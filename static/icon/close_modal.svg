@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="prefix__Button_popup_close" width="46" height="46" data-name="Button_popup close" viewBox="0 0 46 46">
+    <defs>
+        <style>
+            .prefix__cls-2{fill:none;stroke:#898989;stroke-linecap:round;stroke-width:2px}
+        </style>
+    </defs>
+    <circle id="prefix__타원_625" cx="23" cy="23" r="23" data-name="타원 625" style="fill:#fff"/>
+    <g id="prefix__Icon_Close" transform="translate(12.696 12.696)">
+        <path id="prefix__선_500" d="M0 0L30.556 0" class="prefix__cls-2" data-name="선 500" transform="rotate(45)"/>
+        <path id="prefix__선_501" d="M0 0L30.556 0" class="prefix__cls-2" data-name="선 501" transform="rotate(135 10.803 4.475)"/>
+    </g>
+</svg>
