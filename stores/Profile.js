@@ -1351,7 +1351,7 @@ class Profile {
     })
 
     return {
-      //name: this.company_name,
+      name: this.company_name,
       //employee: this.employee,
       //career: this.career,
       //revenue: this.revenue,

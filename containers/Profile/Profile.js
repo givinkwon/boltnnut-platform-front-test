@@ -261,7 +261,7 @@ const CardHead = styled.div`
   }
 `
 const CardBody = styled.div`
-  display: flex;
+  display: inline;
   padding: 20px 0;
   > p {
     :last-of-type {

@@ -154,13 +154,14 @@ class CompanyConatiner extends React.Component {
   componentDidMount() {
     this.props.Profile.getCityData()
   }
+
   render(){
     const {
       possible_search, possible_selected,
       history_search, history_selected
     } = this.state
     const { Profile, Answer } = this.props
-    const city = Profile.city
+    const city = Profile.data.city
     const region = Profile.region
     const {possible_list, history_list} = Answer
 
@@ -186,7 +187,7 @@ class CompanyConatiner extends React.Component {
             <SelectBox>
               <Text.FontSize20 color={DARKGRAY} fontWeight={500}>시/도</Text.FontSize20>
               <SelectComponent
-                styles={customStyles} options={Profile.city_data} value={city}
+                styles={customStyles} options={Profile.city_data} value={Profile.getCityById(city)}
                 getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Profile.setCity}/>
             </SelectBox>
           </W30>
