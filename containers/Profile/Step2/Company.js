@@ -173,7 +173,7 @@ class CompanyConatiner extends React.Component {
           <W30>
             <InputComponent placeholder='상호명을 입력해주세요' label='상호명' type='text' onChange={Profile.setCompanyName} value={Profile.company_name}/>
           </W30>
-        {/*<W30 center>
+        {/*<W30 center> //0928수정
             <InputComponent placeholder='종업원 수를 입력해주세요' label='종업원 수' type='number' onChange={Profile.setEmployee} value={Profile.employee}/>
           </W30>
           <W30>
