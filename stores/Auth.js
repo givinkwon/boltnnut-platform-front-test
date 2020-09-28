@@ -653,7 +653,7 @@ class Auth {
       AccountAPI.partnerSignup(req)
         .then((res) => {
           setTimeout(() => {
-            this.loading = false;
+            this.loading = false
             alert('회원가입 성공');
             this.reset();
             Router.push("/login");
