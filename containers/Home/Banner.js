@@ -155,7 +155,8 @@ const Subtitle = styled(Text.FontSize20)`
         text-align: center;
     }
   @media (min-width: 480px) and (max-width: 767.98px) {
-        width : 480px !important;
+        width : 100% !important;
+        display : inline-block;
         text-align: center;
     }
   @media (min-width: 768px) and (max-width: 991.98px) {
