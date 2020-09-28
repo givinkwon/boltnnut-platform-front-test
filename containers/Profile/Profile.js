@@ -112,7 +112,7 @@ class ProfileContainer extends Component {
               </AnswerInfo>
             </AnswerInfoBox>
           </AnswerWrapper>
-          <RateBox>
+          {/*<RateBox>
             <div>
               <div>
                 <ScoreBox>
@@ -154,7 +154,7 @@ class ProfileContainer extends Component {
                 </ScoreBox>
               </div>
             </div>
-          </RateBox>
+          </RateBox>*/}
         </CardBody>
       </Card>
     )
