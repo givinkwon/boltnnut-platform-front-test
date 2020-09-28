@@ -161,7 +161,7 @@ class CompanyConatiner extends React.Component {
       history_search, history_selected
     } = this.state
     const { Profile, Answer } = this.props
-    const city = Profile.data.city
+    const city = Profile.city
     const region = Profile.region
     const {possible_list, history_list} = Answer
 
@@ -187,7 +187,7 @@ class CompanyConatiner extends React.Component {
             <SelectBox>
               <Text.FontSize20 color={DARKGRAY} fontWeight={500}>시/도</Text.FontSize20>
               <SelectComponent
-                styles={customStyles} options={Profile.city_data} value={Profile.getCityById(city)}
+                styles={customStyles} options={Profile.city_data} value={city ? city : Profile.getCityById(Profile.data.city)}
                 getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Profile.setCity}/>
             </SelectBox>
           </W30>
