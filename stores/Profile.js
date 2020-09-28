@@ -49,9 +49,6 @@ class Profile {
   @observable process_set = []
   @observable process_checked = []
 
-  @observable resume_set = []
-  @observable resume_checked = []
-
   @action reset = () => {
     this.email = ''
     this.password = ''
@@ -228,25 +225,6 @@ class Profile {
     })
   }
 
-  @action setResumeSet = (array) => {
-    this.resume_set = array
-    this.resetResumeChecked()
-    this.resume_set.forEach(resume => {
-      this.resume_checked.push(false)
-    })
-    this.sortResumeSet()
-  }
-  @action sortResumeSet = () => {
-    this.resume_set = this.resume_set.sort((a, b) => {
-      if(a.is_main === b.is_main) {
-        return a.id - b.id
-      }
-      else {
-        return b.is_main - a.is_main
-      }
-    })
-  }
-
   @action togglePortfolioChecked = (idx) => {
     this.portfolio_checked[idx] = !this.portfolio_checked[idx]
   }
@@ -262,11 +240,6 @@ class Profile {
   @action toggleProcessChecked = (idx) => {
     this.process_checked[idx] = !this.process_checked[idx]
   }
-
-  @action toggleResumeChecked = (idx) => {
-    this.process_checked[idx] = !this.process_checked[idx]
-  }
-
   @action resetPortfolioChecked = () => {
     this.portfolio_checked = []
   }
@@ -282,10 +255,6 @@ class Profile {
   @action resetProcessChecked = () => {
     this.process_checked = []
   }
-  @action resetResumeChecked = () => {
-    this.process_checked = []
-  }
-
   @action setCity = (obj) => {
     this.region_data = []
     this.city = obj
@@ -417,7 +386,6 @@ class Profile {
           this.setMachineSet(res.data.data.Partner[0].machine_set)
           this.setCertificationSet(res.data.data.Partner[0].certification_set)
           this.setProcessSet(res.data.data.Partner[0].process_set)
-          this.setResumeSet(res.data.data.Partner[0].resume_set)
         }
       })
       .catch(e => {
@@ -1370,155 +1338,7 @@ class Profile {
         })
     })
   }
-   @action toggleResumeIsMain = (idx) => {
-    const token = localStorage.getItem('token')
-    const req = {
-      id: this.resume_set[idx].id,
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-      data: {
-        is_main: !this.resume_set[idx].is_main
-      },
-    }
 
-    PartnerAPI.patchResume(req)
-      .then(res => {
-        console.log('이력서 중요 표시 토글')
-        console.log(res.data)
-
-        this.resume_set[idx].is_main = !this.resume_set[idx].is_main
-        this.sortResumeSet()
-      })
-      .catch(e => {
-        console.log(e.response)
-        try {
-          alert(e.response.data.message)
-        }
-        catch {
-          console.log(e)
-          console.log(e.response)
-        }
-      })
-  }
-  @action updateCheckedResumeIsMain = () => {
-    // check된 포르폴리오 isMain
-    this.resume_checked.forEach((checked, idx) => {
-      if(!checked) { return }
-
-      const token = localStorage.getItem('token')
-      const req = {
-        id: this.resume_set[idx].id,
-        headers: {
-          'Authorization': `Token ${token}`,
-        },
-        data: {
-          is_main: true,
-        },
-      }
-
-      PartnerAPI.patchResume(req)
-        .then(res => {
-          console.log('체크된 이력서 중요 표시 성공')
-          console.log(res.data)
-
-          this.resume_set[idx].is_main = true
-          this.sortResumeSet()
-        })
-        .catch(e => {
-          console.log(e.response)
-        })
-    })
-  }
-  @action postResume = (partnerId, files) => {
-    for (let i = 0; i < files.length; i++) {
-      const token = localStorage.getItem('token')
-      const req = {
-        headers: {
-          'Authorization': `Token ${token}`,
-        },
-      }
-      let formData = new FormData()
-      formData.append('img_resume', files[i])
-      formData.append('is_main', 'false')
-      formData.append('partner', partnerId)
-
-      PartnerAPI.postResume(req, formData)
-        .then(res => {
-          console.log('이력서 업로드 성공!')
-          console.log(res.data)
-
-          this.resume_set.push({
-            ...res.data
-          })
-          this.resume_checked.push(false)
-        })
-        .catch(e => {
-          console.log(e.response)
-          try {
-            alert(e.response.data.message)
-          }
-          catch {
-            console.log(e)
-            console.log(e.response)
-          }
-        })
-    }
-  }
-  @action deleteResumeSet = (deletedIdx) => {
-    deletedIdx.sort()
-    deletedIdx.forEach((idx, deleted_count) => {
-      this.resume_set.splice(idx - deleted_count, 1)
-      this.resume_checked.splice(idx - deleted_count, 1)
-
-      console.log(this.resume_set)
-    })
-  }
-  deleteResume = () => {
-    let deletedCount = 0
-    let deletedIdx = []
-    let resumeChecked = []
-
-    this.resume_checked.forEach((checked, idx) => {
-      if(checked) {
-        resumeChecked.push(idx)
-      }
-    })
-
-    resumeChecked.forEach(async (checkedIdx, idx) => {
-      const token = localStorage.getItem('token')
-      const req = {
-        id: this.resume_set[checkedIdx].id,
-        headers: {
-          'Authorization': `Token ${token}`,
-        }
-      }
-
-      console.log('요청: ' + checkedIdx)
-      await PartnerAPI.deleteResume(req)
-        .then(res => {
-          console.log('체크된 이력서 삭제 성공: ' + idx)
-
-          deletedCount += 1
-          deletedIdx.push(checkedIdx)
-
-          // 요청에 대한 모든 응답이 도착했다면
-          // mobx 스토어의 내용에도 반영
-          if(deletedCount === resumeChecked.length) {
-            this.deleteResumeSet(deletedIdx)
-          }
-        })
-        .catch(e => {
-          try {
-            alert(e.response.data.message)
-          }
-          catch {
-            console.log(e)
-            console.log(e.response)
-          }
-        })
-    })
-  }
   getData = () => {
     let possible_set = []
     let history_set = []
@@ -1536,9 +1356,9 @@ class Profile {
       //career: this.career,
       //revenue: this.revenue,
       city: this.city.id,
-      region: this.region.id,
+      //region: this.region.id,
       //info_biz: this.info_biz,
-      //info_company: this.info_company,
+      info_company: this.info_company,
       deal: this.deal,
       history: this.histories, // 0923 수정
       category_middle: this.category_middle_set,

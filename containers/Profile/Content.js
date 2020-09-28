@@ -103,7 +103,7 @@ class ContentConatiner extends React.Component {
           toggleIsMain={Profile.toggleCertificationIsMain}
           updateCheckedIsMain={Profile.updateCheckedCertificationIsMain}
         />
-        ImageBox
+        {/*<ImageBox
           title="이력서"
           imgField="img_resume"
           data={Profile.resume_set}
@@ -113,8 +113,7 @@ class ContentConatiner extends React.Component {
           deleteData={Profile.deleteResume}
           toggleIsMain={Profile.toggleResumeIsMain}
           updateCheckedIsMain={Profile.updateCheckedResumeIsMain}
-        />
-
+        />*/}
         <ImageBox
           title="진행 공정"
           imgField="img_process"

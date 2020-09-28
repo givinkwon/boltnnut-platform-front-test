@@ -216,4 +216,3 @@ const DialogFooter = styled(DialogContent)`
     height: 50px;
   }
 `
-

@@ -173,7 +173,7 @@ class CompanyConatiner extends React.Component {
           <W30>
             <InputComponent placeholder='상호명을 입력해주세요' label='상호명' type='text' onChange={Profile.setCompanyName} value={Profile.company_name}/>
           </W30>
-          <W30 center>
+        {/*<W30 center>
             <InputComponent placeholder='종업원 수를 입력해주세요' label='종업원 수' type='number' onChange={Profile.setEmployee} value={Profile.employee}/>
           </W30>
           <W30>
@@ -181,7 +181,7 @@ class CompanyConatiner extends React.Component {
           </W30>
           <W30>
             <InputComponent placeholder='매출액을 입력해주세요' label='매출액' type='number' onChange={Profile.setRevenue} value={Profile.revenue}/>
-          </W30>
+          </W30>*/}
           <W30 center select>
             <SelectBox>
               <Text.FontSize20 color={DARKGRAY} fontWeight={500}>시/도</Text.FontSize20>
@@ -190,18 +190,18 @@ class CompanyConatiner extends React.Component {
                 getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Profile.setCity}/>
             </SelectBox>
           </W30>
-          <W30 select>
+          {/*<W30 select>
             <SelectBox>
                 <Text.FontSize20 color={DARKGRAY} fontWeight={500}>지역</Text.FontSize20>
                 <SelectComponent
                   styles={customStyles} options={Profile.region_data} value={region}
                   getOptionLabel={(option) => option.region} placeholder='옵션을 선택해주세요' onChange={Profile.setRegion}/>
               </SelectBox>
-          </W30>
-          <W100>
+          </W30>*/}
+          {/*<W100>
             <Text.FontSize20 style={{marginTop: 15}} color={DARKGRAY} fontWeight={500}>주요사업</Text.FontSize20>
             <TextArea placeholder='주요사업을 입력해주세요' col={3} onChange={Profile.setInfoBiz} value={Profile.info_biz}/>
-          </W100>
+          </W100>*/}
           <W100>
             <Text.FontSize20 style={{marginTop: 12}} color={DARKGRAY} fontWeight={500}>주요거래처</Text.FontSize20>
             <TextArea placeholder='주요거래처를 입력해주세요' col={3} onChange={Profile.setDeal} value={Profile.deal}/>
@@ -209,6 +209,10 @@ class CompanyConatiner extends React.Component {
           <W100>
             <Text.FontSize20 style={{marginTop: 12}} color={DARKGRAY} fontWeight={500}>진행한 제품들</Text.FontSize20>
             <TextArea placeholder='진행한 제품들을 입력해주세요' col={3} onChange={Profile.setHistories} value={Profile.histories}/>
+          </W100>
+          <W100>
+            <Text.FontSize20 style={{marginTop: 12}} color={DARKGRAY} fontWeight={500}>회사 소개[100자 이상]</Text.FontSize20>
+            <TextArea placeholder='회사소개를 입력해 주세요.' col={3} onChange={Profile.setInfoCompany} value={Profile.info_company}/>
           </W100>
           {/*
           <W100>
@@ -268,7 +272,7 @@ class CompanyConatiner extends React.Component {
             )
           }
           */}
-          <W100>
+          {/*<W100>
            <SearchCategory>
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>진행한 제품 분야</Text.FontSize20>
             <Text.FontSize14 color="#767676!important;"  fontWeight={500}>자동차용품, 의료용품, 산업장비 및 부품, 주방용품, 생활용품, 유아용품, 가전/디지털, 스포츠용품을 검색해보세요</Text.FontSize14>
@@ -322,7 +326,7 @@ class CompanyConatiner extends React.Component {
                 </BadgeList>
               </W100>
             )
-          }
+          }*/}
         </Content>
       </div>
     )
