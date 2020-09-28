@@ -41,7 +41,7 @@ class PartnerConatiner extends React.Component {
               {current_partner ? (current_partner.machine_set.length > 0 ? <MachineConatiner/> : "") : ("")}
               {current_partner ? (current_partner.certification_set.length > 0 ? <CertificationConatiner/> : "") : ("")}
               <RequestCardConatiner/>
-              <ResumeContainer/>
+              {/*<ResumeContainer/>*/}
             </CustomContainer>
           )
         }
