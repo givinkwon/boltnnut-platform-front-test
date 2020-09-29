@@ -3,6 +3,24 @@ import styled from 'styled-components'
 
 // Text List
 // MainTitle, SectionTitle,
+
+export const FontSize62 = styled.p`
+  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
+  color: ${props => props.color ? props.color : '#000000'};
+  text-align: ${props => props.center ? 'center' : 'left'};
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 32px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 36px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    font-size: 40px;
+  }
+  @media (min-width: 1300px) {
+    font-size: 62px;
+  }
+`
 export const FontSize48 = styled.p`
   font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
   color: ${props => props.color ? props.color : '#000000'};
