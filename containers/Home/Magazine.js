@@ -9,13 +9,8 @@ import { BLACK1, DARKGRAY } from 'static/style'
 import {inject, observer} from "mobx-react";
 
 const search_ic = 'static/icon/search.png'
-const right = 'static/icon/right-arrow.png'
-const data = [
-  {id:1, name: "제조 스타트업이 망하는 72가지 이유", image: 'static/images/main/2-1.png'},
-  {id:2, name: "제품을 만드려면 특허는 기본?", image: 'static/images/main/2-2.png'},
-  {id:3, name: "제조 스타트업이 망하는 72가지 이유", image: 'static/images/main/2-1.png'},
-]
-
+const right = "/static/images/main/main_right.png";
+const left = "/static/images/main/main_left.png";
 
 @inject('Home')
 @observer
@@ -70,7 +65,7 @@ class MagazineContainer extends React.Component {
     var settings = {
       dots: false,
       infinite: false,
-      slidesToShow: 2,
+      slidesToShow: 1,
       slidesToScroll: 1,
       initialSlide: 0,
       beforeChange: (current) => {
@@ -79,27 +74,58 @@ class MagazineContainer extends React.Component {
     };
     return (
       <FindExperct>
-        <Header>
-          <Text.FontSize40 color={BLACK1} fontWeight={700}>개발 매거진</Text.FontSize40>
-          <Icon prev style={{marginLeft: 'auto', opacity: prev ? 1 : 0.4}} src={right} onClick={this.sliderPrev}/>
-          <Icon style={{opacity: next ? 1 : 0.4}} src={right} onClick={this.sliderNext}/>
-        </Header>
-        <List>
-          <Slider {...settings} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
-          {
-            data.map((item, idx) => {
-              return (
-                <ItemBox key={idx} onClick={() => this.pushToDetail(item.id)}>
-                  <Item>
-                    <Image ratio='45%' src={item.image} onClick={() => this.setState({tab: 1})}/>
-                    <Text.FontSize24 color={DARKGRAY} fontWeight={500}>{item.title}</Text.FontSize24>
-                  </Item>
-                </ItemBox>
-              )
-            })
-          }
-          </Slider>
-        </List>
+        <LeftArrow src={left} onClick = {this.sliderPrev}/>
+        <MagazineBox>
+          <Header>
+            <Text.FontSize30 color={"#0a2165"} fontWeight={700}>매거진</Text.FontSize30>
+          </Header>
+          <List>
+            <Slider {...settings} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
+                    {
+                      data.map((item, idx) => {
+                        return(
+                          <ItemBox>
+                            <Item>
+                              <Image ratio='45%' src={item.image} onClick={() => this.setState({tab: 1})}/>
+                              <TextBox>
+                                <div class="Header">
+                                  {item.title}
+                                </div>
+                                <div class="Body">
+                                  asdsad
+                                </div>
+                              </TextBox>
+                            </Item>
+                            <Item>
+                              <Image ratio='45%' src={item.image} onClick={() => this.setState({tab: 1})}/>
+                              <TextBox>
+                                <div class="Header">
+                                  {item.title}
+                                </div>
+                                <div class="Body">
+                                  asdsad
+                                </div>
+                              </TextBox>
+                            </Item>
+                          </ItemBox>
+                        )
+                      })
+                    }
+
+            </Slider>
+          </List>
+        </MagazineBox>
+        <RightArrow src={right} onClick = {this.sliderNext}/>
+        <RequestBox>
+          <Header>
+            <Text.FontSize30 color={"#0a2165"} fontWeight={700}>실시간 의뢰 건 리스트</Text.FontSize30>
+          </Header>
+          <Middle>
+            제조 파트너사 등록 수 <span class="Bold">3900</span>  프로젝트 수 <span class="Bold">1300</span>
+          </Middle>
+          <List>
+          </List>
+        </RequestBox>
       </FindExperct>
     )
   }
@@ -108,6 +134,7 @@ class MagazineContainer extends React.Component {
 export default MagazineContainer;
 
 const FindExperct = styled(Container)`
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 0px;
     margin-bottom: 20px;
@@ -118,8 +145,11 @@ const FindExperct = styled(Container)`
   @media (min-width: 992px) and (max-width: 1299.98px) { 
     padding: 60px 0px;
   }
-  @media (min-width: 1300px) { 
-    padding: 80px 0px;
+  @media (min-width: 1300px) {
+    width: 100%;
+    height: 662px;
+    display: inline-flex;
+    align-items: center;
   }
 `
 const List = styled.div`
@@ -130,16 +160,35 @@ const List = styled.div`
     margin-top: 30px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) { 
-    margin-top: 40px;
+    margin-top: 11px;
   }
-  @media (min-width: 1300px) { 
-    margin-top: 60px;
+  @media (min-width: 1300px) {
+    margin-top: 11px;
   }
 `
 
 const Header = styled.div`
   display: flex;
   align-items: center;
+`
+const Middle = styled.div`
+  width: 420px;
+  height: 29px;
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.45;
+  letter-spacing: -0.5px;
+  text-align: left;
+  color: #191919;
+  margin-top: 13px;
+  .Bold {
+    font-weight: 500;
+    color: #0933b3;
+  }
 `
 const Icon = styled.img`
   cursor: pointer;
@@ -156,7 +205,8 @@ const Icon = styled.img`
 
 const ItemBox = styled.a`
   display: block;
-
+  flex-direction: column;
+  width: 873px;
   :focus {
     outline: none;
   }
@@ -165,7 +215,7 @@ const ItemBox = styled.a`
 `
 const Item = styled.div`
   width: calc(100% - 15px);
-
+  display: flex;
   > p {
     text-align: center;
   }
@@ -179,9 +229,11 @@ const Item = styled.div`
     }
   }
   @media (min-width: 768px) {
-    > p {
-      margin-top: 20px;
-    }
+    > div {
+      display: flex;
+      }
+    padding-bottom: 45px;
+    height: 240px;
   }
 `
 const Image = styled(RatioImage)`
@@ -213,4 +265,89 @@ const Image = styled(RatioImage)`
       transform: scale(1.2);
     }
   }
+`
+const MagazineBox = styled.div`
+  width: 873px;
+  height: 100%;
+  flex-direction: column;
+`
+const TextBox = styled.div`
+  flex-direction: column;
+  .Header {
+  width: 385px;
+  height: 70px;
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-size: 26px;
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.31;
+  letter-spacing: -0.65px;
+  text-align: left;
+  color: #191919;
+  }
+  .Body {
+      width: 377px;
+  height: 100%;
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.47;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: #767676;
+  }
+`
+const LeftArrow = styled(RatioImage)`
+  cursor: pointer;
+  margin-right: 70px;
+  width: 19px;
+  height: 32px;
+  object-fit: contain;
+  > div {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position = right;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-right: 10px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-right: 10px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
+`
+const RightArrow = styled(RatioImage)`
+  cursor: pointer;
+  margin-left: 38px;
+  width: 19px;
+  height: 32px;
+  object-fit: contain;
+  > div {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position = right;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-left: 10px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-left: 10px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
+`
+const RequestBox = styled.div`
+  width: 384px;
+  height: 100%;
+  flex-direction: column;
 `
