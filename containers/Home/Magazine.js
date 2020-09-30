@@ -78,8 +78,9 @@ class MagazineContainer extends React.Component {
       },
     };
     return (
+    <CustomContainer>
+      <LeftArrow src={left} onClick = {this.sliderPrev}/>
       <FindExperct>
-        <LeftArrow src={left} onClick = {this.sliderPrev}/>
         <MagazineBox>
           <Header>
             <Text.FontSize30 color={"#0a2165"} fontWeight={700}>매거진</Text.FontSize30>
@@ -146,14 +147,40 @@ class MagazineContainer extends React.Component {
           </RequestItemBox>
         </RequestBox>
       </FindExperct>
+  </CustomContainer>
     )
   }
 }
 
 export default MagazineContainer;
 
-const FindExperct = styled(Container)`
+const CustomContainer = styled.div`
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: calc(100% - 40px);
+    padding: 0 20px;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 1300px) {
+    width: 100%;
+  }
+`
+
+const FindExperct = styled(Container)`
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 0px;
     margin-bottom: 20px;
@@ -165,11 +192,12 @@ const FindExperct = styled(Container)`
     padding: 60px 0px;
   }
   @media (min-width: 1300px) {
-    width: 100%;
+    width: 1300px;
     height: 662px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: 0px;
   }
 `
 const List = styled.div`
@@ -283,7 +311,7 @@ const Image = styled(RatioImage)`
   }
 `
 const MagazineBox = styled.div`
-  width: 873px;
+  width: 727px;
   height: 100%;
   flex-direction: column;
 `
@@ -369,7 +397,6 @@ const RequestBox = styled.div`
   width: 384px;
   height: 100%;
   flex-direction: column;
-  margin-bottom: 70px;
 `
 const RequestItemBox = styled.div`
   width: 384px;

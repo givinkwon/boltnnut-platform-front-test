@@ -10,10 +10,8 @@ import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 import * as AnswerAPI  from 'axios/Answer'
 
 const search_ic = "static/icon/search.png";
-const image1 = "/static/images/main/section4_step1_img.png";
-const image2 = "/static/images/main/section4_step2_img.png";
-const image3 = "/static/images/main/section4_step3_img.png";
-const image4 = "/static/images/banner2_4.png";
+const image1 = "/static/images/main/Banner3_1.png";
+const image2 = "/static/images/main/Banner3_2.png";
 
 class NewBanner5Container extends React.Component {
   render() {
@@ -35,34 +33,12 @@ class NewBanner5Container extends React.Component {
       ]
     }
     return (
-    <CustomContainer>
           <Container>
-            <ItemBox>
-                <Header> 볼트앤너트 파트너가 되면 <br/> <Bold>매일 새로운 클라이언트</Bold>를 만나보실 수 있습니다 </Header>
                 <Item>
-                     <List>
-                        <Slider {...settings}>
-                            <Image src={image1} />
-                            <Image src={image2} />
-                            <Image src={image3} />
-                        </Slider>
-                     </List>
+                    <Image src={image1} />
+                    <Image src={image2} />
                 </Item>
-
-                <Item>
-                  <ButtonBox>
-                    <Button
-                    onClick={() => Router.push("/signup")}
-                    >
-                      <p>
-                        파트너 신청하기
-                      </p>
-                    </Button>
-                  </ButtonBox>
-                </Item>
-            </ItemBox>
           </Container>
-      </CustomContainer>
     );
   }
 }
@@ -73,8 +49,8 @@ const CustomContainer = styled.div`
   padding: 0px;
   width: 100%;
   height: 100%;
-  margin-right: auto;
-  margin-left: auto;
+  text-align: center;
+  margin: auto;
   background-color: #f5f5f5; !important;;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -96,13 +72,10 @@ const CustomContainer = styled.div`
 `
 
 const Container = styled.div`
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
   text-align : center;
   align-items: center;
   height: 100%;
+  margin: auto;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100% - 40px);
     padding: 0 20px;
@@ -117,7 +90,7 @@ const Container = styled.div`
   }
 
   @media (min-width: 1300px) {
-    width: 1400px;
+    width: 1300px;
   }
 `
 
@@ -192,13 +165,10 @@ const ItemBox = styled.div`
   }
 `
 const Item = styled.div`
-  display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  > p {
-    text-align: left;
-  }
+  justify-content: space-between;
+  text-align: right;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100%);
     display: flex;
@@ -209,36 +179,30 @@ const Item = styled.div`
     }
   }
   @media (min-width: 768px) {
-    width: calc(100% - 10px);
+    width: calc(100%);
     > p {
       margin-top: 20px;
     }
   }
 `
 const Image = styled(RatioImage)`
-  width: 300px;
-  height: 352px;
-  object-fit: contain;
+  width: 588px;
+  height: 565px;
   justify-content: center;
   align-items: center;
+  margin-top: 109px;
+  padding-right: 22px;
   > div {
     background-size: contain;
     background-repeat: no-repeat;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 232px;
-    height: 276px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 232px;
-    height: 276px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-  margin-right: 20px;
   }
   @media (min-width: 1300px) {
-    margin-top: 0px;
-    margin-right : 20px;
   }
 `
 const Header = styled.span`
