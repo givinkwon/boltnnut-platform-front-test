@@ -11,6 +11,9 @@ import {inject, observer} from "mobx-react";
 const search_ic = 'static/icon/search.png'
 const right = "/static/images/main/main_right.png";
 const left = "/static/images/main/main_left.png";
+const image1 = "/static/images/main/logo_1.png";
+const image2 = "/static/images/main/logo_2.png";
+const image3 = "/static/images/main/logo_5.png";
 
 @inject('Home')
 @observer
@@ -60,7 +63,9 @@ class MagazineContainer extends React.Component {
 
   render() {
     const data = this.props.Home.magazine_list
+    const request_data = this.props.Home.request_list
     const { prev, next } = this.state
+    console.log(request_data)
 
     var settings = {
       dots: false,
@@ -123,8 +128,22 @@ class MagazineContainer extends React.Component {
           <Middle>
             제조 파트너사 등록 수 <span class="Bold">3900</span>  프로젝트 수 <span class="Bold">1300</span>
           </Middle>
-          <List>
-          </List>
+          <RequestItemBox>
+              {
+                request_data.map((item, idx) => {
+                  return (
+                    <RequestItem>
+                      {item.name} 의뢰가 접수되었습니다.
+                    </RequestItem>
+                  )
+                })
+              }
+            <RequestImageContainer>
+              <RequestImage src={image1}/>
+              <RequestImage src={image2}/>
+              <RequestImage src={image3}/>
+            </RequestImageContainer>
+          </RequestItemBox>
         </RequestBox>
       </FindExperct>
     )
@@ -150,6 +169,7 @@ const FindExperct = styled(Container)`
     height: 662px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
   }
 `
 const List = styled.div`
@@ -210,7 +230,6 @@ const ItemBox = styled.a`
   :focus {
     outline: none;
   }
-  
   text-decoration: none;
 `
 const Item = styled.div`
@@ -239,13 +258,10 @@ const Item = styled.div`
 const Image = styled(RatioImage)`
   cursor: pointer;
   border-radius: 25px;
-  
   width: calc(100% - 15px);
-  
   @media (min-width: 0px) and (max-width: 767.98px) {
     border-radius: 15px;
     max-width: 400px;
-    
     :hover {
       border-radius: 15px;
       > div {
@@ -286,8 +302,10 @@ const TextBox = styled.div`
   letter-spacing: -0.65px;
   text-align: left;
   color: #191919;
+  margin-left: 10px;
   }
   .Body {
+  margin-left: 10px;
       width: 377px;
   height: 100%;
   object-fit: contain;
@@ -344,10 +362,46 @@ const RightArrow = styled(RatioImage)`
   @media (min-width: 992px) and (max-width: 1299.98px) {
   }
   @media (min-width: 1300px) {
+    margin-right: 69px;
   }
 `
 const RequestBox = styled.div`
   width: 384px;
   height: 100%;
   flex-direction: column;
+  margin-bottom: 70px;
+`
+const RequestItemBox = styled.div`
+  width: 384px;
+  height: 100%;
+`
+const RequestItem = styled.div`
+  width: 384px;
+  height: 63px;
+  background-color: #f3f4f8;
+  font-family: NotoSansCJKkr;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: -0.4px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+  color: #767676;
+  margin-top: 24px;
+`
+const RequestImageContainer = styled.div`
+  width: 100%;
+  height: 104px;
+  text-align: center;
+  align-items: center;
+  justify-content: space-evenly;
+  display: inline-flex;
+`
+const RequestImage = styled(Image)`
+  width: 104px;
+  height: 104px;
 `

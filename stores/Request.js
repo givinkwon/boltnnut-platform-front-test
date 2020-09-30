@@ -6,8 +6,6 @@ import * as RequestAPI from "axios/Request";
 import Router from "next/router";
 
 class Request {
-
-
   @observable client_id = -1;
   @observable select_reqs = [];
 
