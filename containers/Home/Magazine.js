@@ -25,6 +25,7 @@ class MagazineContainer extends React.Component {
   }
 
   state = {
+    idx: 0,
     current: 1,
     next: true,
     prev: false,
@@ -32,13 +33,17 @@ class MagazineContainer extends React.Component {
   slider = null
   afterChangeHandler = (current) => {
     const magazineCount = this.props.Home.magazine_list.length
-
-    if(current === 0){
+ 
+    console.log("i ", this.state.idx);
+    console.log("c ", this.state.current);
+    console.log("m ", magazineCount/2);
+    if(current === 1){
       this.setState({next: true, prev: false})
     }
     else {
       // slidesToShow : 2
-      if(current === magazineCount - 2) {
+      if(current+2 === magazineCount/2) {
+        console.log("asdf")
         this.setState({next: false, prev: true})
       }
       else {
@@ -48,8 +53,11 @@ class MagazineContainer extends React.Component {
 
   }
   sliderNext = () => {
-    const breakpoint = this.slider.state.breakpoint
-    this.slider.slickNext()
+    const magazineCount = this.props.Home.magazine_list.length
+    if(this.state.idx+1 !== magazineCount/2) {
+      this.state.idx++;
+      this.slider.slickNext()
+    }
   }
   sliderPrev = () => {
     if(this.state.current === 0) {
@@ -58,6 +66,10 @@ class MagazineContainer extends React.Component {
     else {
       this.setState({ prev: true })
     }
+    this.state.idx--;
+    if(this.state.idx<0){
+      this.state.idx = 0;
+    }
     this.slider.slickPrev()
   }
 
@@ -65,7 +77,7 @@ class MagazineContainer extends React.Component {
     const data = this.props.Home.magazine_list
     const request_data = this.props.Home.request_list
     const { prev, next } = this.state
-    console.log(request_data)
+    const {idx} = this.state
 
     var settings = {
       dots: false,
@@ -78,6 +90,7 @@ class MagazineContainer extends React.Component {
       },
     };
     return (
+    <CustomContainer>
       <FindExperct>
         <LeftArrow src={left} onClick = {this.sliderPrev}/>
         <MagazineBox>
@@ -87,28 +100,27 @@ class MagazineContainer extends React.Component {
           <List>
             <Slider {...settings} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
                     {
-                      data.map((item, idx) => {
+                      data.map(() => {
                         return(
                           <ItemBox>
                             <Item>
-                              <Image ratio='45%' src={item.image} onClick={() => this.setState({tab: 1})}/>
+                              <Image ratio='45%' src={data[idx*2].image} onClick={() => this.setState({tab: 1})}/>
                               <TextBox>
                                 <div class="Header">
-                                  {item.title}
+                                  {data[idx*2].title}
                                 </div>
-                                <div class="Body">
-                                  asdsad
+                                <div class="Body" dangerouslySetInnerHTML={{__html: data[idx*2].content.substring(0,350)}}>
+                                  {/*{item.content.replace(/(<([^>]+)>)/ig,"").split('&nbsp;')[4]}*/}
                                 </div>
                               </TextBox>
                             </Item>
                             <Item>
-                              <Image ratio='45%' src={item.image} onClick={() => this.setState({tab: 1})}/>
+                              <Image ratio='45%' src={data[idx*2+1].image} onClick={() => this.setState({tab: 1})}/>
                               <TextBox>
                                 <div class="Header">
-                                  {item.title}
+                                  {data[idx*2+1].title}
                                 </div>
-                                <div class="Body">
-                                  asdsad
+                                <div class="Body" dangerouslySetInnerHTML={{__html: data[idx*2].content.substring(0,350)}}>
                                 </div>
                               </TextBox>
                             </Item>
@@ -130,10 +142,10 @@ class MagazineContainer extends React.Component {
           </Middle>
           <RequestItemBox>
               {
-                request_data.map((item, idx) => {
+                request_data.slice(0,5).map((item, idx) => {
                   return (
                     <RequestItem>
-                      {item.name} 의뢰가 접수되었습니다.
+                      {item.name.split(':')[0]} 의뢰가 접수되었습니다.
                     </RequestItem>
                   )
                 })
@@ -146,14 +158,40 @@ class MagazineContainer extends React.Component {
           </RequestItemBox>
         </RequestBox>
       </FindExperct>
+  </CustomContainer>
     )
   }
 }
 
 export default MagazineContainer;
 
-const FindExperct = styled(Container)`
+const CustomContainer = styled.div`
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: calc(100% - 40px);
+    padding: 0 20px;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 1300px) {
+    width: 100%;
+  }
+`
+
+const FindExperct = styled(Container)`
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 0px;
     margin-bottom: 20px;
@@ -165,11 +203,12 @@ const FindExperct = styled(Container)`
     padding: 60px 0px;
   }
   @media (min-width: 1300px) {
-    width: 100%;
+    width: 1300px;
     height: 662px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: 0px;
   }
 `
 const List = styled.div`
@@ -226,14 +265,14 @@ const Icon = styled.img`
 const ItemBox = styled.a`
   display: block;
   flex-direction: column;
-  width: 873px;
+  width: 727px;
   :focus {
     outline: none;
   }
   text-decoration: none;
 `
 const Item = styled.div`
-  width: calc(100% - 15px);
+  width: calc(100% + 10)px;
   display: flex;
   > p {
     text-align: center;
@@ -264,6 +303,7 @@ const Image = styled(RatioImage)`
     max-width: 400px;
     :hover {
       border-radius: 15px;
+      opacity: 0.4;
       > div {
         border-radius: 15px;
         transform: scale(1.2);
@@ -276,6 +316,7 @@ const Image = styled(RatioImage)`
   
   :hover {
     border-radius: 25px;
+      opacity: 0.4;
     > div {
       border-radius: 25px;
       transform: scale(1.2);
@@ -283,7 +324,7 @@ const Image = styled(RatioImage)`
   }
 `
 const MagazineBox = styled.div`
-  width: 873px;
+  width: 730px;
   height: 100%;
   flex-direction: column;
 `
@@ -307,7 +348,8 @@ const TextBox = styled.div`
   .Body {
   margin-left: 10px;
       width: 377px;
-  height: 100%;
+      overflow: hidden;
+  height: 150px;
   object-fit: contain;
   font-family: NotoSansCJKkr;
   font-size: 15px;
@@ -344,7 +386,6 @@ const LeftArrow = styled(RatioImage)`
 `
 const RightArrow = styled(RatioImage)`
   cursor: pointer;
-  margin-left: 38px;
   width: 19px;
   height: 32px;
   object-fit: contain;
@@ -369,7 +410,6 @@ const RequestBox = styled.div`
   width: 384px;
   height: 100%;
   flex-direction: column;
-  margin-bottom: 70px;
 `
 const RequestItemBox = styled.div`
   width: 384px;
