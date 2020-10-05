@@ -33,18 +33,19 @@ class NewBanner4Container extends React.Component {
         <BodyBox>
                       <Item>
                         <CommentBox>
-                          <Image src={image3} />
+                          <Image src={image4} />
                           <TextBox>
                             <HeaderWrapper>
                               <div class="CommentHeader">
-                                <p> HClab </p>
+                                <p> MANU </p>
                               </div>
                               <div class="CommentStar">
                                 <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
                               </div>
                             </HeaderWrapper>
                             <div class="CommentBody">
-                              <p> 제품 제조에 처음 도전한 저희는 제품을 개발해줄 개발업체를 찾느라 한 달 이상 애를 먹고 있었어요. <br/> 볼트앤너트 덕에 더 이상 시간을 낭비하지 않아도 되었답니다. </p>
+                              <span class="Header"> 볼트앤너트 덕분에 2차 마켓까지 진행하였어요 </span>
+                              <p> 업체를 고를 때 개발을 진행하는 마인드와 포트폴리오를 가장 중요하게 생각하는데 볼트앤너트가 모두 제공해줘서 편리했습니다. </p>
                             </div>
                          </TextBox>
                         </CommentBox>
@@ -52,10 +53,10 @@ class NewBanner4Container extends React.Component {
                       <Item>
                         <SmallCommentBox>
                             <div class="HeaderWrapper">
-                              <SmallImage src={image3} />
+                              <SmallImage src={image2} />
                               <div class = "TextBox">
                               <div class="CommentHeader">
-                                <p> HClab </p>
+                                <p> IOPET </p>
                               </div>
                               <div class="CommentStar">
                                 <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
@@ -63,7 +64,7 @@ class NewBanner4Container extends React.Component {
                               </div>
                             </div>
                             <div class="CommentBody">
-                              <p> 제품 제조에 처음 도전한 저희는 제품을 개발해줄 개발업체를 찾느라 한 달 이상 애를 먹고 있었어요. <br/> 볼트앤너트 덕에 더 이상 시간을 낭비하지 않아도 되었답니다. </p>
+                              <p> 기존거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트를 통해 업체들을 추천 받아 비교해볼 수  있었고 더 나은 조건의 업체와계약하게 되었습니다. </p>
                             </div>
                         </SmallCommentBox>
                         <SmallCommentBox>
@@ -84,10 +85,10 @@ class NewBanner4Container extends React.Component {
                         </SmallCommentBox>
                         <SmallCommentBox>
                             <div class="HeaderWrapper">
-                              <SmallImage src={image3} />
+                              <SmallImage src={image1} />
                               <div class = "TextBox">
                               <div class="CommentHeader">
-                                <p> HClab </p>
+                                <p> TAJO </p>
                               </div>
                               <div class="CommentStar">
                                 <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
@@ -95,7 +96,7 @@ class NewBanner4Container extends React.Component {
                               </div>
                             </div>
                             <div class="CommentBody">
-                              <p> 제품 제조에 처음 도전한 저희는 제품을 개발해줄 개발업체를 찾느라 한 달 이상 애를 먹고 있었어요. <br/> 볼트앤너트 덕에 더 이상 시간을 낭비하지 않아도 되었답니다. </p>
+                              <p> 제조 양산 프로세스를 모르다 보니 시행착오가 많았는데 볼트앤너트 측에서 PM 업무를 수행하여 제품을 성공적으로  양산할 수 있었습니다. </p>
                             </div>
                         </SmallCommentBox>
                       </Item>
@@ -599,6 +600,16 @@ const CommentBox = styled.div`
   @media (min-width: 1300px) {
     margin-right: 10px;
   }
+  .Header {
+    font-size: 24px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.6px;
+    text-align: left;
+    color: #060606;
+    }
 }
 `
 const SmallCommentBox = styled.div`
