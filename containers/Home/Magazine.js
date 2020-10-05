@@ -33,17 +33,12 @@ class MagazineContainer extends React.Component {
   slider = null
   afterChangeHandler = (current) => {
     const magazineCount = this.props.Home.magazine_list.length
- 
-    console.log("i ", this.state.idx);
-    console.log("c ", this.state.current);
-    console.log("m ", magazineCount/2);
     if(current === 1){
       this.setState({next: true, prev: false})
     }
     else {
       // slidesToShow : 2
       if(current+2 === magazineCount/2) {
-        console.log("asdf")
         this.setState({next: false, prev: true})
       }
       else {
@@ -85,6 +80,8 @@ class MagazineContainer extends React.Component {
       slidesToShow: 1,
       slidesToScroll: 1,
       initialSlide: 0,
+      draggable: false,
+      swipe: false,
       beforeChange: (current) => {
         this.setState({current: current})
       },
@@ -104,7 +101,7 @@ class MagazineContainer extends React.Component {
                         return(
                           <ItemBox>
                             <Item>
-                              <Image ratio='45%' src={data[idx*2].image} onClick={() => this.setState({tab: 1})}/>
+                              <Image ratio='45%' src={data[idx*2].image} onClick={() => this.pushToDetail(data[idx*2].id)}/>
                               <TextBox>
                                 <div class="Header">
                                   {data[idx*2].title}
@@ -115,12 +112,12 @@ class MagazineContainer extends React.Component {
                               </TextBox>
                             </Item>
                             <Item>
-                              <Image ratio='45%' src={data[idx*2+1].image} onClick={() => this.setState({tab: 1})}/>
+                              <Image ratio='45%' src={data[idx*2+1].image} onClick={() => this.pushToDetail(data[idx*2].id)}/>
                               <TextBox>
                                 <div class="Header">
                                   {data[idx*2+1].title}
                                 </div>
-                                <div class="Body" dangerouslySetInnerHTML={{__html: data[idx*2].content.substring(0,350)}}>
+                                <div class="Body" dangerouslySetInnerHTML={{__html: data[idx*2+1].content.substring(0,350)}}>
                                 </div>
                               </TextBox>
                             </Item>
@@ -364,7 +361,7 @@ const TextBox = styled.div`
 `
 const LeftArrow = styled(RatioImage)`
   cursor: pointer;
-  margin-right: 70px;
+  margin-right: 40px;
   width: 19px;
   height: 32px;
   object-fit: contain;
@@ -403,7 +400,8 @@ const RightArrow = styled(RatioImage)`
   @media (min-width: 992px) and (max-width: 1299.98px) {
   }
   @media (min-width: 1300px) {
-    margin-right: 69px;
+    margin-right: 50px;
+    margin-left: 20px;
   }
 `
 const RequestBox = styled.div`
