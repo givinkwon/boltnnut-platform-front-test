@@ -27,7 +27,7 @@ class NewBanner4Container extends React.Component {
     <CustomContainer>
       <Container>
         <HeaderBox>
-          <Header2>제조업 성공한<Bold> <span class="line">실제 후기</span></Bold></Header2>
+          <Header2>제조업 성공한 실제 후기</Header2>
         </HeaderBox>
 
         <BodyBox>
@@ -253,6 +253,7 @@ const HeaderBox = styled.div`
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 0px;
+  align-items: baseline;
   :focus {
     outline: none;
   }
@@ -411,14 +412,13 @@ const Header2 = styled.span`
   height: 59px;
   margin-bottom: 60px;
   font-family: NotoSansCJKkr;
-  font-size: 50px;
+  font-size: 32px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.36;
-  letter-spacing: -1.25px;
-  text-align: center;
-  color: #0a2165;
+  line-height: 2.13;
+  letter-spacing: -0.8px;
+  color: #505050;
   margin-top: 130px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 100%;
