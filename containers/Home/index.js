@@ -26,9 +26,9 @@ class HomeConatiner extends React.Component {
         <MagazineConatiner/>
         {/*<NewBanner1Container/>
         <NewBanner2Container/>
-        <NewBanner3Container/>
-        <NewBanner4Container/>*/}
+        <NewBanner3Container/>*/}
         <NewBanner5Container/>
+        <NewBanner4Container/>
         <LogoConatiner/>
       </>
     )

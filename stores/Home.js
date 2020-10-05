@@ -38,7 +38,7 @@ class Home {
   @action setLatestRequests = async () => {
     await RequestAPI.getRequests()
       .then(res => {
-        this.request_list = res.data.results.filter(item => item.client != 18)
+        this.request_list = res.data.results
       }
       )
   }

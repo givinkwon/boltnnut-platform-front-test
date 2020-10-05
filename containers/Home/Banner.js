@@ -50,9 +50,9 @@ const ButtonBox = styled.div`
     border: none;
     border-radius: 10px;
     :hover {
-      background-color: ${WHITE};
+      background-color: #0933b3;//${WHITE};
       > p {
-        color: #001a56 !important;
+        color: ${WHITE}; !important;
       }
 
     }
@@ -65,7 +65,6 @@ const ButtonBox = styled.div`
 
   }
 `
-
 const Banner = styled.div`
   background-position: center;
   background-size: cover;

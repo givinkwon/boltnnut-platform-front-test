@@ -33,12 +33,14 @@ class NewBanner5Container extends React.Component {
       ]
     }
     return (
+    <CustomContainer>
           <Container>
                 <Item>
                     <Image src={image1} />
                     <Image src={image2} />
                 </Item>
           </Container>
+    </CustomContainer>
     );
   }
 }
@@ -51,7 +53,7 @@ const CustomContainer = styled.div`
   height: 100%;
   text-align: center;
   margin: auto;
-  background-color: #f5f5f5; !important;;
+  background-color: rgba(158, 159, 161, 0.12);
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100% - 40px);
@@ -168,7 +170,7 @@ const Item = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  text-align: right;
+  text-align: center;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100%);
     display: flex;
@@ -191,6 +193,7 @@ const Image = styled(RatioImage)`
   justify-content: center;
   align-items: center;
   margin-top: 109px;
+  margin-bottom: 140px;
   padding-right: 22px;
   > div {
     background-size: contain;

@@ -66,6 +66,7 @@ class MagazineContainer extends React.Component {
     const request_data = this.props.Home.request_list
     const { prev, next } = this.state
     console.log(request_data)
+    //console.log(data[0].content.replace(/(<([^>]+)>)/ig,"").split('&nbsp;')[4])
 
     var settings = {
       dots: false,
@@ -79,8 +80,8 @@ class MagazineContainer extends React.Component {
     };
     return (
     <CustomContainer>
-      <LeftArrow src={left} onClick = {this.sliderPrev}/>
       <FindExperct>
+        <LeftArrow src={left} onClick = {this.sliderPrev}/>
         <MagazineBox>
           <Header>
             <Text.FontSize30 color={"#0a2165"} fontWeight={700}>매거진</Text.FontSize30>
@@ -97,8 +98,8 @@ class MagazineContainer extends React.Component {
                                 <div class="Header">
                                   {item.title}
                                 </div>
-                                <div class="Body">
-                                  asdsad
+                                <div class="Body" dangerouslySetInnerHTML={{__html: item.content.substring(0,350)}}>
+                                  {/*{item.content.replace(/(<([^>]+)>)/ig,"").split('&nbsp;')[4]}*/}
                                 </div>
                               </TextBox>
                             </Item>
@@ -108,8 +109,7 @@ class MagazineContainer extends React.Component {
                                 <div class="Header">
                                   {item.title}
                                 </div>
-                                <div class="Body">
-                                  asdsad
+                                <div class="Body" dangerouslySetInnerHTML={{__html: item.content.substring(0,350)}}>
                                 </div>
                               </TextBox>
                             </Item>
@@ -131,10 +131,10 @@ class MagazineContainer extends React.Component {
           </Middle>
           <RequestItemBox>
               {
-                request_data.map((item, idx) => {
+                request_data.slice(0,5).map((item, idx) => {
                   return (
                     <RequestItem>
-                      {item.name} 의뢰가 접수되었습니다.
+                      {item.name.split(':')[0]} 의뢰가 접수되었습니다.
                     </RequestItem>
                   )
                 })
@@ -254,14 +254,14 @@ const Icon = styled.img`
 const ItemBox = styled.a`
   display: block;
   flex-direction: column;
-  width: 873px;
+  width: 727px;
   :focus {
     outline: none;
   }
   text-decoration: none;
 `
 const Item = styled.div`
-  width: calc(100% - 15px);
+  width: calc(100% + 10)px;
   display: flex;
   > p {
     text-align: center;
@@ -292,6 +292,7 @@ const Image = styled(RatioImage)`
     max-width: 400px;
     :hover {
       border-radius: 15px;
+      opacity: 0.4;
       > div {
         border-radius: 15px;
         transform: scale(1.2);
@@ -304,6 +305,7 @@ const Image = styled(RatioImage)`
   
   :hover {
     border-radius: 25px;
+      opacity: 0.4;
     > div {
       border-radius: 25px;
       transform: scale(1.2);
@@ -311,7 +313,7 @@ const Image = styled(RatioImage)`
   }
 `
 const MagazineBox = styled.div`
-  width: 727px;
+  width: 730px;
   height: 100%;
   flex-direction: column;
 `
@@ -335,7 +337,8 @@ const TextBox = styled.div`
   .Body {
   margin-left: 10px;
       width: 377px;
-  height: 100%;
+      overflow: hidden;
+  height: 150px;
   object-fit: contain;
   font-family: NotoSansCJKkr;
   font-size: 15px;
@@ -372,7 +375,6 @@ const LeftArrow = styled(RatioImage)`
 `
 const RightArrow = styled(RatioImage)`
   cursor: pointer;
-  margin-left: 38px;
   width: 19px;
   height: 32px;
   object-fit: contain;
