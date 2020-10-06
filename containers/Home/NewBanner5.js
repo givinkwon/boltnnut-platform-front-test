@@ -38,21 +38,25 @@ class NewBanner5Container extends React.Component {
             <Header> 제조사 찾기 말고 다른 서비스를 찾으시나요? </Header>
                 <Item>
                     <ImageTextBox style={{backgroundImage: 'url("/static/images/main/Banner3_1.png")'}}>
-                      <div class="ImageHeader">
-                        asdafasdasdas
-                      </div>
-                      <div class="ImageBottom">
-                        <span class="ImageBold"> asdasfadf </span>
-                         asdasfadf
+                      <div class="TextBox">
+                        <div class="ImageHeader">
+                          예산이 예상보다 비싸다구요? <br/> 자체에서 개발한 양산개발 시스템으로
+                        </div>
+                        <div class="ImageBottom">
+                          <span class="ImageBold"> 최대 40% </span>
+                           비용을 낮추는 양산개발 서비스를 이용해 보세요
+                        </div>
                       </div>
                     </ImageTextBox>
                     <ImageTextBox style={{backgroundImage: 'url("/static/images/main/Banner3_2.png")'}}>
-                      <div class="ImageHeader">
-                        asdafasdasdas
-                      </div>
-                      <div class="ImageBottom">
-                        <span class="ImageBold"> asdasfadf </span>
-                         asdasfadf
+                      <div class="TextBox">
+                        <div class="ImageHeader">
+                          제조사 말고 제품을 찾고 계신가요? <br/> 제품의 중국 단가가 궁금하신가요?
+                        </div>
+                        <div class="ImageBottom">
+                          <span class="ImageBold"> 원하시는 제품 </span>
+                           을 발주 조건의 정보를 알아봐 드리는 국내외 발주 공장 수배 서비스를 이용해 보세요.
+                        </div>
                       </div>
                     </ImageTextBox>
                 </Item>
@@ -256,8 +260,14 @@ const ImageTextBox = styled.div`
   margin-bottom: 140px;
   opacity: 0.6;
   background-image: url("/static/images/main/Banner3_1.png");
+  .TextBox{
+    width: 100%;
+    height: 100%;
+    padding-top: 90px;
+    padding-left: 40px;
+  }
   .ImageHeader {
-      width: 363px;
+      width: 400px;
       height: 81px;
       object-fit: contain;
       font-family: NotoSansCJKkr;
@@ -271,7 +281,7 @@ const ImageTextBox = styled.div`
       color: #dcdcdc;
   }
   .ImageBottom {
-     width: 420px;
+     width: 470px;
      height: 188px;
      object-fit: contain;
      font-family: NotoSansCJKkr;

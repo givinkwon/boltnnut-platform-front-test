@@ -27,7 +27,7 @@ class NewBanner4Container extends React.Component {
     <CustomContainer>
       <Container>
         <HeaderBox>
-          <Header2>제조업 성공한 실제 후기</Header2>
+          <Header2>클라이언트의 제조 성공이야기 </Header2>
         </HeaderBox>
 
         <BodyBox>
@@ -126,7 +126,7 @@ const W50 = styled.div`
 const CustomContainer = styled.div`
   padding: 0px;
   width: 100%;
-  height: 100%;
+  height: 857px;
   margin-right: 0;
   margin-left: 0;
   align-items: center;
@@ -312,7 +312,6 @@ const Item = styled.div`
   box-sizing: border-box;
   display: inline-flex;
   justify-content: space-between;
-  margin-bottom: 30px;
   > p {
     text-align: left;
   }
@@ -617,7 +616,7 @@ const SmallCommentBox = styled.div`
   height: 210px;
   object-fit: contain;
   border-radius: 10px;
-  margin-top: 30px;
+  margin-top: 24px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   align-items: center;
