@@ -109,6 +109,7 @@ class MagazineContainer extends React.Component {
                                 <div class="Body" dangerouslySetInnerHTML={{__html: data[idx*2].content.substring(0,350)}}>
                                   {/*{item.content.replace(/(<([^>]+)>)/ig,"").split('&nbsp;')[4]}*/}
                                 </div>
+                                <p> ... </p>
                               </TextBox>
                             </Item>
                             <Item>
@@ -119,6 +120,7 @@ class MagazineContainer extends React.Component {
                                 </div>
                                 <div class="Body" dangerouslySetInnerHTML={{__html: data[idx*2+1].content.substring(0,350)}}>
                                 </div>
+                                <p> ... </p>
                               </TextBox>
                             </Item>
                           </ItemBox>

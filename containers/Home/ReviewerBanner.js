@@ -34,7 +34,8 @@ class TestBanner extends React.Component {
                       <div class="Body">
                         내부 설계와 소프트웨어가 탄탄하게 설계되어 있어도 제품의 겉 표면
                         스타일링이 되어 있지 않으면 제품 퀄리티가 떨어져 보입니다. 디자인 시안
-                        부터 고객님과 함께 정하고 원하시는 타겟에 맞춰 디자인을 도와드립니다.
+                        부터 고객님과 함께 정하고 원하시는 타겟에 맞춰 디자인을 도와드립니다. <br/>
+                        <span class="HyperLink"> 더 보기 </span>
                       </div>
                     </TextBox>
                 </Item1>
@@ -48,7 +49,9 @@ class TestBanner extends React.Component {
                         실리콘 반려동물 샤워기
                       </div>
                       <div class="Body">
-                        질병 문제 해결을 위한 반려동물 샤워기 클라이언트의 의견 맞춰서 실리콘  금형양산을 진행하였습니다. R&D 요소를 같이 진행하여 실리콘 분량률을 최소화 하여 예산에 맞춰 양산하였습니다.
+                        질병 문제 해결을 위한 반려동물 샤워기 클라이언트의 의견 맞춰서 실리콘  금형양산을 진행하였습니다.
+                         R&D 요소를 같이 진행하여 실리콘 분량률을 최소화 하여 예산에 맞춰 양산하였습니다. <br/><br/>
+                        <span class="HyperLink"> 더 보기 </span>
                       </div>
                     </TextBox>
                 </Item1>
@@ -176,7 +179,7 @@ const TextBox = styled.div`
   height: 81px;
   margin-top: 20px;
   width: 540px;
-  height: 87px;
+  height: 100px;
   object-fit: contain;
   font-family: NotoSansCJKkr;
   font-size: 18px;
@@ -187,6 +190,20 @@ const TextBox = styled.div`
   letter-spacing: -0.45px;
   text-align: left;
   color: #767676;
+  .HyperLink {
+  width: 52px;
+  height: 27px;
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-size: 15px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.47;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: #0933b3;
+  }
   }
 `
 
