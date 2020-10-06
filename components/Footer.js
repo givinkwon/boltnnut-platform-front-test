@@ -7,8 +7,11 @@ import {inject, observer} from "mobx-react";
 import * as Text from "./Text";
 import { PRIMARY, WHITE } from "static/style";
 
-const logo_footer = "/static/images/logo.png";
 
+const logo_footer = "/static/images/logo.png";
+const instargram = "/static/images/instargram.png";
+const facebook = "/static/images/facebook.png";
+const blog = "/static/images/blog.png";
 
 @inject('Auth')
 @observer
@@ -18,7 +21,7 @@ class FooterComponent extends React.Component {
 
     return (
       <Footer>
-        <Container style={{marginBottom: 40}}>
+        <Container style={{marginBottom: 0}}>
           <Image src={logo_footer} onClick={() => Router.push("/")} />
           <CompanyInfo>
             <div>
@@ -112,21 +115,25 @@ class FooterComponent extends React.Component {
           </div>
         </Container>
         <Container>
-          <div style={{marginTop: 10}}>
-            <Text.FontSize24 color="#fff" style={{marginBottom: 5}}>
+          <div>
+            <Text.FontSize24 color="#fff" style={{marginBottom: 4}}>
               ​CONTACT
             </Text.FontSize24>
-            <Text.FontSize32 color="#fff" style={{marginBottom: 5}}>
+            <Text.FontSize32 color="#fff" style={{marginBottom: 2}}>
               ​T. 02.926.6637
             </Text.FontSize32>
-            <Text.FontSize12 color="#fff" style={{marginBottom: 5}}>
+            <Text.FontSize12 color="#fff" style={{marginBottom: 12}}>
               평일 오전 10시 - 오후 7시 
             </Text.FontSize12>
             <Text.FontSize12 color="#fff" style={{marginBottom: 5}}>
               ​E. boltnnut@boltnnut.com
             </Text.FontSize12>
             <Text.FontSize12 color="#fff" style={{marginBottom: 5}}>
-              A B C  
+              <SnsBox>
+                <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
+                <Sns src={facebook} onClick={() => window.open('http://www.facebook.com/boltnnut6637')} />
+                <Sns src={blog} onClick={() => window.open('http://www.blog.naver.com/boltnnut_korea')} />
+              </SnsBox>
             </Text.FontSize12>
           </div>
         </Container>
@@ -141,17 +148,40 @@ const Footer = styled.div`
   background-color: ${PRIMARY};
   padding: 40px 0px;
   display : inline-flex;
+  justify-content: space-around;
+  padding-top : 3.5% ;
+  padding-bottom : 3.5% ;
 
   > div:nth-of-type(1) {
-    margin-bottom: 50px;
+    margin-left:9%;
+  }
+  > div:nth-of-type(3) {
+    margin-right: 9%;
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 1300px) {
+    width: 100%;
   }
 `;
-
+// 여기
 const Container = styled.div`
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  
 
 
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -174,7 +204,6 @@ const Container = styled.div`
 
 const TextBox = styled.div`
   display: flex;
-  margin-top: 20px;
   margin-bottom: 20px;
   
   :last-of-type {
@@ -183,25 +212,43 @@ const TextBox = styled.div`
   
   p {
     cursor: pointer;
-    width: 120px;
-    margin-left: 30px;
+    width: auto;
+    margin-left: 0px;
     :nth-of-type(1) {
       margin-left: 0px;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     p {
-      width: 100px;
-      margin-left: 25px;
+      width: 80px;
+      margin-left: 0px;
       :nth-of-type(1) {
         margin-left: 0px;
       }
     }
   }
-  @media (min-width: 768px) {
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    p {
+      width: 100px;
+      margin-left: 0px;
+      :nth-of-type(1) {
+        margin-left: 0px;
+      }
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) { 
     p {
       width: 120px;
-      margin-left: 30px;
+      margin-left: 0px;
+      :nth-of-type(1) {
+        margin-left: 0px;
+      }
+    }
+  }
+  @media (min-width: 1300px) { 
+    p {
+      width: 230px;
+      margin-left: 0px;
       :nth-of-type(1) {
         margin-left: 0px;
       }
@@ -237,5 +284,35 @@ const CompanyInfo = styled.div`
 `;
 const Image = styled.img`
   cursor: pointer;
-  width: 100px;
+  width: 148px;
 `;
+const SnsBox = styled.div`
+  > img:nth-of-type(1) {
+    padding-left : 0;
+  }
+`;
+const Sns = styled.img`
+  cursor: pointer;
+  height: 24px;
+  padding : 17px;
+  
+`;
+
+
+// const FontSize18 = styled.p`
+//   font-family: NotoSansCJKkr;
+// `;
+// const FontSize16 = styled.p`
+//   font-family: NotoSansCJKkr;
+// `;
+// const FontSize12 = styled.p`
+//   font-family: NotoSansCJKkr;
+// `;
+// const FontSize24 = styled.p`
+//   @import url('https://fonts.googleapis.com/css?family=Roboto');
+//   font-family: 'Roboto', sans-serif;
+// `;
+// const FontSize32 = styled.p`
+//   @import url('https://fonts.googleapis.com/css?family=Roboto');
+//   font-family: 'Roboto', sans-serif;
+// `;
