@@ -35,9 +35,30 @@ class NewBanner5Container extends React.Component {
     return (
     <CustomContainer>
           <Container>
+            <Header> 제조사 찾기 말고 다른 서비스를 찾으시나요? </Header>
                 <Item>
-                    <Image src={image1} />
-                    <Image src={image2} />
+                    <ImageTextBox style={{backgroundImage: 'url("/static/images/main/Banner3_1.png")'}}>
+                      <div class="TextBox">
+                        <div class="ImageHeader">
+                          예산이 예상보다 비싸다구요? <br/> 자체에서 개발한 양산개발 시스템으로
+                        </div>
+                        <div class="ImageBottom">
+                          <span class="ImageBold"> 최대 40% </span>
+                           비용을 낮추는 양산개발 서비스를 이용해 보세요
+                        </div>
+                      </div>
+                    </ImageTextBox>
+                    <ImageTextBox style={{backgroundImage: 'url("/static/images/main/Banner3_2.png")'}}>
+                      <div class="TextBox">
+                        <div class="ImageHeader">
+                          제조사 말고 제품을 찾고 계신가요? <br/> 제품의 중국 단가가 궁금하신가요?
+                        </div>
+                        <div class="ImageBottom">
+                          <span class="ImageBold"> 원하시는 제품 </span>
+                           을 발주 조건의 정보를 알아봐 드리는 국내외 발주 공장 수배 서비스를 이용해 보세요.
+                        </div>
+                      </div>
+                    </ImageTextBox>
                 </Item>
           </Container>
     </CustomContainer>
@@ -171,6 +192,7 @@ const Item = styled.div`
   align-items: center;
   justify-content: space-between;
   text-align: center;
+  display: inline-flex;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100%);
     display: flex;
@@ -189,12 +211,10 @@ const Item = styled.div`
 `
 const Image = styled(RatioImage)`
   width: 588px;
-  height: 565px;
+  height: 523px;
   justify-content: center;
   align-items: center;
-  margin-top: 109px;
   margin-bottom: 140px;
-  padding-right: 22px;
   > div {
     background-size: contain;
     background-repeat: no-repeat;
@@ -208,40 +228,79 @@ const Image = styled(RatioImage)`
   @media (min-width: 1300px) {
   }
 `
-const Header = styled.span`
-  width: 880px;
-  height: 104px;
+const Header = styled.div`
+  width: 700px;
+  height: 47px;
+  object-fit: contain;
   font-family: NotoSansCJKkr;
-  font-size: 40px;
-  font-weight: normal;
+  font-size: 32px;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.4;
-  letter-spacing: normal;
-  text-align: center;
-  color: #061953;
+  line-height: 2.44;
+  letter-spacing: -0.8px;
+  text-align: left;
+  color: #191919;
+  padding-top: 150px;
+  padding-bottom: 60px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 50px;
-    width: 290px;
-    margin-bottom: 20px;
-    font-size: 24px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 50px;
-    width: 290px;
-    margin-bottom: 40px;
-    font-size: 24px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-top: 70px;
-    margin-bottom: 73px;
   }
   @media (min-width: 1300px) {
-    margin-top: 70px;
-    margin-bottom: 73px;
   }
 `
- const Bold = styled.span`
+const ImageTextBox = styled.div`
+  width: 588px;
+  height: 523px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 140px;
+  opacity: 0.6;
+  background-image: url("/static/images/main/Banner3_1.png");
+  .TextBox{
+    width: 100%;
+    height: 100%;
+    padding-top: 90px;
+    padding-left: 40px;
+  }
+  .ImageHeader {
+      width: 400px;
+      height: 81px;
+      object-fit: contain;
+      font-family: NotoSansCJKkr;
+      font-size: 24px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.88;
+      letter-spacing: -0.6px;
+      text-align: left;
+      color: #dcdcdc;
+  }
+  .ImageBottom {
+     width: 470px;
+     height: 188px;
+     object-fit: contain;
+     font-family: NotoSansCJKkr;
+     font-size: 32px;
+     font-weight: bold;
+     font-stretch: normal;
+     font-style: normal;
+     line-height: 1.66;
+     letter-spacing: -0.8px;
+     text-align: left;
+     color: #191919;
+     .ImageBold {
+      font-size: 56px;
+      letter-spacing: -1.4px;
+      color: #ffc000;
+  }
+  }
+`
+const Bold = styled.span`
   font-Weight : bold;
   font-family: NotoSansCJKkr-Bold;
 `
@@ -290,4 +349,3 @@ const ButtonBox = styled.div`
     }
   }
 `
-
