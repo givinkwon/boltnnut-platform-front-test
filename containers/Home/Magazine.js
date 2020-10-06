@@ -419,7 +419,6 @@ const RequestItem = styled.div`
   width: 384px;
   height: 63px;
   background-color: #f3f4f8;
-  font-family: NotoSansCJKkr;
   font-size: 16px;
   font-weight: normal;
   font-stretch: normal;

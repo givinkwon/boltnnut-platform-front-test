@@ -181,7 +181,6 @@ const TextBox = styled.div`
   width: 540px;
   height: 100px;
   object-fit: contain;
-  font-family: NotoSansCJKkr;
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
