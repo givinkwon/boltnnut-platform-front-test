@@ -37,7 +37,8 @@ class NewBanner5Container extends React.Component {
           <Container>
             <Header> 제조사 찾기 말고 다른 서비스를 찾으시나요? </Header>
                 <Item>
-                    <ImageTextBox style={{backgroundImage: 'url("/static/images/main/Banner3_1.png")'}}>
+                    <ImageTextBox>
+                      <div class="BackImage"/>
                       <div class="TextBox">
                         <div class="ImageHeader">
                           예산이 예상보다 비싸다구요? <br/> 자체에서 개발한 양산개발 시스템으로
@@ -46,9 +47,14 @@ class NewBanner5Container extends React.Component {
                           <span class="ImageBold"> 최대 40% </span>
                            비용을 낮추는 양산개발 서비스를 이용해 보세요
                         </div>
+                        <div class="More">
+                           자세히 보기 >
+                        </div>
                       </div>
+                      <div class="CoverImage"/>
                     </ImageTextBox>
-                    <ImageTextBox style={{backgroundImage: 'url("/static/images/main/Banner3_2.png")'}}>
+                    <ImageTextBox>
+                      <div class="BackImage2"/>
                       <div class="TextBox">
                         <div class="ImageHeader">
                           제조사 말고 제품을 찾고 계신가요? <br/> 제품의 중국 단가가 궁금하신가요?
@@ -57,7 +63,11 @@ class NewBanner5Container extends React.Component {
                           <span class="ImageBold"> 원하시는 제품 </span>
                            을 발주 조건의 정보를 알아봐 드리는 국내외 발주 공장 수배 서비스를 이용해 보세요.
                         </div>
+                        <div class="More">
+                           자세히 보기 >
+                        </div>
                       </div>
+                      <div class="CoverImage"/>
                     </ImageTextBox>
                 </Item>
           </Container>
@@ -113,7 +123,7 @@ const Container = styled.div`
   }
 
   @media (min-width: 1300px) {
-    width: 1300px;
+    width: 1200px;
   }
 `
 
@@ -258,33 +268,57 @@ const ImageTextBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 140px;
-  opacity: 0.6;
-  background-image: url("/static/images/main/Banner3_1.png");
-  .TextBox{
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  .BackImage {
+    position: absolute;
     width: 100%;
     height: 100%;
+    background-image: url("/static/images/main/Banner3_1.png");
+    filter: blur(2px);
+    opacity: 0.78;
+    z-index: 0;
+  }
+  .BackImage2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/images/main/Banner3_2.png");
+    filter: blur(2px);
+    opacity: 0.78;
+    z-index: 0;
+  }
+  .CoverImage {
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   background-color: #000000;
+   opacity: 0.55;
+   z-index:1;
+  }
+  .TextBox{
+    position: absolute;
     padding-top: 90px;
     padding-left: 40px;
-  }
-  .ImageHeader {
-      width: 400px;
-      height: 81px;
-      object-fit: contain;
-      font-family: NotoSansCJKkr;
-      font-size: 24px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.88;
-      letter-spacing: -0.6px;
-      text-align: left;
-      color: #dcdcdc;
+    z-index: 2;
+    .ImageHeader {
+        width: 363px;
+        height: 81px;
+        object-fit: contain;
+        font-size: 24px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.88;
+        letter-spacing: -0.6px;
+        text-align: left;
+        color: #ffffff;
   }
   .ImageBottom {
-     width: 470px;
+     width: 500px;
      height: 188px;
      object-fit: contain;
-     font-family: NotoSansCJKkr;
      font-size: 32px;
      font-weight: bold;
      font-stretch: normal;
@@ -297,7 +331,23 @@ const ImageTextBox = styled.div`
       font-size: 56px;
       letter-spacing: -1.4px;
       color: #ffc000;
-  }
+      }
+   }
+}
+.More {
+  width: 120px;
+  height: 29px;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.7;
+  letter-spacing: -0.5px;
+  text-align: right;
+  color: #ffffff;
+  float: right;
+  padding-right: 10px;
+  padding-top: 70px;
   }
 `
 const Bold = styled.span`
