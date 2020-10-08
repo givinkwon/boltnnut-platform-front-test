@@ -86,10 +86,43 @@ class MagazineContainer extends React.Component {
         this.setState({current: current})
       },
     };
+    var settings2 = {
+      dots: false,
+      infinite: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      initialSlide: 0,
+      draggable: false,
+      swipe: false,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      arrows: false,
+      beforeChange: (current) => {
+        this.setState({current: current})
+      },
+    };
+    var settings3 = {
+      dots: false,
+      infinite: true,
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      initialSlide: 0,
+      draggable: false,
+      swipe: false,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      vertical: true,
+      arrows: false,
+      beforeChange: (current) => {
+        this.setState({current: current})
+      },
+    };
     return (
     <CustomContainer>
-      <FindExperct>
+      <ArrowContainer>
         <LeftArrow src={left} onClick = {this.sliderPrev}/>
+      </ArrowContainer>
+      <FindExperct>
         <MagazineBox>
           <Header>
             <Text.FontSize30 color={"#0a2165"} fontWeight={700}>매거진</Text.FontSize30>
@@ -140,20 +173,27 @@ class MagazineContainer extends React.Component {
             제조 파트너사 등록 수 <span class="Bold">3900</span>  프로젝트 수 <span class="Bold">1300</span>
           </Middle>
           <RequestItemBox>
+            <RequestList>
+            <Slider {...settings3} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
               {
-                request_data.slice(0,5).map((item, idx) => {
+                request_data.slice(0,20).map((item, idx) => {
                   return (
-                    <RequestItem>
+                    <RequestItem styled={{justifyContent: "center", alignItems: "center"}}>
                       {item.name.split(':')[0]} 의뢰가 접수되었습니다.
                     </RequestItem>
                   )
                 })
               }
-            <RequestImageContainer>
-              <RequestImage src={image1}/>
-              <RequestImage src={image2}/>
-              <RequestImage src={image3}/>
-            </RequestImageContainer>
+            </Slider>
+            </RequestList>
+            <ImageList>
+                <Slider {...settings2} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
+                      <RequestImage src={image1}/>
+                      <RequestImage src={image2}/>
+                      <RequestImage src={image3}/>
+                      <RequestImage src={image1}/>
+                </Slider>
+            </ImageList>
           </RequestItemBox>
         </RequestBox>
       </FindExperct>
@@ -171,7 +211,9 @@ const CustomContainer = styled.div`
   margin-right: auto;
   margin-left: auto;
   text-align: center;
-
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100% - 40px);
     padding: 0 20px;
@@ -189,7 +231,11 @@ const CustomContainer = styled.div`
     width: 100%;
   }
 `
-
+const ArrowContainer = styled.div`
+  width: 19px;
+  padding-right: 30px;
+  height: 100%;
+`
 const FindExperct = styled(Container)`
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 0px;
@@ -202,12 +248,13 @@ const FindExperct = styled(Container)`
     padding: 60px 0px;
   }
   @media (min-width: 1300px) {
-    width: 1300px;
+    width: 1200px;
     height: 662px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0px;
+    margin: 0;
   }
 `
 const List = styled.div`
@@ -233,7 +280,6 @@ const Middle = styled.div`
   width: 420px;
   height: 29px;
   object-fit: contain;
-  font-family: NotoSansCJKkr;
   font-size: 20px;
   font-weight: normal;
   font-stretch: normal;
@@ -350,7 +396,6 @@ const TextBox = styled.div`
       overflow: hidden;
   height: 150px;
   object-fit: contain;
-  font-family: NotoSansCJKkr;
   font-size: 15px;
   font-weight: normal;
   font-stretch: normal;
@@ -413,7 +458,21 @@ const RequestBox = styled.div`
 `
 const RequestItemBox = styled.div`
   width: 384px;
-  height: 100%;
+  height: 510px;
+`
+const RequestList = styled.div`
+  width: 384px;
+  height: 400px;
+  overflow: hidden;
+  .slick-list{
+    > div {
+      > div {
+        > div > div {
+          display: flex !important;
+        }
+      }
+    }
+  }
 `
 const RequestItem = styled.div`
   width: 384px;
@@ -428,17 +487,25 @@ const RequestItem = styled.div`
   text-align: center;
   align-items: center;
   justify-content: center;
-  display: inline-flex;
   color: #767676;
-  margin-top: 24px;
+  margin-top: 22px;
 `
 const RequestImageContainer = styled.div`
-  width: 100%;
+  width: 104px;
   height: 104px;
   text-align: center;
   align-items: center;
   justify-content: space-evenly;
-  display: inline-flex;
+`
+const ImageList = styled.div`
+  text-align: center;
+  align-items: center;
+  justify-content: space-evenly;
+  display: inline;
+  .slick-list {
+    height: 104px;
+    margin-top: 10px;
+  }
 `
 const RequestImage = styled(Image)`
   width: 104px;
