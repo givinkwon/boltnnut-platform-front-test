@@ -14,6 +14,7 @@ const image1 = "/static/images/main/Banner3_1.png";
 const image2 = "/static/images/main/Banner3_2.png";
 
 class NewBanner5Container extends React.Component {
+
   render() {
     var settings = {
       dots: false,
@@ -294,14 +295,22 @@ const ImageTextBox = styled.div`
    height: 100%;
    width: 100%;
    background-color: #000000;
-   opacity: 0.55;
+   opacity: 0.35; // mouseover = 0.35
    z-index:1;
+   : hover {
+     opacity: 0.55;
+   }
   }
   .TextBox{
     position: absolute;
     padding-top: 90px;
     padding-left: 40px;
     z-index: 2;
+    : hover {
+    + div {
+      opacity : 0.55;
+      }
+    }
     .ImageHeader {
         width: 363px;
         height: 81px;
