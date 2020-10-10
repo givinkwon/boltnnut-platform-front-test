@@ -7,6 +7,7 @@ import RatioImage from 'components/RatioImage'
 import * as Text from 'components/Text'
 import { BLACK1, DARKGRAY } from 'static/style'
 import {inject, observer} from "mobx-react";
+import DOMPurify from 'dompurify';
 
 const search_ic = 'static/icon/search.png'
 const right = "/static/images/main/main_right.png";
@@ -139,7 +140,7 @@ class MagazineContainer extends React.Component {
                                 <div class="Header">
                                   {data[idx*2].title}
                                 </div>
-                                <div class="Body" dangerouslySetInnerHTML={{__html: data[idx*2].content.substring(0,350)}}>
+                                <div class="Body" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(data[idx*2].content.substring(0,350), {ALLOWED_TAGS:['p']})}}>
                                   {/*{item.content.replace(/(<([^>]+)>)/ig,"").split('&nbsp;')[4]}*/}
                                 </div>
                                 <p> ... </p>
@@ -151,7 +152,7 @@ class MagazineContainer extends React.Component {
                                 <div class="Header">
                                   {data[idx*2+1].title}
                                 </div>
-                                <div class="Body" dangerouslySetInnerHTML={{__html: data[idx*2+1].content.substring(0,350)}}>
+                                <div class="Body" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(data[idx*2+1].content.substring(0,350), {ALLOWED_TAGS:['p']})}}>
                                 </div>
                                 <p> ... </p>
                               </TextBox>
