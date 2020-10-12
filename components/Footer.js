@@ -22,26 +22,26 @@ class FooterComponent extends React.Component {
     return (
       <Footer>
         <Container style={{marginBottom: 0}}>
-          <Image src={logo_footer} onClick={() => Router.push("/")} />
-          <CompanyInfo>
-            <div>
-              <Text.FontSize16 color="#fff" style={{marginBottom: 12}}>
-                (주)볼트앤너트
-              </Text.FontSize16>
-              <Text.FontSize16 color="#fff" style={{marginBottom: 12}}>
-                ​대표자 : 윤기열, 신지섭
-              </Text.FontSize16>
-              <Text.FontSize16 color="#fff" style={{marginBottom: 12}}>
-                사업자등록번호 390-87-01669
-              </Text.FontSize16>
-              <Text.FontSize16 color="#fff" style={{marginBottom: 12}}>
-                서울특별시 성북구 고려대로30길 4 2층
-              </Text.FontSize16>
-            </div>
-          </CompanyInfo>
-          
+          <CompanyInfoContainer>
+            <Image src={logo_footer} onClick={() => Router.push("/")} />
+            <CompanyInfo>
+              <div>
+                <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
+                  (주)볼트앤너트
+                </Text.FontSize15>
+                <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
+                  ​대표자 : 윤기열, 신지섭
+                </Text.FontSize15>
+                <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
+                  사업자등록번호 390-87-01669
+                </Text.FontSize15>
+                <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
+                  서울특별시 성북구 고려대로30길 4 2층
+                </Text.FontSize15>
+              </div>
+            </CompanyInfo>
+          </CompanyInfoContainer>
         </Container>
-
         <Container>
           <div>
             {/* <TextBox>
@@ -80,7 +80,7 @@ class FooterComponent extends React.Component {
                 fontWeight={500}
                 onClick={() => Router.push("/partner")}
               >
-                제조사찾기
+                제조사 찾기
               </Text.FontSize18>
               <Text.FontSize18
                 color={WHITE}
@@ -116,18 +116,18 @@ class FooterComponent extends React.Component {
         </Container>
         <Container>
           <div>
-            <Text.FontSize24 color="#fff" style={{marginBottom: 4}}>
+            <Text.FontSize25 color="#fff" style={{marginBottom: 4}}>
               ​CONTACT
-            </Text.FontSize24>
-            <Text.FontSize32 color="#fff" style={{marginBottom: 2}}>
-              ​T. 02.926.6637
-            </Text.FontSize32>
-            <Text.FontSize12 color="#fff" style={{marginBottom: 12}}>
+            </Text.FontSize25>
+            <Text.FontSize33 color="#fff" style={{marginBottom: 2}}>
+              ​02.926.6637
+            </Text.FontSize33>
+            <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
               평일 오전 10시 - 오후 7시 
-            </Text.FontSize12>
-            <Text.FontSize12 color="#fff" style={{marginBottom: 5}}>
+            </Text.FontSize15>
+            <Text.FontSize16 color="#fff" style={{marginBottom: 5},{fontFamily: 'Roboto, sans-serif'}}>
               ​E. boltnnut@boltnnut.com
-            </Text.FontSize12>
+            </Text.FontSize16>
             <Text.FontSize12 color="#fff" style={{marginBottom: 5}}>
               <SnsBox>
                 <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
@@ -151,6 +151,9 @@ const Footer = styled.div`
   justify-content: space-around;
   padding-top : 3.5% ;
   padding-bottom : 3.5% ;
+  /* text-align: center;
+  margin: auto;
+  width: 1200; */
 
   > div:nth-of-type(1) {
     margin-left:9%;
@@ -181,8 +184,6 @@ const Container = styled.div`
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-  
-
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100% - 40px);
@@ -205,7 +206,9 @@ const Container = styled.div`
 const TextBox = styled.div`
   display: flex;
   margin-bottom: 20px;
-  
+  margin-left : 170px;
+  width : 1100;
+ 
   :last-of-type {
     margin-bottom: 0;
   }
@@ -214,13 +217,14 @@ const TextBox = styled.div`
     cursor: pointer;
     width: auto;
     margin-left: 0px;
+    text-align: left;
     :nth-of-type(1) {
       margin-left: 0px;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     p {
-      width: 80px;
+      width: 12px;
       margin-left: 0px;
       :nth-of-type(1) {
         margin-left: 0px;
@@ -229,7 +233,7 @@ const TextBox = styled.div`
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     p {
-      width: 100px;
+      width: 180px;
       margin-left: 0px;
       :nth-of-type(1) {
         margin-left: 0px;
@@ -238,7 +242,7 @@ const TextBox = styled.div`
   }
   @media (min-width: 992px) and (max-width: 1299.98px) { 
     p {
-      width: 120px;
+      width: 232px;
       margin-left: 0px;
       :nth-of-type(1) {
         margin-left: 0px;
@@ -247,7 +251,7 @@ const TextBox = styled.div`
   }
   @media (min-width: 1300px) { 
     p {
-      width: 230px;
+      width: 300px;
       margin-left: 0px;
       :nth-of-type(1) {
         margin-left: 0px;
@@ -255,6 +259,10 @@ const TextBox = styled.div`
     }
   }
 `;
+const CompanyInfoContainer = styled.div`
+  float : right;
+`;
+
 const CompanyInfo = styled.div`
   display: flex;
   align-items: flex-end;
@@ -267,6 +275,7 @@ const CompanyInfo = styled.div`
     
     > p {
       margin-bottom: 5px;
+      white-space: nowrap;
     }
   }
   
@@ -295,24 +304,7 @@ const Sns = styled.img`
   cursor: pointer;
   height: 24px;
   padding : 17px;
-  
 `;
-
-
-// const FontSize18 = styled.p`
-//   font-family: NotoSansCJKkr;
-// `;
 // const FontSize16 = styled.p`
-//   font-family: NotoSansCJKkr;
-// `;
-// const FontSize12 = styled.p`
-//   font-family: NotoSansCJKkr;
-// `;
-// const FontSize24 = styled.p`
-//   @import url('https://fonts.googleapis.com/css?family=Roboto');
-//   font-family: 'Roboto', sans-serif;
-// `;
-// const FontSize32 = styled.p`
-//   @import url('https://fonts.googleapis.com/css?family=Roboto');
 //   font-family: 'Roboto', sans-serif;
 // `;
