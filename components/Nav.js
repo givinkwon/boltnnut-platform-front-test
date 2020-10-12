@@ -454,6 +454,10 @@ const NavLink = styled.p`
   color: #000000;
   display: flex;
   align-items: center;
+  :hover {
+      color: #0a2165;//${WHITE};
+  }
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
     font-weight: 500;

@@ -225,6 +225,7 @@ export const FontSize16 = styled.p`
   font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
   color: ${props => props.color ? props.color : '#000000'};
   text-align: ${props => props.center ? 'center' : 'left'};
+  /* font-stretch : ${props => props.fontStretch ? props.fontStretch : normal}; */
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 12px;
   }
@@ -243,6 +244,7 @@ export const FontSize15 = styled.p`
   font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
   color: ${props => props.color ? props.color : '#000000'};
   text-align: ${props => props.center ? 'center' : 'left'};
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 11px;
   }

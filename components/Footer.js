@@ -267,6 +267,11 @@ const CompanyInfo = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  line-height : 1.47;
+  letter-spacing : -0.38px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
 
   > div {
     display: flex;
