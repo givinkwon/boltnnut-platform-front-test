@@ -107,7 +107,7 @@ class Nav extends React.Component {
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     Auth.checkLogin();
   }
-  render() {
+  render () {
     const { Auth, Partner } = this.props;
     const { url, is_open, is_profile, token } = this.state;
     console.log(url)
@@ -125,8 +125,8 @@ class Nav extends React.Component {
                 />
               </Close>
 
-              {Auth.logged_in_user ? (
-                Auth.logged_in_user.type === 0 ? (
+              {this.props.Auth.logged_in_user ? (
+                this.props.Auth.logged_in_user.type === 0 ? (
                   /* client로 로그인 */
 
                   <Fragment>
@@ -160,7 +160,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      <p class="line"> 제품 인사이트 </p>
+                      <p class="line"> 매거진 </p>
                     </NavLink>
                     {/*<NavLink
                       onClick={() => Router.push("/info?tab=1")}
