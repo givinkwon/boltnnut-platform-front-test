@@ -126,7 +126,23 @@ export const FontSize28 = styled.p`
     font-size: 28px;
   }
 `
-
+export const FontSize26 = styled.p`
+  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
+  color: ${props => props.color ? props.color : '#000000'};
+  text-align: ${props => props.center ? 'center' : 'left'};
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 18px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 20px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    font-size: 24px;
+  }
+  @media (min-width: 1300px) {
+    font-size: 26px;
+  }
+`
 export const FontSize24 = styled.p`
   font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
   color: ${props => props.color ? props.color : '#000000'};

@@ -54,9 +54,9 @@ class MenuConatiner extends React.Component {
           width < 768 ? (
               <MobileMenuBox>
                 <MobileMenuHeader>
-                  <MobileMenuTab active={tab === 1} onClick={() => this.setTab(1)}>
+                  {/*<MobileMenuTab active={tab === 1} onClick={() => this.setTab(1)}>
                     <Text.FontSize18 color={tab === 1 ? WHITE : DARKGRAY} fontWeight={700}>제품분야</Text.FontSize18>
-                  </MobileMenuTab>
+                  </MobileMenuTab>*/}
                   <MobileMenuTab active={tab === 2} onClick={() => this.setTab(2)}>
                     <Text.FontSize18 color={tab === 2 ? WHITE : DARKGRAY} fontWeight={700}>카테고리</Text.FontSize18>
                   </MobileMenuTab>
@@ -83,6 +83,7 @@ class MenuConatiner extends React.Component {
                         {
                           Partner.develop_list.length > 0 && Partner.develop_list.map((item, idx) => {
                             console.log(Partner.developBig);
+                            console.log(develop_list)
                             return (
                               <MenuItem
                                 type='develop'
@@ -112,7 +113,7 @@ class MenuConatiner extends React.Component {
             )
             : (
               <MenuBox>
-                <Menu>
+                {/*<Menu>
                   <Header>
                     <Text.FontSize18 color={WHITE} fontWeight={700}>제품분야</Text.FontSize18>
                   </Header>
@@ -121,7 +122,7 @@ class MenuConatiner extends React.Component {
                       return <MenuItem type='category' key={idx} data={item}/>
                     })
                   }
-                </Menu>
+                </Menu>*/}
                 <Menu>
                   <Header>
                     <Text.FontSize18 color={WHITE} fontWeight={700}>카테고리</Text.FontSize18>
@@ -129,6 +130,7 @@ class MenuConatiner extends React.Component {
                   {
                     Partner.develop_list.length > 0 && Partner.develop_list.map((item, idx) => {
                       console.log(Partner.developBig);
+                      console.log(item)
                       return (
                         <MenuItem
                           type='develop'
