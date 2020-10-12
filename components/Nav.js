@@ -110,7 +110,6 @@ class Nav extends React.Component {
   render () {
     const { Auth, Partner } = this.props;
     const { url, is_open, is_profile, token } = this.state;
-    console.log(url)
 
     return (
       <NavBox>
@@ -135,13 +134,13 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/request?big=4&mid=")}
                       active={url.indexOf("request") > -1}
                     >
-                      <p class="line"> 의뢰하기 </p>
+                      의뢰하기
                     </NavLink>
                     <NavLink
                       onClick={() => Router.push("/answer")}
                       active={url.indexOf("answer") > -1}
                     >
-                      <p class="line"> 보낸 의뢰 </p>
+                      보낸 의뢰
                     </NavLink>
                     <NavLink
                       onClick={
@@ -154,7 +153,7 @@ class Nav extends React.Component {
                       }
                       active={url.indexOf("partner") > -1}
                     >
-                      <p class="line"> 제조사 찾기 </p>
+                      제조사 찾기
                     </NavLink>
                     <NavLink
                       onClick={() => Router.push("/magazine")}
@@ -196,13 +195,13 @@ class Nav extends React.Component {
                       }
                       active={url.indexOf("partner") > -1}
                     >
-                      <p class="line"> 제조사 찾기 </p>
+                      제조사 찾기
                     </NavLink>
                     <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      <p class="line"> 매거진 </p>
+                      제품 인사이트
                     </NavLink>
                     {/*<NavLink
                       onClick={() => Router.push("/info?tab=2")}
@@ -215,17 +214,8 @@ class Nav extends React.Component {
               ) : (
                 /* 로그인 안되어있는 경우 */
                 <Fragment>
-                  <NavLink
-                    onClick={
-                      async () => {
-                        await Router.push("/");
-                        if(Router.pathname === '/') {
-                          Router.reload();
-                        }
-                      }
-                    }
-                    active = {url === '/'}>
-                    <p class="line">서비스 소개</p>
+                  <NavLink>
+                    서비스 소개
                   </NavLink>
                   <NavLink
                     onClick={
@@ -238,14 +228,14 @@ class Nav extends React.Component {
                     }
                     active={url.indexOf("partner") > -1}
                   >
-                    <p class="line"> 제조사 찾기 </p>
+                    제조사 찾기
                   </NavLink>
                   <NavLink
                     first
                     onClick={() => Router.push("/request?big=4&mid=")}
                     active={url.indexOf("request") > -1}
                   >
-                    <p class="line"> 의뢰하기 </p>
+                    의뢰하기
                   </NavLink>
                   {/*<NavLink
                     onClick={() => Router.push("/answer")}
@@ -257,7 +247,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                    <p class="line"> 매거진 </p>
+                      매거진
                   </NavLink>
                   {/*<NavLink
                     onClick={() => Router.push("/info?tab=1")}
@@ -279,7 +269,7 @@ class Nav extends React.Component {
                       {Auth.logged_in_user.type == 1 ? (
                         <div onClick={async () => await Router.push("/profile")}>
                           <Text.FontSize16 fontWeight={500}>
-                            <p class="line"> 프로필 </p>
+                            프로필
                           </Text.FontSize16>
                         </div>
                       ) : null}
@@ -298,12 +288,12 @@ class Nav extends React.Component {
                       </div>*/}
                       <div onClick={() => Router.push('/account?tab=1')}>
                         <Text.FontSize16 fontWeight={500}>
-                          <p class="line"> 계정설정 </p>
+                          계정설정
                         </Text.FontSize16>
                       </div>
                       <div onClick={this.logout}>
                         <Text.FontSize16 fontWeight={500}>
-                          <p class ="line">로그아웃</p>
+                          로그아웃
                         </Text.FontSize16>
                       </div>
                     </ProfileMenu>
@@ -316,7 +306,7 @@ class Nav extends React.Component {
                   }}
                   active={url.indexOf("login") > -1}
                 >
-                  <p class="line"> 로그인 </p>
+                  로그인
                 </NavLink>
               )}
             </Menu>
@@ -458,6 +448,12 @@ const Menu = styled.div`
   }
 `;
 const NavLink = styled.p`
+  margin: 0px;
+  height: 70px;
+  cursor: pointer;
+  color: #000000;
+  display: flex;
+  align-items: center;zzz
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
     font-weight: 500;
@@ -477,12 +473,12 @@ const NavLink = styled.p`
   @media (min-width: 1300px) and (max-width: 1599.98px) {
     padding-left: 25px;
     padding-right: 25px;
-    font-size: 20px;
+    font-size: 14px;
   }
   @media (min-width: 1600px) {
     padding-left: 30px;
     padding-right: 30px;
-    font-size: 20px;
+    font-size: 16px;
   }
   ${(props) =>
     props.first &&
@@ -490,54 +486,11 @@ const NavLink = styled.p`
       margin-left: 0px !important;
     `}
   ${(props) =>
-    props.active ?
+    props.active &&
     css`
-        width: 103px;
-        height: 33px;
-        object-fit: contain;
-        font-size: 22px;
-        font-weight: bold;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1.5;
-        letter-spacing: -0.55px;
-        text-align: center;
-        color: #0a2165;
-        .line {
-        width: 104px;
-        position: relative;
-        }
-        .line:after {
-        width: 104px;
-        margin-top : 19px;
-        position: absolute;
-        content: "";
-        border-bottom: 6px solid #0a2165;
-        display: block;
-        }
-    `
-    :
-    css`
-    width: 103px;
-    height: 29px;
-    font-size: 20px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.45;
-    letter-spacing: -0.5px;
-    text-align: center;
-    color: #191919;
-    cursor: pointer;
-    .line {
-        width: 104px;
-        position: relative;
-        cursor: pointer;
-        }
-    `
-    }
+      font-weight: 700;
+      background-color: rgba(255, 255, 255, 0.1);
+    `}
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
   }
