@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from "react";
 import styled, {css} from 'styled-components'
 import Router from 'next/router'
 import Slider from "react-slick";
@@ -12,7 +12,7 @@ import {inject, observer} from "mobx-react";
 import * as FormatUtils from 'utils/format';
 
 
-const search_ic = 'static/icon/search.png'
+const left = 'static/icon/left-arrow.png'
 const right = 'static/icon/right-arrow.png'
 
 @inject('Magazine')
@@ -89,62 +89,99 @@ class ContentConatiner extends React.Component {
     const { prev, next, width, height } = this.state
 
     if(width > 768){
-    var settings = {
-      dots: false,
-      infinite: false,
-      slidesToShow: 2,
-      slidesToScroll: 1,
-      initialSlide: 0,
-      rows: 3,
-      beforeChange: (current) => {
-        this.setState({current: current})
-      },
-    };
+      var settings = {
+        dots: true,
+        infinite: false,
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 0,
+        rows: 3,
+        beforeChange: (current) => {
+          this.setState({current: current})
+        },
+        appendDots: dots => (   
+          <div
+            style={{
+              backgroundColor: "#0000",
+              marginTop:100,
+              bottom:-200,
+            }}
+          >
+            <Icon prev style={{marginRight : '15px', opacity: prev ? 1 : 0.4}} src={left} onClick={this.sliderPrev}/>
+            <ul style={{ margin: "0px", display:"inline-flex" }}> {dots} </ul>
+            <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={right} onClick={this.sliderNext}/>
+          </div>
+        ),
+        customPaging: i => (
+          <Text.FontSize25 style={{}}>
+            {i + 1}
+          </Text.FontSize25>
+        )
+      };
     }
     if(width < 768){
-    var settings = {
-      dots: false,
-      infinite: false,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      initialSlide: 0,
-      rows: 3,
-      beforeChange: (current) => {
-        this.setState({current: current})
-      },
-    };
+      var settings = {
+        dots: true,
+        infinite: false,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        initialSlide: 0,
+        rows: 3,
+        beforeChange: (current) => {
+          this.setState({current: current})
+        },
+        appendDots: dots => (   
+          <div
+            style={{
+              backgroundColor: "#0000",
+              marginTop:100,
+              bottom:-200,
+            }}
+          >
+            <Icon prev style={{marginRight : '15px', opacity: prev ? 1 : 0.4}} src={left} onClick={this.sliderPrev}/>
+            <ul style={{ margin: "0px", display:"inline-flex" }}> {dots} </ul>
+            <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={right} onClick={this.sliderNext}/>
+          </div>
+        ),
+        customPaging: i => (
+          <Text.FontSize25 style={{}}> 
+            {i + 1}
+          </Text.FontSize25>
+        )
+      };
     }
     return (
         <FindExperct>
-        <Header>
-          <Text.FontSize40 color={BLACK1} fontWeight={700}>제품 인사이트</Text.FontSize40>
-          <Icon prev style={{marginLeft: 'auto', opacity: prev ? 1 : 0.4}} src={right} onClick={this.sliderPrev}/>
-          <Icon style={{opacity: next ? 1 : 0.4}} src={right} onClick={this.sliderNext}/>
-        </Header>
-        <List>
-          <Slider {...settings} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
-          {
-            magazineList.map((item, idx) => {
-              return (
-                <ItemBox key={idx} onClick={() => this.pushToDetail(item.id)}>
-                  <Item>
-                    <Image ratio='45%' src={item.image} onClick={() => this.setState({tab: 1})}/>
-                    <Text.FontSize20 color={DARKGRAY} fontWeight={500}>{item.title}</Text.FontSize20>
-                  </Item>
-                </ItemBox>
-              )
-            })
-          }
-          </Slider>
-        </List>
-      </FindExperct>
+          {/* <Header>
+            <Text.FontSize40 color={BLACK1} fontWeight={700}>제품 인사이트</Text.FontSize40>
+            <Icon prev style={{marginLeft: 'auto', opacity: prev ? 1 : 0.4}} src={right} onClick={this.sliderPrev}/>
+            <Icon style={{opacity: next ? 1 : 0.4}} src={right} onClick={this.sliderNext}/>
+          </Header> */}
+          <List style={{marginBottom:330}}>
+            <Slider {...settings} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
+            {
+              magazineList.map((item, idx) => {
+                return (
+                  <ItemBox key={idx} onClick={() => this.pushToDetail(item.id)}>
+                    <Item>
+                      <Image ratio='45%' src={item.image} onClick={() => this.setState({tab: 1})}/>
+                      <Text.FontSize24 color="#191919" fontWeight={500}>{item.title}</Text.FontSize24>
+                    </Item>
+                  </ItemBox>
+                )
+              })
+            }
+            </Slider>
+          </List>
+        </FindExperct>
   )}
 }
 
 export default ContentConatiner;
 
 const FindExperct = styled(Container)`
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  
+  /* @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 0px;
     margin-bottom: 20px;
   }
@@ -156,10 +193,44 @@ const FindExperct = styled(Container)`
   }
   @media (min-width: 1300px) {
     padding: 80px 0px;
-  }
+  } */
 `
 const List = styled.div`
-  @media (min-width: 0px) and (max-width: 767.98px) {
+
+  ul{
+    li {
+      margin: 0 15px;
+      cursor: pointer;
+    }
+    li p {
+      color: #0933b3;
+      opacity: 0.1;
+      cursor: pointer;
+
+    }
+    li.slick-active p {
+      color: #0933b3;
+      opacity: 1;
+      cursor: pointer;
+    }
+    p{
+      width: 14px;
+      height: 30px;
+      font-weight: 700;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.2;
+      letter-spacing: 0.63px;
+      text-align: left;
+      color: #999999;
+      :hover {
+        color: #0933b3;
+      }
+
+    }
+  }
+
+  /* @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 30px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -170,7 +241,7 @@ const List = styled.div`
   }
   @media (min-width: 1300px) {
     margin-top: 60px;
-  }
+  } */
 `
 
 const Header = styled.div`
@@ -179,15 +250,13 @@ const Header = styled.div`
 `
 const Icon = styled.img`
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 10x;
+  height: 17px;
+  
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 30px;
     height: 30px;
   }
-  ${props => props.prev && css`
-    transform: rotate(180deg);
-  `}
 `
 
 const ItemBox = styled.a`
@@ -203,6 +272,11 @@ const Item = styled.div`
   width: calc(100% - 15px);
 
   > p {
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.42;
+    letter-spacing: -0.6px;
     text-align: center;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -226,14 +300,15 @@ const Image = styled(RatioImage)`
   cursor: pointer;
   border-radius: 25px;
 
-  width: calc(100% - 15px);
+  width: calc(100%);
+  height: 310px ;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    border-radius: 15px;
+    border-radius: 10px;
     max-width: 400px;
 
     :hover {
-      border-radius: 15px;
+      border-radius: 10px;
       > div {
         border-radius: 15px;
         transform: scale(1.2);
@@ -245,9 +320,9 @@ const Image = styled(RatioImage)`
   }
 
   :hover {
-    border-radius: 25px;
+    border-radius: 10px;
     > div {
-      border-radius: 25px;
+      border-radius: 10px;
       transform: scale(1.2);
     }
   }
