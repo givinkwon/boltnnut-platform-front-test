@@ -38,10 +38,13 @@ class ContentConatiner extends React.Component {
     const { Partner, Home } = this.props
     return (
       <CustomContainer>
+        <Header>
+          '실리콘 사출'에 대한 검색 결과입니다.
+        </Header>
         <List>
           <Card />
           {
-            Partner.partner_list.length > 0 && Partner.partner_list.map((item, idx) => {
+            Partner.partner_list.length > 0 && Partner.partner_list.slice(0,5).map((item, idx) => {
               return (
                 <Card
                   key={item.id}
@@ -53,6 +56,7 @@ class ContentConatiner extends React.Component {
             })
           }
         </List>
+        <p> asdasd </p>
       </CustomContainer>
     )
   }
@@ -61,7 +65,6 @@ class ContentConatiner extends React.Component {
 export default ContentConatiner
 
 const CustomContainer = styled(Container)`
-  padding: 15px 0;
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 0 !important;
     width: 100% !important;
@@ -110,4 +113,18 @@ const Image = styled(RatioImage)`
       transform: scale(1.2);
     }
   }
+`
+const Header = styled.div`
+  height: 36px;
+  object-fit: contain;
+  font-size: 24px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.42;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #191919;
+  padding-top: 30px;
+  padding-bottom: 15px;
 `
