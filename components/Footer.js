@@ -22,7 +22,7 @@ class FooterComponent extends React.Component {
     return (
       <Footer>
         <Container style={{marginBottom: 0}}>
-          <CompanyInfoContainer>
+          <CompanyInfoContainer style={{paddingRight: 0}}>
             <Image src={logo_footer} onClick={() => Router.push("/")} />
             <CompanyInfo>
               <div>
@@ -148,18 +148,16 @@ const Footer = styled.div`
   background-color: ${PRIMARY};
   padding: 40px 0px;
   display : inline-flex;
-  justify-content: space-around;
+  justify-content: center;
   padding-top : 3.5% ;
   padding-bottom : 3.5% ;
-  /* text-align: center;
-  margin: auto;
-  width: 1200; */
 
   > div:nth-of-type(1) {
-    margin-left:9%;
+    position: relative; 
+    left:80px;  
   }
-  > div:nth-of-type(3) {
-    margin-right: 9%;
+  > div:nth-of-type(2) {
+    position: relative; 
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -180,12 +178,12 @@ const Footer = styled.div`
 `;
 // 여기
 const Container = styled.div`
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+  /* padding-right: 15px;
+  padding-left: 15px; */
+  /* margin-right: auto;
+  margin-left: auto; */
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  /* @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100% - 40px);
     padding: 0 20px;
   }
@@ -200,14 +198,14 @@ const Container = styled.div`
 
   @media (min-width: 1300px) { 
     width: 1200px;
-  }
+  } */
 `
 
 const TextBox = styled.div`
   display: flex;
   margin-bottom: 20px;
-  margin-left : 170px;
-  width : 1100;
+  /* margin-left : 170px; */
+  /* width : 1100; */
  
   :last-of-type {
     margin-bottom: 0;
@@ -217,7 +215,7 @@ const TextBox = styled.div`
     cursor: pointer;
     width: auto;
     margin-left: 0px;
-    text-align: left;
+    text-align: center;
     :nth-of-type(1) {
       margin-left: 0px;
     }
