@@ -12,11 +12,23 @@ import ProfileInfoContainer from "ProfileInfo"
 
 import {DARKGRAY, GRAY, PRIMARY} from "static/style"
 const image1 = 'static/images/mask.png';
+const dropdown = 'static/images/main/dropdown.png';
 
+const jot1 = 'static/images/partner/jot1.png';
+const jot2 = 'static/images/partner/jot2.png';
+const jot3 = 'static/images/partner/jot3.png';
+const jot4 = 'static/images/partner/jot4.png';
+const jot5 = 'static/images/partner/jot5.png';
+const sival = 'static/images/partner/arrow_up.png';
 
 @inject('Partner')
 @observer
 class CardContainer extends Component {
+  state = {
+    showDrop: true,
+    showDetail: 'none'
+  }
+
   static defaultProps = {
     observer: false,
     handleIntersection: function () {
@@ -29,17 +41,32 @@ class CardContainer extends Component {
     this.props.Partner.detail = item
     Router.push(`/partner/${item.id}`)
   }
+
+  detailDown = () => {
+    const { showDrop, showDetail } = this.state;
+    this.setState({showDrop: 'none', showDetail: true})
+  }
+
+  detailUp = () => {
+    const { showDrop, showDetail } = this.state;
+    this.setState({showDrop: true, showDetail: 'none'})
+  }
+
   render() {
     const { item, observer, handleIntersection } = this.props;
+    const { showDrop, showDetail } = this.state;
     console.log(item)
+    console.log(showDetail)
 
     const options = {
       onChange: handleIntersection,
     };
 
     if(item){
+      console.log(item)
       return (
-        <Card onClick={this.toDetail}>
+      <Card>
+        <SummaryContainer>
           <Image src={item.logo}/>
           <TextBox>
             <div class="Header">
@@ -63,7 +90,53 @@ class CardContainer extends Component {
               }
             </div>
           </TextBox>
-        </Card>
+        </SummaryContainer>
+        <div class="dropdown" style={{display: showDrop}}>
+            <img src={dropdown} onClick = {this.detailDown}/>
+        </div>
+        <DetailContainer style={{display: showDetail}}>
+          <Detail1>
+            <div class="detailInner">
+              <div class="fuck">
+                <img src={jot5} />
+                <div class="text"> 전문분야 <br/> {item.id} </div>
+              </div>
+            </div>
+            <div class="detailInner">
+              <div class="fuck">
+                <img src={jot3} />
+                <div class="text"> 경력 <br/> {item.id} </div>
+              </div>
+            </div>
+            <div class="detailInner">
+              <div class="fuck">
+                <img src={jot1} />
+                <div class="text"> 보유기기 <br/> {item.id} </div>
+              </div>
+            </div>
+            <div class="detailInner">
+              <div class="fuck">
+                <img src={jot4} />
+                <div class="text"> 주재료 <br/> {item.id} </div>
+              </div>
+            </div>
+            <div class="detailInner">
+              <div class="fuck">
+                <img src={jot2} />
+                <div class="text"> 진행한 제품군 <br/> {item.id} </div>
+              </div>
+            </div>
+          </Detail1>
+          <PortfolioContainer>
+              <img src={jot1} />
+              <img src={jot2} />
+              <img src={jot3} />
+          </PortfolioContainer>
+          <div class="dropup">
+            <img src={sival} onClick = {this.detailUp}/>
+          </div>
+        </DetailContainer>
+      </Card>
       )
     }
     return null
@@ -72,24 +145,112 @@ class CardContainer extends Component {
 
 export default withRouter(CardContainer);
 
-
+const SummaryContainer = styled.div`
+  display: inline-flex;
+  width: 100%;
+  padding-top: 33px;
+`
+const DetailContainer = styled.div`
+.dropup {
+    width: 100%;
+    height: 12px;
+    padding-top: 19px;
+    padding-bottom: 19px;
+    > img {
+      cursor: pointer;
+      float: right;
+      padding-right: 33px;
+    }
+  }
+`
+const Detail1 = styled.div`
+  width: 894px;
+  height: 175px;
+  object-fit: contain;
+  background-color: #f1f3f4;
+  display: table;
+  .detailInner {
+    display: table-cell;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    .fuck {
+      flex-direction: column;
+      display: inline-block;
+      > img {
+        padding-top: 27px;
+      }
+      .text {
+        width: 110px;
+        height: 27px;
+        object-fit: contain;
+        font-size: 18px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.5;
+        letter-spacing: -0.45px;
+        text-align: center;
+        color: var(--black);
+      }
+    }
+  }
+`
+const PortfolioContainer = styled.div`
+  width: 894px;
+  height: 283px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  > img {
+    :nth-of-type(1) {
+        width: 256px;
+        height: 238px;
+        border-radius: 3px;
+        background-color: #dcdcdc;
+      }
+    :nth-of-type(2) {
+        width: 295px;
+        height: 238px;
+        border-radius: 3px;
+        background-color: #dcdcdc;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    :nth-of-type(3) {
+        width: 256px;
+        height: 238px;
+        border-radius: 3px;
+        background-color: #dcdcdc;
+      }
+  }
+`
 const Card = styled.div`
   width: 894px;
-  height: 252px;
+  height: 100%;
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   border-radius : 10px;
-  cursor: pointer;
   margin-bottom: 15px;
-  width: 100%;
   align-items: center;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   :hover {
     box-shadow: 0 0 6px 0 ${PRIMARY}55;
   }
+  .dropdown {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    > img {
+      cursor: pointer;
+      float: right;
+      padding-right: 33px;
+    }
+  }
 `
 const TextBox = styled.div`
-  width: 678px;
   height: 186px;
   margin-left: 30px;
   font-family: 'Noto Sans KR', sans-serif;

@@ -11,6 +11,8 @@ import Card from './Card'
 
 import { BLACK1, DARKGRAY } from 'static/style'
 import RequestListCard from "../../components/RequestCard";
+const pass1 = 'static/images/pass1.png'
+const pass2 = 'static/images/pass2.png'
 
 @inject('Partner', 'Home')
 @observer
@@ -56,7 +58,16 @@ class ContentConatiner extends React.Component {
             })
           }
         </List>
-        <p> asdasd </p>
+        <PageBar>
+            <img src={pass1}/>
+            <PageCount active={true}> 1 </PageCount>
+            <PageCount> 2 </PageCount>
+            <PageCount> 3 </PageCount>
+            <PageCount> 4 </PageCount>
+            <PageCount> 5 </PageCount>
+            <PageCount> ... </PageCount>
+            <img src={pass2}/>
+        </PageBar>
       </CustomContainer>
     )
   }
@@ -127,4 +138,33 @@ const Header = styled.div`
   color: #191919;
   padding-top: 30px;
   padding-bottom: 15px;
+`
+const PageBar = styled.div`
+  width: 351px;
+  margin-top: 109px;
+  margin-bottom: 157px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+`
+const PageCount = styled.span`
+    width: 14px;
+    height: 30px;
+    font-size: 25px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: 0.63px;
+    text-align: left;
+    color : #999999;
+    ${(props) =>
+      props.active &&
+      css`
+      font-weight: 700;
+      color: #0933b3;
+      `
+     }
 `

@@ -7,7 +7,7 @@ import * as Text from 'components/Text'
 import {WHITE, PRIMARY, DARKGRAY} from 'static/style'
 
 import MenuItem from './MenuItem'
-const image1 = 'static/images/question.png'
+const image1 = 'static/images/Info.png'
 
 @inject('Partner')
 @observer
