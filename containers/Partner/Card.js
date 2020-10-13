@@ -151,7 +151,8 @@ const SummaryContainer = styled.div`
   padding-top: 33px;
 `
 const DetailContainer = styled.div`
-.dropup {
+  transition: display: 2s;
+  .dropup {
     width: 100%;
     height: 12px;
     padding-top: 19px;
