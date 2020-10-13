@@ -11,9 +11,9 @@ class MagazineConatiner extends React.Component {
     return (
       <>
       <BannerConatiner/>
-      <Section>
-        <Container>
-          <ContentConatiner/>
+      <Section style={{padding: 0}}>
+        <Container style={{padding: 0}}>
+          <ContentConatiner style={{padding: 0}}/>
         </Container>
       </Section>
       </>

@@ -11,7 +11,8 @@ class BannerConatiner extends React.Component {
     return (
       <Banner>
         <Container>
-          <Text.FontSize48 color={WHITE} fontWeight={700}>볼트앤너트 제품 인사이트</Text.FontSize48>
+          <Text.FontSize62 color={'#0a2165'}>매거진</Text.FontSize62>
+          <Text.FontSize32 color={'#191919'}>볼트앤너트의 다양한 이야기를 만나보세요.</Text.FontSize32>
         </Container>
       </Banner>
     )
@@ -21,31 +22,48 @@ class BannerConatiner extends React.Component {
 export default BannerConatiner
 
 const Banner = styled.div`
-  background-image: url('/static/images/banner.jpg');
+  /* background-image: url('/static/images/banner.jpg');
   background-position: center;
-  background-size: cover;
+  background-size: cover; */
   ${Container} {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    > p {
+      text-align : center; 
+    }
+    > p:nth-of-type(1){
+      margin-top: 8px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.29;
+      letter-spacing: -1.55px;
+    }
     > p:nth-of-type(2){
       margin-top: 8px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.06;
+      letter-spacing: -0.8px;
     }
     > p:nth-of-type(3){
       line-height: 1.3;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 180px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 200px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    height: 230px;
-  }
-  @media (min-width: 1300px) { 
     height: 250px;
   }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    height: 300px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) { 
+    height: 350px;
+  }
+  @media (min-width: 1300px) { 
+    height: 426px;
+  }
 `
+// 값들 임의로 정함
