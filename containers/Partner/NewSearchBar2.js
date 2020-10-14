@@ -14,11 +14,10 @@ import { WHITE, PRIMARY } from "static/style";
 import SelectComponent from 'components/Select';
 import InputComponent from 'components/Input2';
 //Slider
-import Slider, { createSliderWithTooltip } from 'rc-slider';
-import 'rc-slider/assets/index.css';
-import Tooltip from 'rc-tooltip';
-const Range = createSliderWithTooltip(Slider.Range);
-const { Handle } = Slider;
+import { withStyles,makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
 
 //image
 const phone = 'static/images/phone.png'
@@ -56,6 +55,7 @@ const customStyles = {
   }
 }
 
+
 @inject("Auth", "Partner")
 @observer
 class SearchBarContainer2 extends React.Component {
@@ -73,7 +73,11 @@ class SearchBarContainer2 extends React.Component {
   state = {
     search: "",
     modal_open: false,
-    value: 0
+    value: 0,
+    price_min: 0,
+    price_max: 0,
+    due_min: 0,
+    due_max: 0
   };
   searchText = (e) => {
     this.props.Partner.search_text = e.target.value;
@@ -99,13 +103,34 @@ class SearchBarContainer2 extends React.Component {
         this.props.Partner.search();
     }
   };
+  handleChange = (event, newValue) => {
+    if (event.target.value) {
+      this.setState({...this.state, price_max: event.target.value})
+    } else {
+    this.setState({...this.state, price_max: newValue})
+    }
+  };
+  handleChange2 = (event, newValue) => {
+    if (event.target.value) {
+      this.setState({...this.state, due_max: event.target.value})
+    } else {
+    this.setState({...this.state, due_max: newValue})
+    }
+  };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
   }
+  CustomSliderThumbComponent (props) {
+  return (
+    <div {...props}>
+      <ThumbCircle>
+      </ThumbCircle>
+    </div>
+    );
+  }
   render() {
-    const { search, modal_open } = this.state;
+    const { search, modal_open, price_max, price_min, due_max, due_min } = this.state;
     const { Partner, Auth } = this.props;
-
     return (
       <CustomContainer>
         <SelectRow>
@@ -123,13 +148,72 @@ class SearchBarContainer2 extends React.Component {
           <Title>
             희망예산
           </Title>
-          {/* TODO */}
+          <BarWrapper>
+            <CustomSlider
+              ThumbComponent={this.CustomSliderThumbComponent}
+              aria-labelledby="range-slider"
+              onChange={this.handleChange}
+              value = {price_max}
+              step={100}
+              min={0}
+              max={10000}
+              valueLabelDisplay="auto"
+            />
+          </BarWrapper>
+          <PriceBox>
+            <PriceInput>
+              <input
+                value = {price_max}
+                onChange = {this.handleChange}
+                type = "value"/>
+              <span> 만원 </span>
+            </PriceInput>
+            <span> ~ </span>
+            <PriceInput>
+              <input
+                value = {price_max}
+                onChange = {this.handleChange}
+                type = "value"
+                />
+              <span> 만원 </span>
+            </PriceInput>
+          </PriceBox>
         </SelectRow>
         <SelectRow>
           <Title>
             기간
           </Title>
-          {/* TODO */}
+          <BarWrapper>
+            <CustomSlider
+              ThumbComponent={this.CustomSliderThumbComponent}
+              aria-labelledby="range-slider"
+              onChange={this.handleChange2}
+              value = {due_max}
+              step={1}
+              min={0}
+              max={36}
+              valueLabelDisplay="auto"
+            />
+          </BarWrapper>
+          <PriceBox>
+            <PriceInput>
+              <input
+                value = {due_max}
+                onChange = {this.handleChange2}
+                type = "value"
+                />
+              <span> 개월 </span>
+            </PriceInput>
+            <span> ~ </span>
+            <PriceInput>
+              <input
+                value = {due_max}
+                onChange = {this.handleChange2}
+                type = "value"
+                />
+              <span> 개월 </span>
+            </PriceInput>
+          </PriceBox>
         </SelectRow>
         <SelectRow>
           <Title>
@@ -334,5 +418,102 @@ const ButtonBox = styled.div`
   	    width : 30%
     }
 
+  }
+`
+const BarWrapper = styled.div`
+  width: 619px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+`
+const CustomSlider = withStyles({
+  root: {
+    color: '#767676',
+    },
+  thumb: {
+    height: 24,
+    width: 24,
+    backgroundColor: '#0933b3',
+    marginTop: -11,
+    marginLeft: -13,
+  },
+  track: {
+    height: 2,
+  },
+  rail: {
+    color: '#767676',
+    opacity: 1,
+    height: 3,
+  },
+})(Slider);
+
+const ThumbCircle = styled.circle`
+  width: 12px;
+  height: 12px;
+  background-color: #ffffff;
+  border-radius: 50%;
+`
+
+const PriceInput = styled.div`
+  width: 180px;
+  height: 43px;
+  object-fit: contain;
+  border-radius: 3px;
+  border: solid 1px #c7c7c7;
+  background-color: #ffffff;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.45;
+  letter-spacing: -0.5px;
+  text-align: left;
+  color: #999999;
+  display: flex;
+  align-items: center;
+  > input {
+  width: 123px;
+  height: 37px;
+  object-fit: contain;
+  font-family: 'Roboto', sans-serif;
+  font-size: 21px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.19;
+  letter-spacing: 0.42px;
+  text-align: right;
+  color: #191919;
+  border: none;
+  display: flex;
+  align-items: center;
+  }
+  > span {
+    margin-left: 4px;
+    margin-right: 10px;
+    font-weight: 500;
+  }
+`
+const PriceBox = styled.div`
+  width: 399px;
+  height: 100%;
+  margin-left: 48px;
+  display: inline-flex;
+  align-items: center;
+  > span {
+      width: 11px;
+      height: 29px;
+      object-fit: contain;
+      font-size: 20px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.8;
+      letter-spacing: normal;
+      text-align: left;
+      color: #999999;
+      margin-right: 14px; margin-left: 14px;
+      display: flex;
+      align-items: center;
   }
 `
