@@ -115,11 +115,11 @@ class FooterComponent extends React.Component {
           </div>
         </Container>
         <Container>
-          <div>
-            <Text.FontSize25 color="#fff" style={{marginBottom: 4}}>
+          <ContactInfoContainer>
+            <Text.FontSize25 color="#fff" style={{marginBottom: 4},{height :30}}>
               ​CONTACT
             </Text.FontSize25>
-            <Text.FontSize33 color="#fff" style={{marginBottom: 2}}>
+            <Text.FontSize33 color="#fff" style={{}}>
               ​02.926.6637
             </Text.FontSize33>
             <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
@@ -135,7 +135,7 @@ class FooterComponent extends React.Component {
                 <Sns src={blog} onClick={() => window.open('http://www.blog.naver.com/boltnnut_korea')} />
               </SnsBox>
             </Text.FontSize12>
-          </div>
+          </ContactInfoContainer>
         </Container>
       </Footer>
     );
@@ -146,15 +146,14 @@ export default FooterComponent;
 
 const Footer = styled.div`
   background-color: ${PRIMARY};
-  padding: 40px 0px;
+  padding: 99px 0px;
   display : inline-flex;
   justify-content: center;
-  padding-top : 3.5% ;
-  padding-bottom : 3.5% ;
+
 
   > div:nth-of-type(1) {
     position: relative; 
-    left:80px;  
+    left:62px;  
   }
   > div:nth-of-type(2) {
     position: relative; 
@@ -204,9 +203,7 @@ const Container = styled.div`
 const TextBox = styled.div`
   display: flex;
   margin-bottom: 20px;
-  /* margin-left : 170px; */
-  /* width : 1100; */
- 
+  
   :last-of-type {
     margin-bottom: 0;
   }
@@ -216,6 +213,12 @@ const TextBox = styled.div`
     width: auto;
     margin-left: 0px;
     text-align: center;
+    font-weight: 100;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.45px;
+
     :nth-of-type(1) {
       margin-left: 0px;
     }
@@ -259,6 +262,14 @@ const TextBox = styled.div`
 `;
 const CompanyInfoContainer = styled.div`
   float : right;
+
+  p {
+    font-weight: 100;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.47;
+    letter-spacing: -0.38px;
+  }
 `;
 
 const CompanyInfo = styled.div`
@@ -274,7 +285,7 @@ const CompanyInfo = styled.div`
   > div {
     display: flex;
     flex-direction: column;
-    margin-top: 15px;
+    margin-top: 14px;
     
     > p {
       margin-bottom: 5px;
@@ -292,6 +303,27 @@ const CompanyInfo = styled.div`
     align-items: flex-start;
     
     > div:nth-of-type(2) {}
+  }
+`;
+const ContactInfoContainer = styled.div`
+  p {
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.47;
+    letter-spacing: -0.38px;
+    top: 50%;
+  }
+  > p:nth-of-type(1) {
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.48px; 
+  }
+  > p:nth-of-type(2) {
+    margin: 10px 0;
+    font-weight: 500;
+    line-height: 0.76;
+    letter-spacing: normal; 
   }
 `;
 const Image = styled.img`

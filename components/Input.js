@@ -5,7 +5,8 @@ import TextField from '@material-ui/core/TextField';
 
 const CustomInput = withStyles({
   root: {
-    width: '100%',
+    // width: ${props => props.width ? props.width : "100%"};
+    // width: '100%',
     margin: '15px 0',
     '& label': {
       color: '#fff9',

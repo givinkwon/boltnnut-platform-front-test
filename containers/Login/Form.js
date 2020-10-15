@@ -13,6 +13,9 @@ import Router from 'next/router'
 import * as Text from 'components/Text'
 import { WHITE, PRIMARY } from 'static/style'
 
+const logo_ic = "/static/images/logo_marine.png";
+const line = "/static/images/line.png";
+
 
 @inject('Auth')
 @observer
@@ -44,28 +47,31 @@ class FormConatiner extends React.Component {
     return (
       <Form>
         <Container>
-          <Text.FontSize40 color={WHITE} fontWeight={700} style={{textAlign: 'center', wordBreak: 'keep-all'}}>전문 제조업체 매칭 플랫폼 볼트앤너트</Text.FontSize40>
-          <Text.FontSize20 color={WHITE}>전문 제조업체 매칭 플랫폼에 오신걸 환영합니다</Text.FontSize20>
+          <Logo src={logo_ic}/>
+          <Text.FontSize24 color={'#0a2165'}>제품 개발 전문가 매칭 플랫폼</Text.FontSize24>
           <Input label='아이디/이메일' placeholder='아이디/이메일' onChange={Auth.setEmail}/>
           <Input label='비밀번호' placeholder='비밀번호' type='password' onChange={Auth.setPassword} onKeyDown={this.handleKeyDown}/>
-          <More>
-            <CheckBoxComponent onChange={(state) => Auth.always_login = state}>
-              <p style={{color: '#fff', fontSize: 16, fontWeight: 400}}>항상 로그인</p>
-            </CheckBoxComponent>
-            <Fotget onClick={this.toForgot}>비밀번호를 잊으셨나요?</Fotget>
-          </More>
           <ButtonBox>
-            <ButtonComponent backgroundColor={WHITE} borderColor={WHITE} borderRadius={100} onClick={Auth.login}>
+            <ButtonComponent backgroundColor={"#0a2165"} borderColor={WHITE} borderRadius={3} borderWidth={1} onClick={Auth.login} >
               {
                 Auth.loading
                 ? <ButtonSpinnerComponent primary/>
-                : <Text.FontSize24 color={PRIMARY} fontWeight={500}>로그인</Text.FontSize24>
+                : <Text.FontSize24 color={WHITE} fontWeight={500}>로그인</Text.FontSize24>
               }
             </ButtonComponent>
-            <ButtonComponent id="sign_up_button" backgroundColor={WHITE+'00'} borderColor={WHITE} borderRadius={100} onClick={this.toSignUp}>
-              <Text.FontSize24 color={WHITE} fontWeight={500}>회원가입</Text.FontSize24>
+            <ButtonComponent id="sign_up_button" backgroundColor={WHITE+'00'}  borderRadius={3} borderWidth={1} onClick={this.toSignUp}>
+              <Text.FontSize24 color={"#505050"} fontWeight={500}>회원가입</Text.FontSize24>
             </ButtonComponent>
           </ButtonBox>
+          <More>
+            <CheckBoxComponent onChange={(state) => Auth.always_login = state}>
+              <p style={{color: '#9999', fontSize: 16, fontWeight: 400}}>로그인 상태 유지</p>
+            </CheckBoxComponent>
+            <Fotget onClick={this.toForgot}>아이디 찾기</Fotget>
+            {/* 로그인미완 */}
+            <Line src={line}/>
+            <Fotget onClick={this.toForgot}>비밀번호 찾기</Fotget>
+          </More>
         </Container>
       </Form>
     )
@@ -74,23 +80,39 @@ class FormConatiner extends React.Component {
 
 export default FormConatiner
 
+const Logo = styled.img`
+  cursor: pointer;
+  width: 383px;
+  height: 60px;
+`;
+const Line = styled.img`
+  width: 1px;
+  height: 24px;
+  padding: 0 10px;
+`;
 const Fotget = styled.p`
-  color: #fff;
+  color: #0a2165;
   font-size: 16px;
   font-weight: 400;
   cursor: pointer;
   margin-left: auto;
+  p:nth-of-type(2) {
+    margin-left : 0px;
+  }
   :hover {
     text-decoration: underline;
     text-decoration-color: #fff;
   }
 `
 const More = styled.div`
-  width: 100%;
-  max-width: 400px;
+  width: 588px;
+  max-width: auto;
   display: flex;
   align-items: center;
   margin-bottom: 50px;
+  p:nth-of-type(2) {
+    margin-left : 0px;
+  }
   
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 15px;
@@ -113,27 +135,33 @@ const More = styled.div`
   }
 `
 const Input = styled(InputComponent)`
-  max-width: 400px;
+  width : 588px; 
+  
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 8px 0 !important;
   }
 `
 const ButtonBox = styled.div`
-  width: 100%;
-  max-width: 450px;
+  width: 588px;
   justify-content: space-between;
-  display: flex;
+  display: inline;
+
+  div {
+    width:auto;
+    height: 52px;
+    border: solid 1px #c7c7c7;
+  }
   
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  /* @media (min-width: 0px) and (max-width: 767.98px) {
     > div {
       width: 120px;
     }
-  }
+  } */
 `
 const Form = styled.div`
-  background-image: url('/static/images/banner.jpg');
+  /* background-image: url('/static/images/banner.jpg');
   background-position: center;
-  background-size: cover;
+  background-size: cover; */
   ${Container} {
     display: flex;
     flex-direction: column;

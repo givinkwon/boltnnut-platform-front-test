@@ -410,7 +410,6 @@ const Header2 = styled.span`
   width: 1000px;
   height: 59px;
   margin-bottom: 60px;
-  font-family: NotoSansCJKkr;
   font-size: 32px;
   font-weight: bold;
   font-stretch: normal;
@@ -422,7 +421,6 @@ const Header2 = styled.span`
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 100%;
     height: 72px;
-    font-family: NotoSansCJKkr;
     font-size: 21px;
     font-weight: normal;
     font-stretch: normal;
@@ -438,7 +436,6 @@ const Header2 = styled.span`
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 430px;
     height: 72px;
-    font-family: NotoSansCJKkr;
     font-size: 32px;
     font-weight: normal;
     font-stretch: normal;
@@ -459,7 +456,6 @@ const Header2 = styled.span`
 
  const Bold = styled.span`
   font-Weight : bold;
-  font-family : NotoSansCJKkr;
   .line {
     border-bottom: 0.85px solid rgba(255, 192, 0, 0.6);
     box-shadow: inset 0 -16px 0 rgba(255, 192, 0, 0.6);
@@ -510,7 +506,6 @@ const CommentBox = styled.div`
   height: 24px;
   flex-direction: row;
   display: inline-flex;
-  font-family: NotoSansCJKkr;
   font-size: 16px;
   font-weight: bold;
   font-stretch: normal;
@@ -540,7 +535,6 @@ const CommentBox = styled.div`
   flex-direction: row;
   display: inline-flex;
   margin-left: 15px;
-  font-family: NotoSansCJKkr;
   font-size: 16px;
   font-weight: bold;
   font-stretch: normal;
@@ -566,9 +560,7 @@ const CommentBox = styled.div`
   }
 }
 .CommentBody {
-  width: 750px;
   height: 40px;
-  font-family: NotoSansCJKkr;
   font-size: 16px;
   font-weight: normal;
   font-stretch: normal;
@@ -652,7 +644,6 @@ const SmallCommentBox = styled.div`
   height: 24px;
   flex-direction: row;
   display: inline-flex;
-  font-family: NotoSansCJKkr;
   font-size: 16px;
   font-weight: bold;
   font-stretch: normal;
@@ -681,7 +672,6 @@ const SmallCommentBox = styled.div`
   height: 24px;
   flex-direction: row;
   display: inline-flex;
-  font-family: NotoSansCJKkr;
   font-size: 16px;
   font-weight: bold;
   font-stretch: normal;
@@ -707,10 +697,9 @@ const SmallCommentBox = styled.div`
   }
 }
 .CommentBody {
-  width: 357px;
+  width: 330px;
   height: 66px;
   object-fit: contain;
-  font-family: NotoSansCJKkr;
   font-size: 15px;
   font-weight: normal;
   font-stretch: normal;
@@ -762,7 +751,7 @@ const SmallCommentBox = styled.div`
 `
 const TextBox = styled.div`
   max-width: 900px;
-  width: 100%;
+  width: 600px;
   height: 150px;
   margin-left: 50px;
   margin-top: 50px;
