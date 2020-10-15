@@ -52,5 +52,5 @@ const Container = styled.div`
 `
 const CustomContainer = styled(Container)`
   width: 100%;
-  height:768px;
+  height: 100%;
 `

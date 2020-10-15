@@ -77,7 +77,8 @@ class SearchBarContainer2 extends React.Component {
     price_min: 0,
     price_max: 0,
     due_min: 0,
-    due_max: 0
+    due_max: 0,
+    show_detail: "none"
   };
   searchText = (e) => {
     this.props.Partner.search_text = e.target.value;
@@ -128,8 +129,17 @@ class SearchBarContainer2 extends React.Component {
     </div>
     );
   }
+  showDetail = () => {
+    if (this.state.show_detail == "none") {
+    this.setState({...this.state, show_detail: true})
+    } else {
+    this.setState({...this.state, show_detail: "none"})
+    }
+    console.log(this.state.show_detail)
+  }
+
   render() {
-    const { search, modal_open, price_max, price_min, due_max, due_min } = this.state;
+    const { search, modal_open, price_max, price_min, due_max, due_min, show_detail } = this.state;
     const { Partner, Auth } = this.props;
     return (
       <CustomContainer>
@@ -143,6 +153,11 @@ class SearchBarContainer2 extends React.Component {
           <Select
             styles={customStyles} options={Auth.city_data} value={Auth.city}
             getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
+          <DropButton
+            onClick = {this.showDetail}
+          >
+            <span> 무료 가견적 넣기 </span>
+          </DropButton>
         </SelectRow>
         <SelectRow>
           <Title>
@@ -189,9 +204,9 @@ class SearchBarContainer2 extends React.Component {
               aria-labelledby="range-slider"
               onChange={this.handleChange2}
               value = {due_max}
-              step={1}
+              step={0}
               min={0}
-              max={36}
+              max={100}
               valueLabelDisplay="auto"
             />
           </BarWrapper>
@@ -215,6 +230,9 @@ class SearchBarContainer2 extends React.Component {
             </PriceInput>
           </PriceBox>
         </SelectRow>
+        <DropDown
+          style={{display: show_detail}}
+        >
         <SelectRow>
           <Title>
             제품이름
@@ -262,11 +280,18 @@ class SearchBarContainer2 extends React.Component {
               </Text.FontSize26>
             </Button>
           </ButtonBox>
+      </DropDown>
       </CustomContainer>
     )
   }
 }
 export default SearchBarContainer2;
+
+const DropDown = styled.div`
+  width: 100%;
+  transition: display 2s;
+
+`
 
 const InputBox = styled.div`
   width: 501px;
@@ -305,13 +330,13 @@ const InputBox = styled.div`
 
 const CustomContainer = styled(Container)`
   padding: 0 0;
-  height: 650px;
+  width: 100%;
 `
 const SelectRow = styled.div`
   width: 100%;
   display: inline-flex;
   align-items: center;
-  margin-top : 22px;
+  margin-bottom: 22px;
 `
 const Title = styled.div`
   width: 94px;
@@ -453,7 +478,6 @@ const ThumbCircle = styled.circle`
   background-color: #ffffff;
   border-radius: 50%;
 `
-
 const PriceInput = styled.div`
   width: 180px;
   height: 43px;
@@ -472,7 +496,7 @@ const PriceInput = styled.div`
   display: flex;
   align-items: center;
   > input {
-  width: 123px;
+  width: 120px;
   height: 37px;
   object-fit: contain;
   font-family: 'Roboto', sans-serif;
@@ -492,6 +516,7 @@ const PriceInput = styled.div`
     margin-left: 4px;
     margin-right: 10px;
     font-weight: 500;
+    width: 40px;
   }
 `
 const PriceBox = styled.div`
@@ -515,5 +540,30 @@ const PriceBox = styled.div`
       margin-right: 14px; margin-left: 14px;
       display: flex;
       align-items: center;
+  }
+`
+const DropButton = styled.div`
+  width: 180px;
+  height: 51px;
+  object-fit: contain;
+  background-color: #0a2165;
+  border: solid 1px #0a2165;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  > span {
+    display: flex;
+    align-items: center;
+    height: 31px;
+    font-size: 21px;
+    font-weight: 500;
+    font-family: 'Noto Sans KR',sans-serif;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.19;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fffdf8;
   }
 `

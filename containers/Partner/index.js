@@ -19,8 +19,6 @@ class PartnerConatiner extends React.Component {
   render() {
     return (
       <>
-        {/*<BannerContainer />
-        <SearchBarContainer />*/}
         <SearchBannerContainer/>
         <CustomContainer>
           <Container>

@@ -164,7 +164,7 @@ const SearchBox = styled.div`
   align-items: center;
   display: flex;
   margin-left: 32px;
-  margin-bottom: 8px;
+  margin-bottom: 30px;
   > img {
       width: 26px;
       height: 26px;
