@@ -290,7 +290,6 @@ export default SearchBarContainer2;
 const DropDown = styled.div`
   width: 100%;
   transition: display 2s;
-
 `
 
 const InputBox = styled.div`

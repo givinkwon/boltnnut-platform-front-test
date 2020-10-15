@@ -148,7 +148,7 @@ const Menu = styled.div`
     margin-bottom: 0;
   }
   @media (min-width: 768px) {
-    width: 200px;
+    width: 219px;
     margin-top: 30px;
     margin-right: 87px;
   }

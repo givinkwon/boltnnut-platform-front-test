@@ -60,10 +60,12 @@ class SearchBarContainer extends React.Component {
                 value={Partner.search_text}
                 onChange={this.searchText}
                 onKeyDown={this.handleKeyDown}
+                id = "search"
               />
                 <img
                   src="/static/images/search.png"
-                  onclick = {this.search}
+                  onClick = {this.search}
+                  id = "searchbutton"
                 />
         </SearchBox>
       </Form>
