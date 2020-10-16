@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 import Container from 'components/Container'
 import ButtonComponent from 'components/Button'
 import InputComponent from 'components/Input'
-import CheckBoxComponent from 'components/CheckBox'
+import CheckBoxComponent from 'components/LoginCheckBox'
 import ButtonSpinnerComponent from 'components/ButtonSpinner'
 
 import Router from 'next/router'
@@ -37,7 +37,11 @@ class FormConatiner extends React.Component {
     this.props.Auth.setStep(0)
     Router.push('/signup')
   }
-  toForgot = () => {
+  toForgotID = () => {
+    this.props.Auth.reset()
+    Router.push('/forget_id')
+  }
+  toForgotPW = () => {
     this.props.Auth.reset()
     Router.push('/forget_password')
   }
@@ -48,9 +52,9 @@ class FormConatiner extends React.Component {
       <Form>
         <Container>
           <Logo src={logo_ic}/>
-          <Text.FontSize24 color={'#0a2165'}>제품 개발 전문가 매칭 플랫폼</Text.FontSize24>
-          <Input label='아이디/이메일' placeholder='아이디/이메일' onChange={Auth.setEmail}/>
-          <Input label='비밀번호' placeholder='비밀번호' type='password' onChange={Auth.setPassword} onKeyDown={this.handleKeyDown}/>
+          <Text.FontSize24 color={'#0a2165'} style={{marginBottom:90}}>제품 개발 전문가 매칭 플랫폼</Text.FontSize24>
+          <Input id="custom-css-outlined-input" placeholder="이메일"  onChange={Auth.setEmail}/>
+          <Input id="custom-css-outlined-input" placeholder="비밀번호" type='password' onChange={Auth.setPassword} onKeyDown={this.handleKeyDown}/>
           <ButtonBox>
             <ButtonComponent backgroundColor={"#0a2165"} borderColor={WHITE} borderRadius={3} borderWidth={1} onClick={Auth.login} >
               {
@@ -65,12 +69,12 @@ class FormConatiner extends React.Component {
           </ButtonBox>
           <More>
             <CheckBoxComponent onChange={(state) => Auth.always_login = state}>
-              <p style={{color: '#9999', fontSize: 16, fontWeight: 400}}>로그인 상태 유지</p>
+              <p style={{color: '#9999', fontSize: 20, fontWeight: 400}}>로그인 상태 유지</p>
             </CheckBoxComponent>
-            <Fotget onClick={this.toForgot}>아이디 찾기</Fotget>
+            <Fotget onClick={this.toForgotID}>아이디 찾기</Fotget>
             {/* 로그인미완 */}
             <Line src={line}/>
-            <Fotget onClick={this.toForgot}>비밀번호 찾기</Fotget>
+            <Fotget onClick={this.toForgotPW}>비밀번호 찾기</Fotget>
           </More>
         </Container>
       </Form>
@@ -81,9 +85,10 @@ class FormConatiner extends React.Component {
 export default FormConatiner
 
 const Logo = styled.img`
-  cursor: pointer;
+  /* cursor: pointer; */
   width: 383px;
   height: 60px;
+  margin-bottom: 15px;
 `;
 const Line = styled.img`
   width: 1px;
@@ -92,16 +97,17 @@ const Line = styled.img`
 `;
 const Fotget = styled.p`
   color: #0a2165;
-  font-size: 16px;
-  font-weight: 400;
   cursor: pointer;
   margin-left: auto;
-  p:nth-of-type(2) {
-    margin-left : 0px;
-  }
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.7;
+  letter-spacing: -0.5px;
+
   :hover {
-    text-decoration: underline;
-    text-decoration-color: #fff;
+    color :#0933b3 ; 
   }
 `
 const More = styled.div`
@@ -109,6 +115,7 @@ const More = styled.div`
   max-width: auto;
   display: flex;
   align-items: center;
+  margin-top : 20px;
   margin-bottom: 50px;
   p:nth-of-type(2) {
     margin-left : 0px;
@@ -137,21 +144,44 @@ const More = styled.div`
 const Input = styled(InputComponent)`
   width : 588px; 
   
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  /* @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 8px 0 !important;
-  }
+  } */
 `
 const ButtonBox = styled.div`
   width: 588px;
   justify-content: space-between;
   display: inline;
+  
 
   div {
+    margin-top : 35px;
     width:auto;
-    height: 52px;
     border: solid 1px #c7c7c7;
+    border-radius : 3px;
+
+    :nth-of-type(1) {
+      :hover {
+          background-color: #0933b3;
+        }
+    }
+    :nth-of-type(2) {
+      :hover {
+        border: solid 1px #0933b3 ;
+        p {
+          color : #0933b3 ; 
+        }
+      }
+      
+    }
+    p {
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.42;
+      letter-spacing: -0.6px;         
+    }
   }
-  
   /* @media (min-width: 0px) and (max-width: 767.98px) {
     > div {
       width: 120px;
@@ -162,12 +192,20 @@ const Form = styled.div`
   /* background-image: url('/static/images/banner.jpg');
   background-position: center;
   background-size: cover; */
+  min-height: 500px;
   ${Container} {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
+    > p:nth-of-type(1){
+      font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.42;
+    letter-spacing: -0.6px;
+    }
     > p:nth-of-type(2){
       margin-top: 15px;
       margin-bottom: 15px;
@@ -176,7 +214,6 @@ const Form = styled.div`
       line-height: 1.25em;
     }
   }
-  min-height: 500px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     height: calc(100vh - 214px);
   }
