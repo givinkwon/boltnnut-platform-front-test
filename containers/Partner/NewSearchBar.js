@@ -191,6 +191,7 @@ const SearchBox = styled.div`
     padding-left: 20px;
     padding-top: 11px;
     padding-bottom: 11px;
+    outline: none;
   }
 `
 const Input = styled.input`

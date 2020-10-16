@@ -69,7 +69,7 @@ class ContentConatiner extends React.Component {
     const { Partner } = this.props;
     const newPage = this.state.current + 1
     this.setState({...this.state, current: newPage})
-    if (this.state.current %2 == 1) {
+    if (this.state.current %2 == 0) {
       Partner.getNextPartner();
     }
   }

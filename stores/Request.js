@@ -71,13 +71,13 @@ class Request {
             this.initial_contents.push(this.big_category_list[i].category_set[j].subclass_set)
           }
         }
-
         this.setQuery(q);
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
+  console.log(this.big_category_list)
   };
   @action setBigCategory = (obj) => {
     /*

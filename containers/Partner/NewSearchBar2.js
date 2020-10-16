@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 
@@ -56,9 +56,32 @@ const customStyles = {
 }
 
 
-@inject("Auth", "Partner")
+@inject("Auth", "Partner", "Request")
 @observer
 class SearchBarContainer2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.portfolio = React.createRef();
+  }
+
+  onChangePortfolio = (e) => {
+    if(e.currentTarget.files.length === 0) {
+      this.setState({
+        ...this.state,
+        portfolioValue: '',
+      })
+      return
+    }
+
+    const fileName = e.currentTarget.files[0].name;
+    this.setState({
+      ...this.state,
+      portfolioValue: fileName,
+    })
+
+    this.props.Auth.setFile(e.currentTarget.files[0])
+  }
+
   onSliderChange = value => {
     this.setState(
       {
@@ -78,7 +101,8 @@ class SearchBarContainer2 extends React.Component {
     price_max: 0,
     due_min: 0,
     due_max: 0,
-    show_detail: "none"
+    show_detail: "none",
+    portfolioValue: ''
   };
   searchText = (e) => {
     this.props.Partner.search_text = e.target.value;
@@ -104,20 +128,107 @@ class SearchBarContainer2 extends React.Component {
         this.props.Partner.search();
     }
   };
-  handleChange = (event, newValue) => {
-    if (event.target.value) {
-      this.setState({...this.state, price_max: event.target.value})
-    } else {
-    this.setState({...this.state, price_max: newValue})
-    }
-  };
-  handleChange2 = (event, newValue) => {
-    if (event.target.value) {
-      this.setState({...this.state, due_max: event.target.value})
-    } else {
-    this.setState({...this.state, due_max: newValue})
-    }
-  };
+  RangeSlider = () => {
+  const [price_max, setPrice] = React.useState([0,0]);
+
+  const handleChange = (event, newValue) => {
+    setPrice(newValue);
+   };
+
+  return (
+    <>
+      <BarWrapper>
+            <CustomSlider
+              ThumbComponent={this.CustomSliderThumbComponent}
+              aria-labelledby="range-slider"
+              onChange={handleChange}
+              value = {price_max}
+              step={100}
+              min={0}
+              max={10000}
+              valueLabelDisplay="auto"
+            />
+      </BarWrapper>
+      <PriceBox>
+            <PriceInput>
+              <input
+                value = {price_max[0]}
+                onChange = {handleChange}
+                type = "value"/>
+              <span> 만원 </span>
+            </PriceInput>
+            <span> ~ </span>
+            <PriceInput>
+              <input
+                value = {price_max[1]}
+                onChange = {handleChange}
+                type = "value"
+                />
+              <span> 만원 </span>
+            </PriceInput>
+      </PriceBox>
+    </>
+    );
+  }
+
+  RangeSlider2 = () => {
+  const [due_max, setDue] = React.useState([0,0]);
+
+  const handleChange = (event, newValue) => {
+    setDue(newValue);
+   };
+
+  return (
+    <>
+          <BarWrapper>
+            <CustomSlider
+              ThumbComponent={this.CustomSliderThumbComponent}
+              aria-labelledby="range-slider"
+              onChange={handleChange}
+              value = {due_max}
+              step={1}
+              min={0}
+              max={48}
+              valueLabelDisplay="auto"
+            />
+          </BarWrapper>
+          <PriceBox>
+            <PriceInput>
+              <input
+                value = {due_max[0]}
+                onChange = {handleChange}
+                type = "value"
+                />
+              <span> 개월 </span>
+            </PriceInput>
+            <span> ~ </span>
+            <PriceInput>
+              <input
+                value = {due_max[1]}
+                onChange = {handleChange}
+                type = "value"
+                />
+              <span> 개월 </span>
+            </PriceInput>
+          </PriceBox>
+    </>
+    );
+  }
+
+//  handleChange = (event, newValue) => {
+//    if (event.target.value) {
+//      this.setState({...this.state, price_max: event.target.value})
+//    } else {
+//    this.setState({...this.state, price_max: newValue})
+//    }
+//  };
+//  handleChange2 = (event, newValue) => {
+//    if (event.target.value) {
+//      this.setState({...this.state, due_max: event.target.value})
+//    } else {
+//    this.setState({...this.state, due_max: newValue})
+//    }
+//  };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
   }
@@ -140,7 +251,8 @@ class SearchBarContainer2 extends React.Component {
 
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail } = this.state;
-    const { Partner, Auth } = this.props;
+    const { Partner, Auth, Request } = this.props;
+
     return (
       <CustomContainer>
         <SelectRow>
@@ -148,11 +260,11 @@ class SearchBarContainer2 extends React.Component {
             제품분야
           </Title>
           <Select
-            styles={customStyles} options={Auth.city_data} value={Auth.city}
-            getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
+            styles={customStyles} options={Request.big_category_list} value={Request.select_big}
+            getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}/>
           <Select
-            styles={customStyles} options={Auth.city_data} value={Auth.city}
-            getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
+            styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
+            getOptionLabel={(option) => option.subclass} placeholder='옵션을 선택해주세요' onChange={Request.setSmallCategory}/>
           <DropButton
             onClick = {this.showDetail}
           >
@@ -163,72 +275,13 @@ class SearchBarContainer2 extends React.Component {
           <Title>
             희망예산
           </Title>
-          <BarWrapper>
-            <CustomSlider
-              ThumbComponent={this.CustomSliderThumbComponent}
-              aria-labelledby="range-slider"
-              onChange={this.handleChange}
-              value = {price_max}
-              step={100}
-              min={0}
-              max={10000}
-              valueLabelDisplay="auto"
-            />
-          </BarWrapper>
-          <PriceBox>
-            <PriceInput>
-              <input
-                value = {price_max}
-                onChange = {this.handleChange}
-                type = "value"/>
-              <span> 만원 </span>
-            </PriceInput>
-            <span> ~ </span>
-            <PriceInput>
-              <input
-                value = {price_max}
-                onChange = {this.handleChange}
-                type = "value"
-                />
-              <span> 만원 </span>
-            </PriceInput>
-          </PriceBox>
+          <this.RangeSlider/>
         </SelectRow>
         <SelectRow>
           <Title>
             기간
           </Title>
-          <BarWrapper>
-            <CustomSlider
-              ThumbComponent={this.CustomSliderThumbComponent}
-              aria-labelledby="range-slider"
-              onChange={this.handleChange2}
-              value = {due_max}
-              step={0}
-              min={0}
-              max={100}
-              valueLabelDisplay="auto"
-            />
-          </BarWrapper>
-          <PriceBox>
-            <PriceInput>
-              <input
-                value = {due_max}
-                onChange = {this.handleChange2}
-                type = "value"
-                />
-              <span> 개월 </span>
-            </PriceInput>
-            <span> ~ </span>
-            <PriceInput>
-              <input
-                value = {due_max}
-                onChange = {this.handleChange2}
-                type = "value"
-                />
-              <span> 개월 </span>
-            </PriceInput>
-          </PriceBox>
+          <this.RangeSlider2/>
         </SelectRow>
         <DropDown
           style={{display: show_detail}}
@@ -237,10 +290,10 @@ class SearchBarContainer2 extends React.Component {
           <Title>
             제품이름
           </Title>
-          <InputBox>
+        <InputBox>
             <input
                 placeholder="ex)반려동물 관리 장난감"
-              />
+            />
         </InputBox>
         </SelectRow>
         <SelectRow>
@@ -259,10 +312,15 @@ class SearchBarContainer2 extends React.Component {
           <Title>
             도면
           </Title>
-          <FileBox>
+          <FileBox
+            onClick = {()=>this.portfolio.current.click()}>
             <input
-              placeholder = "도면이나 유사 이미지가 있으시면 첨부해주세요."
+              onChange = {this.onChangePortfolio}
+              type = "file"
+              style={{display: 'none'}}
+              ref={this.portfolio}
               />
+            <span> { this.state.portfolioValue ? this.state.portfolioValue : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
             <img
               src="/static/images/mask.png"
               />
@@ -324,6 +382,7 @@ const InputBox = styled.div`
   padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
+  outline: none;
   }
 `
 
@@ -338,9 +397,9 @@ const SelectRow = styled.div`
   margin-bottom: 22px;
 `
 const Title = styled.div`
-  width: 94px;
+  width: 100px;
   height: 38px;
-  margin-right: 40px;
+  margin-right: 34px;
   object-fit: contain;
   font-size: 26px;
   font-weight: bold;
@@ -380,6 +439,15 @@ const PhoneInput = styled.input`
   border-radius: 3px;
   border: solid 1px #c7c7c7;
   background-color: #ffffff;
+  outline: none;
+  font-size: 23px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.22;
+  letter-spacing: 0.58px;
+  text-align: center;
+  color: #b7b7b7;
 `
 const FileBox = styled.div`
   width: 767px;
@@ -395,6 +463,7 @@ const FileBox = styled.div`
       height: 22px;
       object-fit: contain;
       cursor: pointer;
+      padding-right: 26px;
   }
   > input {
     border: none;
@@ -414,6 +483,23 @@ const FileBox = styled.div`
     padding-left: 20px;
     padding-top: 11px;
     padding-bottom: 11px;
+    outline: none;
+  }
+  > span {
+    width: 100%;
+    height: 30px;
+    object-fit: contain;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.95;
+    letter-spacing: normal;
+    text-align: left;
+    color: #b7b7b7;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
   }
 `
 const ButtonBox = styled.div`
@@ -452,7 +538,8 @@ const BarWrapper = styled.div`
 `
 const CustomSlider = withStyles({
   root: {
-    color: '#767676',
+    color: '#0933b3',
+    height: 4
     },
   thumb: {
     height: 24,
@@ -462,12 +549,12 @@ const CustomSlider = withStyles({
     marginLeft: -13,
   },
   track: {
-    height: 2,
+    height: 4,
   },
   rail: {
     color: '#767676',
     opacity: 1,
-    height: 3,
+    height: 4,
   },
 })(Slider);
 
@@ -510,6 +597,7 @@ const PriceInput = styled.div`
   border: none;
   display: flex;
   align-items: center;
+  outline: none;
   }
   > span {
     margin-left: 4px;

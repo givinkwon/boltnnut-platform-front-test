@@ -77,7 +77,7 @@ class CardContainer extends Component {
             </div>
             <div class="devbox">
               {
-                item.category.length > 0 && item.category.slice(0,5).map((item1,idx) => {
+                item.category.length > 0 && item.category.slice(0,4).map((item1,idx) => {
                   return (
                     <div class="develop">
                       {item1.category}
@@ -258,7 +258,7 @@ const TextBox = styled.div`
   margin-left: 30px;
   font-family: 'Noto Sans KR', sans-serif;
   .Header {
-    width: 151px;
+    width: 200px;
     height: 36px;
     font-size: 24px;
     font-weight: bold;
@@ -284,7 +284,7 @@ const TextBox = styled.div`
     margin-top: 20px;
   }
   .devbox {
-    width: 100%;
+    width: 470px;
     height: 30px;
     display: inline-flex;
     margin-top: 20px;
