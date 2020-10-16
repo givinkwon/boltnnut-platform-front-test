@@ -23,6 +23,10 @@ import Slider from '@material-ui/core/Slider';
 const phone = 'static/images/phone.png'
 const file = 'static/images/mask.png'
 
+//test
+
+import * as CategoryAPI from "axios/Category";
+
 const customStyles = {
   dropdownIndicator: () => ({
     color: '#555555',
@@ -231,6 +235,8 @@ class SearchBarContainer2 extends React.Component {
 //  };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
+    await CategoryAPI.getMainCategory()
+                      .then((res) => (console.log(res.data.results)));
   }
   CustomSliderThumbComponent (props) {
   return (
@@ -261,10 +267,10 @@ class SearchBarContainer2 extends React.Component {
           </Title>
           <Select
             styles={customStyles} options={Request.big_category_list} value={Request.select_big}
-            getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}/>
+            getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}/>
           <Select
             styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
-            getOptionLabel={(option) => option.subclass} placeholder='옵션을 선택해주세요' onChange={Request.setSmallCategory}/>
+            getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}/>
           <DropButton
             onClick = {this.showDetail}
           >

@@ -8,7 +8,7 @@ import MenuContainer from "./Menu";
 import ContentContainer from "./Content";
 import SearchBannerContainer from "./Search";
 
-@inject("Partner")
+@inject("Partner", "Request")
 @observer
 class PartnerConatiner extends React.Component {
   async componentDidMount() {

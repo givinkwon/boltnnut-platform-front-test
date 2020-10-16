@@ -26,7 +26,8 @@ class ContentConatiner extends React.Component {
     current: 0,
     next: true,
     prev: true,
-    word: ""
+    word: "",
+    count: 0
   }
   handleIntersection = (event) => {
     if(event.isIntersecting) {
@@ -42,8 +43,6 @@ class ContentConatiner extends React.Component {
     const userAgent = window.navigator.userAgent;
     const searchButton = document.getElementById('searchbutton')
     const searchBarInput = document.getElementById('search')
-    console.log(searchBarInput)
-    console.log(userAgent)
 
     if(userAgent.indexOf("MSIE ") !== -1 || userAgent.indexOf(".NET") !== -1
       || userAgent.indexOf("Edge") !== -1)
@@ -53,10 +52,11 @@ class ContentConatiner extends React.Component {
     searchButton.addEventListener('click', function(event) {
        self.setState({...this.state, searchWord: searchBarInput.value})
     })
-    }
+  }
   componentWillMount() {
     const { Partner } = this.props;
     Partner.getNextPartner();
+    this.setState({...this.state, count: Partner.partner_count})
   }
   afterChangeHandler = (current) => {
     if(current === 0){
@@ -67,8 +67,12 @@ class ContentConatiner extends React.Component {
   }
   pageNext = () => {
     const { Partner } = this.props;
+    const { current, count } = this.state;
     const newPage = this.state.current + 1
-    this.setState({...this.state, current: newPage})
+    const page = parseInt(count/5) + 1
+
+    this.setState({...this.state, current: newPage, count: Partner.partner_count})
+
     if (this.state.current %2 == 0) {
       Partner.getNextPartner();
     }
@@ -82,11 +86,16 @@ class ContentConatiner extends React.Component {
   setSearch = () => {
     this.setState({...this.state, searchWord: "Aa"})
   }
+  buttonClick = () => {
+    console.log("n")
+  }
 
   render() {
     const { Partner, Home } = this.props
-    const { prev, next, current, searchWord } = this.state
+    const { prev, next, current, searchWord, count } = this.state
     const current_set = (parseInt(current/5) + 1)
+    const page = parseInt(count/5) + 1
+
     return (
       <CustomContainer>
           <Header>
@@ -107,14 +116,14 @@ class ContentConatiner extends React.Component {
           }
         </List>
         <PageBar>
-            <img src={pass1} style={{opacity: current_set == 1 && current == 0  ? 1 : 0.4}} onClick = {this.pagePrev}/>
-              <PageCount active={current%5 == 0}> {5*(current_set - 1) + 1} </PageCount>
-              <PageCount active={current%5 == 1}> {5*(current_set - 1) + 2} </PageCount>
-              <PageCount active={current%5 == 2}> {5*(current_set - 1) + 3} </PageCount>
-              <PageCount active={current%5 == 3}> {5*(current_set - 1) + 4} </PageCount>
-              <PageCount active={current%5 == 4}> {5*(current_set - 1) + 5} </PageCount>
+            <img src={pass1} style={{opacity: current_set == 1 && current == 0  ? 0.4 : 1 }} onClick = {this.pagePrev}/>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 1} active={current%5 == 0}> {5*(current_set - 1) + 1} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 2} active={current%5 == 1}> {5*(current_set - 1) + 2} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 3} active={current%5 == 2}> {5*(current_set - 1) + 3} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 4} active={current%5 == 3}> {5*(current_set - 1) + 4} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 5} active={current%5 == 4}> {5*(current_set - 1) + 5} </PageCount>
               <PageCount> ... </PageCount>
-            <img src={pass2} onClick = {this.pageNext} />
+            <img src={pass2} style={{opacity: page == current ? 0.4 : 1, display: page == current? 'none' : 'block'}} onClick = {this.pageNext} />
         </PageBar>
       </CustomContainer>
     )
@@ -223,6 +232,7 @@ const PageCount = styled.span`
     letter-spacing: 0.63px;
     text-align: left;
     color : #999999;
+    cursor: pointer;
     ${(props) =>
       props.active &&
       css`

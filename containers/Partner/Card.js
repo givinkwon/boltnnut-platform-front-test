@@ -123,7 +123,7 @@ class CardContainer extends Component {
             <div class="detailInner">
               <div class="fuck">
                 <img src={jot2} />
-                <div class="text"> 진행한 제품군 <br/> {item.product_history[0].subclass} <br/> ... </div>
+                <div class="text"> 진행한 제품군 <br/> {item.product_history[0] && item.product_history[0].subclass} <br/> ... </div>
               </div>
             </div>
           </Detail1>
