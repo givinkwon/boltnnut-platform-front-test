@@ -2,6 +2,7 @@ import React from 'react'
 import styled, {css} from 'styled-components'
 import { inject, observer } from 'mobx-react'
 import Router from 'next/router'
+import Slider from "react-slick";
 
 import Container from 'components/Container'
 import RatioImage from 'components/RatioImage'
@@ -11,12 +12,23 @@ import Card from './Card'
 
 import { BLACK1, DARKGRAY } from 'static/style'
 import RequestListCard from "../../components/RequestCard";
+
 const pass1 = 'static/images/pass1.png'
 const pass2 = 'static/images/pass2.png'
+
+const left = 'static/icon/left-arrow.png'
+const right = 'static/icon/right-arrow.png'
 
 @inject('Partner', 'Home')
 @observer
 class ContentConatiner extends React.Component {
+  state = {
+    current: 0,
+    next: true,
+    prev: true,
+    word: "",
+    count: 0
+  }
   handleIntersection = (event) => {
     if(event.isIntersecting) {
       console.log('추가 로딩을 시도합니다')
@@ -26,27 +38,72 @@ class ContentConatiner extends React.Component {
   }
   // IE 오류 해결
   componentDidMount() {
-    const { Home } = this.props
+    const { Home, Partner } = this.props
+    const self = this;
     const userAgent = window.navigator.userAgent;
-    console.log(userAgent)
+    const searchButton = document.getElementById('searchbutton')
+    const searchBarInput = document.getElementById('search')
+
     if(userAgent.indexOf("MSIE ") !== -1 || userAgent.indexOf(".NET") !== -1
       || userAgent.indexOf("Edge") !== -1)
         {
           this.props.Home.is_ie = true;
         }
+    searchButton.addEventListener('click', function(event) {
+       self.setState({...this.state, searchWord: searchBarInput.value})
+    })
+  }
+  componentWillMount() {
+    const { Partner } = this.props;
+    Partner.getNextPartner();
+    this.setState({...this.state, count: Partner.partner_count})
+  }
+  afterChangeHandler = (current) => {
+    if(current === 0){
+      this.setState({next: true, prev: false})
+    } else {
+        this.setState({next: true, prev: true})
     }
+  }
+  pageNext = () => {
+    const { Partner } = this.props;
+    const { current, count } = this.state;
+    const newPage = this.state.current + 1
+    const page = parseInt(count/5) + 1
+
+    this.setState({...this.state, current: newPage, count: Partner.partner_count})
+
+    if (this.state.current %2 == 0) {
+      Partner.getNextPartner();
+    }
+  }
+  pagePrev = () => {
+    if (this.state.current != 0) {
+      const newPage = this.state.current - 1
+      this.setState({...this.state, current: newPage, prev: true})
+    }
+  }
+  setSearch = () => {
+    this.setState({...this.state, searchWord: "Aa"})
+  }
+  buttonClick = () => {
+    console.log("n")
+  }
 
   render() {
     const { Partner, Home } = this.props
+    const { prev, next, current, searchWord, count } = this.state
+    const current_set = (parseInt(current/5) + 1)
+    const page = parseInt(count/5) + 1
+
     return (
       <CustomContainer>
-        <Header>
-          '실리콘 사출'에 대한 검색 결과입니다.
-        </Header>
+          <Header>
+            {searchWord}에 대한 검색 결과입니다.
+          </Header>
         <List>
-          <Card />
           {
-            Partner.partner_list.length > 0 && Partner.partner_list.slice(0,5).map((item, idx) => {
+            Partner.partner_list.length > 0 && Partner.partner_list.slice(5*current, 5*(current+1)).map((item, idx) => {
               return (
                 <Card
                   key={item.id}
@@ -59,14 +116,14 @@ class ContentConatiner extends React.Component {
           }
         </List>
         <PageBar>
-            <img src={pass1}/>
-            <PageCount active={true}> 1 </PageCount>
-            <PageCount> 2 </PageCount>
-            <PageCount> 3 </PageCount>
-            <PageCount> 4 </PageCount>
-            <PageCount> 5 </PageCount>
-            <PageCount> ... </PageCount>
-            <img src={pass2}/>
+            <img src={pass1} style={{opacity: current_set == 1 && current == 0  ? 0.4 : 1 }} onClick = {this.pagePrev}/>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 1} active={current%5 == 0}> {5*(current_set - 1) + 1} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 2} active={current%5 == 1}> {5*(current_set - 1) + 2} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 3} active={current%5 == 2}> {5*(current_set - 1) + 3} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 4} active={current%5 == 3}> {5*(current_set - 1) + 4} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 5} active={current%5 == 4}> {5*(current_set - 1) + 5} </PageCount>
+              <PageCount> ... </PageCount>
+            <img src={pass2} style={{opacity: page == current ? 0.4 : 1, display: page == current? 'none' : 'block'}} onClick = {this.pageNext} />
         </PageBar>
       </CustomContainer>
     )
@@ -75,15 +132,30 @@ class ContentConatiner extends React.Component {
 
 export default ContentConatiner
 
-const CustomContainer = styled(Container)`
+const CustomContainer = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 0 !important;
-    width: 100% !important;
+    width: calc(100% - 40px);
+    padding: 0 20px;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 720px;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
+    width: 894px;
   }
 `
 const List = styled.div`
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  .slick-dots {
+    width: 120px;
+  }
 `
 const Item = styled.div`
   display: flex;
@@ -160,6 +232,7 @@ const PageCount = styled.span`
     letter-spacing: 0.63px;
     text-align: left;
     color : #999999;
+    cursor: pointer;
     ${(props) =>
       props.active &&
       css`
@@ -167,4 +240,14 @@ const PageCount = styled.span`
       color: #0933b3;
       `
      }
+`
+const Icon = styled.img`
+  cursor: pointer;
+  width: 10x;
+  height: 17px;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 30px;
+    height: 30px;
+  }
 `

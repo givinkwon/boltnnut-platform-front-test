@@ -9,7 +9,7 @@ import Spinner from 'components/Spinner'
 
 import PartnerConatiner from 'containers/Partner'
 
-@inject('Counter', 'Post', 'Loading') 
+@inject('Counter', 'Post', 'Loading')
 @observer
 class Partner extends React.Component {
   static getInitialProps({query}) {

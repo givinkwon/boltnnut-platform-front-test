@@ -77,7 +77,7 @@ class CardContainer extends Component {
             </div>
             <div class="devbox">
               {
-                item.category.length > 0 && item.category.slice(0,5).map((item1,idx) => {
+                item.category.length > 0 && item.category.slice(0,4).map((item1,idx) => {
                   return (
                     <div class="develop">
                       {item1.category}
@@ -99,31 +99,31 @@ class CardContainer extends Component {
             <div class="detailInner">
               <div class="fuck">
                 <img src={jot5} />
-                <div class="text"> 전문분야 <br/> {item.id} </div>
+                <div class="text"> 전문분야 <br/> {item.category[0].category} <br/> ...</div>
               </div>
             </div>
             <div class="detailInner">
               <div class="fuck">
                 <img src={jot3} />
-                <div class="text"> 경력 <br/> {item.id} </div>
+                <div class="text"> 경력 <br/>15년 <br/> <br/> </div>
               </div>
             </div>
             <div class="detailInner">
               <div class="fuck">
                 <img src={jot1} />
-                <div class="text"> 보유기기 <br/> {item.id} </div>
+                <div class="text"> 보유기기 <br/> {item.id} <br/> <br/> </div>
               </div>
             </div>
             <div class="detailInner">
               <div class="fuck">
                 <img src={jot4} />
-                <div class="text"> 주재료 <br/> {item.id} </div>
+                <div class="text"> 주재료 <br/> {item.id} <br/> <br/> </div>
               </div>
             </div>
             <div class="detailInner">
               <div class="fuck">
                 <img src={jot2} />
-                <div class="text"> 진행한 제품군 <br/> {item.id} </div>
+                <div class="text"> 진행한 제품군 <br/> {item.product_history[0] && item.product_history[0].subclass} <br/> ... </div>
               </div>
             </div>
           </Detail1>
@@ -170,19 +170,21 @@ const Detail1 = styled.div`
   object-fit: contain;
   background-color: #f1f3f4;
   display: table;
+  margin-top: 25px;
   .detailInner {
     display: table-cell;
     justify-content: center;
     text-align: center;
     flex-direction: column;
+    padding-bottom: 24px;
     .fuck {
       flex-direction: column;
       display: inline-block;
       > img {
-        padding-top: 27px;
+        padding-top: 20px;
       }
       .text {
-        width: 110px;
+        width: 150px;
         height: 27px;
         object-fit: contain;
         font-size: 18px;
@@ -256,7 +258,7 @@ const TextBox = styled.div`
   margin-left: 30px;
   font-family: 'Noto Sans KR', sans-serif;
   .Header {
-    width: 151px;
+    width: 200px;
     height: 36px;
     font-size: 24px;
     font-weight: bold;
@@ -282,7 +284,7 @@ const TextBox = styled.div`
     margin-top: 20px;
   }
   .devbox {
-    width: 100%;
+    width: 470px;
     height: 30px;
     display: inline-flex;
     margin-top: 20px;

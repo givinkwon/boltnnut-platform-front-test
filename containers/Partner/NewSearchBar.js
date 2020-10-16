@@ -60,10 +60,12 @@ class SearchBarContainer extends React.Component {
                 value={Partner.search_text}
                 onChange={this.searchText}
                 onKeyDown={this.handleKeyDown}
+                id = "search"
               />
                 <img
                   src="/static/images/search.png"
-                  onclick = {this.search}
+                  onClick = {this.search}
+                  id = "searchbutton"
                 />
         </SearchBox>
       </Form>
@@ -164,7 +166,7 @@ const SearchBox = styled.div`
   align-items: center;
   display: flex;
   margin-left: 32px;
-  margin-bottom: 8px;
+  margin-bottom: 30px;
   > img {
       width: 26px;
       height: 26px;
@@ -189,6 +191,7 @@ const SearchBox = styled.div`
     padding-left: 20px;
     padding-top: 11px;
     padding-bottom: 11px;
+    outline: none;
   }
 `
 const Input = styled.input`
