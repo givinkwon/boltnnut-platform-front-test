@@ -193,7 +193,7 @@ class MagazineContainer extends React.Component {
           </List>
         </MagazineBox>
         <RightArrowContainer>
-        {/*edit */}
+        {/*edit -  */}
         {(this.state.idx*2 + 4) < magazineCount ? <RightArrow src={right} onClick = {this.sliderNext}/> : <RightArrow/>}
         </RightArrowContainer>
         <RequestBox>
