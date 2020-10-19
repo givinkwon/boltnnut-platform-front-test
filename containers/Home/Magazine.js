@@ -12,9 +12,35 @@ import DOMPurify from 'dompurify';
 const search_ic = 'static/icon/search.png'
 const right = "/static/images/main/main_right.png";
 const left = "/static/images/main/main_left.png";
-const image1 = "/static/images/main/logo_1.png";
-const image2 = "/static/images/main/logo_2.png";
-const image3 = "/static/images/main/logo_5.png";
+const image1 = "/static/images/logo/logo_1.png";
+const image2 = "/static/images/logo/logo_2.png";
+const image3 = "/static/images/logo/logo_3.png";
+const image4 = "/static/images/logo/logo_4.png";
+const image5 = "/static/images/logo/logo_5.png";
+const image6 = "/static/images/logo/logo_6_3.png";
+const image7 = "/static/images/logo/logo_7.jpg";
+const image8 = "/static/images/logo/logo_8.jpg";
+const image9 = "/static/images/logo/logo_9.png";
+const image10 = "/static/images/logo/logo_10.png";
+const image11 = "/static/images/logo/logo_11.png";
+const image12 = "/static/images/logo/logo_12.png";
+const image13 = "/static/images/logo/logo_13.png";
+const image14 = "/static/images/logo/logo_14.png";
+const image15 = "/static/images/logo/logo_15.png";
+const image16 = "/static/images/logo/logo_16.jpg";
+const image17 = "/static/images/logo/logo_17.png";
+const image18 = "/static/images/logo/logo_18.png";
+const image19 = "/static/images/logo/logo_19.png";
+const image20 = "/static/images/logo/logo_20.png";
+const image21 = "/static/images/logo/logo_21.png";
+const image22 = "/static/images/logo/logo_22.png";
+const image23 = "/static/images/logo/logo_23.png";
+const image24 = "/static/images/logo/logo_24.png";
+const image25 = "/static/images/logo/logo_25.png";
+const image26 = "/static/images/logo/logo_26.png";
+const image27 = "/static/images/logo/logo_27.png";
+const image28 = "/static/images/logo/logo_28.png";
+const image29 = "/static/images/logo/logo_29.png";
 
 @inject('Home')
 @observer
@@ -72,6 +98,7 @@ class MagazineContainer extends React.Component {
   render() {
     const data = this.props.Home.magazine_list
     const request_data = this.props.Home.request_list
+    const magazineCount = this.props.Home.magazine_list.length
     const { prev, next } = this.state
     const {idx} = this.state
 
@@ -165,6 +192,10 @@ class MagazineContainer extends React.Component {
             </Slider>
           </List>
         </MagazineBox>
+        <RightArrowContainer>
+        {/*edit   */}
+        {(this.state.idx*2 + 4) < magazineCount ? <RightArrow src={right} onClick = {this.sliderNext}/> : <RightArrow/>}
+        </RightArrowContainer>
         <RightArrow src={right} onClick = {this.sliderNext}/>
         <RequestBox>
           <Header>
@@ -192,7 +223,38 @@ class MagazineContainer extends React.Component {
                       <RequestImage src={image1}/>
                       <RequestImage src={image2}/>
                       <RequestImage src={image3}/>
-                      <RequestImage src={image1}/>
+                      <RequestImage src={image4}/>
+                      <RequestImage src={image5}/>
+                      <RequestImage src={image6}/>
+                      <RequestImage src={image7}/>
+                      <RequestImage src={image8}/>
+                      <RequestImage src={image9}/>
+                      <RequestImage src={image10}/>
+                      <RequestImage src={image11}/>
+                      <RequestImage src={image12}/>
+                      <RequestImage src={image13}/>
+                      <RequestImage src={image14}/>
+                      <RequestImage src={image15}/>
+                      <RequestImage src={image16}/>
+                      <RequestImage src={image17}/>
+                      <RequestImage src={image18}/>
+                      <RequestImage src={image19}/>
+                      <RequestImage src={image20}/>
+                      <RequestImage src={image21}/>
+                      <RequestImage src={image22}/>
+                      <RequestImage src={image23}/>
+                      <RequestImage src={image24}/>
+                      <RequestImage src={image25}/>
+                      <RequestImage src={image26}/>
+                      <RequestImage src={image27}/>
+                      <RequestImage src={image28}/>
+                      <RequestImage src={image29}/>
+
+
+
+
+
+
                 </Slider>
             </ImageList>
           </RequestItemBox>
@@ -233,10 +295,20 @@ const CustomContainer = styled.div`
   }
 `
 const ArrowContainer = styled.div`
+  position : relative;
   width: 19px;
   padding-right: 30px;
   height: 100%;
 `
+
+const RightArrowContainer = styled.div`
+  position : relative;
+  width: 19px;
+  padding-left: 30px;
+  margin-right: 50px;
+  height: 100%;
+`
+
 const FindExperct = styled(Container)`
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 0px;
@@ -408,6 +480,11 @@ const TextBox = styled.div`
   }
 `
 const LeftArrow = styled(RatioImage)`
+
+  position : absolute;
+  bottom : 50%;
+  right : 20%;
+
   cursor: pointer;
   margin-right: 40px;
   width: 19px;
@@ -416,7 +493,7 @@ const LeftArrow = styled(RatioImage)`
   > div {
     background-size: contain;
     background-repeat: no-repeat;
-    background-position = right;
+    background-position : right;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-right: 10px;
@@ -430,6 +507,10 @@ const LeftArrow = styled(RatioImage)`
   }
 `
 const RightArrow = styled(RatioImage)`
+  position : absolute;
+  bottom : 50%;
+  left : 20%;
+
   cursor: pointer;
   width: 19px;
   height: 32px;
@@ -437,7 +518,7 @@ const RightArrow = styled(RatioImage)`
   > div {
     background-size: contain;
     background-repeat: no-repeat;
-    background-position = right;
+    background-position : right;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-left: 10px;
@@ -465,6 +546,9 @@ const RequestList = styled.div`
   width: 384px;
   height: 400px;
   overflow: hidden;
+
+  pointer-events: none;
+
   .slick-list{
     > div {
       > div {
@@ -511,4 +595,6 @@ const ImageList = styled.div`
 const RequestImage = styled(Image)`
   width: 104px;
   height: 104px;
+
 `
+

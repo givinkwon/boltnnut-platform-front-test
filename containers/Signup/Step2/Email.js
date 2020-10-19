@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
 import Container from 'components/Container'
-import InputComponent from 'components/Input2'
+import InputComponent from 'components/Input3'
 import ButtonComponent from 'components/Button'
 import ButtonSpinnerComponent from 'components/ButtonSpinner'
 import CheckBoxComponent from 'components/CheckBox'
@@ -57,12 +57,12 @@ class EmailConatiner extends React.Component {
     const { Auth } = this.props
     return (
       <div>
-        <Header>
+        {/* <Header>
           <Text.FontSize20 color={WHITE} fontWeight={700}>{Auth.type === 'expert' ? '이메일/비밀번호' : '회원가입'} </Text.FontSize20>
-        </Header>
+        </Header> */}
         <Content>
           <W100>
-            <InputComponent placeholder='이메일을 입력하세요' label='이메일' onChange={Auth.setEmail} value={Auth.email}/>
+            <InputComponent placeholder='이메일을 입력하세요' label='이메일 주소' onChange={Auth.setEmail} value={Auth.email}/>
           </W100>
           <W50 left>
             <InputComponent placeholder='비밀번호를 입력하세요' label='비밀번호' type='password' onChange={Auth.setPassword} value={Auth.password}/>
@@ -73,10 +73,10 @@ class EmailConatiner extends React.Component {
 
           <W50 left>
             <InputComponent placeholder='-없이 입력해주세요' label='휴대전화' type='phone' onChange={Auth.setPhone} value={Auth.phone}/>
-            <br/>
+            {/* <br/>
             {Auth.type === 'expert' ? (<Text.FontSize14 color={DARKGRAY} fontWeight={500}>제조 의뢰 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
                                      :(<Text.FontSize14 color={DARKGRAY} fontWeight={500}>파트너와 미팅 및 계약 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
-            }
+            } */}
           </W50>
           <W50 right>
             <SelectBox>
@@ -150,14 +150,21 @@ const Header = styled.div`
   }
 `
 const Content = styled.div`
-  background-color: #f2f2f2;
-  padding: 20px;
-
+  padding: 40px;
+  border: solid 1px #c7c7c7;
+  border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
-  
+
+  div {
+    border-radius: 3px;
+    margin-top : 10px;
+  }
+  div > input {
+
+  }
   > div > div > p {
-    color: #4b4b4b;
+    color: #505050;
   }
   
   @media (min-width: 0px) and (max-width: 767.98px) {

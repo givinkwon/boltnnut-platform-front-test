@@ -136,7 +136,7 @@ class Step2Conatiner extends React.Component {
               {
                 Auth.loading
                 ? <ButtonSpinnerComponent/>
-                : <Text.FontSize20 id="sign_up_button_complete_p" color={WHITE} fontWeight={500}>회원가입 완료</Text.FontSize20>
+                : <Text.FontSize20 id="sign_up_button_complete_p" color={WHITE} fontWeight={500}>가입완료</Text.FontSize20>
               }
             </ButtonComponent>
           </ButtonBox>
