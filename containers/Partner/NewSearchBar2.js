@@ -235,8 +235,7 @@ class SearchBarContainer2 extends React.Component {
 //  };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-    await CategoryAPI.getMainCategory()
-                      .then((res) => (console.log(res.data.results)));
+
   }
   CustomSliderThumbComponent (props) {
   return (
@@ -258,6 +257,8 @@ class SearchBarContainer2 extends React.Component {
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail } = this.state;
     const { Partner, Auth, Request } = this.props;
+    console.log(Partner.select_big)
+    console.log(Partner.request_middle_list)
 
     return (
       <CustomContainer>
@@ -266,11 +267,11 @@ class SearchBarContainer2 extends React.Component {
             제품분야
           </Title>
           <Select
-            styles={customStyles} options={Request.big_category_list} value={Request.select_big}
-            getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}/>
+            styles={customStyles} options={Partner.category_list} value={Partner.select_big}
+            getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Partner.setBigCategory}/>
           <Select
-            styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
-            getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}/>
+            styles={customStyles} options={Partner.request_middle_list} value={Partner.select_mid}
+            getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Partner.setMidCategory}/>
           <DropButton
             onClick = {this.showDetail}
           >
