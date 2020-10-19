@@ -7,7 +7,7 @@ import { WHITE, PRIMARY } from "static/style";
 
 const WhiteCheckbox = withStyles({
   root: {
-    color: WHITE,
+    color: "#c7c7c7",
     "&$checked": {
       color: WHITE,
     },

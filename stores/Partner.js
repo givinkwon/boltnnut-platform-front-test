@@ -14,6 +14,7 @@ class Partner {
   // "/mainCategory"
   @observable category_list = [];
   @observable category_middle_list = [];
+  @observable request_middle_list = [];
   @observable develop_list = [];
   @observable city_list = [];
 
@@ -28,9 +29,14 @@ class Partner {
   @observable search_develop = [];
   @observable search_region = [];
 
+  @observable select_big = null;
+  @observable select_mid = null;
+
+
   @action init = () => {
     CategoryAPI.getMainCategory()
       .then((res) => {
+        this.big_category_all = res.data.results;
         this.category_list = res.data.results;
         this.category_list.forEach((mainCategory) => {
           this.category_middle_list = this.category_middle_list.concat(
@@ -75,6 +81,14 @@ class Partner {
     this.search_category = []
     this.search_develop = []
     this.search_region = []
+  }
+  @action setBigCategory = (obj) => {
+    this.select_mid = null;
+    this.select_big = obj;
+    this.request_middle_list = this.select_big.category_set;
+  }
+  @action setMidCategory = (obj) => {
+    this.select_mid = obj;
   }
 
   @action setParentList = (state, data, type) => {

@@ -142,7 +142,7 @@ const CustomContainer = styled.div`
 const Container = styled.div`
   margin-right: auto;
   margin-left: auto;
-  height: 100%
+  height: 100%;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100% - 40px);

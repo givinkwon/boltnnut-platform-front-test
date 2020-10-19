@@ -139,7 +139,7 @@ class NewBanner5Container extends React.Component {
           <Item>
             <Image src={image29} active={true}/>
           </Item>
-          <FooterBox>
+          {/*<FooterBox>
                     <ButtonBox>
                 <Button
                 id={'request'}
@@ -153,7 +153,7 @@ class NewBanner5Container extends React.Component {
                 </Text.FontSize24>
                 </Button>
             </ButtonBox>
-            </FooterBox>
+            </FooterBox>*/}
 
       </Category>
       </Banner>

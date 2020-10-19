@@ -7,6 +7,7 @@ import * as Text from 'components/Text'
 import {WHITE, PRIMARY, DARKGRAY} from 'static/style'
 
 import MenuItem from './MenuItem'
+const image1 = 'static/images/Info.png'
 
 @inject('Partner')
 @observer
@@ -54,9 +55,9 @@ class MenuConatiner extends React.Component {
           width < 768 ? (
               <MobileMenuBox>
                 <MobileMenuHeader>
-                  <MobileMenuTab active={tab === 1} onClick={() => this.setTab(1)}>
+                  {/*<MobileMenuTab active={tab === 1} onClick={() => this.setTab(1)}>
                     <Text.FontSize18 color={tab === 1 ? WHITE : DARKGRAY} fontWeight={700}>제품분야</Text.FontSize18>
-                  </MobileMenuTab>
+                  </MobileMenuTab>*/}
                   <MobileMenuTab active={tab === 2} onClick={() => this.setTab(2)}>
                     <Text.FontSize18 color={tab === 2 ? WHITE : DARKGRAY} fontWeight={700}>카테고리</Text.FontSize18>
                   </MobileMenuTab>
@@ -67,22 +68,10 @@ class MenuConatiner extends React.Component {
 
                 <Menu>
                   {
-                    tab === 1 && (
-                      <>
-                        {
-                          Partner.category_list.length > 0 && Partner.category_list.map((item, idx) => {
-                            return <MenuItem type='category' key={idx} data={item}/>
-                          })
-                        }
-                      </>
-                    )
-                  }
-                  {
                     tab === 2 && (
                       <>
                         {
                           Partner.develop_list.length > 0 && Partner.develop_list.map((item, idx) => {
-                            console.log(Partner.developBig);
                             return (
                               <MenuItem
                                 type='develop'
@@ -96,23 +85,12 @@ class MenuConatiner extends React.Component {
                       </>
                     )
                   }
-                  {
-                    tab === 3 && (
-                      <>
-                        {
-                          Partner.city_list.length > 0 && Partner.city_list.map((item, idx) => {
-                            return <MenuItem type='city' key={idx} data={item}/>
-                          })
-                        }
-                      </>
-                    )
-                  }
                 </Menu>
               </MobileMenuBox>
             )
             : (
               <MenuBox>
-                <Menu>
+                {/*<Menu>
                   <Header>
                     <Text.FontSize18 color={WHITE} fontWeight={700}>제품분야</Text.FontSize18>
                   </Header>
@@ -121,14 +99,16 @@ class MenuConatiner extends React.Component {
                       return <MenuItem type='category' key={idx} data={item}/>
                     })
                   }
-                </Menu>
+                </Menu>*/}
                 <Menu>
-                  <Header>
-                    <Text.FontSize18 color={WHITE} fontWeight={700}>카테고리</Text.FontSize18>
+                  <Header class="line">
+                    <span>카테고리</span>
+                    <img src={image1}/>
                   </Header>
                   {
                     Partner.develop_list.length > 0 && Partner.develop_list.map((item, idx) => {
                       console.log(Partner.developBig);
+                      console.log(item)
                       return (
                         <MenuItem
                           type='develop'
@@ -140,16 +120,6 @@ class MenuConatiner extends React.Component {
                     })
                   }
                 </Menu>
-                {/*<Menu style={{marginBottom: 20}}>
-                  <Header>
-                    <Text.FontSize18 color={WHITE} fontWeight={700}>지역</Text.FontSize18>
-                  </Header>
-                  {
-                    Partner.city_list.length > 0 && Partner.city_list.map((item, idx) => {
-                      return <MenuItem type='city' key={idx} data={item}/>
-                    })
-                  }
-                </Menu>*/}
               </MenuBox>
             )
         }
@@ -171,28 +141,44 @@ const MenuBox = styled.div`
   }
 `
 const Menu = styled.div`
-  background-color: #fff;
-  box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+  width: 219px;
   margin-bottom: 20px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 100%;
     margin-bottom: 0;
   }
   @media (min-width: 768px) {
-    width: 200px;
-    margin-top: 15px;
-    margin-right: 15px;
+    width: 219px;
+    margin-top: 30px;
+    margin-right: 87px;
   }
 `
 const Header = styled.div`
-  width: calc(100% - 30px);
-  padding: 15px;
-  margin-bottom: 16px;
-
-  background-color: ${PRIMARY};
+  width: 219px;
+  height: 36px;
+  object-fit: contain;
+  font-size: 24px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.42;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #191919;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  //background: linear-gradient(to top, #c2c2c2, #c2c2c2, transparent 5%);
+  border-bottom: 2px solid #c2c2c2;
+  > img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    padding-left: 12.1px;
+  }
   @media (min-width: 0px) and (max-width: 767.98px) {
     justify-content: center;
     margin-bottom: 4px;

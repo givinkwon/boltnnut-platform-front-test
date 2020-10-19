@@ -22,7 +22,8 @@ class Info extends React.Component {
     const { Post, Counter, Loading } = this.props;
     return (
       <div>
-        {Loading.is_open && <Spinner />}
+        {Loading.is_open}
+        {/* {Loading.is_open && <Spinner/>} */}
         <Head>
           <title>볼트앤너트</title>
         </Head>

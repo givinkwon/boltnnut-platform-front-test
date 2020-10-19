@@ -42,7 +42,8 @@ class AnswerDetail extends Component {
 
 		return (
 			<div>
-        {Loading.is_open && <Spinner/>}
+        {Loading.is_open}
+        {/* {Loading.is_open && <Spinner/>} */}
         <Head>
           {/* <title>Tirrilee :: {item[0].title}</title>
           <meta property="og:url" content={`https://www.tirrilee.io/news/${item[0].id}`}/>

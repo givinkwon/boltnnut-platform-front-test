@@ -4,7 +4,6 @@ import { inject, observer } from "mobx-react";
 import { withRouter } from 'next/router'
 import Router from "next/router";
 // components
-import Container from "./Container";
 import * as Text from "./Text";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
@@ -108,7 +107,7 @@ class Nav extends React.Component {
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     Auth.checkLogin();
   }
-  render() {
+  render () {
     const { Auth, Partner } = this.props;
     const { url, is_open, is_profile, token } = this.state;
 
@@ -125,8 +124,8 @@ class Nav extends React.Component {
                 />
               </Close>
 
-              {Auth.logged_in_user ? (
-                Auth.logged_in_user.type === 0 ? (
+              {this.props.Auth.logged_in_user ? (
+                this.props.Auth.logged_in_user.type === 0 ? (
                   /* client로 로그인 */
 
                   <Fragment>
@@ -160,7 +159,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      제품 인사이트
+                      <p class="line"> 매거진 </p>
                     </NavLink>
                     {/*<NavLink
                       onClick={() => Router.push("/info?tab=1")}
@@ -215,19 +214,9 @@ class Nav extends React.Component {
               ) : (
                 /* 로그인 안되어있는 경우 */
                 <Fragment>
-                  <NavLink
-                    first
-                    onClick={() => Router.push("/request?big=4&mid=")}
-                    active={url.indexOf("request") > -1}
-                  >
-                    의뢰하기
+                  <NavLink>
+                    서비스 소개
                   </NavLink>
-                  {/*<NavLink
-                    onClick={() => Router.push("/answer")}
-                    active={url.indexOf("answer") > -1}
-                  >
-                    보낸 의뢰
-                  </NavLink>*/}
                   <NavLink
                     onClick={
                       async () => {
@@ -242,10 +231,23 @@ class Nav extends React.Component {
                     제조사 찾기
                   </NavLink>
                   <NavLink
+                    first
+                    onClick={() => Router.push("/request?big=4&mid=")}
+                    active={url.indexOf("request") > -1}
+                  >
+                    의뢰하기
+                  </NavLink>
+                  {/*<NavLink
+                    onClick={() => Router.push("/answer")}
+                    active={url.indexOf("answer") > -1}
+                  >
+                    보낸 의뢰
+                  </NavLink>*/}
+                  <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      제품 인사이트
+                      매거진
                   </NavLink>
                   {/*<NavLink
                     onClick={() => Router.push("/info?tab=1")}
@@ -304,7 +306,7 @@ class Nav extends React.Component {
                   }}
                   active={url.indexOf("login") > -1}
                 >
-                  LOG IN
+                  로그인
                 </NavLink>
               )}
             </Menu>
@@ -345,6 +347,29 @@ const ProfileMenu = styled.div`
     }
   }
 `;
+const Container = styled.div`
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: calc(100% - 40px);
+    padding: 0 20px;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 720px;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 930px;
+  }
+
+  @media (min-width: 1300px) {
+    width: 1920px;
+  }
+`
 const Avatar = styled.img`
   width: 32px;
   height: 32px;
@@ -366,7 +391,7 @@ const NavWrap = styled.div`
     padding: 0;
   }
   @media (min-width: 768px) {
-    padding: 0 16px;
+    padding: 0 135px;
   }
 `;
 const Logo = styled.img`

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const Button = styled.div`
   color: ${props => props.color ? props.color : "#006cb3"};
-  border: solid 2px ${props => props.borderColor ? props.borderColor : "#006cb3"};
+  border: solid ${props => props.borderWidth ? props.borderWidth : "2px"} ${props => props.borderColor ? props.borderColor : "#006cb3"};
   background-color: ${props => props.backgroundColor ? props.backgroundColor : "#ffffff"};
   display: flex;
   justify-content: center;
