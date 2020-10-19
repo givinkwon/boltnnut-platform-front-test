@@ -12,7 +12,6 @@ import DOMPurify from 'dompurify';
 const search_ic = 'static/icon/search.png'
 const right = "/static/images/main/main_right.png";
 const left = "/static/images/main/main_left.png";
-<<<<<<< HEAD
 const image1 = "/static/images/logo/logo_1.png";
 const image2 = "/static/images/logo/logo_2.png";
 const image3 = "/static/images/logo/logo_3.png";
@@ -42,11 +41,6 @@ const image26 = "/static/images/logo/logo_26.png";
 const image27 = "/static/images/logo/logo_27.png";
 const image28 = "/static/images/logo/logo_28.png";
 const image29 = "/static/images/logo/logo_29.png";
-=======
-const image1 = "/static/images/main/logo_1.png";
-const image2 = "/static/images/main/logo_2.png";
-const image3 = "/static/images/main/logo_5.png";
->>>>>>> dced8ca968236c7547764146443d2e57d79fe92b
 
 @inject('Home')
 @observer
@@ -104,10 +98,7 @@ class MagazineContainer extends React.Component {
   render() {
     const data = this.props.Home.magazine_list
     const request_data = this.props.Home.request_list
-<<<<<<< HEAD
     const magazineCount = this.props.Home.magazine_list.length
-=======
->>>>>>> dced8ca968236c7547764146443d2e57d79fe92b
     const { prev, next } = this.state
     const {idx} = this.state
 
@@ -201,14 +192,11 @@ class MagazineContainer extends React.Component {
             </Slider>
           </List>
         </MagazineBox>
-<<<<<<< HEAD
         <RightArrowContainer>
         {/*edit   */}
         {(this.state.idx*2 + 4) < magazineCount ? <RightArrow src={right} onClick = {this.sliderNext}/> : <RightArrow/>}
         </RightArrowContainer>
-=======
         <RightArrow src={right} onClick = {this.sliderNext}/>
->>>>>>> dced8ca968236c7547764146443d2e57d79fe92b
         <RequestBox>
           <Header>
             <Text.FontSize30 color={"#0a2165"} fontWeight={700}>실시간 의뢰 건 리스트</Text.FontSize30>
@@ -235,7 +223,6 @@ class MagazineContainer extends React.Component {
                       <RequestImage src={image1}/>
                       <RequestImage src={image2}/>
                       <RequestImage src={image3}/>
-<<<<<<< HEAD
                       <RequestImage src={image4}/>
                       <RequestImage src={image5}/>
                       <RequestImage src={image6}/>
@@ -268,9 +255,6 @@ class MagazineContainer extends React.Component {
 
 
 
-=======
-                      <RequestImage src={image1}/>
->>>>>>> dced8ca968236c7547764146443d2e57d79fe92b
                 </Slider>
             </ImageList>
           </RequestItemBox>
@@ -311,15 +295,11 @@ const CustomContainer = styled.div`
   }
 `
 const ArrowContainer = styled.div`
-<<<<<<< HEAD
   position : relative;
-=======
->>>>>>> dced8ca968236c7547764146443d2e57d79fe92b
   width: 19px;
   padding-right: 30px;
   height: 100%;
 `
-<<<<<<< HEAD
 
 const RightArrowContainer = styled.div`
   position : relative;
@@ -328,8 +308,7 @@ const RightArrowContainer = styled.div`
   margin-right: 50px;
   height: 100%;
 `
-=======
->>>>>>> dced8ca968236c7547764146443d2e57d79fe92b
+
 const FindExperct = styled(Container)`
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 0px;
@@ -501,12 +480,11 @@ const TextBox = styled.div`
   }
 `
 const LeftArrow = styled(RatioImage)`
-<<<<<<< HEAD
+
   position : absolute;
   bottom : 50%;
   right : 20%;
-=======
->>>>>>> dced8ca968236c7547764146443d2e57d79fe92b
+
   cursor: pointer;
   margin-right: 40px;
   width: 19px;
@@ -529,12 +507,10 @@ const LeftArrow = styled(RatioImage)`
   }
 `
 const RightArrow = styled(RatioImage)`
-<<<<<<< HEAD
   position : absolute;
   bottom : 50%;
   left : 20%;
-=======
->>>>>>> dced8ca968236c7547764146443d2e57d79fe92b
+
   cursor: pointer;
   width: 19px;
   height: 32px;
@@ -570,10 +546,9 @@ const RequestList = styled.div`
   width: 384px;
   height: 400px;
   overflow: hidden;
-<<<<<<< HEAD
+
   pointer-events: none;
-=======
->>>>>>> dced8ca968236c7547764146443d2e57d79fe92b
+
   .slick-list{
     > div {
       > div {
@@ -620,8 +595,7 @@ const ImageList = styled.div`
 const RequestImage = styled(Image)`
   width: 104px;
   height: 104px;
-<<<<<<< HEAD
+
 `
-=======
-`
->>>>>>> dced8ca968236c7547764146443d2e57d79fe92b
+
+
