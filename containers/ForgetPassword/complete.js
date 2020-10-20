@@ -16,7 +16,7 @@ const search_ic = 'static/icon/search.png'
 
 @inject('Auth')
 @observer
-class FormConatiner extends React.Component {
+class CompleteConatiner extends React.Component {
   state = {
     search: ''
   }
@@ -30,10 +30,6 @@ class FormConatiner extends React.Component {
       this.props.Auth.login()
     }
   }
-  toSignUp = () => {
-    this.props.Auth.setStep(0)
-    Router.push('/signup')
-  }
   toLogIn = () => {
     this.props.Auth.setStep(0)
     Router.push('/login')
@@ -46,59 +42,28 @@ class FormConatiner extends React.Component {
         <Container>
           <Text.FontSize56 color={'#0a2165'} fontWeight={700}>비밀번호 찾기</Text.FontSize56>
           <ForgetPasswordContainer>
-            <Text.FontSize20 color={'#505050'}>이메일</Text.FontSize20>
-            <Input placeholder='이메일을 입력하세요' onChange={Auth.setEmail} value={Auth.email}/>
-            <Text.FontSize20 color={'#505050'}>휴대전화번호</Text.FontSize20>
-            <Input placeholder='- 없이 입력해주세요' onChange={Auth.setPhone} value={Auth.phone} onKeyDown={this.handleKeyDown}/>
-            <More>
-              <Text.FontSize15 color={BLACK} fontWeight={500}>
-                버튼을 누르시면 해당 이메일로 비밀번호를 재설정하기 위한 안내절차를 발송합니다.
-              </Text.FontSize15>
-            </More>
+            <Text.FontSize20 color={'#505050'}>비밀번호 찾기</Text.FontSize20>
+            <Text.FontSize22 color={'#0a2165'}>
+                메일이 발송이 완료 되었습니다.<br/>
+                메일을 확인하시고 비밀번호를 재설정해 주세요.</Text.FontSize22>
             <ButtonBox>
-              <ButtonComponent backgroundColor={"#0a2165"} borderColor={WHITE} borderRadius={3} borderWidth={1} onClick={Auth.forget}>
+              <ButtonComponent backgroundColor={"#0a2165"} borderColor={WHITE} borderRadius={3} borderWidth={1} onClick={Auth.toLogIn}>
                 {
                   Auth.loading
                   ? <ButtonSpinnerComponent scale='50%' primary/>
-                  : <Text.FontSize24 color={WHITE} fontWeight={500}>비밀번호 재설정하기</Text.FontSize24>
+                  : <Text.FontSize24 color={WHITE} fontWeight={500}>로그인</Text.FontSize24>
                 }
               </ButtonComponent>
             </ButtonBox>
           </ForgetPasswordContainer>
-          <Move>
-            <MovePage onClick={this.toLogIn}>로그인</MovePage>
-            <MovePage onClick={this.toSignUp}>회원가입</MovePage>
-          </Move>
         </Container>
       </Form>
     )
   }
 }
 
-export default FormConatiner
+export default CompleteConatiner
 
-const Move = styled.div`
-  display : flex ;
-  margin-top : 30px;
-  p:nth-of-type(1){
-    margin-right : 430px;
-  }
-`
-const MovePage = styled.p`
-  color: #0a2165;
-  cursor: pointer;
-  margin-left: auto;
-  font-size: 20px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.7;
-  letter-spacing: -0.5px;
-
-  :hover {
-    color :#0933b3 ; 
-  }
-`
 const ForgetPasswordContainer =  styled.div`
   border-radius: 10px;
   border: solid 1px #c7c7c7;
@@ -111,33 +76,6 @@ const ForgetPasswordContainer =  styled.div`
     font-style: normal;
     line-height: 1.7;
     letter-spacing: -0.5px;
-  }
-`
-const More = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  > p {
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.6;
-    letter-spacing: -0.38px;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    > p {
-      width: 100%;
-      text-align: center;
-    } 
-  }
-`
-const Input = styled(InputComponent)`
-  width : 508px ;
-  height : 49 px; 
-  
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin: 7px 0 !important;
   }
 `
 const ButtonBox = styled.div`

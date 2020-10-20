@@ -10,7 +10,7 @@ import CheckBoxComponent from 'components/CheckBox'
 import SelectComponent from 'components/Select'
 
 import * as Text from 'components/Text'
-import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
+import { GRAY, DARKGRAY, PRIMARY, WHITE, BLACK } from 'static/style'
 
 const search_ic = 'static/icon/search.png'
 const customStyles = {
@@ -56,7 +56,7 @@ class EmailConatiner extends React.Component {
    render(){
     const { Auth } = this.props
     return (
-      <div>
+      <div style={{marginBottom : 45}}>
         {/* <Header>
           <Text.FontSize20 color={WHITE} fontWeight={700}>{Auth.type === 'expert' ? '이메일/비밀번호' : '회원가입'} </Text.FontSize20>
         </Header> */}
@@ -91,7 +91,7 @@ class EmailConatiner extends React.Component {
             <InputComponent placeholder='회사명을 입력해주세요' label='회사명' type='name' onChange={Auth.setName} value={Auth.name}/>
             <br/>
             {Auth.type === 'expert' ? ''
-                                     :(<Text.FontSize14 color={DARKGRAY} fontWeight={500}>개인인 경우 '개인'을 입력해주세요</Text.FontSize14>)
+                                     :(<Text.FontSize15 color={BLACK} fontWeight={500}>개인일 경우 '개인'을 입력해주세요</Text.FontSize15>)
             }
           </W50>
           <W50 right>
@@ -150,11 +150,19 @@ const Header = styled.div`
   }
 `
 const Content = styled.div`
-  padding: 40px;
+  width : 996px;
+  padding: 10px 40px 40px;
   border: solid 1px #c7c7c7;
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
+  p{
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+  }
 
   div {
     border-radius: 3px;
@@ -174,8 +182,15 @@ const SelectBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  div {
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+  }
   > p {
-    margin-top: 15px;
+    margin-top: 30px;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     > div > div > div {

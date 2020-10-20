@@ -699,8 +699,8 @@ class Auth {
       .then((res) => {
         setTimeout(() => {
           this.loading = false;
-          alert("임시 비밀번호가 회원님의 이메일로 발송되었습니다.");
-          Router.push("/login");
+          // alert("임시 비밀번호가 회원님의 이메일로 발송되었습니다.");
+          // Router.push("/login");
         }, 800);
       })
       .catch((e) => {

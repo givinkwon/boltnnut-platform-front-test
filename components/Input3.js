@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import * as Text from './Text'
 import { DARKGRAY } from 'static/style'
 
-// login페이지
+// 회원가입 페이지
 class InputComponent extends React.Component {
   onChange = (e) => {
     if(this.props.type === 'file'){
@@ -42,8 +42,9 @@ const Wrap = styled.div`
   flex-direction: column;
   width: 100%;
   > p {
-    margin-top: 15px;
+    margin-top: 30px;
   }
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     > p {
       margin-bottom: 16px;
@@ -54,10 +55,10 @@ const Input = styled.input`
   width: 100%;
   margin-top: ${props => props.marginTop}px;
 
-  border-radius: 6px;
+  border-radius: 3px;
   border: solid 1px #c7c7c7;
   padding: 15px 15px;
-  color: #c7c7c7;
+  color: #505050;
   font-weight: 400;
   :focus {
     outline: none;
@@ -80,6 +81,6 @@ const Input = styled.input`
     font-size: 18px;
   }
   @media (min-width: 1300px) { 
-    font-size: 20px;
+    font-size: 18px;
   }
 `
