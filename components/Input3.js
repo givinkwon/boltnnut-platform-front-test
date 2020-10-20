@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import * as Text from './Text'
 import { DARKGRAY } from 'static/style'
 
+// login페이지
 class InputComponent extends React.Component {
   onChange = (e) => {
     if(this.props.type === 'file'){

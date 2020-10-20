@@ -158,7 +158,6 @@ const Content = styled.div`
 
   div {
     border-radius: 3px;
-    margin-top : 10px;
   }
   div > input {
 

@@ -126,12 +126,11 @@ class Step2Conatiner extends React.Component {
           </CheckBoxComponent>
 
           <MarketingModal open= {this.state.open_marketing} handleClose={this.handleClose} open_marketing={this.state.open_marketing} accept_marketing={this.state.accept_marketing}/>
-          <br/>
 
           <ButtonBox>
-            <ButtonComponent backgroundColor='#e6e6e6' borderColor='#e6e6e6' borderRadius={100} onClick={() => Auth.setStep(0)}>
+            {/* <ButtonComponent backgroundColor='#e6e6e6' borderColor='#e6e6e6' borderRadius={100} onClick={() => Auth.setStep(0)}>
               <Text.FontSize20 color='#a0a0a0' fontWeight={500}>이전</Text.FontSize20>
-            </ButtonComponent>
+            </ButtonComponent> */}
             <ButtonComponent id="sign_up_button_complete_div" backgroundColor={PRIMARY} borderColor={PRIMARY} borderRadius={100} onClick={this.handleSubmit}>
               {
                 Auth.loading
@@ -153,8 +152,15 @@ const ButtonBox = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-
   margin-top: 30px;
+
+  div {
+    border-radius: 3px;
+    box-shadow: 0 3px 6px 0 rgba(123, 123, 123, 0.64);
+    background-color: #0a2165;
+    width : 147px ; 
+    height: 52px;
+  }
   
   @media (min-width: 0px) and (max-width: 767.98px) {
     > div {

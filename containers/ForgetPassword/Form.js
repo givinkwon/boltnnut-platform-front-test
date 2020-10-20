@@ -4,13 +4,13 @@ import { inject, observer } from 'mobx-react'
 
 import Container from 'components/Container'
 import ButtonComponent from 'components/Button'
-import InputComponent from 'components/Input'
+import InputComponent from 'components/Input4'
 import ButtonSpinnerComponent from 'components/ButtonSpinner'
 
 import Router from 'next/router'
 
 import * as Text from 'components/Text'
-import { WHITE, PRIMARY } from 'static/style'
+import { BLACK, WHITE, PRIMARY } from 'static/style'
 
 const search_ic = 'static/icon/search.png'
 
@@ -36,25 +36,31 @@ class FormConatiner extends React.Component {
     return (
       <Form>
         <Container>
-          <Text.FontSize40 color={WHITE} fontWeight={700}>비밀번호 재설정</Text.FontSize40>
-          <Text.FontSize20 color={WHITE}>가입한 이메일 주소가 무엇인가요?</Text.FontSize20>
-          <Input label='이메일' placeholder='이메일' onChange={Auth.setEmail} value={Auth.email}/>
-          <Input label='휴대폰' placeholder='휴대폰' onChange={Auth.setPhone} value={Auth.phone} onKeyDown={this.handleKeyDown}/>
-          <More>
-            <Text.FontSize16 color={WHITE} fontWeight={500}>
-              다음 버튼을 누르시면 해당 이메일로 비밀번호를<br/>
-              재설정하기 위한 안내절차를 발송합니다.
-            </Text.FontSize16>
-          </More>
-          <ButtonBox>
-            <ButtonComponent backgroundColor={WHITE} borderColor={WHITE} borderRadius={100} onClick={Auth.forget}>
-              {
-                Auth.loading
-                ? <ButtonSpinnerComponent scale='50%' primary/>
-                : <Text.FontSize24 color={PRIMARY} fontWeight={500}>비밀번호 재설정하기</Text.FontSize24>
-              }
-            </ButtonComponent>
-          </ButtonBox>
+          <Text.FontSize56 color={'#0a2165'} fontWeight={700}>비밀번호 찾기</Text.FontSize56>
+          <ForgetPasswordContainer>
+            <Text.FontSize20 color={'#505050'}>이메일</Text.FontSize20>
+            <Input placeholder='이메일을 입력하세요' onChange={Auth.setEmail} value={Auth.email}/>
+            <Text.FontSize20 color={'#505050'}>휴대전화번호</Text.FontSize20>
+            <Input placeholder='- 없이 입력해주세요' onChange={Auth.setPhone} value={Auth.phone} onKeyDown={this.handleKeyDown}/>
+            <More>
+              <Text.FontSize15 color={BLACK} fontWeight={500}>
+                버튼을 누르시면 해당 이메일로 비밀번호를 재설정하기 위한 안내절차를 발송합니다.
+              </Text.FontSize15>
+            </More>
+            <ButtonBox>
+              <ButtonComponent backgroundColor={"#0a2165"} borderColor={WHITE} borderRadius={3} borderWidth={1} onClick={Auth.forget}>
+                {
+                  Auth.loading
+                  ? <ButtonSpinnerComponent scale='50%' primary/>
+                  : <Text.FontSize24 color={WHITE} fontWeight={500}>비밀번호 재설정하기</Text.FontSize24>
+                }
+              </ButtonComponent>
+            </ButtonBox>
+          </ForgetPasswordContainer>
+          <Move>
+            <MovePage onClick={this.toForgotID}>로그인</MovePage>
+            <MovePage onClick={this.toForgotPW}>회원가입</MovePage>
+          </Move>
         </Container>
       </Form>
     )
@@ -63,48 +69,94 @@ class FormConatiner extends React.Component {
 
 export default FormConatiner
 
+const Move = styled.div`
+  display : flex ;
+  margin-top : 30px;
+  p:nth-of-type(1){
+    margin-right : 430px;
+  }
+`
+const MovePage = styled.p`
+  color: #0a2165;
+  cursor: pointer;
+  margin-left: auto;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.7;
+  letter-spacing: -0.5px;
+
+  :hover {
+    color :#0933b3 ; 
+  }
+`
+const ForgetPasswordContainer =  styled.div`
+  border-radius: 10px;
+  border: solid 1px #c7c7c7;
+  padding : 40px;
+  margin-top : 50px;
+  > p { 
+    color : #505050;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+  }
+`
 const More = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  margin-top: 20px;
   margin-bottom: 20px;
   > p {
-    line-height: 1.4;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.6;
+    letter-spacing: -0.38px;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     > p {
-      margin-top: 30px;
       width: 100%;
       text-align: center;
     } 
   }
 `
 const Input = styled(InputComponent)`
+  width : 508px ;
+  height : 49 px; 
+  
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 7px 0 !important;
   }
 `
 const ButtonBox = styled.div`
   width: 100%;
-  max-width: 450px;
   justify-content: space-between;
   display: flex;
   > div {
     width: 100%;
+    > p {
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.42;
+      letter-spacing: -0.6px;
+    }
   }
 `
 const Form = styled.div`
-  background-image: url('/static/images/banner.jpg');
   background-position: center;
   background-size: cover;
   ${Container} {
-    max-width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     height: 100%;
+    
     > p:nth-of-type(2){
       margin-top: 15px;
       margin-bottom: 30px;
