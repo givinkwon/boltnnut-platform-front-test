@@ -31,13 +31,12 @@ const customStyles = {
     fontSize: 16,
   }),
   control: () => ({
-    fontSize: 16,
-    marginTop: 12,
-    border: '1px solid #e6e6e6',
+    marginTop: 10,
+    border: '1px solid #c7c7c7',
     backgroundColor: '#fff',
     display: 'flex',
-    borderRadius: 6,
-    padding: 4,
+    borderRadius: 3,
+    padding: 5,
   }),
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
@@ -167,9 +166,6 @@ const Content = styled.div`
   div {
     border-radius: 3px;
   }
-  div > input {
-
-  }
   > div > div > p {
     color: #505050;
   }
@@ -183,6 +179,8 @@ const SelectBox = styled.div`
   flex-direction: column;
   width: 100%;
   div {
+    color : #c7c7c7;
+    font-size : 20px;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;

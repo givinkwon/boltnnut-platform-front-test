@@ -59,11 +59,12 @@ const Input = styled.input`
   border: solid 1px #c7c7c7;
   padding: 15px 15px;
   color: #505050;
-  font-weight: 400;
   :focus {
     outline: none;
   }
   ::placeholder {
+    color : #c7c7c7;
+    font-size : 20px;
     line-height: 1.7;
     letter-spacing: -0.5px;
     font-weight: normal;

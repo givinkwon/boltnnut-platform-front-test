@@ -27,7 +27,7 @@ class FormConatiner extends React.Component {
     if (e.key === 'Enter') {
       // TODO 검색 API
       console.log('검색');
-      this.props.Auth.login()
+      this.props.Auth.forget()
     }
   }
   toSignUp = () => {

@@ -2,13 +2,13 @@ import React from 'react'
 import styled, {css} from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
-import InputComponent from 'components/Input2'
+import InputComponent from 'components/Input3'
 import SelectComponent from 'components/Select'
 
 
 import * as Text from 'components/Text'
 import * as Category from 'axios/Category'
-import { PRIMARY, DARKGRAY, WHITE, BLACK1 } from 'static/style'
+import { PRIMARY, DARKGRAY, WHITE, BLACK } from 'static/style'
 
 const badge_close = 'static/images/badge_close.png'
 
@@ -30,13 +30,12 @@ const customStyles = {
     fontSize: 16,
   }),
   control: () => ({
-    fontSize: 16,
-    marginTop: 12,
-    border: '1px solid #e6e6e6',
+    marginTop: 10,
+    border: '1px solid #c7c7c7',
     backgroundColor: '#fff',
     display: 'flex',
-    borderRadius: 6,
-    padding: 4,
+    borderRadius: 3,
+    padding: 5,
   }),
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
@@ -172,14 +171,22 @@ class CompanyConatiner extends React.Component {
     const { possible_list, history_list } = Answer
 
     return (
-      <div style={{marginTop: 30}}>
-        <Header>
-          <Text.FontSize20 color={WHITE} fontWeight={700}>회사정보</Text.FontSize20>
-        </Header>
+      <div style={{marginBottom : 40}}>
         <Content>
-          <W30>
+          <Header>
+            <Text.FontSize24 color={'#0933b3'} fontWeight={700}>회사정보</Text.FontSize24>
+          </Header>
+          <W50 left>
             <InputComponent placeholder='상호명을 입력해주세요' label='상호명' type='text' onChange={Auth.setCompanyName} value={Auth.company_name}/>
-          </W30>
+          </W50>
+          <W50 right select>
+            <SelectBox>
+              <Text.FontSize20 color={DARKGRAY} fontWeight={500}>시/도</Text.FontSize20>
+              <SelectComponent
+                styles={customStyles} options={Auth.city_data} value={Auth.city}
+                getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
+            </SelectBox>
+          </W50>
           {/*<W30 center>
             <InputComponent placeholder='종업원 수를 입력해주세요' label='종업원 수' type='number' onChange={Auth.setEmployee} value={Auth.employee}/>
           </W30>
@@ -189,14 +196,6 @@ class CompanyConatiner extends React.Component {
           <W30>
             <InputComponent placeholder='매출액을 입력해주세요' label='매출액' type='number' onChange={Auth.setRevenue} value={Auth.revenue}/>
           </W30>*/}
-          <W30 center select>
-            <SelectBox>
-              <Text.FontSize20 color={DARKGRAY} fontWeight={500}>시/도</Text.FontSize20>
-              <SelectComponent
-                styles={customStyles} options={Auth.city_data} value={Auth.city}
-                getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
-            </SelectBox>
-          </W30>
           {/*<W30 select>
             <SelectBox>
               <Text.FontSize20 color={DARKGRAY} fontWeight={500}>지역</Text.FontSize20>
@@ -467,7 +466,7 @@ const SearchCategory = styled.div`
     > p:nth-of-type(2) {
       width: 100%;
     }
-
+  }
   @media (min-width: 768px) and (max-width: 991.98px) {
     flex-direction: column;
     align-items: flex-start;
@@ -497,7 +496,24 @@ const TextArea = styled.textarea`
   :focus {
     outline: none;
   }
+  ::-webkit-input-placeholder {
+    color : #c7c7c7 !important;
+    font-weight: normal !important;
+    font-stretch: normal !important;
+    font-style: normal !important;
+    line-height: 1.7 !important;
+    letter-spacing: -0.5px !important;
+    
+  }
   ::placeholder {
+    color : #c7c7c7 !important;
+    font-weight: normal !important;
+    font-stretch: normal !important;
+    font-style: normal !important;
+    line-height: 1.7 !important;
+    letter-spacing: -0.5px !important;
+    /* 왜안먹노 ..  */
+
     @media (min-width: 0px) and (max-width: 767.98px) {
       font-size: 14px;
     }
@@ -532,31 +548,60 @@ const W100 = styled.div`
   width: 100%;
 `
 const Header = styled.div`
-  height: 55px;
-  background-color: ${PRIMARY};
   display: flex;
   align-items: center;
-  padding: 0 15px;
-
+  width : 100%;
+  > p {
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.42;
+    letter-spacing: -0.6px;
+  }
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 0px 10px;
   }
 `
 const Content = styled.div`
-  background-color: #f2f2f2;
-  padding: 20px;
+  width : 996px;
+  padding: 40px;
+  border: solid 1px #c7c7c7;
+  border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
-
+  p{
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+  }
+  div {
+    border-radius: 3px;
+  }
   > div > div > p {
-    color: #4b4b4b;
+    color: #505050;
   }
-  > div > p {
+  /* > div > p {
     color: #4b4b4b;
-  }
+  } */
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 10px 20px;
+  }
+`
+const W50 = styled.div`
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    width: calc(50% - 14px);
+    ${props => props.left && css`
+      margin-right: 14px;
+    `}
+    ${props => props.right && css`
+      margin-left: 14px;
+    `}
   }
 `
 const W30 = styled.div`
@@ -580,8 +625,17 @@ const SelectBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  div {
+    color : #c7c7c7;
+    font-size : 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+  }
   > p {
-    margin-top: 15px;
+    margin-top: 30px;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     > div > div > div {

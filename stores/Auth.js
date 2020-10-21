@@ -389,9 +389,14 @@ class Auth {
       })
   };
 
-  @action login = () => {
+  @action login = async () => {
     if (!this.email) {
       alert("이메일을 입력해주세요.");
+      return;
+    }
+    var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+    if (!emailValid.test(this.email)) {
+      await alert("이메일 형식을 확인해주세요.");
       return;
     }
     if (!this.password) {
@@ -675,12 +680,17 @@ class Auth {
         });
     }
   };
-  @action forget = () => {
+  @action forget = async () => {
     setTimeout(() => {
       this.loading = false;
     }, 1500);
     if (!this.email) {
       alert("이메일을 입력해주세요.");
+      return;
+    }
+    var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+    if (!emailValid.test(this.email)) {
+      await alert("이메일 형식을 확인해주세요.");
       return;
     }
     if (!this.phone) {
