@@ -32,9 +32,13 @@ const Banner = styled.div`
     height: 100%;
     font-stretch: normal;
     font-style: normal;
+    margin-top : 200px;
+    margin-bottom : 10px;
     >p {
       margin-right : auto;
       margin-left : auto;
+      font-stretch: normal;
+      font-style: normal;
     }
     > p:nth-of-type(1){
       line-height: 1.35;
@@ -46,7 +50,7 @@ const Banner = styled.div`
       letter-spacing: -0.6px;
     }
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  /* @media (min-width: 0px) and (max-width: 767.98px) {
     height: 180px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -57,5 +61,5 @@ const Banner = styled.div`
   }
   @media (min-width: 1300px) { 
     height: 250px;
-  }
+  } */
 `
