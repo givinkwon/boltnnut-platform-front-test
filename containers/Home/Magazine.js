@@ -50,14 +50,12 @@ class MagazineContainer extends React.Component {
     await Router.push(`/magazine/${id}`);
     Magazine.setCurrent(id);
   }
-
   state = {
     idx: 0,
     current: 1,
     next: true,
     prev: false,
   }
-  slider = null
   afterChangeHandler = (current) => {
     const magazineCount = this.props.Home.magazine_list.length
     if(current === 1){
@@ -94,13 +92,16 @@ class MagazineContainer extends React.Component {
     }
     this.slider.slickPrev()
   }
+  componentWillMount () {
+    var slider2 = this.slider
+    console.log(slider2)
+  }
 
   render() {
     const data = this.props.Home.magazine_list
     const request_data = this.props.Home.request_list
     const magazineCount = this.props.Home.magazine_list.length
-    const { prev, next } = this.state
-    const {idx} = this.state
+    const { prev, next, idx } = this.state
 
     var settings = {
       dots: false,
@@ -125,9 +126,6 @@ class MagazineContainer extends React.Component {
       autoplay: true,
       autoplaySpeed: 2000,
       arrows: false,
-      beforeChange: (current) => {
-        this.setState({current: current})
-      },
     };
     var settings3 = {
       dots: false,
@@ -206,7 +204,7 @@ class MagazineContainer extends React.Component {
           </Middle>
           <RequestItemBox>
             <RequestList>
-            <Slider {...settings3} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
+            <Slider {...settings3}>
               {
                 request_data.slice(0,20).map((item, idx) => {
                   return (
@@ -218,8 +216,9 @@ class MagazineContainer extends React.Component {
               }
             </Slider>
             </RequestList>
-            <ImageList>
-                <Slider {...settings2} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
+            <div>
+              <ImageList>
+                <Slider {...settings2}>
                       <RequestImage src={image1}/>
                       <RequestImage src={image2}/>
                       <RequestImage src={image3}/>
@@ -249,14 +248,9 @@ class MagazineContainer extends React.Component {
                       <RequestImage src={image27}/>
                       <RequestImage src={image28}/>
                       <RequestImage src={image29}/>
-
-
-
-
-
-
                 </Slider>
-            </ImageList>
+              </ImageList>
+            </div>
           </RequestItemBox>
         </RequestBox>
       </FindExperct>
@@ -583,6 +577,8 @@ const RequestImageContainer = styled.div`
   justify-content: space-evenly;
 `
 const ImageList = styled.div`
+  width: 100%;
+  height: 100%;
   text-align: center;
   align-items: center;
   justify-content: space-evenly;
