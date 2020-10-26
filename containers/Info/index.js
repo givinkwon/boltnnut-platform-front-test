@@ -4,6 +4,10 @@ import Head from "next/head";
 import BannerContainer from "./Banner";
 import TabContainer from "./Tab";
 
+import ManufacturerContainer from "./Manufacturer";
+import MassproductContainer from "./Massproduct";
+import EstimateContainer from "./Estimate";
+
 import PartnerContainer from "./Partner";
 import ExpertContainer from "./Expert";
 class AnswerConatiner extends React.Component {
@@ -32,8 +36,9 @@ class AnswerConatiner extends React.Component {
       <>
         <BannerContainer tab={tab} />
         <TabContainer tab={tab} setTab={this.setTab} />
-        {tab === 1 && <PartnerContainer />}
-        {tab === 2 && <ExpertContainer />}
+        {tab === 1 && <EstimateContainer/>}
+        {tab === 2 && <MassproductContainer/>}
+        {tab === 3 && <ManufacturerContainer/>}
       </>
     );
   }

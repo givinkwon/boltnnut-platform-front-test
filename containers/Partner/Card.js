@@ -151,7 +151,8 @@ const SummaryContainer = styled.div`
   padding-top: 33px;
 `
 const DetailContainer = styled.div`
-  transition: display: 2s;
+  /* transition: ; */
+  display: 2s;
   .dropup {
     width: 100%;
     height: 12px;
@@ -256,7 +257,6 @@ const Card = styled.div`
 const TextBox = styled.div`
   height: 186px;
   margin-left: 30px;
-  font-family: 'Noto Sans KR', sans-serif;
   .Header {
     width: 200px;
     height: 36px;

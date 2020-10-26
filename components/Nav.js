@@ -214,7 +214,16 @@ class Nav extends React.Component {
               ) : (
                 /* 로그인 안되어있는 경우 */
                 <Fragment>
-                  <NavLink>
+                  <NavLink
+                  onClick={
+                    async () => {
+                      await Router.push("/info");
+                      if(Router.pathname === '/info') {
+                        Router.reload();
+                      }
+                    }
+                  }
+                  active={url.indexOf("info") > -1}>
                     서비스 소개
                   </NavLink>
                   <NavLink

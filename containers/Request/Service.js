@@ -50,19 +50,19 @@ class Step1Conatiner extends React.Component {
           </Info> */}
 
           <ButtonBox>
-            <Button id="sign_uo_button_client" active={Auth.type==="client"} onClick={() => Auth.setType('client')}>
+            <Button id="find_manufacturer" active={Auth.type==="manufacturer"} onClick={() => Auth.setType('manufacturer')}>
               <div style={{margin : 0}}>
                 <Text.FontSize40 color={'#191919'} fontWeight={700}>제조사찾기 서비스</Text.FontSize40>
                 <Text.FontSize24 color={'#767676'} fontWeight={500}>제조 컨설턴트와 전문 제조사가<br/>고객님의 아이디어를 컨설팅 드리고<br/>현실화 시켜드립니다</Text.FontSize24>
               </div>
             </Button>
-            <Button id="sign_uo_button_partner" active={Auth.type==="expert"} onClick={() => Auth.setType('expert')}>
+            <Button id="development_massProduct" active={Auth.type==="massproduct"} onClick={() => Auth.setType('massproduct')}>
               <div style={{margin : 0}}>
                 <Text.FontSize40 color={'#191919'} fontWeight={700}>양산개발 서비스</Text.FontSize40>
                 <Text.FontSize24 color={'#767676'} fontWeight={500}>지속적인 소통과 제품 분석 시스템으로<br/>제품 생산에 불필요한 과정을 방지하여<br/>양산 비용을 최대 40% 절감합니다.</Text.FontSize24>            
               </div>
             </Button>
-            <Button id="sign_uo_button_partner" active={Auth.type==="expert"} onClick={() => Auth.setType('expert')}>
+            <Button id="find_estimate" active={Auth.type==="estimate"} onClick={() => Auth.setType('estimate')}>
               <div style={{margin : 0}}>
                 <Text.FontSize40 color={'#191919'} fontWeight={700}>견적수량 도출 서비스</Text.FontSize40>
                 <Text.FontSize24 color={'#767676'} fontWeight={500}>국내 제조사와 해외유통사 네크워크를<br/>통해 원하는 조건에 맞는 제조견적, MOQ<br/>(최소발주수량)등의 정보를 전달해드립니다.</Text.FontSize24>            
