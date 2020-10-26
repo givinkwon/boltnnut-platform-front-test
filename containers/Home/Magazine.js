@@ -493,7 +493,7 @@ const LeftArrow = styled(RatioImage)`
   > div {
     background-size: contain;
     background-repeat: no-repeat;
-    background-position = right;
+    background-position : right;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-right: 10px;
@@ -518,7 +518,7 @@ const RightArrow = styled(RatioImage)`
   > div {
     background-size: contain;
     background-repeat: no-repeat;
-    background-position = right;
+    background-position : right;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-left: 10px;
@@ -597,5 +597,3 @@ const RequestImage = styled(Image)`
   height: 104px;
 
 `
-
-

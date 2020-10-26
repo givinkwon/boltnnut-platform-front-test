@@ -9,7 +9,7 @@ import { WHITE } from "static/style";
 import * as AnswerAPI  from 'axios/Answer'
 
 const search_ic = "static/icon/search.png";
-
+//
 class BannerConatiner extends React.Component {
   render() {
     return (

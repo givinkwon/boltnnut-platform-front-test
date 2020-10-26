@@ -11,7 +11,7 @@ class BannerConatiner extends React.Component {
     return (
       <Banner>
         <Container>
-          <Text.FontSize48 color={WHITE} fontWeight={700}>회원가입</Text.FontSize48>
+          <Text.FontSize56 color={'#0a2165'} >회원가입</Text.FontSize56>
         </Container>
       </Banner>
     )
@@ -21,7 +21,6 @@ class BannerConatiner extends React.Component {
 export default BannerConatiner
 
 const Banner = styled.div`
-  background-image: url('/static/images/banner.jpg');
   background-position: center;
   background-size: cover;
   ${Container} {
@@ -29,6 +28,15 @@ const Banner = styled.div`
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    margin-top:200px;
+    p{
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.29;
+      letter-spacing: -1.4px;
+      text-align : center;
+    }
     > p:nth-of-type(2){
       margin-top: 8px;
     }
@@ -36,7 +44,7 @@ const Banner = styled.div`
       line-height: 1.3;
     }
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  /* @media (min-width: 0px) and (max-width: 767.98px) {
     height: 180px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -47,5 +55,5 @@ const Banner = styled.div`
   }
   @media (min-width: 1300px) { 
     height: 250px;
-  }
+  } */
 `

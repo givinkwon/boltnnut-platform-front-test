@@ -193,6 +193,7 @@ const Form = styled.div`
   background-position: center;
   background-size: cover; */
   min-height: 500px;
+  margin : 200px 0px;
   ${Container} {
     display: flex;
     flex-direction: column;
@@ -215,15 +216,15 @@ const Form = styled.div`
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    height: calc(100vh - 214px);
+    height: calc(80vh);
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    height: calc(100vh - 214px);
+    height: calc(80vh);
   }
   @media (min-width: 992px) and (max-width: 1299.98px) { 
-    height: calc(100vh - 214px);
+    height: calc(80vh);
   }
   @media (min-width: 1300px) { 
-    height: calc(100vh - 218px);
+    height: calc(80vh);
   }
 `

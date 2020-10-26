@@ -44,20 +44,28 @@ class Step1Conatiner extends React.Component {
           <ButtonBox>
             <Button id="sign_uo_button_client" active={Auth.type==="client"} onClick={() => Auth.setType('client')}>
               <div style={{margin : 0}}>
-                <Text.FontSize36 color={'#191919'} fontWeight={700}>클라이언트</Text.FontSize36>
+                <Text.FontSize40 color={'#191919'} fontWeight={700}>제조사찾기 서비스</Text.FontSize40>
                 <Text.FontSize24 color={'#767676'} fontWeight={500}>의뢰를 하고자하는 의뢰자</Text.FontSize24>
               </div>
             </Button>
             <Button id="sign_uo_button_partner" active={Auth.type==="expert"} onClick={() => Auth.setType('expert')}>
               <div style={{margin : 0}}>
-                <Text.FontSize36 color={'#191919'} fontWeight={700}>전문가</Text.FontSize36>
+                <Text.FontSize40 color={'#191919'} fontWeight={700}>양산개발 서비스</Text.FontSize40>
+                <Text.FontSize24 color={'#767676'} fontWeight={500}>제조 전문성을 가진 제조사</Text.FontSize24>            
+              </div>
+              </Button>
+              <Button id="sign_uo_button_partner" active={Auth.type==="expert"} onClick={() => Auth.setType('expert')}>
+              <div style={{margin : 0}}>
+                <Text.FontSize40 color={'#191919'} fontWeight={700}>견적수량 도출 서비스</Text.FontSize40>
                 <Text.FontSize24 color={'#767676'} fontWeight={500}>제조 전문성을 가진 제조사</Text.FontSize24>            
               </div>
               </Button>
           </ButtonBox>
           <NextButton backgroundColor={Auth.type ? PRIMARY : '#0a2165'} borderColor={Auth.type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
-            <Text.FontSize24 color={Auth.type ? WHITE : '#ffffff'} fontWeight={500}>다음</Text.FontSize24>
-            <Image src={right}/>
+            <Text.FontSize24 color={Auth.type ? WHITE : '#ffffff'} fontWeight={500}>알아보기</Text.FontSize24>
+          </NextButton>
+          <NextButton backgroundColor={Auth.type ? PRIMARY : '#0a2165'} borderColor={Auth.type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
+            <Text.FontSize24 color={Auth.type ? WHITE : '#ffffff'} fontWeight={500}>의뢰하기</Text.FontSize24>
           </NextButton>
         </Container>
       </Section>

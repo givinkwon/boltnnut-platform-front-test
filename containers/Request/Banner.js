@@ -11,8 +11,8 @@ class BannerConatiner extends React.Component {
     return (
       <Banner>
         <Container>
-          <Text.FontSize48 color={WHITE} fontWeight={700}>제품개발 의뢰하기</Text.FontSize48>
-          <Text.FontSize24 color={WHITE} fontWeight={400}>의뢰하고자 하는 제품에 대한 질문에 답하고 적합한 전문업체를 찾아보세요</Text.FontSize24>
+          <Text.FontSize40 color={'#0a2165'} fontWeight={700}>의뢰하기</Text.FontSize40>
+          <Text.FontSize24 color={'#191919'} fontWeight={500}>나에게 꼭 맞는 제조방식 시작하기</Text.FontSize24>
         </Container>
       </Banner>
     )
@@ -22,20 +22,28 @@ class BannerConatiner extends React.Component {
 export default BannerConatiner
 
 const Banner = styled.div`
-  background-image: url('/static/images/banner.jpg');
   background-position: center;
   background-size: cover;
+  
   ${Container} {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    font-stretch: normal;
+    font-style: normal;
+    >p {
+      margin-right : auto;
+      margin-left : auto;
+    }
+    > p:nth-of-type(1){
+      line-height: 1.35;
+      letter-spacing: -1px;
+    }
     > p:nth-of-type(2){
       margin-top: 8px;
-      line-height: 1.3em;
-    }
-    > p:nth-of-type(3){
-      line-height: 1.3;
+      line-height: 1.42;
+      letter-spacing: -0.6px;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {

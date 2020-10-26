@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
 import Container from 'components/Container'
-import InputComponent from 'components/Input2'
+import InputComponent from 'components/Input3'
 import ButtonComponent from 'components/Button'
 import ButtonSpinnerComponent from 'components/ButtonSpinner'
 import CheckBoxComponent from 'components/CheckBox'
@@ -117,11 +117,11 @@ class FileConatiner extends React.Component {
     const { Auth } = this.props
     const { crop, croppedImageUrl, src, modal_open } = this.state;
     return (
-      <div>
-        <Header>
-          <Text.FontSize20 color={WHITE} fontWeight={700}>포트폴리오</Text.FontSize20>
-        </Header>
+      <div style={{marginBottom : 45}}>
         <Content>
+          <Header>
+            <Text.FontSize24 color={'#0933b3'} fontWeight={700}>포트폴리오</Text.FontSize24>
+          </Header>
           <W100>
             <input
               onChange={this.onChangePortfolio}
@@ -131,12 +131,12 @@ class FileConatiner extends React.Component {
             />
 
             <Wrap>
-              <Text.FontSize20 color={DARKGRAY} fontWeight={500}>회사소개서[연혁, 실적, 상세 개발 이력, 조직도, 보유 장비 등]</Text.FontSize20>
+              <Text.FontSize20 color={'#505050'} fontWeight={500}>회사소개서[연혁, 실적, 상세 개발 이력, 조직도, 보유 장비 등]</Text.FontSize20>
               <InputBox onClick={() => this.portfolio.current.click()}>
-                <Text.FontSize20 color="#767676" fontWeight={400}>
+                <Text.FontSize20 color="#999999" fontWeight={400}>
                   { this.state.portfolioValue ? this.state.portfolioValue : '선택된 파일 없음' }
                 </Text.FontSize20>
-                <FileIcon src="/static/icon/download_file.svg" />
+                <FileIcon src="/static/icon/download.png" />
               </InputBox>
             </Wrap>
           </W100>
@@ -150,12 +150,12 @@ class FileConatiner extends React.Component {
             />
 
             <Wrap>
-              <Text.FontSize20 color={DARKGRAY} fontWeight={500}>개발인력 이력서[최소 2인 이상]</Text.FontSize20>
+              <Text.FontSize20 color={'#505050'}>개발인력 이력서</Text.FontSize20>
               <InputBox onClick={() => this.resume.current.click()}>
-                <Text.FontSize20 color="#767676" fontWeight={400}>
+                <Text.FontSize20 color="#999999">
                   { this.state.resumeValue ? this.state.resumeValue : '선택된 파일 없음' }
                 </Text.FontSize20>
-                <FileIcon src="/static/icon/download_file.svg" />
+                <FileIcon src="/static/icon/download.png" />
               </InputBox>
             </Wrap>
           </W100>
@@ -215,21 +215,34 @@ const W100 = styled.div`
   display: flex;
 `
 const Header = styled.div`
-  height: 55px;
-  background-color: ${PRIMARY};
-
   display: flex;
   align-items: center;
-
-  padding: 0 15px;
+  width : 100%;
+  > p {
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.42;
+    letter-spacing: -0.6px;
+  }
 `
 const Content = styled.div`
-  background-color: #f2f2f2;
-  padding: 20px;
-
+  width : 996px;
+  padding: 40px;
+  border: solid 1px #c7c7c7;
+  border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
-  
+  p{
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+  }
+  div {
+    border-radius: 3px;
+  }
   > div > div > p {
     color: #4b4b4b;
   }
@@ -267,8 +280,6 @@ const InputBox = styled.div`
     font-size: 16px;
   }
   > p {
-    max-height: 1em;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-right: 12px;

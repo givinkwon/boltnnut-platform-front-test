@@ -11,6 +11,8 @@ import styled, {css} from "styled-components"
 import Container from "components/Container";
 import PartnerInfoContainer from "./Partner";
 import CounterContainer from "./Counter";
+import ServiceContainer from "./Service";
+
 
 import Router from 'next/router';
 
@@ -34,11 +36,12 @@ class RequestConatiner extends React.Component {
   return (
       <>
         <BannerContainer/>
-        <SearchBarContainer/>
+        <ServiceContainer/>
+        {/* <SearchBarContainer/>
         <br/><br/><br/><br/>
         <CounterContainer />
         <PartnerInfoContainer />
-        <br/><br/><br/><br/>
+        <br/><br/><br/><br/> */}
       </>
     )
   }

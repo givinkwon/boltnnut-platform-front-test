@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
 import Container from 'components/Container'
-import InputComponent from 'components/Input2'
+import InputComponent from 'components/Input3'
 import ButtonComponent from 'components/Button'
 import ButtonSpinnerComponent from 'components/ButtonSpinner'
 import CheckBoxComponent from 'components/CheckBox'
@@ -31,13 +31,12 @@ const customStyles = {
     fontSize: 16,
   }),
   control: () => ({
-    fontSize: 16,
-    marginTop: 12,
-    border: '1px solid #e6e6e6',
+    marginTop: 10,
+    border: '1px solid #c7c7c7',
     backgroundColor: '#fff',
     display: 'flex',
-    borderRadius: 6,
-    padding: 4,
+    borderRadius: 3,
+    padding: 5,
   }),
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
@@ -57,11 +56,11 @@ class PartnerEmailConatiner extends React.Component {
    render(){
     const { Auth } = this.props
     return (
-      <div>
-        <Header>
-          <Text.FontSize20 color={WHITE} fontWeight={700}>{Auth.type === 'expert' ? '이메일/비밀번호' : '회원가입'} </Text.FontSize20>
-        </Header>
+      <div style={{marginBottom : 40}}>
         <Content>
+          <Header>
+            <Text.FontSize24 color={'#0933b3'} fontWeight={700}>{Auth.type === 'expert' ? '이메일/비밀번호' : '회원가입'} </Text.FontSize24>
+          </Header>
           <W100>
             <InputComponent placeholder='이메일을 입력하세요' label='이메일' onChange={Auth.setEmail} value={Auth.email}/>
           </W100>
@@ -74,12 +73,12 @@ class PartnerEmailConatiner extends React.Component {
 
           <W50 left>
             <InputComponent placeholder='-없이 입력해주세요' label='휴대전화' type='phone' onChange={Auth.setPhone} value={Auth.phone}/>
-            <br/>
+            {/* <br/>
             {Auth.type === 'expert' ? (<Text.FontSize14 color={DARKGRAY} fontWeight={500}>제조 의뢰 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
                                      :(<Text.FontSize14 color={DARKGRAY} fontWeight={500}>파트너와 미팅 및 계약 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
-            }
+            } */}
           </W50>
-          {/*<W50 right>
+          <W50 right>
             <SelectBox>
               <Text.FontSize20 color={DARKGRAY} fontWeight={500}>방문경로</Text.FontSize20>
               <SelectComponent
@@ -87,7 +86,7 @@ class PartnerEmailConatiner extends React.Component {
                 getOptionLabel={(option) => option.path} placeholder='옵션을 선택해주세요' onChange={Auth.setPath}/>
             </SelectBox>
           </W50>
-          <W50 left>
+          {/* <W50 left>
             <InputComponent placeholder='회사명을 입력해주세요' label='회사명' type='name' onChange={Auth.setName} value={Auth.name}/>
             <br/>
             {Auth.type === 'expert' ? ''
@@ -108,7 +107,7 @@ class PartnerEmailConatiner extends React.Component {
           {Auth.business && Auth.business.business == "기타" && <W50 right>
             <InputComponent placeholder='기타 업종을 입력해주세요' label='업종' type='business2' onChange={Auth.setBusiness2} value={Auth.business2}/>
             <br/>
-          </W50>*/}
+          </W50> */}
         </Content>
       </div>
     )
@@ -135,26 +134,41 @@ const W50 = styled.div`
   }
 `
 const Header = styled.div`
-  height: 55px;
-  background-color: ${PRIMARY};
   display: flex;
   align-items: center;
-  padding: 0 15px;
+  width : 100%;
+  > p {
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.42;
+    letter-spacing: -0.6px;
+  }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 0px 10px;
   }
 `
 const Content = styled.div`
-  background-color: #f2f2f2;
-  padding: 20px;
+  width : 996px;
+  padding: 40px;
+  border: solid 1px #c7c7c7;
+  border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
-
-  > div > div > p {
-    color: #4b4b4b;
+  p{
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
   }
-
+  div {
+    border-radius: 3px;
+  }
+  > div > div > p {
+    color: #505050;
+  }
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 10px;
   }
@@ -163,8 +177,17 @@ const SelectBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  div {
+    color : #c7c7c7;
+    font-size : 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+  }
   > p {
-    margin-top: 15px;
+    margin-top: 30px;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     > div > div > div {
