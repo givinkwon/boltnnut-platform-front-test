@@ -486,11 +486,24 @@ const NavLink = styled.p`
       margin-left: 0px !important;
     `}
   ${(props) =>
-    props.active &&
+    props.active ?
+    (
     css`
       font-weight: 700;
       background-color: rgba(255, 255, 255, 0.1);
-    `}
+      color: #0a2165;
+      font-size: 22px;
+      border-bottom: 4px solid #0a2165;
+    `) :
+    (
+    css`
+      font-weight: 500;
+      background-color: rgba(255, 255, 255, 0.1);
+      font-size: 20px;
+      font-weight: 500;
+    `
+    )
+    }
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
   }

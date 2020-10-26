@@ -191,10 +191,10 @@ class MagazineContainer extends React.Component {
           </List>
         </MagazineBox>
         <RightArrowContainer>
-        {/*edit   */}
-        {(this.state.idx*2 + 4) < magazineCount ? <RightArrow src={right} onClick = {this.sliderNext}/> : <RightArrow/>}
+          {/*edit   */}
+          {(this.state.idx*2 + 4) < magazineCount ? <RightArrow src={right} onClick = {this.sliderNext}/> : <RightArrow/>}
         </RightArrowContainer>
-        <RightArrow src={right} onClick = {this.sliderNext}/>
+        <RightArrow src={right} style={{visibility: 'hidden'}} onClick = {this.sliderNext}/> {/*TODO*/}
         <RequestBox>
           <Header>
             <Text.FontSize30 color={"#0a2165"} fontWeight={700}>실시간 의뢰 건 리스트</Text.FontSize30>
@@ -208,7 +208,7 @@ class MagazineContainer extends React.Component {
               {
                 request_data.slice(0,20).map((item, idx) => {
                   return (
-                    <RequestItem styled={{justifyContent: "center", alignItems: "center"}}>
+                    <RequestItem style={{justifyContent: "center", alignItems: "center"}}>
                       {item.name.split(':')[0]} 의뢰가 접수되었습니다.
                     </RequestItem>
                   )
