@@ -194,7 +194,6 @@ class MagazineContainer extends React.Component {
           {/*edit   */}
           {(this.state.idx*2 + 4) < magazineCount ? <RightArrow src={right} onClick = {this.sliderNext}/> : <RightArrow/>}
         </RightArrowContainer>
-        <RightArrow src={right} style={{visibility: 'hidden'}} onClick = {this.sliderNext}/> {/*TODO*/}
         <RequestBox>
           <Header>
             <Text.FontSize30 color={"#0a2165"} fontWeight={700}>실시간 의뢰 건 리스트</Text.FontSize30>
