@@ -50,14 +50,12 @@ class MagazineContainer extends React.Component {
     await Router.push(`/magazine/${id}`);
     Magazine.setCurrent(id);
   }
-
   state = {
     idx: 0,
     current: 1,
     next: true,
     prev: false,
   }
-  slider = null
   afterChangeHandler = (current) => {
     const magazineCount = this.props.Home.magazine_list.length
     if(current === 1){
@@ -94,13 +92,16 @@ class MagazineContainer extends React.Component {
     }
     this.slider.slickPrev()
   }
+  componentWillMount () {
+    var slider2 = this.slider
+    console.log(slider2)
+  }
 
   render() {
     const data = this.props.Home.magazine_list
     const request_data = this.props.Home.request_list
     const magazineCount = this.props.Home.magazine_list.length
-    const { prev, next } = this.state
-    const {idx} = this.state
+    const { prev, next, idx } = this.state
 
     var settings = {
       dots: false,
@@ -125,9 +126,6 @@ class MagazineContainer extends React.Component {
       autoplay: true,
       autoplaySpeed: 2000,
       arrows: false,
-      beforeChange: (current) => {
-        this.setState({current: current})
-      },
     };
     var settings3 = {
       dots: false,
@@ -204,7 +202,7 @@ class MagazineContainer extends React.Component {
           </Middle>
           <RequestItemBox>
             <RequestList>
-            <Slider {...settings3} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
+            <Slider {...settings3}>
               {
                 request_data.slice(0,20).map((item, idx) => {
                   return (
@@ -216,8 +214,9 @@ class MagazineContainer extends React.Component {
               }
             </Slider>
             </RequestList>
-            <ImageList>
-                <Slider {...settings2} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
+            <div>
+              <ImageList>
+                <Slider {...settings2}>
                       <RequestImage src={image1}/>
                       <RequestImage src={image2}/>
                       <RequestImage src={image3}/>
@@ -247,14 +246,9 @@ class MagazineContainer extends React.Component {
                       <RequestImage src={image27}/>
                       <RequestImage src={image28}/>
                       <RequestImage src={image29}/>
-
-
-
-
-
-
                 </Slider>
-            </ImageList>
+              </ImageList>
+            </div>
           </RequestItemBox>
         </RequestBox>
       </FindExperct>
@@ -279,15 +273,12 @@ const CustomContainer = styled.div`
     width: calc(100% - 40px);
     padding: 0 20px;
   }
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
   }
-
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 100%;
   }
-
   @media (min-width: 1300px) {
     width: 100%;
   }
@@ -315,7 +306,7 @@ const FindExperct = styled(Container)`
   @media (min-width: 768px) and (max-width: 991.98px) {
     padding: 40px 0px;
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     padding: 60px 0px;
   }
   @media (min-width: 1300px) {
@@ -335,7 +326,7 @@ const List = styled.div`
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 30px;
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     margin-top: 11px;
   }
   @media (min-width: 1300px) {
@@ -429,7 +420,7 @@ const Image = styled(RatioImage)`
   > div {
     transition: 0.4s;
   }
-  
+
   :hover {
     border-radius: 25px;
       opacity: 0.4;
@@ -478,11 +469,9 @@ const TextBox = styled.div`
   }
 `
 const LeftArrow = styled(RatioImage)`
-
   position : absolute;
   bottom : 50%;
   right : 20%;
-
   cursor: pointer;
   margin-right: 40px;
   width: 19px;
@@ -508,7 +497,6 @@ const RightArrow = styled(RatioImage)`
   position : absolute;
   bottom : 50%;
   left : 20%;
-
   cursor: pointer;
   width: 19px;
   height: 32px;
@@ -544,9 +532,7 @@ const RequestList = styled.div`
   width: 384px;
   height: 400px;
   overflow: hidden;
-
   pointer-events: none;
-
   .slick-list{
     > div {
       > div {
@@ -581,6 +567,8 @@ const RequestImageContainer = styled.div`
   justify-content: space-evenly;
 `
 const ImageList = styled.div`
+  width: 100%;
+  height: 100%;
   text-align: center;
   align-items: center;
   justify-content: space-evenly;
@@ -593,6 +581,4 @@ const ImageList = styled.div`
 const RequestImage = styled(Image)`
   width: 104px;
   height: 104px;
-
 `
-

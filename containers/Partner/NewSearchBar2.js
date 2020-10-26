@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 
+import * as RequestAPI from "axios/Request";
+
 import Container from "components/Container";
 import Button from "components/Button";
 
@@ -101,10 +103,10 @@ class SearchBarContainer2 extends React.Component {
     search: "",
     modal_open: false,
     value: 0,
-    price_min: 0,
-    price_max: 0,
-    due_min: 0,
-    due_max: 0,
+    //price_min: 0,
+    price_max: [0,0],
+    //due_min: 0,
+    due_max: [0,0],
     show_detail: "none",
     portfolioValue: ''
   };
@@ -133,10 +135,10 @@ class SearchBarContainer2 extends React.Component {
     }
   };
   RangeSlider = () => {
-  const [price_max, setPrice] = React.useState([0,0]);
+  [this.state.price_max, this.state.setPrice] = React.useState([0,0]);
 
   const handleChange = (event, newValue) => {
-    setPrice(newValue);
+    this.state.setPrice(newValue);
    };
 
   return (
@@ -146,7 +148,7 @@ class SearchBarContainer2 extends React.Component {
               ThumbComponent={this.CustomSliderThumbComponent}
               aria-labelledby="range-slider"
               onChange={handleChange}
-              value = {price_max}
+              value = {this.state.price_max}
               step={100}
               min={0}
               max={10000}
@@ -156,7 +158,7 @@ class SearchBarContainer2 extends React.Component {
       <PriceBox>
             <PriceInput>
               <input
-                value = {price_max[0]}
+                value = {this.state.price_max[0]}
                 onChange = {handleChange}
                 type = "value"/>
               <span> 만원 </span>
@@ -164,7 +166,7 @@ class SearchBarContainer2 extends React.Component {
             <span> ~ </span>
             <PriceInput>
               <input
-                value = {price_max[1]}
+                value = {this.state.price_max[1]}
                 onChange = {handleChange}
                 type = "value"
                 />
@@ -176,10 +178,10 @@ class SearchBarContainer2 extends React.Component {
   }
 
   RangeSlider2 = () => {
-  const [due_max, setDue] = React.useState([0,0]);
-
+  [this.state.due_max, this.state.setDue] = React.useState([0,0]);
+  //console.log(due_max[0], due_max[1])
   const handleChange = (event, newValue) => {
-    setDue(newValue);
+    this.state.setDue(newValue);
    };
 
   return (
@@ -189,7 +191,7 @@ class SearchBarContainer2 extends React.Component {
               ThumbComponent={this.CustomSliderThumbComponent}
               aria-labelledby="range-slider"
               onChange={handleChange}
-              value = {due_max}
+              value = {this.state.due_max}
               step={1}
               min={0}
               max={48}
@@ -199,7 +201,7 @@ class SearchBarContainer2 extends React.Component {
           <PriceBox>
             <PriceInput>
               <input
-                value = {due_max[0]}
+                value = {this.state.due_max[0]}
                 onChange = {handleChange}
                 type = "value"
                 />
@@ -208,7 +210,7 @@ class SearchBarContainer2 extends React.Component {
             <span> ~ </span>
             <PriceInput>
               <input
-                value = {due_max[1]}
+                value = {this.state.due_max[1]}
                 onChange = {handleChange}
                 type = "value"
                 />
@@ -245,7 +247,26 @@ class SearchBarContainer2 extends React.Component {
     </div>
     );
   }
+
   showDetail = () => {
+    if (this.props.Partner.select_big == null){
+       alert("제품분야를 선택해주세요")
+       return
+    }
+    if (this.props.Partner.select_mid == null){
+       alert("제품분야를 선택해주세요")
+       return
+    }
+    if (this.state.price_max[1] == 0){
+       alert("희망 예산을 선택해주세요")
+       return
+    }
+    if (this.state.due_max[1] == 0){
+       alert("희망 개발 기간을 선택해주세요")
+       return
+    }
+    //console.log(this.state.price_max[1], this.state.price_max)
+    //console.log(this.state.due_max[1], this.state.due_max)
     if (this.state.show_detail == "none") {
     this.setState({...this.state, show_detail: true})
     } else {
@@ -254,11 +275,88 @@ class SearchBarContainer2 extends React.Component {
     console.log(this.state.show_detail)
   }
 
+  submit = () => {
+    const { Request, router  } = this.props;
+
+    const {file} = this.state;
+
+    if (!Request.input_name) {
+      alert("제품 의뢰명을 입력해주세요.");
+      return;
+    }
+    if (!Request.input_phone) {
+      alert("전화번호를 입력해주세요.");
+      return;
+    }
+    if (!Request.input_phone2) {
+      alert("전화번호를 입력해주세요.");
+      return;
+    }
+    if (!Request.input_phone3) {
+      alert("전화번호를 입력해주세요.");
+      return;
+    }
+
+    var formData = new FormData();
+    formData.append("content", "18")
+    formData.append("client", 18)
+    formData.append("category",1)
+    formData.append("product", 30) // 의뢰제품
+    formData.append("name", Request.input_name);
+    formData.append("phone", Request.input_phone + Request.input_phone2 + Request.input_phone3);
+    //
+    if(file) {
+      formData.append("file", file);
+    }
+    const req = {
+      data: formData,
+    };
+    RequestAPI.create(req)
+      .then((res) => {
+        console.log("create: ", res);
+        Request.created_request = res.data
+        Request.loadAppropriatePartners()
+
+        const token = localStorage.getItem("token")
+        if(!token) { return }
+
+        //const token = localStorage.getItem("token")
+        //if(!token) { return }
+        {/*console.log(res.data.category.join(','))
+        const new_req = {
+            headers: {
+                Authorization: `Token ${token}`,
+            },
+            data: {
+                subclass: res.data.product,
+                subject: res.data.name,
+                category: res.data.category,
+            },
+        }
+        RequestAPI.sendKakao(new_req)
+          .then((res) => {
+            console.log("sendKakao :", res);
+          })
+          .catch((e) => {
+            console.log(e);
+            console.log(e.response);
+            console.log(e.response.new_req);
+          });
+          */}
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      })
+
+  };
+
+
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail } = this.state;
     const { Partner, Auth, Request } = this.props;
-    console.log(Partner.select_big)
-    console.log(Partner.request_middle_list)
+    {/*console.log(Partner.select_big)
+    console.log(Partner.request_middle_list)*/}
 
     return (
       <CustomContainer>
@@ -272,49 +370,64 @@ class SearchBarContainer2 extends React.Component {
           <Select
             styles={customStyles} options={Partner.request_middle_list} value={Partner.select_mid}
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Partner.setMidCategory}/>
-          <DropButton
+          {this.state.show_detail == "none" && <DropButton
             onClick = {this.showDetail}
           >
             <span> 무료 가견적 넣기 </span>
-          </DropButton>
+          </DropButton>}
         </SelectRow>
+
         <SelectRow>
           <Title>
             희망예산
           </Title>
           <this.RangeSlider/>
         </SelectRow>
+
         <SelectRow>
           <Title>
             기간
           </Title>
           <this.RangeSlider2/>
         </SelectRow>
+
         <DropDown
           style={{display: show_detail}}
         >
+
         <SelectRow>
           <Title>
             제품이름
           </Title>
-        <InputBox>
-            <input
+            <InputComponent
                 placeholder="ex)반려동물 관리 장난감"
+                value={Request.input_name}
+                onChange={Request.setInputName}
             />
-        </InputBox>
         </SelectRow>
+
         <SelectRow>
           <Title>
             전화번호
           </Title>
           <PhoneBox>
-            <PhoneInput/>
+            <InputComponent
+                value={Request.input_phone}
+                onChange={Request.setInputPhone}
+            />
               <img src={phone}/>
-            <PhoneInput/>
+            <InputComponent
+                value={Request.input_phone2}
+                onChange={Request.setInputPhone2}
+            />
               <img src={phone}/>
-            <PhoneInput/>
+            <InputComponent
+                value={Request.input_phone3}
+                onChange={Request.setInputPhone3}
+            />
           </PhoneBox>
         </SelectRow>
+
         <SelectRow>
           <Title>
             도면
@@ -333,12 +446,13 @@ class SearchBarContainer2 extends React.Component {
               />
           </FileBox>
         </SelectRow>
+
         <ButtonBox>
             <Button
               id={'request'}
               backgroundColor={WHITE + "00"}
               borderColor={WHITE}
-              onClick={() => Router.push("/request")}
+              onClick={this.submit}
             >
               <Text.FontSize26 color={WHITE} fontWeight={500} borderRadius={0} style={{display: "flex", alignItems: "center"}}>
                 가견적 넣기
