@@ -304,7 +304,7 @@ class SearchBarContainer2 extends React.Component {
     formData.append("product", 30) // 의뢰제품
     formData.append("name", Request.input_name);
     formData.append("phone", Request.input_phone + Request.input_phone2 + Request.input_phone3);
-
+    //
     if(file) {
       formData.append("file", file);
     }
