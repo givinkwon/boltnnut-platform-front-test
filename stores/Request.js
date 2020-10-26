@@ -49,16 +49,31 @@ class Request {
    // save_writed_request
   @observable input_name = "";
   @observable input_phone = "";
+  @observable input_phone2 = "";
+  @observable input_phone3 = "";
   @observable input_content = "";
 
   @observable input_day = null;
   @observable input_price = null;
 
+  @action setInputName = (val) => {
+    console.log(val)
+    this.input_name = val;
+  };
   @action setType = (val) => {
     this.type = val;
   };
   @action setTab = (val) => {
     this.tab = val;
+  };
+  @action setInputPhone = (val) => {
+    this.input_phone = val;
+  };
+  @action setInputPhone2 = (val) => {
+    this.input_phone2 = val;
+  };
+  @action setInputPhone3 = (val) => {
+    this.input_phone3 = val;
   };
   @action init = (q) => {
     CategoryAPI.getMainCategory()

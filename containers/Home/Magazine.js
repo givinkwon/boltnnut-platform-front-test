@@ -275,15 +275,12 @@ const CustomContainer = styled.div`
     width: calc(100% - 40px);
     padding: 0 20px;
   }
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
   }
-
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 100%;
   }
-
   @media (min-width: 1300px) {
     width: 100%;
   }
@@ -311,7 +308,7 @@ const FindExperct = styled(Container)`
   @media (min-width: 768px) and (max-width: 991.98px) {
     padding: 40px 0px;
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     padding: 60px 0px;
   }
   @media (min-width: 1300px) {
@@ -331,7 +328,7 @@ const List = styled.div`
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 30px;
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     margin-top: 11px;
   }
   @media (min-width: 1300px) {
@@ -425,7 +422,7 @@ const Image = styled(RatioImage)`
   > div {
     transition: 0.4s;
   }
-  
+
   :hover {
     border-radius: 25px;
       opacity: 0.4;
@@ -474,11 +471,9 @@ const TextBox = styled.div`
   }
 `
 const LeftArrow = styled(RatioImage)`
-
   position : absolute;
   bottom : 50%;
   right : 20%;
-
   cursor: pointer;
   margin-right: 40px;
   width: 19px;
@@ -504,7 +499,6 @@ const RightArrow = styled(RatioImage)`
   position : absolute;
   bottom : 50%;
   left : 20%;
-
   cursor: pointer;
   width: 19px;
   height: 32px;
@@ -540,9 +534,7 @@ const RequestList = styled.div`
   width: 384px;
   height: 400px;
   overflow: hidden;
-
   pointer-events: none;
-
   .slick-list{
     > div {
       > div {
@@ -591,5 +583,4 @@ const ImageList = styled.div`
 const RequestImage = styled(Image)`
   width: 104px;
   height: 104px;
-
 `
