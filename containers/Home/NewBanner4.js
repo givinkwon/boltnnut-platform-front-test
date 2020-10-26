@@ -770,7 +770,6 @@ const Arrow = styled(RatioImage)`
     background-size: contain;
     background-repeat: no-repeat;
   }
-  }
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: none;
   }
@@ -788,7 +787,6 @@ const Arrow = styled(RatioImage)`
   margin-top: 30px;
   margin-bottom: 24px;
   }
-}
 `
 const HeaderWrapper = styled.div`
   width: 100%;

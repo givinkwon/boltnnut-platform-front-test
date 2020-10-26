@@ -145,10 +145,10 @@ class MagazineContainer extends React.Component {
     };
     return (
     <CustomContainer>
-      <ArrowContainer>
-        <LeftArrow src={left} onClick = {this.sliderPrev}/>
-      </ArrowContainer>
       <FindExperct>
+        <LeftArrowContainer>
+          <LeftArrow src={left} onClick = {this.sliderPrev}/>
+        </LeftArrowContainer>
         <MagazineBox>
           <Header>
             <Text.FontSize30 color={"#0a2165"} fontWeight={700}>매거진</Text.FontSize30>
@@ -191,7 +191,6 @@ class MagazineContainer extends React.Component {
           </List>
         </MagazineBox>
         <RightArrowContainer>
-          {/*edit   */}
           {(this.state.idx*2 + 4) < magazineCount ? <RightArrow src={right} onClick = {this.sliderNext}/> : <RightArrow/>}
         </RightArrowContainer>
         <RequestBox>
@@ -284,7 +283,7 @@ const CustomContainer = styled.div`
     width: 100%;
   }
 `
-const ArrowContainer = styled.div`
+const LeftArrowContainer = styled.div`
   position : relative;
   width: 19px;
   padding-right: 30px;
