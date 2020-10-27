@@ -154,7 +154,6 @@ class NewBanner5Container extends React.Component {
                 </Button>
             </ButtonBox>
             </FooterBox>*/}
-
       </Category>
       </Banner>
     )
@@ -228,12 +227,12 @@ const Item = styled.div`
 `
 const Image = styled(RatioImage)`
   cursor: pointer;
-  //border: 2px solid #ddd;
-  //border-radius: 200px !important;
   margin-bottom: 20px;
-  //${props => props.active && css`
-  //  border: 2px solid ${PRIMARY};
-  //`}
+  /* border: 2px solid #ddd;
+  border-radius: 200px !important;  
+  ${props => props.active && css`
+    border: 2px solid ${PRIMARY};
+  `} */
 `
 const HeaderBox = styled.div`
   width: 100%;
@@ -284,7 +283,7 @@ const ButtonBox = styled.div`
     margin-right: 10px;
     width: 100% !important;
     height: fit-content;
-    padding: 22px 0px 14px 0px; !important;
+    padding: 22px 0px 14px 0px !important;
     background-color: #ffc000 !important;;
     text-align: center;
     align-items: center;
@@ -308,7 +307,7 @@ const ButtonBox = styled.div`
 
       }
     }
-    }
+  }
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 63px;
     margin-bottom: 40px;
@@ -326,7 +325,7 @@ const ButtonBox = styled.div`
     margin-top: 104px;
     margin-bottom: 0px;
   }
-  }
+  
 `
 
 const Header = styled.div`
@@ -342,7 +341,7 @@ const Header = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: #061953;
-  }
+  
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 80px;
     margin-bottom: 60px;

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 import { inject, observer } from 'mobx-react'
+import Router from "next/router";
 
 
 import Container from 'components/Container'
@@ -12,57 +13,54 @@ import CheckBoxComponent from 'components/CheckBox'
 import * as Text from 'components/Text'
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
 
-const search_ic = 'static/icon/search.png'
-const right = "/static/images/main/main_right.png";
-
-
-@inject('Auth')
+@inject('Request')
 @observer
 class Step1Conatiner extends React.Component {
-  Next = () => {
-    const { Auth } = this.props
-    if(Auth.type){
-      Auth.setStep(1)
+  Info = () => {
+    const { Request } = this.props
+    if(Request.type){
+      Request.setStep(0)
+      Router.push("/info")
     }
   }
-  Info = () => {
-    const { Auth } = this.props
-    if(Auth.type){
-      Auth.setStep(1)
+  Next = () => {
+    const { Request } = this.props
+    if(Request.type){
+      Request.setStep(1)
     }
   }
    render(){
-    const { Auth } = this.props
+    const { Request } = this.props
     return (
       <Section style={{paddiingTop : 0}}>
         <ServiceContainer>
           {/* <Info>
             <Text.FontSize24>
               {
-                Auth.type === 'client' &&
+                Request.type === 'client' &&
                   '의뢰를 하고자하는 의뢰사'
               }
               {
-                Auth.type === 'expert' &&
+                Request.type === 'expert' &&
                   '제조 전문성을 가진 제조사'
               }
             </Text.FontSize24>
           </Info> */}
 
           <ButtonBox>
-            <Button id="find_manufacturer" active={Auth.type==="manufacturer"} onClick={() => Auth.setType('manufacturer')}>
+            <Button id="find_manufacturer" active={Request.type==="manufacturer"} onClick={() => Request.setType('manufacturer')}>
               <div style={{margin : 0}}>
                 <Text.FontSize40 color={'#191919'} fontWeight={700}>제조사찾기 서비스</Text.FontSize40>
                 <Text.FontSize24 color={'#767676'} fontWeight={500}>제조 컨설턴트와 전문 제조사가<br/>고객님의 아이디어를 컨설팅 드리고<br/>현실화 시켜드립니다</Text.FontSize24>
               </div>
             </Button>
-            <Button id="development_massProduct" active={Auth.type==="massproduct"} onClick={() => Auth.setType('massproduct')}>
+            <Button id="development_massProduct" active={Request.type==="massproduct"} onClick={() => Request.setType('massproduct')}>
               <div style={{margin : 0}}>
                 <Text.FontSize40 color={'#191919'} fontWeight={700}>양산개발 서비스</Text.FontSize40>
                 <Text.FontSize24 color={'#767676'} fontWeight={500}>지속적인 소통과 제품 분석 시스템으로<br/>제품 생산에 불필요한 과정을 방지하여<br/>양산 비용을 최대 40% 절감합니다.</Text.FontSize24>            
               </div>
             </Button>
-            <Button id="find_estimate" active={Auth.type==="estimate"} onClick={() => Auth.setType('estimate')}>
+            <Button id="find_estimate" active={Request.type==="estimate"} onClick={() => Request.setType('estimate')}>
               <div style={{margin : 0}}>
                 <Text.FontSize40 color={'#191919'} fontWeight={700}>견적수량 도출 서비스</Text.FontSize40>
                 <Text.FontSize24 color={'#767676'} fontWeight={500}>국내 제조사와 해외유통사 네크워크를<br/>통해 원하는 조건에 맞는 제조견적, MOQ<br/>(최소발주수량)등의 정보를 전달해드립니다.</Text.FontSize24>            
@@ -70,11 +68,11 @@ class Step1Conatiner extends React.Component {
             </Button>
           </ButtonBox>
           <NextButtonBox>
-            <InfoButton backgroundColor={Auth.type ? WHITE : '#ffffff'} borderColor={Auth.type ? PRIMARY : '#dcdcdc'} borderRadius={3} onClick={this.Info}>
-                <Text.FontSize24 color={Auth.type ? PRIMARY : '#0a2165'} fontWeight={500}>알아보기</Text.FontSize24>
+            <InfoButton backgroundColor={Request.type ? WHITE : '#ffffff'} borderColor={Request.type ? PRIMARY : '#dcdcdc'} borderRadius={3} onClick={this.Info}>
+                <Text.FontSize24 color={Request.type ? PRIMARY : '#0a2165'} fontWeight={500}>알아보기</Text.FontSize24>
             </InfoButton>
-            <NextButton backgroundColor={Auth.type ? PRIMARY : '#0a2165'} borderColor={Auth.type ? PRIMARY : '#dcdcdc'} borderRadius={3} onClick={this.Next}>
-                <Text.FontSize24 color={Auth.type ? WHITE : '#ffffff'} fontWeight={500}>의뢰하기</Text.FontSize24>
+            <NextButton backgroundColor={Request.type ? PRIMARY : '#0a2165'} borderColor={Request.type ? PRIMARY : '#dcdcdc'} borderRadius={3} onClick={this.Next}>
+                <Text.FontSize24 color={Request.type ? WHITE : '#ffffff'} fontWeight={500}>의뢰하기</Text.FontSize24>
             </NextButton>
           </NextButtonBox>
           

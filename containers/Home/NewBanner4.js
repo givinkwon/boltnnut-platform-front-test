@@ -20,89 +20,86 @@ const star_gray_img = "/static/images/main/star_gray.png";
 const arrow = "/static/images/main/[M]chevron_down_gray.png"
 
 class NewBanner4Container extends React.Component {
-
   render() {
-
     return (
     <CustomContainer>
       <Container>
         <HeaderBox>
           <Header2>클라이언트의 제조 성공이야기 </Header2>
         </HeaderBox>
-
         <BodyBox>
-                      <Item>
-                        <CommentBox>
-                          <Image src={image4} />
-                          <TextBox>
-                            <HeaderWrapper>
-                              <div class="CommentHeader">
-                                <p> MANU </p>
-                              </div>
-                              <div class="CommentStar">
-                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
-                              </div>
-                            </HeaderWrapper>
-                            <div class="CommentBody">
-                              <span class="Header"> 볼트앤너트 덕분에 2차 마켓까지 진행하였어요 </span>
-                              <p> 업체를 고를 때 개발을 진행하는 마인드와 포트폴리오를 가장 중요하게 생각하는데 볼트앤너트가 모두 제공해줘서 편리했습니다. </p>
-                            </div>
-                         </TextBox>
-                        </CommentBox>
-                      </Item>
-                      <Item>
-                        <SmallCommentBox>
-                            <div class="HeaderWrapper">
-                              <SmallImage src={image2} />
-                              <div class = "TextBox">
-                              <div class="CommentHeader">
-                                <p> IOPET </p>
-                              </div>
-                              <div class="CommentStar">
-                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
-                              </div>
-                              </div>
-                            </div>
-                            <div class="CommentBody">
-                              <p> 기존거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트를 통해 업체들을 추천 받아 비교해볼 수  있었고 더 나은 조건의 업체와계약하게 되었습니다. </p>
-                            </div>
-                        </SmallCommentBox>
-                        <SmallCommentBox>
-                            <div class="HeaderWrapper">
-                              <SmallImage src={image3} />
-                              <div class = "TextBox">
-                              <div class="CommentHeader">
-                                <p> HClab </p>
-                              </div>
-                              <div class="CommentStar">
-                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
-                              </div>
-                              </div>
-                            </div>
-                            <div class="CommentBody">
-                              <p> 제품 제조에 처음 도전한 저희는 제품을 개발해줄 개발업체를 찾느라 한 달 이상 애를 먹고 있었어요. <br/> 볼트앤너트 덕에 더 이상 시간을 낭비하지 않아도 되었답니다. </p>
-                            </div>
-                        </SmallCommentBox>
-                        <SmallCommentBox>
-                            <div class="HeaderWrapper">
-                              <SmallImage src={image1} />
-                              <div class = "TextBox">
-                              <div class="CommentHeader">
-                                <p> TAJO </p>
-                              </div>
-                              <div class="CommentStar">
-                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
-                              </div>
-                              </div>
-                            </div>
-                            <div class="CommentBody">
-                              <p> 제조 양산 프로세스를 모르다 보니 시행착오가 많았는데 볼트앤너트 측에서 PM 업무를 수행하여 제품을 성공적으로  양산할 수 있었습니다. </p>
-                            </div>
-                        </SmallCommentBox>
-                      </Item>
+          <Item>
+            <CommentBox>
+              <Image src={image4} />
+              <TextBox>
+                <HeaderWrapper>
+                  <div class="CommentHeader">
+                    <p> MANU </p>
+                  </div>
+                  <div class="CommentStar">
+                    <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                  </div>
+                </HeaderWrapper>
+                <div class="CommentBody">
+                  <span class="Header"> 볼트앤너트 덕분에 2차 마켓까지 진행하였어요 </span>
+                  <p> 업체를 고를 때 개발을 진행하는 마인드와 포트폴리오를 가장 중요하게 생각하는데 볼트앤너트가 모두 제공해줘서 편리했습니다. </p>
+                </div>
+              </TextBox>
+            </CommentBox>
+          </Item>
+          <Item>
+            <SmallCommentBox>
+                <div class="HeaderWrapper">
+                  <SmallImage src={image2} />
+                  <div class = "TextBox">
+                  <div class="CommentHeader">
+                    <p> IOPET </p>
+                  </div>
+                  <div class="CommentStar">
+                    <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                  </div>
+                  </div>
+                </div>
+                <div class="CommentBody">
+                  <p> 기존거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트를 통해 업체들을 추천 받아 비교해볼 수  있었고 더 나은 조건의 업체와계약하게 되었습니다. </p>
+                </div>
+            </SmallCommentBox>
+            <SmallCommentBox>
+                <div class="HeaderWrapper">
+                  <SmallImage src={image3} />
+                  <div class = "TextBox">
+                  <div class="CommentHeader">
+                    <p> HClab </p>
+                  </div>
+                  <div class="CommentStar">
+                    <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                  </div>
+                  </div>
+                </div>
+                <div class="CommentBody">
+                  <p> 제품 제조에 처음 도전한 저희는 제품을 개발해줄 개발업체를 찾느라 한 달 이상 애를 먹고 있었어요. <br/> 볼트앤너트 덕에 더 이상 시간을 낭비하지 않아도 되었답니다. </p>
+                </div>
+            </SmallCommentBox>
+            <SmallCommentBox>
+                <div class="HeaderWrapper">
+                  <SmallImage src={image1} />
+                  <div class = "TextBox">
+                  <div class="CommentHeader">
+                    <p> TAJO </p>
+                  </div>
+                  <div class="CommentStar">
+                    <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                  </div>
+                  </div>
+                </div>
+                <div class="CommentBody">
+                  <p> 제조 양산 프로세스를 모르다 보니 시행착오가 많았는데 볼트앤너트 측에서 PM 업무를 수행하여 제품을 성공적으로  양산할 수 있었습니다. </p>
+                </div>
+            </SmallCommentBox>
+          </Item>
         </BodyBox>
-    </Container>
-  </CustomContainer>
+      </Container>
+    </CustomContainer>
     );
   }
 }

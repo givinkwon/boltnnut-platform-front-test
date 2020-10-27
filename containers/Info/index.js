@@ -12,8 +12,9 @@ import PartnerContainer from "./Partner";
 import ExpertContainer from "./Expert";
 class AnswerConatiner extends React.Component {
   state = {
-    tab: 0,
+    tab: 1,
   };
+  // tab값 전달받아야돼
   setTab = (val) => {
     this.setState({ tab: val });
   };
@@ -36,9 +37,10 @@ class AnswerConatiner extends React.Component {
       <>
         <BannerContainer tab={tab} />
         <TabContainer tab={tab} setTab={this.setTab} />
-        {tab === 1 && <EstimateContainer/>}
-        {tab === 2 && <MassproductContainer/>}
-        {tab === 3 && <ManufacturerContainer/>}
+        {tab === 1 && <ManufacturerContainer/>}
+        {tab === 2 && <MassproductContainer/>}        
+        {tab === 3 && <EstimateContainer/>}
+
       </>
     );
   }

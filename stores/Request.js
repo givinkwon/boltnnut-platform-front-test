@@ -55,7 +55,13 @@ class Request {
 
   @observable input_day = null;
   @observable input_price = null;
+  
+  @observable step = 0;
 
+  
+  @action setStep = (val) => {
+    this.step = val;
+  };
   @action setInputName = (val) => {
     console.log(val)
     this.input_name = val;
