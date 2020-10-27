@@ -20,17 +20,36 @@ const star_gray_img = "/static/images/main/star_gray.png";
 const arrow = "/static/images/main/[M]chevron_down_gray.png"
 
 class NewBanner4Container extends React.Component {
-
+  state = {
+    idx: 0,
+    current: 1,
+    next: true,
+    prev: false,
+    width: 0,
+    tab: 0,
+  }
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   render() {
-
+    const { width } = this.state;
     return (
     <CustomContainer>
       <Container>
         <HeaderBox>
           <Header2>클라이언트의 제조 성공이야기 </Header2>
         </HeaderBox>
-
         <BodyBox>
+          <>
+          { width > 450 ? (
+            <>
                       <Item>
                         <CommentBox>
                           <Image src={image4} />
@@ -100,6 +119,70 @@ class NewBanner4Container extends React.Component {
                             </div>
                         </SmallCommentBox>
                       </Item>
+            </>
+                      ) : (
+                    <>
+                      <Item>
+                        <CommentBox>
+                          <Image src={image4} />
+                          <TextBox>
+                            <HeaderWrapper>
+                              <div class="CommentHeader">
+                                <p> MANU </p>
+                              </div>
+                              <div class="CommentStar">
+                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                              </div>
+                            </HeaderWrapper>
+                            <div class="CommentBody">
+                              <span class="Header"> 볼트앤너트 덕분에 2차 마켓까지 진행하였어요 </span>
+                              <p> 업체를 고를 때 개발을 진행하는 마인드와 포트폴리오를 가장 중요하게 생각하는데 볼트앤너트가 모두 제공해줘서 편리했습니다. </p>
+                            </div>
+                         </TextBox>
+                        </CommentBox>
+                      </Item>
+                      <Item>
+                        <CommentBox>
+                          <Image src={image2} />
+                          <TextBox>
+                            <HeaderWrapper>
+                              <div class="CommentHeader">
+                                <p> MANU </p>
+                              </div>
+                              <div class="CommentStar">
+                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                              </div>
+                            </HeaderWrapper>
+                            <div class="CommentBody">
+                              <span class="Header"> 볼트앤너트 덕분에 2차 마켓까지 진행하였어요 </span>
+                              <p> 업체를 고를 때 개발을 진행하는 마인드와 포트폴리오를 가장 중요하게 생각하는데 볼트앤너트가 모두 제공해줘서 편리했습니다. </p>
+                            </div>
+                         </TextBox>
+                        </CommentBox>
+                      </Item>
+                      <Item>
+                        <CommentBox>
+                          <Image src={image3} />
+                          <TextBox>
+                            <HeaderWrapper>
+                              <div class="CommentHeader">
+                                <p> MANU </p>
+                              </div>
+                              <div class="CommentStar">
+                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                              </div>
+                            </HeaderWrapper>
+                            <div class="CommentBody">
+                              <span class="Header"> 볼트앤너트 덕분에 2차 마켓까지 진행하였어요 </span>
+                              <p> 업체를 고를 때 개발을 진행하는 마인드와 포트폴리오를 가장 중요하게 생각하는데 볼트앤너트가 모두 제공해줘서 편리했습니다. </p>
+                            </div>
+                         </TextBox>
+                        </CommentBox>
+                      </Item>
+                    </>
+                    )
+                  }
+            </>
         </BodyBox>
     </Container>
   </CustomContainer>
@@ -134,8 +217,8 @@ const CustomContainer = styled.div`
   flex-direction: column;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
+    width: calc(100%);
+    padding: 0;
     height: 600px;
   }
 
@@ -161,8 +244,8 @@ const Container = styled.div`
   background-color: #ffffff;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
+    width: calc(100%);
+    padding: 0;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -245,7 +328,6 @@ const List = styled.div`
 `
 const HeaderBox = styled.div`
   width: 100%;
-  height: 100%;
   background-color:#ffffff;
   display: flex;
   align-items: center;
@@ -320,11 +402,11 @@ const Item = styled.div`
     }
   @media (min-width: 0px) and (max-width: 767.98px) {
     flex-direction: column;
-    height: 288px;
+    height: 100%;
     width: 100%;
     text-align: center;
     align-items: center;
-    margin-bottom: 67px;
+    margin-bottom: 8px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -353,7 +435,7 @@ const Image = styled(RatioImage)`
     background-repeat: no-repeat;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 180px;
+    width: 82px;
     height: 100%;
     margin-left: 15px;
   }
@@ -406,7 +488,7 @@ const SmallImage = styled(RatioImage)`
     height: 99px;
   }
 `
-const Header2 = styled.span`
+const Header2 = styled.div`
   width: 1000px;
   height: 59px;
   margin-bottom: 60px;
@@ -419,8 +501,6 @@ const Header2 = styled.span`
   color: #505050;
   margin-top: 130px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 100%;
-    height: 72px;
     font-size: 21px;
     font-weight: normal;
     font-stretch: normal;
@@ -429,8 +509,7 @@ const Header2 = styled.span`
     letter-spacing: normal;
     text-align: center;
     color: #ffffff;
-    margin-bottom: 45px;
-    margin-top: 80px;
+    margin: 0
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -481,13 +560,14 @@ const CommentBox = styled.div`
   background-color: #ffffff;
   align-items: center;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 100%;
-    width: 80%;
-    border-radius: 22px;
-    border: solid 1px #707070;
+    width: 328px;
+    height: 134px;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    border: solid 1px #f6f6f6;
     background-color: #ffffff;
   }
-
   @media (min-width: 768px) and (max-width: 991.98px) {
   height: 158px;
   width: 100%;
@@ -514,8 +594,7 @@ const CommentBox = styled.div`
   letter-spacing: normal;
   text-align: left;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-left: 24px;
-    margin-top: 24px;
+    margin: 0;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -543,9 +622,9 @@ const CommentBox = styled.div`
   letter-spacing: normal;
   text-align: left;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 24px;
-    margin-left: 24px;
-    visibility: hidden;
+    margin: 0;
+    width: 50px;
+    height: 10px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -570,13 +649,24 @@ const CommentBox = styled.div`
   text-align: left;
   color: #707070;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-left: 24px;
-    margin-right: 30px;
+    margin: 0;
     width: 100%;
     font-size : 13px !important;
     padding-right: 18px;
-  }
-
+    > p {
+        width: 210px;
+        height: 30px;
+        object-fit: contain;
+        font-size: 10px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.5;
+        letter-spacing: -0.25px;
+        text-align: left;
+        color: #191919;
+        }
+    }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-left: 24px;
     margin-right: 30px;
@@ -600,7 +690,14 @@ const CommentBox = styled.div`
     letter-spacing: -0.6px;
     text-align: left;
     color: #060606;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      margin: 0;
+      width: 100%;
+      font-size : 11px !important;
+      padding-right: 18px;
+      padding-bottom: 4px;
     }
+  }
 }
 `
 const SmallCommentBox = styled.div`
@@ -680,9 +777,7 @@ const SmallCommentBox = styled.div`
   letter-spacing: normal;
   text-align: left;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 24px;
-    margin-left: 24px;
-    visibility: hidden;
+    margin: 0;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -760,6 +855,21 @@ const TextBox = styled.div`
   display: inline-flex;
   flex-direction: column;
   background-color: #ffffff;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin: 0;
+    width: 219px;
+    height: 110px;
+    margin-left: 6px;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
+  }
 `
 const Arrow = styled(RatioImage)`
   cursor: pointer;
@@ -794,20 +904,17 @@ const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: row;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 70px;
+    height: 22px;
+    padding-bottom: 5px;
   }
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     height: 70px;
   }
-
   @media (min-width: 992px) and (max-width: 1299.98px) {
   }
-
   @media (min-width: 1300px) {
   }
 `
-
 const Star = styled(RatioImage)`
   width: 100%;
   height: 22px;

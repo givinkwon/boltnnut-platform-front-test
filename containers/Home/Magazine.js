@@ -55,6 +55,8 @@ class MagazineContainer extends React.Component {
     current: 1,
     next: true,
     prev: false,
+    width: 0,
+    tab: 0,
   }
   afterChangeHandler = (current) => {
     const magazineCount = this.props.Home.magazine_list.length
@@ -92,16 +94,22 @@ class MagazineContainer extends React.Component {
     }
     this.slider.slickPrev()
   }
-  componentWillMount () {
-    var slider2 = this.slider
-    console.log(slider2)
-  }
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
 
   render() {
     const data = this.props.Home.magazine_list
     const request_data = this.props.Home.request_list
     const magazineCount = this.props.Home.magazine_list.length
-    const { prev, next, idx } = this.state
+    const { prev, next, idx, width } = this.state
 
     var settings = {
       dots: false,
@@ -114,6 +122,24 @@ class MagazineContainer extends React.Component {
       beforeChange: (current) => {
         this.setState({current: current})
       },
+      responsive: [
+        {
+          breakpoint: 450,
+          settings: {
+            dots: false,
+            infinite: false,
+            arrows: false,
+            slidesToShow: 1,
+            slidesToScroll: 0.575,
+            initialSlide: 0,
+            draggable: false,
+            swipe: true,
+            beforeChange: (current) => {
+              this.setState({current: current})
+            },
+          }
+        }
+      ]
     };
     var settings2 = {
       dots: false,
@@ -146,14 +172,23 @@ class MagazineContainer extends React.Component {
     return (
     <CustomContainer>
       <FindExperct>
-        <LeftArrowContainer>
+        <LeftArrowContainer width= {this.state.width}>
           <LeftArrow src={left} onClick = {this.sliderPrev}/>
         </LeftArrowContainer>
         <MagazineBox>
-          <Header>
-            <Text.FontSize30 color={"#0a2165"} fontWeight={700}>매거진</Text.FontSize30>
-          </Header>
+            <>
+              <Header>
+                { width < 768 ? (
+                  <span>매거진</span>
+                  ) : (
+                  <Text.FontSize30 color={"#0a2165"} fontWeight={700}>매거진</Text.FontSize30>
+                  )
+                }
+              </Header>
+            </>
           <List>
+            <>
+            { width > 450 ? (
             <Slider {...settings} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
                     {
                       data.map(() => {
@@ -188,14 +223,36 @@ class MagazineContainer extends React.Component {
                     }
 
             </Slider>
+            ) :
+            (
+            <Slider {...settings} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
+                    {
+                      data.map((item, idx) => {
+                        return(
+                          <ItemBox>
+                            <Item>
+                              <Image ratio='45%' src={item.image} onClick={() => this.pushToDetail(item.id)}/>
+                              <TextBox>
+                                <div class="Header">
+                                  {item.title}
+                                </div>
+                              </TextBox>
+                            </Item>
+                          </ItemBox>
+                        )
+                      })
+                    }
+            </Slider>
+            )}
+          </>
           </List>
         </MagazineBox>
-        <RightArrowContainer>
+        <RightArrowContainer width= {this.state.width}>
           {(this.state.idx*2 + 4) < magazineCount ? <RightArrow src={right} onClick = {this.sliderNext}/> : <RightArrow/>}
         </RightArrowContainer>
-        <RequestBox>
+        <RequestBox width = {this.state.width}>
           <Header>
-            <Text.FontSize30 color={"#0a2165"} fontWeight={700}>실시간 의뢰 건 리스트</Text.FontSize30>
+              <Text.FontSize30 color={"#0a2165"} fontWeight={700}>실시간 의뢰 건 리스트</Text.FontSize30>
           </Header>
           <Middle>
             제조 파트너사 등록 수 <span class="Bold">3900</span>  프로젝트 수 <span class="Bold">1300</span>
@@ -263,24 +320,36 @@ const CustomContainer = styled.div`
   padding: 0px;
   width: 100%;
   height: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
+    margin: 0 0;
+    display: inline-flex;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
   }
   @media (min-width: 1300px) {
     width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
   }
 `
 const LeftArrowContainer = styled.div`
@@ -288,6 +357,9 @@ const LeftArrowContainer = styled.div`
   width: 19px;
   padding-right: 30px;
   height: 100%;
+  ${props => props.width < 450 && css`
+    display: none;
+  `}
 `
 
 const RightArrowContainer = styled.div`
@@ -296,15 +368,17 @@ const RightArrowContainer = styled.div`
   padding-left: 30px;
   margin-right: 50px;
   height: 100%;
+  ${props => props.width < 450 && css`
+    display: none;
+  `}
 `
 
-const FindExperct = styled(Container)`
+const FindExperct = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 20px 0px;
-    margin-bottom: 20px;
+    width: 100%;
+    padding-left: calc(5%);
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    padding: 40px 0px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     padding: 60px 0px;
@@ -320,8 +394,21 @@ const FindExperct = styled(Container)`
   }
 `
 const List = styled.div`
+  width: 100%;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 30px;
+    margin-top: 16px;
+    .slick-list {
+    width: 100%;
+    > div > div {
+      width: 199px !important;
+      margin-right: 8px;
+    }
+    > div > div > div > div  {
+      display: flex !important;
+      align-items: center;
+      width: 199px !important;
+    }
+  }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 30px;
@@ -337,6 +424,20 @@ const List = styled.div`
 const Header = styled.div`
   display: flex;
   align-items: center;
+  @media (min-width: 0px) and (max-width: 450.98px) {
+    > span {
+    height: 24px;
+    object-fit: contain;
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.19;
+    letter-spacing: -0.4px;
+    text-align: left;
+    color: #505050;
+    }
+  }
 `
 const Middle = styled.div`
   width: 420px;
@@ -377,6 +478,16 @@ const ItemBox = styled.a`
     outline: none;
   }
   text-decoration: none;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-right: 8px;
+    margin-bottom: 24px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
 `
 const Item = styled.div`
   width: calc(100% + 10)px;
@@ -388,7 +499,8 @@ const Item = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 10px;
+    width: 199px;
+    height: 132px;
     > p {
       margin-top: 20px;
     }
@@ -407,6 +519,8 @@ const Image = styled(RatioImage)`
   width: calc(100% - 15px);
   @media (min-width: 0px) and (max-width: 767.98px) {
     border-radius: 15px;
+    height: 106px;
+    width: 199px;
     max-width: 400px;
     :hover {
       border-radius: 15px;
@@ -434,6 +548,18 @@ const MagazineBox = styled.div`
   width: 730px;
   height: 100%;
   flex-direction: column;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-top: 30px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-top: 11px;
+  }
+  @media (min-width: 1300px) {
+    margin-top: 11px;
+  }
 `
 const TextBox = styled.div`
   flex-direction: column;
@@ -441,7 +567,6 @@ const TextBox = styled.div`
   width: 385px;
   height: 70px;
   object-fit: contain;
-  font-family: NotoSansCJKkr;
   font-size: 26px;
   font-stretch: normal;
   font-style: normal;
@@ -451,6 +576,25 @@ const TextBox = styled.div`
   text-align: left;
   color: #191919;
   margin-left: 10px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 178px;
+    height: 18px;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.08;
+    letter-spacing: -0.3px;
+    text-align: left;
+    color: #191919;
+    margin-top: 8px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
   }
   .Body {
   margin-left: 10px;
@@ -523,6 +667,9 @@ const RequestBox = styled.div`
   width: 384px;
   height: 100%;
   flex-direction: column;
+  ${props => props.width < 450 && css`
+    display: none;
+  `}
 `
 const RequestItemBox = styled.div`
   width: 384px;
