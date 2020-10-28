@@ -17,6 +17,7 @@ class AnswerConatiner extends React.Component {
   // tab값 전달받아야돼
   setTab = (val) => {
     this.setState({ tab: val });
+    console.log(val)
   };
   componentDidUpdate(prevProps, prevState) {
     const { query } = this.props;

@@ -547,7 +547,6 @@ const PhoneBox = styled.div`
   text-align: left;
   > img {
     width: 16px;
-    height: ;
     object-fit: contain;
     margin-left: 14.5px;
     margin-right: 14.5px;
@@ -638,7 +637,7 @@ const ButtonBox = styled.div`
     :hover {
       background-color: #0933b3;//${WHITE};
       > p {
-        color: ${WHITE}; !important;
+        color: ${WHITE} !important;
       }
 
     }

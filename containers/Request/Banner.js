@@ -12,7 +12,6 @@ class BannerConatiner extends React.Component {
       <Banner>
         <Container>
           <Text.FontSize40 color={'#0a2165'} fontWeight={700}>의뢰하기</Text.FontSize40>
-          <Text.FontSize24 color={'#191919'} fontWeight={500}>나에게 꼭 맞는 제조방식 시작하기</Text.FontSize24>
         </Container>
       </Banner>
     )

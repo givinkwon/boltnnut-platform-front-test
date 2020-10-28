@@ -32,7 +32,10 @@ class Step1Conatiner extends React.Component {
    render(){
     const { Request } = this.props
     return (
-      <Section style={{paddiingTop : 0}}>
+      <SectionContainer style={{paddiingTop : 0}}>
+        <HeaderContainer>
+          <Text.FontSize24 color={'#191919'} fontWeight={500}>나에게 꼭 맞는 제조방식 시작하기</Text.FontSize24>
+        </HeaderContainer>
         <ServiceContainer>
           {/* <Info>
             <Text.FontSize24>
@@ -77,13 +80,32 @@ class Step1Conatiner extends React.Component {
           </NextButtonBox>
           
         </ServiceContainer>
-      </Section>
+      </SectionContainer>
 
     )
   }
 }
 
 export default Step1Conatiner
+const SectionContainer = styled(Section)`
+  padding-top : 0px !important;
+`
+
+const HeaderContainer = styled.div`
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    display: inline-flex;
+    margin-bottom : 90px;
+  >p {
+      line-height: 1.42;
+      letter-spacing: -0.6px;
+      margin-right : auto;
+      margin-left : auto;
+      font-stretch: normal;
+      font-style: normal;
+    }
+`
 
 const InfoButton = styled(ButtonComponent)`
   margin-top : 80px;

@@ -110,11 +110,14 @@ class TabConatiner extends React.Component {
             </Tab>
           </Tabs>
           {/* <Icon prev style={{marginRight : '15px', opacity: prev ? 1 : 0.4}} src={left} onClick={this.sliderPrev}/> */}
+          
+          
           <Tabs asNavFor={this.state.nav2}
             ref={slider => (this.slider1 = slider)}
+            infinite ={false}
             {...settings}>
             <Tab>
-            <Container>
+              <Container>
                 <SmallBanner>
                   <Text.FontSize32>제조사 찾기 서비스</Text.FontSize32>
                 </SmallBanner>
@@ -194,6 +197,22 @@ const TabsContainer = styled.div`
 const Tabs = styled(Slider)`
   display: flex;
   width : 100%;
+  .Header { 
+    border-bottom : 1px solid #707070;
+    /* ${(props) =>
+      props.active ?
+      (
+      css`
+        border-bottom : 1px solid #707070;
+      `) :
+      (
+      css`
+        border-bottom: 4px solid #0a2165;
+
+      `
+      )
+    } */
+  }
   .slick-list {
    width : 100% ; 
   }
@@ -280,29 +299,10 @@ const Tab = styled.div`
   justify-content: center;
   align-items: center;
   width: 50%;
+  
   > p {
     color: #${BLACK};
   }
   ${(props) =>
     props.active}
-`;
-const TabDetail = styled.div`
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  > p {
-    color: #${BLACK};
-    
-  }
-  padding: 15px 0px;
-  ${(props) =>
-    props.active &&
-    css`
-      /* background-color: ${PRIMARY}; */
-      > p {
-        color: ${WHITE};
-      }
-    `}
 `;
