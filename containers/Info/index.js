@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import { inject, observer } from 'mobx-react'
 
 import BannerContainer from "./Banner";
 import TabContainer from "./Tab";
@@ -10,14 +11,19 @@ import EstimateContainer from "./Estimate";
 
 import PartnerContainer from "./Partner";
 import ExpertContainer from "./Expert";
+@inject('Request')
+
 class AnswerConatiner extends React.Component {
   state = {
     tab: 1,
   };
   // tab값 전달받아야돼
   setTab = (val) => {
+    // const { Request } = this.props
     this.setState({ tab: val });
     console.log(val)
+    // console.log(Request.type)
+
   };
   componentDidUpdate(prevProps, prevState) {
     const { query } = this.props;
@@ -33,6 +39,7 @@ class AnswerConatiner extends React.Component {
   }
   render() {
     const { tab } = this.state;
+    const { Request } = this.props;
 
     return (
       <>

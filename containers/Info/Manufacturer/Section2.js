@@ -9,21 +9,21 @@ import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 import Container from 'components/Container'
 
 
-const image1 = "/static/images/logo/logo_1.png";
-const image2 = "/static/images/logo/logo_2.png";
-const image3 = "/static/images/logo/logo_3.png";
-const image4 = "/static/images/logo/logo_4.png";
-const image5 = "/static/images/logo/logo_5.png";
-const image6 = "/static/images/logo/logo_6_3.png";
-const image7 = "/static/images/logo/logo_7.jpg";
-const image8 = "/static/images/logo/logo_8.jpg";
-const image9 = "/static/images/logo/logo_9.png";
-const image10 = "/static/images/logo/logo_10.png";
-const image11 = "/static/images/logo/logo_11.png";
-const image12 = "/static/images/logo/logo_12.png";
-const image13 = "/static/images/logo/logo_13.png";
-const image14 = "/static/images/logo/logo_14.png";
-const image15 = "/static/images/logo/logo_15.png";
+const image1 = "/static/icon/info/logo_1.png";
+const image2 = "/static/icon/info/logo_2.png";
+const image3 = "/static/icon/info/logo_3.png";
+const image4 = "/static/icon/info/logo_4.png";
+const image5 = "/static/icon/info/logo_5.png";
+const image6 = "/static/icon/info/logo_6_3.png";
+const image7 = "/static/icon/info/logo_7.jpg";
+const image8 = "/static/icon/info/logo_8.jpg";
+const image9 = "/static/icon/info/logo_9.png";
+const image10 = "/static/icon/info/logo_10.png";
+const image11 = "/static/icon/info/logo_11.png";
+const image12 = "/static/icon/info/logo_12.png";
+const image13 = "/static/icon/info/logo_13.png";
+const image14 = "/static/icon/info/logo_14.png";
+const image15 = "/static/icon/info/logo_15.png";
 
 class Section2Container extends React.Component {
   render() {

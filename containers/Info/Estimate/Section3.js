@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import Router from "next/router";
+import { inject, observer } from 'mobx-react'
 
 import ButtonComponent from 'components/Button'
 import RatioImage from 'components/RatioImage';
@@ -11,9 +12,20 @@ import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 const person = "/static/icon/info/person.png";
 const star = "/static/icon/info/star.png";
 
+@inject('Request')
 
-class Section2Container extends React.Component {
+class Section3Container extends React.Component {
+  Next = () => {
+    const { Request } = this.props
+    Request.setType('estimate')
+    if(Request.type){
+      Router.push("/request?big=&mid=")
+      Request.setStep(1)
+    }
+  }
   render() {
+    const { Request } = this.props
+
     return (
         <CustomContainer>
             <Container>
@@ -22,7 +34,7 @@ class Section2Container extends React.Component {
                 <Text.FontSize24>10 영업일 이내 원하는 조건(견적,MOQ)을 구하지 못하는 경우</Text.FontSize24>
                 <Text.FontSize48 color={'#0933b3'}>100% 환불</Text.FontSize48>
                 <Text.FontSize24>가격 39,000원</Text.FontSize24>
-                <NextButton backgroundColor={'#0a2165'} borderColor={'#e6e6e6'} onClick={this.Next}>
+                <NextButton active={Request.type==="estimate"} onClick={this.Next} backgroundColor={'#0a2165'} borderColor={'#e6e6e6'} onClick={this.Next}>
                     <Text.FontSize32 color={'#ffffff'} fontWeight={500}>서비스 시작하기</Text.FontSize32>
                 </NextButton>
               </ItemBox>
@@ -32,7 +44,8 @@ class Section2Container extends React.Component {
   }
 }
 
-export default Section2Container;
+export default Section3Container;
+
 const ItemBox = styled.div`
   display: inline;
   width: 100%;

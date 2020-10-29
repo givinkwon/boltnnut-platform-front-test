@@ -6,9 +6,11 @@ import Container from "components/Container";
 import * as Text from "components/Text";
 import { WHITE, PRIMARY, BLACK } from "static/style";
 import RatioImage from 'components/RatioImage'
+import { inject, observer } from 'mobx-react'
 
 const right = "/static/images/main/main_right.png";
 const left = "/static/images/main/main_left.png";
+@inject('Request')
 
 class TabConatiner extends React.Component {
   setTab = (val) => {
@@ -87,6 +89,8 @@ class TabConatiner extends React.Component {
   render() {
     const { tab } = this.props;
     const { prev, next} = this.state
+    const { Request } = this.props;
+
     const settings = {
       infinite: true,
       nextArrow: <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={right}/>,

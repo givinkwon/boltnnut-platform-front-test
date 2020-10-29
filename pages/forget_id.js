@@ -6,9 +6,9 @@ import { inject, observer } from 'mobx-react'
 import Nav from 'components/Nav'
 import Footer from 'components/Footer'
 
-import ForgetPasswordConatiner from 'containers/ForgetPassword'
+import ForgetIdConatiner from 'containers/ForgetId'
 
-class ForgetPassword extends React.Component {
+class ForgetId extends React.Component {
   render(){
     return (
       <div>
@@ -16,11 +16,11 @@ class ForgetPassword extends React.Component {
           <title>볼트앤너트</title>
         </Head>
         <Nav />
-        <ForgetPasswordConatiner/>
+        <ForgetIdConatiner/>
         <Footer/>
       </div>
     )
   }
 }
 
-export default ForgetPassword
+export default ForgetId

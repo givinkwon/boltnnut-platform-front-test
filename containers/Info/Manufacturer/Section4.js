@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import Router from "next/router";
+import { inject, observer } from 'mobx-react'
 
 import ButtonComponent from 'components/Button'
 import RatioImage from 'components/RatioImage';
@@ -11,15 +12,26 @@ import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 const person = "/static/icon/info/person.png";
 const star = "/static/icon/info/star.png";
 
+@inject('Request')
 
 class Section4Container extends React.Component {
+  Next = () => {
+    const { Request } = this.props
+    Request.setType('manufacturer')
+    if(Request.type){
+      Router.push("/request?big=&mid=")
+      Request.setStep(1)
+    }
+  }
   render() {
+    const { Request } = this.props
+
     return (
         <CustomContainer>
             <Container>
               <ItemBox>
                 <Text.FontSize40>볼트앤너트는 <span>고객님의 아이디어가<br/>제품으로 실체화 될 수 있도록</span><br/>최선을 다하겠습니다. </Text.FontSize40>
-                <NextButton backgroundColor={'#0a2165'} borderColor={'#e6e6e6'} onClick={this.Next}>
+                <NextButton active={Request.type==="manufacturer"} onClick={this.Next} backgroundColor={'#0a2165'} borderColor={'#e6e6e6'} onClick={this.Next}>
                     <Text.FontSize32 color={'#ffffff'} fontWeight={500}>무료 가견적 문의하기</Text.FontSize32>
                 </NextButton>
               </ItemBox>
