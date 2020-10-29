@@ -89,6 +89,7 @@ const CustomContainer = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100%);
     background-color: WHITE;
+    margin-bottom: 8px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {

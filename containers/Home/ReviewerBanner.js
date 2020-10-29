@@ -42,7 +42,7 @@ class ReviewBanner extends React.Component {
       dots: false,
       infinite: false,
       slidesToShow: 1,
-      slidesToScroll: 0.794444,
+      slidesToScroll: 285/width,
       initialSlide: 0,
       draggable: false,
       arrows: false,
@@ -53,7 +53,7 @@ class ReviewBanner extends React.Component {
     return (
         <CustomContainer>
             <Container>
-              <Header>소비자의 니즈에 맞춰서 진행한 제품 후기</Header>
+              <Header>소비자 맞춤형 제품 생산 사례</Header>
               <>
               { width > 450 ? (
               <>
@@ -148,6 +148,7 @@ const CustomContainer = styled.div`
     height: 100%;
     padding: 0;
     background-color: #ffffff;
+    margin-bottom: 8px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -205,9 +206,11 @@ const Header = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 0px;
     width: 290px;
+    height: 100%;
     margin-bottom: 0px;
     font-size: 16px;
     font-weight: bold;
+    padding-top: 22px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 50px;

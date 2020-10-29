@@ -164,7 +164,8 @@ export default NewBanner5Container;
 
 const Banner = styled(Container)`
   @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 20px 0px;
+    background-color: white;
+
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     padding: 40px 0px;

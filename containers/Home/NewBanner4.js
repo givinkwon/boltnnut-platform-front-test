@@ -220,6 +220,7 @@ const CustomContainer = styled.div`
     width: calc(100%);
     height: 100%;
     padding: 0;
+    margin-bottom: 8px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -340,6 +341,15 @@ const HeaderBox = styled.div`
   :focus {
     outline: none;
   }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+  padding-left: calc(5%);
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
 `
 const BodyBox = styled.div`
   width: 100%;
@@ -408,6 +418,9 @@ const Item = styled.div`
     text-align: center;
     align-items: center;
     margin-bottom: 8px;
+    padding-left: calc(5%);
+    align-items: flex-start;
+    display: inline-flex;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -503,6 +516,7 @@ const Header2 = styled.div`
   margin-top: 130px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 300px;
+    height: 100%;
     font-size: 16px;
     font-weight: bold;
     font-stretch: normal;
@@ -512,8 +526,8 @@ const Header2 = styled.div`
     text-align: left;
     color: #505050;
     margin: 0;
-    margin-bottom: 16px;
-    padding-left: calc(5%);
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {

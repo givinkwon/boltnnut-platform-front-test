@@ -39,7 +39,7 @@ class BannerConatiner extends React.Component {
       infinite: false,
       arrows: false,
       slidesToShow: 1,
-      slidesToScroll: 0.7194,
+      slidesToScroll: 259/width,
       initialSlide: 0,
       draggable: false,
       beforeChange: (current) => {
@@ -252,6 +252,8 @@ const MobileBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
+  margin-bottom: 8px;
 `
 const MobileBanner = styled.div`
   width: calc(90%);

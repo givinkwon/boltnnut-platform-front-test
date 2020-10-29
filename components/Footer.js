@@ -324,7 +324,6 @@ const CompanyInfoContainer = styled.div`
     display: flex;
     flex-direction: column;
   }
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
   }
@@ -367,6 +366,7 @@ const CompanyInfo = styled.div`
     > span {
       font-size: 10px;
       color: white;
+      font-weight: 300;
     }
     > span:nth-of-type(1) {
       color: white;
@@ -405,11 +405,12 @@ const CompanyInfo2 = styled.div`
     > span {
       font-size: 10px;
       color: white;
+      font-weight: 300;
     }
     > span:nth-of-type(1) {
       color: white;
       font-size: 12px;
-      font-weight: bold;
+      font-weight: 500;
       padding-bottom: 8px;
     }
   }
@@ -518,10 +519,11 @@ const MobileContainer = styled.div`
     justify-content: space-between;
     padding-right: 10px;
     padding-top: 30px;
+    padding-bottom: 23px;
     > span {
       color: white;
       font-size: 10px;
-      font-weight: normal;
+      font-weight: 300;
       font-stretch: normal;
       font-style: normal;
       line-height: 1.5;
