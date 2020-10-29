@@ -16,7 +16,7 @@ import NewBanner2Container from './NewBanner2';
 import NewBanner3Container from './NewBanner3';
 import NewBanner4Container from './NewBanner4';
 import NewBanner5Container from './NewBanner5';
-import TestBanner from './ReviewerBanner';
+import ReviewBanner from './ReviewerBanner';
 
 class HomeConatiner extends React.Component {
   render() {
@@ -30,7 +30,7 @@ class HomeConatiner extends React.Component {
         <NewBanner3Container/>*/}
         <NewBanner5Container/>
         <NewBanner4Container/>
-        <TestBanner/>
+        <ReviewBanner/>
         <LogoConatiner/>
       </>
     )

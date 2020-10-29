@@ -332,7 +332,6 @@ const Header = styled.div`
   margin-top: 100px;
   width: 720px;
   height: 107px;
-  font-family: NotoSansCJKkr;
   font-size: 32px;
   font-weight: normal;
   font-stretch: normal;
@@ -341,22 +340,20 @@ const Header = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: #061953;
-  
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 80px;
-    margin-bottom: 60px;
+    margin-top: 24px;
+    margin-bottom: 9px;
     font-size: 18px !important;
-  width: 550px;
-  height: 100%;
-  font-family: NotoSansCJKkr;
-  font-size: 20px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.25;
-  letter-spacing: normal;
-  text-align: center;
-  color: #061953;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    text-align: center;
+    color: #061953;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 80px;
