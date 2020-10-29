@@ -46,7 +46,6 @@ class BannerConatiner extends React.Component {
         this.setState({current: current})
       },
     };
-
     return (
     <>
       { width > 768 ? (
@@ -253,7 +252,6 @@ const MobileBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `
 const MobileBanner = styled.div`
   width: calc(90%);

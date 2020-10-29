@@ -86,10 +86,9 @@ const CustomContainer = styled.div`
   text-align: center;
   margin: auto;
   background-color: rgba(158, 159, 161, 0.12);
-
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
+    width: calc(100%);
+    background-color: WHITE;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -111,8 +110,8 @@ const Container = styled.div`
   height: 100%;
   margin: auto;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
+    width: calc(100%);
+    padding-left: calc(5%);
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -125,26 +124,6 @@ const Container = styled.div`
 
   @media (min-width: 1300px) {
     width: 1200px;
-  }
-`
-
-const Banner = styled(Container)`
-  width: 1400px;
-  height: 100%;
-  align-items: center;
-  background-color: #f5f5f5;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 0px 0px;
-    margin-bottom: 20px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    padding: 0px 0px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    padding: 0px 0px;
-  }
-  @media (min-width: 1300px) {
-    padding: 0px 0px;
   }
 `
 const List = styled.div`
@@ -190,7 +169,7 @@ const List = styled.div`
 const ItemBox = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #f5f5f5;
+  background-color: WHITE;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -205,13 +184,18 @@ const Item = styled.div`
   text-align: center;
   display: inline-flex;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100%);
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    > p {
-      margin-top: 20px;
-    }
+     width: 328px;
+     height: 100%;
+     padding-bottom: 16px;
+     opacity: 0.35;
+     border-radius: 6px;
+     background-color: WHITE;
+     display: flex;
+     flex-direction: column;
+     align-items: left;
+     > p {
+       margin-top: 20px;
+     }
   }
   @media (min-width: 768px) {
     width: calc(100%);
@@ -255,6 +239,18 @@ const Header = styled.div`
   padding-top: 150px;
   padding-bottom: 60px;
   @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.81;
+    letter-spacing: -0.4px;
+    text-align: left;
+    color: #505050;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
   }
@@ -272,6 +268,17 @@ const ImageTextBox = styled.div`
   position: relative;
   border-radius: 10px;
   overflow: hidden;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 328px;
+    height: 192px;
+    margin-bottom: 16px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
   .BackImage {
     position: absolute;
     width: 100%;
@@ -280,6 +287,17 @@ const ImageTextBox = styled.div`
     filter: blur(2px);
     opacity: 0.78;
     z-index: 0;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 328px;
+      height: 192px;
+      background-image: url("/static/images/main/Banner3_1_Mobile.png");
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+    }
+    @media (min-width: 1300px) {
+    }
   }
   .BackImage2 {
     position: absolute;
@@ -289,17 +307,38 @@ const ImageTextBox = styled.div`
     filter: blur(2px);
     opacity: 0.78;
     z-index: 0;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 328px;
+    height: 192px;
+    background-image: url("/static/images/main/Banner3_2_Mobile.png");
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+    }
+    @media (min-width: 1300px) {
+    }
   }
   .CoverImage {
    position: absolute;
    height: 100%;
    width: 100%;
    background-color: #000000;
-   opacity: 0.35; // mouseover = 0.35
+   opacity: 0.55; // mouseover = 0.35
    z-index:1;
    : hover {
-     opacity: 0.55;
+     opacity: 0.35;
    }
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      height: 100%;
+      width: 100%;
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+    }
+    @media (min-width: 1300px) {
+    }
   }
   .TextBox{
     position: absolute;
@@ -310,6 +349,18 @@ const ImageTextBox = styled.div`
     + div {
       opacity : 0.55;
       }
+    }
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      padding-top: 27px;
+      padding-left: 21px;
+      width: 287px;
+      height: 138px;
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+    }
+    @media (min-width: 1300px) {
     }
     .ImageHeader {
         width: 363px;
@@ -323,7 +374,18 @@ const ImageTextBox = styled.div`
         letter-spacing: -0.6px;
         text-align: left;
         color: #ffffff;
-  }
+        @media (min-width: 0px) and (max-width: 767.98px) {
+          height: 60px;
+          font-size: 14px;
+          width: 250px;
+        }
+        @media (min-width: 768px) and (max-width: 991.98px) {
+         }
+        @media (min-width: 992px) and (max-width: 1299.98px) {
+        }
+        @media (min-width: 1300px) {
+        }
+    }
   .ImageBottom {
      width: 500px;
      height: 188px;
@@ -336,10 +398,30 @@ const ImageTextBox = styled.div`
      letter-spacing: -0.8px;
      text-align: left;
      color: #191919;
+     @media (min-width: 0px) and (max-width: 767.98px) {
+          width: 287px;
+          height: 60px;
+          font-size: 16px;
+      }
+     @media (min-width: 768px) and (max-width: 991.98px) {
+        }
+     @media (min-width: 992px) and (max-width: 1299.98px) {
+        }
+     @media (min-width: 1300px) {
+        }
      .ImageBold {
       font-size: 56px;
       letter-spacing: -1.4px;
       color: #ffc000;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+          font-size: 20px;
+        }
+     @media (min-width: 768px) and (max-width: 991.98px) {
+        }
+     @media (min-width: 992px) and (max-width: 1299.98px) {
+        }
+     @media (min-width: 1300px) {
+        }
       }
    }
 }
@@ -357,6 +439,28 @@ const ImageTextBox = styled.div`
   float: right;
   padding-right: 10px;
   padding-top: 70px;
+  position: relative;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+       padding: 0;
+       padding-top: 10px;
+       width: 65px;
+       height: 16px;
+       font-size: 10px;
+       font-weight: 500;
+       font-stretch: normal;
+       font-style: normal;
+       line-height: 1.6;
+       letter-spacing: -0.25px;
+       text-align: left;
+       color: #ffffff;
+       float: right;
+     }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+     }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+     }
+  @media (min-width: 1300px) {
+     }
   }
 `
 const Bold = styled.span`
