@@ -181,6 +181,8 @@ const TabsContainer = styled.div`
     }
   }
   height : 650px ;
+  outline : none ;
+  *:focus {outline:none;}
   /* @media (min-width: 0px) and (max-width: 767.98px) {
     height: 200px;
   }
