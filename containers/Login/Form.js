@@ -21,8 +21,19 @@ const line = "/static/images/line.png";
 @observer
 class FormConatiner extends React.Component {
   state = {
-    search: ''
+    search: '',
+    width : 0, 
   }
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   searchText = (e) => {
     this.setState({ search: e.target.value })
   }
@@ -46,11 +57,13 @@ class FormConatiner extends React.Component {
     Router.push('/forget_password')
   }
   render(){
-    const { search } = this.state
+    const { search, width } = this.state
     const { Auth } = this.props
     return (
       <Form>
-        <Container>
+        <Container style={{padding :0}}>
+        { width > 767.98 ? (
+        <>
           <Logo src={logo_ic}/>
           <Text.FontSize24 color={'#0a2165'} style={{marginBottom:90}}>제품 개발 전문가 매칭 플랫폼</Text.FontSize24>
           <Input id="custom-css-outlined-input" placeholder="이메일"  onChange={Auth.setEmail}/>
@@ -76,6 +89,42 @@ class FormConatiner extends React.Component {
             <Line src={line}/>
             <Fotget onClick={this.toForgotPW}>비밀번호 찾기</Fotget>
           </More>
+        </>
+              
+        ) : (
+        <>
+          <span class="header" color={'#0a2165'}>로그인</span>
+          <span class="title">이메일</span>
+          <Input id="custom-css-outlined-input" placeholder="이메일"  onChange={Auth.setEmail}/>
+          <span class="title">비밀번호</span>
+          <Input id="custom-css-outlined-input" placeholder="비밀번호" type='password' onChange={Auth.setPassword} onKeyDown={this.handleKeyDown}/>
+          <ButtonBox>
+            <ButtonComponent backgroundColor={"#0a2165"} borderColor={WHITE} borderRadius={3} borderWidth={1} onClick={Auth.login} >
+              {
+                Auth.loading
+                ? <ButtonSpinnerComponent primary/>
+                : <span class="buttonText">로그인</span>
+              }
+            </ButtonComponent>
+            <ButtonComponent id="sign_up_button" backgroundColor={WHITE+'00'}  borderRadius={3} borderWidth={1} onClick={this.toSignUp}>
+              <span class="buttonText">회원가입</span>
+            </ButtonComponent>
+          </ButtonBox>
+          <More>
+            <CheckBoxComponent onChange={(state) => Auth.always_login = state}>
+              <p style={{color: '#9999', fontSize: 14, fontWeight: 400}}>로그인 상태 유지</p>
+            </CheckBoxComponent>
+          </More>
+          <More>
+           <Fotget onClick={this.toForgotID}>아이디 찾기</Fotget>
+            {/* 로그인미완 */}
+            <Line src={line}/>
+            <Fotget onClick={this.toForgotPW}>비밀번호 찾기</Fotget>
+          </More>
+        </>
+        
+        )}
+          
         </Container>
       </Form>
     )
@@ -98,8 +147,6 @@ const Line = styled.img`
 const Fotget = styled.p`
   color: #0a2165;
   cursor: pointer;
-  margin-left: auto;
-  font-size: 20px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -109,29 +156,44 @@ const Fotget = styled.p`
   :hover {
     color :#0933b3 ; 
   }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 12px;
+    :nth-of-type(1) {
+      margin-right : auto
+    }
+    :nth-of-type(2) {
+      margin-left : auto
+    }
+
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    
+  }
+
+  @media (min-width: 1300px) {
+    font-size: 20px;
+    margin-left:auto;
+  }
 `
 const More = styled.div`
-  width: 588px;
   max-width: auto;
   display: flex;
   align-items: center;
-  margin-top : 20px;
-  margin-bottom: 50px;
-  p:nth-of-type(2) {
-    margin-left : 0px;
-  }
   
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 15px;
-    /*
-    flex-direction: column;
-    align-items: flex-start;
-    */
-    > p {
-      margin-left: auto;
-      font-size: 14px;
+    width: 100%;
+    :nth-of-type(1) { 
+      margin-top : 24px; 
     }
-    
+    :nth-of-type(2) { 
+      margin-top : 39px; 
+    }
     .MuiTypography-root.MuiFormControlLabel-label > p {
       font-size: 14px !important;
     }
@@ -139,15 +201,51 @@ const More = styled.div`
     .MuiSvgIcon-root {
       width: 0.8em !important;
     }
+    
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+  @media (min-width: 1300px) {
+    width: 588px;
+    margin-top : 20px;
+    margin-bottom: 50px;
+    p:nth-of-type(2) {
+      margin-left : 0px;
+    }
   }
 `
-const Input = styled(InputComponent)`
-  width : 588px; 
+
+const Input = styled(InputComponent)` 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+    margin-top : 0px !important;
+    margin-bottom: 8px !important;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 1300px) {
+    width : 588px; 
+
+  }
+  
   
   /* @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 8px 0 !important;
   } */
 `
+
 const ButtonBox = styled.div`
   width: 588px;
   justify-content: space-between;
@@ -182,49 +280,111 @@ const ButtonBox = styled.div`
       letter-spacing: -0.6px;         
     }
   }
-  /* @media (min-width: 0px) and (max-width: 767.98px) {
-    > div {
-      width: 120px;
+  
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+    > div:nth-of-type(1) > span{
+      color : #ffffff;
+
     }
-  } */
+    > div:nth-of-type(2) > span{
+      color : #505050;
+
+    }
+    .buttonText {
+      font-size : 16px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.42;
+      letter-spacing: -0.6px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 1300px) {
+    width: 588px;
+  }
 `
 const Form = styled.div`
   /* background-image: url('/static/images/banner.jpg');
   background-position: center;
   background-size: cover; */
   min-height: 500px;
-  margin : 200px 0px;
   ${Container} {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
-    > p:nth-of-type(1){
-      font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.42;
-    letter-spacing: -0.6px;
+    > span {
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      :nth-of-type(1){
+        font-weight: 700;
+        color: #0a2165;
+        margin-bottom : 24px;
+      }
+      :nth-of-type(2){
+        line-height: 2.43;
+        letter-spacing: -0.35px;
+        margin-bottom: 8px;
+        color: #505050;
+        margin-right :auto;
+      }
+      :nth-of-type(3){
+        line-height: 2.43;
+        letter-spacing: -0.35px;
+        margin-bottom: 8px;
+        color: #505050;
+        margin-right :auto;
+      }
     }
-    > p:nth-of-type(2){
-      margin-top: 15px;
-      margin-bottom: 15px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+     margin-top : 40px;
+     margin-bottom : 50px;
+     width : 82%;
+     
+     .header {
+       font-size : 20px;
+       font-weight : 700;
+     }
+     .title {
+       font-size : 14px
+     }
+     > p:nth-of-type(1){
+        font-size : 20px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.42;
+        letter-spacing: -0.6px;
+        margin-bottom : 24px;
+      }
     }
-    p {
-      line-height: 1.25em;
+    @media (min-width: 768px) and (max-width: 991.98px) {
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) { 
+    }
+    @media (min-width: 1300px) { 
+      
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    height: calc(80vh);
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    height: calc(80vh);
   }
   @media (min-width: 992px) and (max-width: 1299.98px) { 
-    height: calc(80vh);
   }
-  @media (min-width: 1300px) { 
-    height: calc(80vh);
+  @media (min-width: 1300px) {
+    margin : 200px 0px; 
   }
 `
