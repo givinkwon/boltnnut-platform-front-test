@@ -75,7 +75,12 @@ class BannerConatiner extends React.Component {
             <Title fontWeight={700}>
               나에게 특화된 맞춤 제조사를<br/> 한 눈에 확인하세요.
             </Title>
-            <MobileButton>
+            <MobileButton
+              id={'request'}
+              backgroundColor={WHITE + "00"}
+              borderColor={WHITE}
+              onClick={() => Router.push("/request")}
+              >
               <span> 제조사 찾기 </span>
             </MobileButton>
           </MobileBanner>
@@ -276,6 +281,11 @@ const MobileButton = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  : hover {
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    background-color: #0933b3;
+  }
   > span {
     width: 76px;
     height: 24px;
