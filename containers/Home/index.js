@@ -68,6 +68,7 @@ class HomeConatiner extends React.Component {
 export default HomeConatiner
 
 const CustomContainer = styled.div`
-  background-color: #e1e5e6
+  background-color: #e1e5e6;
+  margin-top: 2px;
 `
 

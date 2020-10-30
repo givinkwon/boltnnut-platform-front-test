@@ -8,13 +8,17 @@ import {WHITE, PRIMARY, DARKGRAY} from 'static/style'
 
 import MenuItem from './MenuItem'
 const image1 = 'static/images/Info.png'
-
+const dropdown = 'static/images/main/dropdown.png';
+const dropup = 'static/images/partner/arrow_up.png';
 @inject('Partner')
 @observer
 class MenuConatiner extends React.Component {
   state = {
     width: 0,
     tab: 0,
+    showDrop: true,
+    showDetail: 'none'
+
   };
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
@@ -27,6 +31,16 @@ class MenuConatiner extends React.Component {
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
+
+  detailDown = () => {
+    const { showDrop, showDetail } = this.state;
+    this.setState({showDrop: 'none', showDetail: true})
+  }
+
+  detailUp = () => {
+    const { showDrop, showDetail } = this.state;
+    this.setState({showDrop: true, showDetail: 'none'})
+  }
 
   setTab = (tab) => {
     // 초기화
@@ -47,7 +61,7 @@ class MenuConatiner extends React.Component {
 
   render(){
     const { Partner } = this.props
-    const { width, tab } = this.state
+    const { width, tab, showDrop, showDetail } = this.state
 
     return (
       <>
@@ -73,12 +87,16 @@ class MenuConatiner extends React.Component {
                         {
                           Partner.develop_list.length > 0 && Partner.develop_list.map((item, idx) => {
                             return (
+                            <>
+
                               <MenuItem
                                 type='develop'
                                 key={idx}
                                 data={item}
                                 main_checked={Partner.developBig && Partner.developBig.id === item.id}
                               />
+
+                            </>
                             )
                           })
                         }
@@ -110,15 +128,43 @@ class MenuConatiner extends React.Component {
                       console.log(Partner.developBig);
                       console.log(item)
                       return (
+                       <>
+                       {(item.id == 1) &&
                         <MenuItem
                           type='develop'
                           key={idx}
                           data={item}
                           main_checked={Partner.developBig && Partner.developBig.id === item.id}
                         />
+                        }
+                        </>
                       )
                     })
                   }
+                  { showDetail == true && Partner.develop_list.length > 0 && Partner.develop_list.map((item, idx) => {
+                      console.log(Partner.developBig);
+                      console.log(item)
+                      return (
+                       <>
+                       {(item.id == 3 || item.id == 4) &&
+                        <MenuItem
+                          type='develop'
+                          key={idx}
+                          data={item}
+                          main_checked={Partner.developBig && Partner.developBig.id === item.id}
+                        />
+                        }
+                        </>
+                      )
+                    })
+
+                  }
+                  <div class="dropdown" style={{display: showDrop}}>
+                    <img src={dropdown} onClick = {this.detailDown}/>
+                  </div>
+                  <div class="dropup" style={{display: showDetail}}>
+                    <img src={dropup} onClick = {this.detailUp}/>
+                  </div>
                 </Menu>
               </MenuBox>
             )
@@ -151,6 +197,27 @@ const Menu = styled.div`
     width: 219px;
     margin-top: 30px;
     margin-right: 87px;
+  }
+  .dropdown {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    > img {
+      cursor: pointer;
+      float: right;
+      padding-right: 33px;
+    }
+  }
+  .dropup {
+    width: 100%;
+    height: 12px;
+    padding-top: 19px;
+    padding-bottom: 19px;
+    > img {
+      cursor: pointer;
+      float: right;
+      padding-right: 33px;
+    }
   }
 `
 const Header = styled.div`

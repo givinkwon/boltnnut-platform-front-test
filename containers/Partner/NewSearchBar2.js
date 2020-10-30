@@ -278,7 +278,7 @@ class SearchBarContainer2 extends React.Component {
   submit = () => {
     const { Request, router  } = this.props;
 
-    const {file} = this.state;
+    const {file, price_max, due_max} = this.state;
 
     if (!Request.input_name) {
       alert("제품 의뢰명을 입력해주세요.");
@@ -298,11 +298,14 @@ class SearchBarContainer2 extends React.Component {
     }
 
     var formData = new FormData();
-    formData.append("content", "18")
+    formData.append("content", "<상담 후에 수정하길 바랍니다>")
     formData.append("client", 18)
-    formData.append("category",1)
+    formData.append("category",1) // 일단 대충개발
     formData.append("product", 30) // 의뢰제품
     formData.append("name", Request.input_name);
+    formData.append("price", price_max[0] + "/" + price_max[1]);
+    formData.append("day", due_max[0] + "/" + due_max[1]);
+
     formData.append("phone", Request.input_phone + Request.input_phone2 + Request.input_phone3);
     //
     if(file) {

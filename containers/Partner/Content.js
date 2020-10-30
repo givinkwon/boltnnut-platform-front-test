@@ -83,9 +83,7 @@ class ContentConatiner extends React.Component {
       this.setState({...this.state, current: newPage, prev: true})
     }
   }
-  setSearch = () => {
-    this.setState({...this.state, searchWord: "Aa"})
-  }
+
   buttonClick = () => {
     console.log("n")
   }
@@ -99,7 +97,10 @@ class ContentConatiner extends React.Component {
     return (
       <CustomContainer>
           <Header>
-            {searchWord}에 대한 검색 결과입니다.
+            {Partner.search_true == 1 ?
+            (Partner.search_text + "에 대한 검색 결과입니다.")
+             : ""
+             }
           </Header>
         <List>
           {
@@ -161,7 +162,7 @@ const Item = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 30px;
-  
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc((100%/2) - 7.5px);
     :nth-of-type(2n){

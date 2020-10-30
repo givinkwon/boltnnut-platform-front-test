@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
 import Nav from 'components/Nav'
+import MobileNav from 'components/MobileNav'
 import Footer from 'components/Footer'
 import Spinner from 'components/Spinner'
 
@@ -14,6 +15,10 @@ import AnswerConatiner from 'containers/Answer'
 class Answer extends React.Component {
   async componentDidMount() {
     const { Auth, Home, Answer, Loading } = this.props
+
+    //창 크기
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
 
     Home.init()
     Loading.setOpen(true)
@@ -30,8 +35,15 @@ class Answer extends React.Component {
       })
     }
   }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   render(){
     const { Answer, Loading } = this.props
+    const { width } = this.state;
     return (
       <div>
         {Loading.is_open}
@@ -39,7 +51,14 @@ class Answer extends React.Component {
         <Head>
           <title>볼트앤너트</title>
         </Head>
-        <Nav />
+        <>
+        { width > 450 ? (
+          <Nav />
+          ) : (
+          <MobileNav/>
+          )
+        }
+        </>
         <AnswerConatiner/>
         <Footer/>
       </div>

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
 import Nav from 'components/Nav'
+import MobileNav from 'components/MobileNav'
 import Footer from 'components/Footer'
 import Spinner from 'components/Spinner'
 
@@ -12,14 +13,29 @@ import PartnerConatiner from 'containers/Partner'
 @inject('Counter', 'Post', 'Loading')
 @observer
 class Partner extends React.Component {
+  state = {
+    width: 0,
+  }
   static getInitialProps({query}) {
     return {query}
   }
   componentDidMount() {
     this.props.Post.getData()
+     //창 크기
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
   }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+
   render(){
-    const { Post, Counter, Loading } = this.props
+    const { Post, Counter, Loading } = this.props;
+    const { width } = this.state;
+
     return (
       <div>
         {Loading.is_open}
@@ -27,7 +43,14 @@ class Partner extends React.Component {
         <Head>
           <title>볼트앤너트</title>
         </Head>
-        <Nav />
+        <>
+        { width > 450 ? (
+          <Nav />
+          ) : (
+          <MobileNav/>
+          )
+        }
+        </>
         <PartnerConatiner query={this.props.query}/>
         <Footer/>
       </div>
