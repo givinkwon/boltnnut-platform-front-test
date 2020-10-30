@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import * as Text from './Text'
 import { DARKGRAY } from 'static/style'
 
-class InputComponent extends React.Component {
+class PhoneInputComponent extends React.Component {
   onChange = (e) => {
     if(this.props.type === 'file'){
       this.props.onChange(e.currentTarget.files[0])
@@ -15,24 +15,21 @@ class InputComponent extends React.Component {
   render() {
     const { onChange, children, label, ...props } = this.props
     return (
-      <Wrap>
-        { label && <Text.FontSize20 color={DARKGRAY} fontWeight={500}>{label}</Text.FontSize20> }
         <InputBox marginTop={label ? 12 : 0}>
           <Input {...props} onChange={this.onChange}/>
           {children}
         </InputBox>
-      </Wrap>
     )
   }
 }
 
-export default InputComponent
+export default PhoneInputComponent
 
 const InputBox = styled.div`
   display: flex;
-  margin-top: 10px;
+  margin-top: 12px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-      width: 206px;
+      width: 56px;
       height: 32px;
       object-fit: contain;
       background-color: #ffffff;
@@ -47,7 +44,7 @@ const Wrap = styled.div`
     margin-top: 15px;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-left: 12px;
+    margin-left: 10px;
     > p {
       margin-bottom: 16px;
     }
@@ -75,10 +72,10 @@ const Input = styled.input`
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 16px;
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     font-size: 18px;
   }
-  @media (min-width: 1300px) { 
+  @media (min-width: 1300px) {
     font-size: 20px;
   }
 `

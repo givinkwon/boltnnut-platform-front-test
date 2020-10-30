@@ -15,6 +15,7 @@ import { intcomma } from "utils/format";
 import { WHITE, PRIMARY } from "static/style";
 import SelectComponent from 'components/Select';
 import InputComponent from 'components/Input2';
+import PhoneInputComponent from 'components/PhoneInput';
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -53,6 +54,36 @@ const customStyles = {
     display: 'flex',
     borderRadius: 6,
     padding: 4,
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+    return { ...provided, opacity, transition };
+  }
+}
+
+const MobilecustomStyles = {
+  dropdownIndicator: () => ({
+    color: '#555555',
+    width: 40,
+    height: 29,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? '#000000' : '#555555',
+    backgroundColor: '#fff',
+    borderRadius: 0,
+    fontSize: 14,
+  }),
+  control: () => ({
+    fontSize: 14,
+    border: '1px solid #e6e6e6',
+    backgroundColor: '#fff',
+    display: 'flex',
+    padding: 0,
   }),
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
@@ -108,7 +139,8 @@ class SearchBarContainer2 extends React.Component {
     //due_min: 0,
     due_max: [0,0],
     show_detail: "none",
-    portfolioValue: ''
+    portfolioValue: '',
+    width: 0,
   };
   searchText = (e) => {
     this.props.Partner.search_text = e.target.value;
@@ -136,12 +168,15 @@ class SearchBarContainer2 extends React.Component {
   };
   RangeSlider = () => {
   [this.state.price_max, this.state.setPrice] = React.useState([0,0]);
+  const { width } = this.state;
 
   const handleChange = (event, newValue) => {
     this.state.setPrice(newValue);
    };
 
   return (
+  <>
+  { width > 768 ? (
     <>
       <BarWrapper>
             <CustomSlider
@@ -174,6 +209,29 @@ class SearchBarContainer2 extends React.Component {
             </PriceInput>
       </PriceBox>
     </>
+    ) : (
+      <>
+      <PriceBox>
+            <PriceInput>
+              <input
+                value = {this.state.price_max[0]}
+                onChange = {handleChange}
+                type = "value"/>
+              <span> 만원 </span>
+            </PriceInput>
+            <span> ~ </span>
+            <PriceInput>
+              <input
+                value = {this.state.price_max[1]}
+                onChange = {handleChange}
+                type = "value"
+                />
+              <span> 만원 </span>
+            </PriceInput>
+      </PriceBox>
+    </>
+    )}
+  </>
     );
   }
 
@@ -237,8 +295,15 @@ class SearchBarContainer2 extends React.Component {
 //  };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-
-  }
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   CustomSliderThumbComponent (props) {
   return (
     <div {...props}>
@@ -353,13 +418,17 @@ class SearchBarContainer2 extends React.Component {
 
 
   render() {
-    const { search, modal_open, price_max, price_min, due_max, due_min, show_detail } = this.state;
+    const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request } = this.props;
     {/*console.log(Partner.select_big)
     console.log(Partner.request_middle_list)*/}
 
     return (
+
       <CustomContainer>
+      <>
+      { width > 768 ? (
+        <>
         <SelectRow>
           <Title>
             제품분야
@@ -460,6 +529,106 @@ class SearchBarContainer2 extends React.Component {
             </Button>
           </ButtonBox>
       </DropDown>
+      </>
+      )
+       : (
+       // 모바일
+       <>
+         <SelectRow>
+           <Title> 제품분야 </Title>
+           <MobileSelectBox>
+           <Select
+              styles={MobilecustomStyles} options={Partner.category_list} value={Partner.select_big}
+              getOptionLabel={(option) => option.maincategory} placeholder='대 카테고리' onChange={Partner.setBigCategory}/>
+           <Select
+              styles={MobilecustomStyles} options={Partner.request_middle_list} value={Partner.select_mid}
+              getOptionLabel={(option) => option.category} placeholder='중 카테고리' onChange={Partner.setMidCategory}/>
+           </MobileSelectBox>
+         </SelectRow>
+         <SelectRow>
+             <Title> 희망예산 </Title>
+             {/*<PriceBox>
+               <PriceInput>
+               </PriceInput>
+               <span> ~ </span>
+               <PriceInput>
+               </PriceInput>
+             </PriceBox>*/}
+             <this.RangeSlider/>
+           </SelectRow>
+         <SelectRow>
+           <Title> 기간 </Title>
+           <PriceBox>
+               <PriceInput>
+               </PriceInput>
+               <span> ~ </span>
+               <PriceInput>
+               </PriceInput>
+           </PriceBox>
+         </SelectRow>
+         <SelectRow style={{marginTop: 24, marginBottom: 24, display: "inline-flex", justifyContent: "center"}}>
+           <MobileButton1>
+             <span>필터 적용하기</span>
+           </MobileButton1>
+           <MobileButton2
+             onClick = {this.showDetail}
+           >
+             <span> 무료 가견적 넣기 </span>
+           </MobileButton2>
+         </SelectRow>
+         <SelectRow>
+           <Title>
+             제품이름
+           </Title>
+            <InputComponent
+                placeholder="ex)반려동물 관리 장난감"
+                value={Request.input_name}
+                onChange={Request.setInputName}
+            />
+         </SelectRow>
+         <SelectRow>
+           <Title style={{width: 65}}>
+            전화번호
+           </Title>
+           <PhoneBox>
+            <PhoneInputComponent
+                value={Request.input_phone}
+                onChange={Request.setInputPhone}
+            />
+              <img src={phone}/>
+            <PhoneInputComponent
+                value={Request.input_phone2}
+                onChange={Request.setInputPhone2}
+            />
+              <img src={phone}/>
+            <PhoneInputComponent
+                value={Request.input_phone3}
+                onChange={Request.setInputPhone3}
+            />
+          </PhoneBox>
+         </SelectRow>
+         <SelectRow>
+           <Title>
+             첨부파일
+           </Title>
+           <FileBox
+            onClick = {()=>this.portfolio.current.click()}>
+            <input
+              onChange = {this.onChangePortfolio}
+              type = "file"
+              style={{display: 'none'}}
+              ref={this.portfolio}
+              />
+            <span> { this.state.portfolioValue ? this.state.portfolioValue : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
+            <img
+              src="/static/images/mask.png"
+              />
+          </FileBox>
+         </SelectRow>
+       </>
+      )
+      }
+    </>
       </CustomContainer>
     )
   }
@@ -510,12 +679,25 @@ const InputBox = styled.div`
 const CustomContainer = styled(Container)`
   padding: 0 0;
   width: 100%;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+        padding-left: calc(4.4%);
+        padding-right: calc(4.4%);
+        width: 100%;
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+    }
 `
 const SelectRow = styled.div`
   width: 100%;
   display: inline-flex;
   align-items: center;
   margin-bottom: 22px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-top: 16px;
+    margin-bottom: 0px;
+    }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    }
 `
 const Title = styled.div`
   width: 100px;
@@ -530,11 +712,40 @@ const Title = styled.div`
   letter-spacing: -0.65px;
   text-align: left;
   color: #191919;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 46px !important;
+      white-space: nowrap;
+      height: 18px;
+      object-fit: contain;
+      font-size: 12px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 0.67;
+      letter-spacing: -0.3px;
+      text-align: left;
+      color: #191919;
+      margin-right: 0px;
+      display: flex;
+      align-items: center;
+    }
 `
 const Select = styled(SelectComponent)`
   width: 400px;
   height: 100%;
   margin-right: 47px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin: 0;
+    padding: 0;
+    margin-right: 8px;
+    width: 132px !important;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 2px;
+    border: solid 0.5px #c7c7c7;
+    background-color: #ffffff;
+    position: relative;
+  }
 `
 const Wrapper = styled.div`
   width: 400px;
@@ -550,24 +761,15 @@ const PhoneBox = styled.div`
     object-fit: contain;
     margin-left: 14.5px;
     margin-right: 14.5px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+        width : 5px;
+        margin-left: 6.9px;
+        margin-right: 7.1px;
+    }
   }
-`
-const PhoneInput = styled.input`
-  width: 134px;
-  height: 50px;
-  object-fit: contain;
-  border-radius: 3px;
-  border: solid 1px #c7c7c7;
-  background-color: #ffffff;
-  outline: none;
-  font-size: 23px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.22;
-  letter-spacing: 0.58px;
-  text-align: center;
-  color: #b7b7b7;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-left: 12px;
+  }
 `
 const FileBox = styled.div`
   width: 767px;
@@ -583,7 +785,7 @@ const FileBox = styled.div`
       height: 22px;
       object-fit: contain;
       cursor: pointer;
-      padding-right: 26px;
+      padding-right: calc(5%);
   }
   > input {
     border: none;
@@ -620,6 +822,25 @@ const FileBox = styled.div`
     display: flex;
     align-items: center;
     padding-left: 20px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 240px;
+      height: 25px;
+      object-fit: contain;
+      padding-left: calc(5%);
+      font-size: 11px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 0.36;
+      letter-spacing: normal;
+      text-align: left;
+      color: #b7b7b7;
+    }
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 75.6%;
+    height: 32px;
+    margin-left: 10px;
   }
 `
 const ButtonBox = styled.div`
@@ -647,7 +868,6 @@ const ButtonBox = styled.div`
     @media (min-width: 768px) and (max-width: 991.98px) {
   	    width : 30%
     }
-
   }
 `
 const BarWrapper = styled.div`
@@ -718,12 +938,36 @@ const PriceInput = styled.div`
   display: flex;
   align-items: center;
   outline: none;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 100%;
+    width: 100%;
+    padding: 0 3px;
+    font-size: 14px;
+    font-family: "Roboto";
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.36;
+    letter-spacing: 0.28px;
+    color: #767676;
+    }
   }
   > span {
     margin-left: 4px;
     margin-right: 10px;
     font-weight: 500;
     width: 40px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      font-size: 12px;
+    }
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 118px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 2px;
+    border: solid 0.5px #c7c7c7;
+    background-color: #ffffff;
   }
 `
 const PriceBox = styled.div`
@@ -747,6 +991,17 @@ const PriceBox = styled.div`
       margin-right: 14px; margin-left: 14px;
       display: flex;
       align-items: center;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        margin: 0;
+        margin-left: 12px;
+        margin-right: 13px;
+      }
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin: 0;
+    width: 100%;
+    margin-left: 12px;
+    padding-right: calc(4.4%);
   }
 `
 const DropButton = styled.div`
@@ -772,5 +1027,56 @@ const DropButton = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: #fffdf8;
+  }
+`
+const MobileSelectBox = styled.div`
+  display: inline-flex;
+  width: 100%;
+  margin-left: 12px;
+`
+const MobileButton1 = styled.div`
+  width: 94px;
+  height: 28px;
+  border-radius: 2px;
+  border: solid 1px #093976;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > span {
+    height: 18px;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.42;
+    letter-spacing: normal;
+    text-align: left;
+    color: #093976;
+    display: flex;
+    align-items: center;
+  }
+`
+const MobileButton2 = styled.div`
+  width: 99px;
+  height: 28px;
+  border-radius: 2px;
+  background-color: #093976;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+  cursor: pointer;
+  > span {
+    height: 18px;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.42;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fffdf8;
+    display: flex;
+    align-items: center;
   }
 `
