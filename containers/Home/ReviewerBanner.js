@@ -16,17 +16,52 @@ const image2 = "/static/images/main/review2.png";
 const image3 = "/static/images/main/section4_step3_img.png";
 const image4 = "/static/images/banner2_4.png";
 
-class TestBanner extends React.Component {
+class ReviewBanner extends React.Component {
+  state = {
+    idx: 0,
+    current: 1,
+    next: true,
+    prev: false,
+    width: 0,
+    tab: 0,
+  }
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+
   render() {
+    const { prev, next, idx, width } = this.state
+     var settings = {
+      dots: false,
+      infinite: false,
+      slidesToShow: 1,
+      slidesToScroll: 285/width,
+      initialSlide: 0,
+      draggable: false,
+      arrows: false,
+      beforeChange: (current) => {
+        this.setState({current: current})
+      },
+      }
     return (
         <CustomContainer>
             <Container>
-              <Header>소비자의 니즈에 맞춰서 진행한 제품 후기</Header>
+              <Header>소비자 맞춤형 제품 생산 사례</Header>
+              <>
+              { width > 450 ? (
+              <>
                 <Item1>
                   <Image src={image2}/>
                     <TextBox>
                       <div class="Header">
-                        제품을 디자인이 가장 어려우신분<br/>스타일링으로 제품 퀄리티를 바꿔보세요.
+                        스타일링으로<br/> 제품 퀄리티를 바꿔보세요.
                       </div>
                       <div class="Middle">
                         IoT 헬스케어 캣타워
@@ -55,13 +90,53 @@ class TestBanner extends React.Component {
                       </div>
                     </TextBox>
                 </Item1>
+              </>  ) : (
+              <>
+              <List>
+              <Slider {...settings}>
+                <Item1>
+                    <Image src={image2}/>
+                    <TextBox>
+                      <div class="Header">
+                        스타일링으로<br/> 제품 퀄리티를 바꿔보세요.
+                      </div>
+                      <div class="Middle">
+                        IoT 헬스케어 캣타워
+                      </div>
+                      <div class="Body">
+                        내부 설계와 소프트웨어가 탄탄하게 설계되어 있어도 제품의 겉 표면
+                        스타일링이 되어 있지 않으면 제품 퀄리티가 떨어져 보입니다. 디자인 시안
+                        부터 고객님과 함께 정하고 원하시는 타겟에 맞춰 디자인을 도와드립니다. <br/><br/>
+                      </div>
+                    </TextBox>
+                </Item1>
+                <Item1>
+                  <Image src={image1}/>
+                    <TextBox>
+                      <div class="Header">
+                        제품을 처음만드시는 분들의 어려운 부분을 채워 드립니다.
+                      </div>
+                      <div class="Middle">
+                        실리콘 반려동물 샤워기
+                      </div>
+                      <div class="Body">
+                        질병 문제 해결을 위한 반려동물 샤워기 클라이언트의 의견 맞춰서 실리콘  금형양산을 진행하였습니다.
+                         R&D 요소를 같이 진행하여 실리콘 분량률을 최소화 하여 예산에 맞춰 양산하였습니다. <br/><br/>
+                      </div>
+                    </TextBox>
+                </Item1>
+              </Slider>
+              </List>
+            </>
+              )}
+            </>
             </Container>
         </CustomContainer>
     );
   }
 }
 
-export default TestBanner;
+export default ReviewBanner;
 
 const CustomContainer = styled.div`
   padding: 0px;
@@ -69,8 +144,11 @@ const CustomContainer = styled.div`
   height: 1239px;
   background-color: rgba(158, 159, 161, 0.12);
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
+    width: calc(100%);
+    height: 100%;
+    padding: 0;
+    background-color: #ffffff;
+    margin-bottom: 8px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -94,8 +172,11 @@ const Container = styled.div`
   text-align : center;
   align-items: center;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
+    width: calc(100%);
+    height: calc(100%);
+    padding: 0;
+    padding-left: calc(5%);
+    margin: 0;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -114,7 +195,6 @@ const Header = styled.div`
   width: 600px;
   height: 47px;
   object-fit: contain;
-  font-family: NotoSansCJKkr;
   font-size: 32px;
   font-weight: bold;
   font-stretch: normal;
@@ -124,10 +204,13 @@ const Header = styled.div`
   text-align: left;
   color: #505050;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 50px;
+    margin-top: 0px;
     width: 290px;
-    margin-bottom: 20px;
-    font-size: 24px;
+    height: 100%;
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 22px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 50px;
@@ -147,6 +230,18 @@ const Header = styled.div`
 const TextBox = styled.div`
   margin-left: 45px;
   width: 550px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 100%;
+      margin: 0;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 232px;
+    height: 276px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
   .Header {
   padding-top: 45px;
   height: 89px;
@@ -159,6 +254,23 @@ const TextBox = styled.div`
   letter-spacing: -0.75px;
   text-align: left;
   color: #191919;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 240px;
+    height: 58px;
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.4;
+    padding-top : calc(5%);
+    padding-left: calc(6%);
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
   }
   .Middle {
   padding-top: 40px;
@@ -172,6 +284,27 @@ const TextBox = styled.div`
   letter-spacing: 0.5px;
   text-align: left;
   color: #505050;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 24px;
+    object-fit: contain;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: -0.4px;
+    text-align: left;
+    color: #505050;
+    padding-top: 0px;
+    padding-top : calc(3%);
+    padding-left: calc(6%);
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
   }
   .Body{
   height: 81px;
@@ -187,6 +320,30 @@ const TextBox = styled.div`
   letter-spacing: -0.45px;
   text-align: left;
   color: #767676;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 217px;
+    height: 66px;
+    object-fit: contain;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: -0.3px;
+    text-align: left;
+    color: #767676;
+    padding-top : calc(1%);
+    padding-left: calc(6%);
+    margin: 0;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 232px;
+    height: 276px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
   .HyperLink {
   width: 52px;
   height: 27px;
@@ -203,7 +360,6 @@ const TextBox = styled.div`
   }
   }
 `
-
 const Item1 = styled.div`
   width: 1200px;
   height: 391px;
@@ -216,11 +372,26 @@ const Item1 = styled.div`
   > p {
     text-align: left;
   }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 272px;
+      height: 372px;
+      border-radius: 4px;
+      box-shadow: 2px 3px 6px 0 rgba(0, 0, 0, 0.16);
+      background-color: #ffffff;
+      display: block;
+      margin: 0;
+      margin-bottom: 26px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 232px;
+    height: 276px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
 `
-const Item_Container = styled.div`
-  padding-left: 25px;
-  padding-top: 150px;
-  text-align: left;
+const ItemContainer = styled.div`
 `
 const Item2 = styled.div`
   display: flex;
@@ -257,12 +428,14 @@ const Image = styled(RatioImage)`
   align-items: left;
   border-radius: 10px;
   > div {
-    background-size: contain;
     background-repeat: no-repeat;
+
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 232px;
-    height: 276px;
+     width: calc(100%);
+     height: 154px;
+     object-fit: contain;
+     border-radius: 4px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 232px;
@@ -316,5 +489,28 @@ const ButtonBox = styled.div`
   	    width : 30%
         margin-bottom: 44px;
     }
+  }
+`
+const List = styled.div`
+  width: 100%;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-top: 16px;
+    .slick-list {
+    width: 100%;
+    > div > div {
+      width: 270px !important;
+      margin-right: 16px;
+    }
+    > div > div > div > div  {
+      align-items: center;
+      width: 270px !important;
+    }
+  }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
   }
 `

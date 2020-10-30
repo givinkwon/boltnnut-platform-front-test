@@ -130,7 +130,7 @@ class MagazineContainer extends React.Component {
             infinite: false,
             arrows: false,
             slidesToShow: 1,
-            slidesToScroll: 0.575,
+            slidesToScroll: 207/width,
             initialSlide: 0,
             draggable: false,
             swipe: true,
@@ -323,6 +323,8 @@ const CustomContainer = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 0 0;
     display: inline-flex;
+    background-color: white;
+    margin-bottom: 8px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
@@ -425,6 +427,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   @media (min-width: 0px) and (max-width: 450.98px) {
+    padding-top: 16px;
     > span {
     height: 24px;
     object-fit: contain;

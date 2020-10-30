@@ -16,10 +16,31 @@ const blog = "/static/images/blog.png";
 @inject('Auth')
 @observer
 class FooterComponent extends React.Component {
+  state = {
+    idx: 0,
+    current: 1,
+    next: true,
+    prev: false,
+    width: 0,
+    tab: 0,
+  }
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   render() {
     const {Auth} = this.props;
-
+    const { width } = this.state;
     return (
+    <>
+    { width > 450 ? (
+      <>
       <Footer>
         <Container style={{marginBottom: 0}}>
           <CompanyInfoContainer style={{paddingRight: 0}}>
@@ -138,6 +159,40 @@ class FooterComponent extends React.Component {
           </ContactInfoContainer>
         </Container>
       </Footer>
+      </>
+      ) : (
+         <MobileFooter>
+           <CompanyInfoContainer>
+             <div style={{flexDirection: "row", display: "inline-flex"}}>
+             <CompanyInfo>
+               <span> (주) 볼트앤너트 </span>
+               <span> 대표자 윤기열, 신지섭</span>
+               <span> 사업자등록번호 390-87-01669</span>
+               <span> 서울특별시 성북구 고려대길30길 4 2층</span>
+             </CompanyInfo>
+             <CompanyInfo2>
+               <span> CONTACT </span>
+               <span> 02-926-6637 </span>
+               <span> 평일 오전 10시~오후7시 </span>
+               <span> boltnnut@boltnnut.com </span>
+               <SnsBox>
+                <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
+                <Sns src={facebook} onClick={() => window.open('http://www.facebook.com/boltnnut6637')} />
+                <Sns src={blog} onClick={() => window.open('http://www.blog.naver.com/boltnnut_korea')} />
+              </SnsBox>
+             </CompanyInfo2>
+             </div>
+             <MobileContainer>
+               <span> 제조사 찾기 </span>
+               <span> 자주찾는 질문 </span>
+               <span> 이용약관 </span>
+               <span> 개인정보 처리 방침 </span>
+             </MobileContainer>
+           </CompanyInfoContainer>
+         </MobileFooter>
+      )
+    }
+  </>
     );
   }
 }
@@ -149,20 +204,15 @@ const Footer = styled.div`
   padding: 99px 0px;
   display : inline-flex;
   justify-content: center;
-
-
   > div:nth-of-type(1) {
-    position: relative; 
-    left:62px;  
+    position: relative;
   }
   > div:nth-of-type(2) {
     position: relative; 
   }
-
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 100%
   }
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
   }
@@ -203,11 +253,9 @@ const Container = styled.div`
 const TextBox = styled.div`
   display: flex;
   margin-bottom: 20px;
-  
   :last-of-type {
     margin-bottom: 0;
   }
-  
   p {
     cursor: pointer;
     width: auto;
@@ -262,7 +310,6 @@ const TextBox = styled.div`
 `;
 const CompanyInfoContainer = styled.div`
   float : right;
-
   p {
     font-weight: 100;
     font-stretch: normal;
@@ -270,8 +317,25 @@ const CompanyInfoContainer = styled.div`
     line-height: 1.47;
     letter-spacing: -0.38px;
   }
-`;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+    padding-left: 16px;
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 1300px) {
+    width: 100%;
+  }
+`;
 const CompanyInfo = styled.div`
   display: flex;
   align-items: flex-end;
@@ -281,28 +345,74 @@ const CompanyInfo = styled.div`
   font-weight: 300;
   font-stretch: normal;
   font-style: normal;
-
   > div {
     display: flex;
     flex-direction: column;
     margin-top: 14px;
-    
     > p {
       margin-bottom: 5px;
       white-space: nowrap;
     }
   }
-  
   > div:nth-of-type(2) {
     margin-left: auto;
     width: fit-content;
   }
-  
   @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 154px;
+    height: 76px;
     flex-direction: column;
     align-items: flex-start;
-    
-    > div:nth-of-type(2) {}
+    > span {
+      font-size: 10px;
+      color: white;
+      font-weight: 300;
+    }
+    > span:nth-of-type(1) {
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding-bottom: 8px;
+    }
+  }
+`;
+const CompanyInfo2 = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  line-height : 1.47;
+  letter-spacing : -0.38px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  > div {
+    flex-direction: row;
+    > p {
+      margin-bottom: 5px;
+      white-space: nowrap;
+    }
+  }
+  > div:nth-of-type(2) {
+    margin-left: auto;
+    width: fit-content;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 120px;
+    height: 91px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 54px;
+    > span {
+      font-size: 10px;
+      color: white;
+      font-weight: 300;
+    }
+    > span:nth-of-type(1) {
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      padding-bottom: 8px;
+    }
   }
 `;
 const ContactInfoContainer = styled.div`
@@ -334,12 +444,101 @@ const SnsBox = styled.div`
   > img:nth-of-type(1) {
     padding-left : 0;
   }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 0;
+    padding-top: 8px;
+    display: inline-flex;
+    justify-content: space-between;
+    width: 55px;
+    height: 13px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
+  }
 `;
 const Sns = styled.img`
   cursor: pointer;
   height: 24px;
   padding : 17px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 0;
+    width: 13.2px;
+    height: 12.9px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+
+  @media (min-width: 1300px) {
+  }
 `;
 // const FontSize16 = styled.p`
 //   font-family: 'Roboto', sans-serif;
 // `;
+const MobileFooter = styled.div`
+  background-color: ${PRIMARY};
+  padding: 0px 0px;
+  display : inline-flex;
+  justify-content: center;
+  > div:nth-of-type(1) {
+    position: relative;
+  }
+  > div:nth-of-type(2) {
+    position: relative;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 1300px) {
+    width: 100%;
+  }
+`;
+const MobileContainer = styled.div`
+  background-color: ${PRIMARY};
+  padding: 0px 0px;
+  display : inline-flex;
+  justify-content: center;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%
+    color: white;
+    display: inline-flex;
+    justify-content: space-between;
+    padding-right: 10px;
+    padding-top: 30px;
+    padding-bottom: 23px;
+    > span {
+      color: white;
+      font-size: 10px;
+      font-weight: 300;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: -0.25px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+
+  @media (min-width: 1300px) {
+    width: 100%;
+  }
+`;

@@ -147,15 +147,15 @@ class NewBanner4Container extends React.Component {
                           <TextBox>
                             <HeaderWrapper>
                               <div class="CommentHeader">
-                                <p> MANU </p>
+                                <p> IoPET </p>
                               </div>
                               <div class="CommentStar">
                                 <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
                               </div>
                             </HeaderWrapper>
                             <div class="CommentBody">
-                              <span class="Header"> 볼트앤너트 덕분에 2차 마켓까지 진행하였어요 </span>
-                              <p> 업체를 고를 때 개발을 진행하는 마인드와 포트폴리오를 가장 중요하게 생각하는데 볼트앤너트가 모두 제공해줘서 편리했습니다. </p>
+                              <span class="Header"> 더 나은 조건의 업체를 찾을 수 있었습니다 </span>
+                              <p> 업체를 추천받아 비교해 볼 수 있었고, 더 나은 조건의 업체와 계약해서 간편하고 너무 좋았습니다. </p>
                             </div>
                          </TextBox>
                         </CommentBox>
@@ -166,15 +166,15 @@ class NewBanner4Container extends React.Component {
                           <TextBox>
                             <HeaderWrapper>
                               <div class="CommentHeader">
-                                <p> MANU </p>
+                                <p> HClab </p>
                               </div>
                               <div class="CommentStar">
                                 <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
                               </div>
                             </HeaderWrapper>
                             <div class="CommentBody">
-                              <span class="Header"> 볼트앤너트 덕분에 2차 마켓까지 진행하였어요 </span>
-                              <p> 업체를 고를 때 개발을 진행하는 마인드와 포트폴리오를 가장 중요하게 생각하는데 볼트앤너트가 모두 제공해줘서 편리했습니다. </p>
+                              <span class="Header"> 포트폴리오 비교해서 고를 수 있어 좋았습니다. </span>
+                              <p> 제조사 포트폴리오 하나하나 받고 비교해서 고르기 힘들었는데 바로 제공받고 골라서 편리했습니다. </p>
                             </div>
                          </TextBox>
                         </CommentBox>
@@ -218,8 +218,9 @@ const CustomContainer = styled.div`
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100%);
+    height: 100%;
     padding: 0;
-    height: 600px;
+    margin-bottom: 8px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -246,6 +247,7 @@ const Container = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100%);
     padding: 0;
+    padding-bottom: 24px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -339,6 +341,15 @@ const HeaderBox = styled.div`
   :focus {
     outline: none;
   }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+  padding-left: calc(5%);
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
 `
 const BodyBox = styled.div`
   width: 100%;
@@ -407,6 +418,9 @@ const Item = styled.div`
     text-align: center;
     align-items: center;
     margin-bottom: 8px;
+    padding-left: calc(5%);
+    align-items: flex-start;
+    display: inline-flex;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -501,15 +515,19 @@ const Header2 = styled.div`
   color: #505050;
   margin-top: 130px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 21px;
-    font-weight: normal;
+    width: 300px;
+    height: 100%;
+    font-size: 16px;
+    font-weight: bold;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.25;
     letter-spacing: normal;
-    text-align: center;
-    color: #ffffff;
-    margin: 0
+    text-align: left;
+    color: #505050;
+    margin: 0;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
