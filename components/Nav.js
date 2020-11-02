@@ -357,27 +357,15 @@ const ProfileMenu = styled.div`
   }
 `;
 const Container = styled.div`
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+  padding-right: 0% !important;
+  padding-left: 0% !important;
+  margin-right: 0% !important;
+  margin-left: 0% !important;
+  width: 100%;
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
-  }
 
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 720px;
-  }
 
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 930px;
-  }
 
-  @media (min-width: 1300px) {
-    width: 1920px;
-  }
 `
 const Avatar = styled.img`
   width: 32px;
@@ -396,16 +384,16 @@ const NavWrap = styled.div`
   display: flex;
   align-items: center;
   height: 70px;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 0;
-  }
-  @media (min-width: 768px) {
-    padding: 0 135px;
-  }
+  padding-left: 7%;
+  padding-right: 7%;
 `;
 const Logo = styled.img`
   cursor: pointer;
-  width: 113px;
+  width: auto;
+  height: 42.6%;
+
+
+
 `;
 const Icon = styled.img`
   cursor: pointer;
@@ -477,17 +465,17 @@ const NavLink = styled.p`
   @media (min-width: 992px) and (max-width: 1299.98px) {
     padding-left: 25px;
     padding-right: 25px;
-    font-size: 14px;
+    font-size: 18px;
   }
   @media (min-width: 1300px) and (max-width: 1599.98px) {
     padding-left: 25px;
     padding-right: 25px;
-    font-size: 14px;
+    font-size: 20px;
   }
   @media (min-width: 1600px) {
     padding-left: 30px;
     padding-right: 30px;
-    font-size: 16px;
+    font-size: 20px;
   }
   ${(props) =>
     props.first &&
