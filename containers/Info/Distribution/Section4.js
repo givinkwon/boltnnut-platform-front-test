@@ -18,9 +18,9 @@ class Section4Container extends React.Component {
         <CustomContainer>
             <Container>
               <ItemBox>
-                <Text.FontSize40>볼트앤너트는 <span>원하시는 제품을<br/>성공적으로 만들 수 있도록</span><br/>최선을 다하겠습니다. </Text.FontSize40>
+                <Text.FontSize40><span>경쟁력 있는 제품을 만들고 싶다면?</span></Text.FontSize40>
                 <NextButton backgroundColor={'#0a2165'} borderColor={'#e6e6e6'} onClick={this.Next}>
-                    <Text.FontSize32 color={'#ffffff'} fontWeight={500}>무료 가견적 문의하기</Text.FontSize32>
+                    <Text.FontSize32 color={'#ffffff'} fontWeight={500}>상품 설명서 보기</Text.FontSize32>
                 </NextButton>
               </ItemBox>
             </Container>

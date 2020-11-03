@@ -86,7 +86,7 @@ class ContentConatiner extends React.Component {
 
   render() {
     const magazineList = this.props.Magazine.magazine_list
-    const { prev, next, width, height } = this.state
+    const { prev, next, width, height, current } = this.state
 
     if(width > 768){
       var settings = {
@@ -94,7 +94,7 @@ class ContentConatiner extends React.Component {
         infinite: false,
         slidesToShow: 2,
         slidesToScroll: 2,
-        initialSlide: 0,
+        initialSlide: 1,
         rows: 3,
         beforeChange: (current) => {
           this.setState({current: current})

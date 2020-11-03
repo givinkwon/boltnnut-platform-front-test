@@ -8,7 +8,7 @@ import Section1Container from "./Section1";
 import Section2Container from "./Section2";
 import Section3Container from "./Section3";
 
-class MassproductContainer extends React.Component {
+class SearchContainer extends React.Component {
   
   render() {
     return (
@@ -21,5 +21,5 @@ class MassproductContainer extends React.Component {
   }
 }
 
-export default MassproductContainer;
+export default SearchContainer;
 

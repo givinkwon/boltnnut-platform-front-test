@@ -12,16 +12,13 @@ const person = "/static/icon/info/person.png";
 const star = "/static/icon/info/star.png";
 
 
-class Section2Container extends React.Component {
+class Section4Container extends React.Component {
   render() {
     return (
         <CustomContainer>
             <Container>
-              <Header>이용 안내</Header>
               <ItemBox>
-                <Text.FontSize24>10 영업일 이내 원하는 조건(견적,MOQ)을 구하지 못하는 경우</Text.FontSize24>
-                <Text.FontSize48 color={'#0933b3'}>100% 환불</Text.FontSize48>
-                <Text.FontSize24>가격 39,000원</Text.FontSize24>
+                <Text.FontSize40><span>경쟁력 있는 제품을 찾고 싶다면?</span></Text.FontSize40>
                 <NextButton backgroundColor={'#0a2165'} borderColor={'#e6e6e6'} onClick={this.Next}>
                     <Text.FontSize32 color={'#ffffff'} fontWeight={500}>서비스 시작하기</Text.FontSize32>
                 </NextButton>
@@ -32,30 +29,26 @@ class Section2Container extends React.Component {
   }
 }
 
-export default Section2Container;
+export default Section4Container;
+
 const ItemBox = styled.div`
   display: inline;
   width: 100%;
   margin-bottom : 200px;
-  > p { 
+  > p {
+    font-weight: 500;
     font-stretch: normal;
     font-style: normal;
+    line-height: 2.19;
+    letter-spacing: -0.8px;
+    text-align: center;
+    color : #191919 ;
+    > span {
+      font-weight: 600;
+      color: #0933b3;
+    }
   }
-  > p:nth-of-type(1) {
-    font-weight: normal;
-    line-height: 1.58;
-    letter-spacing: -0.6px;
-  }
-  > p:nth-of-type(2) {
-    font-weight: bold;
-    line-height: 1.42;
-    letter-spacing: -0.02px;
-  }
-  > p:nth-of-type(3) {
-    font-weight: normal;
-    line-height: 1.58;
-    letter-spacing: -0.6px;
-  }
+
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100%);
@@ -78,11 +71,11 @@ const NextButton = styled(ButtonComponent)`
   margin-top : 50px;
   border-radius: 16px;
   box-shadow: 0 3px 6px 0 var(--black-16);
-  
+
   :hover {
     background-color : #0933b3;
   }
-  
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 302px;
     height: 77px;
@@ -91,11 +84,11 @@ const NextButton = styled(ButtonComponent)`
     width: 302px;
     height: 77px;
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 302px;
     height: 77px;
   }
-  @media (min-width: 1300px) { 
+  @media (min-width: 1300px) {
     width: 302px;
     height: 77px;
   }
@@ -160,7 +153,8 @@ const Container = styled.div`
   margin-left: auto;
   text-align : center;
   align-items: center;
-  padding-bottom : 200px;
+  padding-top : 220px;
+  padding-bottom : 230px;
   /* @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100% - 40px);
     padding: 0 20px;
