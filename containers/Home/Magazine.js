@@ -172,16 +172,22 @@ class MagazineContainer extends React.Component {
     return (
     <CustomContainer>
       <FindExperct>
+        {width > 1299.98 &&
         <LeftArrowContainer width= {this.state.width}>
           <LeftArrow src={left} onClick = {this.sliderPrev}/>
         </LeftArrowContainer>
+        }
         <MagazineBox>
             <>
               <Header>
                 { width < 768 ? (
                   <span>매거진</span>
                   ) : (
+                  <>
+                  { width > 1299.98 &&
                   <Text.FontSize30 color={"#0a2165"} fontWeight={700}>매거진</Text.FontSize30>
+                  }
+                  </>
                   )
                 }
               </Header>
@@ -189,6 +195,8 @@ class MagazineContainer extends React.Component {
           <List>
             <>
             { width > 450 ? (
+            <>
+            { width > 1299.98 &&
             <Slider {...settings} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
                     {
                       data.map(() => {
@@ -223,6 +231,8 @@ class MagazineContainer extends React.Component {
                     }
 
             </Slider>
+            }
+            </>
             ) :
             (
             <Slider {...settings} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
@@ -247,9 +257,14 @@ class MagazineContainer extends React.Component {
           </>
           </List>
         </MagazineBox>
+
+        {
+        width > 1299 &&
         <RightArrowContainer width= {this.state.width}>
           {(this.state.idx*2 + 4) < magazineCount ? <RightArrow src={right} onClick = {this.sliderNext}/> : <RightArrow/>}
         </RightArrowContainer>
+        }
+
         <RequestBox width = {this.state.width}>
           <Header>
               <Text.FontSize30 color={"#0a2165"} fontWeight={700}>실시간 의뢰 건 리스트</Text.FontSize30>
@@ -317,6 +332,8 @@ class MagazineContainer extends React.Component {
 export default MagazineContainer;
 
 const CustomContainer = styled.div`
+  max-width: 100%;
+  overflow: hidden;
   padding: 0px;
   width: 100%;
   height: 100%;
@@ -441,6 +458,13 @@ const Header = styled.div`
     color: #505050;
     }
   }
+  @media (min-width: 768px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
 `
 const Middle = styled.div`
   width: 420px;
@@ -458,6 +482,15 @@ const Middle = styled.div`
   .Bold {
     font-weight: 500;
     color: #0933b3;
+  }
+  @media (min-width: 768px) and (max-width: 1299.98px) {
+    font-size: 34px !important;
+    width: 100%;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-bottom: 15px;
+  }
+  @media (min-width: 1300px) {
   }
 `
 const Icon = styled.img`
@@ -673,10 +706,25 @@ const RequestBox = styled.div`
   ${props => props.width < 450 && css`
     display: none;
   `}
+
+  @media (min-width: 768px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+
 `
 const RequestItemBox = styled.div`
+
+  height: 550px;
   width: 384px;
-  height: 510px;
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 730px !important;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 930px !important;
+  }
+  @media (min-width: 1300px) {
+    width: 384px;
+  }
 `
 const RequestList = styled.div`
   width: 384px;
@@ -691,6 +739,13 @@ const RequestList = styled.div`
         }
       }
     }
+  }
+  @media (min-width: 768px) and (max-width: 1299.98px) {
+    width: 100% !important;
+  }
+
+  @media (min-width: 1300px) {
+    width: 384px;
   }
 `
 const RequestItem = styled.div`
@@ -708,6 +763,13 @@ const RequestItem = styled.div`
   justify-content: center;
   color: #767676;
   margin-top: 22px;
+  @media (min-width: 768px) and (max-width: 1299.98px) {
+    width: 100% !important;
+  }
+
+  @media (min-width: 1300px) {
+    width: 384px;
+  }
 `
 const RequestImageContainer = styled.div`
   width: 104px;

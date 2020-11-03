@@ -36,17 +36,17 @@ class NewBanner5Container extends React.Component {
     return (
     <CustomContainer>
           <Container>
-            <Header> 제조사 찾기 말고 다른 서비스를 찾으시나요? </Header>
+            <Header> 경쟁력 있는 제품을 원하시나요? </Header>
                 <Item>
                     <ImageTextBox>
                       <div class="BackImage"/>
                       <div class="TextBox">
                         <div class="ImageHeader">
-                          예산이 예상보다 비싸다구요? <br/> 자체에서 개발한 양산개발 시스템으로
+                          경쟁력 있는 제품을 찾고 계신가요?
                         </div>
                         <div class="ImageBottom">
-                          <span class="ImageBold"> 최대 40% </span>
-                           비용을 낮추는 양산개발 서비스를 이용해 보세요
+                          <span class="ImageBold"> 제품발주조건 </span>
+                           을 알려드리는 국내외 공장 수배 서비스를 이용해보세요
                         </div>
                         <div class="More">
                            자세히 보기 >
@@ -58,11 +58,11 @@ class NewBanner5Container extends React.Component {
                       <div class="BackImage2"/>
                       <div class="TextBox">
                         <div class="ImageHeader">
-                          제조사 말고 제품을 찾고 계신가요? <br/> 제품의 중국 단가가 궁금하신가요?
+                          경쟁력 있는 제품을 만들고 싶은가요?
                         </div>
                         <div class="ImageBottom">
-                          <span class="ImageBold"> 원하시는 제품 </span>
-                           을 발주 조건의 정보를 알아봐 드리는 국내외 발주 공장 수배 서비스를 이용해 보세요.
+                          <span class="ImageBold"> 개발/생산 비용 </span>
+                           을 포함한 제품의 모든 것을 알려드리는 유통 제조 서비스를 이용해보세요
                         </div>
                         <div class="More">
                            자세히 보기 >
@@ -275,8 +275,10 @@ const ImageTextBox = styled.div`
     margin-bottom: 16px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 350px !important;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 450px !important;
   }
   @media (min-width: 1300px) {
   }
@@ -358,8 +360,12 @@ const ImageTextBox = styled.div`
       height: 138px;
     }
     @media (min-width: 768px) and (max-width: 991.98px) {
+      padding-left: 25px;
+      padding-right: 25px;
     }
     @media (min-width: 992px) and (max-width: 1299.98px) {
+      padding-right: 30px;
+      padding-left: 30px;
     }
     @media (min-width: 1300px) {
     }
@@ -381,8 +387,11 @@ const ImageTextBox = styled.div`
           width: 250px;
         }
         @media (min-width: 768px) and (max-width: 991.98px) {
+            width : 100%;
+            font-size: 20px;
          }
         @media (min-width: 992px) and (max-width: 1299.98px) {
+            width : 100%;
         }
         @media (min-width: 1300px) {
         }
@@ -405,8 +414,11 @@ const ImageTextBox = styled.div`
           font-size: 16px;
       }
      @media (min-width: 768px) and (max-width: 991.98px) {
+          width: 100%;
+          font-size: 26px;
         }
      @media (min-width: 992px) and (max-width: 1299.98px) {
+          width: 100%;
         }
      @media (min-width: 1300px) {
         }
@@ -418,8 +430,10 @@ const ImageTextBox = styled.div`
           font-size: 20px;
         }
      @media (min-width: 768px) and (max-width: 991.98px) {
+          font-size: 30px;
         }
      @media (min-width: 992px) and (max-width: 1299.98px) {
+          font-size: 41px;
         }
      @media (min-width: 1300px) {
         }

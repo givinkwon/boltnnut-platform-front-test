@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Router from "next/router";
 
-import Container from "components/Container";
 import Button from "components/Button";
 import * as Text from "components/Text";
 import { WHITE } from "static/style";
@@ -52,7 +51,7 @@ class BannerConatiner extends React.Component {
       <Banner>
         <Container>
           <Title>
-            나에게 특화된 맞춤 제조사를<br/> 한 눈에 확인하세요.
+            내 제품에 딱 맞는 제조사를<br/> 바로 만나보세요.
           </Title>
           <ButtonBox>
             <Button
@@ -116,6 +115,14 @@ class BannerConatiner extends React.Component {
 
 export default BannerConatiner;
 
+const Container = styled.div`
+  padding-right: 0% !important;
+  padding-left: 0% !important;
+  margin-right: 0% !important;
+  margin-left: 0% !important;
+  width: 100%;
+`
+
 const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
@@ -164,15 +171,13 @@ const Banner = styled.div`
   }
 `;
 // ed7d31
-const Title = styled(Text.FontSize62)`
-  width: 800px;
-  height: 172px;
-  padding-top: 202px;
-  margin-right: auto;
-  margin-left: auto;
+const Title = styled.div`
+  padding-top: 200px;
+
+  margin-right: 0%;
+  margin-left: 0%;
   object-fit: contain;
   font-family: NotoSansCJKkr;
-  font-size: 62px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -195,7 +200,30 @@ const Title = styled(Text.FontSize62)`
         text-align: center;
         color: #191919;
         padding-bottom: 32px;
-    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+        font-size: 37px !important;
+        width: 60%;
+        height: 22.3%;
+        padding-top: 200px;
+        padding-left: 20%;
+        padding-right: 20%;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  	    font-size: 45px !important;
+  	    width: 60%;
+        height: 22.3%;
+        padding-left: 20%;
+        padding-right: 20%;
+  }
+  @media (min-width: 1300px){
+    font-size: 62px !important;
+    width: 60%;
+    height: 22.3%;
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+
 `
 
 const Subtitle = styled(Text.FontSize20)`
