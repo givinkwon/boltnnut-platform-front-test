@@ -53,7 +53,9 @@ class ReviewBanner extends React.Component {
     return (
         <CustomContainer>
             <Container>
-              <Header>소비자 맞춤형 제품 생산 사례</Header>
+              <HeaderBox>
+                <Header>볼트앤너트 제품 개선 사례</Header>
+              </HeaderBox>
               <>
               { width > 450 ? (
               <>
@@ -61,7 +63,7 @@ class ReviewBanner extends React.Component {
                   <Image src={image2}/>
                     <TextBox>
                       <div class="Header">
-                        스타일링으로<br/> 제품 퀄리티를 바꿔보세요.
+                        경쟁사 제품과의 차별화된 디자인<br/> 볼트앤너트가 도와 드립니다.
                       </div>
                       <div class="Middle">
                         IoT 헬스케어 캣타워
@@ -70,7 +72,7 @@ class ReviewBanner extends React.Component {
                         내부 설계와 소프트웨어가 탄탄하게 설계되어 있어도 제품의 겉 표면
                         스타일링이 되어 있지 않으면 제품 퀄리티가 떨어져 보입니다. 디자인 시안
                         부터 고객님과 함께 정하고 원하시는 타겟에 맞춰 디자인을 도와드립니다. <br/><br/>
-                        <span class="HyperLink"> 더 보기 </span>
+                        {width > 992 && <span class="HyperLink"> 더 보기 </span>}
                       </div>
                     </TextBox>
                 </Item1>
@@ -78,7 +80,7 @@ class ReviewBanner extends React.Component {
                   <Image src={image1}/>
                     <TextBox>
                       <div class="Header">
-                        제품을 처음만드시는 분들이  모르거나 <br/> 어려운 부분을 채워 드립니다.
+                        어려운 생산 관리 걱정하지 마세요. <br/> 볼트앤너트가 도와 드립니다.
                       </div>
                       <div class="Middle">
                         실리콘 반려동물 샤워기
@@ -86,7 +88,7 @@ class ReviewBanner extends React.Component {
                       <div class="Body">
                         질병 문제 해결을 위한 반려동물 샤워기 클라이언트의 의견 맞춰서 실리콘  금형양산을 진행하였습니다.
                          R&D 요소를 같이 진행하여 실리콘 분량률을 최소화 하여 예산에 맞춰 양산하였습니다. <br/><br/>
-                        <span class="HyperLink"> 더 보기 </span>
+                        {width > 992 && <span class="HyperLink"> 더 보기 </span>}
                       </div>
                     </TextBox>
                 </Item1>
@@ -153,6 +155,7 @@ const CustomContainer = styled.div`
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
+
   }
 
   @media (min-width: 992px) and (max-width: 1299.98px) {
@@ -163,6 +166,7 @@ const CustomContainer = styled.div`
     width: 100%;
   }
 `
+
 
 const Container = styled.div`
   width: 1200px;
@@ -191,17 +195,39 @@ const Container = styled.div`
     width: 1200px;
   }
 `
+
+const HeaderBox = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 0px;
+  align-items: baseline;
+  :focus {
+    outline: none;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+  padding-left: calc(5%);
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
+`
+
 const Header = styled.div`
-  width: 600px;
-  height: 47px;
-  object-fit: contain;
+  height: 59px;
+  margin-bottom: 60px;
   font-size: 32px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 2.13;
   letter-spacing: -0.8px;
-  text-align: left;
   color: #505050;
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 0px;
@@ -213,10 +239,8 @@ const Header = styled.div`
     padding-top: 22px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 50px;
-    width: 290px;
-    margin-bottom: 40px;
-    font-size: 24px;
+    margin-top: 60px;
+
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     margin-top: 70px;
@@ -235,8 +259,8 @@ const TextBox = styled.div`
       margin: 0;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 232px;
-    height: 276px;
+    margin-left: 30px;
+    margin-right: 30px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
   }
@@ -266,6 +290,7 @@ const TextBox = styled.div`
     padding-left: calc(6%);
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size : 28px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
   }
@@ -337,8 +362,7 @@ const TextBox = styled.div`
     margin: 0;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 232px;
-    height: 276px;
+    width: 100%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
   }
@@ -383,10 +407,10 @@ const Item1 = styled.div`
       margin-bottom: 26px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 232px;
-    height: 276px;
+    width: 720px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 930px;
   }
   @media (min-width: 1300px) {
   }
@@ -438,8 +462,8 @@ const Image = styled(RatioImage)`
      border-radius: 4px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 232px;
-    height: 276px;
+    height: 100%;
+    width: 50%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
   }

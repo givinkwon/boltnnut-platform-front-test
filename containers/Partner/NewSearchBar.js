@@ -23,6 +23,7 @@ class SearchBarContainer extends React.Component {
   };
   searchText = (e) => {
     this.props.Partner.search_text = e.target.value;
+    this.props.Partner.search_true = 1; // 검색이 되었는 지를 확인
   };
   search = () => {
   //  if (this.props.Auth.logged_in_partner) {

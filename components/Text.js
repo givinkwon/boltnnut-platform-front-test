@@ -222,7 +222,7 @@ export const FontSize20 = styled.p`
   color: ${props => props.color ? props.color : '#000000'};
   text-align: ${props => props.center ? 'center' : 'left'};
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 14px;
+    font-size: 13px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 16px;

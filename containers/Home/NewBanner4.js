@@ -44,11 +44,13 @@ class NewBanner4Container extends React.Component {
     <CustomContainer>
       <Container>
         <HeaderBox>
-          <Header2>클라이언트의 제조 성공이야기 </Header2>
+          <Header2>볼트앤너트 제조 성공 스토리 </Header2>
         </HeaderBox>
         <BodyBox>
           <>
           { width > 450 ? (
+            <>
+            {width > 1300 ? (
             <>
                       <Item>
                         <CommentBox>
@@ -63,8 +65,8 @@ class NewBanner4Container extends React.Component {
                               </div>
                             </HeaderWrapper>
                             <div class="CommentBody">
-                              <span class="Header"> 볼트앤너트 덕분에 2차 마켓까지 진행하였어요 </span>
-                              <p> 업체를 고를 때 개발을 진행하는 마인드와 포트폴리오를 가장 중요하게 생각하는데 볼트앤너트가 모두 제공해줘서 편리했습니다. </p>
+                              <span class="Header"> 다른 업체보다 30% 싸게 만들었어요 </span>
+                              <p> IoT 전문 개발사를 찾고 있었는데, 볼트앤너트 파트너 견적이 30%이상 저렴해서 합리적인 가격으로 개발할 수 있었습니다 </p>
                             </div>
                          </TextBox>
                         </CommentBox>
@@ -83,7 +85,7 @@ class NewBanner4Container extends React.Component {
                               </div>
                             </div>
                             <div class="CommentBody">
-                              <p> 기존거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트를 통해 업체들을 추천 받아 비교해볼 수  있었고 더 나은 조건의 업체와계약하게 되었습니다. </p>
+                              <p> 기존거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트를 통해 업체들을 추천 받아 비교해볼 수  있었고 더 나은 조건의 업체와 계약하게 되었습니다. </p>
                             </div>
                         </SmallCommentBox>
                         <SmallCommentBox>
@@ -99,7 +101,7 @@ class NewBanner4Container extends React.Component {
                               </div>
                             </div>
                             <div class="CommentBody">
-                              <p> 제품 제조에 처음 도전한 저희는 제품을 개발해줄 개발업체를 찾느라 한 달 이상 애를 먹고 있었어요. <br/> 볼트앤너트 덕에 더 이상 시간을 낭비하지 않아도 되었답니다. </p>
+                              <p> 제품 제조에 처음 도전하다보니 개발업체를 찾느라 한 달 이상 애를 먹고 있었어요. <br/> 볼트앤너트 노팀장님 덕분에 시간 낭비를 하지 않을 수 있었습니다 </p>
                             </div>
                         </SmallCommentBox>
                         <SmallCommentBox>
@@ -115,10 +117,87 @@ class NewBanner4Container extends React.Component {
                               </div>
                             </div>
                             <div class="CommentBody">
-                              <p> 제조 양산 프로세스를 모르다 보니 시행착오가 많았는데 볼트앤너트 측에서 PM 업무를 수행하여 제품을 성공적으로  양산할 수 있었습니다. </p>
+                              <p> 제조 양산 프로세스를 모르다 보니 시행착오가 많았는데, 볼트앤너트 측에서 PM을 잘해주셔서 제품을 성공적으로 양산할 수 있었습니다.</p>
                             </div>
                         </SmallCommentBox>
                       </Item>
+
+               </>) : (
+               <>
+                      <Item>
+                        <CommentBox>
+                          <Image src={image4} />
+                          <TextBox>
+                            <HeaderWrapper>
+                              <div class="CommentHeader">
+                                <p> MANU </p>
+                              </div>
+                              <div class="CommentStar">
+                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                              </div>
+                            </HeaderWrapper>
+                            <div class="CommentBody">
+                              <span class="Header"> 다른 업체보다 30% 싸게 만들었어요 </span>
+                              <p> IoT 전문 개발사를 찾고 있었는데, 볼트앤너트 파트너 견적이 30%이상 저렴해서 합리적인 가격으로 개발할 수 있었습니다 </p>
+                            </div>
+                         </TextBox>
+                        </CommentBox>
+                      </Item>
+                      <Item>
+                        <CommentBox>
+                            <Image src={image2} />
+                            <TextBox>
+                              <HeaderWrapper>
+                              <div class="CommentHeader">
+                                <p> IOPET </p>
+                              </div>
+                              <div class="CommentStar">
+                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                              </div>
+                            </HeaderWrapper>
+                            <div class="CommentBody">
+                              <p> 기존거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트를 통해 업체들을 추천 받아 비교해볼 수  있었고 더 나은 조건의 업체와 계약하게 되었습니다. </p>
+                            </div>
+                            </TextBox>
+                        </CommentBox>
+                      </Item>
+                      <Item>
+                        <CommentBox>
+                              <Image src={image3} />
+                              <TextBox>
+                                <HeaderWrapper>
+                                <div class="CommentHeader">
+                                    <p> HClab </p>
+                                </div>
+                              <div class="CommentStar">
+                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                              </div>
+                            </HeaderWrapper>
+                            <div class="CommentBody">
+                              <p> 제품 제조에 처음 도전하다보니 개발업체를 찾느라 한 달 이상 애를 먹고 있었어요. <br/> 볼트앤너트 노팀장님 덕분에 시간낭비를 하지 않을 수 있었습니다 </p>
+                            </div>
+                            </TextBox>
+                        </CommentBox>
+                      </Item>
+                      <Item>
+                        <CommentBox>
+                              <Image src={image1} />
+                              <TextBox>
+                                <HeaderWrapper>
+                                <div class="CommentHeader">
+                                    <p> TAJO </p>
+                                </div>
+                              <div class="CommentStar">
+                                <Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/><Star src={star_yellow_img}/>
+                              </div>
+                            </HeaderWrapper>
+                            <div class="CommentBody">
+                              <p> 제조 양산 프로세스를 모르다 보니 시행착오가 많았는데, 볼트앤너트 측에서 PM을 잘해주셔서 제품을 성공적으로 양산할 수 있었습니다.</p>
+                            </div>
+                            </TextBox>
+                        </CommentBox>
+                      </Item>
+               </>)}
             </>
                       ) : (
                     <>
@@ -225,11 +304,12 @@ const CustomContainer = styled.div`
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
-    height: 600px;
+    height: 100%;
   }
 
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 100%;
+    height: 100%;
   }
 
   @media (min-width: 1300px) {
@@ -425,15 +505,16 @@ const Item = styled.div`
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     flex-direction: column;
-    height: 288px;
-    width: 552px;
+    height: auto;
+    width: 100%;
     text-align: center;
     align-items: center;
-    margin-bottom: 67px;
+    margin-bottom: 15px;
   }
 
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 100%;
+    margin-bottom: 15px;
   }
 
   @media (min-width: 1300px) {
@@ -531,18 +612,7 @@ const Header2 = styled.div`
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 430px;
-    height: 72px;
-    font-size: 32px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.25;
-    letter-spacing: normal;
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 45px;
-    margin-top: 80px;
+    margin-top : 60px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
   }
@@ -590,8 +660,6 @@ const CommentBox = styled.div`
   height: 158px;
   width: 100%;
   border-radius: 22px;
-  border: solid 1px #707070;
-  background-color: #ffffff;
   }
 
   @media (min-width: 992px) and (max-width: 1299.98px) {
@@ -686,7 +754,6 @@ const CommentBox = styled.div`
         }
     }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-left: 24px;
     margin-right: 30px;
     width: 100%;
     font-size: 12px;
@@ -694,6 +761,7 @@ const CommentBox = styled.div`
 
   @media (min-width: 992px) and (max-width: 1299.98px) {
     margin-right: 10px;
+    width: 100%;
   }
 
   @media (min-width: 1300px) {
@@ -714,6 +782,10 @@ const CommentBox = styled.div`
       font-size : 11px !important;
       padding-right: 18px;
       padding-bottom: 4px;
+    }
+
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      font-size : 20px;
     }
   }
 }
@@ -744,6 +816,7 @@ const SmallCommentBox = styled.div`
   }
 
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 310px;
   }
 
   @media (min-width: 1300px) {
@@ -881,9 +954,12 @@ const TextBox = styled.div`
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
+    margin: 0px;
+    width: 100%;
   }
 
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
   }
 
   @media (min-width: 1300px) {
