@@ -499,6 +499,7 @@ const Item = styled.div`
     align-items: center;
     margin-bottom: 8px;
     padding-left: calc(5%);
+    padding-right: calc(5%);
     align-items: flex-start;
     display: inline-flex;
   }
@@ -647,7 +648,7 @@ const CommentBox = styled.div`
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   align-items: center;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     width: 328px;
     height: 134px;
     object-fit: contain;
@@ -655,6 +656,12 @@ const CommentBox = styled.div`
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     border: solid 1px #f6f6f6;
     background-color: #ffffff;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+  height: 158px;
+  width: 100% !important;
+  margin-bottom: 15px;
+  border-radius: 22px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
   height: 158px;
