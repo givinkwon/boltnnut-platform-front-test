@@ -53,9 +53,7 @@ const Wrap = styled.div`
 const Input = styled.input`
   width: 100%;
   margin-top: ${props => props.marginTop}px;
-
-  border-radius: 6px;
-  border: solid 1px #dddddd;
+  border: solid 0.5px #c7c7c7;
   padding: 15px 15px;
   color: #404040;
   font-weight: 400;

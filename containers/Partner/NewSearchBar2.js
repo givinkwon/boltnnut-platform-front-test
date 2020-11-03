@@ -21,13 +21,14 @@ import { withStyles,makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import MobileSlider from "react-slick";
 
 //image
 const phone = 'static/images/phone.png'
 const file = 'static/images/mask.png'
+const ddarrow = 'static/images/partner/Arrow.png'
 
 //test
-
 import * as CategoryAPI from "axios/Category";
 
 const customStyles = {
@@ -101,6 +102,30 @@ class SearchBarContainer2 extends React.Component {
     this.portfolio = React.createRef();
   }
 
+  state = {
+    search: "",
+    modal_open: false,
+    value: 0,
+    //price_min: 0,
+    price_max: [0,0],
+    //due_min: 0,
+    due_max: [0,0],
+    show_detail: "none",
+    portfolioValue: '',
+    width: 0,
+    category_list: [
+      ['디자인','inactive'],
+      ['기구설계','inactive'],
+      ['기계설계','inactive'],
+      ['야','inactive'],
+      ['연휴','inactive'],
+      ['하이','inactive'],
+      ['출근','inactive'],
+      ['퇴근','inactive'],
+      ],
+    category_idx: ['디자인', '기구설계', '기계설계', '야', '연휴', '하이', '출근', '퇴근']
+  };
+
   onChangePortfolio = (e) => {
     if(e.currentTarget.files.length === 0) {
       this.setState({
@@ -128,19 +153,6 @@ class SearchBarContainer2 extends React.Component {
         console.log(this.state.value);
       }
     );
-  };
-
-  state = {
-    search: "",
-    modal_open: false,
-    value: 0,
-    //price_min: 0,
-    price_max: [0,0],
-    //due_min: 0,
-    due_max: [0,0],
-    show_detail: "none",
-    portfolioValue: '',
-    width: 0,
   };
   searchText = (e) => {
     this.props.Partner.search_text = e.target.value;
@@ -418,14 +430,81 @@ class SearchBarContainer2 extends React.Component {
       })
 
   };
+  CategoryCircle = () => {
+    const { category_list, category_idx } = this.state;
+    //console.log(category_list.indexOf("디자인"))
+    //console.log(category_list.splice(0, 1))
+    const handleChange = async (e) => {
+      if (category_list[category_idx.indexOf(e.target.innerText)][1] == "inactive") {
+        const temp_list = category_list;
+        const temp_idx = category_idx;
+        const idx = temp_idx.indexOf(e.target.innerText);
+        delete temp_idx[idx]
+        delete temp_list[idx]
+        const f = [e.target.innerText]
+        const f_list = [[e.target.innerText, 'active']]
 
+        for (var item in temp_idx) {
+          f.push(temp_idx[item])
+        }
+        for (var item in temp_list) {
+          f_list.push(temp_list[item])
+        }
+        this.setState({...this.state, category_idx: f, category_list: f_list})
+      } else {
+        const temp_list = category_list;
+        const temp_idx = category_idx;
+        const idx = temp_idx.indexOf(e.target.innerText);
+        delete temp_idx[idx]
+        delete temp_list[idx]
+        const f = []
+        const f_list = []
+
+        for (var item in temp_idx) {
+          f.push(temp_idx[item])
+        }
+        f.push(e.target.innerText)
+        for (var item in temp_list) {
+          f_list.push(temp_list[item])
+        }
+        f_list.push([e.target.innerText, 'inactive'])
+        this.setState({...this.state, category_idx: f, category_list: f_list})
+      }
+    }
+    var settings = {
+      dots: false,
+      infinite: false,
+      arrows: false,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      initialSlide: 0,
+      draggable: false,
+      beforeChange: (current) => {
+        this.setState({current: current})
+      },
+    }
+    return (
+    <MobileSlider {...settings}>
+      {
+      category_list.map((item, idx) => {
+        return (
+        <CategoryBox onClick = {handleChange}>
+          <div class={item[1]}>
+            <span> {item[0]} </span>
+          </div>
+        </CategoryBox>
+        )
+      })
+      }
+    </MobileSlider>
+  )
+  }
 
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request } = this.props;
     {/*console.log(Partner.select_big)
     console.log(Partner.request_middle_list)*/}
-
     return (
 
       <CustomContainer>
@@ -569,16 +648,7 @@ class SearchBarContainer2 extends React.Component {
                </PriceInput>
            </PriceBox>
          </SelectRow>
-         <SelectRow style={{marginTop: 24, marginBottom: 24, display: "inline-flex", justifyContent: "center"}}>
-           <MobileButton1>
-             <span>필터 적용하기</span>
-           </MobileButton1>
-           <MobileButton2
-             onClick = {this.showDetail}
-           >
-             <span> 무료 가견적 넣기 </span>
-           </MobileButton2>
-         </SelectRow>
+
          <SelectRow>
            <Title>
              제품이름
@@ -628,10 +698,24 @@ class SearchBarContainer2 extends React.Component {
               />
           </FileBox>
          </SelectRow>
-       </>
-      )
-      }
-    </>
+         <SelectRow style={{marginTop: 24, display: "inline-flex", justifyContent: "center"}}>
+           <MobileButton1>
+             <span>필터 적용하기</span>
+           </MobileButton1>
+           <MobileButton2
+             onClick = {this.showDetail}
+           >
+             <span> 무료 가견적 넣기 </span>
+           </MobileButton2>
+           <img src={ddarrow} />
+         </SelectRow>
+         <List>
+           <this.CategoryCircle/>
+         </List>
+         </>
+         )
+        }
+        </>
       </CustomContainer>
     )
   }
@@ -695,9 +779,15 @@ const SelectRow = styled.div`
   display: inline-flex;
   align-items: center;
   margin-bottom: 22px;
+  position: relative;
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 16px;
     margin-bottom: 0px;
+    > img {
+      align-self: flex-end;
+      float: right;
+    }
+
     }
   @media (min-width: 768px) and (max-width: 991.98px) {
     }
@@ -1081,5 +1171,49 @@ const MobileButton2 = styled.div`
     color: #fffdf8;
     display: flex;
     align-items: center;
+  }
+`
+const CategoryBox = styled.div`
+  width: 64px;
+  height: 22px;
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  > span {
+    width: 32px;
+    height: 18px;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.67;
+    letter-spacing: -0.3px;
+    text-align: center;
+  }
+  .active {
+    width: 64px;
+    height: 22px;
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+    background-color: #0933b3;
+      > span {
+        color: white;
+        font-size: 12px;
+      }
+    }
+`
+const List = styled(SelectRow)`
+  display: block;
+  padding-top: 33px;
+  padding-bottom: 12px;
+  .slick-list {
+    height: 24px;
+    > div > div {
+      width: 64px !important;
+      margin-right: 12px;
+    }
+    > div > div > div {
+        width: 64px;
+    }
   }
 `
