@@ -138,6 +138,17 @@ const Form = styled.div`
   justify-content: center;
   display:inline-flex;
   margin-top: 80px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin: 0;
+    width: 100%;
+    margin-top: 24px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
 `;
 const CustomContainer = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -168,6 +179,24 @@ const SearchBox = styled.div`
   display: flex;
   margin-left: 32px;
   margin-bottom: 30px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+      margin: 0;
+      width: calc(91.8%);
+      height: 36px;
+      object-fit: contain;
+      border-radius: 2px;
+      border: solid 0.5px #001a56;
+      padding-right: calc(4%);
+      padding-left: calc(4%);
+      margin-right: calc(4%);
+      margin-left: calc(4%);
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
   > img {
       width: 26px;
       height: 26px;
@@ -193,6 +222,27 @@ const SearchBox = styled.div`
     padding-top: 11px;
     padding-bottom: 11px;
     outline: none;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      padding-top :0;
+      padding-bottom: 0;
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 0.93;
+      letter-spacing: -0.35px;
+      text-align: left;
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+    }
+    @media (min-width: 1300px) {
+    }
   }
 `
 const Input = styled.input`

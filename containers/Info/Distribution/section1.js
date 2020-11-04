@@ -8,10 +8,9 @@ import * as Text from "components/Text";
 import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 
 const right = "/static/icon/rightInround.png";
-const step1 = "/static/icon/info/Massproduct_step1.png";
-const step2 = "/static/icon/info/Massproduct_step2.png";
-const step3 = "/static/icon/info/Massproduct_step3.png";
-const step4 = "/static/icon/info/Massproduct_step4.png";
+const step1 = "/static/icon/info/Estimate_step1.png";
+const step2 = "/static/icon/info/Estimate_step2.png";
+const step3 = "/static/icon/info/Estimate_step3.png";
 
 
 class Section1Container extends React.Component {
@@ -26,8 +25,8 @@ class Section1Container extends React.Component {
                         <Text.FontSize30>STEP 1</Text.FontSize30>
                     </Itemheader>
                     <Step1 src={step1}></Step1>
-                    <Text.FontSize26>가견적 의뢰</Text.FontSize26>
-                    <Text.FontSize20>희망 예산, 기간 등 문의하실 제품의 정보를 입력해주세요</Text.FontSize20>
+                    <Text.FontSize26>기획서 작성</Text.FontSize26>
+                    <Text.FontSize20>Benchmark 제품, 목표 기능, 희망 예산 등 만들고자 하는 제품의 기획서를 작성해주세요</Text.FontSize20>
                   </Item>
                   <Image src={right}></Image>
                   <Item>
@@ -36,7 +35,7 @@ class Section1Container extends React.Component {
                     </Itemheader>
                     <Step2 src={step2}></Step2>
                     <Text.FontSize26>컨설턴트 상담</Text.FontSize26>
-                    <Text.FontSize20>제조 컨설턴트가 상담을 도와드리며, 1000 건 이상의 프로젝트 데이터를 바탕으로 전문 개발사를 매칭해드립니다</Text.FontSize20>
+                    <Text.FontSize20>제조 전문 컨설턴트가 상담을 통해 제품 기획을 고도화하고 적합한 서비스를 안내드립니다</Text.FontSize20>
                   </Item>
                   <Image src={right}></Image>
                   <Item>
@@ -44,17 +43,8 @@ class Section1Container extends React.Component {
                         <Text.FontSize30>STEP 3</Text.FontSize30>
                     </Itemheader>
                     <Step3 src={step3}></Step3>
-                    <Text.FontSize26>가견적 및 개발사 정보 전달</Text.FontSize26>
-                    <Text.FontSize20>매칭된 전문 개발사의 정보와 가견적을 전달해드립니다</Text.FontSize20>
-                  </Item>
-                  <Image src={right}></Image>
-                  <Item>
-                    <Itemheader>
-                        <Text.FontSize30>STEP 4</Text.FontSize30>
-                    </Itemheader>
-                    <Step4 src={step4}></Step4>
-                    <Text.FontSize26>미팅 주선</Text.FontSize26>
-                    <Text.FontSize20>원하시는 조건의 전문개발사와 3자미팅을 주선해드립니다</Text.FontSize20>
+                    <Text.FontSize26>보고서 제출</Text.FontSize26>
+                    <Text.FontSize20>만들고자 하는 제품의 제조 프로세스 설계, 생산 조건 등이 포함된 보고서를 제안드립니다</Text.FontSize20>
                   </Item>
               </ItemBox>
             </Container>
@@ -67,8 +57,7 @@ export default Section1Container;
 const CustomContainer = styled.div`
   padding: 0px;
   width: 100%;
-  padding-bottom : 150px;
-  background-color: #f5f7f7;
+  margin-bottom : 150px;
   p {
       text-align : center ;
   }
@@ -112,19 +101,15 @@ const Image = styled.img`
 `;
 const Step1 = styled.img`
   width: 131px;
-  margin-top : 80px;
+  margin-top : 70px;
 `;
 const Step2 = styled.img`
   width: 161px;
   margin-top : 70px;
 `;
 const Step3 = styled.img`
-  width: 130px;
+  width: 104px;
   margin-top : 70px;
-`;
-const Step4 = styled.img`
-  width: 135px;
-  margin-top : 66px;
 `;
 
 const Header = styled.div`
@@ -174,7 +159,7 @@ const ItemBox = styled.div`
     }
   }
   @media (min-width: 768px) {
-    width: 1770px;
+    width: 1400px;
     > p {
       margin-top: 20px;
     }

@@ -281,9 +281,6 @@ class TabConatiner extends React.Component {
               console.log(e.response);
             });
 
-
-
-
         const token = localStorage.getItem("token")
         if(!token) { return }
         {/*console.log(res.data.category.join(','))

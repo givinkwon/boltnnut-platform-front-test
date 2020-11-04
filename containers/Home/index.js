@@ -39,7 +39,7 @@ class HomeConatiner extends React.Component {
     const { width } = this.state;
     return (
     <>
-      { width < 768 ? (
+      { width < 360 ? (
       <>
         <CustomContainer>
           <BannerConatiner/>
@@ -53,7 +53,7 @@ class HomeConatiner extends React.Component {
           ) : (
           <>
             <BannerConatiner/>
-            <MagazineConatiner/>
+            {width > 768 && <MagazineConatiner/>}
             <NewBanner5Container/>
             <NewBanner4Container/>
             <ReviewBanner/>

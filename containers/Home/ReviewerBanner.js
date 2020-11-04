@@ -145,12 +145,15 @@ const CustomContainer = styled.div`
   width: 100%;
   height: 1239px;
   background-color: rgba(158, 159, 161, 0.12);
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     width: calc(100%);
     height: 100%;
     padding: 0;
     background-color: #ffffff;
     margin-bottom: 8px;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -175,12 +178,19 @@ const Container = styled.div`
   margin-left: auto;
   text-align : center;
   align-items: center;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     width: calc(100%);
     height: calc(100%);
     padding: 0;
     padding-left: calc(5%);
     margin: 0;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+
+    padding-left: calc(5%);
+    padding-right: calc(5%);
+    margin: 0;
+    width: 100%;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -208,8 +218,11 @@ const HeaderBox = styled.div`
   :focus {
     outline: none;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
   padding-left: calc(5%);
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    width: 100%;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
   }
@@ -229,7 +242,7 @@ const Header = styled.div`
   line-height: 2.13;
   letter-spacing: -0.8px;
   color: #505050;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     margin-top: 0px;
     width: 290px;
     height: 100%;
@@ -237,6 +250,11 @@ const Header = styled.div`
     font-size: 16px;
     font-weight: bold;
     padding-top: 22px;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    margin-top: 30px;
+    font-size: 16px;
+    margin-bottom: 30px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 60px;
@@ -396,7 +414,7 @@ const Item1 = styled.div`
   > p {
     text-align: left;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
       width: 272px;
       height: 372px;
       border-radius: 4px;
@@ -405,6 +423,9 @@ const Item1 = styled.div`
       display: block;
       margin: 0;
       margin-bottom: 26px;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    width: 100%;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 720px;

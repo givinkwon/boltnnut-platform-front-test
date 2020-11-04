@@ -1,22 +1,20 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import Slider from "react-slick";
+import { inject, observer } from 'mobx-react'
 
 import Container from "components/Container";
 import * as Text from "components/Text";
 import { WHITE, PRIMARY, BLACK } from "static/style";
 import RatioImage from 'components/RatioImage'
-import { inject, observer } from 'mobx-react'
 
 const right = "/static/images/main/main_right.png";
 const left = "/static/images/main/main_left.png";
-@inject('Request')
 
+@inject('Request')
+@observer
 class TabConatiner extends React.Component {
-  setTab = (val) => {
-    this.props.setTab(val);
-    // window.history.pushState("", "", `/info?tab=${val}`);
-  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -82,14 +80,13 @@ class TabConatiner extends React.Component {
   // }
   slider = null
   state = {
-    current: 1,
+    current: 0,
     next: true,
     prev: false,
   }
   render() {
-    const { tab } = this.props;
-    const { prev, next} = this.state
     const { Request } = this.props;
+    const { prev, next} = this.state
 
     const settings = {
       infinite: true,
@@ -101,16 +98,19 @@ class TabConatiner extends React.Component {
         <TabsContainer>
           <Tabs asNavFor={this.state.nav1}
             ref={slider => (this.slider2 = slider)}
-            slidesToShow={3}
+            slidesToShow={4}
             focusOnSelect={true}>
-            <Tab class="Header" active={tab === 1} onClick={async() => await this.setTab(1)} >
-              <Text.FontSize40 fontWeight={500}>제조사 찾기 서비스</Text.FontSize40>
+            <Tab class="Header" active={Request.tab == 0} onClick={async() => await Request.setTab(0)}>
+              <Text.FontSize32 fontWeight={500}>가견적 서비스</Text.FontSize32>
             </Tab>
-            <Tab class="Header" active={tab === 2} onClick={async() => await this.setTab(2)}>
-              <Text.FontSize40 fontWeight={500}>양산/개발 서비스</Text.FontSize40>
+            <Tab class="Header" active={Request.tab == 1} onClick={async() => await Request.setTab(1)}>
+              <Text.FontSize32 fontWeight={500}>유통 제조 패키지</Text.FontSize32>
             </Tab>
-            <Tab class="Header" active={tab === 3} onClick={async() => await this.setTab(3)}>
-              <Text.FontSize40 fontWeight={500}>견적/수량 도출 서비스</Text.FontSize40>
+            <Tab class="Header" active={Request.tab == 2} onClick={async() => await Request.setTab(2)}>
+              <Text.FontSize32 fontWeight={500}>R&D 제조 패키지</Text.FontSize32>
+            </Tab>
+            <Tab class="Header" active={Request.tab == 3} onClick={async() => await Request.setTab(3)}>
+              <Text.FontSize32 fontWeight={500}>제품 수배 패키지</Text.FontSize32>
             </Tab>
           </Tabs>
           {/* <Icon prev style={{marginRight : '15px', opacity: prev ? 1 : 0.4}} src={left} onClick={this.sliderPrev}/> */}
@@ -123,10 +123,10 @@ class TabConatiner extends React.Component {
             <Tab>
               <Container>
                 <SmallBanner>
-                  <Text.FontSize32>제조사 찾기 서비스</Text.FontSize32>
+                  <Text.FontSize32>가견적 서비스</Text.FontSize32>
                 </SmallBanner>
                 <Content>
-                  <Text.FontSize26>고객님의 아이디어가 현실화 될 수 있도록<br/>가격과 기간, 제품기능 등 유선상담을 도와드리고<br/>이에 맞는 <span>제조 컨설턴트와 전문 제조사를 매칭해 드리는 서비스</span> 입니다.</Text.FontSize26>
+                  <Text.FontSize26>원하시는 개발 조건에 적합한<br/><span>전문 제조사의 가견적을 바로 받아보세요</span><br/>가견적을 바탕으로 상담을 통해 최적의 제조사를 매칭해드립니다.</Text.FontSize26>
                   <Text.FontSize20 style={{color : "#707070"}}>* 제조사찾기 의뢰시 무료로 가견적을 드립니다.</Text.FontSize20>
                 </Content>
               </Container>
@@ -134,17 +134,27 @@ class TabConatiner extends React.Component {
             <Tab>
               <Container>
                 <SmallBanner>
-                  <Text.FontSize32>양산/개발 서비스</Text.FontSize32>
+                  <Text.FontSize32>유통 제조 패키지</Text.FontSize32>
                 </SmallBanner>
                 <Content>
-                  <Text.FontSize26>빅데이터를 기반한 제품분석시스템으로 제품 생산에<br/><span>불필요한 과정을 방지하여 양산 비용을 최대 40% 절감</span>합니다.</Text.FontSize26>
+                  <Text.FontSize26>개발시간, 개발비용, MOQ, 생산단가, 생산시간 등<br/><span>제품에 필요한 모든 요소를 고려하여 제품 개발과 생산의 A-Z까지 설계해드립니다.</span><br/>볼트앤너트의 프로젝트 매니저가 귀사의 개발팀장이 되어 개발/생산과정을 제시해드립니다</Text.FontSize26>
                 </Content>
               </Container>
             </Tab>
             <Tab>
               <Container>
                 <SmallBanner>
-                  <Text.FontSize32>견적/수량 도출 서비스</Text.FontSize32>
+                  <Text.FontSize32>R&D 제조 패키지</Text.FontSize32>
+                </SmallBanner>
+                <Content>
+                  <Text.FontSize26>제품의 최적화를 위해 기능 명세를 기반으로<br/>개발부터 생산까지 턴키 서비스를 통해 제조 프로세스를 설계해드립니다<br/>R&D 요소 최적화, 양산 사이클 관리, 기간 조정을 통한 양산 Follow-up 시스템으로<br/><span>비용 최대 40% 절감해보세요</span></Text.FontSize26>
+                </Content>
+              </Container>
+            </Tab>
+            <Tab>
+              <Container>
+                <SmallBanner>
+                  <Text.FontSize32>제품 수배 패키지</Text.FontSize32>
                 </SmallBanner>
                 <Content>
                   <Text.FontSize26>볼트앤너트가 국내 제조사와 해외유통사 네크워크를 통해<br/><span>원하는 조건에 맞는 제조견적, MOQ(최소발주수량) 등의 정보를 전달</span>해드립니다.</Text.FontSize26>
@@ -187,18 +197,18 @@ const TabsContainer = styled.div`
   height : 650px ;
   outline : none ;
   *:focus {outline:none;}
-  /* @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 200px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 250px;
+
   }
   @media (min-width: 992px) and (max-width: 1299.98px) { 
-    height: 300px;
+
   }
   @media (min-width: 1300px) { 
-    height: 335px;
-  } */
+
+  }
 `;
 const Tabs = styled(Slider)`
   display: flex;

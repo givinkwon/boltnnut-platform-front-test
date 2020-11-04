@@ -22,16 +22,28 @@ class Step1Conatiner extends React.Component {
   };
   Info = () => {
     const { Request } = this.props
-    if(Request.type){
-      Request.setStep(0)
+    if(Request.type == 0){
+      Request.setTab(0)
       Router.push("/info")
       console.log(Request.type)
 
+      return
     }
+    if(Request.type == 1){
+      Request.setTab(1)
+      Router.push("/info")
+      return
+    }
+    if(Request.type == 2){
+      Request.setTab(2)
+      Router.push("/info")
+      return
+    }
+
   }
   Next = () => {
     const { Request } = this.props
-    if(Request.type){
+    if(Request.type == 0 || Request.type == 1 || Request.type == 2){
       Request.setStep(1)
     }
     console.log(Request.type)
@@ -59,22 +71,22 @@ class Step1Conatiner extends React.Component {
           </Info> */}
 
           <ButtonBox>
-            <Button id="find_manufacturer" active={Request.type==="manufacturer"} onClick={() => Request.setType('manufacturer')}>
+            <Button id="find_manufacturer" active={Request.type==0} onClick={() => Request.setType(0)}>
               <div style={{margin : 0}}>
-                <Text.FontSize40 color={'#191919'} fontWeight={700}>제조사찾기 서비스</Text.FontSize40>
-                <Text.FontSize24 color={'#767676'} fontWeight={500}>제조 컨설턴트와 전문 제조사가<br/>고객님의 아이디어를 컨설팅 드리고<br/>현실화 시켜드립니다</Text.FontSize24>
+                <Text.FontSize40 color={'#191919'} fontWeight={700}>가견적 서비스</Text.FontSize40>
+                <Text.FontSize24 color={'#767676'} fontWeight={500}>원하시는 개발 조건에 적합한<br/>전문 제조사의 가견적을<br/>바로 받아보세요</Text.FontSize24>
               </div>
             </Button>
-            <Button id="development_massProduct" active={Request.type==="massproduct"} onClick={() => Request.setType('massproduct')}>
+            <Button id="development_massProduct" active={Request.type==1} onClick={() => Request.setType(1)}>
               <div style={{margin : 0}}>
-                <Text.FontSize40 color={'#191919'} fontWeight={700}>양산개발 서비스</Text.FontSize40>
-                <Text.FontSize24 color={'#767676'} fontWeight={500}>지속적인 소통과 제품 분석 시스템으로<br/>제품 생산에 불필요한 과정을 방지하여<br/>양산 비용을 최대 40% 절감합니다.</Text.FontSize24>            
+                <Text.FontSize40 color={'#191919'} fontWeight={700}>유통 제조 패키지</Text.FontSize40>
+                <Text.FontSize24 color={'#767676'} fontWeight={500}>제품에 필요한 모든 요소를<br/>고려하여 제품 개발과 생산의<br/>A-Z까지 설계해드립니다</Text.FontSize24>
               </div>
             </Button>
-            <Button id="find_estimate" active={Request.type==="estimate"} onClick={() => Request.setType('estimate')}>
+            <Button id="find_estimate" active={Request.type==2} onClick={() => Request.setType(2)}>
               <div style={{margin : 0}}>
-                <Text.FontSize40 color={'#191919'} fontWeight={700}>견적수량 도출 서비스</Text.FontSize40>
-                <Text.FontSize24 color={'#767676'} fontWeight={500}>국내 제조사와 해외유통사 네크워크를<br/>통해 원하는 조건에 맞는 제조견적, MOQ<br/>(최소발주수량)등의 정보를 전달해드립니다.</Text.FontSize24>            
+                <Text.FontSize40 color={'#191919'} fontWeight={700}>R&D 제조 패키지</Text.FontSize40>
+                <Text.FontSize24 color={'#767676'} fontWeight={500}>개발부터 생산까지<br/>턴키 서비스를 통해<br/>제조 프로세스를 설계해드립니다</Text.FontSize24>
               </div>
             </Button>
           </ButtonBox>

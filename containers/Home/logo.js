@@ -97,48 +97,6 @@ class NewBanner5Container extends React.Component {
           <Item>
             <Image src={image14} active={true}/>
           </Item>
-          <Item>
-            <Image src={image16} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image17} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image18} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image19} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image20} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image21} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image22} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image23} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image24} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image25} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image26} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image27} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image28} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image29} active={true}/>
-          </Item>
           {/*<FooterBox>
                     <ButtonBox>
                 <Button

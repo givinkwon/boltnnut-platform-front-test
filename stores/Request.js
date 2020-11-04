@@ -12,6 +12,7 @@ class Request {
   @observable id = null;
   @observable tab = 0;
   @observable type = "";
+  @observable step = 0;
 
   @observable created_request = null;
   @observable check_list = [];
@@ -65,6 +66,9 @@ class Request {
   };
   @action setTab = (val) => {
     this.tab = val;
+  };
+  @action setStep = (val) => {
+    this.step = val;
   };
   @action setInputPhone = (val) => {
     this.input_phone = val;

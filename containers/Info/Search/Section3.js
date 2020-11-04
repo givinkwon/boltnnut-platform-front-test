@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import Router from "next/router";
-import { inject, observer } from 'mobx-react'
 
 import ButtonComponent from 'components/Button'
 import RatioImage from 'components/RatioImage';
@@ -12,27 +11,16 @@ import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 const person = "/static/icon/info/person.png";
 const star = "/static/icon/info/star.png";
 
-@inject('Request')
 
 class Section4Container extends React.Component {
-  Next = () => {
-    const { Request } = this.props
-    Request.setType('manufacturer')
-    if(Request.type){
-      Router.push("/request?big=&mid=")
-      Request.setStep(1)
-    }
-  }
   render() {
-    const { Request } = this.props
-
     return (
         <CustomContainer>
             <Container>
               <ItemBox>
-                <Text.FontSize40>볼트앤너트는 <span>원하시는 제품을<br/>성공적으로 만들 수 있도록</span><br/>최선을 다하겠습니다. </Text.FontSize40>
+                <Text.FontSize40><span>경쟁력 있는 제품을 찾고 싶다면?</span></Text.FontSize40>
                 <NextButton backgroundColor={'#0a2165'} borderColor={'#e6e6e6'} onClick={this.Next}>
-                    <Text.FontSize32 color={'#ffffff'} fontWeight={500}>무료 가견적 문의하기</Text.FontSize32>
+                    <Text.FontSize32 color={'#ffffff'} fontWeight={500}>서비스 시작하기</Text.FontSize32>
                 </NextButton>
               </ItemBox>
             </Container>
@@ -47,7 +35,7 @@ const ItemBox = styled.div`
   display: inline;
   width: 100%;
   margin-bottom : 200px;
-  > p { 
+  > p {
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -60,7 +48,7 @@ const ItemBox = styled.div`
       color: #0933b3;
     }
   }
-  
+
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100%);
@@ -83,11 +71,11 @@ const NextButton = styled(ButtonComponent)`
   margin-top : 50px;
   border-radius: 16px;
   box-shadow: 0 3px 6px 0 var(--black-16);
-  
+
   :hover {
     background-color : #0933b3;
   }
-  
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 302px;
     height: 77px;
@@ -96,11 +84,11 @@ const NextButton = styled(ButtonComponent)`
     width: 302px;
     height: 77px;
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 302px;
     height: 77px;
   }
-  @media (min-width: 1300px) { 
+  @media (min-width: 1300px) {
     width: 302px;
     height: 77px;
   }

@@ -86,9 +86,14 @@ const CustomContainer = styled.div`
   text-align: center;
   margin: auto;
   background-color: rgba(158, 159, 161, 0.12);
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     width: calc(100%);
     background-color: WHITE;
+    margin-bottom: 8px;
+  }
+
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    width: 100%;
     margin-bottom: 8px;
   }
 
@@ -110,9 +115,14 @@ const Container = styled.div`
   align-items: center;
   height: 100%;
   margin: auto;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     width: calc(100%);
     padding-left: calc(5%);
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    width: calc(100%);
+    padding-left: calc(5%);
+    padding-right: calc(5%);
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -184,13 +194,25 @@ const Item = styled.div`
   justify-content: space-between;
   text-align: center;
   display: inline-flex;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
      width: 328px;
      height: 100%;
      padding-bottom: 16px;
      opacity: 0.35;
      border-radius: 6px;
      background-color: WHITE;
+     display: flex;
+     flex-direction: column;
+     align-items: left;
+     > p {
+       margin-top: 20px;
+     }
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+     item-align : center;
+     width: 90%;
+     height: 500px;
+
      display: flex;
      flex-direction: column;
      align-items: left;
@@ -269,9 +291,14 @@ const ImageTextBox = styled.div`
   position: relative;
   border-radius: 10px;
   overflow: hidden;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     width: 328px;
     height: 192px;
+    margin-bottom: 16px;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    width: 100%;
+    height: 500px;
     margin-bottom: 16px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -290,9 +317,14 @@ const ImageTextBox = styled.div`
     filter: blur(2px);
     opacity: 0.78;
     z-index: 0;
-    @media (min-width: 0px) and (max-width: 767.98px) {
+    @media (min-width: 0px) and (max-width: 359.98px) {
       width: 328px;
       height: 192px;
+      background-image: url("/static/images/main/Banner3_1_Mobile.png");
+    }
+    @media (min-width: 360px) and (max-width: 767.98px) {
+      width: 100%;
+      height: 500px;
       background-image: url("/static/images/main/Banner3_1_Mobile.png");
     }
     @media (min-width: 768px) and (max-width: 991.98px) {
@@ -310,12 +342,18 @@ const ImageTextBox = styled.div`
     filter: blur(2px);
     opacity: 0.78;
     z-index: 0;
-    @media (min-width: 0px) and (max-width: 767.98px) {
+    @media (min-width: 0px) and (max-width: 359.98px) {
     width: 328px;
     height: 192px;
     background-image: url("/static/images/main/Banner3_2_Mobile.png");
     }
+    @media (min-width: 360px) and (max-width: 767.98px) {
+    width: 100%;
+    height: 500px;
+    background-image: url("/static/images/main/Banner3_2_Mobile.png");
+    }
     @media (min-width: 768px) and (max-width: 991.98px) {
+
     }
     @media (min-width: 992px) and (max-width: 1299.98px) {
     }
@@ -353,11 +391,17 @@ const ImageTextBox = styled.div`
       opacity : 0.55;
       }
     }
-    @media (min-width: 0px) and (max-width: 767.98px) {
+    @media (min-width: 0px) and (max-width: 359.98px) {
       padding-top: 27px;
       padding-left: 21px;
       width: 287px;
       height: 138px;
+    }
+    @media (min-width: 360px) and (max-width: 767.98px) {
+      padding-top: 27px;
+      padding-left: 21px;
+      width: 100%;
+      height: 500px;
     }
     @media (min-width: 768px) and (max-width: 991.98px) {
       padding-left: 25px;
@@ -381,10 +425,15 @@ const ImageTextBox = styled.div`
         letter-spacing: -0.6px;
         text-align: left;
         color: #ffffff;
-        @media (min-width: 0px) and (max-width: 767.98px) {
+        @media (min-width: 0px) and (max-width: 359.98px) {
           height: 60px;
           font-size: 14px;
           width: 250px;
+        }
+        @media (min-width: 360px) and (max-width: 767.98px) {
+          height: 60px;
+          font-size: 20px;
+          width: 300px;
         }
         @media (min-width: 768px) and (max-width: 991.98px) {
             width : 100%;
@@ -408,10 +457,15 @@ const ImageTextBox = styled.div`
      letter-spacing: -0.8px;
      text-align: left;
      color: #191919;
-     @media (min-width: 0px) and (max-width: 767.98px) {
+     @media (min-width: 0px) and (max-width: 359.98px) {
           width: 287px;
           height: 60px;
           font-size: 16px;
+      }
+      @media (min-width: 360px) and (max-width: 767.98px) {
+          width: 90%;
+          height: 60px;
+          font-size: 20px;
       }
      @media (min-width: 768px) and (max-width: 991.98px) {
           width: 100%;
@@ -455,7 +509,7 @@ const ImageTextBox = styled.div`
   padding-right: 10px;
   padding-top: 70px;
   position: relative;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
        padding: 0;
        padding-top: 10px;
        width: 65px;
@@ -469,6 +523,9 @@ const ImageTextBox = styled.div`
        text-align: left;
        color: #ffffff;
        float: right;
+     }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+        display:none;
      }
   @media (min-width: 768px) and (max-width: 991.98px) {
      }

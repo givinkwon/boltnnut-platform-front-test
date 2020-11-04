@@ -214,8 +214,8 @@ class NewBanner4Container extends React.Component {
                               </div>
                             </HeaderWrapper>
                             <div class="CommentBody">
-                              <span class="Header"> 볼트앤너트 덕분에 2차 마켓까지 진행하였어요 </span>
-                              <p> 업체를 고를 때 개발을 진행하는 마인드와 포트폴리오를 가장 중요하게 생각하는데 볼트앤너트가 모두 제공해줘서 편리했습니다. </p>
+                              <span class="Header"> 다른 업체보다 30% 싸게 만들었어요  </span>
+                              <p> IoT 전문 개발사를 찾고 있었는데, 볼트앤너트 파트너 견적이 30%이상 저렴해서 합리적인 가격으로 개발할 수 있었습니다 </p>
                             </div>
                          </TextBox>
                         </CommentBox>
@@ -234,7 +234,7 @@ class NewBanner4Container extends React.Component {
                             </HeaderWrapper>
                             <div class="CommentBody">
                               <span class="Header"> 더 나은 조건의 업체를 찾을 수 있었습니다 </span>
-                              <p> 업체를 추천받아 비교해 볼 수 있었고, 더 나은 조건의 업체와 계약해서 간편하고 너무 좋았습니다. </p>
+                              <p> 기존거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트를 통해 업체들을 추천 받아 비교해볼 수 있었고 더 나은 조건의 업체와 계약하게 되었습니다. </p>
                             </div>
                          </TextBox>
                         </CommentBox>
@@ -499,6 +499,7 @@ const Item = styled.div`
     align-items: center;
     margin-bottom: 8px;
     padding-left: calc(5%);
+    padding-right: calc(5%);
     align-items: flex-start;
     display: inline-flex;
   }
@@ -647,7 +648,7 @@ const CommentBox = styled.div`
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   align-items: center;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     width: 328px;
     height: 134px;
     object-fit: contain;
@@ -655,6 +656,12 @@ const CommentBox = styled.div`
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     border: solid 1px #f6f6f6;
     background-color: #ffffff;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+  height: 158px;
+  width: 100% !important;
+  margin-bottom: 15px;
+  border-radius: 22px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
   height: 158px;

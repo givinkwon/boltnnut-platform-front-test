@@ -1,29 +1,28 @@
 import React from "react";
 import Head from "next/head";
 import { inject, observer } from 'mobx-react'
-
 import BannerContainer from "./Banner";
 import TabContainer from "./Tab";
 
+
 import ManufacturerContainer from "./Manufacturer";
-import MassproductContainer from "./Massproduct";
-import EstimateContainer from "./Estimate";
+import RNDContainer from "./RND";
+import SearchContainer from "./Search";
+import DistributionContainer from "./Distribution";
 
 import PartnerContainer from "./Partner";
 import ExpertContainer from "./Expert";
-@inject('Request')
 
+@inject('Request')
+@observer
 class AnswerConatiner extends React.Component {
   state = {
-    tab: 1,
+    tab: 0,
   };
   // tab값 전달받아야돼
   setTab = (val) => {
-    // const { Request } = this.props
-    this.setState({ tab: val });
-    console.log(val)
-    // console.log(Request.type)
-
+    const {Request } = this.props;
+    Request.tab = val
   };
   componentDidUpdate(prevProps, prevState) {
     const { query } = this.props;
@@ -32,22 +31,23 @@ class AnswerConatiner extends React.Component {
     }
   }
   componentDidMount() {
-    const { query } = this.props;
+    const { query, Request } = this.props;
+
     if (query.tab) {
       this.setState({ tab: parseInt(query.tab) });
     }
   }
   render() {
-    const { tab } = this.state;
     const { Request } = this.props;
-
+    console.log(Request.tab)
     return (
       <>
-        <BannerContainer tab={tab} />
-        <TabContainer tab={tab} setTab={this.setTab} />
-        {tab === 1 && <ManufacturerContainer/>}
-        {tab === 2 && <MassproductContainer/>}        
-        {tab === 3 && <EstimateContainer/>}
+        <BannerContainer/>
+        <TabContainer setTab={this.setTab} />
+        {Request.tab == 0 && <ManufacturerContainer/>}
+        {Request.tab == 1 && <DistributionContainer/>}
+        {Request.tab == 2 && <RNDContainer/>}
+        {Request.tab == 3 && <SearchContainer/>}
 
       </>
     );

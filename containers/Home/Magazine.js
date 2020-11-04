@@ -337,11 +337,14 @@ const CustomContainer = styled.div`
   padding: 0px;
   width: 100%;
   height: 100%;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     margin: 0 0;
     display: inline-flex;
     background-color: white;
     margin-bottom: 8px;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    height: auto;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
