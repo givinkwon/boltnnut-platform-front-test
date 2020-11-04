@@ -50,17 +50,22 @@ const ItemBox = styled.div`
   }
 
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     width: calc(100%);
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    > p {
-      margin-top: 20px;
-    }
+
   }
-  @media (min-width: 768px) {
-    width: 1000px;
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    width: calc(100%);
+
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+  @media (min-width: 1300px) {
+    width: 100%;
     > p {
       margin-top: 20px;
     }
@@ -77,7 +82,7 @@ const NextButton = styled(ButtonComponent)`
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 302px;
+    width: 200px;
     height: 77px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
