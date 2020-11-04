@@ -41,7 +41,13 @@ export function sendPassword(req) {
     data: req.data,
   });
 }
-
+export function findId(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/users/id/`,
+    data: req.data,
+  });
+}
 export function changePassword(req) {
   return axios({
     method: "PATCH",

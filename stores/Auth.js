@@ -697,6 +697,7 @@ class Auth {
       alert("휴대폰 번호를 입력해주세요.");
       return;
     }
+    
     this.loading = true;
     const req = {
       data: {
@@ -711,6 +712,45 @@ class Auth {
           this.loading = false;
           // alert("임시 비밀번호가 회원님의 이메일로 발송되었습니다.");
           // Router.push("/login");
+        }, 800);
+      })
+      .catch((e) => {
+        try {
+          alert(e.response.data.message);
+        } catch {
+          console.log(e);
+          console.log(e.response);
+        }
+        setTimeout(() => {
+          this.loading = false;
+        }, 1500);
+      });
+  };
+  @action forgetId = async () => {
+    setTimeout(() => {
+      this.loading = false;
+    }, 1500);
+    if (!this.name) {
+      alert("회사명을 입력해주세요.");
+      return;
+    }
+    if (!this.phone) {
+      alert("휴대폰 번호를 입력해주세요.");
+      return;
+    }
+    
+    this.loading = true;
+    const req = {
+      data: {
+        username: this.name,
+        password: this.password,
+        phone: this.phone,
+      },
+    };
+    AccountAPI.sendPassword(req)
+      .then((res) => {
+        setTimeout(() => {
+          this.loading = false;
         }, 800);
       })
       .catch((e) => {

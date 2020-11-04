@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import Router from "next/router";
+import { inject, observer } from 'mobx-react'
 
 import ButtonComponent from 'components/Button'
 import RatioImage from 'components/RatioImage';
@@ -11,9 +12,20 @@ import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 const person = "/static/icon/info/person.png";
 const star = "/static/icon/info/star.png";
 
+@inject('Request')
 
 class Section4Container extends React.Component {
+  Next = () => {
+    const { Request } = this.props
+    Request.setType('estimate')
+    if(Request.type){
+      Router.push("/request?big=&mid=")
+      Request.setStep(1)
+    }
+  }
   render() {
+    const { Request } = this.props
+
     return (
         <CustomContainer>
             <Container>

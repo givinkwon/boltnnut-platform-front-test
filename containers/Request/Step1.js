@@ -16,11 +16,17 @@ import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
 @inject('Request')
 @observer
 class Step1Conatiner extends React.Component {
+  setTab = (val) => {
+    this.props.setTab(val);
+    // window.history.pushState("", "", `/info?tab=${val}`);
+  };
   Info = () => {
     const { Request } = this.props
     if(Request.type == 0){
       Request.setTab(0)
       Router.push("/info")
+      console.log(Request.type)
+
       return
     }
     if(Request.type == 1){
@@ -40,6 +46,8 @@ class Step1Conatiner extends React.Component {
     if(Request.type == 0 || Request.type == 1 || Request.type == 2){
       Request.setStep(1)
     }
+    console.log(Request.type)
+
   }
    render(){
     const { Request } = this.props

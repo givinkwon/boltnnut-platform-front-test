@@ -87,6 +87,7 @@ class TabConatiner extends React.Component {
   render() {
     const { Request } = this.props;
     const { prev, next} = this.state
+
     const settings = {
       infinite: true,
       nextArrow: <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={right}/>,

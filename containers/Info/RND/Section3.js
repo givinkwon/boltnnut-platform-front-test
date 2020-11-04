@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import Router from "next/router";
+import { inject, observer } from 'mobx-react'
+
 
 import ButtonComponent from 'components/Button'
 import RatioImage from 'components/RatioImage';
@@ -11,9 +13,20 @@ import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 const person = "/static/icon/info/person.png";
 const star = "/static/icon/info/star.png";
 
-
+@inject('Request')
+@observer
 class Section3Container extends React.Component {
+  Next = () => {
+    const { Request } = this.props
+    Request.setType('massproduct')
+    if(Request.type){
+      Router.push("/request?big=&mid=")
+      Request.setStep(1)
+    }
+  }
   render() {
+    const { Request } = this.props
+
     return (
         <CustomContainer>
             <Container>
@@ -22,7 +35,7 @@ class Section3Container extends React.Component {
                 <Text.FontSize32>1. 합리적인 견적만을 추구합니다. </Text.FontSize32>
                 <Text.FontSize32>2. 제조 전문 컨설턴트가 <span>불필요한 용역 요소를 사전에 제거</span>하여 개발비를 낮춰줍니다. </Text.FontSize32>
                 <Text.FontSize32>3. 디자인, 설계, 목업, 금형 등 <span>구간 별 최적의 업체와 개발/양산을 진행</span>하여<br/>과도한 비용소모를 막습니다. </Text.FontSize32>
-                <NextButton backgroundColor={'#0a2165'} borderColor={'#e6e6e6'} onClick={this.Next}>
+                <NextButton active={Request.type==="massproduct"} onClick={this.Next} backgroundColor={'#0a2165'} borderColor={'#e6e6e6'} onClick={this.Next}>
                     <Text.FontSize32 color={'#ffffff'} fontWeight={500}>서비스 이용하기</Text.FontSize32>
                 </NextButton>
               </ItemBox>
