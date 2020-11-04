@@ -18,7 +18,6 @@ class MenuConatiner extends React.Component {
     tab: 0,
     showDrop: true,
     showDetail: 'none'
-
   };
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
@@ -67,7 +66,7 @@ class MenuConatiner extends React.Component {
       <>
         {
           width < 768 ? (
-              <MobileMenuBox>
+              <MobileMenuBox style={{display: "none"}}>
                 <MobileMenuHeader>
                   {/*<MobileMenuTab active={tab === 1} onClick={() => this.setTab(1)}>
                     <Text.FontSize18 color={tab === 1 ? WHITE : DARKGRAY} fontWeight={700}>제품분야</Text.FontSize18>

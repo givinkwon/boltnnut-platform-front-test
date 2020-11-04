@@ -430,7 +430,7 @@ class SearchBarContainer2 extends React.Component {
       })
 
   };
-  CategoryCircle = () => {
+  /*CategoryCircle = () => {
     const { category_list, category_idx } = this.state;
     //console.log(category_list.indexOf("디자인"))
     //console.log(category_list.splice(0, 1))
@@ -498,7 +498,7 @@ class SearchBarContainer2 extends React.Component {
       }
     </MobileSlider>
   )
-  }
+  } */
 
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
@@ -698,20 +698,20 @@ class SearchBarContainer2 extends React.Component {
               />
           </FileBox>
          </SelectRow>
-         <SelectRow style={{marginTop: 24, display: "inline-flex", justifyContent: "center"}}>
-           <MobileButton1>
-             <span>필터 적용하기</span>
-           </MobileButton1>
-           <MobileButton2
-             onClick = {this.showDetail}
-           >
-             <span> 무료 가견적 넣기 </span>
-           </MobileButton2>
-           <img src={ddarrow} />
+         <SelectRow style={{marginTop: 24, display: "block", justifyContent: "center"}}>
+             {/*<MobileButton1>
+               <span>필터 적용하기</span>
+             </MobileButton1>*/}
+             <div>
+               <MobileButton2
+                 onClick = {this.showDetail}
+                 style={{margin: 'auto'}}
+               >
+                 <span> 무료 가견적 넣기 </span>
+               </MobileButton2>
+               <img src={ddarrow} style={{float: 'right', paddingRight: '10%'}}/>
+             </div>
          </SelectRow>
-         <List>
-           <this.CategoryCircle/>
-         </List>
          </>
          )
         }
@@ -770,6 +770,7 @@ const CustomContainer = styled(Container)`
         padding-left: calc(4.4%);
         padding-right: calc(4.4%);
         width: 100%;
+        padding-bottom: 35px;
     }
     @media (min-width: 768px) and (max-width: 991.98px) {
     }
@@ -872,13 +873,15 @@ const FileBox = styled.div`
   border: solid 1px #c7c7c7;
   background-color: #ffffff;
   align-items: center;
-  display: flex;
   > img {
       width: 23px;
-      height: 22px;
+      height: 100%;
       object-fit: contain;
       cursor: pointer;
       padding-right: calc(5%);
+      float: right;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+      }
   }
   > input {
     border: none;
@@ -902,7 +905,8 @@ const FileBox = styled.div`
   }
   > span {
     width: 100%;
-    height: 30px;
+    height: 100%;
+    white-space: nowrap;
     object-fit: contain;
     font-size: 20px;
     font-weight: normal;
@@ -917,9 +921,9 @@ const FileBox = styled.div`
     padding-left: 20px;
     @media (min-width: 0px) and (max-width: 767.98px) {
       width: 240px;
-      height: 25px;
+      height: 100%;
       object-fit: contain;
-      padding-left: calc(5%);
+      padding-left: calc(4%);
       font-size: 11px;
       font-weight: normal;
       font-stretch: normal;
@@ -928,6 +932,7 @@ const FileBox = styled.div`
       letter-spacing: normal;
       text-align: left;
       color: #b7b7b7;
+      position: absolute;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {

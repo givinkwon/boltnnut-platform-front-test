@@ -26,7 +26,8 @@ const sival = 'static/images/partner/arrow_up.png';
 class CardContainer extends Component {
   state = {
     showDrop: true,
-    showDetail: 'none'
+    showDetail: 'none',
+    width: 0,
   }
 
   static defaultProps = {
@@ -51,12 +52,22 @@ class CardContainer extends Component {
     const { showDrop, showDetail } = this.state;
     this.setState({showDrop: true, showDetail: 'none'})
   }
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
 
   render() {
     const { item, observer, handleIntersection } = this.props;
-    const { showDrop, showDetail } = this.state;
+    const { showDrop, showDetail, width } = this.state;
     console.log(item)
-    console.log(showDetail)
 
     const options = {
       onChange: handleIntersection,
@@ -76,6 +87,8 @@ class CardContainer extends Component {
               {item.info_company.substring(0,50)} ...
             </div>
             <div class="devbox">
+            { width > 768 ? (
+            <>
               {
                 item.category.length > 0 && item.category.slice(0,4).map((item1,idx) => {
                   return (
@@ -85,6 +98,20 @@ class CardContainer extends Component {
                   )
                 })
               }
+            </>
+              ) : (
+            <>
+              {
+                item.category.length > 0 && item.category.slice(0,3).map((item1,idx) => {
+                  return (
+                    <div class="develop">
+                      {item1.category}
+                    </div>
+                  )
+                })
+              }
+            </>
+              )}
               {
                 item.category.length > 5 && "..."
               }
@@ -94,6 +121,9 @@ class CardContainer extends Component {
         <div class="dropdown" style={{display: showDrop}}>
             <img src={dropdown} onClick = {this.detailDown}/>
         </div>
+        <>
+        { width > 768 ? (
+      <>
         <DetailContainer style={{display: showDetail}}>
           <Detail1>
             <div class="detailInner">
@@ -136,6 +166,47 @@ class CardContainer extends Component {
             <img src={sival} onClick = {this.detailUp}/>
           </div>
         </DetailContainer>
+      </>
+      ) : (
+        <DetailContainer style={{display: showDetail}}>
+          <Detail1 style={{borderRadius: 0}}>
+          </Detail1>
+          <Detail1>
+            <MobileDetail1 >
+              <div class="title">
+                전문분야
+              </div>
+              <div class="info" style={{borderLeft: "0.5px solid #d5d5d5", borderRight: "0.5px solid #d5d5d5"}}>
+                경력
+              </div>
+              <div class="info" style={{borderRight: "0.5px solid #d5d5d5"}}>
+                지역
+              </div>
+            </MobileDetail1>
+            <MobileDetail1>
+              <div class="title">
+                주요실적
+              </div>
+              <div class="info" style={{textAlign: 'left'}}>
+                삼선 전자 에어컨 프로젝트 개발 용역 수행
+              </div>
+            </MobileDetail1>
+            <MobileDetail1>
+              <div class="title">
+                진행한 제품군
+              </div>
+              <div class="info" style={{textAlign: 'left'}}>
+                삼선 전자 에어컨 프로젝트 개발 용역 수행
+              </div>
+            </MobileDetail1>
+            <div class="dropup">
+              <img src={sival} onClick = {this.detailUp}/>
+            </div>
+          </Detail1>
+        </DetailContainer>
+        )
+      }
+    </>
       </Card>
       )
     }
@@ -149,10 +220,16 @@ const SummaryContainer = styled.div`
   display: inline-flex;
   width: 100%;
   padding-top: 33px;
+  @media (min-width: 0px) and (max-width: 768.1px) {
+      padding: 0;
+      padding-top: 16px;
+  }
 `
 const DetailContainer = styled.div`
   /* transition: ; */
-  display: 2s;
+  @media (min-width: 0px) and (max-width: 768.1px) {
+      width: 100%;
+  }
   .dropup {
     width: 100%;
     height: 12px;
@@ -162,6 +239,17 @@ const DetailContainer = styled.div`
       cursor: pointer;
       float: right;
       padding-right: 33px;
+    }
+    @media (min-width: 0px) and (max-width: 768.1px) {
+      padding: 0 0;
+      > img {
+        cursor: pointer;
+        float: right;
+        padding-right: 0px;
+        width: 7px;
+        height: 4px;
+        padding-right: 0px;
+      }
     }
   }
 `
@@ -196,6 +284,25 @@ const Detail1 = styled.div`
         letter-spacing: -0.45px;
         text-align: center;
         color: var(--black);
+      }
+    }
+  }
+  @media (min-width: 0px) and (max-width: 768.1px) {
+    margin-top: 0px;
+    width: 90.5%;
+    padding-left: calc(5%);
+    padding-right: calc(5%);
+    border-radius: 6px;
+    height: 144px;
+    > div {
+      :nth-of-type(1) {
+        height: 30px;
+      }
+      :nth-of-type(2) {
+        height: 52px;
+      }
+      :nth-of-type(3) {
+        height: 52px;
       }
     }
   }
@@ -240,6 +347,20 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @media (min-width: 0px) and (max-width: 768.1px) {
+    width: 90%;
+    height: 100%;
+    border-radius: 6px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ffffff;
+    padding: 0;
+    > img {
+     width: 72px;
+     height: 81px;
+     border-radius: 3px;
+     background-color: #c9c9c9;
+    }
+  }
   :hover {
     box-shadow: 0 0 6px 0 ${PRIMARY}55;
   }
@@ -251,6 +372,17 @@ const Card = styled.div`
       cursor: pointer;
       float: right;
       padding-right: 33px;
+    }
+    @media (min-width: 0px) and (max-width: 768.1px) {
+      padding: 0;
+      padding-bottom: 10px;
+      > img {
+        cursor: pointer;
+        float: right;
+        width: 7px;
+        height: 4px;
+        padding-right: 10px;
+      }
     }
   }
 `
@@ -269,6 +401,18 @@ const TextBox = styled.div`
     letter-spacing: -0.6px;
     text-align: left;
     color: #191919;
+    @media (min-width: 0px) and (max-width: 768.1px) {
+      width: 64px;
+      height: 16px;
+      font-size: 10px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 0.9;
+      letter-spacing: -0.25px;
+      text-align: left;
+      color: #191919;
+    }
   }
   .Body {
     width: 470px;
@@ -282,6 +426,18 @@ const TextBox = styled.div`
     text-align: left;
     color: #191919;
     margin-top: 20px;
+    @media (min-width: 0px) and (max-width: 768.1px) {
+      width: 210px;
+      font-size: 10px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: -0.25px;
+      text-align: left;
+      color: #191919;
+      margin-top: 0px;
+    }
   }
   .devbox {
     width: 470px;
@@ -289,15 +445,36 @@ const TextBox = styled.div`
     display: inline-flex;
     margin-top: 20px;
     .develop {
-    width: 120px;
-    height: 30px;
-    border-radius: 4px;
-    background-color: #f1f1f1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
+      width: 120px;
+      height: 30px;
+      border-radius: 4px;
+      background-color: #f1f1f1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      @media (min-width: 0px) and (max-width: 768.1px) {
+        width: auto;
+        height: 16px;
+        font-size: 10px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.5;
+        letter-spacing: -0.25px;
+        text-align: left;
+        color: #191919;
+        }
+      }
+  @media (min-width: 0px) and (max-width: 768.1px) {
+       margin: 0;
+       margin-top: 14px;
+       width: 100%;
     }
+  }
+  @media (min-width: 0px) and (max-width: 768.1px) {
+    width: 210px;
+    height: 81px;
   }
 `
 const Image = styled(RatioImage)`
@@ -309,10 +486,38 @@ const Image = styled(RatioImage)`
   vertical-align: middle;
   margin-left: 30px;
   @media (min-width: 0px) and (max-width: 991.98px) {
-    width: 50px;
-    height: 50px;
+    width: 72px;
+    height: 81px;
     vertical-align: top;
     margin-top: 2px;
+    margin-left: 10px;
+  }
+`
+const MobileDetail1 = styled.div`
+  width: 100%;
+  height: 30px;
+  padding-top: 10px;
+  display: inline-flex;
+  .title {
+    width: 72px;
+    height: 15px;
+    object-fit: contain;
+    font-size: 10px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.25px;
+    text-align: left;
+    color: #191919;
+    display: inline-table;
+  }
+  .info {
+    width: 100%;
+    font-size: 10px;
+    text-align: center;
+    border-left: solid #d5d5d5 {props => props.active && 0.5px};
+    border-right: solid #d5d5d5 {props => props.active && 0.5px};
   }
 `
 

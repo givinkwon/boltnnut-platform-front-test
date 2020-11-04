@@ -11,13 +11,28 @@ import SearchBannerContainer from "./Search";
 @inject("Partner", "Request")
 @observer
 class PartnerConatiner extends React.Component {
+  state = {
+    width: 0,
+  }
   async componentDidMount() {
     await this.props.Partner.init();
     this.props.Partner.search_text = await this.props.query.q;
     await this.props.Partner.searchjust();
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
   }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   render() {
+    const { width } = this.state
     return (
+      <>
+      { width > 768 ? (
       <>
         <SearchBannerContainer/>
         <CustomContainer>
@@ -26,6 +41,16 @@ class PartnerConatiner extends React.Component {
             <ContentContainer />
           </Container>
         </CustomContainer>
+      </>
+        ) : (
+      <>
+        <SearchBannerContainer/>
+        <CustomContainer>
+            <ContentContainer />
+        </CustomContainer>
+      </>
+        )
+      }
       </>
     );
   }

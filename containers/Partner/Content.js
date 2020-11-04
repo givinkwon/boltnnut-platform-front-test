@@ -27,7 +27,21 @@ class ContentConatiner extends React.Component {
     next: true,
     prev: true,
     word: "",
-    count: 0
+    count: 0,
+    width: 0,
+    category_list: [
+      ['디자인','inactive'],
+      ['금형/사출','inactive'],
+      ['금속가공','inactive'],
+      ['기구설계','inactive'],
+      ['회로설계','inactive'],
+      ['실리콘','inactive'],
+      ['3D 프린터','inactive'],
+      ['기계설계','inactive'],
+      ['진공성형','inactive'],
+      ['나무가공','inactive'],
+      ],
+    category_idx: ['디자인', '금형/사출', '금속가공', '기구설계', '회로설계', '실리콘', '3D 프린터', '기계설계', '진공성형', '나무가공']
   }
   handleIntersection = (event) => {
     if(event.isIntersecting) {
@@ -43,6 +57,8 @@ class ContentConatiner extends React.Component {
     const userAgent = window.navigator.userAgent;
     const searchButton = document.getElementById('searchbutton')
     const searchBarInput = document.getElementById('search')
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
 
     if(userAgent.indexOf("MSIE ") !== -1 || userAgent.indexOf(".NET") !== -1
       || userAgent.indexOf("Edge") !== -1)
@@ -53,11 +69,20 @@ class ContentConatiner extends React.Component {
        self.setState({...this.state, searchWord: searchBarInput.value})
     })
   }
+
   componentWillMount() {
+    if (typeof window !== "undefined") {
+    window.removeEventListener('resize', this.updateDimensions);
+    }
     const { Partner } = this.props;
     Partner.getNextPartner();
     this.setState({...this.state, count: Partner.partner_count})
   }
+
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+
   afterChangeHandler = (current) => {
     if(current === 0){
       this.setState({next: true, prev: false})
@@ -87,21 +112,99 @@ class ContentConatiner extends React.Component {
   buttonClick = () => {
     console.log("n")
   }
+  CategoryCircle = () => {
+    const { category_list, category_idx } = this.state;
+    //console.log(category_list.indexOf("디자인"))
+    //console.log(category_list.splice(0, 1))
+    const handleChange = async (e) => {
+      if (category_list[category_idx.indexOf(e.target.innerText)][1] == "inactive") {
+        const temp_list = category_list;
+        const temp_idx = category_idx;
+        const idx = temp_idx.indexOf(e.target.innerText);
+        delete temp_idx[idx]
+        delete temp_list[idx]
+        const f = [e.target.innerText]
+        const f_list = [[e.target.innerText, 'active']]
+
+        for (var item in temp_idx) {
+          f.push(temp_idx[item])
+        }
+        for (var item in temp_list) {
+          f_list.push(temp_list[item])
+        }
+        this.setState({...this.state, category_idx: f, category_list: f_list})
+      } else {
+        const temp_list = category_list;
+        const temp_idx = category_idx;
+        const idx = temp_idx.indexOf(e.target.innerText);
+        delete temp_idx[idx]
+        delete temp_list[idx]
+        const f = []
+        const f_list = []
+
+        for (var item in temp_idx) {
+          f.push(temp_idx[item])
+        }
+        f.push(e.target.innerText)
+        for (var item in temp_list) {
+          f_list.push(temp_list[item])
+        }
+        f_list.push([e.target.innerText, 'inactive'])
+        this.setState({...this.state, category_idx: f, category_list: f_list})
+      }
+    }
+    var settings = {
+      dots: false,
+      infinite: false,
+      arrows: false,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      initialSlide: 0,
+      draggable: false,
+    }
+    return (
+    <Slider {...settings}>
+      {
+      category_list.map((item, idx) => {
+        return (
+        <CategoryBox onClick = {handleChange}>
+          <div class={item[1]}>
+            <span> {item[0]} </span>
+          </div>
+        </CategoryBox>
+        )
+      })
+      }
+    </Slider>
+  )
+  }
 
   render() {
     const { Partner, Home } = this.props
-    const { prev, next, current, searchWord, count } = this.state
+    const { prev, next, current, searchWord, count, width } = this.state
     const current_set = (parseInt(current/5) + 1)
     const page = parseInt(count/5) + 1
 
     return (
       <CustomContainer>
+      <>
+      { width < 768 && (
+        <>
+          <MobileList>
+            <this.CategoryCircle/>
+          </MobileList>
+        </>
+        )
+      }
+      </>
           <Header>
             {Partner.search_true == 1 ?
             (Partner.search_text + "에 대한 검색 결과입니다.")
              : ""
              }
           </Header>
+      { width > 768 ? (
+      <>
         <List>
           {
             Partner.partner_list.length > 0 && Partner.partner_list.slice(5*current, 5*(current+1)).map((item, idx) => {
@@ -126,6 +229,25 @@ class ContentConatiner extends React.Component {
               <PageCount> ... </PageCount>
             <img src={pass2} style={{opacity: page == current ? 0.4 : 1, display: page == current? 'none' : 'block'}} onClick = {this.pageNext} />
         </PageBar>
+      </>
+    ) : (
+    <>
+      <List>
+          {
+            Partner.partner_list.length > 0 && Partner.partner_list.map((item, idx) => {
+              return (
+                <Card
+                  key={item.id}
+                  item={item}
+                  handleIntersection={this.handleIntersection}
+                  observer={!this.props.Home.is_ie && idx === Partner.partner_list.length}
+                />
+              )
+            })
+          }
+        </List>
+    </>
+    )}
       </CustomContainer>
     )
   }
@@ -135,8 +257,8 @@ export default ContentConatiner
 
 const CustomContainer = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
+    width: calc(100%);
+    padding: 0;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -156,6 +278,9 @@ const List = styled.div`
   flex-wrap: wrap;
   .slick-dots {
     width: 120px;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    justify-content: center;
   }
 `
 const Item = styled.div`
@@ -211,6 +336,20 @@ const Header = styled.div`
   color: #191919;
   padding-top: 30px;
   padding-bottom: 15px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding-top: 16px;
+    height: auto;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.08;
+    letter-spacing: -0.3px;
+    text-align: left;
+    padding-left: calc(5%);
+    }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    }
 `
 const PageBar = styled.div`
   width: 351px;
@@ -250,5 +389,79 @@ const Icon = styled.img`
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 30px;
     height: 30px;
+  }
+`
+const CategoryBox = styled.div`
+  width: 64px;
+  height: 22px;
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  text-align: center;
+  font-size: 10px;
+  display:flex;
+  align-items: center;
+  : hover {
+    outline: none;
+  }
+  > span {
+    width: 32px;
+    height: 18px;
+    font-size: 10px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.67;
+    letter-spacing: -0.3px;
+    text-align: center;
+  }
+  .active {
+    width: 64px;
+    height: 22px;
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+    background-color: #0933b3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    : hover {
+      outline: none;
+    }
+      > span {
+        color: white;
+        font-size: 10px;
+      }
+    }
+`
+const SelectRow = styled.div`
+  width: 100%;
+  align-items: center;
+  position: relative;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-bottom: 0px;
+    }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    }
+`
+const MobileList = styled(SelectRow)`
+  display: block;
+  padding-left: calc(5%);
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: solid 2px #dfdfdf;
+  border-top: solid 2px #dfdfdf;
+  .slick-list {
+    height: 24px;
+    > div > div {
+      width: 64px !important;
+      margin-right: 12px;
+    }
+    > div > div > div {
+        width: 64px;
+    }
+    > div > div > div > div {
+      display: flex !important;
+      justify-content: center;
+    }
   }
 `
