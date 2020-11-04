@@ -57,7 +57,7 @@ class ReviewBanner extends React.Component {
                 <Header>볼트앤너트 제품 개선 사례</Header>
               </HeaderBox>
               <>
-              { width > 450 ? (
+              { width > 768 ? (
               <>
                 <Item1>
                   <Image src={image2}/>
@@ -153,7 +153,7 @@ const CustomContainer = styled.div`
     margin-bottom: 8px;
   }
   @media (min-width: 360px) and (max-width: 767.98px) {
-
+    height: 100%;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -191,6 +191,7 @@ const Container = styled.div`
     padding-right: calc(5%);
     margin: 0;
     width: 100%;
+    height: 100%;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -538,12 +539,26 @@ const ButtonBox = styled.div`
 `
 const List = styled.div`
   width: 100%;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     margin-top: 16px;
     .slick-list {
     width: 100%;
     > div > div {
       width: 270px !important;
+      margin-right: 16px;
+    }
+    > div > div > div > div  {
+      align-items: center;
+      width: 270px !important;
+    }
+  }
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    margin-top: 16px;
+    .slick-list {
+    width: 100%;
+    > div > div {
+      width: 22% !important;
       margin-right: 16px;
     }
     > div > div > div > div  {
