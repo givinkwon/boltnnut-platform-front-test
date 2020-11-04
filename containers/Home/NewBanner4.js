@@ -48,7 +48,7 @@ class NewBanner4Container extends React.Component {
         </HeaderBox>
         <BodyBox>
           <>
-          { width > 450 ? (
+          { width > 360 ? (
             <>
             {width > 1300 ? (
             <>
@@ -371,6 +371,7 @@ const List = styled.div`
       }
     }
   }
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 0px;
     .slick-list {
@@ -530,8 +531,13 @@ const Image = styled(RatioImage)`
     background-size: contain;
     background-repeat: no-repeat;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     width: 82px;
+    height: 100%;
+    margin-left: 15px;
+  }
+
+  @media (min-width: 360px) and (max-width: 767.98px) {
     height: 100%;
     margin-left: 15px;
   }
@@ -741,7 +747,7 @@ const CommentBox = styled.div`
   letter-spacing: normal;
   text-align: left;
   color: #707070;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     margin: 0;
     width: 100%;
     font-size : 13px !important;
@@ -760,6 +766,11 @@ const CommentBox = styled.div`
         color: #191919;
         }
     }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    margin-right: 30px;
+    width: 100%;
+    font-size: 12px;
+  }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-right: 30px;
     width: 100%;
@@ -783,14 +794,16 @@ const CommentBox = styled.div`
     letter-spacing: -0.6px;
     text-align: left;
     color: #060606;
-    @media (min-width: 0px) and (max-width: 767.98px) {
+    @media (min-width: 0px) and (max-width: 359.98px) {
       margin: 0;
       width: 100%;
       font-size : 11px !important;
       padding-right: 18px;
       padding-bottom: 4px;
     }
-
+    @media (min-width: 360px) and (max-width: 767.98px) {
+      font-size : 14px;
+    }
     @media (min-width: 768px) and (max-width: 991.98px) {
       font-size : 20px;
     }
@@ -901,11 +914,19 @@ const SmallCommentBox = styled.div`
   letter-spacing: -0.38px;
   text-align: left;
   color: #191919;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     margin-left: 24px;
     margin-right: 30px;
     width: 100%;
     font-size : 13px !important;
+    padding-right: 18px;
+  }
+
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    margin-left: 24px;
+    margin-right: 30px;
+    width: 100%;
+    font-size : 18px !important;
     padding-right: 18px;
   }
 
@@ -953,11 +974,18 @@ const TextBox = styled.div`
   display: inline-flex;
   flex-direction: column;
   background-color: #ffffff;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     margin: 0;
     width: 219px;
     height: 110px;
     margin-left: 6px;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    margin: 0;
+    width: 80%;
+    height: 110px;
+    margin-left: 10%;
+    margin-right: 10%;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
