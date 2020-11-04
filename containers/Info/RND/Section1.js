@@ -103,11 +103,11 @@ const Itemheader = styled.div`
       line-height: 1.23;
       letter-spacing: 0.75px;
     }
-    
+
 `
 const Image = styled.img`
   width: 42px;
-  margin : 0px 42px;    
+  margin : 0px 42px;
 `;
 const Step1 = styled.img`
   width: 131px;

@@ -50,14 +50,13 @@ const ItemBox = styled.div`
   }
   
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     width: calc(100%);
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    > p {
-      margin-top: 20px;
-    }
+
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    width: calc(100%);
+
   }
   @media (min-width: 768px) {
     width: 1000px;
@@ -71,12 +70,16 @@ const NextButton = styled(ButtonComponent)`
   margin-top : 50px;
   border-radius: 16px;
   box-shadow: 0 3px 6px 0 var(--black-16);
-  
+
   :hover {
     background-color : #0933b3;
   }
-  
-  @media (min-width: 0px) and (max-width: 767.98px) {
+
+  @media (min-width: 0px) and (max-width: 359.98px) {
+    width: 200px;
+    height: 77px;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
     width: 302px;
     height: 77px;
   }
@@ -84,11 +87,11 @@ const NextButton = styled(ButtonComponent)`
     width: 302px;
     height: 77px;
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 302px;
     height: 77px;
   }
-  @media (min-width: 1300px) { 
+  @media (min-width: 1300px) {
     width: 302px;
     height: 77px;
   }

@@ -62,7 +62,7 @@ export const FontSize40 = styled.p`
   color: ${props => props.color ? props.color : '#000000'};
   text-align: ${props => props.center ? 'center' : 'left'};
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 24px;
+    font-size: 18px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 28px;
@@ -169,13 +169,13 @@ export const FontSize26 = styled.p`
   text-align: ${props => props.center ? 'center' : 'left'};
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 18px;
+    font-size: 15px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    font-size: 19px;
+    font-size: 17px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    font-size: 21px;
+    font-size: 19px;
   }
   @media (min-width: 1300px) {
     font-size: 25px;
@@ -222,13 +222,13 @@ export const FontSize20 = styled.p`
   color: ${props => props.color ? props.color : '#000000'};
   text-align: ${props => props.center ? 'center' : 'left'};
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 13px;
+    font-size: 12px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    font-size: 16px;
+    font-size: 14px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) { 
-    font-size: 18px;
+    font-size: 16px;
   }
   @media (min-width: 1300px) { 
     font-size: 20px;

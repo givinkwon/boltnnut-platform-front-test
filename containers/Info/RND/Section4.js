@@ -66,6 +66,7 @@ const ItemBox = styled.div`
     }
   }
 `
+
 const NextButton = styled(ButtonComponent)`
   margin: auto;
   margin-top : 50px;
@@ -76,7 +77,11 @@ const NextButton = styled(ButtonComponent)`
     background-color : #0933b3;
   }
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
+    width: 200px;
+    height: 77px;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
     width: 302px;
     height: 77px;
   }

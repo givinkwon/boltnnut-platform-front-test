@@ -36,7 +36,7 @@ class Section1Container extends React.Component {
                     </Itemheader>
                     <Step2 src={step2}></Step2>
                     <Text.FontSize26>컨설턴트 상담</Text.FontSize26>
-                    <Text.FontSize20>제조 컨설턴트가 상담을 도와드리며, 1000 건 이상의 프로젝트 데이터를 바탕으로 전문 개발사를 매칭해드립니다</Text.FontSize20>
+                    <Text.FontSize20>1000 건 이상의 프로젝트 데이터를 바탕으로 전문 개발사를 매칭해드립니다</Text.FontSize20>
                   </Item>
                   <Image src={right}></Image>
                   <Item>
@@ -44,7 +44,7 @@ class Section1Container extends React.Component {
                         <Text.FontSize30>STEP 3</Text.FontSize30>
                     </Itemheader>
                     <Step3 src={step3}></Step3>
-                    <Text.FontSize26>가견적 및 개발사 정보 전달</Text.FontSize26>
+                    <Text.FontSize26>개발사 정보/가견적 전달</Text.FontSize26>
                     <Text.FontSize20>매칭된 전문 개발사의 정보와 가견적을 전달해드립니다</Text.FontSize20>
                   </Item>
                   <Image src={right}></Image>
@@ -173,8 +173,14 @@ const ItemBox = styled.div`
       margin-top: 20px;
     }
   }
-  @media (min-width: 768px) {
-    width: 1770px;
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+  }
+  @media (min-width: 1300px) {
+    width: 100%;
     > p {
       margin-top: 20px;
     }
