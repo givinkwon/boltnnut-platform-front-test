@@ -100,11 +100,11 @@ const NextButton = styled(ButtonComponent)`
     width: 302px;
     height: 77px;
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 302px;
     height: 77px;
   }
-  @media (min-width: 1300px) { 
+  @media (min-width: 1300px) {
     width: 302px;
     height: 77px;
   }
