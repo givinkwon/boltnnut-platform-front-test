@@ -586,6 +586,7 @@ class SearchBarContainer2 extends React.Component {
            <Title> 제품분야 </Title>
            <MobileSelectBox>
            <Select
+              style={{marginRight: 0}}
               styles={MobilecustomStyles} options={Partner.category_list} value={Partner.select_big}
               getOptionLabel={(option) => option.maincategory} placeholder='대 카테고리' onChange={Partner.setBigCategory}/>
            <Select
@@ -814,7 +815,7 @@ const Select = styled(SelectComponent)`
     margin: 0;
     padding: 0;
     margin-right: 8px;
-    width: 132px !important;
+    width: 100%;
     height: 32px;
     object-fit: contain;
     border-radius: 2px;
@@ -1042,7 +1043,7 @@ const PriceInput = styled.div`
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 118px;
+    width: 100%;
     height: 32px;
     object-fit: contain;
     border-radius: 2px;
@@ -1081,7 +1082,8 @@ const PriceBox = styled.div`
     margin: 0;
     width: 100%;
     margin-left: 12px;
-    padding-right: calc(4.4%);
+    padding-right: calc(8%);
+    justify-content: center;
   }
 `
 const DropButton = styled.div`
@@ -1119,6 +1121,8 @@ const MobileSelectBox = styled.div`
   display: inline-flex;
   width: 100%;
   margin-left: 12px;
+  padding-right: calc(6%);
+  justify-content: center;
 `
 const MobileButton1 = styled.div`
   width: 94px;
