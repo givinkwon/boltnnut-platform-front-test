@@ -229,6 +229,12 @@ const DetailContainer = styled.div`
   /* transition: ; */
   @media (min-width: 0px) and (max-width: 768.1px) {
       width: 100%;
+      padding-top: 17px;
+      > div {
+      :nth-of-type(1) {
+        border-radius: 0px;
+      }
+      }
   }
   .dropup {
     width: 100%;
@@ -359,6 +365,7 @@ const Card = styled.div`
      height: 81px;
      border-radius: 3px;
      background-color: #c9c9c9;
+    }
     }
   }
   :hover {

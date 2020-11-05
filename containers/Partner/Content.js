@@ -50,6 +50,18 @@ class ContentConatiner extends React.Component {
       Partner.getNextPartner()
     }
   }
+  loadScroll = () => {
+    const { Partner } = this.props;
+
+    if (typeof document != "undefined") {
+      var scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+      var clientHeight = document.documentElement.clientHeight;
+    }
+    if (scrollTop + clientHeight === scrollHeight) {
+      Partner.getNextPartner();
+    }
+  }
   // IE 오류 해결
   componentDidMount() {
     const { Home, Partner } = this.props
@@ -58,6 +70,7 @@ class ContentConatiner extends React.Component {
     const searchButton = document.getElementById('searchbutton')
     const searchBarInput = document.getElementById('search')
     window.addEventListener('resize', this.updateDimensions);
+    window.addEventListener('scroll', this.loadScroll);
     this.setState({ ...this.state, width: window.innerWidth });
 
     if(userAgent.indexOf("MSIE ") !== -1 || userAgent.indexOf(".NET") !== -1
@@ -235,12 +248,14 @@ class ContentConatiner extends React.Component {
       <List>
           {
             Partner.partner_list.length > 0 && Partner.partner_list.map((item, idx) => {
+              console.log(idx)
+              console.log(Partner.partner_list.length - 1)
               return (
                 <Card
                   key={item.id}
                   item={item}
                   handleIntersection={this.handleIntersection}
-                  observer={!this.props.Home.is_ie && idx === Partner.partner_list.length}
+                  observer={!this.props.Home.is_ie && idx === Partner.partner_list.length - 1}
                 />
               )
             })

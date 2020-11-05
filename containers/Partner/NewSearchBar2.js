@@ -113,17 +113,10 @@ class SearchBarContainer2 extends React.Component {
     show_detail: "none",
     portfolioValue: '',
     width: 0,
-    category_list: [
-      ['디자인','inactive'],
-      ['기구설계','inactive'],
-      ['기계설계','inactive'],
-      ['야','inactive'],
-      ['연휴','inactive'],
-      ['하이','inactive'],
-      ['출근','inactive'],
-      ['퇴근','inactive'],
-      ],
-    category_idx: ['디자인', '기구설계', '기계설계', '야', '연휴', '하이', '출근', '퇴근']
+    temp_min: 0,
+    temp_max: 0,
+    temp_due_min: 0,
+    temp_due_max: 0,
   };
 
   onChangePortfolio = (e) => {
@@ -181,10 +174,24 @@ class SearchBarContainer2 extends React.Component {
   RangeSlider = () => {
   [this.state.price_max, this.state.setPrice] = React.useState([0,0]);
   const { width } = this.state;
+  console.log(this.state.price_max)
 
   const handleChange = (event, newValue) => {
-    this.state.setPrice(newValue);
+      this.state.setPrice(newValue);
    };
+  const handleChangeMin = (event) => {
+      var temp_min = 0;
+      temp_min = event.target.value;
+      this.setState({...this.state, temp_min: temp_min});
+      console.log(temp_min);
+      this.state.price_max[0] = temp_min;
+  }
+  const handleChangeMax = (event) => {
+    var temp_max = 0;
+    temp_max = event.target.value;
+    this.setState({...this.state, temp_max: temp_max});
+    this.state.price_max[1] = temp_max;
+  }
 
   return (
   <>
@@ -205,17 +212,17 @@ class SearchBarContainer2 extends React.Component {
       <PriceBox>
             <PriceInput>
               <input
-                value = {this.state.price_max[0]}
-                onChange = {handleChange}
-                type = "value"/>
+                value = {this.state.price_max && this.state.price_max[0]}
+                onChange = {handleChangeMin}
+                type = "number"/>
               <span> 만원 </span>
             </PriceInput>
             <span> ~ </span>
             <PriceInput>
               <input
-                value = {this.state.price_max[1]}
-                onChange = {handleChange}
-                type = "value"
+                value = {this.state.price_max && this.state.price_max[1]}
+                onChange = {handleChangeMax}
+                type = "number"
                 />
               <span> 만원 </span>
             </PriceInput>
@@ -226,16 +233,16 @@ class SearchBarContainer2 extends React.Component {
       <PriceBox>
             <PriceInput>
               <input
-                value = {this.state.price_max[0]}
-                onChange = {handleChange}
+                value = {this.state.price_max && this.state.price_max[0]}
+                onChange = {handleChangeMin}
                 type = "value"/>
               <span> 만원 </span>
             </PriceInput>
             <span> ~ </span>
             <PriceInput>
               <input
-                value = {this.state.price_max[1]}
-                onChange = {handleChange}
+                value = {this.state.price_max && this.state.price_max[1]}
+                onChange = {handleChangeMax}
                 type = "value"
                 />
               <span> 만원 </span>
@@ -249,13 +256,28 @@ class SearchBarContainer2 extends React.Component {
 
   RangeSlider2 = () => {
   [this.state.due_max, this.state.setDue] = React.useState([0,0]);
-  //console.log(due_max[0], due_max[1])
+  const { width } = this.state;
+  console.log(this.state.due_max)
   const handleChange = (event, newValue) => {
     this.state.setDue(newValue);
+    console.log(newValue)
    };
-
+  const handleChangeDueMin = (event) => {
+      var temp_due_min = 0;
+      temp_due_min = event.target.value;
+      this.setState({...this.state, temp_due_min: temp_due_min});
+      this.state.due_max[0] = temp_due_min;
+  }
+  const handleChangeDueMax = (event) => {
+    var temp_due_max = 0;
+    temp_due_max = event.target.value;
+    this.setState({...this.state, temp_due_max: temp_due_max});
+    this.state.due_max[1] = temp_due_max;
+  }
   return (
     <>
+    { width > 768 ? (
+        <>
           <BarWrapper>
             <CustomSlider
               ThumbComponent={this.CustomSliderThumbComponent}
@@ -272,7 +294,7 @@ class SearchBarContainer2 extends React.Component {
             <PriceInput>
               <input
                 value = {this.state.due_max[0]}
-                onChange = {handleChange}
+                onChange = {handleChangeDueMin}
                 type = "value"
                 />
               <span> 개월 </span>
@@ -281,30 +303,40 @@ class SearchBarContainer2 extends React.Component {
             <PriceInput>
               <input
                 value = {this.state.due_max[1]}
-                onChange = {handleChange}
+                onChange = {handleChangeDueMax}
                 type = "value"
                 />
               <span> 개월 </span>
             </PriceInput>
           </PriceBox>
+        </>
+        ) : (
+        <>
+          <PriceBox>
+            <PriceInput>
+              <input
+                value = {this.state.due_max[0]}
+                onChange = {handleChangeDueMin}
+                type = "value"
+                />
+              <span> 개월 </span>
+            </PriceInput>
+            <span> ~ </span>
+            <PriceInput>
+              <input
+                value = {this.state.due_max[1]}
+                onChange = {handleChangeDueMax}
+                type = "value"
+                />
+              <span> 개월 </span>
+            </PriceInput>
+          </PriceBox>
+        </>
+        )}
     </>
     );
   }
 
-//  handleChange = (event, newValue) => {
-//    if (event.target.value) {
-//      this.setState({...this.state, price_max: event.target.value})
-//    } else {
-//    this.setState({...this.state, price_max: newValue})
-//    }
-//  };
-//  handleChange2 = (event, newValue) => {
-//    if (event.target.value) {
-//      this.setState({...this.state, due_max: event.target.value})
-//    } else {
-//    this.setState({...this.state, due_max: newValue})
-//    }
-//  };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
     window.addEventListener('resize', this.updateDimensions);
@@ -354,7 +386,6 @@ class SearchBarContainer2 extends React.Component {
 
   submit = () => {
     const { Request, router  } = this.props;
-
     const {file, price_max, due_max} = this.state;
 
     if (!Request.input_name) {
@@ -503,10 +534,16 @@ class SearchBarContainer2 extends React.Component {
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request } = this.props;
+    if (typeof window !== "undefined") {
+      console.log(window.innerHeight)
+      console.log(document.documentElement.offsetHeight)
+      console.log(document.documentElement.scrollHeight)
+      console.log(document.documentElement.scrollTop)
+      console.log(document.documentElement.scrollHeight)
+    }
     {/*console.log(Partner.select_big)
     console.log(Partner.request_middle_list)*/}
     return (
-
       <CustomContainer>
       <>
       { width > 768 ? (
@@ -639,16 +676,11 @@ class SearchBarContainer2 extends React.Component {
              <this.RangeSlider/>
            </SelectRow>
          <SelectRow>
-           <Title> 기간 </Title>
-           <PriceBox>
-               <PriceInput>
-               </PriceInput>
-               <span> ~ </span>
-               <PriceInput>
-               </PriceInput>
-           </PriceBox>
+           <Title> 개발기간 </Title>
+           <this.RangeSlider2/>
          </SelectRow>
-
+       { show_detail != "none" ? (
+       <>
          <SelectRow>
            <Title>
              제품이름
@@ -660,7 +692,7 @@ class SearchBarContainer2 extends React.Component {
             />
          </SelectRow>
          <SelectRow>
-           <Title style={{width: 65}}>
+           <Title>
             전화번호
            </Title>
            <PhoneBox>
@@ -678,7 +710,7 @@ class SearchBarContainer2 extends React.Component {
                 value={Request.input_phone3}
                 onChange={Request.setInputPhone3}
             />
-          </PhoneBox>
+           </PhoneBox>
          </SelectRow>
          <SelectRow>
            <Title>
@@ -696,7 +728,7 @@ class SearchBarContainer2 extends React.Component {
             <img
               src="/static/images/mask.png"
               />
-          </FileBox>
+           </FileBox>
          </SelectRow>
          <SelectRow style={{marginTop: 24, display: "block", justifyContent: "center"}}>
              {/*<MobileButton1>
@@ -709,12 +741,29 @@ class SearchBarContainer2 extends React.Component {
                >
                  <span> 무료 가견적 넣기 </span>
                </MobileButton2>
-               <img src={ddarrow} style={{float: 'right', paddingRight: '10%'}}/>
+               <img src={ddarrow} style={{float: 'right', paddingRight: '10%'}}
+                onClick = {this.showDetail}
+                />
              </div>
          </SelectRow>
+       </>
+         ) : (
+         <>
+           <SelectRow style={{justifyContent: 'center'}}>
+             <MobileButton1
+              onClick = {this.showDetail}>
+               <span>필터 적용하기</span>
+             </MobileButton1>
+               <MobileButton2
+                onClick = {this.showDetail}>
+                 <span> 무료 가견적 넣기 </span>
+               </MobileButton2>
+             </SelectRow>
          </>
-         )
-        }
+         )}
+         </>
+       )
+    }
         </>
       </CustomContainer>
     )
