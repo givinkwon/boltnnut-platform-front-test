@@ -87,7 +87,7 @@ class CardContainer extends Component {
               {item.info_company.substring(0,50)} ...
             </div>
             <div class="devbox">
-            { width > 768 ? (
+            { width > 767.99 ? (
             <>
               {
                 item.category.length > 0 && item.category.slice(0,4).map((item1,idx) => {
@@ -122,7 +122,7 @@ class CardContainer extends Component {
             <img src={dropdown} onClick = {this.detailDown}/>
         </div>
         <>
-        { width > 768 ? (
+        { width > 767.99 ? (
       <>
         <DetailContainer style={{display: showDetail}}>
           <Detail1>
@@ -220,14 +220,15 @@ const SummaryContainer = styled.div`
   display: inline-flex;
   width: 100%;
   padding-top: 33px;
-  @media (min-width: 0px) and (max-width: 768.1px) {
+  @media (min-width: 0px) and (max-width: 767.99px) {
       padding: 0;
       padding-top: 16px;
+      align-items: center;
   }
 `
 const DetailContainer = styled.div`
   /* transition: ; */
-  @media (min-width: 0px) and (max-width: 768.1px) {
+  @media (min-width: 0px) and (max-width: 767.99px) {
       width: 100%;
       padding-top: 17px;
       > div {
@@ -246,7 +247,7 @@ const DetailContainer = styled.div`
       float: right;
       padding-right: 33px;
     }
-    @media (min-width: 0px) and (max-width: 768.1px) {
+    @media (min-width: 0px) and (max-width: 767.99px) {
       padding: 0 0;
       > img {
         cursor: pointer;
@@ -293,7 +294,7 @@ const Detail1 = styled.div`
       }
     }
   }
-  @media (min-width: 0px) and (max-width: 768.1px) {
+  @media (min-width: 0px) and (max-width: 767.99px) {
     margin-top: 0px;
     width: 90.5%;
     padding-left: calc(5%);
@@ -353,7 +354,7 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  @media (min-width: 0px) and (max-width: 768.1px) {
+  @media (min-width: 0px) and (max-width: 767.99px) {
     width: 90%;
     height: 100%;
     border-radius: 6px;
@@ -365,7 +366,6 @@ const Card = styled.div`
      height: 81px;
      border-radius: 3px;
      background-color: #c9c9c9;
-    }
     }
   }
   :hover {
@@ -380,7 +380,7 @@ const Card = styled.div`
       float: right;
       padding-right: 33px;
     }
-    @media (min-width: 0px) and (max-width: 768.1px) {
+    @media (min-width: 0px) and (max-width: 767.99px) {
       padding: 0;
       padding-bottom: 10px;
       > img {
@@ -408,8 +408,8 @@ const TextBox = styled.div`
     letter-spacing: -0.6px;
     text-align: left;
     color: #191919;
-    @media (min-width: 0px) and (max-width: 768.1px) {
-      width: 64px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: auto;
       height: 16px;
       font-size: 10px;
       font-weight: bold;
@@ -433,8 +433,8 @@ const TextBox = styled.div`
     text-align: left;
     color: #191919;
     margin-top: 20px;
-    @media (min-width: 0px) and (max-width: 768.1px) {
-      width: 210px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: calc(90%);
       font-size: 10px;
       font-weight: normal;
       font-stretch: normal;
@@ -460,7 +460,7 @@ const TextBox = styled.div`
       align-items: center;
       justify-content: center;
       margin-right: 10px;
-      @media (min-width: 0px) and (max-width: 768.1px) {
+      @media (min-width: 0px) and (max-width: 767.98px) {
         width: auto;
         height: 16px;
         font-size: 10px;
@@ -473,15 +473,22 @@ const TextBox = styled.div`
         color: #191919;
         }
       }
-  @media (min-width: 0px) and (max-width: 768.1px) {
+  @media (min-width: 0px) and (max-width: 767.98px) {
        margin: 0;
        margin-top: 14px;
        width: 100%;
     }
   }
-  @media (min-width: 0px) and (max-width: 768.1px) {
-    width: 210px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: calc(90%);
     height: 81px;
+  }
+  @media (min-width: 991.98px) and (max-width: 1299.98px) {
+    width: 70%;
+    height: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 `
 const Image = styled(RatioImage)`
@@ -492,13 +499,17 @@ const Image = styled(RatioImage)`
   display: inline-block;
   vertical-align: middle;
   margin-left: 30px;
-  @media (min-width: 0px) and (max-width: 991.98px) {
-    width: 72px;
-    height: 81px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: calc(20%);
+    height: calc(7%);
     vertical-align: top;
     margin-top: 2px;
     margin-left: 10px;
   }
+  @media (min-width: 767.99px) and (max-width: 1299.98px) {
+       height: calc(7%);
+       width: calc(30%);
+    }
 `
 const MobileDetail1 = styled.div`
   width: 100%;

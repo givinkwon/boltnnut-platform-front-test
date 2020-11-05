@@ -113,7 +113,7 @@ const SearchBar = styled.div`
       border: 0;
     }
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.99px) and (max-width: 991.98px) {
     margin-top: 30px;
     input {
       font-size: 16px;
@@ -143,7 +143,7 @@ const Form = styled.div`
     width: 100%;
     margin-top: 24px;
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.99px) and (max-width: 991.98px) {
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
   }
@@ -156,7 +156,7 @@ const CustomContainer = styled.div`
     padding: 0 20px;
   }
 
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.99px) and (max-width: 991.98px) {
     width: 720px;
   }
 
@@ -191,9 +191,22 @@ const SearchBox = styled.div`
       margin-right: calc(4%);
       margin-left: calc(4%);
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
+  @media (min-width: 767.99px) and (max-width: 1299.98px) {
+    width: calc(85%);
+    text-align: left;
+    display: block;
+    align-items: center;
+    > input {
+      position: absolute;
+      width: calc(60%) !important;
+    }
+    > img {
+      position: relative;
+      float: right;
+      height: 100% !important;
+      vertical-align: middle;
+      padding-right: calc(5%);
+    }
   }
   @media (min-width: 1300px) {
   }
@@ -237,7 +250,7 @@ const SearchBox = styled.div`
       letter-spacing: -0.35px;
       text-align: left;
     }
-    @media (min-width: 768px) and (max-width: 991.98px) {
+    @media (min-width: 767.99px) and (max-width: 991.98px) {
     }
     @media (min-width: 992px) and (max-width: 1299.98px) {
     }

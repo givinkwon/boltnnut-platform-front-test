@@ -126,7 +126,7 @@ class ContentConatiner extends React.Component {
   }
   CategoryCircle = () => {
     const { Partner } = this.props;
-    const { category_list, category_idx } = this.state;
+    const { category_list, category_idx, width } = this.state;
     //console.log(category_list.indexOf("디자인"))
     //console.log(category_list.splice(0, 1))
     const handleChange = async (e) => {
@@ -182,6 +182,9 @@ class ContentConatiner extends React.Component {
       draggable: false,
     }
     return (
+  <>
+    { width < 767.99 ? (
+  <>
     <Slider {...settings}>
       {
       category_list.map((item, idx) => {
@@ -195,6 +198,24 @@ class ContentConatiner extends React.Component {
       })
       }
     </Slider>
+  </>
+    ) : (
+    <>
+      {
+      category_list.map((item, idx) => {
+        return (
+        <CategoryBox onClick = {handleChange}>
+          <div class={item[1]}>
+            <span> {item[0]} </span>
+          </div>
+        </CategoryBox>
+        )
+      })
+      }
+    </>
+    )
+    }
+  </>
   )
   }
 
@@ -207,7 +228,7 @@ class ContentConatiner extends React.Component {
     return (
       <CustomContainer>
       <>
-      { width < 768 && (
+      { width < 1299.98 && (
         <>
           <MobileList>
             <this.CategoryCircle/>
@@ -222,7 +243,7 @@ class ContentConatiner extends React.Component {
              : ""
              }
           </Header>
-      { width > 768 ? (
+      { width > 991.98 ? (
       <>
         <List>
           {
@@ -282,7 +303,7 @@ const CustomContainer = styled.div`
     padding: 0;
   }
 
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.99px) and (max-width: 991.98px) {
     width: 720px;
   }
 
@@ -297,6 +318,7 @@ const List = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   .slick-dots {
     width: 120px;
   }
@@ -318,7 +340,7 @@ const Item = styled.div`
       margin-top: 10px;
     }
   }
-  @media (min-width: 768px) {
+  @media (min-width: 767.99px) {
     width: calc((100%/3) - 10px);
     :nth-of-type(3n-1){
       margin-left: 15px;
@@ -369,7 +391,7 @@ const Header = styled.div`
     text-align: left;
     padding-left: calc(5%);
     }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.99px) and (max-width: 991.98px) {
     }
 `
 const PageBar = styled.div`
@@ -435,6 +457,9 @@ const CategoryBox = styled.div`
     line-height: 0.67;
     letter-spacing: -0.3px;
     text-align: center;
+    @media (min-width: 767.99px) and (max-width: 1299.98px) {
+      font-size: 16px;
+    }
   }
   .active {
     width: 64px;
@@ -445,6 +470,13 @@ const CategoryBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    @media (min-width: 767.99px) and (max-width: 1299.98px) {
+      width: 70px;
+      height: 32px;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+    }
     : hover {
       outline: none;
     }
@@ -453,6 +485,14 @@ const CategoryBox = styled.div`
         font-size: 10px;
       }
     }
+  @media (min-width: 767.99px) and (max-width: 1299.98px) {
+    width: calc(10%);
+    height: 32px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+  }
 `
 const SelectRow = styled.div`
   width: 100%;
@@ -461,8 +501,11 @@ const SelectRow = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-bottom: 0px;
     }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    }
+  @media (min-width: 767.99px) and (max-width: 1299.98px) {
+    padding-left: 0px;
+    display: inline-flex;
+    justify-content: space-between;
+  }
 `
 const MobileList = styled(SelectRow)`
   display: block;
@@ -483,6 +526,9 @@ const MobileList = styled(SelectRow)`
     > div > div > div > div {
       display: flex !important;
       justify-content: center;
+    }
+    @media (min-width: 767.99px) and (max-width: 1299.98px) {
+      height: 36px;
     }
   }
 `

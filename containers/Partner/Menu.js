@@ -65,7 +65,7 @@ class MenuConatiner extends React.Component {
     return (
       <>
         {
-          width < 768 ? (
+          width < 1299.98 ? (
               <MobileMenuBox style={{display: "none"}}>
                 <MobileMenuHeader>
                   {/*<MobileMenuTab active={tab === 1} onClick={() => this.setTab(1)}>

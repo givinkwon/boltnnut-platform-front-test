@@ -32,7 +32,7 @@ class PartnerConatiner extends React.Component {
     const { width } = this.state
     return (
       <>
-      { width > 768 ? (
+      { width > 767.99 ? (
       <>
         <SearchBannerContainer/>
         <CustomContainer>
@@ -76,7 +76,7 @@ const Container = styled.div`
     padding: 0 20px;
   }
 
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.99px) and (max-width: 991.98px) {
     width: 720px;
   }
 

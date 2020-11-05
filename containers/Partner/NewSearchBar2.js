@@ -195,7 +195,7 @@ class SearchBarContainer2 extends React.Component {
 
   return (
   <>
-  { width > 768 ? (
+  { width > 767.98 ? (
     <>
       <BarWrapper>
             <CustomSlider
@@ -276,7 +276,7 @@ class SearchBarContainer2 extends React.Component {
   }
   return (
     <>
-    { width > 768 ? (
+    { width > 767.98 ? (
         <>
           <BarWrapper>
             <CustomSlider
@@ -459,78 +459,7 @@ class SearchBarContainer2 extends React.Component {
         console.log(e);
         console.log(e.response);
       })
-
   };
-  /*CategoryCircle = () => {
-    const { category_list, category_idx } = this.state;
-    //console.log(category_list.indexOf("디자인"))
-    //console.log(category_list.splice(0, 1))
-    const handleChange = async (e) => {
-      if (category_list[category_idx.indexOf(e.target.innerText)][1] == "inactive") {
-        const temp_list = category_list;
-        const temp_idx = category_idx;
-        const idx = temp_idx.indexOf(e.target.innerText);
-        delete temp_idx[idx]
-        delete temp_list[idx]
-        const f = [e.target.innerText]
-        const f_list = [[e.target.innerText, 'active']]
-
-        for (var item in temp_idx) {
-          f.push(temp_idx[item])
-        }
-        for (var item in temp_list) {
-          f_list.push(temp_list[item])
-        }
-        this.setState({...this.state, category_idx: f, category_list: f_list})
-      } else {
-        const temp_list = category_list;
-        const temp_idx = category_idx;
-        const idx = temp_idx.indexOf(e.target.innerText);
-        delete temp_idx[idx]
-        delete temp_list[idx]
-        const f = []
-        const f_list = []
-
-        for (var item in temp_idx) {
-          f.push(temp_idx[item])
-        }
-        f.push(e.target.innerText)
-        for (var item in temp_list) {
-          f_list.push(temp_list[item])
-        }
-        f_list.push([e.target.innerText, 'inactive'])
-        this.setState({...this.state, category_idx: f, category_list: f_list})
-      }
-    }
-    var settings = {
-      dots: false,
-      infinite: false,
-      arrows: false,
-      slidesToShow: 4,
-      slidesToScroll: 1,
-      initialSlide: 0,
-      draggable: false,
-      beforeChange: (current) => {
-        this.setState({current: current})
-      },
-    }
-    return (
-    <MobileSlider {...settings}>
-      {
-      category_list.map((item, idx) => {
-        return (
-        <CategoryBox onClick = {handleChange}>
-          <div class={item[1]}>
-            <span> {item[0]} </span>
-          </div>
-        </CategoryBox>
-        )
-      })
-      }
-    </MobileSlider>
-  )
-  } */
-
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request } = this.props;
@@ -546,7 +475,7 @@ class SearchBarContainer2 extends React.Component {
     return (
       <CustomContainer>
       <>
-      { width > 768 ? (
+      { width > 767.98 ? (
         <>
         <SelectRow>
           <Title>
@@ -574,7 +503,7 @@ class SearchBarContainer2 extends React.Component {
 
         <SelectRow>
           <Title>
-            기간
+            개발기간
           </Title>
           <this.RangeSlider2/>
         </SelectRow>
@@ -821,7 +750,7 @@ const CustomContainer = styled(Container)`
         width: 100%;
         padding-bottom: 35px;
     }
-    @media (min-width: 768px) and (max-width: 991.98px) {
+    @media (min-width: 767.99px) and (max-width: 991.98px) {
     }
 `
 const SelectRow = styled.div`
@@ -839,7 +768,7 @@ const SelectRow = styled.div`
     }
 
     }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.99px) and (max-width: 991.98px) {
     }
 `
 const Title = styled.div`
@@ -872,6 +801,10 @@ const Title = styled.div`
       display: flex;
       align-items: center;
     }
+  @media (min-width: 767.99px) and (max-width: 1299.98px) {
+    font-size: 16px;
+    white-space: nowrap;
+  }
 `
 const Select = styled(SelectComponent)`
   width: 400px;
@@ -1012,7 +945,7 @@ const ButtonBox = styled.div`
     @media (min-width: 0px) and (max-width: 767.98px) {
         width : 40%
     }
-    @media (min-width: 768px) and (max-width: 991.98px) {
+    @media (min-width: 767px) and (max-width: 991.98px) {
   	    width : 30%
     }
   }
@@ -1174,6 +1107,12 @@ const DropButton = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: #fffdf8;
+  }
+  @media (min-width: 767.99px) and (max-width: 1299.98px) {
+    height: 41px;
+    > span {
+      font-size: 14px;
+    }
   }
 `
 const MobileSelectBox = styled.div`

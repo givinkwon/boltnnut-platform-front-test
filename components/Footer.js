@@ -39,7 +39,7 @@ class FooterComponent extends React.Component {
     const { width } = this.state;
     return (
     <>
-    { width > 450 ? (
+    { width > 768 ? (
       <>
       <Footer>
         <Container style={{marginBottom: 0}}>
@@ -163,7 +163,7 @@ class FooterComponent extends React.Component {
       ) : (
          <MobileFooter>
            <CompanyInfoContainer>
-             <div style={{flexDirection: "row", display: "inline-flex"}}>
+             <div style={{flexDirection: "row", display: "block", position: "relative"}}>
              <CompanyInfo>
                <span> (주) 볼트앤너트 </span>
                <span> 대표자 윤기열, 신지섭</span>
@@ -361,6 +361,7 @@ const CompanyInfo = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 154px;
     height: 76px;
+    position: absolute;
     flex-direction: column;
     align-items: flex-start;
     > span {
@@ -402,6 +403,8 @@ const CompanyInfo2 = styled.div`
     flex-direction: column;
     align-items: flex-start;
     padding-left: 54px;
+    position: relative;
+    float: right;
     > span {
       font-size: 10px;
       color: white;
