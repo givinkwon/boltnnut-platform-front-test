@@ -30,18 +30,17 @@ class ContentConatiner extends React.Component {
     count: 0,
     width: 0,
     category_list: [
-      ['디자인','inactive'],
-      ['금형/사출','inactive'],
-      ['금속가공','inactive'],
-      ['기구설계','inactive'],
-      ['회로설계','inactive'],
-      ['실리콘','inactive'],
-      ['3D 프린터','inactive'],
-      ['기계설계','inactive'],
-      ['진공성형','inactive'],
-      ['나무가공','inactive'],
+      ['디자인','inactive', 1],
+      ['금형/사출','inactive', 14],
+      ['금속가공','inactive', 12],
+      ['기구설계','inactive', 6],
+      ['회로설계','inactive', 2],
+      ['실리콘','inactive', 10],
+      ['3D 프린터','inactive', 9],
+      ['기계설계','inactive', 7],
+      ['진공성형','inactive', 11],
       ],
-    category_idx: ['디자인', '금형/사출', '금속가공', '기구설계', '회로설계', '실리콘', '3D 프린터', '기계설계', '진공성형', '나무가공']
+    category_idx: ['디자인', '금형/사출', '금속가공', '기구설계', '회로설계', '실리콘', '3D 프린터', '기계설계', '진공성형']
   }
   handleIntersection = (event) => {
     if(event.isIntersecting) {
@@ -126,6 +125,7 @@ class ContentConatiner extends React.Component {
     console.log("n")
   }
   CategoryCircle = () => {
+    const { Partner } = this.props;
     const { category_list, category_idx } = this.state;
     //console.log(category_list.indexOf("디자인"))
     //console.log(category_list.splice(0, 1))
@@ -134,6 +134,9 @@ class ContentConatiner extends React.Component {
         const temp_list = category_list;
         const temp_idx = category_idx;
         const idx = temp_idx.indexOf(e.target.innerText);
+
+        Partner.setList(temp_list[idx][2], 'develop');
+
         delete temp_idx[idx]
         delete temp_list[idx]
         const f = [e.target.innerText]
@@ -150,6 +153,9 @@ class ContentConatiner extends React.Component {
         const temp_list = category_list;
         const temp_idx = category_idx;
         const idx = temp_idx.indexOf(e.target.innerText);
+
+        Partner.setList(temp_list[idx][2], 'develop');
+
         delete temp_idx[idx]
         delete temp_list[idx]
         const f = []
