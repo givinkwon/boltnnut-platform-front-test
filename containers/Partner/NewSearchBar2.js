@@ -478,7 +478,7 @@ class SearchBarContainer2 extends React.Component {
       { width > 767.98 ? (
         <>
         <SelectRow>
-          <Title>
+          <Title style={{marginRight: 12}}>
             제품분야
           </Title>
           <Select
