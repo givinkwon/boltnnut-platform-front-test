@@ -8,6 +8,8 @@ import Observer from "@researchgate/react-intersection-observer";
 import * as Text from "components/Text"
 import RatioImage from "components/RatioImage"
 
+import Slider from "react-slick";
+
 import ProfileInfoContainer from "ProfileInfo"
 
 import {DARKGRAY, GRAY, PRIMARY} from "static/style"
@@ -69,6 +71,16 @@ class CardContainer extends Component {
     const { showDrop, showDetail, width } = this.state;
     console.log(item)
 
+    var settings = {
+      dots: false,
+      infinite: false,
+      arrows: true,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      initialSlide: 0,
+      draggable: false,
+    }
+
     const options = {
       onChange: handleIntersection,
     };
@@ -125,46 +137,51 @@ class CardContainer extends Component {
         { width > 767.99 ? (
       <>
         <DetailContainer style={{display: showDetail}}>
-          <Detail1>
-            <div class="detailInner">
-              <div class="fuck">
-                <img src={jot5} />
-                <div class="text"> 전문분야 <br/> {item.category[0].category} <br/> ...</div>
-              </div>
-            </div>
-            <div class="detailInner">
-              <div class="fuck">
-                <img src={jot3} />
-                <div class="text"> 경력 <br/>15년 <br/> <br/> </div>
-              </div>
-            </div>
-            <div class="detailInner">
-              <div class="fuck">
+          <PortfolioContainer>
+            <Slider {...settings}>
+              <PortfolioImage>
                 <img src={jot1} />
-                <div class="text"> 보유기기 <br/> {item.id} <br/> <br/> </div>
+              </PortfolioImage>
+              <PortfolioImage>
+                <img src={jot1} />
+              </PortfolioImage>
+              <PortfolioImage>
+                <img src={jot1} />
+              </PortfolioImage>
+            </Slider>
+          </PortfolioContainer>
+          <Detail1>
+            <MobileDetail1 >
+              <div class="title">
+                전문분야
               </div>
-            </div>
-            <div class="detailInner">
-              <div class="fuck">
-                <img src={jot4} />
-                <div class="text"> 주재료 <br/> {item.id} <br/> <br/> </div>
+              <div class="info" style={{borderLeft: "0.5px solid #d5d5d5", borderRight: "0.5px solid #d5d5d5"}}>
+                경력
               </div>
-            </div>
-            <div class="detailInner">
-              <div class="fuck">
-                <img src={jot2} />
-                <div class="text"> 진행한 제품군 <br/> {item.product_history[0] && item.product_history[0].subclass} <br/> ... </div>
+              <div class="info" style={{borderRight: "0.5px solid #d5d5d5"}}>
+                지역
               </div>
+            </MobileDetail1>
+            <MobileDetail1>
+              <div class="title">
+                주요실적
+              </div>
+              <div class="info" style={{textAlign: 'left'}}>
+                삼선 전자 에어컨 프로젝트 개발 용역 수행
+              </div>
+            </MobileDetail1>
+            <MobileDetail1>
+              <div class="title">
+                진행한 제품군
+              </div>
+              <div class="info" style={{textAlign: 'left'}}>
+                삼선 전자 에어컨 프로젝트 개발 용역 수행
+              </div>
+            </MobileDetail1>
+            <div class="dropup">
+              <img src={sival} onClick = {this.detailUp}/>
             </div>
           </Detail1>
-          <PortfolioContainer>
-              <img src={jot1} />
-              <img src={jot2} />
-              <img src={jot3} />
-          </PortfolioContainer>
-          <div class="dropup">
-            <img src={sival} onClick = {this.detailUp}/>
-          </div>
         </DetailContainer>
       </>
       ) : (
@@ -225,8 +242,13 @@ const SummaryContainer = styled.div`
       padding-top: 16px;
       align-items: center;
   }
+  @media (min-width: 767.99px) and (max-width: 1299.98px) {
+      width: 100%;
+  }
+
 `
 const DetailContainer = styled.div`
+  width: 100%;
   /* transition: ; */
   @media (min-width: 0px) and (max-width: 767.99px) {
       width: 100%;
@@ -261,12 +283,16 @@ const DetailContainer = styled.div`
   }
 `
 const Detail1 = styled.div`
-  width: 894px;
+  width: calc(96.4%);
   height: 175px;
   object-fit: contain;
   background-color: #f1f3f4;
   display: table;
   margin-top: 25px;
+  padding-left: calc(3.7%);
+  > img {
+    width: calc(34.5%);
+  }
   .detailInner {
     display: table-cell;
     justify-content: center;
@@ -296,7 +322,7 @@ const Detail1 = styled.div`
   }
   @media (min-width: 0px) and (max-width: 767.99px) {
     margin-top: 0px;
-    width: 90.5%;
+    width: 90%;
     padding-left: calc(5%);
     padding-right: calc(5%);
     border-radius: 6px;
@@ -313,35 +339,31 @@ const Detail1 = styled.div`
       }
     }
   }
+  @media (min-width: 768.98px) and (max-width: 1299.98px) {
+    width: calc(96.4%);
+  }
 `
 const PortfolioContainer = styled.div`
   width: 894px;
-  height: 283px;
+  height: 238px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  > img {
-    :nth-of-type(1) {
-        width: 256px;
-        height: 238px;
-        border-radius: 3px;
-        background-color: #dcdcdc;
-      }
-    :nth-of-type(2) {
-        width: 295px;
-        height: 238px;
-        border-radius: 3px;
-        background-color: #dcdcdc;
-        margin-left: 15px;
-        margin-right: 15px;
-    }
-    :nth-of-type(3) {
-        width: 256px;
-        height: 238px;
-        border-radius: 3px;
-        background-color: #dcdcdc;
-      }
+  .slick-slider {
+    width: calc(90%);
   }
+  @media (min-width: 768.98px) and (max-width: 1299.98px) {
+    width: 98%;
+    padding-left: calc(2%);
+  }
+`
+const PortfolioImage = styled.div`
+    width: 100%;
+    height: 236px;
+    > img {
+      width: calc(95%);
+      height: 100%;
+    }
 `
 const Card = styled.div`
   width: 894px;
@@ -391,6 +413,9 @@ const Card = styled.div`
         padding-right: 10px;
       }
     }
+  }
+  @media (min-width: 768.98px) and (max-width: 1299.98px) {
+    width: 720px !important;
   }
 `
 const TextBox = styled.div`
@@ -512,7 +537,7 @@ const Image = styled(RatioImage)`
     }
 `
 const MobileDetail1 = styled.div`
-  width: 100%;
+  width: 99%;
   height: 30px;
   padding-top: 10px;
   display: inline-flex;
