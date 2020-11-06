@@ -586,10 +586,10 @@ class SearchBarContainer2 extends React.Component {
            <Title> 제품분야 </Title>
            <MobileSelectBox>
            <Select
-              style={{marginRight: 0}}
               styles={MobilecustomStyles} options={Partner.category_list} value={Partner.select_big}
               getOptionLabel={(option) => option.maincategory} placeholder='대 카테고리' onChange={Partner.setBigCategory}/>
            <Select
+              style={{marginRight: 0}}
               styles={MobilecustomStyles} options={Partner.request_middle_list} value={Partner.select_mid}
               getOptionLabel={(option) => option.category} placeholder='중 카테고리' onChange={Partner.setMidCategory}/>
            </MobileSelectBox>
@@ -1121,8 +1121,13 @@ const MobileSelectBox = styled.div`
   display: inline-flex;
   width: 100%;
   margin-left: 12px;
-  padding-right: calc(6%);
+  padding-right: calc(8%);
   justify-content: center;
+  > div {
+    :nth-of-type(2) {
+      margin-right: 0px;
+    }
+  }
 `
 const MobileButton1 = styled.div`
   width: 94px;
