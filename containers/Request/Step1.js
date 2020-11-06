@@ -47,7 +47,6 @@ class Step1Conatiner extends React.Component {
       Request.setStep(1)
     }
     console.log(Request.type)
-
   }
    render(){
     const { Request } = this.props

@@ -12,6 +12,10 @@ class BannerConatiner extends React.Component {
       <Banner>
         <Container>
           <Text.FontSize40 color={'#0a2165'} fontWeight={700}>의뢰하기</Text.FontSize40>
+          {
+            this.props.step2 &&
+            <span> 제조사 찾기 서비스 </span>
+          }
         </Container>
       </Banner>
     )
@@ -47,6 +51,18 @@ const Banner = styled.div`
       margin-top: 8px;
       line-height: 1.42;
       letter-spacing: -0.6px;
+    }
+    > span {
+        height: 36px;
+        object-fit: contain;
+        font-size: 24px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.42;
+        letter-spacing: -0.6px;
+        text-align: center;
+        color: #0933b3;
     }
   }
   /* @media (min-width: 0px) and (max-width: 767.98px) {

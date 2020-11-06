@@ -463,13 +463,6 @@ class SearchBarContainer2 extends React.Component {
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request } = this.props;
-    if (typeof window !== "undefined") {
-      console.log(window.innerHeight)
-      console.log(document.documentElement.offsetHeight)
-      console.log(document.documentElement.scrollHeight)
-      console.log(document.documentElement.scrollTop)
-      console.log(document.documentElement.scrollHeight)
-    }
     {/*console.log(Partner.select_big)
     console.log(Partner.request_middle_list)*/}
     return (
@@ -478,7 +471,7 @@ class SearchBarContainer2 extends React.Component {
       { width > 767.98 ? (
         <>
         <SelectRow>
-          <Title style={{marginRight: 12}}>
+          <Title>
             제품분야
           </Title>
           <Select
@@ -547,7 +540,7 @@ class SearchBarContainer2 extends React.Component {
 
         <SelectRow>
           <Title>
-            도면
+            제품도면
           </Title>
           <FileBox
             onClick = {()=>this.portfolio.current.click()}>
@@ -666,7 +659,7 @@ class SearchBarContainer2 extends React.Component {
              </MobileButton1>*/}
              <div>
                <MobileButton2
-                 onClick = {this.showDetail}
+                 onClick = {this.submit}
                  style={{margin: 'auto'}}
                >
                  <span> 무료 가견적 넣기 </span>
@@ -773,7 +766,7 @@ const SelectRow = styled.div`
     }
 `
 const Title = styled.div`
-  width: 100px;
+  white-space: nowrap;
   height: 38px;
   margin-right: 34px;
   object-fit: contain;
@@ -887,8 +880,9 @@ const FileBox = styled.div`
     outline: none;
   }
   > span {
-    width: 100%;
+    width: 80%;
     height: 100%;
+    position: absolute;
     white-space: nowrap;
     object-fit: contain;
     font-size: 20px;

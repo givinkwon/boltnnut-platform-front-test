@@ -4,6 +4,7 @@ import InfoContainer from "./Detail/Info";
 import BannerContainer from './Banner'
 import Step1Container from "./Step1";
 import Step2Conatiner from "./Step2";
+import SearchBarContainer2 from "Partner/NewSearchBar2";
 
 
 import Router from 'next/router';
@@ -21,9 +22,9 @@ class RequestConatiner extends React.Component {
 
   return (
       <>
-        <BannerContainer/>
+        <BannerContainer step2={true}/>
         {Request.step === 0 && <Step1Container/>}
-        {Request.step === 1 && <Step2Conatiner/>}
+        {Request.step === 1 && <SearchBarContainer2/>}
         {/* <SearchBarContainer/>
         <br/><br/><br/><br/>
         <CounterContainer />
