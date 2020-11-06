@@ -55,7 +55,7 @@ class FormConatiner extends React.Component {
                 {
                   Auth.loading
                   ? <ButtonSpinnerComponent scale='50%' primary/>
-                  : <Text.FontSize24 color={WHITE} fontWeight={500}>비밀번호 재설정하기</Text.FontSize24>
+                  : <Text.FontSize24 color={WHITE} fontWeight={500}>아이디 찾기</Text.FontSize24>
                 }
               </ButtonComponent>
             </ButtonBox>

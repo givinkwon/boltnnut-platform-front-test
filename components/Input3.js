@@ -131,7 +131,7 @@ const Input = styled.input`
       font-size: 18px;
     }
     @media (min-width: 1300px) { 
-      font-size: 18px;
+      font-size: 20px;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -145,6 +145,6 @@ const Input = styled.input`
     font-size: 18px;
   }
   @media (min-width: 1300px) { 
-    font-size: 18px;
+    font-size: 20px;
   }
 `

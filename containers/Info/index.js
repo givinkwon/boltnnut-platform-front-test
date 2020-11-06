@@ -6,12 +6,9 @@ import TabContainer from "./Tab";
 
 
 import ManufacturerContainer from "./Manufacturer";
-import RNDContainer from "./RND";
 import SearchContainer from "./Search";
-import DistributionContainer from "./Distribution";
+import ProductContainer from "./product";
 
-import PartnerContainer from "./Partner";
-import ExpertContainer from "./Expert";
 
 @inject('Request')
 @observer
@@ -45,8 +42,8 @@ class AnswerConatiner extends React.Component {
         <BannerContainer/>
         <TabContainer setTab={this.setTab} />
         {Request.tab == 0 && <ManufacturerContainer/>}
-        {Request.tab == 1 && <DistributionContainer/>}
-        {Request.tab == 2 && <RNDContainer/>}
+        {(Request.tab == 1 ||Request.tab == 2) && <ProductContainer/>}
+
         {Request.tab == 3 && <SearchContainer/>}
 
       </>

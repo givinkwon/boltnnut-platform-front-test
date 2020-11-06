@@ -629,10 +629,12 @@ const TextArea = styled.textarea`
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 16px;
     height: 48px;
+    padding: 10px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     font-size: 18px;
     height: 54px;
+    padding: 13px;
   }
   @media (min-width: 1300px) {
     font-size: 20px;

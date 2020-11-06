@@ -24,11 +24,49 @@ const image12 = "/static/icon/info/logo_12.png";
 const image13 = "/static/icon/info/logo_13.png";
 const image14 = "/static/icon/info/logo_14.png";
 const image15 = "/static/icon/info/logo_15.png";
+const right = "/static/images/main/main_right.png";
+const left = "/static/images/main/main_left.png";
 
 class Section2Container extends React.Component {
+  state = {
+    width: 0,
+    next: true,
+
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   render() {
+    const { width } = this.state
+    const { next} = this.state
+
+     var settings = {
+      dots: false,
+      infinite: true,
+      slidesToShow: 2,
+      slidesToScroll: 2,
+      initialSlide: 0,
+      draggable: false,
+      arrows: true,
+      centerPadding: "38px",
+      nextArrow: <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={right}/>,
+      prevArrow: <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={left}/>,
+      beforeChange: (current) => {
+        this.setState({current: current})
+      },
+    }
     return (
         <CustomContainer>
+          { width > 767.98 ? (
+            <>
             <Container>
               <Header>볼트앤너트 제조 파트너</Header>
               <Category>
@@ -79,6 +117,64 @@ class Section2Container extends React.Component {
                 </Item>
               </Category>
             </Container>
+            </>
+          ) : (
+            <>
+            <Container>
+              <Header>볼트앤너트 제조 파트너</Header>
+                <List>
+                  <Slider {...settings}>
+                    <Item>
+                      <Image src={image1} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image2} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image3} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image4} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image5} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image10} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image7} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image8} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image9} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image6} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image11} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image12} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image13} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image14} active={true}/>
+                    </Item>
+                    <Item>
+                      <Image src={image15} active={true}/>
+                    </Item>
+                  </Slider>
+                </List>
+              </Container>
+            </>
+          )}
+            
         </CustomContainer>
     );
   }
@@ -110,13 +206,37 @@ const Category = styled(Container)`
 const Image = styled(RatioImage)`
   cursor: pointer;
   margin-bottom: 20px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width : 127px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+
+  }
+  @media (min-width: 1300px) {
+
+  }
+
   /* border: 2px solid #ddd;
   border-radius: 200px !important;  
   ${props => props.active && css`
     border: 2px solid ${PRIMARY};
   `} */
-`
 
+`
+const Icon = styled.img`
+  cursor: pointer;
+  width: 13x;
+  height: 24px;
+  z-index : 100;
+  
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 30px;
+    height: 30px;
+  }
+`
 const Header = styled.div`
   object-fit: contain;
   font-size: 32px;
@@ -151,9 +271,7 @@ const Header = styled.div`
 `
 
 const Item = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
 
   width: calc(20% - 40px);
   padding: 20px 0;
@@ -163,10 +281,6 @@ const Item = styled.div`
     width: calc(50% - 30px);
     margin: 0;
     padding: 15px;
-
-    > p {
-      font-size: 14px;
-    }
   }
   @media (min-width: 500px) and (max-width: 991.98px) {
     margin: 0;
@@ -174,6 +288,9 @@ const Item = styled.div`
     padding: 15px;
   }
   @media (min-width: 992px) and (max-width: 1199.98px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 0;
     width: calc(25% - 30px);
     padding: 15px;
@@ -204,4 +321,31 @@ const CustomContainer = styled.div`
     width: 100%;
   }
 `
-
+const List = styled.div`
+  @media (min-width: 0px) and (max-width: 359.98px) {
+    padding-top: 16px;
+    padding-bottom : 40px;
+    .slick-list {
+      /* width: 100%; */
+    }
+    .slick-track {
+      width : max-content !important;
+    }
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    padding-top: 16px;
+    padding-bottom : 40px;
+    .slick-list {
+      /* width: 100%; */
+    }
+    .slick-track {
+      width : max-content !important;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
+`

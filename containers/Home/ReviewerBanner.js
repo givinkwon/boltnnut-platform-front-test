@@ -49,7 +49,7 @@ class ReviewBanner extends React.Component {
       beforeChange: (current) => {
         this.setState({current: current})
       },
-      }
+    }
     return (
         <CustomContainer>
             <Container>
@@ -542,30 +542,30 @@ const List = styled.div`
   @media (min-width: 0px) and (max-width: 359.98px) {
     margin-top: 16px;
     .slick-list {
-    width: 100%;
-    > div > div {
-      width: 270px !important;
-      margin-right: 16px;
+      width: 100%;
+      > div > div {
+        width: 270px !important;
+        margin-right: 16px;
+      }
+      > div > div > div > div  {
+        align-items: center;
+        width: 270px !important;
+      }
     }
-    > div > div > div > div  {
-      align-items: center;
-      width: 270px !important;
-    }
-  }
   }
   @media (min-width: 360px) and (max-width: 767.98px) {
     margin-top: 16px;
     .slick-list {
-    width: 100%;
-    > div > div {
-      width: 22% !important;
-      margin-right: 16px;
+      width: 100%;
+      > div > div {
+        width: 22% !important;
+        margin-right: 16px;
+      }
+      > div > div > div > div  {
+        align-items: center;
+        width: 270px !important;
+      }
     }
-    > div > div > div > div  {
-      align-items: center;
-      width: 270px !important;
-    }
-  }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
   }

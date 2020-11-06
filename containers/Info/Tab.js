@@ -98,16 +98,13 @@ class TabConatiner extends React.Component {
         <TabsContainer>
           <Tabs asNavFor={this.state.nav1}
             ref={slider => (this.slider2 = slider)}
-            slidesToShow={4}
+            slidesToShow={3}
             focusOnSelect={true}>
             <Tab class="Header" active={Request.tab == 0} onClick={async() => await Request.setTab(0)}>
               <Text.FontSize32 fontWeight={500}>가견적 서비스</Text.FontSize32>
             </Tab>
             <Tab class="Header" active={Request.tab == 1} onClick={async() => await Request.setTab(1)}>
-              <Text.FontSize32 fontWeight={500}>유통 제조 패키지</Text.FontSize32>
-            </Tab>
-            <Tab class="Header" active={Request.tab == 2} onClick={async() => await Request.setTab(2)}>
-              <Text.FontSize32 fontWeight={500}>R&D 제조 패키지</Text.FontSize32>
+              <Text.FontSize32 fontWeight={500}>유통&개발 제조 패키지</Text.FontSize32>
             </Tab>
             <Tab class="Header" active={Request.tab == 3} onClick={async() => await Request.setTab(3)}>
               <Text.FontSize32 fontWeight={500}>제품 수배 패키지</Text.FontSize32>
@@ -134,20 +131,10 @@ class TabConatiner extends React.Component {
             <Tab>
               <Container>
                 <SmallBanner>
-                  <Text.FontSize32>유통 제조 패키지</Text.FontSize32>
+                  <Text.FontSize32>제조 패키지</Text.FontSize32>
                 </SmallBanner>
                 <Content>
-                  <Text.FontSize26>개발시간, 개발비용, MOQ, 생산단가, 생산시간 등<br/><span>제품에 필요한 모든 요소를 고려하여 제품 개발과 생산의 A-Z까지 설계해드립니다.</span><br/>볼트앤너트의 프로젝트 매니저가 귀사의 개발팀장이 되어 개발/생산과정을 제시해드립니다</Text.FontSize26>
-                </Content>
-              </Container>
-            </Tab>
-            <Tab>
-              <Container>
-                <SmallBanner>
-                  <Text.FontSize32>R&D 제조 패키지</Text.FontSize32>
-                </SmallBanner>
-                <Content>
-                  <Text.FontSize26>제품의 최적화를 위해 기능 명세를 기반으로<br/>개발부터 생산까지 턴키 서비스를 통해 제조 프로세스를 설계해드립니다<br/>R&D 요소 최적화, 양산 사이클 관리, 기간 조정을 통한 양산 Follow-up 시스템으로<br/><span>비용 최대 40% 절감해보세요</span></Text.FontSize26>
+                  <Text.FontSize26>빅데이터를 기반한 제품분석시스템으로 제품 생산에<br/><span>불필요한 과정을 방지하여 양산 비용을 최대 40% 절감</span>합니다.</Text.FontSize26>
                 </Content>
               </Container>
             </Tab>
@@ -194,7 +181,6 @@ const TabsContainer = styled.div`
       margin : auto; 
     }
   }
-  height : 650px ;
   outline : none ;
   *:focus {outline:none;}
   @media (min-width: 0px) and (max-width: 767.98px) {

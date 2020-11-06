@@ -89,8 +89,10 @@ const Banner = styled.div`
       margin-top:24px;
     }
     @media (min-width: 768px) and (max-width: 991.98px) {
+      margin-top:140px;
     }
     @media (min-width: 992px) and (max-width: 1299.98px) { 
+      margin-top:170px;
     }
     @media (min-width: 1300px) { 
       margin-top:200px;

@@ -130,7 +130,6 @@ const NextButton = styled(ButtonComponent)`
     margin-top : 70px;
     margin-bottom : 67px;
 
-
     > .nextButtonText {
       font-size: 16px;
       font-weight: bold;
@@ -145,11 +144,15 @@ const NextButton = styled(ButtonComponent)`
     width: 117px;
     height: 52px;
     border-radius: 3px;
+    margin-top : 50px;
+
   }
   @media (min-width: 992px) and (max-width: 1299.98px) { 
     width: 117px;
     height: 52px;
     border-radius: 3px;
+    margin-top : 50px;
+
   }
   @media (min-width: 1300px) {
     width: 117px;
@@ -193,9 +196,21 @@ const ButtonBox = styled.div`
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 40px;
+    div:nth-of-type(1) {
+      margin-right: 8px;
+    }
+    div:nth-of-type(2) {
+      margin-left: 8px;
+    } 
   }
   @media (min-width: 992px) and (max-width: 1299.98px) { 
     margin-top: 50px;
+    div:nth-of-type(1) {
+      margin-right: 10px;
+    }
+    div:nth-of-type(2) {
+      margin-left: 10px;
+    } 
   }
   @media (min-width: 1300px) {
     margin-top: 60px;
