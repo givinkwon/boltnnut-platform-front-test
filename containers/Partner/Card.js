@@ -22,6 +22,67 @@ const jot3 = 'static/images/partner/jot3.png';
 const jot4 = 'static/images/partner/jot4.png';
 const jot5 = 'static/images/partner/jot5.png';
 const sival = 'static/images/partner/arrow_up.png';
+const next = 'static/images/partner/next.png';
+const prev = 'static/images/partner/prev.png';
+
+const NextArrow = (props) => {
+  const { onClick } = props;
+  const ArrowCircle = styled.div`
+    width: 46px;
+    height: 46px;
+    opacity: 0.7;
+    background-color: #505050;
+    border-radius: 30px;
+    cursor: pointer;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 19px;
+      height: 19px;
+      > div > img {
+        width: 6px;
+        height: 11px;
+      }
+    }
+  `
+  return (
+    <div>
+      <ArrowCircle>
+        <div
+          style={{display: 'inline-flex', width: '100%', height: '100%', justifyContent:'center', alignItems: 'center'}}>
+          <img src={next} onClick = {onClick}/>
+        </div>
+      </ArrowCircle>
+    </div>
+  )
+}
+const PrevArrow = (props) => {
+  const { onClick } = props;
+  const ArrowCircle = styled.div`
+    width: 46px;
+    height: 46px;
+    opacity: 0.7;
+    background-color: #505050;
+    border-radius: 30px;
+    cursor: pointer;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 19px;
+      height: 19px;
+      > div > img {
+        width: 6px;
+        height: 11px;
+      }
+    }
+  `
+  return (
+    <div>
+      <ArrowCircle>
+        <div
+          style={{display: 'inline-flex', width: '100%', height: '100%', justifyContent:'center', alignItems: 'center'}}>
+          <img src={prev} onClick={onClick}/>
+        </div>
+      </ArrowCircle>
+    </div>
+  )
+}
 
 @inject('Partner')
 @observer
@@ -67,7 +128,7 @@ class CardContainer extends Component {
   };
 
   render() {
-    const { item, observer, handleIntersection } = this.props;
+    const { item, observer, handleIntersection, Partner } = this.props;
     const { showDrop, showDetail, width } = this.state;
     console.log(item)
 
@@ -79,6 +140,8 @@ class CardContainer extends Component {
       slidesToScroll: 1,
       initialSlide: 0,
       draggable: false,
+      nextArrow: <NextArrow/>,
+      prevArrow: <PrevArrow/>,
     }
 
     const options = {
@@ -130,25 +193,79 @@ class CardContainer extends Component {
             </div>
           </TextBox>
         </SummaryContainer>
-        <div class="dropdown" style={{display: showDrop}}>
-            <img src={dropdown} onClick = {this.detailDown}/>
+        <div class="dropdown">
+          { showDrop == true ? (
+              <img src={dropdown} onClick = {this.detailDown}/>
+              ) : (
+              <img src={sival} onClick = {this.detailUp} />
+              )
+          }
         </div>
-        <>
+      <>
         { width > 767.99 ? (
       <>
         <DetailContainer style={{display: showDetail}}>
           <PortfolioContainer>
-            <Slider {...settings}>
-              <PortfolioImage>
-                <img src={jot1} />
-              </PortfolioImage>
-              <PortfolioImage>
-                <img src={jot1} />
-              </PortfolioImage>
-              <PortfolioImage>
-                <img src={jot1} />
-              </PortfolioImage>
+            <Slider {...settings} ref={slider => (this.slider = slider)}>
+              {
+                item.portfolio_set.length > 0 && item.portfolio_set.map((item2,idx) => {
+                  return (
+                    <PortfolioImage>
+                      <img src={item2.img_portfolio}/>
+                    </PortfolioImage>
+                  )
+                })
+              }
             </Slider>
+          </PortfolioContainer>
+          <Detail1>
+            <MobileDetail1>
+              <div class="title">
+                전문분야
+              </div>
+              <div class="info" style={{borderLeft: "0.5px solid #d5d5d5", borderRight: "0.5px solid #d5d5d5"}}>
+                경력 <br/><br/>
+                {item.career}
+              </div>
+              <div class="info" style={{borderRight: "0.5px solid #d5d5d5", marginLeft: 0}}>
+                지역 <br/><br/>
+                {Partner.getCityNameById(item.city)}
+              </div>
+            </MobileDetail1>
+            <MobileDetail1>
+              <div class="title">
+                주요실적
+              </div>
+              <div class="info" style={{textAlign: 'left'}}>
+                {item.deal}
+              </div>
+            </MobileDetail1>
+            <MobileDetail1>
+              <div class="title">
+                진행한 제품군
+              </div>
+              <div class="info" style={{textAlign: 'left'}}>
+                {item.info_biz}
+              </div>
+            </MobileDetail1>
+          </Detail1>
+        </DetailContainer>
+      </>
+      ) : (
+      <>
+        <DetailContainer style={{display: showDetail}}>
+          <PortfolioContainer>
+              <Slider {...settings} ref={slider => (this.slider = slider)}>
+              {
+                item.portfolio_set.length > 0 && item.portfolio_set.map((item2,idx) => {
+                  return (
+                    <PortfolioImage>
+                      <img src={item2.img_portfolio}/>
+                    </PortfolioImage>
+                  )
+                })
+              }
+              </Slider>
           </PortfolioContainer>
           <Detail1>
             <MobileDetail1 >
@@ -156,10 +273,12 @@ class CardContainer extends Component {
                 전문분야
               </div>
               <div class="info" style={{borderLeft: "0.5px solid #d5d5d5", borderRight: "0.5px solid #d5d5d5"}}>
-                경력
+                설립연도 <br/> <br/>
+                {item.career}
               </div>
               <div class="info" style={{borderRight: "0.5px solid #d5d5d5"}}>
-                지역
+                지역 <br/> <br/>
+                {Partner.getCityNameById(item.city)}
               </div>
             </MobileDetail1>
             <MobileDetail1>
@@ -167,7 +286,7 @@ class CardContainer extends Component {
                 주요실적
               </div>
               <div class="info" style={{textAlign: 'left'}}>
-                삼선 전자 에어컨 프로젝트 개발 용역 수행
+                {item.deal}
               </div>
             </MobileDetail1>
             <MobileDetail1>
@@ -175,53 +294,13 @@ class CardContainer extends Component {
                 진행한 제품군
               </div>
               <div class="info" style={{textAlign: 'left'}}>
-                삼선 전자 에어컨 프로젝트 개발 용역 수행
+                {item.info_biz}
               </div>
             </MobileDetail1>
-            <div class="dropup">
-              <img src={sival} onClick = {this.detailUp}/>
-            </div>
           </Detail1>
         </DetailContainer>
       </>
-      ) : (
-        <DetailContainer style={{display: showDetail}}>
-          <Detail1 style={{borderRadius: 0}}>
-          </Detail1>
-          <Detail1>
-            <MobileDetail1 >
-              <div class="title">
-                전문분야
-              </div>
-              <div class="info" style={{borderLeft: "0.5px solid #d5d5d5", borderRight: "0.5px solid #d5d5d5"}}>
-                경력
-              </div>
-              <div class="info" style={{borderRight: "0.5px solid #d5d5d5"}}>
-                지역
-              </div>
-            </MobileDetail1>
-            <MobileDetail1>
-              <div class="title">
-                주요실적
-              </div>
-              <div class="info" style={{textAlign: 'left'}}>
-                삼선 전자 에어컨 프로젝트 개발 용역 수행
-              </div>
-            </MobileDetail1>
-            <MobileDetail1>
-              <div class="title">
-                진행한 제품군
-              </div>
-              <div class="info" style={{textAlign: 'left'}}>
-                삼선 전자 에어컨 프로젝트 개발 용역 수행
-              </div>
-            </MobileDetail1>
-            <div class="dropup">
-              <img src={sival} onClick = {this.detailUp}/>
-            </div>
-          </Detail1>
-        </DetailContainer>
-        )
+      )
       }
     </>
       </Card>
@@ -261,6 +340,7 @@ const DetailContainer = styled.div`
   }
   .dropup {
     width: 100%;
+    padding-right: calc(10%);
     height: 12px;
     padding-top: 19px;
     padding-bottom: 19px;
@@ -271,6 +351,7 @@ const DetailContainer = styled.div`
     }
     @media (min-width: 0px) and (max-width: 767.99px) {
       padding: 0 0;
+      width: 100%;
       > img {
         cursor: pointer;
         float: right;
@@ -284,7 +365,7 @@ const DetailContainer = styled.div`
 `
 const Detail1 = styled.div`
   width: calc(96.4%);
-  height: 175px;
+  height: 371px;
   object-fit: contain;
   background-color: #f1f3f4;
   display: table;
@@ -322,7 +403,7 @@ const Detail1 = styled.div`
   }
   @media (min-width: 0px) and (max-width: 767.99px) {
     margin-top: 0px;
-    width: 90%;
+    width: 90.3%;
     padding-left: calc(5%);
     padding-right: calc(5%);
     border-radius: 6px;
@@ -341,6 +422,17 @@ const Detail1 = styled.div`
   }
   @media (min-width: 768.98px) and (max-width: 1299.98px) {
     width: calc(96.4%);
+    > div {
+      :nth-of-type(1) {
+        height: 54px;
+      }
+      :nth-of-type(2) {
+        height: 62px;
+      }
+      :nth-of-type(3) {
+        height: 62px;
+      }
+    }
   }
 `
 const PortfolioContainer = styled.div`
@@ -349,12 +441,31 @@ const PortfolioContainer = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding-top: 20px;
+  > div {
+    :nth-of-type(1) {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .slick-list {
+    width: 100%;
+  }
   .slick-slider {
     width: calc(90%);
+    .slick-initialized {
+      display: flex;
+    }
   }
-  @media (min-width: 768.98px) and (max-width: 1299.98px) {
-    width: 98%;
-    padding-left: calc(2%);
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+    height: 133px;
+    padding-top: 0px;
+    padding-bottom: 12px;
+  }
+  @media (min-width: 767.99px) and (max-width: 1299.98px) {
+    width: 95%;
+    padding-left: calc(2.5%);
   }
 `
 const PortfolioImage = styled.div`
@@ -364,6 +475,10 @@ const PortfolioImage = styled.div`
       width: calc(95%);
       height: 100%;
     }
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 203px;
+      height: 133px;
+  }
 `
 const Card = styled.div`
   width: 894px;
@@ -537,10 +652,39 @@ const Image = styled(RatioImage)`
     }
 `
 const MobileDetail1 = styled.div`
-  width: 99%;
-  height: 30px;
-  padding-top: 10px;
-  display: inline-flex;
+  @media (min-width: 767.98px) {
+    width: 99%;
+    height: 62px;
+    margin-top: 37px;
+    display: inline-flex;
+  .title {
+    width: 104px;
+    height: 15px;
+    object-fit: contain;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.25px;
+    text-align: left;
+    color: #191919;
+    display: inline-table;
+  }
+  .info {
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    border-left: solid #d5d5d5 {props => props.active && 0.5px};
+    border-right: solid #d5d5d5 {props => props.active && 0.5px};
+    margin-left: 64px;
+    }
+  }
+  @media (min-width:0px) and (max-width: 767.97px) {
+    width: 99%;
+    height: 30px;
+    padding-top: 15px;
+    display: inline-flex;
   .title {
     width: 72px;
     height: 15px;
@@ -561,6 +705,7 @@ const MobileDetail1 = styled.div`
     text-align: center;
     border-left: solid #d5d5d5 {props => props.active && 0.5px};
     border-right: solid #d5d5d5 {props => props.active && 0.5px};
+  }
   }
 `
 

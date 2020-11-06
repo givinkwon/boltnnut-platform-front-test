@@ -14,7 +14,7 @@ import InfoConatiner from "containers/Info";
 @observer
 class Info extends React.Component {
   state = {
-    width: 0,
+    width: null,
   }
   static getInitialProps({ query }) {
     return { query };
@@ -36,6 +36,8 @@ class Info extends React.Component {
     const { Post, Counter, Loading } = this.props;
     const { width } = this.state;
     return (
+      <>
+      {width &&
       <div>
         {Loading.is_open}
         {/* {Loading.is_open && <Spinner/>} */}
@@ -53,6 +55,8 @@ class Info extends React.Component {
         <InfoConatiner query={this.props.query} />
         <Footer />
       </div>
+      }
+      </>
     );
   }
 }

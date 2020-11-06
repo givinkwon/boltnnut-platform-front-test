@@ -177,7 +177,7 @@ const SearchBox = styled.div`
   background-color: #ffffff;
   align-items: center;
   display: flex;
-  margin-left: 32px;
+  margin-left: 10px;
   margin-bottom: 30px;
   @media (min-width: 0px) and (max-width: 767.98px) {
       margin: 0;

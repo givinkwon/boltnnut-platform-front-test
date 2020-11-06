@@ -14,7 +14,7 @@ import PartnerConatiner from 'containers/Partner'
 @observer
 class Partner extends React.Component {
   state = {
-    width: 0,
+    width: null,
   }
   static getInitialProps({query}) {
     return {query}
@@ -37,6 +37,8 @@ class Partner extends React.Component {
     const { width } = this.state;
 
     return (
+      <>
+      {width &&
       <div>
         {Loading.is_open}
         {/* {Loading.is_open && <Spinner/>} */}
@@ -54,6 +56,8 @@ class Partner extends React.Component {
         <PartnerConatiner query={this.props.query}/>
         <Footer/>
       </div>
+      }
+      </>
     )
   }
 }

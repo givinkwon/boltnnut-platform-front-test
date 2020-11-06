@@ -30,7 +30,11 @@ export default InputComponent
 
 const InputBox = styled.div`
   display: flex;
+  height: 50px;
   margin-top: 10px;
+  border: solid 0.5px #c7c7c7;
+  color: #404040;
+  border-radius: 3px;
   @media (min-width: 0px) and (max-width: 767.98px) {
       width: 206px;
       height: 32px;
@@ -56,10 +60,10 @@ const Wrap = styled.div`
 const Input = styled.input`
   width: 100%;
   margin-top: ${props => props.marginTop}px;
-  border: solid 0.5px #c7c7c7
   padding: 15px 15px;
   color: #404040;
   font-weight: 400;
+  border: none;
   :focus {
     outline: none;
   }

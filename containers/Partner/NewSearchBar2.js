@@ -119,6 +119,14 @@ class SearchBarContainer2 extends React.Component {
     temp_due_max: 0,
   };
 
+  Next = () => {
+    const { Request } = this.props
+    if(Request.type == 0 || Request.type == 1 || Request.type == 2){
+      Request.setStep(2)
+    }
+    console.log(Request.type)
+  }
+
   onChangePortfolio = (e) => {
     if(e.currentTarget.files.length === 0) {
       this.setState({
@@ -430,46 +438,21 @@ class SearchBarContainer2 extends React.Component {
 
         const token = localStorage.getItem("token")
         if(!token) { return }
+        //Router.push()
 
-        //const token = localStorage.getItem("token")
-        //if(!token) { return }
-        {/*console.log(res.data.category.join(','))
-        const new_req = {
-            headers: {
-                Authorization: `Token ${token}`,
-            },
-            data: {
-                subclass: res.data.product,
-                subject: res.data.name,
-                category: res.data.category,
-            },
-        }
-        RequestAPI.sendKakao(new_req)
-          .then((res) => {
-            console.log("sendKakao :", res);
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-            console.log(e.response.new_req);
-          });
-          */}
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       })
+    if(Request.type == 0 || Request.type == 1 || Request.type == 2){
+      Request.setStep(2)
+    }
   };
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request } = this.props;
-    if (typeof window !== "undefined") {
-      console.log(window.innerHeight)
-      console.log(document.documentElement.offsetHeight)
-      console.log(document.documentElement.scrollHeight)
-      console.log(document.documentElement.scrollTop)
-      console.log(document.documentElement.scrollHeight)
-    }
+    console.log(Request.type)
     {/*console.log(Partner.select_big)
     console.log(Partner.request_middle_list)*/}
     return (
@@ -478,7 +461,7 @@ class SearchBarContainer2 extends React.Component {
       { width > 767.98 ? (
         <>
         <SelectRow>
-          <Title style={{marginRight: 12}}>
+          <Title>
             제품분야
           </Title>
           <Select
@@ -547,7 +530,7 @@ class SearchBarContainer2 extends React.Component {
 
         <SelectRow>
           <Title>
-            도면
+            제품도면
           </Title>
           <FileBox
             onClick = {()=>this.portfolio.current.click()}>
@@ -586,10 +569,10 @@ class SearchBarContainer2 extends React.Component {
            <Title> 제품분야 </Title>
            <MobileSelectBox>
            <Select
-              style={{marginRight: 0}}
               styles={MobilecustomStyles} options={Partner.category_list} value={Partner.select_big}
               getOptionLabel={(option) => option.maincategory} placeholder='대 카테고리' onChange={Partner.setBigCategory}/>
            <Select
+              style={{marginRight: 0}}
               styles={MobilecustomStyles} options={Partner.request_middle_list} value={Partner.select_mid}
               getOptionLabel={(option) => option.category} placeholder='중 카테고리' onChange={Partner.setMidCategory}/>
            </MobileSelectBox>
@@ -666,7 +649,7 @@ class SearchBarContainer2 extends React.Component {
              </MobileButton1>*/}
              <div>
                <MobileButton2
-                 onClick = {this.showDetail}
+                 onClick = {this.submit}
                  style={{margin: 'auto'}}
                >
                  <span> 무료 가견적 넣기 </span>
@@ -773,7 +756,7 @@ const SelectRow = styled.div`
     }
 `
 const Title = styled.div`
-  width: 100px;
+  white-space: nowrap;
   height: 38px;
   margin-right: 34px;
   object-fit: contain;
@@ -887,8 +870,9 @@ const FileBox = styled.div`
     outline: none;
   }
   > span {
-    width: 100%;
+    width: 80%;
     height: 100%;
+    position: absolute;
     white-space: nowrap;
     object-fit: contain;
     font-size: 20px;
@@ -1121,8 +1105,13 @@ const MobileSelectBox = styled.div`
   display: inline-flex;
   width: 100%;
   margin-left: 12px;
-  padding-right: calc(6%);
+  padding-right: calc(8%);
   justify-content: center;
+  > div {
+    :nth-of-type(2) {
+      margin-right: 0px;
+    }
+  }
 `
 const MobileButton1 = styled.div`
   width: 94px;

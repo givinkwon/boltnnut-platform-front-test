@@ -179,7 +179,6 @@ class TabConatiner extends React.Component {
   }
   reply = () => {
     const { Request, router } = this.props;
-
     const { name, content, price, day, file, phone } = this.state;
 
     if (!name) {

@@ -16,7 +16,7 @@ import HomeConatiner from "containers/Home";
 @observer
 class Home extends React.Component {
   state = {
-    width: 0,
+    width: null,
   }
   async componentDidMount() {
     this.props.Loading.setOpen(true);
@@ -40,6 +40,8 @@ class Home extends React.Component {
     const { Loading } = this.props;
     const { width } = this.state;
     return (
+      <>
+      {width &&
       <div>
         {Loading.is_open}
         {/* {Loading.is_open && <Spinner/>} */}
@@ -57,6 +59,8 @@ class Home extends React.Component {
         <HomeConatiner/>
         <Footer />
       </div>
+      }
+      </>
     );
   }
 }
