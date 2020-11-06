@@ -119,6 +119,14 @@ class SearchBarContainer2 extends React.Component {
     temp_due_max: 0,
   };
 
+  Next = () => {
+    const { Request } = this.props
+    if(Request.type == 0 || Request.type == 1 || Request.type == 2){
+      Request.setStep(2)
+    }
+    console.log(Request.type)
+  }
+
   onChangePortfolio = (e) => {
     if(e.currentTarget.files.length === 0) {
       this.setState({
@@ -430,39 +438,21 @@ class SearchBarContainer2 extends React.Component {
 
         const token = localStorage.getItem("token")
         if(!token) { return }
+        //Router.push()
 
-        //const token = localStorage.getItem("token")
-        //if(!token) { return }
-        {/*console.log(res.data.category.join(','))
-        const new_req = {
-            headers: {
-                Authorization: `Token ${token}`,
-            },
-            data: {
-                subclass: res.data.product,
-                subject: res.data.name,
-                category: res.data.category,
-            },
-        }
-        RequestAPI.sendKakao(new_req)
-          .then((res) => {
-            console.log("sendKakao :", res);
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-            console.log(e.response.new_req);
-          });
-          */}
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       })
+    if(Request.type == 0 || Request.type == 1 || Request.type == 2){
+      Request.setStep(2)
+    }
   };
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request } = this.props;
+    console.log(Request.type)
     {/*console.log(Partner.select_big)
     console.log(Partner.request_middle_list)*/}
     return (
