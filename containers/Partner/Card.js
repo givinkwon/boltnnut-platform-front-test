@@ -237,7 +237,7 @@ class CardContainer extends Component {
                 주요실적
               </div>
               <div class="info" style={{textAlign: 'left'}}>
-                삼선 전자 에어컨 프로젝트 개발 용역 수행
+                {item.deal}
               </div>
             </MobileDetail1>
             <MobileDetail1>
@@ -245,7 +245,7 @@ class CardContainer extends Component {
                 진행한 제품군
               </div>
               <div class="info" style={{textAlign: 'left'}}>
-                삼선 전자 에어컨 프로젝트 개발 용역 수행
+                {item.info_biz}
               </div>
             </MobileDetail1>
           </Detail1>
@@ -273,10 +273,12 @@ class CardContainer extends Component {
                 전문분야
               </div>
               <div class="info" style={{borderLeft: "0.5px solid #d5d5d5", borderRight: "0.5px solid #d5d5d5"}}>
-                경력
+                설립연도 <br/> <br/>
+                {item.career}
               </div>
               <div class="info" style={{borderRight: "0.5px solid #d5d5d5"}}>
-                지역
+                지역 <br/> <br/>
+                {Partner.getCityNameById(item.city)}
               </div>
             </MobileDetail1>
             <MobileDetail1>
@@ -284,7 +286,7 @@ class CardContainer extends Component {
                 주요실적
               </div>
               <div class="info" style={{textAlign: 'left'}}>
-                삼선 전자 에어컨 프로젝트 개발 용역 수행
+                {item.deal}
               </div>
             </MobileDetail1>
             <MobileDetail1>
@@ -292,7 +294,7 @@ class CardContainer extends Component {
                 진행한 제품군
               </div>
               <div class="info" style={{textAlign: 'left'}}>
-                삼선 전자 에어컨 프로젝트 개발 용역 수행
+                {item.info_biz}
               </div>
             </MobileDetail1>
           </Detail1>
@@ -681,7 +683,7 @@ const MobileDetail1 = styled.div`
   @media (min-width:0px) and (max-width: 767.97px) {
     width: 99%;
     height: 30px;
-    padding-top: 10px;
+    padding-top: 15px;
     display: inline-flex;
   .title {
     width: 72px;
