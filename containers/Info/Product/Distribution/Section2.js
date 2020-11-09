@@ -367,7 +367,7 @@ class Section2Container extends React.Component {
                         </List>
                         <List>
                           <Circle/>
-                          <span class="">기구 설계</span class="">
+                          <span class="">기구 설계</span>
                         </List>
                       </ListBox>
                     </div>

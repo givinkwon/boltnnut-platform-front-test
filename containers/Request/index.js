@@ -5,8 +5,7 @@ import BannerContainer from './Banner'
 import Step1Container from "./Step1";
 import Step2Conatiner from "./Step2";
 import SearchBarContainer2 from "Partner/NewSearchBar2";
-import CompleteBannerConatiner from "./Detail/NewComplete";
-
+import CompleteBannerContainer from "./Detail/NewComplete";
 
 import Router from 'next/router';
 

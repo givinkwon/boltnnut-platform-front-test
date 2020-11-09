@@ -6,7 +6,7 @@ import * as Text from 'components/Text'
 import { WHITE } from 'static/style'
 
 
-class CompleteBannerConatiner extends React.Component {
+class CompleteBannerContainer extends React.Component {
   render(){
     return (
       <Banner>
@@ -19,7 +19,7 @@ class CompleteBannerConatiner extends React.Component {
           </TextBox>
           <ServiceBox>
             <span class="Header"> 아래 상담하기를 클릭해주세요.</span>
-            <span> 의뢰서를 바탕으로 추가 문답 진행 후 최대 3-분 내로 내 제품에 적합한 개발업체 리스트를 받아보실 수 있습니다. </span>
+            <span> 의뢰서를 바탕으로 추가 문답 진행 후 최대 3분 내로 내 제품에 적합한 개발업체 리스트를 받아보실 수 있습니다. </span>
             <span> 채팅방에 입장 후 꼭 볼트앤너트 ID를 입력해주세요.</span>
             <span> ID 미입력시 상담 진행이 어렵습니다. </span>
             <span> 회원가입을 하지 않으셨을 경우에는 상담 진행이 어려우니 상담 전 회원가입을 부탁드립니다. </span>
@@ -37,13 +37,17 @@ class CompleteBannerConatiner extends React.Component {
   }
 }
 
-export default CompleteBannerConatiner
+export default CompleteBannerContainer
 
 const Banner = styled.div`
   background-position: center;
   background-size: cover;
   ${Container} {
     display: flex;
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -63,19 +67,18 @@ const Banner = styled.div`
     }
   }
   @media (min-width: 0px) and (max-width: 329.98px) {
-    height: 480px;
+    height: 100%;
     line-height: 1.5em;
   }
   @media (min-width: 330px) and (max-width: 369.98px) {
-    height: 440px;
+    height: 100%;
     line-height: 1.5em;
   }
   @media (min-width: 370px) and (max-width: 767.98px) {
-    height: 400px;
-    line-height: 1.5em;
+    height: 100%;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 340px;
+    height: 100%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     height: 100%;
@@ -95,6 +98,7 @@ const MessageBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 36px;
+  margin-top: 150px;
   > span {
     object-fit: contain;
     font-size: 24px;
@@ -105,13 +109,23 @@ const MessageBox = styled.div`
     letter-spacing: -0.6px;
     text-align: center;
     color: white;
+    @media (min-width: 0px) and (max-width: 499.98px) {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    @media (min-width: 500px) and (max-width: 767.98px) {
+      font-size:  18px;
+      font-weight: bold;
+    }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 10px 15px;
+    width: calc(65%);
+    margin-bottom: calc(2.8%);
     > p {
       line-height: 1.25em;
       text-align: center;
     }
+
   }
 `
 const TextBox = styled.div`
@@ -124,9 +138,12 @@ const TextBox = styled.div`
   letter-spacing: -0.7px;
   text-align: center;
   margin-bottom: 40px;
+  @media (max-width: 767.98px) {
+    width: 300px;
+    font-size: 18px;
+  }
 `
 const ServiceBox = styled.div`
-  width: 1082px;
   height: 372px;
   border-radius: 10px;
   display: flex;
@@ -144,6 +161,16 @@ const ServiceBox = styled.div`
         letter-spacing: -0.8px;
         text-align: center;
         color: #0a2165;
+        @media (max-width: 767.98px) {
+            font-size: 16px;
+            font-weight: bold;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 2.56;
+            letter-spacing: -0.4px;
+            text-align: center;
+            color: #0a2165;
+        }
   }
   > span {
     color: #191919;
@@ -157,6 +184,42 @@ const ServiceBox = styled.div`
     :nth-of-type(2) {
       margin-top: 40px;
     }
+    @media (max-width: 767.98px) {
+      font-size: 12px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.83;
+      letter-spacing: -0.3px;
+      text-align: left;
+      color: #191919;
+    }
+  }
+  @media (min-width: 0) and (max-width: 767.98px) {
+    width: 60%;
+    height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    display: inline-flex;
+    align-items: normal;
+  }
+  @media (min-width: 767.98px) and (max-width: 1299.98px) {
+    width: 90%;
+    height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  @media (min-width: 1300px) {
+    width: 1082px;
+    height: 372px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 `
 const TextBox2 = styled.div`
@@ -170,6 +233,17 @@ const TextBox2 = styled.div`
   color: #191919;
   margin-top: 26px;
   margin-bottom: 40px;
+  @media (max-width: 767.98px) {
+      font-size: 10px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.4;
+      letter-spacing: -0.25px;
+      text-align: left;
+      color: #191919;
+
+  }
 `
 const ButtonBox = styled.div`
   width: 274px;
@@ -189,4 +263,16 @@ const ButtonBox = styled.div`
   justify-content: center;
   margin-bottom: 200px;
   cursor: pointer;
+  @media (max-width: 767.98px) {
+    width: 55%;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.13;
+    letter-spacing: -0.4px;
+    text-align: left;
+    color: #ffffff;
+  }
 `

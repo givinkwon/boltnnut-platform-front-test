@@ -664,15 +664,11 @@ class SearchBarContainer2 extends React.Component {
          ) : (
          <>
            <SelectRow style={{justifyContent: 'center'}}>
-             <MobileButton1
-              onClick = {this.showDetail}>
-               <span>필터 적용하기</span>
-             </MobileButton1>
                <MobileButton2
                 onClick = {this.showDetail}>
                  <span> 무료 가견적 넣기 </span>
                </MobileButton2>
-             </SelectRow>
+           </SelectRow>
          </>
          )}
          </>

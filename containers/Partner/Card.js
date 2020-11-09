@@ -27,6 +27,10 @@ const prev = 'static/images/partner/prev.png';
 
 const NextArrow = (props) => {
   const { onClick } = props;
+  var display = true
+  if ( props.currentSlide + 2 == props.slideCount ) {
+    display = 'none';
+  }
   const ArrowCircle = styled.div`
     width: 46px;
     height: 46px;
@@ -44,6 +48,8 @@ const NextArrow = (props) => {
     }
   `
   return (
+  <>
+  { display != 'none' ? (
     <div>
       <ArrowCircle>
         <div
@@ -52,11 +58,27 @@ const NextArrow = (props) => {
         </div>
       </ArrowCircle>
     </div>
+    ) : (
+    <div style={{visibility: 'hidden'}}>
+      <ArrowCircle>
+        <div
+          style={{display: 'inline-flex', width: '100%', height: '100%', justifyContent:'center', alignItems: 'center'}}>
+          <img src={next} onClick = {onClick}/>
+        </div>
+      </ArrowCircle>
+    </div>
+    )
+    }
+  </>
   )
 }
 const PrevArrow = (props) => {
   const { onClick } = props;
-  console.log(props)
+  var display = true
+  if ( props.currentSlide == 0 ) {
+    display = 'none';
+    console.log(display)
+  }
   const ArrowCircle = styled.div`
     width: 46px;
     height: 46px;
@@ -74,6 +96,8 @@ const PrevArrow = (props) => {
     }
   `
   return (
+  <>
+  { display != 'none' ? (
     <div>
       <ArrowCircle>
         <div
@@ -82,6 +106,18 @@ const PrevArrow = (props) => {
         </div>
       </ArrowCircle>
     </div>
+    ) : (
+    <div style={{visibility: 'hidden'}}>
+      <ArrowCircle>
+        <div
+          style={{display: 'inline-flex', width: '100%', height: '100%', justifyContent:'center', alignItems: 'center'}}>
+          <img src={prev} onClick={onClick}/>
+        </div>
+      </ArrowCircle>
+    </div>
+    )
+  }
+  </>
   )
 }
 
@@ -92,6 +128,8 @@ class CardContainer extends Component {
     showDrop: true,
     showDetail: 'none',
     width: 0,
+    displayPrev: true,
+    displayNext: true
   }
 
   static defaultProps = {
@@ -142,7 +180,7 @@ class CardContainer extends Component {
       initialSlide: 0,
       draggable: false,
       nextArrow: <NextArrow/>,
-      prevArrow: <PrevArrow hi={"hi"}/>,
+      prevArrow: <PrevArrow/>,
     }
 
     const options = {
@@ -256,7 +294,7 @@ class CardContainer extends Component {
       <>
         <DetailContainer style={{display: showDetail}}>
           <PortfolioContainer>
-              <Slider {...settings} ref={slider => (this.slider = slider)}>
+              <Slider {...settings} ref={slider => (this.slider = slider)} length={item.portfolio_set.length}>
               {
                 item.portfolio_set.length > 0 && item.portfolio_set.map((item2,idx) => {
                   return (
@@ -274,11 +312,11 @@ class CardContainer extends Component {
                 전문분야
               </div>
               <div class="info" style={{borderLeft: "0.5px solid #d5d5d5", borderRight: "0.5px solid #d5d5d5"}}>
-                설립연도 <br/> <br/>
+                설립연도 <br/>
                 {item.career}
               </div>
               <div class="info" style={{borderRight: "0.5px solid #d5d5d5"}}>
-                지역 <br/> <br/>
+                지역 <br/>
                 {Partner.getCityNameById(item.city)}
               </div>
             </MobileDetail1>
@@ -365,6 +403,7 @@ const DetailContainer = styled.div`
   }
 `
 const Detail1 = styled.div`
+  line-height: 2;
   width: calc(96.4%);
   height: 371px;
   object-fit: contain;
@@ -417,7 +456,8 @@ const Detail1 = styled.div`
         height: 52px;
       }
       :nth-of-type(3) {
-        height: 52px;
+        height: 100%;
+        margin-bottom: 5%;
       }
     }
   }
@@ -574,6 +614,7 @@ const TextBox = styled.div`
     text-align: left;
     color: #191919;
     margin-top: 20px;
+
     @media (min-width: 0px) and (max-width: 767.98px) {
       width: calc(90%);
       font-size: 10px;
@@ -585,6 +626,10 @@ const TextBox = styled.div`
       text-align: left;
       color: #191919;
       margin-top: 0px;
+    }
+    @media (min-width: 768px) and (max-width: 1199.98px) {
+      width: 90%;
+      margin-right: 10%;
     }
   }
   .devbox {
@@ -683,7 +728,7 @@ const MobileDetail1 = styled.div`
   }
   @media (min-width:0px) and (max-width: 767.97px) {
     width: 99%;
-    height: 30px;
+    height: 100%;
     padding-top: 15px;
     display: inline-flex;
   .title {
@@ -702,6 +747,7 @@ const MobileDetail1 = styled.div`
   }
   .info {
     width: 100%;
+    height: 100%;
     font-size: 10px;
     text-align: center;
     border-left: solid #d5d5d5 {props => props.active && 0.5px};
