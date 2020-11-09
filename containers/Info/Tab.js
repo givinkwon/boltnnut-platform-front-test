@@ -104,7 +104,7 @@ class TabConatiner extends React.Component {
               <Text.FontSize32 fontWeight={500}>가견적 서비스</Text.FontSize32>
             </Tab>
             <Tab class="Header" active={Request.tab == 1} onClick={async() => await Request.setTab(1)}>
-              <Text.FontSize32 fontWeight={500}>유통&개발 제조 패키지</Text.FontSize32>
+              <Text.FontSize32 fontWeight={500}>개발&생산 제조 패키지</Text.FontSize32>
             </Tab>
             <Tab class="Header" active={Request.tab == 3} onClick={async() => await Request.setTab(3)}>
               <Text.FontSize32 fontWeight={500}>제품 수배 패키지</Text.FontSize32>

@@ -79,6 +79,12 @@ R&D 요소 최적화, 양산 사이클 관리, 기간
 
           ) : (
             <>
+            <LineBox>
+              <Line>
+                <li class="line1"></li>
+                <li class="line2"></li>
+              </Line>
+            </LineBox>
             <ButtonBox>
               <Button active={Request.tab == 1} onClick={async() => await Request.setTab(1)}>
                 <div style={{margin : 0}}>

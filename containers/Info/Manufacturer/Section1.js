@@ -8,10 +8,10 @@ import * as Text from "components/Text";
 import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 
 const right = "/static/icon/rightInround.png";
-const step1 = "/static/icon/info/Massproduct_step1.png";
-const step2 = "/static/icon/info/Massproduct_step2.png";
-const step3 = "/static/icon/info/Massproduct_step3.png";
-const step4 = "/static/icon/info/Massproduct_step4.png";
+const step1 = "/static/icon/info/Manufacturer_step1.png";
+const step2 = "/static/icon/info/Manufacturer_step2.png";
+const step3 = "/static/icon/info/Manufacturer_step3.png";
+const step4 = "/static/icon/info/Manufacturer_step4.png";
 
 
 class Section1Container extends React.Component {
@@ -57,7 +57,7 @@ class Section1Container extends React.Component {
                     <Itemheader>
                         <Text.FontSize30>STEP 1</Text.FontSize30>
                     </Itemheader>
-                    <Step1 src={step1}></Step1>
+                    <Step src={step1}></Step>
                     <Text.FontSize26>가견적 의뢰</Text.FontSize26>
                     <Text.FontSize20>희망 예산, 기간 등 문의하실 제품의 정보를 입력해주세요</Text.FontSize20>
                   </Item>
@@ -66,7 +66,7 @@ class Section1Container extends React.Component {
                     <Itemheader>
                         <Text.FontSize30>STEP 2</Text.FontSize30>
                     </Itemheader>
-                    <Step2 src={step2}></Step2>
+                    <Step src={step2}></Step>
                     <Text.FontSize26>컨설턴트 상담</Text.FontSize26>
                     <Text.FontSize20>1000 건 이상의 프로젝트 데이터를 바탕으로 전문 개발사를 매칭해드립니다</Text.FontSize20>
                   </Item>
@@ -75,7 +75,7 @@ class Section1Container extends React.Component {
                     <Itemheader>
                         <Text.FontSize30>STEP 3</Text.FontSize30>
                     </Itemheader>
-                    <Step3 src={step3}></Step3>
+                    <Step src={step3}></Step>
                     <Text.FontSize26>개발사 정보/가견적 전달</Text.FontSize26>
                     <Text.FontSize20>매칭된 전문 개발사의 정보와 가견적을 전달해드립니다</Text.FontSize20>
                   </Item>
@@ -84,7 +84,7 @@ class Section1Container extends React.Component {
                     <Itemheader>
                         <Text.FontSize30>STEP 4</Text.FontSize30>
                     </Itemheader>
-                    <Step4 src={step4}></Step4>
+                    <Step src={step4}></Step>
                     <Text.FontSize26>미팅 주선</Text.FontSize26>
                     <Text.FontSize20>원하시는 조건의 전문개발사와 3자미팅을 주선해드립니다</Text.FontSize20>
                   </Item>
@@ -98,7 +98,7 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 1</Text.FontSize30>
                         </Itemheader>
-                        <Step1 src={step1}></Step1>
+                        <Step src={step1}></Step>
                         <Text.FontSize26>가견적 의뢰</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>희망 예산, 기간 등 문의하실 제품의 정보를 입력해주세요</Text.FontSize20>
@@ -109,7 +109,7 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 2</Text.FontSize30>
                         </Itemheader>
-                        <Step1 src={step1}></Step1>
+                        <Step src={step1}></Step>
                         <Text.FontSize26>컨설턴트 상담</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>1000 건 이상의 프로젝트 데이터를 바탕으로 전문 개발사를 매칭해드립니다</Text.FontSize20>
@@ -120,7 +120,7 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 3</Text.FontSize30>
                         </Itemheader>
-                        <Step1 src={step1}></Step1>
+                        <Step src={step1}></Step>
                         <Text.FontSize26>개발사 정보/가견적 전달</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>매칭된 전문 개발사의 정보와 가견적을 전달해드립니다</Text.FontSize20>
@@ -132,7 +132,7 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 4</Text.FontSize30>
                         </Itemheader>
-                        <Step1 src={step1}></Step1>
+                        <Step src={step1}></Step>
                         <Text.FontSize26>미팅 주선</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>원하시는 조건의 전문개발사와 3자미팅을 주선해드립니다</Text.FontSize20>
@@ -281,7 +281,7 @@ const Image = styled.img`
     margin : 0px 1.27%;
   }    
 `;
-const Step1 = styled.img`
+const Step = styled.img`
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin : 58px auto 46px; 
@@ -295,21 +295,8 @@ const Step1 = styled.img`
     margin-top : 80px;
   } 
   @media (min-width: 1300px) {
-    width: 131px;
-    margin-top : 80px;
+    margin-top : 54px;
   }
-`;
-const Step2 = styled.img`
-  width: 161px;
-  margin-top : 70px;
-`;
-const Step3 = styled.img`
-  width: 130px;
-  margin-top : 70px;
-`;
-const Step4 = styled.img`
-  width: 135px;
-  margin-top : 66px;
 `;
 
 const Header = styled.div`
@@ -420,7 +407,7 @@ const Item = styled.div`
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
     > p:nth-of-type(1) {
-      margin-top : 70px;
+      margin-top : 46px;
       font-weight: bold;
       font-stretch: normal;
       font-style: normal;
@@ -429,7 +416,7 @@ const Item = styled.div`
     }
     > p:nth-of-type(2) {
       margin-top : 10px;
-      margin-bottom : 80px ;
+      margin-bottom : 9% ;
       margin-left: 15.6%;
       margin-right: 15.6%;
       font-weight: normal;
@@ -444,7 +431,7 @@ const Item = styled.div`
     width: 100%;
     height : 525px;
     > p:nth-of-type(1) {
-      margin-top : 70px;
+      margin-top : 46px;
       font-weight: bold;
       font-stretch: normal;
       font-style: normal;
@@ -453,7 +440,7 @@ const Item = styled.div`
     }
     > p:nth-of-type(2) {
       margin-top : 10px;
-      margin-bottom : 80px ;
+      margin-bottom : 9% ;
       margin-left: 15.6%;
       margin-right: 15.6%;
       font-weight: normal;
@@ -468,7 +455,7 @@ const Item = styled.div`
     width: 100%;
     height : 525px;
     > p:nth-of-type(1) {
-    margin-top : 70px;
+    margin-top : 46px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
@@ -477,7 +464,7 @@ const Item = styled.div`
   }
   > p:nth-of-type(2) {
     margin-top : 10px;
-    margin-bottom : 80px ;
+    margin-bottom : 9% ;
     margin-left: 15.6%;
     margin-right: 15.6%;
     font-weight: normal;

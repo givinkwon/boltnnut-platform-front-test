@@ -14,9 +14,9 @@ const image2 = "/static/icon/info/logo_2.png";
 const image3 = "/static/icon/info/logo_3.png";
 const image4 = "/static/icon/info/logo_4.png";
 const image5 = "/static/icon/info/logo_5.png";
-const image6 = "/static/icon/info/logo_6_3.png";
-const image7 = "/static/icon/info/logo_7.jpg";
-const image8 = "/static/icon/info/logo_8.jpg";
+const image6 = "/static/icon/info/logo_6.png";
+const image7 = "/static/icon/info/logo_7.png";
+const image8 = "/static/icon/info/logo_8.png";
 const image9 = "/static/icon/info/logo_9.png";
 const image10 = "/static/icon/info/logo_10.png";
 const image11 = "/static/icon/info/logo_11.png";
@@ -86,7 +86,7 @@ class Section2Container extends React.Component {
                   <Image src={image5} active={true}/>
                 </Item>
                 <Item>
-                  <Image src={image10} active={true}/>
+                  <Image src={image6} active={true}/>
                 </Item>
                 <Item>
                   <Image src={image7} active={true}/>
@@ -98,7 +98,7 @@ class Section2Container extends React.Component {
                   <Image src={image9} active={true}/>
                 </Item>
                 <Item>
-                  <Image src={image6} active={true}/>
+                  <Image src={image10} active={true}/>
                 </Item>
                 <Item>
                   <Image src={image11} active={true}/>
@@ -140,7 +140,7 @@ class Section2Container extends React.Component {
                       <Image src={image5} active={true}/>
                     </Item>
                     <Item>
-                      <Image src={image10} active={true}/>
+                      <Image src={image6} active={true}/>
                     </Item>
                     <Item>
                       <Image src={image7} active={true}/>
@@ -152,7 +152,7 @@ class Section2Container extends React.Component {
                       <Image src={image9} active={true}/>
                     </Item>
                     <Item>
-                      <Image src={image6} active={true}/>
+                      <Image src={image10} active={true}/>
                     </Item>
                     <Item>
                       <Image src={image11} active={true}/>
@@ -203,29 +203,7 @@ const Category = styled(Container)`
     padding: 80px 0px;
   } */
 `
-const Image = styled(RatioImage)`
-  cursor: pointer;
-  margin-bottom: 20px;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width : 127px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
 
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-
-  }
-  @media (min-width: 1300px) {
-
-  }
-
-  /* border: 2px solid #ddd;
-  border-radius: 200px !important;  
-  ${props => props.active && css`
-    border: 2px solid ${PRIMARY};
-  `} */
-
-`
 const Icon = styled.img`
   cursor: pointer;
   width: 13x;
@@ -233,8 +211,8 @@ const Icon = styled.img`
   z-index : 100;
   
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 30px;
-    height: 30px;
+    width: 4px;
+    height: 8px;
   }
 `
 const Header = styled.div`
@@ -269,23 +247,44 @@ const Header = styled.div`
     padding-bottom: 60px;
   }
 `
+const Image = styled(RatioImage)`
+  cursor: pointer;
+  margin-bottom: 20px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height : 100px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    height: 100%
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    height: 100%
 
+  }
+  @media (min-width: 1300px) {
+    height: 100%
+  }
+
+  /* border: 2px solid #ddd;
+  border-radius: 200px !important;  
+  ${props => props.active && css`
+    border: 2px solid ${PRIMARY};
+  `} */
+
+`
 const Item = styled.div`
 
 
-  width: calc(20% - 40px);
+  height : 100px ;
+
   padding: 20px 0;
-  margin: 0 20px;
 
   @media (min-width: 0px) and (max-width: 499.98px) {
-    width: calc(50% - 30px);
+    width : 50%;
     margin: 0;
-    padding: 15px;
   }
   @media (min-width: 500px) and (max-width: 991.98px) {
     margin: 0;
     width: calc(33.33% - 30px);
-    padding: 15px;
   }
   @media (min-width: 992px) and (max-width: 1199.98px) {
     display: flex;
@@ -293,7 +292,12 @@ const Item = styled.div`
     align-items: center;
     margin: 0;
     width: calc(25% - 30px);
+    height : 100px ;
     padding: 15px;
+  }
+  @media (min-width: 1300px) {
+    width: calc(20%);
+
   }
 `
 

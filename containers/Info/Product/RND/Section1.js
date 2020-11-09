@@ -8,10 +8,10 @@ import * as Text from "components/Text";
 import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 
 const right = "/static/icon/rightInround.png";
-const step1 = "/static/icon/info/Massproduct_step1.png";
-const step2 = "/static/icon/info/Massproduct_step2.png";
-const step3 = "/static/icon/info/Massproduct_step3.png";
-const step4 = "/static/icon/info/Massproduct_step4.png";
+const step1 = "/static/icon/info/Product_step1.png";
+const step2 = "/static/icon/info/Product_step2.png";
+const step3 = "/static/icon/info/Product_step3.png";
+const step4 = "/static/icon/info/Product_step4.png";
 
 
 class Section1Container extends React.Component {

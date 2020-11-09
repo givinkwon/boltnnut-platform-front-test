@@ -591,7 +591,6 @@ const SmallImage = styled(RatioImage)`
   }
 `
 const Header2 = styled.div`
-  width: 1000px;
   height: 59px;
   margin-bottom: 60px;
   font-size: 32px;
@@ -602,6 +601,9 @@ const Header2 = styled.div`
   letter-spacing: -0.8px;
   color: #505050;
   margin-top: 130px;
+  text-align : center;
+  margin-right: auto;
+  margin-left: auto;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 300px;
     height: 100%;
