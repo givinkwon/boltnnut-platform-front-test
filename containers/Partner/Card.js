@@ -56,6 +56,7 @@ const NextArrow = (props) => {
 }
 const PrevArrow = (props) => {
   const { onClick } = props;
+  console.log(props)
   const ArrowCircle = styled.div`
     width: 46px;
     height: 46px;
@@ -141,7 +142,7 @@ class CardContainer extends Component {
       initialSlide: 0,
       draggable: false,
       nextArrow: <NextArrow/>,
-      prevArrow: <PrevArrow/>,
+      prevArrow: <PrevArrow hi={"hi"}/>,
     }
 
     const options = {

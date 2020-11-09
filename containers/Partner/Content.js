@@ -275,8 +275,6 @@ class ContentConatiner extends React.Component {
       <List>
           {
             Partner.partner_list.length > 0 && Partner.partner_list.map((item, idx) => {
-              console.log(idx)
-              console.log(Partner.partner_list.length - 1)
               return (
                 <Card
                   key={item.id}

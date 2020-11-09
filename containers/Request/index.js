@@ -21,13 +21,18 @@ class RequestConatiner extends React.Component {
     step2: false,
     complete: false,
   }
+
+  componentDidMount () {
+    const { Request } = this.props;
+  }
+
   render () {
     const { Request } = this.props
-    console.log(Request.type)
-    console.log(Request.step)
+    const { step2 } = this.state;
+
     return (
       <>
-        <BannerContainer step2={true} style={{display: "none"}}/>
+        {Request.step === 1 ? (<BannerContainer step2 = {true}/>) : (<BannerContainer/>)}
         {Request.step === 0 && <Step1Container/>}
         {Request.step === 1 && <SearchBarContainer2/>}
         {Request.step === 2 && <CompleteBannerConatiner/>}

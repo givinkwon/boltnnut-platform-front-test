@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 
 import * as RequestAPI from "axios/Request";
+import Router, { withRouter, useRouter } from 'next/router'
 
 import Container from "components/Container";
 import Button from "components/Button";
@@ -393,7 +394,7 @@ class SearchBarContainer2 extends React.Component {
   }
 
   submit = () => {
-    const { Request, router  } = this.props;
+    const { Request } = this.props;
     const {file, price_max, due_max} = this.state;
 
     if (!Request.input_name) {
@@ -438,16 +439,19 @@ class SearchBarContainer2 extends React.Component {
 
         const token = localStorage.getItem("token")
         if(!token) { return }
-        //Router.push()
-
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       })
-    if(Request.type == 0 || Request.type == 1 || Request.type == 2){
-      Request.setStep(2)
-    }
+      Request.setStep(2);
+      Router.push({
+        pathname: `/request`,
+        query: {
+          big: 4,
+          from: Router.pathname
+          }
+        });
   };
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
@@ -644,9 +648,6 @@ class SearchBarContainer2 extends React.Component {
            </FileBox>
          </SelectRow>
          <SelectRow style={{marginTop: 24, display: "block", justifyContent: "center"}}>
-             {/*<MobileButton1>
-               <span>필터 적용하기</span>
-             </MobileButton1>*/}
              <div>
                <MobileButton2
                  onClick = {this.submit}
@@ -682,7 +683,7 @@ class SearchBarContainer2 extends React.Component {
     )
   }
 }
-export default SearchBarContainer2;
+export default withRouter(SearchBarContainer2);
 
 const DropDown = styled.div`
   width: 100%;
