@@ -99,7 +99,7 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 2</Text.FontSize30>
                         </Itemheader>
-                        <Step1 src={step1}></Step1>
+                        <Step1 src={step2}></Step1>
                         <Text.FontSize26>컨설턴트 상담</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>제조 전문 컨설턴트가 상담을 통해 제품 기획을 고도화하고 적합한 서비스를 안내드립니다</Text.FontSize20>
@@ -110,7 +110,7 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 3</Text.FontSize30>
                         </Itemheader>
-                        <Step1 src={step1}></Step1>
+                        <Step1 src={step3}></Step1>
                         <Text.FontSize26>보고서 제출</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>만들고자 하는 제품의 제조 프로세스 설계, 생산 조건 등이 포함된 보고서를 제안드립니다</Text.FontSize20>

@@ -240,7 +240,7 @@ class Section2Container extends React.Component {
               <ItemBox>
                   <MainBox>
                     <Main>
-                      <span>A</span>
+                      <span class="">A</span>
                     </Main>
                     <MainTitle>
                       <span class="">300,000원</span>
@@ -249,7 +249,7 @@ class Section2Container extends React.Component {
 
                   <Item>
                     <div class="Header">
-                        <span class="">도면 설계 작업이 필요 없는 생산제품</span>
+                        <span class="HeaderTitle">도면 설계 작업이 필요 없는 생산제품</span>
                     </div>
                     <div class="Body1">
                         <span class=""> ex) 봉제, 목제류</span>
@@ -258,11 +258,7 @@ class Section2Container extends React.Component {
                       <ListBox>
                         <List>
                           <Circle/>
-                          <span class="">생산 조건 기획</span>
-                        </List>
-                        <List>
-                          <Circle/>
-                          <span class="">생산 업체 수배&협상</span>
+                          <span>생산 조건 기획</span>
                         </List>
                         <List>
                           <Circle/>
@@ -276,7 +272,7 @@ class Section2Container extends React.Component {
                         </List>
                         <List>
                           <Circle/>
-                          <span class="">보고서 제출</span>
+                          <span class="">생산 업체 수배&협상</span>
                         </List>
                       </ListBox>
                     </div>
@@ -307,18 +303,20 @@ class Section2Container extends React.Component {
                         </List>
                         <List>
                           <Circle/>
-                          <span class="">생산 업체 수배&협상</span>
-                        </List>
-                        <List>
-                          <Circle/>
                           <span class="">프로세스 설계</span>
                         </List>
                       </ListBox>
                       <ListBox>
                         <List>
                           <Circle/>
+                          <span class="">생산 업체 수배&협상</span>
+                        </List>
+                        <List>
+                          <Circle/>
                           <span class="">보고서 제출</span>
                         </List>
+                      </ListBox>
+                      <ListBox>
                         <List>
                           <Circle/>
                           <span class="">기구설계</span>
@@ -353,18 +351,21 @@ class Section2Container extends React.Component {
                         </List>
                         <List>
                           <Circle/>
-                          <span class="">생산 업체 수배&협상</span>
-                        </List>
-                        <List>
-                          <Circle/>
                           <span class="">프로세스 설계</span>
                         </List>
+
                       </ListBox>
                       <ListBox>
                         <List>
                           <Circle/>
+                          <span class="">생산 업체 수배&협상</span>
+                        </List>
+                        <List>
+                          <Circle/>
                           <span class="">보고서 제출</span>
                         </List>
+                      </ListBox>
+                      <ListBox>
                         <List>
                           <Circle/>
                           <span class="">기구 설계</span>
@@ -399,21 +400,13 @@ class Section2Container extends React.Component {
                         </List>
                         <List>
                           <Circle/>
-                          <span class="">생산 업체 수배&협상</span>
-                        </List>
-                        <List>
-                          <Circle/>
                           <span class="">프로세스 설계</span>
                         </List>
                       </ListBox>
                       <ListBox>
                         <List>
                           <Circle/>
-                          <span class="">선행기술자료 검토</span>
-                        </List>
-                        <List>
-                          <Circle/>
-                          <span class="">명세서 권리범위 검토</span>
+                          <span class="">생산 업체 수배&협상</span>
                         </List>
                         <List>
                           <Circle/>
@@ -423,7 +416,17 @@ class Section2Container extends React.Component {
                       <ListBox>
                         <List>
                           <Circle/>
-                          <Text.FontSize24>기구 설계</Text.FontSize24>
+                          <span class="">기구 설계</span>
+                        </List>
+                        <List>
+                          <Circle/>
+                          <span class="">명세서 권리범위 검토</span>
+                        </List>
+                      </ListBox>
+                      <ListBox>
+                        <List>
+                          <Circle/>
+                          <span class="">선행기술자료 검토</span>
                         </List>
                       </ListBox>
                     </div>
@@ -449,6 +452,22 @@ const Circle = styled.div`
   border-radius: 50px;
   margin-top : auto ;
   margin-bottom : auto ;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width:4px;
+    height:4px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width:4px;
+    height:4px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width:10px;
+    height:10px;
+  }
+  @media (min-width: 1300px) {
+    width:10px;
+    height:10px;
+  }
 `
 const Main = styled.div`
   border-radius: 10px;
@@ -457,8 +476,11 @@ const Main = styled.div`
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.3);
   background-color: #ffffff;
   height: 60%;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    height : 30%
+  @media (min-width: 0px) and (max-width: 359.98px) {
+    
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    height : 55%
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
 
@@ -468,7 +490,27 @@ const Main = styled.div`
   }
   @media (min-width: 1300px) {
 
-  }  
+  } 
+  span {
+    font-size: 38px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: -0.95px;
+    color: #0933b3;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      padding:0px 20px;
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+
+    }
+    @media (min-width: 1300px) {
+    } 
+  }
+   
   p { 
     font-weight: bold;
     font-stretch: normal;
@@ -496,10 +538,15 @@ const Main = styled.div`
 const MainBox = styled.div`
   
   
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 359.98px) {
     margin-top : 25px;
     margin-left : 16px;
-    width : 23.5%;
+    width : 30%;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    margin-top : 25px;
+    margin-left : 16px;
+    width : 15%;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top : 30px;
@@ -519,6 +566,16 @@ const MainBox = styled.div`
   
 `
 const MainTitle = styled.div`
+  text-align : center;
+  span { 
+    font-size: 11px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #0933b3;
+  }
   P {
     font-size: 24px;
     font-weight: 500;
@@ -536,22 +593,75 @@ const MainTitle = styled.div`
       }
     }
   }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-top : 6px ;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-top : 6px ;
+
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-top : 20px ;
+
+  }
+  @media (min-width: 1300px) {
+    margin-top : 20px ;
+
+  }
   
 
-  margin-top : 20px ;
 `
 const ListBox = styled.div`
   justify-content :space-between;
-  :nth-of-type(2) {
-    padding-top : 10px;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    :nth-of-type(2) {
+      padding-top : 2px;
+    }
+    :nth-of-type(3) {
+      padding-top : 2px;
+    }
+    :nth-of-type(4) {
+      padding-top : 2px;
+    }
   }
-  :nth-of-type(3) {
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    :nth-of-type(2) {
+      padding-top : 8px;
+    }
+    :nth-of-type(3) {
+      padding-top : 8px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    :nth-of-type(2) {
     padding-top : 10px;
+    }
+    :nth-of-type(3) {
+      padding-top : 10px;
+    }
+  }
+  @media (min-width: 1300px) {
+    :nth-of-type(2) {
+    padding-top : 10px;
+    }
+    :nth-of-type(3) {
+      padding-top : 10px;
+    }
   }
 `
 const List = styled.div`
   display : inline-flex;
-  width: 33.33%;
+  span {
+    font-size: 10px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.6;
+    letter-spacing: -0.25px;
+    text-align: left;
+    color: #191919;
+  }
   p {
     font-weight: 500;
     font-stretch: normal;
@@ -560,9 +670,27 @@ const List = styled.div`
     letter-spacing: -0.63px;
     text-align: left;
     color: #191919;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+    }
     @media (min-width: 768px) and (max-width: 991.98px) {
       font-size : 16px !important;
     }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+    }
+    @media (min-width: 1300px) {
+    }
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width : 50% ;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width : 50% ;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 33.33%;
+  }
+  @media (min-width: 1300px) {
+    width: 33.33%;
   }
   
 `
@@ -576,17 +704,25 @@ const Item = styled.div`
   }
   .Header {
       p {
-      text-align : left ;
-      font-weight: 700;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.73;
-      letter-spacing: normal;
-      color: #323232 !important;
+        text-align : left ;
+        font-weight: 700;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.73;
+        letter-spacing: normal;
+        color: #323232 !important;
+      }
+      span {
+        font-size: 14px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        letter-spacing: normal;
+        color: #323232;
       }
       
       margin-top : 6px;
-    }
+  }
   .Body1 {
       display : inline-flex;
     p {
@@ -598,13 +734,35 @@ const Item = styled.div`
       letter-spacing: normal;
       color: #707070;
     }
+    span {
+      font-size: 10px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      letter-spacing: normal;
+      color: #707070;
+    }
     
   }
   .Body2 {
     display : block;
    	justify-content: space-between;
-    padding-top : 20px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      padding-top : 10px;
 
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      padding-top : 10px;
+
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+      padding-top : 20px;
+
+    }
+    @media (min-width: 1300px) {
+      padding-top : 20px;
+
+    }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 12px 0 0 16px; 
@@ -627,7 +785,6 @@ const ItemBox = styled.div`
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.3);
   background-color: #f3f3f3;
   
-  margin-bottom : 65px;
   margin-left : auto;
   margin-right : auto;
 
@@ -639,16 +796,21 @@ const ItemBox = styled.div`
     display: flex;
     flex-direction: row;
     align-items: left;
+    margin-bottom : 16px;
+
     > p {
       margin-top: 20px;
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-bottom : 50px;
 
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 996px;
     height : 310px;
+    margin-bottom : 65px;
+
     > p {
       margin-top: 20px;
     }
@@ -656,6 +818,8 @@ const ItemBox = styled.div`
   @media (min-width: 1300px) {
     width: 996px;
     height : 310px;
+    margin-bottom : 65px;
+
     > p {
       margin-top: 20px;
     }
@@ -700,6 +864,9 @@ const Header = styled.div`
 const CustomContainer = styled.div`
   padding: 0px;
   width: 100%;
+  p {
+      text-align : center ;
+  }
   ${Container} {
     @media (min-width: 0px) and (max-width: 767.98px) {
       width: calc(100% - 40px);
@@ -710,12 +877,9 @@ const CustomContainer = styled.div`
       width: 90%;
     }
   }
-  p {
-      text-align : center ;
-  }
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100% - 40px);
-    padding: 0 20px;
+    padding :0px 20px ;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
