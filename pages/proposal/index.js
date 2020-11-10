@@ -13,7 +13,7 @@ import Spinner from 'components/Spinner'
 @observer
 class Proposal extends React.Component {
   state = {
-    width: 0,
+    width: null,
   }
   async componentDidMount() {
     const { Proposal, Answer, Loading, Auth } = this.props
