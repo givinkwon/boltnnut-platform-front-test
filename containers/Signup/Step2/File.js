@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
 import Container from 'components/Container'
-import InputComponent from 'components/Input2'
+import InputComponent from 'components/Input3'
 import ButtonComponent from 'components/Button'
 import ButtonSpinnerComponent from 'components/ButtonSpinner'
 import CheckBoxComponent from 'components/CheckBox'
@@ -31,7 +31,18 @@ class FileConatiner extends React.Component {
     resumeValue: '',
     src: null,
     modal_open: false,
-    }
+    width : 0, 
+  }
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
 
   closeModal = () => {
     this.setState({
@@ -116,12 +127,16 @@ class FileConatiner extends React.Component {
   render(){
     const { Auth } = this.props
     const { crop, croppedImageUrl, src, modal_open } = this.state;
+    const { width } = this.state;
+
     return (
-      <div>
-        <Header>
-          <Text.FontSize20 color={WHITE} fontWeight={700}>포트폴리오</Text.FontSize20>
-        </Header>
+      <ContentContainer>
         <Content>
+        { width > 767.98 ? (
+          <>
+          <Header>
+            <Text.FontSize24 color={'#0933b3'} fontWeight={700}>포트폴리오</Text.FontSize24>
+          </Header>
           <W100>
             <input
               onChange={this.onChangePortfolio}
@@ -131,12 +146,12 @@ class FileConatiner extends React.Component {
             />
 
             <Wrap>
-              <Text.FontSize20 color={DARKGRAY} fontWeight={500}>회사소개서[연혁, 실적, 상세 개발 이력, 조직도, 보유 장비 등]</Text.FontSize20>
+              <Text.FontSize20 color={'#505050'} fontWeight={500}>회사소개서[연혁, 실적, 상세 개발 이력, 조직도, 보유 장비 등]</Text.FontSize20>
               <InputBox onClick={() => this.portfolio.current.click()}>
-                <Text.FontSize20 color="#767676" fontWeight={400}>
+                <Text.FontSize20 color="#999999" fontWeight={400}>
                   { this.state.portfolioValue ? this.state.portfolioValue : '선택된 파일 없음' }
                 </Text.FontSize20>
-                <FileIcon src="/static/icon/download_file.svg" />
+                <FileIcon src="/static/icon/download.png" />
               </InputBox>
             </Wrap>
           </W100>
@@ -150,12 +165,12 @@ class FileConatiner extends React.Component {
             />
 
             <Wrap>
-              <Text.FontSize20 color={DARKGRAY} fontWeight={500}>개발인력 이력서[최소 2인 이상]</Text.FontSize20>
+              <Text.FontSize20 color={'#505050'}>개발인력 이력서</Text.FontSize20>
               <InputBox onClick={() => this.resume.current.click()}>
-                <Text.FontSize20 color="#767676" fontWeight={400}>
+                <Text.FontSize20 color="#999999">
                   { this.state.resumeValue ? this.state.resumeValue : '선택된 파일 없음' }
                 </Text.FontSize20>
-                <FileIcon src="/static/icon/download_file.svg" />
+                <FileIcon src="/static/icon/download.png" />
               </InputBox>
             </Wrap>
           </W100>
@@ -183,14 +198,87 @@ class FileConatiner extends React.Component {
 
             </Wrap>*/}
           </W100>
+          </>
+        ) : (
+          <>
+          <Header>
+            <span>포트폴리오</span>
+          </Header>
+          <W100>
+            <input
+              onChange={this.onChangePortfolio}
+              style={{display: 'none'}}
+              ref={this.portfolio}
+              type='file'
+            />
+            <Wrap>
+              <span class="inputHeader">회사소개서[연혁,실적,상세 개발 이력, 보유장비 등]</span>
+              <InputBox onClick={() => this.portfolio.current.click()}>
+                <span class="inputBody">
+                  { this.state.portfolioValue ? this.state.portfolioValue : '선택된 파일 없음' }
+                </span>
+                <FileIcon src="/static/icon/download.png" />
+              </InputBox>
+            </Wrap>
+          </W100>
+          <W100>
+            <input
+              onChange={this.onChangeResume}
+              style={{display: 'none'}}
+              ref={this.resume}
+              type='file'
+            />
+            <Wrap>
+              <span class="inputHeader">개발인력 이력서</span>
+              <InputBox onClick={() => this.resume.current.click()}>
+                <span class="inputBody">
+                  { this.state.resumeValue ? this.state.resumeValue : '선택된 파일 없음' }
+                </span>
+                <FileIcon src="/static/icon/download.png" />
+              </InputBox>
+            </Wrap>
+          </W100>
+          <W100>
+            <input
+              onChange={this.onChangeLogo}
+              style={{display: 'none'}}
+              ref={this.logo}
+              type='file'
+            />
+          </W100>
+          </>
+        )}
+
+          
         </Content>
-      </div>
+      </ContentContainer>
     )
   }
 }
 
 export default FileConatiner
 
+const ContentContainer = styled.div`
+  margin-bottom : 45px;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-right :0px !important;
+    margin-left :0px !important;
+    
+    
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-right :0px !important;
+    margin-left :0px !important;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-right :0px !important;
+    margin-left :0px !important;
+  }
+  @media (min-width: 1300px) {
+    
+  }
+`
 
 
 const Button = styled.div`
@@ -213,29 +301,101 @@ const Button = styled.div`
 const W100 = styled.div`
   width: 100%;
   display: flex;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    display : inline-flex;
+    > span {
+      white-space: nowrap;
+      margin-top : auto;
+      margin-right : 1px; 
+      margin-left : 12px; 
+    }
+    
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    
+  }
+  @media (min-width: 1300px) {
+    
+  }
 `
 const Header = styled.div`
-  height: 55px;
-  background-color: ${PRIMARY};
-
   display: flex;
   align-items: center;
+  width : 100%;
+  > p {
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.42;
+    letter-spacing: -0.6px;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > span {
+      font-size: 16px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.13;
+      letter-spacing: -0.4px;
+      color: #0933b3;
+    }
 
-  padding: 0 15px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+
+  }
+  @media (min-width: 1300px) {
+
+  }
 `
 const Content = styled.div`
-  background-color: #f2f2f2;
-  padding: 20px;
-
+  border: solid 1px #c7c7c7;
+  border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
-  
+  p{
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+  }
+  div {
+    border-radius: 3px;
+  }
   > div > div > p {
     color: #4b4b4b;
   }
   
   @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 20px 10px 20px;
+    padding: 4.8%;
+    .BoxText {
+      font-size: 10px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 4.8%;
+
+    .BoxText {
+      font-size: 18px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    padding: 4.8%;
+
+
+  }
+  @media (min-width: 1300px) {
+    width : 996px;
+    padding: 40px;
+
+
   }
 `
 
@@ -246,6 +406,37 @@ const Wrap = styled.div`
   width: 100%;
   > p {
     margin-top: 15px;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > span {
+      white-space: nowrap;
+    }
+    .inputHeader {
+      font-size: 14px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.43;
+      letter-spacing: -0.35px;
+      color: #505050;
+    }
+    .inputBody {
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.43;
+      letter-spacing: -0.35px;
+      color: #c7c7c7;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+
+  }
+  @media (min-width: 1300px) {
+}
   }
 `
 const InputBox = styled.div`
@@ -261,14 +452,11 @@ const InputBox = styled.div`
 
   border-radius: 6px;
   border: solid 1px #dddddd;
-  padding: 15px;
   
   input {
     font-size: 16px;
   }
   > p {
-    max-height: 1em;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-right: 12px;
@@ -276,12 +464,19 @@ const InputBox = styled.div`
   
   
   @media (min-width: 0px) and (max-width: 767.98px) {
+    padding : 0% 2% 
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    padding : 2% 2% 
+
   }
   @media (min-width: 992px) and (max-width: 1299.98px) { 
+    padding : 2% 2% 
+
   }
   @media (min-width: 1300px) {
+    padding: 15px;
+
   }
 `
 

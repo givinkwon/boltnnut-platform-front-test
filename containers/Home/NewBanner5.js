@@ -10,12 +10,11 @@ import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 import * as AnswerAPI  from 'axios/Answer'
 
 const search_ic = "static/icon/search.png";
-const image1 = "/static/images/main/section4_step1_img.png";
-const image2 = "/static/images/main/section4_step2_img.png";
-const image3 = "/static/images/main/section4_step3_img.png";
-const image4 = "/static/images/banner2_4.png";
+const image1 = "/static/images/main/Banner3_1.png";
+const image2 = "/static/images/main/Banner3_2.png";
 
 class NewBanner5Container extends React.Component {
+
   render() {
     var settings = {
       dots: false,
@@ -32,37 +31,50 @@ class NewBanner5Container extends React.Component {
             dots: true
           }
         },
-      ]
-    }
+        ]
+      }
     return (
     <CustomContainer>
           <Container>
-            <ItemBox>
-                <Header> 볼트앤너트 파트너가 되면 <br/> <Bold>매일 새로운 클라이언트</Bold>를 만나보실 수 있습니다 </Header>
+            <Header> 경쟁력 있는 제품을 원하시나요? </Header>
                 <Item>
-                     <List>
-                        <Slider {...settings}>
-                            <Image src={image1} />
-                            <Image src={image2} />
-                            <Image src={image3} />
-                        </Slider>
-                     </List>
+                    <ImageTextBox>
+                      <div class="BackImage"/>
+                      <div class="TextBox">
+                        <div class="ImageHeader">
+                          경쟁력 있는 제품을 찾고 계신가요?
+                        </div>
+                        <div class="ImageBottom">
+                          <span class="ImageBold"> 제품발주조건 </span>
+                           을 알려드리는 국내외 공장 수배 서비스를 이용해보세요
+                        </div>
+                        <div class="More"
+                          onClick = {() => Router.push(`/info`)}>
+                           자세히 보기 >
+                        </div>
+                      </div>
+                      <div class="CoverImage"/>
+                    </ImageTextBox>
+                    <ImageTextBox>
+                      <div class="BackImage2"/>
+                      <div class="TextBox">
+                        <div class="ImageHeader">
+                          경쟁력 있는 제품을 만들고 싶은가요?
+                        </div>
+                        <div class="ImageBottom">
+                          <span class="ImageBold"> 개발/생산 비용 </span>
+                           을 포함한 제품의 모든 것을 알려드리는 유통 제조 서비스를 이용해보세요
+                        </div>
+                        <div class="More"
+                          onClick = {() => Router.push(`/info`)}>
+                           자세히 보기 >
+                        </div>
+                      </div>
+                      <div class="CoverImage"/>
+                    </ImageTextBox>
                 </Item>
-
-                <Item>
-                  <ButtonBox>
-                    <Button
-                    onClick={() => Router.push("/signup")}
-                    >
-                      <p>
-                        파트너 신청하기
-                      </p>
-                    </Button>
-                  </ButtonBox>
-                </Item>
-            </ItemBox>
           </Container>
-      </CustomContainer>
+    </CustomContainer>
     );
   }
 }
@@ -73,13 +85,18 @@ const CustomContainer = styled.div`
   padding: 0px;
   width: 100%;
   height: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  background-color: #f5f5f5; !important;;
+  text-align: center;
+  margin: auto;
+  background-color: rgba(158, 159, 161, 0.12);
+  @media (min-width: 0px) and (max-width: 359.98px) {
+    width: calc(100%);
+    background-color: WHITE;
+    margin-bottom: 8px;
+  }
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    width: 100%;
+    margin-bottom: 8px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -96,16 +113,18 @@ const CustomContainer = styled.div`
 `
 
 const Container = styled.div`
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
   text-align : center;
   align-items: center;
   height: 100%;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
+  margin: auto;
+  @media (min-width: 0px) and (max-width: 359.98px) {
+    width: calc(100%);
+    padding-left: calc(5%);
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    width: calc(100%);
+    padding-left: calc(5%);
+    padding-right: calc(5%);
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -117,27 +136,7 @@ const Container = styled.div`
   }
 
   @media (min-width: 1300px) {
-    width: 1400px;
-  }
-`
-
-const Banner = styled(Container)`
-  width: 1400px;
-  height: 100%;
-  align-items: center;
-  background-color: #f5f5f5;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 0px 0px;
-    margin-bottom: 20px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    padding: 0px 0px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    padding: 0px 0px;
-  }
-  @media (min-width: 1300px) {
-    padding: 0px 0px;
+    width: 1200px;
   }
 `
 const List = styled.div`
@@ -183,7 +182,7 @@ const List = styled.div`
 const ItemBox = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #f5f5f5;
+  background-color: WHITE;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -192,89 +191,354 @@ const ItemBox = styled.div`
   }
 `
 const Item = styled.div`
-  display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  > p {
-    text-align: left;
+  justify-content: space-between;
+  text-align: center;
+  display: inline-flex;
+  @media (min-width: 0px) and (max-width: 359.98px) {
+     width: 328px;
+     height: 100%;
+     padding-bottom: 16px;
+     opacity: 0.35;
+     border-radius: 6px;
+     background-color: WHITE;
+     display: flex;
+     flex-direction: column;
+     align-items: left;
+     > p {
+       margin-top: 20px;
+     }
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100%);
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    > p {
-      margin-top: 20px;
-    }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+     item-align : center;
+     width: 90%;
+     height: 500px;
+
+     display: flex;
+     flex-direction: column;
+     align-items: left;
+     > p {
+       margin-top: 20px;
+     }
   }
   @media (min-width: 768px) {
-    width: calc(100% - 10px);
+    width: calc(100%);
     > p {
       margin-top: 20px;
     }
   }
 `
 const Image = styled(RatioImage)`
-  width: 300px;
-  height: 352px;
-  object-fit: contain;
+  width: 588px;
+  height: 523px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 140px;
   > div {
     background-size: contain;
     background-repeat: no-repeat;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 232px;
-    height: 276px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 232px;
-    height: 276px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-  margin-right: 20px;
   }
   @media (min-width: 1300px) {
-    margin-top: 0px;
-    margin-right : 20px;
   }
 `
-const Header = styled.span`
-  width: 880px;
-  height: 104px;
+const Header = styled.div`
+  width: 700px;
+  height: 47px;
+  object-fit: contain;
   font-family: NotoSansCJKkr;
-  font-size: 40px;
-  font-weight: normal;
+  font-size: 32px;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.4;
-  letter-spacing: normal;
-  text-align: center;
-  color: #061953;
+  line-height: 2.44;
+  letter-spacing: -0.8px;
+  text-align: left;
+  color: #191919;
+  padding-top: 150px;
+  padding-bottom: 60px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 50px;
-    width: 290px;
-    margin-bottom: 20px;
-    font-size: 24px;
+    height: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.81;
+    letter-spacing: -0.4px;
+    text-align: left;
+    color: #505050;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 50px;
-    width: 290px;
-    margin-bottom: 40px;
-    font-size: 24px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-top: 70px;
-    margin-bottom: 73px;
   }
   @media (min-width: 1300px) {
-    margin-top: 70px;
-    margin-bottom: 73px;
   }
 `
- const Bold = styled.span`
+const ImageTextBox = styled.div`
+  width: 588px;
+  height: 523px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 140px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  @media (min-width: 0px) and (max-width: 359.98px) {
+    width: 328px;
+    height: 192px;
+    margin-bottom: 16px;
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 16px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 350px !important;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 450px !important;
+  }
+  @media (min-width: 1300px) {
+  }
+  .BackImage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/images/main/Banner3_1.png");
+    filter: blur(2px);
+    opacity: 0.78;
+    z-index: 0;
+    @media (min-width: 0px) and (max-width: 359.98px) {
+      width: 328px;
+      height: 192px;
+      background-image: url("/static/images/main/Banner3_1_Mobile.png");
+    }
+    @media (min-width: 360px) and (max-width: 767.98px) {
+      width: 100%;
+      height: 500px;
+      background-image: url("/static/images/main/Banner3_1_Mobile.png");
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+    }
+    @media (min-width: 1300px) {
+    }
+  }
+  .BackImage2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/images/main/Banner3_2.png");
+    filter: blur(2px);
+    opacity: 0.78;
+    z-index: 0;
+    @media (min-width: 0px) and (max-width: 359.98px) {
+    width: 328px;
+    height: 192px;
+    background-image: url("/static/images/main/Banner3_2_Mobile.png");
+    }
+    @media (min-width: 360px) and (max-width: 767.98px) {
+    width: 100%;
+    height: 500px;
+    background-image: url("/static/images/main/Banner3_2_Mobile.png");
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+    }
+    @media (min-width: 1300px) {
+    }
+  }
+  .CoverImage {
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   background-color: #000000;
+   opacity: 0.55; // mouseover = 0.35
+   z-index:1;
+   : hover {
+     opacity: 0.35;
+   }
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      height: 100%;
+      width: 100%;
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+    }
+    @media (min-width: 1300px) {
+    }
+  }
+  .TextBox{
+    position: absolute;
+    padding-top: 90px;
+    padding-left: 40px;
+    z-index: 2;
+    : hover {
+    + div {
+      opacity : 0.55;
+      }
+    }
+    @media (min-width: 0px) and (max-width: 359.98px) {
+      padding-top: 27px;
+      padding-left: 21px;
+      width: 287px;
+      height: 138px;
+    }
+    @media (min-width: 360px) and (max-width: 767.98px) {
+      padding-top: 27px;
+      padding-left: 21px;
+      width: 100%;
+      height: 500px;
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+    @media (min-width: 1300px) {
+    }
+    .ImageHeader {
+        width: 363px;
+        height: 81px;
+        object-fit: contain;
+        font-size: 24px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.88;
+        letter-spacing: -0.6px;
+        text-align: left;
+        color: #ffffff;
+        @media (min-width: 0px) and (max-width: 359.98px) {
+          height: 60px;
+          font-size: 14px;
+          width: 250px;
+        }
+        @media (min-width: 360px) and (max-width: 767.98px) {
+          height: 60px;
+          font-size: 20px;
+          width: 300px;
+        }
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            width : 100%;
+            font-size: 20px;
+         }
+        @media (min-width: 992px) and (max-width: 1299.98px) {
+            width : 100%;
+        }
+        @media (min-width: 1300px) {
+        }
+    }
+  .ImageBottom {
+     width: 500px;
+     height: 188px;
+     object-fit: contain;
+     font-size: 32px;
+     font-weight: bold;
+     font-stretch: normal;
+     font-style: normal;
+     line-height: 1.66;
+     letter-spacing: -0.8px;
+     text-align: left;
+     color: #191919;
+     @media (min-width: 0px) and (max-width: 359.98px) {
+          width: 287px;
+          height: 60px;
+          font-size: 16px;
+      }
+      @media (min-width: 360px) and (max-width: 767.98px) {
+          width: 90%;
+          height: 60px;
+          font-size: 20px;
+      }
+     @media (min-width: 768px) and (max-width: 991.98px) {
+          width: 100%;
+          font-size: 26px;
+        }
+     @media (min-width: 992px) and (max-width: 1299.98px) {
+          width: 100%;
+        }
+     @media (min-width: 1300px) {
+        }
+     .ImageBold {
+      font-size: 56px;
+      letter-spacing: -1.4px;
+      color: #ffc000;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+          font-size: 20px;
+        }
+     @media (min-width: 768px) and (max-width: 991.98px) {
+          font-size: 30px;
+        }
+     @media (min-width: 992px) and (max-width: 1299.98px) {
+          font-size: 41px;
+        }
+     @media (min-width: 1300px) {
+        }
+      }
+   }
+}
+.More {
+  width: 120px;
+  height: 29px;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.7;
+  letter-spacing: -0.5px;
+  text-align: right;
+  color: #ffffff;
+  float: right;
+  padding-right: 10px;
+  padding-top: 70px;
+  position: relative;
+  cursor: pointer;
+  @media (min-width: 0px) and (max-width: 359.98px) {
+       padding: 0;
+       padding-top: 10px;
+       width: 65px;
+       height: 16px;
+       font-size: 10px;
+       font-weight: 500;
+       font-stretch: normal;
+       font-style: normal;
+       line-height: 1.6;
+       letter-spacing: -0.25px;
+       text-align: left;
+       color: #ffffff;
+       float: right;
+     }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+        display:none;
+     }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+     }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+     }
+  @media (min-width: 1300px) {
+     }
+  }
+`
+const Bold = styled.span`
   font-Weight : bold;
   font-family: NotoSansCJKkr-Bold;
 `
@@ -323,4 +587,3 @@ const ButtonBox = styled.div`
     }
   }
 `
-

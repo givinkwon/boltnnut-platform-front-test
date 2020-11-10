@@ -2,13 +2,13 @@ import React from 'react'
 import styled, {css} from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
-import InputComponent from 'components/Input2'
+import InputComponent from 'components/Input3'
 import SelectComponent from 'components/Select'
 
 
 import * as Text from 'components/Text'
 import * as Category from 'axios/Category'
-import { PRIMARY, DARKGRAY, WHITE, BLACK1 } from 'static/style'
+import { PRIMARY, DARKGRAY, WHITE, BLACK } from 'static/style'
 
 const badge_close = 'static/images/badge_close.png'
 
@@ -30,13 +30,12 @@ const customStyles = {
     fontSize: 16,
   }),
   control: () => ({
-    fontSize: 16,
-    marginTop: 12,
-    border: '1px solid #e6e6e6',
+    marginTop: 10,
+    border: '1px solid #c7c7c7',
     backgroundColor: '#fff',
     display: 'flex',
-    borderRadius: 6,
-    padding: 4,
+    borderRadius: 3,
+    padding: 5,
   }),
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
@@ -50,6 +49,8 @@ const customStyles = {
 @observer
 class CompanyConatiner extends React.Component {
   state = {
+    width : 0, 
+
     possible_search: '',
     possible_selected: null,
 
@@ -162,24 +163,45 @@ class CompanyConatiner extends React.Component {
   }
   componentDidMount() {
     this.props.Auth.getCityData()
-  }
+
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   render(){
     const {
       possible_search, possible_selected,
       history_search, history_selected
     } = this.state
     const { Auth, Answer } = this.props
+    const { width } = this.state;
+
     const { possible_list, history_list } = Answer
 
     return (
-      <div style={{marginTop: 30}}>
-        <Header>
-          <Text.FontSize20 color={WHITE} fontWeight={700}>회사정보</Text.FontSize20>
-        </Header>
+      <div style={{marginBottom : 40}}>
         <Content>
-          <W30>
-            <InputComponent placeholder='상호명을 입력해주세요' label='상호명' type='text' onChange={Auth.setCompanyName} value={Auth.company_name}/>
-          </W30>
+        { width > 767.98 ? (
+        <>
+          <Header>
+            <Text.FontSize24 color={'#0933b3'} fontWeight={700}>회사정보</Text.FontSize24>
+          </Header>
+          <W50 left>
+            <InputComponent placeholder='회사명을 입력해주세요' label='회사명' type='text' onChange={Auth.setCompanyName} value={Auth.company_name}/>
+          </W50>
+          <W50 right select>
+            <SelectBox>
+              <Text.FontSize20 color={DARKGRAY} fontWeight={500}>시/도</Text.FontSize20>
+              <SelectComponent
+                styles={customStyles} options={Auth.city_data} value={Auth.city}
+                getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
+            </SelectBox>
+          </W50>
           {/*<W30 center>
             <InputComponent placeholder='종업원 수를 입력해주세요' label='종업원 수' type='number' onChange={Auth.setEmployee} value={Auth.employee}/>
           </W30>
@@ -189,14 +211,6 @@ class CompanyConatiner extends React.Component {
           <W30>
             <InputComponent placeholder='매출액을 입력해주세요' label='매출액' type='number' onChange={Auth.setRevenue} value={Auth.revenue}/>
           </W30>*/}
-          <W30 center select>
-            <SelectBox>
-              <Text.FontSize20 color={DARKGRAY} fontWeight={500}>시/도</Text.FontSize20>
-              <SelectComponent
-                styles={customStyles} options={Auth.city_data} value={Auth.city}
-                getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
-            </SelectBox>
-          </W30>
           {/*<W30 select>
             <SelectBox>
               <Text.FontSize20 color={DARKGRAY} fontWeight={500}>지역</Text.FontSize20>
@@ -337,6 +351,63 @@ class CompanyConatiner extends React.Component {
               </W100>
             )
           }
+        </>
+        ) : (
+        <>
+          <Header>
+            <span class="Header">회사정보</span><br/>
+            <span class="SmallHeader">가능하신 제조분야를 선택해주세요.(복수선택가능)</span>
+          </Header>
+          <W100>
+            <InputComponent placeholder='회사명을 입력해주세요' label='회사명' type='text' onChange={Auth.setCompanyName} value={Auth.company_name}/>
+          </W100>
+          <W100 select>
+            <SelectBox>
+              <span class="selectHeader">시/도</span>
+              <SelectComponent
+                styles={customStyles} options={Auth.city_data} value={Auth.city}
+                getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
+            </SelectBox>
+          </W100>
+          <W100>
+            <TextBox>
+              <span class="textareaHeader">주요거래처[대표 거래처 3곳 이상]</span>
+              <TextArea style={{height : 85}} class="textareaBody1" placeholder='* 해당정보는 제조사 찾기에 노출이 되므로 우려되는 부분이 있으시다면 이니셜 위주로 써주시길 바랍니다. ex) s사, 삼성전자' col={3} onChange={Auth.setDeal} value={Auth.deal}/>
+            </TextBox>
+          </W100>
+          <W100>
+            <TextBox>
+              <span class="textareaHeader">회사소개[100자 이상]</span>
+              <TextArea style={{height : 112}} class="textareaBody2" placeholder='회사를 소개하는 글을 써주세요.' col={3} onChange={Auth.setInfoCompany} value={Auth.info_company}/>
+            </TextBox>
+          </W100>
+          <W100>
+            <TextBox>
+             <span class="textareaHeader">진행한 제품[10개 이상]</span>
+             <TextArea style={{height : 70}} class="textareaBody3" placeholder='진행하셨던 제품을 써주세요. ex) 공기청정기' col={3} onChange={Auth.setHistories} value={Auth.histories}/>
+            </TextBox>
+          </W100>
+          {
+            Auth.history_set && Auth.history_set.length > 0 && (
+              <W100>
+                <BadgeList>
+                {
+                  Auth.history_set.map((item, idx) => {
+                    return (
+                      <Badge key={idx}>
+                        <Text.FontSize20 color={DARKGRAY} fontWeight={500}>#{item.subclass}</Text.FontSize20>
+                        <img src={badge_close} onClick={() => Auth.removeHistorySet(idx)}/>
+                      </Badge>
+                    )
+                  })
+                }
+                </BadgeList>
+              </W100>
+            )
+          }
+        </>
+)}
+          
         </Content>
       </div>
     )
@@ -345,6 +416,23 @@ class CompanyConatiner extends React.Component {
 
 export default CompanyConatiner
 
+const TextBox = styled.div`
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > .textareaBody1 {
+    }
+    > .textareaBody2 {
+    }
+    > .textareaBody3 {
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
+    
+`
 const BadgeList = styled.div`
   margin-top: 15px;
   border-radius: 8px;
@@ -424,80 +512,102 @@ const Button = styled.div`
     margin-top: 0;
   }
 `
-const SearchCategory = styled.div`
-  display: flex;
-  align-items: center;
-  > p {
-    margin-top: 12px;
-    margin-right: 10px;
-    white-space: nowrap;
-    color: ${PRIMARY};
-    width: 180px;
-  }
-  > div {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    position: relative;
-    > div {
-      max-width: 420px;
-    }
-  }
+// const SearchCategory = styled.div`
+//   display: flex;
+//   align-items: center;
+//   > p {
+//     margin-top: 12px;
+//     margin-right: 10px;
+//     white-space: nowrap;
+//     color: ${PRIMARY};
+//     width: 180px;
+//   }
+//   > div {
+//     display: flex;
+//     align-items: center;
+//     width: 100%;
+//     position: relative;
+//     > div {
+//       max-width: 420px;
+//     }
+//   }
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    flex-direction: column;
-    align-items: flex-start;
-    > p {
-      margin-bottom: 12px;
-    }
-    > p:nth-of-type(2) {
-      line-height: 15px;
-      width: 100%;
-      white-space: break-spaces;
-      word-break: break-all;
-    }
-  }
+//   @media (min-width: 0px) and (max-width: 767.98px) {
+//     flex-direction: column;
+//     align-items: flex-start;
+//     > p {
+//       margin-bottom: 12px;
+//     }
+//     > p:nth-of-type(2) {
+//       line-height: 15px;
+//       width: 100%;
+//       white-space: break-spaces;
+//       word-break: break-all;
+//     }
+//   }
 
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    flex-direction: column;
-    align-items: flex-start;
-    > p {
-      margin-bottom: 12px;
-    }
-    > p:nth-of-type(2) {
-      width: 100%;
-    }
+//   @media (min-width: 768px) and (max-width: 991.98px) {
+//     flex-direction: column;
+//     align-items: flex-start;
+//     > p {
+//       margin-bottom: 12px;
+//     }
+//     > p:nth-of-type(2) {
+//       width: 100%;
+//     }
+//   }
+//   @media (min-width: 768px) and (max-width: 991.98px) {
+//     flex-direction: column;
+//     align-items: flex-start;
+//     > p {
+//       margin-bottom: 12px;
+//     }
+//     > p:nth-of-type(2) {
+//       width: 50%;
+//     }
+//    }
+//   @media (min-width: 1300px) {
+//     flex-direction: column;
+//     align-items: flex-start;
+//     > p {
+//       margin-bottom: 12px;
+//     }
+//   }
 
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    flex-direction: column;
-    align-items: flex-start;
-    > p {
-      margin-bottom: 12px;
-    }
-    > p:nth-of-type(2) {
-      width: 50%;
-    }
-   }
-  @media (min-width: 1300px) {
-    flex-direction: column;
-    align-items: flex-start;
-    > p {
-      margin-bottom: 12px;
-    }
-  }
-
-`
+// `
 const TextArea = styled.textarea`
   resize: none;
-  width: calc(100% - 30px);
+  width: calc(100% - 18px);
   margin-top: 12px;
-  border-radius: 6px;
-  border: solid 1px #dddddd;
-  padding: 15px;
+  border-radius: 2px;
+  border: solid 1px #c7c7c7;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.29;
+  letter-spacing: -0.35px;
+  color: #c7c7c7;
+
   :focus {
     outline: none;
   }
-  ::placeholder {
+  ::-webkit-input-placeholder {
+    color : #c7c7c7 !important;
+    font-weight: normal !important;
+    font-stretch: normal !important;
+    font-style: normal !important;
+    line-height: 1.7 !important;
+    letter-spacing: -0.5px !important;
+    
+  }
+  /* ::placeholder {
+    color : #c7c7c7 !important;
+    font-weight: normal !important;
+    font-stretch: normal !important;
+    font-style: normal !important;
+    line-height: 1.7 !important;
+    letter-spacing: -0.5px !important;
+
     @media (min-width: 0px) and (max-width: 767.98px) {
       font-size: 14px;
     }
@@ -510,53 +620,179 @@ const TextArea = styled.textarea`
     @media (min-width: 1300px) {
       font-size: 20px;
     }
-  }
+  } */
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
-    height: 42px;
+    padding: 8px;
+
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 16px;
     height: 48px;
+    padding: 10px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     font-size: 18px;
     height: 54px;
+    padding: 13px;
   }
   @media (min-width: 1300px) {
     font-size: 20px;
     height: 60px;
+    padding: 15px;
+
+
   }
 `
 const W100 = styled.div`
   width: 100%;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    display : inline-flex;
+    > span {
+      white-space: nowrap;
+      margin-top : auto;
+      margin-right : 1px; 
+      margin-left : 12px; 
+    }
+    .selectHeader {
+      font-size: 14px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.43;
+      letter-spacing: -0.35px;
+      color: #505050;
+    }
+    .textareaHeader {
+      font-size: 14px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.43;
+      letter-spacing: -0.35px;
+      color: #505050;
+    }
+    
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    
+  }
+  @media (min-width: 1300px) {
+    
+  }
 `
 const Header = styled.div`
-  height: 55px;
-  background-color: ${PRIMARY};
   display: flex;
   align-items: center;
-  padding: 0 15px;
-
+  width : 100%;
+  > p {
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.42;
+    letter-spacing: -0.6px;
+  }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 0px 10px;
+    > span {
+      font-stretch: normal;
+      font-style: normal;
+      font-weight: 500;
+
+    }
+    .Header {
+      font-size: 16px;
+      /* line-height: 2.13; */
+      letter-spacing: -0.4px;
+      color: #0933b3;
+      padding-bottom : 4px;
+    }
+    .SmallHeader {
+      font-size: 12px;
+      line-height: 1.17;
+      letter-spacing: -0.3px;
+      text-align: left;
+      color: #767676;
+    }
+
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+
+  }
+  @media (min-width: 1300px) {
+
   }
 `
 const Content = styled.div`
-  background-color: #f2f2f2;
-  padding: 20px;
+  border: solid 1px #c7c7c7;
+  border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
-
+  > div {
+    display : block;
+  }
+  p{
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+  }
+  div {
+    border-radius: 3px;
+  }
   > div > div > p {
-    color: #4b4b4b;
+    color: #505050;
   }
-  > div > p {
-    color: #4b4b4b;
+  .BoxText {
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.6;
+    letter-spacing: -0.25px;
+    color: #505050; 
   }
-
   @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 20px 10px 20px;
+    padding: 4.8%;
+    .BoxText {
+      font-size: 10px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 4.8%;
+
+    .BoxText {
+      font-size: 18px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    padding: 4.8%;
+
+  }
+  @media (min-width: 1300px) {
+    width : 996px;
+    padding: 40px;
+
+
+  }
+`
+const W50 = styled.div`
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    width: calc(50% - 14px);
+    ${props => props.left && css`
+      margin-right: 14px;
+    `}
+    ${props => props.right && css`
+      margin-left: 14px;
+    `}
   }
 `
 const W30 = styled.div`
@@ -576,31 +812,55 @@ const W30 = styled.div`
     `}
   }
 `
+
 const SelectBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  > p {
-    margin-top: 15px;
+  div {
+    color : #c7c7c7;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
   }
+  /* > p {
+    margin-top: 30px;
+  } */
   @media (min-width: 0px) and (max-width: 767.98px) {
     > div > div > div {
       font-size: 14px;
+    }
+    p {
+      margin-top: 8px;
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     > div > div > div {
       font-size: 16px;
     }
+    > p {
+      margin-top: 30px;
+      /* 4% */
+    }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     > div > div > div {
       font-size: 18px;
     }
+    > p {
+      margin-top: 30px;
+      /* 4% */
+    }
   }
   @media (min-width: 1300px) {
     > div > div > div {
       font-size: 20px;
+    }
+    > p {
+      margin-top: 30px;
+      /* 4% */
     }
   }
 `

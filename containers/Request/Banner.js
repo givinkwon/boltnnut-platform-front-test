@@ -6,39 +6,66 @@ import * as Text from 'components/Text'
 import { WHITE } from 'static/style'
 
 
-class BannerConatiner extends React.Component {
+class BannerContainer extends React.Component {
   render(){
     return (
       <Banner>
         <Container>
-          <Text.FontSize48 color={WHITE} fontWeight={700}>제품개발 의뢰하기</Text.FontSize48>
-          <Text.FontSize24 color={WHITE} fontWeight={400}>의뢰하고자 하는 제품에 대한 질문에 답하고 적합한 전문업체를 찾아보세요</Text.FontSize24>
+          <Text.FontSize40 color={'#0a2165'} fontWeight={700}>의뢰하기</Text.FontSize40>
+          {
+            this.props.step2 &&
+            <span> 제조사 찾기 서비스 </span>
+          }
         </Container>
       </Banner>
     )
   }
 }
 
-export default BannerConatiner
+export default BannerContainer
 
 const Banner = styled.div`
-  background-image: url('/static/images/banner.jpg');
   background-position: center;
   background-size: cover;
+  
   ${Container} {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    font-stretch: normal;
+    font-style: normal;
+    margin-top : 200px;
+    margin-bottom : 10px;
+    >p {
+      margin-right : auto;
+      margin-left : auto;
+      font-stretch: normal;
+      font-style: normal;
+    }
+    > p:nth-of-type(1){
+      line-height: 1.35;
+      letter-spacing: -1px;
+    }
     > p:nth-of-type(2){
       margin-top: 8px;
-      line-height: 1.3em;
+      line-height: 1.42;
+      letter-spacing: -0.6px;
     }
-    > p:nth-of-type(3){
-      line-height: 1.3;
+    > span {
+        height: 36px;
+        object-fit: contain;
+        font-size: 24px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.42;
+        letter-spacing: -0.6px;
+        text-align: center;
+        color: #0933b3;
     }
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  /* @media (min-width: 0px) and (max-width: 767.98px) {
     height: 180px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -49,5 +76,5 @@ const Banner = styled.div`
   }
   @media (min-width: 1300px) { 
     height: 250px;
-  }
+  } */
 `

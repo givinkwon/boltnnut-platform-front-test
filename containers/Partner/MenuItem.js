@@ -17,7 +17,7 @@ const drop_up = "/static/images/drop-up.png";
 @observer
 class MenuItemConatiner extends React.Component {
   state = {
-    is_open: false,
+    is_open: true,
     main_checked: this.props.main_checked,
     modal_open: false,
   };
@@ -58,6 +58,7 @@ class MenuItemConatiner extends React.Component {
       }
     }
     if (type === "develop") {
+      console.log(data.develop_set)
       data.develop_set.forEach((develop) => {
         const idx = Partner.search_develop.findIndex(
           (developId) => developId === develop.id
@@ -80,6 +81,7 @@ class MenuItemConatiner extends React.Component {
           main_checked: true,
         });
       }
+
     }
   };
 
@@ -113,93 +115,9 @@ class MenuItemConatiner extends React.Component {
     const { data, type, Partner } = this.props;
     const { is_open, main_checked, modal_open} = this.state;
 
-    if (type === "category") {
-      console.log("main_checked : ", main_checked);
-      return (
-        <div>
-          <Dropdown>
-            <CheckBox
-              primary
-              checked={main_checked}
-              onChange={(state) => {
-                this.setState({
-                  ...this.state,
-                  main_checked: state,
-                });
-                Partner.setParentList(state, data, "category");
-              }}
-            />
-            <div onClick={() => this.setState({ is_open: !is_open })}>
-              <Text.FontSize18 fontWeight={700} color={main_checked ? PRIMARY : '#404040'}>
-                {data.maincategory}
-              </Text.FontSize18>
-              <img
-                style={{
-                  marginLeft: "auto",
-                  width: 14,
-                  height: 14,
-                  marginRight: 10,
-                }}
-                src={is_open ? drop_up : drop_down}
-              />
-            </div>
-          </Dropdown>
-          {is_open && (
-            <>
-              {data.category_set.length > 0 &&
-                data.category_set.map((item, idx) => {
-                  return (
-                    <SmallCheck key={idx}>
-                      <CustomCheckBox
-                        checked={Partner.search_category.indexOf(item.id) > -1}
-                        onClick={() => {
-                          Partner.setList(item.id, "category");
-                          this.checkDisabled();
-                        }}
-                      >
-                        {item.category}
-                      </CustomCheckBox>
-                    </SmallCheck>
-                  );
-                })}
-            </>
-          )}
-        </div>
-      );
-    }
     if (type === "develop") {
-      console.log("main_checked : ", main_checked);
       return (
         <div>
-          <Dropdown>
-            <CheckBox
-              primary
-              checked={main_checked}
-              onChange={(state) => {
-                this.setState({
-                  ...this.state,
-                  main_checked: state,
-                });
-                Partner.setParentList(state, data, "develop");
-              }}
-            />
-            <div onClick={() => this.setState({ is_open: !is_open })}>
-              <Text.FontSize18 fontWeight={700} color={main_checked ? PRIMARY : '#404040'}>
-                {data.maincategory}
-              </Text.FontSize18>
-              <img
-                style={{
-                  marginLeft: "auto",
-                  width: 14,
-                  height: 14,
-                  marginRight: 10,
-                }}
-                src={is_open ? drop_up : drop_down}
-              />
-            </div>
-          </Dropdown>
-          {is_open && (
-            <>
               {data.develop_set.length > 0 &&
                 data.develop_set.map((item, idx) => {
                   return (
@@ -216,8 +134,6 @@ class MenuItemConatiner extends React.Component {
                     </SmallCheck>
                   );
                 })}
-            </>
-          )}
         </div>
       );
     }
@@ -243,10 +159,13 @@ const Dropdown = styled.div`
 `;
 
 const SmallCheck = styled.div`
-  padding: 2px 0px;
-  margin-left: 10px;
-  transform: scale(0.8);
-  :last-of-type {
-    margin-bottom: 10px;
-  }
+  height: 36px;
+  font-size: 24px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.42;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #191919;
 `;

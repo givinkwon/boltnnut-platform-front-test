@@ -142,7 +142,7 @@ const CustomContainer = styled.div`
 const Container = styled.div`
   margin-right: auto;
   margin-left: auto;
-  height: 100%
+  height: 100%;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100% - 40px);
@@ -185,11 +185,11 @@ const List = styled.div`
   height : 100%;
   padding-top : 0px;
   :focus {
-    outline: none; !important
+    outline: none !important;
     border: none;
   }
   .ItemBox {
-    outline: none; !important
+    outline: none !important
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 0px;
@@ -259,12 +259,12 @@ const ItemBox = styled.div`
   display: inline-flex;
   flex-direction: row;
   :focus {
-    outline: none; !important
-    border: none; !important
+    outline: none !important;
+    border: none !important;
   }
   >div {
    :focus {
-     outline: none; !important
+     outline: none !important
    }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -387,7 +387,6 @@ const Header = styled.span`
 const Middle = styled.span`
   width: 270px;
   height: 59px;
-  font-family: NotoSansCJKkr;
   font-size: 40px;
   font-weight: bold;
   font-stretch: normal;
@@ -397,10 +396,10 @@ const Middle = styled.span`
   text-align: left;
   color: #061953;
   margin-top: 10px;
-  }
+  
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 20px;
-    text-align:center;
+    font-size : 20px;
+    text-align : center;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 22px;

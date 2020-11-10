@@ -1,38 +1,63 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+
 import TextField from '@material-ui/core/TextField';
 
 
 const CustomInput = withStyles({
   root: {
-    width: '100%',
-    margin: '15px 0',
+    // width: ${props => props.width ? props.width : "100%"};
+    // width: '100%',
+    marginTop: '35px',
+    border : '1px',
+    borderRadius: '3px',
+    
     '& label': {
-      color: '#fff9',
+      color: '#c7c7c7',
     },
-    '& input': {
-      color: '#fff',
-      '&::placeholder': {
-        color: '#fff',
-      }
+    '& placeholder' : {
+      fontSize: '20',
+      fontWeight: 'normal',
+      fontStretch: 'normal',
+      fontStyle: 'normal',
+      lineHeight: '1.7',
+      letterSpacing: '-0.5px',
     },
     '& label.Mui-focused': {
-      color: '#fff',
+      color: '#c7c7c7',
     },
-    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-      borderBottom: '2px solid #fff9',
-    },
-    '& .MuiInput-underline:before': {
-      borderBottom: '1px solid #fff9',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#fff',
+    "& .MuiInput-underline:after": {
+      borderColor: "#0933b3"
     },
     '& .MuiOutlinedInput-root': {
-      '&.Mui-focused fieldset': {
-        borderColor: '#fff',
+      "& fieldset": {
+        borderColor: "#c7c7c7"
       },
-    },              
+      "&:hover fieldset": {
+        borderColor: "#0933b3"
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#0933b3',
+      },
+    }, 
+    // '& input': {
+    //   color: '#999999',
+    //   '&::placeholder': {
+    //     color: '#c7c7c7',
+    //   }
+    // },
+    // '& .MuiTextField-root': {
+    // },
+    // '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+    //   borderBottom: '2px solid #c7c7c7',
+    // },
+    // '& .MuiInput-underline:before': {
+    //   borderBottom: '1px solid #c7c7c7',
+    // },
+    // '& .MuiInput-underline:after': {
+    //   borderBottomColor: '#c7c7c7',
+    // },       
   },            
 })(TextField);
 
@@ -60,13 +85,16 @@ class Input extends React.Component {
   }
   render() {
     const { focused } = this.state
-    const { placeholder, label, ...props } = this.props 
+    const { placeholder, label, outlined, variant, ...props } = this.props 
     return ( 
-      <CustomInput {...props} 
+      <CustomInput {...props}
+        id= {this.id} 
         label={focused ? label : placeholder} 
+        outlined={this.outlined}
         onFocus={this.onFocus} 
         onBlur={this.onBlur} 
-        onChange={this.onChange}/>
+        onChange={this.onChange}
+        variant="outlined"/>
     )
   }
 }

@@ -745,7 +745,7 @@ const RightArrow = styled(RatioImage)`
   > div {
     background-size: contain;
     background-repeat: no-repeat;
-    background-position = right;
+    background-position : right;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     max-width: 400px;
@@ -760,7 +760,7 @@ const LeftArrow = styled(RatioImage)`
   > div {
     background-size: contain;
     background-repeat: no-repeat;
-    background-position = right;
+    background-position : right;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     height: 100%;
@@ -770,6 +770,8 @@ const LeftArrow = styled(RatioImage)`
   }
 
   @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
   }
 `
 const Space = styled.div`
@@ -794,64 +796,63 @@ const Space = styled.div`
   }
 `
 // slider circle
-const LineContainer = styled.div` {
+const LineContainer = styled.div` 
   position: relative;
   width: 100%;
   height: 30px;
   margin-top: 69px;
-}
+
 `
-const LineContainer2 = styled.div` {
+const LineContainer2 = styled.div` 
   position: relative;
   width: 100%;
   height: 30px;
   margin-top: 12px;
   margin-bottom: 40px;
-}
+
 `
-const SubContainer = styled.div` {
+const SubContainer = styled.div` 
   position: absolute;
   width: 100%;
   height: 100%;
   display: table;
   font-size: 0; /* div 사이의 간격을 없애기 위해서 씀*/
 `
-const TableCellContainer = styled.div` {
+const TableCellContainer = styled.div` 
   width: 100%;
   height: 100%;
   display: table-cell;
   vertical-align: middle;
   text-align: center;
-}
+
 `
-const TextCellContainer = styled.div` {
+const TextCellContainer = styled.div` 
   display: table-cell;
   vertical-align: middle;
   text-align: center;
-}
+
 `
-const ContentBox = styled.div` {
+const ContentBox = styled.div` 
   display: inline-table;
   width: calc(100% / 5);
   position: relative;
   height: 100%;
   vertical-align: middle;
-}
+
 `
-const EndLine = styled.div` {
+const EndLine = styled.div` 
   display: inline-table;
   width: calc(70% / 5);
   position: relative;
   height: 100%;
   vertical-align: middle;
-}
 `
 const Circle = styled.div`
   font-size: 16px;
   width: 28px;
   height: 28px;
   margin:auto;
-  justify-contents: center;
+  justify-content: center;
   align-items: center;
   color: #707070;
   line-height: 20px;
@@ -859,27 +860,28 @@ const Circle = styled.div`
   display: block;
   z-index: 100;
   vertical-align: middle;
+
   position: relative; /* z-index는 relative 등의 특정 포지션에서만 작동함 */
   transform: translateX(10px);
   > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .after {
-  border-radius: 16px;
-  width: 100%;
-  height: 28px;
-  border: 2px solid #061953;
-  background-color: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    height: 28px;
+    border: 2px solid #061953;
+    background-color: #ffffff;
   }
   .active {
-  border-radius: 16px;
-  width: 100%;
-  height: 28px;
-  border: 1px solid #061953;
-  background-color: #061953;
-  color: white;
+    border-radius: 16px;
+    width: 100%;
+    height: 28px;
+    border: 1px solid #061953;
+    background-color: #061953;
+    color: white;
   }
   .normal {
     width: 100%;
@@ -930,5 +932,4 @@ const SlideText = styled.div`
 
   @media (min-width: 1300px) {
   }
-}
 `

@@ -7,9 +7,16 @@ import { WHITE, PRIMARY } from "static/style";
 
 const WhiteCheckbox = withStyles({
   root: {
-    color: WHITE,
+    color: "#c7c7c7",
+    borderRadius: "3px",
     "&$checked": {
       color: WHITE,
+    "input:hover ~ &": {
+      boederColor: "#0933b3",
+    },
+    "&$checked": {
+      color: "#0933b3",
+    },
     },
   },
   checked: {},

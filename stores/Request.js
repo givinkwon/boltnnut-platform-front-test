@@ -6,14 +6,13 @@ import * as RequestAPI from "axios/Request";
 import Router from "next/router";
 
 class Request {
-
-
   @observable client_id = -1;
   @observable select_reqs = [];
 
   @observable id = null;
   @observable tab = 0;
   @observable type = "";
+  @observable step = 0;
 
   @observable created_request = null;
   @observable check_list = [];
@@ -51,16 +50,34 @@ class Request {
    // save_writed_request
   @observable input_name = "";
   @observable input_phone = "";
+  @observable input_phone2 = "";
+  @observable input_phone3 = "";
   @observable input_content = "";
 
   @observable input_day = null;
   @observable input_price = null;
 
+  @action setInputName = (val) => {
+    console.log(val)
+    this.input_name = val;
+  };
   @action setType = (val) => {
     this.type = val;
   };
   @action setTab = (val) => {
     this.tab = val;
+  };
+  @action setStep = (val) => {
+    this.step = val;
+  };
+  @action setInputPhone = (val) => {
+    this.input_phone = val;
+  };
+  @action setInputPhone2 = (val) => {
+    this.input_phone2 = val;
+  };
+  @action setInputPhone3 = (val) => {
+    this.input_phone3 = val;
   };
   @action init = (q) => {
     CategoryAPI.getMainCategory()
@@ -73,13 +90,13 @@ class Request {
             this.initial_contents.push(this.big_category_list[i].category_set[j].subclass_set)
           }
         }
-
         this.setQuery(q);
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
+  console.log(this.big_category_list)
   };
   @action setBigCategory = (obj) => {
     /*

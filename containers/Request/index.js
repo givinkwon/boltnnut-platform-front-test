@@ -1,16 +1,14 @@
-import React, { useCallback } from 'react'
+
+import React from 'react'
 import { inject, observer } from 'mobx-react'
+import styled from "styled-components";
 import InfoContainer from "./Detail/Info";
 import BannerContainer from './Banner'
-import Banner2Container from './Banner2'
-import SearchBarContainer from './SearchBar'
-import ContentContainer from './Content'
-import * as Text from 'components/Text'
-import {PRIMARY, WHITE, DARKGRAY, BLACK, BLACK1} from "static/style";
-import styled, {css} from "styled-components"
-import Container from "components/Container";
-import PartnerInfoContainer from "./Partner";
-import CounterContainer from "./Counter";
+import Step1Container from "./Step1";
+import Step2Conatiner from "./Step2";
+import SearchBarContainer2 from "Partner/NewSearchBar2";
+import CompleteBannerContainer from "./Detail/NewComplete";
+
 
 import Router from 'next/router';
 
@@ -18,30 +16,47 @@ import Router from 'next/router';
 import 'react-count-animation/dist/count.min.css';
 import AnimationCount from 'react-count-animation';
 
-// slicker
-import Slider from "react-slick";
-const search_ic = 'static/icon/search.png'
-const right = 'static/icon/right-arrow.png'
-import RatioImage from 'components/RatioImage'
-
-@inject('Partner', 'Request')
+@inject('Request')
 @observer
 class RequestConatiner extends React.Component {
+  state = {
+    step2: false,
+    complete: false,
+  }
+
+  componentDidMount () {
+    const { Request } = this.props;
+  }
 
   render () {
-    const { Request, Partner } = this.props;
+    const { Request } = this.props
+    const { step2 } = this.state;
 
-  return (
+    return (
       <>
-        <BannerContainer/>
-        <SearchBarContainer/>
+        {Request.step === 1 ? (<BannerContainer step2 = {true}/>) : (<BannerContainer/>)}
+        {Request.step === 0 && <Step1Container/>}
+        {Request.step === 1 &&
+        <>
+        <SearchBarContainer2/>
+        <MarginContainer/>
+        </>
+        }
+        {Request.step === 2 && <CompleteBannerContainer/>}
+        {/*Request.step === 1 && <SearchBarContainer2/>*/}
+        {/* <SearchBarContainer/>
         <br/><br/><br/><br/>
         <CounterContainer />
         <PartnerInfoContainer />
-        <br/><br/><br/><br/>
+        <br/><br/><br/><br/> */}
       </>
     )
   }
 }
 
 export default RequestConatiner
+
+const MarginContainer = styled.div`
+  height: 200px;
+  margin-bottome: 200px;
+`

@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx'
 
 import * as CategoryAPI from 'axios/Category'
+import * as RequestAPI from 'axios/Request'
 
 class Home {
   @observable category_list = []
@@ -8,6 +9,7 @@ class Home {
   @observable magazine_list = []
   @observable magazine_next = null
   @observable is_ie = false
+  @observable request_list = []
 
   @action init = () => {
     CategoryAPI.getMainCategory()
@@ -28,6 +30,17 @@ class Home {
       })
 
     this.loadAllMagazine()
+
+    //0930 added
+    this.setLatestRequests()
+  }
+
+  @action setLatestRequests = async () => {
+    await RequestAPI.getRequests()
+      .then(res => {
+        this.request_list = res.data.results
+      }
+      )
   }
 
   @action loadAllMagazine = () => {

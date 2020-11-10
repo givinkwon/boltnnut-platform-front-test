@@ -97,49 +97,7 @@ class NewBanner5Container extends React.Component {
           <Item>
             <Image src={image14} active={true}/>
           </Item>
-          <Item>
-            <Image src={image16} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image17} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image18} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image19} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image20} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image21} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image22} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image23} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image24} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image25} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image26} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image27} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image28} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image29} active={true}/>
-          </Item>
-          <FooterBox>
+          {/*<FooterBox>
                     <ButtonBox>
                 <Button
                 id={'request'}
@@ -153,8 +111,7 @@ class NewBanner5Container extends React.Component {
                 </Text.FontSize24>
                 </Button>
             </ButtonBox>
-            </FooterBox>
-
+            </FooterBox>*/}
       </Category>
       </Banner>
     )
@@ -165,7 +122,8 @@ export default NewBanner5Container;
 
 const Banner = styled(Container)`
   @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 20px 0px;
+    background-color: white;
+
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     padding: 40px 0px;
@@ -228,12 +186,12 @@ const Item = styled.div`
 `
 const Image = styled(RatioImage)`
   cursor: pointer;
-  //border: 2px solid #ddd;
-  //border-radius: 200px !important;
   margin-bottom: 20px;
-  //${props => props.active && css`
-  //  border: 2px solid ${PRIMARY};
-  //`}
+  /* border: 2px solid #ddd;
+  border-radius: 200px !important;  
+  ${props => props.active && css`
+    border: 2px solid ${PRIMARY};
+  `} */
 `
 const HeaderBox = styled.div`
   width: 100%;
@@ -284,7 +242,7 @@ const ButtonBox = styled.div`
     margin-right: 10px;
     width: 100% !important;
     height: fit-content;
-    padding: 22px 0px 14px 0px; !important;
+    padding: 22px 0px 14px 0px !important;
     background-color: #ffc000 !important;;
     text-align: center;
     align-items: center;
@@ -308,7 +266,7 @@ const ButtonBox = styled.div`
 
       }
     }
-    }
+  }
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 63px;
     margin-bottom: 40px;
@@ -326,14 +284,13 @@ const ButtonBox = styled.div`
     margin-top: 104px;
     margin-bottom: 0px;
   }
-  }
+  
 `
 
 const Header = styled.div`
   margin-top: 100px;
   width: 720px;
   height: 107px;
-  font-family: NotoSansCJKkr;
   font-size: 32px;
   font-weight: normal;
   font-stretch: normal;
@@ -342,22 +299,20 @@ const Header = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: #061953;
-  }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 80px;
-    margin-bottom: 60px;
+    margin-top: 24px;
+    margin-bottom: 9px;
     font-size: 18px !important;
-  width: 550px;
-  height: 100%;
-  font-family: NotoSansCJKkr;
-  font-size: 20px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.25;
-  letter-spacing: normal;
-  text-align: center;
-  color: #061953;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    text-align: center;
+    color: #061953;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 80px;

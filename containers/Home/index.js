@@ -16,25 +16,59 @@ import NewBanner2Container from './NewBanner2';
 import NewBanner3Container from './NewBanner3';
 import NewBanner4Container from './NewBanner4';
 import NewBanner5Container from './NewBanner5';
+import ReviewBanner from './ReviewerBanner';
 
 class HomeConatiner extends React.Component {
-  render() {
-    return (
-      <>
-
-        <BannerConatiner/>
-        <NewBanner1Container/>
-        <NewBanner2Container/>
-        <NewBanner3Container/>
-        <NewBanner4Container/>
-        <MagazineConatiner/>
-        <NewBanner5Container/>
-
-        <LogoConatiner/>
-      </>
-    )
+  state = {
+    next: true,
+    prev: false,
+    width: 0,
+    tab: 0,
   }
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  render() {
+    const { width } = this.state;
+    return (
+    <>
+      { width < 360 ? (
+      <>
+        <CustomContainer>
+          <BannerConatiner/>
+          <MagazineConatiner/>
+          <NewBanner5Container/>
+          <NewBanner4Container/>
+          <ReviewBanner/>
+          <LogoConatiner/>
+        </CustomContainer>
+      </>
+          ) : (
+          <>
+            <BannerConatiner/>
+            {width > 768 && <MagazineConatiner/>}
+            <NewBanner5Container/>
+            <NewBanner4Container/>
+            <ReviewBanner/>
+            <LogoConatiner/>
+          </>
+          )
+          } </>
+      )
+}
 }
 
 export default HomeConatiner
+
+const CustomContainer = styled.div`
+  background-color: #e1e5e6;
+  margin-top: 2px;
+`
 

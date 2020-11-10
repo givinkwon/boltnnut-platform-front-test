@@ -25,7 +25,7 @@ const customStyles = {
   control: () => ({
     fontSize: 16,
     lineHeight: 1.2,
-    border: "1px solid #e6e6e6",
+    border: "1px solid #c7c7c7",
     display: "flex",
   }),
   singleValue: (provided, state) => {
