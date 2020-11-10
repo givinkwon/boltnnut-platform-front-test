@@ -7,7 +7,7 @@ import TabContainer from "./Tab";
 
 import ManufacturerContainer from "./Manufacturer";
 import SearchContainer from "./Search";
-import ProductContainer from "./product";
+import ProductContainer from "./Product";
 
 
 @inject('Request')
