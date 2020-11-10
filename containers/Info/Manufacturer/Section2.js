@@ -286,7 +286,7 @@ const Item = styled.div`
     margin: 0;
     width: calc(33.33% - 30px);
   }
-  @media (min-width: 992px) and (max-width: 1199.98px) {
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     display: flex;
     flex-direction: column;
     align-items: center;

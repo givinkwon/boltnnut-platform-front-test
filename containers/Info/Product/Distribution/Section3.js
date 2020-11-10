@@ -10,9 +10,12 @@ import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
 
 const person = "/static/icon/info/person.png";
 const star = "/static/icon/info/star.png";
-
+const file = "/static/file/distributor_service.pdf"
 
 class Section4Container extends React.Component {
+  Next = () => {
+    Router.push(file)
+  }
   render() {
     return (
         <CustomContainer>

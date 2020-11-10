@@ -127,6 +127,7 @@ class Section1Container extends React.Component {
                         </TextContainer>
                   
                       </Item>
+                      <Image src={right}></Image>
                       <Item>
                         <Itemheader>
                             <Text.FontSize30>STEP 4</Text.FontSize30>
