@@ -15,17 +15,49 @@ const step4 = "/static/icon/info/Search_step4.png";
 
 
 class Section1Container extends React.Component {
+  state = {
+    width: 0,
+  }
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   render() {
+    const {width } = this.state
+     var settings = {
+      dots: false,
+      infinite: false,
+      slidesToShow: 1,
+      slidesToScroll: 1,  
+      centerMode : true, 
+      initialSlide: 0,
+      draggable: true,
+      arrows: false,
+      centerPadding: "38px",
+      variableWidth: true,
+      
+      beforeChange: (current) => {
+        this.setState({current: current})
+      },
+    };
     return (
         <CustomContainer>
             <Container>
               <Header>서비스 이용단계</Header>
-              <ItemBox>
+              { width > 767.98 ? (
+                <>
+                <ItemBox>
                   <Item>
                     <Itemheader>
                         <Text.FontSize30>STEP 1</Text.FontSize30>
                     </Itemheader>
-                    <Step1 src={step1}></Step1>
+                    <Step src={step1}></Step>
                     <Text.FontSize26>목표 제품 정량화</Text.FontSize26>
                     <Text.FontSize20>찾고자 하는 Benchmark 제품 리스트 정리,  희망 발주 견적, 수량 등을 알려드립니다.</Text.FontSize20>
                   </Item>
@@ -34,7 +66,7 @@ class Section1Container extends React.Component {
                     <Itemheader>
                         <Text.FontSize30>STEP 2</Text.FontSize30>
                     </Itemheader>
-                    <Step2 src={step2}></Step2>
+                    <Step src={step2}></Step>
                     <Text.FontSize26>해당 업체 수배 및 소통</Text.FontSize26>
                     <Text.FontSize20>목표 제품을 생산할 수 있는 업체와의 소통을 통해 고객이 원하는 조건의 발주 가능 여부 확인해 드립니다.</Text.FontSize20>
                   </Item>
@@ -43,11 +75,54 @@ class Section1Container extends React.Component {
                     <Itemheader>
                         <Text.FontSize30>STEP 3</Text.FontSize30>
                     </Itemheader>
-                    <Step3 src={step3}></Step3>
+                    <Step src={step3}></Step>
                     <Text.FontSize26>국내외 업체 정보 전달</Text.FontSize26>
                     <Text.FontSize20>국내외 업체 정보 및 도매가, MOQ 등에 대해 보고서 형태로 전달해 드립니다.</Text.FontSize20>
                   </Item>
-              </ItemBox>
+                </ItemBox>
+                </>
+              ) : (
+                <>
+                <List>
+                  <Slider {...settings}>
+                      <Item>
+                        <Itemheader>
+                            <Text.FontSize30>STEP 1</Text.FontSize30>
+                        </Itemheader>
+                        <Step src={step1}></Step>
+                        <Text.FontSize26>목표 제품 정량화</Text.FontSize26>
+                        <TextContainer>
+                          <Text.FontSize20>찾고자 하는 Benchmark 제품 리스트 정리,  희망 발주 견적, 수량 등을 알려드립니다.</Text.FontSize20>
+                        </TextContainer>
+                      </Item>
+                      <Image src={right}></Image>
+                      <Item>
+                        <Itemheader>
+                            <Text.FontSize30>STEP 2</Text.FontSize30>
+                        </Itemheader>
+                        <Step src={step2}></Step>
+                        <Text.FontSize26>해당 업체 수배 및 소통</Text.FontSize26>
+                        <TextContainer>
+                          <Text.FontSize20>목표 제품을 생산할 수 있는 업체와의 소통을 통해 고객이 원하는 조건의 발주 가능 여부 확인해 드립니다.</Text.FontSize20>
+                        </TextContainer>
+                      </Item>
+                      <Image src={right}></Image>
+                      <Item>
+                        <Itemheader>
+                            <Text.FontSize30>STEP 3</Text.FontSize30>
+                        </Itemheader>
+                        <Step src={step3}></Step>
+                        <Text.FontSize26>국내외 업체 정보 전달</Text.FontSize26>
+                        <TextContainer>
+                          <Text.FontSize20>국내외 업체 정보 및 도매가, MOQ 등에 대해 보고서 형태로 전달해 드립니다.</Text.FontSize20>
+                        </TextContainer>
+                        
+                      </Item>
+                  </Slider>
+                </List>
+                </>
+              )}
+              
             </Container>
         </CustomContainer>
     );
@@ -55,10 +130,81 @@ class Section1Container extends React.Component {
 }
 
 export default Section1Container;
+const TextContainer = styled.div`
+  > p { 
+    text-align :center;
+  }
+  @media (min-width: 0px) and (max-width: 359.98px) {
+    max-width : 136px;
+    padding: 0px 22px;
+    > p {
+      font-size: 10px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.6;
+      letter-spacing: -0.25px;
+      text-align: center;
+      color: #191919;
+    } 
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    max-width : 200px;
+    padding: 0px 22px;
+    padding-bottom : 15px;
+    > p {
+      font-size: 10px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.6;
+      letter-spacing: -0.25px;
+      text-align: center;
+      color: #191919;
+    } 
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
+`
+
+
+const List = styled.div`
+  @media (min-width: 0px) and (max-width: 359.98px) {
+    padding-top: 16px;
+    padding-bottom : 40px;
+    .slick-list {
+      /* width: 100%; */
+    }
+    .slick-track {
+      width : max-content !important;
+    }
+  }
+  @media (min-width: 360px) and (max-width: 767.98px) {
+    padding-top: 16px;
+    padding-bottom : 40px;
+    .slick-list {
+      /* width: 100%; */
+    }
+    .slick-track {
+      width : max-content !important;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
+`
 const CustomContainer = styled.div`
   padding: 0px;
   width: 100%;
-  margin-bottom : 150px;
+  padding-bottom : 150px;
+  background-color: #f5f7f7;
   p {
       text-align : center ;
   }
@@ -97,20 +243,40 @@ const Itemheader = styled.div`
     
 `
 const Image = styled.img`
-  width: 42px;
-  margin : 0px 42px;    
+  
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 20px !important;
+    margin: 200px 30px 0px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 30px;
+    margin: 200px 30px 0px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 30px;
+    margin : 0px 1.27%;
+  }
+  @media (min-width: 1300px) {
+    width: 42px;
+    margin : 0px 1.27%;
+  }    
 `;
-const Step1 = styled.img`
-  width: 131px;
-  margin-top : 70px;
-`;
-const Step2 = styled.img`
-  width: 161px;
-  margin-top : 70px;
-`;
-const Step3 = styled.img`
-  width: 104px;
-  margin-top : 70px;
+const Step = styled.img`
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin : 58px auto 46px; 
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 131px;
+    margin-top : 80px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 131px;
+    margin-top : 80px;
+  } 
+  @media (min-width: 1300px) {
+    margin-top : 54px;
+  }
 `;
 
 const Header = styled.div`
@@ -124,23 +290,25 @@ const Header = styled.div`
   color: #505050;
   margin : auto ;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 50px;
-    width: 290px;
-    margin-bottom: 20px;
+    margin-top:110px;
+    padding-top: 80px;
+    padding-bottom: 60px;
     font-size: 24px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 50px;
-    width: 290px;
-    margin-bottom: 40px;
+    margin-top:110px;
+    padding-top: 80px;
+    padding-bottom: 60px;
     font-size: 24px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-top: 70px;
-    margin-bottom: 73px;
+    margin-top:110px;
+    padding-top: 80px;
+    padding-bottom: 60px;
   }
   @media (min-width: 1300px) {
-    padding-top: 150px;
+    margin-top:110px;
+    padding-top: 80px;
     padding-bottom: 60px;
   }
 `
@@ -150,6 +318,7 @@ const ItemBox = styled.div`
   justify-content: space-between;
   text-align: center;
   display: inline-flex;
+  
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100%);
     display: flex;
@@ -159,16 +328,39 @@ const ItemBox = styled.div`
       margin-top: 20px;
     }
   }
-  @media (min-width: 768px) {
-    width: 1400px;
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+    >div:nth-of-type(1) {
+      margin-left : 3%
+    }
+    >div:nth-of-type(3) {
+      margin-right : 3%
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+    >div:nth-of-type(1) {
+      margin-left : 12%
+    }
+    >div:nth-of-type(3) {
+      margin-right : 12%
+    }
+  }
+  @media (min-width: 1300px) {
+    width: 100%;
     > p {
       margin-top: 20px;
+    }
+    >div:nth-of-type(1) {
+      margin-left : 17.36%
+    }
+    >div:nth-of-type(3) {
+      margin-right : 17.36%
     }
   }
 `
 const Item = styled.div`
-  width: 100%;
-  height : 525px;
+
   justify-content: center;
   align-items: center;
   position: relative;
@@ -176,8 +368,74 @@ const Item = styled.div`
   /* border: ; */
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   overflow: hidden;
-  > p:nth-of-type(1) {
-    margin-top : 70px;
+  
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+    height : 100%;
+    flex-direction: column;
+    > p {
+      font-size: 16px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 0.81;
+      letter-spacing: -0.4px;
+      color: #191919;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+    > p:nth-of-type(1) {
+      margin-top : 46px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.31;
+      letter-spacing: -0.65px;
+    }
+    > p:nth-of-type(2) {
+      margin-top : 10px;
+      margin-bottom : 9% ;
+      margin-left: 15.6%;
+      margin-right: 15.6%;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.65;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+    height : 525px;
+    > p:nth-of-type(1) {
+      margin-top : 46px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.31;
+      letter-spacing: -0.65px;
+    }
+    > p:nth-of-type(2) {
+      margin-top : 10px;
+      margin-bottom : 9% ;
+      margin-left: 15.6%;
+      margin-right: 15.6%;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.65;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  @media (min-width: 1300px) {
+    width: 100%;
+    height : 525px;
+    > p:nth-of-type(1) {
+    margin-top : 46px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
@@ -186,7 +444,7 @@ const Item = styled.div`
   }
   > p:nth-of-type(2) {
     margin-top : 10px;
-    margin-bottom : 80px ;
+    margin-bottom : 9% ;
     margin-left: 15.6%;
     margin-right: 15.6%;
     font-weight: normal;
@@ -194,6 +452,7 @@ const Item = styled.div`
     font-style: normal;
     line-height: 1.65;
     letter-spacing: -0.5px;
+  }
   }
 `
 

@@ -16,7 +16,7 @@ class Section2Container extends React.Component {
     return (
         <CustomContainer>
             <Container>
-              <Header>성공 사례</Header>
+              <Header>성공한 사례</Header>
               <ItemBox>
                   <Image src={person}/>
                   <Item>
@@ -85,14 +85,47 @@ const ItemBox = styled.div`
   }
 `
 const Image = styled.img`
-  width: 80px;
-  height: 89px;
-  margin : 85px 0px 0px 75px;
+  
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 64px;
+    height: 64px;
+    margin : 27px 0px 0px 16px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 80px;
+    height: 89px;
+    margin : 85px 0px 0px 75px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 80px;
+    height: 89px;
+    margin : 85px 0px 0px 75px;
+  }
+  @media (min-width: 1300px) {
+    width: 80px;
+    height: 89px;
+    margin : 85px 0px 0px 75px;
+  }
      
 `;
 const Star = styled.img`
-  width: 134px;
-  height: 31px;
+  
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 50px;
+    height: 10px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 134px;
+    height: 31px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 134px;
+    height: 31px;
+  }
+  @media (min-width: 1300px) {
+    width: 134px;
+    height: 31px;
+  }
 `;
 
 
@@ -107,20 +140,20 @@ const Header = styled.div`
   color: #505050;
   margin : auto ;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 50px;
+    padding-top: 50px;
     width: 290px;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
     font-size: 24px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 50px;
+    padding-top: 50px;
     width: 290px;
-    margin-bottom: 40px;
+    padding-bottom: 40px;
     font-size: 24px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-top: 70px;
-    margin-bottom: 73px;
+    padding-top: 70px;
+    padding-bottom: 73px;
   }
   @media (min-width: 1300px) {
     padding-top: 150px;
@@ -130,12 +163,14 @@ const Header = styled.div`
 
 const Item = styled.div`
   width : 100% ;
-  margin: 40px 50px; 
   text-align : left;
   > div {
     margin-bottom : 10px;
     font-stretch: normal;
     font-style: normal;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      margin-bottom : 0px;
+    }
   }
   > div:nth-of-type(1) {
     font-weight: bold;
@@ -157,6 +192,9 @@ const Item = styled.div`
     letter-spacing: -0.65px;
     text-align: left;
     color: #191919;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      margin-bottom : 13px
+    }
   }
 
   .Header {
@@ -170,9 +208,14 @@ const Item = styled.div`
     line-height: 1.42;
     letter-spacing: -0.6px;
     color: #191919;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      p { 
+        height : 18px;
+      }
+    }
   }
   .Body1 {
-      display : inline-flex;
+    display : inline-flex;
     p {
         text-align : left ; 
     }
@@ -182,6 +225,11 @@ const Item = styled.div`
     line-height: 1.5;
     letter-spacing: -0.45px;
     color: #191919;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      p { 
+        font-size : 10px !important;
+      }
+    }
   }
   .Body2 {
     p {
@@ -193,6 +241,31 @@ const Item = styled.div`
     line-height: 1.5;
     letter-spacing: -0.45px;
     color: #191919;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      p { 
+        font-size : 10px !important;
+      }
+    }
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin: 12px 0px 0px 20px; 
+
+
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin: 40px 50px; 
+
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin: 40px 50px; 
+
+  }
+
+  @media (min-width: 1300px) {
+    margin: 40px 50px; 
+
   }
 `
 

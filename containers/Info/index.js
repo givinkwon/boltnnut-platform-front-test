@@ -43,7 +43,6 @@ class AnswerConatiner extends React.Component {
         <TabContainer setTab={this.setTab} />
         {Request.tab == 0 && <ManufacturerContainer/>}
         {(Request.tab == 1 ||Request.tab == 2) && <ProductContainer/>}
-
         {Request.tab == 3 && <SearchContainer/>}
 
       </>

@@ -58,20 +58,15 @@ class Step0Conatiner extends React.Component {
             
             <ButtonBox>
               <Button active={Request.tab === 1} onClick={async() => await Request.setTab(1)}>
-                <div style={{margin : 0}}>
+                <div style={{margin : 50}}>
                   <Text.FontSize36 color={'#191919'} fontWeight={700}>유통 제조</Text.FontSize36>
                   <Text.FontSize26 color={'#767676'} fontWeight={500}>개발시간, 개발비용, MOQ, 생산단가, 생산시간 등 제품에 필요한 모든 요소를 고려하여 제품 개발과 생산의 A-Z까지 설계해드립니다. 볼트앤너트의 프로젝트 매니저가 귀사의 개발팀장이 되어 개발/생산과정을 제시해드립니다</Text.FontSize26>
                 </div>
               </Button>
               <Button active={Request.tab === 2} onClick={async() => await Request.setTab(2)}>
-                <div style={{margin : 0}}>
+                <div style={{margin : 50}}>
                   <Text.FontSize36 color={'#191919'} fontWeight={700}>R&D 제조</Text.FontSize36>
-                  <Text.FontSize24 color={'#767676'} fontWeight={500}>제품의 최적화를 위해 기능 명세를 기반으로
-개발부터 생산까지 턴키 서비스를 통해 제조 
-프로세스를 설계해드립니다.
-R&D 요소 최적화, 양산 사이클 관리, 기간 
-조정을 통해 양산 Follow-up 비용 최대 
-40% 절감해보세요</Text.FontSize24>            
+                  <Text.FontSize24 color={'#767676'} fontWeight={500}>제품의 최적화를 위해 기능 명세를 기반으로 개발부터 생산까지 턴키 서비스를 통해 제조 프로세스를 설계해드립니다. R&D 요소 최적화, 양산 사이클 관리, 기간 조정을 통해 양산 Follow-up 비용 최대 40% 절감해보세요</Text.FontSize24>            
                 </div>
               </Button>
             </ButtonBox>
@@ -87,15 +82,15 @@ R&D 요소 최적화, 양산 사이클 관리, 기간
             </LineBox>
             <ButtonBox>
               <Button active={Request.tab == 1} onClick={async() => await Request.setTab(1)}>
-                <div style={{margin : 0}}>
-                  <Text.FontSize36 color={'#191919'} fontWeight={700}>클라이언트</Text.FontSize36>
-                  <Text.FontSize24 color={'#767676'} fontWeight={500}>의뢰를 하고자하는 의뢰자</Text.FontSize24>
+                <div style={{margin : 10}}>
+                  <Text.FontSize36 color={'#191919'} fontWeight={700}>유통 제조</Text.FontSize36>
+                  <Text.FontSize24 class="ButtonTextBody" color={'#767676'} fontWeight={500}>개발시간, 개발비용, MOQ, 생산단가, 생산시간 등 제품에 필요한 모든 요소를 고려하여 제품 개발과 생산의 A-Z까지 설계해드립니다.</Text.FontSize24>
                 </div>
               </Button>
               <Button active={Request.tab == 2} onClick={async() => await Request.setTab(2)}>
-                <div style={{margin : 0}}>
-                  <Text.FontSize36 color={'#191919'} fontWeight={700}>전문가</Text.FontSize36>
-                  <Text.FontSize24 color={'#767676'} fontWeight={500}>제조 전문성을 가진 제조사</Text.FontSize24>            
+                <div style={{margin : 10}}>
+                  <Text.FontSize36 color={'#191919'} fontWeight={700}>R&D 제조</Text.FontSize36>
+                  <Text.FontSize24 color={'#767676'} fontWeight={500}>제품의 최적화를 위해 기능 명세를 기반으로 개발부터 생산까지 턴키 서비스를 통해 제조 프로세스를 설계해드립니다.</Text.FontSize24>            
                 </div>
               </Button>
             </ButtonBox>
@@ -232,6 +227,9 @@ const Button = styled.div`
     :nth-of-type(2) {
       line-height: 1.42;
       letter-spacing: -0.6px;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        font-size: 12px !important;
+      }
     }
   }
   

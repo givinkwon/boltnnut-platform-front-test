@@ -109,7 +109,7 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 2</Text.FontSize30>
                         </Itemheader>
-                        <Step src={step1}></Step>
+                        <Step src={step2}></Step>
                         <Text.FontSize26>컨설턴트 상담</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>1000 건 이상의 프로젝트 데이터를 바탕으로 전문 개발사를 매칭해드립니다</Text.FontSize20>
@@ -120,7 +120,7 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 3</Text.FontSize30>
                         </Itemheader>
-                        <Step src={step1}></Step>
+                        <Step src={step3}></Step>
                         <Text.FontSize26>개발사 정보/가견적 전달</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>매칭된 전문 개발사의 정보와 가견적을 전달해드립니다</Text.FontSize20>
@@ -132,7 +132,7 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 4</Text.FontSize30>
                         </Itemheader>
-                        <Step src={step1}></Step>
+                        <Step src={step4}></Step>
                         <Text.FontSize26>미팅 주선</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>원하시는 조건의 전문개발사와 3자미팅을 주선해드립니다</Text.FontSize20>

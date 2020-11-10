@@ -90,9 +90,22 @@ class TabConatiner extends React.Component {
 
     const settings = {
       infinite: true,
-      nextArrow: <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={right}/>,
-      prevArrow: <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={left}/>
-    };
+      
+      responsive: [
+        {
+          breakpoint: 3000,
+          settings: {
+            nextArrow: <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={right}/>,
+            prevArrow: <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={left}/>,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+          },
+        },
+      ]
+    }
     return (
       <Container>
         <TabsContainer>
