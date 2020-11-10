@@ -6,7 +6,7 @@ import * as Text from 'components/Text'
 import { WHITE } from 'static/style'
 
 
-class BannerConatiner extends React.Component {
+class BannerContainer extends React.Component {
   render(){
     return (
       <Banner>
@@ -22,7 +22,7 @@ class BannerConatiner extends React.Component {
   }
 }
 
-export default BannerConatiner
+export default BannerContainer
 
 const Banner = styled.div`
   background-position: center;

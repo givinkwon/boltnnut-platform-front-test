@@ -1,3 +1,4 @@
+
 import React from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
@@ -34,14 +35,14 @@ class Section1Container extends React.Component {
       dots: false,
       infinite: false,
       slidesToShow: 1,
-      slidesToScroll: 1,  
-      centerMode : true, 
+      slidesToScroll: 1,
+      centerMode : true,
       initialSlide: 0,
       draggable: true,
       arrows: false,
       centerPadding: "38px",
       variableWidth: true,
-      
+
       beforeChange: (current) => {
         this.setState({current: current})
       },
@@ -109,7 +110,7 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 2</Text.FontSize30>
                         </Itemheader>
-                        <Step src={step1}></Step>
+                        <Step src={step2}></Step>
                         <Text.FontSize26>컨설턴트 상담</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>1000 건 이상의 프로젝트 데이터를 바탕으로 전문 개발사를 매칭해드립니다</Text.FontSize20>
@@ -120,19 +121,19 @@ class Section1Container extends React.Component {
                         <Itemheader>
                             <Text.FontSize30>STEP 3</Text.FontSize30>
                         </Itemheader>
-                        <Step src={step1}></Step>
+                        <Step src={step3}></Step>
                         <Text.FontSize26>개발사 정보/가견적 전달</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>매칭된 전문 개발사의 정보와 가견적을 전달해드립니다</Text.FontSize20>
                         </TextContainer>
-                        
+
                       </Item>
                       <Image src={right}></Image>
                       <Item>
                         <Itemheader>
                             <Text.FontSize30>STEP 4</Text.FontSize30>
                         </Itemheader>
-                        <Step src={step1}></Step>
+                        <Step src={step4}></Step>
                         <Text.FontSize26>미팅 주선</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>원하시는 조건의 전문개발사와 3자미팅을 주선해드립니다</Text.FontSize20>
@@ -142,7 +143,7 @@ class Section1Container extends React.Component {
                 </List>
                 </>
               )}
-              
+
             </Container>
         </CustomContainer>
     );
@@ -151,7 +152,7 @@ class Section1Container extends React.Component {
 
 export default Section1Container;
 const TextContainer = styled.div`
-  > p { 
+  > p {
     text-align :center;
   }
   @media (min-width: 0px) and (max-width: 359.98px) {
@@ -166,7 +167,7 @@ const TextContainer = styled.div`
       letter-spacing: -0.25px;
       text-align: center;
       color: #191919;
-    } 
+    }
   }
   @media (min-width: 360px) and (max-width: 767.98px) {
     max-width : 200px;
@@ -181,7 +182,7 @@ const TextContainer = styled.div`
       letter-spacing: -0.25px;
       text-align: center;
       color: #191919;
-    } 
+    }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
   }
@@ -260,10 +261,10 @@ const Itemheader = styled.div`
       line-height: 1.23;
       letter-spacing: 0.75px;
     }
-    
+
 `
 const Image = styled.img`
-  
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 20px !important;
     margin: 200px 30px 0px;
@@ -279,12 +280,12 @@ const Image = styled.img`
   @media (min-width: 1300px) {
     width: 42px;
     margin : 0px 1.27%;
-  }    
+  }
 `;
 const Step = styled.img`
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin : 58px auto 46px; 
+    margin : 58px auto 46px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 131px;
@@ -293,7 +294,7 @@ const Step = styled.img`
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 131px;
     margin-top : 80px;
-  } 
+  }
   @media (min-width: 1300px) {
     margin-top : 54px;
   }
@@ -338,7 +339,7 @@ const ItemBox = styled.div`
   justify-content: space-between;
   text-align: center;
   display: inline-flex;
-  
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100%);
     display: flex;
@@ -388,7 +389,7 @@ const Item = styled.div`
   /* border: ; */
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   overflow: hidden;
-  
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 100%;
     height : 100%;
@@ -501,4 +502,3 @@ const Container = styled.div`
     width: 1200px;
   } */
 `
-

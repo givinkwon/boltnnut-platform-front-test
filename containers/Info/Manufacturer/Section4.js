@@ -1,3 +1,4 @@
+
 import React from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
@@ -13,6 +14,9 @@ const star = "/static/icon/info/star.png";
 
 
 class Section4Container extends React.Component {
+  Next = () => {
+    Router.push("/request?big=4&mid=")
+  }
   render() {
     return (
         <CustomContainer>
@@ -20,7 +24,7 @@ class Section4Container extends React.Component {
               <ItemBox>
                 <Text.FontSize40>볼트앤너트는 <span>원하시는 제품을<br/>성공적으로 만들 수 있도록</span><br/>최선을 다하겠습니다. </Text.FontSize40>
                 <NextButton backgroundColor={'#0a2165'} borderColor={'#e6e6e6'} onClick={this.Next}>
-                    <Text.FontSize32 color={'#ffffff'} fontWeight={500}>무료 가견적 문의하기</Text.FontSize32>
+                    <Text.FontSize32 color={'#ffffff'} fontWeight={500} onClick={this.Next}>무료 가견적 문의하기</Text.FontSize32>
                 </NextButton>
               </ItemBox>
             </Container>
@@ -35,7 +39,7 @@ const ItemBox = styled.div`
   display: inline;
   width: 100%;
   margin-bottom : 200px;
-  > p { 
+  > p {
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -48,7 +52,7 @@ const ItemBox = styled.div`
       color: #0933b3;
     }
   }
-  
+
 
   @media (min-width: 0px) and (max-width: 359.98px) {
     width: calc(100%);
@@ -175,4 +179,3 @@ const Container = styled.div`
     width: 1200px;
   } */
 `
-

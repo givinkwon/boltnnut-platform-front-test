@@ -1,11 +1,14 @@
+
 import React from 'react'
 import { inject, observer } from 'mobx-react'
+import styled from "styled-components";
 import InfoContainer from "./Detail/Info";
 import BannerContainer from './Banner'
 import Step1Container from "./Step1";
 import Step2Conatiner from "./Step2";
 import SearchBarContainer2 from "Partner/NewSearchBar2";
 import CompleteBannerContainer from "./Detail/NewComplete";
+
 
 import Router from 'next/router';
 
@@ -33,8 +36,13 @@ class RequestConatiner extends React.Component {
       <>
         {Request.step === 1 ? (<BannerContainer step2 = {true}/>) : (<BannerContainer/>)}
         {Request.step === 0 && <Step1Container/>}
-        {Request.step === 1 && <SearchBarContainer2/>}
-        {Request.step === 2 && <CompleteBannerConatiner/>}
+        {Request.step === 1 &&
+        <>
+        <SearchBarContainer2/>
+        <MarginContainer/>
+        </>
+        }
+        {Request.step === 2 && <CompleteBannerContainer/>}
         {/*Request.step === 1 && <SearchBarContainer2/>*/}
         {/* <SearchBarContainer/>
         <br/><br/><br/><br/>
@@ -47,3 +55,8 @@ class RequestConatiner extends React.Component {
 }
 
 export default RequestConatiner
+
+const MarginContainer = styled.div`
+  height: 200px;
+  margin-bottome: 200px;
+`
