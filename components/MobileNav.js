@@ -119,14 +119,24 @@ class MobileNav extends React.Component {
           <NavWrap/>
           <NavWrap2>
             <Logo src={logo_ic} onClick={() => Router.push("/")} />
-            <NavLink
+            {
+              !this.props.Auth.logged_in_user ? (
+              <NavLink
                   onClick={() => {
                     Router.push("/login"), Auth.reset();
                   }}
                   active={url.indexOf("login") > -1}
                 >
                   로그인
-            </NavLink>
+              </NavLink>
+              ) : (
+              <NavLink
+                onClick={this.logout}
+                >
+                  로그아웃
+              </NavLink>
+              )
+            }
           </NavWrap2>
           <NavWrap3>
             <NavLink3
