@@ -31,8 +31,8 @@ class NewBanner5Container extends React.Component {
             dots: true
           }
         },
-      ]
-    }
+        ]
+      }
     return (
     <CustomContainer>
           <Container>
@@ -48,7 +48,8 @@ class NewBanner5Container extends React.Component {
                           <span class="ImageBold"> 제품발주조건 </span>
                            을 알려드리는 국내외 공장 수배 서비스를 이용해보세요
                         </div>
-                        <div class="More">
+                        <div class="More"
+                          onClick = {() => Router.push(`/info`)}>
                            자세히 보기 >
                         </div>
                       </div>
@@ -64,7 +65,8 @@ class NewBanner5Container extends React.Component {
                           <span class="ImageBold"> 개발/생산 비용 </span>
                            을 포함한 제품의 모든 것을 알려드리는 유통 제조 서비스를 이용해보세요
                         </div>
-                        <div class="More">
+                        <div class="More"
+                          onClick = {() => Router.push(`/info`)}>
                            자세히 보기 >
                         </div>
                       </div>
@@ -509,6 +511,7 @@ const ImageTextBox = styled.div`
   padding-right: 10px;
   padding-top: 70px;
   position: relative;
+  cursor: pointer;
   @media (min-width: 0px) and (max-width: 359.98px) {
        padding: 0;
        padding-top: 10px;

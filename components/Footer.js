@@ -65,36 +65,6 @@ class FooterComponent extends React.Component {
         </Container>
         <Container>
           <div>
-            {/* <TextBox>
-              <Text.FontSize14
-                color={WHITE}
-                fontWeight={500}
-                onClick={() => Router.push("/notice")}
-              >
-                공지사항
-              </Text.FontSize14>
-              <Text.FontSize14
-                color={WHITE}
-                fontWeight={500}
-                onClick={() => {
-                  if (Auth.logged_in_partner) {
-                    Router.push("/info?tab=2");
-                  }
-                  else {
-                    Router.push("/info?tab=1");
-                  }
-                }}
-              >
-                이용안내
-              </Text.FontSize14>
-              <Text.FontSize14
-                color={WHITE}
-                fontWeight={500}
-                onClick={() => Router.push("/store?tab=1")}
-              >
-                이용 요금
-              </Text.FontSize14>
-            </TextBox> */}
             <TextBox>
               <Text.FontSize18
                 color={WHITE}
@@ -125,13 +95,6 @@ class FooterComponent extends React.Component {
               >
                 개인정보 처리 방침
               </Text.FontSize18>
-              {/* <Text.FontSize14
-                color={WHITE}
-                fontWeight={500}
-                onClick={() => Router.push("/faq?tab=1")}
-              >
-                자주 묻는 질문
-              </Text.FontSize14> */}
             </TextBox>
           </div>
         </Container>
@@ -317,7 +280,7 @@ const CompanyInfoContainer = styled.div`
     line-height: 1.47;
     letter-spacing: -0.38px;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.99px) {
     width: 100%;
     padding-left: 16px;
     padding-top: 24px;
@@ -358,7 +321,7 @@ const CompanyInfo = styled.div`
     margin-left: auto;
     width: fit-content;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.99px) {
     width: 154px;
     height: 76px;
     position: absolute;
@@ -397,7 +360,7 @@ const CompanyInfo2 = styled.div`
     margin-left: auto;
     width: fit-content;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.99px) {
     width: 120px;
     height: 91px;
     flex-direction: column;
@@ -495,7 +458,7 @@ const MobileFooter = styled.div`
   > div:nth-of-type(2) {
     position: relative;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.99px) {
     width: 100%
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -515,7 +478,7 @@ const MobileContainer = styled.div`
   padding: 0px 0px;
   display : inline-flex;
   justify-content: center;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.99px) {
     width: 100%
     color: white;
     display: inline-flex;
