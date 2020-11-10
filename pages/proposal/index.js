@@ -53,12 +53,16 @@ class Proposal extends React.Component {
           <title>볼트앤너트</title>
         </Head>
         <>
-        { width > 450 ? (
+        { width &&
+        <>
+        ({ width > 450 ? (
           <Nav />
           ) : (
           <MobileNav/>
           )
         }
+        </>
+        )}
         </>
         <ProposalConatiner/>
         <Footer/>
