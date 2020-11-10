@@ -57,7 +57,7 @@ class ReviewBanner extends React.Component {
                 <Header>볼트앤너트 제품 개선 사례</Header>
               </HeaderBox>
               <>
-              { width > 768 ? (
+              { width > 767.98 ? (
               <>
                 <Item1>
                   <Image src={image2}/>
@@ -297,8 +297,8 @@ const TextBox = styled.div`
   letter-spacing: -0.75px;
   text-align: left;
   color: #191919;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 240px;
+  @media (min-width: 0px) and (max-width: 767.97px) {
+    width: auto;
     height: 58px;
     font-size: 20px;
     font-weight: bold;
@@ -308,7 +308,7 @@ const TextBox = styled.div`
     padding-top : calc(5%);
     padding-left: calc(6%);
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.98px) and (max-width: 991.98px) {
     font-size : 28px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
@@ -328,7 +328,7 @@ const TextBox = styled.div`
   letter-spacing: 0.5px;
   text-align: left;
   color: #505050;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.97px) {
     height: 24px;
     object-fit: contain;
     font-size: 16px;
@@ -343,7 +343,7 @@ const TextBox = styled.div`
     padding-top : calc(3%);
     padding-left: calc(6%);
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 768.98px) and (max-width: 991.98px) {
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
   }
@@ -364,7 +364,7 @@ const TextBox = styled.div`
   letter-spacing: -0.45px;
   text-align: left;
   color: #767676;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.97px) {
     width: 217px;
     height: 66px;
     object-fit: contain;
@@ -380,7 +380,7 @@ const TextBox = styled.div`
     padding-left: calc(6%);
     margin: 0;
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.98px) and (max-width: 991.98px) {
     width: 100%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
@@ -427,9 +427,11 @@ const Item1 = styled.div`
   }
   @media (min-width: 360px) and (max-width: 767.98px) {
     width: 100%;
+    height: 372px;
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.98px) and (max-width: 991.98px) {
     width: 720px;
+    display: inline-flex !important;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 930px;
@@ -437,35 +439,6 @@ const Item1 = styled.div`
   @media (min-width: 1300px) {
   }
 `
-const ItemContainer = styled.div`
-`
-const Item2 = styled.div`
-  display: flex;
-  padding-top: 100px;
-  padding-bottom: 107px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  > p {
-    text-align: left;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100%);
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    > p {
-      margin-top: 20px;
-    }
-  }
-  @media (min-width: 768px) {
-    width: calc(100% - 10px);
-    > p {
-      margin-top: 20px;
-    }
-  }
-`
-
 const Image = styled(RatioImage)`
   width: 587px;
   height: 391px;
@@ -475,15 +448,15 @@ const Image = styled(RatioImage)`
   border-radius: 10px;
   > div {
     background-repeat: no-repeat;
-
+    height: 100%;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.97px) {
      width: calc(100%);
-     height: 154px;
+     height: calc(42.6%);
      object-fit: contain;
      border-radius: 4px;
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 767.98px) and (max-width: 991.98px) {
     height: 100%;
     width: 50%;
   }
@@ -539,7 +512,7 @@ const ButtonBox = styled.div`
 `
 const List = styled.div`
   width: 100%;
-  @media (min-width: 0px) and (max-width: 359.98px) {
+  @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 16px;
     .slick-list {
       width: 100%;
@@ -558,7 +531,7 @@ const List = styled.div`
     .slick-list {
       width: 100%;
       > div > div {
-        width: 22% !important;
+        width: 270px !important;
         margin-right: 16px;
       }
       > div > div > div > div  {

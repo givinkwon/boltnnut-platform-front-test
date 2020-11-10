@@ -186,7 +186,7 @@ const Title = styled.div`
   text-align: center;
   color: #191919;
   word-break: keep-all;
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 768.98px) {
         width: 100%;
         height: 58px;
         padding-top: 52px;
@@ -201,7 +201,7 @@ const Title = styled.div`
         color: #191919;
         padding-bottom: 32px;
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 768.99px) and (max-width: 991.98px) {
         font-size: 37px !important;
         width: 60%;
         height: 22.3%;
@@ -246,12 +246,12 @@ const Subtitle = styled(Text.FontSize20)`
         display : inline-block;
         text-align: center;
     }
-  @media (min-width: 480px) and (max-width: 767.98px) {
+  @media (min-width: 480px) and (max-width: 768.98px) {
         width : 100% !important;
         display : inline-block;
         text-align: center;
     }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 768.99px) and (max-width: 991.98px) {
   	    width : 720px !important;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
