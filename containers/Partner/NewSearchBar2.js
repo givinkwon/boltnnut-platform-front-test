@@ -655,7 +655,7 @@ class SearchBarContainer2 extends React.Component {
                  onClick = {this.submit}
                  style={{margin: 'auto'}}
                >
-                 <span> 무료 가견적 넣기 </span>
+                 <span> 무료 가견적 받기 </span>
                </MobileButton2>
                <img src={ddarrow} style={{float: 'right', paddingRight: '10%'}}
                 onClick = {this.showDetail}
@@ -668,7 +668,7 @@ class SearchBarContainer2 extends React.Component {
            <SelectRow style={{justifyContent: 'center'}}>
                <MobileButton2
                 onClick = {this.showDetail}>
-                 <span> 무료 가견적 넣기 </span>
+                 <span> 무료 가견적 받기 </span>
                </MobileButton2>
            </SelectRow>
          </>
