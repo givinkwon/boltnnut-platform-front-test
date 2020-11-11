@@ -90,11 +90,13 @@ class ContentConatiner extends React.Component {
 
     if(width > 768){
       var settings = {
-        dots: true,
-        infinite: false,
+        dots: false,
+        infinite: true,
         slidesToShow: 2,
         slidesToScroll: 2,
         initialSlide: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
         rows: 3,
         beforeChange: (current) => {
           this.setState({current: current})
@@ -125,7 +127,7 @@ class ContentConatiner extends React.Component {
         infinite: false,
         slidesToShow: 1,
         slidesToScroll: 1,
-        initialSlide: 0,
+        initialSlide: 1,
         rows: 3,
         beforeChange: (current) => {
           this.setState({current: current})
