@@ -245,7 +245,7 @@ const TextBox2 = styled.div`
 
   }
 `
-const ButtonBox = styled.div`
+const ButtonBox = styled.a`
   width: 274px;
   height: 64px;
   border-radius: 4px;
