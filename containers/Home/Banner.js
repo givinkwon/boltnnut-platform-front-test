@@ -58,7 +58,7 @@ class BannerConatiner extends React.Component {
               id={'request'}
               backgroundColor={WHITE + "00"}
               borderColor={WHITE}
-              onClick={() => Router.push("/request")}
+              onClick={() => Router.push("/partner")}
             >
               <Text.FontSize32 color={WHITE} fontWeight={500} borderRadius={0} style={{height: 47, display: "flex", alignItems: "center"}}>
                 제조사 찾기
