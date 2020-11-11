@@ -295,7 +295,7 @@ class SearchBarContainer2 extends React.Component {
               value = {this.state.due_max}
               step={1}
               min={0}
-              max={48}
+              max={12}
               valueLabelDisplay="auto"
             />
           </BarWrapper>

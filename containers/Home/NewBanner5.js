@@ -40,7 +40,8 @@ class NewBanner5Container extends React.Component {
                 <Item>
                     <ImageTextBox>
                       <div class="BackImage"/>
-                      <div class="TextBox">
+                      <div class="TextBox"
+                        onClick = {() => Router.push(`/info`)}>
                         <div class="ImageHeader">
                           경쟁력 있는 제품을 찾고 계신가요?
                         </div>
@@ -48,8 +49,7 @@ class NewBanner5Container extends React.Component {
                           <span class="ImageBold"> 제품발주조건 </span>
                            을 알려드리는 국내외 공장 수배 서비스를 이용해보세요
                         </div>
-                        <div class="More"
-                          onClick = {() => Router.push(`/info`)}>
+                        <div class="More">
                            자세히 보기 >
                         </div>
                       </div>
@@ -57,7 +57,8 @@ class NewBanner5Container extends React.Component {
                     </ImageTextBox>
                     <ImageTextBox>
                       <div class="BackImage2"/>
-                      <div class="TextBox">
+                      <div class="TextBox"
+                        onClick = {() => Router.push(`/info`)}>
                         <div class="ImageHeader">
                           경쟁력 있는 제품을 만들고 싶은가요?
                         </div>
@@ -65,8 +66,7 @@ class NewBanner5Container extends React.Component {
                           <span class="ImageBold"> 개발/생산 비용 </span>
                            을 포함한 제품의 모든 것을 알려드리는 유통 제조 서비스를 이용해보세요
                         </div>
-                        <div class="More"
-                          onClick = {() => Router.push(`/info`)}>
+                        <div class="More">
                            자세히 보기 >
                         </div>
                       </div>
@@ -369,7 +369,9 @@ const ImageTextBox = styled.div`
    background-color: #000000;
    opacity: 0.55; // mouseover = 0.35
    z-index:1;
-   : hover {
+   cursor: pointer;
+
+   :hover {
      opacity: 0.35;
    }
     @media (min-width: 0px) and (max-width: 767.98px) {
@@ -388,11 +390,14 @@ const ImageTextBox = styled.div`
     padding-top: 90px;
     padding-left: 40px;
     z-index: 2;
-    : hover {
+    cursor: pointer;
+
+    :hover {
     + div {
-      opacity : 0.55;
+      opacity : 0.35;
       }
     }
+    
     @media (min-width: 0px) and (max-width: 359.98px) {
       padding-top: 27px;
       padding-left: 21px;
@@ -578,11 +583,11 @@ const ButtonBox = styled.div`
       }
     }
     @media (min-width: 0px) and (max-width: 767.98px) {
-        width : 50%
+        width : 50%;
         margin-bottom: 44px;
     }
     @media (min-width: 768px) and (max-width: 991.98px) {
-  	    width : 30%
+  	    width : 30%;
         margin-bottom: 44px;
     }
   }

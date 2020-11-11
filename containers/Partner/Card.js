@@ -152,47 +152,93 @@ class CardContainer extends Component {
       console.log(item)
       return (
       <Card>
-        <SummaryContainer>
-          <Image src={item.logo}/>
-          <TextBox>
-            <div class="Header">
-              {item.name}
-            </div>
-            <div class="Body">
-              {item.info_company.substring(0,50)} ...
-            </div>
-            <div class="devbox">
-            { width > 767.99 ? (
-            <>
-              {
-                item.category.length > 0 && item.category.slice(0,4).map((item1,idx) => {
-                  return (
-                    <div class="develop">
-                      {item1.category}
-                    </div>
-                  )
-                })
-              }
-            </>
-              ) : (
-            <>
-              {
-                item.category.length > 0 && item.category.slice(0,3).map((item1,idx) => {
-                  return (
-                    <div class="develop">
-                      {item1.category}
-                    </div>
-                  )
-                })
-              }
-            </>
-              )}
-              {
-                item.category.length > 5 && "..."
-              }
-            </div>
-          </TextBox>
-        </SummaryContainer>
+        { showDrop == true ? (
+          <SummaryContainer onClick = {this.detailDown}>
+            <Image src={item.logo}/>
+            <TextBox>
+              <div class="Header">
+                {item.name}
+              </div>
+              <div class="Body">
+                {item.info_company.substring(0,50)} ...
+              </div>
+              <div class="devbox">
+              { width > 767.99 ? (
+              <>
+                {
+                  item.category.length > 0 && item.category.slice(0,4).map((item1,idx) => {
+                    return (
+                      <div class="develop">
+                        {item1.category}
+                      </div>
+                    )
+                  })
+                }
+              </>
+                ) : (
+              <>
+                {
+                  item.category.length > 0 && item.category.slice(0,3).map((item1,idx) => {
+                    return (
+                      <div class="develop">
+                        {item1.category}
+                      </div>
+                    )
+                  })
+                }
+              </>
+                )}
+                {
+                  item.category.length > 5 && "..."
+                }
+              </div>
+            </TextBox>
+          </SummaryContainer>
+          ) : (
+            <SummaryContainer onClick = {this.detailUp}>
+              <Image src={item.logo}/>
+              <TextBox>
+                <div class="Header">
+                  {item.name}
+                </div>
+                <div class="Body">
+                  {item.info_company.substring(0,50)} ...
+                </div>
+                <div class="devbox">
+                { width > 767.99 ? (
+                <>
+                  {
+                    item.category.length > 0 && item.category.slice(0,4).map((item1,idx) => {
+                      return (
+                        <div class="develop">
+                          {item1.category}
+                        </div>
+                      )
+                    })
+                  }
+                </>
+                  ) : (
+                <>
+                  {
+                    item.category.length > 0 && item.category.slice(0,3).map((item1,idx) => {
+                      return (
+                        <div class="develop">
+                          {item1.category}
+                        </div>
+                      )
+                    })
+                  }
+                </>
+                  )}
+                  {
+                    item.category.length > 5 && "..."
+                  }
+                </div>
+              </TextBox>
+            </SummaryContainer>
+          )
+        }
+        
         <div class="dropdown">
           { showDrop == true ? (
               <img src={dropdown} onClick = {this.detailDown}/>
@@ -316,6 +362,8 @@ const SummaryContainer = styled.div`
   display: inline-flex;
   width: 100%;
   padding-top: 33px;
+  cursor: pointer;
+
   @media (min-width: 0px) and (max-width: 767.99px) {
       padding: 0;
       padding-top: 16px;
