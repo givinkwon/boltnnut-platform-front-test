@@ -78,7 +78,7 @@ class BannerConatiner extends React.Component {
               id={'request'}
               backgroundColor={WHITE + "00"}
               borderColor={WHITE}
-              onClick={() => Router.push("/request")}
+              onClick={() => Router.push("/partner")}
               >
               <span> 제조사 찾기 </span>
             </MobileButton>
