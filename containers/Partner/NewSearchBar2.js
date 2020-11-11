@@ -100,7 +100,7 @@ const MobilecustomStyles = {
 class SearchBarContainer2 extends React.Component {
   constructor(props) {
     super(props);
-    this.portfolio = React.createRef();
+    this.file = React.createRef();
   }
 
   state = {
@@ -112,7 +112,8 @@ class SearchBarContainer2 extends React.Component {
     //due_min: 0,
     due_max: [0,0],
     show_detail: "none",
-    portfolioValue: '',
+    fileName: '',
+    file:'',
     width: 0,
     temp_min: 0,
     temp_max: 0,
@@ -128,11 +129,11 @@ class SearchBarContainer2 extends React.Component {
     console.log(Request.type)
   }
 
-  onChangePortfolio = (e) => {
+  onChangeFile = (e) => {
     if(e.currentTarget.files.length === 0) {
       this.setState({
         ...this.state,
-        portfolioValue: '',
+        fileName: '',
       })
       return
     }
@@ -140,8 +141,10 @@ class SearchBarContainer2 extends React.Component {
     const fileName = e.currentTarget.files[0].name;
     this.setState({
       ...this.state,
-      portfolioValue: fileName,
+      file: e.currentTarget.files[0],
+      fileName: fileName,
     })
+
 
     this.props.Auth.setFile(e.currentTarget.files[0])
   }
@@ -395,7 +398,7 @@ class SearchBarContainer2 extends React.Component {
 
   submit = () => {
     const { Request } = this.props;
-    const {file, price_max, due_max} = this.state;
+    const {fileName, file, price_max, due_max} = this.state;
 
     if (!Request.input_name) {
       alert("제품 의뢰명을 입력해주세요.");
@@ -425,8 +428,8 @@ class SearchBarContainer2 extends React.Component {
 
     formData.append("phone", Request.input_phone + Request.input_phone2 + Request.input_phone3);
     //
-    if(file) {
-      formData.append("file", file);
+    if(this.state.file) {
+      formData.append("file", this.state.file);
     }
     const req = {
       data: formData,
@@ -539,14 +542,14 @@ class SearchBarContainer2 extends React.Component {
             제품도면
           </Title>
           <FileBox
-            onClick = {()=>this.portfolio.current.click()}>
+            onClick = {()=>this.file.current.click()}>
             <input
-              onChange = {this.onChangePortfolio}
+              onChange = {this.onChangeFile}
               type = "file"
               style={{display: 'none'}}
-              ref={this.portfolio}
+              ref={this.file}
               />
-            <span> { this.state.portfolioValue ? this.state.portfolioValue : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
+            <span> { this.state.fileName ? this.state.fileName : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
             <img
               src="/static/images/mask.png"
               />
@@ -636,14 +639,14 @@ class SearchBarContainer2 extends React.Component {
              첨부파일
            </Title>
            <FileBox
-            onClick = {()=>this.portfolio.current.click()}>
+            onClick = {()=>this.file.current.click()}>
             <input
-              onChange = {this.onChangePortfolio}
+              onChange = {this.onChangeFile}
               type = "file"
               style={{display: 'none'}}
-              ref={this.portfolio}
+              ref={this.file}
               />
-            <span> { this.state.portfolioValue ? this.state.portfolioValue : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
+            <span> { this.state.fileName ? this.state.fileName : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
             <img
               src="/static/images/mask.png"
               />
