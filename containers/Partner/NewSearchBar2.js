@@ -569,7 +569,7 @@ class SearchBarContainer2 extends React.Component {
               onClick={this.submit}
             >
               <Text.FontSize26 color={WHITE} fontWeight={500} borderRadius={0} style={{display: "flex", alignItems: "center"}}>
-                가견적 넣기
+                가견적 받기
               </Text.FontSize26>
             </Button>
           </ButtonBox>
