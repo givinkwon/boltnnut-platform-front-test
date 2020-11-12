@@ -35,7 +35,6 @@ class RequestConatiner extends React.Component {
     return (
       <>
         {Request.step === 0 ? (<BannerContainer step2 = {true}/>) : (<BannerContainer/>)}
-        {/* {Request.step === 0 && <Step1Container/>} */}
         {Request.step === 0 &&
         <>
         <SearchBarContainer2
@@ -43,12 +42,6 @@ class RequestConatiner extends React.Component {
         </>
         }
         {Request.step === 1 && <CompleteBannerContainer/>}
-        {/*Request.step === 1 && <SearchBarContainer2/>*/}
-        {/* <SearchBarContainer/>
-        <br/><br/><br/><br/>
-        <CounterContainer />
-        <PartnerInfoContainer />
-        <br/><br/><br/><br/> */}
       </>
     )
   }
