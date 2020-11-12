@@ -26,7 +26,7 @@ import MobileSlider from "react-slick";
 
 //image
 const phone = 'static/images/phone.png'
-const file = 'static/images/mask.png'
+const file = 'static/images/Mask.png'
 const ddarrow = 'static/images/partner/Arrow.png'
 
 //test
