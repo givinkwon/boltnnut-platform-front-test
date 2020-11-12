@@ -8,7 +8,7 @@ import Step1Container from "./Step1";
 import Step2Conatiner from "./Step2";
 import SearchBarContainer2 from "Partner/NewSearchBar2";
 import CompleteBannerContainer from "./Detail/NewComplete";
-
+import CounterContainer from "./Counter"
 
 import Router from 'next/router';
 
@@ -38,8 +38,8 @@ class RequestConatiner extends React.Component {
         {/* {Request.step === 0 && <Step1Container/>} */}
         {Request.step === 0 &&
         <>
-        <SearchBarContainer2/>
-        <MarginContainer/>
+        <SearchBarContainer2
+          is_request={true}/>
         </>
         }
         {Request.step === 1 && <CompleteBannerContainer/>}

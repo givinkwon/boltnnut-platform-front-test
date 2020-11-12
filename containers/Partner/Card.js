@@ -130,7 +130,6 @@ class CardContainer extends Component {
   render() {
     const { item, observer, handleIntersection, Partner } = this.props;
     const { showDrop, showDetail, width } = this.state;
-    console.log(item)
 
     var settings = {
       dots: false,
@@ -149,7 +148,6 @@ class CardContainer extends Component {
     };
 
     if(item){
-      console.log(item)
       return (
       <Card>
         { showDrop == true ? (
@@ -588,7 +586,7 @@ const TextBox = styled.div`
   height: 186px;
   margin-left: 30px;
   .Header {
-    width: 200px;
+    width: auto;
     height: 36px;
     font-size: 24px;
     font-weight: bold;

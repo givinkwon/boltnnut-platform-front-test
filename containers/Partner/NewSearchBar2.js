@@ -31,6 +31,7 @@ const ddarrow = 'static/images/partner/Arrow.png'
 
 //test
 import * as CategoryAPI from "axios/Category";
+import CounterContainer from 'containers/Request/Counter';
 
 const customStyles = {
   dropdownIndicator: () => ({
@@ -183,7 +184,6 @@ class SearchBarContainer2 extends React.Component {
   RangeSlider = () => {
   [this.state.price_max, this.state.setPrice] = React.useState([0,0]);
   const { width } = this.state;
-  console.log(this.state.price_max)
 
   const handleChange = (event, newValue) => {
       this.state.setPrice(newValue);
@@ -266,7 +266,6 @@ class SearchBarContainer2 extends React.Component {
   RangeSlider2 = () => {
   [this.state.due_max, this.state.setDue] = React.useState([0,0]);
   const { width } = this.state;
-  console.log(this.state.due_max)
   const handleChange = (event, newValue) => {
     this.state.setDue(newValue);
     console.log(newValue)
@@ -350,6 +349,9 @@ class SearchBarContainer2 extends React.Component {
     await this.props.Auth.checkLogin();
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+    if (this.props.is_request == true) {
+      this.setState({...this.state, show_detail: true})
+    };
   };
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
@@ -458,7 +460,6 @@ class SearchBarContainer2 extends React.Component {
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request } = this.props;
-    console.log(Request.type)
     {/*console.log(Partner.select_big)
     console.log(Partner.request_middle_list)*/}
     return (
@@ -552,6 +553,10 @@ class SearchBarContainer2 extends React.Component {
               />
           </FileBox>
         </SelectRow>
+
+        {this.props.is_request &&
+            <CounterContainer/>
+        }
 
         <ButtonBox>
             <Button
