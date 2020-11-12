@@ -419,7 +419,7 @@ class SearchBarContainer2 extends React.Component {
     formData.append("client", 19)
     formData.append("category",1) // 일단 대충개발
     formData.append("product", 30) // 의뢰제품
-    formData.append("name", Request.input_name + ":" + Request.input_phone + "-" + Request.input_phone2 + "-" + Request.input_phone3);
+    formData.append("name", Request.input_name + ":" + Request.input_phone + Request.input_phone2 + Request.input_phone3);
     formData.append("price", price_max[0] + "/" + price_max[1]);
     formData.append("day", due_max[0] + "/" + due_max[1]);
 
@@ -446,7 +446,7 @@ class SearchBarContainer2 extends React.Component {
         console.log(e.response);
       })
 
-      Request.setStep(2);
+      Request.setStep(1);
       Router.push({
         pathname: `/request`,
         query: {
@@ -561,7 +561,7 @@ class SearchBarContainer2 extends React.Component {
               onClick={this.submit}
             >
               <Text.FontSize26 color={WHITE} fontWeight={500} borderRadius={0} style={{display: "flex", alignItems: "center"}}>
-                가견적 받기
+                가견적 넣기
               </Text.FontSize26>
             </Button>
           </ButtonBox>
@@ -655,7 +655,7 @@ class SearchBarContainer2 extends React.Component {
                  onClick = {this.submit}
                  style={{margin: 'auto'}}
                >
-                 <span> 무료 가견적 넣기 </span>
+                 <span> 무료 가견적 받기 </span>
                </MobileButton2>
                <img src={ddarrow} style={{float: 'right', paddingRight: '10%'}}
                 onClick = {this.showDetail}
@@ -668,7 +668,7 @@ class SearchBarContainer2 extends React.Component {
            <SelectRow style={{justifyContent: 'center'}}>
                <MobileButton2
                 onClick = {this.showDetail}>
-                 <span> 무료 가견적 넣기 </span>
+                 <span> 무료 가견적 받기 </span>
                </MobileButton2>
            </SelectRow>
          </>

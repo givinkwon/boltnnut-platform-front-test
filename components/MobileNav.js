@@ -172,14 +172,14 @@ class MobileNav extends React.Component {
                   >
                     제조사 찾기
             </NavLink3>
-            {/*
+            
             <NavLink3
                       first
                       onClick={() => Router.push("/request?big=4&mid=")}
                       active={url.indexOf("request") > -1}
                     >
                       의뢰하기
-            </NavLink3>*/}
+            </NavLink3>
             <NavLink3
                   onClick={() => {
                     Router.push("/magazine");

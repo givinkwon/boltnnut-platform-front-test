@@ -129,13 +129,13 @@ class Nav extends React.Component {
                   /* client로 로그인 */
 
                   <Fragment>
-                    {/*<NavLink
+                    <NavLink
                       first
                       onClick={() => Router.push("/request?big=4&mid=")}
                       active={url.indexOf("request") > -1}
                     >
                       의뢰하기
-                    </NavLink>*/}
+                    </NavLink>
                     <NavLink
                       onClick={() => Router.push("/answer")}
                       active={url.indexOf("answer") > -1}
@@ -239,13 +239,13 @@ class Nav extends React.Component {
                   >
                     제조사 찾기
                   </NavLink>
-                  {/*<NavLink
+                  <NavLink
                     first
                     onClick={() => Router.push("/request?big=4&mid=")}
                     active={url.indexOf("request") > -1}
                   >
                     의뢰하기
-                  </NavLink>*/}
+                  </NavLink>
                   {/*<NavLink
                     onClick={() => Router.push("/answer")}
                     active={url.indexOf("answer") > -1}

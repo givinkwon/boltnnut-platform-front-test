@@ -34,15 +34,15 @@ class RequestConatiner extends React.Component {
 
     return (
       <>
-        {Request.step === 1 ? (<BannerContainer step2 = {true}/>) : (<BannerContainer/>)}
-        {Request.step === 0 && <Step1Container/>}
-        {Request.step === 1 &&
+        {Request.step === 0 ? (<BannerContainer step2 = {true}/>) : (<BannerContainer/>)}
+        {/* {Request.step === 0 && <Step1Container/>} */}
+        {Request.step === 0 &&
         <>
         <SearchBarContainer2/>
         <MarginContainer/>
         </>
         }
-        {Request.step === 2 && <CompleteBannerContainer/>}
+        {Request.step === 1 && <CompleteBannerContainer/>}
         {/*Request.step === 1 && <SearchBarContainer2/>*/}
         {/* <SearchBarContainer/>
         <br/><br/><br/><br/>
@@ -58,5 +58,5 @@ export default RequestConatiner
 
 const MarginContainer = styled.div`
   height: 200px;
-  margin-bottome: 200px;
+  margin-bottom: 200px;
 `

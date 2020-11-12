@@ -442,7 +442,7 @@ const CategoryBox = styled.div`
   font-size: 10px;
   display:flex;
   align-items: center;
-  : hover {
+  :hover {
     outline: none;
   }
   > span {
@@ -475,7 +475,7 @@ const CategoryBox = styled.div`
       display: flex;
       justify-content: center;
     }
-    : hover {
+    :hover {
       outline: none;
     }
       > span {
