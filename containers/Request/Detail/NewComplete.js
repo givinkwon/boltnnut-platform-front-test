@@ -12,22 +12,20 @@ class CompleteBannerContainer extends React.Component {
       <Banner>
         <Container>
           <MessageBox>
-            <span> 고객님의 제조 의뢰가 접수되었습니다. </span>
+            <span> 고객님의 가견적 의뢰가 접수되었습니다. </span>
           </MessageBox>
           <TextBox>
-            볼트앤너트 '최진영' 개발 전문 컨설턴트와 1:1 상담을 진행합니다.
+            볼트앤너트 컨설턴트가 의뢰 내용을 확인하여 가견적을 산출해드립니다.
           </TextBox>
           <ServiceBox>
-            <span class="Header"> 아래 상담하기를 클릭해주세요.</span>
-            <span> 의뢰서를 바탕으로 추가 문답 진행 후 최대 3분 내로 내 제품에 적합한 개발업체 리스트를 받아보실 수 있습니다. </span>
-            <span> 채팅방에 입장 후 꼭 볼트앤너트 ID를 입력해주세요.</span>
-            <span> ID 미입력시 상담 진행이 어렵습니다. </span>
+            <span class="Header"> 최대 1영업일 이내 연락을 드립니다.</span>
+            <span> 가견적을 바탕으로 내 제품에 적합한 제조업체 리스트를 받아보실 수 있습니다. </span>
+            <br/><br/>
+            <span> 상담이 필요하다면 아래의 상담하기 버튼을 눌러주세요.</span>
+            <span> 제조 전문 컨설턴트가 궁금하신 사항에 답변해드립니다. </span>
             <span> 회원가입을 하지 않으셨을 경우에는 상담 진행이 어려우니 상담 전 회원가입을 부탁드립니다. </span>
           </ServiceBox>
-          <TextBox2>
-            ※접속이 되지 않을 경우 아래로 문의해주세요 <br/>
-            T. 02-926-6637   C. 홈페이지 우측 하단 실시간 톡
-          </TextBox2>
+
           <ButtonBox id="request_chat_button" href='https://pf.kakao.com/_xfAxlfxb/chat'>
             무료 1:1 상담하기
           </ButtonBox>
@@ -245,7 +243,9 @@ const TextBox2 = styled.div`
 
   }
 `
-const ButtonBox = styled.div`
+const ButtonBox = styled.a`
+  margin-top: 30px;
+  text-decoration:none;
   width: 274px;
   height: 64px;
   border-radius: 4px;
