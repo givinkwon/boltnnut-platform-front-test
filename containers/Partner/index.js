@@ -64,6 +64,7 @@ const CustomContainer = styled.div`
   background-color : #f5f7f7;
   @media (min-width: 0px) and (max-width: 767.98px) {
     flex-direction: column;
+    overflow: hidden;
   }
 `;
 const Container = styled.div`
