@@ -15,7 +15,7 @@ const star = "/static/icon/info/star.png";
 
 class Section4Container extends React.Component {
   Next = () => {
-    Router.push("/request?big=4&mid=")
+    Router.push("/partner")
   }
   render() {
     return (
