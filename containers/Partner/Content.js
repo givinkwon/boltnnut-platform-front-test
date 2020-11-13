@@ -58,7 +58,7 @@ class ContentConatiner extends React.Component {
       var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
       var clientHeight = document.documentElement.clientHeight;
     }
-    if (width < 991.98 && scrollTop + clientHeight + 1 > scrollHeight) {
+    if (width < 991.98 && scrollTop + clientHeight + 5 > scrollHeight) {
       Partner.getNextPartner();
     }
   }
