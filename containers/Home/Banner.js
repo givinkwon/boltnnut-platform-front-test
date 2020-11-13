@@ -33,13 +33,14 @@ class BannerConatiner extends React.Component {
   render() {
     const { width } = this.state;
     const request_data = this.props.Home.request_list
+    console.log(request_data)
     var settings = {
       dots: false,
       infinite: false,
       arrows: false,
       slidesToShow: 1,
       slidesToScroll: 259/width,
-      initialSlide: 0,
+      initialSlide: 1,
       draggable: false,
       beforeChange: (current) => {
         this.setState({current: current})
@@ -96,6 +97,7 @@ class BannerConatiner extends React.Component {
             <Slider {...settings}>
               {
                 request_data.slice(0,20).map((item, idx) => {
+                  console.log(item)
                   return (
                     <RequestItem>
                       {item.name.split(':')[0]} 의뢰가 접수되었습니다.
@@ -173,7 +175,6 @@ const Banner = styled.div`
 // ed7d31
 const Title = styled.div`
   padding-top: 200px;
-
   margin-right: 0%;
   margin-left: 0%;
   object-fit: contain;

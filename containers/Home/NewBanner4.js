@@ -656,7 +656,7 @@ const CommentBox = styled.div`
   align-items: center;
   @media (min-width: 0px) and (max-width: 359.98px) {
     width: 328px;
-    height: 134px;
+    height: 100%;
     object-fit: contain;
     border-radius: 6px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
@@ -664,7 +664,7 @@ const CommentBox = styled.div`
     background-color: #ffffff;
   }
   @media (min-width: 360px) and (max-width: 767.98px) {
-  height: 158px;
+  height: 100%;
   width: 100% !important;
   margin-bottom: 15px;
   border-radius: 22px;
@@ -748,13 +748,13 @@ const CommentBox = styled.div`
   text-align: left;
   color: #707070;
   @media (min-width: 0px) and (max-width: 359.98px) {
+    height: 100%;
     margin: 0;
     width: 100%;
     font-size : 13px !important;
     padding-right: 18px;
     > p {
-        width: 210px;
-        height: 30px;
+        height: 100%;
         object-fit: contain;
         font-size: 10px;
         font-weight: normal;
@@ -769,6 +769,7 @@ const CommentBox = styled.div`
   @media (min-width: 360px) and (max-width: 767.98px) {
     margin-right: 30px;
     width: 100%;
+    height: 100%;
     font-size: 12px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -918,6 +919,7 @@ const SmallCommentBox = styled.div`
     margin-left: 24px;
     margin-right: 30px;
     width: 100%;
+    height: 100%;
     font-size : 13px !important;
     padding-right: 18px;
   }
@@ -925,6 +927,7 @@ const SmallCommentBox = styled.div`
   @media (min-width: 360px) and (max-width: 767.98px) {
     margin-left: 24px;
     margin-right: 30px;
+    height: 100%;
     width: 100%;
     font-size : 18px !important;
     padding-right: 18px;
@@ -977,13 +980,13 @@ const TextBox = styled.div`
   @media (min-width: 0px) and (max-width: 359.98px) {
     margin: 0;
     width: 219px;
-    height: 110px;
+    height: 100%;
     margin-left: 6px;
   }
   @media (min-width: 360px) and (max-width: 767.98px) {
     margin: 0;
     width: 80%;
-    height: 110px;
+    height: 100%;
     margin-left: 10%;
     margin-right: 10%;
   }
