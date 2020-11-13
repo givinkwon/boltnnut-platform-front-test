@@ -33,8 +33,8 @@ class RequestConatiner extends React.Component {
     const { step2 } = this.state;
 
     return (
-      <>
-        {Request.step === 0 ? (<BannerContainer step2 = {true}/>) : (<BannerContainer/>)}
+      <div style={{overflow: 'hidden'}}>
+        {Request.step === 0 && (<BannerContainer step2 = {true}/>)}
         {Request.step === 0 &&
         <>
         <SearchBarContainer2
@@ -42,7 +42,7 @@ class RequestConatiner extends React.Component {
         </>
         }
         {Request.step === 1 && <CompleteBannerContainer/>}
-      </>
+      </div>
     )
   }
 }

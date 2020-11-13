@@ -22,7 +22,7 @@ class Request extends React.Component {
   componentDidMount() {
     this.props.Request.init(this.props.query)
     if (this.props.query.from === '/partner') {
-      this.props.Request.setStep(2)
+      this.props.Request.setStep(1)
     } else {
       this.props.Request.setStep(0);
     };
