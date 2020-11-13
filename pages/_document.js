@@ -107,6 +107,7 @@ export default class MyDocument extends Document {
           <meta name="naver-site-verification" content="12005c1a60612f3a3510070ec18a2d7a1553fcab"/>
           <meta charSet="utf-8" />
           {/* SEO */}
+          <title>볼트앤너트</title>
           <meta property="og:title" content="볼트앤너트" />
           <meta property="og:description" content="제조 중개 매칭 플랫폼 볼트앤너트" />
           <meta name="description" content="제조 중개 매칭 플랫폼 볼트앤너트" />
