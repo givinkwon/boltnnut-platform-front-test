@@ -42,13 +42,14 @@ class Home extends React.Component {
     console.log(Home.request_list)
     return (
       <>
+      <Head>
+        <title>볼트앤너트</title>
+      </Head>
       {width &&
       <div>
         {Loading.is_open}
         {/* {Loading.is_open && <Spinner/>} */}
-        <Head>
 
-        </Head>
         <>
         { width > 450 ? (
           <Nav />
