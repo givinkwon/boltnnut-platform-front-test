@@ -47,7 +47,7 @@ class Home extends React.Component {
         {Loading.is_open}
         {/* {Loading.is_open && <Spinner/>} */}
         <Head>
-          <title>볼트앤너트</title>
+
         </Head>
         <>
         { width > 450 ? (
