@@ -40,7 +40,7 @@ class BannerConatiner extends React.Component {
       arrows: false,
       slidesToShow: 1,
       slidesToScroll: 259/width,
-      initialSlide: 1,
+      initialSlide: 0,
       draggable: false,
       beforeChange: (current) => {
         this.setState({current: current})
@@ -387,7 +387,6 @@ const RequestList = styled.div`
       width: 208px !important;
     }
     > div {
-      transform: translate3d(0, 0, 0) !important;
     }
   }
 `
