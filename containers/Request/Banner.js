@@ -14,7 +14,7 @@ class BannerContainer extends React.Component {
           <Text.FontSize40 color={'#0a2165'} fontWeight={700}>의뢰하기</Text.FontSize40>
           {
             this.props.step2 &&
-            <span> 제조사 찾기 서비스 </span>
+            <span> 최대 1 영업일 이내로 제작하고자 하는 제품의 가견적을 안내드립니다. </span>
           }
         </Container>
       </Banner>
@@ -63,18 +63,22 @@ const Banner = styled.div`
         letter-spacing: -0.6px;
         text-align: center;
         color: #0933b3;
+        @media (min-width: 0px) and (max-width: 767.98px) {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+        @media (min-width: 992px) and (max-width: 1299.98px) {
+
+        }
+        @media (min-width: 1300px) {
+
+        }
+
     }
   }
-  /* @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 180px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 200px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    height: 230px;
-  }
-  @media (min-width: 1300px) { 
-    height: 250px;
-  } */
+
 `
