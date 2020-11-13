@@ -37,9 +37,8 @@ class Home extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
   };
   render() {
-    const { Loading } = this.props;
+    const { Loading,Home } = this.props;
     const { width } = this.state;
-    console.log(width)
     return (
       <>
       {width &&

@@ -386,6 +386,9 @@ const RequestList = styled.div`
       padding-right: 16px;
       width: 208px !important;
     }
+    > div {
+      transform: translate3d(0, 0, 0) !important;
+    }
   }
 `
 const RequestItem = styled.div`
