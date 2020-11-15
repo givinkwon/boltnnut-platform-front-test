@@ -42,6 +42,7 @@ class BannerConatiner extends React.Component {
       slidesToScroll: 259/width,
       initialSlide: 0,
       draggable: false,
+      autoplay: true,
       beforeChange: (current) => {
         this.setState({current: current})
       },
@@ -97,7 +98,6 @@ class BannerConatiner extends React.Component {
             <Slider {...settings}>
               {
                 request_data.slice(0,20).map((item, idx) => {
-                  console.log(item)
                   return (
                     <RequestItem>
                       {item.name.split(':')[0]} 의뢰가 접수되었습니다.
