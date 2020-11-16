@@ -33,14 +33,13 @@ class BannerConatiner extends React.Component {
   render() {
     const { width } = this.state;
     const request_data = this.props.Home.request_list
-    console.log(request_data)
     var settings = {
       dots: false,
       infinite: false,
       arrows: false,
       slidesToShow: 1,
       slidesToScroll: 259/width,
-      initialSlide: 0,
+      initialSlide: 1,
       draggable: false,
       autoplay: true,
       beforeChange: (current) => {
