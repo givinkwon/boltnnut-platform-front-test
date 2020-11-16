@@ -10,9 +10,12 @@ import Slider from "react-slick";
 
 import {inject, observer} from "mobx-react";
 import DOMPurify from 'dompurify';
+//counter
+import 'react-count-animation/dist/count.min.css';
+import AnimationCount from 'react-count-animation';
 
 const search_ic = "static/icon/search.png";
-//
+
 @inject('Home')
 class BannerConatiner extends React.Component {
   state = {
@@ -44,6 +47,22 @@ class BannerConatiner extends React.Component {
       beforeChange: (current) => {
         this.setState({current: current})
       },
+    };
+    const countSettings1 = {
+      start: 0,
+      count : 3927,
+      duration: 6000,
+      decimals: 0,
+      useGroup: true,
+      animation: 'up'
+    };
+    const countSettings2 = {
+      start: 0,
+      count : 1367,
+      duration: 6000,
+      decimals: 0,
+      useGroup: true,
+      animation: 'up'
     };
     return (
     <>
@@ -87,9 +106,13 @@ class BannerConatiner extends React.Component {
             <div class="Header">
               실시간 의뢰 건 리스트
             </div>
-            <div class="Middle">
-              제조 파트너사 등록 수 <span class="active"> 3,900 </span> <br/>
-              프로젝트 수 <span class="active"> 1,300 </span>
+            <div className="countup" class="Middle">
+              <div class="body">
+                제조 파트너사 등록 수<AnimationCount class="active" {...countSettings1}/>
+              </div><br/>
+              <div class="body">
+                프로젝트 수<AnimationCount class="active" {...countSettings2}/>
+              </div>
             </div>
           </RequestBox>
           <RequestList>
@@ -137,7 +160,7 @@ const ButtonBox = styled.div`
     :hover {
       background-color: #0933b3;//${WHITE};
       > p {
-        color: ${WHITE}; !important;
+        color: ${WHITE} !important;
       }
 
     }
@@ -310,7 +333,7 @@ const MobileButton = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  : hover {
+  :hover {
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     background-color: #0933b3;
   }
@@ -365,6 +388,9 @@ const RequestBox = styled.div`
       font-weight : 500;
       color: #0933b3;
     }
+  }
+  .body {
+    display : inline-flex;
   }
 `
 const RequestList = styled.div`
