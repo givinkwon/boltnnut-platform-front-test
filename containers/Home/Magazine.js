@@ -8,6 +8,9 @@ import * as Text from 'components/Text'
 import { BLACK1, DARKGRAY } from 'static/style'
 import {inject, observer} from "mobx-react";
 import DOMPurify from 'dompurify';
+//counter
+import 'react-count-animation/dist/count.min.css';
+import AnimationCount from 'react-count-animation';
 
 const search_ic = 'static/icon/search.png'
 const right = "/static/images/main/main_right.png";
@@ -169,6 +172,22 @@ class MagazineContainer extends React.Component {
         this.setState({current: current})
       },
     };
+    const countSettings1 = {
+      start: 0,
+      count : 3927,
+      duration: 6000,
+      decimals: 0,
+      useGroup: true,
+      animation: 'up'
+    };
+    const countSettings2 = {
+      start: 0,
+      count : 1367,
+      duration: 6000,
+      decimals: 0,
+      useGroup: true,
+      animation: 'up'
+    };
     return (
     <CustomContainer>
       <FindExperct>
@@ -269,8 +288,13 @@ class MagazineContainer extends React.Component {
           <Header>
               <Text.FontSize30 color={"#0a2165"} fontWeight={700}>실시간 의뢰 건 리스트</Text.FontSize30>
           </Header>
-          <Middle>
-            제조 파트너사 등록 수 <span class="Bold">3900</span>  프로젝트 수 <span class="Bold">1300</span>
+          <Middle className="countup">
+            <div class="body">
+              제조 파트너사 등록 수 <AnimationCount class="Bold" {...countSettings1}/>
+            </div>
+            <div class="body"> 
+              프로젝트 수 <AnimationCount class="Bold" {...countSettings2}/>
+            </div>
           </Middle>
           <RequestItemBox>
             <RequestList>
@@ -482,9 +506,16 @@ const Middle = styled.div`
   text-align: left;
   color: #191919;
   margin-top: 13px;
-  .Bold {
-    font-weight: 500;
-    color: #0933b3;
+  .body {
+    display : inline-flex;
+    :nth-last-of-type(1){
+      padding-left : 10px;
+    }
+    > div {
+      font-weight: 500;
+      color: #0933b3;
+    }
+
   }
   @media (min-width: 768px) and (max-width: 1299.98px) {
     font-size: 34px !important;
