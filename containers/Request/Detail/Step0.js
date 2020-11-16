@@ -139,7 +139,7 @@ const ButtonBox = styled.div`
       //background-color: ${DARKGRAY};
       //background-image: null !important;
       }
-    }
+    
     > div:nth-of-type(2){
       //background-image: url("/static/images/request/manufacture.jpg");
       //background-size: cover;
