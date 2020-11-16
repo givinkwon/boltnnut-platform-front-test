@@ -552,7 +552,7 @@ class SearchBarContainer2 extends React.Component {
               />
             <span> { this.state.fileName ? this.state.fileName : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
             <img
-              src="/static/images/mask.png"
+              src="/static/images/Mask.png"
               />
           </FileBox>
         </SelectRow>
@@ -653,7 +653,7 @@ class SearchBarContainer2 extends React.Component {
               />
             <span> { this.state.fileName ? this.state.fileName : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
             <img
-              src="/static/images/mask.png"
+              src="/static/images/Mask.png"
               />
            </FileBox>
          </SelectRow>

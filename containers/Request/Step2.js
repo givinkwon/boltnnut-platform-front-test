@@ -17,7 +17,7 @@ import Slider from '@material-ui/core/Slider';
 
 //image
 const phone = 'static/images/phone.png'
-const file = 'static/images/mask.png'
+const file = 'static/images/Mask.png'
 
 const customStyles = {
   dropdownIndicator: () => ({
