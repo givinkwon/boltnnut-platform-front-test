@@ -10,7 +10,7 @@ import Spinner from 'components/Spinner'
 
 import RequestConatiner from 'containers/Request'
 
-@inject('Request')
+@inject('Request', 'Partner')
 @observer
 class Request extends React.Component {
   state = {
@@ -21,8 +21,9 @@ class Request extends React.Component {
   }
   componentDidMount() {
     this.props.Request.init(this.props.query)
+    this.props.Partner.init();
     if (this.props.query.from === '/partner') {
-      this.props.Request.setStep(2)
+      this.props.Request.setStep(1)
     } else {
       this.props.Request.setStep(0);
     };

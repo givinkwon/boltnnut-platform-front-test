@@ -26,11 +26,12 @@ import MobileSlider from "react-slick";
 
 //image
 const phone = 'static/images/phone.png'
-const file = 'static/images/mask.png'
+const file = 'static/images/Mask.png'
 const ddarrow = 'static/images/partner/Arrow.png'
 
 //test
 import * as CategoryAPI from "axios/Category";
+import CounterContainer from 'containers/Request/Counter';
 
 const customStyles = {
   dropdownIndicator: () => ({
@@ -100,7 +101,7 @@ const MobilecustomStyles = {
 class SearchBarContainer2 extends React.Component {
   constructor(props) {
     super(props);
-    this.portfolio = React.createRef();
+    this.file = React.createRef();
   }
 
   state = {
@@ -112,7 +113,8 @@ class SearchBarContainer2 extends React.Component {
     //due_min: 0,
     due_max: [0,0],
     show_detail: "none",
-    portfolioValue: '',
+    fileName: '',
+    file:'',
     width: 0,
     temp_min: 0,
     temp_max: 0,
@@ -128,11 +130,11 @@ class SearchBarContainer2 extends React.Component {
     console.log(Request.type)
   }
 
-  onChangePortfolio = (e) => {
+  onChangeFile = (e) => {
     if(e.currentTarget.files.length === 0) {
       this.setState({
         ...this.state,
-        portfolioValue: '',
+        fileName: '',
       })
       return
     }
@@ -140,8 +142,10 @@ class SearchBarContainer2 extends React.Component {
     const fileName = e.currentTarget.files[0].name;
     this.setState({
       ...this.state,
-      portfolioValue: fileName,
+      file: e.currentTarget.files[0],
+      fileName: fileName,
     })
+
 
     this.props.Auth.setFile(e.currentTarget.files[0])
   }
@@ -183,7 +187,6 @@ class SearchBarContainer2 extends React.Component {
   RangeSlider = () => {
   [this.state.price_max, this.state.setPrice] = React.useState([0,0]);
   const { width } = this.state;
-  console.log(this.state.price_max)
 
   const handleChange = (event, newValue) => {
       this.state.setPrice(newValue);
@@ -266,7 +269,6 @@ class SearchBarContainer2 extends React.Component {
   RangeSlider2 = () => {
   [this.state.due_max, this.state.setDue] = React.useState([0,0]);
   const { width } = this.state;
-  console.log(this.state.due_max)
   const handleChange = (event, newValue) => {
     this.state.setDue(newValue);
     console.log(newValue)
@@ -350,6 +352,9 @@ class SearchBarContainer2 extends React.Component {
     await this.props.Auth.checkLogin();
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+    if (this.props.is_request == true) {
+      this.setState({...this.state, show_detail: true})
+    };
   };
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
@@ -395,7 +400,7 @@ class SearchBarContainer2 extends React.Component {
 
   submit = () => {
     const { Request } = this.props;
-    const {file, price_max, due_max} = this.state;
+    const {fileName, file, price_max, due_max} = this.state;
 
     if (!Request.input_name) {
       alert("제품 의뢰명을 입력해주세요.");
@@ -425,8 +430,8 @@ class SearchBarContainer2 extends React.Component {
 
     formData.append("phone", Request.input_phone + Request.input_phone2 + Request.input_phone3);
     //
-    if(file) {
-      formData.append("file", file);
+    if(this.state.file) {
+      formData.append("file", this.state.file);
     }
     const req = {
       data: formData,
@@ -458,7 +463,6 @@ class SearchBarContainer2 extends React.Component {
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request } = this.props;
-    console.log(Request.type)
     {/*console.log(Partner.select_big)
     console.log(Partner.request_middle_list)*/}
     return (
@@ -539,19 +543,23 @@ class SearchBarContainer2 extends React.Component {
             제품도면
           </Title>
           <FileBox
-            onClick = {()=>this.portfolio.current.click()}>
+            onClick = {()=>this.file.current.click()}>
             <input
-              onChange = {this.onChangePortfolio}
+              onChange = {this.onChangeFile}
               type = "file"
               style={{display: 'none'}}
-              ref={this.portfolio}
+              ref={this.file}
               />
-            <span> { this.state.portfolioValue ? this.state.portfolioValue : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
+            <span> { this.state.fileName ? this.state.fileName : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
             <img
               src="/static/images/mask.png"
               />
           </FileBox>
         </SelectRow>
+
+        {this.props.is_request &&
+            <CounterContainer/>
+        }
 
         <ButtonBox>
             <Button
@@ -561,7 +569,7 @@ class SearchBarContainer2 extends React.Component {
               onClick={this.submit}
             >
               <Text.FontSize26 color={WHITE} fontWeight={500} borderRadius={0} style={{display: "flex", alignItems: "center"}}>
-                가견적 넣기
+                가견적 받기
               </Text.FontSize26>
             </Button>
           </ButtonBox>
@@ -636,14 +644,14 @@ class SearchBarContainer2 extends React.Component {
              첨부파일
            </Title>
            <FileBox
-            onClick = {()=>this.portfolio.current.click()}>
+            onClick = {()=>this.file.current.click()}>
             <input
-              onChange = {this.onChangePortfolio}
+              onChange = {this.onChangeFile}
               type = "file"
               style={{display: 'none'}}
-              ref={this.portfolio}
+              ref={this.file}
               />
-            <span> { this.state.portfolioValue ? this.state.portfolioValue : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
+            <span> { this.state.fileName ? this.state.fileName : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
             <img
               src="/static/images/mask.png"
               />
@@ -657,9 +665,11 @@ class SearchBarContainer2 extends React.Component {
                >
                  <span> 무료 가견적 받기 </span>
                </MobileButton2>
+               { !this.props.is_request &&
                <img src={ddarrow} style={{float: 'right', paddingRight: '10%'}}
                 onClick = {this.showDetail}
                 />
+                }
              </div>
          </SelectRow>
        </>

@@ -15,18 +15,18 @@ import AnimationCount from 'react-count-animation';
 class CounterContainer extends React.Component {
 
   countCalc () {
-    const { Request } = this.props;
+    const { Request, Partner } = this.props;
     let result = 0
     //console.log(Request.select_big, Request.select_mid, Request.select_small)
 
-    if(Request.select_big != null && Request.select_mid == null){
-        result = Request.select_big.id === 0 ?  4490 : 460 * (((Request.select_big.id)/5) + 4)
+    if(Partner.select_big != null && Partner.select_mid == null){
+        result = Partner.select_big.id === 0 ?  4490 : 460 * (((Partner.select_big.id)/5) + 4)
     }
-    if(Request.select_big != null && Request.select_mid != null && Request.select_small == null){
-        result = Request.select_big.id === 0 ?  4490 : 460 * (((Request.select_big.id)/5) + 4) - 260* ((Request.select_mid.id/50) + 5)
+    if(Partner.select_big != null && Partner.select_mid != null && Partner.select_small == null){
+        result = Partner.select_big.id === 0 ?  4490 : 460 * (((Partner.select_big.id)/5) + 4) - 260* ((Partner.select_mid.id/50) + 5)
     }
-    if(Request.select_big != null && Request.select_mid != null && Request.select_small != null){
-        result = Request.select_big.id === 0 ?  4490 : 460 * (((Request.select_big.id)/5) + 4) - 260* ((Request.select_mid.id/50) + 5) - 40 * ((Request.select_small.id/100) + 3)
+    if(Partner.select_big != null && Partner.select_mid != null && Partner.select_small != null){
+        result = Partner.select_big.id === 0 ?  4490 : 460 * (((Partner.select_big.id)/5) + 4) - 260* ((Partner.select_mid.id/50) + 5) - 40 * ((Request.select_small.id/100) + 3)
     }
     return result
   }

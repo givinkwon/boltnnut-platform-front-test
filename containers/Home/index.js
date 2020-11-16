@@ -51,14 +51,14 @@ class HomeConatiner extends React.Component {
         </CustomContainer>
       </>
           ) : (
-          <>
+          <div style={{overflow:'hidden'}}>
             <BannerConatiner/>
             {width > 768 && <MagazineConatiner/>}
             <NewBanner5Container/>
             <NewBanner4Container/>
             <ReviewBanner/>
             <LogoConatiner/>
-          </>
+          </div>
           )
           } </>
       )
@@ -69,6 +69,7 @@ export default HomeConatiner
 
 const CustomContainer = styled.div`
   background-color: #e1e5e6;
+  overflow: hidden;
   margin-top: 2px;
 `
 

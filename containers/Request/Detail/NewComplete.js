@@ -136,9 +136,12 @@ const TextBox = styled.div`
   letter-spacing: -0.7px;
   text-align: center;
   margin-bottom: 40px;
-  @media (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.98px) {
     width: 300px;
     font-size: 18px;
+  }
+  @media (min-width: 767.99px) and (max-width: 1299.98px) {
+    width: 400px;
   }
 `
 const ServiceBox = styled.div`
@@ -151,6 +154,7 @@ const ServiceBox = styled.div`
   box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.16);
   background-color: white;
   .Header {
+        white-space: nowrap;
         font-size: 32px;
         font-weight: bold;
         font-stretch: normal;
@@ -159,7 +163,7 @@ const ServiceBox = styled.div`
         letter-spacing: -0.8px;
         text-align: center;
         color: #0a2165;
-        @media (max-width: 767.98px) {
+        @media (max-width: 767.98px) and (max-width: 1299.98px) {
             font-size: 16px;
             font-weight: bold;
             font-stretch: normal;

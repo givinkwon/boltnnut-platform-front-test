@@ -40,7 +40,7 @@ class ContentConatiner extends React.Component {
       ['기계설계','inactive', 7],
       ['진공성형','inactive', 11],
       ],
-    category_idx: ['디자인', '금형/사출', '금속가공', '기구설계', '회로설계', '실리콘', '3D 프린터', '기계설계', '진공성형']
+    category_idx: ['디자인', '금형/사출', '금속가공', '기구설계', '회로설계', '실리콘', '3D 프린터', '기계설계', '진공성형'],
   }
   handleIntersection = (event) => {
     if(event.isIntersecting) {
@@ -51,13 +51,14 @@ class ContentConatiner extends React.Component {
   }
   loadScroll = () => {
     const { Partner } = this.props;
+    const { width } = this.state;
 
     if (typeof document != "undefined") {
       var scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
       var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
       var clientHeight = document.documentElement.clientHeight;
     }
-    if (scrollTop + clientHeight === scrollHeight) {
+    if (width < 991.98 && scrollTop + clientHeight + 5 > scrollHeight) {
       Partner.getNextPartner();
     }
   }
@@ -84,7 +85,7 @@ class ContentConatiner extends React.Component {
 
   componentWillMount() {
     if (typeof window !== "undefined") {
-    window.removeEventListener('resize', this.updateDimensions);
+      window.removeEventListener('resize', this.updateDimensions);
     }
     const { Partner } = this.props;
     Partner.getNextPartner();
@@ -113,6 +114,12 @@ class ContentConatiner extends React.Component {
     if (this.state.current %2 == 0) {
       Partner.getNextPartner();
     }
+    if (this.state.current%5 == 4) {
+      Partner.getNextPartner();
+      console.log(this.state.current)
+    }
+    console.log(this.state.current)
+    console.log(this.state.current%5);
   }
   pagePrev = () => {
     if (this.state.current != 0) {
@@ -120,10 +127,30 @@ class ContentConatiner extends React.Component {
       this.setState({...this.state, current: newPage, prev: true})
     }
   }
-
-  buttonClick = () => {
-    console.log("n")
+  sleep = (time) => {
+    var timeStart = new Date().getTime();
+    while (true) {
+      var elapsedTime = new Date().getTime() - timeStart;
+      if (elapsedTime > time) {
+        break;
+      }
+    }
   }
+  buttonClick = (e) => {
+    const { Partner } = this.props;
+    const { current } = this.state;
+    const newPage = e.target.innerText*1;
+    var length = Partner.partner_list.length;
+    var filledPage = parseInt(length/5);
+
+    while (filledPage < newPage) {
+      Partner.getNextPartner();
+      filledPage = filledPage + 2;
+      console.log(filledPage)
+    }
+    this.setState({...this.state, current: newPage-1});
+  }
+
   CategoryCircle = () => {
     const { Partner } = this.props;
     const { category_list, category_idx, width } = this.state;
@@ -262,10 +289,10 @@ class ContentConatiner extends React.Component {
         <PageBar>
             <img src={pass1} style={{opacity: current_set == 1 && current == 0  ? 0.4 : 1 }} onClick = {this.pagePrev}/>
               <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 1} active={current%5 == 0}> {5*(current_set - 1) + 1} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 2} active={current%5 == 1}> {5*(current_set - 1) + 2} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 3} active={current%5 == 2}> {5*(current_set - 1) + 3} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 4} active={current%5 == 3}> {5*(current_set - 1) + 4} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 5} active={current%5 == 4}> {5*(current_set - 1) + 5} </PageCount>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 2} active={current%5 == 1}> {5*(current_set - 1) + 2} </PageCount>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 3} active={current%5 == 2}> {5*(current_set - 1) + 3} </PageCount>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 4} active={current%5 == 3}> {5*(current_set - 1) + 4} </PageCount>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 5} active={current%5 == 4}> {5*(current_set - 1) + 5} </PageCount>
               <PageCount> ... </PageCount>
             <img src={pass2} style={{opacity: page == current ? 0.4 : 1, display: page == current? 'none' : 'block'}} onClick = {this.pageNext} />
         </PageBar>
@@ -469,7 +496,7 @@ const CategoryBox = styled.div`
     align-items: center;
     justify-content: center;
     @media (min-width: 767.99px) and (max-width: 1299.98px) {
-      width: 70px;
+      width: 100%;
       height: 32px;
       border-radius: 15px;
       display: flex;
@@ -480,7 +507,7 @@ const CategoryBox = styled.div`
     }
       > span {
         color: white;
-        font-size: 10px;
+        font-size: 16px;
       }
     }
   @media (min-width: 767.99px) and (max-width: 1299.98px) {

@@ -37,17 +37,19 @@ class Home extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
   };
   render() {
-    const { Loading } = this.props;
+    const { Loading,Home } = this.props;
     const { width } = this.state;
+    console.log(Home.request_list)
     return (
       <>
+      <Head>
+        <title>볼트앤너트</title>
+      </Head>
       {width &&
       <div>
         {Loading.is_open}
         {/* {Loading.is_open && <Spinner/>} */}
-        <Head>
-          <title>볼트앤너트</title>
-        </Head>
+
         <>
         { width > 450 ? (
           <Nav />
