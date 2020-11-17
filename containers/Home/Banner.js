@@ -21,33 +21,63 @@ class BannerConatiner extends React.Component {
   state = {
     width: 0,
     tab: 0,
+    slideStart: 0,
+    slideMoved: 0,
+    slidePosition: 0,
+    slidesToScroll: 258/this.props.width,
   };
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
+    this.setState({ ...this.state, width: this.props.width });
   };
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: this.props.width });
+    this.props.Home.init();
   };
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
+  updateSlide = () => {
+      this.setState({...this.state, slideMoved: 0})
+  }
+//  componentDidUpdate = () => {
+//    var src = document.getElementById("slider");
+//    src.addEventListener('touchend', this.updateSlide);
+//  }
 
+  slideStart = (e) => {
+    const { slideStart  } = this.state;
+    this.setState({...this.state, slideStart: e.targetTouches[0].clientX});
+    console.log(this.state)
+  }
+  slideMove = (e) => {
+    const { slideStart, slideMoved, slidePosition } = this.state;
+    var Moved = e.targetTouches[0].clientX - slideStart
+    // slideStart에서 얘를 빼줌.
+    if (Moved < 0) {
+      this.setState({...this.state, slideMoved: Moved, slidePosition: slidePosition-10});
+    } else {
+      this.setState({...this.state, slideMoved: Moved, slidePosition: slidePosition+10});
+    }
+    console.log(this.state)
+  }
   render() {
-    const { width } = this.state;
+    const { width, slidePosition, slidesToScroll } = this.state;
     const request_data = this.props.Home.request_list
+
     var settings = {
       dots: false,
       infinite: false,
       arrows: false,
       slidesToShow: 1,
-      slidesToScroll: 259/width,
-      initialSlide: 1,
+      slidesToScroll: slidesToScroll,
+      initialSlide: 0,
       draggable: false,
       autoplay: true,
       beforeChange: (current) => {
         this.setState({current: current})
-      },
+      }
     };
     const countSettings1 = {
       start: 0,
@@ -118,8 +148,15 @@ class BannerConatiner extends React.Component {
           </RequestBox>
           <RequestList>
             <Slider {...settings}>
+            {/*<CustomSlider
+              id="slider"
+              onTouchStart = {this.slideStart}
+              onTouchMove = {this.slideMove}
+              onTouchEnd = {this.slideEnd}
+              X = {slidePosition}
+              >*/}
               {
-                request_data.slice(0,20).map((item, idx) => {
+                request_data && request_data.slice(0,20).map((item, idx) => {
                   return (
                     <RequestItem>
                       {item.name.split(':')[0]} 의뢰가 접수되었습니다.
@@ -127,6 +164,9 @@ class BannerConatiner extends React.Component {
                   )
                 })
               }
+              {/*
+            </CustomSlider>
+            */}
             </Slider>
           </RequestList>
         </MobileBox>
@@ -397,6 +437,7 @@ const RequestList = styled.div`
   width: 100%;
   height: 64px;
   padding-left: calc(10%);
+  //display: -webkit-box;
   .slick-list {
     margin : 0;
     width: 100%;
@@ -413,7 +454,6 @@ const RequestList = styled.div`
     }
     > div {
     }
-  }
 `
 const RequestItem = styled.div`
   width: 250px;
@@ -430,4 +470,10 @@ const RequestItem = styled.div`
   margin-top: 8.5px;
   margin-right: 9px;
   border-radius: 6px;
+`
+const CustomSlider = styled.div`
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  transform: translateX(${props => props.X ? props.X : 0}px);
 `

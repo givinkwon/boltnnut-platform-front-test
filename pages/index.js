@@ -58,7 +58,7 @@ class Home extends React.Component {
           )
         }
         </>
-        <HomeConatiner/>
+        <HomeConatiner width={width} reqList={Home.request_list}/>
         <Footer />
       </div>
       }
