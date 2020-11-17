@@ -36,7 +36,6 @@ class BannerConatiner extends React.Component {
   render() {
     const { width } = this.state;
     const request_data = this.props.Home.request_list
-    console.log(request_data)
     var settings = {
       dots: false,
       infinite: false,
@@ -45,6 +44,7 @@ class BannerConatiner extends React.Component {
       slidesToScroll: 0.75,
       initialSlide: 0,
       draggable: false,
+      autoplay: true,
       beforeChange: (current) => {
         this.setState({current: current})
       },
@@ -120,7 +120,6 @@ class BannerConatiner extends React.Component {
             <Slider {...settings}>
               {
                 request_data.slice(0,20).map((item, idx) => {
-                  console.log(item)
                   return (
                     <RequestItem>
                       {item.name.split(':')[0]} 의뢰가 접수되었습니다.
