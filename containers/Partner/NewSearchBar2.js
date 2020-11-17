@@ -455,8 +455,6 @@ class SearchBarContainer2 extends React.Component {
       Router.push({
         pathname: `/request`,
         query: {
-          big: 4,
-          from: Router.pathname
           }
         });
   };

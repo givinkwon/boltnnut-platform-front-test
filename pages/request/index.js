@@ -21,13 +21,15 @@ class Request extends React.Component {
   }
   componentDidMount() {
     this.props.Request.init(this.props.query)
+    console.log(this.props.query)
     this.props.Partner.init();
+    {/*
     if (this.props.query.from === '/partner') {
       this.props.Request.setStep(1)
     } else {
       this.props.Request.setStep(0);
     };
-    console.log(this.props.Request.step)
+    */}
      //창 크기
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });

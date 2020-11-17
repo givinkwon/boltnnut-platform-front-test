@@ -144,7 +144,8 @@ class Request {
       contents = [...contents, ...item.subclass_set];
     }
     this.contents = contents;
-    window.history.pushState("", "", `/request?big=${obj.id}&mid=`);
+    window.history.pushState("", "", `/request`);
+    //window.history.pushState("", "", `/request?big=${obj.id}&mid=`);
   };
   @action setMidCategory = (obj) => {
     console.log(obj);
@@ -162,7 +163,8 @@ class Request {
     window.history.pushState(
       "",
       "",
-      `/request?big=${obj.maincategory}&mid=${obj.id}`
+      `/request`
+      //`/request?big=${obj.maincategory}&mid=${obj.id}`
     );
   };
   @action setSmallCategory = (obj) => {
@@ -345,7 +347,8 @@ class Request {
         }
         this.contents = contents;
       } else {
-        window.history.pushState("", "", `/request?big=&mid=`);
+        window.history.pushState("", "", `/request`);
+        //window.history.pushState("", "", `/request?big=&mid=`);
       }
     }
   };

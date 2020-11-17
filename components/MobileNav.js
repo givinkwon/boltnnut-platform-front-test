@@ -175,7 +175,8 @@ class MobileNav extends React.Component {
             
             <NavLink3
                       first
-                      onClick={() => Router.push("/request?big=4&mid=")}
+                      //onClick={() => Router.push("/request?big=4&mid=")}
+                      onClick={() => Router.push("/request")}
                       active={url.indexOf("request") > -1}
                     >
                       의뢰하기
