@@ -303,7 +303,7 @@ class MagazineContainer extends React.Component {
                 request_data.slice(0,20).map((item, idx) => {
                   return (
                     <RequestItem style={{justifyContent: "center", alignItems: "center"}}>
-                      {item.name.split(':')[0]} 의뢰가 접수되었습니다.
+                      {(item.name.split(':')[0])[0] + (item.name.split(':')[0])[1] + "  ...  "} 의뢰가 접수되었습니다.
                     </RequestItem>
                   )
                 })

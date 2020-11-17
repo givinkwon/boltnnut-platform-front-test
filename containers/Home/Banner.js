@@ -42,7 +42,7 @@ class BannerConatiner extends React.Component {
       infinite: false,
       arrows: false,
       slidesToShow: 1,
-      slidesToScroll: 259/width,
+      slidesToScroll: 0.75,
       initialSlide: 0,
       draggable: false,
       beforeChange: (current) => {
