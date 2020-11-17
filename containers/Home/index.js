@@ -18,6 +18,10 @@ import NewBanner4Container from './NewBanner4';
 import NewBanner5Container from './NewBanner5';
 import ReviewBanner from './ReviewerBanner';
 
+import { inject, observer } from "mobx-react";
+
+@inject('Home')
+@observer
 class HomeConatiner extends React.Component {
   state = {
     next: true,
@@ -28,6 +32,7 @@ class HomeConatiner extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+    console.log(this.props.width)
   };
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
@@ -36,13 +41,13 @@ class HomeConatiner extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
   };
   render() {
-    const { width } = this.state;
+    const { width, reqList } = this.props;
     return (
     <>
       { width < 360 ? (
       <>
         <CustomContainer>
-          <BannerConatiner/>
+          <BannerConatiner width={width}/>
           <MagazineConatiner/>
           <NewBanner5Container/>
           <NewBanner4Container/>
@@ -52,7 +57,7 @@ class HomeConatiner extends React.Component {
       </>
           ) : (
           <div style={{overflow:'hidden'}}>
-            <BannerConatiner/>
+            <BannerConatiner width={width}/>
             {width > 768 && <MagazineConatiner/>}
             <NewBanner5Container/>
             <NewBanner4Container/>
