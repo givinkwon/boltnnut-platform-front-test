@@ -131,7 +131,8 @@ class Nav extends React.Component {
                   <Fragment>
                     <NavLink
                       first
-                      onClick={() => Router.push("/request?big=4&mid=")}
+                      onClick={() => Router.push("/request")}
+                      //onClick={() => Router.push("/request?big=4&mid=")}
                       active={url.indexOf("request") > -1}
                     >
                       의뢰하기
@@ -241,7 +242,8 @@ class Nav extends React.Component {
                   </NavLink>
                   <NavLink
                     first
-                    onClick={() => Router.push("/request?big=4&mid=")}
+                    onClick={() => Router.push("/request")}
+                    //onClick={() => Router.push("/request?big=4&mid=")}
                     active={url.indexOf("request") > -1}
                   >
                     의뢰하기
