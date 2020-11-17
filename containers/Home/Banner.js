@@ -46,12 +46,12 @@ class BannerConatiner extends React.Component {
 //    src.addEventListener('touchend', this.updateSlide);
 //  }
 
-  slideStart = (e) => {
+  slideStart = (e) => {/*
     const { slideStart  } = this.state;
     this.setState({...this.state, slideStart: e.targetTouches[0].clientX});
     console.log(this.state)
-  }
-  slideMove = (e) => {
+  */}
+  slideMove = (e) => {/*
     const { slideStart, slideMoved, slidePosition } = this.state;
     var Moved = e.targetTouches[0].clientX - slideStart
     // slideStart에서 얘를 빼줌.
@@ -60,8 +60,7 @@ class BannerConatiner extends React.Component {
     } else {
       this.setState({...this.state, slideMoved: Moved, slidePosition: slidePosition+10});
     }
-    console.log(this.state)
-  }
+  */}
   render() {
     const { width, slidePosition, slidesToScroll } = this.state;
     const request_data = this.props.Home.request_list
