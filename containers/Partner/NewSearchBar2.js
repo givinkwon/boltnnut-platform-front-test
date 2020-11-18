@@ -561,12 +561,12 @@ class SearchBarContainer2 extends React.Component {
 
         <ButtonBox>
             <Button
-              id={'request'}
+              id={'request_submit_button'}
               backgroundColor={WHITE + "00"}
               borderColor={WHITE}
               onClick={this.submit}
             >
-              <Text.FontSize26 color={WHITE} fontWeight={500} borderRadius={0} style={{display: "flex", alignItems: "center"}}>
+              <Text.FontSize26 id="request_submit" color={WHITE} fontWeight={500} borderRadius={0} style={{display: "flex", alignItems: "center"}}>
                 가견적 받기
               </Text.FontSize26>
             </Button>
@@ -658,10 +658,11 @@ class SearchBarContainer2 extends React.Component {
          <SelectRow style={{marginTop: 24, display: "block", justifyContent: "center"}}>
              <div>
                <MobileButton2
+                id={'request_submit_button'}              
                  onClick = {this.submit}
                  style={{margin: 'auto'}}
                >
-                 <span> 무료 가견적 받기 </span>
+                 <span id="request_submit">가견적 받기</span>
                </MobileButton2>
                { !this.props.is_request &&
                <img src={ddarrow} style={{float: 'right', paddingRight: '10%'}}
@@ -675,8 +676,9 @@ class SearchBarContainer2 extends React.Component {
          <>
            <SelectRow style={{justifyContent: 'center'}}>
                <MobileButton2
+                id={'request_submit_button'}              
                 onClick = {this.showDetail}>
-                 <span> 무료 가견적 받기 </span>
+                 <span id="request_submit">가견적 받기</span>
                </MobileButton2>
            </SelectRow>
          </>
