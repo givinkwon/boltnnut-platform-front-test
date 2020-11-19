@@ -18,163 +18,107 @@ const right = 'static/icon/right-arrow.png'
 @inject('Magazine')
 @observer
 class ContentConatiner extends React.Component {
-
-  constructor(props) {
-  super(props);
-  this.state = { width: 0, height: 0 };
-  this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  state = {
+    current: 0,
+    next: true,
+    prev: false,
+    show: 'visible'
   }
-
   componentDidMount() {
-  this.updateWindowDimensions();
-  window.addEventListener('resize', this.updateWindowDimensions);
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   componentWillUnmount() {
-  window.removeEventListener('resize', this.updateWindowDimensions);
+    window.removeEventListener('resize', this.updateWindowDimensions);
   }
 
   updateWindowDimensions() {
   this.setState({ width: window.innerWidth, height: window.innerHeight });
-
   }
-
   pushToDetail = async (id) => {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
     Magazine.setCurrent(id);
   }
 
-  state = {
-    current: 1,
-    next: true,
-    prev: false,
-  }
-  slider = null
-  afterChangeHandler = (current) => {
-    const magazineCount = this.props.Magazine.magazine_list.length
-
-    if(current === 0){
-      this.setState({next: true, prev: false})
-    }
-    else {
-      // slidesToShow : 2
-      if(current === magazineCount - 2) {
-        this.setState({next: false, prev: true})
-      }
-      else {
-        this.setState({next: true, prev: true})
-      }
-    }
-
-  }
   sliderNext = () => {
-    const breakpoint = this.slider.state.breakpoint
-    this.slider.slickNext()
+    const {current, next} = this.state;
+    console.log(this.props.Magazine.magazine_list.length) // 16
+    var fullPage = parseInt((this.props.Magazine.magazine_list.length - 6)/3)+1
+
+    if (current != fullPage) {
+      const newPage = current + 1
+      this.setState({...this.state, current: newPage, show:'hidden'})
+      setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
+      this.slider.slickNext();
+    }
+    console.log(this.state)
   }
   sliderPrev = () => {
-    if(this.state.current === 0) {
-      this.setState({ prev: false,  next: true })
+    const {current, prev} = this.state;
+
+    if (current != 0) {
+      const newPage = current - 1
+      this.setState({...this.state, current: newPage, show:'hidden'})
+      setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
+      this.slider.slickPrev();
     }
-    else {
-      this.setState({ prev: true })
-    }
-    this.slider.slickPrev()
   }
-
-
-
   render() {
-    const magazineList = this.props.Magazine.magazine_list
-    const { prev, next, width, height, current } = this.state
+    const { prev, next, width, height, current, show } = this.state;
+    const current_set = (parseInt(current/5) + 1)
+    var fullPage = parseInt((this.props.Magazine.magazine_list.length - 6)/3)+1
 
-    if(width > 768){
-      var settings = {
-        dots: false,
-        infinite: true,
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        initialSlide: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        rows: 3,
-        beforeChange: (current) => {
-          this.setState({current: current})
-        },
-        appendDots: dots => (   
-          <div
-            style={{
-              backgroundColor: "#0000",
-              marginTop:100,
-              bottom:-200,
-            }}
-          >
-            <Icon prev style={{marginRight : '15px', opacity: prev ? 1 : 0.4}} src={left} onClick={this.sliderPrev}/>
-            <ul style={{ margin: "0px", display:"inline-flex" }}> {dots} </ul>
-            <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={right} onClick={this.sliderNext}/>
-          </div>
-        ),
-        customPaging: i => (
-          <Text.FontSize25 style={{}}>
-            {i + 1}
-          </Text.FontSize25>
-        )
-      };
-    }
-    if(width < 768){
-      var settings = {
-        dots: true,
-        infinite: false,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        initialSlide: 1,
-        rows: 3,
-        beforeChange: (current) => {
-          this.setState({current: current})
-        },
-        appendDots: dots => (   
-          <div
-            style={{
-              backgroundColor: "#0000",
-              marginTop:100,
-              bottom:-200,
-            }}
-          >
-            <Icon prev style={{marginRight : '15px', opacity: prev ? 1 : 0.4}} src={left} onClick={this.sliderPrev}/>
-            <ul style={{ margin: "0px", display:"inline-flex" }}> {dots} </ul>
-            <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={right} onClick={this.sliderNext}/>
-          </div>
-        ),
-        customPaging: i => (
-          <Text.FontSize25 style={{}}> 
-            {i + 1}
-          </Text.FontSize25>
-        )
-      };
-    }
+    var settings = {
+      dots: false,
+      infinite: false,
+      arrows: false,
+      slidesToShow: 2,
+      rows: 3,
+      slidesToScroll: 1,
+      initialSlide: 0,
+      draggable: false,
+    };
+
     return (
         <FindExperct>
-          {/* <Header>
-            <Text.FontSize40 color={BLACK1} fontWeight={700}>제품 인사이트</Text.FontSize40>
-            <Icon prev style={{marginLeft: 'auto', opacity: prev ? 1 : 0.4}} src={right} onClick={this.sliderPrev}/>
-            <Icon style={{opacity: next ? 1 : 0.4}} src={right} onClick={this.sliderNext}/>
-          </Header> */}
           <List style={{marginBottom:330}}>
-            <Slider {...settings} ref={slider => (this.slider = slider)} afterChange={this.afterChangeHandler}>
+            <Slider {...settings} ref={slider => (this.slider = slider)}>
             {
-              magazineList.map((item, idx) => {
-                return (
-                  <ItemBox key={idx} onClick={() => this.pushToDetail(item.id)}>
-                    <Item>
-                      <Image ratio='45%' src={item.image} onClick={() => this.setState({tab: 1})}/>
-                      <Text.FontSize24 color="#191919" fontWeight={500}>{item.title}</Text.FontSize24>
-                    </Item>
-                  </ItemBox>
-                )
+            this.props.Magazine.magazine_list.map((item, idx) => {
+              return (
+                <Item>
+                  <Image ratio='45%' src={item.image}/>
+                  <span> {item.title} </span>
+                </Item>
+              )
               })
             }
             </Slider>
           </List>
+          <PageBar>
+            {
+            current == 0 ? (
+              <img src={left} onClick = {this.sliderPrev} style={{opacity: 0.4, visibility: this.state.show}}/>
+              ) : (
+              <img src={left} onClick = {this.sliderPrev} style={{visibility: this.state.show}}/>
+              )
+            }
+              <PageCount value = {5*(current_set - 1) + 1} active={current%5 == 0}> {5*(current_set - 1) + 1} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 2} active={current%5 == 1}> {5*(current_set - 1) + 2} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 3} active={current%5 == 2}> {5*(current_set - 1) + 3} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 4} active={current%5 == 3}> {5*(current_set - 1) + 4} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 5} active={current%5 == 4}> {5*(current_set - 1) + 5} </PageCount>
+              <PageCount> ... </PageCount>
+            {
+            current == fullPage ? (
+              <img src={right} onClick = {this.sliderNext} style={{opacity: 0.4, visibility: this.state.show}}/>
+              ) : (
+              <img src={right} onClick = {this.sliderNext} style={{visibility: this.state.show}}/>
+              )
+            }
+          </PageBar>
         </FindExperct>
   )}
 }
@@ -182,7 +126,7 @@ class ContentConatiner extends React.Component {
 export default ContentConatiner;
 
 const FindExperct = styled(Container)`
-  
+  text-align: center;
   /* @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 0px;
     margin-bottom: 20px;
@@ -198,52 +142,13 @@ const FindExperct = styled(Container)`
   } */
 `
 const List = styled.div`
-
-  ul{
-    li {
-      margin: 0 15px;
-      cursor: pointer;
-    }
-    li p {
-      color: #0933b3;
-      opacity: 0.1;
-      cursor: pointer;
-
-    }
-    li.slick-active p {
-      color: #0933b3;
-      opacity: 1;
-      cursor: pointer;
-    }
-    p{
-      width: 14px;
-      height: 30px;
-      font-weight: 700;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.2;
-      letter-spacing: 0.63px;
-      text-align: left;
-      color: #999999;
-      :hover {
-        color: #0933b3;
-      }
-
-    }
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+  > div {
+    width: 100%;
   }
-
-  /* @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 30px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 30px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-top: 40px;
-  }
-  @media (min-width: 1300px) {
-    margin-top: 60px;
-  } */
 `
 
 const Header = styled.div`
@@ -271,38 +176,37 @@ const ItemBox = styled.a`
   text-decoration: none;
 `
 const Item = styled.div`
-  width: calc(100% - 15px);
-
-  > p {
+  width: calc(100%);
+  display: flex;
+  flex-direction: column;
+  > span {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    font-size: 24px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.42;
     letter-spacing: -0.6px;
     text-align: center;
+    color: var(--black);
+    white-space: nowrap;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 10px;
-    > p {
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
   }
   @media (min-width: 768px) {
-    > p {
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
   }
 `
 const Image = styled(RatioImage)`
   cursor: pointer;
   border-radius: 25px;
 
-  width: calc(100%);
+  width: calc(90%);
   height: 310px ;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -328,4 +232,38 @@ const Image = styled(RatioImage)`
       transform: scale(1.2);
     }
   }
+`
+// paging
+const PageBar = styled.div`
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 150px;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  > img {
+    cursor: pointer;
+  }
+`
+const PageCount = styled.span`
+    width: 14px;
+    height: 30px;
+    font-size: 25px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: 0.63px;
+    text-align: left;
+    color : #999999;
+    cursor: pointer;
+    ${(props) =>
+      props.active &&
+      css`
+      font-weight: 700;
+      color: #0933b3;
+      `
+     }
 `

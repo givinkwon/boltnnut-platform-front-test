@@ -7,7 +7,7 @@ import BannerConatiner from './Banner'
 import ContentConatiner from './Content'
 
 class MagazineConatiner extends React.Component {
-  render(){
+  render () {
     return (
       <>
       <BannerConatiner/>
