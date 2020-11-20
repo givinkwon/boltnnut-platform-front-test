@@ -40,6 +40,7 @@ class ContentConatiner extends React.Component {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
     Magazine.setCurrent(id);
+    console.log(id)
   }
 
   sliderNext = () => {
@@ -88,7 +89,8 @@ class ContentConatiner extends React.Component {
             {
             this.props.Magazine.magazine_list.map((item, idx) => {
               return (
-                <Item>
+                <Item
+                  onClick={() => this.pushToDetail(item.id)}>
                   <Image ratio='45%' src={item.image}/>
                   <span> {item.title} </span>
                 </Item>
