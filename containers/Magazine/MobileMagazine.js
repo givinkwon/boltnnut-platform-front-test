@@ -17,42 +17,14 @@ const right = 'static/icon/right-arrow.png'
 
 @inject('Magazine')
 @observer
-class ContentConatiner extends React.Component {
+class MobileContentContainer extends React.Component {
   state = {
-    current: 0,
-    next: true,
-    prev: false,
-    show: 'visible'
   }
   pushToDetail = async (id) => {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
     Magazine.setCurrent(id);
     console.log(id)
-  }
-
-  sliderNext = () => {
-    const {current, next} = this.state;
-    console.log(this.props.Magazine.magazine_list.length) // 16
-    var fullPage = parseInt((this.props.Magazine.magazine_list.length - 6)/3)+1
-
-    if (current != fullPage && this.props.Magazine.magazine_list.length > 6) {
-      const newPage = current + 1
-      this.setState({...this.state, current: newPage, show:'hidden'})
-      setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
-      this.slider.slickNext();
-    }
-    console.log(this.state)
-  }
-  sliderPrev = () => {
-    const {current, prev} = this.state;
-
-    if (current != 0) {
-      const newPage = current - 1
-      this.setState({...this.state, current: newPage, show:'hidden'})
-      setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
-      this.slider.slickPrev();
-    }
   }
   render() {
     const { prev, next, width, height, current, show } = this.state;
@@ -72,8 +44,6 @@ class ContentConatiner extends React.Component {
 
     return (
         <FindExperct>
-          <List style={{marginBottom:330}}>
-            <Slider {...settings} ref={slider => (this.slider = slider)}>
             {
             this.props.Magazine.magazine_list.map((item, idx) => {
               return (
@@ -85,35 +55,11 @@ class ContentConatiner extends React.Component {
               )
               })
             }
-            </Slider>
-          </List>
-          <PageBar>
-            {
-            current == 0 ? (
-              <img src={left} onClick = {this.sliderPrev} style={{opacity: 0.4, visibility: this.state.show}}/>
-              ) : (
-              <img src={left} onClick = {this.sliderPrev} style={{visibility: this.state.show}}/>
-              )
-            }
-              <PageCount value = {5*(current_set - 1) + 1} active={current%5 == 0}> {5*(current_set - 1) + 1} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 2} active={current%5 == 1}> {5*(current_set - 1) + 2} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 3} active={current%5 == 2}> {5*(current_set - 1) + 3} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 4} active={current%5 == 3}> {5*(current_set - 1) + 4} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 5} active={current%5 == 4}> {5*(current_set - 1) + 5} </PageCount>
-              <PageCount> ... </PageCount>
-            {
-            current == fullPage ? (
-              <img src={right} onClick = {this.sliderNext} style={{opacity: 0.4, visibility: this.state.show}}/>
-              ) : (
-              <img src={right} onClick = {this.sliderNext} style={{visibility: this.state.show}}/>
-              )
-            }
-          </PageBar>
         </FindExperct>
   )}
 }
 
-export default ContentConatiner;
+export default MobileContentContainer;
 
 const FindExperct = styled(Container)`
   text-align: center;
@@ -185,11 +131,11 @@ const Item = styled.div`
     color: var(--black);
     white-space: nowrap;
     @media (max-width: 1299.98px) {
-      font-size: 18px;
-      width: 90%;
-      height: 50px;
-      white-space: initial;
-    }
+        font-size: 18px;
+        width: 90%;
+        height: 50px;
+        white-space: initial;
+      }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: flex;
