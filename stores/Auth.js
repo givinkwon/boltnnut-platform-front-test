@@ -51,6 +51,9 @@ class Auth {
   @observable path_data = [];
   @observable business_data = [];
 
+  // 아이디 찾기 정보
+  @observable email_find = [];
+
   @action reset = () => {
     this.email = "";
     this.password = "";
@@ -730,40 +733,21 @@ class Auth {
     setTimeout(() => {
       this.loading = false;
     }, 1500);
-    if (!this.name) {
-      alert("회사명을 입력해주세요.");
-      return;
-    }
+    this.email_find = [];
     if (!this.phone) {
       alert("휴대폰 번호를 입력해주세요.");
       return;
     }
-    
     this.loading = true;
     const req = {
       data: {
-        username: this.name,
-        password: this.password,
-        phone: this.phone,
+      phone: this.phone
       },
     };
-    AccountAPI.sendPassword(req)
-      .then((res) => {
-        setTimeout(() => {
-          this.loading = false;
-        }, 800);
-      })
-      .catch((e) => {
-        try {
-          alert(e.response.data.message);
-        } catch {
-          console.log(e);
-          console.log(e.response);
-        }
-        setTimeout(() => {
-          this.loading = false;
-        }, 1500);
-      });
+    AccountAPI.findId(req).then(async(res) => {
+      this.email_find = this.email_find.concat(res.data.data)
+    })
+    this.setStep(1);
   };
 }
 

@@ -146,7 +146,6 @@ class ContentConatiner extends React.Component {
     while (filledPage < newPage) {
       Partner.getNextPartner();
       filledPage = filledPage + 2;
-      console.log(filledPage)
     }
     this.setState({...this.state, current: newPage-1});
   }

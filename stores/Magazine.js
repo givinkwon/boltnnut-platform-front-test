@@ -4,9 +4,9 @@ import * as MagazineAPI from 'axios/Magazine'
 import * as CategoryAPI from 'axios/Category'
 class Magazine {
   @observable current = null
-
   @observable magazine_list = []
   @observable magazine_next = null
+  @observable magazine_length = null
 
   @action init = () => {
     const req = {
@@ -14,8 +14,7 @@ class Magazine {
         ordering: '-is_top, -id',
       },
     }
-
-    CategoryAPI.getMagazine()
+    MagazineAPI.getMagazine(req)
       .then(async (res) => {
         this.magazine_list = res.data.results
         this.magazine_next = res.data.next
@@ -24,8 +23,9 @@ class Magazine {
           const req = {
             nextUrl: this.magazine_next,
           }
+          console.log(req.nextUrl[4])
 
-          await CategoryAPI.getNextPage(req)
+          await MagazineAPI.getNextPage(req)
             .then(res => {
               this.magazine_list = this.magazine_list.concat(res.data.results)
               this.magazine_next = res.data.next
@@ -35,8 +35,8 @@ class Magazine {
               console.log(e.response)
             })
         }
-
         console.log(`magazine length: ${this.magazine_list.length}`)
+        this.magazine_length = this.magazine_list.length
       })
       .catch(e => {
         console.log(e)
@@ -73,5 +73,4 @@ class Magazine {
     console.log(this.current);
   };
 }
-
 export default new Magazine()
