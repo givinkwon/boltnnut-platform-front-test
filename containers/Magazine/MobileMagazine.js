@@ -24,7 +24,6 @@ class MobileContentContainer extends React.Component {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
     Magazine.setCurrent(id);
-    console.log(id)
   }
   render() {
     const { prev, next, width, height, current, show } = this.state;

@@ -24,16 +24,21 @@ class ContentConatiner extends React.Component {
     prev: false,
     show: 'visible'
   }
+  buttonClick = (e) => {
+    const { current } = this.state;
+    const newPage = e.target.innerText*1;
+    this.setState({...this.state, current: newPage-1});
+    this.slider.slickGoTo(newPage-1)
+  }
   pushToDetail = async (id) => {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
     Magazine.setCurrent(id);
-    console.log(id)
   }
 
   sliderNext = () => {
     const {current, next} = this.state;
-    console.log(this.props.Magazine.magazine_list.length) // 16
+    console.log(this.props.Magazine.magazine_list.length)
     var fullPage = parseInt((this.props.Magazine.magazine_list.length - 6)/3)+1
 
     if (current != fullPage && this.props.Magazine.magazine_list.length > 6) {
@@ -42,7 +47,6 @@ class ContentConatiner extends React.Component {
       setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
       this.slider.slickNext();
     }
-    console.log(this.state)
   }
   sliderPrev = () => {
     const {current, prev} = this.state;
@@ -95,11 +99,11 @@ class ContentConatiner extends React.Component {
               <img src={left} onClick = {this.sliderPrev} style={{visibility: this.state.show}}/>
               )
             }
-              <PageCount value = {5*(current_set - 1) + 1} active={current%5 == 0}> {5*(current_set - 1) + 1} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 2} active={current%5 == 1}> {5*(current_set - 1) + 2} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 3} active={current%5 == 2}> {5*(current_set - 1) + 3} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 4} active={current%5 == 3}> {5*(current_set - 1) + 4} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 5} active={current%5 == 4}> {5*(current_set - 1) + 5} </PageCount>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 1} active={current%5 == 0}> {5*(current_set - 1) + 1} </PageCount>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 2} active={current%5 == 1}> {5*(current_set - 1) + 2} </PageCount>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 3} active={current%5 == 2}> {5*(current_set - 1) + 3} </PageCount>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 4} active={current%5 == 3}> {5*(current_set - 1) + 4} </PageCount>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 5} active={current%5 == 4}> {5*(current_set - 1) + 5} </PageCount>
               <PageCount> ... </PageCount>
             {
             current == fullPage ? (
