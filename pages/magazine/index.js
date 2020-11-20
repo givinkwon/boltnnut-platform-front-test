@@ -28,6 +28,7 @@ class Index extends React.Component {
   };
   render(){
     const { width } = this.state;
+    console.log(width)
     return (
       <div>
         <Head>
@@ -41,7 +42,7 @@ class Index extends React.Component {
           )
         }
         </>
-        <MagazineConatiner />
+        <MagazineConatiner width = {width}/>
         <Footer/>
       </div>
     )

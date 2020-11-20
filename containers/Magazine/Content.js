@@ -24,18 +24,6 @@ class ContentConatiner extends React.Component {
     prev: false,
     show: 'visible'
   }
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
-  }
-
-  updateWindowDimensions() {
-  this.setState({ width: window.innerWidth, height: window.innerHeight });
-  }
   pushToDetail = async (id) => {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
@@ -196,6 +184,12 @@ const Item = styled.div`
     text-align: center;
     color: var(--black);
     white-space: nowrap;
+    @media (max-width: 1299.98px) {
+      font-size: 18px;
+      width: 90%;
+      height: 50px;
+      white-space: initial;
+    }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: flex;
