@@ -48,7 +48,7 @@ class ContentConatiner extends React.Component {
     console.log(this.props.Magazine.magazine_list.length) // 16
     var fullPage = parseInt((this.props.Magazine.magazine_list.length - 6)/3)+1
 
-    if (current != fullPage) {
+    if (current != fullPage && this.props.Magazine.magazine_list.length > 6) {
       const newPage = current + 1
       this.setState({...this.state, current: newPage, show:'hidden'})
       setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
@@ -179,8 +179,10 @@ const ItemBox = styled.a`
 `
 const Item = styled.div`
   width: calc(100%);
-  display: flex;
+  display: flex !important;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   > span {
     width: 100%;
     height: 100%;

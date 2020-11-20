@@ -27,7 +27,7 @@ class FormConatiner extends React.Component {
     if (e.key === 'Enter') {
       // TODO 검색 API
       console.log('검색');
-      this.props.Auth.forget()
+      this.props.Auth.forgetId()
     }
   }
   toSignUp = () => {
@@ -46,8 +46,7 @@ class FormConatiner extends React.Component {
         <Container>
           <Text.FontSize56 color={'#0a2165'} fontWeight={700}>아이디 찾기</Text.FontSize56>
           <ForgetIDContainer>
-            <Text.FontSize20 color={'#505050'}>회사명</Text.FontSize20>
-            <Input placeholder='회사명을 입력하세요' onChange={Auth.setName} value={Auth.Name}/>
+            <Text.FontSize20 color={'#0a2165'} fontWeight={700}> 가입 시 사용했던 휴대전화번호를 입력해 주세요. </Text.FontSize20>
             <Text.FontSize20 color={'#505050'}>휴대전화번호</Text.FontSize20>
             <Input placeholder='- 없이 입력해주세요' onChange={Auth.setPhone} value={Auth.phone} onKeyDown={this.handleKeyDown}/>
             <ButtonBox>
@@ -99,9 +98,8 @@ const ForgetIDContainer =  styled.div`
   border: solid 1px #c7c7c7;
   padding : 40px;
   margin-top : 50px;
-  > p { 
-    color : #505050;
-    font-weight: normal;
+  > p {
+    font-weight: ${props => props.fontWeight ? props.fontWeight: 'normal'};
     font-stretch: normal;
     font-style: normal;
     line-height: 1.7;
