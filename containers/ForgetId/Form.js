@@ -44,10 +44,10 @@ class FormConatiner extends React.Component {
     return (
       <Form>
         <Container>
-          <Text.FontSize56 color={'#0a2165'} fontWeight={700}>아이디 찾기</Text.FontSize56>
+          <Text.FontSize56 color={'#0a2165'} fontWeight={'bold'}>아이디 찾기</Text.FontSize56>
           <ForgetIDContainer>
-            <Text.FontSize20 color={'#0a2165'} fontWeight={700}> 가입 시 사용했던 휴대전화번호를 입력해 주세요. </Text.FontSize20>
-            <Text.FontSize20 color={'#505050'}>휴대전화번호</Text.FontSize20>
+            <Text.FontSize20 color={'#0a2165'} fontWeight={'bold'}> 가입 시 사용했던 휴대전화번호를 입력해 주세요. </Text.FontSize20>
+            <Text.FontSize20 color={'#505050'} fontWeight={'normal'}>휴대전화번호</Text.FontSize20>
             <Input placeholder='- 없이 입력해주세요' onChange={Auth.setPhone} value={Auth.phone} onKeyDown={this.handleKeyDown}/>
             <ButtonBox>
               <ButtonComponent backgroundColor={"#0a2165"} borderColor={WHITE} borderRadius={3} borderWidth={1} onClick={Auth.forgetId}>
@@ -72,16 +72,33 @@ class FormConatiner extends React.Component {
 export default FormConatiner
 
 const Move = styled.div`
+  width: 60%;
   display : flex ;
   margin-top : 30px;
-  p:nth-of-type(1){
-    margin-right : 430px;
+  display: inline-flex;
+  justify-content: space-between;
+  > p {
+    font-size: 16px;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: calc(90%);
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: calc(80%);
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) { 
+    width: calc(60%);
+  }
+
+  @media (min-width: 1300px) { 
+    width: calc(45%);
   }
 `
 const MovePage = styled.p`
   color: #0a2165;
   cursor: pointer;
-  margin-left: auto;
   font-size: 20px;
   font-weight: 500;
   font-stretch: normal;
@@ -99,11 +116,14 @@ const ForgetIDContainer =  styled.div`
   padding : 40px;
   margin-top : 50px;
   > p {
-    font-weight: ${props => props.fontWeight ? props.fontWeight: 'normal'};
     font-stretch: normal;
     font-style: normal;
     line-height: 1.7;
     letter-spacing: -0.5px;
+  }
+  @media (max-width: 767.99px) {
+    width: calc(80%);
+    padding: calc(5%);
   }
 `
 const More = styled.div`
@@ -128,9 +148,9 @@ const More = styled.div`
 const Input = styled(InputComponent)`
   width : 508px ;
   height : 49 px; 
-  
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 7px 0 !important;
+    width: calc(100%);
   }
 `
 const ButtonBox = styled.div`
@@ -160,7 +180,11 @@ const Form = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
-    
+    @media (max-width: 767.99px) {
+    > p:nth-of-type(1) {
+       font-size: 20px;
+    }
+  }
     > p:nth-of-type(2){
       margin-top: 15px;
       margin-bottom: 30px;
