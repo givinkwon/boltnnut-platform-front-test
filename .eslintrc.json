@@ -20,10 +20,13 @@
         "react"
     ],
     "rules": {
+        // props 변수 에러 무시
         "react/prop-types": 0,
+        // 개행 에러 무시(윈도우 유닉스 문제)
         "linebreak-style": 0,
         "react/destructuring-assignment": 0,
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "react/prefer-stateless-function": 0
+        "react/prefer-stateless-function": 0,
+        "react/jsx-props-no-spreading": 0
     }
 }
