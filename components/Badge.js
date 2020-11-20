@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import * as Text from './Text';
 
 const Wrap = styled.div`
