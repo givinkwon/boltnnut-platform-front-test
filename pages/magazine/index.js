@@ -16,6 +16,7 @@ class Index extends React.Component {
   }
   componentDidMount() {
     //창 크기
+    // conflict..?
     window.addEventListener('resize', this.updateDimensions);
     this.props.Magazine.init();
     this.setState({ ...this.state, width: window.innerWidth });
