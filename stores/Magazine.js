@@ -23,7 +23,6 @@ class Magazine {
           const req = {
             nextUrl: this.magazine_next,
           }
-          console.log(req.nextUrl[4])
 
           await MagazineAPI.getNextPage(req)
             .then(res => {

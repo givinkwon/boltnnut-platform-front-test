@@ -9,6 +9,7 @@ import MobileContentContainer from './MobileMagazine';
 
 class MagazineConatiner extends React.Component {
   render () {
+    console.log(this.props.length)
     return (
       <div style={{overflow: 'hidden'}}>
       <BannerConatiner/>
@@ -18,7 +19,7 @@ class MagazineConatiner extends React.Component {
           this.props.width && this.props.width > 767.99 ? (
           <ContentConatiner style={{padding: 0}}/>
           ) : (
-          <MobileContentContainer/>
+          <MobileContentContainer length = {this.props.length}/>
           )
           }
         </Container>
