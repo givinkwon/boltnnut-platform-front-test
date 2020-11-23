@@ -1,14 +1,12 @@
-import React from "react";
-import App from "next/app";
+import React from 'react';
+import App from 'next/app';
 // import { Head } from 'next/document'
-import { Provider } from "mobx-react";
-import { createGlobalStyle } from "styled-components";
+import { Provider } from 'mobx-react';
+import { createGlobalStyle } from 'styled-components';
+import stores from 'stores';
 
-import IE from "components/IE";
-import ScrollToTop from "components/ScrollToTop";
-import stores from "stores";
-import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
-import PrepareModal from "../containers/Home/PrepareModal";
+import ScrollToTop from '../components/ScrollToTop';
+import CheckBrowserModal from '../containers/Home/CheckBrowserModal';
 
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
@@ -77,16 +75,16 @@ class MyApp extends App {
       ie_user: false,
       modal_shown: true,
       prepare: false,
-    })
+    });
   }
 
   componentDidMount() {
-    const { Home } = this.props
+    const { Home } = this.props;
     const userAgent = window.navigator.userAgent;
-    console.log(userAgent)
+    console.log(userAgent);
 
-    if(userAgent.indexOf("MSIE ") !== -1 || userAgent.indexOf(".NET") !== -1
-      || userAgent.indexOf("Edge") !== -1)
+    if(userAgent.indexOf('MSIE ') !== -1 || userAgent.indexOf('.NET') !== -1
+      || userAgent.indexOf('Edge') !== -1)
         {
             this.setState({
                 ...this.state,
@@ -103,7 +101,7 @@ class MyApp extends App {
             })
         }
 
-    const jssStyles = document.querySelector("#jss-server-side");
+    const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles && jssStyles.parentNode)
       jssStyles.parentNode.removeChild(jssStyles);
   }
