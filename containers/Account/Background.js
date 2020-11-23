@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 
 import Container from "components/Container";
-
+ 
 const BackgroundContainer = ({children}) => {
   return (
     <Background>
