@@ -18,7 +18,7 @@ class MagazineConatiner extends React.Component {
           this.props.width && this.props.width > 767.99 ? (
           <ContentConatiner style={{padding: 0}}/>
           ) : (
-          <MobileContentContainer/>
+          <MobileContentContainer length = {this.props.length}/>
           )
           }
         </Container>

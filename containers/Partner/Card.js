@@ -512,8 +512,12 @@ const PortfolioContainer = styled.div`
     padding-top: 0px;
     padding-bottom: 12px;
   }
-  @media (min-width: 767.99px) and (max-width: 1299.98px) {
-    width: 95%;
+  @media (min-width: 767.99px) and (max-width: 991.98px) {
+    width: 100%;
+    padding-left: calc(2.5%);
+  }
+  @media (min-width: 991.99px) and (max-width: 1299.98px) {
+    width: 930px;
     padding-left: calc(2.5%);
   }
 `
@@ -579,7 +583,7 @@ const Card = styled.div`
     }
   }
   @media (min-width: 768.98px) and (max-width: 1299.98px) {
-    width: 720px !important;
+    width: 100% !important;
   }
 `
 const TextBox = styled.div`

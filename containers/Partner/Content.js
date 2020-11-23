@@ -11,13 +11,16 @@ import * as Text from 'components/Text'
 import Card from './Card'
 
 import { BLACK1, DARKGRAY } from 'static/style'
+import AnimationCount from 'react-count-animation';
 import RequestListCard from "../../components/RequestCard";
+import CounterContainer from "../Request/Counter";
 
 const pass1 = 'static/images/pass1.png'
 const pass2 = 'static/images/pass2.png'
 
 const left = 'static/icon/left-arrow.png'
 const right = 'static/icon/right-arrow.png'
+
 
 @inject('Partner', 'Home')
 @observer
@@ -245,11 +248,37 @@ class ContentConatiner extends React.Component {
   )
   }
 
+  countCalc () {
+    const { Request, Partner } = this.props;
+    let result = 0
+    //console.log(Request.select_big, Request.select_mid, Request.select_small)
+
+    if(Partner.select_big != null && Partner.select_mid == null){
+        result = Partner.select_big.id === 0 ?  4490 : 460 * (((Partner.select_big.id)/5) + 4)
+    }
+    if(Partner.select_big != null && Partner.select_mid != null && Partner.select_small == null){
+        result = Partner.select_big.id === 0 ?  4490 : 460 * (((Partner.select_big.id)/5) + 4) - 260* ((Partner.select_mid.id/50) + 5)
+    }
+    if(Partner.select_big != null && Partner.select_mid != null && Partner.select_small != null){
+        result = Partner.select_big.id === 0 ?  4490 : 460 * (((Partner.select_big.id)/5) + 4) - 260* ((Partner.select_mid.id/50) + 5) - 40 * ((Request.select_small.id/100) + 3)
+    }
+    return result
+  }
+
   render() {
     const { Partner, Home } = this.props
     const { prev, next, current, searchWord, count, width } = this.state
     const current_set = (parseInt(current/5) + 1)
     const page = parseInt(count/5) + 1
+
+    const countSettings = {
+      start: 0,
+      count : this.countCalc(),
+      duration: 6000,
+      decimals: 0,
+      useGroup: true,
+      animation: 'up'
+    };
 
     return (
       <CustomContainer>
@@ -266,7 +295,9 @@ class ContentConatiner extends React.Component {
           <Header>
             {Partner.search_true == 1 ?
             (Partner.search_text + "에 대한 검색 결과입니다.")
-             : ""
+             : <div style={{display: "inline-flex"}}>
+                 총 <AnimationCount {...countSettings}> 3924 </AnimationCount> 개의 제조사가 있습니다.
+               </div>
              }
           </Header>
       { width > 991.98 ? (

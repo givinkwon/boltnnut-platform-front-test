@@ -19,32 +19,48 @@ const right = 'static/icon/right-arrow.png'
 @observer
 class MobileContentContainer extends React.Component {
   state = {
+    magazineLength: 0,
+    magazine_idx: 3
+  }
+  componentDidMount () {
+    this.setState({...this.state, magazineLength: this.props.length})
+    window.addEventListener('scroll', this.loadScroll);
   }
   pushToDetail = async (id) => {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
     Magazine.setCurrent(id);
   }
+
+  loadScroll = () => {
+    const { magazine_idx, magazineLength } = this.state;
+    var newIdx = magazine_idx + 3
+
+    if (typeof document != "undefined") {
+      var scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+      var clientHeight = document.documentElement.clientHeight;
+    }
+    if (scrollTop + clientHeight + 5 > scrollHeight && magazineLength == null) {
+      this.setState({...this.state, magazineLength: this.props.length})
+      console.log(this.props.length)
+    }
+    if (scrollTop + clientHeight + 5 > scrollHeight && magazineLength > magazine_idx ) {
+      if (newIdx < magazineLength) {
+        this.setState({...this.state, magazine_idx: newIdx})
+      } else {
+        this.setState({...this.state, magazine_idx: magazineLength})
+      }
+    }
+  }
+
   render() {
-    const { prev, next, width, height, current, show } = this.state;
-    const current_set = (parseInt(current/5) + 1)
-    var fullPage = parseInt((this.props.Magazine.magazine_list.length - 6)/3)+1
-
-    var settings = {
-      dots: false,
-      infinite: false,
-      arrows: false,
-      slidesToShow: 2,
-      rows: 3,
-      slidesToScroll: 1,
-      initialSlide: 0,
-      draggable: false,
-    };
-
+    const { magazine_idx, magazineLength } = this.state;
+    console.log(this.state);
     return (
         <FindExperct>
             {
-            this.props.Magazine.magazine_list.map((item, idx) => {
+            magazine_idx && this.props.Magazine.magazine_list.slice(0,magazine_idx).map((item, idx) => {
               return (
                 <Item
                   onClick={() => this.pushToDetail(item.id)}>

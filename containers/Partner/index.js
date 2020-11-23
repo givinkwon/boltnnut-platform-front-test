@@ -31,9 +31,9 @@ class PartnerConatiner extends React.Component {
   render() {
     const { width } = this.state
     return (
-      <>
+      <div style={{overflow: 'hidden'}}>
       { width > 767.99 ? (
-      <>
+      <div style={{overflow: 'hidden'}}>
         <SearchBannerContainer/>
         <CustomContainer>
           <Container>
@@ -41,17 +41,17 @@ class PartnerConatiner extends React.Component {
             <ContentContainer />
           </Container>
         </CustomContainer>
-      </>
+      </div>
         ) : (
-      <>
+      <div style={{overflow: 'hidden'}}>
         <SearchBannerContainer/>
         <CustomContainer>
             <ContentContainer />
         </CustomContainer>
-      </>
+      </div>
         )
       }
-      </>
+      </div>
     );
   }
 }
