@@ -43,8 +43,8 @@ export function sendPassword(req) {
 }
 export function findId(req) {
   return axios({
-    method: "POST",
-    url: `${ROOT_URL}/users/findemail/`,
+    method: "GET",
+    url: `${ROOT_URL}/users/id/`,
     data: req.data,
   });
 }
