@@ -421,7 +421,7 @@ class SearchBarContainer2 extends React.Component {
 
     var formData = new FormData();
     formData.append("content", "<상담 후에 수정하길 바랍니다>")
-    formData.append("client", 19)
+    formData.append("client", 19) // 원래 19
     formData.append("category",1) // 일단 대충개발
     formData.append("product", 30) // 의뢰제품
     formData.append("name", Request.input_name + ":" + Request.input_phone + Request.input_phone2 + Request.input_phone3);
@@ -443,8 +443,6 @@ class SearchBarContainer2 extends React.Component {
 
         const token = localStorage.getItem("token")
         if(!token) { return }
-        //Router.push()
-
       })
       .catch((e) => {
         console.log(e);
@@ -453,9 +451,8 @@ class SearchBarContainer2 extends React.Component {
 
       Request.setStep(1);
       Router.push({
-        pathname: `/request`,
-        query: {
-          }
+        pathname: `/request/complete1`,
+        query: {},
         });
   };
   render() {
