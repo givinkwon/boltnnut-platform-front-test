@@ -10,6 +10,7 @@ import Nav from "components/Nav";
 import Footer from "components/Footer";
 
 import RequestDetailConatiner from "containers/Request/Detail";
+import CompleteBannerContainer from "containers/Request/Detail/NewComplete";
 
 @inject("Answer", "Auth")
 class RequestDetail extends React.Component {
@@ -41,7 +42,8 @@ class RequestDetail extends React.Component {
           <link rel="canonical" href={`https://www.tirrilee.io/portfolio/${item[0].id}`} /> */}
         </Head>
         <Nav />
-        <RequestDetailConatiner project_id={id} />
+        {/*<RequestDetailConatiner project_id={id} />*/}
+        <CompleteBannerContainer/>
         <Footer />
       </div>
     );

@@ -50,7 +50,6 @@ class MobileContentContainer extends React.Component {
         this.setState({...this.state, magazine_idx: newIdx})
       } else {
         this.setState({...this.state, magazine_idx: magazineLength})
-        console.log(2)
       }
     }
   }
