@@ -451,15 +451,13 @@ class SearchBarContainer2 extends React.Component {
 
       Request.setStep(1);
       Router.push({
-        pathname: `/request/complete1`,
+        pathname: `/request/complete`,
         query: {},
         });
   };
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request } = this.props;
-    {/*console.log(Partner.select_big)
-    console.log(Partner.request_middle_list)*/}
     return (
       <CustomContainer>
       <>
