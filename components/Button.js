@@ -1,14 +1,16 @@
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
+
 
 const Button = styled.div`
-  color: ${(props) => (props.color ? props.color : '#006cb3')};
-  border: solid ${(props) => (props.borderWidth ? props.borderWidth : '2px')} ${(props) => (props.borderColor ? props.borderColor : '#006cb3')};
-  background-color: ${(props) => (props.backgroundColor ? props.backgroundColor : '#ffffff')};
+  color: ${props => props.color ? props.color : "#006cb3"};
+  border: solid ${props => props.borderWidth ? props.borderWidth : "2px"} ${props => props.borderColor ? props.borderColor : "#006cb3"};
+  background-color: ${props => props.backgroundColor ? props.backgroundColor : "#ffffff"};
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border-radius: ${(props) => (props.borderRadius ? props.borderRadius : 0)}px;
+  border-radius: ${props => props.borderRadius ? props.borderRadius : 0}px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 12px;
     width: 140px;
@@ -29,5 +31,5 @@ const Button = styled.div`
     width: 200px;
     height: 56px;
   }
-`;
-export default Button;
+`
+export default Button

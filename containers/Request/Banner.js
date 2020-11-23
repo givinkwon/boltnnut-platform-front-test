@@ -35,21 +35,8 @@ const Banner = styled.div`
     height: 100%;
     font-stretch: normal;
     font-style: normal;
+    margin-top : 200px;
     margin-bottom : 10px;
-    @media (min-width: 0px) and (max-width: 767.98px) {
-      margin-top : 80px;
-    }
-    @media (min-width: 768px) and (max-width: 991.98px) {
-      margin-top : 100px;
-    }
-    @media (min-width: 992px) and (max-width: 1299.98px) {
-      margin-top : 200px;
-
-    }
-    @media (min-width: 1300px) {
-      margin-top : 200px;
-
-    }
     >p {
       margin-right : auto;
       margin-left : auto;
