@@ -110,7 +110,7 @@ class BannerConatiner extends React.Component {
               onClick={() => Router.push("/partner")}
             >
               <Text.FontSize32 color={WHITE} fontWeight={500} borderRadius={0} style={{height: 47, display: "flex", alignItems: "center"}}>
-                제조사 찾기
+                무료로 가견적 받기
               </Text.FontSize32>
             </Button>
           </ButtonBox>
@@ -129,7 +129,7 @@ class BannerConatiner extends React.Component {
               borderColor={WHITE}
               onClick={() => Router.push("/partner")}
               >
-              <span> 제조사 찾기 </span>
+              <span> 무료로 가견적 받기 </span>
             </MobileButton>
           </MobileBanner>
           <RequestBox>
@@ -360,7 +360,7 @@ const MobileBanner = styled.div`
   margin-top: 26px;
 `
 const MobileButton = styled.div`
-  width: 152px;
+  width: 50%;
   height: 40px;
   object-fit: contain;
   background-color: #0a2165;
@@ -377,7 +377,7 @@ const MobileButton = styled.div`
     background-color: #0933b3;
   }
   > span {
-    width: 76px;
+    width: 100%;
     height: 24px;
     font-size: 16px;
     font-stretch: normal;
@@ -386,6 +386,7 @@ const MobileButton = styled.div`
     line-height: 0.81;
     letter-spacing: -0.4px;
     text-align: center;
+    justify-content: center;
     color: #ffffff;
     display: flex;
     align-items: center;
