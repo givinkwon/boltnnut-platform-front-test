@@ -1,21 +1,22 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import { WHITE, PRIMARY } from '../static/style';
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+
+import { WHITE, PRIMARY } from "static/style";
 
 const WhiteCheckbox = withStyles({
   root: {
-    color: '#c7c7c7',
-    borderRadius: '3px',
-    '&$checked': {
+    color: "#c7c7c7",
+    borderRadius: "3px",
+    "&$checked": {
       color: WHITE,
-      'input:hover ~ &': {
-        boederColor: '#0933b3',
-      },
-      '&$checked': {
-        color: '#0933b3',
-      },
+    "input:hover ~ &": {
+      boederColor: "#0933b3",
+    },
+    "&$checked": {
+      color: "#0933b3",
+    },
     },
   },
   checked: {},
@@ -24,7 +25,7 @@ const WhiteCheckbox = withStyles({
 const PrimaryCheckbox = withStyles({
   root: {
     color: '#404040',
-    '&$checked': {
+    "&$checked": {
       color: PRIMARY,
     },
   },
@@ -35,21 +36,21 @@ class CheckBoxComponent extends React.Component {
   handleChange = (e) => {
     this.props.onChange(e.target.checked);
   };
-
   render() {
     const { checked } = this.props;
-    const { primary, disabled } = this.props;
-    console.log(checked);
+    const { primary, placeholder, label, disabled, ...props } = this.props;
+
+    console.log(checked)
     if (primary) {
       return (
         <FormControlLabel
-          control={(
+          control={
             <PrimaryCheckbox
               checked={checked}
               onChange={this.handleChange}
               disabled={disabled}
             />
-          )}
+          }
           label={this.props.children}
         />
       );

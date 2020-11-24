@@ -26,6 +26,7 @@ class CompleteConatiner extends React.Component {
   handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       // TODO 검색 API
+      console.log('검색');
       this.props.Auth.login()
     }
   }
@@ -36,38 +37,22 @@ class CompleteConatiner extends React.Component {
   render(){
     const { search } = this.state
     const { Auth } = this.props
-    const emailList = Auth.email_find;
-    console.log(emailList.length)
     return (
       <Form>
         <Container>
           <Text.FontSize56 color={'#0a2165'} fontWeight={700}>아이디 찾기</Text.FontSize56>
           <ForgetIDContainer>
-            <Text.FontSize20 color={'#505050'} style={{paddingBottom: 15}}>입력하신 휴대폰 번호로 가입 된 이메일의 목록입니다.</Text.FontSize20>
-            { emailList.length > 0 ? (
-            <>
-            {
-              emailList.map((item,idx) => {
-                return (
-                  <Text.FontSize20 color={PRIMARY}> {item} </Text.FontSize20>
-                )
-              })
-            }
-            </>
-            ) : (
-            <>
-              <Text.FontSize20 color={PRIMARY} fontWeight={'bold'}> 목록이 존재하지 않습니다. 휴대폰 번호를 다시 확인해주세요. </Text.FontSize20>
-            </>
-            )
-            }
+            <Text.FontSize20 color={'#505050'}>아이디</Text.FontSize20>
+            <Text.FontSize22 findId color={'#0a2165'}>
+                findId.
+                {/* 여기해야댐 */}
+            </Text.FontSize22>
             <ButtonBox>
               <ButtonComponent backgroundColor={"#0a2165"} borderColor={WHITE} borderRadius={3} borderWidth={1} onClick={Auth.toLogIn}>
                 {
                   Auth.loading
                   ? <ButtonSpinnerComponent scale='50%' primary/>
-                  : <Text.FontSize24 color={WHITE} fontWeight={500}
-                     onClick = {this.toLogIn}>
-                      로그인 창으로 돌아가기</Text.FontSize24>
+                  : <Text.FontSize24 color={WHITE} fontWeight={500}>로그인</Text.FontSize24>
                 }
               </ButtonComponent>
             </ButtonBox>
@@ -85,7 +70,8 @@ const ForgetIDContainer =  styled.div`
   border: solid 1px #c7c7c7;
   padding : 40px;
   margin-top : 50px;
-  > p {
+  > p { 
+    color : #505050;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
@@ -97,7 +83,6 @@ const ButtonBox = styled.div`
   width: 100%;
   justify-content: space-between;
   display: flex;
-  padding-top: 15px;
   > div {
     width: 100%;
     :hover {

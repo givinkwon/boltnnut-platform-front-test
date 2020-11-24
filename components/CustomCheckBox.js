@@ -1,26 +1,25 @@
 import React from 'react';
-import styled from 'styled-components';
-import * as Text from './Text';
-import { DARKGRAY } from '../static/style';
+import styled from 'styled-components'
+import * as Text from './Text'
+import { GRAY, DARKGRAY } from 'static/style'
+import {BLACK} from "../static/style";
 
-const check_on = '/static/images/check_on.png';
-const check_off = '/static/images/check_off.png';
+const check_on = '/static/images/check_on.png'
+const check_off = '/static/images/check_off.png'
 
 class CustomCheckBoxComponent extends React.Component {
   render() {
-    const {
-      children, checked, onClick, className,
-    } = this.props;
+    const { children, checked, onClick, className, name } = this.props
     return (
       <CheckBox className={className} onClick={onClick}>
-        <Icon src={checked ? check_on : check_off} />
+        <Icon src={checked ? check_on : check_off}/>
         <Text.FontSize20 color={checked ? '#404040' : DARKGRAY} fontWeight={checked ? 500 : 300}>{children}</Text.FontSize20>
       </CheckBox>
-    );
+    )
   }
 }
 
-export default CustomCheckBoxComponent;
+export default CustomCheckBoxComponent
 
 const Icon = styled.img`
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -43,9 +42,9 @@ const Icon = styled.img`
     height: 26px;
     margin-right: 10px;
   }
-`;
+`
 const CheckBox = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-`;
+`
