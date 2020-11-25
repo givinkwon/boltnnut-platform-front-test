@@ -99,6 +99,8 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
+          <meta charSet="utf-8" />
+
           {/* GA Settings
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
           <script dangerouslySetInnerHTML={this.setGoogleTags()} /> */}
@@ -106,14 +108,18 @@ export default class MyDocument extends Document {
           <script dangerouslySetInnerHTML={{__html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PWFPPZ5');`,}}></script>
           {/* Naver webmaster */}
           <meta name="naver-site-verification" content="4354dc20bc3fb28a16e1db9800acf406fd782d76" />
-          <meta charSet="utf-8" />
           {/* SEO */}
           <meta property="og:title" content="볼트앤너트" />
           <meta property="og:description" content="제조 중개 매칭 플랫폼 볼트앤너트" />
           <meta name="description" content="제조 중개 매칭 플랫폼 볼트앤너트" />
-
           <meta property="og:image" content="/static/images/thumbnail.png"/>
+          <link rel="icon" href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"/>
+          <link rel="shortcut icon" href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"/>
+          <link rel="shortcut icon" href="https://www.boltnnut.com/favicon.ico"/>
+          <link rel="shortcut icon" href="/favicon.ico"/>
           <link rel="icon" href="/static/favicon.ico" />
+          <link rel="icon" href="/public/favicon.ico" />
+
           <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900|Noto+Sans:400,700&display=swap" rel="stylesheet" />
           <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
           <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
