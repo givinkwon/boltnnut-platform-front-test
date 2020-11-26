@@ -230,9 +230,9 @@ class MagazineContainer extends React.Component {
                                 <div class="Body" style={{paddingTop: 10}}>
                                   {data[idx*2].summary}
                                 </div>
+                                <p>....</p>
                                 {/*<div class="Body" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(data[idx*2].content.substring(0,350), {ALLOWED_TAGS:['p']})}}>
                                 </div>*/}
-                                <p> ... </p>
                               </TextBox>
                             </Item>
                             <Item>
@@ -244,7 +244,7 @@ class MagazineContainer extends React.Component {
                                 <div class="Body" style={{paddingTop: 10}}>
                                   {data[idx*2+1].summary}
                                 </div>
-                                <p> ... </p>
+                                <p> .... </p>
                               </TextBox>
                             </Item>
                           </ItemBox>
