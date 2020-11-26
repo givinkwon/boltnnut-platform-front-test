@@ -39,7 +39,6 @@ class Home extends React.Component {
   render() {
     const { Loading,Home } = this.props;
     const { width } = this.state;
-    console.log(Home.request_list)
     return (
       <>
       <Head>

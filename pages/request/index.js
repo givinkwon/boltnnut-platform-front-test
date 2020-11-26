@@ -21,7 +21,7 @@ class Request extends React.Component {
   }
   componentDidMount() {
     //this.props.Request.init(this.props.query)
-    //console.log(this.props.query)
+    console.log(this.props.query)
     this.props.Partner.init();
      //창 크기
     window.addEventListener('resize', this.updateDimensions);
