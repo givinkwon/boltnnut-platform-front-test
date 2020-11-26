@@ -222,24 +222,27 @@ class MagazineContainer extends React.Component {
                         return(
                           <ItemBox>
                             <Item>
-                              <Image ratio='45%' src={data[idx*2].image} onClick={() => this.pushToDetail(data[idx*2].id)}/>
+                              <Image ratio='50%' src={data[idx*2].image} onClick={() => this.pushToDetail(data[idx*2].id)}/>
                               <TextBox>
                                 <div class="Header">
                                   {data[idx*2].title}
                                 </div>
-                                <div class="Body" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(data[idx*2].content.substring(0,350), {ALLOWED_TAGS:['p']})}}>
-                                  {/*{item.content.replace(/(<([^>]+)>)/ig,"").split('&nbsp;')[4]}*/}
+                                <div class="Body" style={{paddingTop: 10}}>
+                                  {data[idx*2].summary}
                                 </div>
+                                {/*<div class="Body" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(data[idx*2].content.substring(0,350), {ALLOWED_TAGS:['p']})}}>
+                                </div>*/}
                                 <p> ... </p>
                               </TextBox>
                             </Item>
                             <Item>
-                              <Image ratio='45%' src={data[idx*2+1].image} onClick={() => this.pushToDetail(data[idx*2].id)}/>
+                              <Image ratio='50%' src={data[idx*2+1].image} onClick={() => this.pushToDetail(data[idx*2].id)}/>
                               <TextBox>
                                 <div class="Header">
                                   {data[idx*2+1].title}
                                 </div>
-                                <div class="Body" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(data[idx*2+1].content.substring(0,350), {ALLOWED_TAGS:['p']})}}>
+                                <div class="Body" style={{paddingTop: 10}}>
+                                  {data[idx*2+1].summary}
                                 </div>
                                 <p> ... </p>
                               </TextBox>
@@ -586,11 +589,11 @@ const Item = styled.div`
 const Image = styled(RatioImage)`
   cursor: pointer;
   border-radius: 25px;
-  width: calc(100% - 15px);
+  width: calc(100%);
   @media (min-width: 0px) and (max-width: 767.98px) {
     border-radius: 15px;
     height: 106px;
-    width: 199px;
+    width: 100%;
     max-width: 400px;
     :hover {
       border-radius: 15px;
@@ -633,9 +636,10 @@ const MagazineBox = styled.div`
 `
 const TextBox = styled.div`
   flex-direction: column;
+  width: 100%;
   .Header {
-  width: 385px;
-  height: 70px;
+  width: 100%;
+  height: auto;
   object-fit: contain;
   font-size: 26px;
   font-stretch: normal;
@@ -668,8 +672,8 @@ const TextBox = styled.div`
   }
   .Body {
   margin-left: 10px;
-      width: 377px;
-      overflow: hidden;
+  width: auto;
+  overflow: hidden;
   height: 150px;
   object-fit: contain;
   font-size: 15px;
