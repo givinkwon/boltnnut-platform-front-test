@@ -144,10 +144,13 @@ class FooterComponent extends React.Component {
              </CompanyInfo2>
              </div>
              <MobileContainer>
-               <span> 제조사 찾기 </span>
+               <span
+                onClick={() => Router.push("/partner")}> 제조사 찾기 </span>
                <span> 자주찾는 질문 </span>
-               <span> 이용약관 </span>
-               <span> 개인정보 처리 방침 </span>
+               <span
+                onClick={() => Router.push("/term/policy")}> 이용약관 </span>
+               <span
+                onClick={() => Router.push("/term/personal")}> 개인정보 처리 방침 </span>
              </MobileContainer>
            </CompanyInfoContainer>
          </MobileFooter>

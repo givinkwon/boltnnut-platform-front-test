@@ -21,7 +21,7 @@ class Request extends React.Component {
   }
   componentDidMount() {
     //this.props.Request.init(this.props.query)
-    //console.log(this.props.query)
+    console.log(this.props.query)
     this.props.Partner.init();
      //창 크기
     window.addEventListener('resize', this.updateDimensions);
@@ -42,10 +42,10 @@ class Request extends React.Component {
           <title>볼트앤너트</title>
         </Head>
         <>
-        { width > 450 ? (
+        { width > 767.98 ? (
           <Nav />
           ) : (
-          <MobileNav/>
+          <MobileNav width={width}/>
           )
         }
         </>

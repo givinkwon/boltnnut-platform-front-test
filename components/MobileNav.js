@@ -21,7 +21,6 @@ class MobileNav extends React.Component {
     url: "/",
     is_profile: false,
     is_open: false,
-    width: 0,
   };
 
   alreadyLoggedin = ["login", "signup"];
@@ -38,7 +37,6 @@ class MobileNav extends React.Component {
     const token = await localStorage.getItem("token");
     const { route, pathname } = Router.router;
     const splitedRoute = route.split("/");
-    console.log(splitedRoute);
     const requestId = window.location.pathname.split('/').pop()
 
     // 사용자 접근 제어
@@ -108,13 +106,27 @@ class MobileNav extends React.Component {
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     Auth.checkLogin();
   }
-
+  menuClick = () => {
+    const { is_open } = this.state;
+    if (is_open === true) {
+      this.setState({...this.state, is_open : false});
+    } else {
+      this.setState({...this.state, is_open: true});
+    }
+  }
   render () {
-    const { Auth, Partner } = this.props;
-    const { url, is_open, is_profile, token, width } = this.state;
-    console.log(url)
+    const { Auth, Partner,width } = this.props;
+    const { url, is_open, is_profile, token } = this.state;
+    console.log(this.props.width)
     return (
       <NavBox>
+        {is_open && (
+            <ProfileMenu width={this.props.width} onClick={() => this.setState({is_open: false})}>
+                <span onClick={async () => await Router.push("/profile")}> 프로필 수정 </span>
+                <span onClick={async () => await Router.push('/account?tab=1')}> 계정 관리 </span>
+                <span onClick={this.logout}> 로그아웃 </span>
+            </ProfileMenu>
+          )}
         <Container>
           <NavWrap/>
           <NavWrap2>
@@ -130,11 +142,12 @@ class MobileNav extends React.Component {
                   로그인
               </NavLink>
               ) : (
-              <NavLink
-                onClick={this.logout}
-                >
-                  로그아웃
-              </NavLink>
+              <>
+              <Icon
+                src={hamburger_ic}
+                onClick={this.menuClick}
+              />
+              </>
               )
             }
           </NavWrap2>
@@ -197,25 +210,22 @@ class MobileNav extends React.Component {
 }
 
 const ProfileMenu = styled.div`
+  width: 126px;
+  height: 162px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
   position: absolute;
-  background-color: #fff;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-top: 50px;
-  > div {
-    padding: 15px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    > p {
-      color: rgb(0, 0, 0, 0.8);
-    }
-    :hover {
-      background-color: #f3f3f3;
-      > p {
-        color: ${PRIMARY};
-      }
+  background-color: white;
+  z-index: 3;
+  transform: translate3d(${props => props.width ? props.width - 156 : 10}px, calc(55%), 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  > span {
+    padding-bottom: 20px;
+    :nth-of-type(3) {
+      padding:0
     }
   }
 `;
@@ -267,6 +277,7 @@ const Icon = styled.img`
   width: 40px;
   height: 40px;
   display: none;
+  background-color: '#f3f3f3';
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: block;
   }
@@ -396,15 +407,6 @@ const NavLink3 = styled.div`
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
   }
-`;
-const BG = styled.div`
-  background-color: rgba(0, 0, 0, 0.1);
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  z-index: 800;
-  top: 0;
-  left: 0;
 `;
 const Close = styled.div`
   margin: 10px;

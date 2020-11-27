@@ -12,11 +12,23 @@ import SignupConatiner from 'containers/Signup'
 @inject('Counter', 'Post', 'Loading') // *_app.js <Provider>에 넘겨준 store명과 일치해야함. *inject: 컴포넌트에서 store에 접근 가능하게 함. 해당 store에 있는 값을 컴포넌트의 props로 주입시켜줌.
 @observer
 class Signup extends React.Component {
-  componentDidMount() {
-    this.props.Post.getData()
+  state={
+    width=null,
   }
+  componentDidMount() {
+    this.props.Post.getData();
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   render(){
     const { Post, Counter, Loading } = this.props
+    const { width } = this.state;
     return (
       <div>
         {Loading.is_open}
@@ -24,7 +36,14 @@ class Signup extends React.Component {
         <Head>
           <title>볼트앤너트</title>
         </Head>
-        <Nav />
+        <>
+        { width > 767.98 ? (
+          <Nav />
+          ) : (
+          <MobileNav width={width}/>
+          )
+        }
+        </>
         <SignupConatiner/>
         <Footer/>
       </div>

@@ -46,10 +46,10 @@ class Partner extends React.Component {
           <title>볼트앤너트</title>
         </Head>
         <>
-        { width > 768 ? (
+        { width > 767.98 ? (
           <Nav />
           ) : (
-          <MobileNav/>
+          <MobileNav width={width}/>
           )
         }
         </>
