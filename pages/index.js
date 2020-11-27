@@ -50,10 +50,10 @@ class Home extends React.Component {
         {/* {Loading.is_open && <Spinner/>} */}
 
         <>
-        { width > 450 ? (
+        { width > 767.98 ? (
           <Nav />
           ) : (
-          <MobileNav/>
+          <MobileNav width={width}/>
           )
         }
         </>

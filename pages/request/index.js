@@ -42,10 +42,10 @@ class Request extends React.Component {
           <title>볼트앤너트</title>
         </Head>
         <>
-        { width > 450 ? (
+        { width > 767.98 ? (
           <Nav />
           ) : (
-          <MobileNav/>
+          <MobileNav width={width}/>
           )
         }
         </>
