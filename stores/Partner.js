@@ -31,7 +31,11 @@ class Partner {
 
   @observable select_big = null;
   @observable select_mid = null;
-
+  @observable loading = 0;
+  
+  @action setLoading = () => {
+    this.loading = 1;
+  }
 
   @action init = () => {
     CategoryAPI.getMainCategory()

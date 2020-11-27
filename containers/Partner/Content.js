@@ -14,6 +14,9 @@ import { BLACK1, DARKGRAY } from 'static/style'
 import AnimationCount from 'react-count-animation';
 import RequestListCard from "../../components/RequestCard";
 import CounterContainer from "../Request/Counter";
+//Skeleton
+import Skeleton from '@material-ui/lab/Skeleton';
+
 
 const pass1 = 'static/images/pass1.png'
 const pass2 = 'static/images/pass2.png'
@@ -22,7 +25,7 @@ const left = 'static/icon/left-arrow.png'
 const right = 'static/icon/right-arrow.png'
 
 
-@inject('Partner', 'Home')
+@inject('Partner', 'Home', "Loading")
 @observer
 class ContentConatiner extends React.Component {
   state = {
@@ -32,6 +35,7 @@ class ContentConatiner extends React.Component {
     word: "",
     count: 0,
     width: 0,
+    customers: 0,
     category_list: [
       ['디자인','inactive', 1],
       ['금형/사출','inactive', 14],
@@ -66,12 +70,18 @@ class ContentConatiner extends React.Component {
     }
   }
   // IE 오류 해결
-  componentDidMount() {
+  async componentDidMount() {
+    console.log('componentDidMount');
+
+    setTimeout(() => 
+    this.props.Loading.setOpen(true), 10000);
+
     const { Home, Partner } = this.props
     const self = this;
     const userAgent = window.navigator.userAgent;
     const searchButton = document.getElementById('searchbutton')
     const searchBarInput = document.getElementById('search')
+
     window.addEventListener('resize', this.updateDimensions);
     window.addEventListener('scroll', this.loadScroll);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -87,6 +97,8 @@ class ContentConatiner extends React.Component {
   }
 
   componentWillMount() {
+    console.log('componentWillMount');
+
     if (typeof window !== "undefined") {
       window.removeEventListener('resize', this.updateDimensions);
     }
@@ -266,7 +278,7 @@ class ContentConatiner extends React.Component {
   }
 
   render() {
-    const { Partner, Home } = this.props
+    const { Partner, Home, Loading } = this.props
     const { prev, next, current, searchWord, count, width } = this.state
     const current_set = (parseInt(current/5) + 1)
     const page = parseInt(count/5) + 1
@@ -302,20 +314,25 @@ class ContentConatiner extends React.Component {
           </Header>
       { width > 991.98 ? (
       <>
-        <List>
-          {
-            Partner.partner_list.length > 0 && Partner.partner_list.slice(5*current, 5*(current+1)).map((item, idx) => {
-              return (
-                <Card
-                  key={item.id}
-                  item={item}
-                  handleIntersection={this.handleIntersection}
-                  observer={!this.props.Home.is_ie && idx === Partner.partner_list.length - 2}
-                />
-              )
-            })
-          }
-        </List>
+          <List>
+            {
+              Partner.partner_list.length > 0 && Partner.partner_list.slice(5*current, 5*(current+1)).map((item, idx) => {
+                return (
+                  Loading.is_open ? (
+                    <Card
+                    key={item.id}
+                    item={item}
+                    handleIntersection={this.handleIntersection}
+                    observer={!this.props.Home.is_ie && idx === Partner.partner_list.length - 2}
+                  />
+                  ):( 
+                    <Skeleton animation="wave" variant="rect" width="894px" height="200px" style={{ marginBottom: 20 }}/>
+                  )
+                  
+                )
+              })
+            }
+          </List>
         <PageBar>
             <img src={pass1} style={{opacity: current_set == 1 && current == 0  ? 0.4 : 1 }} onClick = {this.pagePrev}/>
               <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 1} active={current%5 == 0}> {5*(current_set - 1) + 1} </PageCount>
