@@ -13,7 +13,7 @@ import SignupConatiner from 'containers/Signup'
 @observer
 class Signup extends React.Component {
   state={
-    width=null,
+    width : null,
   }
   componentDidMount() {
     this.props.Post.getData();

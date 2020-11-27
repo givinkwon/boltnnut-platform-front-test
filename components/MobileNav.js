@@ -117,7 +117,6 @@ class MobileNav extends React.Component {
   render () {
     const { Auth, Partner,width } = this.props;
     const { url, is_open, is_profile, token } = this.state;
-    console.log(this.props.width)
     return (
       <NavBox>
         {is_open && (
