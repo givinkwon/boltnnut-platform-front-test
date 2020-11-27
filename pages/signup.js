@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
 import Nav from 'components/Nav'
+import MobileNav from 'components/MobileNav'
 import Footer from 'components/Footer'
 import Spinner from 'components/Spinner'
 
