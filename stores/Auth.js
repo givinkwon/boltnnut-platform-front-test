@@ -50,6 +50,7 @@ class Auth {
   @observable region_data = [];
   @observable path_data = [];
   @observable business_data = [];
+  @observable restore_email = [];
 
   @action reset = () => {
     this.email = "";
@@ -730,28 +731,26 @@ class Auth {
     setTimeout(() => {
       this.loading = false;
     }, 1500);
-    if (!this.name) {
-      alert("회사명을 입력해주세요.");
-      return;
-    }
     if (!this.phone) {
       alert("휴대폰 번호를 입력해주세요.");
       return;
     }
     
     this.loading = true;
+    console.log(this.phone)
     const req = {
       data: {
-        username: this.name,
-        password: this.password,
         phone: this.phone,
       },
     };
-    AccountAPI.sendPassword(req)
+    AccountAPI.findId(req)
       .then((res) => {
         setTimeout(() => {
           this.loading = false;
         }, 800);
+        this.restore_email = [];
+        this.setStep(1);
+        this.restore_email = this.restore_email.concat(res.data.data);
       })
       .catch((e) => {
         try {

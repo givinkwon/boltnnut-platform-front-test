@@ -248,24 +248,12 @@ class Nav extends React.Component {
                   >
                     의뢰하기
                   </NavLink>
-                  {/*<NavLink
-                    onClick={() => Router.push("/answer")}
-                    active={url.indexOf("answer") > -1}
-                  >
-                    보낸 의뢰
-                  </NavLink>*/}
                   <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
                       매거진
                   </NavLink>
-                  {/*<NavLink
-                    onClick={() => Router.push("/info?tab=1")}
-                    active={url.indexOf("info") > -1}
-                  >
-                    이용 안내
-                  </NavLink>*/}
                 </Fragment>
               )}
 
@@ -289,14 +277,6 @@ class Nav extends React.Component {
                           {Auth.logged_in_user.type == 1 ? '이용요금' : '이용요금'}
                         </Text.FontSize16>
                       </div>
-                      {/*<div onClick={async () => {
-                        await Router.push("/store?tab=2")
-                        Router.reload()
-                      } }>
-                        <Text.FontSize16 fontWeight={500}>
-                          스토어
-                        </Text.FontSize16>
-                      </div>*/}
                       <div onClick={() => Router.push('/account?tab=1')}>
                         <Text.FontSize16 fontWeight={500}>
                           계정설정

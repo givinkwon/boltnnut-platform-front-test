@@ -39,7 +39,6 @@ class Home extends React.Component {
   render() {
     const { Loading,Home } = this.props;
     const { width } = this.state;
-    console.log(Home.request_list)
     return (
       <>
       <Head>
@@ -51,10 +50,10 @@ class Home extends React.Component {
         {/* {Loading.is_open && <Spinner/>} */}
 
         <>
-        { width > 450 ? (
+        { width > 767.98 ? (
           <Nav />
           ) : (
-          <MobileNav/>
+          <MobileNav width={width}/>
           )
         }
         </>

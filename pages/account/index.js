@@ -59,8 +59,8 @@ class Account extends React.Component {
           <title>볼트앤너트</title>
         </Head>
         <>
-          { width > 768
-            ? (<Nav />) : (<MobileNav />)}
+          { width > 767.98
+            ? (<Nav />) : (<MobileNav width={width}/>)}
         </>
         <AccountConatiner query={query} />
         <Footer />

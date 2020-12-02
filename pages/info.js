@@ -48,7 +48,7 @@ class Info extends React.Component {
         { width > 450 ? (
           <Nav />
           ) : (
-          <MobileNav/>
+          <MobileNav width={width}/>
           )
         }
         </>

@@ -1,8 +1,9 @@
-import React from 'react'
-import Head from 'next/head'
-import { inject, observer } from 'mobx-react'
+import React from 'react';
+import Head from 'next/head';
+import { inject, observer } from 'mobx-react';
 
-import FormConatiner from './Form'
+import FormConatiner from './Form';
+import CompleteContainer from './complete';
 
 @inject('Auth')
 @observer

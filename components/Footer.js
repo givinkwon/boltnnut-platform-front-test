@@ -64,7 +64,6 @@ class FooterComponent extends React.Component {
           </CompanyInfoContainer>
         </Container>
         <Container>
-          <div>
             <TextBox>
               <Text.FontSize18
                 color={WHITE}
@@ -96,7 +95,6 @@ class FooterComponent extends React.Component {
                 개인정보 처리 방침
               </Text.FontSize18>
             </TextBox>
-          </div>
         </Container>
         <Container>
           <ContactInfoContainer>
@@ -146,10 +144,13 @@ class FooterComponent extends React.Component {
              </CompanyInfo2>
              </div>
              <MobileContainer>
-               <span> 제조사 찾기 </span>
+               <span
+                onClick={() => Router.push("/partner")}> 제조사 찾기 </span>
                <span> 자주찾는 질문 </span>
-               <span> 이용약관 </span>
-               <span> 개인정보 처리 방침 </span>
+               <span
+                onClick={() => Router.push("/term/policy")}> 이용약관 </span>
+               <span
+                onClick={() => Router.push("/term/personal")}> 개인정보 처리 방침 </span>
              </MobileContainer>
            </CompanyInfoContainer>
          </MobileFooter>
@@ -171,7 +172,8 @@ const Footer = styled.div`
     position: relative;
   }
   > div:nth-of-type(2) {
-    position: relative; 
+    position: relative;
+    width: 50%;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 100%
@@ -190,27 +192,6 @@ const Footer = styled.div`
 `;
 // 여기
 const Container = styled.div`
-  /* padding-right: 15px;
-  padding-left: 15px; */
-  /* margin-right: auto;
-  margin-left: auto; */
-
-  /* @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 40px);
-    padding: 0 20px;
-  }
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 720px;
-  }
-
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    width: 930px;
-  }
-
-  @media (min-width: 1300px) { 
-    width: 1200px;
-  } */
 `
 
 const TextBox = styled.div`
@@ -284,6 +265,8 @@ const CompanyInfoContainer = styled.div`
     width: 100%;
     padding-left: 16px;
     padding-top: 24px;
+    padding-bottom: 24px;
+    padding-right: 16px;
     display: flex;
     flex-direction: column;
   }
@@ -407,16 +390,20 @@ const Image = styled.img`
   width: 148px;
 `;
 const SnsBox = styled.div`
-  > img:nth-of-type(1) {
-    padding-left : 0;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  padding-left : 0;
+  
+  @media (min-width: 0px) and (max-width: 767.99px) {
     padding: 0;
     padding-top: 8px;
     display: inline-flex;
-    justify-content: space-between;
-    width: 55px;
-    height: 13px;
+    width: 100%;
+    height: 100%;
+    > img {
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      margin-right: 15px;
+    }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
   }
