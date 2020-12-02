@@ -100,14 +100,14 @@ class BannerConatiner extends React.Component {
       <Banner>
         <Container>
           <Title>
-            내 제품에 딱 맞는 제조사를<br/> 바로 만나보세요.
+            내 제품 제작 비용과<br/> 전문 제조사를 바로 만나보세요.
           </Title>
           <ButtonBox>
             <Button
               id={'request'}
               backgroundColor={WHITE + "00"}
               borderColor={WHITE}
-              onClick={() => Router.push("/partner")}
+              onClick={() => Router.push("/request")}
             >
               <Text.FontSize32 color={WHITE} fontWeight={500} borderRadius={0} style={{height: 47, display: "flex", alignItems: "center"}}>
                 무료로 가견적 받기
@@ -121,13 +121,13 @@ class BannerConatiner extends React.Component {
         <MobileBox>
           <MobileBanner>
             <Title fontWeight={700}>
-              나에게 특화된 맞춤 제조사를<br/> 한 눈에 확인하세요.
+             클릭 한 번으로 제품 제작 비용과<br/> 전문 제조사를 바로 만나보세요.
             </Title>
             <MobileButton
               id={'request'}
               backgroundColor={WHITE + "00"}
               borderColor={WHITE}
-              onClick={() => Router.push("/partner")}
+              onClick={() => Router.push("/request")}
               >
               <span> 무료로 가견적 받기 </span>
             </MobileButton>

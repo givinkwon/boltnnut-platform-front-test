@@ -160,16 +160,12 @@ class MobileNav extends React.Component {
                   홈
             </NavLink3>
             <NavLink3
-                  onClick={
-                    async () => {
-                      await Router.push("/info");
-                      if(Router.pathname === '/info') {
-                        Router.reload();
-                      }
-                    }
-                  }
-                  active={url.indexOf("info") > -1}>
-                    서비스 소개
+                      first
+                      //onClick={() => Router.push("/request?big=4&mid=")}
+                      onClick={() => Router.push("/request")}
+                      active={url.indexOf("request") > -1}
+                    >
+                      의뢰하기
             </NavLink3>
             <NavLink3
                     onClick={
@@ -185,13 +181,18 @@ class MobileNav extends React.Component {
                     제조사 찾기
             </NavLink3>
             
+            
             <NavLink3
-                      first
-                      //onClick={() => Router.push("/request?big=4&mid=")}
-                      onClick={() => Router.push("/request")}
-                      active={url.indexOf("request") > -1}
-                    >
-                      의뢰하기
+                  onClick={
+                    async () => {
+                      await Router.push("/info");
+                      if(Router.pathname === '/info') {
+                        Router.reload();
+                      }
+                    }
+                  }
+                  active={url.indexOf("info") > -1}>
+                    서비스 소개
             </NavLink3>
             <NavLink3
                   onClick={() => {

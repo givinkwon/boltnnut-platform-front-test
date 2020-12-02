@@ -216,16 +216,12 @@ class Nav extends React.Component {
                 /* 로그인 안되어있는 경우 */
                 <Fragment>
                   <NavLink
-                  onClick={
-                    async () => {
-                      await Router.push("/info");
-                      if(Router.pathname === '/info') {
-                        Router.reload();
-                      }
-                    }
-                  }
-                  active={url.indexOf("info") > -1}>
-                    서비스 소개
+                    first
+                    onClick={() => Router.push("/request")}
+                    //onClick={() => Router.push("/request?big=4&mid=")}
+                    active={url.indexOf("request") > -1}
+                  >
+                    의뢰하기
                   </NavLink>
                   <NavLink
                     onClick={
@@ -240,19 +236,25 @@ class Nav extends React.Component {
                   >
                     제조사 찾기
                   </NavLink>
-                  <NavLink
-                    first
-                    onClick={() => Router.push("/request")}
-                    //onClick={() => Router.push("/request?big=4&mid=")}
-                    active={url.indexOf("request") > -1}
-                  >
-                    의뢰하기
-                  </NavLink>
+              
+                  
                   <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
                       매거진
+                  </NavLink>
+                  <NavLink
+                  onClick={
+                    async () => {
+                      await Router.push("/info");
+                      if(Router.pathname === '/info') {
+                        Router.reload();
+                      }
+                    }
+                  }
+                  active={url.indexOf("info") > -1}>
+                    서비스 소개
                   </NavLink>
                 </Fragment>
               )}
