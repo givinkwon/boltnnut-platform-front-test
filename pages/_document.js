@@ -113,11 +113,11 @@ export default class MyDocument extends Document {
           <meta property="og:description" content="제조 중개 매칭 플랫폼 볼트앤너트" />
           <meta name="description" content="제조 중개 매칭 플랫폼 볼트앤너트" />
           <meta property="og:image" content="/static/images/thumbnail.png"/>
-          <link rel="icon" href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"/>
+          {/* favicon */}
           <link rel="shortcut icon" href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"/>
           <link rel="shortcut icon" href="https://www.boltnnut.com/favicon.ico"/>
-          <link rel="shortcut icon" href="/favicon.ico"/>
-          <link rel="icon" href="/static/favicon.ico" />
+          <link rel="shortcut icon" href="/public/favicon.ico"/>
+          <link rel="icon" href="C:\Users\user\boltnnut-platform-front\public\favicon.ico"/>
           <link rel="icon" href="/public/favicon.ico" />
 
           <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900|Noto+Sans:400,700&display=swap" rel="stylesheet" />
@@ -130,10 +130,11 @@ export default class MyDocument extends Document {
         <body>
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5" height="0" width="0" style={{display : "none", visibility : "hidden"}}></iframe></noscript>
           <Main />
-          <script dangerouslySetInnerHTML={this.setChannelTalk()} />
+          {/* <script dangerouslySetInnerHTML={this.setChannelTalk()} /> */}
           <NextScript />
         </body>
       </html>
     );
   }
 }
+// test
