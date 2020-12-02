@@ -554,7 +554,7 @@ const CategoryBox = styled.div`
     }
       > span {
         color: white;
-        font-size: 16px;
+        font-size: 12px;
       }
     }
   @media (min-width: 767.99px) and (max-width: 1299.98px) {
