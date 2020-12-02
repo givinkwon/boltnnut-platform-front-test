@@ -12,7 +12,7 @@ const close_ic = "/static/icon/close.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/logo2.jpg";
 const profile = "/static/images/profile.png";
-
+//...
 @inject("Auth", "Partner")
 @observer
 class MobileNav extends React.Component {
