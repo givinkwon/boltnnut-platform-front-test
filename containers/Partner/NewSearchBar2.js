@@ -561,7 +561,7 @@ class SearchBarContainer2 extends React.Component {
               borderColor={WHITE}
               onClick={this.submit}
             >
-              <Text.FontSize26 id="request_submit" color={WHITE} fontWeight={500} borderRadius={0} style={{display: "flex", alignItems: "center"}}>
+              <Text.FontSize26 color={WHITE} fontWeight={500} borderRadius={0} style={{display: "flex", alignItems: "center"}}>
                 가견적 받기
               </Text.FontSize26>
             </Button>
@@ -657,7 +657,7 @@ class SearchBarContainer2 extends React.Component {
                  onClick = {this.submit}
                  style={{margin: 'auto'}}
                >
-                 <span id="request_submit">가견적 받기</span>
+                 <span>가견적 받기</span>
                </MobileButton2>
                { !this.props.is_request &&
                <img src={ddarrow} style={{float: 'right', paddingRight: '10%'}}
@@ -673,7 +673,7 @@ class SearchBarContainer2 extends React.Component {
                <MobileButton2
                 id={'request_submit_button'}              
                 onClick = {this.showDetail}>
-                 <span id="request_submit">가견적 받기</span>
+                 <span>가견적 받기</span>
                </MobileButton2>
            </SelectRow>
          </>
