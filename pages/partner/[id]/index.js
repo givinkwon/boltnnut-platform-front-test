@@ -37,6 +37,20 @@ class PartnerDetail extends React.Component {
     return (
       <div>
         <Head>
+          {/* 대표 URL */}
+          <link rel="canonical" href="https://www.boltnnut.com/partner"/>
+          {/* SEO */}
+          <meta name="description" content="원하시는 분야의 전문가를 검색해보세요. 개인맞춤 희망예산과 개발기간까지 총 3,924개의 제조사가 당신을 기다리고 있습니다!" />
+          <meta name="keywords" content="제조, 제조업, 제조업체, 제조회사, 제품개발, 외주용역, 제조업체찾기, 제품제작, ODM, 제품제조"/>
+          {/* SEO - open graph*/}
+          <meta property="og:type" content="website"/>
+          <meta property="og:image" content="/static/images/thumbnail.png"/>
+          <meta property="og:title" content="파트너|믿을 수 있는 제조 전문가" />
+          <meta property="og:description" content="원하시는 분야의 전문가를 검색해보세요. 개인맞춤 희망예산과 개발기간까지 총 3,924개의 제조사가 당신을 기다리고 있습니다!"/>
+          <meta property="og:url" content="https://www.boltnnut.com/partner"/>           
+          {/* Title */}
+          <title>볼트앤너트|파트너</title>
+
           {/* <title>Tirrilee :: {item[0].title}</title>
           <meta property="og:url" content={`https://www.tirrilee.io/news/${item[0].id}`}/>
           <meta property="og:image" content={item[0].thumbnail}/>
