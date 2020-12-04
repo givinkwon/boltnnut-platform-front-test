@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  <url>
+    <loc>https://boltnnut.com/faq</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/forget_id</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/forget_password</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/info</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/login</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/payment</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/profile</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/signup</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/store</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/_app</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/_document</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/answer</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/chat</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/account</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/magazine</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/notice</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/offered</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/partner</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/request</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/term/personal</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/term/policy</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/answer/[id]</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/chat/[id]</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/magazine/[id]</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/notice/[id]</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/partner/[id]</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/request/[id]</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/partner/[id]/review</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://boltnnut.com/answer/[id]/detail/[answer_id]</loc>
+    <lastmod>2020-12-04T09:43:07.126Z</lastmod>
+  </url>
+</urlset>
