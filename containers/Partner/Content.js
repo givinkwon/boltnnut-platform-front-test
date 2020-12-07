@@ -74,7 +74,7 @@ class ContentConatiner extends React.Component {
     console.log('componentDidMount');
 
     setTimeout(() => 
-    this.props.Loading.setOpen(true), 10000);
+    this.props.Loading.setOpen(true), 5000);
 
     const { Home, Partner } = this.props
     const self = this;

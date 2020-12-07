@@ -194,11 +194,11 @@ const ButtonBox = styled.div`
     height: 92px;
     padding: 0 !important;
     margin-top: 120px;
-    background-color: #0a2165;
+    background-color: #0933b3;//${WHITE};
     border: none;
     border-radius: 10px;
     :hover {
-      background-color: #0933b3;//${WHITE};
+      background-color: #0a2165;
       > p {
         color: ${WHITE} !important;
       }
@@ -208,21 +208,25 @@ const ButtonBox = styled.div`
         width : 40%
     }
     @media (min-width: 768px) and (max-width: 991.98px) {
-  	    width : 30%
+         width : 30%
     }
   }
 `
 const Banner = styled.div`
   background-position: center;
   background-size: cover;
-  height: 772px;
+  margin-bottom: 26px;
+  background-image: url("/static/images/main/main.jpg");
   @media (min-width: 0px) and (max-width: 767.98px) {
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    height: 600px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    height: 650px;
   }
   @media (min-width: 1300px) {
+    height: 772px;
   }
   ${Container} {
     > p:nth-of-type(2) {
@@ -246,12 +250,12 @@ const Title = styled.div`
   line-height: 1.29;
   letter-spacing: -1.55px;
   text-align: center;
-  color: #191919;
+  color: #ffffff;
   word-break: keep-all;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.61);
   @media (min-width: 0px) and (max-width: 768.98px) {
         width: 100%;
         height: 58px;
-        padding-top: 52px;
         object-fit: contain;
         font-size: 20px;
         font-weight: bold;
@@ -260,7 +264,9 @@ const Title = styled.div`
         line-height: 1.4;
         letter-spacing: -0.5px;
         text-align: center;
-        color: #191919;
+        color: #ffffff;
+        text-shadow: 0 3px 6px rgba(0, 0, 0, 0.61);
+        padding-top: 52px;
         padding-bottom: 32px;
   }
   @media (min-width: 768.99px) and (max-width: 991.98px) {
@@ -272,8 +278,8 @@ const Title = styled.div`
         padding-right: 20%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-  	    font-size: 45px !important;
-  	    width: 60%;
+         font-size: 45px !important;
+         width: 60%;
         height: 22.3%;
         padding-left: 20%;
         padding-right: 20%;
@@ -314,10 +320,10 @@ const Subtitle = styled(Text.FontSize20)`
         text-align: center;
     }
   @media (min-width: 768.99px) and (max-width: 991.98px) {
-  	    width : 720px !important;
+         width : 720px !important;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-  	    width : 900px !important;
+         width : 900px !important;
   }
 `;
 
@@ -351,13 +357,14 @@ const MobileBox = styled.div`
   margin-bottom: 8px;
 `
 const MobileBanner = styled.div`
-  width: calc(90%);
-  height: 210px;
+  width: 421px;
+  height: 225px;
   border-radius: 6px;
   background-color: #e5e5e5;
   display: flex;
   flex-direction: column;
   margin-top: 26px;
+  background-image: url("/static/images/main/main_mobile.png");
 `
 const MobileButton = styled.div`
   width: 50%;
