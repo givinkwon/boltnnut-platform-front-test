@@ -217,14 +217,16 @@ const Banner = styled.div`
   background-size: cover;
   margin-bottom: 26px;
   background-image: url("/static/images/main/main.jpg");
-  height: 772px;
   @media (min-width: 0px) and (max-width: 767.98px) {
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    height: 600px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    height: 650px;
   }
   @media (min-width: 1300px) {
+    height: 772px;
   }
   ${Container} {
     > p:nth-of-type(2) {
@@ -254,7 +256,6 @@ const Title = styled.div`
   @media (min-width: 0px) and (max-width: 768.98px) {
         width: 100%;
         height: 58px;
-        padding-top: 52px;
         object-fit: contain;
         font-size: 20px;
         font-weight: bold;
@@ -265,6 +266,7 @@ const Title = styled.div`
         text-align: center;
         color: #ffffff;
         text-shadow: 0 3px 6px rgba(0, 0, 0, 0.61);
+        padding-top: 52px;
         padding-bottom: 32px;
   }
   @media (min-width: 768.99px) and (max-width: 991.98px) {
@@ -355,14 +357,14 @@ const MobileBox = styled.div`
   margin-bottom: 8px;
 `
 const MobileBanner = styled.div`
-  width: calc(90%);
-  height: 210px;
+  width: 421px;
+  height: 225px;
   border-radius: 6px;
   background-color: #e5e5e5;
   display: flex;
   flex-direction: column;
   margin-top: 26px;
-  background-image: url("/static/images/main/main.jpg");
+  background-image: url("/static/images/main/main_mobile.png");
 `
 const MobileButton = styled.div`
   width: 50%;
