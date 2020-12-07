@@ -114,7 +114,7 @@ class FooterComponent extends React.Component {
               <SnsBox>
                 <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
                 <Sns src={facebook} onClick={() => window.open('http://www.facebook.com/boltnnut6637')} />
-                <Sns src={blog} onClick={() => window.open('http://www.blog.naver.com/boltnnut_korea')} />
+                <Sns src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')} />
               </SnsBox>
             </Text.FontSize12>
           </ContactInfoContainer>
@@ -139,7 +139,7 @@ class FooterComponent extends React.Component {
                <SnsBox>
                 <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
                 <Sns src={facebook} onClick={() => window.open('http://www.facebook.com/boltnnut6637')} />
-                <Sns src={blog} onClick={() => window.open('http://www.blog.naver.com/boltnnut_korea')} />
+                <Sns src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')} />
               </SnsBox>
              </CompanyInfo2>
              </div>
