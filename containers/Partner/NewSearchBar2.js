@@ -533,7 +533,7 @@ class SearchBarContainer2 extends React.Component {
 
         <SelectRow>
           <Title>
-            제품도면
+            첨부파일
           </Title>
           <FileBox
             onClick = {()=>this.file.current.click()}>
@@ -543,7 +543,7 @@ class SearchBarContainer2 extends React.Component {
               style={{display: 'none'}}
               ref={this.file}
               />
-            <span> { this.state.fileName ? this.state.fileName : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
+            <span> { this.state.fileName ? this.state.fileName : '도면, 유사 이미지, 기획서 등이 있으시면 첨부해주세요.' }</span>
             <img
               src="/static/images/Mask.png"
               />
@@ -644,7 +644,7 @@ class SearchBarContainer2 extends React.Component {
               style={{display: 'none'}}
               ref={this.file}
               />
-            <span> { this.state.fileName ? this.state.fileName : '도면이나 유사 이미지가 있으시면 첨부해주세요.' }</span>
+            <span> { this.state.fileName ? this.state.fileName : '도면, 유사 이미지, 기획서 등이 있으시면 첨부해주세요.' }</span>
             <img
               src="/static/images/Mask.png"
               />
