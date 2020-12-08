@@ -61,6 +61,16 @@ class BannerConatiner extends React.Component {
       this.setState({...this.state, slideMoved: Moved, slidePosition: slidePosition+10});
     }
   */}
+  // countCalc () {
+  //   const { Request, Partner } = this.props;
+  //   let result = 3924
+
+  //   if(Partner.select_big != null && Partner.select_mid == null){
+  //       result =  3 * (((Partner.select_big.id)/5) + 4)
+  //   }
+    
+  //   return result
+  // }
   render() {
     const { width, slidePosition, slidesToScroll } = this.state;
     const request_data = this.props.Home.request_list
@@ -80,7 +90,8 @@ class BannerConatiner extends React.Component {
     };
     const countSettings1 = {
       start: 0,
-      count : 3927,
+      // count : this.countCalc(),
+      count : 3967,
       duration: 6000,
       decimals: 0,
       useGroup: true,
@@ -158,7 +169,7 @@ class BannerConatiner extends React.Component {
                 request_data && request_data.slice(0,20).map((item, idx) => {
                   return (
                     <RequestItem>
-                      {item.name.split(':')[0]} 의뢰가 접수되었습니다.
+                      {(item.name.split(':')[0])[0] + (item.name.split(':')[0])[1] + "  ...  "} 의뢰가 접수되었습니다.
                     </RequestItem>
                   )
                 })
