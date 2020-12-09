@@ -71,12 +71,12 @@ class ContentConatiner extends React.Component {
   }
   // IE 오류 해결
   async componentDidMount() {
+    const { Home, Partner } = this.props
     console.log('componentDidMount');
 
     setTimeout(() => 
-    this.props.Loading.setOpen(true), 5000);
+    this.props.Loading.setOpen(true), 4000);
 
-    const { Home, Partner } = this.props
     const self = this;
     const userAgent = window.navigator.userAgent;
     const searchButton = document.getElementById('searchbutton')

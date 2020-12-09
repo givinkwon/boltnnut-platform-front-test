@@ -96,7 +96,7 @@ const MobilecustomStyles = {
 }
 
 
-@inject("Auth", "Partner", "Request")
+@inject("Auth", "Partner", "Request", "Loading")
 @observer
 class SearchBarContainer2 extends React.Component {
   constructor(props) {
@@ -397,6 +397,14 @@ class SearchBarContainer2 extends React.Component {
     }
     console.log(this.state.show_detail)
   }
+  showSkeleton = () => {
+    if (this.state.show_detail == "none") {
+    this.setState({...this.state, show_detail: true})
+    } else {
+    this.setState({...this.state, show_detail: "none"})
+    }
+    console.log(this.state.show_detail)
+  }
 
   submit = () => {
     const { Request } = this.props;
@@ -457,7 +465,7 @@ class SearchBarContainer2 extends React.Component {
   };
   render() {
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
-    const { Partner, Auth, Request } = this.props;
+    const { Partner, Auth, Request, Loading } = this.props;
     return (
       <CustomContainer>
       <>
@@ -469,7 +477,8 @@ class SearchBarContainer2 extends React.Component {
           </Title>
           <Select
             styles={customStyles} options={Partner.category_list} value={Partner.select_big}
-            getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Partner.setBigCategory}/>
+            getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Partner.setBigCategory}
+          />
           <Select
             styles={customStyles} options={Partner.request_middle_list} value={Partner.select_mid}
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Partner.setMidCategory}/>
