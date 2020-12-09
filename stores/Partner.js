@@ -221,6 +221,7 @@ class Partner {
       });
   };
 
+  // 파트너 정보 제한 검색
   @action searchjust = () => {
     const name = this.search_text;
     const develop = this.search_develop;
@@ -256,6 +257,54 @@ class Partner {
     };
     console.log(req);
     PartnerAPI.searchjust(req)
+      .then((res) => {
+        console.log(res);
+        this.partner_list = res.data.results;
+        this.partner_count = res.data.count;
+        this.partner_next = res.data.next;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  // 파트너 정보 제한 랜덤 검색
+  @action searchrandom = () => {
+    const name = this.search_text;
+    const develop = this.search_develop;
+    const region = this.search_region;
+
+    let subclasses = [];
+    if (this.search_category) {
+      for (let i = 0; i < this.search_category.length; i++) {
+        const category_middle = this.getCategoryById(this.search_category[i]);
+
+        if (category_middle) {
+          category_middle.subclass_set.forEach((subclass) => {
+            subclasses.push(subclass.id);
+          });
+        }
+      }
+    }
+    console.log(subclasses);
+
+    const req = {
+      data: {
+        search: name,
+        // 제품 분야 = 가능 제품 분야
+        history_set__id: subclasses.toString() ? subclasses.toString() : null,
+        // history_set__id: toJS(develop).toString(),
+        region: region.toString() ? region.toString() : null,
+        // 카테고리 = 의뢰 분야
+        category_middle__id: toJS(develop).toString()
+          ? toJS(develop).toString()
+          : null,
+        page: this.page,
+      },
+    };
+    console.log(req);
+    PartnerAPI.searchrandom(req)
       .then((res) => {
         console.log(res);
         this.partner_list = res.data.results;
@@ -324,6 +373,34 @@ class Partner {
       });
   };
 
+  @action getNextRandomPartner = () => {
+    if (!this.partner_next) {
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    const req = {
+      nextUrl: this.partner_next,
+      // headers
+      headers: {
+       //  Authorization: `Token ${token}`,
+      },
+    };
+
+    PartnerAPI.getNextJustPage(req)
+      .then((res) => {
+        console.log("파트너 다음 페이지 읽기 성공");
+        console.log(res.data);
+
+        this.partner_list = this.partner_list.concat(res.data.results);
+        this.partner_next = res.data.next;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
   @action getRequestsByAnswers = () => {
     if(!this.detail) { return; }
 
@@ -352,6 +429,23 @@ class Partner {
         })
     });
   };
+
+  @action getCountRequest = () => {
+    PartnerAPI.getProject(projectId, req)
+        .then(res => {
+          this.requests.push(res.data.request_set[0]);
+          console.log(res.data);
+
+          if(idx === this.detail.answer_set.length - 1) {
+            this.getClientsByRequests();
+          }
+        })
+        .catch(e => {
+          console.log(e);
+          console.log(e.response);
+        })
+  }
+  
   @action getClientsByRequests = () => {
     if(!this.detail) { return; }
 

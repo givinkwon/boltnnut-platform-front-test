@@ -18,6 +18,13 @@ export function searchjust(req) {
   });
 }
 
+export function searchrandom(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/randompartner/`,
+    params: req.data,
+  });
+}
 
 export function matchPartner(req) {
   return axios({
