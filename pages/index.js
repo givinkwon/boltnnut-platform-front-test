@@ -42,8 +42,7 @@ class Home extends React.Component {
     return (
       <>
       <Head>
-        {/* 대표 URL */}
-        <link rel="canonical" href="https://www.boltnnut.com/"/>
+      
         {/* SEO */}
         <meta name="description" content="제품군별 제조 전문가 큐레이션 플랫폼 볼트앤너트. 믿음직한 제품 개발업체를 만나는 가장 쉬운 방법! 시제품부터 생활용품까지 모두 OK!" />
         <meta name="keywords" content="제조, 제조업, 제조업체, 제조회사, 제품개발, 외주용역, 제조업체찾기, 제품제작, ODM, 제품제조"/>

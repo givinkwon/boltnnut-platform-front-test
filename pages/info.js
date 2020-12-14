@@ -42,8 +42,7 @@ class Info extends React.Component {
         {Loading.is_open}
         {/* {Loading.is_open && <Spinner/>} */}
         <Head>
-          {/* 대표 URL */}
-          <link rel="canonical" href="https://www.boltnnut.com/info"/>
+
           {/* SEO */}
           <meta name="description" content="전문 제조사의 가견적을 바로 받아보는 서비스. 양산 비용 최대 40%를 절감하는 제조 패키지. 맞춤 제조견적, MOQ 등 제품 수배 패키지." />
           <meta name="keywords" content="제조, 제조업, 제조업체, 제조회사, 제품개발, 외주용역, 제조업체찾기, 제품제작, ODM, 제품제조"/>

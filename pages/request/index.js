@@ -39,8 +39,7 @@ class Request extends React.Component {
     return (
       <div>
         <Head>
-          {/* 대표 URL */}
-          <link rel="canonical" href="https://www.boltnnut.com/request"/>
+
           {/* SEO */}
           <meta name="description" content="볼트앤너트의 큐레이션 시스템이 최대 1영업일 이내로 제작하고자하는 제품의 가견적을 안내드립니다. 나에게 맞는 업체를 찾고, 적합한 업체로부터 가견적을 받아보세요!" />
           <meta name="keywords" content="제조, 제조업, 제조업체, 제조회사, 제품개발, 외주용역, 제조업체찾기, 제품제작, ODM, 제품제조"/>
