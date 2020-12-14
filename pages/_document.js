@@ -104,7 +104,8 @@ export default class MyDocument extends Document {
           <meta name="NaverBot" content="index, follow"/>
           <meta name="Yeti" content="All"/>
           <meta name="Yeti" content="index, follow"/>
-          
+          {/* 대표 URL */}
+          <link rel="canonical" href="https://www.boltnnut.com/"/>
           {/* GA Settings
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
           <script dangerouslySetInnerHTML={this.setGoogleTags()} /> */}
