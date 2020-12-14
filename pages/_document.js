@@ -99,8 +99,12 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <meta charSet="utf-8" />
-
+          {/* 네이버웹마스터도구 사이트구조개선 코드*/}
+          <meta name="NaverBot" content="All"/>
+          <meta name="NaverBot" content="index, follow"/>
+          <meta name="Yeti" content="All"/>
+          <meta name="Yeti" content="index, follow"/>
+          
           {/* GA Settings
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
           <script dangerouslySetInnerHTML={this.setGoogleTags()} /> */}
