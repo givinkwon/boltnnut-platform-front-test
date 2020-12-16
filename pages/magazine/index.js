@@ -13,6 +13,7 @@ import {inject, observer} from "mobx-react";
 class Index extends React.Component {
   state = {
     width: 0,
+    test : 0,
   }
   componentDidMount() {
     this.props.Magazine.init()
