@@ -2,6 +2,7 @@ import React from 'react'
 import styled, {css} from 'styled-components'
 import { inject, observer } from 'mobx-react'
 import Router from 'next/router'
+import AnimationCount from 'react-count-animation';
 
 import Button from "components/Button";
 import Container from 'components/Container'
@@ -49,10 +50,19 @@ class NewBanner5Container extends React.Component {
   render() {
     const { Home } = this.props
     const { tab } = this.state
+    const countSettings = {
+      start: 0,
+      // count : this.countCalc(),
+      count : 2000,
+      duration: 6000,
+      decimals: 0,
+      useGroup: true,
+      animation: 'up'
+    };
     return (
       <Banner>
            <HeaderBox>
-                <Header> 이미 <Bold>2,000여명</Bold>이 넘는 클라이언트분들이 <br/> 볼트앤너트를 이용하셨습니다. </Header>
+                <Header> 이미 <AnimationCount class="active" {...countSettings}/>명이 넘는 클라이언트분들이 <br/> 볼트앤너트를 이용하셨습니다. </Header>
            </HeaderBox>
       <Category>
           <Item>
@@ -299,6 +309,9 @@ const Header = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: #061953;
+  > div {
+    display : inline-flex;
+  }
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 24px;
     margin-bottom: 9px;
