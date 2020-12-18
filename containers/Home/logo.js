@@ -53,8 +53,8 @@ class NewBanner5Container extends React.Component {
     const countSettings = {
       start: 0,
       // count : this.countCalc(),
-      count : 2000,
-      duration: 6000,
+      count : 863*3,
+      duration: 16000,
       decimals: 0,
       useGroup: true,
       animation: 'up'
@@ -62,7 +62,7 @@ class NewBanner5Container extends React.Component {
     return (
       <Banner>
            <HeaderBox>
-                <Header> 이미 <AnimationCount class="active" {...countSettings}/>명이 넘는 클라이언트분들이 <br/> 볼트앤너트를 이용하셨습니다. </Header>
+                <Header> 이미 <AnimationCount class="active" {...countSettings}/>명의 클라이언트분들이 <br/> 볼트앤너트를 이용하셨습니다. </Header>
            </HeaderBox>
       <Category>
           <Item>
