@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 
-import Banner1Conatiner from './Banner1'
+//import Banner1Conatiner from './Banner1'
 import Banner2Conatiner from './Banner2'
 import Banner3Conatiner from './Banner3'
 import BannerConatiner from './Banner0'
