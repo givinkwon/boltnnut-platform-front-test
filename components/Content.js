@@ -34,5 +34,5 @@ export const ContentTitle = style.p`
     font-size: 16px;
     letter-spacing: 0.5px;
   }
-` 
-  
+`
+
