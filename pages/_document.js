@@ -125,6 +125,19 @@ export default class MyDocument extends Document {
           {/* Iamport */}
           <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
           <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+          {/* Naver analic */}
+          <script type="text/javascript" src="//wcs.naver.net/wcslog.js" async></script>
+          <script type="text/javascript" dangerouslySetInnerHTML={{__html: `if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "a888b15a2864e";if(window.wcs) {wcs_do();}`,}} async ></script>
+          
+          {/* 문법 오류 부분(네이버에서복사한원본코드)*/}
+          {/* <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+          <script type="text/javascript">
+          if(!wcs_add) var wcs_add = {};
+          wcs_add["wa"] = "a888b15a2864e";
+          if(window.wcs) {
+            wcs_do();
+          }
+          </script> */}
         </Head>
         <body>
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5" height="0" width="0" style={{display : "none", visibility : "hidden"}}></iframe></noscript>
