@@ -429,4 +429,4 @@ const CustomSlider = styled.div`
   height: 100%;
   display: inline-flex;
   transform: translateX(${props => props.X ? props.X : 0}px);
-`
+'
