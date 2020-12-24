@@ -1,64 +1,72 @@
-import React from "react";
-import styled from "styled-components";
-import Router from "next/router";
+import React from 'react';
 
-import Container from "components/Container";
-import Button from "components/Button";
-import RatioImage from 'components/RatioImage';
-import * as Text from "components/Text";
-import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
-import * as AnswerAPI  from 'axios/Answer'
+import Containerv1 from 'components/Containerv1';
+import * as Text from 'components/Content';
+import * as Title from 'components/Title';
 
-const search_ic = "static/icon/search.png";
-const image1 = "/static/images/banner2_4.png";
 
-class Banner1Conatiner extends React.Component {
+class Container2 extends React.Component {
   render() {
     return (
-      <Banner>
-        <Text.FontSize40 color={BLACK1} fontWeight={700}>볼트앤너트 의뢰 프로세스</Text.FontSize40>
-        <br/><br/><br/>
-        <Image ratio='100%' src={image1} />
+      <Containerv1>
+        <div style={styles.flexRow}>
+          <div style={styles.img}>
+          </div>
+          <div >
+            <span style={styles.banner}>컨설턴트 중 해당 제품</span>
+            <Title2 style={styles.h1}>1초만에 내 제품<br/>가견적 받기</Title2>
+            <FontSize16>안녕하세요</FontSize16>
+          </div>
+        </div>
+      </Containerv1>
 
-      </Banner>
     );
   }
+};
+export default Container2;
+
+const styles = {
+  img: {
+    width: 300,
+    height: 300,
+    backgroundColor: 'yellow',
+  },
+  flexRow: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  flexCol: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  h1: {
+    fontFamily: "NotoSansCJKkr",
+    fontSize: 56,
+    fontWeight: "bold",
+    letterSpacing: "-1.4px",
+    lineHeight: 1.36,
+  },
+  banner: {
+    color: "#0933b3",
+    lineHeight: 1.45,
+    fontFamily: "NotoSansCJKkr",
+    fontWeight: "bold",
+    textAlign: "left",
+    width: 300,
+    marginBottom: 30,
+    fontSize: 20,
+  },
+  content: {
+    color: '#282c36',
+    fontSize: 24,
+    fontFamily: 'NotoSansCJKkr',
+    fontWeight: 500,
+    width: 465,
+    textAlign: 'left',
+    letterSpacing: '-0.6px',
+    lineHeight: 1.67,
+    marginTop: 110,
+  },
 }
-
-export default Banner1Conatiner;
-
-const Banner = styled(Container)`
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 20px 0px;
-    margin-bottom: 20px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    padding: 40px 0px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    padding: 60px 0px;
-  }
-  @media (min-width: 1300px) {
-    padding: 80px 0px;
-  }
-`
-
-const Image = styled(RatioImage)`
-  border-radius: 0 !important;
-  width: 100%;
-  max-height: 550px;
-  > div {
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    max-height : 300px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    max-height : 300px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    max-height : 400px;
-  }
-
-`

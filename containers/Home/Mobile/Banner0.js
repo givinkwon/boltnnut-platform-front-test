@@ -17,7 +17,7 @@ import AnimationCount from 'react-count-animation';
 const search_ic = "static/icon/search.png";
 
 @inject('Home')
-class BannerConatiner extends React.Component {
+class MobileBanner0Conatiner extends React.Component {
   state = {
     width: 0,
     tab: 0,
@@ -41,36 +41,7 @@ class BannerConatiner extends React.Component {
   updateSlide = () => {
       this.setState({...this.state, slideMoved: 0})
   }
-//  componentDidUpdate = () => {
-//    var src = document.getElementById("slider");
-//    src.addEventListener('touchend', this.updateSlide);
-//  }
 
-  slideStart = (e) => {/*
-    const { slideStart  } = this.state;
-    this.setState({...this.state, slideStart: e.targetTouches[0].clientX});
-    console.log(this.state)
-  */}
-  slideMove = (e) => {/*
-    const { slideStart, slideMoved, slidePosition } = this.state;
-    var Moved = e.targetTouches[0].clientX - slideStart
-    // slideStart에서 얘를 빼줌.
-    if (Moved < 0) {
-      this.setState({...this.state, slideMoved: Moved, slidePosition: slidePosition-10});
-    } else {
-      this.setState({...this.state, slideMoved: Moved, slidePosition: slidePosition+10});
-    }
-  */}
-  // countCalc () {
-  //   const { Request, Partner } = this.props;
-  //   let result = 3924
-
-  //   if(Partner.select_big != null && Partner.select_mid == null){
-  //       result =  3 * (((Partner.select_big.id)/5) + 4)
-  //   }
-    
-  //   return result
-  // }
   render() {
     const { width, slidePosition, slidesToScroll } = this.state;
     const request_data = this.props.Home.request_list
@@ -106,29 +77,6 @@ class BannerConatiner extends React.Component {
       animation: 'up'
     };
     return (
-    <>
-      { width > 768 ? (
-      <Banner>
-        <Container>
-          <Title>
-            내 제품 제작 비용과<br/> 전문 제조사를 바로 만나보세요.
-          </Title>
-          <ButtonBox>
-            <Button
-              id={'request'}
-              backgroundColor={WHITE + "00"}
-              borderColor={WHITE}
-              onClick={() => Router.push("/request")}
-            >
-              <Text.FontSize32 color={WHITE} fontWeight={500} borderRadius={0} style={{height: 47, display: "flex", alignItems: "center"}}>
-                무료로 가견적 받기
-              </Text.FontSize32>
-            </Button>
-          </ButtonBox>
-        </Container>
-      </Banner>
-      ) :
-      (
         <MobileBox>
           <MobileBanner>
             <Title fontWeight={700}>
@@ -158,13 +106,6 @@ class BannerConatiner extends React.Component {
           </RequestBox>
           <RequestList>
             <Slider {...settings}>
-            {/*<CustomSlider
-              id="slider"
-              onTouchStart = {this.slideStart}
-              onTouchMove = {this.slideMove}
-              onTouchEnd = {this.slideEnd}
-              X = {slidePosition}
-              >*/}
               {
                 request_data && request_data.slice(0,20).map((item, idx) => {
                   return (
@@ -174,20 +115,14 @@ class BannerConatiner extends React.Component {
                   )
                 })
               }
-              {/*
-            </CustomSlider>
-            */}
             </Slider>
           </RequestList>
         </MobileBox>
-      )
-      }
-    </>
-    );
+    )
   }
-}
+};
 
-export default BannerConatiner;
+export default Banner0Conatiner;
 
 const Container = styled.div`
   padding-right: 0% !important;
@@ -494,4 +429,4 @@ const CustomSlider = styled.div`
   height: 100%;
   display: inline-flex;
   transform: translateX(${props => props.X ? props.X : 0}px);
-`
+'
