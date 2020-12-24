@@ -158,13 +158,6 @@ class BannerConatiner extends React.Component {
           </RequestBox>
           <RequestList>
             <Slider {...settings}>
-            {/*<CustomSlider
-              id="slider"
-              onTouchStart = {this.slideStart}
-              onTouchMove = {this.slideMove}
-              onTouchEnd = {this.slideEnd}
-              X = {slidePosition}
-              >*/}
               {
                 request_data && request_data.slice(0,20).map((item, idx) => {
                   return (
@@ -174,9 +167,6 @@ class BannerConatiner extends React.Component {
                   )
                 })
               }
-              {/*
-            </CustomSlider>
-            */}
             </Slider>
           </RequestList>
         </MobileBox>
