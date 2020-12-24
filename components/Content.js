@@ -5,7 +5,7 @@ export const Content1 = styled.p`
   font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
   color: ${props => props.color ? props.color : '#000000'};
   text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng && 'Roboto'}, sans-serif;
+  font-family: ${props => props.eng ? 'Roboto' : 'NotoSansKR', "sans-serif"};
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 32px;
   }
@@ -18,7 +18,7 @@ export const Content1 = styled.p`
     letter-spacing: 0.5px;
   }
 `
-export const ContentTitle = styled.p`
+export const ContentTitle = style.p`
   font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
   color: ${props => props.color ? props.color : '#000000'};
   text-align: ${props => props.center ? 'center' : 'left'};

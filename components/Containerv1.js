@@ -15,4 +15,4 @@ const Containerv1 = styled.div`
   }
 `
 
-export default Containerv1
+export default Containerv1;
