@@ -1,25 +1,25 @@
 import React from 'react';
 
 import Containerv1 from 'components/Containerv1';
-import * as Text from 'components/Content';
-import { TextSize16 } from 'components/Title';
-
+import * as Title from 'components/Title';
+import
 
 class Container2 extends React.Component {
   render() {
     return (
-      <Containerv1>
-        <div style={styles.flexRow}>
-          <div style={styles.img}>
+      <Background>
+        <Containerv1>
+          <div style={styles.flexRow}>
+            <div style={styles.img}>
+            </div>
+            <div>
+              <Title.FontSize20 style={styles.banner}>컨설턴트 중 해당 제품</Title.FontSize20>
+              <Title.FontSize56>1초만에 내 제품<br/>가견적 받기</Title.FontSize56>
+              <Title.FontSize24>안녕하세요</Title.FontSize24>
+            </div>
           </div>
-          <div >
-            <span style={styles.banner}>컨설턴트 중 해당 제품</span>
-            <Title2 style={styles.h1}>1초만에 내 제품<br/>가견적 받기</Title2>
-            <TextSize16>안녕하세요</TextSize16>
-          </div>
-        </div>
-      </Containerv1>
-
+        </Containerv1>
+      </Background>
     );
   }
 };
