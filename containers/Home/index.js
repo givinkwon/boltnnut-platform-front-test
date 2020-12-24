@@ -1,10 +1,10 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 
-//import Banner1Conatiner from './Banner1'
+import Banner0Conatiner from './Banner0'
+import Banner1Conatiner from './Banner1'
 import Banner2Conatiner from './Banner2'
 import Banner3Conatiner from './Banner3'
-import BannerConatiner from './Banner0'
 import CategoryConatiner from './Category'
 import FindExperctConatiner from './FindExpert'
 import ContentGroupConatiner from './ContentGroup'
@@ -57,7 +57,8 @@ class HomeConatiner extends React.Component {
       </>
           ) : (
           <div style={{overflow:'hidden'}}>
-            <BannerConatiner width={width}/>
+            <Banner0Conatier/>
+            <Banner1Container/>
             <Banner2Conatiner/>
             {width > 768 && <MagazineConatiner/>}
             <NewBanner5Container/>
