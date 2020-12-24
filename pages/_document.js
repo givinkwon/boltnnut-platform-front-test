@@ -106,11 +106,6 @@ export default class MyDocument extends Document {
           <meta name="Yeti" content="index, follow"/>
           {/* 대표 URL */}
           <link rel="canonical" href="https://www.boltnnut.com/"/>
-          {/* GA Settings
-          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
-          <script dangerouslySetInnerHTML={this.setGoogleTags()} /> */}
-          {/* Google Tag Manager */}
-          <script dangerouslySetInnerHTML={{__html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PWFPPZ5');`,}}></script>
           {/* Naver webmaster */}
           <meta name="naver-site-verification" content="4354dc20bc3fb28a16e1db9800acf406fd782d76" />
           {/* favicon */}
@@ -122,15 +117,32 @@ export default class MyDocument extends Document {
           <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900|Noto+Sans:400,700&display=swap" rel="stylesheet" />
           <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
           <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
-          {/* Iamport */}
-          <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-          <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
         </Head>
         <body>
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5" height="0" width="0" style={{display : "none", visibility : "hidden"}}></iframe></noscript>
           <Main />
           {/* <script dangerouslySetInnerHTML={this.setChannelTalk()} /> */}
           <NextScript />
+          {/* GA Settings
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
+          <script dangerouslySetInnerHTML={this.setGoogleTags()} /> */}
+          {/* Google Tag Manager */}
+          <script dangerouslySetInnerHTML={{__html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PWFPPZ5');`,}} async ></script>
+          {/* Iamport */}
+          {/* <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" async ></script>
+          <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" async ></script> */}
+          {/* Naver analic */}
+          {/* <script type="text/javascript" src="//wcs.naver.net/wcslog.js" async></script>
+          <script type="text/javascript" dangerouslySetInnerHTML={{__html: `if(!wcs_add) var wcs_add = {};wcs_add["wa"] = "a888b15a2864e";if(window.wcs) {wcs_do();}`,}} async ></script> */}
+          {/* 문법 오류 부분(네이버에서복사한원본코드)*/}
+          {/* <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+          <script type="text/javascript">
+          if(!wcs_add) var wcs_add = {};
+          wcs_add["wa"] = "a888b15a2864e";
+          if(window.wcs) {
+            wcs_do();
+          }
+          </script> */}
         </body>
       </html>
     );
