@@ -60,6 +60,7 @@ class HomeConatiner extends React.Component {
           <div style={{overflow:'hidden'}}>
             <BannerConatiner width={width}/>
             <Banner1Conatiner width={width}/>
+            <Banner2Conatiner/>
             {width > 768 && <MagazineConatiner/>}
             <NewBanner5Container/>
             <NewBanner4Container/>
