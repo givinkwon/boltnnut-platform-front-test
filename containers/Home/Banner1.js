@@ -14,7 +14,7 @@ class Banner1Conatiner extends React.Component {
               <img src={ "/static/images/Home/Banner1/48시간.png" }/>
             </div>
             <div>
-              <img src={ "/static/images/Home/Banner1/>>>>.png" }/>
+              <img src={ "/static/images/Home/Banner1/next.png" }/>
             </div>
             <div>
               <img src={ "/static/images/Home/Banner1/1초.png" }/>
