@@ -47,7 +47,7 @@ class HomeConatiner extends React.Component {
       { width < 360 ? (
       <>
         <CustomContainer>
-          <Banner0Conatiner width={width}/>
+          <Banner0Conatiner/>
           <MagazineConatiner/>
           <NewBanner5Container/>
           <NewBanner4Container/>
