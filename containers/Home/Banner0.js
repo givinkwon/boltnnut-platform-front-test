@@ -20,11 +20,13 @@ class Banner0Conatiner extends React.Component {
     return (
     <Background src={background}>
       <Containerv1>
-        <Title.FontSize56 color={WHITE} shadow={"0 3px 6px rgba(0,0,0,0.61);"}> 
+        <Title.FontSize56 color={WHITE} shadow={"0 3px 6px rgba(0,0,0,0.61);"} fontWeight={"500"}> 
           내 제품 제작 비용과<br/>
           전문 제조사를<br/>
           바로 만나보세요.
         </Title.FontSize56>
+        <Info>
+        </Info>
       </Containerv1>
     </Background>
     );
@@ -33,3 +35,5 @@ class Banner0Conatiner extends React.Component {
 
 export default Banner0Conatiner;
 
+const Info = styled.div`
+`
