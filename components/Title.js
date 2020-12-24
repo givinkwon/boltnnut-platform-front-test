@@ -5,7 +5,7 @@ export const Title1 = styled.p`
   font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
   color: ${props => props.color ? props.color : '#000000'};
   text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng && 'Roboto'};
+  font-family: ${props => props.eng ? 'Roboto' : 'NotoSansKR'},sans-serif;
   text-shadow: ${props => props.shadow};
   letter-spacing: -1.5px;
   @media (min-width: 0px) and (max-width: 767.98px) {

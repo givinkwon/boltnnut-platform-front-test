@@ -20,7 +20,7 @@ class Banner0Conatiner extends React.Component {
     return (
     <Background src={background}>
       <Containerv1>
-        <Title.Title2 color={WHITE} shadow={"0 3px 6px rgba(0,0,0.61)"}> 
+        <Title.Title2 eng = {true} color={WHITE} shadow={"0 3px 6px rgba(0,0,0.61)"}> 
           내 제품 제작 비용과 전문 제조사를 바로 만나보세요 
         </Title.Title2>
       </Containerv1>
