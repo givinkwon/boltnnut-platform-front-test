@@ -40,14 +40,14 @@ class Banner0Container extends React.Component {
               2,000,000,000 
             </Content.FontSize32>  
           </InfoCell>
-          <InfoCell> 
+          <InfoCell>
             <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center'}} color={'#ffffff'}>
               의뢰 프로젝트
             </Content.FontSize24>
              <br/>
             <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
               300+ 
-            </Content.FontSize32>  
+            </Content.FontSize32>
           </InfoCell>
           <InfoCell> 
             <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center'}} color={'#ffffff'}>
