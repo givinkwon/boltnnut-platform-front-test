@@ -17,7 +17,7 @@ class PartnerConatiner extends React.Component {
   async componentDidMount() {
     await this.props.Partner.init();
     this.props.Partner.search_text = await this.props.query.q;
-    await this.props.Partner.searchjust();
+    await this.props.Partner.searchrandom();
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   }

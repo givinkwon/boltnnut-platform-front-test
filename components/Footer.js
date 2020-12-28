@@ -12,6 +12,7 @@ const logo_footer = "/static/images/logo.png";
 const instargram = "/static/images/instargram.png";
 const facebook = "/static/images/facebook.png";
 const blog = "/static/images/blog.png";
+const blog_post = "/static/images/blog_post.png";
 
 @inject('Auth')
 @observer
@@ -115,6 +116,7 @@ class FooterComponent extends React.Component {
                 <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
                 <Sns src={facebook} onClick={() => window.open('http://www.facebook.com/boltnnut6637')} />
                 <Sns src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')} />
+                {/* <Sns src={blog_post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')} />                 */}
               </SnsBox>
             </Text.FontSize12>
           </ContactInfoContainer>
@@ -140,6 +142,7 @@ class FooterComponent extends React.Component {
                 <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
                 <Sns src={facebook} onClick={() => window.open('http://www.facebook.com/boltnnut6637')} />
                 <Sns src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')} />
+                {/* <Sns src={blog_post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')} /> */}
               </SnsBox>
              </CompanyInfo2>
              </div>
@@ -416,7 +419,8 @@ const SnsBox = styled.div`
 const Sns = styled.img`
   cursor: pointer;
   height: 24px;
-  padding : 17px;
+  padding-right : 21px;
+  padding-top:12px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 0;
     width: 13.2px;

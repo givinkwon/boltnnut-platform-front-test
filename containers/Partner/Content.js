@@ -71,12 +71,12 @@ class ContentConatiner extends React.Component {
   }
   // IE 오류 해결
   async componentDidMount() {
+    const { Home, Partner } = this.props
     console.log('componentDidMount');
 
-    setTimeout(() => 
-    this.props.Loading.setOpen(true), 5000);
+    // setTimeout(() => 
+    // this.props.Loading.setOpen(true), 4000);
 
-    const { Home, Partner } = this.props
     const self = this;
     const userAgent = window.navigator.userAgent;
     const searchButton = document.getElementById('searchbutton')
@@ -318,16 +318,17 @@ class ContentConatiner extends React.Component {
             {
               Partner.partner_list.length > 0 && Partner.partner_list.slice(5*current, 5*(current+1)).map((item, idx) => {
                 return (
-                  Loading.is_open ? (
-                    <Card
+                  <Card
                     key={item.id}
                     item={item}
                     handleIntersection={this.handleIntersection}
                     observer={!this.props.Home.is_ie && idx === Partner.partner_list.length - 2}
                   />
-                  ):( 
-                    <Skeleton animation="wave" variant="rect" width="894px" height="200px" style={{ marginBottom: 20 }}/>
-                  )
+                  // Loading.is_open ? (
+                    
+                  // ):( 
+                  //   <Skeleton animation="wave" variant="rect" width="894px" height="200px" style={{ marginBottom: 20 }}/>
+                  // )
                   
                 )
               })

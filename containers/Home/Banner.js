@@ -91,7 +91,7 @@ class BannerConatiner extends React.Component {
     const countSettings1 = {
       start: 0,
       // count : this.countCalc(),
-      count : 3967,
+      count : 3927,
       duration: 6000,
       decimals: 0,
       useGroup: true,

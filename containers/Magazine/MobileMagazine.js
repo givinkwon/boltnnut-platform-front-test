@@ -31,7 +31,6 @@ class MobileContentContainer extends React.Component {
     await Router.push(`/magazine/${id}`);
     Magazine.setCurrent(id);
   }
-
   loadScroll = () => {
     const { magazine_idx, magazineLength } = this.state;
     var newIdx = magazine_idx + 3
@@ -50,6 +49,7 @@ class MobileContentContainer extends React.Component {
         this.setState({...this.state, magazine_idx: newIdx})
       } else {
         this.setState({...this.state, magazine_idx: magazineLength})
+        console.log(2)
       }
     }
   }
@@ -57,6 +57,7 @@ class MobileContentContainer extends React.Component {
   render() {
     const { magazine_idx, magazineLength } = this.state;
     console.log(this.state);
+
     return (
         <FindExperct>
             {
@@ -119,11 +120,9 @@ const Icon = styled.img`
 
 const ItemBox = styled.a`
   display: block;
-
   :focus {
     outline: none;
   }
-
   text-decoration: none;
 `
 const Item = styled.div`
@@ -164,14 +163,11 @@ const Item = styled.div`
 const Image = styled(RatioImage)`
   cursor: pointer;
   border-radius: 25px;
-
   width: calc(90%);
   height: 310px ;
-
   @media (min-width: 0px) and (max-width: 767.98px) {
     border-radius: 10px;
     max-width: 400px;
-
     :hover {
       border-radius: 10px;
       > div {
@@ -183,7 +179,6 @@ const Image = styled(RatioImage)`
   > div {
     transition: 0.4s;
   }
-
   :hover {
     border-radius: 10px;
     > div {
