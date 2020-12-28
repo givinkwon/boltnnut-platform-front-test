@@ -10,15 +10,17 @@ class Banner1Conatiner extends React.Component {
       <Background>
         <ContentContainer>
           <Image>
-            <div>
-              <img src={ "/static/images/Home/Banner1/48시간.png" }/>
-            </div>
-            <div>
-              <img src={ "/static/images/Home/Banner1/next.png" }/>
-            </div>
-            <div>
-              <img src={ "/static/images/Home/Banner1/1초.png" }/>
-            </div>
+            <ImageContainer>
+              <div>
+                <img src={ "/static/images/Home/Banner1/48시간.png" }/>
+              </div>
+              <div>
+                <img style={{margin: '0px 52px 0px 45px'}} src={ "/static/images/Home/Banner1/next.png" }/>
+              </div>
+              <div>
+                <img src={ "/static/images/Home/Banner1/1초.png" }/>
+              </div>
+            </ImageContainer>
           </Image>
           <div>
             <Head>컨설턴트 중 해당 제품</Head>
@@ -38,8 +40,15 @@ const ContentContainer = styled(Containerv1)`
 const Image = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
   margin-right: 120px;
+`
+const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 246px;
+  margin-top: 385px;
 `
 const Head = styled(Title.FontSize20)`
   color: #0933b3;
@@ -48,7 +57,7 @@ const Head = styled(Title.FontSize20)`
   font-style: normal;
   line-height: 1.45;
   letter-spacing: normal;
-  margin: 293px 0px 106px 0px;
+  margin: 293px 0px 32px 0px;
 `
 const Main = styled(Title.FontSize56)`
   font-weight: bold;
