@@ -15,7 +15,7 @@ import Buttonv1 from "components/Buttonv1";
 //Image
 const background = "static/images/Home/main.jpg";
 
-class Banner0Conatiner extends React.Component {
+class Banner0Container extends React.Component {
   render () {
     return (
     <Background src={background}>
@@ -65,7 +65,7 @@ class Banner0Conatiner extends React.Component {
   }
   }
 
-export default Banner0Conatiner;
+export default Banner0Container;
 
 const Info = styled.div`
  display: table;
