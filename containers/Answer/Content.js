@@ -99,6 +99,7 @@ class FindExperctConatiner extends React.Component {
           <Slider {...settings} ref={slider => (this.slider = slider)}>
           {
             data.map((item, idx) => {
+              console.log(item)
               // ToDo: 유틸로 빼기
               const now = new Date()
               const created_at_date = new Date(item.created_at)
@@ -164,10 +165,7 @@ class FindExperctConatiner extends React.Component {
                       }*/}
 
                       <p className='footer'>
-
                           {item.apply_count}개의 제안서 확인
-
-
                       </p>
                     </Card>
                   </Item>
