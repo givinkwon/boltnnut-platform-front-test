@@ -8,6 +8,7 @@ const Background = styled.div`
   background-image: url(${props => props.src});
   display: inline-flex;
   justify-content: center;
+  background-size: cover;
 `
 
 export default Background
