@@ -9,8 +9,9 @@ const image1 = "/static/images/Home/Banner4/Banner4_img1.png"
 class Banner4Container extends React.Component {
   render() {
     return (
-        <Background>
+        <Background backgroundColor = {"#d4d7e2"}>
             <Containerv1 style={{paddingBottom: 306, paddingTop: 308, justifyContent: 'space-between'}}>
+
                 <div>
                     <Header>
                         컨설턴트 중 해당 제품
@@ -37,6 +38,13 @@ class Banner4Container extends React.Component {
 
 export default Banner4Container;
 
+const Test=styled.div`
+  width: 162px;
+  height: 312px;
+  // margin: 0 197px 6px 0;
+  opacity: 0.82;
+  background:white;
+`
 const Header = styled(Title.FontSize20)`
   color: #0933b3;
   font-weight: bold;
