@@ -6,17 +6,13 @@ import Banner1Conatiner from './Banner1'
 import Banner2Container from './Banner2'
 import Banner3Container from './Banner3'
 import Banner4Container from './Banner4'
+import Banner5Container from './Banner5'
 import CategoryConatiner from './Category'
 import FindExperctConatiner from './FindExpert'
 import ContentGroupConatiner from './ContentGroup'
 import MagazineConatiner from './Magazine'
 import LogoConatiner from './logo'
 import HomeRequestContainer from './Request';
-import NewBanner1Container from './NewBanner1';
-import NewBanner2Container from './NewBanner2';
-import NewBanner3Container from './NewBanner3';
-import NewBanner4Container from './NewBanner4';
-import NewBanner5Container from './NewBanner5';
 import ReviewBanner from './ReviewerBanner';
 
 import { inject, observer } from "mobx-react";
@@ -49,10 +45,7 @@ class HomeConatiner extends React.Component {
       <>
         <CustomContainer>
           <Banner0Container/>
-          <Banner1Conatiner width={width}/>
-          <MagazineConatiner/>
-          <NewBanner5Container/>
-          <NewBanner4Container/>
+          <Banner1Conatiner/>
           <ReviewBanner/>
           <LogoConatiner/>
         </CustomContainer>
@@ -64,9 +57,7 @@ class HomeConatiner extends React.Component {
             <Banner2Container/>
             <Banner3Container/>
             <Banner4Container/>
-            {width > 768 && <MagazineConatiner/>}
-            <NewBanner5Container/>
-            <NewBanner4Container/>
+            <Banner5Container/>
             <ReviewBanner/>
             <LogoConatiner/>
           </div>
