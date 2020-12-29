@@ -43,20 +43,20 @@ class HomeConatiner extends React.Component {
   render() {
     const { width, reqList } = this.props;
     return (
-    <>
-      { width < 360 ? (
       <>
-        <CustomContainer>
-          <Banner0Container/>
-          <Banner1Conatiner width={width}/>
-          <MagazineConatiner/>
-          <NewBanner5Container/>
-          <NewBanner4Container/>
-          <ReviewBanner/>
-          <LogoConatiner/>
-        </CustomContainer>
-      </>
-          ) : (
+        { width < 360 ? (
+          <>
+            <CustomContainer>
+              <Banner0Container/>
+              <Banner1Conatiner width={width}/>
+              <MagazineConatiner/>
+              <NewBanner5Container/>
+              <NewBanner4Container/>
+              <ReviewBanner/>
+              <LogoConatiner/>
+            </CustomContainer>
+          </>
+        ) : (
           <div style={{overflow:'hidden'}}>
             <Banner0Container/>
             <Banner1Conatiner/>
@@ -67,10 +67,10 @@ class HomeConatiner extends React.Component {
             <ReviewBanner/>
             <LogoConatiner/>
           </div>
-          )
-          } </>
-      )
-}
+        )
+        } </>
+    )
+  }
 }
 
 export default HomeConatiner
@@ -80,4 +80,3 @@ const CustomContainer = styled.div`
   overflow: hidden;
   margin-top: 2px;
 `
-
