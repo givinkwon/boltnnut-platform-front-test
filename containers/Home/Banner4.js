@@ -11,7 +11,6 @@ class Banner4Container extends React.Component {
     return (
         <Background backgroundColor = {"#d4d7e2"}>
             <Containerv1 style={{paddingBottom: 306, paddingTop: 308, justifyContent: 'space-between'}}>
-
                 <div>
                     <Header>
                         컨설턴트 중 해당 제품
@@ -20,7 +19,6 @@ class Banner4Container extends React.Component {
                         7가지 계약 관리<br/>
                         서비스로 계약 이행<br/>
                         <p>100% 보증</p>
-
                     </Middle>
                     <Body>
                         200여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
@@ -38,13 +36,6 @@ class Banner4Container extends React.Component {
 
 export default Banner4Container;
 
-const Test=styled.div`
-  width: 162px;
-  height: 312px;
-  // margin: 0 197px 6px 0;
-  opacity: 0.82;
-  background:white;
-`
 const Header = styled(Title.FontSize20)`
   color: #0933b3;
   font-weight: bold;
