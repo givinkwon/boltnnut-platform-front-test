@@ -9,7 +9,7 @@ const image1 = "/static/images/Home/Banner4/Banner4_img1.png"
 class Banner4Container extends React.Component {
   render() {
     return (
-        <Background>
+        <Background backgroundColor = {"#d4d7e2"}>
             <Containerv1 style={{paddingBottom: 306, paddingTop: 308, justifyContent: 'space-between'}}>
                 <div>
                     <Header>
@@ -19,7 +19,6 @@ class Banner4Container extends React.Component {
                         7가지 계약 관리<br/>
                         서비스로 계약 이행<br/>
                         <p>100% 보증</p>
-
                     </Middle>
                     <Body>
                         200여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
