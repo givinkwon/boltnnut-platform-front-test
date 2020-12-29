@@ -7,6 +7,8 @@ import Banner2Container from './Banner2'
 import Banner3Container from './Banner3'
 import Banner4Container from './Banner4'
 import Banner5Container from './Banner5'
+import Banner7Container from './Banner7'
+import Banner8Container from './Banner8'
 import CategoryConatiner from './Category'
 import FindExperctConatiner from './FindExpert'
 import ContentGroupConatiner from './ContentGroup'
@@ -58,8 +60,8 @@ class HomeConatiner extends React.Component {
             <Banner3Container/>
             <Banner4Container/>
             <Banner5Container/>
-            <ReviewBanner/>
-            <LogoConatiner/>
+            <Banner7Container/>
+            <Banner8Container/>
           </div>
           )
           } </>
