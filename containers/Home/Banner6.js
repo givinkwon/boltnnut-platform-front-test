@@ -16,38 +16,54 @@ class Banner6Container extends React.Component {
     progress: 0,
   }
   buttonClick = (e) => {
-    const { current } = this.state;
     const newPage = e.target.innerText*1;
     this.setState({...this.state, current: newPage-1});
+    this.setState({...this.state, progress: newPage*100-100});
     this.slider.slickGoTo(newPage-1)
   }
   sliderNext = () => {
-    const {current, next} = this.state;
+    const {current, progress} = this.state;
     const fullfage = 2;
     if (current != fullfage) {
-      const newPage = current + 1
-      this.setState({...this.state, current: newPage, show:'hidden'})
+      const newPage = current + 1;
+      if (progress < 200) {
+        this.setState({...this.state, current: newPage, progress: progress + 100, show:'hidden'});
+      }
       setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
       this.slider.slickNext();
     }
-
   }
   sliderPrev = () => {
-    const {current, prev} = this.state;
+    const {current, progress} = this.state;
+    console.log(current);
     if (current != 0) {
-      const newPage = current - 1
-      this.setState({...this.state, current: newPage, show:'hidden'})
+      const newPage = current - 1;
+      if (progress > 0) {
+        this.setState({...this.state, progress: progress - 100, current: newPage, show:'hidden'});
+      }
       setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
       this.slider.slickPrev();
     }
   }
-  // progressBar = () => {
-  //   const { progress } = this.state;
-  //
-  // }
   render() {
     const left = 'static/images/Home/Banner6/prev.png';
     const right = 'static/images/Home/Banner6/next.png';
+    console.log(this.state.progress);
+    let progress = String(this.state.progress) + "%";
+    let progress2 = "0%";
+    if (this.state.progress > 100) {
+      for (let i = 1; i < 101; i++) {
+        progress2 = String(i) + "%";
+      }
+    }
+    var circleColor = "gray";
+    var circleColor2 = "gray";
+    if (this.state.progress >= 100) {
+      circleColor = "#0933b3";
+    };
+    if (this.state.progress >= 200) {
+      circleColor2 = "#0933b3";
+    }
     const item1 = {
       headContent: "Step 1",
       mainContent: "파트너 신청",
@@ -55,13 +71,13 @@ class Banner6Container extends React.Component {
     };
     const item2 = {
       headContent: "Step 2",
-      mainContent: "ㅋㅋ",
-      footContent: "xxxx"
+      mainContent: "파트너 신청",
+      footContent: "회사소개서, 주요기술이력서 등 \n 전문성을 알 수 있는 자료와 프로젝트 \n 가견적 데이터를 통해 합리적 \n 견적 여부를 파악합니다."
     };
     const item3 = {
       headContent: "Step 3",
-      mainContent: "ㅋㅋㅋㅋㅋㅋ",
-      footContent: "zzz",
+      mainContent: "파트너 신청",
+      footContent: "회사소개서, 주요기술이력서 등 \n 전문성을 알 수 있는 자료와 프로젝트 \n 가견적 데이터를 통해 합리적 \n 견적 여부를 파악합니다."
     };
     const settings = {
       dots: false,
@@ -103,7 +119,7 @@ class Banner6Container extends React.Component {
                 </ContentBox>
                 <ContentBox>
                   <TableCellContainer>
-                    <Circle onClick= {this.buttonClick} value= {2}>
+                    <Circle onClick= {this.buttonClick} value= {2} backgroundColor={ circleColor }>
                       <span>
                         <CircleFont>2</CircleFont>
                       </span>
@@ -112,7 +128,7 @@ class Banner6Container extends React.Component {
                 </ContentBox>
                 <ContentBox width={'0px'}>
                   <TableCellContainer>
-                    <Circle onClick= {this.buttonClick} value= {3}>
+                    <Circle onClick= {this.buttonClick} value= {3} backgroundColor={ circleColor2 }>
                       <span>
                         <CircleFont>3</CircleFont>
                       </span>
@@ -123,8 +139,12 @@ class Banner6Container extends React.Component {
             </SubContainer>
             <SubContainer>
               <TableCellContainer>
-                <Line/>
-                <Line/>
+                <Line>
+                  <LineProgress progressWidth={ progress }/>
+                </Line>
+                <Line>
+                  <LineProgress progressWidth={ progress2 }/>
+                </Line>
               </TableCellContainer>
             </SubContainer>
           </ItemBox>
@@ -137,33 +157,13 @@ class Banner6Container extends React.Component {
 export default Banner6Container;
 
 const SliderWraper = styled.div`
-  width: 1000px;
-  height: 500px;
-  
-  .slick-dots li.slick-active button:before {
-    color: #ffffff;
-    width: 30px;
-  }
-  .ft-slick__dots--custom {
-    height: 34px;
-    width: 34px;
-    background-color: #86888c;
-    border-radius: 20px;
-  }
-  .slick-dots .slick-active .ft-slick__dots--custom {
-    background-color: #ffffff;
-  }
-  .slick-next:before {
-    color: #ffffff;
-    
-  }
-
+  width: 1090px;
+  height: 669px;
 `
 const CustomContainer = styled(Containerv1)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 `
 const Header = styled(Title.FontSize56)`
   color: #ffffff;
@@ -185,6 +185,7 @@ const ItemBox=styled.div`
   width: 804px;
   // border: 1px solid black;
   height: 80px;
+  margin-bottom: 90px;
 `
 
 const SubContainer=styled.div`
@@ -222,7 +223,7 @@ const Circle=styled.div`
   position: relative; /* z-index는 relative 등의 특정 포지션에서만 작동함 */
   // float: right;
   transform: translateX(-10px); /* 반지름만큼 */
-  
+
   >span{
      position:absolute;
      transform: translate(-5px,5px); /* 반지름만큼 */
@@ -230,13 +231,18 @@ const Circle=styled.div`
 `
 
 const Line = styled(ContentBox)`
-   height:4px;
-   width: calc(100% / 2);
-   background-color: ${(props) => (props.backgroundColor? props.backgroundColor : "gray")};
-   z-index: 1;
-   position: relative;
+  height:4px;
+  background-color: gray;
+  width: calc(100% / 2);
+  z-index: 1;
+  position: relative;
 `
-
+const LineProgress = styled(ContentBox)`
+  background-color: #0933b3;
+  width: ${(props) => (props.progressWidth)};
+  z-index: 0;
+  position: relative;
+`
 const CircleFont=styled(Title.FontSize18)`
    color:white;
    font-weight:500;

@@ -6,9 +6,10 @@ class SliderMain extends React.Component {
   render() {
     const { item } = this.props;
     const mac = 'static/Images/Home/Banner6/Mac.png';
+    const pic = 'static/Images/Home/Banner6/pic.png';
     return (
       <SliderContent>
-        <div>
+        <div style={{marginTop: 50,}}>
           <Head style={{whiteSpace:'pre-line'}}>
             {item.headContent}
           </Head>
@@ -19,7 +20,10 @@ class SliderMain extends React.Component {
             {item.footContent}
           </Foot>
         </div>
-        <img src={ mac }/>
+        <ImageContainer>
+          <img src={ mac } style={{ position: 'absolute'}}/>
+          <img src={ pic } style={{ position: 'absolute', top: '10px', left:'60px'}}/>
+        </ImageContainer>
       </SliderContent>
     );
   }
@@ -28,10 +32,11 @@ class SliderMain extends React.Component {
 export default SliderMain;
 
 const SliderContent = styled.div`
-  width: 1053px;
+  width: 1065px;
   height: 390px;
   display: flex;
   flex-direction: row;
+  margin: 107px 13px 112px 58px;
 `
 const Head = styled(Title.FontSize24)`
   color: #0933b3;
@@ -51,6 +56,7 @@ const Main = styled(Title.FontSize32)`
   letter-spacing: -0.8px;
   text-align: left;
   color: #333742;
+  margin: 10px 0px 30px 0px;
 `
 const Foot = styled(Title.FontSize24)`
   font-weight: 500;
@@ -60,4 +66,7 @@ const Foot = styled(Title.FontSize24)`
   letter-spacing: -0.6px;
   text-align: left;
   color: #f6f6f6;
+`
+const ImageContainer = styled.div`
+  position: relative;
 `
