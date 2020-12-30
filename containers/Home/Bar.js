@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-class BarContainer1 extends React.Component {
+class BarContainer extends React.Component {
 
   Selector = (current) => {
      if (current == 1) {
@@ -518,12 +518,13 @@ class BarContainer1 extends React.Component {
     const { current } = this.props;
 
     return (
-      this.Selector( current )
-    )
+      // this.Selector( current )
+        this.Selector(1)
+      )
   }
   }
 
-export default BarContainer1;
+export default BarContainer;
 // slider circle
 const LineContainer = styled.div` {
   position: relative;
