@@ -65,7 +65,6 @@ class HomeConatiner extends React.Component {
             <Banner6Container/>
             <Banner7Container/>
             <Banner8Container/>
-            <MagazineConatiner/>
           </div>
         )
         } </>
