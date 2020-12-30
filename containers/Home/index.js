@@ -43,6 +43,7 @@ class HomeConatiner extends React.Component {
   };
   render() {
     const { width, reqList } = this.props;
+    console.log(document.documentElement.clientHeight);
     return (
       <>
         { width < 360 ? (
