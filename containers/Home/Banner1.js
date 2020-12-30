@@ -4,7 +4,7 @@ import Containerv1 from 'components/Containerv1';
 import * as Title from 'components/Title';
 import styled from 'styled-components';
 
-class Banner1Conatiner extends React.Component {
+class Banner1Container extends React.Component {
   render() {
     return (
       <Background>
@@ -32,7 +32,7 @@ class Banner1Conatiner extends React.Component {
     );
   }
 };
-export default Banner1Conatiner;
+export default Banner1Container;
 const ContentContainer = styled(Containerv1)`
   display: flex;
   flex-direction: row;
