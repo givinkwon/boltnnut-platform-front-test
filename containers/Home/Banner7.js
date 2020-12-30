@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
-import Fade from 'react-reveal/Fade';
-
+import Slider from "react-slick"
+import Fade from "react-reveal/Fade"
 const image1 = "/static/images/logo/logo_1.png";
 const image2 = "/static/images/logo/logo_2.png";
 const image3 = "/static/images/logo/logo_3.png";
@@ -35,108 +35,127 @@ const image27 = "/static/images/logo/logo_27.png";
 const image28 = "/static/images/logo/logo_28.png";
 const image29 = "/static/images/logo/logo_29.png";
 
+const item1="/static/images/Home/Banner7/Banner7_img1.png";
 
 class Banner7Container extends React.Component {
-    render() {
-        return (
-            <Background>
-                <Containerv1 style={{paddingBottom: 141, paddingTop: 140, justifyContent: 'space-between',flexDirection:'column'}}>
-                    <Fade bottom>
-                        <Header>
-                            이미 <p>2,000여명</p>이 넘는 클라이언트분들이<br/>
-                            볼트앤너트를 이용하셨습니다.
-                        </Header>
-                        <ItemBox>
-                            <Item>
-                                <img src={image1}/>
-                            </Item>
-                            <Item>
-                                <img src={image2}/>
-                            </Item>
-                            <Item>
-                                <img src={image3}/>
-                            </Item>
-                            <Item>
-                                <img src={image4}/>
-                            </Item>
-                            <Item>
-                                <img src={image5}/>
-                            </Item>
-                            <Item>
-                                <img src={image10}/>
-                            </Item>
-                            <Item>
-                                <img src={image7}/>
-                            </Item>
-                            <Item>
-                                <img src={image8}/>
-                            </Item>
-                            <Item>
-                                <img src={image9}/>
-                            </Item>
-                            <Item>
-                                <img src={image6}/>
-                            </Item>
-                            <Item>
-                                <img src={image11}/>
-                            </Item>
-                            <Item>
-                                <img src={image12}/>
-                            </Item>
-                            <Item>
-                                <img src={image13}/>
-                            </Item>
-                            <Item>
-                                <img src={image14}/>
-                            </Item>
-                            <Item>
-                                <img src={image16}/>
-                            </Item>
-                            <Item>
-                                <img src={image17}/>
-                            </Item>
-                            <Item>
-                                <img src={image18}/>
-                            </Item>
-                            <Item>
-                                <img src={image19}/>
-                            </Item>
-                            <Item>
-                                <img src={image20}/>
-                            </Item>
-                            <Item>
-                                <img src={image21}/>
-                            </Item>
-                            <Item>
-                                <img src={image22}/>
-                            </Item>
-                            <Item>
-                                <img src={image23}/>
-                            </Item>
-                            <Item>
-                                <img src={image24}/>
-                            </Item>
-                            <Item>
-                                <img src={image25}/>
-                            </Item>
-                            <Item>
-                                <img src={image26}/>
-                            </Item>
-                            <Item>
-                                <img src={image27}/>
-                            </Item>
-                            <Item>
-                                <img src={image28}/>
-                            </Item>
-                            <Item>
-                                <img src={image29}/>
-                            </Item>
-                        </ItemBox>
-                    </Fade>
-                </Containerv1>
-            </Background>
-        );
-    }
+  render() {
+    const SlideSettings = {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      draggable:true
+    };
+    return (
+      <Background>
+        <Containerv1 style={{paddingBottom: 141, paddingTop: 140, justifyContent: 'space-between',flexDirection:'column'}}>
+          <Fade bottom>
+            <Header>
+              이미 <p>2,000여명</p>이 넘는 클라이언트분들이<br/>
+              볼트앤너트를 이용하셨습니다.
+            </Header>
+            <>
+              {/* <ItemBox>
+                        <Item>
+                            <img src={image1}/>
+                        </Item>
+                        <Item>
+                            <img src={image2}/>
+                        </Item>
+                        <Item>
+                            <img src={image3}/>
+                        </Item>
+                        <Item>
+                            <img src={image4}/>
+                        </Item>
+                        <Item>
+                            <img src={image5}/>
+                        </Item>
+                        <Item>
+                            <img src={image10}/>
+                        </Item>
+                        <Item>
+                            <img src={image7}/>
+                        </Item>
+                        <Item>
+                            <img src={image8}/>
+                        </Item>
+                        <Item>
+                            <img src={image9}/>
+                        </Item>
+                        <Item>
+                            <img src={image6}/>
+                        </Item>
+                        <Item>
+                            <img src={image11}/>
+                        </Item>
+                        <Item>
+                            <img src={image12}/>
+                        </Item>
+                        <Item>
+                            <img src={image13}/>
+                        </Item>
+                        <Item>
+                            <img src={image14}/>
+                        </Item>
+                        <Item>
+                            <img src={image16}/>
+                        </Item>
+                        <Item>
+                            <img src={image17}/>
+                        </Item>
+                        <Item>
+                            <img src={image18}/>
+                        </Item>
+                        <Item>
+                            <img src={image19}/>
+                        </Item>
+                        <Item>
+                            <img src={image20}/>
+                        </Item>
+                        <Item>
+                            <img src={image21}/>
+                        </Item>
+                        <Item>
+                            <img src={image22}/>
+                        </Item>
+                        <Item>
+                            <img src={image23}/>
+                        </Item>
+                        <Item>
+                            <img src={image24}/>
+                        </Item>
+                        <Item>
+                            <img src={image25}/>
+                        </Item>
+                        <Item>
+                            <img src={image26}/>
+                        </Item>
+                        <Item>
+                            <img src={image27}/>
+                        </Item>
+                        <Item>
+                            <img src={image28}/>
+                        </Item>
+                        <Item>
+                            <img src={image29}/>
+                        </Item>
+                    </ItemBox> */}
+            </>
+            <div style={{paddingTop:80}}>
+              <Slider {...SlideSettings}>
+                <ImgBox>
+                  <img src={item1}/>
+                </ImgBox>
+              </Slider>
+            </div>
+          </Fade>
+
+        </Containerv1>
+      </Background>
+    );
+  }
 }
 
 export default Banner7Container;
@@ -167,7 +186,6 @@ const Item = styled.div`
   // display: flex;
   // flex-direction: column;
   // align-items: center;
-
   width: calc(14% - 40px);
   padding: 20px 0;
   margin: 0 20px;
@@ -180,4 +198,10 @@ const Item = styled.div`
     overflow: hidden;
     cursor: pointer;
   }
+`
+
+const ImgBox=styled.div`
+    :focus {
+        outline: none;
+    }
 `
