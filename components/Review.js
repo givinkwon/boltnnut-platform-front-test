@@ -46,7 +46,7 @@ class ReviewCard extends Component {
                               starColor={'#0a2165'}/>
                         </Name>
                     </CardHeader>
-                    <ContentTitle>
+                    <ContentTitle style={{whiteSpace:'pre-line'}}>
                         {item.title ? item.title : ""}
                     </ContentTitle>
                     <ContentBox2>
