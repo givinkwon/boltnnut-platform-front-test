@@ -2,14 +2,14 @@ import React from 'react'
 import styled, {css} from 'styled-components'
 
 import Banner0Container from './Banner0'
-import Banner1Conatiner from './Banner1'
+import Banner1Container from './Banner1'
 import Banner2Container from './Banner2'
 import Banner3Container from './Banner3'
 import Banner4Container from './Banner4'
 import CategoryConatiner from './Category'
 import FindExperctConatiner from './FindExpert'
 import ContentGroupConatiner from './ContentGroup'
-import MagazineConatiner from './Magazine'
+import MagazineContainer from './Magazine'
 import LogoConatiner from './logo'
 import HomeRequestContainer from './Request';
 import NewBanner1Container from './NewBanner1';
@@ -20,6 +20,7 @@ import NewBanner5Container from './NewBanner5';
 import ReviewBanner from './ReviewerBanner';
 
 import { inject, observer } from "mobx-react";
+import Banner6Container from './Banner6';
 
 @inject('Home')
 @observer
@@ -49,8 +50,8 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <Banner0Container/>
-              <Banner1Conatiner width={width}/>
-              <MagazineConatiner/>
+              <Banner1Container width={width}/>
+              <MagazineContainer/>
               <NewBanner5Container/>
               <NewBanner4Container/>
               <ReviewBanner/>
@@ -60,11 +61,12 @@ class HomeConatiner extends React.Component {
         ) : (
           <div style={{overflow:'hidden'}}>
             <Banner0Container/>
-            <Banner1Conatiner/>
+            <Banner1Container/>
             <Banner2Container/>
             <Banner3Container/>
             <Banner4Container/>
-            {width > 768 && <MagazineConatiner/>}
+            <Banner6Container/>
+            {width > 768 && <MagazineContainer/>}
             <NewBanner5Container/>
             <NewBanner4Container/>
             <ReviewBanner/>
