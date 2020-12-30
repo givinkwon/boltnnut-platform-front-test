@@ -67,3 +67,4 @@ const Body = styled(Title.FontSize24)`
   text-align: left;
   color: #555963;
 `
+

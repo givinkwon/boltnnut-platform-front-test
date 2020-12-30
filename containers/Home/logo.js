@@ -64,65 +64,67 @@ class NewBanner5Container extends React.Component {
            <HeaderBox>
                 <Header> 이미 <AnimationCount class="active" {...countSettings}/>명의 클라이언트분들이 <br/> 볼트앤너트를 이용하셨습니다. </Header>
            </HeaderBox>
-      <Category>
-          <Item>
-            <Image src={image1} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image2} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image3} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image4} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image5} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image10} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image7} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image8} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image9} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image6} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image11} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image12} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image13} active={true}/>
-          </Item>
-          <Item>
-            <Image src={image14} active={true}/>
-          </Item>
-          {/*<FooterBox>
-                    <ButtonBox>
-                <Button
-                id={'request'}
-                backgroundColor={WHITE + "00"}
-                borderColor={WHITE}
-                onClick={() => Router.push("/request")}
-                padding= {0}
-                >
-                <Text.FontSize24 id={'request_text'} color={WHITE} fontWeight={500} borderRadius={0}>
-                    무료로 업체 정보 받기
-                </Text.FontSize24>
-                </Button>
-            </ButtonBox>
-            </FooterBox>*/}
-      </Category>
+          <Category>
+              <Item>
+                <Image src={image1} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image2} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image3} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image4} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image5} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image10} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image7} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image8} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image9} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image6} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image11} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image12} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image13} active={true}/>
+              </Item>
+              <Item>
+                <Image src={image14} active={true}/>
+              </Item>
+
+
+              {/*<FooterBox>
+                        <ButtonBox>
+                    <Button
+                    id={'request'}
+                    backgroundColor={WHITE + "00"}
+                    borderColor={WHITE}
+                    onClick={() => Router.push("/request")}
+                    padding= {0}
+                    >
+                    <Text.FontSize24 id={'request_text'} color={WHITE} fontWeight={500} borderRadius={0}>
+                        무료로 업체 정보 받기
+                    </Text.FontSize24>
+                    </Button>
+                </ButtonBox>
+                </FooterBox>*/}
+          </Category>
       </Banner>
     )
   }

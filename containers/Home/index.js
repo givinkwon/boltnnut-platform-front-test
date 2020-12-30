@@ -2,21 +2,19 @@ import React from 'react'
 import styled, {css} from 'styled-components'
 
 import Banner0Container from './Banner0'
-import Banner1Container from './Banner1'
+import Banner1Conatiner from './Banner1'
 import Banner2Container from './Banner2'
 import Banner3Container from './Banner3'
 import Banner4Container from './Banner4'
+import Banner5Container from './Banner5'
+import Banner7Container from './Banner7'
+import Banner8Container from './Banner8'
 import CategoryConatiner from './Category'
 import FindExperctConatiner from './FindExpert'
 import ContentGroupConatiner from './ContentGroup'
-import MagazineContainer from './Magazine'
+import MagazineConatiner from './Magazine'
 import LogoConatiner from './logo'
 import HomeRequestContainer from './Request';
-import NewBanner1Container from './NewBanner1';
-import NewBanner2Container from './NewBanner2';
-import NewBanner3Container from './NewBanner3';
-import NewBanner4Container from './NewBanner4';
-import NewBanner5Container from './NewBanner5';
 import ReviewBanner from './ReviewerBanner';
 
 import { inject, observer } from "mobx-react";
@@ -50,10 +48,7 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <Banner0Container/>
-              <Banner1Container width={width}/>
-              <MagazineContainer/>
-              <NewBanner5Container/>
-              <NewBanner4Container/>
+              <Banner1Conatiner/>
               <ReviewBanner/>
               <LogoConatiner/>
             </CustomContainer>
@@ -61,16 +56,14 @@ class HomeConatiner extends React.Component {
         ) : (
           <div style={{overflow:'hidden'}}>
             <Banner0Container/>
-            <Banner1Container/>
+            <Banner1Conatiner/>
             <Banner2Container/>
             <Banner3Container/>
             <Banner4Container/>
+            <Banner5Container/>
             <Banner6Container/>
-            {width > 768 && <MagazineContainer/>}
-            <NewBanner5Container/>
-            <NewBanner4Container/>
-            <ReviewBanner/>
-            <LogoConatiner/>
+            <Banner7Container/>
+            <Banner8Container/>
           </div>
         )
         } </>
