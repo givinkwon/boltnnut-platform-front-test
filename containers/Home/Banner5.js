@@ -7,6 +7,7 @@ import StarRatingComponent from 'react-star-rating-component';
 import ReviewCard from 'components/Review';
 import ReviewCard2 from 'components/Review';
 import * as Content from 'components/Content';
+import Fade from 'react-reveal/Fade';
 
 const MANU = "/static/images/Home/Banner5/Manu.png";
 const TAJO = "/static/images/Home/Banner5/TAJO.png";
@@ -39,41 +40,43 @@ class Banner5Container extends React.Component {
     return (
         <Background>
             <Containerv1 style={{display: 'inline-flex', alignItems: 'center', paddingTop: 150, paddingBottom: 210,flexDirection: 'column'}}>
+              <Fade bottom>
                 <Header>
-                    클라이언트분들께<br/>
-                    검증된 <span class="bold">볼트앤너트</span>를 만나보세요
+                  클라이언트분들께<br/>
+                  검증된 <span class="bold">볼트앤너트</span>를 만나보세요
                 </Header>
                 <RatingBox>
-                    <StarTitle>
-                        클라이언트 평균 만족도
-                    </StarTitle>
-                    <div style={{paddingTop: 24, display: 'inline-flex'}}>
-                        <MyStarRatingComponent 
-                            name="rate1"
-                            starCount={5}
-                            starColor={"#0a2165"}
-                            value={5}
-                        />
-                        <Rate>
-                            4.8 <span class="slash"> / </span> <span class="total"> 5.0 </span>
-                        </Rate>
-                    </div>
+                  <StarTitle>
+                    클라이언트 평균 만족도
+                  </StarTitle>
+                  <div style={{paddingTop: 24, display: 'inline-flex'}}>
+                    <MyStarRatingComponent
+                      name="rate1"
+                      starCount={5}
+                      starColor={"#0a2165"}
+                      value={5}
+                    />
+                    <Rate>
+                      4.8 <span class="slash"> / </span> <span class="total"> 5.0 </span>
+                    </Rate>
+                  </div>
                 </RatingBox>
                 <div style={{display: 'inline-flex', width: "100%", justifyContent: 'space-between'}}>
-                    <div>
-                        <ReviewCard2 item = {item3} big={true}/>
-                    </div>
-                    <div>
-                        <ReviewCard item = {item1}/>
-                        <div style={{marginTop: 28}} />
-                        <ReviewCard item = {item2}/>
-                    </div>
-                    <div>
-                        <ReviewCard item = {item2}/>
-                        <div style={{marginTop: 28}} />
-                        <ReviewCard item = {item1}/>
-                    </div>
+                  <div>
+                    <ReviewCard2 item = {item3} big={true}/>
+                  </div>
+                  <div>
+                    <ReviewCard item = {item1}/>
+                    <div style={{marginTop: 28}} />
+                    <ReviewCard item = {item2}/>
+                  </div>
+                  <div>
+                    <ReviewCard item = {item2}/>
+                    <div style={{marginTop: 28}} />
+                    <ReviewCard item = {item1}/>
+                  </div>
                 </div>
+              </Fade>
             </Containerv1>
         </Background>
     );
