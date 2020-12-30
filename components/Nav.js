@@ -5,6 +5,7 @@ import { withRouter } from 'next/router'
 import Router from "next/router";
 // components
 import * as Text from "./Text";
+import Containerv1 from "components/Containerv1";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 
@@ -113,7 +114,7 @@ class Nav extends React.Component {
 
     return (
       <NavBox>
-        <Container>
+        <Containerv1 style={{display: "inline", justifyContent: "space-between"}}>
           <NavWrap>
             <Logo src={logo_ic} onClick={() => Router.push("/")} />
             <Menu is_open={is_open}>
@@ -311,7 +312,7 @@ class Nav extends React.Component {
               <BG onClick={() => this.setState({ is_open: false })} />
             )}
           </NavWrap>
-        </Container>
+        </Containerv1>
       </NavBox>
     );
   }
@@ -346,10 +347,6 @@ const Container = styled.div`
   margin-right: 0% !important;
   margin-left: 0% !important;
   width: 100%;
-
-
-
-
 `
 const Avatar = styled.img`
   width: 32px;
@@ -363,13 +360,13 @@ const NavBox = styled.div`
   width: 100%;
   background-color: ${WHITE};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  justify-content: center;
 `;
 const NavWrap = styled.div`
   display: flex;
   align-items: center;
   height: 70px;
-  padding-left: 7%;
-  padding-right: 7%;
 `;
 const Logo = styled.img`
   cursor: pointer;
