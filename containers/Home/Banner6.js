@@ -18,7 +18,7 @@ class Banner6Container extends React.Component {
   buttonClick = (e) => {
     const newPage = e.target.innerText*1;
     this.setState({...this.state, current: newPage-1, progress: newPage*100-100});
-    this.slider.slickGoTo(newPage-1)
+    this.slider.slickGoTo(newPage-1);
   }
   sliderNext = () => {
     const {current, progress} = this.state;
@@ -34,7 +34,6 @@ class Banner6Container extends React.Component {
   }
   sliderPrev = () => {
     const {current, progress} = this.state;
-    console.log(current);
     if (current != 0) {
       const newPage = current - 1;
       if (progress > 0) {
@@ -45,6 +44,7 @@ class Banner6Container extends React.Component {
     }
   }
   render() {
+    const { current, show } = this.state;
     const left = 'static/images/Home/Banner6/prev.png';
     const right = 'static/images/Home/Banner6/next.png';
     console.log(this.state.progress);
@@ -94,7 +94,15 @@ class Banner6Container extends React.Component {
             볼트 앤 너트 검증 서비스를 통해, <br/>검증된 제품 전문가를 만나보세요.
           </Header>
           <ContainerBanner6>
-            <div><img src={left} onClick= {this.sliderPrev}/></div>
+            <div>
+          {
+            current == 0 ? (
+              <img src={left} onClick = {this.sliderPrev} style={{opacity: 0.3, visibility: this.state.show}}/>
+            ) : (
+              <img src={left} onClick = {this.sliderPrev} style={{visibility: this.state.show}}/>
+            )
+          }
+            </div>
             <SliderWraper>
               <Slider {...settings} ref={slider => (this.slider = slider)}>
                 <SliderMain item={ item1 } imgSrc={left}/>
@@ -102,7 +110,16 @@ class Banner6Container extends React.Component {
                 <SliderMain item={ item3 } imgSrc={left}/>
               </Slider>
             </SliderWraper>
-            <div><img src={right} onClick= {this.sliderNext}/></div>
+            <div>
+          {
+            current == 2 ? (
+              <img src={right} onClick = {this.sliderNext} style={{opacity: 0.3, visibility: this.state.show}}/>
+            ) : (
+              <img src={right} onClick = {this.sliderNext} style={{visibility: this.state.show}}/>
+            )
+          }
+            </div>
+
           </ContainerBanner6>
           <ItemBox>
             <SubContainer>
