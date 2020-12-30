@@ -19,6 +19,7 @@ import HomeRequestContainer from './Request';
 import ReviewBanner from './ReviewerBanner';
 
 import { inject, observer } from "mobx-react";
+import Banner6Container from './Banner6';
 
 @inject('Home')
 @observer
@@ -43,17 +44,17 @@ class HomeConatiner extends React.Component {
   render() {
     const { width, reqList } = this.props;
     return (
-    <>
-      { width < 360 ? (
       <>
-        <CustomContainer>
-          <Banner0Container/>
-          <Banner1Conatiner/>
-          <ReviewBanner/>
-          <LogoConatiner/>
-        </CustomContainer>
-      </>
-          ) : (
+        { width < 360 ? (
+          <>
+            <CustomContainer>
+              <Banner0Container/>
+              <Banner1Conatiner/>
+              <ReviewBanner/>
+              <LogoConatiner/>
+            </CustomContainer>
+          </>
+        ) : (
           <div style={{overflow:'hidden'}}>
             <Banner0Container/>
             <Banner1Conatiner/>
@@ -61,14 +62,15 @@ class HomeConatiner extends React.Component {
             <Banner3Container/>
             <Banner4Container/>
             <Banner5Container/>
+            <Banner6Container/>
             <Banner7Container/>
             <Banner8Container/>
             <MagazineConatiner/>
           </div>
-          )
-          } </>
-      )
-}
+        )
+        } </>
+    )
+  }
 }
 
 export default HomeConatiner
@@ -78,4 +80,3 @@ const CustomContainer = styled.div`
   overflow: hidden;
   margin-top: 2px;
 `
-
