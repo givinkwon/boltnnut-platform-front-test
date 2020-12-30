@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
+import Slider from "react-slick"
 
 const image1 = "/static/images/logo/logo_1.png";
 const image2 = "/static/images/logo/logo_2.png";
@@ -34,9 +35,18 @@ const image27 = "/static/images/logo/logo_27.png";
 const image28 = "/static/images/logo/logo_28.png";
 const image29 = "/static/images/logo/logo_29.png";
 
+const item1="/static/images/Home/Banner7/Banner7_img1.png";
 
 class Banner7Container extends React.Component {
     render() {
+        const SlideSettings = {
+            dots: false,
+            infinite: false,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            draggable:true
+          };
         return (
             <Background>
                 <Containerv1 style={{paddingBottom: 141, paddingTop: 140, justifyContent: 'space-between',flexDirection:'column'}}>
@@ -44,7 +54,8 @@ class Banner7Container extends React.Component {
                         이미 <p>2,000여명</p>이 넘는 클라이언트분들이<br/>
                         볼트앤너트를 이용하셨습니다.
                     </Header>
-                    <ItemBox>
+                    <>
+                    {/* <ItemBox>  
                         <Item>
                             <img src={image1}/>
                         </Item>
@@ -129,7 +140,15 @@ class Banner7Container extends React.Component {
                         <Item>
                             <img src={image29}/>
                         </Item>
-                    </ItemBox>
+                    </ItemBox> */}
+                    </>
+                    <div style={{paddingTop:80}}>
+                        <Slider {...SlideSettings}>
+                            <ImgBox>
+                                <img src={item1}/>
+                            </ImgBox>
+                        </Slider>
+                    </div>
                 </Containerv1>
             </Background>
         );
@@ -161,6 +180,7 @@ const ItemBox = styled.div`
 `
 
 const Item = styled.div`
+
   // display: flex;
   // flex-direction: column;
   // align-items: center;
@@ -177,4 +197,10 @@ const Item = styled.div`
     overflow: hidden;
     cursor: pointer;
   }
+`
+
+const ImgBox=styled.div`
+    :focus {
+        outline: none;
+    }
 `
