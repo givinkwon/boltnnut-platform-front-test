@@ -17,8 +17,7 @@ class Banner6Container extends React.Component {
   }
   buttonClick = (e) => {
     const newPage = e.target.innerText*1;
-    this.setState({...this.state, current: newPage-1});
-    this.setState({...this.state, progress: newPage*100-100});
+    this.setState({...this.state, current: newPage-1, progress: newPage*100-100});
     this.slider.slickGoTo(newPage-1)
   }
   sliderNext = () => {
