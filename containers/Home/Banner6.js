@@ -17,9 +17,8 @@ class Banner6Container extends React.Component {
   }
   buttonClick = (e) => {
     const newPage = e.target.innerText*1;
-    this.setState({...this.state, current: newPage-1});
-    this.setState({...this.state, progress: newPage*100-100});
-    this.slider.slickGoTo(newPage-1)
+    this.setState({...this.state, current: newPage-1, progress: newPage*100-100});
+    this.slider.slickGoTo(newPage-1);
   }
   sliderNext = () => {
     const {current, progress} = this.state;
@@ -35,7 +34,6 @@ class Banner6Container extends React.Component {
   }
   sliderPrev = () => {
     const {current, progress} = this.state;
-    console.log(current);
     if (current != 0) {
       const newPage = current - 1;
       if (progress > 0) {
