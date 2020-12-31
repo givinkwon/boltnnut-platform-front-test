@@ -6,6 +6,7 @@ import * as Title from "components/Title";
 import Slider from 'react-slick';
 // import SliderWrapper from "./SliderStyle";
 import SliderMain from './SliderContent';
+import Fade from 'react-reveal/Fade';
 
 class Banner6Container extends React.Component {
   state = {
@@ -18,7 +19,7 @@ class Banner6Container extends React.Component {
   buttonClick = (e) => {
     const newPage = e.target.innerText*1;
     this.setState({...this.state, current: newPage-1, progress: newPage*100-100});
-    this.slider.slickGoTo(newPage-1)
+    this.slider.slickGoTo(newPage-1);
   }
   sliderNext = () => {
     const {current, progress} = this.state;
@@ -34,7 +35,6 @@ class Banner6Container extends React.Component {
   }
   sliderPrev = () => {
     const {current, progress} = this.state;
-    console.log(current);
     if (current != 0) {
       const newPage = current - 1;
       if (progress > 0) {
@@ -45,6 +45,7 @@ class Banner6Container extends React.Component {
     }
   }
   render() {
+    const { current, show } = this.state;
     const left = 'static/images/Home/Banner6/prev.png';
     const right = 'static/images/Home/Banner6/next.png';
     console.log(this.state.progress);
@@ -90,63 +91,81 @@ class Banner6Container extends React.Component {
     return (
       <Background backgroundColor= {"#a4aab4"}>
         <CustomContainer>
-          <Header>
-            볼트 앤 너트 검증 서비스를 통해, <br/>검증된 제품 전문가를 만나보세요.
-          </Header>
-          <ContainerBanner6>
-            <div><img src={left} onClick= {this.sliderPrev}/></div>
-            <SliderWraper>
-              <Slider {...settings} ref={slider => (this.slider = slider)}>
-                <SliderMain item={ item1 } imgSrc={left}/>
-                <SliderMain item={ item2 } imgSrc={left}/>
-                <SliderMain item={ item3 } imgSrc={left}/>
-              </Slider>
-            </SliderWraper>
-            <div><img src={right} onClick= {this.sliderNext}/></div>
-          </ContainerBanner6>
-          <ItemBox>
-            <SubContainer>
-              <TableCellContainer>
-                <ContentBox>
-                  <TableCellContainer>
-                    <Circle onClick= {this.buttonClick} value= {1} backgroundColor={"#0933b3"}>
+          <Fade bottom>
+            <Header>
+              볼트 앤 너트 검증 서비스를 통해, <br/>검증된 제품 전문가를 만나보세요.
+            </Header>
+            <ContainerBanner6>
+              <div>
+                {
+                  current == 0 ? (
+                    <img src={left} onClick = {this.sliderPrev} style={{opacity: 0.3, visibility: this.state.show}}/>
+                  ) : (
+                    <img src={left} onClick = {this.sliderPrev} style={{visibility: this.state.show}}/>
+                  )
+                }
+              </div>
+              <SliderWraper>
+                <Slider {...settings} ref={slider => (this.slider = slider)}>
+                  <SliderMain item={ item1 } imgSrc={left}/>
+                  <SliderMain item={ item2 } imgSrc={left}/>
+                  <SliderMain item={ item3 } imgSrc={left}/>
+                </Slider>
+              </SliderWraper>
+              <div>
+                {
+                  current == 2 ? (
+                    <img src={right} onClick = {this.sliderNext} style={{opacity: 0.3, visibility: this.state.show}}/>
+                  ) : (
+                    <img src={right} onClick = {this.sliderNext} style={{visibility: this.state.show}}/>
+                  )
+                }
+              </div>
+            </ContainerBanner6>
+            <ItemBox>
+              <SubContainer>
+                <TableCellContainer>
+                  <ContentBox>
+                    <TableCellContainer>
+                      <Circle onClick= {this.buttonClick} value= {1} backgroundColor={"#0933b3"}>
                       <span>
                         <CircleFont>1</CircleFont>
                       </span>
-                    </Circle>
-                  </TableCellContainer>
-                </ContentBox>
-                <ContentBox>
-                  <TableCellContainer>
-                    <Circle onClick= {this.buttonClick} value= {2} backgroundColor={ circleColor }>
+                      </Circle>
+                    </TableCellContainer>
+                  </ContentBox>
+                  <ContentBox>
+                    <TableCellContainer>
+                      <Circle onClick= {this.buttonClick} value= {2} backgroundColor={ circleColor }>
                       <span>
                         <CircleFont>2</CircleFont>
                       </span>
-                    </Circle>
-                  </TableCellContainer>
-                </ContentBox>
-                <ContentBox width={'0px'}>
-                  <TableCellContainer>
-                    <Circle onClick= {this.buttonClick} value= {3} backgroundColor={ circleColor2 }>
+                      </Circle>
+                    </TableCellContainer>
+                  </ContentBox>
+                  <ContentBox width={'0px'}>
+                    <TableCellContainer>
+                      <Circle onClick= {this.buttonClick} value= {3} backgroundColor={ circleColor2 }>
                       <span>
                         <CircleFont>3</CircleFont>
                       </span>
-                    </Circle>
-                  </TableCellContainer>
-                </ContentBox>
-              </TableCellContainer>
-            </SubContainer>
-            <SubContainer>
-              <TableCellContainer>
-                <Line>
-                  <LineProgress progressWidth={ progress }/>
-                </Line>
-                <Line>
-                  <LineProgress progressWidth={ progress2 }/>
-                </Line>
-              </TableCellContainer>
-            </SubContainer>
-          </ItemBox>
+                      </Circle>
+                    </TableCellContainer>
+                  </ContentBox>
+                </TableCellContainer>
+              </SubContainer>
+              <SubContainer>
+                <TableCellContainer>
+                  <Line>
+                    <LineProgress progressWidth={ progress }/>
+                  </Line>
+                  <Line>
+                    <LineProgress progressWidth={ progress2 }/>
+                  </Line>
+                </TableCellContainer>
+              </SubContainer>
+            </ItemBox>
+          </Fade>
         </CustomContainer>
       </Background>
     );

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
+import Fade from 'react-reveal/Fade';
 
 const image1 = "/static/images/Home/Banner3/Banner3_img1.png"
 
@@ -11,22 +12,24 @@ class Banner3Container extends React.Component {
     return (
         <Background>
             <Containerv1 style={{paddingBottom: 358, paddingTop: 257, justifyContent: 'space-between'}}>
+              <Fade bottom>
                 <div>
-                    <img src={image1}/>
+                  <img src={image1}/>
                 </div>
                 <div>
-                    <Header>
-                        컨설턴트 중 해당 제품
-                    </Header>
-                    <Middle>
-                        40년 경력의 전문<br/>
-                        컨설턴트 <p>무료 상담</p>
-                    </Middle>
-                    <Body>
-                        컨설턴트 중 해당 제품의 전문가가 배정되어<br/>
-                        무료상담을 통해 최적의 솔루션을 찾아드립니다.
-                    </Body>
+                  <Header>
+                    컨설턴트 중 해당 제품
+                  </Header>
+                  <Middle>
+                    40년 경력의 전문<br/>
+                    컨설턴트 <p>무료 상담</p>
+                  </Middle>
+                  <Body>
+                    컨설턴트 중 해당 제품의 전문가가 배정되어<br/>
+                    무료상담을 통해 최적의 솔루션을 찾아드립니다.
+                  </Body>
                 </div>
+              </Fade>
             </Containerv1>
         </Background>
     );

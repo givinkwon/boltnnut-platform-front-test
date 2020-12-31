@@ -11,54 +11,74 @@ import Background from "components/Background";
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
+import Fade from 'react-reveal/Fade';
+import UseScrollCount from "./UseScrollCount"
 
 //Image
 const background = "static/images/Home/main.jpg";
+
+const CountFunc = ({index}) => 
+{
+    const countItem = {
+      0: UseScrollCount(2000000000,1000000000,0,0,1000000),
+      1: UseScrollCount(300,0,0,0,1),
+      2: UseScrollCount(450,0,0,0,1)
+    };
+  
+    return (
+        <p {...countItem[index]} style={{display:'inline'}}/>
+    );
+};
 
 class Banner0Container extends React.Component {
   render () {
     return (
     <Background src={background}>
       <Containerv1 style={{paddingBottom: 336, paddingTop: 279, justifyContent: 'space-between'}}>
-        <div>
-          <Title.FontSize56 color={WHITE} shadow={"0 3px 6px rgba(0,0,0,0.61);"} fontWeight={"500"} style={{lineHeight: 1.49}}> 
-            내 제품 제작 비용과<br/>
-            전문 제조사를<br/>
-            바로 만나보세요.
-          </Title.FontSize56>
-          <Buttonv1 style={{marginTop: 71}}>
-            지금 무료 가견적 받기
-          </Buttonv1>
-        </div>
-        <Info>
-          <InfoCell> 
-            <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center'}} color={'#ffffff'}>
-              총 프로젝트 금액
-            </Content.FontSize24>
-             <br/>
-            <Content.FontSize32 eng={true} fontWeight={"bold"} color={'#ffffff'}>
-              2,000,000,000 
-            </Content.FontSize32>  
-          </InfoCell>
-          <InfoCell>
-            <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center'}} color={'#ffffff'}>
-              의뢰 프로젝트
-            </Content.FontSize24>
-             <br/>
-            <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
-              300+ 
-            </Content.FontSize32>
-          </InfoCell>
-          <InfoCell> 
-            <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center'}} color={'#ffffff'}>
-              개발 전문업체
-            </Content.FontSize24>
-             <br/>
-            <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
-              450+ 
-            </Content.FontSize32>  
-          </InfoCell>
-        </Info>
+        <Fade bottom>
+          <div>
+            <Title.FontSize56 color={WHITE} shadow={"0 3px 6px rgba(0,0,0,0.61);"} fontWeight={"500"} style={{lineHeight: 1.49}}>
+              내 제품 제작 비용과<br/>
+              전문 제조사를<br/>
+              바로 만나보세요.
+            </Title.FontSize56>
+            <Buttonv1 style={{marginTop: 71}}>
+              지금 무료 가견적 받기
+            </Buttonv1>
+          </div>
+          <Info>
+            <InfoCell>
+              <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center'}} color={'#ffffff'}>
+                총 프로젝트 금액
+              </Content.FontSize24>
+              <br/>
+              <Content.FontSize32 eng={true} fontWeight={"bold"} color={'#ffffff'}>
+                {/* 2,000,000,000 */}
+                <CountFunc index={0}/>
+              </Content.FontSize32>
+            </InfoCell>
+            <InfoCell>
+              <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center'}} color={'#ffffff'}>
+                의뢰 프로젝트
+              </Content.FontSize24>
+              <br/>
+              <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
+                {/* 300+ */}
+                <CountFunc index={1}/>+
+              </Content.FontSize32>
+            </InfoCell>
+            <InfoCell>
+              <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center'}} color={'#ffffff'}>
+                개발 전문업체
+              </Content.FontSize24>
+              <br/>
+              <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
+                {/* 450+ */}
+                <CountFunc index={2}/>+
+              </Content.FontSize32>
+            </InfoCell>
+          </Info>
+        </Fade>
       </Containerv1>
     </Background>
     );

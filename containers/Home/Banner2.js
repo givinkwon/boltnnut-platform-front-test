@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Background from "../../components/Background";
 import Containerv1 from "../../components/Containerv1";
 import * as Title from "../../components/Title";
+import Fade from 'react-reveal/Fade';
 
 
 const image1 = "/static/images/Home/Banner2/image1.png"
@@ -12,22 +13,24 @@ class Banner2Container extends React.Component {
         return (
             <Background backgroundColor = {"#0a2165"}>
                 <Containerv1 style={{paddingBottom: 308, paddingTop: 306, justifyContent: 'space-between'}}>
-                    <div>
-                        <Header>
-                            컨설턴트 중 해당 제품
-                        </Header>
-                        <Middle>
-                            5000여개의 제조사 중 <br/>
-                            딱 맞는 전문가를 매칭
-                        </Middle>
-                        <Body>
-                            200여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
-                            알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
-                        </Body>
-                    </div>
-                    <div>
-                        <img src={image1} style={{width:588,height:392}}/>
-                    </div>
+                    <Fade bottom>
+                        <div>
+                            <Header>
+                                컨설턴트 중 해당 제품
+                            </Header>
+                            <Middle>
+                                5000여개의 제조사 중 <br/>
+                                딱 맞는 전문가를 매칭
+                            </Middle>
+                            <Body>
+                                200여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
+                                알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
+                            </Body>
+                        </div>
+                        <div>
+                            <img src={image1} style={{width:588,height:392}}/>
+                        </div>
+                    </Fade>
                 </Containerv1>
             </Background>
 
