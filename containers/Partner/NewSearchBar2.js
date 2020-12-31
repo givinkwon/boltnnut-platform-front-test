@@ -444,6 +444,7 @@ class SearchBarContainer2 extends React.Component {
     const req = {
       data: formData,
     };
+    console.log(req)
     RequestAPI.create(req)
       .then((res) => {
         console.log("create: ", res);
