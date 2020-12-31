@@ -362,6 +362,7 @@ class SearchBarContainer2 extends React.Component {
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
+  
   CustomSliderThumbComponent (props) {
   return (
     <div {...props}>
