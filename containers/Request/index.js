@@ -19,32 +19,15 @@ import AnimationCount from 'react-count-animation';
 @inject('Partner','Request')
 @observer
 class RequestConatiner extends React.Component {
-  state = {
-    step2: false,
-    complete: false,
-  }
 
   async componentDidMount () {
     await this.props.Partner.init(); // 제품 분야 불러오기 위함
-
   }
 
   render () {
-    const { Request } = this.props
-    const { step2 } = this.state;
-
     return (
-      <div style={{overflow: 'hidden'}}>
-        {Request.step === 0 && (<BannerContainer step2 = {true}/>)}
-        {Request.step === 0 &&
-        <>
-        <SearchBarContainer2
-          is_request={true}/>
-        </>
-        }
-        {Request.step === 1 && <CompleteBannerContainer/>}
-      </div>
-    )
+
+    );
   }
 }
 

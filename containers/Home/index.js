@@ -33,6 +33,7 @@ class HomeConatiner extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+    console.log(this.props.width)
   };
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
@@ -42,7 +43,7 @@ class HomeConatiner extends React.Component {
   };
   render() {
     const { width, reqList } = this.props;
-    console.log(document.documentElement.clientHeight);
+    //console.log(document.documentElement.clientHeight);
     return (
       <>
         { width < 360 ? (
