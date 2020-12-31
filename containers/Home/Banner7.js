@@ -4,6 +4,7 @@ import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
 import Slider from "react-slick"
+import UseScrollCount from "./UseScrollCount"
 
 const image1 = "/static/images/logo/logo_1.png";
 const image2 = "/static/images/logo/logo_2.png";
@@ -37,6 +38,16 @@ const image29 = "/static/images/logo/logo_29.png";
 
 const item1="/static/images/Home/Banner7/Banner7_img1.png";
 
+const CountFunc = () => {
+    const countItem = {
+      0: UseScrollCount(2000,0,1)
+    };
+  
+    return (
+        <p {...countItem[0]}/>
+    );
+  };
+
 class Banner7Container extends React.Component {
     render() {
         const SlideSettings = {
@@ -51,7 +62,7 @@ class Banner7Container extends React.Component {
             <Background>
                 <Containerv1 style={{paddingBottom: 141, paddingTop: 140, justifyContent: 'space-between',flexDirection:'column'}}>
                     <Header>
-                        이미 <p>2,000여명</p>이 넘는 클라이언트분들이<br/>
+                        이미 <CountFunc/><p>명</p>이 넘는 클라이언트분들이<br/>
                         볼트앤너트를 이용하셨습니다.
                     </Header>
                     <>
