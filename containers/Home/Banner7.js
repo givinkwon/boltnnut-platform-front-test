@@ -4,7 +4,7 @@ import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
 import Slider from "react-slick"
-
+import Fade from "react-reveal/Fade"
 const image1 = "/static/images/logo/logo_1.png";
 const image2 = "/static/images/logo/logo_2.png";
 const image3 = "/static/images/logo/logo_3.png";
@@ -38,24 +38,25 @@ const image29 = "/static/images/logo/logo_29.png";
 const item1="/static/images/Home/Banner7/Banner7_img1.png";
 
 class Banner7Container extends React.Component {
-    render() {
-        const SlideSettings = {
-            dots: false,
-            infinite: false,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            draggable:true
-          };
-        return (
-            <Background>
-                <Containerv1 style={{paddingBottom: 141, paddingTop: 140, justifyContent: 'space-between',flexDirection:'column'}}>
-                    <Header>
-                        이미 <p>2,000여명</p>이 넘는 클라이언트분들이<br/>
-                        볼트앤너트를 이용하셨습니다.
-                    </Header>
-                    <>
-                    {/* <ItemBox>  
+  render() {
+    const SlideSettings = {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      draggable:true
+    };
+    return (
+      <Background>
+        <Containerv1 style={{paddingBottom: 141, paddingTop: 140, justifyContent: 'space-between',flexDirection:'column'}}>
+          <Fade bottom>
+            <Header>
+              이미 <p>2,000여명</p>이 넘는 클라이언트분들이<br/>
+              볼트앤너트를 이용하셨습니다.
+            </Header>
+            <>
+              {/* <ItemBox>
                         <Item>
                             <img src={image1}/>
                         </Item>
@@ -141,18 +142,20 @@ class Banner7Container extends React.Component {
                             <img src={image29}/>
                         </Item>
                     </ItemBox> */}
-                    </>
-                    <div style={{paddingTop:80}}>
-                        <Slider {...SlideSettings}>
-                            <ImgBox>
-                                <img src={item1}/>
-                            </ImgBox>
-                        </Slider>
-                    </div>
-                </Containerv1>
-            </Background>
-        );
-    }
+            </>
+            <div style={{paddingTop:80}}>
+              <Slider {...SlideSettings}>
+                <ImgBox>
+                  <img src={item1}/>
+                </ImgBox>
+              </Slider>
+            </div>
+          </Fade>
+
+        </Containerv1>
+      </Background>
+    );
+  }
 }
 
 export default Banner7Container;
@@ -180,11 +183,9 @@ const ItemBox = styled.div`
 `
 
 const Item = styled.div`
-
   // display: flex;
   // flex-direction: column;
   // align-items: center;
-
   width: calc(14% - 40px);
   padding: 20px 0;
   margin: 0 20px;
