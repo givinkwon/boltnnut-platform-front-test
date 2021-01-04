@@ -72,12 +72,12 @@ class Banner6Container extends React.Component {
     const item2 = {
       headContent: "Step 2",
       mainContent: "파트너 실사",
-      footContent: "볼트앤너트 시니어 컨설턴트가 제출받은 \n검토 자료를 기반으로 6종의 정량 평가를 실시하여\n 협업 및 소통능력을 검증합니다."
+      footContent: "볼트앤너트 시니어 컨설턴트가 제출받은 \n검토 자료를 기반으로 6종의 정량 평가를\n 실시하여 협업 및 소통능력을 검증합니다."
     };
     const item3 = {
       headContent: "Step 3",
       mainContent: "프로젝트 상세 검증",
-      footContent: "볼트앤너트 측에서 테스트 프로젝트 발주를 \n통해 제조사의 품질과 납기를 검증하고\n 볼트앤너트 프로젝트 프로세스를 교육합니다."
+      footContent: "볼트앤너트 측에서 테스트 프로젝트 발주를 \n통해 제조사의 품질과 납기를 검증하고\n 볼트앤너트 프로세스를 교육합니다."
     };
     const settings = {
       dots: false,
