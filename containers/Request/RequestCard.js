@@ -22,13 +22,10 @@ class RequestCardContainer extends Component {
   }
 
 handleChange = (event, newValue) => {
-  console.log(newValue)
   this.setState({percentage: newValue})
 }
 CustomSliderThumbComponent = (props) => {
   const {percentage} = this.state;
-  console.log(props)
-  console.log(percentage)
     return (
       <div {...props}>
         <img src={ThumbImage} />
