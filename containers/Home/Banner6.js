@@ -107,9 +107,9 @@ class Banner6Container extends React.Component {
               </div>
               <SliderWraper>
                 <Slider {...settings} ref={slider => (this.slider = slider)}>
-                  <SliderMain item={ item1 } imgSrc={left}/>
-                  <SliderMain item={ item2 } imgSrc={left}/>
-                  <SliderMain item={ item3 } imgSrc={left}/>
+                  <SliderMain item={ item1 }/>
+                  <SliderMain item={ item2 }/>
+                  <SliderMain item={ item3 }/>
                 </Slider>
               </SliderWraper>
               <div>

@@ -4,7 +4,9 @@ import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
 import Slider from "react-slick"
+import UseScrollCount from "./UseScrollCount"
 import Fade from "react-reveal/Fade"
+
 const image1 = "/static/images/logo/logo_1.png";
 const image2 = "/static/images/logo/logo_2.png";
 const image3 = "/static/images/logo/logo_3.png";
@@ -37,6 +39,17 @@ const image29 = "/static/images/logo/logo_29.png";
 
 const item1="/static/images/Home/Banner7/Banner7_img1.png";
 
+const CountFunc = ({index}) => 
+{
+    const countItem = {
+      0: UseScrollCount(2000,0,0,0,3)
+    };
+  
+    return (
+        <p {...countItem[index]}/>
+    );
+};
+
 class Banner7Container extends React.Component {
   render() {
     const SlideSettings = {
@@ -52,7 +65,7 @@ class Banner7Container extends React.Component {
         <Containerv1 style={{paddingBottom: 141, paddingTop: 140, justifyContent: 'space-between',flexDirection:'column'}}>
           <Fade bottom>
             <Header>
-              이미 <p>2,000여명</p>이 넘는 클라이언트분들이<br/>
+              이미 <CountFunc index={0}/><p>명</p>이 넘는 클라이언트분들이<br/>
               볼트앤너트를 이용하셨습니다.
             </Header>
             <>
@@ -148,6 +161,15 @@ class Banner7Container extends React.Component {
                 <ImgBox>
                   <img src={item1}/>
                 </ImgBox>
+                <ImgBox>
+                  <img src={item1}/>
+                </ImgBox>
+                <ImgBox>
+                  <img src={item1}/>
+                </ImgBox>
+                <ImgBox>
+                  <img src={item1}/>
+                </ImgBox>     
               </Slider>
             </div>
           </Fade>

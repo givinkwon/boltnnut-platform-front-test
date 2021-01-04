@@ -169,8 +169,6 @@ class ContentConatiner extends React.Component {
   CategoryCircle = () => {
     const { Partner } = this.props;
     const { category_list, category_idx, width } = this.state;
-    //console.log(category_list.indexOf("디자인"))
-    //console.log(category_list.splice(0, 1))
     const handleChange = async (e) => {
       if (category_list[category_idx.indexOf(e.target.innerText)][1] == "inactive") {
         const temp_list = category_list;
