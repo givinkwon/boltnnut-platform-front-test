@@ -16,8 +16,6 @@ const person = "/static/images/Home/Banner5/person.png";
 class ReviewCard extends Component {
     render() {
         const {item, big} = this.props;
-
-        console.log(this.props);
         if (item && !big) {
         return (
             <Card>
