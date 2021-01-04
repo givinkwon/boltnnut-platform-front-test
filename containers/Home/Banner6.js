@@ -7,6 +7,10 @@ import Slider from 'react-slick';
 // import SliderWrapper from "./SliderStyle";
 import SliderMain from './SliderContent';
 import Fade from 'react-reveal/Fade';
+const pic = 'static/images/Home/Banner6/pic.png';
+const pic2 = 'static/images/Home/Banner6/pic2.jpg';
+const pic3 = 'static/images/Home/Banner6/pic3.jpg';
+
 
 class Banner6Container extends React.Component {
   state = {
@@ -16,6 +20,7 @@ class Banner6Container extends React.Component {
     show: 'visible',
     progress: 0,
   }
+
   buttonClick = (e) => {
     const newPage = e.target.innerText*1;
     this.setState({...this.state, current: newPage-1, progress: newPage*100-100});
@@ -107,9 +112,9 @@ class Banner6Container extends React.Component {
               </div>
               <SliderWraper>
                 <Slider {...settings} ref={slider => (this.slider = slider)}>
-                  <SliderMain item={ item1 } imgSrc={left}/>
-                  <SliderMain item={ item2 } imgSrc={left}/>
-                  <SliderMain item={ item3 } imgSrc={left}/>
+                  <SliderMain item={ item1 } src={ pic }/>
+                  <SliderMain item={ item2 } src={ pic2 }/>
+                  <SliderMain item={ item3 } src={ pic3 }/>
                 </Slider>
               </SliderWraper>
               <div>
@@ -175,7 +180,7 @@ class Banner6Container extends React.Component {
 export default Banner6Container;
 
 const SliderWraper = styled.div`
-  width: 1090px;
+  width: 1140px;
   height: 669px;
 `
 const CustomContainer = styled(Containerv1)`
