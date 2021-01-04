@@ -8,25 +8,45 @@ class LogoSlider extends React.Component {
     const settings = {
       dots: false,
       infinite: true,
-      speed: 500,
       slidesToShow: 5,
-      slidesToScroll: 2
+      slidesToScroll: 1,
+      initialSlide: 0,
+      draggable: false,
+      swipe: false,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      arrows: false,
     };
     return (
-      <Slider {...settings}>
-        <div style={{width:112, height:112}}><img src={ Logo1 }/></div>
-        <div style={{width:112, height:112}}><img src={ Logo1 }/></div>
-        <div style={{width:112, height:112}}><img src={ Logo1 }/></div>
-        <div style={{width:112, height:112}}><img src={ Logo1 }/></div>
-        <div style={{width:112, height:112}}><img src={ Logo1 }/></div>
-        <div style={{width:112, height:112}}><img src={ Logo1 }/></div>
-        <div style={{width:112, height:112}}><img src={ Logo1 }/></div>
-        <div style={{width:112, height:112}}><img src={ Logo1 }/></div>
-        <div style={{width:112, height:112}}><img src={ Logo1 }/></div>
-        <div style={{width:112, height:112}}><img src={ Logo1 }/></div>
-      </Slider>
+      <SliderWraper>
+        <Slider {...settings}>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          <ImgContainer><img src={ Logo1 }/></ImgContainer>
+        </Slider>
+      </SliderWraper>
     )
   }
 }
-
+const SliderWraper = styled.div`
+  width: 730px;
+  height: 112px;
+  margin: 10px 83px 30px 83px;
+`
+const ImgContainer = styled.div`
+  width: 112px;
+  height: 112px;
+  > img {
+    margin: 0px 17px;
+  }
+`
 export default LogoSlider;
+

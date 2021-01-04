@@ -15,6 +15,7 @@ import Slider from '@material-ui/core/Slider';
 
 // Components
 import * as Content from "components/Content";
+import * as Title from "components/Title";
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 
@@ -55,6 +56,11 @@ CustomSliderThumbComponent = (props) => {
               onChange={this.handleChange}
             />
             <LogoSlider/>
+            <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
+            <ButtonContainer>
+              <NewButton backgroundColor={ "#ffffff" } color={"#282c36"}>이전</NewButton>
+              <NewButton>다음</NewButton>
+            </ButtonContainer>
           </Card>
         )
     }
@@ -128,4 +134,20 @@ const ThumbText = styled(Content.FontSize18)`
   color: white;
   top: -10px;
   font-weight: bold;
+`
+const MatchingText = styled(Title.FontSize20)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.5px;
+  color: #282c36;
+  margin: 0px 176px;
+`
+const ButtonContainer = styled.div`
+  width: 260px;
+  height: 44px;
+  margin: 90px 317px 50px 317px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `
