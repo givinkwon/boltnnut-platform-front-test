@@ -23,7 +23,7 @@ const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
     const countItem = {
       0: UseScrollCount(1400006740,1000000000,0,0,900000),
-      1: UseScrollCount(projCount*3+997,0,0,0,5),
+      1: UseScrollCount(projCount,0,0,0,5),
       2: UseScrollCount(partnerCount,0,0,0,1)
     };
   

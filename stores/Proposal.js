@@ -359,17 +359,11 @@ class Proposal {
 	@action loadProjects = () =>{
 		ProposalAPI.getMyProject()
 			.then((res) => {
-				this.setProjectsAndRequests(res.data)
+				this.projects_count = res.data.count*3+997
 			})
 			.catch(e => {
+				console.log(e);
 				console.log(e.response)
-        try {
-          alert(e.response.data.message)
-        }
-        catch {
-          console.log(e)
-          console.log(e.response)
-        }
 			})
 	}
 
