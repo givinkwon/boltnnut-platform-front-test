@@ -19,6 +19,7 @@ const UseScrollCount = (end, start = 0, duration = 3000, delay = 0,addAmount=1) 
     ([entry]) => {
       const { current } = element;
       if (entry.isIntersecting) {
+        console.log("ASDASD");
         let currentNumber = start;
         const counter = setInterval(() => {
           currentNumber += addAmount;
@@ -40,7 +41,8 @@ const UseScrollCount = (end, start = 0, duration = 3000, delay = 0,addAmount=1) 
       observer.current.observe(element.current);
     }
 
-    return () => observer && observer.disconnect();
+    // return () => observer && observer.disconnect();
+
   }, [onScroll]);
 
   return {
