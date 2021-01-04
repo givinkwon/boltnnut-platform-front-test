@@ -25,9 +25,9 @@ class Banner1Container extends React.Component {
               </ImageContainer>
             </Image>
             <div>
-              <Head>컨설턴트 중 해당 제품</Head>
+              <Head>자동 견적 알고리즘</Head>
               <Main>1초만에 내 제품<br/>가견적 받기</Main>
-              <Content>평균 48시간의 견적 시간을 450건 의뢰 데이터를<br/>기반으로 클릭 한 번으로 해결해 드립니다.</Content>
+              <Content>2390건의 데이터에 기반한 자동견적 알고리즘이<br/>평균 2일의 견적 시간을 한 번에 해결해 드립니다.</Content>
             </div>
           </Fade>
         </ContentContainer>

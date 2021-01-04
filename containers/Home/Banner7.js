@@ -56,7 +56,7 @@ class Banner7Container extends React.Component {
               볼트앤너트를 이용하셨습니다.
             </Header>
             <>
-              {/* <ItemBox>
+              <ItemBox>
                         <Item>
                             <img src={image1}/>
                         </Item>
@@ -141,15 +141,8 @@ class Banner7Container extends React.Component {
                         <Item>
                             <img src={image29}/>
                         </Item>
-                    </ItemBox> */}
+                    </ItemBox>
             </>
-            <div style={{paddingTop:80}}>
-              <Slider {...SlideSettings}>
-                <ImgBox>
-                  <img src={item1}/>
-                </ImgBox>
-              </Slider>
-            </div>
           </Fade>
 
         </Containerv1>
