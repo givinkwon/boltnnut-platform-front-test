@@ -42,7 +42,7 @@ const item1="/static/images/Home/Banner7/Banner7_img1.png";
 const CountFunc = ({index}) => 
 {
     const countItem = {
-      0: UseScrollCount(2000,0,0,0,3)
+      0: UseScrollCount(878*3,0,0,0,10)
     };
   
     return (

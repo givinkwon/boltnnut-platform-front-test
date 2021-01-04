@@ -22,9 +22,9 @@ const background = "static/images/Home/main.jpg";
 const CountFunc = ({index,projCount=0,partnerCount=0}) => 
 {
     const countItem = {
-      0: UseScrollCount(1400006740,1000000000,0,0,900000),
+      0: UseScrollCount(146740000,1000000000,0,0,900000),
       1: UseScrollCount(projCount*3+997,0,0,0,5),
-      2: UseScrollCount(4933,0,0,0,1)
+      2: UseScrollCount(4933,0,0,0,10)
     };
   
     return (
@@ -77,7 +77,7 @@ class Banner0Container extends React.Component {
               <br/>
               <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
                 {/* 300+ */}
-                <CountFunc index={1} projCount={ProjectCount}/>+
+                <CountFunc index={1} projCount={ProjectCount}/>
               </Content.FontSize32>
             </InfoCell>
             <InfoCell>
