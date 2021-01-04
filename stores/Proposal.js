@@ -127,7 +127,6 @@ class Proposal {
 		this.projects_prev = data.previous
 		this.projects_next = data.next
 		this.projects_count = data.count
-
 		this.projects.forEach(project => {
 			if(project.request_set.length != 0) {
 				this.requests.push(project.request_set[0])
@@ -341,6 +340,24 @@ class Proposal {
 		}
 
 		ProposalAPI.getProject(req)
+			.then((res) => {
+				this.setProjectsAndRequests(res.data)
+			})
+			.catch(e => {
+				console.log(e.response)
+        try {
+          alert(e.response.data.message)
+        }
+        catch {
+          console.log(e)
+          console.log(e.response)
+        }
+			})
+	}
+
+	//프로젝트만 로드
+	@action loadProjects = () =>{
+		ProposalAPI.getMyProject()
 			.then((res) => {
 				this.setProjectsAndRequests(res.data)
 			})
