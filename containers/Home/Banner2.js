@@ -16,14 +16,14 @@ class Banner2Container extends React.Component {
                     <Fade bottom>
                         <div>
                             <Header>
-                                컨설턴트 중 해당 제품
+                                AI 제조사 매칭 알고리즘
                             </Header>
                             <Middle>
                                 5000여개의 제조사 중 <br/>
                                 딱 맞는 전문가를 매칭
                             </Middle>
                             <Body>
-                                200여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
+                                2300여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
                                 알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
                             </Body>
                         </div>

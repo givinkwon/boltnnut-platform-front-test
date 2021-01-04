@@ -67,17 +67,17 @@ class Banner6Container extends React.Component {
     const item1 = {
       headContent: "Step 1",
       mainContent: "파트너 신청",
-      footContent: "회사소개서, 주요기술이력서 등 \n 전문성을 알 수 있는 자료와 프로젝트 \n 가견적 데이터를 통해 합리적 \n 견적 여부를 파악합니다."
+      footContent: "회사소개서, 주요기술이력서 등을 통해 \n 파트너의 전문성을 검토하고, 파트너 검증\n키트를 통해 가격경쟁력을 파악합니다."
     };
     const item2 = {
       headContent: "Step 2",
-      mainContent: "파트너 신청",
-      footContent: "회사소개서, 주요기술이력서 등 \n 전문성을 알 수 있는 자료와 프로젝트 \n 가견적 데이터를 통해 합리적 \n 견적 여부를 파악합니다."
+      mainContent: "파트너 실사",
+      footContent: "볼트앤너트 시니어 컨설턴트가 제출받은 \n검토 자료를 기반으로 6종의 정량 평가를\n 실시하여 협업 및 소통능력을 검증합니다."
     };
     const item3 = {
       headContent: "Step 3",
-      mainContent: "파트너 신청",
-      footContent: "회사소개서, 주요기술이력서 등 \n 전문성을 알 수 있는 자료와 프로젝트 \n 가견적 데이터를 통해 합리적 \n 견적 여부를 파악합니다."
+      mainContent: "프로젝트 상세 검증",
+      footContent: "볼트앤너트 측에서 테스트 프로젝트 발주를 \n통해 제조사의 품질과 납기를 검증하고\n 볼트앤너트 프로세스를 교육합니다."
     };
     const settings = {
       dots: false,
@@ -93,7 +93,7 @@ class Banner6Container extends React.Component {
         <CustomContainer>
           <Fade bottom>
             <Header>
-              볼트 앤 너트 검증 서비스를 통해, <br/>검증된 제품 전문가를 만나보세요.
+              볼트앤너트 3단계 검증 프로세스로 <br/>검증된 제품 전문가를 만나보세요.
             </Header>
             <ContainerBanner6>
               <div>

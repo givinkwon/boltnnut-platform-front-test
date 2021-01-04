@@ -17,11 +17,11 @@ class Banner8Container extends React.Component {
                         <Fade bottom>
                             <div>
                                 <Header>
-                                    이미 2,000여명이 넘는 클라이언트분들이<br/>
-                                    볼트앤너트를 이용하셨습니다.
+                                    내 제품의 제작 비용과 <br/>
+                                    전문 제조사를 바로 만나보세요.
                                 </Header>
                                 <Buttonv1 style={{margin:'0 auto', marginTop: 50}}>
-                                    무료 가견적 받기
+                                    지금 무료 가견적 받기
                                 </Buttonv1>
                             </div>
                         </Fade>

@@ -12,6 +12,8 @@ import Fade from 'react-reveal/Fade';
 const MANU = "/static/images/Home/Banner5/Manu.png";
 const TAJO = "/static/images/Home/Banner5/TAJO.png";
 const HCLAB = "/static/images/Home/Banner5/HCLAB.png";
+const IoPET = "/static/images/Home/Banner5/IOPET.png";
+const JINYOUNG = "/static/images/Home/Banner5/JINYOUNG.png";
 const person = "/static/images/Home/Banner5/person.png";
 
 class Banner5Container extends React.Component {
@@ -22,20 +24,30 @@ class Banner5Container extends React.Component {
   render() {
     let rate = this.state.rating;
     const item1 = {
-        name: "Manu",
-        review: "기존 거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트를 통해 업체들을 추천 받아 비교해 볼 수 있었고 더 나은 조건의 업체와계약하게 되었습니다.",
+        name: "MANU",
+        review: "기존 거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트 가견적과 상담을 통해 합리적인 견적을 알 수 있었고, 더 나은 조건의 업체와 계약하게 되었습니다.",
         logo: MANU
     }
     const item2 = {
         name: "TAJO",
-        review: "제조양산 프로세스를 모르다보니 시행착오가 많았는데 볼트앤너트 측에서 PM 업무를 수행하여 제품을 성공적으로 양산할 수 있었습니다.",
+        review: "제품 제조에 처음 도전하다보니 개발업체를 찾느라 한 달 이상 애를 먹었습니다. 볼트앤너트 상담을 통해 전문 업체를 찾았고, 볼트앤너트 측에서 프로젝트를 전담하여 시행착오 없이 제조할 수 있었습니다.",
         logo: TAJO
     }
     const item3 = {
         name: "HCLAB",
-        review: "공장에 대한 지식이 없는 저희에게 처음에는 막막. 제품이 원료나 가공 방법에 따라 원가가 공장에 대한 지식이 없는 저희에게 처음에는 막막.제품이 원료나 가공 방법에 따라합니다.",
+        review: "IoT 전문 개발사를 찾고 있었는데, 볼트앤너트에서 찾아준 제조사 견적이 30% 이상 저렴해서 합리적인 가격으로 개발할 수 있었습니다.",
         logo: HCLAB,
-        title: '개발 업체 찾는기간이\n3달이 단축됐죠'
+        title: '기존 거래처 견적보다\n30% 싸게 만들었습니다'
+    }
+    const item4 = {
+        name: "IOPET",
+        review: "제조 양산 프로세스를 모르다보니 시행착오가 많았는데, 볼트앤너트에서 계약서와 기능명세 작성부터 자료 이관 및 양산 프로세스 안내까지 도움주셔서 자사제품인 Petwash를 성공적으로 양산했습니다.",
+        logo: IoPET 
+    }
+    const item5 = {
+        name: "JIN&YOUNG ENG",
+        review: "생산 계획 수립을 위해 개발부터 전체 양산 단가까지 턴키로 알아볼 필요가 있었는데, 볼트앤너트 상담을 통해 양산 예산을 안내해주셨고 그에 따라 적합한 생산 계획을 수립할 수 있었습니다.",
+        logo: JINYOUNG
     }
     return (
         <Background>
@@ -71,9 +83,9 @@ class Banner5Container extends React.Component {
                     <ReviewCard item = {item2}/>
                   </div>
                   <div>
-                    <ReviewCard item = {item2}/>
+                    <ReviewCard item = {item4}/>
                     <div style={{marginTop: 28}} />
-                    <ReviewCard item = {item1}/>
+                    <ReviewCard item = {item5}/>
                   </div>
                 </div>
               </Fade>

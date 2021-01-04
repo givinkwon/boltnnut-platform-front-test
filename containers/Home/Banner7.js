@@ -69,109 +69,96 @@ class Banner7Container extends React.Component {
               볼트앤너트를 이용하셨습니다.
             </Header>
             <>
-              {/* <ItemBox>
-                        <Item>
-                            <img src={image1}/>
-                        </Item>
-                        <Item>
-                            <img src={image2}/>
-                        </Item>
-                        <Item>
-                            <img src={image3}/>
-                        </Item>
-                        <Item>
-                            <img src={image4}/>
-                        </Item>
-                        <Item>
-                            <img src={image5}/>
-                        </Item>
-                        <Item>
-                            <img src={image10}/>
-                        </Item>
-                        <Item>
-                            <img src={image7}/>
-                        </Item>
-                        <Item>
-                            <img src={image8}/>
-                        </Item>
-                        <Item>
-                            <img src={image9}/>
-                        </Item>
-                        <Item>
-                            <img src={image6}/>
-                        </Item>
-                        <Item>
-                            <img src={image11}/>
-                        </Item>
-                        <Item>
-                            <img src={image12}/>
-                        </Item>
-                        <Item>
-                            <img src={image13}/>
-                        </Item>
-                        <Item>
-                            <img src={image14}/>
-                        </Item>
-                        <Item>
-                            <img src={image16}/>
-                        </Item>
-                        <Item>
-                            <img src={image17}/>
-                        </Item>
-                        <Item>
-                            <img src={image18}/>
-                        </Item>
-                        <Item>
-                            <img src={image19}/>
-                        </Item>
-                        <Item>
-                            <img src={image20}/>
-                        </Item>
-                        <Item>
-                            <img src={image21}/>
-                        </Item>
-                        <Item>
-                            <img src={image22}/>
-                        </Item>
-                        <Item>
-                            <img src={image23}/>
-                        </Item>
-                        <Item>
-                            <img src={image24}/>
-                        </Item>
-                        <Item>
-                            <img src={image25}/>
-                        </Item>
-                        <Item>
-                            <img src={image26}/>
-                        </Item>
-                        <Item>
-                            <img src={image27}/>
-                        </Item>
-                        <Item>
-                            <img src={image28}/>
-                        </Item>
-                        <Item>
-                            <img src={image29}/>
-                        </Item>
-                    </ItemBox> */}
+              <ItemBox>
+                {/* <Slider> */}
+                  <Item>
+                      <img src={image1}/>
+                  </Item>
+                  <Item>
+                      <img src={image2}/>
+                  </Item>
+                  <Item>
+                      <img src={image3}/>
+                  </Item>
+                  <Item>
+                      <img src={image4}/>
+                  </Item>
+                  <Item>
+                      <img src={image5}/>
+                  </Item>
+                  <Item>
+                      <img src={image10}/>
+                  </Item>
+                  <Item>
+                      <img src={image7}/>
+                  </Item>
+                  <Item>
+                      <img src={image8}/>
+                  </Item>
+                  <Item>
+                      <img src={image9}/>
+                  </Item>
+                  <Item>
+                      <img src={image6}/>
+                  </Item>
+                  <Item>
+                      <img src={image11}/>
+                  </Item>
+                  <Item>
+                      <img src={image12}/>
+                  </Item>
+                  <Item>
+                      <img src={image13}/>
+                  </Item>
+                  <Item>
+                      <img src={image14}/>
+                  </Item>
+                  <Item>
+                      <img src={image16}/>
+                  </Item>
+                  <Item>
+                      <img src={image17}/>
+                  </Item>
+                  <Item>
+                      <img src={image18}/>
+                  </Item>
+                  <Item>
+                      <img src={image19}/>
+                  </Item>
+                  <Item>
+                      <img src={image20}/>
+                  </Item>
+                  <Item>
+                      <img src={image21}/>
+                  </Item>
+                  <Item>
+                      <img src={image22}/>
+                  </Item>
+                  <Item>
+                      <img src={image23}/>
+                  </Item>
+                  <Item>
+                      <img src={image24}/>
+                  </Item>
+                  <Item>
+                      <img src={image25}/>
+                  </Item>
+                  <Item>
+                      <img src={image26}/>
+                  </Item>
+                  <Item>
+                      <img src={image27}/>
+                  </Item>
+                  <Item>
+                      <img src={image28}/>
+                  </Item>
+                  <Item>
+                      <img src={image29}/>
+                  </Item>
+                {/* </Slider> */}
+              
+              </ItemBox>
             </>
-            <div style={{paddingTop:80}}>
-              <Slider {...SlideSettings}>
-                <ImgBox>
-                  <img src={item1}/>
-                </ImgBox>
-                <ImgBox>
-                  <img src={item1}/>
-                </ImgBox>
-                <ImgBox>
-                  <img src={item1}/>
-                </ImgBox>
-                <ImgBox>
-                  <img src={item1}/>
-                </ImgBox>     
-              </Slider>
-            </div>
           </Fade>
 
         </Containerv1>
