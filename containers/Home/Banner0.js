@@ -23,10 +23,10 @@ const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
     const countItem = {
       0: UseScrollCount(1667400000,1000000000,0,0,900000),
-      1: UseScrollCount(projCount*3+997,0,0,0,5),
+      1: UseScrollCount(projCount,0,0,0,5),
       2: UseScrollCount(4933,0,0,0,10)
     };
-  
+   
     return (
         <p {...countItem[index]} style={{display:'inline'}}/>
     );
@@ -55,7 +55,7 @@ class Banner0Container extends React.Component {
               전문 제조사를<br/>
               바로 만나보세요.
             </Title.FontSize56>
-            <Buttonv1 style={{marginTop: 71}}>
+            <Buttonv1 style={{marginTop: 71}} onClick={() => Router.push("/request")}>
               지금 무료 가견적 받기
             </Buttonv1>
           </div>
@@ -116,6 +116,7 @@ const Info = styled.div`
   padding-left: 37.5px;
  }
 `
+
 const InfoCell = styled.div`
  display: table-cell;
  text-align: center;
