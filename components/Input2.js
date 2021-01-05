@@ -12,8 +12,27 @@ class InputComponent extends React.Component {
       this.props.onChange(e.currentTarget.value)
     }
   }
+  onChangeFile = (e) => {
+    if(e.currentTarget.files.length === 0) {
+      this.setState({
+        ...this.state,
+        fileName: '',
+      })
+      return
+    }
+    const fileName = e.currentTarget.files[0].name;
+    this.setState({
+      ...this.state,
+      file: e.currentTarget.files[0],
+      fileName: fileName,
+    })
+
+
+    this.props.Auth.setFile(e.currentTarget.files[0])
+  }
   render() {
-    const { onChange, children, label, ...props } = this.props
+    const { onChange, children, label, file, ...props } = this.props
+    if (!file) {
     return (
       <Wrap>
         { label && <Text.FontSize20 color={DARKGRAY} fontWeight={500}>{label}</Text.FontSize20> }
@@ -23,6 +42,20 @@ class InputComponent extends React.Component {
         </InputBox>
       </Wrap>
     )
+    } else {
+    return (
+      <Wrap>
+        <InputBox>
+        <input
+          type="file"
+          style={{display: 'none'}}
+          onClick={()=>this.onChangeFile}
+        />
+        aa
+        </InputBox>
+      </Wrap>  
+    )
+    }
   }
 }
 

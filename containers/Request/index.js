@@ -9,6 +9,8 @@ import Background from 'components/Background';
 //counter
 import 'react-count-animation/dist/count.min.css';
 // import 'react-count-animation/dist/count.min.css';
+// Step
+import Step1Container from "./Step1";
 
 class RequestContainer extends React.Component {
   render() {
@@ -18,8 +20,7 @@ class RequestContainer extends React.Component {
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
             <Step/>
-            <RequestCardContainer title={"제품 정보 선택"}>
-            </RequestCardContainer>
+            <Step1Container/>
           </Containerv1>
         </Background>
       </div>
