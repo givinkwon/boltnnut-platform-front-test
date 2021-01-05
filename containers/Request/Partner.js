@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { inject, observer } from 'mobx-react'
 import InfoContainer from "./Detail/Info";
-import BannerContainer from './Banner'
+import BannerContainer from './Banner0'
 import Banner2Container from './Banner2'
 import SearchBarContainer from './SearchBar'
 import ContentContainer from './Content'
