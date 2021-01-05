@@ -6,7 +6,6 @@ class SliderMain extends React.Component {
   render() {
     const { item } = this.props;
     const mac = 'static/images/Home/Banner6/Mac.png';
-    const pic = 'static/images/Home/Banner6/pic.png';
     return (
       <SliderContent>
         <div style={{marginTop: 50,}}>
@@ -22,7 +21,7 @@ class SliderMain extends React.Component {
         </div>
         <ImageContainer>
           <img src={ mac } style={{ position: 'absolute'}}/>
-          <img src={ pic } style={{ position: 'absolute', top: '10px', left:'60px'}}/>
+          <img src={ this.props.src } style={{ position: 'absolute', top: '10px', left:'60px'}}/>
         </ImageContainer>
       </SliderContent>
     );

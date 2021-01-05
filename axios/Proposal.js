@@ -57,3 +57,10 @@ export function getProject(req) {
 		headers: req.headers ? req.headers : null,
 	})
 }
+
+export function getMyProject() {
+	return axios({
+		method: 'GET',
+		url: `${ROOT_URL}/project/`
+	})
+}

@@ -7,24 +7,29 @@ import Fade from 'react-reveal/Fade';
 
 
 const image1 = "/static/images/Home/Banner2/image1.png"
+const backgroundImg="/static/images/Home/Banner2/Banner2_Bg.png"
+import { inject, observer } from "mobx-react";
 
+@inject('Proposal','Partner')
+@observer
 class Banner2Container extends React.Component {
     render() {
+        const ProjectCount = this.props.Proposal.projects_count;
         return (
-            <Background backgroundColor = {"#0a2165"}>
+            <Background src={backgroundImg}>
                 <Containerv1 style={{paddingBottom: 308, paddingTop: 306, justifyContent: 'space-between'}}>
                     <Fade bottom>
                         <div>
                             <Header>
-                                컨설턴트 중 해당 제품
+                                AI 제조사 매칭 알고리즘
                             </Header>
                             <Middle>
                                 5000여개의 제조사 중 <br/>
                                 딱 맞는 전문가를 매칭
                             </Middle>
                             <Body>
-                                200여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
-                                알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
+                            {ProjectCount*3+997}개 프로젝트 데이터를 학습한 AI 매칭 알고리즘이<br/>
+                                내 제품의 전문가를 큐레이션해드립니다.
                             </Body>
                         </div>
                         <div>
