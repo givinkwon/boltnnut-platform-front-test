@@ -7,16 +7,16 @@ import Fade from 'react-reveal/Fade';
 
 
 const image1 = "/static/images/Home/Banner2/image1.png"
+const backgroundImg="/static/images/Home/Banner2/Banner2_Bg.png"
 import { inject, observer } from "mobx-react";
 
 @inject('Proposal','Partner')
 @observer
 class Banner2Container extends React.Component {
-    
     render() {
         const ProjectCount = this.props.Proposal.projects_count;
         return (
-            <Background backgroundColor = {"#0a2165"}>
+            <Background src={backgroundImg}>
                 <Containerv1 style={{paddingBottom: 308, paddingTop: 306, justifyContent: 'space-between'}}>
                     <Fade bottom>
                         <div>
