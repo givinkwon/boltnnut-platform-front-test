@@ -5,6 +5,7 @@ import Background from "components/Background";
 import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
 import Fade from 'react-reveal/Fade';
+import Router from "next/router";
 
 const image1 = "/static/images/Home/Banner8/Banner8_img1.png"
 
@@ -20,7 +21,7 @@ class Banner8Container extends React.Component {
                                     내 제품의 제작 비용과 <br/>
                                     전문 제조사를 바로 만나보세요.
                                 </Header>
-                                <Buttonv1 style={{margin:'0 auto', marginTop: 50}}>
+                                <Buttonv1 style={{margin:'0 auto', marginTop: 50}} onClick={() => Router.push("/request")}>
                                     지금 무료 가견적 받기
                                 </Buttonv1>
                             </div>

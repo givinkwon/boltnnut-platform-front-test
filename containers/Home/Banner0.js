@@ -55,7 +55,7 @@ class Banner0Container extends React.Component {
               전문 제조사를<br/>
               바로 만나보세요.
             </Title.FontSize56>
-            <Buttonv1 style={{marginTop: 71}}>
+            <Buttonv1 style={{marginTop: 71}} onClick={() => Router.push("/request")}>
               지금 무료 가견적 받기
             </Buttonv1>
           </div>

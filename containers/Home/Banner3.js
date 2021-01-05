@@ -6,11 +6,12 @@ import * as Title from "components/Title";
 import Fade from 'react-reveal/Fade';
 
 const image1 = "/static/images/Home/Banner3/Banner3_img1.png"
+const backgroundImg = "/static/images/Home/Banner3/Banner3_Bg.png"
 
 class Banner3Container extends React.Component {
   render() {
     return (
-        <Background>
+        <Background src={backgroundImg}>
             <Containerv1 style={{paddingBottom: 358, paddingTop: 257, justifyContent: 'space-between'}}>
               <Fade bottom>
                 <div>
