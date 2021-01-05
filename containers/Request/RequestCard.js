@@ -4,6 +4,8 @@ import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Observer from "@researchgate/react-intersection-observer";
+import NewButton from '../../components/NewButton';
+import LogoSlider from "./LogoImageSlider";
 
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
@@ -13,6 +15,7 @@ import Slider from '@material-ui/core/Slider';
 
 // Components
 import * as Content from "components/Content";
+import * as Title from "components/Title";
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 
@@ -52,6 +55,12 @@ CustomSliderThumbComponent = (props) => {
               value={percentage}
               onChange={this.handleChange}
             />
+            <LogoSlider/>
+            <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
+            <ButtonContainer>
+              <NewButton backgroundColor={ "#ffffff" } color={"#282c36"}>이전</NewButton>
+              <NewButton>다음</NewButton>
+            </ButtonContainer>
           </Card>
         )
     }
@@ -62,11 +71,14 @@ export default withRouter(RequestCardContainer);
 
 const Card = styled.div`
   width: 894px;
-  height: 1004px;
+  height: 976px;
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
   background-color: white;
+  margin: 60px 0px 200px 280px;
+  display: inline;
+  float: right;
 `
 const Header = styled(Content.FontSize32)`
   width: auto;
@@ -122,4 +134,20 @@ const ThumbText = styled(Content.FontSize18)`
   color: white;
   top: -10px;
   font-weight: bold;
+`
+const MatchingText = styled(Title.FontSize20)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.5px;
+  color: #282c36;
+  margin: 0px 176px;
+`
+const ButtonContainer = styled.div`
+  width: 260px;
+  height: 44px;
+  margin: 90px 317px 50px 317px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `
