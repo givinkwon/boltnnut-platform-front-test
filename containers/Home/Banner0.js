@@ -14,24 +14,38 @@ import Buttonv1 from "components/Buttonv1";
 import Fade from 'react-reveal/Fade';
 import UseScrollCount from "./UseScrollCount"
 
+import { inject, observer } from "mobx-react";
+
 //Image
 const background = "static/images/Home/main.jpg";
 
-const CountFunc = ({index}) => 
+const CountFunc = ({index,projCount=0,partnerCount=0}) => 
 {
     const countItem = {
-      0: UseScrollCount(2000000000,1000000000,0,0,1000000),
-      1: UseScrollCount(300,0,0,0,1),
-      2: UseScrollCount(450,0,0,0,1)
+      0: UseScrollCount(1667400000,1000000000,0,0,900000),
+      1: UseScrollCount(projCount,0,0,0,5),
+      2: UseScrollCount(4933,0,0,0,10)
     };
-  
+   
     return (
         <p {...countItem[index]} style={{display:'inline'}}/>
     );
 };
 
+
+@inject('Proposal','Partner')
+@observer
 class Banner0Container extends React.Component {
+
+  componentDidMount() {
+    const {Proposal,Partner} = this.props;
+    Proposal.loadProjects();
+    Partner.loadPartnerCount();
+  }
+
   render () {
+    const ProjectCount = this.props.Proposal.projects_count;
+    const PartnerCount = this.props.Partner.partner_count;
     return (
     <Background src={background}>
       <Containerv1 style={{paddingBottom: 336, paddingTop: 279, justifyContent: 'space-between'}}>
@@ -42,7 +56,7 @@ class Banner0Container extends React.Component {
               전문 제조사를<br/>
               바로 만나보세요.
             </Title.FontSize56>
-            <Buttonv1 style={{marginTop: 71}}>
+            <Buttonv1 style={{marginTop: 71}} onClick={() => Router.push("/request")}>
               지금 무료 가견적 받기
             </Buttonv1>
           </div>
@@ -64,7 +78,7 @@ class Banner0Container extends React.Component {
               <br/>
               <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
                 {/* 300+ */}
-                <CountFunc index={1}/>+
+                <CountFunc index={1} projCount={ProjectCount}/>
               </Content.FontSize32>
             </InfoCell>
             <InfoCell>
@@ -74,7 +88,7 @@ class Banner0Container extends React.Component {
               <br/>
               <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
                 {/* 450+ */}
-                <CountFunc index={2}/>+
+                <CountFunc index={2} partnerCount={PartnerCount}/>
               </Content.FontSize32>
             </InfoCell>
           </Info>
@@ -103,6 +117,7 @@ const Info = styled.div`
   padding-left: 37.5px;
  }
 `
+
 const InfoCell = styled.div`
  display: table-cell;
  text-align: center;

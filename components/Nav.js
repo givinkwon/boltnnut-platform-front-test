@@ -144,7 +144,7 @@ class Nav extends React.Component {
                     >
                       보낸 의뢰
                     </NavLink>
-                    <NavLink
+                    {/*<NavLink
                       onClick={
                         async () => {
                           Router.push("/partner");
@@ -156,7 +156,7 @@ class Nav extends React.Component {
                       active={url.indexOf("partner") > -1}
                     >
                       제조사 찾기
-                    </NavLink>
+                    </NavLink>*/}
                     <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
@@ -186,7 +186,7 @@ class Nav extends React.Component {
                     >
                       보낸 제안서
                     </NavLink>*/}
-                    <NavLink
+                    {/*<NavLink
                       onClick={
                         async () => {
                           await Router.push("/partner");
@@ -198,7 +198,7 @@ class Nav extends React.Component {
                       active={url.indexOf("partner") > -1}
                     >
                       제조사 찾기
-                    </NavLink>
+                    </NavLink>*/}
                     <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
@@ -224,7 +224,7 @@ class Nav extends React.Component {
                   >
                     의뢰하기
                   </NavLink>
-                  <NavLink
+                  {/*<NavLink
                     onClick={
                       async () => {
                         await Router.push("/partner");
@@ -236,7 +236,7 @@ class Nav extends React.Component {
                     active={url.indexOf("partner") > -1}
                   >
                     제조사 찾기
-                  </NavLink>
+                  </NavLink>*/}
               
                   
                   <NavLink
@@ -245,7 +245,7 @@ class Nav extends React.Component {
                     >
                       매거진
                   </NavLink>
-                  <NavLink
+                  {/*<NavLink
                   onClick={
                     async () => {
                       await Router.push("/info");
@@ -256,7 +256,7 @@ class Nav extends React.Component {
                   }
                   active={url.indexOf("info") > -1}>
                     서비스 소개
-                  </NavLink>
+                </NavLink>*/}
                 </Fragment>
               )}
 

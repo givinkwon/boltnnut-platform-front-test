@@ -1,9 +1,20 @@
 import React from 'react';
-import styled from 'styled-components'
-import * as Text from './Text'
-import { DARKGRAY } from 'static/style'
+import styled from 'styled-components';
+import * as Text from './Text';
+import { DARKGRAY } from 'static/style';
+import * as Content from 'components/Content';
+
+const fileImage = 'static/images/components/Input2/Mask.png';
 
 class InputComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.file = React.createRef();
+  }
+  state = {
+    fileName: '',
+    file:''
+  };
   onChange = (e) => {
     if(this.props.type === 'file'){
       this.props.onChange(e.currentTarget.files[0])
@@ -12,8 +23,29 @@ class InputComponent extends React.Component {
       this.props.onChange(e.currentTarget.value)
     }
   }
+
+  onChangeFile = (e) => {
+    if(e.currentTarget.files.length === 0) {
+      this.setState({
+        ...this.state,
+        fileName: '',
+      })
+      return
+    }
+    const fileName = e.currentTarget.files[0].name;
+    this.setState({
+      ...this.state,
+      file: e.currentTarget.files[0],
+      fileName: fileName,
+    })
+    console.log(this.state.fileName)
+  }
+
   render() {
-    const { onChange, children, label, ...props } = this.props
+    const { onChange, children, label, file, ...props } = this.props
+    const { fileName } = this.state;
+    console.log(fileName)
+    if (!file) {
     return (
       <Wrap>
         { label && <Text.FontSize20 color={DARKGRAY} fontWeight={500}>{label}</Text.FontSize20> }
@@ -23,6 +55,28 @@ class InputComponent extends React.Component {
         </InputBox>
       </Wrap>
     )
+    } else {
+    return (
+      <Wrap>
+        <InputBox
+          style={{width: 460, display: 'inline-block'}}
+          onClick = {()=>this.file.current.click()}>
+          <input
+            type="file"
+            style={{display: 'none'}}
+            onChange={this.onChangeFile}
+            ref={this.file}
+          />
+        <FileText>
+          { this.state.fileName }
+        </FileText>
+        <img
+          src={fileImage}
+        />
+        </InputBox>
+      </Wrap>  
+    )
+    }
   }
 }
 
@@ -35,6 +89,11 @@ const InputBox = styled.div`
   border: solid 0.5px #c7c7c7;
   color: #404040;
   border-radius: 3px;
+  > img {
+    padding: 15px 15px;
+    position: relative;
+    float: right;
+  }
   @media (min-width: 0px) and (max-width: 767.98px) {
       width: 206px;
       height: 32px;
@@ -83,4 +142,16 @@ const Input = styled.input`
   @media (min-width: 1300px) { 
     font-size: 20px;
   }
+`
+const FileText = styled(Content.FontSize18)`
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.18px;
+  text-align: left;
+  color: #c6c7cc;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  position: absolute;
 `
