@@ -41,7 +41,6 @@ class Request {
   @observable common_content = "";
   @observable common_period = "";
   @observable common_price = "";
-  @observable common_file = null;
 
   @observable search_mode = '';
   @observable partners = [];
@@ -52,8 +51,9 @@ class Request {
   @observable input_phone = "";
   @observable input_content = "";
 
-  @observable input_day = null;
-  @observable input_price = null;
+  @observable input_day = null; // 개발기간
+  @observable input_price = null; // 가격
+  @observable common_file = null; // 첨부 파일
 
   @action setInputName = (val) => {
     this.input_name = val;
@@ -76,6 +76,18 @@ class Request {
   @action setDue = (val) => {
     this.input_day = val;
   }
+  @action setCommonFile = (obj) => {
+    console.log(typeof obj)
+    if (typeof obj == 'object') {
+      this.common_file = obj;
+      console.log("file uploaded")
+    } else {
+      this.common_file = null;
+      console.log(this.common_file)
+    }
+  }
+
+
   @action init = (q) => {
     CategoryAPI.getMainCategory()
       .then((res) => {

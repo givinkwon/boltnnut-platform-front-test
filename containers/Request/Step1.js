@@ -8,6 +8,7 @@ import * as Title from 'components/Title';
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
 import SelectComponent from 'components/Select';
 import InputComponent from 'components/Input2';
+import CheckBoxComponent from 'components/CheckBox';
 
 
 const customStyles = {
@@ -47,8 +48,8 @@ const customStyles = {
 class Step1Container extends React.Component {
   state = {
     step: 1,
-    price: 3500
   }
+
   content1 = () => {
     const {Request, Partner} = this.props;
     const dueArray = [1,2,3,4,5,6,7,8,9,10,11,12];
@@ -86,6 +87,7 @@ class Step1Container extends React.Component {
             styles={customStyles} options={dueArray} value={Request.input_day}
             getOptionLabel={(option) => option + " 개월"} placeholder='개월' onChange={Request.setDue}
           />
+          
         </SelectRow>
      </>
     );
@@ -120,6 +122,7 @@ class Step1Container extends React.Component {
        </Header>
        <SelectRow style={{width: "100%"}}>
          <InputComponent file={true}/>
+         <CheckBoxComponent onChange = {Request.setCommonFile}/>
        </SelectRow>
      </>
     );
@@ -130,7 +133,7 @@ class Step1Container extends React.Component {
     const content2 = this.content2();
 
     return (
-      <RequestCardContainer title={"기본 정보 입력"} content = {content1}>
+      <RequestCardContainer title={"기본 정보 입력"} content = {content2}>
       </RequestCardContainer>
     )
   }

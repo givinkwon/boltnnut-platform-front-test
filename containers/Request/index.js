@@ -25,8 +25,6 @@ class RequestContainer extends React.Component {
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
             <Step/>
-            <RequestCardContainer title={"제품 정보 선택"} content={ content }>
-            </RequestCardContainer>
             <Step1Container/>
           </Containerv1>
         </Background>
