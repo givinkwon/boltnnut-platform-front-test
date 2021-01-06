@@ -271,7 +271,6 @@ class SearchBarContainer2 extends React.Component {
   const { width } = this.state;
   const handleChange = (event, newValue) => {
     this.state.setDue(newValue);
-    console.log(newValue)
    };
   const handleChangeDueMin = (event) => {
       var temp_due_min = 0;
@@ -389,8 +388,6 @@ class SearchBarContainer2 extends React.Component {
        alert("희망 개발 기간을 선택해주세요")
        return
     }
-    //console.log(this.state.price_max[1], this.state.price_max)
-    //console.log(this.state.due_max[1], this.state.due_max)
     if (this.state.show_detail == "none") {
     this.setState({...this.state, show_detail: true})
     } else {
@@ -556,7 +553,7 @@ class SearchBarContainer2 extends React.Component {
             <span> { this.state.fileName ? this.state.fileName : '도면, 유사 이미지, 기획서 등이 있으시면 첨부해주세요.' }</span>
             <img
               src="/static/images/Mask.png"
-              />
+            />
           </FileBox>
         </SelectRow>
 

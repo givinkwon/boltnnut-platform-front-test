@@ -45,7 +45,7 @@ CustomSliderThumbComponent = (props) => {
               {this.props.title}
             </Header>
             <ContentBox>
-              콘텐츠
+              {this.props.content}
             </ContentBox>
             <CustomSlider
               ThumbComponent={this.CustomSliderThumbComponent}

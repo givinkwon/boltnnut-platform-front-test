@@ -78,8 +78,11 @@ const CardHeader = styled.div`
     display: inline-flex;
     align-items: center;
     width: 89.7%;
-    margin-left: 10.7%;
+    margin-left: 8%;
     padding-top: 6.7%;
+    > img {
+        margin-right: 5%;
+    }
 `
 const Name = styled(Content.FontSize18)`
     font-weight: bold;

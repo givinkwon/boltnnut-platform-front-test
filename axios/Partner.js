@@ -234,3 +234,10 @@ export function getClient(id, req) {
     headers: req.headers ? req.headers : null,
   })
 }
+
+export function getMyPartner() {
+  return axios({
+    method: 'GET',
+    url: `${ROOT_URL}/randompartner/`
+  })
+}

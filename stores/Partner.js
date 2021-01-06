@@ -401,6 +401,18 @@ class Partner {
       });
   };
 
+  //파트너 숫자만 로드
+	@action loadPartnerCount = () =>{
+		PartnerAPI.getMyPartner()
+			.then((res) => {
+				this.partner_count = res.data.count;
+			})
+			.catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  }
+  
   @action getRequestsByAnswers = () => {
     if(!this.detail) { return; }
 

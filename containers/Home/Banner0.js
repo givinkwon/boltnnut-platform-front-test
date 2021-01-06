@@ -35,8 +35,16 @@ const CountFunc = ({index,projCount=0,partnerCount=0}) =>
     );
 };
 
+<<<<<<< HEAD
 @inject('Proposal','Partner')
 @observer
+=======
+<<<<<<< HEAD
+=======
+@inject('Proposal','Partner')
+@observer
+>>>>>>> 4f8c192e121278e20ea1a5571a3df9a37337837b
+>>>>>>> tmp
 class Banner0Container extends React.Component {
 
   componentDidMount() {
