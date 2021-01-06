@@ -6,6 +6,7 @@ import 'intersection-observer'; // polyfill
 import Observer from "@researchgate/react-intersection-observer";
 import NewButton from '../../components/NewButton';
 import LogoSlider from "./LogoImageSlider";
+import Buttonv1 from "components/Buttonv1";
 
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
@@ -20,10 +21,12 @@ import * as Title from "components/Title";
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 const HeaderImg = "/static/images/request/Step3/Step3_Header.png";
+const DropdownArrow1 = "/static/images/request/Step3/Step3_Dropdown1.png";
+const DropdownArrow2 = "/static/images/request/Step3/Step3_Dropdown2.png";
 
 class Step3Container extends Component {
   state = {
-    percentage: 40,
+    percentage: 100,
   }
 
 handleChange = (event, newValue) => {
@@ -58,26 +61,52 @@ CustomSliderThumbComponent = (props) => {
                   <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'left'}} color={'#ffffff'}>
                     견적가
                   </Content.FontSize24>
-                  <div>
+                  <div style={{display:'flex',alignItems:'center'}}>
                     <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'left'}} color={'#ffffff'}>
-                      25,000,000
+                      25,000,000 원
                     </Content.FontSize24>
+                    <div style={{marginLeft:20}}>
+                      <img src={DropdownArrow1}/>
+                    </div>
                   </div>
                 </HeaderTextBox>
             </HeaderBackground>
-            
-            <ContentBox>
-              <ContentHeader>
-                요청하신 0000 제품 개발의 전문가인 볼트앤너트 파트너사는 31개입니다.
-              </ContentHeader>
-              <EstimateLogoSlider/>
-            </ContentBox>
 
-            <CustomSlider
+            <ContentBox>
+              <Content.FontSize16 fontWeight={'bold'} style={{textAlign: 'center'}} color={'#0933b3'}>
+                최대 경력 40년 이상의 파트너들이 선정 되었습니다. 
+              </Content.FontSize16>
+
+              <CustomSlider
               ThumbComponent={this.CustomSliderThumbComponent}
               value={percentage}
               onChange={this.handleChange}
             />
+              <ContentHeader>
+                요청하신 0000 제품 개발의 전문가인 볼트앤너트 파트너사는 31개입니다.
+              </ContentHeader>
+
+              <EstimateLogoSlider/>
+              
+              <ConsultantBox>
+                <ConsultantHeader>
+                  매칭 컨설턴트 : 최진영 기술 고문 
+                </ConsultantHeader>
+                <ConsultantHashtag>#의료기기 #생활가전 #기구설계</ConsultantHashtag>
+                <div style={{marginRight:50.4}}>
+                  <img src={DropdownArrow2}/>
+                </div>
+              </ConsultantBox>
+
+              <ContentHeader style={{marginTop:60}}>
+                정확한 견적을 받고 싶다면?
+              </ContentHeader>
+              <Buttonv1 fontSize={20} style={{margin:'0 auto', marginTop: 30,marginBottom:50,width:260,height:50}}>
+                무료 컨설팅 받기
+              </Buttonv1>
+            </ContentBox>
+
+            
             
             {/* <LogoSlider/>
             <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
@@ -95,7 +124,7 @@ export default withRouter(Step3Container);
 
 const Card = styled.div`
   width: 894px;
-  height: 976px;
+  // height: 1170px;
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
@@ -104,13 +133,11 @@ const Card = styled.div`
   display: inline;
   float: right;
 `
-
 const HeaderBackground = styled.div`
   background-color: #0a2165;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 `
-
 const HeaderTextBox = styled.div`
   display:flex;
   justify-content:space-between;
@@ -153,21 +180,22 @@ const ContentHeader = styled(Content.FontSize24)`
   color: #282c36;
   object-fit: contain;
 `
+
 const ContentBox = styled.div`
   // height: calc(46.3%);
   margin-right: 5.4%;
   margin-left: 5.4%;
-  margin-top: 70px;
+  margin-top: 60px;
 `
 
 const CustomSlider = withStyles({
   root: {
     color: '#0933b3',
     height: 12,
-    width: '92%',
-    marginLeft: '4%',
-    marginRight: '4%',
+    width: '100%',
     borderRadius: 10,
+    paddingTop:20,
+    paddingBottom:30
     },
   thumb: {
     top: -10,
@@ -186,6 +214,41 @@ const CustomSlider = withStyles({
   },
 })(Slider);
 
+const ConsultantBox=styled.div`
+  margin-top:100px;
+  width:100%;
+  height:76px;
+  border-top:solid 1px #707070;
+  border-bottom:solid 1px #707070;
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+`
+
+const ConsultantHeader = styled(Content.FontSize24)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #282c36;
+  object-fit: contain;
+  margin-left:63px;
+  // margin-right:26px;
+`
+
+const ConsultantHashtag = styled(Content.FontSize16)`
+  width: auto;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #282c36;
+  object-fit: contain;
+`
 const ThumbText = styled(Content.FontSize18)`
   position: absolute;
   color: white;

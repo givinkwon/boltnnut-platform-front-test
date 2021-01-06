@@ -9,77 +9,109 @@ class EstimateLogoSlider extends React.Component {
     const SlideSettings = {
         dots: false,
         infinite: false,
-        slidesToShow: 2,
+        slidesToShow: 4,
         slidesToScroll: 1,
         draggable: true
       };
     
     return (
       <ItemBox>
-        <Slider {...SlideSettings}>
-            <Item>
-                <ImgBox>
-                    <img src={Logo1}/>
-                </ImgBox>
-                <TextBox>
-                    <HashTag>
-                        #27년차
-                    </HashTag>
-                    <HashTag>
-                        #의료기기
-                    </HashTag>
-                </TextBox>
-            </Item>
-
-            <Item>
-                <ImgBox>
-                    <img src={Logo1}/>
-                </ImgBox>
-                <TextBox>
-                    <HashTag>
-                        #27년차
-                    </HashTag>
-                    <HashTag>
-                        #의료기기
-                    </HashTag>
-                </TextBox>
-            </Item>
-
-            <Item>
-                <ImgBox>
-                    <img src={Logo1}/>
-                </ImgBox>
-                <TextBox>
-                    <HashTag>
-                        #27년차
-                    </HashTag>
-                    <HashTag>
-                        #의료기기
-                    </HashTag>
-                </TextBox>
-            </Item>
-
-            <Item>
-                <ImgBox>
-                    <img src={Logo1}/>
-                </ImgBox>
-                <TextBox>
-                    <HashTag>
-                        #27년차
-                    </HashTag>
-                    <HashTag>
-                        #의료기기
-                    </HashTag>
-                </TextBox>
-            </Item>
-        </Slider>
+        <StyledSlider {...SlideSettings}>
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                    <TextBox>
+                        <HashTag>
+                            #27년차
+                        </HashTag>
+                        <HashTag>
+                            #의료기기
+                        </HashTag>
+                    </TextBox>
+                </Item>
+            </div>            
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                    <TextBox>
+                        <HashTag>
+                            #27년차
+                        </HashTag>
+                        <HashTag>
+                            #의료기기
+                        </HashTag>
+                    </TextBox>
+                </Item>
+            </div>
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                    <TextBox>
+                        <HashTag>
+                            #27년차
+                        </HashTag>
+                        <HashTag>
+                            #의료기기
+                        </HashTag>
+                    </TextBox>
+                </Item>
+            </div>
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                    <TextBox>
+                        <HashTag>
+                            #27년차
+                        </HashTag>
+                        <HashTag>
+                            #의료기기
+                        </HashTag>
+                    </TextBox>
+                </Item>
+            </div>
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                    <TextBox>
+                        <HashTag>
+                            #27년차
+                        </HashTag>
+                        <HashTag>
+                            #의료기기
+                        </HashTag>
+                    </TextBox>
+                </Item>
+            </div>
+        </StyledSlider>
       </ItemBox>
     )
   }
 }
 
+const StyledSlider = styled(Slider)`
+    .slick-slide div{
+      outline: none;
+    }
+`
+
 const ItemBox=styled.div`
-  padding-top:31px;
+  padding-top:60px;
+  width:100%;
+  .slick-list >div {
+      margin-left:2px;
+      padding-top:10px;
+      padding-bottom:10px;
+  }
 `
 
 const Item=styled.div`
