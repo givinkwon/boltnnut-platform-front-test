@@ -95,23 +95,6 @@ class Request {
   console.log(this.big_category_list)
   };
   @action setBigCategory = (obj) => {
-    /*
-    if(obj.maincategory === '전체보기') {
-      this.select_big = null;
-      this.select_mid = null;
-      this.select_small = null;
-
-      this.mid_category_list = [];
-      this.small_category_list = [];
-
-      this.contents = this.initial_contents;
-
-      window.history.pushState("", "", `/request?big=&mid=`);
-      return;
-    }
-     */
-    console.log(obj);
-
     this.select_big = obj;
     this.select_mid = null;
     this.select_small = null;

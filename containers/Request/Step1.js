@@ -46,7 +46,8 @@ const customStyles = {
 @observer
 class Step1Container extends React.Component {
   state = {
-    step: 1
+    step: 1,
+    price: 3500
   }
   content1 = () => {
     const {Request, Partner} = this.props;
@@ -129,7 +130,7 @@ class Step1Container extends React.Component {
     const content2 = this.content2();
 
     return (
-      <RequestCardContainer title={"기본 정보 입력"} content = {content2}>
+      <RequestCardContainer title={"기본 정보 입력"} content = {content1}>
       </RequestCardContainer>
     )
   }
