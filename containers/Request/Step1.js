@@ -117,7 +117,7 @@ class Step1Container extends React.Component {
        <Header style={{marginTop: 30}}>
         도면
        </Header>
-       <SelectRow style={{width: 360}}>
+       <SelectRow style={{width: "100%"}}>
          <InputComponent file={true}/>
        </SelectRow>
      </>
@@ -127,6 +127,7 @@ class Step1Container extends React.Component {
     const { Request, Partner } = this.props;
     const content1  = this.content1();
     const content2 = this.content2();
+
     return (
       <RequestCardContainer title={"기본 정보 입력"} content = {content2}>
       </RequestCardContainer>

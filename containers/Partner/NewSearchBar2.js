@@ -195,7 +195,6 @@ class SearchBarContainer2 extends React.Component {
       var temp_min = 0;
       temp_min = event.target.value;
       this.setState({...this.state, temp_min: temp_min});
-      console.log(temp_min);
       this.state.price_max[0] = temp_min;
   }
   const handleChangeMax = (event) => {
@@ -401,7 +400,6 @@ class SearchBarContainer2 extends React.Component {
     } else {
     this.setState({...this.state, show_detail: "none"})
     }
-    console.log(this.state.show_detail)
   }
 
   submit = () => {

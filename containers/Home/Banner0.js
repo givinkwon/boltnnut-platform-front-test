@@ -13,11 +13,8 @@ import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
 import Fade from 'react-reveal/Fade';
 import UseScrollCount from "./UseScrollCount"
-<<<<<<< HEAD
-=======
 
 import { inject, observer } from "mobx-react";
->>>>>>> 4f8c192e121278e20ea1a5571a3df9a37337837b
 
 //Image
 const background = "static/images/Home/main.jpg";
@@ -35,16 +32,9 @@ const CountFunc = ({index,projCount=0,partnerCount=0}) =>
     );
 };
 
-<<<<<<< HEAD
+
 @inject('Proposal','Partner')
 @observer
-=======
-<<<<<<< HEAD
-=======
-@inject('Proposal','Partner')
-@observer
->>>>>>> 4f8c192e121278e20ea1a5571a3df9a37337837b
->>>>>>> tmp
 class Banner0Container extends React.Component {
 
   componentDidMount() {
@@ -88,11 +78,7 @@ class Banner0Container extends React.Component {
               <br/>
               <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
                 {/* 300+ */}
-<<<<<<< HEAD
-                <CountFunc index={1}/>+
-=======
                 <CountFunc index={1} projCount={ProjectCount}/>
->>>>>>> 4f8c192e121278e20ea1a5571a3df9a37337837b
               </Content.FontSize32>
             </InfoCell>
             <InfoCell>
@@ -102,11 +88,7 @@ class Banner0Container extends React.Component {
               <br/>
               <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
                 {/* 450+ */}
-<<<<<<< HEAD
-                <CountFunc index={2}/>+
-=======
                 <CountFunc index={2} partnerCount={PartnerCount}/>
->>>>>>> 4f8c192e121278e20ea1a5571a3df9a37337837b
               </Content.FontSize32>
             </InfoCell>
           </Info>
