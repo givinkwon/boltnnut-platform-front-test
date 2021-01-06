@@ -3,308 +3,153 @@ import styled, {css} from 'styled-components'
 import { inject, observer } from 'mobx-react'
 import Router from "next/router";
 
-
-import Container from 'components/Container'
-import ServiceContainer from 'components/ServiceContainer'
-import Section from 'components/Section'
-import ButtonComponent from 'components/Button'
-import CheckBoxComponent from 'components/CheckBox'
-
-import * as Text from 'components/Text'
+import RequestCardContainer from './RequestCard';
+import * as Title from 'components/Title';
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
+import SelectComponent from 'components/Select';
+import InputComponent from 'components/Input2';
 
-@inject('Request')
-@observer
-class Step1Conatiner extends React.Component {
-  setTab = (val) => {
-    this.props.setTab(val);
-    // window.history.pushState("", "", `/info?tab=${val}`);
-  };
-  Info = () => {
-    const { Request } = this.props
-    if(Request.type == 0){
-      Request.setTab(0)
-      Router.push("/info")
-      console.log(Request.type)
 
-      return
-    }
-    if(Request.type == 1){
-      Request.setTab(1)
-      Router.push("/info")
-      return
-    }
-    if(Request.type == 2){
-      Request.setTab(2)
-      Router.push("/info")
-      return
-    }
-
-  }
-  Next = () => {
-    const { Request } = this.props
-    if(Request.type == 0 || Request.type == 1 || Request.type == 2){
-      Request.setStep(1)
-    }
-    console.log(Request.type)
-  }
-   render(){
-    const { Request } = this.props
-    return (
-      <SectionContainer style={{paddiingTop : 0}}>
-        <HeaderContainer>
-          <Text.FontSize24 color={'#191919'} fontWeight={500}>나에게 꼭 맞는 제조방식 시작하기</Text.FontSize24>
-        </HeaderContainer>
-        <ServiceContainer>
-          {/* <Info>
-            <Text.FontSize24>
-              {
-                Request.type === 'client' &&
-                  '의뢰를 하고자하는 의뢰사'
-              }
-              {
-                Request.type === 'expert' &&
-                  '제조 전문성을 가진 제조사'
-              }
-            </Text.FontSize24>
-          </Info> */}
-
-          <ButtonBox>
-            <Button id="find_manufacturer" active={Request.type==0} onClick={() => Request.setType(0)}>
-              <div style={{margin : 0}}>
-                <Text.FontSize40 color={'#191919'} fontWeight={700}>가견적 서비스</Text.FontSize40>
-                <Text.FontSize24 color={'#767676'} fontWeight={500}>원하시는 개발 조건에 적합한<br/>전문 제조사의 가견적을<br/>바로 받아보세요</Text.FontSize24>
-              </div>
-            </Button>
-            <Button id="development_massProduct" active={Request.type==1} onClick={() => Request.setType(1)}>
-              <div style={{margin : 0}}>
-                <Text.FontSize40 color={'#191919'} fontWeight={700}>유통 제조 패키지</Text.FontSize40>
-                <Text.FontSize24 color={'#767676'} fontWeight={500}>제품에 필요한 모든 요소를<br/>고려하여 제품 개발과 생산의<br/>A-Z까지 설계해드립니다</Text.FontSize24>
-              </div>
-            </Button>
-            <Button id="find_estimate" active={Request.type==2} onClick={() => Request.setType(2)}>
-              <div style={{margin : 0}}>
-                <Text.FontSize40 color={'#191919'} fontWeight={700}>R&D 제조 패키지</Text.FontSize40>
-                <Text.FontSize24 color={'#767676'} fontWeight={500}>개발부터 생산까지<br/>턴키 서비스를 통해<br/>제조 프로세스를 설계해드립니다</Text.FontSize24>
-              </div>
-            </Button>
-          </ButtonBox>
-          <NextButtonBox>
-            <InfoButton backgroundColor={Request.type ? WHITE : '#ffffff'} borderColor={Request.type ? PRIMARY : '#dcdcdc'} borderRadius={3} onClick={this.Info}>
-                <Text.FontSize24 color={Request.type ? PRIMARY : '#0a2165'} fontWeight={500}>알아보기</Text.FontSize24>
-            </InfoButton>
-            <NextButton backgroundColor={Request.type ? PRIMARY : '#0a2165'} borderColor={Request.type ? PRIMARY : '#dcdcdc'} borderRadius={3} onClick={this.Next}>
-                <Text.FontSize24 color={Request.type ? WHITE : '#ffffff'} fontWeight={500}>의뢰하기</Text.FontSize24>
-            </NextButton>
-          </NextButtonBox>
-          
-        </ServiceContainer>
-      </SectionContainer>
-
-    )
+const customStyles = {
+  dropdownIndicator: () => ({
+    color: '#555555',
+    width: 40,
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? '#000000' : '#555555',
+    backgroundColor: '#fff',
+    borderRadius: 0,
+    padding: 16,
+    fontSize: 16,
+  }),
+  control: () => ({
+    fontSize: 16,
+    border: '1px solid #e6e6e6',
+    backgroundColor: '#fff',
+    display: 'flex',
+    borderRadius: 6,
+    padding: 4,
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+    return { ...provided, opacity, transition };
   }
 }
 
-export default Step1Conatiner
-const SectionContainer = styled(Section)`
-  padding-top : 0px !important;
-`
+@inject('Request', 'Partner')
+@observer
+class Step1Container extends React.Component {
+  state = {
+    step: 1
+  }
+  content1 = () => {
+    const {Request, Partner} = this.props;
+    const dueArray = [1,2,3,4,5,6,7,8,9,10,11,12];
+    const costArray = ['1000 만원 이하', '1000 만원 ~ 3000 만원', '3000 만원 이상'];
+     return(
+     <>
+       <Header> 
+         관련 분야
+       </Header>
+       <SelectRow>
+        <Select
+            styles={customStyles} options={Request.big_category_list} value={Request.select_big}
+            getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
+          />
+        <div style={{marginRight: 38}}/>
+        <Select
+            styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
+            getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
+          />
+        </SelectRow>
+        <Header style={{marginTop: 30}}> 
+            희망 예산
+        </Header>
+        <SelectRow style={{width: 380}}>
+          <Select
+            styles={customStyles} options={costArray} value={Request.input_price}
+            getOptionLabel={(option) => option} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
+          />
+        </SelectRow>
+          <Header style={{marginTop: 30}}>
+            개발 기간
+          </Header>
+        <SelectRow style={{width: 180}}>
+          <Select
+            styles={customStyles} options={dueArray} value={Request.input_day}
+            getOptionLabel={(option) => option + " 개월"} placeholder='개월' onChange={Request.setDue}
+          />
+        </SelectRow>
+     </>
+    );
+  }
+  content2 = () => {
+    const {Request, Partner} = this.props;
 
-const HeaderContainer = styled.div`
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    display: inline-flex;
-    margin-bottom : 90px;
-  >p {
-      line-height: 1.42;
-      letter-spacing: -0.6px;
-      margin-right : auto;
-      margin-left : auto;
-      font-stretch: normal;
-      font-style: normal;
-    }
-`
+    return(
+     <>
+       <Header> 
+         제품명
+       </Header>
+       <SelectRow>
+         <InputComponent
+            placeholder="ex)반려동물을 위한 한 손 실리콘 샤워 패드"
+            value={Request.input_name}
+            onChange={Request.setInputName}
+          />
+       </SelectRow>
+       <Header style={{marginTop: 30}}> 
+            전화번호
+       </Header>
+       <SelectRow>
+         <InputComponent 
+            placeholder="전화번호를 입력해주세요."
+            value={Request.input_phone}
+            onChange={Request.setInputPhone}
+          />
+       </SelectRow>
+       <Header style={{marginTop: 30}}>
+        도면
+       </Header>
+       <SelectRow style={{width: "100%"}}>
+         <InputComponent file={true}/>
+       </SelectRow>
+     </>
+    );
+  }
+   render() {
+    const { Request, Partner } = this.props;
+    const content1  = this.content1();
+    const content2 = this.content2();
 
-const InfoButton = styled(ButtonComponent)`
-  margin-top : 80px;
-  margin-left : auto;
-  margin-right : 15px;
-  border-radius: 3px;
+    return (
+      <RequestCardContainer title={"기본 정보 입력"} content = {content2}>
+      </RequestCardContainer>
+    )
+  }
+}
+export default Step1Container;
 
-  
-  :hover {
-    p { 
-    color : #ffffff;
-    }
-    background-color :  #0933b3;
-  }
-  
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-  }
-  @media (min-width: 1300px) { 
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-  }
-`
-const NextButton = styled(ButtonComponent)`
-  margin-top : 80px;
-  margin-left : 15px;
-  margin-right : auto;
-  border-radius: 3px;
-  
-  :hover {
-    background-color : #0933b3;
-  }
-  
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-  }
-  @media (min-width: 1300px) { 
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-  }
-`
-const Image = styled.img`
-  width: 9px;
-  height: 17px;
-  margin-left : 4px;
-  margin-top : 4px;
-`
-// const Info = styled.div`
-//   > p {
-//     color: #aaaaaa;
-//     text-align: center;
-//     @media (min-width: 0px) and (max-width: 767.98px) {
-//       margin-top: 30px;
-//     }
-//     @media (min-width: 768px) {
-//       margin-top: 30px;
-//     }
-//   }
-// `
-const NextButtonBox = styled.div`
-  width: 100%;
-  display: flex;
-  margin-bottom : 140px;
-  > p { 
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.42;
-    letter-spacing: -0.6px;
-  }
-`
-const ButtonBox = styled.div`
-  width: 100%;
-  display: flex;
+const Header = styled(Title.FontSize24)`
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  
-  div:nth-of-type(1) {
-    margin-right: 18px;
-  }
-  div:nth-of-type(2) {
-    margin-right: 18px;
-    margin-left: 18px;
-  }
-  div:nth-of-type(3) {
-    margin-left: 18px;
-  }
-  > p { 
-    line-height: 1.35;
-    letter-spacing: -1px;
-  }
-  > p > p { 
-    line-height: 1.5;
-    letter-spacing: -0.6px;
-  }
-  /* @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 15px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 40px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    margin-top: 50px;
-  }
-  @media (min-width: 1300px) { 
-    margin-top: 60px;
-  } */
+  line-height: 1.67;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #282c36;
 `
-const Button = styled.div`
-  cursor: pointer;
-  width: 588px;
+const SelectRow = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  border: 1px solid #c7c7c7;
-  border-radius: 10px;
-  box-sizing: border-box;
-  :hover {
-    border: 4px solid #0933b3;
-    box-shadow: 0 3px 6px 0 var(--black-16);
-  }
-  p{
-    display : flex;
-    justify-content: center;
-    align-items: center;
-    text-align : center;
-    :nth-of-type(1) {
-      margin-bottom : 10px; 
-      line-height: 1.35;
-      letter-spacing: -1px;
-    }
-    :nth-of-type(2) {
-      line-height: 1.42;
-      letter-spacing: -0.6px;
-    }
-  }
-  
-  ${props => props.active && css`
-    background-color: #0933b3;
-    p {
-      color: ${WHITE};
-      display : flex; 
-    }
-  `}
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 300px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 340px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    height: 400px;
-  }
-  @media (min-width: 1300px) { 
-    height: 437px;
-  }
+  margin-top: 10px;
+`
+const Select = styled(SelectComponent)`
+  width: 400px;
 `

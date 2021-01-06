@@ -3,15 +3,10 @@ import styled from "styled-components";
 import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
-import Observer from "@researchgate/react-intersection-observer";
-import NewButton from '../../components/NewButton';
-import LogoSlider from "./LogoImageSlider";
 import Buttonv1 from "components/Buttonv1";
 
 //Slider
-import { withStyles,makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import EstimateLogoSlider from './EstimateSheetLogoSlider'
 
