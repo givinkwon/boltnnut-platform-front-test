@@ -98,8 +98,9 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <>
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
           {/*--PG크로스브라우징필수내용--*/}
           <meta http-equiv="Cache-Control" content="no-cache"/>
           <meta http-equiv="Expires" content="0"/>
@@ -123,6 +124,7 @@ export default class MyDocument extends Document {
           <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900|Noto+Sans:400,700&display=swap" rel="stylesheet" />
           <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
           <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+        </>
         </Head>
         <body>
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5" height="0" width="0" style={{display : "none", visibility : "hidden"}}></iframe></noscript>
