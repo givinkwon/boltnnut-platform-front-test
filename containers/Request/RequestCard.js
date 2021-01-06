@@ -48,7 +48,7 @@ CustomSliderThumbComponent = (props) => {
               {this.props.title}
             </Header>
             <ContentBox>
-              콘텐츠
+              {this.props.content}
             </ContentBox>
             <CustomSlider
               ThumbComponent={this.CustomSliderThumbComponent}
@@ -101,6 +101,8 @@ const ContentBox = styled.div`
   margin-right: 5.4%;
   margin-left: 5.4%;
   margin-top: 4%;
+  display: flex;
+  flex-direction: column;
 `
 
 const CustomSlider = withStyles({
