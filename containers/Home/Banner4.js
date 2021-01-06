@@ -15,7 +15,7 @@ class Banner4Container extends React.Component {
               <Fade bottom>
                 <div>
                   <Header>
-                    컨설턴트 중 해당 제품
+                    계약 이행 보증 서비스
                   </Header>
                   <Middle>
                     7가지 계약 관리<br/>
@@ -23,8 +23,8 @@ class Banner4Container extends React.Component {
                     <p>100% 보증</p>
                   </Middle>
                   <Body>
-                    200여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
-                    알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
+                    개발부터 납품까지 전담 프로젝트 매니저가<br/>
+                    배정되어 계약 이행을 100% 보증합니다.
                   </Body>
                 </div>
                 <div>

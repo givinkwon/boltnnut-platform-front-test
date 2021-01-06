@@ -23,6 +23,7 @@ class Request extends React.Component {
     //this.props.Request.init(this.props.query)
     console.log(this.props.query)
     this.props.Partner.init();
+    this.props.Request.init();
      //창 크기
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });

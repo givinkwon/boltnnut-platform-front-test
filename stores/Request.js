@@ -50,15 +50,12 @@ class Request {
    // save_writed_request
   @observable input_name = "";
   @observable input_phone = "";
-  @observable input_phone2 = "";
-  @observable input_phone3 = "";
   @observable input_content = "";
 
   @observable input_day = null;
   @observable input_price = null;
 
   @action setInputName = (val) => {
-    console.log(val)
     this.input_name = val;
   };
   @action setType = (val) => {
@@ -73,16 +70,15 @@ class Request {
   @action setInputPhone = (val) => {
     this.input_phone = val;
   };
-  @action setInputPhone2 = (val) => {
-    this.input_phone2 = val;
-  };
-  @action setInputPhone3 = (val) => {
-    this.input_phone3 = val;
-  };
+  @action setPrice = (val) => {
+    this.input_price = val;
+  }
+  @action setDue = (val) => {
+    this.input_day = val;
+  }
   @action init = (q) => {
     CategoryAPI.getMainCategory()
       .then((res) => {
-        // this.big_category_list = [{id: 0, maincategory: '전체보기', category: '전체보기'}].concat(res.data.results);
         this.big_category_list = res.data.results;
 
         for(let i = 0; i < this.big_category_list.length; i++) {
@@ -90,7 +86,7 @@ class Request {
             this.initial_contents.push(this.big_category_list[i].category_set[j].subclass_set)
           }
         }
-        this.setQuery(q);
+        //this.setQuery(q);
       })
       .catch((e) => {
         console.log(e);
@@ -145,11 +141,8 @@ class Request {
     }
     this.contents = contents;
     window.history.pushState("", "", `/request`);
-    //window.history.pushState("", "", `/request?big=${obj.id}&mid=`);
   };
   @action setMidCategory = (obj) => {
-    console.log(obj);
-
     if(obj.category === '전체보기') {
       this.setBigCategory(obj)
       return
