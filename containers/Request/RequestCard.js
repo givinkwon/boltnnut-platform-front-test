@@ -98,6 +98,8 @@ const ContentBox = styled.div`
   margin-right: 5.4%;
   margin-left: 5.4%;
   margin-top: 4%;
+  display: flex;
+  flex-direction: column;
 `
 
 const CustomSlider = withStyles({
