@@ -87,7 +87,6 @@ class Step1Container extends React.Component {
             styles={customStyles} options={dueArray} value={Request.input_day}
             getOptionLabel={(option) => option + " 개월"} placeholder='개월' onChange={Request.setDue}
           />
-          
         </SelectRow>
      </>
     );
@@ -133,7 +132,7 @@ class Step1Container extends React.Component {
     const content2 = this.content2();
 
     return (
-      <RequestCardContainer title={"기본 정보 입력"} content = {content2}>
+      <RequestCardContainer title={"기본 정보 입력"} content = {content1}>
       </RequestCardContainer>
     )
   }

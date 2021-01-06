@@ -57,6 +57,7 @@ class Request {
 
   @action setInputName = (val) => {
     this.input_name = val;
+    console.log(val);
   };
   @action setType = (val) => {
     this.type = val;
