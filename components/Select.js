@@ -42,6 +42,7 @@ class SelectComp extends React.Component {
   };
   render() {
     const { options, placeholder, styles, getOptionLabel, value } = this.props;
+    console.log(this.props);
     return (
       <Select
         className={this.props.className}

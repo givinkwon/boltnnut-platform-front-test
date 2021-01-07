@@ -18,18 +18,20 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
-
+@inject('Request')
+@observer
 class RequestCardContainer extends Component {
+  
   state = {
     percentage: 40,
   }
-
 handleChange = (event, newValue) => {
   this.setState({percentage: newValue})
 }
+
 CustomSliderThumbComponent = (props) => {
   const {percentage} = this.state;
-    return (
+  return (
       <div {...props}>
         <img src={ThumbImage} />
         <ThumbText> {percentage}% </ThumbText>
@@ -56,7 +58,7 @@ CustomSliderThumbComponent = (props) => {
             <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
             <ButtonContainer>
               <NewButton backgroundColor={ "#ffffff" } color={"#282c36"}>이전</NewButton>
-              <NewButton>다음</NewButton>
+              <NewButton> 다음 </NewButton>
             </ButtonContainer>
           </Card>
         )

@@ -39,8 +39,6 @@ class CheckBoxComponent extends React.Component {
   render() {
     const { checked } = this.props;
     const { primary, placeholder, label, disabled, ...props } = this.props;
-
-    console.log(checked)
     if (primary) {
       return (
         <FormControlLabel
