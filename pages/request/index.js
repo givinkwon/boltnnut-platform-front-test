@@ -37,6 +37,8 @@ class Request extends React.Component {
   render(){
     const { width } = this.state;
     return (
+      <>
+      {width &&
       <div>
         <Head>
 
@@ -63,6 +65,8 @@ class Request extends React.Component {
         <RequestConatiner/>
         <Footer/>
       </div>
+      }
+      </>
     )
   }
 }

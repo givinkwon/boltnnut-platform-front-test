@@ -35,14 +35,12 @@ class RequestConatiner extends React.Component {
 
     return (
       <div style={{overflow: 'hidden'}}>
-        {Request.step === 0 && (<BannerContainer step2 = {true}/>)}
-        {Request.step === 0 &&
-        <>
+        <BannerContainer step2 = {true}/>
+       
         <SearchBarContainer2
           is_request={true}/>
-        </>
-        }
-        {Request.step === 1 && <CompleteBannerContainer/>}
+      
+
       </div>
     )
   }
