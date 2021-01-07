@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
@@ -18,105 +18,148 @@ const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 const HeaderImg = "/static/images/request/Step3/Step3_Header.png";
 const DropdownArrow1 = "/static/images/request/Step3/Step3_Dropdown1.png";
 const DropdownArrow2 = "/static/images/request/Step3/Step3_Dropdown2.png";
+const DropUpArrow2 = "static/images/partner/arrow_up.png";
 
 class Step3Container extends Component {
+
+  static defaultProps = { title: '견 적 서' };
+
   state = {
     percentage: 100,
+    showDrop: true,
+    showDetail: 'none'
   }
 
-handleChange = (event, newValue) => {
-  console.log(newValue)
-  this.setState({percentage: newValue})
-}
-CustomSliderThumbComponent = (props) => {
-  const {percentage} = this.state;
-  console.log(props)
-  console.log(percentage)
+  handleChange = (event, newValue) => {
+    console.log(newValue)
+    this.setState({ percentage: newValue })
+  }
+  CustomSliderThumbComponent = (props) => {
+    const { percentage } = this.state;
+    console.log(props)
+    console.log(percentage)
     return (
       <div {...props}>
         <img src={ThumbImage} />
         <ThumbText> {percentage}% </ThumbText>
       </div>
-      );
-    }
+    );
+  }
 
-    render() {
-      
-      const {percentage} = this.state;
-      return(
-          <Card>
-            <HeaderBackground>
-                <Logo>
-                    <img src={HeaderImg}/>
-                </Logo>
-                <Header>
-                    {this.props.title}
-                </Header>
-                <HeaderTextBox>
-                  <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'left'}} color={'#ffffff'}>
-                    견적가
+  detailDown = () => {
+    const { showDrop, showDetail } = this.state;
+    this.setState({ showDrop: 'none', showDetail: true })
+  }
+
+  detailUp = () => {
+    const { showDrop, showDetail } = this.state;
+    this.setState({ showDrop: true, showDetail: 'none' })
+  }
+
+
+  render() {
+    const { percentage, showDrop, showDetail } = this.state;
+    return (
+      <Card>
+        <HeaderBackground>
+          <Logo>
+            <img src={HeaderImg} />
+          </Logo>
+          <Header>
+            {this.props.title}
+          </Header>
+          <HeaderTextBox>
+            <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
+              견적가
                   </Content.FontSize24>
-                  <div style={{display:'flex',alignItems:'center'}}>
-                    <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'left'}} color={'#ffffff'}>
-                      25,000,000 원
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
+                25,000,000 원
                     </Content.FontSize24>
-                    <div style={{marginLeft:20}}>
-                      <img src={DropdownArrow1}/>
-                    </div>
-                  </div>
-                </HeaderTextBox>
-            </HeaderBackground>
+              <div style={{ marginLeft: 20 }}>
+                <img src={DropdownArrow1} />
+              </div>
+            </div>
+          </HeaderTextBox>
+        </HeaderBackground>
 
-            <ContentBox>
-              <Content.FontSize16 fontWeight={'bold'} style={{textAlign: 'center'}} color={'#0933b3'}>
-                최대 경력 40년 이상의 파트너들이 선정 되었습니다. 
+        <ContentBox>
+          <Content.FontSize16 fontWeight={'bold'} style={{ textAlign: 'center' }} color={'#0933b3'}>
+            최대 경력 40년 이상의 파트너들이 선정 되었습니다.
               </Content.FontSize16>
 
-              <CustomSlider
-              ThumbComponent={this.CustomSliderThumbComponent}
-              value={percentage}
-              onChange={this.handleChange}
-            />
-              <ContentHeader>
-                요청하신 0000 제품 개발의 전문가인 볼트앤너트 파트너사는 31개입니다.
+          <CustomSlider
+            ThumbComponent={this.CustomSliderThumbComponent}
+            value={percentage}
+            onChange={this.handleChange}
+          />
+          <ContentHeader>
+            요청하신 0000 제품 개발의 전문가인 볼트앤너트 파트너사는 31개입니다.
               </ContentHeader>
 
-              <EstimateLogoSlider/>
-              
-              <ConsultantBox>
-                <ConsultantHeader>
-                  매칭 컨설턴트 : 최진영 기술 고문 
-                </ConsultantHeader>
-                <ConsultantHashtag>#의료기기 #생활가전 #기구설계</ConsultantHashtag>
-                <div style={{marginRight:50.4}}>
-                  <img src={DropdownArrow2}/>
-                </div>
-              </ConsultantBox>
+          <EstimateLogoSlider />
 
-              <ContentHeader style={{marginTop:60}}>
-                정확한 견적을 받고 싶다면?
+
+          <ConsultantBox>
+            <ConsultantTextBox>
+              <ConsultantHeader>
+                매칭 컨설턴트 : 최진영 기술 고문
+              </ConsultantHeader>
+              <ConsultantHashtag>#의료기기 #생활가전 #기구설계</ConsultantHashtag>
+              <div style={{ marginRight: 50.4 }}>
+                {showDrop == true ? (
+                  <img src={DropdownArrow2} onClick={this.detailDown} />
+                ) : (
+                    <img src={DropUpArrow2} onClick={this.detailUp} />
+                  )
+                }
+              </div>
+            </ConsultantTextBox>
+
+            <DetailContainer style={{display: showDetail}}>
+              <History>
+                - 이력1<br/>
+                - 이력2<br/>
+                - 이력3<br/>
+              </History>
+            </DetailContainer>
+          </ConsultantBox>
+          
+          
+          <ContentHeader style={{ marginTop: 60 }}>
+            정확한 견적을 받고 싶다면?
               </ContentHeader>
-              <Buttonv1 fontSize={20} style={{margin:'0 auto', marginTop: 30,marginBottom:50,width:260,height:50}}>
-                무료 컨설팅 받기
+          <Buttonv1 fontSize={20} style={{ margin: '0 auto', marginTop: 30, marginBottom: 50, width: 260, height: 50 }}>
+            무료 컨설팅 받기
               </Buttonv1>
-            </ContentBox>
-
-            
-            
-            {/* <LogoSlider/>
-            <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
-            <ButtonContainer>
-              <NewButton backgroundColor={ "#ffffff" } color={"#282c36"}>이전</NewButton>
-              <NewButton>다음</NewButton>
-            </ButtonContainer> */}
-          </Card>
-        )
-    }
+        </ContentBox>
+      </Card>
+    )
+  }
 }
 
 export default withRouter(Step3Container);
 
+const DetailContainer = styled.div`
+  margin-left:63px;
+  padding-bottom:20px;
+`
+const ConsultantTextBox = styled.div`
+  width:100%;
+  display: flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-top:20px;
+  padding-bottom:20px;
+`
 
+const ConsultantBox = styled.div`
+  margin-top:100px;
+  
+  // height:76px;
+  border-top:solid 1px #707070;
+  border-bottom:solid 1px #707070;
+`
 const Card = styled.div`
   width: 894px;
   // height: 1170px;
@@ -146,6 +189,15 @@ const Logo = styled.div`
     padding-top:40px;
 `
 
+const History = styled(Title.FontSize18)`
+  text-align:left;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.18px;
+  color: #282c36;
+`
 const Header = styled(Content.FontSize32)`
   width: auto;
   height: calc(6.7%);
@@ -189,9 +241,9 @@ const CustomSlider = withStyles({
     height: 12,
     width: '100%',
     borderRadius: 10,
-    paddingTop:20,
-    paddingBottom:30
-    },
+    paddingTop: 20,
+    paddingBottom: 30
+  },
   thumb: {
     top: -10,
     paddingRight: 20,
@@ -209,16 +261,6 @@ const CustomSlider = withStyles({
   },
 })(Slider);
 
-const ConsultantBox=styled.div`
-  margin-top:100px;
-  width:100%;
-  height:76px;
-  border-top:solid 1px #707070;
-  border-bottom:solid 1px #707070;
-  display: flex;
-  align-items: center;
-  justify-content:space-between;
-`
 
 const ConsultantHeader = styled(Content.FontSize24)`
   font-weight: bold;
