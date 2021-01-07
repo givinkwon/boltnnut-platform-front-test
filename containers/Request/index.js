@@ -12,21 +12,18 @@ import 'react-count-animation/dist/count.min.css';
 import QuestionContainer from './Step2';
 // Step
 import Step1Container from "./Step1";
+import Step2Container from './Step2';
 
 class RequestContainer extends React.Component {
-  content = () => {
-    return <QuestionContainer/>
-  }
+
   render() {
-    const content = this.content();
     return (
       <div style={{ overflow: 'hidden' }}>
         <BannerContainer/>
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
             <Step/>
-            <RequestCardContainer title={"제품 정보 선택"} content={ content }>
-            </RequestCardContainer>
+            <Step2Container/>
             <Step1Container/>
           </Containerv1>
         </Background>
