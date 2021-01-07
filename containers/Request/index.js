@@ -5,6 +5,7 @@ import Step from './StepBar';
 import Containerv1 from "components/Containerv1";
 // RequestCard
 import RequestCardContainer from './RequestCard';
+import Step3Container from './Step3';
 import Background from 'components/Background';
 //counter
 import 'react-count-animation/dist/count.min.css';
@@ -25,6 +26,7 @@ class RequestContainer extends React.Component {
             <Step/>
             <Step2Container/>
             <Step1Container/>
+            <Step3Container title={"견 적 서"} />
           </Containerv1>
         </Background>
       </div>
