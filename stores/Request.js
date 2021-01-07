@@ -55,6 +55,14 @@ class Request {
   @observable input_day = null;
   @observable input_price = null;
 
+  //new
+  @observable page_index = 1;
+
+  @action setIndex = (val) => {
+    this.page_index = val;
+    console.log(this.page_index);
+  }
+
   @action setInputName = (val) => {
     this.input_name = val;
   };
