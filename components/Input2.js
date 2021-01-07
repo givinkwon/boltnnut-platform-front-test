@@ -3,9 +3,13 @@ import styled from 'styled-components';
 import * as Text from './Text';
 import { DARKGRAY } from 'static/style';
 import * as Content from 'components/Content';
+import { inject, observer } from 'mobx-react'
+
 
 const fileImage = 'static/images/components/Input2/Mask.png';
 
+@inject('Request', 'Partner')
+@observer
 class InputComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -25,26 +29,20 @@ class InputComponent extends React.Component {
   }
 
   onChangeFile = (e) => {
-    if(e.currentTarget.files.length === 0) {
-      this.setState({
-        ...this.state,
-        fileName: '',
-      })
-      return
-    }
+    const {Request}  = this.props;
     const fileName = e.currentTarget.files[0].name;
     this.setState({
       ...this.state,
       file: e.currentTarget.files[0],
       fileName: fileName,
     })
-    console.log(this.state.fileName)
+    Request.setCommonFile(e.currentTarget.files[0]);
   }
 
   render() {
-    const { onChange, children, label, file, ...props } = this.props
+    const { onChange, children, label, file, Request, ...props } = this.props
     const { fileName } = this.state;
-    console.log(fileName)
+
     if (!file) {
     return (
       <Wrap>
@@ -66,9 +64,10 @@ class InputComponent extends React.Component {
             style={{display: 'none'}}
             onChange={this.onChangeFile}
             ref={this.file}
+            placeholder={"파일을 선택해 주세요."}
           />
         <FileText>
-          { this.state.fileName }
+          { Request.common_file ? this.state.fileName : "파일을 선택해 주세요." }
         </FileText>
         <img
           src={fileImage}
