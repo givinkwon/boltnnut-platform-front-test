@@ -12,6 +12,7 @@ import Offered from "./Offered";
 import Profile from "./Profile";
 import Notice from './Notice';
 import Magazine from './Magazine';
+import DetailQuestion from './DEtailQuestion';
 
 export default {
   Counter,
@@ -28,4 +29,5 @@ export default {
   Offered,
   Notice,
   Magazine,
+  DetailQuestion
 };

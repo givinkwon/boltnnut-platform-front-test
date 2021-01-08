@@ -2,9 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import * as Title from 'components/Title'
 import RequestCardContainer from './RequestCard';
+import { inject, observer } from 'mobx-react';
+import 'intersection-observer'; // polyfill
 
 const Qimage = "static/images/request/Step2/Q.png";
 
+@inject('DetailQuestion')
+@observer
 class Step2Container extends React.Component {
   state = {
     title: "제품은 어떤 소재인가요?",
@@ -45,6 +49,9 @@ class Step2Container extends React.Component {
 
   render(){
     const content = this.content();
+    const { DetailQuestion } = this.props
+    console.log(DetailQuestion.init())
+    
     return (
       <RequestCardContainer title={"제품 정보 선택"} content = { content }>
       </RequestCardContainer>

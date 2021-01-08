@@ -18,6 +18,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
+
 @inject('Request')
 @observer
 class RequestCardContainer extends Component {
