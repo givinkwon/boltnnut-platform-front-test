@@ -57,15 +57,14 @@ class Request {
 
   //new
   @observable page_index = 1;
+  @observable button_active = 0;
 
   @action setIndex = (val) => {
     this.page_index = val;
-    console.log(this.page_index);
   }
 
   @action setInputName = (val) => {
     this.input_name = val;
-    console.log(val);
   };
   @action setType = (val) => {
     this.type = val;
@@ -95,7 +94,11 @@ class Request {
       console.log(this.common_file)
     }
   }
-
+  @action addButtonCount = (val) => {
+  if (val)
+    this.button_active += 1
+    console.log(this.button_active);
+  }
 
   @action init = (q) => {
     CategoryAPI.getMainCategory()
