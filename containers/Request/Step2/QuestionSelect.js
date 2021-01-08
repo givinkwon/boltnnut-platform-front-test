@@ -8,14 +8,14 @@ import { inject, observer } from "mobx-react";
 class QuestionSelect extends React.Component {
   test = () => {
     const { Request } = this.props;
-    let innerText = document.getElementById("queText");
-    console.log(innerText);
+    let innerText = document.getElementById(elementI)
+
   }
   render(){
     const { Request } = this.props;
     return (
       <SelectContainer onClick={ this.test }>
-        {this.props.question.map((question) => <Select onClick={ this.test }><Text id={"queText"} color={this.props.color}>{question}</Text></Select>)}
+        {this.props.question.map((question) => <Select><Text id={"queText"} color={this.props.color}>{question}</Text></Select>)}
       </SelectContainer>
     );
   }

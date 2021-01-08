@@ -56,13 +56,21 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
+  @observable current_index = 1;
+  @observable prev_index = 1;
   @observable page_index = 1;
-
-  @action setIndex = (val) => {
-    this.page_index = val;
-    console.log(this.page_index);
+  @action addIndex = () => {
+    this.page_index += 1;
   }
-
+  @action setCurrentIndex = () => {
+    this.prev_index = this.current_index;
+    this.current_index = this.page_index;
+    console.log(this.page_index)
+  }
+  @action goPrevIndex = () => {
+    this.page_index = this.prev_index;
+    this.current_index = this.prev_index;
+  }
   @action setInputName = (val) => {
     this.input_name = val;
     console.log(val);
