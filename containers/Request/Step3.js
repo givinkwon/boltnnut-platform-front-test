@@ -17,6 +17,7 @@ import * as Title from "components/Title";
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 const HeaderImg = "/static/images/request/Step3/Step3_Header.png";
 const DropdownArrow1 = "/static/images/request/Step3/Step3_Dropdown1.png";
+const DropUpArrow1 = "static/images/partner/arrow_up.png";
 const DropdownArrow2 = "/static/images/request/Step3/Step3_Dropdown2.png";
 const DropUpArrow2 = "static/images/partner/arrow_up.png";
 
@@ -26,8 +27,10 @@ class Step3Container extends Component {
 
   state = {
     percentage: 100,
-    showDrop: true,
-    showDetail: 'none'
+    showEstimateDrop:true,
+    showEstimateDetail:'none',
+    showConsultantDrop: true,
+    showConsultantDetail: 'none'
   }
 
   handleChange = (event, newValue) => {
@@ -36,8 +39,8 @@ class Step3Container extends Component {
   }
   CustomSliderThumbComponent = (props) => {
     const { percentage } = this.state;
-    console.log(props)
-    console.log(percentage)
+    // console.log(props)
+    // console.log(percentage)
     return (
       <div {...props}>
         <img src={ThumbImage} />
@@ -46,19 +49,33 @@ class Step3Container extends Component {
     );
   }
 
-  detailDown = () => {
-    const { showDrop, showDetail } = this.state;
-    this.setState({ showDrop: 'none', showDetail: true })
+  detailDown = (type) => {
+    const { showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
+    if(type==1)
+    {
+      this.setState({ showEstimateDrop:'none', showEstimateDetail: true })
+    }
+    else
+    {
+      this.setState({ showConsultantDrop:'none', showConsultantDetail: true })
+    }
   }
 
-  detailUp = () => {
-    const { showDrop, showDetail } = this.state;
-    this.setState({ showDrop: true, showDetail: 'none' })
+  detailUp = (type) => {
+    const { showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
+    if(type==1)
+    {
+      this.setState({ showEstimateDrop:true, showEstimateDetail: 'none' })
+    }
+    else
+    {
+      this.setState({ showConsultantDrop:true, showConsultantDetail: 'none' })
+    }
   }
 
 
   render() {
-    const { percentage, showDrop, showDetail } = this.state;
+    const { percentage, showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
     return (
       <Card>
         <HeaderBackground>
@@ -77,10 +94,18 @@ class Step3Container extends Component {
                 25,000,000 원
                     </Content.FontSize24>
               <div style={{ marginLeft: 20 }}>
-                <img src={DropdownArrow1} />
+                {showEstimateDrop == true ? (
+                  <img src={DropdownArrow1} onClick={()=>{this.detailDown(1);}} />
+                ) : (
+                    <img src={DropUpArrow1} onClick={()=>{this.detailUp(1);}}/>
+                  )
+                }
               </div>
             </div>
           </HeaderTextBox>
+          <DetailContainer style={{display: showEstimateDetail}}>
+            여기에 견적서 넣기
+          </DetailContainer>
         </HeaderBackground>
 
         <ContentBox>
@@ -107,16 +132,16 @@ class Step3Container extends Component {
               </ConsultantHeader>
               <ConsultantHashtag>#의료기기 #생활가전 #기구설계</ConsultantHashtag>
               <div style={{ marginRight: 50.4 }}>
-                {showDrop == true ? (
-                  <img src={DropdownArrow2} onClick={this.detailDown} />
+                {showConsultantDrop == true ? (
+                  <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} />
                 ) : (
-                    <img src={DropUpArrow2} onClick={this.detailUp} />
+                    <img src={DropUpArrow2} onClick={()=>{this.detailUp(2);}}/>
                   )
                 }
               </div>
             </ConsultantTextBox>
 
-            <DetailContainer style={{display: showDetail}}>
+            <DetailContainer style={{display: showConsultantDetail}}>
               <History>
                 - 이력1<br/>
                 - 이력2<br/>
@@ -124,7 +149,6 @@ class Step3Container extends Component {
               </History>
             </DetailContainer>
           </ConsultantBox>
-          
           
           <ContentHeader style={{ marginTop: 60 }}>
             정확한 견적을 받고 싶다면?
@@ -140,6 +164,10 @@ class Step3Container extends Component {
 
 export default withRouter(Step3Container);
 
+const EstimateDetailContainer = styled.div`
+  margin-left:63px;
+  padding-bottom:20px;
+`
 const DetailContainer = styled.div`
   margin-left:63px;
   padding-bottom:20px;

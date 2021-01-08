@@ -12,7 +12,7 @@ import Offered from "./Offered";
 import Profile from "./Profile";
 import Notice from './Notice';
 import Magazine from './Magazine';
-import DetailQuestion from './DEtailQuestion';
+import DetailQuestion from './DetailQuestion';
 
 export default {
   Counter,
