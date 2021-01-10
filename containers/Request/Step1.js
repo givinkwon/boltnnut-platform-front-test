@@ -84,14 +84,14 @@ class Step1Container extends React.Component {
        </Header>
        <SelectRow>
 
-        <input value={Request.select_big ? Request.select_big.maincategory : null} class="Input"/>
+        <input value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>
         <Select
             styles={customStyles} options={Request.big_category_list} value={Request.select_big}
             getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
           />
         <div style={{marginRight: 38}}/>
 
-        <input value={Request.select_mid ? Request.select_mid.category : null} class="Input"/>
+        <input value={Request.select_mid ? Request.select_mid.category : ''} class="Input"/>
         <Select
             styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
@@ -102,7 +102,7 @@ class Step1Container extends React.Component {
         </Header>
         <SelectRow style={{width: 380}}>
 
-          <input value={Request.input_price ? Request.input_price.value : null} class="Input"/>
+          <input value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
           <Select
             styles={customStyles} options={costArray} value={Request.input_price}
             getOptionLabel={(option) => option.label} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
@@ -113,7 +113,7 @@ class Step1Container extends React.Component {
           </Header>
         <SelectRow style={{width: 180}}>
 
-          <input value={Request.input_day ? Request.input_day.value : null} class="Input"/>
+          <input value={Request.input_day ? Request.input_day.value : ''} class="Input"/>
           <Select
             styles={customStyles} options={dueArray} value={Request.input_day}
             getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}

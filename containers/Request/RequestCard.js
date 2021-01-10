@@ -28,7 +28,8 @@ class RequestCardContainer extends Component {
   state = {
     percentage: 40,
     buttonActiveCount: 0,
-    targets: null
+    targets: null,
+    active: false
   }
 
   handleChange = (event, newValue) => {
@@ -47,13 +48,15 @@ class RequestCardContainer extends Component {
 
     componentDidMount() {
       this.setState({...this.state, buttonActiveCount: document.getElementsByClassName("Input").length, 
-      targets: document.getElementsByClassName("Input")})
+      targets: document.getElementsByClassName("Input")}
+      );
     }
 
     componentDidUpdate() {
-      const { targets } = this.state;
-      console.log(targets);
-      this.fullChecker(targets);
+      const { targets,active } = this.state;
+      if (this.fullChecker(targets) == true && active == false) {
+        this.setState({...this.state, active: true})
+      };
     }
 
     fullChecker(data) {
@@ -65,15 +68,15 @@ class RequestCardContainer extends Component {
         }
       }
       if (counter == buttonActiveCount) {
-        console.log('true')
-        return true;
+        return true
       } else {
         return false
       };
     }
 
     render() {
-      const {percentage,targets} = this.state;
+      const {percentage, active} = this.state;
+
       return(
           <Card>
             <Header>
@@ -90,8 +93,8 @@ class RequestCardContainer extends Component {
             <LogoSlider/>
             <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
             <ButtonContainer>
-              <NewButton active={ true } color={"#282c36"}>이전</NewButton>
-              <NewButton> 다음 </NewButton>
+              <NewButton color={"#282c36"}>이전</NewButton>
+              <NewButton active={ active }> 다음 </NewButton>
             </ButtonContainer>
           </Card>
         )
