@@ -14,6 +14,8 @@ import BarContainer from './Bar';
 
 // Mobile Container
 import MobileBanner0Container from './Mobile/MobileBanner0';
+import MobileBanner4Container from './Mobile/MobileBanner4';
+import MobileBanner5Container from './Mobile/MobileBanner5';
 
 import { inject, observer } from "mobx-react";
 
@@ -47,6 +49,8 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <MobileBanner0Container/>
+              <MobileBanner4Container/>
+              <MobileBanner5Container/>
             </CustomContainer>
           </>
         ) : (
