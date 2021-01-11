@@ -18,27 +18,30 @@ class Step2Container extends React.Component {
   }
 
   componentDidMount() {
-    // const {DetailQuestion} = this.props;
-    // DetailQuestion.init();
+    const {DetailQuestion} = this.props;
+    DetailQuestion.init();
+    this.setState({loading:true});
+    
   }
 
   content = () => {
-    const { title, question } = this.state; 
+    const { title, question,loading } = this.state; 
 
     let test = (e) => {
       console.log(e.target.innerText)
     }
     const {DetailQuestion} = this.props;
 
+    
     return (
       
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          {/* <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue> */}
+          <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue>
           {/* <TitleQue>{DetailQuestion.title_list.results[1].question}</TitleQue> */}
         </TitleContainer>
-        {/* <SelectContainer>
+        <SelectContainer>
           {
             this.state.question.map((question) => {
             return (
@@ -50,7 +53,7 @@ class Step2Container extends React.Component {
               )}
             )
           }
-        </SelectContainer> */}
+        </SelectContainer>
       </>
     );
   }
@@ -59,21 +62,12 @@ class Step2Container extends React.Component {
     const content = this.content();
     const { DetailQuestion } = this.props
     // console.log(DetailQuestion.init())
-    
     return (
       <RequestCardContainer title={"제품 정보 선택"} content = { content }>
-        
       </RequestCardContainer>
     );
   }
 }
-
-Step2Container.getInitialProps = context =>
-{
-  return{
-  };
-   
-};
 
 export default Step2Container;
 
