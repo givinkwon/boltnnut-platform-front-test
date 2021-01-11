@@ -10,7 +10,7 @@ import Spinner from 'components/Spinner'
 
 import RequestConatiner from 'containers/Request'
 
-@inject('Request', 'Partner')
+@inject('Request', 'Partner', 'DetailQuestion')
 @observer
 class Request extends React.Component {
   state = {
@@ -24,6 +24,7 @@ class Request extends React.Component {
     console.log(this.props.query)
     this.props.Partner.init();
     this.props.Request.init();
+
      //창 크기
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -49,7 +50,7 @@ class Request extends React.Component {
           <meta property="og:image" content="/static/images/thumbnail.png"/>
           <meta property="og:title" content="의뢰하기|믿을 수 있는 제조 전문가" />
           <meta property="og:description" content="볼트앤너트의 큐레이션 시스템이 최대 1영업일 이내로 제작하고자하는 제품의 가견적을 안내드립니다. 나에게 맞는 업체를 찾고, 적합한 업체로부터 가견적을 받아보세요!"/>
-          <meta property="og:url" content="https://www.boltnnut.com/request"/>           
+          <meta property="og:url" content="https://www.boltnnut.com/request"/>
           {/* Title */}
           <title>볼트앤너트|의뢰하기</title>
         </Head>

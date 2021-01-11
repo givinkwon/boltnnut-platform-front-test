@@ -56,6 +56,7 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
+  @observable questionTitle = [];
   @observable current_index = 1;
   @observable prev_index = 1;
   @observable page_index = 1;
@@ -103,8 +104,6 @@ class Request {
       console.log(this.common_file)
     }
   }
-
-
   @action init = (q) => {
     CategoryAPI.getMainCategory()
       .then((res) => {
@@ -130,7 +129,6 @@ class Request {
 
     if(obj.category_set[0] && obj.category_set[0].category !== '전체보기') {
       console.log(obj.category_set[0])
-      console.log('전체보기 추가')
       obj.category_set.push(
         {
           id: obj.id,

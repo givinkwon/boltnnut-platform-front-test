@@ -3,22 +3,29 @@ import styled from 'styled-components'
 import * as Title from 'components/Title'
 import RequestCardContainer from './RequestCard';
 import { inject, observer } from 'mobx-react';
-import { observable } from 'mobx';
 
 const Qimage = "static/images/request/Step2/Q.png";
 
-@inject("Request")
+import 'intersection-observer'; // polyfill
+
+@inject('DetailQuestion', "Request")
 @observer
 class Step2Container extends React.Component {
   state = {
     title: "제품은 어떤 소재인가요?",
     question: ["예", "아니오"],
-    index: 1
+    index: 1,
   }
+  componentDidMount() {
+    const { DetailQuestion } = this.props;
+    DetailQuestion.init();
 
-  content () {
-    const { title, question } = this.state;
+  }
+  content() {
     const { Request } = this.props;
+    const { DetailQuestion } = this.props;
+    let a = DetailQuestion.title_list.results;
+    console.log(a);
 
     let test = (e) => {
       let answer = e.target.innerText;
@@ -27,7 +34,6 @@ class Step2Container extends React.Component {
       }
       this.index += 1;
       Request.addIndex();
-      console.log(answer);
     };
 
     return (
