@@ -12,9 +12,10 @@ const Buttonv1 = styled.div`
   border-radius: ${(props) => (props.borderRadius ? props.borderRadius : 46)}px;
   font-size: ${(props)=> (props.fontSize ? props.fontSize : 32)}px;
   @media (min-width: 320px) and (max-width: 767.98px) {
-    font-size: 12px;
-    width: 160px;
-    height: 52px;
+    font-size: ${(props)=> (props.fontSize ? props.fontSize : 15)}px;
+    width: 202px;
+    height: 50px;
+    object-fit: contain;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) { 
     font-size: 14px;

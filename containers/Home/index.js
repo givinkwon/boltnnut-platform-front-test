@@ -1,25 +1,22 @@
-import React from 'react'
-import styled, {css} from 'styled-components'
+import React from 'react';
+import styled, {css} from 'styled-components';
 
-import Banner0Container from './Banner0'
-import Banner1Conatiner from './Banner1'
-import Banner2Container from './Banner2'
-import Banner3Container from './Banner3'
-import Banner4Container from './Banner4'
-import Banner5Container from './Banner5'
-import Banner7Container from './Banner7'
-import Banner8Container from './Banner8'
-import BarContainer from './Bar'
-import CategoryConatiner from './Category'
-import FindExperctConatiner from './FindExpert'
-import ContentGroupConatiner from './ContentGroup'
-import MagazineConatiner from './Magazine'
-import LogoConatiner from './logo'
-import HomeRequestContainer from './Request';
-import ReviewBanner from './ReviewerBanner';
+import Banner0Container from './Banner0';
+import Banner1Conatiner from './Banner1';
+import Banner2Container from './Banner2';
+import Banner3Container from './Banner3';
+import Banner4Container from './Banner4';
+import Banner5Container from './Banner5';
+import Banner6Container from './Banner6';
+import Banner7Container from './Banner7';
+import Banner8Container from './Banner8';
+import BarContainer from './Bar';
+
+// Mobile Container
+import MobileBanner0Container from './Mobile/MobileBanner0';
 
 import { inject, observer } from "mobx-react";
-import Banner6Container from './Banner6';
+
 
 @inject('Home')
 @observer
@@ -43,16 +40,13 @@ class HomeConatiner extends React.Component {
   };
   render() {
     const { width, reqList } = this.props;
-    //console.log(document.documentElement.clientHeight);
+
     return (
       <>
-        { width < 360 ? (
+        { width < 768 ? (
           <>
             <CustomContainer>
-              <Banner0Container/>
-              <Banner1Conatiner/>
-              <ReviewBanner/>
-              <LogoConatiner/>
+              <MobileBanner0Container/>
             </CustomContainer>
           </>
         ) : (
