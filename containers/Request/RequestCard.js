@@ -39,65 +39,65 @@ class RequestCardContainer extends Component {
   CustomSliderThumbComponent = (props) => {
     const {percentage} = this.state;
     return (
-        <div {...props}>
-          <img src={ThumbImage} />
-          <ThumbText> {percentage}% </ThumbText>
-        </div>
-        );
-    }
+      <div {...props}>
+        <img src={ThumbImage} />
+        <ThumbText> {percentage}% </ThumbText>
+      </div>
+    );
+  }
 
-    componentDidMount() {
-      this.setState({...this.state, buttonActiveCount: document.getElementsByClassName("Input").length, 
+  componentDidMount() {
+    this.setState({...this.state, buttonActiveCount: document.getElementsByClassName("Input").length,
       targets: document.getElementsByClassName("Input")}
-      );
-    }
+    );
+  }
 
-    componentDidUpdate() {
-      const { targets,active } = this.state;
-      if (this.fullChecker(targets) == true && active == false) {
-        this.setState({...this.state, active: true})
-      };
-    }
+  componentDidUpdate() {
+    const { targets,active } = this.state;
+    if (this.fullChecker(targets) == true && active == false) {
+      this.setState({...this.state, active: true})
+    };
+  }
 
-    fullChecker(data) {
-      const { buttonActiveCount } = this.state;
-      let counter = 0;
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].value.length != 0) {
-          counter += 1
-        }
+  fullChecker(data) {
+    const { buttonActiveCount } = this.state;
+    let counter = 0;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].value.length != 0) {
+        counter += 1
       }
-      if (counter == buttonActiveCount) {
-        return true
-      } else {
-        return false
-      };
     }
+    if (counter == buttonActiveCount) {
+      return true
+    } else {
+      return false
+    };
+  }
 
-    render() {
-      const {percentage, active} = this.state;
+  render() {
+    const {percentage, active} = this.state;
 
-      return(
-          <Card>
-            <Header>
-              {this.props.title}
-            </Header>
-            <ContentBox>
-              {this.props.content}
-            </ContentBox>
-            <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
-            <CustomSlider value={percentage}/>
-            <ThumbText> {percentage}% </ThumbText>
-            
-            <LogoSlider/>
-            <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
-            <ButtonContainer>
-              <NewButton color={"#282c36"}>이전</NewButton>
-              <NewButton active={ active }> 다음 </NewButton>
-            </ButtonContainer>
-          </Card>
-        )
-    }
+    return(
+      <Card>
+        <Header>
+          {this.props.title}
+        </Header>
+        <ContentBox>
+          {this.props.content}
+        </ContentBox>
+        <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
+        <CustomSlider value={percentage}/>
+        <ThumbText> {percentage}% </ThumbText>
+
+        <LogoSlider/>
+        <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
+        <ButtonContainer>
+          <NewButton color={"#282c36"}>이전</NewButton>
+          <NewButton active={ active }> 다음 </NewButton>
+        </ButtonContainer>
+      </Card>
+    )
+  }
 }
 
 export default withRouter(RequestCardContainer);
@@ -148,7 +148,7 @@ const CustomSlider = withStyles({
     marginRight: '4%',
     borderRadius: 10,
     cursor:'default'
-    },
+  },
   thumb: {
     // top: -10,
     // paddingRight: 20,

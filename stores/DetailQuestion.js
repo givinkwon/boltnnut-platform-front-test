@@ -10,8 +10,7 @@ class DetailQuestion {
     @action init = async () => {
         await DetailQuestionAPI.loadTitle()
         .then(res => {
-            console.log(res);
-            this.title_list = res.data
+            this.title_list = res.data;
           }
         )
     }

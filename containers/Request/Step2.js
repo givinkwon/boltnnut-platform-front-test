@@ -21,20 +21,20 @@ class Step2Container extends React.Component {
     const {DetailQuestion} = this.props;
     DetailQuestion.init();
     this.setState({loading:true});
-    
+
   }
 
   content = () => {
-    const { title, question,loading } = this.state; 
+    const { title, question,loading } = this.state;
 
     let test = (e) => {
       console.log(e.target.innerText)
     }
     const {DetailQuestion} = this.props;
 
-    
+
     return (
-      
+
       <>
         <TitleContainer>
           <img src={ Qimage }/>
@@ -44,12 +44,12 @@ class Step2Container extends React.Component {
         <SelectContainer>
           {
             this.state.question.map((question) => {
-            return (
-              <Select onClick = {test}>
-                <Text id={'queText'} color={"#282c36"}>
+              return (
+                <Select onClick = {test}>
+                  <Text id={'queText'} color={"#282c36"}>
                     {question}
-                </Text>
-              </Select>
+                  </Text>
+                </Select>
               )}
             )
           }

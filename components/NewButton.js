@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CustomButton = styled.div`
+  pointer-events: none;
   color: ${(props) => (props.color ? props.color : '#ffffff')};
   border-radius: 5px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.31);

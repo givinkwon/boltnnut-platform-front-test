@@ -29,5 +29,5 @@ export default {
   Offered,
   Notice,
   Magazine,
-  DetailQuestion
+  DetailQuestion,
 };

@@ -46,7 +46,7 @@ class Request {
   @observable partners = [];
   @observable partners_next = null;
 
-   // save_writed_request
+  // save_writed_request
   @observable input_name = "";
   @observable input_phone = "";
   @observable input_content = "";
@@ -95,8 +95,8 @@ class Request {
     }
   }
   @action addButtonCount = (val) => {
-  if (val)
-    this.button_active += 1
+    if (val)
+      this.button_active += 1
     console.log(this.button_active);
   }
 
@@ -116,7 +116,7 @@ class Request {
         console.log(e);
         console.log(e.response);
       });
-  console.log(this.big_category_list)
+    console.log(this.big_category_list)
   };
   @action setBigCategory = (obj) => {
     this.select_big = obj;
