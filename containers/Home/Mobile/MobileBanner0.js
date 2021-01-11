@@ -50,7 +50,6 @@ class MobileBanner0Container extends React.Component {
     return (
     <Background src={background} style={{paddingBottom: 58, paddingTop: 48, justifyContent: 'center'}}>
         <Fade bottom>
-          <div >
             <Header color={WHITE} fontWeight={"500"}>
               내 제품 제작 비용과<br/>
               전문 제조사를 바로 만나보세요.
@@ -82,7 +81,6 @@ class MobileBanner0Container extends React.Component {
             <Buttonv1 style={{marginTop: 54, marginLeft:'auto', marginRight:'auto', fontWeight: 700}} onClick={() => Router.push("/request")}>
               지금 무료 가견적 받기
             </Buttonv1>
-          </div>
         </Fade>
     </Background>
     );
