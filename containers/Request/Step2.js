@@ -61,7 +61,6 @@ class Step2Container extends React.Component {
   render(){
     const content = this.content();
     const { DetailQuestion } = this.props
-    // console.log(DetailQuestion.init())
     return (
       <RequestCardContainer title={"제품 정보 선택"} content = { content }>
       </RequestCardContainer>

@@ -48,23 +48,50 @@ const customStyles = {
 class Step1Container extends React.Component {
   state = {
     step: 1,
+    activeCount: 0,
+    currentCount: 0
+  }
+
+  handleChange = () => {
+    console.log("aa");
   }
 
   content1 = () => {
     const {Request, Partner} = this.props;
-    const dueArray = [1,2,3,4,5,6,7,8,9,10,11,12];
-    const costArray = ['1000 만원 이하', '1000 만원 ~ 3000 만원', '3000 만원 이상'];
+    const dueArray = [
+      {label: '1 개월', value: 1},
+      {label: '2 개월', value: 2},
+      {label: '3 개월', value: 3},
+      {label: '4 개월', value: 4},
+      {label: '5 개월', value: 5},
+      {label: '6 개월', value: 6},
+      {label: '7 개월', value: 7},
+      {label: '8 개월', value: 8},
+      {label: '9 개월', value: 9},
+      {label: '10 개월', value: 10},
+      {label: '11 개월', value: 11},
+      {label: '12 개월', value: 12},
+    ];
+    const costArray = [
+      {label: '1000 만원 이하', value: '1000 만원 이하'},
+      {label: '1000 만원 ~ 3000 만원', value: '1000 만원 ~ 3000 만원'},
+      {label: '3000 만원 이상', value: '3000 만원 이상'}
+    ];
      return(
      <>
        <Header> 
          관련 분야
        </Header>
        <SelectRow>
+
+        <input value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>
         <Select
             styles={customStyles} options={Request.big_category_list} value={Request.select_big}
             getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
           />
         <div style={{marginRight: 38}}/>
+
+        <input value={Request.select_mid ? Request.select_mid.category : ''} class="Input"/>
         <Select
             styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
@@ -74,18 +101,22 @@ class Step1Container extends React.Component {
             희망 예산
         </Header>
         <SelectRow style={{width: 380}}>
+
+          <input value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
           <Select
             styles={customStyles} options={costArray} value={Request.input_price}
-            getOptionLabel={(option) => option} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
+            getOptionLabel={(option) => option.label} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
           />
         </SelectRow>
           <Header style={{marginTop: 30}}>
             개발 기간
           </Header>
         <SelectRow style={{width: 180}}>
+
+          <input value={Request.input_day ? Request.input_day.value : ''} class="Input"/>
           <Select
             styles={customStyles} options={dueArray} value={Request.input_day}
-            getOptionLabel={(option) => option + " 개월"} placeholder='개월' onChange={Request.setDue}
+            getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
           />
         </SelectRow>
      </>
@@ -109,8 +140,11 @@ class Step1Container extends React.Component {
        <Header style={{marginTop: 30}}> 
             전화번호
        </Header>
+
        <SelectRow>
-         <InputComponent 
+         
+         <div name="Input"/>
+         <InputComponent
             placeholder="전화번호를 입력해주세요."
             value={Request.input_phone}
             onChange={Request.setInputPhone}
@@ -119,8 +153,12 @@ class Step1Container extends React.Component {
        <Header style={{marginTop: 30}}>
         도면
        </Header>
+
        <SelectRow style={{width: "100%"}}>
-         <InputComponent file={true}/>
+         <div name="Input"/>
+         <InputComponent
+            file={true}
+          />
          <CheckBoxComponent onChange = {Request.setCommonFile}/>
        </SelectRow>
      </>

@@ -30,15 +30,17 @@ class Request extends React.Component {
 
      //창 크기
     window.addEventListener('resize', this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
+    this.setState({ ...this.state, width: window.innerWidth});
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
   };
+
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
+
   render(){
     const { width } = this.state;
     return (
@@ -64,7 +66,7 @@ class Request extends React.Component {
           )
         }
         </>
-        <RequestConatiner/>
+        <RequestConatiner />
         <Footer/>
       </div>
     )

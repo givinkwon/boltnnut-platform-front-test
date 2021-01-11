@@ -19,29 +19,64 @@ import * as Title from "components/Title";
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 
+
+
+
 @inject('Request')
 @observer
 class RequestCardContainer extends Component {
-  
   state = {
     percentage: 40,
+    buttonActiveCount: 0,
+    targets: null,
+    active: false
   }
-handleChange = (event, newValue) => {
-  this.setState({percentage: newValue})
-}
 
-CustomSliderThumbComponent = (props) => {
-  const {percentage} = this.state;
-  return (
-      <div {...props}>
-        <img src={ThumbImage} />
-        <ThumbText> {percentage}% </ThumbText>
-      </div>
+  handleChange = (event, newValue) => {
+    this.setState({percentage: newValue})
+  }
+
+  CustomSliderThumbComponent = (props) => {
+    const {percentage} = this.state;
+    return (
+        <div {...props}>
+          <img src={ThumbImage} />
+          <ThumbText> {percentage}% </ThumbText>
+        </div>
+        );
+    }
+
+    componentDidMount() {
+      this.setState({...this.state, buttonActiveCount: document.getElementsByClassName("Input").length, 
+      targets: document.getElementsByClassName("Input")}
       );
     }
 
+    componentDidUpdate() {
+      const { targets,active } = this.state;
+      if (this.fullChecker(targets) == true && active == false) {
+        this.setState({...this.state, active: true})
+      };
+    }
+
+    fullChecker(data) {
+      const { buttonActiveCount } = this.state;
+      let counter = 0;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].value.length != 0) {
+          counter += 1
+        }
+      }
+      if (counter == buttonActiveCount) {
+        return true
+      } else {
+        return false
+      };
+    }
+
     render() {
-      const {percentage} = this.state;
+      const {percentage, active} = this.state;
+
       return(
           <Card>
             <Header>
@@ -57,8 +92,8 @@ CustomSliderThumbComponent = (props) => {
             <LogoSlider/>
             <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
             <ButtonContainer>
-              <NewButton backgroundColor={ "#ffffff" } color={"#282c36"}>이전</NewButton>
-              <NewButton> 다음 </NewButton>
+              <NewButton color={"#282c36"}>이전</NewButton>
+              <NewButton active={ active }> 다음 </NewButton>
             </ButtonContainer>
           </Card>
         )

@@ -16,7 +16,7 @@ import Step3Container from './Step3';
 import Step4Container from './Step4';
 
 class RequestContainer extends React.Component {
-
+  
   render() {
     return (
       <div style={{ overflow: 'hidden' }}>
@@ -24,8 +24,8 @@ class RequestContainer extends React.Component {
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
             <Step />
-            {/* <Step1Container /> */}
-            {<Step2Container />}
+            { <Step1Container /> }
+            {/* {<Step2Container />} */}
             {/* <Step3Container /> */}
           </Containerv1>
         </Background>
