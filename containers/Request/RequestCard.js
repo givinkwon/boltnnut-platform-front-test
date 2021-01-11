@@ -85,11 +85,10 @@ class RequestCardContainer extends Component {
             <ContentBox>
               {this.props.content}
             </ContentBox>
-            <CustomSlider
-              ThumbComponent={this.CustomSliderThumbComponent}
-              value={percentage}
-              onChange={this.handleChange}
-            />
+            <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
+            <CustomSlider value={percentage}/>
+            <ThumbText> {percentage}% </ThumbText>
+            
             <LogoSlider/>
             <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
             <ButtonContainer>
@@ -106,7 +105,7 @@ export default withRouter(RequestCardContainer);
 
 const Card = styled.div`
   width: 894px;
-  height: 976px;
+  height: 1002px;
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
@@ -143,35 +142,49 @@ const ContentBox = styled.div`
 const CustomSlider = withStyles({
   root: {
     color: '#0933b3',
-    height: 12,
+    height: 7,
     width: '92%',
     marginLeft: '4%',
     marginRight: '4%',
     borderRadius: 10,
+    cursor:'default'
     },
   thumb: {
-    top: -10,
-    paddingRight: 20,
-    content: "apapap"
+    // top: -10,
+    // paddingRight: 20,
+    // content: "apapap"
+    display:'none'
   },
   track: {
-    height: 12,
+    height: 7,
     borderRadius: 10,
   },
   rail: {
     color: '#c6c7cc',
     opacity: 1,
-    height: 12,
+    height: 7,
     borderRadius: 10,
   },
 })(Slider);
 
 const ThumbText = styled(Content.FontSize18)`
-  position: absolute;
-  color: white;
-  top: -10px;
+  position: relative;
+  text-align:center;
+  color: #0933b3;
   font-weight: bold;
 `
+
+const SliderText = styled(Content.FontSize16)`
+  position: relative;
+  text-align:center;
+  color: #0933b3;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: -0.16px;
+`
+
 const MatchingText = styled(Title.FontSize20)`
   font-weight: bold;
   font-stretch: normal;
@@ -182,8 +195,8 @@ const MatchingText = styled(Title.FontSize20)`
 `
 const ButtonContainer = styled.div`
   width: 260px;
-  height: 44px;
-  margin: 90px 317px 50px 317px;
+  // height: 44px;
+  margin: 70px 317px 60px 317px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

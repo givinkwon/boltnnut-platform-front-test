@@ -7,6 +7,7 @@ import 'intersection-observer'; // polyfill
 
 const Qimage = "static/images/request/Step2/Q.png";
 
+
 @inject('DetailQuestion')
 @observer
 class Step2Container extends React.Component {
@@ -16,19 +17,29 @@ class Step2Container extends React.Component {
     index: 1
   }
 
-  content () {
-    const { title, question } = this.state;
-    const { Request } = this.props;
+  componentDidMount() {
+    const {DetailQuestion} = this.props;
+    DetailQuestion.init();
+    this.setState({loading:true});
+    
+  }
+
+  content = () => {
+    const { title, question,loading } = this.state; 
 
     let test = (e) => {
       console.log(e.target.innerText)
     }
+    const {DetailQuestion} = this.props;
 
+    
     return (
+      
       <>
         <TitleContainer>
           <img src={ Qimage }/>
           <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue>
+          {/* <TitleQue>{DetailQuestion.title_list.results[1].question}</TitleQue> */}
         </TitleContainer>
         <SelectContainer>
           {
@@ -50,8 +61,6 @@ class Step2Container extends React.Component {
   render(){
     const content = this.content();
     const { DetailQuestion } = this.props
-    // console.log(DetailQuestion.init())
-
     return (
       <RequestCardContainer title={"제품 정보 선택"} content = { content }>
       </RequestCardContainer>
@@ -60,6 +69,8 @@ class Step2Container extends React.Component {
 }
 
 export default Step2Container;
+
+
 
 const TitleContainer = styled.div`
   width: 100%;
