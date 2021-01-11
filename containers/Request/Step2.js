@@ -3,44 +3,43 @@ import styled from 'styled-components'
 import * as Title from 'components/Title'
 import RequestCardContainer from './RequestCard';
 import { inject, observer } from 'mobx-react';
+import 'intersection-observer'; // polyfill
 
 const Qimage = "static/images/request/Step2/Q.png";
 
-import 'intersection-observer'; // polyfill
 
-@inject('DetailQuestion', "Request")
+@inject('DetailQuestion')
 @observer
 class Step2Container extends React.Component {
   state = {
     title: "제품은 어떤 소재인가요?",
     question: ["예", "아니오"],
-    index: 1,
+    index: 1
   }
+
   componentDidMount() {
-    const { DetailQuestion } = this.props;
+    const {DetailQuestion} = this.props;
     DetailQuestion.init();
+    this.setState({loading:true});
 
   }
-  content() {
-    const { Request } = this.props;
-    const { DetailQuestion } = this.props;
-    let a = DetailQuestion.title_list.results;
-    console.log(a);
+
+  content = () => {
+    const { title, question,loading } = this.state;
 
     let test = (e) => {
-      let answer = e.target.innerText;
-      if (answer == "아니오") {
-        Request.addIndex();
-      }
-      this.index += 1;
-      Request.addIndex();
-    };
+      console.log(e.target.innerText)
+    }
+    const {DetailQuestion} = this.props;
+
 
     return (
+
       <>
         <TitleContainer>
           <img src={ Qimage }/>
           <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue>
+          {/* <TitleQue>{DetailQuestion.title_list.results[1].question}</TitleQue> */}
         </TitleContainer>
         <SelectContainer>
           {
@@ -61,6 +60,7 @@ class Step2Container extends React.Component {
 
   render(){
     const content = this.content();
+    const { DetailQuestion } = this.props
     return (
       <RequestCardContainer title={"제품 정보 선택"} content = { content }>
       </RequestCardContainer>
@@ -69,6 +69,8 @@ class Step2Container extends React.Component {
 }
 
 export default Step2Container;
+
+
 
 const TitleContainer = styled.div`
   width: 100%;

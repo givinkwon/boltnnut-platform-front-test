@@ -46,7 +46,7 @@ class Request {
   @observable partners = [];
   @observable partners_next = null;
 
-   // save_writed_request
+  // save_writed_request
   @observable input_name = "";
   @observable input_phone = "";
   @observable input_content = "";
@@ -56,25 +56,15 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
-  @observable questionTitle = [];
-  @observable current_index = 1;
-  @observable prev_index = 1;
   @observable page_index = 1;
-  @action addIndex = () => {
-    this.page_index += 1;
+  @observable button_active = 0;
+
+  @action setIndex = (val) => {
+    this.page_index = val;
   }
-  @action setCurrentIndex = () => {
-    this.prev_index = this.current_index;
-    this.current_index = this.page_index;
-    console.log(this.page_index)
-  }
-  @action goPrevIndex = () => {
-    this.page_index = this.prev_index;
-    this.current_index = this.prev_index;
-  }
+
   @action setInputName = (val) => {
     this.input_name = val;
-    console.log(val);
   };
   @action setType = (val) => {
     this.type = val;
@@ -104,6 +94,12 @@ class Request {
       console.log(this.common_file)
     }
   }
+  @action addButtonCount = (val) => {
+    if (val)
+      this.button_active += 1
+    console.log(this.button_active);
+  }
+
   @action init = (q) => {
     CategoryAPI.getMainCategory()
       .then((res) => {
@@ -120,7 +116,7 @@ class Request {
         console.log(e);
         console.log(e.response);
       });
-  console.log(this.big_category_list)
+    console.log(this.big_category_list)
   };
   @action setBigCategory = (obj) => {
     this.select_big = obj;
