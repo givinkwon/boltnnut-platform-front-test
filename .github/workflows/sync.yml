@@ -1,0 +1,28 @@
+on:
+  schedule:
+  - cron: '0 3 * * *'
+  workflow_dispatch: 
+    inputs: 
+        source-repo:
+          description: source-repo
+        target-repo:
+          description: target-repo
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    name: sync-test
+    steps:
+    - name: Checkout private tools
+      uses: actions/checkout@v2
+      with:
+        repository: givinkwon/boltnnut-platform-front-test
+        token: ${{ secrets.sync }} 
+    - run: git log
+      shell: bash
+    - uses: yomapi/sync-repo-to-repo@v1.4
+      with:
+        source-repo: https://github.com/givinkwon/boltnnut-platform-front
+        target-repo: givinkwon/boltnnut-platform-front-test
+    - run: echo sync completed!
+      shell: bash
