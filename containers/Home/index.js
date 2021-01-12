@@ -47,7 +47,7 @@ class HomeConatiner extends React.Component {
 
     return (
       <>
-        { width < 768 ? (
+        { width < 767.98 ? (
           <>
             <CustomContainer>
               <MobileBanner0Container/>
@@ -58,7 +58,19 @@ class HomeConatiner extends React.Component {
               <MobileBanner8Container/>
             </CustomContainer>
           </>
+        ) : (767.99 < width && width < 1279.98)  ? (
+        <>
+          <CustomContainer>
+            <MobileBanner0Container/>
+            <MobileBanner2Container/>
+            <MobileBanner4Container/>
+            <MobileBanner5Container/>
+            <MobileBanner7Container/>
+            <MobileBanner8Container/>
+          </CustomContainer>
+        </>
         ) : (
+          <>
           <div style={{overflow:'hidden'}}>
             <Banner0Container/>
             <Banner1Conatiner/>
@@ -70,11 +82,11 @@ class HomeConatiner extends React.Component {
             <Banner7Container/>
             <Banner8Container/>
           </div>
-        )
-        } </>
-    )
+          </>
+        )}
+      </>
+    )}
   }
-}
 
 export default HomeConatiner
 
