@@ -1,0 +1,196 @@
+import React from "react";
+import styled from "styled-components";
+import Containerv1 from "components/Containerv1";
+import Background from "components/Background";
+import * as Title from "components/Title";
+import Slider from 'react-slick';
+// import SliderWrapper from "./SliderStyle";
+import SliderMain from '.././MobileSliderContent';
+import Fade from 'react-reveal/Fade';
+const pic1 = 'static/images/Home/Mobile/MobileBanner6/pic1.png';
+const pic2 = 'static/images/Home/Mobile/MobileBanner6/pic2.jpg';
+const pic3 = 'static/images/Home/Mobile/MobileBanner6/pic3.jpg';
+
+
+class MobileBanner6Container extends React.Component {
+  state = {
+    current: 0,
+    next: true,
+    prev: false,
+    show: 'visible',
+    progress: 0,
+  }
+
+  buttonClick = (e) => {
+    const newPage = e.target.innerText*1;
+    this.setState({...this.state, current: newPage-1, progress: newPage*100-100});
+    this.slider.slickGoTo(newPage-1);
+  }
+  sliderNext = () => {
+    const {current, progress} = this.state;
+    const fullfage = 2;
+    if (current != fullfage) {
+      const newPage = current + 1;
+      if (progress < 200) {
+        this.setState({...this.state, current: newPage, progress: progress + 100, show:'hidden'});
+      }
+      setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
+      this.slider.slickNext();
+    }
+  }
+  sliderPrev = () => {
+    const {current, progress} = this.state;
+    if (current != 0) {
+      const newPage = current - 1;
+      if (progress > 0) {
+        this.setState({...this.state, progress: progress - 100, current: newPage, show:'hidden'});
+      }
+      setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
+      this.slider.slickPrev();
+    }
+  }
+  render() {
+    const { current, show } = this.state;
+    const left = 'static/images/Home/Mobile/MobileBanner6/prev.png';
+    const right = 'static/images/Home/Mobile/MobileBanner6/next.png';
+
+    const item1 = {
+      headContent: "Step 1",
+      mainContent: "파트너 신청",
+      footContent: "회사소개서, 주요기술이력서 등을 통해 \n 파트너의 전문성을 검토하고, 파트너 검증\n키트를 통해 가격경쟁력을 파악합니다."
+    };
+    const item2 = {
+      headContent: "Step 2",
+      mainContent: "파트너 실사",
+      footContent: "볼트앤너트 시니어 컨설턴트가 제출받은 \n검토 자료를 기반으로 6종의 정량 평가를\n 실시하여 협업 및 소통능력을 검증합니다."
+    };
+    const item3 = {
+      headContent: "Step 3",
+      mainContent: "프로젝트 상세 검증",
+      footContent: "볼트앤너트 측에서 테스트 프로젝트 발주를 \n통해 제조사의 품질과 납기를 검증하고\n 볼트앤너트 프로세스를 교육합니다."
+    };
+    const settings = {
+      dots: true,
+      infinite: false,
+      speed: 500,
+      arrows: false,
+      slidesToShow: 1,
+      draggable: false,
+      slidesToScroll: 1,
+    };
+    return (
+      <Background backgroundColor= {"#a4aab4"}>
+        <CustomContainer>
+          <Fade bottom>
+            <Header>
+              볼트앤너트 3단계 검증 프로세스로 <br/>검증된 제품 전문가를 만나보세요.
+            </Header>
+            <ContainerBanner6>
+              <div>
+                {
+                  current == 0 ? (
+                    <img src={left} onClick = {this.sliderPrev} style={{opacity: 0.3, visibility: this.state.show}}/>
+                  ) : (
+                    <img src={left} onClick = {this.sliderPrev} style={{visibility: this.state.show}}/>
+                  )
+                }
+              </div>
+              <SliderWraper>
+                <Slider {...settings} ref={slider => (this.slider = slider)}>
+                  <SliderMain src={ pic1 }/>
+                  <SliderMain src={ pic1 }/>
+                  <SliderMain src={ pic1 }/>
+                </Slider>
+              </SliderWraper>
+              <div>
+                {
+                  current == 2 ? (
+                    <img src={right} onClick = {this.sliderNext} style={{opacity: 0.3, visibility: this.state.show}}/>
+                  ) : (
+                    <img src={right} onClick = {this.sliderNext} style={{visibility: this.state.show}}/>
+                  )
+                }
+              </div>
+            </ContainerBanner6>
+          </Fade>
+        </CustomContainer>
+      </Background>
+    );
+  }
+}
+
+export default MobileBanner6Container;
+
+const SliderWraper = styled.div`
+  width: 240px;
+  height: 128px;
+  margin: 46px 0px 36px 0px;
+  .slick-dots li {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .slick-dots li button {
+    height: 4px;
+    width: 4px;
+    background-color: #0933b3;
+    border-radius: 8px;
+  }
+  .slick-dots li button:before {
+    height: 4px;
+    width: 4px;
+    background-color: #0933b3;
+    border-radius: 4px;
+  }
+`
+const CustomContainer = styled(Containerv1)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+const Header = styled(Title.FontSize56)`
+  color: #ffffff;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  letter-spacing: -0.55px;
+  margin-top: 70px;
+  text-align: center;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 22px;
+  }
+`
+const ContainerBanner6 = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+const Main = styled(Title.FontSize32)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.63;
+  letter-spacing: -0.8px;
+  text-align: left;
+  color: #333742;
+  margin: 10px 0px 30px 0px;
+  white-space: pre-line;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 13px;
+  }
+`
+const Foot = styled(Title.FontSize24)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.6px;
+  text-align: left;
+  white-space: pre-line;
+  color: #f6f6f6;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 13px;
+  }
+`

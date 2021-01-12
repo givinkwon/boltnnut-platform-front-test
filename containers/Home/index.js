@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
 
+
 import Banner0Container from './Banner0';
 import Banner1Conatiner from './Banner1';
 import Banner2Container from './Banner2';
@@ -14,11 +15,15 @@ import BarContainer from './Bar';
 
 // Mobile Container
 import MobileBanner0Container from './Mobile/MobileBanner0';
+import MobileBanner1Container from './Mobile/MoblieBanner1';
+import MobileBanner3Container from './Mobile/MobileBanner3';
+import MobileBanner6Container from './Mobile/MobileBanner6';
 import MobileBanner2Container from './Mobile/MobileBanner2';
 import MobileBanner4Container from './Mobile/MobileBanner4';
 import MobileBanner5Container from './Mobile/MobileBanner5';
 import MobileBanner7Container from './Mobile/MobileBanner7';
 import MobileBanner8Container from './Mobile/MobileBanner8';
+
 import { inject, observer } from "mobx-react";
 
 
@@ -51,9 +56,12 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <MobileBanner0Container/>
+              <MobileBanner1Container/>
               <MobileBanner2Container/>
+              <MobileBanner3Container/>
               <MobileBanner4Container/>
               <MobileBanner5Container/>
+              <MobileBanner6Container/>
               <MobileBanner7Container/>
               <MobileBanner8Container/>
             </CustomContainer>
