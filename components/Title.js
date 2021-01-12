@@ -61,7 +61,7 @@ export const FontSize32 = styled.p`
     font-size: 32px;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) {
-    font-size: 48px;
+    font-size: 32px;
   }
   @media (min-width: 1280px) {
     font-size: 32px;
@@ -90,10 +90,10 @@ export const FontSize24 = styled.p`
   font-family: ${props => props.eng ? 'Roboto': 'Noto Sans KR'}, sans-serif;
   letter-spacing: 0px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 32px;
+    font-size: 24px;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) {
-    font-size: 48px;
+    font-size: 24px;
   }
   @media (min-width: 1280px) {
     font-size: 24px;
@@ -181,10 +181,10 @@ export const FontSize16 = styled.p`
   font-family: ${props => props.eng ? 'Roboto': 'Noto Sans KR'}, sans-serif;
   letter-spacing: 0.15px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 32px;
+    font-size: 16px;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) {
-    font-size: 48px;
+    font-size: 16px;
   }
   @media (min-width: 1280px) {
     font-size: 16px;
@@ -229,10 +229,10 @@ export const FontSize20 = styled.p`
   font-family: ${props => props.eng ? 'Roboto': 'Noto Sans KR'}, sans-serif;
   letter-spacing: 0.1px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 32px;
+    font-size: 20px;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) {
-    font-size: 48px;
+    font-size: 20px;
   }
   @media (min-width: 1280px) {
     font-size: 20px;

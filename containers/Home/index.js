@@ -15,7 +15,7 @@ import BarContainer from './Bar';
 
 // Mobile Container
 import MobileBanner0Container from './Mobile/MobileBanner0';
-import MobileBanner1Container from './Mobile/MoblieBanner1';
+import MobileBanner1Container from './Mobile/MobileBanner1';
 import MobileBanner3Container from './Mobile/MobileBanner3';
 import MobileBanner6Container from './Mobile/MobileBanner6';
 import MobileBanner2Container from './Mobile/MobileBanner2';
@@ -26,7 +26,11 @@ import MobileBanner8Container from './Mobile/MobileBanner8';
 
 // Tablet Container
 import TabletBanner0Container from './Tablet/TabletBanner0';
+import TabletBanner1Container from './Tablet/TabletBanner1';
 import TabletBanner2Container from './Tablet/TabletBanner2';
+import TabletBanner3Container from './Tablet/TabletBanner3';
+import TabletBanner4Container from './Tablet/TabletBanner4';
+import TabletBanner5Container from './Tablet/TabletBanner5';
 import TabletBanner7Container from './Tablet/TabletBanner7';
 import TabletBanner8Container from './Tablet/TabletBanner8';
 
@@ -75,7 +79,12 @@ class HomeConatiner extends React.Component {
         ) : (767.99 < width && width < 1279.98)  ? (
         <>
           <CustomContainer>
+            <TabletBanner0Container/>
+            <TabletBanner1Container/>
             <TabletBanner2Container/>
+            <TabletBanner3Container/>
+            <TabletBanner4Container/>
+            <TabletBanner5Container/>
             <TabletBanner7Container/>
             <TabletBanner8Container/>
           </CustomContainer>
