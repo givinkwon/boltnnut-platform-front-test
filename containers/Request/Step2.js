@@ -20,8 +20,6 @@ class Step2Container extends React.Component {
   componentDidMount() {
     const {DetailQuestion} = this.props;
     DetailQuestion.init();
-    this.setState({loading:true});
-
   }
 
   content = () => {
@@ -38,8 +36,8 @@ class Step2Container extends React.Component {
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue>
-          {/* <TitleQue>{DetailQuestion.title_list.results[1].question}</TitleQue> */}
+          {/* <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue> */}
+          <TitleQue>{DetailQuestion.title_list.results[1].question}</TitleQue>
         </TitleContainer>
         <SelectContainer>
           {

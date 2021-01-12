@@ -17,16 +17,17 @@ class Request extends React.Component {
     width: 0,
   }
 
-  static getInitialProps({query}) {
-    return {query}
+  static async getInitialProps()
+  {
+    this.props.DetailQuestion.init();
+    console.log("ASNKDLNASLKCNLKASCNLKASNCLKASNCKLASNCKLANSCLKNASCKLNALSCKLASC");
   }
-
   componentDidMount() {
     //this.props.Request.init(this.props.query)
     console.log(this.props.query)
     this.props.Partner.init();
     this.props.Request.init();
-    this.props.DetailQuestion.init();
+    // this.props.DetailQuestion.init();
 
     //창 크기
     window.addEventListener('resize', this.updateDimensions);
