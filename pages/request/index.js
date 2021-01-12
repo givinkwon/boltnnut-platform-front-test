@@ -17,10 +17,7 @@ class Request extends React.Component {
     width: 0,
   }
 
-  static getInitialProps({query}) {
-    return {query}
-  }
-
+  
   componentDidMount() {
     //this.props.Request.init(this.props.query)
     console.log(this.props.query)

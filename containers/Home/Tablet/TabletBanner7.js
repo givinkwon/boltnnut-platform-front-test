@@ -49,7 +49,7 @@ const CountFunc = ({index}) =>
     );
 };
 
-class MobileBanner7Container extends React.Component {
+class TabletBanner7Container extends React.Component {
     render() {
       const SlideSettings = {
         dots: false,
@@ -334,9 +334,9 @@ class MobileBanner7Container extends React.Component {
     }
   }
   
-  export default MobileBanner7Container;
+  export default TabletBanner7Container;
   
-  const Header = styled(Title.FontSize22)`
+  const Header = styled(Title.FontSize26)`
     color: #191919;
     font-weight: normal;
     font-stretch: normal;
@@ -364,14 +364,15 @@ class MobileBanner7Container extends React.Component {
     // width: calc(14% - 40px);
     // padding: 0px 0px 0px 0px;
     // margin: 0 20px;
+    padding-bottom:38px;
     
     :focus {
       outline: none;
     }
 
     >img{
-      width:90px;
-      height:90px;
+      width:180px;
+      height:180px;
       margin:0 auto;
     //   width:100%;
     //   height:100%;

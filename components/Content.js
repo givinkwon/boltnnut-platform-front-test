@@ -107,7 +107,7 @@ export const FontSize17 = styled.p`
     font-size: 17px;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) {
-    font-size: 14px;
+    font-size: 17px;
     letter-spacing: 0.25px;
   }
   @media (min-width: 1280px) {
