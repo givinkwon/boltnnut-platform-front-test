@@ -4,7 +4,6 @@ import * as Title from "components/Title";
 
 class SliderMain extends React.Component {
   render() {
-    const { item } = this.props;
     return (
       <SliderContent>
           <img src={ this.props.src }/>
