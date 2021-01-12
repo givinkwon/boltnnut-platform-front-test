@@ -24,6 +24,11 @@ import MobileBanner5Container from './Mobile/MobileBanner5';
 import MobileBanner7Container from './Mobile/MobileBanner7';
 import MobileBanner8Container from './Mobile/MobileBanner8';
 
+// Tablet Container
+import TabletBanner0Container from './Tablet/TabletBanner0';
+import TabletBanner4Container from './Tablet/TabletBanner4';
+import TabletBanner5Container from './Tablet/TabletBanner5';
+
 import { inject, observer } from "mobx-react";
 
 
@@ -69,10 +74,10 @@ class HomeConatiner extends React.Component {
         ) : (767.99 < width && width < 1279.98)  ? (
         <>
           <CustomContainer>
-            <MobileBanner0Container/>
+            <TabletBanner0Container/>
             <MobileBanner2Container/>
-            <MobileBanner4Container/>
-            <MobileBanner5Container/>
+            <TabletBanner4Container/>
+            <TabletBanner5Container/>
             <MobileBanner7Container/>
             <MobileBanner8Container/>
           </CustomContainer>
