@@ -47,10 +47,10 @@ export const FontSize24 = styled.p`
   text-align: ${props => props.center ? 'center' : 'left'};
   font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 32px;
+    font-size: 24px;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) {
-    font-size: 14px;
+    font-size: 24px;
     letter-spacing: 0.25px;
   }
   @media (min-width: 1280px) {
@@ -107,7 +107,7 @@ export const FontSize17 = styled.p`
     font-size: 17px;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) {
-    font-size: 14px;
+    font-size: 17px;
     letter-spacing: 0.25px;
   }
   @media (min-width: 1280px) {

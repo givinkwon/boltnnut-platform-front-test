@@ -45,7 +45,7 @@ class TabletBanner2Container extends React.Component {
 
 export default TabletBanner2Container;
 
-const Header = styled(Title.FontSize13)`
+const Header = styled(Title.FontSize17)`
   color: #e8eeff;
   font-weight: bold;
   font-stretch: normal;
@@ -55,7 +55,7 @@ const Header = styled(Title.FontSize13)`
   margin-bottom:2px;
   text-align:center;
 `
-const Middle = styled(Content.FontSize22)`
+const Middle = styled(Content.FontSize24)`
   color: #f6f6f6;
   font-weight: 500;
   font-stretch: normal;
@@ -66,7 +66,7 @@ const Middle = styled(Content.FontSize22)`
   text-align:center;
 `
 
-const Body = styled(Content.FontSize15)`
+const Body = styled(Content.FontSize17)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;

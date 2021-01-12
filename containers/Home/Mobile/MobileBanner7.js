@@ -362,7 +362,7 @@ class MobileBanner7Container extends React.Component {
     // flex-direction: column;
     // align-items: center;
     // width: calc(14% - 40px);
-    // padding: 20px 0;
+    // padding: 0px 0px 0px 0px;
     // margin: 0 20px;
     
     :focus {
@@ -370,8 +370,11 @@ class MobileBanner7Container extends React.Component {
     }
 
     >img{
-      width:100%;
-      height:100%;
+      width:90px;
+      height:90px;
+      margin:0 auto;
+    //   width:100%;
+    //   height:100%;
       overflow: hidden;
       cursor: pointer;
     }

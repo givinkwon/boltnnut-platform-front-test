@@ -32,7 +32,7 @@ class TabletBanner8Container extends React.Component {
 
 export default TabletBanner8Container;
 
-const Header = styled(Title.FontSize18)`
+const Header = styled(Title.FontSize22)`
   color: #ffffff;
   font-weight: 500;
   font-stretch: normal;

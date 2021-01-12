@@ -336,7 +336,7 @@ class TabletBanner7Container extends React.Component {
   
   export default TabletBanner7Container;
   
-  const Header = styled(Title.FontSize22)`
+  const Header = styled(Title.FontSize26)`
     color: #191919;
     font-weight: normal;
     font-stretch: normal;
@@ -362,16 +362,20 @@ class TabletBanner7Container extends React.Component {
     // flex-direction: column;
     // align-items: center;
     // width: calc(14% - 40px);
-    // padding: 20px 0;
+    // padding: 0px 0px 0px 0px;
     // margin: 0 20px;
+    padding-bottom:38px;
     
     :focus {
       outline: none;
     }
 
     >img{
-      width:100%;
-      height:100%;
+      width:180px;
+      height:180px;
+      margin:0 auto;
+    //   width:100%;
+    //   height:100%;
       overflow: hidden;
       cursor: pointer;
     }
