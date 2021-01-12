@@ -50,7 +50,7 @@ class MobileBanner5Container extends React.Component {
     }
     return (
         <Background style={{flexDirection: 'column', paddingBottom: 70}}>
-              <Fade bottom style={{display: 'inline-flex', justifyContent: 'center'}}>
+              <Fade bottom>
                 <Header>
                   클라이언트분들께<br/>
                   검증된 <span class="bold">볼트앤너트</span>를 만나보세요
