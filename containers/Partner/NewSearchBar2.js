@@ -458,7 +458,7 @@ class SearchBarContainer2 extends React.Component {
       })
 
       Router.push({
-        pathname: `/complete`,
+        pathname: `/request/complete`,
         query: {},
         });
   };
