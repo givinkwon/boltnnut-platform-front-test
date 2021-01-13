@@ -8,9 +8,7 @@ import MobileNav from 'components/MobileNav';
 import Footer from 'components/Footer';
 import Spinner from 'components/Spinner';
 
-import RequestConatiner from 'containers/Request';
-
-import * as DetailQuestionAPI from 'axios/DetailQuestion';
+import RequestConatiner from 'containers/Request'
 
 @inject('Request', 'Partner','DetailQuestion')
 @observer
@@ -39,6 +37,7 @@ class Request extends React.Component {
 
   render(){
     const { width } = this.state;
+    const {stars} = this.props;
     return (
       <div>
         <Head>
@@ -68,4 +67,5 @@ class Request extends React.Component {
     )
   }
 }
+
 export default Request
