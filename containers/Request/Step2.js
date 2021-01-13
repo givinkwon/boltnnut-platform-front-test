@@ -39,17 +39,19 @@ class Step2Container extends React.Component {
         <TitleContainer>
           <img src={ Qimage }/>
           <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue>
-          {/* <TitleQue>{DetailQuestion.title_list.results[1].question}</TitleQue> */}
         </TitleContainer>
         <SelectContainer>
           {
             this.state.question.map((question) => {
               return (
+              <>
+                <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>
                 <Select onClick = {test}>
                   <Text id={'queText'} color={"#282c36"}>
                     {question}
                   </Text>
                 </Select>
+              </>
               )}
             )
           }

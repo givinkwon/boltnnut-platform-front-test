@@ -77,6 +77,7 @@ class MobileBanner6Container extends React.Component {
       slidesToShow: 1,
       draggable: false,
       slidesToScroll: 1,
+      appendDots : dots => <ul> {dots}</ul>,
     };
     return (
       <Background backgroundColor= {"#a4aab4"}>
@@ -129,18 +130,6 @@ const SliderWraper = styled.div`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-  }
-  .slick-dots li button {
-    height: 4px;
-    width: 4px;
-    background-color: #0933b3;
-    border-radius: 8px;
-  }
-  .slick-dots li button:before {
-    height: 4px;
-    width: 4px;
-    background-color: #0933b3;
-    border-radius: 4px;
   }
 `
 const CustomContainer = styled(Containerv1)`
