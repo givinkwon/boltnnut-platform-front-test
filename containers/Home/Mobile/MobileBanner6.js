@@ -19,13 +19,30 @@ class MobileBanner6Container extends React.Component {
     prev: false,
     show: 'visible',
     progress: 0,
+    display1: 'none',
+    display2: 'none',
+    display3: 'none',
+
+  }
+  componentDidMount() {
+    const {current} = this.state;
+    if (current == 0) {
+      this.setState({...this.state, display1: 'block'});
+      this.setState({...this.state, display2: 'none'});
+      this.setState({...this.state, display3: 'none'});
+    }
+    else if (current == 1) {
+      this.setState({...this.state, display1: 'none'});
+      this.setState({...this.state, display2: 'block'});
+      this.setState({...this.state, display3: 'none'});
+    }
+    else if (current == 2) {
+      this.setState({...this.state, display1: 'none'});
+      this.setState({...this.state, display2: 'none'});
+      this.setState({...this.state, display3: 'block'});
+    }
   }
 
-  buttonClick = (e) => {
-    const newPage = e.target.innerText*1;
-    this.setState({...this.state, current: newPage-1, progress: newPage*100-100});
-    this.slider.slickGoTo(newPage-1);
-  }
   sliderNext = () => {
     const {current, progress} = this.state;
     const fullfage = 2;
@@ -36,6 +53,21 @@ class MobileBanner6Container extends React.Component {
       }
       setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
       this.slider.slickNext();
+    }
+    if (current == 0) {
+      this.setState({...this.state, display1: 'block'});
+      this.setState({...this.state, display2: 'none'});
+      this.setState({...this.state, display3: 'none'});
+    }
+    else if (current == 1) {
+      this.setState({...this.state, display1: 'none'});
+      this.setState({...this.state, display2: 'block'});
+      this.setState({...this.state, display3: 'none'});
+    }
+    else if (current == 2) {
+      this.setState({...this.state, display1: 'none'});
+      this.setState({...this.state, display2: 'none'});
+      this.setState({...this.state, display3: 'block'});
     }
   }
   sliderPrev = () => {
@@ -48,27 +80,27 @@ class MobileBanner6Container extends React.Component {
       setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
       this.slider.slickPrev();
     }
+    if (current == 0) {
+      this.setState({...this.state, display1: 'block'});
+      this.setState({...this.state, display2: 'none'});
+      this.setState({...this.state, display3: 'none'});
+    }
+    else if (current == 1) {
+      this.setState({...this.state, display1: 'none'});
+      this.setState({...this.state, display2: 'block'});
+      this.setState({...this.state, display3: 'none'});
+    }
+    else if (current == 2) {
+      this.setState({...this.state, display1: 'none'});
+      this.setState({...this.state, display2: 'none'});
+      this.setState({...this.state, display3: 'block'});
+    }
   }
   render() {
-    const { current, show } = this.state;
+    const { current, show, display1, display2, display3} = this.state;
     const left = 'static/images/Home/Mobile/MobileBanner6/prev.png';
     const right = 'static/images/Home/Mobile/MobileBanner6/next.png';
 
-    const item1 = {
-      headContent: "Step 1",
-      mainContent: "파트너 신청",
-      footContent: "회사소개서, 주요기술이력서 등을 통해 \n 파트너의 전문성을 검토하고, 파트너 검증\n키트를 통해 가격경쟁력을 파악합니다."
-    };
-    const item2 = {
-      headContent: "Step 2",
-      mainContent: "파트너 실사",
-      footContent: "볼트앤너트 시니어 컨설턴트가 제출받은 \n검토 자료를 기반으로 6종의 정량 평가를\n 실시하여 협업 및 소통능력을 검증합니다."
-    };
-    const item3 = {
-      headContent: "Step 3",
-      mainContent: "프로젝트 상세 검증",
-      footContent: "볼트앤너트 측에서 테스트 프로젝트 발주를 \n통해 제조사의 품질과 납기를 검증하고\n 볼트앤너트 프로세스를 교육합니다."
-    };
     const settings = {
       dots: true,
       infinite: false,
@@ -112,6 +144,27 @@ class MobileBanner6Container extends React.Component {
                 }
               </div>
             </ContainerBanner6>
+            <TextContainer style={{display: display1}}>
+              <Head>Step 1</Head>
+              <Main>파트너 신청</Main>
+              <Foot>회사소개서, 주요기술이력서 등을 통해
+                파트너의 전문<br/>성을 검토하고, 파트너 검증
+                키트를 통해 가격경쟁력을<br/>파악합니다.</Foot>
+            </TextContainer>
+            <TextContainer style={{display: display2}}>
+              <Head>Step 2</Head>
+              <Main>파트너 실사</Main>
+              <Foot>볼트앤너트 시니어 컨설턴트가 제출받은
+                검토 자료를 기반으로 6종의 정량 평가를
+                실시하여 협업 및 소통능력을 검증합니다.</Foot>
+            </TextContainer>
+            <TextContainer style={{display: display3}}>
+              <Head>Step 3</Head>
+              <Main>프로젝트 상세 검증</Main>
+              <Foot>볼트앤너트 측에서 테스트 프로젝트 발주를
+                통해 제조사의 품질과 납기를 검증하고
+                볼트앤너트 프로세스를 교육합니다.</Foot>
+            </TextContainer>
           </Fade>
         </CustomContainer>
       </Background>
@@ -124,23 +177,9 @@ export default MobileBanner6Container;
 const SliderWraper = styled.div`
   width: 240px;
   height: 128px;
-  margin: 46px 0px 36px 0px;
-  .slick-dots li {
-    // display: inline-flex;
-    // align-items: center;
-    // justify-content: center;
-  }
-  .slick-dots li button {
-    // height: 4px;
-    // width: 4px;
-    // background-color: #0933b3;
-    // border-radius: 8px;
-  }
+  margin-top: 46px;
   .slick-dots li button:before {
-    // height: 4px;
-    // width: 4px;
-    // background-color: #0933b3;
-    // border-radius: 4px;
+    color: #0933b3;
     -webkit-transform: scale(0.5);
   }
 `
@@ -168,6 +207,22 @@ const ContainerBanner6 = styled.div`
   flex-direction: row;
   align-items: center;
 `
+const Head = styled(Title.FontSize24)`
+  color: #0933b3;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.6px;
+  white-space: pre-line;
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 2px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 12px;
+  }
+;
+`
 const Main = styled(Title.FontSize32)`
   font-weight: bold;
   font-stretch: normal;
@@ -176,13 +231,13 @@ const Main = styled(Title.FontSize32)`
   letter-spacing: -0.8px;
   text-align: left;
   color: #333742;
-  margin: 10px 0px 30px 0px;
   white-space: pre-line;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
   }
 `
 const Foot = styled(Title.FontSize24)`
+  margin: 14px 0px 70px 0px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -194,4 +249,8 @@ const Foot = styled(Title.FontSize24)`
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
   }
+`
+const TextContainer = styled.div`
+  width: 280px;
+  text-align: left;
 `
