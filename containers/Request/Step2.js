@@ -17,29 +17,30 @@ class Step2Container extends React.Component {
   }
 
   content = () => {
-    const { title, question} = this.state;
+    const { title, question } = this.state;
+    const { DetailQuestion } = this.props;
 
     let test = (e) => {
       console.log(e.target.innerText)
     }
-    const {DetailQuestion} = this.props;
 
     return (
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          {/* <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue> */}
           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[this.state.index].question}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue>}
         </TitleContainer>
         <SelectContainer>
           {
             this.state.question.map((question) => {
               return (
+              <>
                 <Select onClick = {test}>
                   <Text id={'queText'} color={"#282c36"}>
                     {question}
                   </Text>
                 </Select>
+              </>
               )}
             )
           }
@@ -53,7 +54,6 @@ class Step2Container extends React.Component {
     
     return (
       <RequestCardContainer title={"제품 정보 선택"} content = { content }>
-        
       </RequestCardContainer>
     );
   }

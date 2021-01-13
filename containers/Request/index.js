@@ -8,26 +8,26 @@ import RequestCardContainer from './RequestCard';
 import Background from 'components/Background';
 //counter
 import 'react-count-animation/dist/count.min.css';
-// import 'react-count-animation/dist/count.min.css';
-// Step
+import { inject, observer } from "mobx-react";
+
 import Step1Container from "./Step1";
 import Step2Container from './Step2';
 import Step3Container from './Step3';
 import Step4Container from './Step4';
 
+@inject("DetailQuestion")
+@observer
 class RequestContainer extends React.Component {
-
+  
   render() {
+
     return (
       <div style={{ overflow: 'hidden' }}>
         <BannerContainer />
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
             <Step />
-            {/* { <Step1Container /> } */}
-            {<Step2Container/>}
-            
-            {/* <Step3Container /> */}
+            <Step2Container />
           </Containerv1>
         </Background>
       </div>

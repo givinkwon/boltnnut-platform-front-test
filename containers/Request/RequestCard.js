@@ -56,11 +56,13 @@ class RequestCardContainer extends Component {
     const { targets,active } = this.state;
     if (this.fullChecker(targets) == true && active == false) {
       this.setState({...this.state, active: true})
+    } else if (this.fullChecker(targets) == false && active == true) {
+      this.setState({...this.state, active: false})
     };
   }
 
   fullChecker(data) {
-    const { buttonActiveCount } = this.state;
+    const { buttonActiveCount, active } = this.state;
     let counter = 0;
     for (let i = 0; i < data.length; i++) {
       if (data[i].value.length != 0) {

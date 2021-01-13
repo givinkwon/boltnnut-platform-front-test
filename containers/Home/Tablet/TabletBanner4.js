@@ -8,7 +8,7 @@ import ReviewCard2 from 'components/Review';
 import * as Content from 'components/Content';
 import Fade from 'react-reveal/Fade';
 
-const image1 = "/static/images/Home/Banner4/Banner4_img1.png";
+const image1 = "/static/images/Home/Mobile/MobileBanner4/Banner4_img1.png";
 
 class TabletBanner4Container extends React.Component {
 
@@ -24,7 +24,7 @@ class TabletBanner4Container extends React.Component {
                     <Middle>
                     7가지 계약 관리 서비스로 <br/> 계약 이행<span class="bold"> 100% 보증</span>
                     </Middle>
-                    <img src={image1} style={{width: "92.5%", height: 230, marginTop: 30, marginBottom: 22}}/>
+                    <img src={image1} style={{marginTop: 30, marginBottom: 22}}/>
                     <Body>
                         개발부터 납품까지 전달 프로젝트 매니저가 <br/> 배정되어 계약 이행을 100% 보증합니다.
                     </Body>
