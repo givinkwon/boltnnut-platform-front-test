@@ -25,7 +25,8 @@ class RequestContainer extends React.Component {
           <Containerv1>
             <Step />
             {/* { <Step1Container /> } */}
-            {<Step2Container />}
+            {<Step2Container/>}
+            
             {/* <Step3Container /> */}
           </Containerv1>
         </Background>

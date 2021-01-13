@@ -9,10 +9,7 @@ import Footer from 'components/Footer'
 import Spinner from 'components/Spinner'
 
 import RequestConatiner from 'containers/Request'
-//==========================================
 
-import axios from 'axios';
-//=============================================
 @inject('Request', 'Partner','DetailQuestion')
 @observer
 class Request extends React.Component {
@@ -46,6 +43,7 @@ class Request extends React.Component {
 
   render(){
     const { width } = this.state;
+    const {stars} = this.props;
     return (
       <div>
         <Head>
@@ -69,21 +67,21 @@ class Request extends React.Component {
           )
           }
         </>
-        <RequestConatiner question={this.props.stars}/>
+        {/* <RequestConatiner question={this.props.stars}/> */}
+        <RequestConatiner/>
         <Footer/>
       </div>
     )
   }
 }
 
-Request.getInitialProps = async ctx=>
-{
-  console.log("Reqsssuest Getinitial@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-  const { data } = await axios.get('http://ec2-52-79-230-30.ap-northeast-2.compute.amazonaws.com:8080/detailQuestionTitle/');
+// Request.getInitialProps = async context=>
+// {
+//   console.log("Reqsssuest Getinitial@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//   const { data } = await axios.get('http://ec2-52-79-230-30.ap-northeast-2.compute.amazonaws.com:8080/detailQuestionTitle/');
+//   console.log({data});
   
-  console.log({data});
-  return { stars: data };
-}
+//   return { stars: data };
+// }
 
 export default Request
-
