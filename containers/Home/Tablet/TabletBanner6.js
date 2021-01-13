@@ -4,15 +4,15 @@ import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
 import Slider from 'react-slick';
-// import SliderWrapper from "./SliderStyle";
-import SliderMain from '.././MobileSliderContent';
+
+import SliderMain from '../MobileSliderContent';
 import Fade from 'react-reveal/Fade';
 const pic1 = 'static/images/Home/Mobile/MobileBanner6/pic1.png';
 const pic2 = 'static/images/Home/Mobile/MobileBanner6/pic2.png';
 const pic3 = 'static/images/Home/Mobile/MobileBanner6/pic3.png';
 
 
-class MobileBanner6Container extends React.Component {
+class TabletBanner6Container extends React.Component {
   state = {
     current: 0,
     next: true,
@@ -30,8 +30,8 @@ class MobileBanner6Container extends React.Component {
             <Head>Step 1</Head>
             <Main>파트너 신청</Main>
             <Foot>회사소개서, 주요기술이력서 등을 통해
-              파트너의 전문<br/>성을 검토하고, 파트너 검증
-              키트를 통해 가격경쟁력을<br/>파악합니다.</Foot>
+              파트너의 전문성을 검토하고, 파트너 검증
+              키트를 통해 가격경쟁력을 파악합니다.</Foot>
           </TextContainer>
 
         </>
@@ -146,10 +146,10 @@ class MobileBanner6Container extends React.Component {
   }
 }
 
-export default MobileBanner6Container;
+export default TabletBanner6Container;
 
 const SliderWraper = styled.div`
-  width: 243px;
+  width: 240px;
   height: 128px;
   .slick-dots li button:before {
     color: #0933b3;
@@ -171,8 +171,8 @@ const Header = styled(Title.FontSize56)`
   letter-spacing: -0.55px;
   margin-top: 70px;
   text-align: center;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 22px;
+  @media (min-width: 767.99px) and (max-width: 1279.98px) {
+    font-size: 24px;
   }
 `
 const ContainerBanner6 = styled.div`
@@ -192,8 +192,8 @@ const Head = styled(Title.FontSize24)`
   text-align: left;
   margin-top: 20px;
   margin-bottom: 2px;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 12px;
+  @media (min-width: 767.99px) and (max-width: 1279.98px) {
+    font-size: 14px;
   }
 ;
 `
@@ -206,8 +206,8 @@ const Main = styled(Title.FontSize32)`
   text-align: left;
   color: #333742;
   white-space: pre-line;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 13px;
+  @media (min-width: 767.99px) and (max-width: 1279.98px) {
+    font-size: 15px;
   }
 `
 const Foot = styled(Title.FontSize24)`
@@ -220,8 +220,8 @@ const Foot = styled(Title.FontSize24)`
   text-align: left;
   white-space: pre-line;
   color: #f6f6f6;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 13px;
+  @media (min-width: 767.99px) and (max-width: 1279.98px) {
+    font-size: 15px;
   }
 `
 const TextContainer = styled.div`

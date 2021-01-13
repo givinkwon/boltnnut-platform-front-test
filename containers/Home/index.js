@@ -31,6 +31,7 @@ import TabletBanner2Container from './Tablet/TabletBanner2';
 import TabletBanner3Container from './Tablet/TabletBanner3';
 import TabletBanner4Container from './Tablet/TabletBanner4';
 import TabletBanner5Container from './Tablet/TabletBanner5';
+import TabletBanner6Container from './Tablet/TabletBanner6';
 import TabletBanner7Container from './Tablet/TabletBanner7';
 import TabletBanner8Container from './Tablet/TabletBanner8';
 
@@ -85,6 +86,7 @@ class HomeConatiner extends React.Component {
             <TabletBanner3Container/>
             <TabletBanner4Container/>
             <TabletBanner5Container/>
+            <TabletBanner6Container/>
             <TabletBanner7Container/>
             <TabletBanner8Container/>
           </CustomContainer>
