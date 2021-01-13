@@ -18,55 +18,65 @@ class MobileBanner6Container extends React.Component {
     prev: false,
     show: 'visible',
     progress: 0,
-    display1: 'none',
-    display2: 'none',
-    display3: 'none',
-
+    display: 1
   }
-  componentDidMount() {
-    const {current} = this.state;
-    if (current == 0) {
-      this.setState({...this.state, display1: 'block'});
-      this.setState({...this.state, display2: 'none'});
-      this.setState({...this.state, display3: 'none'});
-    }
-    else if (current == 1) {
-      this.setState({...this.state, display1: 'none'});
-      this.setState({...this.state, display2: 'block'});
-      this.setState({...this.state, display3: 'none'});
-    }
-    else if (current == 2) {
-      this.setState({...this.state, display1: 'none'});
-      this.setState({...this.state, display2: 'none'});
-      this.setState({...this.state, display3: 'block'});
-    }
+
+  content(idx) {
+  if (idx == 1) {
+    return (
+    <>
+      <TextContainer>
+        <Head>Step 1</Head>
+        <Main>파트너 신청</Main>
+        <Foot>회사소개서, 주요기술이력서 등을 통해
+          파트너의 전문<br/>성을 검토하고, 파트너 검증
+          키트를 통해 가격경쟁력을<br/>파악합니다.</Foot>
+      </TextContainer>
+      
+    </>
+    )
+  }
+  if (idx == 2) {
+  return (
+    <>
+      <TextContainer>
+        <Head>Step 2</Head>
+        <Main>파트너 실사</Main>
+        <Foot>볼트앤너트 시니어 컨설턴트가 제출받은
+          검토 자료를 기반으로 6종의 정량 평가를
+          실시하여 협업 및 소통능력을 검증합니다.</Foot>
+      </TextContainer>
+    </>
+  )
+  }
+  if (idx == 3) {
+    return (
+      <>
+        <TextContainer>
+          <Head>Step 3</Head>
+          <Main>프로젝트 상세 검증</Main>
+          <Foot>볼트앤너트 측에서 테스트 프로젝트 발주를
+            통해 제조사의 품질과 납기를 검증하고
+            볼트앤너트 프로세스를 교육합니다.</Foot>
+        </TextContainer>
+      </>
+    )
+  }
   }
 
   sliderNext = () => {
     const {current, progress} = this.state;
     const fullfage = 2;
+    console.log(this.slider.innerSlider.state.currentSlide);
     if (current != fullfage) {
       const newPage = current + 1;
       if (progress < 200) {
         this.setState({...this.state, current: newPage, progress: progress + 100, show:'hidden'});
       }
       setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
+      this.setState({...this.state, display: newPage});
       this.slider.slickNext();
-    }
-    if (current == 0) {
-      this.setState({...this.state, display1: 'block'});
-      this.setState({...this.state, display2: 'none'});
-      this.setState({...this.state, display3: 'none'});
-    }
-    else if (current == 1) {
-      this.setState({...this.state, display1: 'none'});
-      this.setState({...this.state, display2: 'block'});
-      this.setState({...this.state, display3: 'none'});
-    }
-    else if (current == 2) {
-      this.setState({...this.state, display1: 'none'});
-      this.setState({...this.state, display2: 'none'});
-      this.setState({...this.state, display3: 'block'});
+      console.log("aa")
     }
   }
   sliderPrev = () => {
@@ -79,24 +89,10 @@ class MobileBanner6Container extends React.Component {
       setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
       this.slider.slickPrev();
     }
-    if (current == 0) {
-      this.setState({...this.state, display1: 'block'});
-      this.setState({...this.state, display2: 'none'});
-      this.setState({...this.state, display3: 'none'});
-    }
-    else if (current == 1) {
-      this.setState({...this.state, display1: 'none'});
-      this.setState({...this.state, display2: 'block'});
-      this.setState({...this.state, display3: 'none'});
-    }
-    else if (current == 2) {
-      this.setState({...this.state, display1: 'none'});
-      this.setState({...this.state, display2: 'none'});
-      this.setState({...this.state, display3: 'block'});
-    }
   }
+
   render() {
-    const { current, show, display1, display2, display3} = this.state;
+    const { current, show, display } = this.state;
     const left = 'static/images/Home/Mobile/MobileBanner6/prev.png';
     const right = 'static/images/Home/Mobile/MobileBanner6/next.png';
 
@@ -144,27 +140,7 @@ class MobileBanner6Container extends React.Component {
                 }
               </div>
             </ContainerBanner6>
-            <TextContainer style={{display: display1}}>
-              <Head>Step 1</Head>
-              <Main>파트너 신청</Main>
-              <Foot>회사소개서, 주요기술이력서 등을 통해
-                파트너의 전문<br/>성을 검토하고, 파트너 검증
-                키트를 통해 가격경쟁력을<br/>파악합니다.</Foot>
-            </TextContainer>
-            <TextContainer style={{display: display2}}>
-              <Head>Step 2</Head>
-              <Main>파트너 실사</Main>
-              <Foot>볼트앤너트 시니어 컨설턴트가 제출받은
-                검토 자료를 기반으로 6종의 정량 평가를
-                실시하여 협업 및 소통능력을 검증합니다.</Foot>
-            </TextContainer>
-            <TextContainer style={{display: display3}}>
-              <Head>Step 3</Head>
-              <Main>프로젝트 상세 검증</Main>
-              <Foot>볼트앤너트 측에서 테스트 프로젝트 발주를
-                통해 제조사의 품질과 납기를 검증하고
-                볼트앤너트 프로세스를 교육합니다.</Foot>
-            </TextContainer>
+            {this.content(display)}
           </Fade>
         </CustomContainer>
       </Background>

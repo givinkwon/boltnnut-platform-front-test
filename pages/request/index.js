@@ -1,15 +1,16 @@
 import React from 'react'
 import Head from 'next/head'
-import styled from 'styled-components'
-import { inject, observer } from 'mobx-react'
+import styled from 'styled-components';
+import { inject, observer } from 'mobx-react';
 
-import Nav from 'components/Nav'
-import MobileNav from 'components/MobileNav'
-import Footer from 'components/Footer'
-import Spinner from 'components/Spinner'
+import Nav from 'components/Nav';
+import MobileNav from 'components/MobileNav';
+import Footer from 'components/Footer';
+import Spinner from 'components/Spinner';
 
-import RequestConatiner from 'containers/Request'
-import axios from 'axios';
+import RequestConatiner from 'containers/Request';
+
+import * as DetailQuestionAPI from 'axios/DetailQuestion';
 
 @inject('Request', 'Partner','DetailQuestion')
 @observer
@@ -18,14 +19,7 @@ class Request extends React.Component {
     width: 0,
   }
 
-  static getInitialProps({query}) {
-    const { data } = await axios.get('http://ec2-52-79-230-30.ap-northeast-2.compute.amazonaws.com:8080/detailQuestionTitle/');
-    console.log(data);
-    return {query, data}
-  }
-
   componentDidMount() {
-    //this.props.Request.init(this.props.query)
     this.props.Partner.init();
     this.props.Request.init();
     this.props.DetailQuestion.init();
@@ -68,22 +62,10 @@ class Request extends React.Component {
           )
           }
         </>
-        <RequestConatiner question={this.props.stars}/>
+        <RequestConatiner/>
         <Footer/>
       </div>
     )
   }
 }
-
-
-Request.getInitialProps = async ctx =>
-{
-  console.log("Reqsssuest Getinitial@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-  const { data } = await axios.get('http://ec2-52-79-230-30.ap-northeast-2.compute.amazonaws.com:8080/detailQuestionTitle/');
-  
-  console.log({data});
-  return { stars: data };
-}
-
 export default Request
-

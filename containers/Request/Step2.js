@@ -16,36 +16,26 @@ class Step2Container extends React.Component {
     question: ["예", "아니오"],
     index: 1
   }
-  
-  componentDidMount() {
-    const {DetailQuestion} = this.props;
-    DetailQuestion.init();
-    this.setState({loading:true});
-  }
 
   content = () => {
-    const { title, question,loading } = this.state;
+    const { title, question, loading } = this.state;
+    const { DetailQuestion } = this.props;
 
     let test = (e) => {
       console.log(e.target.innerText)
     }
-    const {DetailQuestion} = this.props;
 
     return (
-
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue>
-          {/* <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue> */}
-          {/* <TitleQue>{DetailQuestion.title_list.results[1].question}</TitleQue> */}
+          <TitleQue>{DetailQuestion.title_list.results && DetailQuestion.title_list.results[0].question}</TitleQue>
         </TitleContainer>
         <SelectContainer>
           {
             this.state.question.map((question) => {
               return (
               <>
-                <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>
                 <Select onClick = {test}>
                   <Text id={'queText'} color={"#282c36"}>
                     {question}
@@ -66,7 +56,6 @@ class Step2Container extends React.Component {
     
     return (
       <RequestCardContainer title={"제품 정보 선택"} content = { content }>
-        
       </RequestCardContainer>
     );
   }
