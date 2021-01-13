@@ -4,7 +4,6 @@ import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
 import Slider from 'react-slick';
-// import SliderWrapper from "./SliderStyle";
 import SliderMain from '.././MobileSliderContent';
 import Fade from 'react-reveal/Fade';
 const pic1 = 'static/images/Home/Mobile/MobileBanner6/pic1.png';
@@ -178,18 +177,10 @@ export default MobileBanner6Container;
 const SliderWraper = styled.div`
   width: 240px;
   height: 128px;
-<<<<<<< HEAD
-  margin: 46px 0px 36px 0px;
-  .slick-dots li {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-=======
   margin-top: 46px;
   .slick-dots li button:before {
     color: #0933b3;
     -webkit-transform: scale(0.5);
->>>>>>> a67a6696ae82d387505c623a6744eb7b37e81a42
   }
 `
 const CustomContainer = styled(Containerv1)`

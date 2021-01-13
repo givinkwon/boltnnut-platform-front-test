@@ -16,12 +16,11 @@ class Step2Container extends React.Component {
     question: ["예", "아니오"],
     index: 1
   }
-
+  
   componentDidMount() {
     const {DetailQuestion} = this.props;
     DetailQuestion.init();
     this.setState({loading:true});
-
   }
 
   content = () => {
@@ -32,13 +31,14 @@ class Step2Container extends React.Component {
     }
     const {DetailQuestion} = this.props;
 
-
     return (
 
       <>
         <TitleContainer>
           <img src={ Qimage }/>
           <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue>
+          {/* <TitleQue>{this.state.title}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue> */}
+          {/* <TitleQue>{DetailQuestion.title_list.results[1].question}</TitleQue> */}
         </TitleContainer>
         <SelectContainer>
           {
@@ -63,8 +63,10 @@ class Step2Container extends React.Component {
   render(){
     const content = this.content();
     const { DetailQuestion } = this.props
+    
     return (
       <RequestCardContainer title={"제품 정보 선택"} content = { content }>
+        
       </RequestCardContainer>
     );
   }
