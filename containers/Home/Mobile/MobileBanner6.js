@@ -126,21 +126,22 @@ const SliderWraper = styled.div`
   height: 128px;
   margin: 46px 0px 36px 0px;
   .slick-dots li {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    // display: inline-flex;
+    // align-items: center;
+    // justify-content: center;
   }
   .slick-dots li button {
-    height: 4px;
-    width: 4px;
-    background-color: #0933b3;
-    border-radius: 8px;
+    // height: 4px;
+    // width: 4px;
+    // background-color: #0933b3;
+    // border-radius: 8px;
   }
   .slick-dots li button:before {
-    height: 4px;
-    width: 4px;
-    background-color: #0933b3;
-    border-radius: 4px;
+    // height: 4px;
+    // width: 4px;
+    // background-color: #0933b3;
+    // border-radius: 4px;
+    -webkit-transform: scale(0.5);
   }
 `
 const CustomContainer = styled(Containerv1)`
