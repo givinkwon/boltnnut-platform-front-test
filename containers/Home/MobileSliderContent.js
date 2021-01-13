@@ -15,8 +15,8 @@ class SliderMain extends React.Component {
 export default SliderMain;
 
 const SliderContent = styled.div`
-  width: 240px;
-  height: 120px;
+  width: 243px;
+  height: 128px;
 `
 
 
