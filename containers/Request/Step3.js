@@ -5,6 +5,13 @@ import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
 
+//material-ui
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+
 //Slider
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
@@ -84,7 +91,15 @@ class Step3Container extends Component {
             {this.props.title}
           </Header>
           <DetailContainer style={{display: showEstimateDetail}}>
-            여기에 견적서 넣기
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>번호</TableCell>
+                  <TableCell>번호</TableCell>
+                  <TableCell>번호</TableCell>
+                </TableRow>
+              </TableHead>
+            </Table>
           </DetailContainer>
           <HeaderTextBox>
             <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
