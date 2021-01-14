@@ -154,7 +154,7 @@ const SliderWraper = styled.div`
   height: 128px;
   .slick-dots li button:before {
     color: #0933b3;
-    -webkit-transform: scale(0.5);
+    -webkit-transform: scale(0.6);
   }
 `
 const CustomContainer = styled(Containerv1)`
