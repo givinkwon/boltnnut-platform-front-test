@@ -8,10 +8,12 @@ class EstimateLogoSlider extends React.Component {
   render() {
     const SlideSettings = {
         dots: false,
-        infinite: false,
-        slidesToShow: 4,
+        infinite: true,
+        autoplay:true,
+        slidesToShow: 6,
         slidesToScroll: 1,
-        draggable: true
+        draggable: true,
+        rows:2
       };
     
     return (
@@ -22,29 +24,13 @@ class EstimateLogoSlider extends React.Component {
                     <ImgBox>
                         <img src={Logo1}/>
                     </ImgBox>
-                    <TextBox>
-                        <HashTag>
-                            #27년차
-                        </HashTag>
-                        <HashTag>
-                            #의료기기
-                        </HashTag>
-                    </TextBox>
                 </Item>
-            </div>            
+            </div>     
             <div>
                 <Item>
                     <ImgBox>
                         <img src={Logo1}/>
                     </ImgBox>
-                    <TextBox>
-                        <HashTag>
-                            #27년차
-                        </HashTag>
-                        <HashTag>
-                            #의료기기
-                        </HashTag>
-                    </TextBox>
                 </Item>
             </div>
             <div>
@@ -52,14 +38,6 @@ class EstimateLogoSlider extends React.Component {
                     <ImgBox>
                         <img src={Logo1}/>
                     </ImgBox>
-                    <TextBox>
-                        <HashTag>
-                            #27년차
-                        </HashTag>
-                        <HashTag>
-                            #의료기기
-                        </HashTag>
-                    </TextBox>
                 </Item>
             </div>
             <div>
@@ -67,14 +45,69 @@ class EstimateLogoSlider extends React.Component {
                     <ImgBox>
                         <img src={Logo1}/>
                     </ImgBox>
-                    <TextBox>
-                        <HashTag>
-                            #27년차
-                        </HashTag>
-                        <HashTag>
-                            #의료기기
-                        </HashTag>
-                    </TextBox>
+                </Item>
+            </div> 
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                </Item>
+            </div>  
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                </Item>
+            </div>  
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                </Item>
+            </div>  
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                </Item>
+            </div>  
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                </Item>
+            </div>  
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                </Item>
+            </div>  
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                </Item>
+            </div>  
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
+                </Item>
+            </div>    
+            <div>
+                <Item>
+                    <ImgBox>
+                        <img src={Logo1}/>
+                    </ImgBox>
                 </Item>
             </div>
             <div>
@@ -82,16 +115,8 @@ class EstimateLogoSlider extends React.Component {
                     <ImgBox>
                         <img src={Logo1}/>
                     </ImgBox>
-                    <TextBox>
-                        <HashTag>
-                            #27년차
-                        </HashTag>
-                        <HashTag>
-                            #의료기기
-                        </HashTag>
-                    </TextBox>
                 </Item>
-            </div>
+            </div>  
         </StyledSlider>
       </ItemBox>
     )
@@ -105,18 +130,21 @@ const StyledSlider = styled(Slider)`
 `
 
 const ItemBox=styled.div`
-  padding-top:60px;
+  padding-top:37px;
   width:100%;
   .slick-list >div {
-      margin-left:2px;
+      margin-left:4px;
       padding-top:10px;
       padding-bottom:10px;
   }
 `
 
 const Item=styled.div`
-  width: 188px;
-  height: 274px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width: 122px;
+  height: 122px;
   border-radius: 10px;
   box-shadow: 0 3px 6px 0 gray;
 `
@@ -138,10 +166,11 @@ const HashTag = styled(Content.FontSize15)`
 `
 
 const ImgBox=styled.div`
-   padding-top:20px;
-   width:150px;
-   height:150px;
-   margin:0 auto;
+  
+//    padding-top:20px;
+   width:100px;
+   height:100px;
+//    margin:0 auto;
    >img
    {
        width:100%;
