@@ -46,51 +46,51 @@ export default class MyDocument extends Document {
   //    `
   //  };
   //}
-  // setChannelTalk() {
-  //   return {
-  //     __html: `
-  //       (function() {
-  //         var w = window;
-  //         if (w.ChannelIO) {
-  //           return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
-  //         }
-  //         var d = window.document;
-  //         var ch = function() {
-  //           ch.c(arguments);
-  //         };
-  //         ch.q = [];
-  //         ch.c = function(args) {
-  //           ch.q.push(args);
-  //         };
-  //         w.ChannelIO = ch;
-  //         function l() {
-  //           if (w.ChannelIOInitialized) {
-  //             return;
-  //           }
-  //           w.ChannelIOInitialized = true;
-  //           var s = document.createElement('script');
-  //           s.type = 'text/javascript';
-  //           s.async = true;
-  //           s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
-  //           s.charset = 'UTF-8';
-  //           var x = document.getElementsByTagName('script')[0];
-  //           x.parentNode.insertBefore(s, x);
-  //         }
-  //         if (document.readyState === 'complete') {
-  //           l();
-  //         } else if (window.attachEvent) {
-  //           window.attachEvent('onload', l);
-  //         } else {
-  //           window.addEventListener('DOMContentLoaded', l, false);
-  //           window.addEventListener('load', l, false);
-  //         }
-  //       })();
-  //       ChannelIO('boot', {
-  //         "pluginKey": "ec3d75f3-0b9e-4b01-a746-dfed77e31339"
-  //       });
-  //     `
-  //   }
-  // }
+  setChannelTalk() {
+    return {
+      __html: `
+        (function() {
+          var w = window;
+          if (w.ChannelIO) {
+            return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
+          }
+          var d = window.document;
+          var ch = function() {
+            ch.c(arguments);
+          };
+          ch.q = [];
+          ch.c = function(args) {
+            ch.q.push(args);
+          };
+          w.ChannelIO = ch;
+          function l() {
+            if (w.ChannelIOInitialized) {
+              return;
+            }
+            w.ChannelIOInitialized = true;
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
+            s.charset = 'UTF-8';
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+          }
+          if (document.readyState === 'complete') {
+            l();
+          } else if (window.attachEvent) {
+            window.attachEvent('onload', l);
+          } else {
+            window.addEventListener('DOMContentLoaded', l, false);
+            window.addEventListener('load', l, false);
+          }
+        })();
+        ChannelIO('boot', {
+          "pluginKey": "ec3d75f3-0b9e-4b01-a746-dfed77e31339"
+        });
+      `
+    }
+  }
  // async componentDidMount() {
  //   TagManager.initialize(tagManagerArgs)
  // }
@@ -129,7 +129,7 @@ export default class MyDocument extends Document {
         <body>
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5" height="0" width="0" style={{display : "none", visibility : "hidden"}}></iframe></noscript>
           <Main />
-          {/* <script dangerouslySetInnerHTML={this.setChannelTalk()} /> */}
+          <script dangerouslySetInnerHTML={this.setChannelTalk()} />
           <NextScript />
           {/* GA Settings
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
