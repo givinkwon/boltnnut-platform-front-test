@@ -38,9 +38,7 @@ class Step3Container extends Component {
     this.setState({ percentage: newValue })
   }
   CustomSliderThumbComponent = (props) => {
-    const { percentage } = this.state;
-    // console.log(props)
-    // console.log(percentage)
+    const {percentage} = this.state;
     return (
       <div {...props}>
         <img src={ThumbImage} />
@@ -85,10 +83,13 @@ class Step3Container extends Component {
           <Header>
             {this.props.title}
           </Header>
+          <DetailContainer style={{display: showEstimateDetail}}>
+            여기에 견적서 넣기
+          </DetailContainer>
           <HeaderTextBox>
             <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
               견적가
-                  </Content.FontSize24>
+            </Content.FontSize24>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
                 25,000,000 원
@@ -103,24 +104,18 @@ class Step3Container extends Component {
               </div>
             </div>
           </HeaderTextBox>
-          <DetailContainer style={{display: showEstimateDetail}}>
-            여기에 견적서 넣기
-          </DetailContainer>
+          
         </HeaderBackground>
 
         <ContentBox>
-          <Content.FontSize16 fontWeight={'bold'} style={{ textAlign: 'center' }} color={'#0933b3'}>
-            최대 경력 40년 이상의 파트너들이 선정 되었습니다.
-              </Content.FontSize16>
-
-          <CustomSlider
-            ThumbComponent={this.CustomSliderThumbComponent}
-            value={percentage}
-            onChange={this.handleChange}
-          />
           <ContentHeader>
-            요청하신 0000 제품 개발의 전문가인 볼트앤너트 파트너사는 31개입니다.
-              </ContentHeader>
+            요청하신 반려동물 샤워기 손잡이 끝부분 나사 모양 제품 개발에 최적화된<br/>
+            484곳의 제조 파트너사가 매칭되었습니다.
+          </ContentHeader>
+
+          <CustomSlider value={percentage}/>
+          <ThumbText> {percentage}% </ThumbText>
+          
 
           <EstimateLogoSlider />
 
@@ -150,12 +145,12 @@ class Step3Container extends Component {
             </DetailContainer>
           </ConsultantBox>
           
-          <ContentHeader style={{ marginTop: 60 }}>
-            정확한 견적을 받고 싶다면?
-              </ContentHeader>
-          <Buttonv1 fontSize={20} style={{ margin: '0 auto', marginTop: 30, marginBottom: 50, width: 260, height: 50 }}>
+          <Font16>
+            1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요(워딩필요)
+          </Font16>
+          <Buttonv1 fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
             무료 컨설팅 받기
-              </Buttonv1>
+          </Buttonv1>
         </ContentBox>
       </Card>
     )
@@ -164,13 +159,25 @@ class Step3Container extends Component {
 
 export default withRouter(Step3Container);
 
+const Font16 = styled(Content.FontSize16)`
+  margin-top:100px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: -0.16px;
+  text-align: center;
+  color: #282c36;
+`
 const EstimateDetailContainer = styled.div`
   margin-left:63px;
   padding-bottom:20px;
 `
 const DetailContainer = styled.div`
-  margin-left:63px;
+  // margin-left:63px;
+  margin-top:-1px;
   padding-bottom:20px;
+  background-color:white;
 `
 const ConsultantTextBox = styled.div`
   width:100%;
@@ -182,7 +189,7 @@ const ConsultantTextBox = styled.div`
 `
 
 const ConsultantBox = styled.div`
-  margin-top:100px;
+  margin-top:90px;
   
   // height:76px;
   border-top:solid 1px #707070;
@@ -244,13 +251,13 @@ const Header = styled(Content.FontSize32)`
   object-fit: contain;
 `
 
-const ContentHeader = styled(Content.FontSize24)`
+const ContentHeader = styled(Title.FontSize20)`
   width: auto;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.6px;
+  line-height: 1.9;
+  letter-spacing: -0.5px;
   text-align: center;
   color: #282c36;
   object-fit: contain;
@@ -266,25 +273,28 @@ const ContentBox = styled.div`
 const CustomSlider = withStyles({
   root: {
     color: '#0933b3',
-    height: 12,
-    width: '100%',
+    height: 7,
+    width: '92%',
+    marginLeft: '4%',
+    marginRight: '4%',
+    marginTop:'2%',
     borderRadius: 10,
-    paddingTop: 20,
-    paddingBottom: 30
+    cursor:'default'
   },
   thumb: {
-    top: -10,
-    paddingRight: 20,
-    content: "apapap"
+    // top: -10,
+    // paddingRight: 20,
+    // content: "apapap"
+    display:'none'
   },
   track: {
-    height: 12,
+    height: 7,
     borderRadius: 10,
   },
   rail: {
     color: '#c6c7cc',
     opacity: 1,
-    height: 12,
+    height: 7,
     borderRadius: 10,
   },
 })(Slider);
@@ -315,9 +325,9 @@ const ConsultantHashtag = styled(Content.FontSize16)`
   object-fit: contain;
 `
 const ThumbText = styled(Content.FontSize18)`
-  position: absolute;
-  color: white;
-  top: -10px;
+  position: relative;
+  text-align:center;
+  color: #0933b3;
   font-weight: bold;
 `
 const MatchingText = styled(Title.FontSize20)`

@@ -33,6 +33,7 @@ class Step2Container extends React.Component {
             this.state.question.map((question) => {
               return (
               <>
+                <input style={{display: 'none'}} />
                 <Select onClick = {test}>
                   <Text id={'queText'} color={"#282c36"}>
                     {question}
