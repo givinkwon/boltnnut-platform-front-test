@@ -61,8 +61,7 @@ class Request {
 
   @action setIndex = (val) => {
     this.page_index = val;
-  }
-
+  };
   @action setInputName = (val) => {
     this.input_name = val;
   };
@@ -83,7 +82,8 @@ class Request {
   }
   @action setDue = (val) => {
     this.input_day = val;
-  }
+  };
+  
   @action setCommonFile = (obj) => {
     console.log(typeof obj)
     if (typeof obj == 'object') {
