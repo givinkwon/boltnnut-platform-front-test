@@ -20,7 +20,6 @@ import Step4Container from './Step4';
 class RequestContainer extends React.Component {
   
   render() {
-
     return (
       <div style={{ overflow: 'hidden' }}>
         <BannerContainer />
