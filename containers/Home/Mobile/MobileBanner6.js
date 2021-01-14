@@ -30,8 +30,8 @@ class MobileBanner6Container extends React.Component {
             <Head>Step 1</Head>
             <Main>파트너 신청</Main>
             <Foot>회사소개서, 주요기술이력서 등을 통해
-              파트너의 전문<br/>성을 검토하고, 파트너 검증
-              키트를 통해 가격경쟁력을<br/>파악합니다.</Foot>
+              파트너의 전문성을 검토하고, 파트너 검증
+              키트를 통해 가격경쟁력을 파악합니다.</Foot>
           </TextContainer>
 
         </>
@@ -101,6 +101,7 @@ class MobileBanner6Container extends React.Component {
       arrows: false,
       slidesToShow: 1,
       draggable: false,
+      swipe: false,
       slidesToScroll: 1,
       appendDots : dots => <ul> {dots}</ul>,
     };
@@ -153,7 +154,7 @@ const SliderWraper = styled.div`
   height: 128px;
   .slick-dots li button:before {
     color: #0933b3;
-    -webkit-transform: scale(0.5);
+    -webkit-transform: scale(0.6);
   }
 `
 const CustomContainer = styled(Containerv1)`
@@ -169,7 +170,7 @@ const Header = styled(Title.FontSize56)`
   line-height: 1.36;
   letter-spacing: normal;
   letter-spacing: -0.55px;
-  margin-top: 70px;
+  margin-top: 100px;
   text-align: center;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 22px;
@@ -187,13 +188,13 @@ const Head = styled(Title.FontSize24)`
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.35px;
   white-space: pre-line;
   text-align: left;
   margin-top: 20px;
   margin-bottom: 2px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 ;
 `
@@ -202,30 +203,30 @@ const Main = styled(Title.FontSize32)`
   font-stretch: normal;
   font-style: normal;
   line-height: 1.63;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.35px;
   text-align: left;
   color: #333742;
   white-space: pre-line;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 13px;
+    font-size: 14px;
   }
 `
 const Foot = styled(Title.FontSize24)`
-  margin: 14px 0px 70px 0px;
+  margin: 14px 0px 100px 0px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.38px;
   text-align: left;
   white-space: pre-line;
   color: #f6f6f6;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 13px;
+    font-size: 15px;
   }
 `
 const TextContainer = styled.div`
   margin-top: 36px;
-  width: 280px;
+  width: 284px;
   text-align: left;
 `
