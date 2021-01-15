@@ -57,7 +57,7 @@ const Main = styled(Title.FontSize56)`
   font-stretch: normal;
   font-style: normal;
   line-height: 1.36;
-  letter-spacing: -1.4px;
+  letter-spacing: -0.55px;
   text-align: center;
   > span {
     font-weight: 500;
@@ -72,10 +72,10 @@ const Content = styled(Title.FontSize24)`
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.38px;
   text-align: center;
   color: #555963;
-  margin-bottom: 70px;
+  margin-bottom: 100px;
   @media (min-width: 767.99px) and (max-width: 1279.98px) {
     font-size: 17px;
   }
