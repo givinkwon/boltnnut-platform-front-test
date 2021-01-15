@@ -64,6 +64,7 @@ class RequestCardContainer extends Component {
   fullChecker(data) {
     const { buttonActiveCount, active } = this.state;
     let counter = 0;
+
     for (let i = 0; i < data.length; i++) {
       if (data[i].value.length != 0) {
         counter += 1

@@ -49,6 +49,7 @@ class Request {
   // save_writed_request
   @observable input_name = "";
   @observable input_phone = "";
+
   @observable input_content = "";
 
   @observable input_day = null; // 개발기간
@@ -76,6 +77,7 @@ class Request {
   };
   @action setInputPhone = (val) => {
     this.input_phone = val;
+    console.log(val);
   };
   @action setPrice = (val) => {
     this.input_price = val;

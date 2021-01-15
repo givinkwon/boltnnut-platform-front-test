@@ -44,6 +44,7 @@ class SelectComp extends React.Component {
     const { options, placeholder, styles, getOptionLabel, value } = this.props;
     return (
       <Select
+        id={this.props.id}
         className={this.props.className}
         styles={styles ? styles : customStyles}
         value={value}
