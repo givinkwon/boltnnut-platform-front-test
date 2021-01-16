@@ -51,12 +51,11 @@ class Step1Container extends React.Component {
     step: 1,
     activeCount: 0,
     currentCount: 0,
-    phone: '',
   }
 
   handleChange = (value) => {
-    this.setState({...this.state, phone: value})
-    console.log(value)
+    const { Request } = this.props;
+    Request.setInputPhone(value);
   }
 
   content1 = () => {
@@ -136,7 +135,7 @@ class Step1Container extends React.Component {
        <SelectRow>
          <InputComponent
             class="Input"
-            placeholder="ex)반려동물을 위한 한 손 실리콘 샤워 패드"
+            placeholder="ex) 반려동물을 위한 한 손 실리콘 샤워 패드"
             value={Request.input_name}
             onChange={Request.setInputName}
           />
@@ -146,11 +145,11 @@ class Step1Container extends React.Component {
        </Header>
        <SelectRow>
           <PhoneInputComponent
-            class="Input"
             phd1 = "010"
             phd2 = "1234"
             phd3 = "5678"
             space = {18}
+            updater = {Request.input_phone}
             onChange={this.handleChange.bind(this)}
           />
        </SelectRow>
@@ -160,7 +159,6 @@ class Step1Container extends React.Component {
 
        <SelectRow style={{width: "100%"}}>
          <InputComponent
-            class="Input"
             file={true}
           />
          <CheckBoxComponent onChange = {Request.setCommonFile}/>
@@ -175,7 +173,7 @@ class Step1Container extends React.Component {
     console.log()
 
     return (
-      <RequestCardContainer title={"기본 정보 입력"} content = {content2}>
+      <RequestCardContainer title={"기본 정보 입력"} content = {content1}>
       </RequestCardContainer>
     )
   }
