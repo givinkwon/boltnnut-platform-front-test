@@ -127,7 +127,6 @@ class MobileNav extends React.Component {
             </ProfileMenu>
           )}
         <Container>
-          <NavWrap/>
           <NavWrap2>
             <Logo src={logo_ic} onClick={() => Router.push("/")} />
             {
@@ -150,7 +149,7 @@ class MobileNav extends React.Component {
               )
             }
           </NavWrap2>
-          <NavWrap3>
+          {/* <NavWrap3>
             <NavLink3
                   onClick={() => {
                     Router.push("/"), Auth.reset();
@@ -202,7 +201,7 @@ class MobileNav extends React.Component {
                 >
                   매거진
             </NavLink3>
-          </NavWrap3>
+          </NavWrap3> */}
         </Container>
       </NavBox>
     );
@@ -241,7 +240,7 @@ const Avatar = styled.img`
   cursor: pointer;
 `;
 const NavBox = styled.div`
-  height: 136px;
+  height: 54px;
   width: 100%;
   background-color: ${WHITE};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
