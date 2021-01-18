@@ -254,7 +254,7 @@ const NavWrap2 = styled.div`
   display: flex;
   align-items: center;
   height: 52px;
-  background-color: #f3f3f3;
+  background-color: #ffffff; // #f3f3f3
   padding-right: calc(10%);
   padding-left: calc(9%);
 `;
