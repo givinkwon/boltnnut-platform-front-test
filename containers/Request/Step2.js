@@ -11,13 +11,11 @@ const Qimage = "static/images/request/Step2/Q.png";
 @observer
 class Step2Container extends React.Component {
   state = {
-    question: ["예", "아니오"],
-    index: 0
+    index: 0,
   }
 
   content = () => {
     const { DetailQuestion } = this.props;
-
     let test = (e) => {
       console.log(e.target.innerText)
     }
@@ -26,17 +24,17 @@ class Step2Container extends React.Component {
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[this.state.index].question}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index + 1}/5</TitleQue>}
+          {DetailQuestion.title_list.results && <TitleQue>{DetailQuestion.title_list.results[this.state.index].question}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index + 1}/5</TitleQue>}
         </TitleContainer>
         <SelectContainer>
           {
-            this.state.question.map((question) => {
+            DetailQuestion.select.results && DetailQuestion.select.results.map((question) => {
               return (
               <>
                 <input style={{display: 'none'}} />
                 <Select onClick = {test}>
                   <Text id={'queText'} color={"#282c36"}>
-                    {question}
+                    {question.select}
                   </Text>
                 </Select>
               </>
