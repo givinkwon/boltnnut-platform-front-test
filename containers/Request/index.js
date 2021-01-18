@@ -18,7 +18,6 @@ import Step4Container from './Step4';
 @inject("DetailQuestion")
 @observer
 class RequestContainer extends React.Component {
-  
   render() {
     return (
       <div style={{ overflow: 'hidden' }}>
