@@ -61,7 +61,7 @@ class TabletBanner7Container extends React.Component {
         rows:4
       };
       return (
-        <Background style={{ paddingBottom: 69, paddingTop: 70, justifyContent: 'center' }}>
+        <Background style={{ paddingBottom: 100, paddingTop:100, justifyContent: 'center' }}>
           <Fade bottom>
             <div>
               <Header>
@@ -371,13 +371,13 @@ class TabletBanner7Container extends React.Component {
     }
 
     >img{
-      width:180px;
-      height:180px;
-      margin:0 auto;
-    //   width:100%;
-    //   height:100%;
-      overflow: hidden;
-      cursor: pointer;
+        //   width:90px;
+        //   height:90px;
+          margin:0 auto;
+          width:65%;
+          height:65%;
+          overflow: hidden;
+          cursor: pointer;
     }
   `
   

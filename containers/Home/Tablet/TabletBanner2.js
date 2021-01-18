@@ -18,7 +18,7 @@ class TabletBanner2Container extends React.Component {
     render() {
         const ProjectCount = this.props.Proposal.projects_count;
         return (
-            <Background backgroundColor={'#0a2165'} style={{ paddingBottom: 70, paddingTop: 70, justifyContent: 'center'}}>
+            <Background backgroundColor={'#0a2165'} style={{ paddingBottom: 100, paddingTop: 100, justifyContent: 'center'}}>
                 <Fade bottom>
                     <div>
                         <Header>

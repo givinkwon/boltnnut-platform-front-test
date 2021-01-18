@@ -58,10 +58,11 @@ class MobileBanner7Container extends React.Component {
         slidesToShow: 3,
         slidesToScroll: 1,
         draggable:true,
-        rows:4
+        rows:4,
+        autoplay:true
       };
       return (
-        <Background style={{ paddingBottom: 69, paddingTop: 70, justifyContent: 'center' }}>
+        <Background style={{ paddingBottom: 100, paddingTop: 100, justifyContent: 'center' }}>
           <Fade bottom>
             <div>
               <Header>
@@ -344,7 +345,7 @@ class MobileBanner7Container extends React.Component {
     line-height: 1.45;
     letter-spacing: -0.55px;
     text-align:center;
-    
+    // font-size:1.375em;
     >p {
       display:inline;
       font-weight:bold;
@@ -370,11 +371,11 @@ class MobileBanner7Container extends React.Component {
     }
 
     >img{
-      width:90px;
-      height:90px;
+    //   width:90px;
+    //   height:90px;
       margin:0 auto;
-    //   width:100%;
-    //   height:100%;
+      width:75%;
+      height:75%;
       overflow: hidden;
       cursor: pointer;
     }

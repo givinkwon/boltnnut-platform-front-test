@@ -18,7 +18,6 @@ import Step4Container from './Step4';
 @inject("DetailQuestion")
 @observer
 class RequestContainer extends React.Component {
-  
   render() {
     return (
       <div style={{ overflow: 'hidden' }}>
@@ -26,7 +25,6 @@ class RequestContainer extends React.Component {
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
             <Step />
-            <Step2Container />
             <Step3Container/>
           </Containerv1>
         </Background>

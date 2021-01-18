@@ -33,7 +33,7 @@ class Banner2Container extends React.Component {
                             </Body>
                         </div>
                         <div>
-                            <img src={image1} style={{width:588,height:392}}/>
+                            <img src={image1} style={{width:588,height:392,borderRadius:10}}/>
                         </div>
                     </Fade>
                 </Containerv1>
@@ -56,7 +56,7 @@ const Header = styled(Title.FontSize20)`
 `
 const Middle = styled(Title.FontSize56)`
   color: #f6f6f6;
-  font-weight: normal;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.36;

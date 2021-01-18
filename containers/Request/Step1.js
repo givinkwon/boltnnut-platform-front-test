@@ -8,6 +8,7 @@ import * as Title from 'components/Title';
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
 import SelectComponent from 'components/Select';
 import InputComponent from 'components/Input2';
+import PhoneInputComponent from 'components/PhoneInput';
 import CheckBoxComponent from 'components/CheckBox';
 
 
@@ -49,11 +50,12 @@ class Step1Container extends React.Component {
   state = {
     step: 1,
     activeCount: 0,
-    currentCount: 0
+    currentCount: 0,
   }
 
-  handleChange = () => {
-    console.log("aa");
+  handleChange = (value) => {
+    const { Request } = this.props;
+    Request.setInputPhone(value);
   }
 
   content1 = () => {
@@ -132,7 +134,8 @@ class Step1Container extends React.Component {
        </Header>
        <SelectRow>
          <InputComponent
-            placeholder="ex)반려동물을 위한 한 손 실리콘 샤워 패드"
+            class="Input"
+            placeholder="ex) 반려동물을 위한 한 손 실리콘 샤워 패드"
             value={Request.input_name}
             onChange={Request.setInputName}
           />
@@ -140,14 +143,14 @@ class Step1Container extends React.Component {
        <Header style={{marginTop: 30}}> 
             전화번호
        </Header>
-
        <SelectRow>
-         
-         <div name="Input"/>
-         <InputComponent
-            placeholder="전화번호를 입력해주세요."
-            value={Request.input_phone}
-            onChange={Request.setInputPhone}
+          <PhoneInputComponent
+            phd1 = "010"
+            phd2 = "1234"
+            phd3 = "5678"
+            space = {18}
+            updater = {Request.input_phone}
+            onChange={this.handleChange.bind(this)}
           />
        </SelectRow>
        <Header style={{marginTop: 30}}>
@@ -155,7 +158,6 @@ class Step1Container extends React.Component {
        </Header>
 
        <SelectRow style={{width: "100%"}}>
-         <div name="Input"/>
          <InputComponent
             file={true}
           />
@@ -168,6 +170,7 @@ class Step1Container extends React.Component {
     const { Request, Partner } = this.props;
     const content1  = this.content1();
     const content2 = this.content2();
+    console.log()
 
     return (
       <RequestCardContainer title={"기본 정보 입력"} content = {content1}>
