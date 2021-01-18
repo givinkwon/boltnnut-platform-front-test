@@ -13,7 +13,7 @@ class DetailQuestion {
             this.title_list = res.data;
           }
         )
-    }
+    };
 }
 
 export default new DetailQuestion()

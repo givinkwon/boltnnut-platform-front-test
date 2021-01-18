@@ -31,7 +31,7 @@ class Step2Container extends React.Component {
           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[this.state.index].question}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue>}
         </TitleContainer>
         <SelectContainer>
-          {
+          {/* {
             this.state.question.map((question) => {
               return (
               <>
@@ -44,7 +44,8 @@ class Step2Container extends React.Component {
               </>
               )}
             )
-          }
+          } */}
+          
         </SelectContainer>
       </>
     );
