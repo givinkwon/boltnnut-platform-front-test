@@ -30,7 +30,7 @@ class Banner1Container extends React.Component {
             </Image>
             <div>
               <Head>자동 견적 알고리즘</Head>
-              <Main>1초만에 내 제품<br/>가견적 받기</Main>
+              <Main><span>1초만에</span> 내 제품<br/>가견적 받기</Main>
               <Content>{ProjectCount*3+997}건의 데이터에 기반한 자동견적 알고리즘이<br/>평균 2일의 견적 시간을 한 번에 해결해 드립니다.</Content>
             </div>
           </Fade>
@@ -67,12 +67,15 @@ const Head = styled(Title.FontSize20)`
   margin: 293px 0px 32px 0px;
 `
 const Main = styled(Title.FontSize56)`
-  font-weight: bold;
+  font-weight: 400;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.36;
   letter-spacing: -1.4px;
   margin-bottom: 106px;
+  > span {
+    font-weight: bold;
+  }
 `
 const Content = styled(Title.FontSize24)`
   font-weight: 500;
