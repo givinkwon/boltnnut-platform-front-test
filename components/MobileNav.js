@@ -9,7 +9,8 @@ import * as Text from "./Text";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 
 const close_ic = "/static/icon/close.svg";
-const hamburger_ic = "/static/icon/hamburger.png";
+// const hamburger_ic = "/static/icon/hamburger.png";
+const hamburger_ic = "/static/images/components/MobileNav/hamburger.png";
 const logo_ic = "/static/images/logo2.jpg";
 const profile = "/static/images/profile.png";
 //...
@@ -131,14 +132,20 @@ class MobileNav extends React.Component {
             <Logo src={logo_ic} onClick={() => Router.push("/")} />
             {
               !this.props.Auth.logged_in_user ? (
-              <NavLink
-                  onClick={() => {
-                    Router.push("/login"), Auth.reset();
-                  }}
-                  active={url.indexOf("login") > -1}
-                >
-                  로그인
-              </NavLink>
+              //   <NavLink
+              //     onClick={() => {
+              //       Router.push("/login"), Auth.reset();
+              //     }}
+              //     active={url.indexOf("login") > -1}
+              //   >
+              //     로그인
+              // </NavLink>
+                <>
+                <Icon
+                  src={hamburger_ic}
+                  onClick={this.menuClick}
+                />
+                </>
               ) : (
               <>
               <Icon
@@ -253,10 +260,10 @@ const NavWrap = styled.div`
 const NavWrap2 = styled.div`
   display: flex;
   align-items: center;
-  height: 52px;
+  height: 54px;
   background-color: #ffffff; // #f3f3f3
-  padding-right: calc(10%);
-  padding-left: calc(9%);
+  padding-right: 20px;
+  padding-left: 14px;
 `;
 const NavWrap3 = styled.div`
   display: inline-flex;
@@ -279,6 +286,8 @@ const Icon = styled.img`
   background-color: '#f3f3f3';
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: block;
+    width: 21px;
+    height: 13px;
   }
 `;
 const Menu = styled.div`

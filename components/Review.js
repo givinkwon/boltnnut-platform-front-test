@@ -18,10 +18,10 @@ class ReviewCard extends Component {
         return (
             <Card>
                 <CardHeader>
-                    <img src={item.logo} />
+                    <img src={item.logo}/>
                     <Name eng={true}>
                         {item.name}<br/>
-                        <StarRatingComponent 
+                        <MyStarRatingComponent 
                           value={5}
                           starColor={'#0a2165'}/>
                     </Name>
@@ -34,10 +34,10 @@ class ReviewCard extends Component {
             return (
                 <BigCard>
                     <CardHeader>
-                        <img src={item.logo} />
+                        <img src={item.logo} marginRight={28}/>
                         <Name eng={true}>
                             {item.name}<br/>
-                            <StarRatingComponent 
+                            <MyStarRatingComponent 
                               value={5}
                               starColor={'#0a2165'}/>
                         </Name>
@@ -86,10 +86,11 @@ const CardHeader = styled.div`
         margin-right: 5%;
     }
     @media (min-width: 0px) and (max-width: 767.98px) {
-        margin-left: 7.8%;
+        margin-left: 14px;
         > img {
-            width: 61px;
+            width: 46px;
             height: 46.2px;
+            margin-right: ${(props) => props.marginRight ? props.marginRight : 22}px;
         }
     }
 `
@@ -103,6 +104,7 @@ const Name = styled(Content.FontSize18)`
     color: #191919;
     @media (min-width: 0px) and (max-width: 767.98px) {
         font-size: 12px !important;
+        line-height: 0.8
     }
 `
 const ContentBox = styled(Content.FontSize15)`
@@ -121,6 +123,7 @@ const ContentBox = styled(Content.FontSize15)`
         letter-spacing: -0.3px;
         text-align: left;
         color: #767676;
+        margin-top: 3px;
     }
 `
 /////////////////// ReviewCard2 ////////////////////
@@ -181,4 +184,13 @@ const ImageBox = styled.div`
     > img {
         margin-right: 7.8%;
     }
+`
+const MyStarRatingComponent = styled(StarRatingComponent)`
+  @media (min-width: 0px) and (max-width: 767.98px) {
+      > label {
+          > i {
+          font-size: 8px;
+      }
+    }
+  }
 `
