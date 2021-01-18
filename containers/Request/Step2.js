@@ -11,13 +11,11 @@ const Qimage = "static/images/request/Step2/Q.png";
 @observer
 class Step2Container extends React.Component {
   state = {
-    title: "제품은 어떤 소재인가요?",
     question: ["예", "아니오"],
-    index: 1
+    index: 0
   }
 
   content = () => {
-    const { title, question } = this.state;
     const { DetailQuestion } = this.props;
 
     let test = (e) => {
@@ -28,7 +26,7 @@ class Step2Container extends React.Component {
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[this.state.index].question}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index}/5</TitleQue>}
+          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[this.state.index].question}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index + 1}/5</TitleQue>}
         </TitleContainer>
         <SelectContainer>
           {
@@ -52,7 +50,7 @@ class Step2Container extends React.Component {
 
   render(){
     const content = this.content();
-    
+
     return (
       <RequestCardContainer title={"제품 정보 선택"} content = { content }>
       </RequestCardContainer>

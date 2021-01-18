@@ -48,7 +48,9 @@ class InputComponent extends React.Component {
       <Wrap>
         { label && <Text.FontSize20 color={DARKGRAY} fontWeight={500}>{label}</Text.FontSize20> }
         <InputBox marginTop={label ? 12 : 0}>
-          <Input {...props} onChange={this.onChange}/>
+          <Input>
+            <input {...props} onChange={this.onChange}/>
+          </Input>
           {children}
         </InputBox>
       </Wrap>
@@ -115,31 +117,34 @@ const Wrap = styled.div`
     }
   }
 `
-const Input = styled.input`
+const Input = styled.div`
   width: 100%;
   margin-top: ${props => props.marginTop}px;
-  padding: 15px 15px;
   color: #404040;
   font-weight: 400;
-  border: none;
+  padding-left: 16px;
   :focus {
     outline: none;
   }
-  ::placeholder {
-    font-weight: 400;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 15px 10px;
-    font-size: 14px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    font-size: 16px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  > input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0 !important;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: -0.18px;
+    text-align: left;
     font-size: 18px;
+    :focus {
+      outline: none;
+    }
+    ::placeholder {
+    font-weight: 400;
+    color: #c6c7cc;
   }
-  @media (min-width: 1300px) { 
-    font-size: 20px;
   }
 `
 const FileText = styled(Content.FontSize18)`

@@ -97,7 +97,7 @@ const Header = styled(Title.FontSize22)`
     letter-spacing: -1.4px;
     text-align: center;
     color: #111111;
-    margin-top: 70px;
+    margin-top: 100px;
     .bold {
         font-weight: bold;
     }
@@ -114,7 +114,7 @@ const StarTitle = styled(Title.FontSize14)`
 `
 const RatingBox = styled.div`
     width:100%;
-    padding-bottom: 50px;
+    padding-bottom: 16px;
     display: inline-flex;
     flex-direction: column;
 `

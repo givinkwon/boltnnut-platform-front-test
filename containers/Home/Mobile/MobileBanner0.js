@@ -17,7 +17,7 @@ import UseScrollCount from "containers/Home/UseScrollCount";
 import { inject, observer } from "mobx-react";
 
 //Image
-const background = "static/images/Home/main.jpg";
+const background = "static/images/Home/Mobile/MobileBanner0/background.png";
 
 const CountFunc = ({index,projCount=0,partnerCount=0}) => 
 {
@@ -48,7 +48,7 @@ class MobileBanner0Container extends React.Component {
     const PartnerCount = this.props.Partner.partner_count;
 
     return (
-    <Background src={background} style={{paddingBottom: 58, paddingTop: 48, justifyContent: 'center'}}>
+    <Background src={background} style={{paddingBottom: 70, paddingTop: 54, justifyContent: 'center'}}>
         <Fade bottom>
             <Header color={WHITE} fontWeight={"500"}>
               내 제품 제작 비용과<br/>
@@ -78,7 +78,7 @@ class MobileBanner0Container extends React.Component {
                 <CountFunc index={2}/>
               </Content1>
             </div>
-            <Buttonv1 style={{marginTop: 54, marginLeft:'auto', marginRight:'auto', fontWeight: 700}} onClick={() => Router.push("/request")}>
+            <Buttonv1 style={{marginTop: 56, marginLeft:'auto', marginRight:'auto', fontWeight: 700}} onClick={() => Router.push("/request")}>
               지금 무료 가견적 받기
             </Buttonv1>
         </Fade>

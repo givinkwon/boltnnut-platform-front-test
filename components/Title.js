@@ -131,6 +131,7 @@ export const FontSize22 = styled.p`
     letter-spacing: -0.55px;
     text-align: center;
     color: #111111;
+    font-size: 22px;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) {
     font-size: 22px;
