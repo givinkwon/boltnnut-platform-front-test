@@ -5,6 +5,15 @@ import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
 
+//material-ui
+import Table from '@material-ui/core/Table';
+import Box from '@material-ui/core/Box';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import { makeStyles } from '@material-ui/core/styles';
+
 //Slider
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
@@ -21,9 +30,29 @@ const DropUpArrow1 = "static/images/partner/arrow_up.png";
 const DropdownArrow2 = "/static/images/request/Step3/Step3_Dropdown2.png";
 const DropUpArrow2 = "static/images/partner/arrow_up.png";
 
+const styles = {
+  table: {
+    minWidth: 650
+  },
+  row:{
+    height:'auto',
+  },
+  cell:{
+    border:'1px solid gray'
+  }
+};
+
+function createData(title, content, note) {
+  return { title, content, note };
+}
+
+
+
 class Step3Container extends Component {
 
   static defaultProps = { title: '견 적 서' };
+
+  
 
   state = {
     percentage: 100,
@@ -74,6 +103,23 @@ class Step3Container extends Component {
 
   render() {
     const { percentage, showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
+    
+    const rows1 = [
+      createData('작성일자', '2020.12.25', ''),
+      createData('문서번호', 'C8-20200830 - 001', ''),
+      createData('수신인', '금우용 대표님 / 창살이메이커스', ''),
+      createData('발신인', '최진영 이사 / (주)볼트앤너트', 'TEL : 010 - 7299 - 9208'),
+      createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
+    ];
+
+    const rows2 = [
+      createData('프로젝트', '낙상/배회 알림 IoT 시제품 제작', ''),
+      createData('개발기간', '30일', ''),
+      createData('지급조건', '일시불', ''),
+      createData('견적가', '₩ 2,500,000', 'VAT 포함'),
+    ];
+    const {classes} = this.props
+
     return (
       <Card>
         <HeaderBackground>
@@ -84,7 +130,68 @@ class Step3Container extends Component {
             {this.props.title}
           </Header>
           <DetailContainer style={{display: showEstimateDetail}}>
-            여기에 견적서 넣기
+            <Table className={classes.table} size="small">
+              <TableBody>
+                  {rows1.map((row) => (
+                <TableRow className ={classes.row} key={row.title}>
+                  <TableCell className ={classes.cell} component="th" scope="row" width='154'>
+                    <Font16 style={{marginRight:48,textAlign:'right'}}>{row.title}</Font16>
+                  </TableCell>
+                  <TableCell className ={classes.cell} width='472'>
+                    <Font16 style={{marginLeft:20,textAlign:'left'}}>{row.content}</Font16>
+                  </TableCell>
+                  <TableCell className ={classes.cell} width='268'>
+                    <Font16 style={{marginRight:52,textAlign:'right'}}>{row.note}</Font16>
+                  </TableCell>
+                </TableRow>
+              ))}
+              </TableBody>
+              
+            </Table>
+            <Font16 style={{margin:'30px 0 30px 0',textAlign:'center',fontWeight:'bold'}}>
+                  * 귀하의 일이 번창하심을 기원합니다. 아래와 같은 조건으로 견적을 제출하오니 참조 바랍니다.
+            </Font16>
+            <Table className={classes.table} size="small">
+              <TableBody>
+                  {rows2.map((row) => (
+                <TableRow className ={classes.row} key={row.title}>
+                  <TableCell className ={classes.cell} component="th" scope="row" width='154'>
+                    <Font16 style={{marginRight:48,textAlign:'right'}}>{row.title}</Font16>
+                  </TableCell>
+                  <TableCell className ={classes.cell} width='472'>
+                  <Font16 style={{marginLeft:20,textAlign:'left'}}>{row.content}</Font16>
+                    </TableCell>
+                    <TableCell className ={classes.cell} width='268'>
+                    <Font16 style={{marginRight:52,textAlign:'right'}}>{row.note}</Font16>
+                  </TableCell>
+                </TableRow>
+              ))}
+
+                
+              </TableBody>
+              
+            </Table>
+
+            <Font16 style={{marginTop:40,textAlign:'center',fontWeight:'bold'}}>
+            *해당 견적서는 제품 세부사항에 따라 달리질 수 있습니다.<br/>
+            보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
+            </Font16>
+
+            <AccountBox>
+              <div>
+                <Font16 style={{marginBottom:20}}>* 입금계좌(하나은행)</Font16>
+                <Font16 style={{marginBottom:20}}>예금주: 윤기열(볼트앤너트)</Font16>
+                <Font16 style={{marginBottom:20}}>계좌번호: 391-910021-******</Font16>
+                <Font16>계좌명: 주식회사볼트앤너트</Font16>
+              </div>
+              <div>
+                <Font16 style={{marginBottom:20}}>(주)볼트앤너트</Font16>
+                <Font16 style={{marginBottom:20}}>서울시 성북구 고려대로 30길 4 2층</Font16>
+                <Font16 style={{marginBottom:20}}>Tel : 02 - 926 - 6637</Font16>
+                <Font16>대표이사 윤 기열</Font16>
+              </div>
+            </AccountBox>
+
           </DetailContainer>
           <HeaderTextBox>
             <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
@@ -93,7 +200,7 @@ class Step3Container extends Component {
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
                 25,000,000 원
-                    </Content.FontSize24>
+              </Content.FontSize24>
               <div style={{ marginLeft: 20 }}>
                 {showEstimateDrop == true ? (
                   <img src={DropdownArrow1} onClick={()=>{this.detailDown(1);}} />
@@ -136,16 +243,16 @@ class Step3Container extends Component {
               </div>
             </ConsultantTextBox>
 
-            <DetailContainer style={{display: showConsultantDetail}}>
+            <DetailContainer style={{display: showConsultantDetail,paddingBottom:20}}>
               <History>
-                - 이력1<br/>
-                - 이력2<br/>
-                - 이력3<br/>
+                제품개발/업체관리<br/>
+                경희대 건축&기계공학前제조 스타트업 대표<br/>
+                믹서기, 펫 웨어러플, 펫 샤워기 등 10개 이상 제품<br/>
               </History>
             </DetailContainer>
           </ConsultantBox>
           
-          <Font16>
+          <Font16 style={{marginTop:100,textAlign:'center'}}>
             1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요(워딩필요)
           </Font16>
           <Buttonv1 fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
@@ -157,17 +264,22 @@ class Step3Container extends Component {
   }
 }
 
-export default withRouter(Step3Container);
+export default withStyles(styles)(Step3Container);
 
 const Font16 = styled(Content.FontSize16)`
-  margin-top:100px;
-  font-weight: bold;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.88;
   letter-spacing: -0.16px;
-  text-align: center;
   color: #282c36;
+`
+
+const AccountBox = styled.div`
+  display:flex;
+  justify-content:space-between;
+  // background:blue;
+  padding:50px 80px 0 128px;
 `
 const EstimateDetailContainer = styled.div`
   margin-left:63px;
@@ -176,8 +288,20 @@ const EstimateDetailContainer = styled.div`
 const DetailContainer = styled.div`
   // margin-left:63px;
   margin-top:-1px;
-  padding-bottom:20px;
+  padding-bottom:100px;
   background-color:white;
+
+  .MuiTableCell-sizeSmall
+  {
+    padding:4px 0 4px 0;
+  }
+
+  .MuiTableCell-sizeSmall:last-child
+  {
+    padding-right:0;
+  }
+
+  
 `
 const ConsultantTextBox = styled.div`
   width:100%;
@@ -224,14 +348,15 @@ const Logo = styled.div`
     padding-top:40px;
 `
 
-const History = styled(Title.FontSize18)`
+const History = styled(Title.FontSize16)`
   text-align:left;
-  font-weight: normal;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.18px;
+  line-height: 1.88;
+  letter-spacing: -0.16px;
   color: #282c36;
+  margin-left:63px;
 `
 const Header = styled(Content.FontSize32)`
   width: auto;

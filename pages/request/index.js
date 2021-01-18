@@ -21,7 +21,7 @@ class Request extends React.Component {
     this.props.Partner.init();
     this.props.Request.init();
     this.props.DetailQuestion.init();
-
+    
     //창 크기
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth});
@@ -37,7 +37,7 @@ class Request extends React.Component {
 
   render(){
     const { width } = this.state;
-    const {stars} = this.props;
+    
     return (
       <div>
         <Head>

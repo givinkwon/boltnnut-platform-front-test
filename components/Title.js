@@ -125,13 +125,7 @@ export const FontSize22 = styled.p`
   text-align: ${props => props.center ? 'center' : 'left'};
   font-family: ${props => props.eng ? 'Roboto': 'Noto Sans KR'}, sans-serif;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-weight: 500;
-    font-stretch: normal;
-    line-height: 1.45;
-    letter-spacing: -0.55px;
-    text-align: center;
-    color: #111111;
-    font-size: 22px;
+    font-size:22px;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) {
     font-size: 22px;
@@ -139,7 +133,6 @@ export const FontSize22 = styled.p`
 
   @media (min-width: 1280px) {
     font-size: 22px;
-    letter-spacing: 0px;
   }
 `
 export const FontSize18 = styled.p`
