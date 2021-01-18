@@ -101,6 +101,7 @@ class TabletBanner6Container extends React.Component {
       arrows: false,
       slidesToShow: 1,
       draggable: false,
+      swipe: false,
       slidesToScroll: 1,
       appendDots : dots => <ul> {dots}</ul>,
     };
@@ -153,7 +154,7 @@ const SliderWraper = styled.div`
   height: 128px;
   .slick-dots li button:before {
     color: #0933b3;
-    -webkit-transform: scale(0.5);
+    -webkit-transform: scale(0.6);
   }
 `
 const CustomContainer = styled(Containerv1)`
@@ -169,7 +170,7 @@ const Header = styled(Title.FontSize56)`
   line-height: 1.36;
   letter-spacing: normal;
   letter-spacing: -0.55px;
-  margin-top: 70px;
+  margin-top: 100px;
   text-align: center;
   @media (min-width: 767.99px) and (max-width: 1279.98px) {
     font-size: 24px;
@@ -187,13 +188,13 @@ const Head = styled(Title.FontSize24)`
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.35px;
   white-space: pre-line;
   text-align: left;
   margin-top: 20px;
   margin-bottom: 2px;
   @media (min-width: 767.99px) and (max-width: 1279.98px) {
-    font-size: 14px;
+    font-size: 16px;
   }
 ;
 `
@@ -202,30 +203,30 @@ const Main = styled(Title.FontSize32)`
   font-stretch: normal;
   font-style: normal;
   line-height: 1.63;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.35px;
   text-align: left;
   color: #333742;
   white-space: pre-line;
   @media (min-width: 767.99px) and (max-width: 1279.98px) {
-    font-size: 15px;
+    font-size: 16px;
   }
 `
 const Foot = styled(Title.FontSize24)`
-  margin: 14px 0px 70px 0px;
+  margin: 14px 0px 100px 0px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.38px;
   text-align: left;
   white-space: pre-line;
   color: #f6f6f6;
   @media (min-width: 767.99px) and (max-width: 1279.98px) {
-    font-size: 15px;
+    font-size: 17px;
   }
 `
 const TextContainer = styled.div`
   margin-top: 36px;
-  width: 280px;
+  width: 286px;
   text-align: left;
 `
