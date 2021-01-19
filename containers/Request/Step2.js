@@ -11,40 +11,41 @@ const Qimage = "static/images/request/Step2/Q.png";
 @inject('DetailQuestion')
 @observer
 class Step2Container extends React.Component {
-
-
   componentDidMount()
   {
     DetailQuestion.index=1;
-    console.log(DetailQuestion.title_list.results)
   }
 
-  componentDidUpdate()
-  {
-    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
-    const focusEle = document.activeElement;
-    console.log(document.getElementById('FF'));
-    if (document.getElementById('FF') == focusEle) {
-      console.log(true);
-    }
-  }
 
-  ffff=()=>
-  {
-    const focusEle = document.activeElement;
-    // console.log(document.getElementById('FF'));
-    if (document.getElementById('FF') == focusEle) {
-      console.log(true);
-    }
-  }
   content = () => {
     const { DetailQuestion } = this.props;
-    let test = (e) => {
-      // console.log(e.target.innerText)
-      console.log(e.nextTitle);
-      DetailQuestion.nextPage = e.nextTitle;
-    };
     
+    let test = (e,idx) => {
+      if(DetailQuestion.SelectChecked===idx)
+      {
+        DetailQuestion.nextPage = null;
+        DetailQuestion.SelectChecked=null;
+      }
+      else
+      {
+        DetailQuestion.SelectChecked=idx;
+        DetailQuestion.nextPage = e.nextTitle;
+      }
+    };
+
+    
+    let activeHandler=(idx) =>
+    {
+      if(idx==DetailQuestion.SelectChecked)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    };
+
     return (
       <>
         <TitleContainer>
@@ -53,16 +54,15 @@ class Step2Container extends React.Component {
         </TitleContainer>
         <SelectContainer>
           {
-            DetailQuestion.select.data && DetailQuestion.select.data.map((data) => {
+            DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
               return (
                 <>
-                  <input style={{display: 'none'}}/>
-                  <Select onClick = {()=>{test(data)}}>
+                  {/* <input /> */}
+                  <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
                     <Text id={'queText'} color={"#282c36"}>
                       {data.select}
                     </Text>
                   </Select>
-                  
                 </>
               )}
             )
@@ -128,14 +128,15 @@ const Select = styled.button`
   outline: 0;
   border: 0;
 
+  border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
 
   &:hover {
     border: solid 2px #0933b3;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
   }
 
-  &:focus {
-    border: solid 2px #0933b3;
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
-  }
+  // &:focus {
+  //   border: solid 2px #0933b3;
+  //   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
+  // }
 `
