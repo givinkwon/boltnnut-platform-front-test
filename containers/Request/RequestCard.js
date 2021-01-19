@@ -74,33 +74,19 @@ class RequestCardContainer extends Component {
     };
   }
   nextButtonClick = () => {
-<<<<<<< HEAD
-      const { Request, DetailQuestion } = this.props;
-      
-        switch(Request.step_index)
-        {
-        case 1:
-        //코드 
-        break;
-        case 2:
-        if(DetailQuestion.nextPage)
-          {
-            DetailQuestion.index = DetailQuestion.nextPage;
-            if(DetailQuestion.index!=4)
-              {
-                DetailQuestion.pageCount += 1;
-              }
-            DetailQuestion.loadSelectFromTitle();
-        }
-        break;
-      }
-=======
     const { Request, DetailQuestion } = this.props;
 
     switch(Request.step_index)
     {
       case 1:
-        //코드  
+        if (Request.step1_index == 1) {
+          Request.step1_index = 2;
+          console.log(Request.step1_index);
+        } else {
+          Request.step_index = 2;
+          console.log(Request.step1_index);
+          console.log(Request.step_index);
+        }
         break;
       case 2:
         if(DetailQuestion.nextPage)
@@ -114,11 +100,11 @@ class RequestCardContainer extends Component {
           DetailQuestion.loadSelectFromTitle();
         }
         break;
->>>>>>> 8ff3a27d378622f7637498ba67ad57bf1459a330
     }
+  }
   render() {
     const {percentage, active} = this.state;
-    const { DetailQuestion } = this.props;
+    const { DetailQuestion, Request } = this.props;
     return(
       <Card>
         <Header>
@@ -135,7 +121,7 @@ class RequestCardContainer extends Component {
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
         <ButtonContainer>
           <NewButton color={"#282c36"}>이전</NewButton>
-          <NewButton active={ true } onClick={ this.nextButtonClick }>다음</NewButton>
+          <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
         </ButtonContainer>
       </Card>
     )
