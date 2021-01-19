@@ -25,7 +25,7 @@ class RequestContainer extends React.Component {
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
             <Step />
-            <Step3Container/>
+            <Step2Container/>
           </Containerv1>
         </Background>
       </div>

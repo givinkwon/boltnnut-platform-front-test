@@ -16,6 +16,7 @@ class DetailQuestion {
             )
         await DetailQuestionAPI.loadSelect(this.index)
           .then(res => {
+              console.log(res);
                 this.select = res.data;
             }
           )
