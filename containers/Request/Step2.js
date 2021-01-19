@@ -4,45 +4,52 @@ import * as Title from 'components/Title'
 import RequestCardContainer from './RequestCard';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
+import DetailQuestion from '../../stores/DetailQuestion';
 
 const Qimage = "static/images/request/Step2/Q.png";
 
 @inject('DetailQuestion')
 @observer
 class Step2Container extends React.Component {
-  state = {
-    question: ["예", "아니오"],
-    index: 0
+
+
+  componentDidMount()
+  {
+    DetailQuestion.index=1;
   }
 
   content = () => {
     const { DetailQuestion } = this.props;
-
-    let test = (e) => {
-      console.log(e.target.innerText)
+    let select = (e) => {
+      console.log(e.nextTitle);
+      DetailQuestion.nextPage = e.nextTitle;
+    };
+    let focusOut = () => {
+      DetailQuestion.nextPage = DetailQuestion.index;
+      console.log(DetailQuestion.nextPage);
     }
 
     return (
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[this.state.index].question}&nbsp;&nbsp;&nbsp;&nbsp;{this.state.index + 1}/5</TitleQue>}
+          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.stepIndex + 1}/5</TitleQue>}
         </TitleContainer>
         <SelectContainer>
-          {/* {
-            this.state.question.map((question) => {
+          {
+            DetailQuestion.select.data && DetailQuestion.select.data.map((data) => {
               return (
-              <>
-                <input style={{display: 'none'}} />
-                <Select onClick = {test}>
-                  <Text id={'queText'} color={"#282c36"}>
-                    {question}
-                  </Text>
-                </Select>
-              </>
+                <>
+                  <input style={{display: 'none'}} />
+                  <Select onClick = {()=>select(data)} onblur={ focusOut }>
+                    <Text id={'queText'} color={"#282c36"}>
+                      {data.select}
+                    </Text>
+                  </Select>
+                </>
               )}
             )
-          } */}
+          }
 
         </SelectContainer>
       </>
@@ -104,6 +111,10 @@ const Select = styled.button`
   outline: 0;
   border: 0;
   &:hover {
+    border: solid 2px #0933b3;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
+  }
+  &:focus {
     border: solid 2px #0933b3;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
   }
