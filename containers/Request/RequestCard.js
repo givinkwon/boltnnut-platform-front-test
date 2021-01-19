@@ -75,7 +75,6 @@ class RequestCardContainer extends Component {
   }
   next1 = () => {
     const { DetailQuestion } = this.props;
-    console.log(DetailQuestion.nextPage);
 
     if(DetailQuestion.nextPage)
     {
