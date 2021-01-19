@@ -7,7 +7,7 @@ class DetailQuestion {
   @observable title_list = [];
   @observable select = [];
   @observable index = 1;
-  @observable stepIndex = 0;
+  @observable pageCount = 0;
   @observable nextPage = 0;
 
   @action init = async () => {

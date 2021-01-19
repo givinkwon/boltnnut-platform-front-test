@@ -74,6 +74,7 @@ class RequestCardContainer extends Component {
     };
   }
   nextButtonClick = () => {
+<<<<<<< HEAD
       const { Request, DetailQuestion } = this.props;
       
         switch(Request.step_index)
@@ -93,6 +94,27 @@ class RequestCardContainer extends Component {
         }
         break;
       }
+=======
+    const { Request, DetailQuestion } = this.props;
+
+    switch(Request.step_index)
+    {
+      case 1:
+        //코드  
+        break;
+      case 2:
+        if(DetailQuestion.nextPage)
+        {
+          DetailQuestion.index = DetailQuestion.nextPage;
+          if(DetailQuestion.index!=4)
+          {
+            DetailQuestion.pageCount += 1;
+          }
+
+          DetailQuestion.loadSelectFromTitle();
+        }
+        break;
+>>>>>>> 8ff3a27d378622f7637498ba67ad57bf1459a330
     }
   render() {
     const {percentage, active} = this.state;
