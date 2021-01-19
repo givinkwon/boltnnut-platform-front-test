@@ -35,8 +35,8 @@ class Step2Container extends React.Component {
       console.log(e.nextTitle);
       DetailQuestion.nextPage = e.nextTitle;
     };
-    
-    
+
+
     return (
       <>
         <TitleContainer>
@@ -54,7 +54,7 @@ class Step2Container extends React.Component {
                       {data.select}
                     </Text>
                   </Select>
-                  
+
                 </>
               )}
             )

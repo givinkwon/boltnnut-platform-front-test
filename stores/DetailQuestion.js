@@ -17,7 +17,6 @@ class DetailQuestion {
         }
       )
   };
-
   @action loadSelectFromTitle = async () => {
     await DetailQuestionAPI.loadSelect(this.index)
       .then(res => {
@@ -25,7 +24,9 @@ class DetailQuestion {
           this.select = res.data;
         }
       )
-  };                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+  };
+
 }
 
-export default new DetailQuestion() 
+
+export default new DetailQuestion()

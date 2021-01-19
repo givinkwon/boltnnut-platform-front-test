@@ -77,7 +77,7 @@ class RequestCardContainer extends Component {
   }
   next1 = () => {
     const { DetailQuestion } = this.props;
-    
+
     if(DetailQuestion.nextPage)
     {
       DetailQuestion.index = DetailQuestion.nextPage;
@@ -85,7 +85,7 @@ class RequestCardContainer extends Component {
       {
         DetailQuestion.stepIndex += 1;
       }
-      
+
       DetailQuestion.loadSelectFromTitle();
     }
   }
@@ -115,7 +115,7 @@ class RequestCardContainer extends Component {
   }
 }
 
-export default withRouter(RequestCardContainer); 
+export default withRouter(RequestCardContainer);
 
 
 const Card = styled.div`
