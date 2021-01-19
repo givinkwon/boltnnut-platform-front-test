@@ -73,18 +73,26 @@ class RequestCardContainer extends Component {
       return false
     };
   }
-  next1 = () => {
-    const { DetailQuestion } = this.props;
+  nextButtonClick = () => {
+    const { Request, DetailQuestion } = this.props;
 
-    if(DetailQuestion.nextPage)
+    switch(Request.step_index)
     {
-      DetailQuestion.index = DetailQuestion.nextPage;
-      if(DetailQuestion.index!=4)
-      {
-        DetailQuestion.stepIndex += 1;
-      }
+      case 1:
+        //코드  
+        break;
+      case 2:
+        if(DetailQuestion.nextPage)
+        {
+          DetailQuestion.index = DetailQuestion.nextPage;
+          if(DetailQuestion.index!=4)
+          {
+            DetailQuestion.pageCount += 1;
+          }
 
-      DetailQuestion.loadSelectFromTitle();
+          DetailQuestion.loadSelectFromTitle();
+        }
+        break;
     }
   }
   render() {
@@ -106,7 +114,7 @@ class RequestCardContainer extends Component {
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
         <ButtonContainer>
           <NewButton color={"#282c36"}>이전</NewButton>
-          <NewButton active={ true } onClick={ this.next1 }>다음</NewButton>
+          <NewButton active={ true } onClick={ this.nextButtonClick }>다음</NewButton>
         </ButtonContainer>
       </Card>
     )

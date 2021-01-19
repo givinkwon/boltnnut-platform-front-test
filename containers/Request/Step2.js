@@ -21,12 +21,21 @@ class Step2Container extends React.Component {
 
   componentDidUpdate()
   {
-    // console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
-    // const focusEle = document.activeElement;
-    // console.log(document.getElementById('queText'));
-    // if (document.getElementById('queText') == focusEle) {
-    //   console.log(true);
-    // }
+    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+    const focusEle = document.activeElement;
+    console.log(document.getElementById('FF'));
+    if (document.getElementById('FF') == focusEle) {
+      console.log(true);
+    }
+  }
+
+  ffff=()=>
+  {
+    const focusEle = document.activeElement;
+    // console.log(document.getElementById('FF'));
+    if (document.getElementById('FF') == focusEle) {
+      console.log(true);
+    }
   }
   content = () => {
     const { DetailQuestion } = this.props;
@@ -35,13 +44,12 @@ class Step2Container extends React.Component {
       console.log(e.nextTitle);
       DetailQuestion.nextPage = e.nextTitle;
     };
-
-
+    
     return (
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.stepIndex + 1}/5</TitleQue>}
+          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
         </TitleContainer>
         <SelectContainer>
           {
@@ -54,7 +62,7 @@ class Step2Container extends React.Component {
                       {data.select}
                     </Text>
                   </Select>
-
+                  
                 </>
               )}
             )
@@ -119,10 +127,13 @@ const Select = styled.button`
   margin-bottom: 20px;
   outline: 0;
   border: 0;
+
+
   &:hover {
     border: solid 2px #0933b3;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
   }
+
   &:focus {
     border: solid 2px #0933b3;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
