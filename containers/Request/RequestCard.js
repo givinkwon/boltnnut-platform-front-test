@@ -19,9 +19,6 @@ import * as Title from "components/Title";
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 
-
-
-
 @inject('Request', 'DetailQuestion')
 @observer
 class RequestCardContainer extends Component {
@@ -78,11 +75,19 @@ class RequestCardContainer extends Component {
       return false
     };
   }
-  next = () => {
+  next1 = () => {
     const { DetailQuestion } = this.props;
-    DetailQuestion.stepIndex += 1;
-    DetailQuestion.index = DetailQuestion.nextPage;
-    DetailQuestion.loadSelectFromTitle();
+
+    if(DetailQuestion.nextPage)
+    {
+      DetailQuestion.index = DetailQuestion.nextPage;
+      if(DetailQuestion.index!=4)
+      {
+        DetailQuestion.stepIndex += 1;
+      }
+
+      DetailQuestion.loadSelectFromTitle();
+    }
   }
   render() {
     const {percentage, active} = this.state;
@@ -103,7 +108,7 @@ class RequestCardContainer extends Component {
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
         <ButtonContainer>
           <NewButton color={"#282c36"}>이전</NewButton>
-          <NewButton active={ true } onClick={ this.next }>다음</NewButton>
+          <NewButton active={ true } onClick={ this.next1 }>다음</NewButton>
         </ButtonContainer>
       </Card>
     )

@@ -17,7 +17,6 @@ class DetailQuestion {
         }
       )
   };
-
   @action loadSelectFromTitle = async () => {
     await DetailQuestionAPI.loadSelect(this.index)
       .then(res => {
@@ -28,5 +27,6 @@ class DetailQuestion {
   };
 
 }
+
 
 export default new DetailQuestion()

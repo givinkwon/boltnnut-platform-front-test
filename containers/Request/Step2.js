@@ -16,18 +16,26 @@ class Step2Container extends React.Component {
   componentDidMount()
   {
     DetailQuestion.index=1;
+    console.log(DetailQuestion.title_list.results)
   }
 
+  componentDidUpdate()
+  {
+    // console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+    // const focusEle = document.activeElement;
+    // console.log(document.getElementById('queText'));
+    // if (document.getElementById('queText') == focusEle) {
+    //   console.log(true);
+    // }
+  }
   content = () => {
     const { DetailQuestion } = this.props;
-    let select = (e) => {
+    let test = (e) => {
+      // console.log(e.target.innerText)
       console.log(e.nextTitle);
       DetailQuestion.nextPage = e.nextTitle;
     };
-    let focusOut = () => {
-      DetailQuestion.nextPage = DetailQuestion.index;
-      console.log(DetailQuestion.nextPage);
-    }
+
 
     return (
       <>
@@ -40,12 +48,13 @@ class Step2Container extends React.Component {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data) => {
               return (
                 <>
-                  <input style={{display: 'none'}} />
-                  <Select onClick = {()=>select(data)} onblur={ focusOut }>
+                  <input style={{display: 'none'}}/>
+                  <Select onClick = {()=>{test(data)}}>
                     <Text id={'queText'} color={"#282c36"}>
                       {data.select}
                     </Text>
                   </Select>
+
                 </>
               )}
             )
