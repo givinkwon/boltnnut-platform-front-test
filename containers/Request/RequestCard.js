@@ -79,7 +79,11 @@ class RequestCardContainer extends Component {
     switch(Request.step_index)
     {
       case 1:
-        //코드  
+        if (Request.step1_index == 1) {
+          Request.step1_index = 2;
+        } else {
+          Request.step_index = 2;
+        }
         break;
       case 2:
         if(DetailQuestion.nextPage)
@@ -100,7 +104,7 @@ class RequestCardContainer extends Component {
   }
   render() {
     const {percentage, active} = this.state;
-    const { DetailQuestion } = this.props;
+    const { DetailQuestion, Request } = this.props;
     return(
       <Card>
         <Header>
@@ -117,7 +121,7 @@ class RequestCardContainer extends Component {
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
         <ButtonContainer>
           <NewButton color={"#282c36"}>이전</NewButton>
-          <NewButton active={ true } onClick={ this.nextButtonClick }>다음</NewButton>
+          <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
         </ButtonContainer>
       </Card>
     )

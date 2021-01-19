@@ -17,24 +17,24 @@ class Step extends React.Component {
             <Blue>
               <img src={check}/>
             </Blue>
-            {/*<White/>*/}
-          </Relative>
-        </InlineDiv>
-        <InlineDiv>
-          <Relative>
-            <img src={lineBlue}/>
-            {/*<img src={lineGray}/>*/}
-          </Relative>
-        </InlineDiv>
-        <InlineDiv>
-          <Relative>
-            <Blue>
-              <img src={check}/>
-            </Blue>
-            {/*<Gray>*/}
-            {/*  <img src={two}/>*/}
-            {/*</Gray>*/}
             <White/>
+          </Relative>
+        </InlineDiv>
+        <InlineDiv>
+          <Relative>
+            {/* <img src={lineBlue}/> */}
+            <img src={lineGray}/>
+          </Relative>
+        </InlineDiv>
+        <InlineDiv>
+          <Relative>
+            {/* <Blue>
+              <img src={check}/>
+            </Blue> */}
+            <Gray>
+             <img src={two}/>
+            </Gray>
+            {/* <White/> */}
           </Relative>
         </InlineDiv>
         <InlineDiv>
@@ -46,7 +46,7 @@ class Step extends React.Component {
         <InlineDiv>
           <Relative>
             {/*<Blue>*/}
-            {/*  <img src={check}/>*/}
+             {/* <img src={check}/> */}
             {/*</Blue>*/}
             <Gray>
               <img src={three}/>
@@ -55,8 +55,8 @@ class Step extends React.Component {
           </Relative>
         </InlineDiv>
         <TextContainer>
-          <TextDiv><StepbarText>기본 정보 입력</StepbarText></TextDiv>
-          <TextDiv><StepbarText color={"#0933b3"}>제품 정보 선택</StepbarText></TextDiv>
+          <TextDiv><StepbarText color={"#0933b3"}>기본 정보 입력</StepbarText></TextDiv>
+          <TextDiv><StepbarText>제품 정보 선택</StepbarText></TextDiv>
           <TextDiv><StepbarText>무료 견적 받기</StepbarText></TextDiv>
         </TextContainer>
       </StepbarContainer>
@@ -81,6 +81,7 @@ const TextContainer = styled.div`
   justify-content: space-between;
   margin-left: 74px;
 `
+
 const StepbarContainer = styled.div`
   display: inline-flex;
   flex-direction:column;

@@ -57,13 +57,10 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
-  @observable page_index = 1;
   @observable button_active = 0;
-  @observable step_index = 2;
+  @observable step_index = 1;
+  @observable step1_index = 1;
 
-  @action setIndex = (val) => {
-    this.page_index = val;
-  };
   @action setInputName = (val) => {
     this.input_name = val;
   };

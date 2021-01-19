@@ -15,17 +15,19 @@ import Step2Container from './Step2';
 import Step3Container from './Step3';
 import Step4Container from './Step4';
 
-@inject("DetailQuestion")
+@inject("DetailQuestion", "Request")
 @observer
 class RequestContainer extends React.Component {
   render() {
+    const { Request } = this.props;
     return (
       <div style={{ overflow: 'hidden' }}>
         <BannerContainer />
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
             <Step />
-            <Step2Container/>
+            { Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
+            { Request.step_index == 2 && <Step2Container />}
           </Containerv1>
         </Background>
       </div>

@@ -166,14 +166,25 @@ class Step1Container extends React.Component {
      </>
     );
   }
-   render() {
+  contenthandler = () => {
+    const { page } = this.props;
+    const content1  = this.content1();
+    const content2 = this.content2();
+    return (
+      <>
+      { page == 1 ? ( content1 ) : ( content2 ) }
+      </>
+    )
+  }
+
+  render() {
     const { Request, Partner } = this.props;
     const content1  = this.content1();
     const content2 = this.content2();
-    console.log()
+    const content = this.contenthandler();
 
     return (
-      <RequestCardContainer title={"기본 정보 입력"} content = {content1}>
+      <RequestCardContainer title={"기본 정보 입력"} content = {content}>
       </RequestCardContainer>
     )
   }
