@@ -59,6 +59,7 @@ class Request {
   //new
   @observable page_index = 1;
   @observable button_active = 0;
+  @observable step_index = 1;
 
   @action setIndex = (val) => {
     this.page_index = val;
