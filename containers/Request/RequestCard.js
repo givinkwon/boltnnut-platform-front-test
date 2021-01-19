@@ -67,8 +67,6 @@ class RequestCardContainer extends Component {
         counter += 1
       }
     }
-    console.log(counter);
-    console.log(buttonActiveCount)
     if (counter == buttonActiveCount) {
       return true
     } else {
@@ -77,6 +75,7 @@ class RequestCardContainer extends Component {
   }
   next1 = () => {
     const { DetailQuestion } = this.props;
+    console.log(DetailQuestion.nextPage);
 
     if(DetailQuestion.nextPage)
     {
