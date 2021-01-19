@@ -11,6 +11,6 @@ export function loadTitle() {
 export function loadSelect(title_id) {
   return axios({
     method: 'GET',
-    url: `${ROOT_URL}/detailQuestionSelect/detailQuestionTitle?titleId=${title_id}`,
+    url: `${ROOT_URL}/detailQuestionSelect/detailQuestionTitle/?titleId=${title_id}`,
   });
 }

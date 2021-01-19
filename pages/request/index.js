@@ -21,6 +21,7 @@ class Request extends React.Component {
     this.props.Partner.init();
     this.props.Request.init();
     this.props.DetailQuestion.init();
+    this.props.DetailQuestion.loadSelectFromTitle();
     
     //창 크기
     window.addEventListener('resize', this.updateDimensions);
