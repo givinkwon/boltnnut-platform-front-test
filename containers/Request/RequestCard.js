@@ -81,11 +81,8 @@ class RequestCardContainer extends Component {
       case 1:
         if (Request.step1_index == 1) {
           Request.step1_index = 2;
-          console.log(Request.step1_index);
         } else {
           Request.step_index = 2;
-          console.log(Request.step1_index);
-          console.log(Request.step_index);
         }
         break;
       case 2:
