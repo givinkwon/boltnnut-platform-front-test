@@ -15,12 +15,9 @@ class Step extends React.Component {
   render(){
     return (
       <StepbarContainer>
-        <InlineDiv>
+        <InlineDiv>        
           <Relative>
-            <Blue>
-              <img src={check}/>
-            </Blue>
-            {this.props.Request.step_index==1 && <White/>}
+            {this.props.Request.step_index==1 ? <><Blue/><White/></>: <Blue><img src={check}/></Blue>}
           </Relative>
         </InlineDiv>
         <InlineDiv>
@@ -30,12 +27,9 @@ class Step extends React.Component {
         </InlineDiv>
         <InlineDiv>
           <Relative>
-          {/* {this.props.Request.step_index==2 ? <img src={lineBlue}/> : <img src={lineGray}/>} */}
-            <Blue>
-              <img src={check}/>
-            </Blue>
-            {this.props.Request.step_index==2 && <White/>}
+            {this.props.Request.step_index==2 && <><Blue/><White/></>}
             {this.props.Request.step_index<2 && <Gray><img src={two}/></Gray>}
+            {this.props.Request.step_index>2 && <Blue><img src={check}/></Blue>}
           </Relative>
         </InlineDiv>
         <InlineDiv>
@@ -45,11 +39,9 @@ class Step extends React.Component {
         </InlineDiv>
         <InlineDiv>
           <Relative>
-            <Blue>
-             <img src={check}/>
-            </Blue>
-            {this.props.Request.step_index==3 && <White/>}
+            {this.props.Request.step_index==3 && <><Blue/><White/></>}
             {this.props.Request.step_index<3 && <Gray><img src={three}/></Gray>}
+            {this.props.Request.step_index>3 && <Blue><img src={check}/></Blue>}
           </Relative>
         </InlineDiv>
         <TextContainer>
@@ -77,7 +69,7 @@ const TextContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin-left: 144px;
+  margin-left: 24px;
 `
 
 const StepbarContainer = styled.div`
@@ -85,7 +77,7 @@ const StepbarContainer = styled.div`
   flex-direction:column;
   width: 30px;
   height:254px;
-  align-items: center;
+  // align-items: center;
   justify-content: space-between;
   margin-top: 60px;
 `

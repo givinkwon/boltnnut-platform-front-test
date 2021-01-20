@@ -6,6 +6,7 @@ import 'intersection-observer'; // polyfill
 import Observer from "@researchgate/react-intersection-observer";
 import NewButton from '../../components/NewButton';
 import LogoSlider from "./LogoImageSlider";
+import * as DetailQuestionApi from "axios/DetailQuestion";
 
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
@@ -18,6 +19,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
+var titleData=[];
 
 @inject('Request', 'DetailQuestion')
 @observer
@@ -73,6 +75,7 @@ class RequestCardContainer extends Component {
       return false
     };
   }
+
   prevButtonClick = () => {
     const { Request, DetailQuestion } = this.props;
 
@@ -84,7 +87,9 @@ class RequestCardContainer extends Component {
         }
         break;
       case 2:
-
+        titleData.pop();
+        console.log(titleData);
+        
         if (DetailQuestion.prevPage.length > 0)
         {
           if (DetailQuestion.index != 4)
@@ -92,7 +97,6 @@ class RequestCardContainer extends Component {
             DetailQuestion.pageCount -= 1;
           }
           DetailQuestion.index = DetailQuestion.prevPage.pop();
-
           DetailQuestion.loadSelectFromTitle();
           Request.percentage -= 14;
         }
@@ -107,7 +111,7 @@ class RequestCardContainer extends Component {
   }
   nextButtonClick = () => {
     const { Request, DetailQuestion } = this.props;
-
+    
     switch(Request.step_index)
     {
       case 1:
@@ -121,6 +125,10 @@ class RequestCardContainer extends Component {
       case 2:
         if(DetailQuestion.nextPage)
         {
+          console.log("현재타이틀인덱스="+DetailQuestion.index);
+          console.log("선택한답변인덱스="+DetailQuestion.SelectId)
+          titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          console.log(titleData);
           DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
@@ -130,9 +138,14 @@ class RequestCardContainer extends Component {
             DetailQuestion.pageCount += 1;
           }
           DetailQuestion.loadSelectFromTitle();
-
         }
         else {
+          titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          var SelectSaveData = {
+            "request": 318,
+            "data": titleData,
+          }
+          DetailQuestionApi.saveSelect(SelectSaveData);
           Request.step_index = 3;
         }
         Request.percentage += 14;

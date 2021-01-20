@@ -14,3 +14,11 @@ export function loadSelect(title_id) {
     url: `${ROOT_URL}/detailQuestionSelect/detailQuestionTitle?titleId=${title_id}`,
   });
 }
+
+export function saveSelect(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/detailQuestionSave/`,
+    data: req,
+  });
+}
