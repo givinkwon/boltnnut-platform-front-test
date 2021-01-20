@@ -60,7 +60,6 @@ class Step2Container extends React.Component {
         <SelectContainer>
           {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
-              console.log(DetailQuestion.index);
               return (
                 <>
                   {
