@@ -42,6 +42,7 @@ class InputComponent extends React.Component {
   render() {
     const { onChange, children, label, file, Request, ...props } = this.props
     const { fileName } = this.state;
+    console.log(this);
 
     if (!file) {
     return (

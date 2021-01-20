@@ -58,7 +58,7 @@ class Request {
 
   //new
   @observable button_active = 0;
-  @observable step_index = 2;
+  @observable step_index = 1;
   @observable step1_index = 1;
   @observable drawFile = null;
   @observable percentage = 0;
@@ -94,9 +94,10 @@ class Request {
       console.log(this.common_file)
     }
   }
-  
+
   @action setDrawFile = (obj) => {
     this.drawFile = obj;
+    console.log(obj);
   }
 
   @action addButtonCount = (val) => {

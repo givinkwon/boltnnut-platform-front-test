@@ -20,6 +20,7 @@ class Step2Container extends React.Component {
   }
 
   onChangeFile = (e) => {
+    console.log(this);
     const {Request}  = this.props;
     const fileName = e.currentTarget.files[0].name;
     this.setState({
@@ -42,9 +43,10 @@ class Step2Container extends React.Component {
     DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }
+
   content = () => {
-    const { DetailQuestion, file, ...props } = this.props;
-    console.log(this);
+    const { DetailQuestion, Request, file } = this.props;
+    console.log(this.props)
 
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
@@ -83,23 +85,26 @@ class Step2Container extends React.Component {
         <SelectContainer>
           {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
+              console.log(this.props.file);
               return (
                 <>
                   {
                   DetailQuestion.index == 4 &&
                   <>
                   <FileSelect active={activeHandler(idx)}
-                    onChange = {this.onChangeFile}
-                  >
+                              onClick = {() => (document.getElementById("FileInput").click())}
+                              style={{display: 'inline-block'}}
+                    >
                     <Text id={'queText'} color={"#282c36"}>
-                      파일 첨부
+                        파일을 첨부해 주세요.
                     </Text>
                     <img src={fileImage} />
                     <input
+                      id = "FileInput"
                       type="file"
-                      style={{visibility: 'hidden'}}
+                      style={{display: 'none'}}
+                      onChange={this.onChangeFile}
                       ref={this.file}
-                      placeholder={"파일을 선택해 주세요."}
                     />
                   </FileSelect>
                   </>
@@ -196,8 +201,6 @@ const FileSelect = styled.div`
   align-items: center;
   margin-bottom: 20px;
   outline: 0;
-  position: absolute;
-  z-index: 0;
   border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
   &:hover {
     border: solid 2px #0933b3;
@@ -206,8 +209,6 @@ const FileSelect = styled.div`
   > input {
     width: 100%;
     height: 100%;
-    position: relative;
-    z-index: 1
   }
   > img {
     margin-left: 10px;
