@@ -19,6 +19,7 @@ class Step2Container extends React.Component {
 
   content = () => {
     const { DetailQuestion } = this.props;
+    console.log(DetailQuestion.SelectChecked)
     
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
@@ -53,11 +54,11 @@ class Step2Container extends React.Component {
           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
         </TitleContainer>
         <SelectContainer>
+          <input value = {DetailQuestion.SelectChecked} class="Input" />
           {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
               return (
                 <>
-                  {/* <input /> */}
                   <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
                     <Text id={'queText'} color={"#282c36"}>
                       {data.select}
