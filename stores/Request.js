@@ -58,8 +58,9 @@ class Request {
 
   //new
   @observable button_active = 0;
-  @observable step_index = 1;
+  @observable step_index = 2;
   @observable step1_index = 1;
+  @observable drawFile = null;
   @observable percentage = 0;
 
   @action setInputName = (val) => {
@@ -85,7 +86,6 @@ class Request {
   };
 
   @action setCommonFile = (obj) => {
-    console.log(typeof obj)
     if (typeof obj == 'object') {
       this.common_file = obj;
       console.log("file uploaded")
@@ -94,6 +94,11 @@ class Request {
       console.log(this.common_file)
     }
   }
+  
+  @action setDrawFile = (obj) => {
+    this.drawFile = obj;
+  }
+
   @action addButtonCount = (val) => {
     if (val)
       this.button_active += 1

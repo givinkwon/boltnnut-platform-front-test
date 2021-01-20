@@ -11,9 +11,30 @@ import InputComponent from 'components/Input2';
 const Qimage = "static/images/request/Step2/Q.png";
 const fileImage = 'static/images/components/Input2/Mask.png';
 
-@inject('DetailQuestion')
+@inject('DetailQuestion', 'Request')
 @observer
 class Step2Container extends React.Component {
+  constructor(props) {
+    super(props);
+    this.file = React.createRef();
+  }
+
+  onChangeFile = (e) => {
+    const {Request}  = this.props;
+    const fileName = e.currentTarget.files[0].name;
+    this.setState({
+      ...this.state,
+      file: e.currentTarget.files[0],
+      fileName: fileName,
+    })
+    Request.setDrawFile(e.currentTarget.files[0]);
+  }
+
+  state = {
+    fileName: '',
+    file:''
+  };
+
   componentDidMount()
   {
     if(DetailQuestion.select)
@@ -22,7 +43,9 @@ class Step2Container extends React.Component {
     DetailQuestion.pageCount=0;
   }
   content = () => {
-    const { DetailQuestion } = this.props;
+    const { DetailQuestion, file, ...props } = this.props;
+    console.log(this);
+
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
       {
@@ -65,12 +88,20 @@ class Step2Container extends React.Component {
                   {
                   DetailQuestion.index == 4 &&
                   <>
-                  <Select active={activeHandler(idx)}>
+                  <FileSelect active={activeHandler(idx)}
+                    onChange = {this.onChangeFile}
+                  >
                     <Text id={'queText'} color={"#282c36"}>
                       파일 첨부
                     </Text>
                     <img src={fileImage} />
-                  </Select>
+                    <input
+                      type="file"
+                      style={{visibility: 'hidden'}}
+                      ref={this.file}
+                      placeholder={"파일을 선택해 주세요."}
+                    />
+                  </FileSelect>
                   </>
                   }
                   <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
@@ -148,5 +179,37 @@ const Select = styled.button`
   > input {
     width: 100%;
     height: 100%;
+  }
+  > img {
+    margin-left: 10px;
+  }
+`
+const FileSelect = styled.div`
+  border: none;
+  width: 686px;
+  height: 46px;
+  background-color: #ffffff;
+  object-fit: contain;
+  border-radius: 3px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  outline: 0;
+  position: absolute;
+  z-index: 0;
+  border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
+  &:hover {
+    border: solid 2px #0933b3;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
+  }
+  > input {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1
+  }
+  > img {
+    margin-left: 10px;
   }
 `
