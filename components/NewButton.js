@@ -13,5 +13,6 @@ const CustomButton = styled.div`
   align-items: center;
   cursor: ${(props) => (props.active ? "pointer" : "not-allowed")};
   font-size: ${(props)=> (props.fontSize ? props.fontSize : 16)}px;
+  pointer-events: ${(props) => (!props.active && 'none')};
 `;
 export default CustomButton;

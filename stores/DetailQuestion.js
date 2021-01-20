@@ -9,12 +9,8 @@ class DetailQuestion {
   @observable index = 1;
   @observable pageCount = 0;
   @observable nextPage = 0;
-<<<<<<< HEAD
-  @observable SelectChecked = null;
-=======
   @observable prevPage = [];
   @observable SelectChecked='';
->>>>>>> f62235118bf70b99f626244934d749abfcad58ef
 
   @action init = async () => {
     await DetailQuestionAPI.loadTitle()
