@@ -7,6 +7,7 @@ import 'intersection-observer'; // polyfill
 import DetailQuestion from '../../stores/DetailQuestion';
 import InputComponent from 'components/Input2';
 
+
 const Qimage = "static/images/request/Step2/Q.png";
 const fileImage = 'static/images/components/Input2/Mask.png';
 
@@ -15,6 +16,8 @@ const fileImage = 'static/images/components/Input2/Mask.png';
 class Step2Container extends React.Component {
   componentDidMount()
   {
+    if(DetailQuestion.select)
+      console.log(DetailQuestion.select);
     DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }
@@ -25,11 +28,13 @@ class Step2Container extends React.Component {
       {
         DetailQuestion.nextPage = null;
         DetailQuestion.SelectChecked='';
+        DetailQuestion.SelectId = null;
       }
       else
       {
         DetailQuestion.SelectChecked=idx;
         DetailQuestion.nextPage = e.nextTitle;
+        DetailQuestion.SelectId = e.id;
       }
     };
 
@@ -55,7 +60,6 @@ class Step2Container extends React.Component {
         <SelectContainer>
           {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
-              console.log(DetailQuestion.index);
               return (
                 <>
                   {
