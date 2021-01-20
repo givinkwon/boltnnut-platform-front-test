@@ -14,6 +14,7 @@ class Step2Container extends React.Component {
   componentDidMount()
   {
     DetailQuestion.index=1;
+    DetailQuestion.pageCount=0;
   }
 
 
@@ -24,7 +25,7 @@ class Step2Container extends React.Component {
       if(DetailQuestion.SelectChecked===idx)
       {
         DetailQuestion.nextPage = null;
-        DetailQuestion.SelectChecked=null;
+        DetailQuestion.SelectChecked='';
       }
       else
       {
@@ -33,10 +34,9 @@ class Step2Container extends React.Component {
       }
     };
 
-    
     let activeHandler=(idx) =>
     {
-      if(idx==DetailQuestion.SelectChecked)
+      if(idx===DetailQuestion.SelectChecked)
       {
         return true;
       }
@@ -45,19 +45,19 @@ class Step2Container extends React.Component {
         return false;
       }
     };
-
+    
     return (
       <>
         <TitleContainer>
           <img src={ Qimage }/>
           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
         </TitleContainer>
+        <input value={DetailQuestion.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer>
           {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
               return (
                 <>
-                  {/* <input /> */}
                   <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
                     <Text id={'queText'} color={"#282c36"}>
                       {data.select}
