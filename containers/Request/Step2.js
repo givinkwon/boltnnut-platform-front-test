@@ -6,6 +6,7 @@ import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import DetailQuestion from '../../stores/DetailQuestion';
 
+
 const Qimage = "static/images/request/Step2/Q.png";
 
 @inject('DetailQuestion')
@@ -13,6 +14,8 @@ const Qimage = "static/images/request/Step2/Q.png";
 class Step2Container extends React.Component {
   componentDidMount()
   {
+    if(DetailQuestion.select)
+      console.log(DetailQuestion.select);
     DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }

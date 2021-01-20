@@ -6,6 +6,7 @@ import 'intersection-observer'; // polyfill
 import Observer from "@researchgate/react-intersection-observer";
 import NewButton from '../../components/NewButton';
 import LogoSlider from "./LogoImageSlider";
+import * as DetailQuestionApi from "axios/DetailQuestion";
 
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
@@ -87,7 +88,25 @@ class RequestCardContainer extends Component {
         break;
       case 2:
         if(DetailQuestion.nextPage)
-        {
+        {   
+            var titleData=[];
+            titleData.push({"title_id":1,"title_sed":3});
+            console.log(titleData);
+            var SelectSaveData = {
+              "request": 318,
+              "data": [
+                  {
+                      "title_id" : 1,
+                      "title_select" : 20
+                  },
+                  {
+                      "title_id" : 2,
+                      "title_select" : 24
+                  }
+              ]
+          }
+          // DetailQuestionApi.saveSelect(test);
+
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
@@ -95,6 +114,9 @@ class RequestCardContainer extends Component {
           {
             DetailQuestion.pageCount += 1;
           }
+          
+
+          
 
           DetailQuestion.loadSelectFromTitle();
           
