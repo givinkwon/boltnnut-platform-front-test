@@ -73,6 +73,34 @@ class RequestCardContainer extends Component {
       return false
     };
   }
+  prevButtonClick = () => {
+    const { Request, DetailQuestion } = this.props;
+
+    switch (Request.step_index) {
+      case 1:
+        if (Request.step1_index == 2) {
+          Request.step1_index = 1;
+        }
+        break;
+      case 2:
+
+        if (DetailQuestion.prevPage.length > 0)
+        {
+          if (DetailQuestion.index != 4)
+          {
+            DetailQuestion.pageCount -= 1;
+          }
+          DetailQuestion.index = DetailQuestion.prevPage.pop();
+
+          DetailQuestion.loadSelectFromTitle();
+        }
+        else {
+          Request.step_index = 1;
+        }
+        break;
+
+    }
+  }
   nextButtonClick = () => {
     const { Request, DetailQuestion } = this.props;
 
@@ -88,6 +116,7 @@ class RequestCardContainer extends Component {
       case 2:
         if(DetailQuestion.nextPage)
         {
+          DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
@@ -95,9 +124,11 @@ class RequestCardContainer extends Component {
           {
             DetailQuestion.pageCount += 1;
           }
-
           DetailQuestion.loadSelectFromTitle();
           
+        }
+        else {
+          Request.step_index = 3;
         }
         break;
     }
@@ -120,7 +151,7 @@ class RequestCardContainer extends Component {
         <LogoSlider/>
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
         <ButtonContainer>
-          <NewButton color={"#282c36"}>이전</NewButton>
+          <NewButton active={ true } onClick={ this.prevButtonClick }>이전</NewButton>
           <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
         </ButtonContainer>
       </Card>
@@ -223,7 +254,6 @@ const MatchingText = styled(Title.FontSize20)`
 `
 const ButtonContainer = styled.div`
   width: 260px;
-  // height: 44px;
   margin: 70px 317px 60px 317px;
   display: flex;
   flex-direction: row;

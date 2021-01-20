@@ -82,7 +82,7 @@ class Request {
   @action setDue = (val) => {
     this.input_day = val;
   };
-  
+
   @action setCommonFile = (obj) => {
     console.log(typeof obj)
     if (typeof obj == 'object') {

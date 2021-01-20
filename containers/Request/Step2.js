@@ -16,11 +16,9 @@ class Step2Container extends React.Component {
     DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }
-
-
   content = () => {
     const { DetailQuestion } = this.props;
-    
+
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
       {
@@ -45,7 +43,7 @@ class Step2Container extends React.Component {
         return false;
       }
     };
-    
+
     return (
       <>
         <TitleContainer>
@@ -134,9 +132,4 @@ const Select = styled.button`
     border: solid 2px #0933b3;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
   }
-
-  // &:focus {
-  //   border: solid 2px #0933b3;
-  //   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
-  // }
 `
