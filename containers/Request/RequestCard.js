@@ -23,22 +23,22 @@ const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 @observer
 class RequestCardContainer extends Component {
   state = {
-    percentage: 40,
+    percentage: 0,
     buttonActiveCount: 0,
     targets: null,
     active: false
   }
 
-  handleChange = (event, newValue) => {
-    this.setState({percentage: newValue})
-  }
+  // handleChange = (event, newValue) => {
+  //   this.setState({percentage: newValue})
+  // }
 
   CustomSliderThumbComponent = (props) => {
-    const {percentage} = this.state;
+    const { Request } = this.props;
     return (
       <div {...props}>
         <img src={ThumbImage} />
-        <ThumbText> {percentage}% </ThumbText>
+        <ThumbText> {Request.percentage}% </ThumbText>
       </div>
     );
   }
@@ -80,6 +80,7 @@ class RequestCardContainer extends Component {
       case 1:
         if (Request.step1_index == 2) {
           Request.step1_index = 1;
+          Request.percentage -= 15;
         }
         break;
       case 2:
@@ -93,10 +94,13 @@ class RequestCardContainer extends Component {
           DetailQuestion.index = DetailQuestion.prevPage.pop();
 
           DetailQuestion.loadSelectFromTitle();
+          Request.percentage -= 14;
         }
         else {
           Request.step_index = 1;
+          Request.percentage -= 15;
         }
+
         break;
 
     }
@@ -112,6 +116,7 @@ class RequestCardContainer extends Component {
         } else {
           Request.step_index = 2;
         }
+        Request.percentage += 15;
         break;
       case 2:
         if(DetailQuestion.nextPage)
@@ -125,17 +130,18 @@ class RequestCardContainer extends Component {
             DetailQuestion.pageCount += 1;
           }
           DetailQuestion.loadSelectFromTitle();
-          
+
         }
         else {
           Request.step_index = 3;
         }
+        Request.percentage += 14;
         break;
     }
   }
   render() {
-    const {percentage, active} = this.state;
-    const { DetailQuestion, Request } = this.props;
+    const { active } = this.state;
+    const { Request } = this.props;
     return(
       <Card>
         <Header>
@@ -145,8 +151,8 @@ class RequestCardContainer extends Component {
           {this.props.content}
         </ContentBox>
         <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
-        <CustomSlider value={percentage}/>
-        <ThumbText> {percentage}% </ThumbText>
+        <CustomSlider value={Request.percentage}/>
+        <ThumbText> {Request.percentage}% </ThumbText>
 
         <LogoSlider/>
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>

@@ -77,7 +77,7 @@ const TextContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin-left: 74px;
+  margin-left: 144px;
 `
 
 const StepbarContainer = styled.div`
