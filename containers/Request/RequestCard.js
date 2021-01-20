@@ -19,27 +19,28 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
+var titleData=[];
 
 @inject('Request', 'DetailQuestion')
 @observer
 class RequestCardContainer extends Component {
   state = {
-    percentage: 40,
+    percentage: 0,
     buttonActiveCount: 0,
     targets: null,
     active: false
   }
 
-  handleChange = (event, newValue) => {
-    this.setState({percentage: newValue})
-  }
+  // handleChange = (event, newValue) => {
+  //   this.setState({percentage: newValue})
+  // }
 
   CustomSliderThumbComponent = (props) => {
-    const {percentage} = this.state;
+    const { Request } = this.props;
     return (
       <div {...props}>
         <img src={ThumbImage} />
-        <ThumbText> {percentage}% </ThumbText>
+        <ThumbText> {Request.percentage}% </ThumbText>
       </div>
     );
   }
@@ -74,9 +75,43 @@ class RequestCardContainer extends Component {
       return false
     };
   }
-  nextButtonClick = () => {
+
+  prevButtonClick = () => {
     const { Request, DetailQuestion } = this.props;
 
+    switch (Request.step_index) {
+      case 1:
+        if (Request.step1_index == 2) {
+          Request.step1_index = 1;
+          Request.percentage -= 15;
+        }
+        break;
+      case 2:
+        titleData.pop();
+        console.log(titleData);
+        
+        if (DetailQuestion.prevPage.length > 0)
+        {
+          if (DetailQuestion.index != 4)
+          {
+            DetailQuestion.pageCount -= 1;
+          }
+          DetailQuestion.index = DetailQuestion.prevPage.pop();
+          DetailQuestion.loadSelectFromTitle();
+          Request.percentage -= 14;
+        }
+        else {
+          Request.step_index = 1;
+          Request.percentage -= 15;
+        }
+
+        break;
+
+    }
+  }
+  nextButtonClick = () => {
+    const { Request, DetailQuestion } = this.props;
+    
     switch(Request.step_index)
     {
       case 1:
@@ -85,28 +120,16 @@ class RequestCardContainer extends Component {
         } else {
           Request.step_index = 2;
         }
+        Request.percentage += 15;
         break;
       case 2:
         if(DetailQuestion.nextPage)
-        {   
-            var titleData=[];
-            titleData.push({"title_id":1,"title_sed":3});
-            console.log(titleData);
-            var SelectSaveData = {
-              "request": 318,
-              "data": [
-                  {
-                      "title_id" : 1,
-                      "title_select" : 20
-                  },
-                  {
-                      "title_id" : 2,
-                      "title_select" : 24
-                  }
-              ]
-          }
-          // DetailQuestionApi.saveSelect(test);
-
+        {
+          console.log("현재타이틀인덱스="+DetailQuestion.index);
+          console.log("선택한답변인덱스="+DetailQuestion.SelectId)
+          titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          console.log(titleData);
+          DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
@@ -114,19 +137,24 @@ class RequestCardContainer extends Component {
           {
             DetailQuestion.pageCount += 1;
           }
-          
-
-          
-
           DetailQuestion.loadSelectFromTitle();
-          
         }
+        else {
+          titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          var SelectSaveData = {
+            "request": 318,
+            "data": titleData,
+          }
+          DetailQuestionApi.saveSelect(SelectSaveData);
+          Request.step_index = 3;
+        }
+        Request.percentage += 14;
         break;
     }
   }
   render() {
-    const {percentage, active} = this.state;
-    const { DetailQuestion, Request } = this.props;
+    const { active } = this.state;
+    const { Request } = this.props;
     return(
       <Card>
         <Header>
@@ -136,13 +164,13 @@ class RequestCardContainer extends Component {
           {this.props.content}
         </ContentBox>
         <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
-        <CustomSlider value={percentage}/>
-        <ThumbText> {percentage}% </ThumbText>
+        <CustomSlider value={Request.percentage}/>
+        <ThumbText> {Request.percentage}% </ThumbText>
 
         <LogoSlider/>
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
         <ButtonContainer>
-          <NewButton color={"#282c36"}>이전</NewButton>
+          <NewButton active={ true } onClick={ this.prevButtonClick }>이전</NewButton>
           <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
         </ButtonContainer>
       </Card>
@@ -245,7 +273,6 @@ const MatchingText = styled(Title.FontSize20)`
 `
 const ButtonContainer = styled.div`
   width: 260px;
-  // height: 44px;
   margin: 70px 317px 60px 317px;
   display: flex;
   flex-direction: row;

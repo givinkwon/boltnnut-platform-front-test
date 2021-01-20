@@ -49,19 +49,19 @@ const Head = styled(Title.FontSize20)`
   letter-spacing: normal;
   margin: 70px 0px 2px 0px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 14px;
+    font-size: 13px;
   }
 `
 const Main = styled(Title.FontSize56)`
   font-size: 22px;
-  font-weight: 400;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.36;
   letter-spacing: -0.55px;
   text-align: center;
   > span {
-    font-weight: 500;
+    font-weight: bold;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 22px;

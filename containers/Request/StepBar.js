@@ -15,9 +15,9 @@ class Step extends React.Component {
   render(){
     return (
       <StepbarContainer>
-        <InlineDiv>
+        <InlineDiv>        
           <Relative>
-            {this.props.Request.step_index==1 ? <White/>: <Blue><img src={check}/></Blue>}
+            {this.props.Request.step_index==1 ? <><Blue/><White/></>: <Blue><img src={check}/></Blue>}
           </Relative>
         </InlineDiv>
         <InlineDiv>
@@ -27,9 +27,9 @@ class Step extends React.Component {
         </InlineDiv>
         <InlineDiv>
           <Relative>
-          {/* {this.props.Request.step_index==2 ? <img src={lineBlue}/> : <img src={lineGray}/>} */}
-            {this.props.Request.step_index==2 && <White/>}
-            {this.props.Request.step_index<2 ? <Gray><img src={two}/></Gray>: <Blue><img src={check}/></Blue>}
+            {this.props.Request.step_index==2 && <><Blue/><White/></>}
+            {this.props.Request.step_index<2 && <Gray><img src={two}/></Gray>}
+            {this.props.Request.step_index>2 && <Blue><img src={check}/></Blue>}
           </Relative>
         </InlineDiv>
         <InlineDiv>
@@ -39,9 +39,9 @@ class Step extends React.Component {
         </InlineDiv>
         <InlineDiv>
           <Relative>
-            
-            {this.props.Request.step_index==3 && <White/>}
-            {this.props.Request.step_index<3 ? <Gray><img src={three}/></Gray> : <Blue><img src={check}/></Blue>}
+            {this.props.Request.step_index==3 && <><Blue/><White/></>}
+            {this.props.Request.step_index<3 && <Gray><img src={three}/></Gray>}
+            {this.props.Request.step_index>3 && <Blue><img src={check}/></Blue>}
           </Relative>
         </InlineDiv>
         <TextContainer>

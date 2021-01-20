@@ -60,6 +60,7 @@ class Request {
   @observable button_active = 0;
   @observable step_index = 1;
   @observable step1_index = 1;
+  @observable percentage = 0;
 
   @action setInputName = (val) => {
     this.input_name = val;
@@ -82,7 +83,7 @@ class Request {
   @action setDue = (val) => {
     this.input_day = val;
   };
-  
+
   @action setCommonFile = (obj) => {
     console.log(typeof obj)
     if (typeof obj == 'object') {
