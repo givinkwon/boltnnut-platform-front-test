@@ -25,7 +25,7 @@ class MobileBanner2Container extends React.Component {
                             AI 제조사 매칭 알고리즘
                         </Header>
                         <Middle>
-                            5000여개의 제조사 중 <br />
+                            5000여개의 제조사 중<br/>
                             딱 맞는 전문가를 매칭
                         </Middle>
                         <div>
@@ -64,6 +64,9 @@ const Middle = styled(Content.FontSize22)`
   letter-spacing: -0.55px;
   margin-bottom: 30px;
   text-align:center;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+      line-height: 1.45;
+  }
 `
 
 const Body = styled(Content.FontSize15)`
