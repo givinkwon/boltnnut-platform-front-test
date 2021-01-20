@@ -51,7 +51,7 @@ class RequestCardContainer extends Component {
 
   componentDidUpdate() {
     const { targets,active } = this.state;
-    console.log(targets);
+    // console.log(targets);
     if (this.fullChecker(targets) == true && active == false) {
       this.setState({...this.state, active: true})
     } else if (this.fullChecker(targets) == false && active == true) {
@@ -118,11 +118,14 @@ class RequestCardContainer extends Component {
         {
           DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
+          DetailQuestion.nextPage=null;
+          DetailQuestion.SelectChecked='';
           if(DetailQuestion.index!=4)
           {
             DetailQuestion.pageCount += 1;
           }
           DetailQuestion.loadSelectFromTitle();
+          
         }
         else {
           Request.step_index = 3;

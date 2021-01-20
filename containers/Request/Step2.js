@@ -11,20 +11,37 @@ const Qimage = "static/images/request/Step2/Q.png";
 @inject('DetailQuestion')
 @observer
 class Step2Container extends React.Component {
-
-
   componentDidMount()
   {
     DetailQuestion.index=1;
-    console.log(DetailQuestion.title_list.results)
+    DetailQuestion.pageCount=0;
   }
-
   content = () => {
     const { DetailQuestion } = this.props;
-    let test = (e) => {
-      // console.log(e.target.innerText)
-      console.log(e.nextTitle);
-      DetailQuestion.nextPage = e.nextTitle;
+
+    let test = (e,idx) => {
+      if(DetailQuestion.SelectChecked===idx)
+      {
+        DetailQuestion.nextPage = null;
+        DetailQuestion.SelectChecked='';
+      }
+      else
+      {
+        DetailQuestion.SelectChecked=idx;
+        DetailQuestion.nextPage = e.nextTitle;
+      }
+    };
+
+    let activeHandler=(idx) =>
+    {
+      if(idx===DetailQuestion.SelectChecked)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     };
 
     return (
@@ -33,18 +50,17 @@ class Step2Container extends React.Component {
           <img src={ Qimage }/>
           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
         </TitleContainer>
+        <input value={DetailQuestion.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer>
           {
-            DetailQuestion.select.data && DetailQuestion.select.data.map((data) => {
+            DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
               return (
                 <>
-                  <input style={{display: 'none'}}/>
-                  <Select onClick = {()=>{test(data)}}>
+                  <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
                     <Text id={'queText'} color={"#282c36"}>
                       {data.select}
                     </Text>
                   </Select>
-
                 </>
               )}
             )
@@ -110,13 +126,9 @@ const Select = styled.button`
   outline: 0;
   border: 0;
 
+  border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
 
   &:hover {
-    border: solid 2px #0933b3;
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
-  }
-
-  &:focus {
     border: solid 2px #0933b3;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
   }
