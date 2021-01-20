@@ -19,24 +19,6 @@ class Step2Container extends React.Component {
     console.log(DetailQuestion.title_list.results)
   }
 
-  componentDidUpdate()
-  {
-    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
-    const focusEle = document.activeElement;
-    console.log(document.getElementById('FF'));
-    if (document.getElementById('FF') == focusEle) {
-      console.log(true);
-    }
-  }
-
-  ffff=()=>
-  {
-    const focusEle = document.activeElement;
-    // console.log(document.getElementById('FF'));
-    if (document.getElementById('FF') == focusEle) {
-      console.log(true);
-    }
-  }
   content = () => {
     const { DetailQuestion } = this.props;
     let test = (e) => {
@@ -44,7 +26,7 @@ class Step2Container extends React.Component {
       console.log(e.nextTitle);
       DetailQuestion.nextPage = e.nextTitle;
     };
-    
+
     return (
       <>
         <TitleContainer>
@@ -62,7 +44,7 @@ class Step2Container extends React.Component {
                       {data.select}
                     </Text>
                   </Select>
-                  
+
                 </>
               )}
             )
