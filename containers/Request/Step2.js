@@ -14,18 +14,21 @@ class Step2Container extends React.Component {
   componentDidMount()
   {
     DetailQuestion.index=1;
+    DetailQuestion.pageCount=0;
   }
-
-
   content = () => {
     const { DetailQuestion } = this.props;
+<<<<<<< HEAD
     console.log(DetailQuestion.SelectChecked)
     
+=======
+
+>>>>>>> f62235118bf70b99f626244934d749abfcad58ef
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
       {
         DetailQuestion.nextPage = null;
-        DetailQuestion.SelectChecked=null;
+        DetailQuestion.SelectChecked='';
       }
       else
       {
@@ -34,10 +37,9 @@ class Step2Container extends React.Component {
       }
     };
 
-    
     let activeHandler=(idx) =>
     {
-      if(idx==DetailQuestion.SelectChecked)
+      if(idx===DetailQuestion.SelectChecked)
       {
         return true;
       }
@@ -53,6 +55,7 @@ class Step2Container extends React.Component {
           <img src={ Qimage }/>
           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
         </TitleContainer>
+        <input value={DetailQuestion.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer>
           <input value = {DetailQuestion.SelectChecked} class="Input" />
           {
@@ -135,9 +138,4 @@ const Select = styled.button`
     border: solid 2px #0933b3;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
   }
-
-  // &:focus {
-  //   border: solid 2px #0933b3;
-  //   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
-  // }
 `

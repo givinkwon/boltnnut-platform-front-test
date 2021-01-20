@@ -1,13 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import * as Title from 'components/Title'
+import { inject, observer } from 'mobx-react';
+
 const check = "static/images/request/StepBar/check.png"
 const two = "static/images/request/StepBar/two.png"
 const three = "static/images/request/StepBar/three.png"
 const lineBlue = "static/images/request/StepBar/lineBlue.png"
 const lineGray = "static/images/request/StepBar/lineGray.png"
 
-
+@inject('Request')
+@observer
 class Step extends React.Component {
   render(){
     return (
@@ -17,41 +20,36 @@ class Step extends React.Component {
             <Blue>
               <img src={check}/>
             </Blue>
-            <White/>
+            {this.props.Request.step_index==1 && <White/>}
           </Relative>
         </InlineDiv>
         <InlineDiv>
           <Relative>
-            {/* <img src={lineBlue}/> */}
-            <img src={lineGray}/>
+            {this.props.Request.step_index>=2 ? <img src={lineBlue}/> : <img src={lineGray}/>}
           </Relative>
         </InlineDiv>
         <InlineDiv>
           <Relative>
-            {/* <Blue>
+          {/* {this.props.Request.step_index==2 ? <img src={lineBlue}/> : <img src={lineGray}/>} */}
+            <Blue>
               <img src={check}/>
-            </Blue> */}
-            <Gray>
-             <img src={two}/>
-            </Gray>
-            {/* <White/> */}
+            </Blue>
+            {this.props.Request.step_index==2 && <White/>}
+            {this.props.Request.step_index<2 && <Gray><img src={two}/></Gray>}
           </Relative>
         </InlineDiv>
         <InlineDiv>
           <Relative>
-            {/*<img src={lineBlue}/>*/}
-            <img src={lineGray}/>
+            {this.props.Request.step_index>=3 ? <img src={lineBlue}/> : <img src={lineGray}/>}
           </Relative>
         </InlineDiv>
         <InlineDiv>
           <Relative>
-            {/*<Blue>*/}
-             {/* <img src={check}/> */}
-            {/*</Blue>*/}
-            <Gray>
-              <img src={three}/>
-            </Gray>
-            {/*<White/>*/}
+            <Blue>
+             <img src={check}/>
+            </Blue>
+            {this.props.Request.step_index==3 && <White/>}
+            {this.props.Request.step_index<3 && <Gray><img src={three}/></Gray>}
           </Relative>
         </InlineDiv>
         <TextContainer>
