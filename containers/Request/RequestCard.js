@@ -90,7 +90,7 @@ class RequestCardContainer extends Component {
         {
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
-          DetailQuestion.SelectChecked=null;
+          DetailQuestion.SelectChecked='';
           if(DetailQuestion.index!=4)
           {
             DetailQuestion.pageCount += 1;
