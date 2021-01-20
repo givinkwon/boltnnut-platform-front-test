@@ -13,6 +13,15 @@ const fileImage = 'static/images/components/Input2/Mask.png';
 @inject('DetailQuestion')
 @observer
 class Step2Container extends React.Component {
+  constructor(props) {
+    super(props);
+    this.file = React.createRef();
+  }
+  
+  state = {
+    fileName: '',
+    file:''
+  };
   componentDidMount()
   {
     DetailQuestion.index=1;
@@ -55,7 +64,6 @@ class Step2Container extends React.Component {
         <SelectContainer>
           {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
-              console.log(DetailQuestion.index);
               return (
                 <>
                   {
@@ -66,6 +74,13 @@ class Step2Container extends React.Component {
                       파일 첨부
                     </Text>
                     <img src={fileImage} />
+                    <input
+                      type="file"
+                      style={{display: 'none'}}
+                      onChange={this.onChangeFile}
+                      ref={this.file}
+                      placeholder={"파일을 선택해 주세요."}
+                    />
                   </Select>
                   </>
                   }
@@ -144,5 +159,8 @@ const Select = styled.button`
   > input {
     width: 100%;
     height: 100%;
+  }
+  > img {
+    margin-left: 10px;
   }
 `
