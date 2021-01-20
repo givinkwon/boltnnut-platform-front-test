@@ -59,7 +59,7 @@ class MobileBanner0Container extends React.Component {
                   총 프로젝트 금액
               </Title1>
               <Content1 color={'#ffffff'}>
-                <CountFunc index={0}/>
+                <CountFunc index={0}/> 원
               </Content1>
 
               <div style={{marginTop: 22}} />
@@ -67,7 +67,7 @@ class MobileBanner0Container extends React.Component {
                   의뢰 프로젝트
               </Title1>
               <Content1 color={'#ffffff'}>
-                <CountFunc index={1}/>
+                <CountFunc index={1}/> 건
               </Content1>
               
               <div style={{marginTop: 22}} />
@@ -75,7 +75,7 @@ class MobileBanner0Container extends React.Component {
                   개발 전문업체
               </Title1>
               <Content1 color={'#ffffff'}>
-                <CountFunc index={2}/>
+                <CountFunc index={2}/> 개
               </Content1>
             </div>
             <Buttonv1 style={{marginTop: 56, marginLeft:'auto', marginRight:'auto', fontWeight: 700}} onClick={() => Router.push("/request")}>
@@ -106,4 +106,11 @@ const Content1 = styled(Content.FontSize17)`
   line-height: 1.29;
   letter-spacing: normal;
   text-align: center;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 28px;
+  }
 `
