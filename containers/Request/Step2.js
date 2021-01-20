@@ -5,8 +5,10 @@ import RequestCardContainer from './RequestCard';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import DetailQuestion from '../../stores/DetailQuestion';
+import InputComponent from 'components/Input2';
 
 const Qimage = "static/images/request/Step2/Q.png";
+const fileImage = 'static/images/components/Input2/Mask.png';
 
 @inject('DetailQuestion')
 @observer
@@ -18,7 +20,6 @@ class Step2Container extends React.Component {
   }
   content = () => {
     const { DetailQuestion } = this.props;
-
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
       {
@@ -54,8 +55,20 @@ class Step2Container extends React.Component {
         <SelectContainer>
           {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
+              console.log(DetailQuestion.index);
               return (
                 <>
+                  {
+                  DetailQuestion.index == 4 &&
+                  <>
+                  <Select active={activeHandler(idx)}>
+                    <Text id={'queText'} color={"#282c36"}>
+                      파일 첨부
+                    </Text>
+                    <img src={fileImage} />
+                  </Select>
+                  </>
+                  }
                   <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
                     <Text id={'queText'} color={"#282c36"}>
                       {data.select}
@@ -65,7 +78,6 @@ class Step2Container extends React.Component {
               )}
             )
           }
-
         </SelectContainer>
       </>
     );
@@ -124,12 +136,13 @@ const Select = styled.button`
   align-items: center;
   margin-bottom: 20px;
   outline: 0;
-  border: 0;
-
   border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
-
   &:hover {
     border: solid 2px #0933b3;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
+  }
+  > input {
+    width: 100%;
+    height: 100%;
   }
 `
