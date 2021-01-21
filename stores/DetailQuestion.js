@@ -6,7 +6,7 @@ import Router from "next/router";
 class DetailQuestion {
   @observable title_list = [];
   @observable select = [];
-  @observable index = 3;
+  @observable index = 1;
   @observable pageCount = 0;
   @observable nextPage = 0;
   @observable prevPage = [];

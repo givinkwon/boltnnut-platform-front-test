@@ -14,18 +14,13 @@ const fileImage = 'static/images/components/Input2/Mask.png';
 @inject('DetailQuestion', 'Request')
 @observer
 class Step2Container extends React.Component {
-  constructor(props) {
-    super(props);
-    this.file = React.createRef();
-  }
 
   onChangeFile = (e) => {
-    console.log(this);
     const {Request}  = this.props;
     const fileName = e.currentTarget.files[0].name;
+    console.log(fileName);
     this.setState({
       ...this.state,
-      file: e.currentTarget.files[0],
       fileName: fileName,
     })
     Request.setDrawFile(e.currentTarget.files[0]);
@@ -33,7 +28,6 @@ class Step2Container extends React.Component {
 
   state = {
     fileName: '',
-    file:''
   };
 
   componentDidMount()
@@ -43,10 +37,12 @@ class Step2Container extends React.Component {
     DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }
-
+  setFocus() {
+    console.log(this)
+  }
   content = () => {
     const { DetailQuestion, Request, file } = this.props;
-    console.log(this.props)
+    const { fileName } = this.state;
 
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
@@ -85,7 +81,6 @@ class Step2Container extends React.Component {
         <SelectContainer>
           {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
-              console.log(this.props.file);
               return (
                 <>
                   {
@@ -93,10 +88,9 @@ class Step2Container extends React.Component {
                   <>
                   <FileSelect active={activeHandler(idx)}
                               onClick = {() => (document.getElementById("FileInput").click())}
-                              style={{display: 'inline-block'}}
                     >
                     <Text id={'queText'} color={"#282c36"}>
-                        파일을 첨부해 주세요.
+                        { Request.common_file ? this.state.fileName : "파일을 선택해 주세요." }
                     </Text>
                     <img src={fileImage} />
                     <input
@@ -104,7 +98,6 @@ class Step2Container extends React.Component {
                       type="file"
                       style={{display: 'none'}}
                       onChange={this.onChangeFile}
-                      ref={this.file}
                     />
                   </FileSelect>
                   </>
