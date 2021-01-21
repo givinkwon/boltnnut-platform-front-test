@@ -14,17 +14,13 @@ const fileImage = 'static/images/components/Input2/Mask.png';
 @inject('DetailQuestion', 'Request')
 @observer
 class Step2Container extends React.Component {
-  constructor(props) {
-    super(props);
-    this.file = React.createRef();
-  }
 
   onChangeFile = (e) => {
     const {Request}  = this.props;
     const fileName = e.currentTarget.files[0].name;
+    console.log(fileName);
     this.setState({
       ...this.state,
-      file: e.currentTarget.files[0],
       fileName: fileName,
     })
     Request.setDrawFile(e.currentTarget.files[0]);
@@ -32,7 +28,6 @@ class Step2Container extends React.Component {
 
   state = {
     fileName: '',
-    file:''
   };
 
   componentDidMount()
@@ -42,9 +37,12 @@ class Step2Container extends React.Component {
     DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }
+  setFocus() {
+    console.log(this)
+  }
   content = () => {
-    const { DetailQuestion, file, ...props } = this.props;
-    console.log(this);
+    const { DetailQuestion, Request, file } = this.props;
+    const { fileName } = this.state;
 
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
@@ -89,17 +87,17 @@ class Step2Container extends React.Component {
                   DetailQuestion.index == 4 &&
                   <>
                   <FileSelect active={activeHandler(idx)}
-                    onChange = {this.onChangeFile}
-                  >
+                              onClick = {() => (document.getElementById("FileInput").click())}
+                    >
                     <Text id={'queText'} color={"#282c36"}>
-                      파일 첨부
+                        { Request.common_file ? this.state.fileName : "파일을 선택해 주세요." }
                     </Text>
                     <img src={fileImage} />
                     <input
+                      id = "FileInput"
                       type="file"
-                      style={{visibility: 'hidden'}}
-                      ref={this.file}
-                      placeholder={"파일을 선택해 주세요."}
+                      style={{display: 'none'}}
+                      onChange={this.onChangeFile}
                     />
                   </FileSelect>
                   </>
@@ -196,8 +194,6 @@ const FileSelect = styled.div`
   align-items: center;
   margin-bottom: 20px;
   outline: 0;
-  position: absolute;
-  z-index: 0;
   border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
   &:hover {
     border: solid 2px #0933b3;
@@ -206,8 +202,6 @@ const FileSelect = styled.div`
   > input {
     width: 100%;
     height: 100%;
-    position: relative;
-    z-index: 1
   }
   > img {
     margin-left: 10px;
