@@ -117,18 +117,22 @@ class RequestCardContainer extends Component {
       case 1:
         if (Request.step1_index == 1) {
           Request.step1_index = 2;
+          Request.percentage += 15;
         } else {
-          Request.step_index = 2;
+          try {
+            console.log(1);
+            Request.createRequest();
+            console.log(2);
+            Request.percentage += 15;
+          } catch(e) {
+            console.log(e);
+          }
         }
-        Request.percentage += 15;
         break;
       case 2:
         if(DetailQuestion.nextPage)
         {
-          console.log("현재타이틀인덱스="+DetailQuestion.index);
-          console.log("선택한답변인덱스="+DetailQuestion.SelectId)
           titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
-          console.log(titleData);
           DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
