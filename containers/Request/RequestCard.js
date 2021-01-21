@@ -53,7 +53,6 @@ class RequestCardContainer extends Component {
 
   componentDidUpdate() {
     const { targets,active } = this.state;
-    // console.log(targets);
     if (this.fullChecker(targets) == true && active == false) {
       this.setState({...this.state, active: true})
     } else if (this.fullChecker(targets) == false && active == true) {
@@ -120,14 +119,13 @@ class RequestCardContainer extends Component {
           Request.percentage += 15;
         } else {
           try {
-            console.log(1);
             Request.createRequest();
-            console.log(2);
+            Request.step_index = 2;
             Request.percentage += 15;
           } catch(e) {
             console.log(e);
           }
-        }
+          } 
         break;
       case 2:
         if(DetailQuestion.nextPage)

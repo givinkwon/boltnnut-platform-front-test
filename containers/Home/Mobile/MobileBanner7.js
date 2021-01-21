@@ -11,7 +11,9 @@ const image2 = "/static/images/logo/logo_2.png";
 const image3 = "/static/images/logo/logo_3.png";
 const image4 = "/static/images/logo/logo_4.png";
 const image5 = "/static/images/logo/logo_5.png";
-const image6 = "/static/images/logo/logo_6_3.png";
+const image6_3 = "/static/images/logo/logo_6_3.png";
+const image6_2 = "/static/images/logo/logo_6_2.png";
+const image6 = "/static/images/logo/logo_6.png";
 const image7 = "/static/images/logo/logo_7.png";
 const image8 = "/static/images/logo/logo_8.png";
 const image9 = "/static/images/logo/logo_9.png";
@@ -59,7 +61,7 @@ class MobileBanner7Container extends React.Component {
         slidesToScroll: 1,
         draggable:true,
         rows:4,
-        autoplay:true
+        autoplay:false
       };
       return (
         <Background style={{ paddingBottom: 100, paddingTop: 100, justifyContent: 'center' }}>
@@ -79,34 +81,34 @@ class MobileBanner7Container extends React.Component {
                         <img src={image2}/>
                     </Item>
                     <Item>
-                        <img src={image3}/>
+                        <img src={image12}/>
                     </Item>
                     <Item>
-                        <img src={image4}/>
-                    </Item>
-                    <Item>
-                        <img src={image5}/>
-                    </Item>
-                    <Item>
-                        <img src={image10}/>
-                    </Item>
-                    <Item>
-                        <img src={image7}/>
+                        <img src={image6_3}/>
                     </Item>
                     <Item>
                         <img src={image8}/>
                     </Item>
                     <Item>
-                        <img src={image9}/>
+                        <img src={image3}/>
+                    </Item>
+                    <Item>
+                        <img src={image5}/>
                     </Item>
                     <Item>
                         <img src={image6}/>
                     </Item>
                     <Item>
+                        <img src={image7}/>
+                    </Item>
+                    <Item>
+                        <img src={image4}/>
+                    </Item>
+                    <Item>
                         <img src={image11}/>
                     </Item>
                     <Item>
-                        <img src={image12}/>
+                        <img src={image6_2}/>
                     </Item>
                     <Item>
                         <img src={image13}/>

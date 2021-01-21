@@ -105,7 +105,7 @@ class Request {
   @action createRequest = () => {
     var formData = new FormData();
 
-    formData.append("product", this.select_mid.id);
+    formData.append("product", 45);
     formData.append("name", this.input_name);
     formData.append("price", this.input_price.value);
     formData.append("period", this.input_day.value);
@@ -119,10 +119,10 @@ class Request {
     RequestAPI.create(req)
     .then ((res) => {
       this.created_request = res.data.id;
-      this.step_index = 2;
     })
     .catch((e) => {
       alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');
+      alert(e);
     })
   }
   @action init = (q) => {
