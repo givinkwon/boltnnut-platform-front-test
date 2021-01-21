@@ -6,7 +6,7 @@ import Router from "next/router";
 class DetailQuestion {
   @observable title_list = [];
   @observable select = [];
-  @observable index = 1;
+  @observable index = 0;
   @observable pageCount = 0;
   @observable nextPage = 0;
   @observable prevPage = [];
@@ -19,8 +19,8 @@ class DetailQuestion {
         }
       )
   };
-  @action loadSelectFromTitle = async () => {
-    await DetailQuestionAPI.loadSelect(this.index)
+  @action loadSelectFromTitle = async (m_index) => {
+    await DetailQuestionAPI.loadSelect(m_index)
       .then(res => {
           this.select = res.data;
         }

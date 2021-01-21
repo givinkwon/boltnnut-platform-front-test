@@ -2,21 +2,21 @@ import styled from 'styled-components';
 import * as Content from '../../components/Content';
 import { Component } from 'react';
 
-
 class Step4Container extends Component {
   render() {
     return (
       <Card>
         <Header>1</Header>
-        <ContentBox>2</ContentBox>
+        <ContentBox>
+          2
+        </ContentBox>
+
       </Card>
     )
   }
 }
 
 export default Step4Container;
-
-
 
 
 const Card = styled.div`

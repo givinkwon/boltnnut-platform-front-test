@@ -47,7 +47,7 @@ const Head = styled(Title.FontSize20)`
   font-style: normal;
   line-height: 1.45;
   letter-spacing: normal;
-  margin: 70px 0px 2px 0px;
+  margin: 100px 0px 2px 0px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
   }
