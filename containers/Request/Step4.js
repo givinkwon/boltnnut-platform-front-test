@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import * as Content from '../../components/Content';
 import { Component } from 'react';
+import Calendar from './Calender';
 
 class Step4Container extends Component {
   render() {
     return (
       <Card>
-        <Header>1</Header>
+        <Header>1:1 컨설팅 신청</Header>
         <ContentBox>
-          2
+          <Calendar/>
         </ContentBox>
-
       </Card>
     )
   }
@@ -21,7 +21,6 @@ export default Step4Container;
 
 const Card = styled.div`
   width: 894px;
-  height: 1002px;
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
