@@ -3,7 +3,6 @@ import * as Content from '../../components/Content';
 import { Component } from 'react';
 import Calendar from './Calender';
 
-
 class Step4Container extends Component {
   render() {
     return (
@@ -18,8 +17,6 @@ class Step4Container extends Component {
 }
 
 export default Step4Container;
-
-
 
 
 const Card = styled.div`

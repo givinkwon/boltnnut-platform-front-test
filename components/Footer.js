@@ -137,10 +137,10 @@ class FooterComponent extends React.Component {
                <span> 평일 오전 10시~오후7시 </span>
                <span> boltnnut@boltnnut.com </span>
                <SnsBox>
-                <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
                 <Sns src={facebook} onClick={() => window.open('http://www.facebook.com/boltnnut6637')} />
+                <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
                 <Sns src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')} />
-                {/* <Sns src={blog_post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')} /> */}
+                <Sns src={blog_post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')} />
               </SnsBox>
              </CompanyInfo2>
              </div>
@@ -363,6 +363,13 @@ const CompanyInfo2 = styled.div`
       font-weight: 500;
       padding-bottom: 8px;
     }
+
+    > span:nth-of-type(2) {
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      padding-bottom: 8px;
+    }
   }
 `;
 const ContactInfoContainer = styled.div`
@@ -474,7 +481,6 @@ const MobileContainer = styled.div`
     justify-content: space-between;
     padding-right: 10px;
     padding-top: 30px;
-    padding-bottom: 23px;
     > span {
       color: white;
       font-size: 10px;
