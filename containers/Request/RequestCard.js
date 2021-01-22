@@ -90,7 +90,7 @@ class RequestCardContainer extends Component {
       case 2:
         titleData.pop();
         console.log(titleData);
-        
+
         if (DetailQuestion.prevPage.length > 0)
         {
           if (DetailQuestion.index != 4)
@@ -112,7 +112,7 @@ class RequestCardContainer extends Component {
   }
   nextButtonClick = () => {
     const { Request, DetailQuestion } = this.props;
-    
+
     switch(Request.step_index)
     {
       case 1:
