@@ -18,7 +18,6 @@ class Step2Container extends React.Component {
   onChangeFile = (e) => {
     const {Request}  = this.props;
     const fileName = e.currentTarget.files[0].name;
-    console.log(fileName);
     this.setState({
       ...this.state,
       fileName: fileName,
@@ -32,11 +31,9 @@ class Step2Container extends React.Component {
 
   componentDidMount()
   {
+    if(DetailQuestion.select)
     DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
-  }
-  setFocus() {
-    console.log(this)
   }
   content = () => {
     const { DetailQuestion, Request, file } = this.props;
@@ -56,6 +53,10 @@ class Step2Container extends React.Component {
         DetailQuestion.SelectId = e.id;
       }
     };
+
+    let test2 = (e,idx) => {
+      document.getElementById("FileInput").click();
+    }
 
     let activeHandler=(idx) =>
     {
@@ -84,11 +85,11 @@ class Step2Container extends React.Component {
                   {
                   DetailQuestion.index == 4 &&
                   <>
-                  <FileSelect active={activeHandler(idx)}
-                              onClick = {() => (document.getElementById("FileInput").click())}
+                  <FileSelect active={activeHandler(1)}
+                              onClick = {() => test2({nextTitle: 8},1)}
                     >
                     <Text id={'queText'} color={"#282c36"}>
-                        { Request.common_file ? this.state.fileName : "파일을 선택해 주세요." }
+                        { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요." }
                     </Text>
                     <img src={fileImage} />
                     <input
@@ -96,6 +97,7 @@ class Step2Container extends React.Component {
                       type="file"
                       style={{display: 'none'}}
                       onChange={this.onChangeFile}
+                      onClick={() => test({nextTitle:8}, 1)}
                     />
                   </FileSelect>
                   </>
