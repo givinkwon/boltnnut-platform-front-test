@@ -120,9 +120,9 @@ class Request {
     .then ((res) => {
       this.created_request = res.data.id;
     })
-    .catch((e) => {
+    .catch(error => {
       alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');
-      alert(e);
+      this.step_index = 1;
     })
   }
   @action init = (q) => {

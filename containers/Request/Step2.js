@@ -55,7 +55,6 @@ class Step2Container extends React.Component {
     };
 
     let test2 = (e,idx) => {
-      test(e,idx);
       document.getElementById("FileInput").click();
     }
 
@@ -86,8 +85,8 @@ class Step2Container extends React.Component {
                   {
                   DetailQuestion.index == 4 &&
                   <>
-                  <FileSelect active={activeHandler(idx)}
-                              onClick = {() => test2()}
+                  <FileSelect active={activeHandler(1)}
+                              onClick = {() => test2({nextTitle: 8},1)}
                     >
                     <Text id={'queText'} color={"#282c36"}>
                         { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요." }
@@ -98,6 +97,7 @@ class Step2Container extends React.Component {
                       type="file"
                       style={{display: 'none'}}
                       onChange={this.onChangeFile}
+                      onClick={() => test({nextTitle:8}, 1)}
                     />
                   </FileSelect>
                   </>

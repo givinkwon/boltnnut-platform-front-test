@@ -7,6 +7,7 @@ import Observer from "@researchgate/react-intersection-observer";
 import NewButton from '../../components/NewButton';
 import LogoSlider from "./LogoImageSlider";
 import * as DetailQuestionApi from "axios/DetailQuestion";
+import DetailQuestion from "../../stores/DetailQuestion";
 
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
@@ -96,7 +97,7 @@ class RequestCardContainer extends Component {
             DetailQuestion.pageCount -= 1;
           }
           DetailQuestion.index = DetailQuestion.prevPage.pop();
-          DetailQuestion.loadSelectFromTitle();
+          DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
           Request.percentage -= 14;
         }
         else {
@@ -122,6 +123,7 @@ class RequestCardContainer extends Component {
             Request.createRequest();
             Request.step_index = 2;
             Request.percentage += 15;
+            DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
           } catch(e) {
             console.log(e);
           }
@@ -139,12 +141,12 @@ class RequestCardContainer extends Component {
           {
             DetailQuestion.pageCount += 1;
           }
-          DetailQuestion.loadSelectFromTitle();
+          DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
         }
         else {
           titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
           var SelectSaveData = {
-            "request": 318,
+            "request": Request.created_request,
             "data": titleData,
           }
           DetailQuestionApi.saveSelect(SelectSaveData);
@@ -156,7 +158,7 @@ class RequestCardContainer extends Component {
   }
   render() {
     const { active } = this.state;
-    const { Request } = this.props;
+    const { Request, DetailQuestion } = this.props;
     return(
       <Card>
         <Header>
@@ -172,7 +174,7 @@ class RequestCardContainer extends Component {
         <LogoSlider/>
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
         <ButtonContainer>
-          <NewButton active={ true } onClick={ this.prevButtonClick }>이전</NewButton>
+          <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
           <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
         </ButtonContainer>
       </Card>
