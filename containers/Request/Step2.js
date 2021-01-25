@@ -89,7 +89,7 @@ class Step2Container extends React.Component {
         </TitleContainer>
         <input value={DetailQuestion.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>
-          {
+          {/* {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
               return (
                 <div style={{marginLeft:33}}>
@@ -123,10 +123,10 @@ class Step2Container extends React.Component {
                 </div>
               )}
             )
-          }
+          } */}
 
-          {DetailQuestion.index===8 && <ProductInfoContainer/>}
-          {/* <ProductInfoContainer/>   */}
+          {/* {DetailQuestion.index===8 && <ProductInfoContainer/>} */}
+          <ProductInfoContainer/>  
         </SelectContainer>
         
       </>
