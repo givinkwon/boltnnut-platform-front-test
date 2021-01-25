@@ -399,9 +399,9 @@ const CustomSlider = withStyles({
   root: {
     color: '#0933b3',
     height: 7,
-    width: '92%',
-    marginLeft: '4%',
-    marginRight: '4%',
+    width: '76%',
+    marginLeft: '12%',
+    marginRight: '12%',
     marginTop:'2%',
     borderRadius: 10,
     cursor:'default'

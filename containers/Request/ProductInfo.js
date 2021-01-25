@@ -7,53 +7,40 @@ const img_item1 = "static/images/request/Step2/ProductInfo/ProductInfo_item1.png
 const img_item2 = "static/images/request/Step2/ProductInfo/ProductInfo_item2.png";
 const img_item3 = "static/images/request/Step2/ProductInfo/ProductInfo_item3.png";
 
-@inject('DetailQuestion', 'Request')
+@inject('DetailQuestion', 'Request','ManufactureProcess')
 @observer
 class ProductInfoContainer extends React.Component {
+
+    componentDidMount()
+    {
+        console.log(this.props.ManufactureProcess.title_list);
+    }
   render(){
-    const ItemArray=[];
-    const item1 = {
-        name: "3D 프린터",
-        logo: img_item1
-    }
-    const item2 = {
-        name: "CNC",
-        logo: img_item2
-    }
-    const item3 = {
-        name: "금형 사출",
-        logo: img_item3
+    const ImageArray={
+        "3D 프린팅":img_item1,
+        "CNC":img_item2,
+        "금형사출":img_item3
     }
 
-    const testSelect = {
-        title: [
-            "실리콘",
-            "금속",
-            "다이캐스팅"
-        ]
-    }
+    const { ManufactureProcess } = this.props;
 
-    ItemArray.push(item1,item2,item3);
     return (
         <ItemBox>
-            {ItemArray && ItemArray.map((item) => {
+            {ManufactureProcess.title_list.data && ManufactureProcess.title_list.data.map((item) => {
             return (
                 <Item>
                     <ItemTitle>{item.name}</ItemTitle>
-                    <img src={item.logo}/>
-                    {testSelect.title.map((selectData) =>{return(
+                    <img src={ImageArray[item.name]}/>
+                    {item.detailManufactureProcess.map((selectData) =>{return(
                         <SelectItem>
-                            <ItemContent>{selectData}</ItemContent>
+                            <ItemContent>{selectData.name}</ItemContent>
                         </SelectItem>
                     )})}
                 </Item>
-                
             )}
             )
         }
         </ItemBox>
-
-        
     );
   }
 }
@@ -93,7 +80,7 @@ const ItemTitle = styled(Title.FontSize20)`
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
-    line-height: 2;
+    line-height: 1.5;
     letter-spacing: -0.5px;
     text-align: left;
     color: #282c36;
