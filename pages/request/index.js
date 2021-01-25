@@ -10,7 +10,7 @@ import Spinner from 'components/Spinner';
 
 import RequestConatiner from 'containers/Request'
 
-@inject('Request', 'Partner','DetailQuestion')
+@inject('Request', 'Partner','DetailQuestion','ManufactureProcess')
 @observer
 class Request extends React.Component {
   state = {
@@ -22,7 +22,8 @@ class Request extends React.Component {
     this.props.Request.init();
     this.props.DetailQuestion.init();
     this.props.DetailQuestion.loadSelectFromTitle(1);
-
+    this.props.ManufactureProcess.init();
+    
     //창 크기
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth});
