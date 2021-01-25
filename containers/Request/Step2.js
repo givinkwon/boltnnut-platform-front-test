@@ -6,7 +6,7 @@ import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import DetailQuestion from '../../stores/DetailQuestion';
 import InputComponent from 'components/Input2';
-
+import ProductInfoContainer from './ProductInfo'
 
 const Qimage = "static/images/request/Step2/Q.png";
 const fileImage = 'static/images/components/Input2/Mask.png';
@@ -18,7 +18,6 @@ class Step2Container extends React.Component {
   onChangeFile = (e) => {
     const {Request}  = this.props;
     const fileName = e.currentTarget.files[0].name;
-    console.log(fileName);
     this.setState({
       ...this.state,
       fileName: fileName,
@@ -32,11 +31,9 @@ class Step2Container extends React.Component {
 
   componentDidMount()
   {
+    if(DetailQuestion.select)
     DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
-  }
-  setFocus() {
-    console.log(this)
   }
   content = () => {
     const { DetailQuestion, Request, file } = this.props;
@@ -56,6 +53,10 @@ class Step2Container extends React.Component {
         DetailQuestion.SelectId = e.id;
       }
     };
+
+    let test2 = (e,idx) => {
+      document.getElementById("FileInput").click();
+    }
 
     let activeHandler=(idx) =>
     {
@@ -77,18 +78,18 @@ class Step2Container extends React.Component {
         </TitleContainer>
         <input value={DetailQuestion.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer>
-          {
+          {/* {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
               return (
-                <>
+                <div style={{marginLeft:33}}>
                   {
                   DetailQuestion.index == 4 &&
                   <>
-                  <FileSelect active={activeHandler(idx)}
-                              onClick = {() => (document.getElementById("FileInput").click())}
+                  <FileSelect active={activeHandler(1)}
+                              onClick = {() => test2({nextTitle: 8},1)}
                     >
                     <Text id={'queText'} color={"#282c36"}>
-                        { Request.common_file ? this.state.fileName : "파일을 선택해 주세요." }
+                        { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요." }
                     </Text>
                     <img src={fileImage} />
                     <input
@@ -96,6 +97,7 @@ class Step2Container extends React.Component {
                       type="file"
                       style={{display: 'none'}}
                       onChange={this.onChangeFile}
+                      onClick={() => test({nextTitle:8}, 1)}
                     />
                   </FileSelect>
                   </>
@@ -105,12 +107,17 @@ class Step2Container extends React.Component {
                       {data.select}
                     </Text>
                   </Select>
-                </>
+                </div>
               )}
             )
-          }
+          } */}
+
+          {/* {DetailQuestion.index===8 && <ProductInfoContainer/>} */}
+          <ProductInfoContainer/>  
         </SelectContainer>
+        
       </>
+
     );
   }
 
@@ -145,9 +152,10 @@ const TitleQue = styled(Title.FontSize24)`
 const SelectContainer = styled.div`
   width: 100%;
   margin-top: 30px;
-  margin-left: 33px;
+  // margin-left: 33px;
+  // height:374px;
 `
-const Text = styled(Title.FontSize16)`
+  const Text = styled(Title.FontSize16)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;

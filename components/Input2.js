@@ -8,7 +8,7 @@ import { inject, observer } from 'mobx-react'
 
 const fileImage = 'static/images/components/Input2/Mask.png';
 
-@inject('Request', 'Partner')
+@inject('Request')
 @observer
 class InputComponent extends React.Component {
   constructor(props) {
@@ -42,7 +42,6 @@ class InputComponent extends React.Component {
   render() {
     const { onChange, children, label, file, Request, ...props } = this.props
     const { fileName } = this.state;
-    console.log(this);
 
     if (!file) {
     return (

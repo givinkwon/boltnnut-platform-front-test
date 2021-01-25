@@ -57,12 +57,18 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
-  @observable button_active = 0;
-  @observable step_index = 1;
+  @observable step_index = 2;
   @observable step1_index = 1;
   @observable drawFile = null;
   @observable percentage = 0;
 
+  @action reset = () => {
+    this.input_name = "";
+    this.input_phone = "";
+    this.input_day = null;
+    this.input_price = null;
+    this.common_file = null;
+  }
   @action setInputName = (val) => {
     this.input_name = val;
   };
@@ -91,21 +97,34 @@ class Request {
       console.log("file uploaded")
     } else {
       this.common_file = null;
-      console.log(this.common_file)
     }
   }
-
   @action setDrawFile = (obj) => {
     this.drawFile = obj;
-    console.log(obj);
   }
+  @action createRequest = () => {
+    var formData = new FormData();
 
-  @action addButtonCount = (val) => {
-    if (val)
-      this.button_active += 1
-    console.log(this.button_active);
+    formData.append("product", 45);
+    formData.append("name", this.input_name);
+    formData.append("price", this.input_price.value);
+    formData.append("period", this.input_day.value);
+    formData.append("phone", this.input_phone.replace("-","").replace("-",""));
+    if (this.common_file) {
+      formData.append("file", this.common_file);
+    }
+    const req = {
+      data: formData
+    };
+    RequestAPI.create(req)
+    .then ((res) => {
+      this.created_request = res.data.id;
+    })
+    .catch(error => {
+      alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');
+      this.step_index = 1;
+    })
   }
-
   @action init = (q) => {
     CategoryAPI.getMainCategory()
       .then((res) => {
