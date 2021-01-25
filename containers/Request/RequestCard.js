@@ -167,12 +167,12 @@ class RequestCardContainer extends Component {
         <ContentBox>
           {this.props.content}
         </ContentBox>
-        <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
-        <CustomSlider value={Request.percentage}/>
-        <ThumbText> {Request.percentage}% </ThumbText>
-
-        <LogoSlider/>
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
+        
+        <LogoSlider/>
+        <ThumbText> {Request.percentage}% </ThumbText>
+        <CustomSlider value={Request.percentage}/>
+        <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
         <ButtonContainer>
           <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
           <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
@@ -187,7 +187,7 @@ export default withRouter(RequestCardContainer);
 
 const Card = styled.div`
   width: 894px;
-  height: 1002px;
+  // height: 1002px;
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
@@ -216,7 +216,8 @@ const Header = styled(Content.FontSize32)`
   object-fit: contain;
 `
 const ContentBox = styled.div`
-  height: calc(46.3%);
+  // height: calc(46.3%);
+  
   margin-right: 5.4%;
   margin-left: 5.4%;
   margin-top: 4%;
@@ -228,9 +229,9 @@ const CustomSlider = withStyles({
   root: {
     color: '#0933b3',
     height: 7,
-    width: '92%',
-    marginLeft: '4%',
-    marginRight: '4%',
+    width: '76%',
+    marginLeft: '12%',
+    marginRight: '12%',
     borderRadius: 10,
     cursor:'default'
   },
@@ -252,7 +253,7 @@ const CustomSlider = withStyles({
   },
 })(Slider);
 
-const ThumbText = styled(Content.FontSize18)`
+const ThumbText = styled(Title.FontSize20)`
   position: relative;
   text-align:center;
   color: #0933b3;
@@ -276,11 +277,12 @@ const MatchingText = styled(Title.FontSize20)`
   font-style: normal;
   letter-spacing: -0.5px;
   color: #282c36;
-  margin: 0px 176px;
+  text-align:center;
+  margin-bottom:20px;
 `
 const ButtonContainer = styled.div`
   width: 260px;
-  margin: 70px 317px 60px 317px;
+  margin: 70px 317px 100px 317px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

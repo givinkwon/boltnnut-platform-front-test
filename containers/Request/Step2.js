@@ -6,7 +6,7 @@ import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import DetailQuestion from '../../stores/DetailQuestion';
 import InputComponent from 'components/Input2';
-
+import ProductInfoContainer from './ProductInfo'
 
 const Qimage = "static/images/request/Step2/Q.png";
 const fileImage = 'static/images/components/Input2/Mask.png';
@@ -89,11 +89,11 @@ class Step2Container extends React.Component {
           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
         </TitleContainer>
         <input value={DetailQuestion.SelectChecked} class="Input" style={{display:'none'}}/>
-        <SelectContainer>
+        <SelectContainer index={DetailQuestion.index}>
           {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
               return (
-                <>
+                <div style={{marginLeft:33}}>
                   {
                   DetailQuestion.index == 4 &&
                   <>
@@ -121,12 +121,17 @@ class Step2Container extends React.Component {
                       {data.select}
                     </Text>
                   </Select>
-                </>
+                </div>
               )}
             )
           }
+
+          {DetailQuestion.index===8 && <ProductInfoContainer/>}
+          {/* <ProductInfoContainer/>   */}
         </SelectContainer>
+        
       </>
+
     );
   }
 
@@ -161,9 +166,11 @@ const TitleQue = styled(Title.FontSize24)`
 const SelectContainer = styled.div`
   width: 100%;
   margin-top: 30px;
-  margin-left: 33px;
+  // margin-left: 33px;
+  // height:374px;
+  height: ${(props) => (props.index==8 ? "auto" : '374px')};
 `
-const Text = styled(Title.FontSize16)`
+  const Text = styled(Title.FontSize16)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;

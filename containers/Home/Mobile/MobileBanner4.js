@@ -61,5 +61,5 @@ const Body = styled(Content.FontSize15)`
     letter-spacing: -0.38px;
     text-align: center;
     color: #555963;
-    margin-bottom: 70px;
+    margin-bottom: 100px;
 `
