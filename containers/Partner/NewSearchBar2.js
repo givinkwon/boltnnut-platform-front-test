@@ -204,7 +204,7 @@ class SearchBarContainer2 extends React.Component {
     this.setState({...this.state, temp_max: temp_max});
     this.state.price_max[1] = temp_max;
   }
-
+  
   return (
   <>
   { width > 767.98 ? (
@@ -462,7 +462,9 @@ class SearchBarContainer2 extends React.Component {
         query: {},
         });
   };
+  
   render() {
+    
     const { search, modal_open, price_max, price_min, due_max, due_min, show_detail, width } = this.state;
     const { Partner, Auth, Request, Loading } = this.props;
     return (
