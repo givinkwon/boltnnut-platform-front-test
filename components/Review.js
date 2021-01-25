@@ -49,7 +49,7 @@ class ReviewCard extends Component {
                         {item.review}
                     </ContentBox2>
                     <ImageBox>
-                        <ContentBox style={{fontWeight: 'bold'}}>
+                        <ContentBox style={{fontWeight: 500}}>
                             김율 대표님
                         </ContentBox>
                         <img src={person_mob} />
@@ -132,7 +132,8 @@ const BigCard = styled(Card)`
     overflow: hidden;
     @media (min-width: 0px) and (max-width: 767.98px) {
         width: 90%;
-        height: 204px;
+        // height: 204px;
+        height:100%;
         object-fit: contain;
         border-radius: 7px;
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
@@ -182,7 +183,6 @@ const ImageBox = styled.div`
     justify-content: flex-end;
     align-items: center;
     > img {
-        margin-right: 7.8%;
     }
 `
 const MyStarRatingComponent = styled(StarRatingComponent)`

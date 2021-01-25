@@ -49,7 +49,7 @@ class MobileBanner5Container extends React.Component {
         logo: JINYOUNG
     }
     return (
-        <Background style={{flexDirection: 'column', paddingBottom: 70}}>
+        <Background style={{flexDirection: 'column', paddingBottom: 100}}>
               <Fade bottom>
                 <Header>
                   클라이언트분들께<br/>

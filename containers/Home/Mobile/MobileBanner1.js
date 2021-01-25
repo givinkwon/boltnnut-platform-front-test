@@ -37,7 +37,7 @@ const ImageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin: 30px 0px 20px 0px;
+  margin: 30px 0px 18px 0px;
 `
 const Head = styled(Title.FontSize20)`
   font-size: 14px;
@@ -47,7 +47,7 @@ const Head = styled(Title.FontSize20)`
   font-style: normal;
   line-height: 1.45;
   letter-spacing: normal;
-  margin: 100px 0px 2px 0px;
+  margin: 70px 0px 2px 0px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
   }
@@ -68,11 +68,12 @@ const Main = styled(Title.FontSize56)`
   }
 `
 const Content = styled(Title.FontSize24)`
+  height:46px;
   font-size: 15px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
+  line-height: 1.47;
   letter-spacing: -0.38x;
   text-align: center;
   color: #555963;

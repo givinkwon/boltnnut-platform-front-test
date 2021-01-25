@@ -78,8 +78,8 @@ class MobileBanner0Container extends React.Component {
                 <CountFunc index={2}/> 개
               </Content1>
             </div>
-            <Buttonv1 style={{marginTop: 56, marginLeft:'auto', marginRight:'auto', fontWeight: 700}} onClick={() => Router.push("/request")}>
-              지금 무료 가견적 받기
+            <Buttonv1 style={{marginTop: 56, marginLeft:'auto', marginRight:'auto', fontWeight: 900}} onClick={() => Router.push("/request")}>
+              <p style={{paddingBottom:0.2}}>지금 무료 가견적 받기</p>
             </Buttonv1>
         </Fade>
     </Background>
@@ -98,6 +98,7 @@ const Title1 = styled(Content.FontSize16)`
   line-height: 0.94;
   letter-spacing: -0.4px;
   object-fit: contain;
+  font-weight:normal;
 `
 const Content1 = styled(Content.FontSize17)`
   font-weight: bold;

@@ -171,9 +171,9 @@ class Step1Container extends React.Component {
     const content1  = this.content1();
     const content2 = this.content2();
     return (
-      <>
-      { page == 1 ? ( content1 ) : ( content2 ) }
-      </>
+      <div style={{height:470}}>
+        { page == 1 ? ( content1 ) : ( content2 ) }
+      </div>
     )
   }
 

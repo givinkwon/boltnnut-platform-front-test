@@ -154,7 +154,10 @@ const SliderWraper = styled.div`
   height: 128px;
   .slick-dots li button:before {
     color: #0933b3;
-    -webkit-transform: scale(0.6);
+    -webkit-transform: scale(0.5);
+  }
+  .slick-dots li {
+    width:10px;
   }
 `
 const CustomContainer = styled(Containerv1)`
@@ -212,11 +215,11 @@ const Main = styled(Title.FontSize32)`
   }
 `
 const Foot = styled(Title.FontSize24)`
-  margin: 14px 0px 100px 0px;
+  margin: 6.4px 0px 100px 0px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
+  line-height: 1.47;
   letter-spacing: -0.38px;
   text-align: left;
   white-space: pre-line;

@@ -26,7 +26,7 @@ class MobileBanner2Container extends React.Component {
                         </Header>
                         <Middle>
                             5000여개의 제조사 중<br/>
-                            딱 맞는 전문가를 매칭
+                            딱 맞는 <p>전문가</p>를 매칭
                         </Middle>
                         <div>
                             <img src={image1} style={{ width: 347, height: 230,borderRadius:7}} />
@@ -46,8 +46,9 @@ class MobileBanner2Container extends React.Component {
 export default MobileBanner2Container;
 
 const Header = styled(Title.FontSize13)`
+  height:20px;
   color: #e8eeff;
-  font-weight: bold;
+  font-weight: 700;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.46;
@@ -56,6 +57,7 @@ const Header = styled(Title.FontSize13)`
   text-align:center;
 `
 const Middle = styled(Content.FontSize22)`
+  height:72px;
   color: #f6f6f6;
   font-weight: 500;
   font-stretch: normal;
@@ -66,6 +68,10 @@ const Middle = styled(Content.FontSize22)`
   text-align:center;
   @media (min-width: 0px) and (max-width: 767.98px) {
       line-height: 1.45;
+  }
+  > p {
+    font-weight: bold;
+    display:inline;
   }
 `
 
