@@ -8,10 +8,14 @@ import Buttonv1 from 'components/Buttonv1';
 
 class Step4Container extends Component {
   checkboxChange = (e) => {
-    console.log(e)
+    console.log(e) // 에러피하기용 임시
+  }
+  emailChange = (obj) => {
+    console.log(obj) // 에러피하기용 임시
   }
   render() {
-    const timeArr = ["10:30", "11:00", "11:30", "12:00", "12:30", "01:30","02:00","02:30","03:00","03:30","04:00"]
+    const timeArr = ["10 : 30", "11 : 00", "11 : 30", "01 : 30", "02 : 00", "02 : 30",
+    "03 : 00","03 : 30","04 : 00","04 : 30","05 : 00","05 : 30","06 : 00"]
     return (
       <Card>
         <Header>1:1 컨설팅 신청</Header>
@@ -19,14 +23,14 @@ class Step4Container extends Component {
           <Calendar/>
         </ContentBox>
         <ScheduleBox>
-          <Title>
+          <Title style={{marginTop: 60}}>
             시간
           </Title>
           <SubContent fontWeight = {'bold'}>
             오전
           </SubContent>
           <TimeBox>
-            {timeArr.splice(0,2).map((data) => {
+            {timeArr.slice(0,2).map((data) => {
                 return (
                   <TimeComponent>
                     {data}
@@ -38,14 +42,23 @@ class Step4Container extends Component {
             오후
           </SubContent>
           <TimeBox>
-              {timeArr.splice(2,).map((data) => {
+              {timeArr.slice(3,8).map((data) => {
                 return (
                   <TimeComponent>
                     {data}
                   </TimeComponent>
                 )
               })}
-            </TimeBox>
+          </TimeBox>
+          <TimeBox>
+              {timeArr.slice(8,13).map((data) => {
+                return (
+                  <TimeComponent>
+                    {data}
+                  </TimeComponent>
+                )
+              })}
+          </TimeBox>
           <Title style={{marginTop: 60}}>
             장소
           </Title>
@@ -58,6 +71,7 @@ class Step4Container extends Component {
           <InputComponent
             width={"88.3%"}
             placeholder="이메일을 입력해주세요."
+            onChange={this.emailChange}
           />
           <Tail>
             *컨설팅을 위한 사전 준비 사항을 E-mail로 보내드립니다.
@@ -147,6 +161,18 @@ const TimeComponent = styled.div`
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.22;
+  letter-spacing: -0.45px;
+  text-align: left;
+  color: #282c36;
+  margin-right: 19px;
+  margin-bottom: 20px;
 `
 const Tail = styled(Content.FontSize14)`
   font-weight: 500;

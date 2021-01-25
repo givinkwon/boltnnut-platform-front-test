@@ -16,7 +16,6 @@ class Week extends Component {
         isHolyDay: false
       });
     }
-    console.log(days);
     return days;
   }
   mapDaysToComponents = (Days, fn = () => { }) => {
