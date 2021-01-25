@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Component, useRef } from 'react';
 import moment from "moment";
+const prevMonth = "/static/images/request/Calendar/prevMonth.png";
+const nextMonth = "/static/images/request/Calendar/nextMonth.png";
 
 class Week extends Component {
   Days = (firstDayFormat) => {
@@ -9,10 +11,12 @@ class Week extends Component {
       const Day = moment(firstDayFormat).add('d', i);
       days.push({
         yearMonthDayFormat: Day.format("YYYY-MM-DD"),
+        holyDayCompare: Day.format("MM-DD"),
         getDay: Day.format('D'),
         isHolyDay: false
       });
     }
+    console.log(days);
     return days;
   }
   mapDaysToComponents = (Days, fn = () => { }) => {
@@ -24,9 +28,8 @@ class Week extends Component {
       else if (i === 6) {
         className = "date-sat"
       }
-
       return (
-        <div className={"RCA-calendar-day " + className} onClick={() => fn(dayInfo.yearMonthDayFormat)}>
+        <div className={className} onClick={() => fn(dayInfo.yearMonthDayFormat)}>
             {dayInfo.getDay}
         </div>
       )
@@ -60,27 +63,26 @@ class Calendar extends Component {
       return dates.split(',')
     }
     else{
-      return ["일", "월", "화", "수", "목", "금", "토"]
+      return ["일 SUN", "월 MON", "화 TUE", "수 WED", "목 THU", "금 FRI", "토 SAT"]
     }
   }
   mapArrayToDate = (dateArray) => {
     if (dateArray.length !== 7){
-      dateArray = ["일", "월", "화", "수", "목", "금", "토"];
+      dateArray = ["일 SUN", "월 MON", "화 TUE", "수 WED", "목 THU", "금 FRI", "토 SAT"];
     }
     return dateArray.map((date, index) => {
       const className = () => {
-        let className = "RCA-calendar-date-component";
         if (index === 0){
-          return className + " date-sun"
+          return "date-sun";
         }
         else if(index === 6) {
-          return className + " date-sat"
+          return "date-sat";
         }else {
-          return className + " date-weekday"
+          return "date-weekday";
         }
       }
       return (
-        <div className={className()} key={"RCA-header-"+date}>
+        <div className={className()}>
           {date}
         </div>
       )
@@ -103,13 +105,13 @@ class Calendar extends Component {
   }
   render() {
     return (
-      <>
+      <MainContainer>
         <Header>
-          <button onClick={() => this.moveMonth(-1)}>이전</button>
-          <div>{this.state.today.format("YYYY")}</div>
-          <div>{this.state.today.format("MM")}</div>
-          <div>{this.state.today.format("MMM")}</div>
-          <button onClick={() => this.moveMonth(1)}>다음</button>
+          <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
+          <HeaderText>{this.state.today.format("YYYY")}</HeaderText>
+          <Month>{this.state.today.format("M")}</Month>
+          <HeaderText>{this.state.today.format("MMM")}</HeaderText>
+          <div onClick={() => this.moveMonth(1)}><img src={ nextMonth }/></div>
         </Header>
         <DateContainer>
           {this.mapArrayToDate(this.dateToArray(this.props.dates))}
@@ -117,23 +119,67 @@ class Calendar extends Component {
         <CalendarContainer>
           {this.Weeks(this.state.today)}
         </CalendarContainer>
-      </>
+      </MainContainer>
     )
   }
 }
 
 export default Calendar;
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 const Header = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 182px;
+  width: 254px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+`
+const Month = styled.div`
+  font-family: Roboto;
+  font-size: 46px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -1.15px;
+  color: #282c36;
+  height: 36px;
+`
+const HeaderText = styled.div`
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.6px;
+  color: #282c36;
+  height: 20px;
 `
 const DateContainer = styled.div`
   width: 714px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  > div {
+    text-align: center;
+    width: 102px;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.83;
+    letter-spacing: -0.12px;
+    font-family: NotoSansCJKkr;
+  }
+  .date-sun {
+    color: #f52100;
+  }
+  .date-sat {
+    color: #0933b3;
+  }
 `
 const CalendarContainer = styled.div`
   width: 714px;
@@ -150,5 +196,11 @@ const CalendarContainer = styled.div`
   > div {
     border: solid 0.5px #c6c7cc;
     border-collapse: collapse;
+  }
+  .date-sun {
+    color: #f52100;
+  }
+  .date-sat {
+    color: #0933b3;
   }
 `
