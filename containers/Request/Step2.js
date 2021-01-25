@@ -19,6 +19,7 @@ class Step2Container extends React.Component {
     const {Request}  = this.props;
     let fileName;
     if (e.currentTarget.files[0]) {
+      console.log(e.currentTarget.files[0])
       fileName = e.currentTarget.files[0].name;
       Request.setDrawFile(e.currentTarget.files[0]);
       DetailQuestion.SelectChecked = idx;
@@ -65,7 +66,7 @@ class Step2Container extends React.Component {
         Request.drawFile = null;
       }
     };
-    
+
     let fileActiveHandler=(idx)=>{
       if (Request.drawFile) {
         return true;

@@ -193,6 +193,9 @@ const Card = styled.div`
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
   background-color: white;
   margin: 60px 0px 200px 280px;
+  margin-left: 280px;
+  margin-top: 60px;
+  margin-bottom: 0px;
   display: inline;
   float: right;
 `
