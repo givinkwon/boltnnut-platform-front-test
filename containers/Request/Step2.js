@@ -88,8 +88,8 @@ class Step2Container extends React.Component {
           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
         </TitleContainer>
         <input value={DetailQuestion.SelectChecked} class="Input" style={{display:'none'}}/>
-        <SelectContainer>
-          {/* {
+        <SelectContainer index={DetailQuestion.index}>
+          {
             DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
               return (
                 <div style={{marginLeft:33}}>
@@ -123,10 +123,10 @@ class Step2Container extends React.Component {
                 </div>
               )}
             )
-          } */}
+          }
 
-          {/* {DetailQuestion.index===8 && <ProductInfoContainer/>} */}
-          <ProductInfoContainer/>  
+          {DetailQuestion.index===8 && <ProductInfoContainer/>}
+          {/* <ProductInfoContainer/>   */}
         </SelectContainer>
         
       </>
@@ -167,6 +167,7 @@ const SelectContainer = styled.div`
   margin-top: 30px;
   // margin-left: 33px;
   // height:374px;
+  height: ${(props) => (props.index==8 ? "auto" : '374px')};
 `
   const Text = styled(Title.FontSize16)`
   font-weight: 500;
