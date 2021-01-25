@@ -15,14 +15,19 @@ const fileImage = 'static/images/components/Input2/Mask.png';
 @observer
 class Step2Container extends React.Component {
 
-  onChangeFile = (e) => {
+  onChangeFile = (e,data,idx) => {
     const {Request}  = this.props;
     let fileName;
     if (e.currentTarget.files[0]) {
       fileName = e.currentTarget.files[0].name;
       Request.setDrawFile(e.currentTarget.files[0]);
+      DetailQuestion.SelectChecked = idx;
+      DetailQuestion.nextPage = data.nextTitle;
     } else {
       fileName = null;
+      Request.setDrawFile(null);
+      DetailQuestion.SelectChecked = '';
+      DetailQuestion.nextPage = data.nextTitle;
     }
 
     this.setState({
@@ -42,7 +47,7 @@ class Step2Container extends React.Component {
     DetailQuestion.pageCount=0;
   }
   content = () => {
-    const { DetailQuestion, Request, file } = this.props;
+    const { DetailQuestion, Request } = this.props;
     const { fileName } = this.state;
 
     let test = (e,idx) => {
@@ -57,12 +62,17 @@ class Step2Container extends React.Component {
         DetailQuestion.SelectChecked=idx;
         DetailQuestion.nextPage = e.nextTitle;
         DetailQuestion.SelectId = e.id;
+        Request.drawFile = null;
       }
     };
-
-    let test2 = (e) => {
-      console.log(e);
-    };
+    
+    let fileActiveHandler=(idx)=>{
+      if (Request.drawFile) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
     let activeHandler=(idx) =>
     {
@@ -86,7 +96,7 @@ class Step2Container extends React.Component {
                   {
                   DetailQuestion.index == 4 &&
                   <>
-                  <FileSelect active={activeHandler(1)}
+                  <FileSelect active={fileActiveHandler(1)}
                               onClick = {() => 
                                 document.getElementById("FileInput").click()
                               }
@@ -99,8 +109,8 @@ class Step2Container extends React.Component {
                       id="FileInput"
                       type="file"
                       style={{display: 'none'}}
-                      onChange={this.onChangeFile}
-                      onClick={(event) => test2(event)}
+                      onChange={(e) => this.onChangeFile(e,{nextTitle:8}, 1)}
+                      // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
                     />
                   </FileSelect>
                   </>
