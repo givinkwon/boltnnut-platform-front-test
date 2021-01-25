@@ -15,15 +15,25 @@ const fileImage = 'static/images/components/Input2/Mask.png';
 @observer
 class Step2Container extends React.Component {
 
-  onChangeFile = (e) => {
+  onChangeFile = (e,data,idx) => {
     const {Request}  = this.props;
-    const fileName = e.currentTarget.files[0].name;
-    console.log(fileName);
+    let fileName;
+    if (e.currentTarget.files[0]) {
+      fileName = e.currentTarget.files[0].name;
+      Request.setDrawFile(e.currentTarget.files[0]);
+      DetailQuestion.SelectChecked = idx;
+      DetailQuestion.nextPage = data.nextTitle;
+    } else {
+      fileName = null;
+      Request.setDrawFile(null);
+      DetailQuestion.SelectChecked = '';
+      DetailQuestion.nextPage = data.nextTitle;
+    }
+
     this.setState({
       ...this.state,
       fileName: fileName,
     })
-    Request.setDrawFile(e.currentTarget.files[0]);
   }
 
   state = {
@@ -32,14 +42,12 @@ class Step2Container extends React.Component {
 
   componentDidMount()
   {
+    if(DetailQuestion.select)
     DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }
-  setFocus() {
-    console.log(this)
-  }
   content = () => {
-    const { DetailQuestion, Request, file } = this.props;
+    const { DetailQuestion, Request } = this.props;
     const { fileName } = this.state;
 
     let test = (e,idx) => {
@@ -54,19 +62,23 @@ class Step2Container extends React.Component {
         DetailQuestion.SelectChecked=idx;
         DetailQuestion.nextPage = e.nextTitle;
         DetailQuestion.SelectId = e.id;
+        Request.drawFile = null;
       }
     };
+    
+    let fileActiveHandler=(idx)=>{
+      if (Request.drawFile) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
     let activeHandler=(idx) =>
     {
       if(idx===DetailQuestion.SelectChecked)
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+        { return true; } else
+        { return false; }
     };
 
     return (
@@ -84,18 +96,21 @@ class Step2Container extends React.Component {
                   {
                   DetailQuestion.index == 4 &&
                   <>
-                  <FileSelect active={activeHandler(idx)}
-                              onClick = {() => (document.getElementById("FileInput").click())}
+                  <FileSelect active={fileActiveHandler(1)}
+                              onClick = {() => 
+                                document.getElementById("FileInput").click()
+                              }
                     >
                     <Text id={'queText'} color={"#282c36"}>
-                        { Request.common_file ? this.state.fileName : "파일을 선택해 주세요." }
+                        { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요." }
                     </Text>
                     <img src={fileImage} />
                     <input
-                      id = "FileInput"
+                      id="FileInput"
                       type="file"
                       style={{display: 'none'}}
-                      onChange={this.onChangeFile}
+                      onChange={(e) => this.onChangeFile(e,{nextTitle:8}, 1)}
+                      // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
                     />
                   </FileSelect>
                   </>

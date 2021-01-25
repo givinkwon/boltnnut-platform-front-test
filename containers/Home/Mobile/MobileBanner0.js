@@ -91,7 +91,7 @@ export default MobileBanner0Container;
 
 const Header = styled(Title.FontSize23)`
   text-align: center;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
 `
 const Title1 = styled(Content.FontSize16)`
   text-align: center;

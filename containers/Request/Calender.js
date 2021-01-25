@@ -116,7 +116,7 @@ class Calendar extends Component {
         <DateContainer>
           {this.mapArrayToDate(this.dateToArray(this.props.dates))}
         </DateContainer>
-        <CalendarContainer>
+        <CalendarContainer onClick={(e) => console.log(e.target)}>
           {this.Weeks(this.state.today)}
         </CalendarContainer>
       </MainContainer>

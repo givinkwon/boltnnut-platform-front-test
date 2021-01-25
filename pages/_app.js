@@ -90,7 +90,7 @@ class MyApp extends App {
       location:window.location,
     })
     if (!window.wcs_add) window.wcs_add = {};
-    window.wcs_add["wa"] = "a888b15a2864e";
+    window.wcs_add["wa"] = "a6e52773f17288";
     if (window.wcs) {
       window.wcs_do();
     }
@@ -120,7 +120,7 @@ class MyApp extends App {
   // 네이버애널리틱스
   componentDidUpdate() {
     if (!window.wcs_add) window.wcs_add = {};
-    window.wcs_add["wa"] = "a888b15a2864e";
+    window.wcs_add["wa"] = "a6e52773f17288";
     if (window.wcs) {
       window.wcs_do();
     }

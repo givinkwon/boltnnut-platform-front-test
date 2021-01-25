@@ -7,6 +7,7 @@ import Observer from "@researchgate/react-intersection-observer";
 import NewButton from '../../components/NewButton';
 import LogoSlider from "./LogoImageSlider";
 import * as DetailQuestionApi from "axios/DetailQuestion";
+import DetailQuestion from "../../stores/DetailQuestion";
 
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
@@ -17,7 +18,6 @@ import Slider from '@material-ui/core/Slider';
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-import DetailQuestion from "../../stores/DetailQuestion";
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 var titleData=[];
@@ -54,7 +54,6 @@ class RequestCardContainer extends Component {
 
   componentDidUpdate() {
     const { targets,active } = this.state;
-    // console.log(targets);
     if (this.fullChecker(targets) == true && active == false) {
       this.setState({...this.state, active: true})
     } else if (this.fullChecker(targets) == false && active == true) {
@@ -118,20 +117,22 @@ class RequestCardContainer extends Component {
       case 1:
         if (Request.step1_index == 1) {
           Request.step1_index = 2;
-          
-        } else {          
-          Request.step_index = 2;
-          DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
-        }
-        Request.percentage += 15;
+          Request.percentage += 15;
+        } else {
+          try {
+            Request.createRequest();
+            Request.step_index = 2;
+            Request.percentage += 15;
+            DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
+          } catch(e) {
+            console.log(e);
+          }
+          } 
         break;
       case 2:
         if(DetailQuestion.nextPage)
         {
-          console.log("현재타이틀인덱스="+DetailQuestion.index);
-          console.log("선택한답변인덱스="+DetailQuestion.SelectId)
           titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
-          console.log(titleData);
           DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
@@ -145,7 +146,7 @@ class RequestCardContainer extends Component {
         else {
           titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
           var SelectSaveData = {
-            "request": 318,
+            "request": Request.created_request,
             "data": titleData,
           }
           DetailQuestionApi.saveSelect(SelectSaveData);
@@ -157,7 +158,7 @@ class RequestCardContainer extends Component {
   }
   render() {
     const { active } = this.state;
-    const { Request,DetailQuestion } = this.props;
+    const { Request, DetailQuestion } = this.props;
     return(
       <Card>
         <Header>
