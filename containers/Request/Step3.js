@@ -5,6 +5,7 @@ import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
 
+
 //material-ui
 import Table from '@material-ui/core/Table';
 import Box from '@material-ui/core/Box';
@@ -47,12 +48,16 @@ function createData(title, content, note) {
 }
 
 
-
+@inject('Request')
+@observer
 class Step3Container extends Component {
 
   static defaultProps = { title: '견 적 서' };
 
-  
+  buttonClick = () => {
+    const { Request } = this.props;
+    Request.step_index = 4;
+  }
 
   state = {
     percentage: 100,
@@ -103,7 +108,7 @@ class Step3Container extends Component {
 
   render() {
     const { percentage, showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
-    
+
     const rows1 = [
       createData('작성일자', '2020.12.25', ''),
       createData('문서번호', 'C8-20200830 - 001', ''),
@@ -146,7 +151,7 @@ class Step3Container extends Component {
                 </TableRow>
               ))}
               </TableBody>
-              
+
             </Table>
             <Font16 style={{margin:'30px 0 30px 0',textAlign:'center',fontWeight:'bold'}}>
                   * 귀하의 일이 번창하심을 기원합니다. 아래와 같은 조건으로 견적을 제출하오니 참조 바랍니다.
@@ -167,9 +172,9 @@ class Step3Container extends Component {
                 </TableRow>
               ))}
 
-                
+
               </TableBody>
-              
+
             </Table>
 
             <Font16 style={{marginTop:40,textAlign:'center',fontWeight:'bold'}}>
@@ -211,7 +216,7 @@ class Step3Container extends Component {
               </div>
             </div>
           </HeaderTextBox>
-          
+
         </HeaderBackground>
 
         <ContentBox>
@@ -222,7 +227,7 @@ class Step3Container extends Component {
 
           <CustomSlider value={percentage}/>
           <ThumbText> {percentage}% </ThumbText>
-          
+
 
           <EstimateLogoSlider />
 
@@ -251,11 +256,11 @@ class Step3Container extends Component {
               </History>
             </DetailContainer>
           </ConsultantBox>
-          
+
           <Font16 style={{marginTop:100,textAlign:'center'}}>
             1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요(워딩필요)
           </Font16>
-          <Buttonv1 fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
+          <Buttonv1 onClick={ this.buttonClick } fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
             무료 컨설팅 받기
           </Buttonv1>
         </ContentBox>
