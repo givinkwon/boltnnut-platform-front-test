@@ -42,10 +42,11 @@ class InputComponent extends React.Component {
   render() {
     const { onChange, children, label, file, Request, ...props } = this.props
     const { fileName } = this.state;
+    console.log(this.props.width);
 
     if (!file) {
     return (
-      <Wrap>
+      <Wrap width={this.props.width}>
         { label && <Text.FontSize20 color={DARKGRAY} fontWeight={500}>{label}</Text.FontSize20> }
         <InputBox marginTop={label ? 12 : 0}>
           <Input>
@@ -57,7 +58,7 @@ class InputComponent extends React.Component {
     )
     } else {
     return (
-      <Wrap>
+      <Wrap width={this.props.width}>
         <InputBox
           style={{width: 460, display: 'inline-block'}}
           onClick = {()=>this.file.current.click()}>
@@ -106,7 +107,7 @@ const InputBox = styled.div`
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: ${(props) => props.width ? props.width : "100%"};
   > p {
     margin-top: 15px;
   }
