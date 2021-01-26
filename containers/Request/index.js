@@ -32,7 +32,7 @@ class RequestContainer extends React.Component {
             { Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
             { Request.step_index == 2 && <Step2Container />}
             { Request.step_index == 3 && <Step3Container />}
-            { Request.step_index == 4 && <Step4Container />}
+            {/* { Request.step_index == 4 && <Step4Container />} */}
           </Containerv1>
         </Background>
       </div>
