@@ -83,10 +83,15 @@ class Step4Container extends Component {
       <Card>
         <Header>1:1 컨설팅 신청</Header>
         <ContentBox>
+          <Title>날짜</Title>
           <Calendar/>
         </ContentBox>
         <ScheduleBox>
+<<<<<<< HEAD
           <Title style={{marginTop: 60, marginBottom: 6}}>
+=======
+          <Title style={{marginTop: 30}}>
+>>>>>>> 76e9a583f10f0264e4a4bcab68938e41b5939fb8
             시간
           </Title>
           <FoldedComponent onClick={()=>this.handleDropDown()} style={{display: display}}>
