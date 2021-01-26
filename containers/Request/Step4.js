@@ -5,19 +5,80 @@ import Calendar from './Calender';
 import InputComponent from 'components/Input2';
 import CheckBoxComponent from 'components/CheckBox';
 import Buttonv1 from 'components/Buttonv1';
+import moment from "moment";
+import { inject, observer } from 'mobx-react';
+import 'intersection-observer'; // polyfill
 
 const dropdown = '/static/images/request/Step4/dropdown.png';
 
+@inject('Schedule')
+@observer
 class Step4Container extends Component {
+  state = {
+    display: 'none', // display 는 FoldedComponent 기준
+    display2: true, // display2 는 TimeBox 기준.
+    current: null,
+    date: null
+  }
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
   }
   emailChange = (obj) => {
     console.log(obj) // 에러피하기용 임시
   }
+  getTime = (hour) => {
+    const date = new moment();
+    return (date.format('YYYY-MM-DD ') + date.format(`${hour}:00`));
+  }
+  setTime = (e, date) => {
+    const { Schedule } = this.props;
+    let time = e.currentTarget.innerHTML;
+    if (time == "10:00" || time == "11:00") {
+      this.setState({...this.state, current: "오전 " + time, display: true, display2: 'none', date: date}); // display 는 FoldedComponent 기준
+      Schedule.setTodayDate(date);
+    } else {
+      this.setState({...this.state, current: "오후 " + time, display: true, display2: 'none', date: date});
+    }
+  }
+  handleDropDown = () => {
+    this.setState({...this.state, display: 'none', display2: true})
+  }
   render() {
-    const timeArr = ["10 : 00", "11 : 00", "01 : 00", "02 : 00", "03 : 00",
-    "04 : 00", "05 : 00", "06 : 00"]
+    const { current, display, display2 } = this.state;
+    const timeArr = [
+      {
+        start_at: this.getTime(10),
+        end_at: this.getTime(11)
+      },
+      {
+        start_at: this.getTime(11),
+        end_at: this.getTime(12)
+      },
+      {
+        start_at: this.getTime(13),
+        end_at: this.getTime(14)
+      },
+      {
+        start_at: this.getTime(14),
+        end_at: this.getTime(15)
+      },
+      {
+        start_at: this.getTime(15),
+        end_at: this.getTime(16)
+      },
+      {
+        start_at: this.getTime(16),
+        end_at: this.getTime(17)
+      },
+      {
+        start_at: this.getTime(17),
+        end_at: this.getTime(18)
+      },
+      {
+        start_at: this.getTime(18),
+        end_at: this.getTime(19)
+      }
+    ]
     return (
       <Card>
         <Header>1:1 컨설팅 신청</Header>
@@ -26,38 +87,40 @@ class Step4Container extends Component {
           <Calendar/>
         </ContentBox>
         <ScheduleBox>
-          <Title style={{marginTop: 30}}>
+          <Title style={{marginTop: 60, marginBottom: 6}}>
             시간
           </Title>
-          <FoldedComponent>
-            akalalal
+          <FoldedComponent onClick={()=>this.handleDropDown()} style={{display: display}}>
+            {current}
             <img src={dropdown} />
           </FoldedComponent>
-          <SubContent fontWeight = {'bold'}>
-            오전
-          </SubContent>
-          <TimeBox>
-            {timeArr.slice(0,2).map((data) => {
-                return (
-                  <TimeComponent deactive={true}>
-                    {data}
-                  </TimeComponent>
-                )
-              })}
-          </TimeBox>
-          <SubContent fontWeight = {'bold'}>
-            오후
-          </SubContent>
-          <TimeBox>
-              {timeArr.slice(3,).map((data) => {
-                return (
-                  <TimeComponent>
-                    {data}
-                  </TimeComponent>
-                )
-              })}
-          </TimeBox>
-          <Title style={{marginTop: 60}}>
+          <div style={{display: display2}}>
+            <SubContent fontWeight = {'bold'}>
+              오전
+            </SubContent>
+            <TimeBox style={{marginBottom: 30}}>
+              {timeArr.slice(0,2).map((data) => {
+                  return (
+                    <TimeComponent onClick={(event) => this.setTime(event, data.start_at)}>
+                      {data.start_at.split(' ')[1]}
+                    </TimeComponent>
+                  )
+                })}
+            </TimeBox>
+            <SubContent fontWeight = {'bold'}>
+              오후
+            </SubContent>
+            <TimeBox style={{marginBottom: 60}}>
+                {timeArr.slice(2,).map((data) => {
+                  return (
+                    <TimeComponent onClick = {(event) => this.setTime(event, data.start_at)}>
+                      {data.start_at.split(' ')[1]}
+                    </TimeComponent>
+                  )
+                })}
+            </TimeBox>
+          </div>
+          <Title>
             장소
           </Title>
           <SubContent>
@@ -150,7 +213,7 @@ const SubContent = styled(Content.FontSize18)`
   margin-bottom: 6px;
 `
 const TimeBox = styled.div`
-  width: 520px;
+  width: 100%;
   display: inline-flex;
 `
 const TimeComponent = styled.div`
@@ -170,7 +233,6 @@ const TimeComponent = styled.div`
   text-align: left;
   color: #282c36;
   margin-right: 19px;
-  margin-bottom: 20px;
   :hover {
     border: ${(props) => props.deactive ? 'none' : "solid 3px #0933b3"};
   }
@@ -211,11 +273,19 @@ const CustomButton = styled(Buttonv1)`
   margin-bottom: 60px;
 `
 const FoldedComponent = styled.div`
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.45px;
+  text-align: left;
+  color: #282c36;
   width: fit-content;  
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: var(--white);
   padding: 8px 16px 9px;
+  margin-bottom: 30px;
   > img {
     width: 14px;
     height: 8px;
