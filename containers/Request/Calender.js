@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import { Component, useRef } from 'react';
 import moment from "moment";
+import { inject, observer } from 'mobx-react';
 const prevMonth = "/static/images/request/Calendar/prevMonth.png";
 const nextMonth = "/static/images/request/Calendar/nextMonth.png";
 
+@inject('Request')
+@observer
 class Week extends Component {
   Days = (firstDayFormat) => {
     const days = [];
@@ -19,9 +22,13 @@ class Week extends Component {
     return days;
   }
   mapDaysToComponents = (Days, fn = () => { }) => {
+    const { Request } = this.props;
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
-      if (i === 0) {
+      if (!Request.nowMoment.isSame(dayInfo.yearMonthDayFormat,'month')) {
+        className = "not-month";
+      }
+      else if (i === 0) {
         className = "date-sun";
       }
       else if (i === 6) {
@@ -42,16 +49,25 @@ class Week extends Component {
     )
   }
 }
+@inject('Request')
+@observer
 class Calendar extends Component {
-  state = {
-    calendarYM : moment(),
-    today : moment()
+  state= {
+    now: moment(),
+  }
+  componentDidMount() {
+    const { Request } = this.props;
+    this.setState({
+      now : Request.nowMoment,
+    })
   }
   moveMonth = (month) => {
+    const { Request } = this.props;
+    Request.nowMoment.add(month, 'M');
     this.setState({
-      calendarYM : this.state.calendarYM.add(month,'M'),
-      today : this.state.today.add(month,'M' )
+      now : Request.nowMoment,
     })
+    console.log(Request.nowMoment);
   }
   //요일
   dateToArray = (dates) => {
@@ -76,7 +92,8 @@ class Calendar extends Component {
         }
         else if(index === 6) {
           return "date-sat";
-        }else {
+        }
+        else {
           return "date-weekday";
         }
       }
@@ -103,27 +120,31 @@ class Calendar extends Component {
     return Weeks;
   }
   render() {
+    const { now } = this.state;
     return (
-      <MainContainer>
-        <Header>
-          <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
-          <HeaderText>{this.state.today.format("YYYY")}</HeaderText>
-          <Month>{this.state.today.format("M")}</Month>
-          <HeaderText>{this.state.today.format("MMM")}</HeaderText>
-          <div onClick={() => this.moveMonth(1)}><img src={ nextMonth }/></div>
-        </Header>
-        <DateContainer>
-          {this.mapArrayToDate(this.dateToArray(this.props.dates))}
-        </DateContainer>
-        <CalendarContainer onClick={(e) => console.log(e.target)}>
-          {this.Weeks(this.state.today)}
-        </CalendarContainer>
-      </MainContainer>
+      <>
+        <MainContainer display1={ this.state.hid }>
+          <Header>
+            <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
+            <HeaderText>{now.format("YYYY")}</HeaderText>
+            <Month>{now.format("M")}</Month>
+            <HeaderText>{now.format("MMM")}</HeaderText>
+            <div onClick={() => this.moveMonth(1)}><img src={ nextMonth }/></div>
+          </Header>
+          <DateContainer>
+            {this.mapArrayToDate(this.dateToArray(this.props.dates))}
+          </DateContainer>
+          <CalendarContainer onClick={(e) => console.log(e.target)}>
+            {this.Weeks(now)}
+          </CalendarContainer>
+        </MainContainer>
+      </>
     )
   }
 }
 
 export default Calendar;
+
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -193,13 +214,30 @@ const CalendarContainer = styled.div`
   border-left: solid 2px #c6c7cc;
   border-right: solid 2px #c6c7cc;
   > div {
-    border: solid 0.5px #c6c7cc;
+    padding: 8px;
+    border: solid 0.5px rgba(198,199,204,0.5);
     border-collapse: collapse;
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: -0.12px;
+    color: #282c36;
+    :hover {
+      border: solid 2px #0933b3;
+    }
+    :focus { 
+      border : solid 2px #0933b3;
+    }
   }
   .date-sun {
     color: #f52100;
   }
   .date-sat {
     color: #0933b3;
+  }
+  .not-month {
+    color: rgba(198,199,204,0.5);;
   }
 `
