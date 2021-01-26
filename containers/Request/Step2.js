@@ -44,7 +44,7 @@ class Step2Container extends React.Component {
   componentDidMount()
   {
     if(DetailQuestion.select)
-    DetailQuestion.index=1;
+      DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }
   content = () => {
