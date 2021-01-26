@@ -11,29 +11,62 @@ const img_item3 = "static/images/request/Step2/ProductInfo/ProductInfo_item3.png
 @observer
 class ProductInfoContainer extends React.Component {
 
+    
     componentDidMount()
     {
         console.log(this.props.ManufactureProcess.title_list);
+        
     }
+    
   render(){
+
+    let buttonClick = (e,idx) => {
+        const {DetailQuestion,ManufactureProcess} = this.props;
+        console.log(idx);
+        console.log(e.name);
+        if(ManufactureProcess.SelectChecked===idx)
+        {
+          DetailQuestion.nextPage = null;
+          ManufactureProcess.SelectChecked='';
+          DetailQuestion.SelectId = null;
+        }
+        else
+        {
+          ManufactureProcess.SelectChecked=idx;
+        //   DetailQuestion.nextPage = e.nextTitle;
+        //   DetailQuestion.SelectId = e.id;
+        }
+    };
+
     const ImageArray={
         "3D 프린팅":img_item1,
         "CNC":img_item2,
         "금형사출":img_item3
     }
 
-    const { ManufactureProcess } = this.props;
+    let activeHandler=(idx) =>
+    {
+      if(idx===ManufactureProcess.SelectChecked)
+        { return true; } else
+        { return false; }
+    };
 
+    const { ManufactureProcess } = this.props;
+    let ButtonIndex=0;
     return (
+        
         <ItemBox>
             {ManufactureProcess.title_list.data && ManufactureProcess.title_list.data.map((item) => {
             return (
                 <Item>
                     <ItemTitle>{item.name}</ItemTitle>
                     <img src={ImageArray[item.name]}/>
-                    {item.detailManufactureProcess.map((selectData) =>{return(
-                        <SelectItem>
+                    {item.detailManufactureProcess && item.detailManufactureProcess.map((selectData) =>{
+                        ButtonIndex++;
+                        return(
+                        <SelectItem onClick={()=>{buttonClick(selectData,ButtonIndex)}} active={activeHandler(ButtonIndex)}>
                             <ItemContent>{selectData.name}</ItemContent>
+                            {/* {ButtonIndex} */}
                         </SelectItem>
                     )})}
                 </Item>
@@ -53,7 +86,15 @@ const SelectItem = styled.div`
     margin-bottom:8px;
     border-radius: 3px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-
+    &:hover {
+        border: solid 2px #0933b3;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+        >p
+        {
+            color:#0933b3;
+            font-weight:500;
+        }
+      }
 `
 
 const ItemBox=styled.div`

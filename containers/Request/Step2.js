@@ -44,7 +44,7 @@ class Step2Container extends React.Component {
   componentDidMount()
   {
     if(DetailQuestion.select)
-    DetailQuestion.index=1;
+      DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }
   content = () => {
@@ -168,7 +168,7 @@ const SelectContainer = styled.div`
   margin-top: 30px;
   // margin-left: 33px;
   // height:374px;
-  height: ${(props) => (props.index==8 ? "auto" : '374px')};
+  // height: ${(props) => (props.index==8 ? "auto" : '374px')};
 `
   const Text = styled(Title.FontSize16)`
   font-weight: 500;
