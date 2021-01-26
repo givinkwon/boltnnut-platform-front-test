@@ -13,9 +13,11 @@ const lineGray = "static/images/request/StepBar/lineGray.png"
 @observer
 class Step extends React.Component {
   render(){
-    return (
+  const { Request } = this.props;
+
+  return (
       <StepbarContainer>
-        <InlineDiv>        
+        <InlineDiv>
           <Relative>
             {this.props.Request.step_index==1 ? <><Blue/><White/></>: <Blue><img src={check}/></Blue>}
           </Relative>
@@ -44,10 +46,26 @@ class Step extends React.Component {
             {this.props.Request.step_index>3 && <Blue><img src={check}/></Blue>}
           </Relative>
         </InlineDiv>
+        <InlineDiv>
+          <Relative>
+            {this.props.Request.step_index == 4 && <img src={lineBlue}/>}
+          </Relative>
+        </InlineDiv>
+        <InlineDiv>
+          <Relative>
+            {this.props.Request.step_index==4 && <><Blue/><White/></>}
+            {this.props.Request.step_index>4 && <Blue><img src={check}/></Blue>}
+          </Relative>
+        </InlineDiv>
         <TextContainer>
-          <TextDiv><StepbarText color={"#0933b3"}>기본 정보 입력</StepbarText></TextDiv>
-          <TextDiv><StepbarText>제품 정보 선택</StepbarText></TextDiv>
-          <TextDiv><StepbarText>무료 견적 받기</StepbarText></TextDiv>
+          <TextDiv><StepbarText index={1} realindex={Request.step_index}>기본 정보 입력</StepbarText></TextDiv>
+          <TextDiv><StepbarText index={2} realindex={Request.step_index}>제품 정보 선택</StepbarText></TextDiv>
+          <TextDiv><StepbarText index={3} realindex={Request.step_index}>무료 견적 받기</StepbarText></TextDiv>
+          <TextDiv>
+            {
+              this.props.Request.step_index==4 && <StepbarText index={4} realindex={Request.step_index}>1:1 컨설팅 신청</StepbarText>
+            }
+          </TextDiv>
         </TextContainer>
       </StepbarContainer>
     )
@@ -62,21 +80,21 @@ const TextDiv = styled.div`
   align-items: center;
 `
 const TextContainer = styled.div`
-  width: 100px;
-  height:266px;
+  width: 106px;
+  height:384px;
   position: absolute;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-left: 24px;
+  margin-left: 30px;
 `
 
 const StepbarContainer = styled.div`
   display: inline-flex;
   flex-direction:column;
   width: 30px;
-  height:254px;
+  height:372px;
   // align-items: center;
   justify-content: space-between;
   margin-top: 60px;
@@ -102,7 +120,8 @@ const StepbarText = styled(Title.FontSize16)`
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.16px;
-  color: ${props => props.color ? props.color : '#282c36'};
+  // color: ${props => props.color ? props.color : '#282c36'};
+  color: ${props => props.index == props.realindex ? '#0933b3' : props.index < props.realindex ? '#a4aab4' : '#282c36'};
 `
 const Gray = styled.div`
   width: 30px;

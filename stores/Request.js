@@ -4,6 +4,7 @@ import * as CategoryAPI from "axios/Category";
 import * as PartnerAPI from 'axios/Partner';
 import * as RequestAPI from "axios/Request";
 import Router from "next/router";
+import moment from 'moment';
 
 class Request {
   @observable client_id = -1;
@@ -57,10 +58,11 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
-  @observable step_index = 2;
+  @observable step_index = 1;
   @observable step1_index = 1;
   @observable drawFile = null;
   @observable percentage = 0;
+  @observable nowMoment = moment();
 
   @action reset = () => {
     this.input_name = "";
