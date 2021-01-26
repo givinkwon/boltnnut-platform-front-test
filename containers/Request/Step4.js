@@ -6,6 +6,8 @@ import InputComponent from 'components/Input2';
 import CheckBoxComponent from 'components/CheckBox';
 import Buttonv1 from 'components/Buttonv1';
 
+const dropdown = '/static/images/request/Step4/dropdown.png';
+
 class Step4Container extends Component {
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
@@ -14,8 +16,8 @@ class Step4Container extends Component {
     console.log(obj) // 에러피하기용 임시
   }
   render() {
-    const timeArr = ["10 : 30", "11 : 00", "11 : 30", "01 : 30", "02 : 00", "02 : 30",
-    "03 : 00","03 : 30","04 : 00","04 : 30","05 : 00","05 : 30","06 : 00"]
+    const timeArr = ["10 : 00", "11 : 00", "01 : 00", "02 : 00", "03 : 00",
+    "04 : 00", "05 : 00", "06 : 00"]
     return (
       <Card>
         <Header>1:1 컨설팅 신청</Header>
@@ -26,13 +28,17 @@ class Step4Container extends Component {
           <Title style={{marginTop: 60}}>
             시간
           </Title>
+          <FoldedComponent>
+            akalalal
+            <img src={dropdown} />
+          </FoldedComponent>
           <SubContent fontWeight = {'bold'}>
             오전
           </SubContent>
           <TimeBox>
             {timeArr.slice(0,2).map((data) => {
                 return (
-                  <TimeComponent>
+                  <TimeComponent deactive={true}>
                     {data}
                   </TimeComponent>
                 )
@@ -42,16 +48,7 @@ class Step4Container extends Component {
             오후
           </SubContent>
           <TimeBox>
-              {timeArr.slice(3,8).map((data) => {
-                return (
-                  <TimeComponent>
-                    {data}
-                  </TimeComponent>
-                )
-              })}
-          </TimeBox>
-          <TimeBox>
-              {timeArr.slice(8,13).map((data) => {
+              {timeArr.slice(3,).map((data) => {
                 return (
                   <TimeComponent>
                     {data}
@@ -160,7 +157,7 @@ const TimeComponent = styled.div`
   height: 40px;
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: white;
+  background-color: ${(props) => props.deactive ? "gray" : "white"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -173,6 +170,9 @@ const TimeComponent = styled.div`
   color: #282c36;
   margin-right: 19px;
   margin-bottom: 20px;
+  :hover {
+    border: ${(props) => props.deactive ? 'none' : "solid 3px #0933b3"};
+  }
 `
 const Tail = styled(Content.FontSize14)`
   font-weight: 500;
@@ -208,5 +208,17 @@ const CustomButton = styled(Buttonv1)`
   margin-top: 30px;
   font-size: 20px !important;
   margin-bottom: 60px;
+`
+const FoldedComponent = styled.div`
+  width: fit-content;  
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  background-color: var(--white);
+  padding: 8px 16px 9px;
+  > img {
+    width: 14px;
+    height: 8px;
+    margin-left: 22px;
+  }
 `
 
