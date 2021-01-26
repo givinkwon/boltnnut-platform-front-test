@@ -63,10 +63,13 @@ class ProductInfoContainer extends React.Component {
                     {item.detailManufactureProcess && item.detailManufactureProcess.map((selectData) =>{
                         ButtonIndex++;
                         return(
-                        <SelectItem onClick={()=>{buttonClick(selectData,ButtonIndex)}} active={activeHandler(ButtonIndex)}>
-                            <ItemContent>{selectData.name}</ItemContent>
-                            {/* {ButtonIndex} */}
-                        </SelectItem>
+                        <>
+                            <input value={ButtonIndex}/>
+                            <SelectItem onClick={()=>{buttonClick(selectData,ButtonIndex)}} active={activeHandler(ButtonIndex)} index={ButtonIndex}>
+                                <ItemContent>{selectData.name}</ItemContent>
+                                {/* {ButtonIndex} */}
+                            </SelectItem>
+                        </>
                     )})}
                 </Item>
             )}
