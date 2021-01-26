@@ -1,9 +1,13 @@
 import styled from 'styled-components';
-import { Component, useRef } from 'react';
+import React, { Component, useRef } from 'react';
 import moment from "moment";
 import { inject, observer } from 'mobx-react';
+import Step3Container from './Step3';
+import Step4Container from './Step4';
+import Containerv1 from '../../components/Containerv1';
 const prevMonth = "/static/images/request/Calendar/prevMonth.png";
 const nextMonth = "/static/images/request/Calendar/nextMonth.png";
+const dropdown = '/static/images/request/Step4/dropdown.png';
 
 @inject('Request')
 @observer
@@ -21,6 +25,19 @@ class Week extends Component {
     }
     return days;
   }
+  calendarOnOff = (e) => {
+    const { Request } = this.props;
+      if (Request.calendarOnOff == true) {
+        Request.calendarOnOff = false;
+      }
+      else {
+        Request.calendarOnOff = true;
+      }
+      let day = e.currentTarget.innerHTML;
+      const dayValue = Request.nowMoment;
+      console.log(dayValue);
+      Request.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
+  }
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Request } = this.props;
     return Days.map((dayInfo, i) => {
@@ -35,7 +52,7 @@ class Week extends Component {
         className = "date-sat"
       }
       return (
-        <div className={className} onClick={() => fn(dayInfo.yearMonthDayFormat)}>
+        <div className={className} onClick={ this.calendarOnOff }>
             {dayInfo.getDay}
         </div>
       )
@@ -104,7 +121,15 @@ class Calendar extends Component {
       )
     })
   }
-
+  calendarOnOff = () => {
+    const { Request } = this.props;
+    if (Request.calendarOnOff == true) {
+      Request.calendarOnOff = false;
+    }
+    else {
+      Request.calendarOnOff = true;
+    }
+  }
 
   // 날짜 입력
   Weeks = (monthYear) => {
@@ -121,23 +146,32 @@ class Calendar extends Component {
   }
   render() {
     const { now } = this.state;
+    const { Request } = this.props;
     return (
       <>
-        <MainContainer display1={ this.state.hid }>
-          <Header>
-            <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
-            <HeaderText>{now.format("YYYY")}</HeaderText>
-            <Month>{now.format("M")}</Month>
-            <HeaderText>{now.format("MMM")}</HeaderText>
-            <div onClick={() => this.moveMonth(1)}><img src={ nextMonth }/></div>
-          </Header>
-          <DateContainer>
-            {this.mapArrayToDate(this.dateToArray(this.props.dates))}
-          </DateContainer>
-          <CalendarContainer onClick={(e) => console.log(e.target)}>
-            {this.Weeks(now)}
-          </CalendarContainer>
-        </MainContainer>
+        { Request.calendarOnOff == true &&
+          <MainContainer display1={ this.state.hid }>
+            <Header>
+              <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
+              <HeaderText>{now.format("YYYY")}</HeaderText>
+              <Month>{now.format("M")}</Month>
+              <HeaderText>{now.format("MMM")}</HeaderText>
+              <div onClick={() => this.moveMonth(1)}><img src={ nextMonth }/></div>
+            </Header>
+            <DateContainer>
+              {this.mapArrayToDate(this.dateToArray(this.props.dates))}
+            </DateContainer>
+            <CalendarContainer onClick={(e) => console.log(e.target)}>
+              {this.Weeks(now)}
+            </CalendarContainer>
+          </MainContainer>
+        }
+        { Request.calendarOnOff == false &&
+        <FoldedComponent onClick={ this.calendarOnOff }>
+          { Request.clickDay }
+          <span><img src={dropdown} /></span>
+        </FoldedComponent>
+        }
       </>
     )
   }
@@ -149,6 +183,11 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  width: 740px;
+  height: 600px;
 `
 const Header = styled.div`
   display: flex;
@@ -238,6 +277,20 @@ const CalendarContainer = styled.div`
     color: #0933b3;
   }
   .not-month {
-    color: rgba(198,199,204,0.5);;
+    color: rgba(198,199,204,0.5);
+    pointer-events: none;
+  }
+`
+const FoldedComponent = styled.div`
+  width: fit-content;  
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  background-color: var(--white);
+  padding: 8px 16px 9px;
+  margin-top : 6px;
+  > span {
+    width: 14px;
+    height: 8px;
+    margin-left: 22px;
   }
 `

@@ -22,10 +22,11 @@ class Step4Container extends Component {
       <Card>
         <Header>1:1 컨설팅 신청</Header>
         <ContentBox>
+          <Title>날짜</Title>
           <Calendar/>
         </ContentBox>
         <ScheduleBox>
-          <Title style={{marginTop: 60}}>
+          <Title style={{marginTop: 30}}>
             시간
           </Title>
           <FoldedComponent>
