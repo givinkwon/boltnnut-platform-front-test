@@ -18,7 +18,7 @@ class Step4Container extends Component {
     display: 'none', // display 는 FoldedComponent 기준
     display2: true, // display2 는 TimeBox 기준.
     current: null,
-    date: null
+    date: null,
   }
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
@@ -32,16 +32,29 @@ class Step4Container extends Component {
   }
   setTime = (e, date) => {
     const { Schedule } = this.props;
+    console.log(date);
     let time = e.currentTarget.innerHTML;
     if (time == "10:00" || time == "11:00") {
       this.setState({...this.state, current: "오전 " + time, display: true, display2: 'none', date: date}); // display 는 FoldedComponent 기준
       Schedule.setTodayDate(date);
+      Schedule.getOccupiedDate();
     } else {
       this.setState({...this.state, current: "오후 " + time, display: true, display2: 'none', date: date});
     }
   }
   handleDropDown = () => {
     this.setState({...this.state, display: 'none', display2: true})
+  }
+  timeActiveToggle = (time) => {
+    console.log(time);
+    // const { Schedule } = this.props;
+    // const { inactive_array } = this.state;
+    
+    // if (time in inactive_array) {
+    //   return true
+    // } else {
+    //   return false
+    // }
   }
   render() {
     const { current, display, display2 } = this.state;
@@ -101,7 +114,7 @@ class Step4Container extends Component {
             <TimeBox style={{marginBottom: 30}}>
               {timeArr.slice(0,2).map((data) => {
                   return (
-                    <TimeComponent onClick={(event) => this.setTime(event, data.start_at)}>
+                    <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick={(event) => this.setTime(event, data.start_at)}>
                       {data.start_at.split(' ')[1]}
                     </TimeComponent>
                   )
@@ -113,7 +126,7 @@ class Step4Container extends Component {
             <TimeBox style={{marginBottom: 60}}>
                 {timeArr.slice(2,).map((data) => {
                   return (
-                    <TimeComponent onClick = {(event) => this.setTime(event, data.start_at)}>
+                    <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick = {(event) => this.setTime(event, data.start_at)}>
                       {data.start_at.split(' ')[1]}
                     </TimeComponent>
                   )
