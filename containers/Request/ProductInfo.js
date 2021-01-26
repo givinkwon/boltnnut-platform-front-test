@@ -54,7 +54,6 @@ class ProductInfoContainer extends React.Component {
     const { ManufactureProcess } = this.props;
     let ButtonIndex=0;
     return (
-        
         <ItemBox>
             {ManufactureProcess.title_list.data && ManufactureProcess.title_list.data.map((item) => {
             return (
