@@ -17,8 +17,9 @@ class Step4Container extends Component {
   state = {
     display: 'none', // display 는 FoldedComponent 기준
     display2: true, // display2 는 TimeBox 기준.
-    current: null,
-    date: null,
+    current: null, // FoldedComponent에 넣을 현재 상태(오전 11:00 등)
+    date: null, // 오늘 날짜. 형식은 2021-01-27 11:00 등
+    inactive_array: []
   }
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
@@ -32,7 +33,6 @@ class Step4Container extends Component {
   }
   setTime = (e, date) => {
     const { Schedule } = this.props;
-    console.log(date);
     let time = e.currentTarget.innerHTML;
     if (time == "10:00" || time == "11:00") {
       this.setState({...this.state, current: "오전 " + time, display: true, display2: 'none', date: date}); // display 는 FoldedComponent 기준
@@ -40,21 +40,22 @@ class Step4Container extends Component {
       Schedule.getOccupiedDate();
     } else {
       this.setState({...this.state, current: "오후 " + time, display: true, display2: 'none', date: date});
+      Schedule.setTodayDate(date);
+      Schedule.getOccupiedDate();
     }
   }
   handleDropDown = () => {
     this.setState({...this.state, display: 'none', display2: true})
   }
   timeActiveToggle = (time) => {
+    const { Schedule } = this.props;
+    console.log(Schedule.inactive_today.includes(time));
     console.log(time);
-    // const { Schedule } = this.props;
-    // const { inactive_array } = this.state;
-    
-    // if (time in inactive_array) {
-    //   return true
-    // } else {
-    //   return false
-    // }
+    if (Schedule.inactive_today.includes(time)) {
+      return true
+    } else {
+      return false
+    }
   }
   render() {
     const { current, display, display2 } = this.state;

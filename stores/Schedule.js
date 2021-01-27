@@ -8,8 +8,9 @@ class Schedule {
     @observable inactive_today = [];
 
     @action init = () => {
-        today_date = new moment();
+        let today_date = new moment();
         this.today = today_date.format('YYYY-MM-DD 10:00:00');
+        this.getOccupiedDate();
     }
     @action setTodayDate = (obj) => {
         this.today = obj;
