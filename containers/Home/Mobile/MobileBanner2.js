@@ -10,7 +10,7 @@ const Img = "/static/images/Home/Banner2/image1.png";
 class MobileBanner2Container extends React.Component {
     render() {
         return (
-          <Background>
+          <Background backgroundColor={'#f6f6f6'}>
               <ContentContainer>
                   <Fade bottom>
                       <Header>

@@ -51,11 +51,21 @@ class Week extends Component {
       else if (i === 6) {
         className = "date-sat"
       }
-      return (
-        <div className={className} onClick={ this.calendarOnOff }>
-            {dayInfo.getDay}
-        </div>
-      )
+      if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD")) {
+        return (
+          <div className={className} onClick={ this.calendarOnOff }>
+            <div>{dayInfo.getDay}</div>
+            <div>오늘</div>
+          </div>
+        )
+      }
+      else {
+        return (
+          <div className={className} onClick={ this.calendarOnOff }>
+            <div>{dayInfo.getDay}</div>
+          </div>
+        )
+      }
     })
   }
   render() {
@@ -257,13 +267,16 @@ const CalendarContainer = styled.div`
     padding: 8px;
     border: solid 0.5px rgba(198,199,204,0.5);
     border-collapse: collapse;
-    font-family: Roboto;
-    font-size: 12px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    letter-spacing: -0.12px;
-    color: #282c36;
+    > div {
+      font-family: Roboto;
+      line-height: 1.4;
+      font-size: 12px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      letter-spacing: -0.12px;
+      color: #282c36;
+    }
     :hover {
       border: solid 2px #0933b3;
     }
@@ -272,14 +285,20 @@ const CalendarContainer = styled.div`
     }
   }
   .date-sun {
-    color: #f52100;
+    > div {
+      color: #f52100;
+    }
   }
   .date-sat {
-    color: #0933b3;
+    > div {
+      color: #0933b3;
+    }
   }
   .not-month {
-    color: rgba(198,199,204,0.5);
     pointer-events: none;
+    > div {
+      color: rgba(198,199,204,0.5);
+    }
   }
 `
 const FoldedComponent = styled.div`
