@@ -33,9 +33,9 @@ class Week extends Component {
       else {
         Request.calendarOnOff = true;
       }
-      let day = e.currentTarget.innerHTML;
+      let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
       const dayValue = Request.nowMoment;
-      
+
       Request.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
       Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   }
@@ -55,7 +55,7 @@ class Week extends Component {
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD")) {
         return (
           <div className={className} onClick={ this.calendarOnOff }>
-            <div>{dayInfo.getDay}</div>
+            {dayInfo.getDay}
             <div>오늘</div>
           </div>
         )
@@ -63,7 +63,7 @@ class Week extends Component {
       else {
         return (
           <div className={className} onClick={ this.calendarOnOff }>
-            <div>{dayInfo.getDay}</div>
+            {dayInfo.getDay}
           </div>
         )
       }
@@ -268,6 +268,14 @@ const CalendarContainer = styled.div`
     padding: 8px;
     border: solid 0.5px rgba(198,199,204,0.5);
     border-collapse: collapse;
+    font-family: Roboto;
+    line-height: 1.4;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: -0.12px;
+    color: #282c36;
     > div {
       font-family: Roboto;
       line-height: 1.4;
