@@ -236,7 +236,7 @@ class MagazineContainer extends React.Component {
                               </TextBox>
                             </Item>
                             <Item>
-                              <Image ratio='50%' src={data[idx*2+1].image} onClick={() => this.pushToDetail(data[idx*2].id)}/>
+                              <Image ratio='50%' src={data[idx*2+1].image} onClick={() => this.pushToDetail(data[idx*2+1].id)}/>
                               <TextBox>
                                 <div class="Header">
                                   {data[idx*2+1].title}
