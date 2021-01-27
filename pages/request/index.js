@@ -10,7 +10,7 @@ import Spinner from 'components/Spinner';
 
 import RequestConatiner from 'containers/Request'
 
-@inject('Request', 'Partner','DetailQuestion','ManufactureProcess')
+@inject('Request', 'Partner','DetailQuestion','ManufactureProcess', 'Schedule')
 @observer
 class Request extends React.Component {
   state = {
