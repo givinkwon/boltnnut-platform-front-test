@@ -9,7 +9,7 @@ const prevMonth = "/static/images/request/Calendar/prevMonth.png";
 const nextMonth = "/static/images/request/Calendar/nextMonth.png";
 const dropdown = '/static/images/request/Step4/dropdown.png';
 
-@inject('Request')
+@inject('Request', 'Schedule')
 @observer
 class Week extends Component {
   Days = (firstDayFormat) => {
@@ -26,7 +26,7 @@ class Week extends Component {
     return days;
   }
   calendarOnOff = (e) => {
-    const { Request } = this.props;
+    const { Request, Schedule } = this.props;
       if (Request.calendarOnOff == true) {
         Request.calendarOnOff = false;
       }
@@ -35,8 +35,9 @@ class Week extends Component {
       }
       let day = e.currentTarget.innerHTML;
       const dayValue = Request.nowMoment;
-      console.log(dayValue);
+      
       Request.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
+      Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   }
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Request } = this.props;
