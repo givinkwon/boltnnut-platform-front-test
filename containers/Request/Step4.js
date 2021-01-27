@@ -233,6 +233,7 @@ const TimeComponent = styled.div`
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: ${(props) => props.deactive ? "gray" : "white"};
+  pointer-events:${(props) => props.deactive && "none"};
   display: flex;
   align-items: center;
   justify-content: center;

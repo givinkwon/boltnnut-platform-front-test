@@ -11,7 +11,8 @@ class Schedule {
     @action init = () => {
         let today_date = new moment();
         this.today = today_date.format('YYYY-MM-DD ');
-        this.book_time = this.today + this.current
+        this.book_time = this.today + this.current;
+
         this.getOccupiedDate();
     }
     @action setTodayDate = (obj) => {
@@ -21,8 +22,6 @@ class Schedule {
         this.getOccupiedDate();
     }
     @action setCurrent = (obj) => {
-        console.log(obj)
-        console.log(this.today);
         this.current = obj;
         this.book_time = this.today + this.current
     }
@@ -38,6 +37,14 @@ class Schedule {
         }).catch(
             (error) => console.log(error)
         )
+    }
+    @action submitSchedule = (req) => {
+        let formData = new FormData();
+        formData.append("request", req.req_num);
+        formData.append("client", req.client);
+        formData.append("startAt", this.book_time);
+        formData.append("endAt", );
+
     }
 }
 
