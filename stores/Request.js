@@ -62,9 +62,7 @@ class Request {
   @observable step1_index = 1;
   @observable drawFile = null;
   @observable percentage = 0;
-  @observable nowMoment = moment();
-  @observable calendarOnOff = true;
-  @observable clickDay = 0;
+
 
   @action reset = () => {
     this.input_name = "";
