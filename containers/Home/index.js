@@ -36,6 +36,9 @@ import TabletBanner7Container from './Tablet/TabletBanner7';
 import TabletBanner8Container from './Tablet/TabletBanner8';
 
 import { inject, observer } from "mobx-react";
+import Banner9Container from './Banner9';
+import TabletBanner9Container from './Tablet/TabletBanner9';
+import MobileBanner9Container from './Mobile/MobileBanner9';
 
 
 @inject('Home')
@@ -75,6 +78,7 @@ class HomeConatiner extends React.Component {
               <MobileBanner6Container/>
               <MobileBanner7Container/>
               <MobileBanner8Container/>
+              <MobileBanner9Container/>
             </CustomContainer>
           </>
         ) : (767.99 < width && width < 1279.98)  ? (
@@ -89,6 +93,7 @@ class HomeConatiner extends React.Component {
             <TabletBanner6Container/>
             <TabletBanner7Container/>
             <TabletBanner8Container/>
+            <TabletBanner9Container/>
           </CustomContainer>
         </>
         ) : (
@@ -103,6 +108,7 @@ class HomeConatiner extends React.Component {
             <Banner6Container/>
             <Banner7Container/>
             <Banner8Container/>
+            <Banner9Container/>
           </div>
           </>
         )}

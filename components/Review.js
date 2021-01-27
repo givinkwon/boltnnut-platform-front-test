@@ -6,8 +6,8 @@ import * as Title from "components/Title";
 import StarRatingComponent from 'react-star-rating-component';
 
 // 이미지테스트
-const person = "/static/images/Home/Banner5/person.png";
-const person_mob = "/static/images/Home/Banner5/person_mob.png";
+const person = "/static/images/Home/Banner6/person.png";
+const person_mob = "/static/images/Home/Banner6/person_mob.png";
 
 //@inject('Answer')
 //@observer
@@ -21,7 +21,7 @@ class ReviewCard extends Component {
                     <img src={item.logo}/>
                     <Name eng={true}>
                         {item.name}<br/>
-                        <MyStarRatingComponent 
+                        <MyStarRatingComponent
                           value={5}
                           starColor={'#0a2165'}/>
                     </Name>
@@ -37,7 +37,7 @@ class ReviewCard extends Component {
                         <img src={item.logo} marginRight={28}/>
                         <Name eng={true}>
                             {item.name}<br/>
-                            <MyStarRatingComponent 
+                            <MyStarRatingComponent
                               value={5}
                               starColor={'#0a2165'}/>
                         </Name>

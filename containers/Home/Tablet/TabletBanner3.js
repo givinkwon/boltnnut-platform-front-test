@@ -1,89 +1,78 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "components/Containerv1";
+
+//Components
 import Background from "components/Background";
 import * as Title from "components/Title";
+import * as Content from "components/Content";
 import Fade from 'react-reveal/Fade';
 
-const Img = "/static/images/Home/Mobile/MobileBanner3/MobileBanner3Img.png"
+import { inject, observer } from "mobx-react";
 
+//Image
+const image1 = "/static/images/Home/Banner3/image1.png"
+
+@inject('Proposal')
+@observer
 class TabletBanner3Container extends React.Component {
   render() {
+    const ProjectCount = this.props.Proposal.projects_count;
     return (
-      <Background>
-        <ContentContainer>
-          <Fade bottom>
+      <Background backgroundColor={'#0a2165'} style={{paddingBottom: 100, paddingTop: 100, justifyContent: 'center'}}>
+        <Fade bottom>
+          <div>
             <Header>
-              제조 무료 상담 서비스
+              AI 제조사 매칭 알고리즘
             </Header>
             <Middle>
-              40년 경력의 전<br/>
-              컨설턴트 <p>무료 상담</p>
+              5000여개의 제조사 중 <br/>
+              딱 맞는 전문가를 매칭
             </Middle>
-            <ImgContainer>
-              <img src={ Img }/>
-            </ImgContainer>
+            <div>
+              <img src={image1} style={{ width: 347, height: 230,borderRadius:7, marginLeft:14,}} />
+            </div>
             <Body>
-              프로젝트마다 해당 제품의 전문가가 배정되어<br/>
-              무료상담을 통해 최적의 견적을 알려드립니다.
+              {ProjectCount * 3 + 997}개 프로젝트 데이터를 학습한 AI 매칭<br />
+              알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
             </Body>
-          </Fade>
-        </ContentContainer>
+          </div>
+        </Fade>
       </Background>
     );
   }
 }
 
 export default TabletBanner3Container;
-const ContentContainer = styled(Containerv1)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-const Header = styled(Title.FontSize20)`
-  color: #0933b3;
+
+const Header = styled(Title.FontSize17)`
+  color: #e8eeff;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.45;
+  line-height: 1.46;
   letter-spacing: normal;
-  margin: 100px 0px 2px 0px;
-  @media (min-width: 767.99px) and (max-width: 1279.98px) {
-    font-size: 17px;
-  }
+  margin-bottom:2px;
+  text-align:center;
 `
-const Middle = styled(Title.FontSize56)`
-  text-align: center;
-  color: #282c36;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.45;
-  letter-spacing: -0.55px;
-  >p {
-    display: inline;
-    font-weight:bold;
-  }
-  @media (min-width: 767.99px) and (max-width: 1279.98px) {
-    font-size: 24px;
-  }
-`
-const ImgContainer = styled.div`
-  margin: 30px 0px 22px 0px;
-`
-const Body = styled(Title.FontSize24)`
-  text-align: center;
-  white-space:nowrap;
+const Middle = styled(Content.FontSize24)`
+  color: #f6f6f6;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
+  line-height: 1.64;
+  letter-spacing: -0.55px;
+  margin-bottom: 30px;
+  text-align:center;
+`
+
+const Body = styled(Content.FontSize17)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
   letter-spacing: -0.38px;
-  text-align: left;
-  color: #555963;
-  margin-bottom: 100px;
-  @media (min-width: 767.99px) and (max-width: 1279.98px) {
-    font-size: 17px;
-  }
+  color: #cedafe;
+  margin-top:22px;
+  text-align:center;
 `
 
