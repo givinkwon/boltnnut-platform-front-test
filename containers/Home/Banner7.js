@@ -3,377 +3,175 @@ import styled from "styled-components";
 import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
-import Slider from "react-slick"
-import UseScrollCount from "./UseScrollCount"
-import Fade from "react-reveal/Fade"
+import Slider from 'react-slick';
+// import SliderWrapper from "./SliderStyle";
+import SliderMain from './SliderContent';
+import Fade from 'react-reveal/Fade';
+const pic = 'static/images/Home/Banner7/pic.png';
+const pic2 = 'static/images/Home/Banner7/pic2.jpg';
+const pic3 = 'static/images/Home/Banner7/pic3.jpg';
 
-const image1 = "/static/images/logo/logo_1.png";
-const image2 = "/static/images/logo/logo_2.png";
-const image3 = "/static/images/logo/logo_3.png";
-const image4 = "/static/images/logo/logo_4.png";
-const image5 = "/static/images/logo/logo_5.png";
-const image6 = "/static/images/logo/logo_6_3.png";
-const image7 = "/static/images/logo/logo_7.jpg";
-const image8 = "/static/images/logo/logo_8.jpg";
-const image9 = "/static/images/logo/logo_9.png";
-const image10 = "/static/images/logo/logo_10.png";
-const image11 = "/static/images/logo/logo_11.png";
-const image12 = "/static/images/logo/logo_12.png";
-const image13 = "/static/images/logo/logo_13.png";
-const image14 = "/static/images/logo/logo_14.png";
-const image15 = "/static/images/logo/logo_15.png";
-const image16 = "/static/images/logo/logo_16.jpg";
-const image17 = "/static/images/logo/logo_17.png";
-const image18 = "/static/images/logo/logo_18.png";
-const image19 = "/static/images/logo/logo_19.png";
-const image20 = "/static/images/logo/logo_20.png";
-const image21 = "/static/images/logo/logo_21.png";
-const image22 = "/static/images/logo/logo_22.png";
-const image23 = "/static/images/logo/logo_23.png";
-const image24 = "/static/images/logo/logo_24.png";
-const image25 = "/static/images/logo/logo_25.png";
-const image26 = "/static/images/logo/logo_26.png";
-const image27 = "/static/images/logo/logo_27.png";
-const image28 = "/static/images/logo/logo_28.png";
-const image29 = "/static/images/logo/logo_29.png";
-
-const item1="/static/images/Home/Banner7/Banner7_img1.png";
-
-const CountFunc = ({index}) => 
-{
-    const countItem = {
-      0: UseScrollCount(878*3,0,0,0,3)
-    };
-  
-    return (
-        <p {...countItem[index]}/>
-    );
-};
 
 class Banner7Container extends React.Component {
+  state = {
+    current: 0,
+    next: true,
+    prev: false,
+    show: 'visible',
+    progress: 0,
+  }
+
+  buttonClick = (e) => {
+    const newPage = e.target.innerText*1;
+    this.setState({...this.state, current: newPage-1, progress: newPage*100-100});
+    this.slider.slickGoTo(newPage-1);
+  }
+  sliderNext = () => {
+    const {current, progress} = this.state;
+    const fullfage = 2;
+    if (current != fullfage) {
+      const newPage = current + 1;
+      if (progress < 200) {
+        this.setState({...this.state, current: newPage, progress: progress + 100, show:'hidden'});
+      }
+      setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
+      this.slider.slickNext();
+    }
+  }
+  sliderPrev = () => {
+    const {current, progress} = this.state;
+    if (current != 0) {
+      const newPage = current - 1;
+      if (progress > 0) {
+        this.setState({...this.state, progress: progress - 100, current: newPage, show:'hidden'});
+      }
+      setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
+      this.slider.slickPrev();
+    }
+  }
   render() {
-    const SlideSettings = {
-      dots: true,
+    const { current, show } = this.state;
+    const left = 'static/images/Home/Banner7/prev.png';
+    const right = 'static/images/Home/Banner7/next.png';
+    console.log(this.state.progress);
+    let progress = String(this.state.progress) + "%";
+    let progress2 = "0%";
+    if (this.state.progress > 100) {
+      for (let i = 1; i < 101; i++) {
+        progress2 = String(i) + "%";
+      }
+    }
+    var circleColor = "gray";
+    var circleColor2 = "gray";
+    if (this.state.progress >= 100) {
+      circleColor = "#0933b3";
+    };
+    if (this.state.progress >= 200) {
+      circleColor2 = "#0933b3";
+    }
+    const item1 = {
+      headContent: "Step 1",
+      mainContent: "파트너 신청",
+      footContent: "회사소개서, 주요기술이력서 등을 통해 \n 파트너의 전문성을 검토하고, 파트너 검증\n키트를 통해 가격경쟁력을 파악합니다."
+    };
+    const item2 = {
+      headContent: "Step 2",
+      mainContent: "파트너 실사",
+      footContent: "볼트앤너트 시니어 컨설턴트가 제출받은 \n검토 자료를 기반으로 6종의 정량 평가를\n 실시하여 협업 및 소통능력을 검증합니다."
+    };
+    const item3 = {
+      headContent: "Step 3",
+      mainContent: "프로젝트 상세 검증",
+      footContent: "볼트앤너트 측에서 테스트 프로젝트 발주를 \n통해 제조사의 품질과 납기를 검증하고\n 볼트앤너트 프로세스를 교육합니다."
+    };
+    const settings = {
+      dots: false,
       infinite: false,
       speed: 500,
-      slidesToShow: 7,
+      arrows: false,
+      slidesToShow: 1,
+      draggable: false,
       slidesToScroll: 1,
-      draggable:true
     };
     return (
-      <Background>
-        <Containerv1 style={{paddingBottom: 141, paddingTop: 140, justifyContent: 'space-between',flexDirection:'column'}}>
+      <Background backgroundColor= {"#a4aab4"}>
+        <CustomContainer>
           <Fade bottom>
             <Header>
-              이미 <CountFunc index={0}/><p>명</p>이 넘는 클라이언트분들이<br/>
-              볼트앤너트를 이용하셨습니다.
+              볼트앤너트 3단계 검증 프로세스로 <br/>검증된 제품 전문가를 만나보세요.
             </Header>
-              <ItemBox>
-                <Slider {...SlideSettings}>
-                  {/* Page1 */}
-                  <Col>
-                    <Item>
-                        <img src={image1}/>
-                    </Item>
-                    <Item>
-                        <img src={image2}/>
-                    </Item>
-                    <Item>
-                        <img src={image3}/>
-                    </Item>
-                    <Item>
-                        <img src={image4}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image5}/>
-                    </Item>
-                    <Item>
-                        <img src={image10}/>
-                    </Item>
-                    <Item>
-                        <img src={image7}/>
-                    </Item>
-                    <Item>
-                        <img src={image8}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image9}/>
-                    </Item>
-                    <Item>
-                        <img src={image6}/>
-                    </Item>
-                    <Item>
-                        <img src={image11}/>
-                    </Item>
-                    <Item>
-                        <img src={image12}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image13}/>
-                    </Item>
-                    <Item>
-                        <img src={image14}/>
-                    </Item>
-                    <Item>
-                        <img src={image16}/>
-                    </Item>
-                    <Item>
-                        <img src={image17}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image18}/>
-                    </Item>
-                    <Item>
-                        <img src={image19}/>
-                    </Item>
-                    <Item>
-                        <img src={image20}/>
-                    </Item>
-                    <Item>
-                        <img src={image21}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image22}/>
-                    </Item>
-                    <Item>
-                        <img src={image23}/>
-                    </Item>
-                    <Item>
-                        <img src={image24}/>
-                    </Item>
-                    <Item>
-                        <img src={image25}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image26}/>
-                    </Item>
-                    <Item>
-                        <img src={image27}/>
-                    </Item>
-                    <Item>
-                        <img src={image28}/>
-                    </Item>
-                    <Item>
-                        <img src={image29}/>
-                    </Item>
-                  </Col>
-
-                  {/* Page2 */}
-                  <Col>
-                    <Item>
-                        <img src={image1}/>
-                    </Item>
-                    <Item>
-                        <img src={image2}/>
-                    </Item>
-                    <Item>
-                        <img src={image3}/>
-                    </Item>
-                    <Item>
-                        <img src={image4}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image5}/>
-                    </Item>
-                    <Item>
-                        <img src={image10}/>
-                    </Item>
-                    <Item>
-                        <img src={image7}/>
-                    </Item>
-                    <Item>
-                        <img src={image8}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image9}/>
-                    </Item>
-                    <Item>
-                        <img src={image6}/>
-                    </Item>
-                    <Item>
-                        <img src={image11}/>
-                    </Item>
-                    <Item>
-                        <img src={image12}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image13}/>
-                    </Item>
-                    <Item>
-                        <img src={image14}/>
-                    </Item>
-                    <Item>
-                        <img src={image16}/>
-                    </Item>
-                    <Item>
-                        <img src={image17}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image18}/>
-                    </Item>
-                    <Item>
-                        <img src={image19}/>
-                    </Item>
-                    <Item>
-                        <img src={image20}/>
-                    </Item>
-                    <Item>
-                        <img src={image21}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image22}/>
-                    </Item>
-                    <Item>
-                        <img src={image23}/>
-                    </Item>
-                    <Item>
-                        <img src={image24}/>
-                    </Item>
-                    <Item>
-                        <img src={image25}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image26}/>
-                    </Item>
-                    <Item>
-                        <img src={image27}/>
-                    </Item>
-                    <Item>
-                        <img src={image28}/>
-                    </Item>
-                    <Item>
-                        <img src={image29}/>
-                    </Item>
-                  </Col>
-
-                  {/* Page3 */}
-                  <Col>
-                    <Item>
-                        <img src={image1}/>
-                    </Item>
-                    <Item>
-                        <img src={image2}/>
-                    </Item>
-                    <Item>
-                        <img src={image3}/>
-                    </Item>
-                    <Item>
-                        <img src={image4}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image5}/>
-                    </Item>
-                    <Item>
-                        <img src={image10}/>
-                    </Item>
-                    <Item>
-                        <img src={image7}/>
-                    </Item>
-                    <Item>
-                        <img src={image8}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image9}/>
-                    </Item>
-                    <Item>
-                        <img src={image6}/>
-                    </Item>
-                    <Item>
-                        <img src={image11}/>
-                    </Item>
-                    <Item>
-                        <img src={image12}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image13}/>
-                    </Item>
-                    <Item>
-                        <img src={image14}/>
-                    </Item>
-                    <Item>
-                        <img src={image16}/>
-                    </Item>
-                    <Item>
-                        <img src={image17}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image18}/>
-                    </Item>
-                    <Item>
-                        <img src={image19}/>
-                    </Item>
-                    <Item>
-                        <img src={image20}/>
-                    </Item>
-                    <Item>
-                        <img src={image21}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image22}/>
-                    </Item>
-                    <Item>
-                        <img src={image23}/>
-                    </Item>
-                    <Item>
-                        <img src={image24}/>
-                    </Item>
-                    <Item>
-                        <img src={image25}/>
-                    </Item>
-                  </Col>
-                  <Col>
-                    <Item>
-                        <img src={image26}/>
-                    </Item>
-                    <Item>
-                        <img src={image27}/>
-                    </Item>
-                    <Item>
-                        <img src={image28}/>
-                    </Item>
-                    <Item>
-                        <img src={image29}/>
-                    </Item>
-                  </Col>
+            <ContainerBanner6>
+              <div>
+                {
+                  current == 0 ? (
+                    <img src={left} onClick = {this.sliderPrev} style={{opacity: 0.3, visibility: this.state.show}}/>
+                  ) : (
+                    <img src={left} onClick = {this.sliderPrev} style={{visibility: this.state.show}}/>
+                  )
+                }
+              </div>
+              <SliderWraper>
+                <Slider {...settings} ref={slider => (this.slider = slider)}>
+                  <SliderMain item={ item1 } src={ pic }/>
+                  <SliderMain item={ item2 } src={ pic2 }/>
+                  <SliderMain item={ item3 } src={ pic3 }/>
                 </Slider>
-              </ItemBox>
+              </SliderWraper>
+              <div>
+                {
+                  current == 2 ? (
+                    <img src={right} onClick = {this.sliderNext} style={{opacity: 0.3, visibility: this.state.show}}/>
+                  ) : (
+                    <img src={right} onClick = {this.sliderNext} style={{visibility: this.state.show}}/>
+                  )
+                }
+              </div>
+            </ContainerBanner6>
+            <ItemBox>
+              <SubContainer>
+                <TableCellContainer>
+                  <ContentBox>
+                    <TableCellContainer>
+                      <Circle onClick= {this.buttonClick} value= {1} backgroundColor={"#0933b3"}>
+                      <span>
+                        <CircleFont>1</CircleFont>
+                      </span>
+                      </Circle>
+                    </TableCellContainer>
+                  </ContentBox>
+                  <ContentBox>
+                    <TableCellContainer>
+                      <Circle onClick= {this.buttonClick} value= {2} backgroundColor={ circleColor }>
+                      <span>
+                        <CircleFont>2</CircleFont>
+                      </span>
+                      </Circle>
+                    </TableCellContainer>
+                  </ContentBox>
+                  <ContentBox width={'0px'}>
+                    <TableCellContainer>
+                      <Circle onClick= {this.buttonClick} value= {3} backgroundColor={ circleColor2 }>
+                      <span>
+                        <CircleFont>3</CircleFont>
+                      </span>
+                      </Circle>
+                    </TableCellContainer>
+                  </ContentBox>
+                </TableCellContainer>
+              </SubContainer>
+              <SubContainer>
+                <TableCellContainer>
+                  <Line>
+                    <LineProgress progressWidth={ progress }/>
+                  </Line>
+                  <Line>
+                    <LineProgress progressWidth={ progress2 }/>
+                  </Line>
+                </TableCellContainer>
+              </SubContainer>
+            </ItemBox>
           </Fade>
-
-        </Containerv1>
+        </CustomContainer>
       </Background>
     );
   }
@@ -381,58 +179,94 @@ class Banner7Container extends React.Component {
 
 export default Banner7Container;
 
-const Header = styled(Title.FontSize32)`
-  color: #191919;
-  font-weight: normal;
+const SliderWraper = styled.div`
+  width: 1140px;
+  height: 669px;
+`
+const CustomContainer = styled(Containerv1)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+const Header = styled(Title.FontSize56)`
+  color: #ffffff;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.38;
-  letter-spacing: -0.8px;
-  text-align:center;
-  margin:0 auto;
-  >p {
-    display:inline;
-    font-weight:bold;
+  line-height: 1.36;
+  letter-spacing: normal;
+  letter-spacing: -1.4px;
+  margin-top: 100px;
+`
+const ContainerBanner6 = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+const ItemBox=styled.div`
+  position: relative;
+  width: 804px;
+  // border: 1px solid black;
+  height: 80px;
+  margin-bottom: 90px;
+`
+
+const SubContainer=styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: table;
+  font-size: 0; /* div 사이의 간격을 없애기 위해서 씀*/
+`
+
+const TableCellContainer=styled.div`
+  display: table-cell;
+  vertical-align: middle;
+`
+
+const ContentBox=styled.div`
+  display:inline-flex;
+  aligh-items:center;
+  width: calc(100% /2);
+  width: ${(props) => (props.width? props.width : "calc(100%/2)")};
+  position: relative;
+`
+
+const Circle=styled.div`
+  font-size: 18px;
+  width: 34px;
+  height: 34px;
+  background-color: ${(props) => (props.backgroundColor? props.backgroundColor : "gray")};
+  color: white;
+  border-radius: 20px;
+  line-height: 20px;
+  text-align: center;
+  display: block;
+  z-index: 100;
+  position: relative; /* z-index는 relative 등의 특정 포지션에서만 작동함 */
+  // float: right;
+  transform: translateX(-10px); /* 반지름만큼 */
+
+  >span{
+     position:absolute;
+     transform: translate(-5px,5px); /* 반지름만큼 */
   }
 `
 
-const ItemBox = styled.div`
-  padding-top:80px;
-  justify-content:center;
-  // display: flex;
-
-  // flex-wrap: wrap;
-  >Slider{
-    display:inline-flex;
-  }
+const Line = styled(ContentBox)`
+  height:4px;
+  background-color: gray;
+  width: calc(100% / 2);
+  z-index: 1;
+  position: relative;
 `
-
-const Item = styled.div`
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // width: calc(14% - 40px);
-  padding: 20px 0;
-  margin: 0 20px;
-  
-  >img{
-    width:100%;
-    // display: inline-block;
-    // position: relative;
-    border-radius: 4px;
-    overflow: hidden;
-    cursor: pointer;
-  }
+const LineProgress = styled(ContentBox)`
+  background-color: #0933b3;
+  width: ${(props) => (props.progressWidth)};
+  z-index: 0;
+  position: relative;
 `
-
-const ImgBox=styled.div`
-    :focus {
-        outline: none;
-    }
-`
-
-const Col=styled.div`
-  :focus {
-    outline: none;
-  }
+const CircleFont=styled(Title.FontSize18)`
+   color:white;
+   font-weight:500;
 `

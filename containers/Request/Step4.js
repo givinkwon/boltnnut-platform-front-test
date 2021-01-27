@@ -87,7 +87,7 @@ class Step4Container extends Component {
           <Calendar/>
         </ContentBox>
         <ScheduleBox>
-          <Title style={{marginTop: 60, marginBottom: 6}}>
+          <Title style={{marginTop: 30, marginBottom: 6}}>
             시간
           </Title>
           <FoldedComponent onClick={()=>this.handleDropDown()} style={{display: display}}>
@@ -275,6 +275,10 @@ const CustomButton = styled(Buttonv1)`
 const FoldedComponent = styled.div`
   font-size: 18px;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: NotoSansCJKkr;
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.45px;
@@ -283,9 +287,10 @@ const FoldedComponent = styled.div`
   width: fit-content;  
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  padding: 8px 16px;
   background-color: var(--white);
-  padding: 8px 16px 9px;
   margin-bottom: 30px;
+  line-height: 1.3;
   > img {
     width: 14px;
     height: 8px;

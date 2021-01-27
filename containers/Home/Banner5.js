@@ -3,151 +3,71 @@ import styled from "styled-components";
 import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
-import StarRatingComponent from 'react-star-rating-component';
-import ReviewCard from 'components/Review';
-import ReviewCard2 from 'components/Review';
-import * as Content from 'components/Content';
 import Fade from 'react-reveal/Fade';
 
-const MANU = "/static/images/Home/Banner5/Manu.png";
-const TAJO = "/static/images/Home/Banner5/TAJO.png";
-const HCLAB = "/static/images/Home/Banner5/HCLAB.png";
-const IoPET = "/static/images/Home/Banner5/IOPET.png";
-const JINYOUNG = "/static/images/Home/Banner5/JINYOUNG.png";
-const person = "/static/images/Home/Banner5/person.png";
+const image1 = "/static/images/Home/Banner5/Banner5_img1.png"
 
 class Banner5Container extends React.Component {
-  state = {
-      rating: 1
-  };
-
   render() {
-    let rate = this.state.rating;
-    const item1 = {
-        name: "MANU",
-        review: "기존 거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트 가견적과 상담을 통해 합리적인 견적을 알 수 있었고, 더 나은 조건의 업체와 계약하게 되었습니다.",
-        logo: MANU
-    }
-    const item2 = {
-        name: "TAJO",
-        review: "제품 제조에 처음 도전하다보니 개발업체를 찾느라 한 달 이상 애를 먹었습니다. 볼트앤너트 상담을 통해 전문 업체를 찾았고, 볼트앤너트 측에서 프로젝트를 전담하여 시행착오 없이 제조할 수 있었습니다.",
-        logo: TAJO
-    }
-    const item3 = {
-        name: "HCLAB",
-        review: "IoT 전문 개발사를 찾고 있었는데, 볼트앤너트에서 찾아준 제조사 견적이 30% 이상 저렴해서 합리적인 가격으로 개발할 수 있었습니다.",
-        logo: HCLAB,
-        title: '기존 거래처 견적보다\n30% 싸게 만들었습니다'
-    }
-    const item4 = {
-        name: "IOPET",
-        review: "제조 양산 프로세스를 모르다보니 시행착오가 많았는데, 볼트앤너트에서 계약서와 기능명세 작성부터 자료 이관 및 양산 프로세스 안내까지 도움주셔서 자사제품인 Petwash를 성공적으로 양산했습니다.",
-        logo: IoPET 
-    }
-    const item5 = {
-        name: "JIN&YOUNG ENG",
-        review: "생산 계획 수립을 위해 개발부터 전체 양산 단가까지 턴키로 알아볼 필요가 있었는데, 볼트앤너트 상담을 통해 양산 예산을 안내해주셨고 그에 따라 적합한 생산 계획을 수립할 수 있었습니다.",
-        logo: JINYOUNG
-    }
     return (
-        <Background>
-            <Containerv1 style={{display: 'inline-flex', alignItems: 'center', paddingTop: 150, paddingBottom: 210,flexDirection: 'column'}}>
-              <Fade bottom>
-                <Header>
-                  클라이언트분들께<br/>
-                  검증된 <span class="bold">볼트앤너트</span>를 만나보세요
-                </Header>
-                <RatingBox>
-                  <StarTitle>
-                    클라이언트 평균 만족도
-                  </StarTitle>
-                  <div style={{paddingTop: 24, display: 'inline-flex'}}>
-                    <MyStarRatingComponent
-                      name="rate1"
-                      starCount={5}
-                      starColor={"#0a2165"}
-                      value={5}
-                    />
-                    <Rate>
-                      4.8 <span class="slash"> / </span> <span class="total"> 5.0 </span>
-                    </Rate>
-                  </div>
-                </RatingBox>
-                <div style={{display: 'inline-flex', width: "100%", justifyContent: 'space-between'}}>
-                  <div>
-                    <ReviewCard2 item = {item3} big={true}/>
-                  </div>
-                  <div>
-                    <ReviewCard item = {item1}/>
-                    <div style={{marginTop: 28}} />
-                    <ReviewCard item = {item2}/>
-                  </div>
-                  <div>
-                    <ReviewCard item = {item4}/>
-                    <div style={{marginTop: 28}} />
-                    <ReviewCard item = {item5}/>
-                  </div>
-                </div>
-              </Fade>
-            </Containerv1>
-        </Background>
+      <Background backgroundColor = {"#d4d7e2"}>
+        <Containerv1 style={{paddingBottom: 306, paddingTop: 308, justifyContent: 'space-between'}}>
+          <Fade bottom>
+            <div>
+              <img src={image1}/>
+            </div>
+            <div>
+              <Header>
+                계약 이행 보증 서비스
+              </Header>
+              <Middle>
+                7가지 계약 관리<br/>
+                서비스로 계약 이행<br/>
+                <p>100% 보증</p>
+              </Middle>
+              <Body>
+                개발부터 납품까지 전담 프로젝트 매니저가<br/>
+                배정되어 계약 이행을 100% 보증합니다.
+              </Body>
+            </div>
+          </Fade>
+        </Containerv1>
+      </Background>
     );
   }
 }
 
 export default Banner5Container;
 
-const Header = styled(Title.FontSize56)`
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.36;
-    letter-spacing: -1.4px;
-    text-align: center;
-    color: #111111;
-    .bold {
-        font-weight: bold;
-    }
-`
-const StarTitle = styled(Title.FontSize24)`
-    text-align: center;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.67;
-    letter-spacing: -0.6px;
-    color: #282c36;
-    margin-top: 90px;
-`
-const RatingBox = styled.div`
-    width: 312px;
-    padding-bottom: 50px;
-    display: inline-flex;
-    flex-direction: column;
-`
-const MyStarRatingComponent = styled(StarRatingComponent)`
-  align-self: center;
-  padding-right: 19px;
-  display: inline-flex !important;
-  > label {
-    cursor: none;
-    width: 30px;
-    height: 30px;
-    > i {
-        font-size: 30px;
-    }
-  }
-`
-const Rate = styled(Content.FontSize48)`
+const Header = styled(Title.FontSize20)`
+  color: #0933b3;
   font-weight: bold;
-  color: #0a2165;
-  white-space: nowrap;
-  .slash {
-    font-size: 32px;
-    color: #86888c;
-  }
-  .total {
-      font-size: 24px;
-      color: #86888c;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.45;
+  letter-spacing: normal;
+`
+const Middle = styled(Title.FontSize56)`
+  color: #282c36;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.36;
+  letter-spacing: -1.4px;
+  margin-bottom: 47px;
+  
+  >p {
+    font-weight:bold;
   }
 `
+const Body = styled(Title.FontSize24)`
+  // white-space:nowrap;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #555963;
+`
+
