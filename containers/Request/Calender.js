@@ -169,7 +169,7 @@ class Calendar extends Component {
         { Request.calendarOnOff == false &&
         <FoldedComponent onClick={ this.calendarOnOff }>
           { Request.clickDay }
-          <span><img src={dropdown} /></span>
+          <img src={dropdown} />
         </FoldedComponent>
         }
       </>
@@ -188,6 +188,7 @@ const MainContainer = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   width: 740px;
   height: 600px;
+  margin-top: 6px;
 `
 const Header = styled.div`
   display: flex;
@@ -282,13 +283,23 @@ const CalendarContainer = styled.div`
   }
 `
 const FoldedComponent = styled.div`
-  width: fit-content;  
+  width: fit-content;
+  font-family: NotoSansCJKkr;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 5px;
+  padding: 8px 16px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: var(--white);
-  padding: 8px 16px 9px;
   margin-top : 6px;
-  > span {
+  line-height: 1.3;
+  > img {
     width: 14px;
     height: 8px;
     margin-left: 22px;
