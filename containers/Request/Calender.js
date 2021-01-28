@@ -12,8 +12,13 @@ const dropdown = '/static/images/request/Step4/dropdown.png';
 @inject('Request', 'Schedule')
 @observer
 class Week extends Component {
+  state = {
+    now: moment()
+  }
   Days = (firstDayFormat) => {
+    const { Schedule } = this.props;
     const days = [];
+
     for (let i = 0; i < 7; i++) {
       const Day = moment(firstDayFormat).add('d', i);
       days.push({
@@ -33,21 +38,17 @@ class Week extends Component {
       else {
         Schedule.calendarOnOff = true;
       }
-<<<<<<< HEAD
-      let day = e.currentTarget.innerHTML;
-      const dayValue = Request.nowMoment;
-
-      Request.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
-=======
       let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
       const dayValue = Schedule.nowMoment;
 
       Schedule.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
->>>>>>> d608ac341c9ee92acae88ad1d3ae1a8c08459a5b
       Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   }
+  
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
+    const { now } = this.state;
+
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
       if (!Schedule.nowMoment.isSame(dayInfo.yearMonthDayFormat,'month')) {
@@ -102,7 +103,6 @@ class Calendar extends Component {
     this.setState({
       now : Schedule.nowMoment,
     })
-    console.log(Schedule.nowMoment);
   }
   //요일
   dateToArray = (dates) => {
@@ -179,7 +179,7 @@ class Calendar extends Component {
             <DateContainer>
               {this.mapArrayToDate(this.dateToArray(this.props.dates))}
             </DateContainer>
-            <CalendarContainer onClick={(e) => console.log(now)}>
+            <CalendarContainer>
               {this.Weeks(now)}
             </CalendarContainer>
           </MainContainer>
