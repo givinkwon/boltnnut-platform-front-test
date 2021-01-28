@@ -50,6 +50,8 @@ class Week extends Component {
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
     const { now } = this.state;
+    const occupied = Schedule.date_occupied;
+    console.log(occupied);
 
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
@@ -72,10 +74,14 @@ class Week extends Component {
       else if (parseInt(thisMoment.format('YYYY')) > parseInt(dayInfo.getYear)) {
         className = "not-day";
       }
-
-
+      else if (occupied.includes(dayInfo.yearMonthDayFormat)) {
+        console.log('occupied');
+        console.log(thisMoment);
+        className = "not-day";
+      }
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD")) {
-        className = "today";
+        className += "today";
+        console.log(className);
         return (
           <div className={className} onClick={ this.calendarOnOff }>
             {dayInfo.getDay}
@@ -337,6 +343,15 @@ const CalendarContainer = styled.div`
       position: absolute;
       margin-top: 38px;
       color: #0933b3;
+    }
+  }
+  .not-daytoday {
+    pointer-events: none;
+    color: #c6c7cc;
+    > div {
+      position: absolute;
+      margin-top: 38px;
+      color: #c6c7cc;
     }
   }
 `

@@ -66,7 +66,6 @@ class Schedule {
                 today: obj[i],
             }
             ScheduleAPI.getOccupiedToday(req).then((res) => {
-                console.log(req.today);
                 if (res.data.data.length == 8) {
                     this.date_occupied.push(req.today)
                 }
@@ -74,7 +73,6 @@ class Schedule {
                 (error) => console.log(error)
             )
         }
-        console.log(this.date_occupied)
     }
     @action getDays = (year, month) => {
         let selected_ym = new moment(year + '-' + month + '-' + '01');
