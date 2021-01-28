@@ -11,7 +11,7 @@ import 'intersection-observer'; // polyfill
 
 const dropdown = '/static/images/request/Step4/dropdown.png';
 
-@inject('Schedule')
+@inject('Schedule', 'Request')
 @observer
 class Step4Container extends Component {
   state = {
@@ -56,6 +56,7 @@ class Step4Container extends Component {
   }
   render() {
     const { current, display, display2 } = this.state;
+    const { Request, Schedule } = this.props;
     const timeArr = [
       {
         start_at: this.getTime(10),

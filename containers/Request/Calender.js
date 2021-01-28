@@ -35,7 +35,7 @@ class Week extends Component {
       }
       let day = e.currentTarget.innerHTML;
       const dayValue = Request.nowMoment;
-      
+
       Request.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
       Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   }
@@ -162,7 +162,7 @@ class Calendar extends Component {
             <DateContainer>
               {this.mapArrayToDate(this.dateToArray(this.props.dates))}
             </DateContainer>
-            <CalendarContainer onClick={(e) => console.log(e.target)}>
+            <CalendarContainer onClick={(e) => console.log(now)}>
               {this.Weeks(now)}
             </CalendarContainer>
           </MainContainer>
