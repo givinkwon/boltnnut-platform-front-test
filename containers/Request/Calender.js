@@ -9,7 +9,7 @@ const prevMonth = "/static/images/request/Calendar/prevMonth.png";
 const nextMonth = "/static/images/request/Calendar/nextMonth.png";
 const dropdown = '/static/images/request/Step4/dropdown.png';
 
-@inject('Request')
+@inject('Request', 'Schedule')
 @observer
 class Week extends Component {
   Days = (firstDayFormat) => {
@@ -26,23 +26,24 @@ class Week extends Component {
     return days;
   }
   calendarOnOff = (e) => {
-    const { Request } = this.props;
-      if (Request.calendarOnOff == true) {
-        Request.calendarOnOff = false;
+    const { Request, Schedule } = this.props;
+      if (Schedule.calendarOnOff == true) {
+        Schedule.calendarOnOff = false;
       }
       else {
-        Request.calendarOnOff = true;
+        Schedule.calendarOnOff = true;
       }
-      let day = e.currentTarget.innerHTML;
-      const dayValue = Request.nowMoment;
-      console.log(dayValue);
-      Request.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
+      let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
+      const dayValue = Schedule.nowMoment;
+
+      Schedule.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
+      Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   }
   mapDaysToComponents = (Days, fn = () => { }) => {
-    const { Request } = this.props;
+    const { Schedule } = this.props;
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
-      if (!Request.nowMoment.isSame(dayInfo.yearMonthDayFormat,'month')) {
+      if (!Schedule.nowMoment.isSame(dayInfo.yearMonthDayFormat,'month')) {
         className = "not-month";
       }
       else if (i === 0) {
@@ -51,11 +52,21 @@ class Week extends Component {
       else if (i === 6) {
         className = "date-sat"
       }
-      return (
-        <div className={className} onClick={ this.calendarOnOff }>
+      if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD")) {
+        return (
+          <div className={className} onClick={ this.calendarOnOff }>
             {dayInfo.getDay}
-        </div>
-      )
+            <div>오늘</div>
+          </div>
+        )
+      }
+      else {
+        return (
+          <div className={className} onClick={ this.calendarOnOff }>
+            {dayInfo.getDay}
+          </div>
+        )
+      }
     })
   }
   render() {
@@ -66,25 +77,25 @@ class Week extends Component {
     )
   }
 }
-@inject('Request')
+@inject('Schedule')
 @observer
 class Calendar extends Component {
   state= {
     now: moment(),
   }
   componentDidMount() {
-    const { Request } = this.props;
+    const { Schedule } = this.props;
     this.setState({
-      now : Request.nowMoment,
+      now : Schedule.nowMoment,
     })
   }
   moveMonth = (month) => {
-    const { Request } = this.props;
-    Request.nowMoment.add(month, 'M');
+    const { Schedule } = this.props;
+    Schedule.nowMoment.add(month, 'M');
     this.setState({
-      now : Request.nowMoment,
+      now : Schedule.nowMoment,
     })
-    console.log(Request.nowMoment);
+    console.log(Schedule.nowMoment);
   }
   //요일
   dateToArray = (dates) => {
@@ -122,12 +133,12 @@ class Calendar extends Component {
     })
   }
   calendarOnOff = () => {
-    const { Request } = this.props;
-    if (Request.calendarOnOff == true) {
-      Request.calendarOnOff = false;
+    const { Schedule } = this.props;
+    if (Schedule.calendarOnOff == true) {
+      Schedule.calendarOnOff = false;
     }
     else {
-      Request.calendarOnOff = true;
+      Schedule.calendarOnOff = true;
     }
   }
 
@@ -146,10 +157,10 @@ class Calendar extends Component {
   }
   render() {
     const { now } = this.state;
-    const { Request } = this.props;
+    const { Schedule } = this.props;
     return (
       <>
-        { Request.calendarOnOff == true &&
+        { Schedule.calendarOnOff == true &&
           <MainContainer display1={ this.state.hid }>
             <Header>
               <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
@@ -166,10 +177,10 @@ class Calendar extends Component {
             </CalendarContainer>
           </MainContainer>
         }
-        { Request.calendarOnOff == false &&
+        { Schedule.calendarOnOff == false &&
         <FoldedComponent onClick={ this.calendarOnOff }>
-          { Request.clickDay }
-          <span><img src={dropdown} /></span>
+          { Schedule.clickDay }
+          <img src={dropdown} />
         </FoldedComponent>
         }
       </>
@@ -188,6 +199,7 @@ const MainContainer = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   width: 740px;
   height: 600px;
+  margin-top: 6px;
 `
 const Header = styled.div`
   display: flex;
@@ -257,12 +269,23 @@ const CalendarContainer = styled.div`
     border: solid 0.5px rgba(198,199,204,0.5);
     border-collapse: collapse;
     font-family: Roboto;
+    line-height: 1.4;
     font-size: 12px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     letter-spacing: -0.12px;
     color: #282c36;
+    > div {
+      font-family: Roboto;
+      line-height: 1.4;
+      font-size: 12px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      letter-spacing: -0.12px;
+      color: #282c36;
+    }
     :hover {
       border: solid 2px #0933b3;
     }
@@ -271,24 +294,40 @@ const CalendarContainer = styled.div`
     }
   }
   .date-sun {
-    color: #f52100;
+    > div {
+      color: #f52100;
+    }
   }
   .date-sat {
-    color: #0933b3;
+    > div {
+      color: #0933b3;
+    }
   }
   .not-month {
-    color: rgba(198,199,204,0.5);
     pointer-events: none;
+    > div {
+      color: rgba(198,199,204,0.5);
+    }
   }
 `
 const FoldedComponent = styled.div`
-  width: fit-content;  
+  width: fit-content;
+  font-family: NotoSansCJKkr;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 5px;
+  padding: 8px 16px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: var(--white);
-  padding: 8px 16px 9px;
   margin-top : 6px;
-  > span {
+  line-height: 1.3;
+  > img {
     width: 14px;
     height: 8px;
     margin-left: 22px;

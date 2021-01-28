@@ -138,12 +138,12 @@ class Nav extends React.Component {
                     >
                       의뢰하기
                     </NavLink>
-                    <NavLink
+                    {/* <NavLink
                       onClick={() => Router.push("/answer")}
                       active={url.indexOf("answer") > -1}
                     >
                       보낸 의뢰
-                    </NavLink>
+                    </NavLink> */}
                     {/*<NavLink
                       onClick={
                         async () => {

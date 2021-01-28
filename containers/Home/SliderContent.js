@@ -5,7 +5,7 @@ import * as Title from "components/Title";
 class SliderMain extends React.Component {
   render() {
     const { item } = this.props;
-    const mac = 'static/images/Home/Banner6/Mac.png';
+    const mac = 'static/images/Home/Banner7/Mac.png';
     return (
       <SliderContent>
         <div style={{marginTop: 50,}}>

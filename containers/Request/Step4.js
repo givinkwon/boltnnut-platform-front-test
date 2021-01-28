@@ -17,8 +17,8 @@ class Step4Container extends Component {
   state = {
     display: 'none', // display 는 FoldedComponent 기준
     display2: true, // display2 는 TimeBox 기준.
-    current: null,
-    date: null
+    current: null, // FoldedComponent에 넣을 현재 상태(오전 11:00 등)
+    inactive_array: []
   }
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
@@ -34,14 +34,25 @@ class Step4Container extends Component {
     const { Schedule } = this.props;
     let time = e.currentTarget.innerHTML;
     if (time == "10:00" || time == "11:00") {
-      this.setState({...this.state, current: "오전 " + time, display: true, display2: 'none', date: date}); // display 는 FoldedComponent 기준
-      Schedule.setTodayDate(date);
+      this.setState({...this.state, current: "오전 " + time, display: true, display2: 'none'}); // display 는 FoldedComponent 기준
+      Schedule.setCurrent(time+":00");
+      Schedule.getOccupiedDate();
     } else {
-      this.setState({...this.state, current: "오후 " + time, display: true, display2: 'none', date: date});
+      this.setState({...this.state, current: "오후 " + time, display: true, display2: 'none'});
+      Schedule.setCurrent(time+":00");
+      Schedule.getOccupiedDate();
     }
   }
   handleDropDown = () => {
     this.setState({...this.state, display: 'none', display2: true})
+  }
+  timeActiveToggle = (time) => {
+    const { Schedule } = this.props;
+    if (Schedule.inactive_today.includes(time)) {
+      return true
+    } else {
+      return false
+    }
   }
   render() {
     const { current, display, display2 } = this.state;
@@ -87,7 +98,7 @@ class Step4Container extends Component {
           <Calendar/>
         </ContentBox>
         <ScheduleBox>
-          <Title style={{marginTop: 60, marginBottom: 6}}>
+          <Title style={{marginTop: 30, marginBottom: 6}}>
             시간
           </Title>
           <FoldedComponent onClick={()=>this.handleDropDown()} style={{display: display}}>
@@ -101,7 +112,7 @@ class Step4Container extends Component {
             <TimeBox style={{marginBottom: 30}}>
               {timeArr.slice(0,2).map((data) => {
                   return (
-                    <TimeComponent onClick={(event) => this.setTime(event, data.start_at)}>
+                    <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick={(event) => this.setTime(event, data.start_at)}>
                       {data.start_at.split(' ')[1]}
                     </TimeComponent>
                   )
@@ -113,7 +124,7 @@ class Step4Container extends Component {
             <TimeBox style={{marginBottom: 60}}>
                 {timeArr.slice(2,).map((data) => {
                   return (
-                    <TimeComponent onClick = {(event) => this.setTime(event, data.start_at)}>
+                    <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick = {(event) => this.setTime(event, data.start_at)}>
                       {data.start_at.split(' ')[1]}
                     </TimeComponent>
                   )
@@ -275,6 +286,10 @@ const CustomButton = styled(Buttonv1)`
 const FoldedComponent = styled.div`
   font-size: 18px;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: NotoSansCJKkr;
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.45px;
@@ -283,9 +298,10 @@ const FoldedComponent = styled.div`
   width: fit-content;  
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  padding: 8px 16px;
   background-color: var(--white);
-  padding: 8px 16px 9px;
   margin-bottom: 30px;
+  line-height: 1.3;
   > img {
     width: 14px;
     height: 8px;

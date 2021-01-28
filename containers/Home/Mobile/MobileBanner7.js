@@ -1,396 +1,235 @@
 import React from "react";
 import styled from "styled-components";
+import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
-import Slider from "react-slick"
-import UseScrollCount from "containers/Home/UseScrollCount";
-import Fade from "react-reveal/Fade"
+import Slider from 'react-slick';
+// import SliderWrapper from "./SliderStyle";
+import SliderMain from '.././MobileSliderContent';
+import Fade from 'react-reveal/Fade';
+const pic1 = 'static/images/Home/Mobile/MobileBanner7/pic1.png';
+const pic2 = 'static/images/Home/Mobile/MobileBanner7/pic2.png';
+const pic3 = 'static/images/Home/Mobile/MobileBanner7/pic3.png';
 
-const image1 = "/static/images/logo/logo_1.png";
-const image2 = "/static/images/logo/logo_2.png";
-const image3 = "/static/images/logo/logo_3.png";
-const image4 = "/static/images/logo/logo_4.png";
-const image5 = "/static/images/logo/logo_5.png";
-const image6_3 = "/static/images/logo/logo_6_3.png";
-const image6_2 = "/static/images/logo/logo_6_2.png";
-const image6 = "/static/images/logo/logo_6.png";
-const image7 = "/static/images/logo/logo_7.png";
-const image8 = "/static/images/logo/logo_8.png";
-const image9 = "/static/images/logo/logo_9.png";
-const image10 = "/static/images/logo/logo_10.png";
-const image11 = "/static/images/logo/logo_11.png";
-const image12 = "/static/images/logo/logo_12.png";
-const image13 = "/static/images/logo/logo_13.png";
-const image14 = "/static/images/logo/logo_14.png";
-const image15 = "/static/images/logo/logo_15.png";
-const image16 = "/static/images/logo/logo_16.jpg";
-const image17 = "/static/images/logo/logo_17.png";
-const image18 = "/static/images/logo/logo_18.png";
-const image19 = "/static/images/logo/logo_19.png";
-const image20 = "/static/images/logo/logo_20.png";
-const image21 = "/static/images/logo/logo_21.png";
-const image22 = "/static/images/logo/logo_22.png";
-const image23 = "/static/images/logo/logo_23.png";
-const image24 = "/static/images/logo/logo_24.png";
-const image25 = "/static/images/logo/logo_25.png";
-const image26 = "/static/images/logo/logo_26.png";
-const image27 = "/static/images/logo/logo_27.png";
-const image28 = "/static/images/logo/logo_28.png";
-const image29 = "/static/images/logo/logo_29.png";
-
-const item1="/static/images/Home/Banner7/Banner7_img1.png";
-
-const CountFunc = ({index}) => 
-{
-    const countItem = {
-      0: UseScrollCount(878*3,0,0,0,3)
-    };
-  
-    return (
-        <p {...countItem[index]}/>
-    );
-};
 
 class MobileBanner7Container extends React.Component {
+    state = {
+        current: 0,
+        next: true,
+        prev: false,
+        show: 'visible',
+        progress: 0,
+        display: 0
+    }
+
+    content(idx) {
+        if (idx == 0) {
+            return (
+              <>
+                  <TextContainer>
+                      <Head>Step 1</Head>
+                      <Main>파트너 신청</Main>
+                      <Foot>회사소개서, 주요기술이력서 등을 통해
+                          파트너의 전문성을 검토하고, 파트너 검증
+                          키트를 통해 가격경쟁력을 파악합니다.</Foot>
+                  </TextContainer>
+
+              </>
+            )
+        }
+        if (idx == 1) {
+            return (
+              <>
+                  <TextContainer>
+                      <Head>Step 2</Head>
+                      <Main>파트너 실사</Main>
+                      <Foot>볼트앤너트 시니어 컨설턴트가 제출받은
+                          검토 자료를 기반으로 6종의 정량 평가를
+                          실시하여 협업 및 소통능력을 검증합니다.</Foot>
+                  </TextContainer>
+              </>
+            )
+        }
+        if (idx == 2) {
+            return (
+              <>
+                  <TextContainer>
+                      <Head>Step 3</Head>
+                      <Main>프로젝트 상세 검증</Main>
+                      <Foot>볼트앤너트 측에서 테스트 프로젝트 발주를
+                          통해 제조사의 품질과 납기를 검증하고
+                          볼트앤너트 프로세스를 교육합니다.</Foot>
+                  </TextContainer>
+              </>
+            )
+        }
+    }
+
+    sliderNext = () => {
+        const {current, progress} = this.state;
+        const fullfage = 2;
+        if (current != fullfage) {
+            const newPage = current + 1;
+            if (progress < 200) {
+                this.setState({...this.state, current: newPage, progress: progress + 100, show:'hidden', display: newPage});
+            }
+            setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
+            this.slider.slickNext();
+        }
+    }
+    sliderPrev = () => {
+        const {current, progress} = this.state;
+        if (current != 0) {
+            const newPage = current - 1;
+            if (progress > 0) {
+                this.setState({...this.state, progress: progress - 100, current: newPage, show:'hidden', display: newPage});
+            }
+            setTimeout(() => {this.setState({...this.state, show:'visible'})}, 600)
+            this.slider.slickPrev();
+        }
+    }
+
     render() {
-      const SlideSettings = {
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        draggable:true,
-        rows:4,
-        autoplay:false
-      };
-      return (
-        <Background style={{ paddingBottom: 100, paddingTop: 100, justifyContent: 'center' }}>
-          <Fade bottom>
-            <div>
-              <Header>
-                이미 <CountFunc index={0}/><p>명</p>이 넘는 클라이언트분들이<br/>
-                볼트앤너트를 이용하셨습니다.
-              </Header>
+        const { current, show, display1, display2, display3} = this.state;
+        const left = 'static/images/Home/Mobile/MobileBanner7/prev.png';
+        const right = 'static/images/Home/Mobile/MobileBanner7/next.png';
 
-              <ItemBox>
-                <Slider {...SlideSettings}>
-                    <Item>
-                        <img src={image1}/>
-                    </Item>
-                    <Item>
-                        <img src={image2}/>
-                    </Item>
-                    <Item>
-                        <img src={image12}/>
-                    </Item>
-                    <Item>
-                        <img src={image6_3}/>
-                    </Item>
-                    <Item>
-                        <img src={image8}/>
-                    </Item>
-                    <Item>
-                        <img src={image3}/>
-                    </Item>
-                    <Item>
-                        <img src={image5}/>
-                    </Item>
-                    <Item>
-                        <img src={image6}/>
-                    </Item>
-                    <Item>
-                        <img src={image7}/>
-                    </Item>
-                    <Item>
-                        <img src={image4}/>
-                    </Item>
-                    <Item>
-                        <img src={image11}/>
-                    </Item>
-                    <Item>
-                        <img src={image6_2}/>
-                    </Item>
-                    <Item>
-                        <img src={image13}/>
-                    </Item>
-                    <Item>
-                        <img src={image14}/>
-                    </Item>
-                    <Item>
-                        <img src={image16}/>
-                    </Item>
-                    <Item>
-                        <img src={image17}/>
-                    </Item>
-                    <Item>
-                        <img src={image18}/>
-                    </Item>
-                    <Item>
-                        <img src={image19}/>
-                    </Item>
-                    <Item>
-                        <img src={image20}/>
-                    </Item>
-                    <Item>
-                        <img src={image21}/>
-                    </Item>
-                    <Item>
-                        <img src={image22}/>
-                    </Item>
-                    <Item>
-                        <img src={image23}/>
-                    </Item>
-                    <Item>
-                        <img src={image24}/>
-                    </Item>
-                    <Item>
-                        <img src={image25}/>
-                    </Item>
-                    <Item>
-                        <img src={image26}/>
-                    </Item>
-                    <Item>
-                        <img src={image27}/>
-                    </Item>
-                    <Item>
-                        <img src={image28}/>
-                    </Item>
-                    <Item>
-                        <img src={image29}/>
-                    </Item>
-
-                    <Item>
-                        <img src={image1}/>
-                    </Item>
-                    <Item>
-                        <img src={image2}/>
-                    </Item>
-                    <Item>
-                        <img src={image3}/>
-                    </Item>
-                    <Item>
-                        <img src={image4}/>
-                    </Item>
-                    <Item>
-                        <img src={image5}/>
-                    </Item>
-                    <Item>
-                        <img src={image10}/>
-                    </Item>
-                    <Item>
-                        <img src={image7}/>
-                    </Item>
-                    <Item>
-                        <img src={image8}/>
-                    </Item>
-                    <Item>
-                        <img src={image9}/>
-                    </Item>
-                    <Item>
-                        <img src={image6}/>
-                    </Item>
-                    <Item>
-                        <img src={image11}/>
-                    </Item>
-                    <Item>
-                        <img src={image12}/>
-                    </Item>
-                    <Item>
-                        <img src={image13}/>
-                    </Item>
-                    <Item>
-                        <img src={image14}/>
-                    </Item>
-                    <Item>
-                        <img src={image16}/>
-                    </Item>
-                    <Item>
-                        <img src={image17}/>
-                    </Item>
-                    <Item>
-                        <img src={image18}/>
-                    </Item>
-                    <Item>
-                        <img src={image19}/>
-                    </Item>
-                    <Item>
-                        <img src={image20}/>
-                    </Item>
-                    <Item>
-                        <img src={image21}/>
-                    </Item>
-                    <Item>
-                        <img src={image22}/>
-                    </Item>
-                    <Item>
-                        <img src={image23}/>
-                    </Item>
-                    <Item>
-                        <img src={image24}/>
-                    </Item>
-                    <Item>
-                        <img src={image25}/>
-                    </Item>
-                    <Item>
-                        <img src={image26}/>
-                    </Item>
-                    <Item>
-                        <img src={image27}/>
-                    </Item>
-                    <Item>
-                        <img src={image28}/>
-                    </Item>
-                    <Item>
-                        <img src={image29}/>
-                    </Item>
-
-                    <Item>
-                        <img src={image1}/>
-                    </Item>
-                    <Item>
-                        <img src={image2}/>
-                    </Item>
-                    <Item>
-                        <img src={image3}/>
-                    </Item>
-                    <Item>
-                        <img src={image4}/>
-                    </Item>
-                    <Item>
-                        <img src={image5}/>
-                    </Item>
-                    <Item>
-                        <img src={image10}/>
-                    </Item>
-                    <Item>
-                        <img src={image7}/>
-                    </Item>
-                    <Item>
-                        <img src={image8}/>
-                    </Item>
-                    <Item>
-                        <img src={image9}/>
-                    </Item>
-                    <Item>
-                        <img src={image6}/>
-                    </Item>
-                    <Item>
-                        <img src={image11}/>
-                    </Item>
-                    <Item>
-                        <img src={image12}/>
-                    </Item>
-                    <Item>
-                        <img src={image13}/>
-                    </Item>
-                    <Item>
-                        <img src={image14}/>
-                    </Item>
-                    <Item>
-                        <img src={image16}/>
-                    </Item>
-                    <Item>
-                        <img src={image17}/>
-                    </Item>
-                    <Item>
-                        <img src={image18}/>
-                    </Item>
-                    <Item>
-                        <img src={image19}/>
-                    </Item>
-                    <Item>
-                        <img src={image20}/>
-                    </Item>
-                    <Item>
-                        <img src={image21}/>
-                    </Item>
-                    <Item>
-                        <img src={image22}/>
-                    </Item>
-                    <Item>
-                        <img src={image23}/>
-                    </Item>
-                    <Item>
-                        <img src={image24}/>
-                    </Item>
-                    <Item>
-                        <img src={image25}/>
-                    </Item>
-                    <Item>
-                        <img src={image26}/>
-                    </Item>
-                    <Item>
-                        <img src={image27}/>
-                    </Item>
-                    <Item>
-                        <img src={image28}/>
-                    </Item>
-                    <Item>
-                        <img src={image29}/>
-                    </Item>
-                </Slider>
-              </ItemBox>
-            </div>
-            </Fade>
-        </Background>
-      );
+        const settings = {
+            dots: true,
+            infinite: false,
+            speed: 500,
+            arrows: false,
+            slidesToShow: 1,
+            draggable: false,
+            swipe: false,
+            slidesToScroll: 1,
+            appendDots : dots => <ul> {dots}</ul>,
+        };
+        return (
+          <Background backgroundColor= {"#a4aab4"}>
+              <CustomContainer>
+                  <Fade bottom>
+                      <Header>
+                          볼트앤너트 3단계 검증 프로세스로 <br/>검증된 제품 전문가를 만나보세요.
+                      </Header>
+                      <ContainerBanner6>
+                          <div>
+                              {
+                                  current == 0 ? (
+                                    <img src={left} onClick = {this.sliderPrev} style={{opacity: 0.3, visibility: this.state.show}}/>
+                                  ) : (
+                                    <img src={left} onClick = {this.sliderPrev} style={{visibility: this.state.show}}/>
+                                  )
+                              }
+                          </div>
+                          <SliderWraper>
+                              <Slider {...settings} ref={slider => (this.slider = slider)}>
+                                  <SliderMain src={ pic1 }/>
+                                  <SliderMain src={ pic2 }/>
+                                  <SliderMain src={ pic3 }/>
+                              </Slider>
+                          </SliderWraper>
+                          <div>
+                              {
+                                  current == 2 ? (
+                                    <img src={right} onClick = {this.sliderNext} style={{opacity: 0.3, visibility: this.state.show}}/>
+                                  ) : (
+                                    <img src={right} onClick = {this.sliderNext} style={{visibility: this.state.show}}/>
+                                  )
+                              }
+                          </div>
+                      </ContainerBanner6>
+                      {this.content(this.state.display)}
+                  </Fade>
+              </CustomContainer>
+          </Background>
+        );
     }
+}
+
+export default MobileBanner7Container;
+
+const SliderWraper = styled.div`
+  width: 243px;
+  height: 128px;
+  .slick-dots li button:before {
+    color: #0933b3;
+    -webkit-transform: scale(0.5);
   }
-  
-  export default MobileBanner7Container;
-  
-  const Header = styled(Title.FontSize22)`
-    color: #191919;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.45;
-    letter-spacing: -0.55px;
-    text-align:center;
-    // font-size:1.375em;
-    >p {
-      display:inline;
-      font-weight:bold;
-    }
-  `
-  
-  const ItemBox = styled.div`
-    padding-top:36px;
-    max-width: 100vw;
-    width: 100%;
-  `
-  
-  const Item = styled.div`
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
-    // width: calc(14% - 40px);
-    // padding: 0px 0px 0px 0px;
-    // margin: 0 20px;
-    
-    :focus {
-      outline: none;
-    }
-
-    >img{
-    //   width:90px;
-    //   height:90px;
-      margin:0 auto;
-      width:75%;
-      height:75%;
-      overflow: hidden;
-      cursor: pointer;
-    }
-  `
-  
-  const ImgBox=styled.div`
-      :focus {
-          outline: none;
-      }
-  `
-  
-  const Col=styled.div`
-    :focus {
-      outline: none;
-    }
-  `
+  .slick-dots li {
+    width:10px;
+  }
+`
+const CustomContainer = styled(Containerv1)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+const Header = styled(Title.FontSize56)`
+  color: #ffffff;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  letter-spacing: -0.55px;
+  margin-top: 100px;
+  text-align: center;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 22px;
+  }
+`
+const ContainerBanner6 = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 46px;
+`
+const Head = styled(Title.FontSize24)`
+  color: #0933b3;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.35px;
+  white-space: pre-line;
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 2px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 14px;
+  }
+;
+`
+const Main = styled(Title.FontSize32)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.63;
+  letter-spacing: -0.35px;
+  text-align: left;
+  color: #333742;
+  white-space: pre-line;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 14px;
+  }
+`
+const Foot = styled(Title.FontSize24)`
+  margin: 6.4px 0px 100px 0px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.47;
+  letter-spacing: -0.38px;
+  text-align: left;
+  white-space: pre-line;
+  color: #f6f6f6;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 15px;
+  }
+`
+const TextContainer = styled.div`
+  margin-top: 36px;
+  width: 284px;
+  text-align: left;
+`

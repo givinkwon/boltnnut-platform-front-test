@@ -1,8 +1,8 @@
 import React from 'react'
 import Head from 'next/head'
 
-import Banner2Container from 'Home/Banner2'
-import Banner3Container from 'Home/Banner3'
+import Banner2Container from 'Home/Banner3'
+import Banner3Container from 'Home/Banner4'
 
 import BannerContainer from './Banner'
 import ContentContainer from './Content'
