@@ -4,7 +4,7 @@ import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
-
+import STLViewer from 'stl-viewer'
 
 //material-ui
 import Table from '@material-ui/core/Table';
@@ -231,6 +231,15 @@ class Step3Container extends Component {
 
           <EstimateLogoSlider />
 
+          {/* <STLViewer
+            url='https://boltnnutplatform-test.s3.amazonaws.com/media/stl/2021/1/27/17a3d0cb839b40abb79c86608763607d_stl.stl' // stl파일 주소
+            width={400}                                  // 가로
+            height={400}                                 // 세로
+            modelColor='#B92C2C'                         // 색
+            backgroundColor='#EAEAEA'                    // 배경색
+            rotate={true}                                // 자동회전 유무
+            orbitControls={true}                         // 마우스 제어 유무
+          /> */}
 
           <ConsultantBox>
             <ConsultantTextBox>
