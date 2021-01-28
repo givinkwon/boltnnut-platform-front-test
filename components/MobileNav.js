@@ -3,14 +3,17 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { withRouter } from 'next/router'
 import Router from "next/router";
+import * as Title from "components/Title";
 // components
 import * as Text from "./Text";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
+import Buttonv1 from "components/Buttonv1";
 
 const close_ic = "/static/icon/close.svg";
 // const hamburger_ic = "/static/icon/hamburger.png";
 const hamburger_ic = "/static/images/components/MobileNav/hamburger.png";
+const x_ic = "/static/images/components/MobileNav/xBtn.png";
 const logo_ic = "/static/images/logo2.jpg";
 const profile = "/static/images/profile.png";
 //...
@@ -121,11 +124,33 @@ class MobileNav extends React.Component {
     return (
       <NavBox>
         {is_open && (
+          <Modal>
             <ProfileMenu width={this.props.width} onClick={() => this.setState({is_open: false})}>
-                <span onClick={async () => await Router.push("/profile")}> 프로필 수정 </span>
-                <span onClick={async () => await Router.push('/account?tab=1')}> 계정 관리 </span>
-                <span onClick={this.logout}> 로그아웃 </span>
+              <ModalHeader>
+                <div style={{marginBottom: 50, width: '100%'}}>
+                  <Logo src={logo_ic} onClick={() => Router.push("/")} style={{float:'left'}}/>
+                  <img src={ x_ic } style={{float: 'right'}}/>
+                </div>
+                <div>내 제품 제작 비용 지금 바로 전문가를 만나 보세요.</div>
+                <FreeButton onClick={() => Router.push("/request")}>
+                  <span>지금 무료 가견적 받기</span>
+                </FreeButton>
+              </ModalHeader>
+              <ModalContent>
+                <p>프로젝트 관리</p>
+                <p>매거진</p>
+                <p>회사소개</p>
+              </ModalContent>
+              <ModalContent2>
+                <p>자주찾는 질문</p>
+                <p>이용약관</p>
+                <p>개인정보 처리 방침</p>
+              </ModalContent2>
+              <Footer>
+                <div onClick={this.logout}> 로그아웃 </div>
+              </Footer>
             </ProfileMenu>
+          </Modal>
           )}
         <Container>
           <NavWrap2>
@@ -186,8 +211,8 @@ class MobileNav extends React.Component {
                   >
                     제조사 찾기
             </NavLink3>
-            
-            
+
+
             <NavLink3
                   onClick={
                     async () => {
@@ -214,27 +239,130 @@ class MobileNav extends React.Component {
     );
   }
 }
-
+const Modal = styled.div`
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4); 
+`
 const ProfileMenu = styled.div`
-  width: 126px;
-  height: 162px;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+  width: 70%;
+  padding: 22px 24px;
+  height: 100%%;
   position: absolute;
   background-color: white;
   z-index: 3;
-  transform: translate3d(${props => props.width ? props.width - 156 : 10}px, calc(55%), 0);
+  top: 0;
+  right: 0;
+  // transform: translate3d(${props => props.width ? props.width - 156 : 10}px, calc(55%), 0);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 6px;
-  > span {
-    padding-bottom: 20px;
-    :nth-of-type(3) {
-      padding:0
-    }
   }
-`;
+`
+const ModalHeader = styled.div`
+  width: 100%;
+  height: 182px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px #e1e2e4;
+  align-items: center;
+
+  //&:after {
+  //  border-bottom: solid 1px #e1e2e4;
+  //}
+  > div {
+    font-family: NotoSansCJKkr;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: -0.3px;
+    color: #111111;
+    text-align: center;
+  }
+`
+const ModalContent = styled.div`
+  width: 100%;
+  height: 158px;
+  display: flex;
+  border-bottom: solid 1px #e1e2e4;
+  flex-direction: column;
+  justify-content: space-evenly;
+  
+  > p {
+    font-family: NotoSansCJKkr;
+    font-size: 15px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.27;
+    letter-spacing: -0.38px;
+    text-align: left;
+    color: #111111;
+  }
+`
+const Footer = styled.div`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  > div {
+    width: 100%;
+    font-family: NotoSansCJKkr;
+    font-size: 13px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.46;
+    letter-spacing: -0.33px;
+    text-align: center;
+    color: #111111;
+  }
+`
+const FreeButton = styled(Buttonv1)`
+  width: 270px;
+  height: 43px;
+  margin-top: 8px;
+  > span {
+    font-family: NotoSansCJKkr;
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.19;
+    letter-spacing: -0.4px;
+    text-align: center;
+    color: #ffffff;
+  }
+`
+const ModalContent2 = styled.div`
+  width: 100%;
+  height: 310px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px #e1e2e4;
+  margin-top: 27px;
+
+  > p {
+    font-family: NotoSansCJKkr;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.3px;
+    color: #282c36;
+    margin-bottom: 22px;
+  }
+`
 const Container = styled.div`
   margin-right: auto;
   margin-left: auto;
