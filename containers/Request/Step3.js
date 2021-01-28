@@ -4,7 +4,6 @@ import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
-import STLViewer from 'stl-viewer'
 
 //material-ui
 import Table from '@material-ui/core/Table';
@@ -48,12 +47,16 @@ function createData(title, content, note) {
 }
 
 
-@inject('Request')
+@inject('Request','Proposal')
 @observer
 class Step3Container extends Component {
 
   static defaultProps = { title: '견 적 서' };
 
+  componentDidMount()
+  {
+    this.props.Proposal.loadEstimateInfo(1);
+  }
   buttonClick = () => {
     const { Request } = this.props;
     Request.step_index = 4;
@@ -62,7 +65,8 @@ class Step3Container extends Component {
   state = {
     percentage: 100,
     showEstimateDrop:true,
-    showEstimateDetail:'none',
+    // showEstimateDetail:'none',
+    showEstimateDetail:true,
     showConsultantDrop: true,
     showConsultantDetail: 'none'
   }
@@ -108,20 +112,29 @@ class Step3Container extends Component {
 
   render() {
     const { percentage, showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
+    const { Proposal } = this.props;
 
+    const estimateData = Proposal.estimateData;
+    const createDate={
+      year:estimateData.createAt.split('-')[0],
+      month:estimateData.createAt.split('-')[1],
+      day:estimateData.createAt.split('-')[2].substring(0,2),
+    };
+
+  
     const rows1 = [
-      createData('작성일자', '2020.12.25', ''),
-      createData('문서번호', 'C8-20200830 - 001', ''),
-      createData('수신인', '금우용 대표님 / 창살이메이커스', ''),
-      createData('발신인', '최진영 이사 / (주)볼트앤너트', 'TEL : 010 - 7299 - 9208'),
-      createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
+      createData('작성일자', createDate.year+'.'+createDate.month + '.' + createDate.day, ''),
+      createData('문서번호', 'C8-'+createDate.year + createDate.month + createDate.day + '-' + estimateData.id, ''),
+      createData('수신인', estimateData.client, ''),
+      createData('발신인', '윤기열 대표 / (주)볼트앤너트', 'TEL : 02 - 926 - 9967'),
+      // createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
     ];
 
     const rows2 = [
-      createData('프로젝트', '낙상/배회 알림 IoT 시제품 제작', ''),
-      createData('개발기간', '30일', ''),
+      createData('프로젝트', estimateData.projectTitle, ''),
+      createData('개발기간', estimateData.period + '일', ''),
       createData('지급조건', '일시불', ''),
-      createData('견적가', '₩ 2,500,000', 'VAT 포함'),
+      createData('견적가', '₩ '+estimateData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), 'VAT 포함'),
     ];
     const {classes} = this.props
 
@@ -182,6 +195,8 @@ class Step3Container extends Component {
             보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
             </Font16>
 
+            {/* 여기 들어간다 */}
+            
             <AccountBox>
               <div>
                 <Font16 style={{marginBottom:20}}>* 입금계좌(하나은행)</Font16>
@@ -204,7 +219,8 @@ class Step3Container extends Component {
             </Content.FontSize24>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
-                25,000,000 원
+                {/* 25,000,000 원 */}
+                {estimateData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원
               </Content.FontSize24>
               <div style={{ marginLeft: 20 }}>
                 {showEstimateDrop == true ? (

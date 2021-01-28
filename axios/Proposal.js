@@ -65,3 +65,10 @@ export function getMyProject() {
 		url: `${ROOT_URL}/project/`
 	})
 }
+
+export function getEstimateInfo(index) {
+	return axios({
+		method: 'GET',
+		url: `${ROOT_URL}/proposal/${index}`
+	})
+}
