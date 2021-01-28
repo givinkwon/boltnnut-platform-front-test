@@ -7362,6 +7362,13 @@ gzip-size@5.1.1:
     duplexer "^0.1.1"
     pify "^4.0.1"
 
+halogenium@^2.2.3:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/halogenium/-/halogenium-2.3.0.tgz#7c9137255cc12f82a972072f3deaae75f5b7377a"
+  integrity sha512-vb8Em3utw+aM+fp1TavBV8G+GsA/56rQE8NXRnd5lN7GPwx/ozl4SrJjZXLQNXwHKWy7Z33sGH7wFDlar0nNCg==
+  dependencies:
+    prop-types "^15.6.0"
+
 handle-thing@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-2.0.1.tgz#857f79ce359580c340d43081cc648970d0bb234e"
@@ -13573,6 +13580,16 @@ stealthy-require@^1.1.1:
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
 
+stl-viewer@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/stl-viewer/-/stl-viewer-0.12.0.tgz#9ffab49ebfe471d3884c5f5f429c2838b35bf769"
+  integrity sha512-6RDmJhhibNUVrBaSaUVKPHxxwisEyD473p78r90ElI6jn82T29jgm9tCihh3z+AVwC8YH9AM+k1YulzAMxaEOA==
+  dependencies:
+    halogenium "^2.2.3"
+    prop-types "^15.6.1"
+    three "^0.72.0"
+    three-orbit-controls "^72.0.0"
+
 stream-browserify@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/stream-browserify/-/stream-browserify-2.0.2.tgz#87521d38a44aa7ee91ce1cd2a47df0cb49dd660b"
@@ -14071,6 +14088,16 @@ text-table@0.2.0, text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
+three-orbit-controls@72.0.0, three-orbit-controls@^72.0.0:
+  version "72.0.0"
+  resolved "https://registry.yarnpkg.com/three-orbit-controls/-/three-orbit-controls-72.0.0.tgz#13a4cbf3780cc6e5446aed0032fe1c5135e72755"
+  integrity sha1-E6TL83gMxuVEau0AMv4cUTXnJ1U=
+
+three@0.72.0, three@^0.72.0:
+  version "0.72.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.72.0.tgz#ac4eb95fd4e5b159c0ffabb609617fec90a336b2"
+  integrity sha1-rE65X9TlsVnA/6u2CWF/7JCjNrI=
+
 throat@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/throat/-/throat-5.0.0.tgz#c5199235803aad18754a667d659b5e72ce16764b"
@@ -14353,6 +14380,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript@3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.2.tgz#27e489b95fa5909445e9fef5ee48d81697ad18fb"
+  integrity sha512-ml7V7JfiN2Xwvcer+XAf2csGO1bPBdRbFCkYBczNZggrBZ9c7G3riSUeJmqEU5uOtXNPMhE3n+R4FA/3YOAWOQ==
 
 ua-parser-js@^0.7.18, ua-parser-js@^0.7.9:
   version "0.7.22"

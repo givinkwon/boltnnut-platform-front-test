@@ -58,10 +58,10 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
-  @observable step_index = 2;
+  @observable step_index = 4;
   @observable step1_index = 1;
   @observable drawFile = null;
-  @observable percentage = 0;
+  @observable percentage = 0
 
 
   @action reset = () => {
