@@ -1,7 +1,6 @@
 import { observable, action } from 'mobx';
 import * as ScheduleAPI from "../axios/Schedule";
 import moment from "moment";
-import STLViewer from 'stl-viewer';
 
 class Schedule {
     @observable today = null; // 오늘 날짜
@@ -14,19 +13,23 @@ class Schedule {
     @observable date_occupied = [];
     @observable alldayOfMonth = [];
 
+    @observable already_setted = [];
+
     @action init = () => {
         let today_date = new moment();
         this.today = today_date.format('YYYY-MM-DD ');
         this.book_time = this.today + this.current;
+        console.log(this.today);
 
         this.getOccupiedDate();
-        this.getDays();
+        this.getDays(this.today.split('-')[0], this.today.split('-')[1]);
     }
     @action setTodayDate = (obj) => {
         this.today = obj;
         this.current = "10:00:00"
         this.book_time = this.today + this.current
-        this.getDays();
+
+        this.getDays(this.today.split('-')[0],this.today.split('-')[1]);
         this.getOccupiedDate();
     }
     @action setCurrent = (obj) => {
@@ -53,15 +56,17 @@ class Schedule {
         formData.append("startAt", this.book_time);
         formData.append("endAt", ); // 미완
     }
+
     @action fullDateCheck = (obj) => {
         let fullday = [];
+        console.log("fullDateCheck돌립니다.")
         console.log(obj);
-
-        for (let i in obj) {
+        for (var i = 0; i <= obj.length; i++ ) {
             let req = {
                 today: obj[i],
             }
             ScheduleAPI.getOccupiedToday(req).then((res) => {
+                console.log(req.today);
                 if (res.data.data.length == 8) {
                     this.date_occupied.push(req.today)
                 }
@@ -69,10 +74,31 @@ class Schedule {
                 (error) => console.log(error)
             )
         }
+        console.log(this.date_occupied)
     }
-    @action getDays = (month) => {
-        console.log(this.today);
-        console.log(new moment());
+    @action getDays = (year, month) => {
+        let selected_ym = new moment(year + '-' + month + '-' + '01');
+        let selected_ym2 = new moment(year + '-' + month + '-' + '01');
+        let a = selected_ym.add("1", "M").format("YYYY-MM-DD");
+
+        let diffDays = (moment(a).diff(moment(selected_ym2.format("YYYY-MM-DD")),"days"));
+        console.log()
+
+        if (!this.already_setted.includes(`${year}-${month}`)) {
+            // 이미 세팅한 month가 아닌 경우
+            console.log(`${year}-${month}`);
+            for (let i=1; i <= diffDays; i ++) {
+                if (i < 10) {
+                    this.alldayOfMonth.push(`${year}-${month}-0${i}`)
+                } else {
+                    this.alldayOfMonth.push(`${year}-${month}-${i}`)
+                }
+            };
+            this.already_setted.push(`${year}-${month}`)
+        } else {
+            console.log("이미 세팅한 연,월 입니다.")
+        }
+        this.fullDateCheck(this.alldayOfMonth);
     }
 }
 
