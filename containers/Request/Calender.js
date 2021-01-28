@@ -25,6 +25,8 @@ class Week extends Component {
         yearMonthDayFormat: Day.format("YYYY-MM-DD"),
         holyDayCompare: Day.format("MM-DD"),
         getDay: Day.format('D'),
+        getMonth: Day.format('M'),
+        getYear: Day.format('YYYY'),
         isHolyDay: false
       });
     }
@@ -51,6 +53,7 @@ class Week extends Component {
 
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
+      let thisMoment = moment();
       if (!Schedule.nowMoment.isSame(dayInfo.yearMonthDayFormat,'month')) {
         className = "not-month";
       }
@@ -58,9 +61,21 @@ class Week extends Component {
         className = "date-sun";
       }
       else if (i === 6) {
-        className = "date-sat"
+        className = "date-sat";
       }
+      else if (parseInt(thisMoment.format('D')) > parseInt(dayInfo.getDay) && parseInt(thisMoment.format("M")) == parseInt(dayInfo.getMonth) && parseInt(thisMoment.format("Y")) == parseInt(dayInfo.getYear)) {
+        className = "not-day";
+      }
+      else if (parseInt(thisMoment.format('M')) > parseInt(dayInfo.getMonth)) {
+        className = "not-day";
+      }
+      else if (parseInt(thisMoment.format('YYYY')) > parseInt(dayInfo.getYear)) {
+        className = "not-day";
+      }
+
+
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD")) {
+        className = "today";
         return (
           <div className={className} onClick={ this.calendarOnOff }>
             {dayInfo.getDay}
@@ -113,12 +128,12 @@ class Calendar extends Component {
       return dates.split(',')
     }
     else{
-      return ["일 SUN", "월 MON", "화 TUE", "수 WED", "목 THU", "금 FRI", "토 SAT"]
+      return ["일", "월", "화", "수", "목", "금", "토"]
     }
   }
   mapArrayToDate = (dateArray) => {
     if (dateArray.length !== 7){
-      dateArray = ["일 SUN", "월 MON", "화 TUE", "수 WED", "목 THU", "금 FRI", "토 SAT"];
+      dateArray = ["일", "월", "화", "수", "목", "금", "토"];
     }
     return dateArray.map((date, index) => {
       const className = () => {
@@ -171,9 +186,7 @@ class Calendar extends Component {
           <MainContainer display1={ this.state.hid }>
             <Header>
               <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
-              <HeaderText>{now.format("YYYY")}</HeaderText>
-              <Month>{now.format("M")}</Month>
-              <HeaderText>{now.format("MMM")}</HeaderText>
+              <HeaderText>{now.format("YYYY.MM")}</HeaderText>
               <div onClick={() => this.moveMonth(1)}><img src={ nextMonth }/></div>
             </Header>
             <DateContainer>
@@ -201,87 +214,82 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  width: 740px;
-  height: 600px;
+  width: 798px;
+  height: 639px;
   margin-top: 6px;
 `
 const Header = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 254px;
+  width: 176px;
   align-items: flex-end;
-  margin-bottom: 20px;
-`
-const Month = styled.div`
-  font-family: Roboto;
-  font-size: 46px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: -1.15px;
-  color: #282c36;
-  height: 36px;
+  margin-bottom: 50px;
+  margin-top: 40px;
 `
 const HeaderText = styled.div`
   font-family: Roboto;
-  font-size: 24px;
-  font-weight: 300;
+  font-size: 28px;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.7px;
+  text-align: left;
   color: #282c36;
-  height: 20px;
+  height: 22px;
 `
 const DateContainer = styled.div`
   width: 714px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  margin-bottom: 25px;
   > div {
     text-align: center;
     width: 102px;
-    font-size: 12px;
+    font-family: NotoSansCJKkr;
+    font-size: 22px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.83;
-    letter-spacing: -0.12px;
-    font-family: NotoSansCJKkr;
+    letter-spacing: -0.55px;
+    color: #282c36;
   }
   .date-sun {
-    color: #f52100;
+    color: #c6c7cc;
   }
   .date-sat {
-    color: #0933b3;
+    color: #c6c7cc;
   }
 `
 const CalendarContainer = styled.div`
-  width: 714px;
+  width: 700px;
   display: grid;
-  height: 480px;
+  height: 432px;
   grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  border-top: solid 2px #282c36;
-  border-bottom: solid 2px #282c36;
-  border-left: solid 2px #c6c7cc;
-  border-right: solid 2px #c6c7cc;
   > div {
-    padding: 8px;
-    border: solid 0.5px rgba(198,199,204,0.5);
-    border-collapse: collapse;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-left: 25px;
+    margin-top: 11px;
+    //border: solid 0.5px rgba(198,199,204,0.5);
+    //border-collapse: collapse;
     font-family: Roboto;
-    line-height: 1.4;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    letter-spacing: -0.12px;
+    letter-spacing: -0.18px;
     color: #282c36;
     > div {
       font-family: Roboto;
@@ -294,26 +302,41 @@ const CalendarContainer = styled.div`
       color: #282c36;
     }
     :hover {
-      border: solid 2px #0933b3;
+      background-color: #0933b3;
+      color: white;
+      > div {
+        color: white;
+        display: none;
+      }
     }
-    :focus { 
-      border : solid 2px #0933b3;
+    :focus {
+      background-color: #0933b3;
+      color: white;    
     }
   }
   .date-sun {
-    > div {
-      color: #f52100;
-    }
+    color: #c6c7cc;
+    pointer-events: none;
   }
   .date-sat {
-    > div {
-      color: #0933b3;
-    }
+    color: #c6c7cc;
+    pointer-events: none;
   }
   .not-month {
+    visibility: hidden;
     pointer-events: none;
+    color: #c6c7cc;
+    }
+  .not-day {
+    pointer-events: none;
+    color: #c6c7cc;
+  }
+  .today {
+    color: #0933b3;
     > div {
-      color: rgba(198,199,204,0.5);
+      position: absolute;
+      margin-top: 38px;
+      color: #0933b3;
     }
   }
 `
