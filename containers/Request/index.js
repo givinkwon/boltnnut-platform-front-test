@@ -25,26 +25,12 @@ import Step5Container from './Step5';
 @inject("DetailQuestion", "Request")
 @observer
 class RequestContainer extends React.Component {
-  state = {
-    next: true,
-    prev: false,
-    width: 0,
-    tab: 0,
-  }
-  componentDidMount() {
-    window.addEventListener('resize', this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
-    console.log(this.props.width)
-  };
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
-  };
-  updateDimensions = () => {
-    this.setState({ ...this.state, width: window.innerWidth });
-  };
+
   render() {
     const { Request } = this.props;
     return (
+      <>
+      {this.props.width >= 767.99 ? (
       <div style={{ overflow: 'hidden' }}>
         <BannerContainer />
         <Background backgroundColor={"#f6f6f6"}>
@@ -53,12 +39,17 @@ class RequestContainer extends React.Component {
             {/* { Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
             { Request.step_index == 2 && <Step2Container />}
             { Request.step_index == 3 && <Step3Container />} */}
-            { Request.step_index == 4 && <Step4Container />}
-            <MobileRequestContainer/>
+            {/* { Request.step_index == 4 && <Step4Container />} */}
           </Containerv1>
         </Background>
       </div>
-    );
-  }
+      ) : (
+        <>
+         <MobileRequestContainer/>
+        </>
+      )}
+    </>
+  )}
 };
+
 export default RequestContainer;

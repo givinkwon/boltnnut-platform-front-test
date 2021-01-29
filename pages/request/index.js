@@ -63,7 +63,7 @@ class Request extends React.Component {
           )
           }
         </>
-        <RequestConatiner/>
+        <RequestConatiner width={width}/>
         <Footer/>
       </div>
     )
