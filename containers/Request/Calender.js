@@ -118,6 +118,7 @@ class Calendar extends Component {
   moveMonth = (month) => {
     const { Schedule } = this.props;
     Schedule.nowMoment.add(month, 'M');
+    Schedule.setTodayDate(this.state.now.format("YYYY-MM"));
     this.setState({
       now : Schedule.nowMoment,
     })

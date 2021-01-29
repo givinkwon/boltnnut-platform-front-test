@@ -63,6 +63,9 @@ class Request {
   @observable drawFile = null;
   @observable percentage = 0
 
+  // Client
+  @observable client_id = null;
+  @observable has_email = false;
 
   @action reset = () => {
     this.input_name = "";
@@ -121,6 +124,9 @@ class Request {
     RequestAPI.create(req)
     .then ((res) => {
       this.created_request = res.data.id;
+      this.client_id = res.data.clientId;
+      this.has_email = res.data.hasEmail;
+      console.log(this.has_email);
     })
     .catch(error => {
       alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');

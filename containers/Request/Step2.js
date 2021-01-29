@@ -126,7 +126,7 @@ class Step2Container extends React.Component {
             )
           }
           {DetailQuestion.index===8 && <ProductInfoContainer/>}
-          <ProductInfoContainer/>  
+          {/* <ProductInfoContainer/>   */}
         </SelectContainer>
       </>
     );

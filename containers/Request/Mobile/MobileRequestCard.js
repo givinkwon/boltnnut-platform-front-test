@@ -4,10 +4,10 @@ import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Observer from "@researchgate/react-intersection-observer";
-import NewButton from '../../components/NewButton';
-import LogoSlider from "./LogoImageSlider";
+import NewButton from 'components/NewButton';
+import LogoSlider from "../LogoImageSlider";
 import * as DetailQuestionApi from "axios/DetailQuestion";
-import DetailQuestion from "../../stores/DetailQuestion";
+import DetailQuestion from "stores/DetailQuestion";
 
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
@@ -24,7 +24,7 @@ var titleData=[];
 
 @inject('Request', 'DetailQuestion')
 @observer
-class RequestCardContainer extends Component {
+class MobileRequestCardContainer extends Component {
   state = {
     percentage: 0,
     buttonActiveCount: 0,
@@ -165,14 +165,15 @@ class RequestCardContainer extends Component {
         <Header>
           {this.props.title}
         </Header>
+        <ThumbText> {Request.percentage}% </ThumbText>
+        <CustomSlider value={Request.percentage}/>
         <ContentBox>
           {this.props.content}
         </ContentBox>
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
         
         <LogoSlider/>
-        <ThumbText> {Request.percentage}% </ThumbText>
-        <CustomSlider value={Request.percentage}/>
+        
         <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
         <ButtonContainer>
           <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
@@ -183,7 +184,7 @@ class RequestCardContainer extends Component {
   }
 }
 
-export default withRouter(RequestCardContainer);
+export default withRouter(MobileRequestCardContainer);
 
 
 const Card = styled.div`
