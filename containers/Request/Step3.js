@@ -115,27 +115,29 @@ class Step3Container extends Component {
     const { Proposal } = this.props;
 
     const estimateData = Proposal.estimateData;
-    const createDate={
-      year:estimateData.createAt.split('-')[0],
-      month:estimateData.createAt.split('-')[1],
-      day:estimateData.createAt.split('-')[2].substring(0,2),
+
+    const createDate = {
+      // year: estimateData.createAt.split('-')[0],
+      // month: estimateData.createAt.split('-')[1],
+      // day: estimateData.createAt.split('-')[2].substring(0, 2),
     };
 
-  
+
     const rows1 = [
-      createData('작성일자', createDate.year+'.'+createDate.month + '.' + createDate.day, ''),
-      createData('문서번호', 'C8-'+createDate.year + createDate.month + createDate.day + '-' + estimateData.id, ''),
-      createData('수신인', estimateData.client, ''),
+      // createData('작성일자', createDate.year + '.' + createDate.month + '.' + createDate.day, ''),
+      // createData('문서번호', 'C8-' + createDate.year + createDate.month + createDate.day + '-' + estimateData.id, ''),
+      // createData('수신인', estimateData.client, ''),
       createData('발신인', '윤기열 대표 / (주)볼트앤너트', 'TEL : 02 - 926 - 9967'),
-      // createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
+      createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
     ];
 
     const rows2 = [
-      createData('프로젝트', estimateData.projectTitle, ''),
-      createData('개발기간', estimateData.period + '일', ''),
-      createData('지급조건', '일시불', ''),
-      createData('견적가', '₩ '+estimateData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), 'VAT 포함'),
+      // createData('프로젝트', estimateData.projectTitle, ''),
+      // createData('개발기간', estimateData.period + '일', ''),
+      // createData('지급조건', '일시불', ''),
+      // createData('견적가', '₩ '+estimateData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), 'VAT 포함'),
     ];
+
     const {classes} = this.props
 
     return (
@@ -150,7 +152,7 @@ class Step3Container extends Component {
           <DetailContainer style={{display: showEstimateDetail}}>
             <Table className={classes.table} size="small">
               <TableBody>
-                  {rows1.map((row) => (
+                  {rows1 && rows1.map((row) => (
                 <TableRow className ={classes.row} key={row.title}>
                   <TableCell className ={classes.cell} component="th" scope="row" width='154'>
                     <Font16 style={{marginRight:48,textAlign:'right'}}>{row.title}</Font16>
@@ -220,7 +222,7 @@ class Step3Container extends Component {
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
                 {/* 25,000,000 원 */}
-                {estimateData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원
+                {/*{estimateData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원*/}
               </Content.FontSize24>
               <div style={{ marginLeft: 20 }}>
                 {showEstimateDrop == true ? (
