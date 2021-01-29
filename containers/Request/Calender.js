@@ -51,7 +51,6 @@ class Week extends Component {
     const { Schedule } = this.props;
     const { now } = this.state;
     const occupied = Schedule.date_occupied;
-    console.log(occupied);
 
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
@@ -75,8 +74,6 @@ class Week extends Component {
         className = "not-day";
       }
       else if (occupied.includes(dayInfo.yearMonthDayFormat)) {
-        console.log('occupied');
-        console.log(thisMoment);
         className = "not-day";
       }
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD")) {
