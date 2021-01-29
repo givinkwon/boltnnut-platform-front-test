@@ -10,13 +10,13 @@ import SelectComponent from 'components/Select';
 import InputComponent from 'components/Input2';
 import PhoneInputComponent from 'components/PhoneInput';
 import CheckBoxComponent from 'components/CheckBox';
-
+import * as Content from 'components/Content';
 
 const customStyles = {
   dropdownIndicator: () => ({
     color: '#555555',
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 21,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -31,17 +31,32 @@ const customStyles = {
   }),
   control: () => ({
     fontSize: 16,
-    border: '1px solid #e6e6e6',
     backgroundColor: '#fff',
     display: 'flex',
     borderRadius: 6,
-    padding: 4,
+    height: '100%'
   }),
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
     const transition = 'opacity 300ms';
     return { ...provided, opacity, transition };
-  }
+  },
+  placeholder: () => ({
+    fontSize: 12,
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    letterSpacing: -0.35,
+    textAlign: 'left',
+    color: '#999999',
+    height: 20,
+    display: 'flex',
+    alignItems: 'center',
+    padding: 0
+  }),
+  indicatorSeparator: () => ({
+      display: 'none'
+  })
 }
 
 @inject('Request', 'Partner')
@@ -85,7 +100,6 @@ class MobileStep1Container extends React.Component {
          관련 분야
        </Header>
        <SelectRow>
-
         <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>
         <Select
             styles={customStyles} options={Request.big_category_list} value={Request.select_big}
@@ -134,6 +148,7 @@ class MobileStep1Container extends React.Component {
        </Header>
        <SelectRow>
          <InputComponent
+            width="100%"
             class="Input"
             placeholder="ex) 반려동물을 위한 한 손 실리콘 샤워 패드"
             value={Request.input_name}
@@ -145,10 +160,12 @@ class MobileStep1Container extends React.Component {
        </Header>
        <SelectRow>
           <PhoneInputComponent
+            width = {66}
+            height = {34}
             phd1 = "010"
             phd2 = "1234"
             phd3 = "5678"
-            space = {18}
+            space = {8}
             updater = {Request.input_phone}
             onChange={this.handleChange.bind(this)}
           />
@@ -191,20 +208,27 @@ class MobileStep1Container extends React.Component {
 }
 export default MobileStep1Container;
 
-const Header = styled(Title.FontSize24)`
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.6px;
-  text-align: left;
-  color: #282c36;
+const Header = styled(Content.FontSize15)`
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: -0.38px;
+    text-align: left;
+    color: #282c36;
+    height: 22px;
+    margin-top: 28px;
 `
 const SelectRow = styled.div`
   width: 100%;
   display: flex;
   margin-top: 10px;
 `
-const Select = styled(SelectComponent)`
-  width: 400px;
+const Select = styled(SelectComponent)`  
+    width: 169px;
+    height: 34px;
+    object-fit: contain;
+    border-radius: 3px;
+    border: solid 1px #c6c7cc;
+    background-color: #ffffff;
 `
