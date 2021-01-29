@@ -51,6 +51,9 @@
     "stl-viewer": "^0.12.0",
     "style-loader": "^1.2.1",
     "styled-components": "4.4.1",
+    "three": "0.72.0",
+    "three-orbit-controls": "72.0.0",
+    "typescript": "3.7.2",
     "yarn": "^1.22.10"
   },
   "devDependencies": {

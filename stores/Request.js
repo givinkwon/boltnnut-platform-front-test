@@ -61,7 +61,7 @@ class Request {
   @observable step_index = 3;
   @observable step1_index = 1;
   @observable drawFile = null;
-  @observable percentage = 0;
+  @observable percentage = 0
 
 
   @action reset = () => {

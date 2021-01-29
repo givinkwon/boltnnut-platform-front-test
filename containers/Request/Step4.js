@@ -11,7 +11,7 @@ import 'intersection-observer'; // polyfill
 
 const dropdown = '/static/images/request/Step4/dropdown.png';
 
-@inject('Schedule')
+@inject('Schedule', 'Request')
 @observer
 class Step4Container extends Component {
   state = {
@@ -56,6 +56,7 @@ class Step4Container extends Component {
   }
   render() {
     const { current, display, display2 } = this.state;
+    const { Request, Schedule } = this.props;
     const timeArr = [
       {
         start_at: this.getTime(10),
@@ -91,6 +92,7 @@ class Step4Container extends Component {
       }
     ]
     return (
+      
       <Card>
         <Header>1:1 컨설팅 신청</Header>
         <ContentBox>
@@ -233,6 +235,7 @@ const TimeComponent = styled.div`
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: ${(props) => props.deactive ? "gray" : "white"};
+  pointer-events:${(props) => props.deactive && "none"};
   display: flex;
   align-items: center;
   justify-content: center;
