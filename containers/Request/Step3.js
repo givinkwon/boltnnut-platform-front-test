@@ -117,6 +117,7 @@ class Step3Container extends Component {
     const { Proposal } = this.props;
 
     const estimateData = Proposal.estimateData;
+
     const rows1 = [
       createData('작성일자', Proposal.estimate_year + '.' + Proposal.estimate_month + '.' + Proposal.estimate_day, ''),
       createData('문서번호', 'C8-' + Proposal.estimate_year + Proposal.estimate_month + Proposal.estimate_day + '-' + estimateData.id, ''),
@@ -192,34 +193,7 @@ class Step3Container extends Component {
             </Font16>
 
             {/* 여기 들어간다 */}
-            <div>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <Paper className={classes.paper}>Content 1</Paper>
-                </Grid>
-                <Grid item xs={6}>
-                  <Paper className={classes.paper}>Content 2</Paper>
-                </Grid>
-                <Grid item xs={3}>
-                  <Paper className={classes.paper}>Content 3</Paper>
-                </Grid>
-                <Grid item xs={3}>
-                  <Paper className={classes.paper}>Content 4</Paper>
-                </Grid>
-                <Grid item xs={9}>
-                  <Paper className={classes.paper}>Content 5</Paper>
-                </Grid>
-                <Grid item xs={3}>
-                  <Paper className={classes.paper}>Content 6</Paper>
-                </Grid>
-                <Grid item xs={9}>
-                  <Paper className={classes.paper}>Content 7</Paper>
-                </Grid>
-                <Grid item xs={6}>
-                  <Paper className={classes.paper}>Content 8</Paper>
-                </Grid>
-              </Grid>
-            </div>
+
             
             <AccountBox>
               <div>

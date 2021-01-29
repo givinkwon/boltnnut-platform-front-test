@@ -131,9 +131,7 @@ class Step2Container extends React.Component {
               )}
             )
           }
-
           {DetailQuestion.index===8 && <ProductInfoContainer updater={this.props.ManufactureProcess.SelectChecked}/>}
-          {/* <ProductInfoContainer updater={this.props.ManufactureProcess.SelectChecked}/>   */}
         </SelectContainer>
       </>
     );
