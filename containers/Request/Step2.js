@@ -11,10 +11,9 @@ import ProductInfoContainer from './ProductInfo'
 const Qimage = "static/images/request/Step2/Q.png";
 const fileImage = 'static/images/components/Input2/Mask.png';
 
-@inject('DetailQuestion', 'Request')
+@inject('DetailQuestion', 'Request','ManufactureProcess')
 @observer
 class Step2Container extends React.Component {
-
   onChangeFile = (e,data,idx) => {
     const {Request}  = this.props;
     let fileName;
@@ -24,7 +23,7 @@ class Step2Container extends React.Component {
       Request.setDrawFile(e.currentTarget.files[0]);
       DetailQuestion.SelectChecked = idx;
       DetailQuestion.nextPage = data.nextTitle;
-    } else {
+    } else {    
       fileName = null;
       Request.setDrawFile(null);
       DetailQuestion.SelectChecked = '';
@@ -41,14 +40,20 @@ class Step2Container extends React.Component {
     fileName: '',
   };
 
+  // componentDidUpdate()
+  // {
+  //   this.handleClass();
+  // }
   componentDidMount()
   {
     if(DetailQuestion.select)
       DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }
+  
+
   content = () => {
-    const { DetailQuestion, Request } = this.props;
+    const { DetailQuestion, Request, ManufactureProcess } = this.props;
     const { fileName } = this.state;
 
     let test = (e,idx) => {
@@ -86,12 +91,12 @@ class Step2Container extends React.Component {
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
+          {/* {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>} */}
         </TitleContainer>
-        {/* <input value={DetailQuestion.SelectChecked} class="Input" style={{display:'none'}}/> */}
+        <input value={DetailQuestion.index<8 ? DetailQuestion.SelectChecked : ManufactureProcess.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>
-          {/* {
-            DetailQuestion.select.data && DetailQuestion.select.data.map((data,idx) => {
+          {
+            (DetailQuestion.select.data && DetailQuestion.index<8)&& DetailQuestion.select.data.map((data,idx) => {
               return (
                 <div style={{marginLeft:33}}>
                   {
@@ -116,6 +121,7 @@ class Step2Container extends React.Component {
                   </FileSelect>
                   </>
                   }
+                  
                   <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
                     <Text id={'queText'} color={"#282c36"}>
                       {data.select}
@@ -124,10 +130,10 @@ class Step2Container extends React.Component {
                 </div>
               )}
             )
-          } */}
+          }
 
-          {/* {DetailQuestion.index===8 && <ProductInfoContainer/>} */}
-          <ProductInfoContainer/>  
+          {DetailQuestion.index===8 && <ProductInfoContainer updater={this.props.ManufactureProcess.SelectChecked}/>}
+          {/* <ProductInfoContainer updater={this.props.ManufactureProcess.SelectChecked}/>   */}
         </SelectContainer>
       </>
     );
