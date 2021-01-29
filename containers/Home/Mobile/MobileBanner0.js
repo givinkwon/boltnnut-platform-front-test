@@ -19,14 +19,14 @@ import { inject, observer } from "mobx-react";
 //Image
 const background = "static/images/Home/Mobile/MobileBanner0/background.png";
 
-const CountFunc = ({index,projCount=0,partnerCount=0}) => 
+const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
     const countItem = {
       0: UseScrollCount(1667400000,1000000000,0,0,900000),
       1: UseScrollCount(projCount,0,0,0,5),
       2: UseScrollCount(4933,0,0,0,10)
     };
-   
+
     return (
         <p {...countItem[index]} style={{display:'inline'}}/>
     );
@@ -69,7 +69,7 @@ class MobileBanner0Container extends React.Component {
               <Content1 color={'#ffffff'}>
                 <CountFunc index={1}/> 건
               </Content1>
-              
+
               <div style={{marginTop: 22}} />
               <Title1 fontWeight={300} color={'#ffffff'}>
                   개발 전문업체
@@ -78,7 +78,7 @@ class MobileBanner0Container extends React.Component {
                 <CountFunc index={2}/> 개
               </Content1>
             </div>
-            <Buttonv1 style={{marginTop: 56, marginLeft:'auto', marginRight:'auto', fontWeight: 900}} onClick={() => Router.push("/request")}>
+            <Buttonv1 style={{marginTop: 56, marginLeft:'auto', marginRight:'auto', fontWeight: 700}} onClick={() => Router.push("/request")}>
               <p style={{paddingBottom:0.2}}>지금 무료 가견적 받기</p>
             </Buttonv1>
         </Fade>
