@@ -38,6 +38,9 @@ class Proposal {
 	@observable select_saves = []
 	@observable select_saves_next = null
 
+	//견적서(규석)
+	@observable estimateData = []
+
     @action setCategory = (e) => {
 		this.category = e.target.value
 		console.log('category: ' + this.category)
@@ -620,6 +623,14 @@ class Proposal {
 		// 0이면 false, 1이면 true
 		return filtered.length !== 0
 	}
+
+	@action loadEstimateInfo = async (index) => {
+		await ProposalAPI.getEstimateInfo(index)
+		  .then(res => {
+			  this.estimateData = res.data;
+			}
+		  )
+	  };
 }
 
 export default new Proposal()

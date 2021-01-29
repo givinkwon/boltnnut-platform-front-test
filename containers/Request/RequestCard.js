@@ -7,6 +7,7 @@ import Observer from "@researchgate/react-intersection-observer";
 import NewButton from '../../components/NewButton';
 import LogoSlider from "./LogoImageSlider";
 import * as DetailQuestionApi from "axios/DetailQuestion";
+import * as ManufactureProcessApi from "axios/ManufactureProcess";
 import DetailQuestion from "../../stores/DetailQuestion";
 
 //Slider
@@ -22,7 +23,7 @@ import * as Title from "components/Title";
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 var titleData=[];
 
-@inject('Request', 'DetailQuestion')
+@inject('Request', 'DetailQuestion','ManufactureProcess')
 @observer
 class RequestCardContainer extends Component {
   state = {
@@ -54,7 +55,7 @@ class RequestCardContainer extends Component {
 
   componentDidUpdate() {
     const { targets,active } = this.state;
-    console.log(this.state);
+    // console.log(this.state);
     if (this.fullChecker(targets) == true && active == false) {
       this.setState({...this.state, active: true})
     } else if (this.fullChecker(targets) == false && active == true) {
@@ -111,7 +112,7 @@ class RequestCardContainer extends Component {
     }
   }
   nextButtonClick = () => {
-    const { Request, DetailQuestion } = this.props;
+    const { Request, DetailQuestion,ManufactureProcess } = this.props;
 
     switch(Request.step_index)
     {
@@ -133,19 +134,36 @@ class RequestCardContainer extends Component {
       case 2:
         if(DetailQuestion.nextPage)
         {
+          
+          if(DetailQuestion.index!=4 || DetailQuestion.nextPage==8)
+          {
+            DetailQuestion.pageCount += 1;
+          }
           titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
           DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
-          if(DetailQuestion.index!=4)
-          {
-            DetailQuestion.pageCount += 1;
-          }
+          
+          console.log(titleData);
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
         }
         else {
           titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          
+          // console.log(Request.drawFile);
+          if(DetailQuestion.index==8)
+          {
+            const ManufactureProcessFormData = new FormData();
+            ManufactureProcessFormData.append("blueprint",Request.drawFile);
+            ManufactureProcessFormData.append("process",ManufactureProcess.SelectedItem.process);
+            ManufactureProcessFormData.append("detailProcess",ManufactureProcess.SelectedItem.id);
+            //기본정보입력에서 받은 의뢰서로 바꾸기
+            ManufactureProcessFormData.append("request",360);
+            ManufactureProcessApi.saveSelect(ManufactureProcessFormData);
+            titleData= titleData.slice(0,3);
+          }
+          console.log(titleData);
           var SelectSaveData = {
             "request": Request.created_request,
             "data": titleData,
@@ -177,6 +195,7 @@ class RequestCardContainer extends Component {
         <ButtonContainer>
           <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
           <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
+          {/* <NewButton active={ true } onClick={ this.nextButtonClick }>다음</NewButton> */}
         </ButtonContainer>
       </Card>
     )
@@ -196,7 +215,7 @@ const Card = styled.div`
   margin: 60px 0px 200px 280px;
   margin-left: 280px;
   margin-top: 60px;
-  margin-bottom: 0px;
+  margin-bottom: 200px;
   display: inline;
   float: right;
 `

@@ -7,3 +7,11 @@ export function loadTitle() {
     url: `${ROOT_URL}/manufactureProcess/`,
   });
 }
+
+export function saveSelect(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/estimate/`,
+    data: req,
+  });
+}
