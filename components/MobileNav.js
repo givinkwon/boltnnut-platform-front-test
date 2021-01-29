@@ -143,8 +143,8 @@ class MobileNav extends React.Component {
               </ModalContent>
               <ModalContent2>
                 <p>자주찾는 질문</p>
-                <p>이용약관</p>
-                <p>개인정보 처리 방침</p>
+                <p onClick={() => Router.push("/term/policy")}>이용약관</p>
+                <p onClick={() => Router.push("/term/personal")}>개인정보 처리 방침</p>
               </ModalContent2>
               <Footer>
                 <div onClick={this.logout}> 로그아웃 </div>
