@@ -128,7 +128,7 @@ class MobileRequestCardContainer extends Component {
           } catch(e) {
             console.log(e);
           }
-          } 
+          }
         break;
       case 2:
         if(DetailQuestion.nextPage)
@@ -163,8 +163,7 @@ class MobileRequestCardContainer extends Component {
     return(
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
         <Header color={"#0a2165"}>
-          {/* {this.props.title} */}
-          기본 정보 입력 1/2
+           {this.props.title}
         </Header>
         <CustomSlider value={Request.percentage}/>
         <ContentBox>

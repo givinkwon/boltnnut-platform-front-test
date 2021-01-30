@@ -9,6 +9,7 @@ import Footer from 'components/Footer';
 import Spinner from 'components/Spinner';
 
 import RequestConatiner from 'containers/Request'
+const back_ic = "/static/images/components/MobileNav/back.png";
 
 @inject('Request', 'Partner','DetailQuestion','ManufactureProcess', 'Schedule')
 @observer
@@ -59,7 +60,7 @@ class Request extends React.Component {
           { width > 767.98 ? (
             <Nav />
           ) : (
-            <MobileNav headText={ "가견적 받기" } width={width}/>
+            <MobileNav src={ back_ic } headText={ "가견적 받기" } width={width}/>
           )
           }
         </>
