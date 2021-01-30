@@ -113,7 +113,7 @@ const InputBox = styled.div`
   align-items: center;
   margin-top: 12px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-      width: 56px;
+      width: 100%;
       height: 32px;
       object-fit: contain;
       background-color: #ffffff;
@@ -163,6 +163,26 @@ const InputCell = styled.div`
       letter-spacing: -0.18px;
       text-align: left;
       color: #c6c7cc;
-    }
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 66px;
+    height: 34px;
+    > input {
+      border: none;
+      padding: 0 !important;
+      :focus {
+        outline: none;
+      }
+      ::placeholder {
+        font-size: 14px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.67;
+        letter-spacing: -0.18px;
+        text-align: left;
+        color: #c6c7cc;
+      }
+  }
   }
 `
