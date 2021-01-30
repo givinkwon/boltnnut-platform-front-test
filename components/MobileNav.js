@@ -137,12 +137,12 @@ class MobileNav extends React.Component {
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
-                <p>프로젝트 관리</p>
-                <p>매거진</p>
+                <p>내 의뢰 관리</p>
+                <p>제조 인사이트</p>
                 <p>회사소개</p>
               </ModalContent>
               <ModalContent2>
-                <p>자주찾는 질문</p>
+                <p>자주묻는 질문</p>
                 <p>이용약관</p>
                 <p>개인정보 처리 방침</p>
               </ModalContent2>
