@@ -161,7 +161,7 @@ class MobileRequestCardContainer extends Component {
     const { active } = this.state;
     const { Request, DetailQuestion } = this.props;
     return(
-    <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
         <Header color={"#0a2165"}>
            {this.props.title}
         </Header>

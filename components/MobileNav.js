@@ -138,8 +138,8 @@ class MobileNav extends React.Component {
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
-                <p>내 의뢰 관리</p>
-                <p>제조 인사이트</p>
+                <p>프로젝트 관리</p>
+                <p>매거진</p>
                 <p>회사소개</p>
               </ModalContent>
               <ModalContent2>
@@ -190,7 +190,7 @@ class MobileNav extends React.Component {
 }
 const Modal = styled.div`
   position: fixed; 
-  z-index: 1; 
+  z-index: 3; 
   left: 0;
   top: 0;
   width: 100%; 
@@ -255,7 +255,7 @@ const ModalContent = styled.div`
   }
 `
 const HeadText = styled.div`
-  z-index: 2;
+  z-index: 0;
   width: 100%;
   height:29px; 
   position: absolute;
@@ -269,6 +269,7 @@ const HeadText = styled.div`
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.5px;
+  left: 0;
 `
 const Footer = styled.div`
   width: 100%;
@@ -290,8 +291,6 @@ const Footer = styled.div`
   }
 `
 const FreeButton = styled(Buttonv1)`
-  width: 270px;
-  height: 43px;
   margin-top: 8px;
   > span {
     font-family: NotoSansCJKkr;
@@ -303,7 +302,12 @@ const FreeButton = styled(Buttonv1)`
     letter-spacing: -0.4px;
     text-align: center;
     color: #ffffff;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 270px;
+      height: 43px;
+    }
   }
+  
 `
 const ModalContent2 = styled.div`
   width: 100%;
@@ -342,11 +346,11 @@ const NavWrap2 = styled.div`
   justify-content: space-between;
   height: 54px;
   background-color: #ffffff; // #f3f3f3
-
+  padding-left: 18px;
+  padding-right: 18px;
 `;
 const Logo = styled.img`
   cursor: pointer;
-  margin-left: 18px;
   z-index: 1;
 `;
 const Icon = styled.img`
@@ -354,7 +358,6 @@ const Icon = styled.img`
   width: 40px;
   height: 40px;
   display: none;
-  margin-right: 18px;
   background-color: '#f3f3f3';
   z-index: 1;
   @media (min-width: 0px) and (max-width: 767.98px) {

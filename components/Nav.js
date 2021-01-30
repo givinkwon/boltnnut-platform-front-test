@@ -136,7 +136,7 @@ class Nav extends React.Component {
                       //onClick={() => Router.push("/request?big=4&mid=")}
                       active={url.indexOf("request") > -1}
                     >
-                      가견적받기
+                      의뢰하기
                     </NavLink>
                     {/* <NavLink
                       onClick={() => Router.push("/answer")}
@@ -161,13 +161,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      <p class="line"> 제조 인사이트 </p>
-                    </NavLink>
-                    <NavLink
-                      onClick={() => Router.push("/info")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      <p class="line"> 회사소개 </p>
+                      <p class="line"> 매거진 </p>
                     </NavLink>
                     {/*<NavLink
                       onClick={() => Router.push("/info?tab=1")}
@@ -209,13 +203,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      제조 인사이트
-                    </NavLink>
-                    <NavLink
-                      onClick={() => Router.push("/info")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      회사 소개
+                      제품 인사이트
                     </NavLink>
                     {/*<NavLink
                       onClick={() => Router.push("/info?tab=2")}
@@ -234,7 +222,7 @@ class Nav extends React.Component {
                     //onClick={() => Router.push("/request?big=4&mid=")}
                     active={url.indexOf("request") > -1}
                   >
-                    가견적 받기
+                    의뢰하기
                   </NavLink>
                   {/*<NavLink
                     onClick={
@@ -255,13 +243,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      제조 인사이트
-                  </NavLink>
-                  <NavLink
-                      onClick={() => Router.push("/info")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      회사소개
+                      매거진
                   </NavLink>
                   {/*<NavLink
                   onClick={
@@ -293,11 +275,11 @@ class Nav extends React.Component {
                           </Text.FontSize16>
                         </div>
                       ) : null}
-                      {/* <div onClick={() => Router.push("/store?tab=1")}>
+                      <div onClick={() => Router.push("/store?tab=1")}>
                         <Text.FontSize16 fontWeight={500}>
                           {Auth.logged_in_user.type == 1 ? '이용요금' : '이용요금'}
                         </Text.FontSize16>
-                      </div> */}
+                      </div>
                       <div onClick={() => Router.push('/account?tab=1')}>
                         <Text.FontSize16 fontWeight={500}>
                           계정설정
