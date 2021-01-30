@@ -138,8 +138,8 @@ class MobileNav extends React.Component {
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
-                <p>프로젝트 관리</p>
-                <p>매거진</p>
+                <p>내 의뢰 관리</p>
+                <p>제조 인사이트</p>
                 <p>회사소개</p>
               </ModalContent>
               <ModalContent2>
@@ -255,6 +255,7 @@ const ModalContent = styled.div`
   }
 `
 const HeadText = styled.div`
+  z-index: 2;
   width: 100%;
   height:29px; 
   position: absolute;
@@ -346,6 +347,7 @@ const NavWrap2 = styled.div`
 const Logo = styled.img`
   cursor: pointer;
   margin-left: 18px;
+  z-index: 1;
 `;
 const Icon = styled.img`
   cursor: pointer;
@@ -354,6 +356,7 @@ const Icon = styled.img`
   display: none;
   margin-right: 18px;
   background-color: '#f3f3f3';
+  z-index: 1;
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: block;
     width: 21px;
