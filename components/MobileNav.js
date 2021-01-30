@@ -121,6 +121,7 @@ class MobileNav extends React.Component {
   render () {
     const { Auth, Partner,width } = this.props;
     const { url, is_open, is_profile, token } = this.state;
+    console.log(this.props.headText)
     return (
       <NavBox>
         {is_open && (
@@ -155,6 +156,7 @@ class MobileNav extends React.Component {
         <Container>
           <NavWrap2>
             <Logo src={logo_ic} onClick={() => Router.push("/")} />
+            <HeadText>{this.props.headText}</HeadText>
             {
               !this.props.Auth.logged_in_user ? (
               //   <NavLink
@@ -308,6 +310,21 @@ const ModalContent = styled.div`
     color: #111111;
   }
 `
+const HeadText = styled.div`
+  width: 94px;
+  height:29px; 
+  color: #0a2165;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-family: NotoSansCJKkr;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.9;
+  letter-spacing: -0.5px;
+`
 const Footer = styled.div`
   width: 100%;
   height: 60px;
@@ -380,14 +397,10 @@ const NavBox = styled.div`
   background-color: ${WHITE};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 `;
-const NavWrap = styled.div`
-  display: flex;
-  align-items: center;
-  height: 36px;
-`;
 const NavWrap2 = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 54px;
   background-color: #ffffff; // #f3f3f3
   padding-right: 20px;
@@ -407,7 +420,6 @@ const Logo = styled.img`
 `;
 const Icon = styled.img`
   cursor: pointer;
-  margin-left: auto;
   width: 40px;
   height: 40px;
   display: none;

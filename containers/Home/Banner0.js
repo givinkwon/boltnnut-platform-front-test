@@ -87,7 +87,6 @@ class Banner0Container extends React.Component {
               </Content.FontSize24>
               <br/>
               <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>
-                {/* 450+ */}
                 <CountFunc index={2} partnerCount={PartnerCount}/>
               </Content.FontSize32>
             </InfoCell>

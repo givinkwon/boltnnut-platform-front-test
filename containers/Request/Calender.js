@@ -51,7 +51,6 @@ class Week extends Component {
     const { Schedule } = this.props;
     const { now } = this.state;
     const occupied = Schedule.date_occupied;
-    console.log(occupied);
 
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
@@ -119,6 +118,7 @@ class Calendar extends Component {
   moveMonth = (month) => {
     const { Schedule } = this.props;
     Schedule.nowMoment.add(month, 'M');
+    Schedule.setTodayDate(this.state.now.format("YYYY-MM"));
     this.setState({
       now : Schedule.nowMoment,
     })

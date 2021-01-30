@@ -57,6 +57,7 @@ class Step4Container extends Component {
   render() {
     const { current, display, display2 } = this.state;
     const { Request, Schedule } = this.props;
+
     const timeArr = [
       {
         start_at: this.getTime(10),
@@ -139,14 +140,18 @@ class Step4Container extends Component {
           <SubContent>
             서울특별시 성북구 고려대로 30길 4, 2층 볼트앤너트
           </SubContent>
-          <Title style={{marginTop: 30}}>
-            이메일
-          </Title>
-          <InputComponent
-            width={"88.3%"}
-            placeholder="이메일을 입력해주세요."
-            onChange={this.emailChange}
-          />
+          { !Request.has_email && (
+          <>
+            <Title style={{marginTop: 30}}>
+              이메일
+            </Title>
+            <InputComponent
+              width={"88.3%"}
+              placeholder="이메일을 입력해주세요."
+              onChange={this.emailChange}
+            />
+          </>
+          ) }
           <Tail>
             *컨설팅을 위한 사전 준비 사항을 E-mail로 보내드립니다.
           </Tail>

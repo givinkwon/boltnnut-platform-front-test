@@ -59,11 +59,11 @@ class Request extends React.Component {
           { width > 767.98 ? (
             <Nav />
           ) : (
-            <MobileNav width={width}/>
+            <MobileNav headText={ "가견적 받기" } width={width}/>
           )
           }
         </>
-        <RequestConatiner/>
+        <RequestConatiner width={width}/>
         <Footer/>
       </div>
     )

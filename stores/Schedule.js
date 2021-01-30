@@ -19,7 +19,6 @@ class Schedule {
         let today_date = new moment();
         this.today = today_date.format('YYYY-MM-DD ');
         this.book_time = this.today + this.current;
-        console.log(this.today);
 
         this.getOccupiedDate();
         this.getDays(this.today.split('-')[0], this.today.split('-')[1]);
@@ -60,7 +59,6 @@ class Schedule {
     @action fullDateCheck = (obj) => {
         let fullday = [];
         console.log("fullDateCheck돌립니다.")
-        console.log(obj);
         for (var i = 0; i <= obj.length; i++ ) {
             let req = {
                 today: obj[i],
@@ -80,7 +78,6 @@ class Schedule {
         let a = selected_ym.add("1", "M").format("YYYY-MM-DD");
 
         let diffDays = (moment(a).diff(moment(selected_ym2.format("YYYY-MM-DD")),"days"));
-        console.log()
 
         if (!this.already_setted.includes(`${year}-${month}`)) {
             // 이미 세팅한 month가 아닌 경우
