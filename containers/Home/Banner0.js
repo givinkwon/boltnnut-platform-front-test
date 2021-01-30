@@ -46,13 +46,14 @@ class Banner0Container extends React.Component {
   render () {
     const ProjectCount = this.props.Proposal.projects_count;
     const PartnerCount = this.props.Partner.partner_count;
+
     return (
     <Background src={background}>
       <Containerv1 style={{paddingBottom: 336, paddingTop: 279, justifyContent: 'space-between'}}>
         <Fade bottom>
           <div>
             <Title.FontSize56 color={WHITE} shadow={"0 3px 6px rgba(0,0,0,0.61);"} fontWeight={"500"} style={{lineHeight: 1.49}}>
-              내 제품 제작 비용과<br/>
+              내 제조 의뢰 견적과<br/>
               전문 제조사를<br/>
               바로 만나보세요.
             </Title.FontSize56>
@@ -83,7 +84,7 @@ class Banner0Container extends React.Component {
             </InfoCell>
             <InfoCell>
               <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center'}} color={'#ffffff'}>
-                개발 전문업체
+                파트너사
               </Content.FontSize24>
               <br/>
               <Content.FontSize32 eng={true} style={{textAlign: 'center'}} fontWeight={"bold"} color={'#ffffff'}>

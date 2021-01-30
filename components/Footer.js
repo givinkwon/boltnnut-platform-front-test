@@ -52,13 +52,13 @@ class FooterComponent extends React.Component {
                   (주)볼트앤너트
                 </Text.FontSize15>
                 <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
-                  ​대표자 : 윤기열, 신지섭
+                  ​대표자 : 윤기열
                 </Text.FontSize15>
                 <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
                   사업자등록번호 390-87-01669
                 </Text.FontSize15>
                 <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
-                  서울특별시 성북구 고려대로30길 4 2층
+                  서울특별시 성북구 고려대로 27길 4, 3층
                 </Text.FontSize15>
               </div>
             </CompanyInfo>
@@ -69,16 +69,16 @@ class FooterComponent extends React.Component {
               <Text.FontSize18
                 color={WHITE}
                 fontWeight={500}
-                onClick={() => Router.push("/partner")}
+                onClick={() => Router.push("/request")}
               >
-                제조사 찾기
+                가건젹 받기
               </Text.FontSize18>
               <Text.FontSize18
                 color={WHITE}
                 fontWeight={500}
                 onClick={() => Router.push("/magazine")}
               >
-                인사이트
+                제조 인사이트
               </Text.FontSize18>
 
               <Text.FontSize18
@@ -93,7 +93,7 @@ class FooterComponent extends React.Component {
                 fontWeight={500}
                 onClick={() => Router.push("/term/personal")}
               >
-                개인정보 처리 방침
+                개인정보처리방침
               </Text.FontSize18>
             </TextBox>
         </Container>
@@ -115,7 +115,7 @@ class FooterComponent extends React.Component {
                 <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
                 <Sns src={facebook} onClick={() => window.open('http://www.facebook.com/boltnnut6637')} />
                 <Sns src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')} />
-                {/* <Sns src={blog_post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')} />                 */}
+                <Sns src={blog_post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')} />           
               </SnsBox>
           </ContactInfoContainer>
         </Container>
