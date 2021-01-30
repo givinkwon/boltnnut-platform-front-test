@@ -14,8 +14,5 @@ const CustomButton = styled.div`
   cursor: ${(props) => (props.active ? "pointer" : "not-allowed")};
   font-size: ${(props)=> (props.fontSize ? props.fontSize : 16)}px;
   pointer-events: ${(props) => (!props.active && 'none')};
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    
-  }
 `;
 export default CustomButton;

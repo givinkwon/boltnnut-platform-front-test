@@ -117,9 +117,9 @@ class Step3Container extends Component {
     const estimateData = Proposal.estimateData;
 
     const createDate = {
-      year: estimateData.createAt.split('-')[0],
-      month: estimateData.createAt.split('-')[1],
-      day: estimateData.createAt.split('-')[2].substring(0, 2),
+      // year: estimateData.createAt.split('-')[0],
+      // month: estimateData.createAt.split('-')[1],
+      // day: estimateData.createAt.split('-')[2].substring(0, 2),
     };
 
 

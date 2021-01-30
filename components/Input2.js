@@ -87,7 +87,6 @@ export default InputComponent
 const InputBox = styled.div`
   display: flex;
   height: 50px;
-  width: 100%;
   margin-top: 10px;
   border: solid 0.5px #c7c7c7;
   color: #404040;
@@ -97,12 +96,12 @@ const InputBox = styled.div`
     position: relative;
     float: right;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) { 
-    height: 34px;
-    object-fit: contain;
-    border-radius: 3px;
-    border: solid 1px #c6c7cc;
-    background-color: #ffffff;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 206px;
+      height: 32px;
+      object-fit: contain;
+      background-color: #ffffff;
+      margin-top: 0px;
   }
 `
 const Wrap = styled.div`
@@ -113,6 +112,10 @@ const Wrap = styled.div`
     margin-top: 15px;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-left: 12px;
+    > p {
+      margin-bottom: 16px;
+    }
   }
 `
 const Input = styled.div`
@@ -140,35 +143,9 @@ const Input = styled.div`
       outline: none;
     }
     ::placeholder {
-      font-weight: 400;
-      color: #c6c7cc;
-    }
+    font-weight: 400;
+    color: #c6c7cc;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-  > input {
-    width: 100%;
-    height: 100%;
-    border: none;
-    padding: 0 !important;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.67;
-    letter-spacing: -0.18px;
-    text-align: left;
-    font-size: 14px;
-    :focus {
-      outline: none;
-    }
-    ::placeholder {  
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 2.43;
-      letter-spacing: -0.35px;
-      text-align: left;
-      color: #999999;
-    }
   }
 `
 const FileText = styled(Content.FontSize18)`

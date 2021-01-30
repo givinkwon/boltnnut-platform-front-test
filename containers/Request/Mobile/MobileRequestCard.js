@@ -161,44 +161,68 @@ class MobileRequestCardContainer extends Component {
     const { active } = this.state;
     const { Request, DetailQuestion } = this.props;
     return(
-    <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-        <Header color={"#0a2165"}>
-          {/* {this.props.title} */}
-          기본 정보 입력 1/2
+      <Card>
+        <Header>
+          {this.props.title}
         </Header>
+        <ThumbText> {Request.percentage}% </ThumbText>
         <CustomSlider value={Request.percentage}/>
         <ContentBox>
           {this.props.content}
         </ContentBox>
         <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
-        {/* <LogoSlider/> */}
+        
+        <LogoSlider/>
+        
         <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
         <ButtonContainer>
           <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
-          <div style={{marginRight: 14}} />
           <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
         </ButtonContainer>
-    </div>
+      </Card>
     )
   }
 }
 
 export default withRouter(MobileRequestCardContainer);
 
-const Header = styled(Content.FontSize16)`
+
+const Card = styled.div`
+  width: 894px;
+  // height: 1002px;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
+  background-color: white;
+  margin: 60px 0px 200px 280px;
+  margin-left: 280px;
+  margin-top: 60px;
+  margin-bottom: 0px;
+  display: inline;
+  float: right;
+`
+const Header = styled(Content.FontSize32)`
   width: auto;
-  height: 46px;
+  height: calc(6.7%);
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.13;
-  letter-spacing: -0.4px;
-  text-align: center;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  line-height: 1.63;
+  letter-spacing: -0.8px;
+  text-align: left;
+  color: #0a2165;
+  margin-left: 5.4%;
+  margin-right: 5.4%;
+  padding-top: 4%;
+  border-bottom: solid 1px #707070;
+  object-fit: contain;
 `
 const ContentBox = styled.div`
+  // height: calc(46.3%);
+  
+  margin-right: 5.4%;
+  margin-left: 5.4%;
+  margin-top: 4%;
   display: flex;
   flex-direction: column;
 `
@@ -206,25 +230,27 @@ const ContentBox = styled.div`
 const CustomSlider = withStyles({
   root: {
     color: '#0933b3',
-    height: 4,
-    width: '100%',
+    height: 7,
+    width: '76%',
+    marginLeft: '12%',
+    marginRight: '12%',
     borderRadius: 10,
-    cursor:'default',
-    position: "absolute",
-    left: 0,
-    paddingTop: 46,
-    paddingBottom: 0
+    cursor:'default'
   },
   thumb: {
+    // top: -10,
+    // paddingRight: 20,
+    // content: "apapap"
     display:'none'
   },
   track: {
-    height: 4,
+    height: 7,
+    borderRadius: 10,
   },
   rail: {
     color: '#c6c7cc',
     opacity: 1,
-    height: 4,
+    height: 7,
     borderRadius: 10,
   },
 })(Slider);
@@ -236,18 +262,18 @@ const ThumbText = styled(Title.FontSize20)`
   font-weight: bold;
 `
 
-const SliderText = styled(Content.FontSize13)`
+const SliderText = styled(Content.FontSize16)`
   position: relative;
-  height: 19px;
   text-align:center;
   color: #0933b3;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
+  line-height: 1.88;
   letter-spacing: -0.16px;
 `
 
-const MatchingText = styled(Content.FontSize15)`
+const MatchingText = styled(Title.FontSize20)`
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -257,10 +283,9 @@ const MatchingText = styled(Content.FontSize15)`
   margin-bottom:20px;
 `
 const ButtonContainer = styled.div`
-  width: 100%;
+  width: 260px;
+  margin: 70px 317px 100px 317px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  margin-top: 32px;
-  margin-bottom: 120px;
+  justify-content: space-between;
 `
