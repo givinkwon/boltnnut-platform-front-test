@@ -11,10 +11,10 @@ class BannerContainer extends React.Component {
       <Background src={ BackImg } backgroundColor={ "#000000" } style={{height: 208, opacity: 0.9}}>
         <CustomContainer>
           <Head>
-            의뢰하기
+            가견적받기
           </Head>
           <Content>
-            전문적이고 안전하고 빠른 당신을 위한 최적의 견적시스템
+            AI 자동 견적 알고리즘 | 최적의 견적을 바로 받아보세요
           </Content>
         </CustomContainer>
       </Background>

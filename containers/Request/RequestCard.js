@@ -178,6 +178,7 @@ class RequestCardContainer extends Component {
   render() {
     const { active } = this.state;
     const { Request, DetailQuestion } = this.props;
+    console.log(this.props.title)
     return(
       <Card>
         <Header>
@@ -186,12 +187,12 @@ class RequestCardContainer extends Component {
         <ContentBox>
           {this.props.content}
         </ContentBox>
-        <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
+        <MatchingText>해당 의뢰에 적합한 XXX 개의 볼트앤너트 파트너사가 있습니다.</MatchingText>
         
         <LogoSlider/>
         <ThumbText> {Request.percentage}% </ThumbText>
         <CustomSlider value={Request.percentage}/>
-        <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
+        {this.props.title == "기본 정보 입력" ? (<SliderText>의뢰에 대해 이해할 수 있도록 기본 정보를 입력해주세요</SliderText>) : (<SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>)}
         <ButtonContainer>
           <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
           <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>

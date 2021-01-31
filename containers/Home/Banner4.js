@@ -5,7 +5,7 @@ import Background from "components/Background";
 import * as Title from "components/Title";
 import Fade from 'react-reveal/Fade';
 
-const image1 = "/static/images/Home/Banner4/Banner5_img1.png"
+const image1 = "/static/images/Home/Banner4/Banner4_img1.png"
 const backgroundImg = "/static/images/Home/Banner4/Banner4_Bg.png"
 
 class Banner4Container extends React.Component {
@@ -23,7 +23,7 @@ class Banner4Container extends React.Component {
                 컨설턴트 <p>무료 상담</p>
               </Middle>
               <Body>
-                프로젝트마다 해당 제품의 전문가가 배정되어<br/>
+                프로젝트마다 해당 의뢰의 전문가가 배정되어<br/>
                 무료상담을 통해 최적의 견적을 알려드립니다.
               </Body>
             </div>

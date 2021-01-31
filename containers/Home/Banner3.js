@@ -13,8 +13,13 @@ import { inject, observer } from "mobx-react";
 @inject('Proposal','Partner')
 @observer
 class Banner3Container extends React.Component {
+
+
   render() {
+    
     const ProjectCount = this.props.Proposal.projects_count;
+
+
     return (
       <Background src={backgroundImg}>
         <Containerv1 style={{paddingBottom: 308, paddingTop: 306, justifyContent: 'space-between'}}>
@@ -27,12 +32,12 @@ class Banner3Container extends React.Component {
                 AI 제조사 매칭 알고리즘
               </Header>
               <Middle>
-                5000여개의 제조사 중 <br/>
+              4933개 파트너사 중 <br/>
                 딱 맞는 전문가를 매칭
               </Middle>
               <Body>
-                {ProjectCount*3+997}개 프로젝트 데이터를 학습한 AI 매칭 알고리즘이<br/>
-                내 제품의 전문가를 큐레이션해드립니다.
+                {ProjectCount}개 프로젝트 데이터를 학습한 AI 매칭 알고리즘이<br/>
+                내 의뢰의 전문가를 큐레이션해드립니다.
               </Body>
             </div>
           </Fade>
