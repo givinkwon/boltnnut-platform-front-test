@@ -19,6 +19,10 @@ import Slider from '@material-ui/core/Slider';
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
+import MobileStepContainer from '../../components/MobileStep';
+
+import 'react-count-animation/dist/count.min.css';
+import AnimationCount from 'react-count-animation';
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 var titleData=[];
@@ -94,13 +98,11 @@ class RequestCardContainer extends Component {
 
         if (DetailQuestion.prevPage.length > 0)
         {
-          if (DetailQuestion.index != 4)
-          {
             DetailQuestion.pageCount -= 1;
-            if (DetailQuestion.prevPage[DetailQuestion.prevPage.length] == 4) {
+            if (DetailQuestion.prevPage[DetailQuestion.prevPage.length-1] == 4) {
               DetailQuestion.pageCount += 1;
             }
-          }
+
           DetailQuestion.index = DetailQuestion.prevPage.pop();
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
           Request.percentage -= 14;
@@ -147,6 +149,7 @@ class RequestCardContainer extends Component {
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
 
+
           console.log(titleData);
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
         }
@@ -177,10 +180,33 @@ class RequestCardContainer extends Component {
         break;
     }
   }
+  countCalc () {
+    const { Request} = this.props;
+    let result = 4997
+    //console.log(Request.select_big, Request.select_mid, Request.select_small)
+  
+    if(Request.select_big != null && Request.select_mid == null){
+        result = Request.select_big.id === 0 ?  4997 : 460 * (((Request.select_big.id)/5) + 4)
+    }
+    if(Request.select_big != null && Request.select_mid != null){
+        result = Request.select_big.id === 0 ?  4997 : 460 * (((Request.select_big.id)/5) + 4) - 260* ((Request.select_mid.id/50) + 5)
+    }
+    return result
+  }
+
   render() {
     const { active } = this.state;
     const { Request, DetailQuestion } = this.props;
     console.log(this.props.title)
+    const countSettings1 = {
+      start: 0,
+      count : this.countCalc(), 
+      duration: 6000,
+      decimals: 0,
+      useGroup: true,
+      animation: 'up',
+      width: 100
+    };
     return(
       <Card>
         <Header>
@@ -189,9 +215,8 @@ class RequestCardContainer extends Component {
         <ContentBox>
           {this.props.content}
         </ContentBox>
-        <MatchingText>해당 의뢰에 적합한 XXX 개의 볼트앤너트 파트너사가 있습니다.</MatchingText>
-
-        <LogoSlider/>
+        <MatchingText>해당 의뢰에 적합한 <AnimationCount {...countSettings1}/> 개의 볼트앤너트 파트너사가 있습니다.</MatchingText>
+        <LogoSlider updater={this.countCalc}/>
         <ThumbText> {Request.percentage}% </ThumbText>
         <CustomSlider value={Request.percentage}/>
         {this.props.title == "기본 정보 입력" ? (<SliderText>의뢰에 대해 이해할 수 있도록 기본 정보를 입력해주세요</SliderText>) : (<SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>)}
@@ -302,6 +327,9 @@ const MatchingText = styled(Title.FontSize20)`
   color: #282c36;
   text-align:center;
   margin-bottom:20px;
+  > div {
+    display: inline;
+  }
 `
 const ButtonContainer = styled.div`
   width: 260px;

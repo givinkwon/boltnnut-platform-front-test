@@ -19,6 +19,7 @@ class Partner {
   @observable city_list = [];
 
   @observable partner_list = [];
+  @observable random_partner_list = [];
   @observable partner_count = 0;
   @observable partner_next = null;
 
@@ -412,7 +413,7 @@ class Partner {
         console.log(e.response);
       });
   }
-  
+
   @action getRequestsByAnswers = () => {
     if(!this.detail) { return; }
 

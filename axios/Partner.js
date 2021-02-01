@@ -243,3 +243,13 @@ export function getMyPartner() {
     url: `${ROOT_URL}/randompartner/`
   })
 }
+
+export function getRandomPartner(req) {
+  return axios({
+    method: 'POST',
+    url: `${ROOT_URL}/partner/category/`,
+    data: req.data ? req.data : null,
+  })
+}
+
+

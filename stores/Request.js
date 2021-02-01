@@ -58,7 +58,7 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
-  @observable step_index = 3;
+  @observable step_index = 1;
   @observable step1_index = 1;
   @observable drawFile = null;
   @observable percentage = 0
@@ -67,7 +67,12 @@ class Request {
   @observable client_id = null;
   @observable has_email = false;
 
+  // Partner
+  @observable random_partner_list = null;
+
   @action reset = () => {
+    this.step_index = 1;
+    this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";
     this.input_day = null;
@@ -126,7 +131,6 @@ class Request {
       this.created_request = res.data.id;
       this.client_id = res.data.clientId;
       this.has_email = res.data.hasEmail;
-      console.log(this.has_email);
     })
     .catch(error => {
       alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');
@@ -150,6 +154,7 @@ class Request {
         console.log(e.response);
       });
     console.log(this.big_category_list)
+    this.reset();
   };
   @action setBigCategory = (obj) => {
     this.select_big = obj;
@@ -186,8 +191,10 @@ class Request {
       this.setBigCategory(obj)
       return
     }
-
+    //console.log(obj)
     this.select_mid = obj;
+    //console.log(this.select_mid)
+    this.loadRandomPartner();
     this.select_small = null;
     this.small_category_list = obj.subclass_set;
 
@@ -241,6 +248,26 @@ class Request {
       this.tab = 2;
     }
   };
+
+  @action loadRandomPartner = () =>{
+    //console.log(this.select_mid.id)
+    const req = {
+      data: {
+        category: this.select_mid.id,
+        // 제품 분야 = 가능 제품 분야
+        count: 20
+      },
+    };
+    console.log(req);
+		PartnerAPI.getRandomPartner(req)
+			.then((res) => {
+        this.random_partner_list = res.data.results;
+			})
+			.catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  }
 
   @action loadAppropriatePartners = () => {
     if(!this.created_request) { return; }
