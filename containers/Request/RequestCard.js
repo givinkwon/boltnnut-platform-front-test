@@ -94,13 +94,12 @@ class RequestCardContainer extends Component {
 
         if (DetailQuestion.prevPage.length > 0)
         {
-          if (DetailQuestion.index != 4)
-          {
             DetailQuestion.pageCount -= 1;
-            if (DetailQuestion.prevPage[DetailQuestion.prevPage.length] == 4) {
+            if (DetailQuestion.prevPage[DetailQuestion.prevPage.length-1] == 4) {
               DetailQuestion.pageCount += 1;
+              console.log("aaa")
             }
-          }
+          
           DetailQuestion.index = DetailQuestion.prevPage.pop();
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
           Request.percentage -= 14;
@@ -146,6 +145,7 @@ class RequestCardContainer extends Component {
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
+          
 
           console.log(titleData);
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
