@@ -130,7 +130,7 @@ class Step3Container extends Component {
       createData('프로젝트', estimateData.projectTitle, ''),
       createData('개발기간', estimateData.period + '일', ''),
       createData('지급조건', '일시불', ''),
-      createData('견적가', '₩ '+Proposal.estimate_price, 'VAT 포함'),
+      createData('견적가', '₩ '+Proposal.estimate_price, 'VAT 미포함'),
     ];
 
     const {classes} = this.props

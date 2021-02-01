@@ -22,12 +22,13 @@ import Step4Container from './Step4';
 import Step5 from './Step5';
 import Step5Container from './Step5';
 
-@inject("DetailQuestion", "Request")
+@inject("DetailQuestion", "Partner", "Request")
 @observer
 class RequestContainer extends React.Component {
 
   render() {
     const { Request } = this.props;
+    
     return (
       <>
       {this.props.width >= 767.99 ? (
