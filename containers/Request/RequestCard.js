@@ -97,6 +97,9 @@ class RequestCardContainer extends Component {
           if (DetailQuestion.index != 4)
           {
             DetailQuestion.pageCount -= 1;
+            if (DetailQuestion.prevPage[DetailQuestion.prevPage.length] == 4) {
+              DetailQuestion.pageCount += 1;
+            }
           }
           DetailQuestion.index = DetailQuestion.prevPage.pop();
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
@@ -106,7 +109,6 @@ class RequestCardContainer extends Component {
           Request.step_index = 1;
           Request.percentage -= 15;
         }
-
         break;
 
     }
@@ -129,12 +131,12 @@ class RequestCardContainer extends Component {
           } catch(e) {
             console.log(e);
           }
-          } 
+          }
         break;
       case 2:
         if(DetailQuestion.nextPage)
         {
-          
+
           if(DetailQuestion.index!=4 || DetailQuestion.nextPage==8)
           {
             DetailQuestion.pageCount += 1;
@@ -144,13 +146,13 @@ class RequestCardContainer extends Component {
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
-          
+
           console.log(titleData);
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
         }
         else {
           titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
-          
+
           // console.log(Request.drawFile);
           if(DetailQuestion.index==8)
           {
@@ -188,7 +190,7 @@ class RequestCardContainer extends Component {
           {this.props.content}
         </ContentBox>
         <MatchingText>해당 의뢰에 적합한 XXX 개의 볼트앤너트 파트너사가 있습니다.</MatchingText>
-        
+
         <LogoSlider/>
         <ThumbText> {Request.percentage}% </ThumbText>
         <CustomSlider value={Request.percentage}/>

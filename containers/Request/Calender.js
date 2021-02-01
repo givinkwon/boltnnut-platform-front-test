@@ -46,7 +46,7 @@ class Week extends Component {
       Schedule.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
       Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   }
-  
+
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
     const { now } = this.state;
@@ -74,7 +74,7 @@ class Week extends Component {
         className = "not-day";
       }
       else if (occupied.includes(dayInfo.yearMonthDayFormat)) {
-        className = "not-day";
+        className = "not-book";
       }
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD")) {
         className += "today";
@@ -306,10 +306,10 @@ const CalendarContainer = styled.div`
       color: #282c36;
     }
     :hover {
-      background-color: #0933b3;
-      color: white;
+      background-color: #e1e2e4;
+      color: black;
       > div {
-        color: white;
+        color: black;
         display: none;
       }
     }
@@ -343,14 +343,25 @@ const CalendarContainer = styled.div`
       color: #0933b3;
     }
   }
-  .not-daytoday {
+  .not-book {
     pointer-events: none;
     color: #c6c7cc;
+  }
+  .not-booktoday {
+    pointer-events: none;
+    color: #0933b3;
     > div {
       position: absolute;
       margin-top: 38px;
-      color: #c6c7cc;
+      color: #0933b3;
     }
+    //pointer-events: none;
+    //background-color: #e1e2e4;
+    //> div {
+    //  position: absolute;
+    //  margin-top: 38px;
+    //  color: #e1e2e4;
+    //}
   }
 `
 const FoldedComponent = styled.div`
