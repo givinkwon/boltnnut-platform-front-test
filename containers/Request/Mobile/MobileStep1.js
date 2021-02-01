@@ -27,10 +27,10 @@ const customStyles = {
     backgroundColor: '#fff',
     borderRadius: 0,
     padding: 16,
-    fontSize: 16,
+    fontSize: 14,
   }),
   control: () => ({
-    fontSize: 16,
+    fontSize: 14,
     backgroundColor: '#fff',
     display: 'flex',
     borderRadius: 6,
@@ -95,7 +95,7 @@ class MobileStep1Container extends React.Component {
       {label: '3000 만원 이상', value: '3000 만원 이상'}
     ];
      return(
-     <>
+     <div>
        <Header>
          관련 분야
        </Header>
@@ -105,7 +105,7 @@ class MobileStep1Container extends React.Component {
             styles={customStyles} options={Request.big_category_list} value={Request.select_big}
             getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
           />
-        <div style={{marginRight: 38}}/>
+        <div style={{marginRight: 8}}/>
 
         <input style={{display: 'none'}} value={Request.select_mid ? Request.select_mid.category : ''} class="Input"/>
         <Select
@@ -135,7 +135,7 @@ class MobileStep1Container extends React.Component {
             getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
           />
         </SelectRow>
-     </>
+     </div>
     );
   }
   content2 = () => {
@@ -178,7 +178,6 @@ class MobileStep1Container extends React.Component {
          <InputComponent
             file={true}
           />
-         <CheckBoxComponent onChange = {Request.setCommonFile}/>
        </SelectRow>
      </>
     );
@@ -188,7 +187,7 @@ class MobileStep1Container extends React.Component {
     const content1  = this.content1();
     const content2 = this.content2();
     return (
-      <div style={{height:470}}>
+      <div style={{width: "100%", height:470}}>
         { page == 1 ? ( content1 ) : ( content2 ) }
       </div>
     )

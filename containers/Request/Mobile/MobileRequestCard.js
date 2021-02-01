@@ -18,6 +18,7 @@ import Slider from '@material-ui/core/Slider';
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
+import MobileStepContainer from '../../../components/MobileStep';
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 var titleData=[];
@@ -162,8 +163,9 @@ class MobileRequestCardContainer extends Component {
     const { Request, DetailQuestion } = this.props;
     return(
     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
-        <Header color={"#0a2165"}>
-           {this.props.title}
+        <Header>
+          <span>{this.props.title}</span>
+          <MobileStepContainer/>
         </Header>
         <CustomSlider value={Request.percentage}/>
         <ContentBox>
@@ -184,7 +186,11 @@ class MobileRequestCardContainer extends Component {
 
 export default withRouter(MobileRequestCardContainer);
 
-const Header = styled(Content.FontSize16)`
+const Header = styled.div`
+  font-family: Roboto;
+  color: #0a2165;
+  position: relative;
+  font-size: 16px;
   width: auto;
   height: 46px;
   font-weight: bold;
@@ -199,6 +205,7 @@ const Header = styled(Content.FontSize16)`
 `
 const ContentBox = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
 `
 
