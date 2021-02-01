@@ -19,6 +19,7 @@ import Slider from '@material-ui/core/Slider';
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
+import MobileStepContainer from '../../components/MobileStep';
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 var titleData=[];
@@ -97,9 +98,8 @@ class RequestCardContainer extends Component {
             DetailQuestion.pageCount -= 1;
             if (DetailQuestion.prevPage[DetailQuestion.prevPage.length-1] == 4) {
               DetailQuestion.pageCount += 1;
-              console.log("aaa")
             }
-          
+
           DetailQuestion.index = DetailQuestion.prevPage.pop();
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
           Request.percentage -= 14;
@@ -145,7 +145,7 @@ class RequestCardContainer extends Component {
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
-          
+
 
           console.log(titleData);
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
