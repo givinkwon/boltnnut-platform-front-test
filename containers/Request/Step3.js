@@ -13,6 +13,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
 //Slider
 import { withStyles } from '@material-ui/core/styles';
@@ -53,6 +54,7 @@ class Step3Container extends Component {
 
   static defaultProps = { title: '견 적 서' };
 
+  rows1=[];
   componentDidMount()
   {
     this.props.Proposal.loadEstimateInfo(1);
@@ -116,26 +118,19 @@ class Step3Container extends Component {
 
     const estimateData = Proposal.estimateData;
 
-    const createDate = {
-      year: estimateData.createAt.split('-')[0],
-      month: estimateData.createAt.split('-')[1],
-      day: estimateData.createAt.split('-')[2].substring(0, 2),
-    };
-
-
     const rows1 = [
-      // createData('작성일자', createDate.year + '.' + createDate.month + '.' + createDate.day, ''),
-      // createData('문서번호', 'C8-' + createDate.year + createDate.month + createDate.day + '-' + estimateData.id, ''),
-      // createData('수신인', estimateData.client, ''),
+      createData('작성일자', Proposal.estimate_year + '.' + Proposal.estimate_month + '.' + Proposal.estimate_day, ''),
+      createData('문서번호', 'C8-' + Proposal.estimate_year + Proposal.estimate_month + Proposal.estimate_day + '-' + estimateData.id, ''),
+      createData('수신인', estimateData.client, ''),
       createData('발신인', '윤기열 대표 / (주)볼트앤너트', 'TEL : 02 - 926 - 9967'),
-      createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
+      // createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
     ];
 
     const rows2 = [
-      // createData('프로젝트', estimateData.projectTitle, ''),
-      // createData('개발기간', estimateData.period + '일', ''),
-      // createData('지급조건', '일시불', ''),
-      // createData('견적가', '₩ '+estimateData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), 'VAT 포함'),
+      createData('프로젝트', estimateData.projectTitle, ''),
+      createData('개발기간', estimateData.period + '일', ''),
+      createData('지급조건', '일시불', ''),
+      createData('견적가', '₩ '+Proposal.estimate_price, 'VAT 포함'),
     ];
 
     const {classes} = this.props
@@ -152,7 +147,7 @@ class Step3Container extends Component {
           <DetailContainer style={{display: showEstimateDetail}}>
             <Table className={classes.table} size="small">
               <TableBody>
-                  {rows1 && rows1.map((row) => (
+                  { rows1.map((row) => (
                 <TableRow className ={classes.row} key={row.title}>
                   <TableCell className ={classes.cell} component="th" scope="row" width='154'>
                     <Font16 style={{marginRight:48,textAlign:'right'}}>{row.title}</Font16>
@@ -193,11 +188,48 @@ class Step3Container extends Component {
             </Table>
 
             <Font16 style={{marginTop:40,textAlign:'center',fontWeight:'bold'}}>
-            *해당 견적서는 제품 세부사항에 따라 달리질 수 있습니다.<br/>
-            보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
+              *해당 견적서는 제품 세부사항에 따라 달리질 수 있습니다.<br/>
+              보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
             </Font16>
 
             {/* 여기 들어간다 */}
+            {/* <Grid container>
+              <Grid item xs={12}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  1
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  2
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  3
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  4
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  5
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  6
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  7
+                </Box>
+              </Grid>
+            </Grid> */}
             
             <AccountBox>
               <div>
@@ -221,8 +253,7 @@ class Step3Container extends Component {
             </Content.FontSize24>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
-                {/* 25,000,000 원 */}
-                {/*{estimateData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원*/}
+                {Proposal.estimate_price} 원
               </Content.FontSize24>
               <div style={{ marginLeft: 20 }}>
                 {showEstimateDrop == true ? (
