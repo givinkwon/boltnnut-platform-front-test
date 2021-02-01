@@ -97,7 +97,6 @@ class RequestCardContainer extends Component {
             DetailQuestion.pageCount -= 1;
             if (DetailQuestion.prevPage[DetailQuestion.prevPage.length-1] == 4) {
               DetailQuestion.pageCount += 1;
-              console.log("aaa")
             }
           
           DetailQuestion.index = DetailQuestion.prevPage.pop();
