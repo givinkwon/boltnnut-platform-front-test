@@ -4,6 +4,7 @@ import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
+import TaskBarContainer from "./TaskBar"
 
 //material-ui
 import Table from '@material-ui/core/Table';
@@ -43,6 +44,7 @@ const styles = {
   }
 };
 
+
 function createData(title, content, note) {
   return { title, content, note };
 }
@@ -54,7 +56,6 @@ class Step3Container extends Component {
 
   static defaultProps = { title: '견 적 서' };
 
-  rows1=[];
   componentDidMount()
   {
     this.props.Proposal.loadEstimateInfo(1);
@@ -118,7 +119,7 @@ class Step3Container extends Component {
 
     const estimateData = Proposal.estimateData;
 
-    const rows1 = [
+    var rows1 = [
       createData('작성일자', Proposal.estimate_year + '.' + Proposal.estimate_month + '.' + Proposal.estimate_day, ''),
       createData('문서번호', 'C8-' + Proposal.estimate_year + Proposal.estimate_month + Proposal.estimate_day + '-' + estimateData.id, ''),
       createData('수신인', estimateData.client, ''),
@@ -163,6 +164,7 @@ class Step3Container extends Component {
               </TableBody>
 
             </Table>
+
             <Font16 style={{margin:'30px 0 30px 0',textAlign:'center',fontWeight:'bold'}}>
                   * 귀하의 일이 번창하심을 기원합니다. 아래와 같은 조건으로 견적을 제출하오니 참조 바랍니다.
             </Font16>
@@ -193,40 +195,36 @@ class Step3Container extends Component {
             </Font16>
 
             {/* 여기 들어간다 */}
+            
+            <TaskBarContainer/>
+            
+            {/* <Table className={classes2.table} size="small">
+              <TableBody>
+                  { rows1.map((row) => (
+                <TableRow className ={classes2.row} key={row.title}>
+                  <TableCell className ={classes2.cell} component="th" scope="row" width='154'>
+                    <Font16 style={{marginRight:48,textAlign:'right'}}>{row.title}</Font16>
+                  </TableCell>
+                  <TableCell className ={classes2.cell} width='472'>
+                    <Font16 style={{marginLeft:20,textAlign:'left'}}>{row.content}</Font16>
+                  </TableCell>
+                  <TableCell className ={classes2.cell} width='268'>
+                    <Font16 style={{marginRight:52,textAlign:'right'}}>{row.note}</Font16>
+                  </TableCell>
+                </TableRow>
+              ))}
+              </TableBody>
+            </Table> */}
+
             {/* <Grid container>
-              <Grid item xs={12}>
+              <Grid item xs={9} sm={1}>
                 <Box bgcolor="info.main" color="info.contrastText" p={2}>
                   1
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={9} sm={1}>
                 <Box bgcolor="info.main" color="info.contrastText" p={2}>
                   2
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Box bgcolor="info.main" color="info.contrastText" p={2}>
-                  3
-                </Box>
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Box bgcolor="info.main" color="info.contrastText" p={2}>
-                  4
-                </Box>
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Box bgcolor="info.main" color="info.contrastText" p={2}>
-                  5
-                </Box>
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Box bgcolor="info.main" color="info.contrastText" p={2}>
-                  6
-                </Box>
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Box bgcolor="info.main" color="info.contrastText" p={2}>
-                  7
                 </Box>
               </Grid>
             </Grid> */}
