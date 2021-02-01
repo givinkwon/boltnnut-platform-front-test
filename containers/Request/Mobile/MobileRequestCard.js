@@ -199,6 +199,7 @@ const Header = styled(Content.FontSize16)`
 `
 const ContentBox = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
 `
 

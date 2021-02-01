@@ -60,7 +60,7 @@ class InputComponent extends React.Component {
     return (
       <Wrap width={this.props.width}>
         <InputBox
-          style={{width: 460, display: 'inline-block'}}
+          style={{width: '100%', display: 'inline-block'}}
           onClick = {()=>this.file.current.click()}>
           <input
             type="file"
@@ -103,6 +103,15 @@ const InputBox = styled.div`
     border-radius: 3px;
     border: solid 1px #c6c7cc;
     background-color: #ffffff;
+    > img {
+      position: relative;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-right: 20px;
+      padding-left: 0px;
+      width: 20px;
+      height: 18px;
+    }
   }
 `
 const Wrap = styled.div`

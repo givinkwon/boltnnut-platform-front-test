@@ -161,14 +161,13 @@ class Step1Container extends React.Component {
           />
        </SelectRow>
        <Header style={{marginTop: 30}}>
-        의뢰 관련 파일
+         의뢰 관련 파일
        </Header>
 
        <SelectRow style={{width: "100%"}}>
          <InputComponent
             file={true}
           />
-         {/* <CheckBoxComponent onChange = {Request.setCommonFile}/> */}
        </SelectRow>
      </>
     );
@@ -214,4 +213,6 @@ const SelectRow = styled.div`
 `
 const Select = styled(SelectComponent)`
   width: 400px;
+`
+const CustomCheckBox = styled(CheckBoxComponent)`
 `

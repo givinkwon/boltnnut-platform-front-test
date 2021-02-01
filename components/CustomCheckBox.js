@@ -47,4 +47,5 @@ const CheckBox = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
+  margin-left: 20px;
 `
