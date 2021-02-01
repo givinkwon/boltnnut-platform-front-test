@@ -5,7 +5,7 @@ import * as Title from "components/Title";
 class SliderMain extends React.Component {
   render() {
     const { item } = this.props;
-    const mac = 'static/images/Home/Banner6/Mac.png';
+    const mac = 'static/images/Home/Banner7/Mac.png';
     return (
       <SliderContent>
         <div style={{marginTop: 50,}}>
@@ -45,6 +45,9 @@ const Head = styled(Title.FontSize24)`
   line-height: 1.67;
   letter-spacing: -0.6px;
   text-align: left;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 12px;
+  }
 ;
 `
 const Main = styled(Title.FontSize32)`
@@ -56,6 +59,9 @@ const Main = styled(Title.FontSize32)`
   text-align: left;
   color: #333742;
   margin: 10px 0px 30px 0px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 13px;
+  }
 `
 const Foot = styled(Title.FontSize24)`
   font-weight: 500;
@@ -65,6 +71,9 @@ const Foot = styled(Title.FontSize24)`
   letter-spacing: -0.6px;
   text-align: left;
   color: #f6f6f6;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 13px;
+  }
 `
 const ImageContainer = styled.div`
   position: relative;

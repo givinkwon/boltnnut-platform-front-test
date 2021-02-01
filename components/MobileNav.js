@@ -3,15 +3,20 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { withRouter } from 'next/router'
 import Router from "next/router";
+import * as Title from "components/Title";
 // components
 import * as Text from "./Text";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
+import Buttonv1 from "components/Buttonv1";
 
 const close_ic = "/static/icon/close.svg";
-const hamburger_ic = "/static/icon/hamburger.png";
-const logo_ic = "/static/images/logo2.jpg";
+// const hamburger_ic = "/static/icon/hamburger.png";
+const hamburger_ic = "/static/images/components/MobileNav/hamburger.png";
+
+const x_ic = "/static/images/components/MobileNav/xBtn.png";
 const profile = "/static/images/profile.png";
+const logo_ic = "/static/images/components/MobileNav/MobileLogo.png";
 //...
 @inject("Auth", "Partner")
 @observer
@@ -120,26 +125,54 @@ class MobileNav extends React.Component {
     return (
       <NavBox>
         {is_open && (
+          <Modal>
             <ProfileMenu width={this.props.width} onClick={() => this.setState({is_open: false})}>
-                <span onClick={async () => await Router.push("/profile")}> 프로필 수정 </span>
-                <span onClick={async () => await Router.push('/account?tab=1')}> 계정 관리 </span>
-                <span onClick={this.logout}> 로그아웃 </span>
+              <ModalHeader>
+                <div style={{marginBottom: 50, width: '100%'}}>
+                  <Logo src={logo_ic} onClick={() => Router.push("/")} style={{float:'left'}}/>
+                  <img src={ x_ic } style={{float: 'right'}}/>
+                </div>
+                <div>내 제품 제작 비용 지금 바로 전문가를 만나 보세요.</div>
+                <FreeButton onClick={() => Router.push("/request")}>
+                  <span>지금 무료 가견적 받기</span>
+                </FreeButton>
+              </ModalHeader>
+              <ModalContent>
+                <p>내 의뢰 관리</p>
+                <p>제조 인사이트</p>
+                <p>회사소개</p>
+              </ModalContent>
+              <ModalContent2>
+                <p>자주찾는 질문</p>
+                <p onClick={() => Router.push("/term/policy")}>이용약관</p>
+                <p onClick={() => Router.push("/term/personal")}>개인정보 처리 방침</p>
+              </ModalContent2>
+              <Footer>
+                <div onClick={this.logout}> 로그아웃 </div>
+              </Footer>
             </ProfileMenu>
+          </Modal>
           )}
         <Container>
-          <NavWrap/>
           <NavWrap2>
-            <Logo src={logo_ic} onClick={() => Router.push("/")} />
+            <Logo src={this.props.src} onClick={() => Router.push("/")} />
+            <HeadText>{this.props.headText}</HeadText>
             {
               !this.props.Auth.logged_in_user ? (
-              <NavLink
-                  onClick={() => {
-                    Router.push("/login"), Auth.reset();
-                  }}
-                  active={url.indexOf("login") > -1}
-                >
-                  로그인
-              </NavLink>
+              //   <NavLink
+              //     onClick={() => {
+              //       Router.push("/login"), Auth.reset();
+              //     }}
+              //     active={url.indexOf("login") > -1}
+              //   >
+              //     로그인
+              // </NavLink>
+                <>
+                <Icon
+                  src={hamburger_ic}
+                  onClick={this.menuClick}
+                />
+                </>
               ) : (
               <>
               <Icon
@@ -150,270 +183,188 @@ class MobileNav extends React.Component {
               )
             }
           </NavWrap2>
-          <NavWrap3>
-            <NavLink3
-                  onClick={() => {
-                    Router.push("/"), Auth.reset();
-                  }}
-                  active={url == '/'}
-                >
-                  홈
-            </NavLink3>
-            <NavLink3
-                      first
-                      //onClick={() => Router.push("/request?big=4&mid=")}
-                      onClick={() => Router.push("/request")}
-                      active={url.indexOf("request") > -1}
-                    >
-                      의뢰하기
-            </NavLink3>
-            <NavLink3
-                    onClick={
-                      async () => {
-                        await Router.push("/partner");
-                        if(Router.pathname === '/partner') {
-                          Router.reload();
-                        }
-                      }
-                    }
-                    active={url.indexOf("partner") > -1}
-                  >
-                    제조사 찾기
-            </NavLink3>
-            
-            
-            <NavLink3
-                  onClick={
-                    async () => {
-                      await Router.push("/info");
-                      if(Router.pathname === '/info') {
-                        Router.reload();
-                      }
-                    }
-                  }
-                  active={url.indexOf("info") > -1}>
-                    서비스 소개
-            </NavLink3>
-            <NavLink3
-                  onClick={() => {
-                    Router.push("/magazine");
-                  }}
-                  active={url.indexOf("magazine") > -1}
-                >
-                  매거진
-            </NavLink3>
-          </NavWrap3>
         </Container>
       </NavBox>
     );
   }
 }
-
+const Modal = styled.div`
+  position: fixed; 
+  z-index: 3; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4); 
+`
 const ProfileMenu = styled.div`
-  width: 126px;
-  height: 162px;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+  width: 70%;
+  padding: 22px 24px;
+  height: 100%%;
   position: absolute;
   background-color: white;
   z-index: 3;
-  transform: translate3d(${props => props.width ? props.width - 156 : 10}px, calc(55%), 0);
+  top: 0;
+  right: 0;
+  // transform: translate3d(${props => props.width ? props.width - 156 : 10}px, calc(55%), 0);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  }
+`
+const ModalHeader = styled.div`
+  width: 100%;
+  height: 182px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px #e1e2e4;
   align-items: center;
-  border-radius: 6px;
+  
+  > div {
+    font-family: NotoSansCJKkr;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: -0.3px;
+    color: #111111;
+    text-align: center;
+  }
+`
+const ModalContent = styled.div`
+  width: 100%;
+  height: 158px;
+  display: flex;
+  border-bottom: solid 1px #e1e2e4;
+  flex-direction: column;
+  justify-content: space-evenly;
+  
+  > p {
+    font-family: NotoSansCJKkr;
+    font-size: 15px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.27;
+    letter-spacing: -0.38px;
+    text-align: left;
+    color: #111111;
+  }
+`
+const HeadText = styled.div`
+  z-index: 0;
+  width: 100%;
+  height:29px; 
+  position: absolute;
+  color: #0a2165;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: NotoSansCJKkr;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.5px;
+  left: 0;
+`
+const Footer = styled.div`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  > div {
+    width: 100%;
+    font-family: NotoSansCJKkr;
+    font-size: 13px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.46;
+    letter-spacing: -0.33px;
+    text-align: center;
+    color: #111111;
+  }
+`
+const FreeButton = styled(Buttonv1)`
+  margin-top: 8px;
   > span {
-    padding-bottom: 20px;
-    :nth-of-type(3) {
-      padding:0
+    font-family: NotoSansCJKkr;
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.19;
+    letter-spacing: -0.4px;
+    text-align: center;
+    color: #ffffff;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 270px;
+      height: 43px;
     }
   }
-`;
+  
+`
+const ModalContent2 = styled.div`
+  width: 100%;
+  height: 310px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px #e1e2e4;
+  margin-top: 27px;
+
+  > p {
+    font-family: NotoSansCJKkr;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.3px;
+    color: #282c36;
+    margin-bottom: 22px;
+  }
+`
 const Container = styled.div`
   margin-right: auto;
   margin-left: auto;
 `
-const Avatar = styled.img`
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  padding: 0px 15px;
-  cursor: pointer;
-`;
 const NavBox = styled.div`
-  height: 136px;
+  height: 54px;
   width: 100%;
   background-color: ${WHITE};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 `;
-const NavWrap = styled.div`
-  display: flex;
-  align-items: center;
-  height: 36px;
-`;
 const NavWrap2 = styled.div`
   display: flex;
+  text-align: center;
   align-items: center;
-  height: 52px;
-  background-color: #f3f3f3;
-  padding-right: calc(10%);
-  padding-left: calc(9%);
-`;
-const NavWrap3 = styled.div`
-  display: inline-flex;
-  align-items: center;
-  height: 48px;
-  width: 100%;
-  align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  height: 54px;
+  background-color: #ffffff; // #f3f3f3
+  padding-left: 18px;
+  padding-right: 18px;
 `;
 const Logo = styled.img`
   cursor: pointer;
-  width: 113px;
+  z-index: 1;
 `;
 const Icon = styled.img`
   cursor: pointer;
-  margin-left: auto;
   width: 40px;
   height: 40px;
   display: none;
   background-color: '#f3f3f3';
+  z-index: 1;
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: block;
+    width: 21px;
+    height: 13px;
   }
 `;
-const Menu = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: none;
-    flex-direction: column;
 
-    width: 100%;
-    max-width: 380px;
-    height: 100vh;
-    background-color: ${DARKGRAY};
-    position: absolute;
-
-    top: 0;
-    right: -100%;
-    transition: 0.8s;
-
-    z-index: 900;
-    ${(props) =>
-      props.is_open &&
-      css`
-        display: flex;
-        right: 0%;
-      `}
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-right: -12px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-right: -25px;
-  }
-  @media (min-width: 1300px) and (max-width: 1599.98px) {
-    margin-right: -25px;
-  }
-  @media (min-width: 1600px) {
-    margin-right: -30px;
-  }
-`;
-const NavLink = styled.p`
-  margin: 0px;
-  height: 100%;
-  cursor: pointer;
-  color: #000000;
-  display: flex;
-  align-items: center;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 14px;
-    font-weight: 500;
-    width: 100%;
-    justify-content: flex-end;
-    text-align: right;
-  }
-  ${(props) =>
-    props.first &&
-    css`
-      margin-left: 0px !important;
-    `}
-  ${(props) =>
-    props.active ?
-    (
-    css`
-      font-weight: 700;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #0a2165;
-      font-size: 22px;
-      border-bottom: 4px solid #0a2165;
-    `) :
-    (
-    css`
-      font-weight: 500;
-      background-color: rgba(255, 255, 255, 0.1);
-      font-size: 20px;
-      font-weight: 500;
-    `
-    )
-    }
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-`;
-const NavLink3 = styled.div`
-  margin: 0;
-  height: 100%;
-  cursor: pointer;
-  color: #000000;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.46;
-  letter-spacing: -0.33px;
-  text-align: center;
-  color: #191919;
-  display: flex;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-  }
-  ${(props) =>
-    props.first &&
-    css`
-      margin-left: 0px !important;
-    `}
-  ${(props) =>
-    props.active ?
-    (
-    css`
-      font-weight: 700;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #0a2165;
-      font-size: 13px;
-      border-bottom: 2px solid #0a2165;
-    `) :
-    (
-    css`
-      font-weight: 500;
-      background-color: rgba(255, 255, 255, 0.1);
-      font-size: 13px;
-      font-weight: 500;
-    `
-    )
-    }
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-`;
-const Close = styled.div`
-  margin: 10px;
-  width: calc(100% - 20px);
-  display: none;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: flex;
-  }
-`;
 export default MobileNav;

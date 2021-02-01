@@ -6,33 +6,33 @@ import * as Title from "components/Title";
 import Fade from 'react-reveal/Fade';
 
 const image1 = "/static/images/Home/Banner4/Banner4_img1.png"
+const backgroundImg = "/static/images/Home/Banner4/Banner4_Bg.png"
 
 class Banner4Container extends React.Component {
   render() {
     return (
-        <Background backgroundColor = {"#d4d7e2"}>
-            <Containerv1 style={{paddingBottom: 306, paddingTop: 308, justifyContent: 'space-between'}}>
-              <Fade bottom>
-                <div>
-                  <Header>
-                    계약 이행 보증 서비스
-                  </Header>
-                  <Middle>
-                    7가지 계약 관리<br/>
-                    서비스로 계약 이행<br/>
-                    <p>100% 보증</p>
-                  </Middle>
-                  <Body>
-                    개발부터 납품까지 전담 프로젝트 매니저가<br/>
-                    배정되어 계약 이행을 100% 보증합니다.
-                  </Body>
-                </div>
-                <div>
-                  <img src={image1}/>
-                </div>
-              </Fade>
-            </Containerv1>
-        </Background>
+      <Background src={backgroundImg}>
+        <Containerv1 style={{paddingBottom: 358, paddingTop: 257, justifyContent: 'space-between'}}>
+          <Fade bottom>
+            <div>
+              <Header>
+                제조 무료 상담 서비스
+              </Header>
+              <Middle>
+                최대 40년 경력의<br/>
+                컨설턴트 <p>무료 상담</p>
+              </Middle>
+              <Body>
+                프로젝트마다 해당 의뢰의 전문가가 배정되어<br/>
+                무료상담을 통해 최적의 견적을 알려드립니다.
+              </Body>
+            </div>
+            <div>
+              <img src={image1}/>
+            </div>
+          </Fade>
+        </Containerv1>
+      </Background>
     );
   }
 }
@@ -46,6 +46,7 @@ const Header = styled(Title.FontSize20)`
   font-style: normal;
   line-height: 1.45;
   letter-spacing: normal;
+  margin-bottom:16px;
 `
 const Middle = styled(Title.FontSize56)`
   color: #282c36;
@@ -54,14 +55,15 @@ const Middle = styled(Title.FontSize56)`
   font-style: normal;
   line-height: 1.36;
   letter-spacing: -1.4px;
-  margin-bottom: 47px;
-  
+  margin-bottom: 107px;
+
   >p {
+    display: inline;
     font-weight:bold;
   }
 `
 const Body = styled(Title.FontSize24)`
-  // white-space:nowrap;
+  white-space:nowrap;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -70,4 +72,3 @@ const Body = styled(Title.FontSize24)`
   text-align: left;
   color: #555963;
 `
-

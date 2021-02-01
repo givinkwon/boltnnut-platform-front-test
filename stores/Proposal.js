@@ -38,6 +38,31 @@ class Proposal {
 	@observable select_saves = []
 	@observable select_saves_next = null
 
+	//견적서(규석)
+	@observable estimateData = []
+	@observable estimate_year='';
+	@observable estimate_month='';
+	@observable estimate_day='';
+	@observable estimate_price='';
+
+	@action loadEstimateInfo = async (index) => {
+		await ProposalAPI.getEstimateInfo(index)
+			.then(res => {
+					this.estimateData = res.data;
+				}
+			)
+
+		this.setEstimateInfo();
+	};
+
+	@action setEstimateInfo=()=>
+	{
+		this.estimate_year= this.estimateData.createAt.split('-')[0];
+		this.estimate_month= this.estimateData.createAt.split('-')[1];
+		this.estimate_day= this.estimateData.createAt.split('-')[2].substring(0,2);
+		this.estimate_price = this.estimateData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+	};
+
     @action setCategory = (e) => {
 		this.category = e.target.value
 		console.log('category: ' + this.category)
@@ -620,6 +645,8 @@ class Proposal {
 		// 0이면 false, 1이면 true
 		return filtered.length !== 0
 	}
+
+
 }
 
 export default new Proposal()

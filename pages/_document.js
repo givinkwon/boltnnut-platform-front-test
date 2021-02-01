@@ -120,7 +120,7 @@ export default class MyDocument extends Document {
         <body>
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5" height="0" width="0" style={{display : "none", visibility : "hidden"}}></iframe></noscript>
           <Main />
-          {/* <script dangerouslySetInnerHTML={this.setChannelTalk()} /> */}
+          <script dangerouslySetInnerHTML={this.setChannelTalk()} />
           <NextScript />
           {/* GA Settings
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>

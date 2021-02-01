@@ -40,24 +40,7 @@ const CustomInput = withStyles({
       '&.Mui-focused fieldset': {
         borderColor: '#0933b3',
       },
-    }, 
-    // '& input': {
-    //   color: '#999999',
-    //   '&::placeholder': {
-    //     color: '#c7c7c7',
-    //   }
-    // },
-    // '& .MuiTextField-root': {
-    // },
-    // '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-    //   borderBottom: '2px solid #c7c7c7',
-    // },
-    // '& .MuiInput-underline:before': {
-    //   borderBottom: '1px solid #c7c7c7',
-    // },
-    // '& .MuiInput-underline:after': {
-    //   borderBottomColor: '#c7c7c7',
-    // },       
+    },       
   },            
 })(TextField);
 
