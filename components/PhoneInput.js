@@ -135,8 +135,8 @@ const Wrap = styled.div`
   }
 `
 const InputCell = styled.div`
-  width: ${(props) => (props.width ? props.width : 74)}px;
-  height: ${(props) => (props.height ? props.height : 44)}px;
+  width: 74px;
+  height: 44px;
   margin-top: ${props => props.marginTop}px;
   color: #404040;
   font-weight: 400;
@@ -163,11 +163,14 @@ const InputCell = styled.div`
       letter-spacing: -0.18px;
       text-align: left;
       color: #c6c7cc;
+    }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 66px;
     height: 34px;
     > input {
+      width: 100%;
+      height: 100%;
       border: none;
       padding: 0 !important;
       :focus {
@@ -183,6 +186,6 @@ const InputCell = styled.div`
         text-align: left;
         color: #c6c7cc;
       }
-  }
+    }
   }
 `
