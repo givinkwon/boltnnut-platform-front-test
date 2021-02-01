@@ -123,7 +123,7 @@ class Step3Container extends Component {
       createData('문서번호', 'C8-' + Proposal.estimate_year + Proposal.estimate_month + Proposal.estimate_day + '-' + estimateData.id, ''),
       createData('수신인', estimateData.client, ''),
       createData('발신인', '윤기열 대표 / (주)볼트앤너트', 'TEL : 02 - 926 - 9967'),
-      createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
+      // createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
     ];
 
     const rows2 = [
@@ -193,7 +193,43 @@ class Step3Container extends Component {
             </Font16>
 
             {/* 여기 들어간다 */}
-
+            {/* <Grid container>
+              <Grid item xs={12}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  1
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  2
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  3
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  4
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  5
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  6
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box bgcolor="info.main" color="info.contrastText" p={2}>
+                  7
+                </Box>
+              </Grid>
+            </Grid> */}
             
             <AccountBox>
               <div>
