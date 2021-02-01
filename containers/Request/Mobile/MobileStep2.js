@@ -1,18 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-import * as Title from 'components/Title';
-import RequestCardContainer from './RequestCard';
+import React from 'react'
+import styled from 'styled-components'
 import { inject, observer } from 'mobx-react';
-import 'intersection-observer'; // polyfill
-import DetailQuestion from '../../stores/DetailQuestion';
-import ProductInfoContainer from './ProductInfo'
+import * as Title from 'components/Title';
+import 'intersection-observer';
+import DetailQuestion from '../../../stores/DetailQuestion';
+import ProductInfoContainer from '../ProductInfo';
+import MobileRequestCardContainer from '../Mobile/MobileRequestCard';
 
-const Qimage = "static/images/request/Step2/Q.png";
-const fileImage = 'static/images/components/Input2/Mask.png';
+const Qimage = "/static/images/request/Step2/MobileQ.png";
+const fileImage = '/static/images/components/Input2/Mask.png';
 
-@inject('DetailQuestion', 'Request','ManufactureProcess')
+@inject('DetailQuestion', 'Request', 'ManufactureProcess')
 @observer
-class Step2Container extends React.Component {
+class MobileStep2Container extends React.Component {
   onChangeFile = (e,data,idx) => {
     const {Request}  = this.props;
     let fileName;
@@ -34,26 +34,17 @@ class Step2Container extends React.Component {
       fileName: fileName,
     })
   }
-
   state = {
     fileName: '',
   };
-
-  // componentDidUpdate()
-  // {
-  //   this.handleClass();
-  // }
   componentDidMount()
   {
     if(DetailQuestion.select)
       DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
   }
-
-
   content = () => {
     const { DetailQuestion, Request, ManufactureProcess } = this.props;
-    const { fileName } = this.state;
 
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
@@ -82,43 +73,43 @@ class Step2Container extends React.Component {
     let activeHandler=(idx) =>
     {
       if(idx===DetailQuestion.SelectChecked)
-        { return true; } else
-        { return false; }
+      { return true; } else
+      { return false; }
     };
 
     return (
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
+          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}</TitleQue>}
         </TitleContainer>
         <input value={DetailQuestion.index<8 ? DetailQuestion.SelectChecked : ManufactureProcess.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>
           {
             (DetailQuestion.select.data && DetailQuestion.index<8)&& DetailQuestion.select.data.map((data,idx) => {
               return (
-                <div style={{marginLeft:33}}>
+                <div>
                   {
-                  DetailQuestion.index == 4 &&
-                  <>
-                  <FileSelect active={fileActiveHandler(1)}
-                              onClick = {() =>
-                                document.getElementById("FileInput").click()
-                              }
-                    >
-                    <Text id={'queText'} color={"#282c36"}>
-                        { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요." }
-                    </Text>
-                    <img src={fileImage} />
-                    <input
-                      id="FileInput"
-                      type="file"
-                      style={{display: 'none'}}
-                      onChange={(e) => this.onChangeFile(e,{nextTitle:8}, 1)}
-                      // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
-                    />
-                  </FileSelect>
-                  </>
+                    DetailQuestion.index == 4 &&
+                    <>
+                      <FileSelect active={fileActiveHandler(1)}
+                                  onClick = {() =>
+                                    document.getElementById("FileInput").click()
+                                  }
+                      >
+                        <Text id={'queText'} color={"#282c36"}>
+                          { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요." }
+                        </Text>
+                        <img src={fileImage} />
+                        <input
+                          id="FileInput"
+                          type="file"
+                          style={{display: 'none'}}
+                          onChange={(e) => this.onChangeFile(e,{nextTitle:8}, 1)}
+                          // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
+                        />
+                      </FileSelect>
+                    </>
                   }
 
                   <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
@@ -138,31 +129,35 @@ class Step2Container extends React.Component {
 
   render(){
     const content = this.content();
-
     return (
-      <RequestCardContainer title={"제품 정보 선택"} content = { content }>
-      </RequestCardContainer>
+      <MobileRequestCardContainer title={"제품 정보 선택 " + (DetailQuestion.pageCount + 1) + "/5"} content = { content }>
+      </MobileRequestCardContainer>
     );
   }
 }
 
-export default Step2Container;
+export default MobileStep2Container;
 
 
 
 const TitleContainer = styled.div`
   width: 100%;
-  height: 36px;
+  height: 25px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 30px;
 `
 const TitleQue = styled(Title.FontSize24)`
-  font-weight: bold;
-  letter-spacing: -0.6px;
-  color: #282c36;
-  display: inline;
-  margin-left: 10px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 17px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    color: #282c36;
+    display: inline;
+    margin-left: 10px;
+  }
 `
 const SelectContainer = styled.div`
   width: 100%;
@@ -171,13 +166,15 @@ const SelectContainer = styled.div`
   // height:374px;
   height: ${(props) => (props.index==8 ? "auto" : '374px')};
 `
-  const Text = styled(Title.FontSize16)`
+const Text = styled(Title.FontSize16)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.16px;
   color: ${(props) => (props.color ? props.color : '#282c36')};
   margin-left: 10px;
+  
+  
 `
 const Select = styled.button`
   border: none;
@@ -202,6 +199,15 @@ const Select = styled.button`
   }
   > img {
     margin-left: 10px;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 347px;
+    height: 40px;
+    //padding: 10px 152px 10px 8px;
+    object-fit: contain;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    background-color: #ffffff;
   }
 `
 const FileSelect = styled.div`

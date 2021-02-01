@@ -96,7 +96,7 @@ class MobileStep1Container extends React.Component {
     ];
      return(
      <>
-       <Header> 
+       <Header>
          관련 분야
        </Header>
        <SelectRow>
@@ -113,7 +113,7 @@ class MobileStep1Container extends React.Component {
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
           />
         </SelectRow>
-        <Header style={{marginTop: 30}}> 
+        <Header style={{marginTop: 30}}>
             희망 예산
         </Header>
         <SelectRow style={{width: 380}}>
@@ -143,7 +143,7 @@ class MobileStep1Container extends React.Component {
 
     return(
      <>
-       <Header> 
+       <Header>
          제품명
        </Header>
        <SelectRow>
@@ -155,7 +155,7 @@ class MobileStep1Container extends React.Component {
             onChange={Request.setInputName}
           />
        </SelectRow>
-       <Header style={{marginTop: 30}}> 
+       <Header style={{marginTop: 30}}>
             전화번호
        </Header>
        <SelectRow>
@@ -195,13 +195,11 @@ class MobileStep1Container extends React.Component {
   }
 
   render() {
-    const { Request, Partner } = this.props;
-    const content1  = this.content1();
-    const content2 = this.content2();
+    const { Request } = this.props;
     const content = this.contenthandler();
 
     return (
-      <MobileRequestCardContainer title={"기본 정보 입력"} content = {content}>
+      <MobileRequestCardContainer title={"기본 정보 입력 " + Request.step1_index + "/2"} content = {content}>
       </MobileRequestCardContainer>
     )
   }
@@ -224,7 +222,7 @@ const SelectRow = styled.div`
   display: flex;
   margin-top: 10px;
 `
-const Select = styled(SelectComponent)`  
+const Select = styled(SelectComponent)`
     width: 169px;
     height: 34px;
     object-fit: contain;

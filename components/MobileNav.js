@@ -13,9 +13,10 @@ import Buttonv1 from "components/Buttonv1";
 const close_ic = "/static/icon/close.svg";
 // const hamburger_ic = "/static/icon/hamburger.png";
 const hamburger_ic = "/static/images/components/MobileNav/hamburger.png";
+
 const x_ic = "/static/images/components/MobileNav/xBtn.png";
-const logo_ic = "/static/images/logo2.jpg";
 const profile = "/static/images/profile.png";
+const logo_ic = "/static/images/components/MobileNav/MobileLogo.png";
 //...
 @inject("Auth", "Partner")
 @observer
@@ -142,9 +143,9 @@ class MobileNav extends React.Component {
                 <p>회사소개</p>
               </ModalContent>
               <ModalContent2>
-                <p>자주묻는 질문</p>
-                <p>이용약관</p>
-                <p>개인정보 처리 방침</p>
+                <p>자주찾는 질문</p>
+                <p onClick={() => Router.push("/term/policy")}>이용약관</p>
+                <p onClick={() => Router.push("/term/personal")}>개인정보 처리 방침</p>
               </ModalContent2>
               <Footer>
                 <div onClick={this.logout}> 로그아웃 </div>
@@ -154,7 +155,8 @@ class MobileNav extends React.Component {
           )}
         <Container>
           <NavWrap2>
-            <Logo src={logo_ic} onClick={() => Router.push("/")} />
+            <Logo src={this.props.src} onClick={() => Router.push("/")} />
+            <HeadText>{this.props.headText}</HeadText>
             {
               !this.props.Auth.logged_in_user ? (
               //   <NavLink
@@ -181,59 +183,6 @@ class MobileNav extends React.Component {
               )
             }
           </NavWrap2>
-          {/* <NavWrap3>
-            <NavLink3
-                  onClick={() => {
-                    Router.push("/"), Auth.reset();
-                  }}
-                  active={url == '/'}
-                >
-                  홈
-            </NavLink3>
-            <NavLink3
-                      first
-                      //onClick={() => Router.push("/request?big=4&mid=")}
-                      onClick={() => Router.push("/request")}
-                      active={url.indexOf("request") > -1}
-                    >
-                      의뢰하기
-            </NavLink3>
-            <NavLink3
-                    onClick={
-                      async () => {
-                        await Router.push("/partner");
-                        if(Router.pathname === '/partner') {
-                          Router.reload();
-                        }
-                      }
-                    }
-                    active={url.indexOf("partner") > -1}
-                  >
-                    제조사 찾기
-            </NavLink3>
-
-
-            <NavLink3
-                  onClick={
-                    async () => {
-                      await Router.push("/info");
-                      if(Router.pathname === '/info') {
-                        Router.reload();
-                      }
-                    }
-                  }
-                  active={url.indexOf("info") > -1}>
-                    서비스 소개
-            </NavLink3>
-            <NavLink3
-                  onClick={() => {
-                    Router.push("/magazine");
-                  }}
-                  active={url.indexOf("magazine") > -1}
-                >
-                  매거진
-            </NavLink3>
-          </NavWrap3> */}
         </Container>
       </NavBox>
     );
@@ -241,7 +190,7 @@ class MobileNav extends React.Component {
 }
 const Modal = styled.div`
   position: fixed; 
-  z-index: 1; 
+  z-index: 3; 
   left: 0;
   top: 0;
   width: 100%; 
@@ -273,10 +222,7 @@ const ModalHeader = styled.div`
   flex-direction: column;
   border-bottom: solid 1px #e1e2e4;
   align-items: center;
-
-  //&:after {
-  //  border-bottom: solid 1px #e1e2e4;
-  //}
+  
   > div {
     font-family: NotoSansCJKkr;
     font-size: 12px;
@@ -308,6 +254,23 @@ const ModalContent = styled.div`
     color: #111111;
   }
 `
+const HeadText = styled.div`
+  z-index: 0;
+  width: 100%;
+  height:29px; 
+  position: absolute;
+  color: #0a2165;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: NotoSansCJKkr;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.5px;
+  left: 0;
+`
 const Footer = styled.div`
   width: 100%;
   height: 60px;
@@ -328,8 +291,6 @@ const Footer = styled.div`
   }
 `
 const FreeButton = styled(Buttonv1)`
-  width: 270px;
-  height: 43px;
   margin-top: 8px;
   > span {
     font-family: NotoSansCJKkr;
@@ -341,7 +302,12 @@ const FreeButton = styled(Buttonv1)`
     letter-spacing: -0.4px;
     text-align: center;
     color: #ffffff;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 270px;
+      height: 43px;
+    }
   }
+  
 `
 const ModalContent2 = styled.div`
   width: 100%;
@@ -367,189 +333,38 @@ const Container = styled.div`
   margin-right: auto;
   margin-left: auto;
 `
-const Avatar = styled.img`
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  padding: 0px 15px;
-  cursor: pointer;
-`;
 const NavBox = styled.div`
   height: 54px;
   width: 100%;
   background-color: ${WHITE};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 `;
-const NavWrap = styled.div`
-  display: flex;
-  align-items: center;
-  height: 36px;
-`;
 const NavWrap2 = styled.div`
   display: flex;
+  text-align: center;
   align-items: center;
+  justify-content: space-between;
   height: 54px;
   background-color: #ffffff; // #f3f3f3
-  padding-right: 20px;
-  padding-left: 14px;
-`;
-const NavWrap3 = styled.div`
-  display: inline-flex;
-  align-items: center;
-  height: 48px;
-  width: 100%;
-  align-items: center;
-  justify-content: space-evenly;
+  padding-left: 18px;
+  padding-right: 18px;
 `;
 const Logo = styled.img`
   cursor: pointer;
-  width: 113px;
+  z-index: 1;
 `;
 const Icon = styled.img`
   cursor: pointer;
-  margin-left: auto;
   width: 40px;
   height: 40px;
   display: none;
   background-color: '#f3f3f3';
+  z-index: 1;
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: block;
     width: 21px;
     height: 13px;
   }
 `;
-const Menu = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: none;
-    flex-direction: column;
 
-    width: 100%;
-    max-width: 380px;
-    height: 100vh;
-    background-color: ${DARKGRAY};
-    position: absolute;
-
-    top: 0;
-    right: -100%;
-    transition: 0.8s;
-
-    z-index: 900;
-    ${(props) =>
-      props.is_open &&
-      css`
-        display: flex;
-        right: 0%;
-      `}
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-right: -12px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-right: -25px;
-  }
-  @media (min-width: 1300px) and (max-width: 1599.98px) {
-    margin-right: -25px;
-  }
-  @media (min-width: 1600px) {
-    margin-right: -30px;
-  }
-`;
-const NavLink = styled.p`
-  margin: 0px;
-  height: 100%;
-  cursor: pointer;
-  color: #000000;
-  display: flex;
-  align-items: center;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 14px;
-    font-weight: 500;
-    width: 100%;
-    justify-content: flex-end;
-    text-align: right;
-  }
-  ${(props) =>
-    props.first &&
-    css`
-      margin-left: 0px !important;
-    `}
-  ${(props) =>
-    props.active ?
-    (
-    css`
-      font-weight: 700;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #0a2165;
-      font-size: 22px;
-      border-bottom: 4px solid #0a2165;
-    `) :
-    (
-    css`
-      font-weight: 500;
-      background-color: rgba(255, 255, 255, 0.1);
-      font-size: 20px;
-      font-weight: 500;
-    `
-    )
-    }
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-`;
-const NavLink3 = styled.div`
-  margin: 0;
-  height: 100%;
-  cursor: pointer;
-  color: #000000;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.46;
-  letter-spacing: -0.33px;
-  text-align: center;
-  color: #191919;
-  display: flex;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-  }
-  ${(props) =>
-    props.first &&
-    css`
-      margin-left: 0px !important;
-    `}
-  ${(props) =>
-    props.active ?
-    (
-    css`
-      font-weight: 700;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #0a2165;
-      font-size: 13px;
-      border-bottom: 2px solid #0a2165;
-    `) :
-    (
-    css`
-      font-weight: 500;
-      background-color: rgba(255, 255, 255, 0.1);
-      font-size: 13px;
-      font-weight: 500;
-    `
-    )
-    }
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-`;
-const Close = styled.div`
-  margin: 10px;
-  width: calc(100% - 20px);
-  display: none;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: flex;
-  }
-`;
 export default MobileNav;
