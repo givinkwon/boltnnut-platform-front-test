@@ -72,6 +72,7 @@ class MobileStep2Container extends React.Component {
 
     let activeHandler=(idx) =>
     {
+      console.log(idx===DetailQuestion.SelectChecked)
       if(idx===DetailQuestion.SelectChecked)
       { return true; } else
       { return false; }
@@ -233,5 +234,9 @@ const FileSelect = styled.div`
   }
   > img {
     margin-left: 10px;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+    height: 40px;
   }
 `

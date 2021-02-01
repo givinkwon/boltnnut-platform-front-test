@@ -108,7 +108,7 @@ const InputBox = styled.div`
       padding-top: 8px;
       padding-bottom: 8px;
       padding-right: 20px;
-      padding-left: 0px;
+      padding-left: 0;
       width: 20px;
       height: 18px;
     }
