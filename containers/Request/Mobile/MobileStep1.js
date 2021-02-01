@@ -95,7 +95,7 @@ class MobileStep1Container extends React.Component {
       {label: '3000 만원 이상', value: '3000 만원 이상'}
     ];
      return(
-     <>
+     <div>
        <Header>
          관련 분야
        </Header>
@@ -135,7 +135,7 @@ class MobileStep1Container extends React.Component {
             getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
           />
         </SelectRow>
-     </>
+     </div>
     );
   }
   content2 = () => {

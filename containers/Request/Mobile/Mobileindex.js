@@ -20,7 +20,7 @@ class MobileRequestContainer extends React.Component {
   render() {
     const { Request } = this.props;
     return (
-      <div style={{ overflow: 'hidden' }}>
+      <div>
         <Background>
           <Containerv1>
             { Request.step_index == 1 && <MobileStep1Container page={Request.step1_index} />}

@@ -42,7 +42,7 @@ class Request extends React.Component {
     const { width } = this.state;
 
     return (
-      <div>
+      <div style={{overflow: 'hidden'}}>
         <Head>
           {/* SEO */}
           <meta name="description" content="볼트앤너트의 큐레이션 시스템이 최대 1영업일 이내로 제작하고자하는 제품의 가견적을 안내드립니다. 나에게 맞는 업체를 찾고, 적합한 업체로부터 가견적을 받아보세요!" />
