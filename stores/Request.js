@@ -71,7 +71,7 @@ class Request {
   @observable random_partner_list = null;
 
   @action reset = () => {
-    this.step_index = 1;
+    this.step_index = 3;
     this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";

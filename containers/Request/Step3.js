@@ -58,7 +58,7 @@ class Step3Container extends Component {
 
   componentDidMount()
   {
-    this.props.Proposal.loadEstimateInfo(1);
+    this.props.Proposal.loadEstimateInfo(1);//다른 타입 보고싶으면 192
   }
   buttonClick = () => {
     const { Request } = this.props;
