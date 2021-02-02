@@ -61,18 +61,31 @@ class Request {
   @observable step_index = 4;
   @observable step1_index = 1;
   @observable drawFile = null;
-  @observable percentage = 0
+  @observable percentage = 0;
+  @observable titleData = [];
 
   // Client
   @observable client_id = null;
   @observable has_email = false;
 
+  // Partner
+  @observable random_partner_list = null;
+
+  //type
+  @observable proposal_type = 1;
+
   @action reset = () => {
+    this.titleData = [];
+    this.percentage = 0;
+    this.step_index = 1;
+    this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";
     this.input_day = null;
     this.input_price = null;
     this.common_file = null;
+    this.select_big = null;
+    this.select_mid = null;
   }
   @action setInputName = (val) => {
     this.input_name = val;
@@ -108,6 +121,14 @@ class Request {
     this.drawFile = obj;
   }
   @action createRequest = () => {
+    var cellphoneValid = /^\d{3}-\d{3,4}-\d{4}$/;
+    var homephoneValid = /^\d{2,3}-\d{3,4}-\d{4}$/;
+    if (!cellphoneValid.test(this.input_phone) || !homephoneValid.test(this.input_phone)){
+      alert('전화번호가 올바르지 않습니다. 재확인해주세요.')
+      return;
+    }
+
+
     var formData = new FormData();
 
     formData.append("product", 45);
@@ -126,6 +147,8 @@ class Request {
       this.created_request = res.data.id;
       this.client_id = res.data.clientId;
       this.has_email = res.data.hasEmail;
+      this.step_index = 2;
+      this.percentage += 15;
     })
     .catch(error => {
       alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');
@@ -149,6 +172,7 @@ class Request {
         console.log(e.response);
       });
     console.log(this.big_category_list)
+    this.reset();
   };
   @action setBigCategory = (obj) => {
     this.select_big = obj;
@@ -185,8 +209,10 @@ class Request {
       this.setBigCategory(obj)
       return
     }
-
+    //console.log(obj)
     this.select_mid = obj;
+    //console.log(this.select_mid)
+    this.loadRandomPartner();
     this.select_small = null;
     this.small_category_list = obj.subclass_set;
 
@@ -240,6 +266,26 @@ class Request {
       this.tab = 2;
     }
   };
+
+  @action loadRandomPartner = () =>{
+    //console.log(this.select_mid.id)
+    const req = {
+      data: {
+        category: this.select_mid.id,
+        // 제품 분야 = 가능 제품 분야
+        count: 20
+      },
+    };
+    console.log(req);
+		PartnerAPI.getRandomPartner(req)
+			.then((res) => {
+        this.random_partner_list = res.data.results;
+			})
+			.catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  }
 
   @action loadAppropriatePartners = () => {
     if(!this.created_request) { return; }

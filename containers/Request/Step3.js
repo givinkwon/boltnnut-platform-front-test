@@ -48,17 +48,14 @@ function createData(title, content, note) {
 }
 
 
-@inject('Request','Proposal')
+@inject('Request','Proposal','DetailQuestion')
 @observer
 class Step3Container extends Component {
 
   static defaultProps = { title: '견 적 서' };
 
   rows1=[];
-  componentDidMount()
-  {
-    this.props.Proposal.loadEstimateInfo(1);
-  }
+  
   buttonClick = () => {
     const { Request } = this.props;
     Request.step_index = 4;
@@ -112,12 +109,19 @@ class Step3Container extends Component {
   }
 
 
+  componentDidMount() {
+    const { Proposal, DetailQuestion } = this.props;
+    if(DetailQuestion !== 0){
+      Proposal.loadEstimateInfo(DetailQuestion.proposal_type);
+      console.log(5)
+    }
+  }
+
   render() {
     const { percentage, showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
     const { Proposal } = this.props;
-
     const estimateData = Proposal.estimateData;
-
+    
     const rows1 = [
       createData('작성일자', Proposal.estimate_year + '.' + Proposal.estimate_month + '.' + Proposal.estimate_day, ''),
       createData('문서번호', 'C8-' + Proposal.estimate_year + Proposal.estimate_month + Proposal.estimate_day + '-' + estimateData.id, ''),
@@ -128,13 +132,13 @@ class Step3Container extends Component {
 
     const rows2 = [
       createData('프로젝트', estimateData.projectTitle, ''),
-      createData('개발기간', estimateData.period + '일', ''),
-      createData('지급조건', '일시불', ''),
-      createData('견적가', '₩ '+Proposal.estimate_price, 'VAT 포함'),
+      createData('개발기간', estimateData.period + '주', ''),
+      createData('지급조건', '선금 50%, 잔금 50%', ''),
+      createData('견적가', '₩ '+Proposal.estimate_price, 'VAT 미포함'),
     ];
 
     const {classes} = this.props
-
+    
     return (
       <Card>
         <HeaderBackground>

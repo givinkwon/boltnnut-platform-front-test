@@ -49,6 +49,7 @@ class Proposal {
 		await ProposalAPI.getEstimateInfo(index)
 			.then(res => {
 					this.estimateData = res.data;
+					console.log(res.data)
 				}
 			)
 
