@@ -24,14 +24,14 @@ class EstimateLogoSlider extends React.Component {
     return (
       <ItemBox>
         <StyledSlider {...SlideSettings}>
-            {this.props.Request.random_partner_list && this.props.Request.random_partner_list.map((item, idx) => {
-              return (
-                
+        {Request.random_partner_list && Request.random_partner_list.map((item, idx) => {
+              console.log(item)
+              return (                
                 <>
                 <div>
                     <Item>
                         <ImgBox>
-                            {item.logo.indexOf("noImage") == -1 && <img src={item.logo}/>}
+                            <img src={item.partnerLogo}/>
                         </ImgBox>
                     </Item>
                 </div>
@@ -40,104 +40,7 @@ class EstimateLogoSlider extends React.Component {
                 }
                 )
             }
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>     
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div> 
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>    
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
+            
         </StyledSlider>
       </ItemBox>
     )
