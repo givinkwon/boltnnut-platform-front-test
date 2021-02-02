@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import * as Content from '../../../components/Content';
+import * as Content from 'components/Content';
 import { Component } from 'react';
 import Calendar from '../Calender';
-import InputComponent from '../../../components/Input2';
-import CheckBoxComponent from '../../../components/CheckBox';
-import Buttonv1 from '../../../components/Buttonv1';
+import InputComponent from 'components/Input2';
+import CheckBoxComponent from 'components/CheckBox';
+import Buttonv1 from 'components/Buttonv1';
 import moment from "moment";
 import { inject, observer } from 'mobx-react';
+import Slider from 'react-slick';
 import 'intersection-observer'; // polyfill
 
 const dropdown = '/static/images/request/Step4/dropdown.png';
@@ -18,7 +19,7 @@ class MobileStep4Container extends Component {
     display: 'none', // display 는 FoldedComponent 기준
     display2: true, // display2 는 TimeBox 기준.
     current: null, // FoldedComponent에 넣을 현재 상태(오전 11:00 등)
-    inactive_array: []
+    inactive_array: [],
   }
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
@@ -57,7 +58,6 @@ class MobileStep4Container extends Component {
   render() {
     const { current, display, display2 } = this.state;
     const { Request, Schedule } = this.props;
-
     const timeArr = [
       {
         start_at: this.getTime(10),
@@ -92,54 +92,56 @@ class MobileStep4Container extends Component {
         end_at: this.getTime(19)
       }
     ]
+    var settings = {
+      dots: false,
+      infinite: false,
+      arrows: false,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      initialSlide: 0,
+      draggable: true,
+      beforeChange: (current) => {
+        this.setState({current: current})
+      }
+    };
     return (
-
       <Card>
-        <Header>1:1 컨설팅 신청</Header>
         <ContentBox>
-          <Title>날짜</Title>
-          <Calendar/>
+          {/* <Calendar/> */}
         </ContentBox>
         <ScheduleBox>
           <Title style={{marginTop: 30, marginBottom: 6}}>
             시간
           </Title>
-          <FoldedComponent onClick={()=>this.handleDropDown()} style={{display: display}}>
+          {/* <FoldedComponent onClick={()=>this.handleDropDown()} style={{display: display}}>
             {current}
             <img src={dropdown} />
-          </FoldedComponent>
-          <div style={{display: display2}}>
-            <SubContent fontWeight = {'bold'}>
-              오전
-            </SubContent>
-            <TimeBox style={{marginBottom: 30}}>
-              {timeArr.slice(0,2).map((data) => {
-                return (
-                  <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick={(event) => this.setTime(event, data.start_at)}>
-                    {data.start_at.split(' ')[1]}
-                  </TimeComponent>
-                )
-              })}
-            </TimeBox>
-            <SubContent fontWeight = {'bold'}>
-              오후
-            </SubContent>
-            <TimeBox style={{marginBottom: 60}}>
-              {timeArr.slice(2,).map((data) => {
+          </FoldedComponent> */}
+          <TimeBox style={{marginBottom: 56}}>
+            <Slider {...settings}>
+              {timeArr.map((data) => {
                 return (
                   <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick = {(event) => this.setTime(event, data.start_at)}>
                     {data.start_at.split(' ')[1]}
                   </TimeComponent>
                 )
               })}
-            </TimeBox>
-          </div>
-          <Title>
-            장소
+            </Slider>
+          </TimeBox>
+          <Title style={{marginBottom: 20}}>
+            컨설팅 유형
           </Title>
-          <SubContent>
-            서울특별시 성북구 고려대로 30길 4, 2층 볼트앤너트
-          </SubContent>
+          <div style={{display: 'inline-flex'}}>
+            <TimeComponent>
+              방문 미팅
+            </TimeComponent>
+            <TimeComponent>
+              화상 미팅
+            </TimeComponent>
+          </div>
+          <Tail>
+            * 서울특별시 성북구 고려대로 30길 4, 2층 볼트앤너트
+          </Tail>
           { !Request.has_email && (
             <>
               <Title style={{marginTop: 30}}>
@@ -174,13 +176,10 @@ export default MobileStep4Container;
 
 
 const Card = styled.div`
-  width: 894px;
+  width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
   background-color: white;
-  margin: 60px 0px 200px 280px;
   display: inline;
   float: right;
 `
@@ -211,13 +210,14 @@ const ContentBox = styled.div`
 const ScheduleBox = styled.div`
   padding-left: 5.4%;
 `
-const Title = styled(Content.FontSize24)`
+const Title = styled(Content.FontSize17)`
+  font-size: 17px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.6px;
-  text-align: left;
+  line-height: 0.88;
+  letter-spacing: -0.43px;
+  text-align: left !important;
   color: #282c36;
 `
 const SubContent = styled(Content.FontSize18)`
@@ -230,13 +230,9 @@ const SubContent = styled(Content.FontSize18)`
   color: #282c36;
   margin-bottom: 6px;
 `
-const TimeBox = styled.div`
-  width: 100%;
-  display: inline-flex;
-`
 const TimeComponent = styled.div`
-  width: 88px;
-  height: 40px;
+  width: 99px;
+  height: 43px;
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: ${(props) => props.deactive ? "gray" : "white"};
@@ -256,16 +252,18 @@ const TimeComponent = styled.div`
     border: ${(props) => props.deactive ? 'none' : "solid 3px #0933b3"};
   }
 `
-const Tail = styled(Content.FontSize14)`
-  font-weight: 500;
+const Tail = styled(Content.FontSize13)`
+  display: flex;
+  align-items: center;
+  height: 19px;
+  font-size: 13px;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.86;
-  letter-spacing: -0.14px;
+  line-height: 2.62;
+  letter-spacing: -0.33px;
   text-align: left;
-  color: #282c36;
-  object-fit: contain;
-  margin-top: 6px;
+  color: #414550;
 `
 const CardFooter = styled.div`
   width: 100%;
@@ -291,29 +289,16 @@ const CustomButton = styled(Buttonv1)`
   font-size: 20px !important;
   margin-bottom: 60px;
 `
-const FoldedComponent = styled.div`
-  font-size: 18px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: NotoSansCJKkr;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: -0.45px;
-  text-align: left;
-  color: #282c36;
-  width: fit-content;  
-  border-radius: 5px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  padding: 8px 16px;
-  background-color: var(--white);
-  margin-bottom: 30px;
-  line-height: 1.3;
-  > img {
-    width: 14px;
-    height: 8px;
-    margin-left: 22px;
-  }
+const TimeBox = styled.div`
+  width: 100%;
+  height: 64px;
+  .slick-list {
+    margin : 0;
+    width: 100%;
+    > div > div {
+    }
+    > div > div > div > div  {
+      display: flex !important;
+      align-items: center;
+    }
 `
-
