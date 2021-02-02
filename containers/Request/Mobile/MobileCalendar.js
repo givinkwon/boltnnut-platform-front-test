@@ -15,7 +15,6 @@ class Week extends Component {
   }
   Days = (firstDayFormat) => {
     const days = [];
-
     for (let i = 0; i < 7; i++) {
       const Day = moment(firstDayFormat).add('d', i);
       days.push({
@@ -29,24 +28,9 @@ class Week extends Component {
     }
     return days;
   }
-  calendarOnOff = (e) => {
-    const { Schedule } = this.props;
-    if (Schedule.calendarOnOff == true) {
-      Schedule.calendarOnOff = false;
-    }
-    else {
-      Schedule.calendarOnOff = true;
-    }
-    let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
-    const dayValue = Schedule.nowMoment;
-
-    Schedule.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
-    Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
-  }
 
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
-    const { now } = this.state;
     const occupied = Schedule.date_occupied;
 
     return Days.map((dayInfo, i) => {
@@ -73,7 +57,7 @@ class Week extends Component {
       else if (occupied.includes(dayInfo.yearMonthDayFormat)) {
         className = "not-book";
       }
-      if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD")) {
+      if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") && Schedule.nowMoment.format('M') === dayInfo.getMonth) {
         className += "today";
         console.log(className);
         return (
@@ -90,6 +74,7 @@ class Week extends Component {
           </div>
         )
       }
+
     })
   }
   render() {
@@ -155,15 +140,6 @@ class MobileCalendar extends Component {
       )
     })
   }
-  calendarOnOff = () => {
-    const { Schedule } = this.props;
-    if (Schedule.calendarOnOff == true) {
-      Schedule.calendarOnOff = false;
-    }
-    else {
-      Schedule.calendarOnOff = true;
-    }
-  }
 
   // 날짜 입력
   Weeks = (monthYear) => {
@@ -183,8 +159,7 @@ class MobileCalendar extends Component {
     const { Schedule } = this.props;
     return (
       <>
-        { Schedule.calendarOnOff == true &&
-        <MainContainer display1={ this.state.hid }>
+        <MainContainer>
           <Header>
             <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
             <HeaderText>{now.format("YYYY.MM")}</HeaderText>
@@ -197,13 +172,6 @@ class MobileCalendar extends Component {
             {this.Weeks(now)}
           </CalendarContainer>
         </MainContainer>
-        }
-        { Schedule.calendarOnOff == false &&
-        <FoldedComponent onClick={ this.calendarOnOff }>
-          { Schedule.clickDay }
-          <img src={ dropdown } />
-        </FoldedComponent>
-        }
       </>
     )
   }
@@ -226,8 +194,8 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 127px;
-  margin-bottom: 50px;
-  margin-top: 40px;
+  margin-bottom: 38px;
+  margin-top: 20px;
   height: 27px;
 `
 const HeaderText = styled.span`
@@ -299,8 +267,8 @@ const CalendarContainer = styled.div`
       color: #282c36;
     }
     :hover {
-      background-color: #e1e2e4;
-      color: black;
+      background-color: #0933b3;
+      color: white;
       > div {
         color: black;
         display: none;
@@ -328,12 +296,18 @@ const CalendarContainer = styled.div`
     pointer-events: none;
     color: #c6c7cc;
   }
-  .today {
-    color: #0933b3;
+  .date-weekday-labeltoday {
     > div {
+      margin-top: 25px;
       position: absolute;
-      margin-top: 38px;
       color: #0933b3;
+      font-family: NotoSansCJKkr;
+      font-size: 10px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: -0.25px;
     }
   }
   .not-book {
@@ -355,28 +329,5 @@ const CalendarContainer = styled.div`
     //  margin-top: 38px;
     //  color: #e1e2e4;
     //}
-  }
-`
-const FoldedComponent = styled.div`
-  width: fit-content;
-  font-family: NotoSansCJKkr;
-  font-size: 18px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: -0.45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  padding: 8px 16px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: var(--white);
-  margin-top : 6px;
-  line-height: 1.3;
-  > img {
-    width: 14px;
-    height: 8px;
-    margin-left: 22px;
   }
 `
