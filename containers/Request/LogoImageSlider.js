@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 
 const Logo1 = 'static/images/request/LogoImageSlider/logo1.png';
+import { inject, observer } from "mobx-react";
+
+@inject("Request")
+@observer
 class LogoSlider extends React.Component {
   render() {
     const settings = {
@@ -17,9 +21,24 @@ class LogoSlider extends React.Component {
       autoplaySpeed: 2000,
       arrows: false,
     };
+    const { Request } = this.props;
+    console.log(this.random_partner_list)
     return (
-      <SliderWraper>
+        <SliderWraper>
         <Slider {...settings}>
+          
+          
+          {this.props.Request.random_partner_list && this.props.Request.random_partner_list.map((item, idx) => {
+              return (
+                <>
+                {item.logo.indexOf("noImage") == -1 && <ImgContainer><img src={item.logo}/></ImgContainer>}
+                </>
+              )
+              }
+            )
+          }
+          
+          
           <ImgContainer><img src={ Logo1 }/></ImgContainer>
           <ImgContainer><img src={ Logo1 }/></ImgContainer>
           <ImgContainer><img src={ Logo1 }/></ImgContainer>
@@ -31,6 +50,7 @@ class LogoSlider extends React.Component {
           <ImgContainer><img src={ Logo1 }/></ImgContainer>
           <ImgContainer><img src={ Logo1 }/></ImgContainer>
           <ImgContainer><img src={ Logo1 }/></ImgContainer>
+          
         </Slider>
       </SliderWraper>
     )
@@ -46,6 +66,8 @@ const ImgContainer = styled.div`
   height: 112px;
   > img {
     margin: 0px 17px;
+    width: 112px;
+    height: 112px;
   }
 `
 export default LogoSlider;
