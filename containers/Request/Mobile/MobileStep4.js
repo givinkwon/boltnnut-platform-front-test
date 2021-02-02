@@ -114,15 +114,15 @@ class MobileStep4Container extends Component {
             시간
           </Title>
           <TimeBox style={{marginBottom: 56}}>
-              <Slider {...settings}>
-                {timeArr.map((data) => {
-                  return (
-                    <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick = {(event) => this.setTime(event, data.start_at)}>
-                      {data.start_at.split(' ')[1]}
-                    </TimeComponent>
-                  )
-                })}
-              </Slider>
+            <Slider {...settings}>
+              {timeArr.map((data) => {
+                return (
+                  <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick = {(event) => this.setTime(event, data.start_at)}>
+                    {data.start_at.split(' ')[1]}
+                  </TimeComponent>
+                )
+              })}
+            </Slider>
           </TimeBox>
           <Title style={{marginBottom: 20}}>
             컨설팅 유형

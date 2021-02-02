@@ -190,7 +190,7 @@ class MobileNav extends React.Component {
 }
 const Modal = styled.div`
   position: fixed; 
-  z-index: 3; 
+  z-index: 10000; 
   left: 0;
   top: 0;
   width: 100%; 
@@ -204,7 +204,7 @@ const ProfileMenu = styled.div`
   height: 100%%;
   position: absolute;
   background-color: white;
-  z-index: 3;
+  z-index: 10000;
   top: 0;
   right: 0;
   // transform: translate3d(${props => props.width ? props.width - 156 : 10}px, calc(55%), 0);
@@ -214,7 +214,7 @@ const ProfileMenu = styled.div`
 `
 const ModalHeader = styled.div`
   width: 100%;
-  height: 182px;
+  height: 160px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -255,7 +255,7 @@ const ModalContent = styled.div`
   }
 `
 const HeadText = styled.div`
-  z-index: 0;
+  z-index: 9998;
   width: 100%;
   height:29px; 
   position: absolute;
@@ -292,6 +292,10 @@ const Footer = styled.div`
 `
 const FreeButton = styled(Buttonv1)`
   margin-top: 8px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 270px;
+    height: 43px;
+  }
   > span {
     font-family: NotoSansCJKkr;
     font-size: 16px;
@@ -302,10 +306,6 @@ const FreeButton = styled(Buttonv1)`
     letter-spacing: -0.4px;
     text-align: center;
     color: #ffffff;
-    @media (min-width: 0px) and (max-width: 767.98px) {
-      width: 270px;
-      height: 43px;
-    }
   }
   
 `
@@ -351,7 +351,7 @@ const NavWrap2 = styled.div`
 `;
 const Logo = styled.img`
   cursor: pointer;
-  z-index: 1;
+  z-index: 9999;
 `;
 const Icon = styled.img`
   cursor: pointer;
@@ -359,7 +359,7 @@ const Icon = styled.img`
   height: 40px;
   display: none;
   background-color: '#f3f3f3';
-  z-index: 1;
+  z-index: 9999;
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: block;
     width: 21px;
