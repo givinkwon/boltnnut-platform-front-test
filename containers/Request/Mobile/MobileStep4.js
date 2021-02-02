@@ -96,7 +96,7 @@ class MobileStep4Container extends Component {
       dots: false,
       infinite: false,
       arrows: false,
-      slidesToShow: 1,
+      slidesToShow: 2,
       slidesToScroll: 1,
       initialSlide: 0,
       draggable: true,
@@ -113,10 +113,6 @@ class MobileStep4Container extends Component {
           <Title style={{marginTop: 30, marginBottom: 6}}>
             시간
           </Title>
-          {/* <FoldedComponent onClick={()=>this.handleDropDown()} style={{display: display}}>
-            {current}
-            <img src={dropdown} />
-          </FoldedComponent> */}
           <TimeBox style={{marginBottom: 56}}>
               <Slider {...settings}>
                 {timeArr.map((data) => {
@@ -139,7 +135,7 @@ class MobileStep4Container extends Component {
               화상 미팅
             </TimeComponent>
           </div>
-          <Tail>
+          <Tail style={{marginTop: 14}}>
             * 서울특별시 성북구 고려대로 30길 4, 2층 볼트앤너트
           </Tail>
           { !Request.has_email && (
@@ -147,24 +143,26 @@ class MobileStep4Container extends Component {
             <Title style={{marginTop: 30}}>
               이메일
             </Title>
-            <InputComponent
-              width={"88.3%"}
+            <MobileInputComponent
+              width={"100%"}
               placeholder="이메일을 입력해주세요."
               onChange={this.emailChange}
             />
           </>
           ) }
-          <Tail>
+          <Tail style={{marginTop: 10}}>
             *컨설팅을 위한 사전 준비 사항을 E-mail로 보내드립니다.
           </Tail>
         </ScheduleBox>
         <CardFooter>
-          <CheckBoxComponent
-            onChange={this.checkboxChange}>
-            이용약관 및 개인정보 처리방침에 동의합니다.
-          </CheckBoxComponent>
+          <CheckBoxWrapper>
+            <CheckBoxComponent
+              onChange={this.checkboxChange}>
+              <span> 이용약관 및 개인정보 처리방침에 동의합니다. </span>
+            </CheckBoxComponent>
+          </CheckBoxWrapper>
           <CustomButton>
-            무료 컨설팅 받기
+            무료 컨설팅 신청
           </CustomButton>
         </CardFooter>
       </Card>
@@ -174,7 +172,17 @@ class MobileStep4Container extends Component {
 
 export default MobileStep4Container;
 
-
+const MobileInputComponent = styled(InputComponent)`
+  width: 100%;
+  height: 40px !important;
+  object-fit: contain;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  .Input2__InputBox-sc-1mnu5am-0 lfxihu {
+    height: 100%;
+  }
+`
 const Card = styled.div`
   width: 100%;
   height: 100%;
@@ -208,7 +216,6 @@ const ContentBox = styled.div`
   flex-direction: column;
 `
 const ScheduleBox = styled.div`
-  padding-left: 5.4%;
 `
 const Title = styled(Content.FontSize17)`
   font-size: 17px;
@@ -248,8 +255,11 @@ const TimeComponent = styled.div`
   text-align: left;
   color: #282c36;
   margin-right: 19px;
+  :focus {
+    outline: none;
+  }
   :hover {
-    border: ${(props) => props.deactive ? 'none' : "solid 3px #0933b3"};
+    border: ${(props) => props.deactive ? 'none' : "solid 1px #0933b3"};
   }
 `
 const Tail = styled(Content.FontSize13)`
@@ -295,12 +305,35 @@ const TimeBox = styled.div`
   .slick-list {
     margin : 0;
     width: 100%;
+    padding: 1px 1px;
     > div > div {
+      width: 99px !important;
+      margin-right: 12px;
+      outline: none;
+      :hover {
+        outline: none;
+      }
     }
     > div > div > div > div  {
       display: flex !important;
       align-items: center;
     }
 `
-
+const CheckBoxWrapper = styled.div`
+  font-size: 13px !important;
+  font-weight: bold !important;
+  font-stretch: normal !important;
+  font-style: normal !important;
+  line-height: 1.54 !important;
+  letter-spacing: -0.33px !important;
+  text-align: center !important;
+  color: #282c36 !important;
+  > label {
+    margin: 0px;
+  }
+  .MuiSvgIcon-root {
+    width: 14px !important;
+    height: 14px !important;
+  }
+`
 
