@@ -25,6 +25,7 @@ import EstimateLogoSlider from './EstimateSheetLogoSlider'
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 
+
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 const HeaderImg = "/static/images/request/Step3/Step3_Header.png";
 const DropdownArrow1 = "/static/images/request/Step3/Step3_Dropdown1.png";
@@ -142,7 +143,7 @@ class Step3Container extends Component {
     ];
 
     const {classes} = this.props
-    
+    var rand2 = 28 + Math.floor(Math.random() * 38);
     return (
       <Card>
         <HeaderBackground>
@@ -275,8 +276,8 @@ class Step3Container extends Component {
 
         <ContentBox>
           <ContentHeader>
-            요청하신 반려동물 샤워기 손잡이 끝부분 나사 모양 제품 개발에 최적화된<br/>
-            484곳의 제조 파트너사가 매칭되었습니다.
+            볼트앤너트에는 요청하신 {estimateData.projectTitle}에 최적화된<br/>
+            {rand2} 곳의 제조 파트너사가 있습니다.
           </ContentHeader>
 
           <CustomSlider value={percentage}/>
