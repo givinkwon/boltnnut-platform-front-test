@@ -118,15 +118,15 @@ class MobileStep4Container extends Component {
             <img src={dropdown} />
           </FoldedComponent> */}
           <TimeBox style={{marginBottom: 56}}>
-              <Slider {...settings}>
-                {timeArr.map((data) => {
-                  return (
-                    <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick = {(event) => this.setTime(event, data.start_at)}>
-                      {data.start_at.split(' ')[1]}
-                    </TimeComponent>
-                  )
-                })}
-              </Slider>
+            <Slider {...settings}>
+              {timeArr.map((data) => {
+                return (
+                  <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick = {(event) => this.setTime(event, data.start_at)}>
+                    {data.start_at.split(' ')[1]}
+                  </TimeComponent>
+                )
+              })}
+            </Slider>
           </TimeBox>
           <Title style={{marginBottom: 20}}>
             컨설팅 유형
@@ -143,16 +143,16 @@ class MobileStep4Container extends Component {
             * 서울특별시 성북구 고려대로 30길 4, 2층 볼트앤너트
           </Tail>
           { !Request.has_email && (
-          <>
-            <Title style={{marginTop: 30}}>
-              이메일
-            </Title>
-            <InputComponent
-              width={"88.3%"}
-              placeholder="이메일을 입력해주세요."
-              onChange={this.emailChange}
-            />
-          </>
+            <>
+              <Title style={{marginTop: 30}}>
+                이메일
+              </Title>
+              <InputComponent
+                width={"88.3%"}
+                placeholder="이메일을 입력해주세요."
+                onChange={this.emailChange}
+              />
+            </>
           ) }
           <Tail>
             *컨설팅을 위한 사전 준비 사항을 E-mail로 보내드립니다.
@@ -302,5 +302,3 @@ const TimeBox = styled.div`
       align-items: center;
     }
 `
-
-

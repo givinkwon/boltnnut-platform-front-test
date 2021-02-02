@@ -86,7 +86,7 @@ class MyApp extends App {
   componentDidMount() {
     const { Home } = this.props
     const userAgent = window.navigator.userAgent;
-  
+
     // 네이버 애널리틱스
     this.setState({
       location:window.location,
