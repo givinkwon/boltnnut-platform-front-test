@@ -25,7 +25,6 @@ import 'react-count-animation/dist/count.min.css';
 import AnimationCount from 'react-count-animation';
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
-var titleData=[];
 
 @inject('Request', 'DetailQuestion','ManufactureProcess')
 @observer
@@ -93,8 +92,8 @@ class RequestCardContainer extends Component {
         }
         break;
       case 2:
-        titleData.pop();
-        console.log(titleData);
+        Request.titleData.pop();
+        console.log(Request.titleData);
 
         if (DetailQuestion.prevPage.length > 0)
         {
@@ -127,8 +126,8 @@ class RequestCardContainer extends Component {
         } else {
           try {
             Request.createRequest();
-            Request.step_index = 2;
-            Request.percentage += 15;
+            
+            
             DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
           } catch(e) {
             console.log(e);
@@ -143,18 +142,18 @@ class RequestCardContainer extends Component {
           {
             DetailQuestion.pageCount += 1;
           }
-          titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
           DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
 
 
-          console.log(titleData);
+          console.log(Request.titleData);
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
         }
         else {
-          titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
 
           // console.log(Request.drawFile);
           if(DetailQuestion.index==8)
@@ -166,15 +165,15 @@ class RequestCardContainer extends Component {
             //기본정보입력에서 받은 의뢰서로 바꾸기
             ManufactureProcessFormData.append("request",360);
             ManufactureProcessApi.saveSelect(ManufactureProcessFormData);
-            titleData= titleData.slice(0,3);
+            Request.titleData= Request.titleData.slice(0,3);
           }
-          console.log(titleData);
+          console.log(Request.titleData);
           var SelectSaveData = {
             "request": Request.created_request,
-            "data": titleData,
+            "data": Request.titleData,
           }
-          DetailQuestionApi.saveSelect(SelectSaveData);
-          Request.step_index = 3;
+          DetailQuestion.loadProposalType(SelectSaveData);
+          Request.step_index = 3; 
         }
         Request.percentage += 14;
         break;

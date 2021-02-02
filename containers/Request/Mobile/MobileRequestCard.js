@@ -55,7 +55,6 @@ class MobileRequestCardContainer extends Component {
 
   componentDidUpdate() {
     const { targets,active } = this.state;
-    console.log(this.state);
     if (this.fullChecker(targets) == true && active == false) {
       this.setState({...this.state, active: true})
     } else if (this.fullChecker(targets) == false && active == true) {

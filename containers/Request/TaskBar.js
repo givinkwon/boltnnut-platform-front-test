@@ -50,7 +50,7 @@ class TaskBarContainer extends React.Component {
   }
 }
 
-export default withStyles(styles)(TaskBarContainer);
+export default TaskBarContainer;
 
 const Font16 = styled(Content.FontSize16)`
   font-weight: 500;

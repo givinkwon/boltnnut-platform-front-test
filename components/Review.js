@@ -179,10 +179,13 @@ const ContentBox2 = styled(Content.FontSize18)`
 `
 const ImageBox = styled.div`
     width: 100%;
+    height: 20%;
     display: inline-flex;
     justify-content: flex-end;
     align-items: center;
+    padding-top: 130px;
     > img {
+        height: 100%;
     }
 `
 const MyStarRatingComponent = styled(StarRatingComponent)`
