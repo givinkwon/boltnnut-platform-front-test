@@ -2,9 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import * as Content from "components/Content";
+import { inject, observer } from "mobx-react";
 
 const Logo1 = 'static/images/request/LogoImageSlider/logo1.png';
+
+@inject('Request')
+@observer
 class EstimateLogoSlider extends React.Component {
+    
   render() {
     const SlideSettings = {
         dots: false,
@@ -15,10 +20,26 @@ class EstimateLogoSlider extends React.Component {
         draggable: true,
         rows:2
       };
-    
+    const { Request } = this.props;  
     return (
       <ItemBox>
         <StyledSlider {...SlideSettings}>
+            {this.props.Request.random_partner_list && this.props.Request.random_partner_list.map((item, idx) => {
+              return (
+                
+                <>
+                <div>
+                    <Item>
+                        <ImgBox>
+                            {item.logo.indexOf("noImage") == -1 && <img src={item.logo}/>}
+                        </ImgBox>
+                    </Item>
+                </div>
+                </>
+                )
+                }
+                )
+            }
             <div>
                 <Item>
                     <ImgBox>

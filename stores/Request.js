@@ -61,7 +61,8 @@ class Request {
   @observable step_index = 1;
   @observable step1_index = 1;
   @observable drawFile = null;
-  @observable percentage = 0
+  @observable percentage = 0;
+  @observable titleData = [];
 
   // Client
   @observable client_id = null;
@@ -70,7 +71,12 @@ class Request {
   // Partner
   @observable random_partner_list = null;
 
+  //type
+  @observable proposal_type = 1;
+
   @action reset = () => {
+    this.titleData = [];
+    this.percentage = 0;
     this.step_index = 1;
     this.step1_index = 1;
     this.input_name = "";
@@ -78,6 +84,8 @@ class Request {
     this.input_day = null;
     this.input_price = null;
     this.common_file = null;
+    this.select_big = null;
+    this.select_mid = null;
   }
   @action setInputName = (val) => {
     this.input_name = val;
@@ -113,6 +121,14 @@ class Request {
     this.drawFile = obj;
   }
   @action createRequest = () => {
+    var cellphoneValid = /^\d{3}-\d{3,4}-\d{4}$/;
+    var homephoneValid = /^\d{2,3}-\d{3,4}-\d{4}$/;
+    if (!cellphoneValid.test(this.input_phone) || !homephoneValid.test(this.input_phone)){
+      alert('전화번호가 올바르지 않습니다. 재확인해주세요.')
+      return;
+    }
+
+
     var formData = new FormData();
 
     formData.append("product", 45);
@@ -131,6 +147,8 @@ class Request {
       this.created_request = res.data.id;
       this.client_id = res.data.clientId;
       this.has_email = res.data.hasEmail;
+      this.step_index = 2;
+      this.percentage += 15;
     })
     .catch(error => {
       alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');
