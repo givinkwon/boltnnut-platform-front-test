@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import * as Title from 'components/Title'
 import { inject, observer } from 'mobx-react';
 
-const openStep = "static/images/request/RequestCard/openStep.png"
-const closeStep = "static/images/request/RequestCard/closeStep.png"
+const openStep = "static/images/request/RequestCard/openStep.svg"
+const closeStep = "static/images/request/RequestCard/closeStep.svg"
 const checkStep = "static/images/request/RequestCard/checkStep.png"
 const dot = "static/images/request/RequestCard/dot.png"
 
