@@ -30,12 +30,15 @@ class InputComponent extends React.Component {
 
   onChangeFile = (e) => {
     const {Request}  = this.props;
-    const fileName = e.currentTarget.files[0].name;
-    this.setState({
-      ...this.state,
-      file: e.currentTarget.files[0],
-      fileName: fileName,
-    })
+    if(e.currentTarget.files[0]){
+      const fileName = e.currentTarget.files[0].name;
+      this.setState({
+        ...this.state,
+        file: e.currentTarget.files[0],
+        fileName: fileName,
+      })
+    }
+
     Request.setCommonFile(e.currentTarget.files[0]);
   }
 
