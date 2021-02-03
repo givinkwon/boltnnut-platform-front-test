@@ -41,19 +41,9 @@ class LogoSlider extends React.Component {
         <SliderWraper>
         <Slider {...settings}>
           
-          
-          {Request.random_partner_list && Request.random_partner_list.map((item, idx) => {
-              console.log(item)
-              return (
-                
-                <ImgContainer><img src={item.partnerLogo}/></ImgContainer>
-                
-              )
-              }
-            )
-          }
-          
-          
+        <>
+          {Request.random_partner_list.length == 0 &&
+          <>
           <ImgContainer><img src={ Logo1 }/></ImgContainer>
           <ImgContainer><img src={ Logo2 }/></ImgContainer>
           <ImgContainer><img src={ Logo3 }/></ImgContainer>
@@ -69,7 +59,23 @@ class LogoSlider extends React.Component {
           <ImgContainer><img src={ Logo13 }/></ImgContainer>
           <ImgContainer><img src={ Logo14 }/></ImgContainer>
           <ImgContainer><img src={ Logo15 }/></ImgContainer>
+          </>
+          }
+
+          {Request.random_partner_list && Request.random_partner_list.map((item, idx) => {
+              console.log(item)
+              return (
+                
+                <ImgContainer><img src={item.partnerLogo}/></ImgContainer>
+                
+              )
+              }
+            )
+          }
           
+          
+          
+        </>
         </Slider>
       </SliderWraper>
     )
@@ -79,6 +85,7 @@ const SliderWraper = styled.div`
   width: 730px;
   height: 112px;
   margin: 10px 83px 30px 83px;
+  
 `
 const ImgContainer = styled.div`
   width: 112px;
