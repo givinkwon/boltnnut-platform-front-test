@@ -1,7 +1,7 @@
-import { observable, action } from "mobx";
-
+import { observable, action} from "mobx";
 import * as DetailQuestionAPI from "axios/DetailQuestion";
 import Router from "next/router";
+import Proposal from './Proposal'
 
 class DetailQuestion {
   @observable title_list = [];
@@ -48,6 +48,7 @@ class DetailQuestion {
           console.log(res)
           this.proposal_type = res.data.proposalId;
           console.log(this.proposal_type)
+          Proposal.loadEstimateInfo(this.proposal_type);
         }
       )
   };
