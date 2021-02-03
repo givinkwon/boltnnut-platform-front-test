@@ -11,12 +11,12 @@ class Schedule {
     @observable calendarOnOff = true;
     @observable clickDay = 0;
     @observable date_occupied = [];
-
+    @observable userEmail = null;
     @observable already_setted = [];
 
     @action init = () => {
         let today_date = new moment();
-        this.today = today_date.format('YYYY-MM-DD');
+        this.today = today_date.format('YYYY-MM-DD ');
         this.book_time = this.today + this.current;
 
         this.getOccupiedDate();
@@ -24,13 +24,15 @@ class Schedule {
     }
     @action setTodayDate = (obj) => {
         this.today = obj;
-        this.current = "10:00:00"
+        this.current = " 10:00:00"
         this.book_time = this.today + this.current
+        console.log(obj);
 
         this.getDays(this.today.split('-')[0],this.today.split('-')[1]);
         this.getOccupiedDate();
     }
     @action setCurrent = (obj) => {
+        console.log(obj);
         this.current = obj;
         this.book_time = this.today + this.current;
     }
@@ -47,12 +49,18 @@ class Schedule {
             (error) => console.log(error)
         )
     }
-    @action submitSchedule = (req) => {
-        let formData = new FormData();
-        formData.append("request", req.req_num);
-        formData.append("client", req.client);
-        formData.append("startAt", this.book_time);
-        formData.append("endAt", ); // 미완
+    @action submitSchedule = (data) => {
+        let req = {
+            "request": data.request,
+            "email": data.email,
+            "startAt": this.book_time + ".00",
+            "endAt": moment(this.book_time).add("1", "H").format("YYYY-MM-DD HH:mm:ss.00"),
+            "note": "할랄라",
+            "isOnline": data.isOnline
+        }
+        ScheduleAPI.postSchedule(req).then((res) => {
+            console.log(res);
+        }).catch(error => console.log(error));
     }
 
     @action fullDateCheck = (startAt, endAt) => {
@@ -62,7 +70,7 @@ class Schedule {
             endAt: endAt
         }
         ScheduleAPI.getOccupiedMonth(req).then((res) => {
-            this.data_occupied += res.data.data;
+            this.date_occupied += res.data.data;
         })
     }
     @action getDays = (year, month) => {
