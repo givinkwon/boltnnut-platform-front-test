@@ -77,7 +77,7 @@ class Request {
   @action reset = () => {
     this.titleData = [];
     this.percentage = 0;
-    this.step_index = 3;
+    this.step_index = 1;
     this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";
@@ -86,6 +86,7 @@ class Request {
     this.common_file = null;
     this.select_big = null;
     this.select_mid = null;
+    this.random_partner_list = [];
   }
   @action setInputName = (val) => {
     this.input_name = val;
@@ -268,7 +269,6 @@ class Request {
   };
 
   @action loadRandomPartner = () =>{
-    //console.log(this.select_mid.id)
     const req = {
       data: {
         category: this.select_mid.id,
@@ -276,10 +276,11 @@ class Request {
         count: 20
       },
     };
-    console.log(req);
 		PartnerAPI.getRandomPartner(req)
 			.then((res) => {
-        this.random_partner_list = res.data.results;
+        console.log("받은 리스폰스",res);
+        this.random_partner_list = res.data.data;
+        console.log(this.random_partner_list)
 			})
 			.catch((e) => {
         console.log(e);

@@ -122,8 +122,6 @@ class MobileRequestCardContainer extends Component {
         } else {
           try {
             Request.createRequest();
-            Request.step_index = 2;
-            Request.percentage += 15;
             DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
           } catch(e) {
             console.log(e);

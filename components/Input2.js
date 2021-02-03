@@ -42,7 +42,6 @@ class InputComponent extends React.Component {
   render() {
     const { onChange, children, label, file, Request, ...props } = this.props
     const { fileName } = this.state;
-    console.log(this.props.width);
 
     if (!file) {
     return (
@@ -98,10 +97,10 @@ const InputBox = styled.div`
     float: right;
   }
   @media (min-width: 0px) and (max-width: 767.98px) { 
-    height: 34px;
+    height: 100%;
     object-fit: contain;
     border-radius: 3px;
-    border: solid 1px #c6c7cc;
+    border: none;
     background-color: #ffffff;
     > img {
       position: relative;
@@ -129,7 +128,6 @@ const Input = styled.div`
   margin-top: ${props => props.marginTop}px;
   color: #404040;
   font-weight: 400;
-  padding-left: 16px;
   :focus {
     outline: none;
   }
@@ -151,6 +149,7 @@ const Input = styled.div`
     ::placeholder {
       font-weight: 400;
       color: #c6c7cc;
+      padding-left: 2.3%;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
