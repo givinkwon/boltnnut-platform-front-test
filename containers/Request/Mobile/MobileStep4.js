@@ -18,14 +18,26 @@ class MobileStep4Container extends Component {
   state = {
     display: 'none', // display 는 FoldedComponent 기준
     display2: true, // display2 는 TimeBox 기준.
-    current: null, // FoldedComponent에 넣을 현재 상태(오전 11:00 등)
     inactive_array: [],
+    userEmail: null,
+    isOnline: 0,
   }
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
   }
+  // 이메일 입력
   emailChange = (obj) => {
-    console.log(obj) // 에러피하기용 임시
+    this.setState({...this.state, userEmail: obj})
+  }
+  // 대면, 비대면 선택
+  isOnlineHandler = (e) => {
+    let targetWord = e.target.innerHTML;
+    // 대면이면 0, 화상이면 1
+    if (targetWord == "화상 미팅") {
+      this.setState({...this.state, isOnline: 1}) 
+    } else {
+      this.setState({...this.state, isOnline: 0})
+    }
   }
   getTime = (hour) => {
     const date = new moment();
@@ -34,18 +46,9 @@ class MobileStep4Container extends Component {
   setTime = (e, date) => {
     const { Schedule } = this.props;
     let time = e.currentTarget.innerHTML;
-    if (time == "10:00" || time == "11:00") {
-      this.setState({...this.state, current: "오전 " + time, display: true, display2: 'none'}); // display 는 FoldedComponent 기준
-      Schedule.setCurrent(time+":00");
-      Schedule.getOccupiedDate();
-    } else {
-      this.setState({...this.state, current: "오후 " + time, display: true, display2: 'none'});
-      Schedule.setCurrent(time+":00");
-      Schedule.getOccupiedDate();
-    }
-  }
-  handleDropDown = () => {
-    this.setState({...this.state, display: 'none', display2: true})
+    
+    Schedule.setCurrent(time+":00");
+    Schedule.getOccupiedDate();
   }
   timeActiveToggle = (time) => {
     const { Schedule } = this.props;
@@ -54,6 +57,15 @@ class MobileStep4Container extends Component {
     } else {
       return false
     }
+  }
+  createSchedule = () => {
+    const { Schedule, Request } = this.props;
+    let req = {
+      request: 1824,
+      email: this.state.userEmail,
+      isOnline: this.state.isOnline
+    }
+    Schedule.submitSchedule(req);
   }
   render() {
     const { current, display, display2 } = this.state;
@@ -131,10 +143,10 @@ class MobileStep4Container extends Component {
             컨설팅 유형
           </Title>
           <div style={{display: 'inline-flex'}}>
-            <TimeComponent>
+            <TimeComponent onClick = {this.isOnlineHandler}>
               방문 미팅
             </TimeComponent>
-            <TimeComponent>
+            <TimeComponent onClick = {this.isOnlineHandler}>
               화상 미팅
             </TimeComponent>
           </div>
@@ -146,11 +158,13 @@ class MobileStep4Container extends Component {
             <Title style={{marginTop: 30}}>
               이메일
             </Title>
-            <MobileInputComponent
-              width={"100%"}
-              placeholder="이메일을 입력해주세요."
-              onChange={this.emailChange}
-            />
+            <MobileInput>
+              <InputComponent
+                width={"100%"}
+                placeholder="이메일을 입력해주세요."
+                onChange={this.emailChange}
+              />
+            </MobileInput>
           </>
           ) }
           <Tail style={{marginTop: 10}}>
@@ -164,7 +178,7 @@ class MobileStep4Container extends Component {
               <span> 이용약관 및 개인정보 처리방침에 동의합니다. </span>
             </CheckBoxComponent>
           </CheckBoxWrapper>
-          <CustomButton>
+          <CustomButton onClick = {this.createSchedule}>
             무료 컨설팅 신청
           </CustomButton>
         </CardFooter>
@@ -175,15 +189,13 @@ class MobileStep4Container extends Component {
 
 export default MobileStep4Container;
 
-const MobileInputComponent = styled(InputComponent)`
-  width: 100%;
-  height: 40px !important;
-  object-fit: contain;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: #ffffff;
-  .Input2__InputBox-sc-1mnu5am-0 lfxihu {
-    height: 100%;
+const MobileInput = styled.div`
+  .InputBox {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    background-color: #ffffff;
   }
 `
 const Card = styled.div`

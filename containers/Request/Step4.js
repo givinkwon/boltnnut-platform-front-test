@@ -18,13 +18,13 @@ class Step4Container extends Component {
     display: 'none', // display 는 FoldedComponent 기준
     display2: true, // display2 는 TimeBox 기준.
     current: null, // FoldedComponent에 넣을 현재 상태(오전 11:00 등)
-    inactive_array: []
+    inactive_array: [],
   }
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
   }
   emailChange = (obj) => {
-    console.log(obj) // 에러피하기용 임시
+    this.setState({...this.state, userEmail: obj})
   }
   getTime = (hour) => {
     const date = new moment();
