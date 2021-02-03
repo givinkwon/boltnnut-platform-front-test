@@ -18,6 +18,7 @@ class TaskBarContainer extends React.Component {
         { return false; }
     };
 
+    var max=0;
   return (
       <>
         <table>
@@ -31,15 +32,17 @@ class TaskBarContainer extends React.Component {
             </tr>
             {Proposal.estimateData.task && Proposal.estimateData.task.map((row)=>(
                 <tr height={80}>
-
-                    {/* <TaskTd><Font18 style={{textAlign:'right',marginRight:41}}>{row.name}</Font18></TaskTd> */}
                     <TaskTd><Font18>{row.name}</Font18></TaskTd>
                     {[...Array(8)].map((n,idx) => {
-                        
+                      if(max<row.endPeriod)
+                      {
+                        max=row.endPeriod;
+                      }
                         return (
                             <TaskTd style={{backgroundColor:'white',border:'1px solid #e1e2e4'}}>
                                 <HalfTd active={activeHandler(idx*2+1,row.startPeriod,row.endPeriod)}/>
                                 <HalfTd active={activeHandler(idx*2+2,row.startPeriod,row.endPeriod)}/>
+                                {max}
                             </TaskTd>
                         )
                     })}
