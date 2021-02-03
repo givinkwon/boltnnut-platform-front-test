@@ -5,6 +5,8 @@ import * as Title from 'components/Title';
 import styled from 'styled-components';
 import Fade from 'react-reveal/Fade';
 import { inject, observer } from "mobx-react";
+
+const MobileBanner1Img = 'static/images/Home/Mobile/MobileBanner1/MobileBanner1Img.png';
 @inject('Proposal','Partner')
 @observer
 class MobileBanner1Container extends React.Component {
@@ -17,7 +19,7 @@ class MobileBanner1Container extends React.Component {
               <Head>자동 견적 알고리즘</Head>
               <Main><span>1초만에</span> 내 제품<br/>가견적 받기</Main>
               <ImageContainer>
-                <img src={"/static/images/Home/Mobile/MobileBanner1/MobileBanner1Img.png"}/>
+                <img src={MobileBanner1Img}/>
               </ImageContainer>
               <Content>{ProjectCount*3+997}건의 데이터에 기반한 자동견적 알고리즘이<br/>평균 2일의 견적 시간을 한 번에 해결해 드립니다.</Content>
             </Fade>

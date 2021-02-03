@@ -15,9 +15,13 @@ const fileImage = 'static/images/components/Input2/Mask.png';
 class Step2Container extends React.Component {
   onChangeFile = (e,data,idx) => {
     const {Request}  = this.props;
+    let fileNameAvailable = ['stl', 'stp'];
     let fileName;
     if (e.currentTarget.files[0]) {
-      console.log(e.currentTarget.files[0])
+      if (!fileNameAvailable.includes(e.currentTarget.files[0].name.split('.')[e.currentTarget.files.length])) {
+        console.log(e.currentTarget.files[0].name.split('.')[e.currentTarget.files.length])
+        return alert("파일 확장자명 (stl, stp만 가능) 을 확인해주세요.")
+      }
       fileName = e.currentTarget.files[0].name;
       Request.setDrawFile(e.currentTarget.files[0]);
       DetailQuestion.SelectChecked = idx;

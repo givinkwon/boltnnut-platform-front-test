@@ -148,8 +148,6 @@ class RequestCardContainer extends Component {
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
 
-
-          console.log(Request.titleData);
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
         }
         else {
@@ -163,7 +161,7 @@ class RequestCardContainer extends Component {
             ManufactureProcessFormData.append("process",ManufactureProcess.SelectedItem.process);
             ManufactureProcessFormData.append("detailProcess",ManufactureProcess.SelectedItem.id);
             //기본정보입력에서 받은 의뢰서로 바꾸기
-            ManufactureProcessFormData.append("request",360);
+            ManufactureProcessFormData.append("request",Request.created_request);
             ManufactureProcessApi.saveSelect(ManufactureProcessFormData);
             Request.titleData= Request.titleData.slice(0,3);
           }
