@@ -125,7 +125,7 @@ class MobileStep1Container extends React.Component {
           />
         </SelectRow>
           <Header style={{marginTop: 30}}>
-            개발 기간
+            희망 개발 기간
           </Header>
         <SelectRow style={{width: 180}}>
 
