@@ -111,11 +111,7 @@ class Step3Container extends Component {
 
   componentDidMount() {
     const { Proposal, DetailQuestion } = this.props;
-    if(DetailQuestion.proposal_type!=0){
-      // Proposal.loadEstimateInfo(DetailQuestion.proposal_type);
-      console.log(DetailQuestion.proposal_type)
-    }
-    // Proposal.loadEstimateInfo(1);
+    // Proposal.loadEstimateInfo(315);
     console.log(DetailQuestion.proposal_type)
   }
 
@@ -351,8 +347,8 @@ const ConsultantBox = styled.div`
   margin-top:90px;
   
   // height:76px;
-  border-top:solid 1px #707070;
-  border-bottom:solid 1px #707070;
+  // border-top:solid 1px #707070;
+  // border-bottom:solid 1px #707070;
 `
 const Card = styled.div`
   width: 894px;
