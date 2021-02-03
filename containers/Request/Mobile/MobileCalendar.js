@@ -28,7 +28,12 @@ class Week extends Component {
     }
     return days;
   }
-
+  calendarOnOff = (e) => {
+    const { Schedule } = this.props;
+    let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
+    const dayValue = Schedule.nowMoment;
+    Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
+  }
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
     const occupied = Schedule.date_occupied;
@@ -59,7 +64,6 @@ class Week extends Component {
       }
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") && Schedule.nowMoment.format('M') === dayInfo.getMonth) {
         className += "today";
-        console.log(className);
         return (
           <div className={className} onClick={ this.calendarOnOff }>
             {dayInfo.getDay}
@@ -100,7 +104,7 @@ class MobileCalendar extends Component {
   moveMonth = (month) => {
     const { Schedule } = this.props;
     Schedule.nowMoment.add(month, 'M');
-    Schedule.setTodayDate(this.state.now.format("YYYY-MM"));
+    Schedule.setTodayDate(this.state.now.format("YYYY-MM-01 "));
     this.setState({
       now : Schedule.nowMoment,
     })
