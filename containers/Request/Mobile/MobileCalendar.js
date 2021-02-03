@@ -23,7 +23,7 @@ class Week extends Component {
         getDay: Day.format('D'),
         getMonth: Day.format('M'),
         getYear: Day.format('YYYY'),
-        isHolyDay: false
+        isHolyDay: false,
       });
     }
     return days;
