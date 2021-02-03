@@ -9,3 +9,11 @@ export function getOccupiedToday(req) {
     headers: req.headers ? req.headers : null,
   })
 }
+export function getOccupiedMonth(req) {
+  return axios({
+    method: 'GET',
+    url: `${ROOT_URL}/schedule/getScheduleByPeriod?startAt=${req.startAt} 10:00:00.00&endAt=${req.endAt} 19:00:00.00&timeWindow=1`, 
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  })
+}

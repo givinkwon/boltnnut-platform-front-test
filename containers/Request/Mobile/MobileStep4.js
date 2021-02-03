@@ -143,11 +143,13 @@ class MobileStep4Container extends Component {
             <Title style={{marginTop: 30}}>
               이메일
             </Title>
-            <MobileInputComponent
-              width={"100%"}
-              placeholder="이메일을 입력해주세요."
-              onChange={this.emailChange}
-            />
+            <MobileInput>
+              <InputComponent
+                width={"100%"}
+                placeholder="이메일을 입력해주세요."
+                onChange={this.emailChange}
+              />
+            </MobileInput>
           </>
           ) }
           <Tail style={{marginTop: 10}}>
@@ -172,15 +174,13 @@ class MobileStep4Container extends Component {
 
 export default MobileStep4Container;
 
-const MobileInputComponent = styled(InputComponent)`
-  width: 100%;
-  height: 40px !important;
-  object-fit: contain;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: #ffffff;
-  .Input2__InputBox-sc-1mnu5am-0 lfxihu {
-    height: 100%;
+const MobileInput = styled.div`
+  .InputBox {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    background-color: #ffffff;
   }
 `
 const Card = styled.div`

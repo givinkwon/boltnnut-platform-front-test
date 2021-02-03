@@ -98,9 +98,9 @@ const InputBox = styled.div`
   }
   @media (min-width: 0px) and (max-width: 767.98px) { 
     height: 100%;
+    height: 34px;
     object-fit: contain;
     border-radius: 3px;
-    border: none;
     background-color: #ffffff;
     > img {
       position: relative;
@@ -128,6 +128,7 @@ const Input = styled.div`
   margin-top: ${props => props.marginTop}px;
   color: #404040;
   font-weight: 400;
+  padding-left: 2.3%;
   :focus {
     outline: none;
   }
@@ -149,15 +150,14 @@ const Input = styled.div`
     ::placeholder {
       font-weight: 400;
       color: #c6c7cc;
-      padding-left: 2.3%;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
+    padding-left: 2.3% !important;
   > input {
     width: 100%;
     height: 100%;
     border: none;
-    padding: 0 !important;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -176,6 +176,7 @@ const Input = styled.div`
       letter-spacing: -0.35px;
       text-align: left;
       color: #999999;
+      padding-left: 0;
     }
   }
 `

@@ -11,13 +11,12 @@ class Schedule {
     @observable calendarOnOff = true;
     @observable clickDay = 0;
     @observable date_occupied = [];
-    @observable alldayOfMonth = [];
 
     @observable already_setted = [];
 
     @action init = () => {
         let today_date = new moment();
-        this.today = today_date.format('YYYY-MM-DD ');
+        this.today = today_date.format('YYYY-MM-DD');
         this.book_time = this.today + this.current;
 
         this.getOccupiedDate();
@@ -56,44 +55,27 @@ class Schedule {
         formData.append("endAt", ); // 미완
     }
 
-    @action fullDateCheck = (obj) => {
-        let fullday = [];
+    @action fullDateCheck = (startAt, endAt) => {
         console.log("fullDateCheck돌립니다.")
-        for (var i = 0; i <= obj.length; i++ ) {
-            let req = {
-                today: obj[i],
-            }
-            ScheduleAPI.getOccupiedToday(req).then((res) => {
-                if (res.data.data.length == 8) {
-                    this.date_occupied.push(req.today)
-                }
-            }).catch(
-                (error) => console.log(error)
-            )
+        let req = {
+            startAt: startAt,
+            endAt: endAt
         }
+        ScheduleAPI.getOccupiedMonth(req).then((res) => {
+            this.data_occupied += res.data.data;
+        })
     }
     @action getDays = (year, month) => {
         let selected_ym = new moment(year + '-' + month + '-' + '01');
         let selected_ym2 = new moment(year + '-' + month + '-' + '01');
         let a = selected_ym.add("1", "M").format("YYYY-MM-DD");
 
-        let diffDays = (moment(a).diff(moment(selected_ym2.format("YYYY-MM-DD")),"days"));
-
         if (!this.already_setted.includes(`${year}-${month}`)) {
-            // 이미 세팅한 month가 아닌 경우
-            console.log(`${year}-${month}`);
-            for (let i=1; i <= diffDays; i ++) {
-                if (i < 10) {
-                    this.alldayOfMonth.push(`${year}-${month}-0${i}`)
-                } else {
-                    this.alldayOfMonth.push(`${year}-${month}-${i}`)
-                }
-            };
             this.already_setted.push(`${year}-${month}`)
+            this.fullDateCheck(selected_ym2.format("YYYY-MM-DD"), selected_ym.format("YYYY-MM-DD"));
         } else {
             console.log("이미 세팅한 연,월 입니다.")
         }
-        this.fullDateCheck(this.alldayOfMonth);
     }
 }
 
