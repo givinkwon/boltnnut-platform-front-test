@@ -12,8 +12,23 @@ class ManufactureProcess {
           this.title_list = res.data;
         }
       )
+    this.reset()
   };
+
+  @action reset = async () => {
+    this.SelectChecked='';
+  };
+
+
+@action saveSelect = (req) => {
+  ManufactureProcessAPI.saveSelect(req)
+    .then((res) => {
+      console.log("받은 리스폰스",res);
+    })
+    .catch((e) => {
+      console.log(e);
+      console.log(e.response);
+    });
 }
-
-
+}
 export default new ManufactureProcess()

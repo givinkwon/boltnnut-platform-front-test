@@ -19,6 +19,8 @@ class Step4Container extends Component {
     display2: true, // display2 는 TimeBox 기준.
     current: null, // FoldedComponent에 넣을 현재 상태(오전 11:00 등)
     inactive_array: [],
+    userEmail: null,
+    isOnline: 0,
   }
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
@@ -48,10 +50,37 @@ class Step4Container extends Component {
   }
   timeActiveToggle = (time) => {
     const { Schedule } = this.props;
-    if (Schedule.inactive_today.includes(time)) {
+    let nowTime = new moment();
+    // console.log(time.split(' ')[1]);  ==> 10:00 과 같음.
+    console.log(time.split(' ')[1]);
+    if (Schedule.inactive_today.includes(time.split(' ')[1])) {
       return true
     } else {
-      return false
+      if (nowTime.format("HH") > time.split(' ')[1].split(":")[0]) {
+        if (nowTime.format("DD") == time.split(' ')[0].split('-')[2]) {
+          console.log(nowTime.format("DD HH"))
+        }
+      }
+    }
+  }
+  // 스케쥴 생성
+  createSchedule = () => {
+    const { Schedule, Request } = this.props;
+    let req = {
+      request: 1824,
+      email: this.state.userEmail,
+      isOnline: this.state.isOnline
+    }
+    Schedule.submitSchedule(req);
+  }
+  // 대면, 비대면 선택
+  isOnlineHandler = (e) => {
+    let targetWord = e.target.innerHTML;
+    // 대면이면 0, 화상이면 1
+    if (targetWord == "화상 미팅") {
+      this.setState({...this.state, isOnline: 1}) 
+    } else {
+      this.setState({...this.state, isOnline: 0})
     }
   }
   render() {
@@ -115,7 +144,7 @@ class Step4Container extends Component {
             <TimeBox style={{marginBottom: 30}}>
               {timeArr.slice(0,2).map((data) => {
                   return (
-                    <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick={(event) => this.setTime(event, data.start_at)}>
+                    <TimeComponent deactive={this.timeActiveToggle(data.start_at)} onClick={(event) => this.setTime(event, data.start_at)}>
                       {data.start_at.split(' ')[1]}
                     </TimeComponent>
                   )
@@ -127,7 +156,7 @@ class Step4Container extends Component {
             <TimeBox style={{marginBottom: 60}}>
                 {timeArr.slice(2,).map((data) => {
                   return (
-                    <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick = {(event) => this.setTime(event, data.start_at)}>
+                    <TimeComponent deactive={this.timeActiveToggle(data.start_at)} onClick = {(event) => this.setTime(event, data.start_at)}>
                       {data.start_at.split(' ')[1]}
                     </TimeComponent>
                   )
@@ -135,11 +164,19 @@ class Step4Container extends Component {
             </TimeBox>
           </div>
           <Title>
-            장소
+            컨설팅 유형
           </Title>
-          <SubContent>
-            서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트
-          </SubContent>
+          <div style={{display: 'inline-flex', marginTop: 9}}>
+            <TimeComponent onClick = {this.isOnlineHandler}>
+              방문 미팅
+            </TimeComponent>
+            <TimeComponent onClick = {this.isOnlineHandler}>
+              화상 미팅
+            </TimeComponent>
+          </div>
+          <Tail>
+            * 서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트
+          </Tail>
           { !Request.has_email && (
           <>
             <Title style={{marginTop: 30}}>
@@ -161,7 +198,7 @@ class Step4Container extends Component {
             onChange={this.checkboxChange}>
             이용약관 및 개인정보 처리방침에 동의합니다.
           </CheckBoxComponent>
-          <CustomButton>
+          <CustomButton onClick={this.createSchedule}>
             무료 컨설팅 받기
           </CustomButton>
         </CardFooter>
@@ -258,6 +295,7 @@ const TimeComponent = styled.div`
 `
 const Tail = styled(Content.FontSize14)`
   font-weight: 500;
+  height: 24px;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.86;
