@@ -148,8 +148,6 @@ class RequestCardContainer extends Component {
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
 
-
-          console.log(Request.titleData);
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
         }
         else {
