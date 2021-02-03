@@ -173,6 +173,7 @@ class RequestCardContainer extends Component {
             "data": Request.titleData,
           }
           DetailQuestion.loadProposalType(SelectSaveData);
+          
           Request.step_index = 3; 
         }
         Request.percentage += 14;

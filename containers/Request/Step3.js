@@ -28,7 +28,7 @@ import * as Title from "components/Title";
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 const HeaderImg = "/static/images/request/Step3/Step3_Header.png";
 const DropdownArrow1 = "/static/images/request/Step3/Step3_Dropdown1.png";
-const DropUpArrow1 = "static/images/partner/arrow_up.png";
+const DropUpArrow1 = "static/images/request/Step3/Step3_Dropdown2.png";
 const DropdownArrow2 = "/static/images/request/Step3/Step3_Dropdown2.png";
 const DropUpArrow2 = "static/images/partner/arrow_up.png";
 
@@ -40,7 +40,7 @@ const styles = {
     height:'auto',
   },
   cell:{
-    border:'1px solid gray'
+    border:'1px solid #c6c7cc'
   }
 };
 
@@ -56,10 +56,6 @@ class Step3Container extends Component {
 
   static defaultProps = { title: '견 적 서' };
 
-  componentDidMount()
-  {
-    this.props.Proposal.loadEstimateInfo(1);//다른 타입 보고싶으면 192
-  }
   buttonClick = () => {
     const { Request } = this.props;
     Request.step_index = 4;
@@ -112,13 +108,14 @@ class Step3Container extends Component {
     }
   }
 
-
   componentDidMount() {
     const { Proposal, DetailQuestion } = this.props;
-    if(DetailQuestion !== 0){
-      Proposal.loadEstimateInfo(DetailQuestion.proposal_type);
-      console.log(5)
+    if(DetailQuestion.proposal_type!=0){
+      // Proposal.loadEstimateInfo(DetailQuestion.proposal_type);
+      console.log(DetailQuestion.proposal_type)
     }
+    // Proposal.loadEstimateInfo(1);
+    console.log(DetailQuestion.proposal_type)
   }
 
   render() {
@@ -152,6 +149,38 @@ class Step3Container extends Component {
           <Header>
             {this.props.title}
           </Header>
+          <HeaderTextBox>
+            <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#282c36'}>
+              견적가
+            </Content.FontSize24>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#282c36'}>
+                {Proposal.estimate_price} 원
+              </Content.FontSize24>
+              <div style={{ marginLeft: 20 }}>
+                
+              </div>
+            </div>
+          </HeaderTextBox>
+          <DetailButtonBox>
+            
+            {showEstimateDrop == true ? (
+                  <>
+                    <Title.FontSize20 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
+                        견적서 상세보기
+                    </Title.FontSize20>
+                    <img src={DropdownArrow1} onClick={()=>{this.detailDown(1);}} style={{marginLeft:12}}/>
+                  </>
+                ) : (
+                    <>
+                      <Title.FontSize20 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
+                          견적서 접기
+                      </Title.FontSize20>
+                      <img src={DropUpArrow1} onClick={()=>{this.detailUp(1);}} style={{marginLeft:20}}/>
+                    </>
+                  )
+                }
+          </DetailButtonBox>
           <DetailContainer style={{display: showEstimateDetail}}>
             <Table className={classes.table} size="small">
               <TableBody>
@@ -196,80 +225,16 @@ class Step3Container extends Component {
 
             </Table>
 
-            <Font16 style={{marginTop:40,textAlign:'center',fontWeight:'bold'}}>
+            <Font16 style={{marginTop:40,textAlign:'center',fontWeight:'bold',color:'#0a2165',marginBottom:40}}>
               *해당 견적서는 제품 세부사항에 따라 달리질 수 있습니다.<br/>
               보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
             </Font16>
 
-            {/* 여기 들어간다 */}
-            
+            {/* 여기 들어간다 */}  
             <TaskBarContainer/>
-            
-            {/* <Table className={classes2.table} size="small">
-              <TableBody>
-                  { rows1.map((row) => (
-                <TableRow className ={classes2.row} key={row.title}>
-                  <TableCell className ={classes2.cell} component="th" scope="row" width='154'>
-                    <Font16 style={{marginRight:48,textAlign:'right'}}>{row.title}</Font16>
-                  </TableCell>
-                  <TableCell className ={classes2.cell} width='472'>
-                    <Font16 style={{marginLeft:20,textAlign:'left'}}>{row.content}</Font16>
-                  </TableCell>
-                  <TableCell className ={classes2.cell} width='268'>
-                    <Font16 style={{marginRight:52,textAlign:'right'}}>{row.note}</Font16>
-                  </TableCell>
-                </TableRow>
-              ))}
-              </TableBody>
-            </Table> */}
-
-            {/* <Grid container>
-              <Grid item xs={9} sm={1}>
-                <Box bgcolor="info.main" color="info.contrastText" p={2}>
-                  1
-                </Box>
-              </Grid>
-              <Grid item xs={9} sm={1}>
-                <Box bgcolor="info.main" color="info.contrastText" p={2}>
-                  2
-                </Box>
-              </Grid>
-            </Grid> */}
-            
-            <AccountBox>
-              <div>
-                <Font16 style={{marginBottom:20}}>* 입금계좌(하나은행)</Font16>
-                <Font16 style={{marginBottom:20}}>예금주: 윤기열(볼트앤너트)</Font16>
-                <Font16 style={{marginBottom:20}}>계좌번호: 391-910021-******</Font16>
-                <Font16>계좌명: 주식회사볼트앤너트</Font16>
-              </div>
-              <div>
-                <Font16 style={{marginBottom:20}}>(주)볼트앤너트</Font16>
-                <Font16 style={{marginBottom:20}}>서울시 성북구 고려대로 30길 4 2층</Font16>
-                <Font16 style={{marginBottom:20}}>Tel : 02 - 926 - 6637</Font16>
-                <Font16>대표이사 윤 기열</Font16>
-              </div>
-            </AccountBox>
-
+          
           </DetailContainer>
-          <HeaderTextBox>
-            <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
-              견적가
-            </Content.FontSize24>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#ffffff'}>
-                {Proposal.estimate_price} 원
-              </Content.FontSize24>
-              <div style={{ marginLeft: 20 }}>
-                {showEstimateDrop == true ? (
-                  <img src={DropdownArrow1} onClick={()=>{this.detailDown(1);}} />
-                ) : (
-                    <img src={DropUpArrow1} onClick={()=>{this.detailUp(1);}}/>
-                  )
-                }
-              </div>
-            </div>
-          </HeaderTextBox>
+          
 
         </HeaderBackground>
 
@@ -343,11 +308,12 @@ const Font16 = styled(Content.FontSize16)`
   color: #282c36;
 `
 
-const AccountBox = styled.div`
+const DetailButtonBox = styled.div`
+  background-color:#f6f6f6;
+  height:59px;
   display:flex;
-  justify-content:space-between;
-  // background:blue;
-  padding:50px 80px 0 128px;
+  align-items:center;
+  justify-content:center;
 `
 const EstimateDetailContainer = styled.div`
   margin-left:63px;
@@ -356,7 +322,7 @@ const EstimateDetailContainer = styled.div`
 const DetailContainer = styled.div`
   // margin-left:63px;
   margin-top:-1px;
-  padding-bottom:100px;
+  // padding-bottom:100px;
   background-color:white;
 
   .MuiTableCell-sizeSmall
@@ -399,7 +365,7 @@ const Card = styled.div`
   float: right;
 `
 const HeaderBackground = styled.div`
-  background-color: #0a2165;
+  // background-color: #0a2165;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 `
@@ -435,12 +401,12 @@ const Header = styled(Content.FontSize32)`
   line-height: 1.63;
   letter-spacing: -0.8px;
   text-align: center;
-  color: #ffffff;
+  color: #282c36;
   margin-left: 5.4%;
   margin-right: 5.4%;
   padding-top: 27px;
   padding-bottom:41px;
-  border-bottom: solid 1px #ffffff;
+  border-bottom: solid 1px #999999;
   object-fit: contain;
 `
 
@@ -460,7 +426,7 @@ const ContentBox = styled.div`
   // height: calc(46.3%);
   margin-right: 5.4%;
   margin-left: 5.4%;
-  margin-top: 60px;
+  margin-top: 100px;
 `
 
 const CustomSlider = withStyles({
