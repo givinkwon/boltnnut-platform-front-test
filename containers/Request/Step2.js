@@ -18,6 +18,7 @@ class Step2Container extends React.Component {
     let fileName;
     if (e.currentTarget.files[0]) {
       console.log(e.currentTarget.files[0])
+      console.log(e.currentTarget.files[0].name.split("."))
       fileName = e.currentTarget.files[0].name;
       Request.setDrawFile(e.currentTarget.files[0]);
       DetailQuestion.SelectChecked = idx;

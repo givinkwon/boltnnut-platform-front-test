@@ -13,6 +13,7 @@ class DetailQuestion {
   @observable SelectChecked='';
   @observable SelectId=null;
   @observable proposal_type = 0;
+  @observable message = '';
   @action init = async () => {
     this.reset()
     await DetailQuestionAPI.loadTitle()
@@ -47,7 +48,9 @@ class DetailQuestion {
       .then(res => {
           console.log(res)
           this.proposal_type = res.data.proposalId;
+          this.message = res.data.message;
           console.log(this.proposal_type)
+          console.log(this.message)
           Proposal.loadEstimateInfo(this.proposal_type);
         }
       )
