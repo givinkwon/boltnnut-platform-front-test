@@ -139,7 +139,7 @@ const StepModal = styled.div`
   background-color: rgba(0,0,0,0.5);
   top: 45px;
   width: 100vw;
-  height: 150vh;
+  height: 200vh;
   z-index: 890;
 `
 const ModalContent = styled.div`

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import * as Content from 'components/Content';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import MobileCalendar from './MobileCalendar';
 import InputComponent from 'components/Input2';
 import CheckBoxComponent from 'components/CheckBox';
@@ -8,7 +8,8 @@ import Buttonv1 from 'components/Buttonv1';
 import moment from "moment";
 import { inject, observer } from 'mobx-react';
 import Slider from 'react-slick';
-import 'intersection-observer'; // polyfill
+import 'intersection-observer';
+import MobileStepContainer from '../../../components/MobileStep'; // polyfill
 
 const dropdown = '/static/images/request/Step4/dropdown.png';
 
@@ -34,7 +35,7 @@ class MobileStep4Container extends Component {
     let targetWord = e.target.innerHTML;
     // 대면이면 0, 화상이면 1
     if (targetWord == "화상 미팅") {
-      this.setState({...this.state, isOnline: 1}) 
+      this.setState({...this.state, isOnline: 1})
     } else {
       this.setState({...this.state, isOnline: 0})
     }
@@ -46,7 +47,7 @@ class MobileStep4Container extends Component {
   setTime = (e, date) => {
     const { Schedule } = this.props;
     let time = e.currentTarget.innerHTML;
-    
+
     Schedule.setCurrent(time+":00");
     Schedule.getOccupiedDate();
   }
@@ -118,7 +119,13 @@ class MobileStep4Container extends Component {
     };
     return (
       <Card>
-        <Title style={{marginTop: 30, marginBottom: 6, width: '100%'}}>
+        <div style={{display: 'flex', justifyContent: 'center',}}>
+          <Header>
+            <span>1:1 컨설팅 신청</span>
+            <MobileStepContainer/>
+          </Header>
+        </div>
+        <Title style={{marginTop: 19, marginBottom: 6, width: '100%'}}>
           날짜
         </Title>
         <ContentBox>
@@ -201,25 +208,26 @@ const MobileInput = styled.div`
 const Card = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   object-fit: contain;
   background-color: white;
 `
-const Header = styled(Content.FontSize32)`
-  width: auto;
-  height: calc(6.7%);
+const Header = styled.div`
+  font-family: Roboto;
+  color: #0a2165;
+  position: relative;
+  font-size: 16px;
+  width: 122px;
+  height: 46px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.63;
-  letter-spacing: -0.8px;
-  text-align: left;
-  color: #0a2165;
-  margin-left: 5.4%;
-  margin-right: 5.4%;
-  padding-top: 4%;
-  border-bottom: solid 1px #707070;
-  object-fit: contain;
-  padding-bottom: 20px;
+  line-height: 1.13;
+  letter-spacing: -0.4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 `
 const ContentBox = styled.div`
   width: 100%;
