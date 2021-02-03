@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import React, { Component, useRef } from 'react';
+import React, { Component } from 'react';
 import moment from "moment";
 import { inject, observer } from 'mobx-react';
-const prevMonth = "/static/images/request/Calendar/prevMonth.png";
-const nextMonth = "/static/images/request/Calendar/nextMonth.png";
-const dropdown = '/static/images/request/Step4/dropdown.png';
+const prevMonth = "/static/images/request/Calendar/MobilePrevMonth.svg";
+const nextMonth = "/static/images/request/Calendar/MobileNextMonth.svg";
+// const dropdown = '/static/images/request/Step4/dropdown.png';
+
 
 @inject('Request', 'Schedule')
 @observer
@@ -13,9 +14,7 @@ class Week extends Component {
     now: moment()
   }
   Days = (firstDayFormat) => {
-    const { Schedule } = this.props;
     const days = [];
-
     for (let i = 0; i < 7; i++) {
       const Day = moment(firstDayFormat).add('d', i);
       days.push({
@@ -29,24 +28,9 @@ class Week extends Component {
     }
     return days;
   }
-  calendarOnOff = (e) => {
-    const { Request, Schedule } = this.props;
-    if (Schedule.calendarOnOff == true) {
-      Schedule.calendarOnOff = false;
-    }
-    else {
-      Schedule.calendarOnOff = true;
-    }
-    let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
-    const dayValue = Schedule.nowMoment;
-
-    Schedule.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
-    Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
-  }
 
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
-    const { now } = this.state;
     const occupied = Schedule.date_occupied;
 
     return Days.map((dayInfo, i) => {
@@ -73,7 +57,7 @@ class Week extends Component {
       else if (occupied.includes(dayInfo.yearMonthDayFormat)) {
         className = "not-book";
       }
-      if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD")) {
+      if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") && Schedule.nowMoment.format('M') === dayInfo.getMonth) {
         className += "today";
         console.log(className);
         return (
@@ -90,6 +74,7 @@ class Week extends Component {
           </div>
         )
       }
+
     })
   }
   render() {
@@ -102,7 +87,7 @@ class Week extends Component {
 }
 @inject('Schedule')
 @observer
-class Calendar extends Component {
+class MobileCalendar extends Component {
   state= {
     now: moment(),
   }
@@ -155,15 +140,6 @@ class Calendar extends Component {
       )
     })
   }
-  calendarOnOff = () => {
-    const { Schedule } = this.props;
-    if (Schedule.calendarOnOff == true) {
-      Schedule.calendarOnOff = false;
-    }
-    else {
-      Schedule.calendarOnOff = true;
-    }
-  }
 
   // 날짜 입력
   Weeks = (monthYear) => {
@@ -183,8 +159,7 @@ class Calendar extends Component {
     const { Schedule } = this.props;
     return (
       <>
-        { Schedule.calendarOnOff == true &&
-        <MainContainer display1={ this.state.hid }>
+        <MainContainer>
           <Header>
             <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
             <HeaderText>{now.format("YYYY.MM")}</HeaderText>
@@ -197,19 +172,12 @@ class Calendar extends Component {
             {this.Weeks(now)}
           </CalendarContainer>
         </MainContainer>
-        }
-        { Schedule.calendarOnOff == false &&
-        <FoldedComponent onClick={ this.calendarOnOff }>
-          { Schedule.clickDay }
-          <img src={dropdown} />
-        </FoldedComponent>
-        }
       </>
     )
   }
 }
 
-export default Calendar;
+export default MobileCalendar;
 
 const MainContainer = styled.div`
   display: flex;
@@ -217,41 +185,39 @@ const MainContainer = styled.div`
   align-items: center;
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  width: 798px;
-  height: 639px;
+  width: 347px;
+  height: 451px;
   margin-top: 6px;
 `
 const Header = styled.div`
   display: flex;
-  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
-  width: 176px;
-  align-items: flex-end;
-  margin-bottom: 50px;
-  margin-top: 40px;
+  width: 127px;
+  margin-bottom: 38px;
+  margin-top: 20px;
+  height: 27px;
 `
-const HeaderText = styled.div`
+const HeaderText = styled.span`
+  height: 14px;
   font-family: Roboto;
-  font-size: 28px;
+  font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.7px;
-  text-align: left;
   color: #282c36;
-  height: 22px;
 `
 const DateContainer = styled.div`
-  width: 714px;
+  width: 347px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-bottom: 25px;
+  margin-bottom: 16px;
   > div {
     text-align: center;
-    width: 102px;
     font-family: NotoSansCJKkr;
-    font-size: 22px;
+    font-size: 15px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -266,9 +232,9 @@ const DateContainer = styled.div`
   }
 `
 const CalendarContainer = styled.div`
-  width: 700px;
+  width: 347px;
   display: grid;
-  height: 432px;
+  height: 315px;
   grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 0px;
@@ -278,15 +244,13 @@ const CalendarContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-    margin-left: 25px;
-    margin-top: 11px;
-    //border: solid 0.5px rgba(198,199,204,0.5);
-    //border-collapse: collapse;
+    width: 35px;
+    height: 35px;
+    border-radius: 35px;
+    margin-left: 7px;
+    margin-top: 10px;
     font-family: Roboto;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -303,8 +267,8 @@ const CalendarContainer = styled.div`
       color: #282c36;
     }
     :hover {
-      background-color: #e1e2e4;
-      color: black;
+      background-color: #0933b3;
+      color: white;
       > div {
         color: black;
         display: none;
@@ -332,12 +296,18 @@ const CalendarContainer = styled.div`
     pointer-events: none;
     color: #c6c7cc;
   }
-  .today {
-    color: #0933b3;
+  .date-weekday-labeltoday {
     > div {
+      margin-top: 25px;
       position: absolute;
-      margin-top: 38px;
       color: #0933b3;
+      font-family: NotoSansCJKkr;
+      font-size: 10px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: -0.25px;
     }
   }
   .not-book {
@@ -359,28 +329,5 @@ const CalendarContainer = styled.div`
     //  margin-top: 38px;
     //  color: #e1e2e4;
     //}
-  }
-`
-const FoldedComponent = styled.div`
-  width: fit-content;
-  font-family: NotoSansCJKkr;
-  font-size: 18px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: -0.45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  padding: 8px 16px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: var(--white);
-  margin-top : 6px;
-  line-height: 1.3;
-  > img {
-    width: 14px;
-    height: 8px;
-    margin-left: 22px;
   }
 `
