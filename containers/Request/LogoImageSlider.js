@@ -36,47 +36,37 @@ class LogoSlider extends React.Component {
       arrows: false,
     };
     const { Request } = this.props;
-    console.log(Request.random_partner_list)
     return (
         <SliderWraper>
-        <Slider {...settings}>
-          
-        <>
-          {Request.random_partner_list.length == 0 &&
-          <>
-          <ImgContainer><img src={ Logo1 }/></ImgContainer>
-          <ImgContainer><img src={ Logo2 }/></ImgContainer>
-          <ImgContainer><img src={ Logo3 }/></ImgContainer>
-          <ImgContainer><img src={ Logo4 }/></ImgContainer>
-          <ImgContainer><img src={ Logo5 }/></ImgContainer>
-          <ImgContainer><img src={ Logo6 }/></ImgContainer>
-          <ImgContainer><img src={ Logo7 }/></ImgContainer>
-          <ImgContainer><img src={ Logo8 }/></ImgContainer>
-          <ImgContainer><img src={ Logo9 }/></ImgContainer>
-          <ImgContainer><img src={ Logo10 }/></ImgContainer>
-          <ImgContainer><img src={ Logo11 }/></ImgContainer>
-          <ImgContainer><img src={ Logo12 }/></ImgContainer>
-          <ImgContainer><img src={ Logo13 }/></ImgContainer>
-          <ImgContainer><img src={ Logo14 }/></ImgContainer>
-          <ImgContainer><img src={ Logo15 }/></ImgContainer>
-          </>
-          }
+            {Request.random_partner_list.length == 0 &&
+            <Slider {...settings}>
 
-          {Request.random_partner_list && Request.random_partner_list.map((item, idx) => {
-              console.log(item)
-              return (
-                
-                <ImgContainer><img src={item.partnerLogo}/></ImgContainer>
-                
+            <ImgContainer><img src={ Logo1 }/></ImgContainer>
+                <ImgContainer><img src={ Logo2 }/></ImgContainer>
+                <ImgContainer><img src={ Logo3 }/></ImgContainer>
+                <ImgContainer><img src={ Logo4 }/></ImgContainer>
+                <ImgContainer><img src={ Logo5 }/></ImgContainer>
+                <ImgContainer><img src={ Logo6 }/></ImgContainer>
+                <ImgContainer><img src={ Logo7 }/></ImgContainer>
+                <ImgContainer><img src={ Logo8 }/></ImgContainer>
+                <ImgContainer><img src={ Logo9 }/></ImgContainer>
+                <ImgContainer><img src={ Logo10 }/></ImgContainer>
+                <ImgContainer><img src={ Logo11 }/></ImgContainer>
+                <ImgContainer><img src={ Logo12 }/></ImgContainer>
+                <ImgContainer><img src={ Logo13 }/></ImgContainer>
+                <ImgContainer><img src={ Logo14 }/></ImgContainer>
+                <ImgContainer><img src={ Logo15 }/></ImgContainer>
+            </Slider>
+            }
+            <Slider {...settings}>
+              {Request.random_partner_list && Request.random_partner_list.map((item, idx) => {
+                  return (
+                    <ImgContainer><img src={item.partnerLogo}/></ImgContainer>
+                  )
+                }
               )
               }
-            )
-          }
-          
-          
-          
-        </>
-        </Slider>
+            </Slider>
       </SliderWraper>
     )
   }
@@ -85,7 +75,6 @@ const SliderWraper = styled.div`
   width: 730px;
   height: 112px;
   margin: 10px 83px 30px 83px;
-  
 `
 const ImgContainer = styled.div`
   width: 112px;
