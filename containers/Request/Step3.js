@@ -260,9 +260,9 @@ class Step3Container extends Component {
           <ConsultantBox>
             <ConsultantTextBox>
               <ConsultantHeader>
-                매칭 컨설턴트 : 최진영 기술 고문
+                매칭 컨설턴트 : 안철옹 기술 고문  외 2명
               </ConsultantHeader>
-              <ConsultantHashtag>#의료기기 #생활가전 #기구설계</ConsultantHashtag>
+              {/* <ConsultantHashtag>#의료기기 #생활가전 #기구설계</ConsultantHashtag> */}
               <div style={{ marginRight: 50.4 }}>
                 {showConsultantDrop == true ? (
                   <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} />
@@ -465,7 +465,7 @@ const ConsultantHeader = styled(Content.FontSize24)`
   text-align: left;
   color: #282c36;
   object-fit: contain;
-  margin-left:63px;
+  // margin-left:63px;
   // margin-right:26px;
 `
 
