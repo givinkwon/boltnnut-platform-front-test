@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import * as Content from 'components/Content';
 import { Component } from 'react';
-import Calendar from '../Calender';
+import MobileCalendar from './MobileCalendar';
 import InputComponent from 'components/Input2';
 import CheckBoxComponent from 'components/CheckBox';
 import Buttonv1 from 'components/Buttonv1';
@@ -106,8 +106,11 @@ class MobileStep4Container extends Component {
     };
     return (
       <Card>
+        <Title style={{marginTop: 30, marginBottom: 6, width: '100%'}}>
+          날짜
+        </Title>
         <ContentBox>
-          {/* <Calendar/> */}
+           <MobileCalendar/>
         </ContentBox>
         <ScheduleBox>
           <Title style={{marginTop: 30, marginBottom: 6}}>
@@ -188,8 +191,6 @@ const Card = styled.div`
   height: 100%;
   object-fit: contain;
   background-color: white;
-  display: inline;
-  float: right;
 `
 const Header = styled(Content.FontSize32)`
   width: auto;
@@ -209,10 +210,9 @@ const Header = styled(Content.FontSize32)`
   padding-bottom: 20px;
 `
 const ContentBox = styled.div`
-  margin-right: 5.4%;
-  margin-left: 5.4%;
-  margin-top: 4%;
+  width: 100%;
   display: flex;
+  align-items: center;
   flex-direction: column;
 `
 const ScheduleBox = styled.div`
