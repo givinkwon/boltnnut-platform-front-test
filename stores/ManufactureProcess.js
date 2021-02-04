@@ -5,6 +5,9 @@ class ManufactureProcess {
   @observable title_list = [];
   @observable SelectChecked='';
   @observable SelectedItem=null;
+  @observable EstimateDataForDrawing=[];
+  @observable MaxPrice=0;
+  @observable MinPrice=0;
 
   @action init = async () => {
     await ManufactureProcessAPI.loadTitle()
@@ -24,6 +27,9 @@ class ManufactureProcess {
   ManufactureProcessAPI.saveSelect(req)
     .then((res) => {
       console.log("받은 리스폰스",res);
+      this.EstimateDataForDrawing = res.data.data;
+      this.MaxPrice= this.EstimateDataForDrawing.totalMaxPrice;
+      this.MinPrice= this.EstimateDataForDrawing.totalMinPrice;
     })
     .catch((e) => {
       console.log(e);

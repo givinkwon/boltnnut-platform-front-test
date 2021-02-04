@@ -11,7 +11,8 @@ const nextMonth = "/static/images/request/Calendar/MobileNextMonth.svg";
 @observer
 class Week extends Component {
   state = {
-    now: moment()
+    now: moment(),
+    active1: null,
   }
   Days = (firstDayFormat) => {
     const days = [];
@@ -28,16 +29,23 @@ class Week extends Component {
     }
     return days;
   }
+  focusFunction = (e) => {
+    let day = e;
+    if (day == this.state.active1) {
+      return true;
+    }
+  }
   calendarOnOff = (e) => {
     const { Schedule } = this.props;
+    let targetDay = e.target.innerHTML;
     let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
+    this.setState({ active1: targetDay});
     const dayValue = Schedule.nowMoment;
     Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   }
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
     const occupied = Schedule.date_occupied;
-
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
       let thisMoment = moment();
@@ -65,7 +73,7 @@ class Week extends Component {
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") && Schedule.nowMoment.format('M') === dayInfo.getMonth) {
         className += "today";
         return (
-          <div className={className} onClick={ this.calendarOnOff }>
+          <div className={className} onClick={ this.calendarOnOff } focused={ this.focusFunction(dayInfo.getDay) }>
             {dayInfo.getDay}
             <div>오늘</div>
           </div>
@@ -73,12 +81,11 @@ class Week extends Component {
       }
       else {
         return (
-          <div className={className} onClick={ this.calendarOnOff }>
+          <div className={className} onClick={ this.calendarOnOff } focused={ this.focusFunction(dayInfo.getDay) }>
             {dayInfo.getDay}
           </div>
         )
       }
-
     })
   }
   render() {
@@ -160,7 +167,6 @@ class MobileCalendar extends Component {
   }
   render() {
     const { now } = this.state;
-    const { Schedule } = this.props;
     return (
       <>
         <MainContainer>
@@ -244,6 +250,8 @@ const CalendarContainer = styled.div`
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   > div {
+    background-color: ${(props) => props.focused ? "#0933b3" : "white"};
+    color: ${(props) => props.focused ? "white" : "#282c36"};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -259,8 +267,8 @@ const CalendarContainer = styled.div`
     font-stretch: normal;
     font-style: normal;
     letter-spacing: -0.18px;
-    color: #282c36;
     > div {
+      display: ${(props) => props.focused ? "none" : "block"};
       font-family: Roboto;
       line-height: 1.4;
       font-size: 12px;
@@ -269,18 +277,6 @@ const CalendarContainer = styled.div`
       font-style: normal;
       letter-spacing: -0.12px;
       color: #282c36;
-    }
-    :hover {
-      background-color: #0933b3;
-      color: white;
-      > div {
-        color: black;
-        display: none;
-      }
-    }
-    :focus {
-      background-color: #0933b3;
-      color: white;    
     }
   }
   .date-sun {
@@ -334,4 +330,10 @@ const CalendarContainer = styled.div`
     //  color: #e1e2e4;
     //}
   }
+`
+const Test = styled.div`
+  width: 100px;
+  height: 100px;
+  background-color: ${(props) => (props.focused ? "#0933b3" : "white")};
+  color: ${(props) => props.focused ? "white" : "#282c36"};
 `

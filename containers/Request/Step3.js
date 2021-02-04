@@ -15,7 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-// import STLViewer from 'stl-viewer'
+import STLViewer from 'stl-viewer'
 
 //Slider
 import { withStyles } from '@material-ui/core/styles';
@@ -119,9 +119,9 @@ class Step3Container extends Component {
 
   render() {
     const { percentage, showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
-    const { Proposal, DetailQuestion } = this.props;
+    const { Proposal, DetailQuestion,ManufactureProcess} = this.props;
     const estimateData = Proposal.estimateData;
-    
+
     const rows1 = [
       createData('작성일자', Proposal.estimate_year + '.' + Proposal.estimate_month + '.' + Proposal.estimate_day, ''),
       createData('문서번호', 'C8-' + Proposal.estimate_year + Proposal.estimate_month + Proposal.estimate_day + '-' + estimateData.id, ''),
@@ -141,9 +141,12 @@ class Step3Container extends Component {
     var message = '도면입력';
     var rand2 = 28 + Math.floor(Math.random() * 38);
 
+    console.log(ManufactureProcess.EstimateDataForDrawing);
     if(DetailQuestion.message.includes(message))
     {
       rows2.splice(1,1);
+      rows2.pop();
+      rows2[3]= createData('견적가', 'Max = '+ManufactureProcess.MaxPrice + ' Min =  '+ManufactureProcess.MinPrice, 'VAT 미포함');
     }
     return (
       <Card>
@@ -163,12 +166,12 @@ class Step3Container extends Component {
                 {Proposal.estimate_price} 원
               </Content.FontSize24>
               <div style={{ marginLeft: 20 }}>
-                
+
               </div>
             </div>
           </HeaderTextBox>
           <DetailButtonBox>
-            
+
             {showEstimateDrop == true ? (
                   <>
                     <Title.FontSize20 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
@@ -235,11 +238,22 @@ class Step3Container extends Component {
               보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
             </Font16>
 
-            {/* 여기 들어간다 */}  
-            {DetailQuestion.message.includes(message) ? '' : (<TaskBarContainer/>)}
-          
+            {/* 여기 들어간다 */}
+
+            
+            {DetailQuestion.message.includes(message) ? 
+            <StyledStlViewer
+            model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
+            width={500}                                  // 가로
+            height={500}                                 // 세로
+            modelColor='gray'                             // 색
+            backgroundColor='white'                    // 배경색
+            rotate={true}                                // 자동회전 유무
+            orbitControls={true}                         // 마우스 제어 유무
+          />
+           : (<TaskBarContainer/>)}
           </DetailContainer>
-          
+
 
         </HeaderBackground>
 
@@ -255,15 +269,7 @@ class Step3Container extends Component {
 
           <EstimateLogoSlider />
 
-          {/* <STLViewer
-            url='https://boltnnutplatform-test.s3.amazonaws.com/media/stl/2021/1/27/17a3d0cb839b40abb79c86608763607d_stl.stl' // stl파일 주소
-            width={400}                                  // 가로
-            height={400}                                 // 세로
-            modelColor='#B92C2C'                         // 색
-            backgroundColor='#EAEAEA'                    // 배경색
-            rotate={true}                                // 자동회전 유무
-            orbitControls={true}                         // 마우스 제어 유무
-          /> */}
+          
 
           <ConsultantHeader>
             매칭 컨설턴트 : 안철옹 기술 고문  외 2명
@@ -354,6 +360,9 @@ class Step3Container extends Component {
 
 export default withStyles(styles)(Step3Container);
 
+const StyledStlViewer=styled(STLViewer)`
+  margin:0 auto;
+`
 const Font14 = styled(Content.FontSize14)`
   font-weight: normal;
   font-stretch: normal;

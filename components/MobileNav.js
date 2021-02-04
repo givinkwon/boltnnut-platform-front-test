@@ -201,7 +201,7 @@ const Modal = styled.div`
 const ProfileMenu = styled.div`
   width: 70%;
   padding: 22px 24px;
-  height: 100%%;
+  height: 100%;
   position: absolute;
   background-color: white;
   z-index: 10000;
