@@ -32,7 +32,7 @@ class MobileBanner3Container extends React.Component {
               <img src={image1} style={{ width: 347, height: 230,borderRadius:7}} />
             </div>
             <Body>
-              {ProjectCount * 3 + 997}개 프로젝트 데이터를 학습한 AI 매칭<br />
+              {ProjectCount}개 프로젝트 데이터를 학습한 AI 매칭<br />
               알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
             </Body>
           </div>

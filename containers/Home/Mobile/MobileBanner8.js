@@ -56,7 +56,7 @@ class MobileBanner8Container extends React.Component {
     const SlideSettings = {
       dots: false,
       infinite: false,
-      speed: 100,
+      speed: 300,
       slidesToShow: 3,
       slidesToScroll: 1,
       draggable:true,
