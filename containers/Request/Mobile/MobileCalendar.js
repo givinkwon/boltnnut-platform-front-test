@@ -37,7 +37,6 @@ class Week extends Component {
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
     const occupied = Schedule.date_occupied;
-
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
       let thisMoment = moment();
@@ -160,7 +159,6 @@ class MobileCalendar extends Component {
   }
   render() {
     const { now } = this.state;
-    const { Schedule } = this.props;
     return (
       <>
         <MainContainer>

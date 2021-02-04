@@ -59,7 +59,7 @@ class MobileStepContainer extends React.Component {
                   </Text>
                 )}
                 <img src={ dot } />
-                { Request.step_index != 2 && (
+                { Request.step_index < 2 && (
                   <Text>
                     <span>제품 정보 선택</span>
                   </Text>
@@ -76,7 +76,7 @@ class MobileStepContainer extends React.Component {
                   </Text>
                 )}
                 <img src={ dot } />
-                { Request.step_index != 3 && (
+                { Request.step_index < 3 && (
                   <Text>
                     <span>무료 견적 받기</span>
                   </Text>
