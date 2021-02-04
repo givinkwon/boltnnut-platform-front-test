@@ -15,6 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+// import STLViewer from 'stl-viewer'
 
 //Slider
 import { withStyles } from '@material-ui/core/styles';
@@ -52,7 +53,7 @@ function createData(title, content, note) {
 }
 
 
-@inject('Request','Proposal','DetailQuestion')
+@inject('Request','Proposal','DetailQuestion','ManufactureProcess')
 @observer
 class Step3Container extends Component {
 
@@ -118,7 +119,7 @@ class Step3Container extends Component {
 
   render() {
     const { percentage, showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
-    const { Proposal } = this.props;
+    const { Proposal, DetailQuestion } = this.props;
     const estimateData = Proposal.estimateData;
     
     const rows1 = [
@@ -137,6 +138,7 @@ class Step3Container extends Component {
     ];
 
     const {classes} = this.props
+    var message = '도면입력';
     var rand2 = 28 + Math.floor(Math.random() * 38);
     return (
       <Card>
@@ -229,7 +231,7 @@ class Step3Container extends Component {
             </Font16>
 
             {/* 여기 들어간다 */}  
-            <TaskBarContainer/>
+            {DetailQuestion.message.includes(message) ? '' : (<TaskBarContainer/>)}
           
           </DetailContainer>
           
