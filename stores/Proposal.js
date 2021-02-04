@@ -52,7 +52,6 @@ class Proposal {
 					console.log(res.data)
 				}
 			)
-
 		this.setEstimateInfo();
 	};
 

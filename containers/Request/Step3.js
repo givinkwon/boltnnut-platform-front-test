@@ -15,7 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-// import STLViewer from 'stl-viewer'
+import STLViewer from 'stl-viewer'
 
 //Slider
 import { withStyles } from '@material-ui/core/styles';
@@ -26,13 +26,14 @@ import EstimateLogoSlider from './EstimateSheetLogoSlider'
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 
-
+//images
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 const HeaderImg = "/static/images/request/Step3/Step3_Header.png";
 const DropdownArrow1 = "/static/images/request/Step3/Step3_Dropdown1.png";
-const DropUpArrow1 = "static/images/request/Step3/Step3_Dropdown2.png";
+const DropUpArrow1 = "static/images/request/Step3/Step3_DropUp1.png";
 const DropdownArrow2 = "/static/images/request/Step3/Step3_Dropdown2.png";
-const DropUpArrow2 = "static/images/partner/arrow_up.png";
+const DropUpArrow2 = "/static/images/request/Step3/Step3_DropUp2.png";
+const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
 
 const styles = {
   table: {
@@ -52,7 +53,7 @@ function createData(title, content, note) {
 }
 
 
-@inject('Request','Proposal','DetailQuestion')
+@inject('Request','Proposal','DetailQuestion','ManufactureProcess')
 @observer
 class Step3Container extends Component {
 
@@ -118,7 +119,7 @@ class Step3Container extends Component {
 
   render() {
     const { percentage, showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
-    const { Proposal, DetailQuestion } = this.props;
+    const { Proposal, DetailQuestion,ManufactureProcess} = this.props;
     const estimateData = Proposal.estimateData;
 
     const rows1 = [
@@ -139,6 +140,14 @@ class Step3Container extends Component {
     const {classes} = this.props
     var message = '도면입력';
     var rand2 = 28 + Math.floor(Math.random() * 38);
+
+    console.log(ManufactureProcess.EstimateDataForDrawing);
+    if(DetailQuestion.message.includes(message))
+    {
+      rows2.splice(1,1);
+      rows2.pop();
+      rows2[3]= createData('견적가', 'Max = '+ManufactureProcess.MaxPrice + ' Min =  '+ManufactureProcess.MinPrice, 'VAT 미포함');
+    }
     return (
       <Card>
         <HeaderBackground>
@@ -230,8 +239,19 @@ class Step3Container extends Component {
             </Font16>
 
             {/* 여기 들어간다 */}
-            {DetailQuestion.message.includes(message) ? '' : (<TaskBarContainer/>)}
 
+            
+            {DetailQuestion.message.includes(message) ? 
+            <StyledStlViewer
+            model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
+            width={500}                                  // 가로
+            height={500}                                 // 세로
+            modelColor='gray'                             // 색
+            backgroundColor='white'                    // 배경색
+            rotate={true}                                // 자동회전 유무
+            orbitControls={true}                         // 마우스 제어 유무
+          />
+           : (<TaskBarContainer/>)}
           </DetailContainer>
 
 
@@ -249,41 +269,83 @@ class Step3Container extends Component {
 
           <EstimateLogoSlider />
 
-          {/* <STLViewer
-            url='https://boltnnutplatform-test.s3.amazonaws.com/media/stl/2021/1/27/17a3d0cb839b40abb79c86608763607d_stl.stl' // stl파일 주소
-            width={400}                                  // 가로
-            height={400}                                 // 세로
-            modelColor='#B92C2C'                         // 색
-            backgroundColor='#EAEAEA'                    // 배경색
-            rotate={true}                                // 자동회전 유무
-            orbitControls={true}                         // 마우스 제어 유무
-          /> */}
+          
 
-          <ConsultantBox>
-            <ConsultantTextBox>
-              <ConsultantHeader>
-                매칭 컨설턴트 : 최진영 기술 고문
-              </ConsultantHeader>
-              <ConsultantHashtag>#의료기기 #생활가전 #기구설계</ConsultantHashtag>
-              <div style={{ marginRight: 50.4 }}>
-                {showConsultantDrop == true ? (
-                  <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} />
-                ) : (
-                    <img src={DropUpArrow2} onClick={()=>{this.detailUp(2);}}/>
-                  )
-                }
-              </div>
-            </ConsultantTextBox>
+          <ConsultantHeader>
+            매칭 컨설턴트 : 안철옹 기술 고문  외 2명
+          </ConsultantHeader>
+            <ConsultantBox>
+              <ConsultantImgBox>
+                <img src={Consultant1}/>
+                <Font18>안철옹</Font18>
+                <Font14 style={{color:'#0933b3',fontWeight:500}}>기술고문</Font14>
+              </ConsultantImgBox>
+              <div style={{height:120,width:2,backgroundColor:'#c6c7cc',marginTop:53}}/>
+              <ConsultantTextBox>
+                <Font16>삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험</Font16>
+                <Font14>(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)</Font14>
+                <Font15>6-시그마 Black belt(삼성전자공인 2003)</Font15>
+                <Font15>과학기술부 신기술 인증상(2007)</Font15>
+                <Font15>CE-Show innovation Award(2016)</Font15>
+              </ConsultantTextBox>  
+            </ConsultantBox>
 
+            {/* 나중에 디비에 연결할거라 그때 map으로 바꾸기 */}
             <DetailContainer style={{display: showConsultantDetail,paddingBottom:20}}>
-              <History>
-                제품개발/업체관리<br/>
-                경희대 건축&기계공학前제조 스타트업 대표<br/>
-                믹서기, 펫 웨어러플, 펫 샤워기 등 10개 이상 제품<br/>
-              </History>
-            </DetailContainer>
-          </ConsultantBox>
+                <ConsultantBox>
+                  <ConsultantImgBox>
+                    <img src={Consultant1}/>
+                    <Font18>안철옹</Font18>
+                    <Font14 style={{color:'#0933b3',fontWeight:500}}>기술고문</Font14>
+                  </ConsultantImgBox>
+                  <div style={{height:120,width:2,backgroundColor:'#c6c7cc',marginTop:53}}/>
+                  <ConsultantTextBox>
+                    <Font16>삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험</Font16>
+                    <Font14>(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)</Font14>
+                    <Font15>6-시그마 Black belt(삼성전자공인 2003)</Font15>
+                    <Font15>과학기술부 신기술 인증상(2007)</Font15>
+                    <Font15>CE-Show innovation Award(2016)</Font15>
+                  </ConsultantTextBox>  
+                </ConsultantBox>
 
+                <ConsultantBox>
+                  <ConsultantImgBox>
+                    <img src={Consultant1}/>
+                    <Font18>안철옹</Font18>
+                    <Font14 style={{color:'#0933b3',fontWeight:500}}>기술고문</Font14>
+                  </ConsultantImgBox>
+                  <div style={{height:120,width:2,backgroundColor:'#c6c7cc',marginTop:53}}/>
+                  <ConsultantTextBox>
+                    <Font16>삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험</Font16>
+                    <Font14>(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)</Font14>
+                    <Font15>6-시그마 Black belt(삼성전자공인 2003)</Font15>
+                    <Font15>과학기술부 신기술 인증상(2007)</Font15>
+                    <Font15>CE-Show innovation Award(2016)</Font15>
+                  </ConsultantTextBox>  
+                </ConsultantBox>
+
+
+              </DetailContainer>
+
+            <ConsultantDetailButtonBox>
+              {showConsultantDrop == true ? (
+                    <>
+                      <Font18 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
+                          더 보기
+                      </Font18>
+                      <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} />
+                    </>
+                  ) : (
+                      <>
+                        <Font18 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
+                          접기
+                        </Font18>
+                        <img src={DropUpArrow2} onClick={()=>{this.detailUp(2);}}/>
+                      </>
+                    )
+                  }
+          </ConsultantDetailButtonBox>
+          
           <Font16 style={{marginTop:100,textAlign:'center'}}>
             1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요(워딩필요)
           </Font16>
@@ -298,12 +360,42 @@ class Step3Container extends Component {
 
 export default withStyles(styles)(Step3Container);
 
+const StyledStlViewer=styled(STLViewer)`
+  margin:0 auto;
+`
+const Font14 = styled(Content.FontSize14)`
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.14;
+  letter-spacing: -0.14px;
+  color: #999999;
+`
+
+const Font15 = styled(Content.FontSize15)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: -0.15px;
+  color: #414550;
+`
+
 const Font16 = styled(Content.FontSize16)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.88;
   letter-spacing: -0.16px;
+  color: #282c36;
+`
+
+const Font18 = styled(Content.FontSize18)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.18px;
   color: #282c36;
 `
 
@@ -336,21 +428,45 @@ const DetailContainer = styled.div`
 
   
 `
+
+const ConsultantDetailButtonBox = styled.div`
+  display:flex;
+  width:727px;
+  margin:0 auto;
+  margin-top:20px;
+  justify-content:flex-end;
+  align-items:center;
+  >img
+  {
+    width:13px;
+    height:7px;
+    margin-left:12px;
+    margin-top:3px;
+  }
+`
+
 const ConsultantTextBox = styled.div`
   width:100%;
   display: flex;
-  justify-content:space-between;
-  align-items:center;
-  padding-top:20px;
-  padding-bottom:20px;
+  flex-direction:column;
+  margin-left:36px;
+  // margin-top:31px;
+  justify-content:center;
 `
 
 const ConsultantBox = styled.div`
-  margin-top:90px;
-  
-  // height:76px;
-  // border-top:solid 1px #707070;
-  // border-bottom:solid 1px #707070;
+  width:727px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  margin:0 auto;
+  margin-top:20px;
+  display:flex;
+`
+
+const ConsultantImgBox = styled.div`
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  padding:34px 36px 13px 40px;
 `
 const Card = styled.div`
   width: 894px;
@@ -376,6 +492,7 @@ const HeaderTextBox = styled.div`
   padding-bottom:18px;
   padding-top:12px;
 `
+
 const Logo = styled.div`
     margin-left: 5.4%;
     padding-top:40px;
@@ -458,7 +575,7 @@ const CustomSlider = withStyles({
 })(Slider);
 
 
-const ConsultantHeader = styled(Content.FontSize24)`
+const ConsultantHeader = styled(Title.FontSize20)`
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -467,7 +584,7 @@ const ConsultantHeader = styled(Content.FontSize24)`
   text-align: left;
   color: #282c36;
   object-fit: contain;
-  margin-left:63px;
+  // margin-left:63px;
   // margin-right:26px;
 `
 
