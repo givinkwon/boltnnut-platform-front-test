@@ -131,7 +131,7 @@ class Step3Container extends Component {
     ];
 
     const rows2 = [
-      createData('프로젝트', estimateData.projectTitle, ''),
+      createData('프로젝트명', estimateData.projectTitle, ''),
       createData('개발기간', estimateData.period + '주', ''),
       createData('지급조건', '선금 50%, 잔금 50%', ''),
       createData('견적가', '₩ '+Proposal.estimate_price, 'VAT 미포함'),
@@ -146,7 +146,19 @@ class Step3Container extends Component {
     {
       rows2.splice(1,1);
       rows2.pop();
-      rows2[3]= createData('견적가', 'Max = '+ManufactureProcess.MaxPrice + ' Min =  '+ManufactureProcess.MinPrice, 'VAT 미포함');
+      rows2.pop();
+      rows2[3]= createData('금형 가견적', '견적 알고리즘이 견적을 도출하고 있습니다.', 'VAT 미포함');
+      rows2[4]= createData('사출 가견적', '견적 알고리즘이 견적을 도출하고 있습니다.', 'VAT 미포함');
+      console.log(ManufactureProcess.totalMinPrice, 1)
+      if(ManufactureProcess.totalMinPrice > 0 && ManufactureProcess.MinPrice > 0){
+        console.log(ManufactureProcess.totalMinPrice, 2)
+        rows2.splice(1,1);
+        rows2.pop();
+        rows2.pop();
+        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/10000)*10000 +'원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000)*10000 + '원', 'VAT 미포함');
+        rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원', 'VAT 미포함');
+      }  
+
     }
     return (
       <Card>
