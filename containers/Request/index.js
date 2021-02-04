@@ -11,8 +11,6 @@ import 'react-count-animation/dist/count.min.css';
 
 //Mobile
 import MobileRequestContainer from './Mobile/Mobileindex';
-
-
 import { inject, observer } from "mobx-react";
 
 import Step1Container from "./Step1";
