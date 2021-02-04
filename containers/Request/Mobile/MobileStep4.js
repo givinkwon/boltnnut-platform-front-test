@@ -22,6 +22,8 @@ class MobileStep4Container extends Component {
     inactive_array: [],
     userEmail: null,
     isOnline: 0,
+    active1_target: null,
+    active2_target: null
   }
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
@@ -35,25 +37,27 @@ class MobileStep4Container extends Component {
     let targetWord = e.target.innerHTML;
     // 대면이면 0, 화상이면 1
     if (targetWord == "화상 미팅") {
-      this.setState({...this.state, isOnline: 1})
+      this.setState({...this.state, isOnline: 1, active2_target: targetWord})
     } else {
-      this.setState({...this.state, isOnline: 0})
+      this.setState({...this.state, isOnline: 0, active2_target: targetWord})
     }
   }
   getTime = (hour) => {
-    const date = new moment();
-    return (date.format('YYYY-MM-DD ') + date.format(`${hour}:00`));
+    const { Schedule, Request } = this.props;
+    return (Schedule.today) + (`${hour}:00`);
   }
   setTime = (e, date) => {
     const { Schedule } = this.props;
     let time = e.currentTarget.innerHTML;
-
+    this.setState({...this.state, active1_target: Schedule.today + time});
     Schedule.setCurrent(time+":00");
     Schedule.getOccupiedDate();
   }
   timeActiveToggle = (time) => {
     const { Schedule } = this.props;
-    if (Schedule.inactive_today.includes(time)) {
+    let nowTime = new moment();
+    // console.log(time.split(' ')[1]);  ==> 10:00 과 같음.
+    if (Schedule.inactive_today.includes(time.split(' ')[1]) || (nowTime.format("HH") >= time.split(' ')[1].split(":")[0] && nowTime.format("DD") == time.split(' ')[0].split('-')[2])) {
       return true
     } else {
       return false
@@ -62,11 +66,25 @@ class MobileStep4Container extends Component {
   createSchedule = () => {
     const { Schedule, Request } = this.props;
     let req = {
-      request: 1824,
+      request: Request.created_request,
       email: this.state.userEmail,
       isOnline: this.state.isOnline
     }
     Schedule.submitSchedule(req);
+  }
+  timeComponentActiveToggle = (e) => {
+    const target = this.state.active1_target
+    if (e == target) {
+      return true
+    }
+  }
+  timeComponentActiveToggle2 = (word) => {
+    const target = this.state.active2_target
+    if (word == target) {
+      return true
+    } else {
+      return false
+    }
   }
   render() {
     const { current, display, display2 } = this.state;
@@ -137,9 +155,13 @@ class MobileStep4Container extends Component {
           </Title>
           <TimeBox style={{marginBottom: 56}}>
             <Slider {...settings}>
-              {timeArr.map((data) => {
+              {Schedule.today && timeArr.map((data) => {
                 return (
-                  <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick = {(event) => this.setTime(event, data.start_at)}>
+                  <TimeComponent
+                    deactive={this.timeActiveToggle(data.start_at)}
+                    onClick = {(event) => this.setTime(event, data.start_at)}
+                    focused={this.timeComponentActiveToggle(data.start_at)}
+                  >
                     {data.start_at.split(' ')[1]}
                   </TimeComponent>
                 )
@@ -150,10 +172,10 @@ class MobileStep4Container extends Component {
             컨설팅 유형
           </Title>
           <div style={{display: 'inline-flex'}}>
-            <TimeComponent onClick = {this.isOnlineHandler}>
+            <TimeComponent onClick = {this.isOnlineHandler} focused={this.timeComponentActiveToggle2("방문 미팅")}>
               방문 미팅
             </TimeComponent>
-            <TimeComponent onClick = {this.isOnlineHandler}>
+            <TimeComponent onClick = {this.isOnlineHandler} focused={this.timeComponentActiveToggle2("화상 미팅")}>
               화상 미팅
             </TimeComponent>
           </div>
@@ -275,11 +297,9 @@ const TimeComponent = styled.div`
   text-align: left;
   color: #282c36;
   margin-right: 19px;
+  border: ${(props) => (props.focused ? "solid 1px #0933b3" : "none")};
   :focus {
     outline: none;
-  }
-  :hover {
-    border: ${(props) => props.deactive ? 'none' : "solid 1px #0933b3"};
   }
 `
 const Tail = styled(Content.FontSize13)`
