@@ -13,7 +13,7 @@ const person_mob = "/static/images/Home/Banner6/person_mob.png";
 //@observer
 class ReviewCard extends Component {
     render() {
-        const {item, big} = this.props;
+        const {item, big, footerimg} = this.props;
         if (item && !big) {
         return (
             <Card>
@@ -50,12 +50,14 @@ class ReviewCard extends Component {
                     <ContentBox2>
                         {item.review}
                     </ContentBox2>
+                    { footerimg &&
                     <ImageBox>
                         <ContentBox style={{fontWeight: 500}}>
                             김율 대표님
                         </ContentBox>
                         <img src={person_mob} />
                     </ImageBox>
+                    }
                 </BigCard>
             )
         }
@@ -116,9 +118,9 @@ const ContentBox = styled(Content.FontSize15)`
     font-stretch: normal;
     font-style: normal;
     line-height: 1.53;
-    letter-spacing: -0.38px;
+    letter-spacing: -0.38px !important;
     text-align: left;
-    color: var(--black);
+    color: black;
     padding-left: 30px;
     padding-right: 30px;
     word-break: keep-all;
@@ -156,6 +158,7 @@ const ContentTitle = styled(Title.FontSize26)`
     text-align: left;
     color: #191919;
     padding-bottom: 30px;
+    padding-top: 30px;
     @media (min-width: 0px) and (max-width: 767.98px) {
         font-size: 13px !important;
         padding-bottom: 4px;
@@ -165,8 +168,9 @@ const ContentBox2 = styled(Content.FontSize18)`
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.5;
-    letter-spacing: -0.45px;
+    line-height: 1.5 !important;
+    letter-spacing: -0.45px !important;
+    word-break: keep-all;
     text-align: left;
     color: #767676;
     padding-left: 30px;
@@ -188,7 +192,7 @@ const ImageBox = styled.div`
     display: inline-flex;
     justify-content: flex-end;
     align-items: center;
-    padding-top: 130px;
+    padding-top: 80px;
     > img {
         height: 100%;
     }

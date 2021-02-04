@@ -88,9 +88,19 @@ class Banner6Container extends React.Component {
       logo: hansung
     }
     const item10 = {
-      name: "*호석 님",
-      review: "볼트앤너트에 놀이용 트레이 제품을 의뢰하였습니다. 시제품 업체연결을 이용하는 과정에서 도움을 받았는데, 볼트앤너트를 이용해서 찾기 힘든 제조 공장을 찾을 수 있었습니다.",
-      logo: JINYOUNG
+      name: "근명고등학교",
+      review: `볼트앤너트에 렌즈케이스를 의뢰하였습니다. 
+      시제품 제조서비스를 이용하는 과정에서
+      너무 많은 도움이 되었고, 정말 친절하게 
+      알려주시고 세심히 체크해 주셨습니다. 
+      저희 입장에서 생각하고 일을 진행해주셔서
+      정말 좋게 일을 마무리 할 수 있었고, 매칭된
+      제조사도 친절했습니다! 다음에 또 시제품을 만들어야하는 상황이 온다면 볼트앤너트를
+      애용하고 싶습니다. 
+      `,
+      title: `다음 제품도 볼트앤너트에서
+      만들고 싶습니다.`,
+      logo: KMH
     }
     const settings = {
       dots: true,
@@ -127,7 +137,7 @@ class Banner6Container extends React.Component {
             <CustomSlider {...settings}>
               <div>
                 <div>
-                  <ReviewCard2 item = {item3} big={true}/>
+                  <ReviewCard2 item = {item3} big={true} footerimg={true}/>
                 </div>
                 <div>
                   <ReviewCard item = {item1}/>
@@ -142,7 +152,7 @@ class Banner6Container extends React.Component {
               </div>
               <div>
                 <div>
-                  <ReviewCard2 item = {item3} big={true}/>
+                  <ReviewCard2 item = {item10} big={true}/>
                 </div>
                 <div>
                   <ReviewCard item = {item6}/>
