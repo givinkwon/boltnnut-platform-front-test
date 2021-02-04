@@ -244,8 +244,8 @@ class Step3Container extends Component {
             {DetailQuestion.message.includes(message) ? 
             <StyledStlViewer
             model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
-            width={500}                                  // 가로
-            height={500}                                 // 세로
+            width={400}                                  // 가로
+            height={400}                                 // 세로
             modelColor='gray'                             // 색
             backgroundColor='white'                    // 배경색
             rotate={true}                                // 자동회전 유무
