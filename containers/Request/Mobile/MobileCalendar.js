@@ -73,7 +73,7 @@ class Week extends Component {
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") && Schedule.nowMoment.format('M') === dayInfo.getMonth) {
         className += "today";
         return (
-          <div className={className} onClick={ this.calendarOnOff } focused={ this.focusFunction(dayInfo.getDay) }>
+          <div className={className} onClick={ this.calendarOnOff } focused={ true }>
             {dayInfo.getDay}
             <div>오늘</div>
           </div>
@@ -81,7 +81,7 @@ class Week extends Component {
       }
       else {
         return (
-          <div className={className} onClick={ this.calendarOnOff } focused={ this.focusFunction(dayInfo.getDay) }>
+          <div className={className} onClick={ this.calendarOnOff } focused={ true }>
             {dayInfo.getDay}
           </div>
         )

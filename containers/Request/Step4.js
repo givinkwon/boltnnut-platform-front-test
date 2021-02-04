@@ -52,10 +52,13 @@ class Step4Container extends Component {
     const { Schedule } = this.props;
     let nowTime = new moment();
     // console.log(time.split(' ')[1]);  ==> 10:00 과 같음.
-    if (Schedule.inactive_today.includes(time.split(' ')[1]) || (nowTime.format("HH") >= time.split(' ')[1].split(":")[0] && nowTime.format("DD") == time.split(' ')[0].split('-')[2])) {
-      return true
-    } else {
-      return false
+    if (time) {
+      console.log(time.split(' ')[1])
+      if (Schedule.inactive_today.includes(time.split(' ')[1]) || (nowTime.format("HH") >= time.split(' ')[1].split(":")[0] && nowTime.format("DD") == time.split(' ')[0].split('-')[2])) {
+        return true
+      } else {
+        return false
+      }
     }
   }
   // 스케쥴 생성
@@ -81,7 +84,7 @@ class Step4Container extends Component {
   render() {
     const { current, display, display2 } = this.state;
     const { Request, Schedule } = this.props;
-
+    console.log(this.getTime(10));
     const timeArr = [
       {
         start_at: this.getTime(10),
@@ -137,7 +140,7 @@ class Step4Container extends Component {
               오전
             </SubContent>
             <TimeBox style={{marginBottom: 30}}>
-              {timeArr.slice(0,2).map((data) => {
+              {timeArr && timeArr.slice(0,2).map((data) => {
                   return (
                     <TimeComponent deactive={this.timeActiveToggle(data.start_at)} onClick={(event) => this.setTime(event, data.start_at)}>
                       {data.start_at.split(' ')[1]}
@@ -149,7 +152,7 @@ class Step4Container extends Component {
               오후
             </SubContent>
             <TimeBox style={{marginBottom: 60}}>
-                {timeArr.slice(2,).map((data) => {
+                {timeArr && timeArr.slice(2,).map((data) => {
                   return (
                     <TimeComponent deactive={this.timeActiveToggle(data.start_at)} onClick = {(event) => this.setTime(event, data.start_at)}>
                       {data.start_at.split(' ')[1]}
