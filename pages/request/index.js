@@ -15,7 +15,6 @@ const back_ic = "/static/images/components/MobileNav/back.png";
 @observer
 class Request extends React.Component {
   state = {
-    width: 0,
   }
 
   componentDidMount() {
@@ -57,15 +56,11 @@ class Request extends React.Component {
           <title>볼트앤너트|가견적받기</title>
         </Head>
         <>
-          { width > 767.98 ? (
-            <Nav />
-          ) : (
-            <MobileNav src={ back_ic } headText={ "가견적 받기" } width={width}/>
-          )
-          }
+          {width && width > 767.98 && <Nav />}
+          {width && width < 768 && <MobileNav src={ back_ic } headText={ "가견적 받기" } width={width}/>}
         </>
-        <RequestConatiner width={width}/>
-        <Footer/>
+        {width && <RequestConatiner width={width}/>}
+        {width && <Footer/>}
       </div>
     )
   }
