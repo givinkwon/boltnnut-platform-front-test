@@ -140,6 +140,11 @@ class Step3Container extends Component {
     const {classes} = this.props
     var message = '도면입력';
     var rand2 = 28 + Math.floor(Math.random() * 38);
+
+    if(DetailQuestion.message.includes(message))
+    {
+      rows2.splice(1,1);
+    }
     return (
       <Card>
         <HeaderBackground>
