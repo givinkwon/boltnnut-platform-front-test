@@ -58,7 +58,7 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
-  @observable step_index = 1;
+  @observable step_index = 4;
   @observable step1_index = 1;
   @observable drawFile = null;
   @observable percentage = 0;
@@ -128,8 +128,6 @@ class Request {
       alert('전화번호가 올바르지 않습니다. 재확인해주세요.')
       return;
     }
-
-
     var formData = new FormData();
 
     formData.append("product", 45);

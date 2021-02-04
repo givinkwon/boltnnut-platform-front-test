@@ -67,7 +67,7 @@ class MobileBanner0Container extends React.Component {
                   의뢰 프로젝트
               </Title1>
               <Content1 color={'#ffffff'}>
-                <CountFunc index={1}/> 건
+                <CountFunc index={1} projCount={ProjectCount}/> 건
               </Content1>
 
               <div style={{marginTop: 22}} />
