@@ -1,15 +1,24 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import Router, { withRouter } from 'next/router';
+import { inject, observer } from 'mobx-react';
 import Buttonv1 from "components/Buttonv1";
 
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 
+@inject('Request','Proposal','DetailQuestion','ManufactureProcess')
+@observer
 class Step6Container extends Component {
+  buttonClick = () => {
+    const { Request } = this.props;
+    Request.step_index = 4;
+  }
   static defaultProps = { title: '고객님의 제조 의뢰가 접수 되었습니다.' };
     render() {
+      
+      
       return(
           <Card>
             <Header>
@@ -19,7 +28,7 @@ class Step6Container extends Component {
                 Step6입니다
               <Font18 style={{textAlign:'center',paddingTop:144}}>1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요.</Font18>
 
-              <Buttonv1 fontSize={20} style={{margin:'0 auto', marginTop: 30,marginBottom:60,width:255,height:49}}>
+              <Buttonv1 fontSize={20} onClick={ this.buttonClick } style={{margin:'0 auto', marginTop: 30,marginBottom:60,width:255,height:49}}>
                 무료 컨설팅 받기
               </Buttonv1>
             </ContentBox>

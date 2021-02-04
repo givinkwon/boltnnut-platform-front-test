@@ -70,6 +70,7 @@ class Step4Container extends Component {
       isOnline: this.state.isOnline
     }
     Schedule.submitSchedule(req);
+    Request.step_index = 7;
   }
   // 대면, 비대면 선택
   isOnlineHandler = (e) => {
@@ -288,6 +289,9 @@ const TimeComponent = styled.div`
   color: #282c36;
   margin-right: 19px;
   :hover {
+    border: ${(props) => props.deactive ? 'none' : "solid 3px #0933b3"};
+  }
+  :focus {
     border: ${(props) => props.deactive ? 'none' : "solid 3px #0933b3"};
   }
 `
