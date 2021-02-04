@@ -16,11 +16,11 @@ const HCLAB = "/static/images/Home/Banner6/HCLAB.png";
 const IoPET = "/static/images/Home/Banner6/IOPET.png";
 const JINYOUNG = "/static/images/Home/Banner6/JINYOUNG.png";
 
-const KMH = "/static/images/Home/Banner6/KMH.jpeg";
-const hans = "/static/images/Home/Banner6/hans.jpeg";
-const hygenu = "/static/images/Home/Banner6/hygenu.png";
-
-const person = "/static/images/Home/Banner6/person.png";
+const KMH = "/static/images/Home/Banner6/근명고등학교.png";
+const lisk = "/static/images/Home/Banner6/리스크엔지니어링.png";
+const hygenu = "/static/images/Home/Banner6/하이젠어스.png";
+const umtel = "/static/images/Home/Banner6/움틀.png";
+const hansung = "/static/images/Home/Banner6/한성대.png";
 
 class Banner6Container extends React.Component {
   state = {
@@ -56,30 +56,36 @@ class Banner6Container extends React.Component {
       logo: JINYOUNG
     }
     const item6 = {
-      name: "*호석 님",
-      review: `볼트앤너트에 놀이용 트레이 제품을 의뢰하였습니다. 시제품 업체연결을 이용하는 과정에서 도움을 받았는데, 
-      볼트앤너트를 이용해서 찾기 힘든 제조 공장을 찾을 수 있었습니다.`,
-      logo: JINYOUNG
+      name: "리스크엔지니어링",
+      review: `볼트앤너트에 스테인레스가공을 의뢰하였습니다. 
+      제조사와의 빠른 매칭이 도움이 되었고, 매칭된 
+      제조사에 대해서 만족합니다. 향후에도 볼트앤너트 
+      서비스를 다시 이용하고 싶습니다.`,
+      logo: lisk
     }
     const item7 = {
-      name: "*원진 님",
-      review: `볼트앤너트에 렌즈케이스 제품을 의뢰하였습니다. 시제품제조 서비스를 이용하는 과정에서 너무 많은 도움이 되었고, 
-      정말 친절하게 알려주시고 세심히 체크해 주셨습니다. 
-      저희 입장에서 생각하고 일을 진행해주셔서 정말 좋게 일을 마무리 할 수 있었고, 
-      매칭된 제조사도 친절했습니다! 다음에 또 시제품을 만들어야하는 상황이 온다면 애용하고 싶습니다.`,
-      logo: KMH
+      name: "움틀",
+      review: `볼트앤너트에 원심분리여과기 및 진공여과기 금형 및 
+      시제품을 의뢰하였습니다. 어떻게 제품을 만들지 
+      막막했는데 해결이 됐고 시기도 적절했습니다. 매칭된 
+      제조사는 함께 맞춰가는 것이 좋았습니다. `,
+      logo: umtel
     }
     const item8 = {
-      name: "*수인 님",
-      review: `볼트앤너트에 샤워기헤드 제품을 의뢰하였습니다. 전반적인 제품 모델링 과정을 상세하게 설명해주셔서 좋았습니다 
-      비전공자라 어떤식으로 진행되는지 몰랐는데 상세히 알려주셔서 편했습니다^^ 
-      덕분에 업체선정에 도움이 많이 됐습니다. 향후 볼트앤너트 서비스를 다시 이용할 생각입니다. `,
-      logo: hans
+      name: "하이젠어스",
+      review: `볼트앤너트에 소량의 기계부품을 의뢰하였습니다. 
+      의뢰 제품에 대한 난이도 의견 및 정확한 제작 견적가가 
+      도움이 되었고, 매칭된 제조사는 높은 품질과 
+      저렴한 가격으로 시제품을 정상 납품하였습니다.  `,
+      logo: hygenu
     }
     const item9 = {
-      name: "*호석 님",
-      review: "볼트앤너트에 놀이용 트레이 제품을 의뢰하였습니다. 시제품 업체연결을 이용하는 과정에서 도움을 받았는데, 볼트앤너트를 이용해서 찾기 힘든 제조 공장을 찾을 수 있었습니다.",
-      logo: hygenu
+      name: "한성대학교",
+      review: `볼트앤너트에 샤워기헤드 제품을 의뢰하였습니다.
+      전반적인 제품 모델링 과정을 상세하게 설명해주셔서 
+      좋았습니다. 어떤식으로 진행되는지 몰랐는데 상세히 
+      알려주셔서 편했습니다. ^^`,
+      logo: hansung
     }
     const item10 = {
       name: "*호석 님",
@@ -139,14 +145,14 @@ class Banner6Container extends React.Component {
                   <ReviewCard2 item = {item3} big={true}/>
                 </div>
                 <div>
-                  <ReviewCard item = {item7}/>
+                  <ReviewCard item = {item6}/>
                   <div style={{marginTop: 28}} />
-                  <ReviewCard item = {item8}/>
+                  <ReviewCard item = {item7}/>
                 </div>
                 <div>
-                  <ReviewCard item = {item9}/>
+                  <ReviewCard item = {item8}/>
                   <div style={{marginTop: 28}} />
-                  <ReviewCard item = {item10}/>
+                  <ReviewCard item = {item9}/>
                 </div>
               </div>
             </CustomSlider>

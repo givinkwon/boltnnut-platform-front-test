@@ -23,7 +23,8 @@ class ReviewCard extends Component {
                         {item.name}<br/>
                         <MyStarRatingComponent
                           value={5}
-                          starColor={'#0a2165'}/>
+                          starColor={'#0a2165'}
+                        />
                     </Name>
                 </CardHeader>
                 <ContentBox>
@@ -33,13 +34,14 @@ class ReviewCard extends Component {
         )} else if (item && big) {
             return (
                 <BigCard>
-                    <CardHeader>
+                    <CardHeader marginLeft={30}>
                         <img src={item.logo} marginRight={28}/>
                         <Name eng={true}>
                             {item.name}<br/>
                             <MyStarRatingComponent
                               value={5}
-                              starColor={'#0a2165'}/>
+                              starColor={'#0a2165'}
+                            />
                         </Name>
                     </CardHeader>
                     <ContentTitle style={{whiteSpace:'pre-line'}}>
@@ -80,10 +82,12 @@ const CardHeader = styled.div`
     display: inline-flex;
     align-items: center;
     width: 89.7%;
-    margin-left: 14px;
-    padding-top: 6.7%;
+    margin-left: ${(props) => props.marginLeft ? props.marginLeft : 20}px;
+    padding-top: 20px;
     > img {
         margin-right: 5%;
+        width: 130px;
+        height: 100px;
     }
     @media (min-width: 0px) and (max-width: 767.98px) {
         margin-left: 14px;
@@ -114,9 +118,10 @@ const ContentBox = styled(Content.FontSize15)`
     line-height: 1.53;
     letter-spacing: -0.38px;
     text-align: left;
-    color: #191919;
-    padding-left: 14px;
-    padding-right: 14px;
+    color: var(--black);
+    padding-left: 30px;
+    padding-right: 30px;
+    word-break: keep-all;
     @media (min-width: 0px) and (max-width: 767.98px) {
         font-size: 12px !important;  
         line-height: 1.5;
@@ -141,8 +146,8 @@ const BigCard = styled(Card)`
     }
 `
 const ContentTitle = styled(Title.FontSize26)`
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-left: 30px;
+    padding-right: 30px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -164,8 +169,8 @@ const ContentBox2 = styled(Content.FontSize18)`
     letter-spacing: -0.45px;
     text-align: left;
     color: #767676;
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-left: 30px;
+    padding-right: 30px;
     @media (min-width: 0px) and (max-width: 767.98px) {
         font-size: 12px !important;
         font-weight: normal;
