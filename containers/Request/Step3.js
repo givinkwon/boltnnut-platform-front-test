@@ -120,7 +120,7 @@ class Step3Container extends Component {
     const { percentage, showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
     const { Proposal, DetailQuestion } = this.props;
     const estimateData = Proposal.estimateData;
-    
+
     const rows1 = [
       createData('작성일자', Proposal.estimate_year + '.' + Proposal.estimate_month + '.' + Proposal.estimate_day, ''),
       createData('문서번호', 'C8-' + Proposal.estimate_year + Proposal.estimate_month + Proposal.estimate_day + '-' + estimateData.id, ''),
@@ -157,12 +157,12 @@ class Step3Container extends Component {
                 {Proposal.estimate_price} 원
               </Content.FontSize24>
               <div style={{ marginLeft: 20 }}>
-                
+
               </div>
             </div>
           </HeaderTextBox>
           <DetailButtonBox>
-            
+
             {showEstimateDrop == true ? (
                   <>
                     <Title.FontSize20 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
@@ -229,11 +229,11 @@ class Step3Container extends Component {
               보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
             </Font16>
 
-            {/* 여기 들어간다 */}  
+            {/* 여기 들어간다 */}
             {DetailQuestion.message.includes(message) ? '' : (<TaskBarContainer/>)}
-          
+
           </DetailContainer>
-          
+
 
         </HeaderBackground>
 
