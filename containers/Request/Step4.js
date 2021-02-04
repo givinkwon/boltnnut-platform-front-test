@@ -29,8 +29,8 @@ class Step4Container extends Component {
     this.setState({...this.state, userEmail: obj})
   }
   getTime = (hour) => {
-    const date = new moment();
-    return (date.format('YYYY-MM-DD ') + date.format(`${hour}:00`));
+    const { Schedule, Request } = this.props;
+    return (Schedule.today) + (`${hour}:00`);
   }
   setTime = (e, date) => {
     const { Schedule } = this.props;
@@ -52,22 +52,17 @@ class Step4Container extends Component {
     const { Schedule } = this.props;
     let nowTime = new moment();
     // console.log(time.split(' ')[1]);  ==> 10:00 과 같음.
-    console.log(time.split(' ')[1]);
-    if (Schedule.inactive_today.includes(time.split(' ')[1])) {
+    if (Schedule.inactive_today.includes(time.split(' ')[1]) || (nowTime.format("HH") >= time.split(' ')[1].split(":")[0] && nowTime.format("DD") == time.split(' ')[0].split('-')[2])) {
       return true
     } else {
-      if (nowTime.format("HH") > time.split(' ')[1].split(":")[0]) {
-        if (nowTime.format("DD") == time.split(' ')[0].split('-')[2]) {
-          console.log(nowTime.format("DD HH"))
-        }
-      }
+      return false
     }
   }
   // 스케쥴 생성
   createSchedule = () => {
     const { Schedule, Request } = this.props;
     let req = {
-      request: 1824,
+      request: Request.created_request,
       email: this.state.userEmail,
       isOnline: this.state.isOnline
     }

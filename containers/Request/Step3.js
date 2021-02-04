@@ -15,7 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import STLViewer from 'stl-viewer'
+// import STLViewer from 'stl-viewer'
 
 //Slider
 import { withStyles } from '@material-ui/core/styles';
