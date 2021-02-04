@@ -18,9 +18,7 @@ class Step2Container extends React.Component {
     let fileNameAvailable = ['stl', 'stp'];
     let fileName;
     if (e.currentTarget.files[0]) {
-
       if (!fileNameAvailable.includes(e.currentTarget.files[0].name.split('.')[e.currentTarget.files.length])) {
-        console.log(e.currentTarget.files[0].name.split('.')[e.currentTarget.files.length])
         return alert("파일 확장자명 (stl, stp만 가능) 을 확인해주세요.")
       }
       fileName = e.currentTarget.files[0].name;
