@@ -69,7 +69,7 @@ class Step6Container extends Component {
                 {this.ConsultantInfo.map((Info) => (
                 <ConsultantBoxContainer Info={Info}/> 
               ))}
-              <Font16 style={{textAlign:'center',paddingTop:70}}>1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요.</Font16>
+              <Font16 style={{textAlign:'center',paddingTop:70}}>전문 컨설턴트의 무료 상담을 통해 의뢰의 정확한 견적을 받아보세요</Font16>
 
               <Buttonv1 onClick={ this.buttonClick } fontSize={20} style={{margin:'0 auto', marginTop: 30,marginBottom:60,width:255,height:49}}>
                 무료 컨설팅 받기
