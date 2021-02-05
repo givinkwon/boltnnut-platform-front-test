@@ -190,8 +190,20 @@ const FileText = styled(Content.FontSize18)`
   letter-spacing: -0.18px;
   text-align: left;
   color: #c6c7cc;
+  padding-top: 10px;
   display: flex;
   align-items: center;
   padding-left: 15px;
   position: absolute;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+      font-size: 14px !important;
+      padding-top: 0px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.43;
+      letter-spacing: -0.35px;
+      text-align: left;
+      color: #999999;
+  }
 `

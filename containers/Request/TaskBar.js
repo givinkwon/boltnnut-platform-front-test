@@ -128,16 +128,13 @@ class TaskBarContainer extends React.Component {
 export default TaskBarContainer;
 
 const Test=styled.div`
-  // width: 1300px;
-  // height: 165px;
-  // // position: absolute;
-  // overflow: scroll;
-  // > table {
-  //   overflow-x: scroll;
-  //   position: absolute;
-  //   width: 1200px
-  //   display: flex;
-  // }
+  height: 900px;
+  position: relative;
+  overflow: scroll;
+  > table {
+    position: absolute;
+    width: 1200px
+  }
 `
 const Font20 = styled(Title.FontSize20)`
   font-weight: bold;
