@@ -10,6 +10,8 @@ import * as Title from "components/Title";
 import ConsultantBoxContainer from './ConsultantBox'
 
 const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
+const Consultant2 = "/static/images/request/Step3/Step3_Consultant2.png";
+const Consultant3 = "/static/images/request/Step3/Step3_Consultant3.png";
 
 @inject('Request')
 @observer
@@ -25,6 +27,14 @@ class Step6Container extends Component {
   ConsultantInfo=[
     {
       Img:Consultant1,
+      Name:"최낙의",
+      Job:"기술고문",
+      Text1:"前 삼성그룹 사업기획팀장/상무",
+      Text2:"(바이오/의료기기, 신재생에너지, ESCO/BOT 등)",
+      Text3:"삼성전자 대표이사 업적공로상(2002), 사업전략/신사업기획 15년 경력"
+    },
+    {
+      Img:Consultant2,
       Name:"안철옹",
       Job:"기술고문",
       Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
@@ -32,20 +42,12 @@ class Step6Container extends Component {
       Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
     },
     {
-      Img:Consultant1,
-      Name:"안철옹",
+      Img:Consultant3,
+      Name:"허성진",
       Job:"기술고문",
-      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
-      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
-      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
-    },
-    {
-      Img:Consultant1,
-      Name:"안철옹",
-      Job:"기술고문",
-      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
-      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
-      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
+      Text1:"기구/금형 설계 경력 29년, 前 한솔 정밀 대표 ",
+      Text2:"인도네시아 (주)K.O.T.I 사출 금형부 차장(2008)",
+      Text3:"중국 (주) 아성정밀 금형 금형 개발부(2011)"
     },
   ]
 
