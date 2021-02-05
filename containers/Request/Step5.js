@@ -11,9 +11,18 @@ import * as Title from "components/Title";
 
 const CallingCard1 = "/static/images/request/Step4/Step4_CallingCard1.png";
 const CallingCard2 = "/static/images/request/Step4/Step4_CallingCard2.png";
+
 class Step5Container extends Component {
+  state = {
+    modal: false
+  };
+  
   static defaultProps = { title: '컨설팅 신청이 완료 되었습니다.' };
-    render() {
+
+  modalHandler() {
+
+  }
+  render() {
       return(
           <Card>
             <Header>
@@ -44,7 +53,6 @@ class Step5Container extends Component {
                 미팅사전 사항 입력하기
               </Buttonv1>
             </ContentBox>
-
           </Card>
         )
     }
