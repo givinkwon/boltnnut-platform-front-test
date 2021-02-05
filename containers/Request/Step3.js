@@ -35,6 +35,8 @@ const DropUpArrow1 = "static/images/request/Step3/Step3_DropUp1.png";
 const DropdownArrow2 = "/static/images/request/Step3/Step3_Dropdown2.png";
 const DropUpArrow2 = "/static/images/request/Step3/Step3_DropUp2.png";
 const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
+const Consultant2 = "/static/images/request/Step3/Step3_Consultant2.png";
+const Consultant3 = "/static/images/request/Step3/Step3_Consultant3.png";
 
 const styles = {
   table: {
@@ -77,6 +79,14 @@ class Step3Container extends Component {
   ConsultantInfo=[
     {
       Img:Consultant1,
+      Name:"최낙의",
+      Job:"기술고문",
+      Text1:"前 삼성그룹 사업기획팀장/상무",
+      Text2:"(바이오/의료기기, 신재생에너지, ESCO/BOT 등)",
+      Text3:"삼성전자 대표이사 업적공로상(2002), 사업전략/신사업기획 15년 경력"
+    },
+    {
+      Img:Consultant2,
       Name:"안철옹",
       Job:"기술고문",
       Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
@@ -84,20 +94,12 @@ class Step3Container extends Component {
       Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
     },
     {
-      Img:Consultant1,
-      Name:"안철옹",
+      Img:Consultant3,
+      Name:"허성진",
       Job:"기술고문",
-      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
-      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
-      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
-    },
-    {
-      Img:Consultant1,
-      Name:"안철옹",
-      Job:"기술고문",
-      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
-      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
-      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
+      Text1:"기구/금형 설계 경력 29년, 前 한솔 정밀 대표 ",
+      Text2:"인도네시아 (주)K.O.T.I 사출 금형부 차장(2008)",
+      Text3:"중국 (주) 아성정밀 금형 금형 개발부(2011)"
     },
   ]
   handleChange = (event, newValue) => {
@@ -182,7 +184,7 @@ class Step3Container extends Component {
         rows2.splice(1,1);
         rows2.pop();
         rows2.pop();
-        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/10000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000) + '만원', 'VAT 미포함');
+        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/1000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/1000) + '만원', 'VAT 미포함');
         rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개', 'VAT 미포함');
       }  
 
@@ -202,7 +204,7 @@ class Step3Container extends Component {
             </Content.FontSize24>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#282c36'}>
-                {Proposal.estimate_price} 원
+              {(ManufactureProcess.totalMinPrice > 0 && ManufactureProcess.MinPrice > 0) ? '하기 표시와 같음' :  Proposal.estimate_price + '원' }
               </Content.FontSize24>
               <div style={{ marginLeft: 20 }}>
 
@@ -273,7 +275,7 @@ class Step3Container extends Component {
             </Table>
 
             <Font16 style={{marginTop:40,textAlign:'center',fontWeight:'bold',color:'#0a2165',marginBottom:40}}>
-              *해당 견적서는 제품 세부사항에 따라 달리질 수 있습니다.<br/>
+              *해당 가견적은 의뢰 세부사항에 따라 달리질 수 있습니다.<br/>
               보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
             </Font16>
 
@@ -308,7 +310,7 @@ class Step3Container extends Component {
           <CustomSlider value={percentage}/>
 
           <ConsultantHeader>
-            매칭 컨설턴트 : 안철옹 기술 고문  외 2명
+            매칭 컨설턴트 : 최낙의 기술 고문  외 2명
           </ConsultantHeader>
           
           <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/>
@@ -339,7 +341,7 @@ class Step3Container extends Component {
           </ConsultantDetailButtonBox>
           
           <Font16 style={{marginTop:100,textAlign:'center'}}>
-            1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요(워딩필요)
+            전문 컨설턴트의 무료 상담을 통해 의뢰의 정확한 견적을 받아보세요
           </Font16>
           <Buttonv1 onClick={ this.buttonClick } fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
             무료 컨설팅 받기
