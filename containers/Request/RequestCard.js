@@ -9,6 +9,7 @@ import LogoSlider from "./LogoImageSlider";
 import * as DetailQuestionApi from "axios/DetailQuestion";
 import * as ManufactureProcessApi from "axios/ManufactureProcess";
 import DetailQuestion from "../../stores/DetailQuestion";
+import ManufactureProcess from "../../stores/ManufactureProcess";
 
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
@@ -137,7 +138,6 @@ class RequestCardContainer extends Component {
       case 2:
         if(DetailQuestion.nextPage)
         {
-
           if(DetailQuestion.index!=4 || DetailQuestion.nextPage==8)
           {
             DetailQuestion.pageCount += 1;
@@ -152,7 +152,7 @@ class RequestCardContainer extends Component {
         }
         else {
           Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
-
+          
           // console.log(Request.drawFile);
           if(DetailQuestion.index==8)
           {
@@ -165,10 +165,22 @@ class RequestCardContainer extends Component {
             ManufactureProcess.saveSelect(ManufactureProcessFormData);
             Request.titleData= Request.titleData.slice(0,3);
           }
+          
           console.log(Request.titleData);
           var SelectSaveData = {
             "request": Request.created_request,
             "data": Request.titleData,
+          }
+          console.log(Request.maincategory_id)
+          // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
+          if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
+            Request.step_index = 6;
+            break;
+          }
+          // 도면에서 카테고리가 실리콘/플라스틱이 아닌 경우
+          if(ManufactureProcess.SelectChecked != 1 && ManufactureProcess.SelectChecked != 2 ){
+            Request.step_index = 6;
+            break;
           }
           DetailQuestion.loadProposalType(SelectSaveData);
           

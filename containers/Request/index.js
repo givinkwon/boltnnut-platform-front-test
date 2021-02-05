@@ -19,6 +19,9 @@ import Step3Container from './Step3';
 import Step4Container from './Step4';
 import Step5 from './Step5';
 import Step5Container from './Step5';
+import Step6Container from './Step6';
+import Step7Container from './Step7';
+
 
 @inject("DetailQuestion", "Partner", "Request")
 @observer
@@ -39,6 +42,8 @@ class RequestContainer extends React.Component {
               { Request.step_index == 2 && <Step2Container />}
               { Request.step_index == 3 && <Step3Container />}
               { Request.step_index == 4 && <Step4Container />}
+              {Request.step_index == 6 && <Step6Container />}
+              {Request.step_index == 7 && <Step7Container />}
           </Containerv1>
         </Background>
       </div>

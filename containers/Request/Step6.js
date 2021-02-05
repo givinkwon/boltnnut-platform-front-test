@@ -1,47 +1,35 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import Router, { withRouter } from 'next/router';
-//Slider
-import { withStyles,makeStyles } from '@material-ui/core/styles';
+import { inject, observer } from 'mobx-react';
 import Buttonv1 from "components/Buttonv1";
 
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 
-const CallingCard1 = "/static/images/request/Step4/Step4_CallingCard1.png";
-const CallingCard2 = "/static/images/request/Step4/Step4_CallingCard2.png";
-class Step5Container extends Component {
-  static defaultProps = { title: '컨설팅 신청이 완료 되었습니다.' };
+@inject('Request','Proposal','DetailQuestion','ManufactureProcess')
+@observer
+class Step6Container extends Component {
+  buttonClick = () => {
+    const { Request } = this.props;
+    Request.step_index = 4;
+  }
+  static defaultProps = { title: '고객님의 제조 의뢰가 접수 되었습니다.' };
     render() {
+      
+      
       return(
           <Card>
             <Header>
               {this.props.title}
             </Header>
             <ContentBox>
-              <ConsultantBox>
-                <Font24>담당 컨설턴트</Font24>
-                <ImageBox>
-                  <img src={CallingCard1}/>
-                  <img src={CallingCard2}/>
-                </ImageBox>
-              </ConsultantBox>
+                Step6입니다
+              <Font18 style={{textAlign:'center',paddingTop:144}}>1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요.</Font18>
 
-              <PlaceBox>
-                <Font24>장소</Font24>
-                <Font18>서울특별시 성북구 고려대로 27길 3, 2층 볼트앤너트</Font18>
-              </PlaceBox>
-
-              <DateBox>
-                <Font24>날짜</Font24>
-                <Font18>2020년 12월 25일 15:00</Font18>
-              </DateBox>
-
-              <Font18 style={{textAlign:'center',paddingTop:144}}>방문하시는 담당자님 정보를 입력해주시면 원활한 상담을 도와드릴 수 있습니다.</Font18>
-
-              <Buttonv1 fontSize={20} style={{margin:'0 auto', marginTop: 30,marginBottom:60,width:255,height:49}}>
-                미팅사전 사항 입력하기
+              <Buttonv1 fontSize={20} onClick={ this.buttonClick } style={{margin:'0 auto', marginTop: 30,marginBottom:60,width:255,height:49}}>
+                무료 컨설팅 받기
               </Buttonv1>
             </ContentBox>
 
@@ -50,7 +38,7 @@ class Step5Container extends Component {
     }
 }
 
-export default withRouter(Step5Container);
+export default withRouter(Step6Container);
 
 const PlaceBox=styled.div`
   padding-top:31px;

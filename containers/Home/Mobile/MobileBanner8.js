@@ -56,12 +56,12 @@ class MobileBanner8Container extends React.Component {
     const SlideSettings = {
       dots: false,
       infinite: false,
-      speed: 500,
+      speed: 300,
       slidesToShow: 3,
       slidesToScroll: 1,
       draggable:true,
       rows:4,
-      autoplay:false
+      autoplay:true
     };
     return (
       <Background style={{ paddingBottom: 100, paddingTop: 100, justifyContent: 'center' }}>

@@ -19,7 +19,7 @@ class TabletBanner1Container extends React.Component {
             <ImageContainer>
               <img src={"/static/images/Home/Mobile/MobileBanner1/MobileBanner1Img.png"}/>
             </ImageContainer>
-            <Content>{ProjectCount*3+997}건의 데이터에 기반한 자동견적 알고리즘이<br/>평균 2일의 견적 시간을 한 번에 해결해 드립니다.</Content>
+            <Content>{ProjectCount}건의 데이터에 기반한 자동견적 알고리즘이<br/>평균 2일의 견적 시간을 한 번에 해결해 드립니다.</Content>
           </Fade>
         </ContentContainer>
       </Background>
