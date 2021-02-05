@@ -33,8 +33,7 @@ class Week extends Component {
     let day = e;
     if (day == Schedule.active1) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -49,6 +48,7 @@ class Week extends Component {
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
     const occupied = Schedule.date_occupied;
+
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
       let thisMoment = moment();
@@ -99,6 +99,7 @@ class Week extends Component {
     )
   }
 }
+
 @inject('Schedule')
 @observer
 class MobileCalendar extends Component {
