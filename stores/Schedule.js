@@ -27,17 +27,16 @@ class Schedule {
     }
     @action setTodayDate = (obj) => {
         this.today = obj;
-        this.current = " 10:00:00"
+        this.current = "10:00:00"
         this.book_time = this.today + this.current
-        console.log(obj);
 
         this.getDays(this.today.split('-')[0],this.today.split('-')[1]);
         this.getOccupiedDate();
     }
     @action setCurrent = (obj) => {
-        console.log(obj);
         this.current = obj;
         this.book_time = this.today + this.current;
+        console.log(this.book_time);
     }
     @action getOccupiedDate = () => {
         this.inactive_today = [];

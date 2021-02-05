@@ -89,7 +89,6 @@ class Week extends Component {
           </Day>
         )
       }
-
     })
   }
   render() {

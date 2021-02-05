@@ -180,7 +180,7 @@ class MobileStep4Container extends Component {
             </TimeComponent>
           </div>
           <Tail style={{marginTop: 14}}>
-            * 서울특별시 성북구 고려대로 30길 4, 2층 볼트앤너트
+            * 서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트
           </Tail>
           { !Request.has_email && (
           <>
