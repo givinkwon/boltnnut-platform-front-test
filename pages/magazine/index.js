@@ -7,6 +7,7 @@ import Footer from 'components/Footer'
 
 import MagazineConatiner from 'containers/Magazine'
 import {inject, observer} from "mobx-react";
+const back_ic = "/static/images/components/MobileNav/back.png";
 
 @inject('Magazine')
 @observer
@@ -40,7 +41,7 @@ class Index extends React.Component {
           <meta property="og:image" content="/static/images/thumbnail.png"/>
           <meta property="og:title" content="매거진|믿을 수 있는 제조 전문가" />
           <meta property="og:description" content="제조업 및 제조 인사이트를 위한 매거진. 볼트앤너트가 다양한 정보를 바탕으로 원하는 제품을 만들 수 있는 꿀팁을 전달해드립니다!"/>
-          <meta property="og:url" content="https://www.boltnnut.com/magazine"/>           
+          <meta property="og:url" content="https://www.boltnnut.com/magazine"/>
           {/* Title */}
           <title>볼트앤너트|제조 인사이트</title>
         </Head>
@@ -48,7 +49,7 @@ class Index extends React.Component {
         { width > 767.98 ? (
           <Nav />
           ) : (
-          <MobileNav width={width}/>
+          <MobileNav width={width} src={ back_ic }/>
           )
         }
         </>
