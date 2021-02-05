@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Observer from "@researchgate/react-intersection-observer";
 import NewButton from 'components/NewButton';
-import LogoSlider from "../LogoImageSlider";
+import MobileLogoImageSlider from './MobileLogoImageSlider';
 import * as DetailQuestionApi from "axios/DetailQuestion";
 import DetailQuestion from "stores/DetailQuestion";
 
@@ -168,8 +168,8 @@ class MobileRequestCardContainer extends Component {
         <ContentBox>
           {this.props.content}
         </ContentBox>
-        <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
-        {/* <LogoSlider/> */}
+      <MatchingText>요청하신 000 제품 개발에 <br/>최적화된 제조 파트너사를 매칭 <span>{Request.percentage}%</span> 완료</MatchingText>
+        <MobileLogoImageSlider/>
         <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
         <ButtonContainer>
           <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
@@ -256,8 +256,11 @@ const MatchingText = styled(Content.FontSize15)`
   font-style: normal;
   letter-spacing: -0.5px;
   color: #282c36;
-  text-align:center;
+  text-align: center;
   margin-bottom:20px;
+  > span {
+    color: #0933b3;
+  }
 `
 const ButtonContainer = styled.div`
   width: 100%;

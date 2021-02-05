@@ -13,6 +13,7 @@ import MobileStep1Container from "./MobileStep1";
 import MobileStep2Container from "./MobileStep2";
 import MobileStep3Container from "./MobileStep3";
 import MobileStep4Container from "./MobileStep4";
+import MobileStep5Container from "./MobileStep5";
 
 import MobileRequestCardContainer from "./MobileRequestCard";
 
@@ -25,12 +26,11 @@ class MobileRequestContainer extends React.Component {
       <div>
         <Background>
           <Containerv1>
+            <MobileStep1Container/>
             {/*{ Request.step_index == 1 && <MobileStep1Container page={Request.step1_index} />}*/}
             {/*{ Request.step_index == 2 && <MobileStep2Container />}*/}
-            { Request.step_index == 3 && <MobileStep3Container />}
+            {/*{ Request.step_index == 3 && <MobileStep3Container />}*/}
             {/*{ Request.step_index == 4 && <MobileStep4Container />}*/}
-            {/*<MobileStep1Container/>*/}
-            {/* <MobileStep4Container/> */}
           </Containerv1>
         </Background>
       </div>

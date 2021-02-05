@@ -28,7 +28,7 @@ class RequestContainer extends React.Component {
 
   render() {
     const { Request } = this.props;
-    
+
     return (
       <>
       {this.props.width >= 767.99 ? (
@@ -37,11 +37,12 @@ class RequestContainer extends React.Component {
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
             <Step />
-              { Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
-              { Request.step_index == 2 && <Step2Container />}
-              { Request.step_index == 3 && <Step3Container />}
-              { Request.step_index == 4 && <Step4Container />}
-              { Request.step_index == 6 && <Step6Container />}
+            <Step1Container/>
+              {/*{ Request.step_index == 1 && <Step1Container page={Request.step1_index} />}*/}
+              {/*{ Request.step_index == 2 && <Step2Container />}*/}
+              {/*{ Request.step_index == 3 && <Step3Container />}*/}
+              {/*{ Request.step_index == 4 && <Step4Container />}*/}
+              {/*{ Request.step_index == 6 && <Step6Container />}*/}
           </Containerv1>
         </Background>
       </div>
