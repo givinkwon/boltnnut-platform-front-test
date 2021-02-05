@@ -22,6 +22,7 @@ class Request {
   @observable big_category_list = [];
   @observable mid_category_list = [];
   @observable small_category_list = [];
+  @observable maincategory_id = '';
 
   @observable q_big = "";
   @observable q_mid = "";
@@ -77,7 +78,7 @@ class Request {
   @action reset = () => {
     this.titleData = [];
     this.percentage = 0;
-    this.step_index = 6;
+    this.step_index = 1;
     this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";
@@ -87,6 +88,7 @@ class Request {
     this.select_big = null;
     this.select_mid = null;
     this.random_partner_list = [];
+    this.maincategory_id = '';
   }
   @action setInputName = (val) => {
     this.input_name = val;
@@ -158,7 +160,6 @@ class Request {
     CategoryAPI.getMainCategory()
       .then((res) => {
         this.big_category_list = res.data.results;
-
         for(let i = 0; i < this.big_category_list.length; i++) {
           for(let j = 0; j < this.big_category_list[i].category_set; j++) {
             this.initial_contents.push(this.big_category_list[i].category_set[j].subclass_set)
@@ -170,14 +171,14 @@ class Request {
         console.log(e);
         console.log(e.response);
       });
-    console.log(this.big_category_list)
+
     this.reset();
   };
   @action setBigCategory = (obj) => {
     this.select_big = obj;
     this.select_mid = null;
     this.select_small = null;
-
+    
     if(obj.category_set[0] && obj.category_set[0].category !== '전체보기') {
       console.log(obj.category_set[0])
       obj.category_set.push(
@@ -201,6 +202,7 @@ class Request {
       contents = [...contents, ...item.subclass_set];
     }
     this.contents = contents;
+    this.maincategory_id = this.select_big.category_set[0].id
     window.history.pushState("", "", `/request`);
   };
   @action setMidCategory = (obj) => {

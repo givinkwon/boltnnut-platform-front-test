@@ -30,7 +30,7 @@ class Step5Container extends Component {
 
               <PlaceBox>
                 <Font24>장소</Font24>
-                <Font18>서울특별시 성북구 고려대로 30길 4, 2층 볼트앤너트</Font18>
+                <Font18>서울특별시 성북구 고려대로 27길 3, 2층 볼트앤너트</Font18>
               </PlaceBox>
 
               <DateBox>
