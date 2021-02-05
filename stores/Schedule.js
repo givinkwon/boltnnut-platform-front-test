@@ -59,8 +59,14 @@ class Schedule {
         }
         ScheduleAPI.postSchedule(req).then((res) => {
             alert(`${this.book_time} 부터 1시간동안의 미팅이 예약되었습니다.`);
-        }).catch(error => alert("미팅이 생성되지 않았습니다. 시간을 다시 확인해주세요. 또는 담당자에게 문의해주세요."));
-    }
+        }).catch(error => {
+                if (error.response.status != 503) {
+                    alert("미팅이 제대로 생성되지 않았습니다. 날짜를 다시 확인해주세요.");
+                    Request.step_index = 4;
+                }
+            }
+            );
+        }
 
     @action fullDateCheck = (startAt, endAt) => {
         console.log("fullDateCheck돌립니다.")

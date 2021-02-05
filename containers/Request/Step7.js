@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import Buttonv1 from "components/Buttonv1";
-import MeetingInformationModal from "MeetingInformationModal";
+import MeetingInformationModal from "./MeetingInformationModal";
 
 // Components
 import * as Content from "components/Content";
@@ -12,79 +12,25 @@ import * as Title from "components/Title";
 @inject('Request','Proposal','DetailQuestion','ManufactureProcess')
 @observer
 class Step7Container extends Component {
-  state = {
-      modal_open : false,
-  }
-  closeModal = () => {
-    this.setState({
-      ...this.state,
-      modal_shown: true,
-    })
-  }
-  buttonClick = () => {
-    const { Request } = this.props;
-    
-  }
-  static defaultProps = { title: '컨설팅 신청이 완료되었습니다..' };
-    render() {
-      
-      
+  render() {
       return(
           <Card>
             <Header>
                 담당 컨설턴트
             </Header>
             <ContentBox>
-                <Title>날짜 및 시간</Title>
-                <Tail>
-                   날짜 및 시간
-                </Tail>
-                <Title>장소</Title>
-                <Tail>
-                    * 서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트
-                </Tail>
-                <Tail>
-                    방문하시는 담당자님 정보를 입력해주시면 원활한 상담을 도와드릴 수 있습니다.
-                </Tail>
             </ContentBox>
             <CardFooter>
                 <CustomButton onClick={ this.buttonClick }>
                     미팅 사전 정보 입력하기
                 </CustomButton>
             </CardFooter>
-            <MeetingInformationModal
-                open={this.state.modal_open}
-                handleClose={this.closeModal}
-            />
-
           </Card>
         )
     }
 }
 
-export default withRouter(Step7Container);
-
-const PlaceBox=styled.div`
-  padding-top:31px;
-`
-
-const DateBox=styled.div`
-  padding-top:30px;
-`
-
-const ConsultantBox=styled.div`
-`
-
-const ImageBox=styled.div` 
-  padding-top:10px;
-  display:flex;
-  justify-content:space-between;
-  >img
-  {
-    height:216px;
-    width:380px;
-  }
-`
+export default Step7Container;
 
 const Card = styled.div`
   width: 894px;
@@ -122,27 +68,6 @@ const ContentBox = styled.div`
   flex-direction: column;
 `
 
-const Font18 = styled(Title.FontSize18)`
-  // width:100%;
-  text-align:left;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.18px;
-  color: #282c36;
-`
-
-const Font24 = styled(Title.FontSize24)`
-  // width:100%;
-  text-align:left;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.6px;
-  color: #282c36;
-`
 
 const Tail = styled(Content.FontSize14)`
   font-weight: 500;

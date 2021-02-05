@@ -17,10 +17,11 @@ class Step4Container extends Component {
   state = {
     display: 'none', // display 는 FoldedComponent 기준
     display2: true, // display2 는 TimeBox 기준.
+    display3: true, // display3은 컨설팅 유형 기준
     current: null, // FoldedComponent에 넣을 현재 상태(오전 11:00 등)
     inactive_array: [],
     userEmail: null,
-    isOnline: 0,
+    isOnline: 0, // 대면이면 0, 화상이면 1
   }
   checkboxChange = (e) => {
     console.log(e) // 에러피하기용 임시
@@ -45,8 +46,13 @@ class Step4Container extends Component {
       Schedule.getOccupiedDate();
     }
   }
-  handleDropDown = () => {
-    this.setState({...this.state, display: 'none', display2: true})
+  handleDropDown = (idx) => {
+    // idx == 2 면 스케쥴 시간, idx == 3 이면 컨설팅 유형 handle
+    if (idx == 2) {
+      this.setState({...this.state, display: 'none', display2: true})
+    } else {
+      this.setState({...this.state, display3: true})
+    }
   }
   timeActiveToggle = (time) => {
     const { Schedule } = this.props;
@@ -69,22 +75,22 @@ class Step4Container extends Component {
       isOnline: this.state.isOnline
     }
     Schedule.submitSchedule(req);
-    Request.step_index = 7;
+    Request.step_index = 5;
+    console.log(Request.step_index);
   }
   // 대면, 비대면 선택
   isOnlineHandler = (e) => {
     let targetWord = e.target.innerHTML;
     // 대면이면 0, 화상이면 1
     if (targetWord == "화상 미팅") {
-      this.setState({...this.state, isOnline: 1}) 
+      this.setState({...this.state, isOnline: 1, display3: false}) 
     } else {
-      this.setState({...this.state, isOnline: 0})
+      this.setState({...this.state, isOnline: 0, display3: false})
     }
   }
   render() {
     const { current, display, display2 } = this.state;
     const { Request, Schedule } = this.props;
-    console.log(this.getTime(10));
     const timeArr = [
       {
         start_at: this.getTime(10),
@@ -131,7 +137,7 @@ class Step4Container extends Component {
           <Title style={{marginTop: 30, marginBottom: 6}}>
             시간
           </Title>
-          <FoldedComponent onClick={()=>this.handleDropDown()} style={{display: display}}>
+          <FoldedComponent onClick={()=>this.handleDropDown(2)} style={{display: display}}>
             {current}
             <img src={dropdown} />
           </FoldedComponent>
@@ -142,7 +148,10 @@ class Step4Container extends Component {
             <TimeBox style={{marginBottom: 30}}>
               {timeArr && timeArr.slice(0,2).map((data) => {
                   return (
-                    <TimeComponent deactive={this.timeActiveToggle(data.start_at)} onClick={(event) => this.setTime(event, data.start_at)}>
+                    <TimeComponent 
+                      deactive={this.timeActiveToggle(data.start_at)} 
+                      onClick={(event) => this.setTime(event, data.start_at)}
+                    >
                       {data.start_at.split(' ')[1]}
                     </TimeComponent>
                   )
@@ -154,24 +163,34 @@ class Step4Container extends Component {
             <TimeBox style={{marginBottom: 60}}>
                 {timeArr && timeArr.slice(2,).map((data) => {
                   return (
-                    <TimeComponent deactive={this.timeActiveToggle(data.start_at)} onClick = {(event) => this.setTime(event, data.start_at)}>
+                    <TimeComponent 
+                      deactive={this.timeActiveToggle(data.start_at)} 
+                      onClick = {(event) => this.setTime(event, data.start_at)}
+                    >
                       {data.start_at.split(' ')[1]}
                     </TimeComponent>
                   )
                 })}
             </TimeBox>
           </div>
-          <Title>
+          <Title style={{marginBottom: 9}}>
             컨설팅 유형
           </Title>
-          <div style={{display: 'inline-flex', marginTop: 9}}>
-            <TimeComponent onClick = {this.isOnlineHandler}>
-              방문 미팅
-            </TimeComponent>
-            <TimeComponent onClick = {this.isOnlineHandler}>
-              화상 미팅
-            </TimeComponent>
-          </div>
+          {this.state.display3 ? (
+            <div style={{display: 'inline-flex'}}>
+              <TimeComponent onClick = {this.isOnlineHandler}>
+                방문 미팅
+              </TimeComponent>
+              <TimeComponent onClick = {this.isOnlineHandler}>
+                화상 미팅
+              </TimeComponent>
+            </div>
+          ) : (
+            <FoldedComponent onClick={() => this.handleDropDown(3)}>
+              {this.state.isOnline == 1 ? "화상 미팅 " : "대면 미팅"}
+              <img src={dropdown} />
+            </FoldedComponent>
+          )}
           <Tail>
             * 서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트
           </Tail>

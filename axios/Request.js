@@ -17,6 +17,7 @@ export function findSelect(req) {
 }
 
 export function create(req) {
+  console.log(req)
   return axios({
     method: "POST",
     url: `${ROOT_URL}/requests/`,
