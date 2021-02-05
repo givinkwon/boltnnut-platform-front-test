@@ -25,6 +25,7 @@ import EstimateLogoSlider from './EstimateSheetLogoSlider'
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
+import ConsultantBoxContainer from './ConsultantBox'
 
 //images
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
@@ -73,6 +74,32 @@ class Step3Container extends Component {
     showConsultantDetail: 'none'
   }
 
+  ConsultantInfo=[
+    {
+      Img:Consultant1,
+      Name:"안철옹",
+      Job:"기술고문",
+      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
+      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
+      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
+    },
+    {
+      Img:Consultant1,
+      Name:"안철옹",
+      Job:"기술고문",
+      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
+      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
+      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
+    },
+    {
+      Img:Consultant1,
+      Name:"안철옹",
+      Job:"기술고문",
+      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
+      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
+      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
+    },
+  ]
   handleChange = (event, newValue) => {
     console.log(newValue)
     this.setState({ percentage: newValue })
@@ -155,8 +182,8 @@ class Step3Container extends Component {
         rows2.splice(1,1);
         rows2.pop();
         rows2.pop();
-        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/10000)*10000 +'원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000)*10000 + '원', 'VAT 미포함');
-        rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원', 'VAT 미포함');
+        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/10000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000) + '만원', 'VAT 미포함');
+        rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개', 'VAT 미포함');
       }  
 
     }
@@ -258,7 +285,7 @@ class Step3Container extends Component {
             model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
             width={400}                                  // 가로
             height={400}                                 // 세로
-            modelColor='gray'                             // 색
+            modelColor='red'                             // 색
             backgroundColor='white'                    // 배경색
             rotate={true}                                // 자동회전 유무
             orbitControls={true}                         // 마우스 제어 유무
@@ -286,58 +313,14 @@ class Step3Container extends Component {
           <ConsultantHeader>
             매칭 컨설턴트 : 안철옹 기술 고문  외 2명
           </ConsultantHeader>
-            <ConsultantBox>
-              <ConsultantImgBox>
-                <img src={Consultant1}/>
-                <Font18>안철옹</Font18>
-                <Font14 style={{color:'#0933b3',fontWeight:500}}>기술고문</Font14>
-              </ConsultantImgBox>
-              <div style={{height:120,width:2,backgroundColor:'#c6c7cc',marginTop:53}}/>
-              <ConsultantTextBox>
-                <Font16>삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험</Font16>
-                <Font14>(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)</Font14>
-                <Font15>6-시그마 Black belt(삼성전자공인 2003)</Font15>
-                <Font15>과학기술부 신기술 인증상(2007)</Font15>
-                <Font15>CE-Show innovation Award(2016)</Font15>
-              </ConsultantTextBox>  
-            </ConsultantBox>
+          
+          <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/>
 
             {/* 나중에 디비에 연결할거라 그때 map으로 바꾸기 */}
             <DetailContainer style={{display: showConsultantDetail,paddingBottom:20}}>
-                <ConsultantBox>
-                  <ConsultantImgBox>
-                    <img src={Consultant1}/>
-                    <Font18>안철옹</Font18>
-                    <Font14 style={{color:'#0933b3',fontWeight:500}}>기술고문</Font14>
-                  </ConsultantImgBox>
-                  <div style={{height:120,width:2,backgroundColor:'#c6c7cc',marginTop:53}}/>
-                  <ConsultantTextBox>
-                    <Font16>삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험</Font16>
-                    <Font14>(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)</Font14>
-                    <Font15>6-시그마 Black belt(삼성전자공인 2003)</Font15>
-                    <Font15>과학기술부 신기술 인증상(2007)</Font15>
-                    <Font15>CE-Show innovation Award(2016)</Font15>
-                  </ConsultantTextBox>  
-                </ConsultantBox>
-
-                <ConsultantBox>
-                  <ConsultantImgBox>
-                    <img src={Consultant1}/>
-                    <Font18>안철옹</Font18>
-                    <Font14 style={{color:'#0933b3',fontWeight:500}}>기술고문</Font14>
-                  </ConsultantImgBox>
-                  <div style={{height:120,width:2,backgroundColor:'#c6c7cc',marginTop:53}}/>
-                  <ConsultantTextBox>
-                    <Font16>삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험</Font16>
-                    <Font14>(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)</Font14>
-                    <Font15>6-시그마 Black belt(삼성전자공인 2003)</Font15>
-                    <Font15>과학기술부 신기술 인증상(2007)</Font15>
-                    <Font15>CE-Show innovation Award(2016)</Font15>
-                  </ConsultantTextBox>  
-                </ConsultantBox>
-
-
-              </DetailContainer>
+              <ConsultantBoxContainer Info={this.ConsultantInfo[1]}/>
+              <ConsultantBoxContainer Info={this.ConsultantInfo[2]}/>
+            </DetailContainer>
 
             <ConsultantDetailButtonBox>
               {showConsultantDrop == true ? (
@@ -375,23 +358,7 @@ export default withStyles(styles)(Step3Container);
 const StyledStlViewer=styled(STLViewer)`
   margin:0 auto;
 `
-const Font14 = styled(Content.FontSize14)`
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 2.14;
-  letter-spacing: -0.14px;
-  color: #999999;
-`
 
-const Font15 = styled(Content.FontSize15)`
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 2;
-  letter-spacing: -0.15px;
-  color: #414550;
-`
 
 const Font16 = styled(Content.FontSize16)`
   font-weight: 500;
@@ -457,29 +424,6 @@ const ConsultantDetailButtonBox = styled.div`
   }
 `
 
-const ConsultantTextBox = styled.div`
-  width:100%;
-  display: flex;
-  flex-direction:column;
-  margin-left:36px;
-  // margin-top:31px;
-  justify-content:center;
-`
-
-const ConsultantBox = styled.div`
-  width:727px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  margin:0 auto;
-  margin-top:20px;
-  display:flex;
-`
-
-const ConsultantImgBox = styled.div`
-  display:inline-flex;
-  flex-direction:column;
-  align-items:center;
-  padding:34px 36px 13px 40px;
-`
 const Card = styled.div`
   width: 894px;
   // height: 1170px;
@@ -600,36 +544,9 @@ const ConsultantHeader = styled(Title.FontSize20)`
   // margin-right:26px;
 `
 
-const ConsultantHashtag = styled(Content.FontSize16)`
-  width: auto;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.6px;
-  text-align: left;
-  color: #282c36;
-  object-fit: contain;
-`
 const ThumbText = styled(Content.FontSize18)`
   position: relative;
   text-align:center;
   color: #0933b3;
   font-weight: bold;
-`
-const MatchingText = styled(Title.FontSize20)`
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: -0.5px;
-  color: #282c36;
-  margin: 0px 176px;
-`
-const ButtonContainer = styled.div`
-  width: 260px;
-  height: 44px;
-  margin: 90px 317px 50px 317px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 `

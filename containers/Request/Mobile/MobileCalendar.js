@@ -12,12 +12,10 @@ const nextMonth = "/static/images/request/Calendar/MobileNextMonth.svg";
 class Week extends Component {
   state = {
     now: moment(),
-    active1: null,
-    targetDay: null
   }
   Days = (firstDayFormat) => {
     const days = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 42; i++) {
       const Day = moment(firstDayFormat).add('d', i);
       days.push({
         yearMonthDayFormat: Day.format("YYYY-MM-DD"),
@@ -31,18 +29,19 @@ class Week extends Component {
     return days;
   }
   focusFunction = (e) => {
+    const { Schedule } = this.props;
     let day = e;
-    if (day == this.state.active1) {
+    if (day == Schedule.active1) {
       return true;
     } else {
-      return null
+      return false;
     }
   }
   calendarOnOff = (e) => {
     const { Schedule } = this.props;
-    let targetDay = e.target.innerHTML;
+    let targetDay = e.target.innerHTML.replace(/[^0-9]/g,'');
     let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
-    this.setState({ ...this.state, active1: targetDay});
+    Schedule.setActive1(targetDay);
     const dayValue = Schedule.nowMoment;
     Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   }
@@ -56,10 +55,10 @@ class Week extends Component {
       if (!Schedule.nowMoment.isSame(dayInfo.yearMonthDayFormat,'month')) {
         className = "not-month";
       }
-      else if (i === 0) {
+      else if (i % 7 == 0) {
         className = "date-sun";
       }
-      else if (i === 6) {
+      else if (i % 7 == 6) {
         className = "date-sat";
       }
       else if (parseInt(thisMoment.format('D')) > parseInt(dayInfo.getDay) && parseInt(thisMoment.format("M")) == parseInt(dayInfo.getMonth) && parseInt(thisMoment.format("Y")) == parseInt(dayInfo.getYear)) {
@@ -80,17 +79,17 @@ class Week extends Component {
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") && Schedule.nowMoment.format('M') === dayInfo.getMonth) {
         className += "today";
         return (
-          <div className={className} onClick={this.calendarOnOff}>
+          <Day className={className} onClick={ this.calendarOnOff } focused={ this.focusFunction(dayInfo.getDay) }>
             {dayInfo.getDay}
             <div>오늘</div>
-          </div>
+          </Day>
         )
       }
       else {
         return (
-          <div className={className} onClick={this.calendarOnOff}>
+          <Day className={className} onClick={ this.calendarOnOff } focused={ this.focusFunction(dayInfo.getDay) }>
             {dayInfo.getDay}
-          </div>
+          </Day>
         )
       }
     })
@@ -120,6 +119,7 @@ class MobileCalendar extends Component {
     const { Schedule } = this.props;
     Schedule.nowMoment.add(month, 'M');
     Schedule.setTodayDate(this.state.now.format("YYYY-MM-01 "));
+    Schedule.setActive1(null);
     this.setState({
       now : Schedule.nowMoment,
     })
@@ -166,11 +166,9 @@ class MobileCalendar extends Component {
     const firstDateOfMonth = firstDayOfMonth.get('d');
     const firstDayOfWeek = firstDayOfMonth.clone().add('d', -firstDateOfMonth);
     const Weeks = [];
-    for (let i = 0; i < 6; i++) {
-      Weeks.push((
-        <Week firstDayOfThisWeekformat={firstDayOfWeek.clone().add('d', i * 7).format("YYYY-MM-DD")} />
-      ))
-    }
+    Weeks.push((
+      <Week firstDayOfThisWeekformat={firstDayOfWeek.format("YYYY-MM-DD")} />
+    ));
     return Weeks;
   }
   render() {
@@ -244,9 +242,43 @@ const DateContainer = styled.div`
   }
   .date-sun {
     color: #c6c7cc;
+    pointer-events: none;
   }
   .date-sat {
     color: #c6c7cc;
+    pointer-events: none;
+  }
+`
+const Day = styled.div`
+  background-color: ${(props) => props.focused ? "#0933b3" : "white"};
+  color: ${(props) => props.focused ? "white" : "#282c36"};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 35px;
+  margin-left: 7px;
+  margin-top: 10px;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.18px;
+  > div {
+    pointer-events: none;
+    margin-top: 25px;
+    position: absolute;
+    color: #0933b3;
+    font-family: NotoSansCJKkr;
+    font-size: 10px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.25px;
   }
 `
 const CalendarContainer = styled.div`
@@ -257,36 +289,6 @@ const CalendarContainer = styled.div`
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  > div {
-    background-color: ${(props) => props.focused ? `#0933b3` : `white`};
-    color: ${(props) => props.focused ? "white" : "#282c36"};
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 35px;
-    margin-left: 7px;
-    margin-top: 10px;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    letter-spacing: -0.18px;
-    > div {
-      display: ${(props) => props.focused ? "none" : "block"};
-      font-family: Roboto;
-      line-height: 1.4;
-      font-size: 12px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      letter-spacing: -0.12px;
-      color: #282c36;
-    }
-  }
   .date-sun {
     color: #c6c7cc;
     pointer-events: none;
@@ -304,20 +306,6 @@ const CalendarContainer = styled.div`
     pointer-events: none;
     color: #c6c7cc;
   }
-  .date-weekday-labeltoday {
-    > div {
-      margin-top: 25px;
-      position: absolute;
-      color: #0933b3;
-      font-family: NotoSansCJKkr;
-      font-size: 10px;
-      font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.5;
-      letter-spacing: -0.25px;
-    }
-  }
   .not-book {
     pointer-events: none;
     color: #c6c7cc;
@@ -330,21 +318,5 @@ const CalendarContainer = styled.div`
       margin-top: 38px;
       color: #0933b3;
     }
-    //pointer-events: none;
-    //background-color: #e1e2e4;
-    //> div {
-    //  position: absolute;
-    //  margin-top: 38px;
-    //  color: #e1e2e4;
-    //}
   }
-  .clicked-day {
-    background-color: blue;
-  }
-`
-const Test = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: ${(props) => (props.focused ? "#0933b3" : "white")};
-  color: ${(props) => props.focused ? "white" : "#282c36"};
 `
