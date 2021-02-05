@@ -1,5 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
+import Router from 'next/router';
 
 const Map = '/static/images/Info/InfoMap.svg';
 const Line = '/static/images/Info/Line.svg';
@@ -28,7 +29,7 @@ class InfoContainer extends React.Component {
               그에 따라 전문가를 자동 매칭합니다. <br/>
               그를 통해 합리적인 견적으로 성공적 발주를 할 수 있도록 돕습니다.
             </span>
-            <div style={{marginBottom:24}}>
+            <div onClick={() => Router.push("/request")} style={{marginBottom:24}}>
               지금 무료 가견적 받기
             </div>
           </Textbox>
@@ -47,7 +48,7 @@ class InfoContainer extends React.Component {
               생산성을 감리하고, 발주된 의뢰의 시작부터 납품까지 <br/>
               검수함으로써 개발/생산품의 품질을 보장합니다.
             </span>
-            <div>1:1 컨설팅 받기</div>
+            <div onClick={() => Router.push("/request")}>1:1 컨설팅 받기</div>
           </Textbox>
         </Banner1>
         <img src={ Line3 }/>

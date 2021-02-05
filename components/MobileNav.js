@@ -138,18 +138,27 @@ class MobileNav extends React.Component {
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
-                <p>내 의뢰 관리</p>
-                <p>제조 인사이트</p>
-                <p>회사소개</p>
+                <p onClick={() => Router.push("/notice")}>내 의뢰 관리</p>
+                <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
+                <p onClick={() => Router.push("/info")}>회사소개</p>
               </ModalContent>
               <ModalContent2>
-                <p>자주찾는 질문</p>
+                <p onClick={() => Router.push("/faq")}>자주찾는 질문</p>
                 <p onClick={() => Router.push("/term/policy")}>이용약관</p>
                 <p onClick={() => Router.push("/term/personal")}>개인정보 처리 방침</p>
               </ModalContent2>
-              <Footer>
-                <div onClick={this.logout}> 로그아웃 </div>
-              </Footer>
+              {this.props.Auth.logged_in_user ? (
+                  <Footer>
+                    <div onClick={this.logout}> 로그아웃 </div>
+                  </Footer>
+                ) :
+                (
+                  <Footer>
+                    <div onClick={() => Router.push("/login")}>로그인</div>
+                    <div onClick={() => Router.push("/signup")}>회원가입</div>
+                  </Footer>
+                )
+              }
             </ProfileMenu>
           </Modal>
           )}
@@ -189,14 +198,14 @@ class MobileNav extends React.Component {
   }
 }
 const Modal = styled.div`
-  position: fixed; 
-  z-index: 10000; 
+  position: fixed;
+  z-index: 10000;
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
-  background-color: rgba(0,0,0,0.4); 
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
 `
 const ProfileMenu = styled.div`
   width: 70%;
@@ -222,7 +231,7 @@ const ModalHeader = styled.div`
   flex-direction: column;
   border-bottom: solid 1px #e1e2e4;
   align-items: center;
-  
+
   > div {
     font-family: NotoSansCJKkr;
     font-size: 12px;
@@ -241,7 +250,7 @@ const ModalContent = styled.div`
   border-bottom: solid 1px #e1e2e4;
   flex-direction: column;
   justify-content: space-evenly;
-  
+
   > p {
     font-family: NotoSansCJKkr;
     font-size: 15px;
@@ -257,7 +266,7 @@ const ModalContent = styled.div`
 const HeadText = styled.div`
   z-index: 9998;
   width: 100%;
-  height:29px; 
+  height:29px;
   position: absolute;
   color: #0a2165;
   display: flex;
@@ -307,7 +316,7 @@ const FreeButton = styled(Buttonv1)`
     text-align: center;
     color: #ffffff;
   }
-  
+
 `
 const ModalContent2 = styled.div`
   width: 100%;

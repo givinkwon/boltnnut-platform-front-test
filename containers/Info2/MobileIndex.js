@@ -1,5 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
+import Router from 'next/router';
 
 const Map = '/static/images/Info/Mobile/MobileMap.svg';
 const Banner2Img = '/static/images/Info/Mobile/MobileBanner2Img.png';
@@ -34,7 +35,7 @@ class MobileInfoContainer extends React.Component {
             자동 매칭합니다. 그를 통해 합리적인 견적으로 <br/>
             성공적 발주를 할 수 있도록 돕습니다.
           </span>
-          <div>
+          <div onClick={() => Router.push("/request")}>
             지금 무료로 가견적 받기
           </div>
         </ContentBox>
@@ -46,7 +47,7 @@ class MobileInfoContainer extends React.Component {
             생산성을 감리하고, 발주된 의뢰의 시작부터 납품까지 <br/>
             검수함으로써 개발/생산품의 품질을 보장합니다.
           </span>
-          <div>
+          <div onClick={() => Router.push("/request")}>
             1:1 컨설팅 받기
           </div>
         </ContentBox>
