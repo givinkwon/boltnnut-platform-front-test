@@ -182,7 +182,7 @@ class Step3Container extends Component {
         rows2.splice(1,1);
         rows2.pop();
         rows2.pop();
-        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/10000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000) + '만원', 'VAT 미포함');
+        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/1000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/1000) + '만원', 'VAT 미포함');
         rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개', 'VAT 미포함');
       }  
 
@@ -202,7 +202,7 @@ class Step3Container extends Component {
             </Content.FontSize24>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#282c36'}>
-                {Proposal.estimate_price} 원
+              {(ManufactureProcess.totalMinPrice > 0 && ManufactureProcess.MinPrice > 0) ? '하기 표시와 같음' :  Proposal.estimate_price + '원' }
               </Content.FontSize24>
               <div style={{ marginLeft: 20 }}>
 
