@@ -32,8 +32,6 @@ class ProductInfoContainer extends React.Component {
         {
           ManufactureProcess.SelectChecked=idx;
           ManufactureProcess.SelectedItem = data;
-          console.log(ManufactureProcess.SelectChecked)
-          console.log(ManufactureProcess.SelectedItem)
         //   console.log("ManuProcess SelectChecked="+idx);
         //   DetailQuestion.nextPage = e.nextTitle;
         //   DetailQuestion.SelectId = e.id;
