@@ -26,19 +26,10 @@ class MobileRequestContainer extends React.Component {
       <div>
         <Background>
           <Containerv1>
-<<<<<<< HEAD
             { Request.step_index == 1 && <MobileStep1Container page={Request.step1_index} />}
             { Request.step_index == 2 && <MobileStep2Container />}
-            {/* { Request.step_index == 3 && <MobileStep3Container />} */}
+            { Request.step_index == 3 && <MobileStep3Container />}
             { Request.step_index == 4 && <MobileStep4Container />}
-            {/*<MobileStep1Container/>*/}
-=======
-            <MobileStep1Container/>
-            {/*{ Request.step_index == 1 && <MobileStep1Container page={Request.step1_index} />}*/}
-            {/*{ Request.step_index == 2 && <MobileStep2Container />}*/}
-            {/*{ Request.step_index == 3 && <MobileStep3Container />}*/}
-            {/*{ Request.step_index == 4 && <MobileStep4Container />}*/}
->>>>>>> d4c7a21ad2fef25178d750bc086e704829f0ba49
           </Containerv1>
         </Background>
       </div>
