@@ -1,31 +1,29 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
-import TaskBarContainer from "./TaskBar"
+import TaskBarContainer from "../TaskBar"
 
 //material-ui
 import Table from '@material-ui/core/Table';
-import Box from '@material-ui/core/Box';
-import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import STLViewer from 'stl-viewer'
 
 //Slider
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
-import EstimateLogoSlider from './EstimateSheetLogoSlider'
+// import EstimateLogoSlider from './EstimateSheetLogoSlider'
+import EstimateLogoSlider from '../EstimateSheetLogoSlider'
 
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-import ConsultantBoxContainer from './ConsultantBox'
+// import ConsultantBoxContainer from './ConsultantBox'
+import ConsultantBoxContainer from '../ConsultantBox'
+import MobileStepContainer from '../../../components/MobileStep';
 
 //images
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
@@ -35,18 +33,17 @@ const DropUpArrow1 = "static/images/request/Step3/Step3_DropUp1.png";
 const DropdownArrow2 = "/static/images/request/Step3/Step3_Dropdown2.png";
 const DropUpArrow2 = "/static/images/request/Step3/Step3_DropUp2.png";
 const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
-const Consultant2 = "/static/images/request/Step3/Step3_Consultant2.png";
-const Consultant3 = "/static/images/request/Step3/Step3_Consultant3.png";
 
 const styles = {
   table: {
-    minWidth: 650
+    // minWidth: 650
   },
   row:{
-    height:'auto',
+    // height:'49px',
   },
   cell:{
-    border:'1px solid #c6c7cc'
+    border:'1px solid #c6c7cc',
+    height:'49px'
   }
 };
 
@@ -58,7 +55,7 @@ function createData(title, content, note) {
 
 @inject('Request','Proposal','DetailQuestion','ManufactureProcess')
 @observer
-class Step3Container extends Component {
+class MobileStep3Container extends Component {
 
   static defaultProps = { title: '견 적 서' };
 
@@ -79,14 +76,6 @@ class Step3Container extends Component {
   ConsultantInfo=[
     {
       Img:Consultant1,
-      Name:"최낙의",
-      Job:"기술고문",
-      Text1:"前 삼성그룹 사업기획팀장/상무",
-      Text2:"(바이오/의료기기, 신재생에너지, ESCO/BOT 등)",
-      Text3:"삼성전자 대표이사 업적공로상(2002), 사업전략/신사업기획 15년 경력"
-    },
-    {
-      Img:Consultant2,
       Name:"안철옹",
       Job:"기술고문",
       Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
@@ -94,12 +83,20 @@ class Step3Container extends Component {
       Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
     },
     {
-      Img:Consultant3,
-      Name:"허성진",
+      Img:Consultant1,
+      Name:"안철옹",
       Job:"기술고문",
-      Text1:"기구/금형 설계 경력 29년, 前 한솔 정밀 대표 ",
-      Text2:"인도네시아 (주)K.O.T.I 사출 금형부 차장(2008)",
-      Text3:"중국 (주) 아성정밀 금형 금형 개발부(2011)"
+      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
+      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
+      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
+    },
+    {
+      Img:Consultant1,
+      Name:"안철옹",
+      Job:"기술고문",
+      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
+      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
+      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
     },
   ]
   handleChange = (event, newValue) => {
@@ -142,7 +139,7 @@ class Step3Container extends Component {
 
   componentDidMount() {
     const { Proposal, DetailQuestion } = this.props;
-    // Proposal.loadEstimateInfo(315);
+    Proposal.loadEstimateInfo(315);
     console.log(DetailQuestion.proposal_type)
   }
 
@@ -155,7 +152,7 @@ class Step3Container extends Component {
       createData('작성일자', Proposal.estimate_year + '.' + Proposal.estimate_month + '.' + Proposal.estimate_day, ''),
       createData('문서번호', 'C8-' + Proposal.estimate_year + Proposal.estimate_month + Proposal.estimate_day + '-' + estimateData.id, ''),
       //createData('수신인', estimateData.client, ''),
-      createData('발신인', '윤기열 대표 / (주)볼트앤너트', 'TEL : 02 - 926 - 9967'),
+      createData('발신인', '윤기열 대표 / \n (주)볼트앤너트', '02 - 926 - 9967'),
       // createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
     ];
 
@@ -184,47 +181,47 @@ class Step3Container extends Component {
         rows2.splice(1,1);
         rows2.pop();
         rows2.pop();
-        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/1000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/1000) + '만원', 'VAT 미포함');
+        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/10000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000) + '만원', 'VAT 미포함');
         rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개', 'VAT 미포함');
       }  
 
     }
     return (
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
+    <TopHeader>
+        <span>무료 견적서 받기</span>
+        <MobileStepContainer/>
+    </TopHeader>
+    
       <Card>
         <HeaderBackground>
-          <Logo>
-            <img src={HeaderImg} />
-          </Logo>
           <Header>
             {this.props.title}
           </Header>
           <HeaderTextBox>
-            <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#282c36'}>
+            <Content.FontSize15 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#282c36'}>
               견적가
-            </Content.FontSize24>
+            </Content.FontSize15>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Content.FontSize24 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#282c36'}>
-              {(ManufactureProcess.totalMinPrice > 0 && ManufactureProcess.MinPrice > 0) ? '하기 표시와 같음' :  Proposal.estimate_price + '원' }
-              </Content.FontSize24>
-              <div style={{ marginLeft: 20 }}>
-
-              </div>
+              <Content.FontSize15 fontWeight={'normal'} style={{ textAlign: 'left' }} color={'#282c36'}>
+                {Proposal.estimate_price} 원
+              </Content.FontSize15>
             </div>
           </HeaderTextBox>
           <DetailButtonBox>
 
             {showEstimateDrop == true ? (
                   <>
-                    <Title.FontSize20 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
+                    <Content.FontSize15 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
                         견적서 상세보기
-                    </Title.FontSize20>
+                    </Content.FontSize15>
                     <img src={DropdownArrow1} onClick={()=>{this.detailDown(1);}} style={{marginLeft:12}}/>
                   </>
                 ) : (
                     <>
-                      <Title.FontSize20 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
+                      <Content.FontSize15 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
                           견적서 접기
-                      </Title.FontSize20>
+                      </Content.FontSize15>
                       <img src={DropUpArrow1} onClick={()=>{this.detailUp(1);}} style={{marginLeft:20}}/>
                     </>
                   )
@@ -235,14 +232,15 @@ class Step3Container extends Component {
               <TableBody>
                   { rows1.map((row) => (
                 <TableRow className ={classes.row} key={row.title}>
-                  <TableCell className ={classes.cell} component="th" scope="row" width='154'>
-                    <Font16 style={{marginRight:48,textAlign:'right'}}>{row.title}</Font16>
+                  <TableCell className ={classes.cell} component="th" scope="row" width='83'>
+                    <Font13 style={{textAlign:'center',color:'#86888c'}}>{row.title}</Font13>
                   </TableCell>
-                  <TableCell className ={classes.cell} width='472'>
-                    <Font16 style={{marginLeft:20,textAlign:'left'}}>{row.content}</Font16>
+                  <TableCell className ={classes.cell} width='144'>
+                    <Font13 style={{marginLeft:20,textAlign:'left'}}>{row.content}</Font13>
+                    {/* <Font13 style={{textAlign:'right',marginRight:14}}>{row.note}</Font13> */}
                   </TableCell>
-                  <TableCell className ={classes.cell} width='268'>
-                    <Font16 style={{marginRight:52,textAlign:'right'}}>{row.note}</Font16>
+                  <TableCell className ={classes.cell} width='120'>
+                    <Font13 style={{marginRight:14,textAlign:'right',color:'#86888c'}}>{row.note}</Font13>
                   </TableCell>
                 </TableRow>
               ))}
@@ -250,21 +248,22 @@ class Step3Container extends Component {
 
             </Table>
 
-            <Font16 style={{margin:'30px 0 30px 0',textAlign:'center',fontWeight:'bold'}}>
-                  * 귀하의 일이 번창하심을 기원합니다. 아래와 같은 조건으로 견적을 제출하오니 참조 바랍니다.
-            </Font16>
+            <Font13 style={{margin:'30px 0 30px 0',textAlign:'center',fontWeight:'bold'}}>
+                  * 귀하의 일이 번창하심을 기원합니다.<br/>
+                  아래와 같은 조건으로 견적을 제출하오니 참조 바랍니다.
+            </Font13>
             <Table className={classes.table} size="small">
               <TableBody>
                   {rows2.map((row) => (
                 <TableRow className ={classes.row} key={row.title}>
-                  <TableCell className ={classes.cell} component="th" scope="row" width='154'>
-                    <Font16 style={{marginRight:48,textAlign:'right'}}>{row.title}</Font16>
+                  <TableCell className ={classes.cell} component="th" scope="row" width='83'>
+                    <Font13 style={{textAlign:'center',color:'#86888c'}}>{row.title}</Font13>
                   </TableCell>
-                  <TableCell className ={classes.cell} width='472'>
-                  <Font16 style={{marginLeft:20,textAlign:'left'}}>{row.content}</Font16>
+                  <TableCell className ={classes.cell} width='144'>
+                  <Font13 style={{marginLeft:20,textAlign:'left'}}>{row.content}</Font13>
                     </TableCell>
-                    <TableCell className ={classes.cell} width='268'>
-                    <Font16 style={{marginRight:52,textAlign:'right'}}>{row.note}</Font16>
+                    <TableCell className ={classes.cell} width='120'>
+                    <Font13 style={{marginRight:14,textAlign:'right',color:'#86888c'}}>{row.note}</Font13>
                   </TableCell>
                 </TableRow>
               ))}
@@ -274,10 +273,12 @@ class Step3Container extends Component {
 
             </Table>
 
-            <Font16 style={{marginTop:40,textAlign:'center',fontWeight:'bold',color:'#0a2165',marginBottom:40}}>
-              *해당 가견적은 의뢰 세부사항에 따라 달리질 수 있습니다.<br/>
-              보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
-            </Font16>
+            <Font13 style={{marginTop:35,textAlign:'center',fontWeight:'bold',color:'#0a2165',marginBottom:35}}>
+              *해당 견적서는 제품 세부사항에 <br/>
+              따라 달리질 수 있습니다.<br/>
+              보다 정확한 견적을 받아보시려면<br/>
+              1:1컨설팅을 신청해주세요.
+            </Font13>
 
             {/* 여기 들어간다 */}
 
@@ -285,8 +286,8 @@ class Step3Container extends Component {
             {DetailQuestion.message.includes(message) ? 
             <StyledStlViewer
             model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
-            width={300}                                  // 가로
-            height={300}                                 // 세로
+            width={400}                                  // 가로
+            height={400}                                 // 세로
             modelColor='red'                             // 색
             backgroundColor='white'                    // 배경색
             rotate={true}                                // 자동회전 유무
@@ -300,17 +301,18 @@ class Step3Container extends Component {
 
         <ContentBox>
           <ContentHeader>
-            요청하신 {estimateData.projectTitle}에 최적화된<br/>
-            <span style={{fontSize:24,color:'#0933b3'}}>{rand2}</span> 곳의 제조 파트너사가 아래와 같이 매칭되었습니다.
+            요청하신 {estimateData.projectTitle} 제품 개발에<br/> 
+            최적화된 <span style={{fontSize:16,color:'#0933b3'}}>{rand2}</span> 곳의 제조 파트너사가 매칭되었습니다.
           </ContentHeader>
 
           <EstimateLogoSlider />
           
-          <ThumbText> {percentage}% </ThumbText>
-          <CustomSlider value={percentage}/>
+          {/* <ThumbText> {percentage}% </ThumbText>
+          <CustomSlider value={percentage}/> */}
 
           <ConsultantHeader>
-            매칭 컨설턴트 : 최낙의 기술 고문  외 2명
+            해당 프로젝트의<br/>
+            볼트앤너트 전문 컨설턴트 이력서 확인하기
           </ConsultantHeader>
           
           <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/>
@@ -340,32 +342,48 @@ class Step3Container extends Component {
                   }
           </ConsultantDetailButtonBox>
           
-          <Font16 style={{marginTop:100,textAlign:'center'}}>
-            전문 컨설턴트의 무료 상담을 통해 의뢰의 정확한 견적을 받아보세요
-          </Font16>
+          <Font13 style={{marginTop:40,textAlign:'center',color:'#0a2165',fontWeight:'bold'}}>
+            1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요(워딩필요)
+          </Font13>
           <Buttonv1 onClick={ this.buttonClick } fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
             무료 컨설팅 받기
           </Buttonv1>
         </ContentBox>
       </Card>
+    </div>
     )
   }
 }
 
-export default withStyles(styles)(Step3Container);
+export default withStyles(styles)(MobileStep3Container);
 
 const StyledStlViewer=styled(STLViewer)`
   margin:0 auto;
 `
-
-
-const Font16 = styled(Content.FontSize16)`
+const TopHeader = styled.div`
+    font-family: Roboto;
+    color: #0a2165;
+    position: relative;
+    width: auto;
+    height: 46px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.13;
+    letter-spacing: -0.4px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+`
+const Font13 = styled(Content.FontSize13)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.88;
-  letter-spacing: -0.16px;
+  line-height: 1.38;
+  letter-spacing: -0.13px;
   color: #282c36;
+  white-space: pre-line;
 `
 
 const Font18 = styled(Content.FontSize18)`
@@ -404,6 +422,22 @@ const DetailContainer = styled.div`
     padding-right:0;
   }
 
+  .MuiTableCell-root:nth-of-type(1)
+  {
+      border-right:none;
+  }
+
+  .MuiTableCell-root:last-child
+  {
+      border-left:none;
+      border-right:none;
+  }
+
+  .MuiTableCell-root:first-child
+  {
+      border-left:none;
+      border-right:none;
+  }
   
 `
 
@@ -424,28 +458,27 @@ const ConsultantDetailButtonBox = styled.div`
 `
 
 const Card = styled.div`
-  width: 894px;
-  // height: 1170px;
+  width: 347px;
   object-fit: contain;
-  border-radius: 10px;
+//   border-radius: 10px;
+  border-top-left-radius: 35px;
+  border-top-right-radius: 35px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
   background-color: white;
-  margin: 60px 0px 200px 280px;
+  margin: 25px 0px 120px 0px;
   display: inline;
   float: right;
 `
 const HeaderBackground = styled.div`
-  // background-color: #0a2165;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+//   background-color: #0a2165;
 `
 const HeaderTextBox = styled.div`
   display:flex;
   justify-content:space-between;
   margin-left: 5.4%;
   margin-right: 5.4%;
-  padding-bottom:18px;
-  padding-top:12px;
+  padding-bottom:24px;
+  padding-top:18px;
 `
 
 const Logo = styled.div`
@@ -463,7 +496,7 @@ const History = styled(Title.FontSize16)`
   color: #282c36;
   margin-left:63px;
 `
-const Header = styled(Content.FontSize32)`
+const Header = styled(Content.FontSize18)`
   width: auto;
   height: calc(6.7%);
   font-weight: bold;
@@ -475,19 +508,19 @@ const Header = styled(Content.FontSize32)`
   color: #282c36;
   margin-left: 5.4%;
   margin-right: 5.4%;
-  padding-top: 27px;
-  padding-bottom:41px;
-  border-bottom: solid 1px #999999;
+  padding-top: 15px;
+  padding-bottom:15px;
+  border-bottom: solid 1px #c6c7cc;
   object-fit: contain;
 `
 
-const ContentHeader = styled(Title.FontSize20)`
+const ContentHeader = styled(Title.FontSize14)`
   width: auto;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.9;
-  letter-spacing: -0.5px;
+  line-height: 1.64;
+  letter-spacing: -0.35px;
   text-align: center;
   color: #282c36;
   object-fit: contain;
@@ -497,7 +530,7 @@ const ContentBox = styled.div`
   // height: calc(46.3%);
   margin-right: 5.4%;
   margin-left: 5.4%;
-  margin-top: 100px;
+  margin-top: 80px;
 `
 
 const CustomSlider = withStyles({
@@ -528,13 +561,13 @@ const CustomSlider = withStyles({
 })(Slider);
 
 
-const ConsultantHeader = styled(Title.FontSize20)`
+const ConsultantHeader = styled(Content.FontSize15)`
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.6px;
-  text-align: left;
+  line-height: 1.53;
+  letter-spacing: -0.38px;
+  text-align: center;
   color: #282c36;
   object-fit: contain;
   // margin-left:63px;

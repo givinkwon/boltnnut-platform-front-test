@@ -25,7 +25,7 @@ class EstimateLogoSlider extends React.Component {
       <ItemBox>
         <StyledSlider {...SlideSettings}>
         {Request.random_partner_list && Request.random_partner_list.map((item, idx) => {
-              console.log(item)
+              // console.log(item)
               return (                
                 <>
                 <div>
@@ -67,10 +67,11 @@ const Item=styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  width: 122px;
-  height: 122px;
+  width: 105px;
+  height: 105px;
   border-radius: 10px;
-  box-shadow: 0 3px 6px 0 gray;
+  box-shadow: 0 1px 3px 0 gray;
+  margin-top:11px;
 `
 
 const TextBox=styled.div`
@@ -92,8 +93,8 @@ const HashTag = styled(Content.FontSize15)`
 const ImgBox=styled.div`
   
 //    padding-top:20px;
-   width:100px;
-   height:100px;
+   width:86px;
+   height:86px;
 //    margin:0 auto;
    >img
    {
