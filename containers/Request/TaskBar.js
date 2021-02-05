@@ -34,6 +34,7 @@ class TaskBarContainer extends React.Component {
     
   return (
       <>
+      {this.props.width >= 767.99 ? (
         <table>
             <tr height={50}>
                 <TaskTd style={{backgroundColor:'#e1e2e4',width:'17.2%'}}><Font20>용역 범위</Font20></TaskTd>
@@ -74,6 +75,51 @@ class TaskBarContainer extends React.Component {
             ))
             }
         </table>
+      ):
+      (
+      <Test>
+        <table>
+            <tr height={50}>
+                <TaskTd style={{backgroundColor:'#e1e2e4',width:'17.2%'}}><Font20>용역 범위</Font20></TaskTd>
+                {[...Array(8)].map((n,idx) => {
+                    return (
+                        <TaskTd style={{backgroundColor:'#e1e2e4'}}><Font18>{idx*2+2}주차</Font18></TaskTd>
+                    )
+                })}
+            </tr>
+
+            {Proposal.estimateData.task && Proposal.estimateData.task.map((row)=>
+            {
+              if(max<row.endPeriod)
+              {
+                max=row.endPeriod;
+                if(max%2!=0)
+                {
+                  max+=1;
+                }
+              }
+            }
+            )}
+
+            {Proposal.estimateData.task && Proposal.estimateData.task.map((row)=>
+            (
+                <tr height={80}>
+                    <TaskTd style={{backgroundColor:'#e1e2e4'}}><Font18>{row.name}</Font18></TaskTd>
+
+                    {[...Array(8)].map((n,idx) => {
+                        return (
+                            <TaskTd active ={deActivateHandler(idx*2+2)} style={{border:'1px solid #e1e2e4'}}>
+                                <HalfTd active={activeHandler(idx*2+1,row.startPeriod,row.endPeriod)} displayHandler={deActivateHandler(idx*2+1)}/>
+                                <HalfTd active={activeHandler(idx*2+2,row.startPeriod,row.endPeriod)} displayHandler={deActivateHandler(idx*2+2)}/>
+                            </TaskTd>
+                        )
+                    })}
+                </tr>
+            ))
+            }
+        </table>
+        </Test>
+      )}
       </>
     )
   }
@@ -81,6 +127,18 @@ class TaskBarContainer extends React.Component {
 
 export default TaskBarContainer;
 
+const Test=styled.div`
+  // width: 1300px;
+  // height: 165px;
+  // // position: absolute;
+  // overflow: scroll;
+  // > table {
+  //   overflow-x: scroll;
+  //   position: absolute;
+  //   width: 1200px
+  //   display: flex;
+  // }
+`
 const Font20 = styled(Title.FontSize20)`
   font-weight: bold;
   font-stretch: normal;
