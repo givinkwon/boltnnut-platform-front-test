@@ -293,7 +293,9 @@ class MobileStep3Container extends Component {
             rotate={true}                                // 자동회전 유무
             orbitControls={true}                         // 마우스 제어 유무
           />
-           : (<TaskBarContainer/>)}
+           : (
+            <TaskBarContainer/>
+            )}
           </DetailContainer>
 
 

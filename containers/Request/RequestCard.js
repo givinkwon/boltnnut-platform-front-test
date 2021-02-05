@@ -75,6 +75,7 @@ class RequestCardContainer extends Component {
         counter += 1
       }
     }
+    console.log(counter);
     if (counter == buttonActiveCount) {
       return true
     } else {
