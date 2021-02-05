@@ -50,7 +50,6 @@ class Step6Container extends Component {
       Text3:"중국 (주) 아성정밀 금형 금형 개발부(2011)"
     },
   ]
-
     render() {
       return(
           <Card>
