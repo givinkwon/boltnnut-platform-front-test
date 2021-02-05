@@ -53,7 +53,6 @@ class Step4Container extends Component {
     let nowTime = new moment();
     // console.log(time.split(' ')[1]);  ==> 10:00 과 같음.
     if (time) {
-      console.log(time.split(' ')[1])
       if (Schedule.inactive_today.includes(time.split(' ')[1]) || (nowTime.format("HH") >= time.split(' ')[1].split(":")[0] && nowTime.format("DD") == time.split(' ')[0].split('-')[2])) {
         return true
       } else {

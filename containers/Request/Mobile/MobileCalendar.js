@@ -13,6 +13,7 @@ class Week extends Component {
   state = {
     now: moment(),
     active1: null,
+    targetDay: null
   }
   Days = (firstDayFormat) => {
     const days = [];
@@ -33,19 +34,22 @@ class Week extends Component {
     let day = e;
     if (day == this.state.active1) {
       return true;
+    } else {
+      return null
     }
   }
   calendarOnOff = (e) => {
     const { Schedule } = this.props;
     let targetDay = e.target.innerHTML;
     let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
-    this.setState({ active1: targetDay});
+    this.setState({ ...this.state, active1: targetDay});
     const dayValue = Schedule.nowMoment;
     Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   }
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
     const occupied = Schedule.date_occupied;
+
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
       let thisMoment = moment();
@@ -70,10 +74,13 @@ class Week extends Component {
       else if (occupied.includes(dayInfo.yearMonthDayFormat)) {
         className = "not-book";
       }
+      else if (this.state.active1 == dayInfo.getDay) {
+        className = "clicked-day";
+      }
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") && Schedule.nowMoment.format('M') === dayInfo.getMonth) {
         className += "today";
         return (
-          <div className={className} onClick={ this.calendarOnOff } focused={ true }>
+          <div className={className} onClick={this.calendarOnOff}>
             {dayInfo.getDay}
             <div>오늘</div>
           </div>
@@ -81,7 +88,7 @@ class Week extends Component {
       }
       else {
         return (
-          <div className={className} onClick={ this.calendarOnOff } focused={ true }>
+          <div className={className} onClick={this.calendarOnOff}>
             {dayInfo.getDay}
           </div>
         )
@@ -97,6 +104,7 @@ class Week extends Component {
     )
   }
 }
+
 @inject('Schedule')
 @observer
 class MobileCalendar extends Component {
@@ -251,7 +259,7 @@ const CalendarContainer = styled.div`
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   > div {
-    background-color: ${(props) => props.focused ? "#0933b3" : "white"};
+    background-color: ${(props) => props.focused ? `#0933b3` : `white`};
     color: ${(props) => props.focused ? "white" : "#282c36"};
     display: flex;
     flex-direction: column;
@@ -330,6 +338,9 @@ const CalendarContainer = styled.div`
     //  margin-top: 38px;
     //  color: #e1e2e4;
     //}
+  }
+  .clicked-day {
+    background-color: blue;
   }
 `
 const Test = styled.div`
