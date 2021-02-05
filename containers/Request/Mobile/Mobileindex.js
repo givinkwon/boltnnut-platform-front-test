@@ -29,8 +29,8 @@ class MobileRequestContainer extends React.Component {
             {/*{ Request.step_index == 2 && <MobileStep2Container />}*/}
             {/*{ Request.step_index == 3 && <MobileStep3Container />}*/}
             {/*{ Request.step_index == 4 && <MobileStep4Container />}*/}
-            {/*<MobileStep1Container/>*/}
-            <MobileStep5Container/>
+            <MobileStep1Container/>
+            {/*<MobileStep5Container/>*/}
           </Containerv1>
         </Background>
       </div>
