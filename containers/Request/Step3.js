@@ -73,6 +73,16 @@ class Step3Container extends Component {
     showConsultantDetail: 'none'
   }
 
+  ConsultantInfo=[
+    {
+      Img:Consultant1,
+      Name:"안철옹",
+      Job:"기술고문",
+      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
+      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
+      Text3:"6-시그마 Black belt(삼성전자공인 2003)</br>과학기술부 신기술 인증상(2007)</br>CE-Show innovation Award(2016)"
+    }
+  ]
   handleChange = (event, newValue) => {
     console.log(newValue)
     this.setState({ percentage: newValue })
@@ -274,6 +284,14 @@ class Step3Container extends Component {
           <ConsultantHeader>
             매칭 컨설턴트 : 안철옹 기술 고문  외 2명
           </ConsultantHeader>
+          {/* 
+          Img
+          Name
+          Job
+          Text1
+          Text2
+          Text3
+          */}
             <ConsultantBox>
               <ConsultantImgBox>
                 <img src={Consultant1}/>

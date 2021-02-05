@@ -6,9 +6,41 @@ import Buttonv1 from "components/Buttonv1";
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
+import ConsultantBoxContainer from './ConsultantBox'
+
+const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
 
 class Step6Container extends Component {
+
   static defaultProps = { title: '고객님의 제조 의뢰가 접수 되었습니다.' };
+
+  ConsultantInfo=[
+    {
+      Img:Consultant1,
+      Name:"안철옹",
+      Job:"기술고문",
+      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
+      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
+      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
+    },
+    {
+      Img:Consultant1,
+      Name:"안철옹",
+      Job:"기술고문",
+      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
+      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
+      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
+    },
+    {
+      Img:Consultant1,
+      Name:"안철옹",
+      Job:"기술고문",
+      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
+      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
+      Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
+    },
+  ]
+
     render() {
       return(
           <Card>
@@ -16,8 +48,18 @@ class Step6Container extends Component {
               {this.props.title}
             </Header>
             <ContentBox>
-                Step6입니다
-              <Font18 style={{textAlign:'center',paddingTop:144}}>1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요.</Font18>
+                <Font20>
+                  의뢰주신 프로젝트는 전문 컨설턴트의 검토가 필요한 사항입니다. <br/>
+                  볼트앤너트 전문 컨설턴트가 정밀 검토 후 최대 1 영업일 내로 상담 안내드립니다.
+                </Font20>
+                <ConsultantHeader>
+                  해당 프로젝트의 볼트앤너트 전문 컨설턴트 이력서 확인하기
+                </ConsultantHeader>
+                
+                {this.ConsultantInfo.map((Info) => (
+                <ConsultantBoxContainer Info={Info}/> 
+              ))}
+              <Font16 style={{textAlign:'center',paddingTop:70}}>1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요.</Font16>
 
               <Buttonv1 fontSize={20} style={{margin:'0 auto', marginTop: 30,marginBottom:60,width:255,height:49}}>
                 무료 컨설팅 받기
@@ -68,39 +110,52 @@ const Header = styled(Content.FontSize32)`
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.63;
+  line-height: 1.06;
   letter-spacing: -0.8px;
-  text-align: center;
+  text-align: left;
   color: #0a2165;
   margin-left: 5.4%;
   margin-right: 5.4%;
-  padding-top: 40px;
+  padding-top: 38px;
   padding-bottom:20px;
-  border-bottom: solid 1px #707070;
+  border-bottom: solid 1px #c6c7cc;
   object-fit: contain;
 `
 
-const ContentBox = styled.div`
-  // height: calc(46.3%);
-  margin-right: 5.4%;
-  margin-left: 5.4%;
-  margin-top: 4.4%;
-  display: flex;
-  flex-direction: column;
-`
-
-const Font18 = styled(Title.FontSize18)`
-  // width:100%;
-  text-align:left;
+const ConsultantHeader = styled(Content.FontSize24)`
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67;
-  letter-spacing: -0.18px;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #414550;
+  padding-top: 130px;
+  padding-bottom:20px;
+  border-bottom: solid 1px #c6c7cc;
+  object-fit: contain;
+`
+const ContentBox = styled.div`
+  // height: calc(46.3%);
+  margin-right: 5.4%;
+  margin-left: 5.4%;
+  margin-top: 2.2%;
+  display: flex;
+  flex-direction: column;
+`
+
+const Font20 = styled(Title.FontSize20)`
+  // width:100%;
+  text-align:left;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: -0.5px;
   color: #282c36;
 `
 
-const Font24 = styled(Title.FontSize24)`
+const Font16 = styled(Title.FontSize16)`
   // width:100%;
   text-align:left;
   font-weight: bold;
