@@ -13,12 +13,15 @@ class Schedule {
     @observable date_occupied = [];
     @observable userEmail = null;
     @observable already_setted = [];
-
+    @observable active1 = null;
+    @action setActive1 = (day) => {
+        this.active1 = day;
+    }
     @action init = () => {
         let today_date = new moment();
         this.today = today_date.format('YYYY-MM-DD ');
         this.book_time = this.today + this.current;
-
+        this.active1 = null;
         this.getOccupiedDate();
         this.getDays(this.today.split('-')[0], this.today.split('-')[1]);
     }
