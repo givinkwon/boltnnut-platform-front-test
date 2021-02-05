@@ -73,9 +73,6 @@ class Week extends Component {
       else if (occupied.includes(dayInfo.yearMonthDayFormat)) {
         className = "not-book";
       }
-      else if (this.state.active1 == dayInfo.getDay) {
-        className = "clicked-day";
-      }
       if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") && Schedule.nowMoment.format('M') === dayInfo.getMonth) {
         className += "today";
         return (
