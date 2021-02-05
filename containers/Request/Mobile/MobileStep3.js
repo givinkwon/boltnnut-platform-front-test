@@ -22,7 +22,6 @@ import EstimateLogoSlider from '../EstimateSheetLogoSlider'
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 // import ConsultantBoxContainer from './ConsultantBox'
-import ConsultantBoxContainer from '../ConsultantBox'
 import MobileStepContainer from '../../../components/MobileStep';
 
 //images
@@ -70,7 +69,8 @@ class MobileStep3Container extends Component {
     // showEstimateDetail:'none',
     showEstimateDetail:true,
     showConsultantDrop: true,
-    showConsultantDetail: 'none'
+    showConsultantDetail: 'none',
+    arrowChecked:null
   }
 
   ConsultantInfo=[
@@ -98,7 +98,8 @@ class MobileStep3Container extends Component {
       Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
       Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
     },
-  ]
+  ];
+
   handleChange = (event, newValue) => {
     console.log(newValue)
     this.setState({ percentage: newValue })
@@ -124,6 +125,36 @@ class MobileStep3Container extends Component {
       this.setState({ showConsultantDrop:'none', showConsultantDetail: true })
     }
   }
+
+  consultantDetailDown=(idx)=>
+  {
+    if(idx==this.state.arrowChecked)
+    {
+      this.setState({ arrowChecked:null ,showConsultantDetail: 'none'})
+    }
+    else{
+      this.setState({ arrowChecked:idx,showConsultantDetail: true})
+    }
+    
+  }
+
+  consultantDetailUp=(idx)=>
+  {
+
+  }
+
+  arrowHandler=(idx)=>
+  {
+    const {arrowChecked} = this.state;
+    if(idx==arrowChecked)
+    {
+      return DropUpArrow2;
+    }
+    else{
+      return DropdownArrow2;
+    }
+  }
+
 
   detailUp = (type) => {
     const { showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
@@ -267,7 +298,7 @@ class MobileStep3Container extends Component {
                   </TableCell>
                 </TableRow>
               ))}
-
+              
 
               </TableBody>
 
@@ -310,19 +341,46 @@ class MobileStep3Container extends Component {
           {/* <ThumbText> {percentage}% </ThumbText>
           <CustomSlider value={percentage}/> */}
 
-          <ConsultantHeader>
-            해당 프로젝트의<br/>
-            볼트앤너트 전문 컨설턴트 이력서 확인하기
-          </ConsultantHeader>
           
-          <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/>
-
-            {/* 나중에 디비에 연결할거라 그때 map으로 바꾸기 */}
-            <DetailContainer style={{display: showConsultantDetail,paddingBottom:20}}>
-              <ConsultantBoxContainer Info={this.ConsultantInfo[1]}/>
-              <ConsultantBoxContainer Info={this.ConsultantInfo[2]}/>
+          
+          {/* <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/> */}
+          <ConsultantBox>
+            <ConsultantHeader>
+                해당 프로젝트의<br/>
+                볼트앤너트 전문 컨설턴트 이력서 확인하기
+            </ConsultantHeader>
+            <ConsultantImgBox>
+                
+                {this.ConsultantInfo.map((Info,idx) => (
+                    <div style={{display:'flex',flexDirection:'column'}}>
+                        <img src={Info.Img}/>
+                        <Font15>{Info.Name}</Font15>
+                        <Font13 style={{color:'#86888c',textAlign:'center'}}>{Info.Job}</Font13>
+                        <img src={this.arrowHandler(idx)} onClick={()=>{this.consultantDetailDown(idx)}} style={{margin:'0 auto',marginTop:15}}/>
+                        {/* {showConsultantDrop == true ? (
+                            <>
+                                <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} style={{margin:'0 auto',marginTop:15}}/>
+                            </>
+                        ) : (
+                            <>
+                                <img src={DropUpArrow2} onClick={()=>{this.detailUp(2);}} style={{margin:'0 auto',marginTop:15}}/>
+                            </>
+                            )
+                        } */}
+                    </div>
+              ))}
+            </ConsultantImgBox>
+            <DetailContainer style={{display: showConsultantDetail,paddingTop:38}}>
+                {this.state.arrowChecked!=null &&
+                      <ConsultantTextBox>
+                        <Font16>{this.ConsultantInfo[this.state.arrowChecked].Text1}</Font16>
+                        <Font14>{this.ConsultantInfo[this.state.arrowChecked].Text2}</Font14>
+                        <Font15>{this.ConsultantInfo[this.state.arrowChecked].Text3}</Font15>
+                      </ConsultantTextBox>
+                }
             </DetailContainer>
-
+          </ConsultantBox>
+            
             <ConsultantDetailButtonBox>
               {showConsultantDrop == true ? (
                     <>
@@ -356,6 +414,71 @@ class MobileStep3Container extends Component {
 }
 
 export default withStyles(styles)(MobileStep3Container);
+
+const ConsultantTextBox = styled.div`
+  width:100%;
+  display: flex;
+  flex-direction:column;
+  // margin-left:36px;
+  // margin-top:31px;
+  justify-content:center;
+`
+
+const Font14 = styled(Content.FontSize14)`
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.14;
+  letter-spacing: -0.14px;
+  color: #999999;
+  text-align:center;
+`
+
+const Font16 = styled(Content.FontSize16)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: -0.16px;
+  color: #282c36;
+  text-align:center;
+`
+
+const Font15 = styled(Content.FontSize15)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: -0.38px;
+  color: #282c36;
+  white-space: pre-line;
+  text-align:center;
+`
+
+const ConsultantImgBox = styled.div`
+  display:flex;
+//   align-items:center;
+  justify-content:space-between;
+//   padding:34px 36px 13px 40px;
+  padding:38px 0 8px 0;
+  >img
+  {
+      width:94px;
+      height:109px;
+  }
+`
+
+const ConsultantBox=styled.div`
+//   width:727px;
+//   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  margin:0 auto;
+//   margin-top:20px;
+//   display:flex;
+  padding-top: 30px;
+  padding-bottom:38px;
+  border-bottom: solid 1px #c6c7cc;
+  border-top: solid 1px #c6c7cc;
+`
 
 const StyledStlViewer=styled(STLViewer)`
   margin:0 auto;
