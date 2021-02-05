@@ -46,8 +46,8 @@ class FormConatiner extends React.Component {
         <Container>
           <Text.FontSize56 color={'#0a2165'} fontWeight={700}>비밀번호 찾기</Text.FontSize56>
           <ForgetPasswordContainer>
-            <Text.FontSize20 color={'#505050'}>이메일</Text.FontSize20>
-            <Input placeholder='이메일을 입력하세요' onChange={Auth.setEmail} value={Auth.email}/>
+            <Text.FontSize20 color={'#505050'}>아이디</Text.FontSize20>
+            <Input placeholder='아이디를 입력하세요' onChange={Auth.setEmail} value={Auth.email}/>
             <Text.FontSize20 color={'#505050'}>휴대전화번호</Text.FontSize20>
             <Input placeholder='- 없이 입력해주세요' onChange={Auth.setPhone} value={Auth.phone} onKeyDown={this.handleKeyDown}/>
             <More>

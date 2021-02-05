@@ -41,7 +41,7 @@ export function partnerSignup(req) {
 export function sendPassword(req) {
   return axios({
     method: 'POST',
-    url: `${ROOT_URL}/users/password/email/`,
+    url: `${ROOT_URL}/users/password/phone/`,
     data: req.data,
   });
 }
