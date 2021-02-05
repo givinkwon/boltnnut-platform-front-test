@@ -1,16 +1,17 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import Router, { withRouter } from 'next/router';
-//Slider
-import { withStyles,makeStyles } from '@material-ui/core/styles';
-import Buttonv1 from "components/Buttonv1";
+import { inject, observer } from 'mobx-react';
+import moment from 'moment';
 
-// Components
-import * as Content from "components/Content";
-import * as Title from "components/Title";
 
+@inject("Schedule")
+@observer
 class Step5Container extends Component {
-    render() {
+  render() {
+    moment.locale('ko');
+    const { Schedule } = this.props;
+    let bookDate = moment(Schedule.book_time).format('LL / LT');
       return(
           <Card>
             <Header>
@@ -19,7 +20,7 @@ class Step5Container extends Component {
             <ContentBox>
               <ContentContainer>
                 <div>날짜 및 시간</div>
-                <span>2020년 12월 25일 / 오후 3:00</span>
+                <span>{ bookDate }</span>
               </ContentContainer>
               <ContentContainer style={{marginTop: 30}}>
                 <div>장소</div>
@@ -57,12 +58,10 @@ class Step5Container extends Component {
 
 export default withRouter(Step5Container);
 
-
-
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  width: 866px;
+  width: 894px;
   object-fit: contain;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
   background-color: white;
@@ -78,8 +77,8 @@ const Header = styled.div`
   line-height: 1.63;
   letter-spacing: -0.8px;
   color: #0a2165;
-  margin-left: 32px;
-  margin-right: 32px;
+  margin-left: 48px;
+  margin-right: 48px;
   padding-top: 40px;
   padding-bottom:20px;
   border-bottom: solid 1px #c6c7cc;
@@ -87,7 +86,6 @@ const Header = styled.div`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 34px;
   > div {
     font-family: NotoSansCJKkr;
     font-size: 24px;
@@ -111,14 +109,14 @@ const ContentContainer = styled.div`
   }
 `
 const ContentBox = styled.div`
-  margin-left: 32px;
-  margin-right: 32px;
+  margin-left: 48px;
+  margin-right: 48px;
   padding-top: 40px;
   padding-bottom: 40px;
   border-bottom: solid 1px #c6c7cc;
 `
 const MainBox = styled.div`
-  padding: 40px 34px 0px 34px;
+  padding: 40px 48px 0px 48px;
   display: flex;
   flex-direction: column;
 `
@@ -174,7 +172,7 @@ const HomeButton = styled.div`
 `
 const Text = styled.p`
   margin-top: 60px;
-  margin-left: 34px;
+  margin-left: 48px;
   height: 29px;
   font-family: NotoSansCJKkr;
   font-size: 20px;

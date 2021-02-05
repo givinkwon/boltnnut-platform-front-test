@@ -153,8 +153,8 @@ class MobileStep4Container extends Component {
           <Title style={{marginTop: 30, marginBottom: 6}}>
             시간
           </Title>
-          <TimeBox style={{marginBottom: 56}}>
-            <Slider {...settings}>
+          <TimeBox>
+            <div>
               {Schedule.today && timeArr.map((data) => {
                 return (
                   <TimeComponent
@@ -166,18 +166,20 @@ class MobileStep4Container extends Component {
                   </TimeComponent>
                 )
               })}
-            </Slider>
+            </div>
           </TimeBox>
-          <Title style={{marginBottom: 20}}>
-            컨설팅 유형
-          </Title>
-          <div style={{display: 'inline-flex'}}>
-            <TimeComponent onClick = {this.isOnlineHandler} focused={this.timeComponentActiveToggle2("방문 미팅")}>
-              방문 미팅
-            </TimeComponent>
-            <TimeComponent onClick = {this.isOnlineHandler} focused={this.timeComponentActiveToggle2("화상 미팅")}>
-              화상 미팅
-            </TimeComponent>
+          <div style={{marginTop: 77}}>
+            <Title style={{marginBottom: 20}}>
+              컨설팅 유형
+            </Title>
+            <div style={{display: 'inline-flex'}}>
+              <TimeComponent onClick = {this.isOnlineHandler} focused={this.timeComponentActiveToggle2("방문 미팅")}>
+                방문 미팅
+              </TimeComponent>
+              <TimeComponent onClick = {this.isOnlineHandler} focused={this.timeComponentActiveToggle2("화상 미팅")}>
+                화상 미팅
+              </TimeComponent>
+            </div>
           </div>
           <Tail style={{marginTop: 14}}>
             * 서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트
@@ -341,23 +343,12 @@ const CustomButton = styled(Buttonv1)`
 `
 const TimeBox = styled.div`
   width: 100%;
-  height: 64px;
-  .slick-list {
-    margin : 0;
-    width: 100%;
-    padding: 1px 1px;
-    > div > div {
-      width: 99px !important;
-      margin-right: 12px;
-      outline: none;
-      :hover {
-        outline: none;
-      }
-    }
-    > div > div > div > div  {
-      display: flex !important;
-      align-items: center;
-    }
+  height: 65px;
+  position: absolute;
+  overflow: scroll;
+  > div {
+    display: inline-flex;
+  }
 `
 const CheckBoxWrapper = styled.div`
   font-size: 13px !important;

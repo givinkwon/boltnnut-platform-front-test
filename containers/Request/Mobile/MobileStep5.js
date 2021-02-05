@@ -1,10 +1,17 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import { withRouter } from 'next/router';
-
+import { inject, observer } from 'mobx-react';
+import moment from 'moment';
 const BusinessCard = "/static/images/request/Step5/명함.png";
+
+@inject("Schedule")
+@observer
 class MobileStep5Container extends Component {
   render() {
+    moment.locale('ko');
+    const { Schedule } = this.props;
+    let bookDate = moment(Schedule.book_time).format('LL / LT');
     return(
       <Card>
         <Header>
@@ -13,7 +20,7 @@ class MobileStep5Container extends Component {
         <ContentBox>
           <ContentContainer>
             <div>날짜 및 시간</div>
-            <span>2020년 12월 25일 / 오후 3:00</span>
+            <span>{ bookDate }</span>
           </ContentContainer>
           <ContentContainer style={{marginTop: 24}}>
             <div>장소</div>
