@@ -53,7 +53,6 @@ class Request {
   @observable input_phone = "";
 
   @observable input_content = "";
-
   @observable input_day = null; // 개발기간
   @observable input_price = null; // 가격
   @observable common_file = null; // 첨부 파일

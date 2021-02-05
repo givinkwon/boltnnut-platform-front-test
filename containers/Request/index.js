@@ -21,6 +21,8 @@ import Step5Container from './Step5';
 import Step5_2Container from './Step5-2';
 import Step6Container from './Step6';
 
+import MarketingModal from './MarketingModal';
+
 
 @inject("DetailQuestion", "Partner", "Request")
 @observer
@@ -37,13 +39,12 @@ class RequestContainer extends React.Component {
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
             <Step />
-              <Step5_2Container/>
-              {/* { Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
+              { Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
               { Request.step_index == 2 && <Step2Container />}
               { Request.step_index == 3 && <Step3Container />}
               { Request.step_index == 4 && <Step4Container />}
               { Request.step_index == 5 && <Step5Container />}
-              { Request.step_index == 6 && <Step6Container />} */}
+              { Request.step_index == 6 && <Step6Container />}
           </Containerv1>
         </Background>
       </div>
