@@ -58,7 +58,8 @@ class Schedule {
             "startAt": this.book_time + ".00",
             "endAt": moment(this.book_time).add("1", "H").format("YYYY-MM-DD HH:mm:ss.00"),
             "note": "할랄라",
-            "isOnline": data.isOnline
+            "isOnline": data.isOnline,
+            "marketing": data.marketing
         }
         ScheduleAPI.postSchedule(req).then((res) => {
             alert(`${this.book_time} 부터 1시간동안의 미팅이 예약되었습니다.`);
