@@ -154,8 +154,8 @@ class MobileNav extends React.Component {
                 ) :
                 (
                   <Footer>
-                    <div onClick={() => Router.push("/login")}>로그인</div>
-                    <div onClick={() => Router.push("/signup")}>회원가입</div>
+                    <div style={{display: 'flex', alignItems:'center', justifyContent:'center', borderRight: "solid 1px #e1e2e4", height:32}} onClick={() => Router.push("/login")}>로그인</div>
+                    <div style={{display: 'flex', alignItems:'center', justifyContent:'center', height:32}} onClick={() => Router.push("/signup")}>회원가입</div>
                   </Footer>
                 )
               }
@@ -320,7 +320,7 @@ const FreeButton = styled(Buttonv1)`
 `
 const ModalContent2 = styled.div`
   width: 100%;
-  height: 310px;
+  height: 340px;
   display: flex;
   flex-direction: column;
   border-bottom: solid 1px #e1e2e4;
