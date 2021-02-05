@@ -4,7 +4,7 @@ import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
-import TaskBarContainer from "./TaskBar"
+import TaskBarContainer from "../TaskBar"
 
 //material-ui
 import Table from '@material-ui/core/Table';
@@ -20,12 +20,14 @@ import STLViewer from 'stl-viewer'
 //Slider
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
-import EstimateLogoSlider from './EstimateSheetLogoSlider'
+// import EstimateLogoSlider from './EstimateSheetLogoSlider'
+import EstimateLogoSlider from '../EstimateSheetLogoSlider'
 
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-import ConsultantBoxContainer from './ConsultantBox'
+// import ConsultantBoxContainer from './ConsultantBox'
+import ConsultantBoxContainer from '../ConsultantBox'
 
 //images
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
@@ -56,7 +58,7 @@ function createData(title, content, note) {
 
 @inject('Request','Proposal','DetailQuestion','ManufactureProcess')
 @observer
-class Step3Container extends Component {
+class MobileStep3Container extends Component {
 
   static defaultProps = { title: '견 적 서' };
 
@@ -350,7 +352,7 @@ class Step3Container extends Component {
   }
 }
 
-export default withStyles(styles)(Step3Container);
+export default withStyles(styles)(MobileStep3Container);
 
 const StyledStlViewer=styled(STLViewer)`
   margin:0 auto;

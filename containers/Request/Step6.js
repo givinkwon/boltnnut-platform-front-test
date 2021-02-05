@@ -48,7 +48,6 @@ class Step6Container extends Component {
       Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
     },
   ]
-
     render() {
       return(
           <Card>
