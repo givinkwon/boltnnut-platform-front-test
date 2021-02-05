@@ -23,7 +23,7 @@ import MobileStepContainer from '../../../components/MobileStep';
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 var titleData=[];
 
-@inject('Request', 'DetailQuestion')
+@inject('Request', 'DetailQuestion','ManufactureProcess')
 @observer
 class MobileRequestCardContainer extends Component {
   state = {
@@ -88,15 +88,16 @@ class MobileRequestCardContainer extends Component {
         }
         break;
       case 2:
-        titleData.pop();
-        console.log(titleData);
+        Request.titleData.pop();
+        console.log(Request.titleData);
 
         if (DetailQuestion.prevPage.length > 0)
         {
-          if (DetailQuestion.index != 4)
-          {
             DetailQuestion.pageCount -= 1;
-          }
+            if (DetailQuestion.prevPage[DetailQuestion.prevPage.length-1] == 4) {
+              DetailQuestion.pageCount += 1;
+            }
+
           DetailQuestion.index = DetailQuestion.prevPage.pop();
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
           Request.percentage -= 14;
@@ -105,13 +106,12 @@ class MobileRequestCardContainer extends Component {
           Request.step_index = 1;
           Request.percentage -= 15;
         }
-
         break;
 
     }
   }
   nextButtonClick = () => {
-    const { Request, DetailQuestion } = this.props;
+    const { Request, DetailQuestion,ManufactureProcess } = this.props;
 
     switch(Request.step_index)
     {
@@ -122,6 +122,8 @@ class MobileRequestCardContainer extends Component {
         } else {
           try {
             Request.createRequest();
+            
+            
             DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
           } catch(e) {
             console.log(e);
@@ -131,25 +133,53 @@ class MobileRequestCardContainer extends Component {
       case 2:
         if(DetailQuestion.nextPage)
         {
-          titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          if(DetailQuestion.index!=4 || DetailQuestion.nextPage==8)
+          {
+            DetailQuestion.pageCount += 1;
+          }
+          Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
           DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
-          if(DetailQuestion.index!=4)
-          {
-            DetailQuestion.pageCount += 1;
-          }
+
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
         }
         else {
-          titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          
+          // console.log(Request.drawFile);
+          if(DetailQuestion.index==8)
+          {
+            const ManufactureProcessFormData = new FormData();
+            ManufactureProcessFormData.append("blueprint",Request.drawFile);
+            ManufactureProcessFormData.append("process",ManufactureProcess.SelectedItem.process);
+            ManufactureProcessFormData.append("detailProcess",ManufactureProcess.SelectedItem.id);
+            //기본정보입력에서 받은 의뢰서로 바꾸기
+            ManufactureProcessFormData.append("request",Request.created_request);
+            ManufactureProcess.saveSelect(ManufactureProcessFormData);
+            Request.titleData= Request.titleData.slice(0,3);
+          }
+          
+          console.log(Request.titleData);
           var SelectSaveData = {
             "request": Request.created_request,
-            "data": titleData,
+            "data": Request.titleData,
           }
-          DetailQuestionApi.saveSelect(SelectSaveData);
-          Request.step_index = 3;
+          console.log(Request.maincategory_id)
+          // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
+          if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
+            Request.step_index = 6;
+            break;
+          }
+          // 도면에서 카테고리가 실리콘/플라스틱이 아닌 경우
+          if(DetailQuestion.index == 8 && ManufactureProcess.SelectChecked != 1 && ManufactureProcess.SelectChecked != 2 ){
+            Request.step_index = 6;
+            break;
+          }
+          DetailQuestion.loadProposalType(SelectSaveData);
+          
+          Request.step_index = 3; 
         }
         Request.percentage += 14;
         break;

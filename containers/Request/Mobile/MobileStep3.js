@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
-import TaskBarContainer from "../TaskBar"
+import TaskBarContainer from "./MobileTaskBar"
 
 //material-ui
 import Table from '@material-ui/core/Table';
@@ -138,11 +138,6 @@ class MobileStep3Container extends Component {
     
   }
 
-  consultantDetailUp=(idx)=>
-  {
-
-  }
-
   arrowHandler=(idx)=>
   {
     const {arrowChecked} = this.state;
@@ -170,7 +165,7 @@ class MobileStep3Container extends Component {
 
   componentDidMount() {
     const { Proposal, DetailQuestion } = this.props;
-    Proposal.loadEstimateInfo(315);
+    // Proposal.loadEstimateInfo(315);
     console.log(DetailQuestion.proposal_type)
   }
 
@@ -298,7 +293,6 @@ class MobileStep3Container extends Component {
                   </TableCell>
                 </TableRow>
               ))}
-              
 
               </TableBody>
 
@@ -316,14 +310,14 @@ class MobileStep3Container extends Component {
             
             {DetailQuestion.message.includes(message) ? 
             <StyledStlViewer
-            model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
-            width={400}                                  // 가로
-            height={400}                                 // 세로
-            modelColor='red'                             // 색
-            backgroundColor='white'                    // 배경색
-            rotate={true}                                // 자동회전 유무
-            orbitControls={true}                         // 마우스 제어 유무
-          />
+              model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
+              width={300}                                  // 가로
+              height={300}                                 // 세로
+              modelColor='red'                             // 색
+              backgroundColor='white'                    // 배경색
+              rotate={true}                                // 자동회전 유무
+              orbitControls={true}                         // 마우스 제어 유무
+            />
            : (
             <TaskBarContainer/>
             )}

@@ -6,7 +6,7 @@ import * as Content from "components/Content";
 import { inject, observer } from 'mobx-react';
 @inject('Proposal')
 @observer
-class TaskBarContainer extends React.Component {
+class MobileTaskBarContainer extends React.Component {
   render(){
   const { Proposal } = this.props;
 
@@ -33,12 +33,13 @@ class TaskBarContainer extends React.Component {
 
     
   return (
+      <Test>
         <table>
             <tr height={50}>
-                <TaskTd style={{backgroundColor:'#e1e2e4',width:'17.2%'}}><Font20>용역 범위</Font20></TaskTd>
+                <TaskTd style={{backgroundColor:'#e1e2e4',width:'12.5%'}}><Font13>용역 범위</Font13></TaskTd>
                 {[...Array(8)].map((n,idx) => {
                     return (
-                        <TaskTd style={{backgroundColor:'#e1e2e4'}}><Font18>{idx*2+2}주차</Font18></TaskTd>
+                        <TaskTd style={{backgroundColor:'#e1e2e4'}}><Font13>{idx*2+2}주차</Font13></TaskTd>
                     )
                 })}
             </tr>
@@ -58,8 +59,8 @@ class TaskBarContainer extends React.Component {
 
             {Proposal.estimateData.task && Proposal.estimateData.task.map((row)=>
             (
-                <tr height={80}>
-                    <TaskTd style={{backgroundColor:'#e1e2e4'}}><Font18>{row.name}</Font18></TaskTd>
+                <tr height={53}>
+                    <TaskTd style={{backgroundColor:'#e1e2e4'}}><Font13>{row.name}</Font13></TaskTd>
 
                     {[...Array(8)].map((n,idx) => {
                         return (
@@ -73,19 +74,38 @@ class TaskBarContainer extends React.Component {
             ))
             }
         </table>
+    </Test>
     )
   }
 }
 
-export default TaskBarContainer;
+export default MobileTaskBarContainer;
+
+const TaskTd=styled.td`
+    border-top:2px solid white;
+    border-right:2px solid white;
+    border-bottom:2px solid white;
+    width:10%;
+    display:table-cell;
+    vertical-align:middle;
+    background-color:${(props) => (props.active ? "#b4b4b4" : 'white')};
+`
+
+const HalfTd=styled.td`
+    //displayHandler를 따로 만든 이유는 props.active로 제어하면 max값보다 작은 범위에서 설정해놓은 inline-flex가 풀려서 태스크바가 붙지 않는다.
+    display:${(props) => (props.displayHandler ? "none" : 'inline-flex')};
+    height:30px;
+    width:50%;
+    background-color:${(props) => (props.active ? "#e1e2e4" : 'white')};
+`
 
 const Test=styled.div`
-  height: 900px;
+  height: 600px;
   position: relative;
   overflow: scroll;
   > table {
-    position: absolute;
-    width: 1200px
+    // position: absolute;
+    width: 680px;
   }
 `
 const Font20 = styled(Title.FontSize20)`
@@ -123,21 +143,4 @@ const Font13 = styled(Title.FontSize13)`
   letter-spacing: -0.13px;
   color: #86888c;
   text-align:center;
-`
-const TaskTd=styled.td`
-    border-top:2px solid white;
-    border-right:2px solid white;
-    border-bottom:2px solid white;
-    width:10%;
-    display:table-cell;
-    vertical-align:middle;
-    background-color:${(props) => (props.active ? "#b4b4b4" : 'white')};
-`
-
-const HalfTd=styled.td`
-    //displayHandler를 따로 만든 이유는 props.active로 제어하면 max값보다 작은 범위에서 설정해놓은 inline-flex가 풀려서 태스크바가 붙지 않는다.
-    display:${(props) => (props.displayHandler ? "none" : 'inline-flex')};
-    height:30px;
-    width:50%;
-    background-color:${(props) => (props.active ? "#e1e2e4" : 'white')};
 `
