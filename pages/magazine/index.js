@@ -42,7 +42,7 @@ class Index extends React.Component {
           <meta property="og:description" content="제조업 및 제조 인사이트를 위한 매거진. 볼트앤너트가 다양한 정보를 바탕으로 원하는 제품을 만들 수 있는 꿀팁을 전달해드립니다!"/>
           <meta property="og:url" content="https://www.boltnnut.com/magazine"/>           
           {/* Title */}
-          <title>볼트앤너트|매거진</title>
+          <title>볼트앤너트|제조 인사이트</title>
         </Head>
         <>
         { width > 767.98 ? (

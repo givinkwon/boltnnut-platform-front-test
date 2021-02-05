@@ -109,7 +109,7 @@ class EmailConatiner extends React.Component {
         { width > 767.98 ? (
           <>
           <W100>
-            <InputComponent placeholder='이메일을 입력하세요' label='이메일 주소' onChange={Auth.setEmail} value={Auth.email}/>
+            <InputComponent placeholder='이메일을 입력하세요' label='아이디' onChange={Auth.setEmail} value={Auth.email}/>
           </W100>
           <W50 left>
             <InputComponent placeholder='비밀번호를 입력하세요' label='비밀번호' type='password' onChange={Auth.setPassword} value={Auth.password}/>

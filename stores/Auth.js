@@ -689,11 +689,7 @@ class Auth {
       alert("이메일을 입력해주세요.");
       return;
     }
-    var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-    if (!emailValid.test(this.email)) {
-      await alert("이메일 형식을 확인해주세요.");
-      return;
-    }
+    
     if (!this.phone) {
       alert("휴대폰 번호를 입력해주세요.");
       return;
@@ -711,13 +707,14 @@ class Auth {
       .then((res) => {
         setTimeout(() => {
           this.loading = false;
-          // alert("임시 비밀번호가 회원님의 이메일로 발송되었습니다.");
-          // Router.push("/login");
+          alert("임시 비밀번호가 회원님의 카카오톡으로 발송되었습니다.");
+          Router.push("/login");
         }, 800);
       })
       .catch((e) => {
         try {
           alert(e.response.data.message);
+          console.log(e.response)
         } catch {
           console.log(e);
           console.log(e.response);

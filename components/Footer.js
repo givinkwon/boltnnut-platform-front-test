@@ -71,7 +71,7 @@ class FooterComponent extends React.Component {
                 fontWeight={500}
                 onClick={() => Router.push("/request")}
               >
-                가건젹 받기
+                가견적 받기
               </Text.FontSize18>
               <Text.FontSize18
                 color={WHITE}

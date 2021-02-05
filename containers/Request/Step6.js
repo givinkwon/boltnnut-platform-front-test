@@ -72,7 +72,6 @@ class Step6Container extends Component {
                 무료 컨설팅 받기
               </Buttonv1>
             </ContentBox>
-
           </Card>
         )
     }
