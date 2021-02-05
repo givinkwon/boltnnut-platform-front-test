@@ -17,8 +17,8 @@ import Step1Container from "./Step1";
 import Step2Container from './Step2';
 import Step3Container from './Step3';
 import Step4Container from './Step4';
+import Step5 from './Step5';
 import Step5Container from './Step5';
-import Step5_2Container from './Step5-2';
 import Step6Container from './Step6';
 
 import MarketingModal from './MarketingModal';
@@ -30,7 +30,7 @@ class RequestContainer extends React.Component {
 
   render() {
     const { Request } = this.props;
-    
+
     return (
       <>
       {this.props.width >= 767.99 ? (
