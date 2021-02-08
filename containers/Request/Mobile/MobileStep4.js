@@ -11,6 +11,8 @@ import Slider from 'react-slick';
 import 'intersection-observer';
 import MobileStepContainer from '../../../components/MobileStep'; // polyfill
 
+// Marketing Modal
+import MarketingModal from '../MarketingModal';
 const dropdown = '/static/images/request/Step4/dropdown.png';
 
 @inject('Schedule', 'Request')
@@ -23,10 +25,23 @@ class MobileStep4Container extends Component {
     userEmail: null,
     isOnline: 0,
     active1_target: null,
-    active2_target: null
+    active2_target: null,
+    open_marketing_modal: false,
+    policy_agree: false,
+    marketing_agree: false
   }
-  checkboxChange = (e) => {
-    console.log(e) // 에러피하기용 임시
+  checkboxChange_policy = (e) => {
+    this.setState({...this.state, policy_agree: e});
+    console.log(this.state)
+  }
+  checkboxChange_marketing = (e) => {
+    this.setState({...this.state, marketing_agree: e});
+  }
+  handleClose =()=> {
+    this.setState({...this.state, open_marketing_modal: false})
+  }
+  openMarketingModal = () => {
+    this.setState({...this.state, open_marketing_modal: true})
   }
   // 이메일 입력
   emailChange = (obj) => {
@@ -65,10 +80,15 @@ class MobileStep4Container extends Component {
   }
   createSchedule = () => {
     const { Schedule, Request } = this.props;
+    const { policy_agree } = this.state;
+    if (!policy_agree) {
+      return alert("이용약관 동의에 체크해주세요.")
+    }
     let req = {
       request: Request.created_request,
       email: this.state.userEmail,
-      isOnline: this.state.isOnline
+      isOnline: this.state.isOnline,
+      marketing: this.state.marketing_agree
     }
     Schedule.submitSchedule(req);
   }
@@ -205,14 +225,33 @@ class MobileStep4Container extends Component {
         <CardFooter>
           <CheckBoxWrapper>
             <CheckBoxComponent
-              onChange={this.checkboxChange}>
-              <span> 이용약관 및 개인정보 처리방침에 동의합니다. </span>
+              onChange={this.checkboxChange_policy}>
+              <span>
+                  <Link target="_blank" href="/term/policy">이용약관 및 개인정보 처리방침</Link>
+                  에 동의합니다.
+              </span>
+            </CheckBoxComponent>
+          </CheckBoxWrapper>
+          <CheckBoxWrapper>
+            <CheckBoxComponent
+              onChange={this.checkboxChange_marketing}>
+              <span>
+                <span class="bold" onClick={this.openMarketingModal}>마케팅 정보 수신</span>에 동의합니다.
+              </span>
             </CheckBoxComponent>
           </CheckBoxWrapper>
           <CustomButton onClick = {this.createSchedule}>
             무료 컨설팅 신청
           </CustomButton>
         </CardFooter>
+        
+      
+        <div>
+        <MarketingModal
+          open={this.state.open_marketing_modal}
+          handleClose={this.handleClose}
+        />
+      </div>
       </Card>
     )
   }
@@ -366,5 +405,26 @@ const CheckBoxWrapper = styled.div`
     width: 14px !important;
     height: 14px !important;
   }
+  > span {
+    font-size: 16px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.88;
+    letter-spacing: -0.16px;
+    text-align: left;
+    color: #282c36;
+    .MuiIconButton-label {
+      color: #c7c7c7;
+    }
+  }
+  .bold {
+    font-weight: bold;
+  }
 `
+const Link = styled.a`
+  color: #191919;
+  display: inline-block;
+  font-weight: bold;
+  text-decoration: none;
+`;
 

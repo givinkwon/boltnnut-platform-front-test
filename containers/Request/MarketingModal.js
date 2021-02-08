@@ -20,10 +20,10 @@ class MarketingModal extends Component {
       >
         <DialogHeader>
           <CloseModalButton handleClose={handleClose}/>
-          <div>
-            이용목적 : 볼트앤너트 제품 제조 관련 콘텐츠 발송 및 할인 이벤트 안내<br/>
-            보유기간 : 별도 동의 철회 시 혹은 회원 탈퇴 후 1주일까지
-          </div>
+            <span>
+              이용목적 : 볼트앤너트 제품 제조 관련 콘텐츠 발송 및 할인 이벤트 안내<br/>
+              보유기간 : 별도 동의 철회 시 혹은 회원 탈퇴 후 1주일까지
+            </span>
         </DialogHeader>
         <DialogFooter>
           <p onClick={handleClose}>
@@ -84,6 +84,10 @@ const DialogHeader = styled(DialogTitle)`
 	}
 	@media (min-width: 0px) and (max-width: 767.98px) {
     padding: 50px 30px 20px !important;
+    span {
+      font-size: 14px;
+      word-break: keep-all;
+    }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
   	padding: 50px 40px 40px !important;

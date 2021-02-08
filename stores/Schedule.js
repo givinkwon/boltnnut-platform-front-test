@@ -15,7 +15,7 @@ class Schedule {
     @observable already_setted = [];
     @observable active1 = null;
     @observable isOnline = null;
-    
+
     @action setActive1 = (day) => {
         this.active1 = day;
     }
@@ -98,6 +98,10 @@ class Schedule {
         } else {
             console.log("이미 세팅한 연,월 입니다.")
         }
+    }
+    // Step5 에서 이름, 회사명, 직책, 부서명 업데이트하기
+    @action updateClientInfo = (data) => {
+        
     }
 }
 
