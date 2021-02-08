@@ -52,6 +52,7 @@ class MobileStep2Container extends React.Component {
         DetailQuestion.nextPage = null;
         DetailQuestion.SelectChecked='';
         DetailQuestion.SelectId = null;
+        console.log("RAKJSBKABSKCBJKSBC");
       }
       else
       {
@@ -73,12 +74,11 @@ class MobileStep2Container extends React.Component {
 
     let activeHandler = (idx) =>
     {
-      if (idx===DetailQuestion.SelectChecked) {
-        return true;
-      }
-      else {
-        return false;
-      }
+      // console.log(idx===DetailQuestion.SelectChecked)
+      if(idx===DetailQuestion.SelectChecked)
+      { return true; } 
+      else
+      { return false; }
     };
 
     return (
