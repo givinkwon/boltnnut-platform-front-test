@@ -51,7 +51,7 @@ class MobileBanner0Container extends React.Component {
     <Background src={background} style={{paddingBottom: 70, paddingTop: 54, justifyContent: 'center'}}>
         <Fade bottom>
             <Header color={WHITE} fontWeight={"500"}>
-              내 제품 제작 비용과<br/>
+              내 제조 의뢰 견적과<br/>
               전문 제조사를 바로 만나보세요.
             </Header>
             <div>
