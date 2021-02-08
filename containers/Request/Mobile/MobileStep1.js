@@ -90,14 +90,21 @@ class MobileStep1Container extends React.Component {
       {label: '12 개월', value: 12},
     ];
     const costArray = [
-      {label: '1000 만원 이하', value: '1000 만원 이하'},
-      {label: '1000 만원 ~ 3000 만원', value: '1000 만원 ~ 3000 만원'},
-      {label: '3000 만원 이상', value: '3000 만원 이상'}
+      {label: '100 만원 이하', value: '100 만원 이하'},
+      {label: '100 만원 ~ 300 만원', value: '100 만원 ~ 300 만원'},
+      {label: '300 만원 ~ 500 만원', value: '300 만원 ~ 500 만원'},
+      {label: '500 만원 ~ 1000 만원', value: '500 만원 ~ 1000 만원'},
+      {label: '1000 만원 ~ 2000 만원', value: '1000 만원 ~ 2000 만원'},
+      {label: '2000 만원 ~ 3000 만원', value: '2000 만원 ~ 3000 만원'},
+      {label: '3000 만원 ~ 5000 만원', value: '3000 만원 ~ 5000 만원'},
+      {label: '5000 만원 ~ 1 억원', value: '5000 만원 ~ 1 억원'},
+      {label: '1 억원 ~ 2 억원', value: '1 억원 ~ 2 억원'},
+      {label: '2 억원 이상', value: '2 억원 이상'}
     ];
      return(
      <div>
        <Header>
-         관련 분야
+         의뢰 분야
        </Header>
        <SelectRow>
         <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>
@@ -171,7 +178,7 @@ class MobileStep1Container extends React.Component {
           />
        </SelectRow>
        <Header style={{marginTop: 30}}>
-        도면
+        의뢰 관련 파일
        </Header>
 
        <SelectRow style={{width: "100%"}}>
