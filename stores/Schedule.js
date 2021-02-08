@@ -14,6 +14,8 @@ class Schedule {
     @observable userEmail = null;
     @observable already_setted = [];
     @observable active1 = null;
+    @observable isOnline = null;
+    
     @action setActive1 = (day) => {
         this.active1 = day;
     }
@@ -24,6 +26,9 @@ class Schedule {
         this.active1 = null;
         this.getOccupiedDate();
         this.getDays(this.today.split('-')[0], this.today.split('-')[1]);
+    }
+    @action setOnline = (obj) => {
+        this.isOnline = obj;
     }
     @action setTodayDate = (obj) => {
         this.today = obj;

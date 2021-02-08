@@ -22,10 +22,17 @@ class Step5Container extends Component {
                 <div>날짜 및 시간</div>
                 <span>{ bookDate }</span>
               </ContentContainer>
+              { Schedule.isOnline ==  0 ? (
               <ContentContainer style={{marginTop: 30}}>
-                <div>장소</div>
+                <div>대면미팅장소</div>
                 <span>서울특별시 성북구 고려대로 30길 4, 2층 볼트앤너트</span>
               </ContentContainer>
+              ) : (
+              <ContentContainer style={{marginTop: 30}}>
+                <div>화상미팅 장소</div>
+                <span>해당 시간에 카카오톡으로 ZOOM URL링크를 보내드립니다.</span>
+              </ContentContainer>
+              )}
             </ContentBox>
             <Text>방문하시는 고객님의 정보를 입력해주시면 원활한 상담을 도와드릴 수 있습니다.</Text>
             <MainBox>

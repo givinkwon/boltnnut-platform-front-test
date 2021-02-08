@@ -79,6 +79,11 @@ class Step4Container extends Component {
   // 스케쥴 생성
   createSchedule = () => {
     const { Schedule, Request } = this.props;
+    const { policy_agree } = this.state;
+
+    if (!policy_agree) {
+      return alert("이용약관 동의에 체크해주세요.")
+    }
     let req = {
       request: Request.created_request,
       email: this.state.userEmail,
@@ -90,12 +95,15 @@ class Step4Container extends Component {
   }
   // 대면, 비대면 선택
   isOnlineHandler = (e) => {
+    const { Schedule } = this.props;
     let targetWord = e.target.innerHTML;
     // 대면이면 0, 화상이면 1
     if (targetWord == "화상 미팅") {
-      this.setState({...this.state, isOnline: 1, display3: false}) 
+      this.setState({...this.state, isOnline: 1, display3: false})
+      Schedule.setOnline(1);
     } else {
       this.setState({...this.state, isOnline: 0, display3: false})
+      Schedule.setOnline(0);
     }
   }
   handleClose =()=> {
