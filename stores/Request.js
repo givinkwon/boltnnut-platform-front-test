@@ -177,7 +177,7 @@ class Request {
     this.select_big = obj;
     this.select_mid = null;
     this.select_small = null;
-    
+
     if(obj.category_set[0] && obj.category_set[0].category !== '전체보기') {
       console.log(obj.category_set[0])
       obj.category_set.push(
