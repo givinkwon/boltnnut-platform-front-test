@@ -18,7 +18,6 @@ class Step5Container extends Component {
     const { Schedule, Request } = this.props;
     // const { client_id } = Request.client_id;
     let req = this.state;
-    console.log(Request);
     Schedule.updateClientInfo(req, Request.client_id);
   }
   onChangeRealname = (e) => {
