@@ -171,8 +171,6 @@ class RequestCardContainer extends Component {
             "data": Request.titleData,
           }
           DetailQuestion.loadProposalType(SelectSaveData);
-          
-          console.log(Request.maincategory_id)
           // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
           if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
             Request.step_index = 6;
