@@ -34,8 +34,8 @@ class DetailQuestion {
     this.SelectChecked='';
     this.SelectId=null;
     this.proposal_type = 0;
-
   }
+  
   @action loadSelectFromTitle = async (m_index) => {
     await DetailQuestionAPI.loadSelect(m_index)
       .then(res => {

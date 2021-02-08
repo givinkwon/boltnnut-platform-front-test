@@ -151,6 +151,17 @@ class MobileStep3Container extends Component {
     }
   }
 
+  activeHandler=(idx)=>
+  {
+    const {arrowChecked} = this.state;
+    if(idx==arrowChecked)
+    {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
 
   detailUp = (type) => {
     const { showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
@@ -347,23 +358,12 @@ class MobileStep3Container extends Component {
                 볼트앤너트 전문 컨설턴트 이력서 확인하기
             </ConsultantHeader>
             <ConsultantImgBox>
-                
                 {this.ConsultantInfo.map((Info,idx) => (
                     <div style={{display:'flex',flexDirection:'column'}}>
-                        <img src={Info.Img}/>
-                        <Font15>{Info.Name}</Font15>
-                        <Font13 style={{color:'#86888c',textAlign:'center'}}>{Info.Job}</Font13>
+                        <ConsultantImg active={this.activeHandler(idx)} onClick={()=>{this.consultantDetailDown(idx)}} src={Info.Img}/>
+                        <Font15 active={this.activeHandler(idx)}>{Info.Name}</Font15>
+                        <Font13 active={this.activeHandler(idx)} style={{textAlign:'center'}}>{Info.Job}</Font13>
                         <img src={this.arrowHandler(idx)} onClick={()=>{this.consultantDetailDown(idx)}} style={{margin:'0 auto',marginTop:15}}/>
-                        {/* {showConsultantDrop == true ? (
-                            <>
-                                <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} style={{margin:'0 auto',marginTop:15}}/>
-                            </>
-                        ) : (
-                            <>
-                                <img src={DropUpArrow2} onClick={()=>{this.detailUp(2);}} style={{margin:'0 auto',marginTop:15}}/>
-                            </>
-                            )
-                        } */}
                     </div>
               ))}
             </ConsultantImgBox>
@@ -422,6 +422,12 @@ const ConsultantTextBox = styled.div`
   
 `
 
+const ConsultantImg = styled.img`
+  width:94px;
+  height:109px;
+  // opacity:0.5;
+  opacity: ${(props) => (props.active ? '0.2' : '1')};
+`
 const Font14 = styled(Content.FontSize14)`
   font-weight: normal;
   font-stretch: normal;
@@ -448,7 +454,8 @@ const Font15 = styled(Content.FontSize15)`
   font-style: normal;
   line-height: 1.6;
   letter-spacing: -0.38px;
-  color: #282c36;
+  // color: #282c36;
+  color: ${(props) => (props.active ? '#c6c7cc' : '#282c36')};
   white-space: pre-line;
   text-align:center;
 `
@@ -461,8 +468,9 @@ const ConsultantImgBox = styled.div`
   padding:38px 0 8px 0;
   >div >img:nth-of-type(1)
   {
-      width:94px;
-      height:109px;
+      // width:94px;
+      // height:109px;
+      // opacity: ${(props) => (props.active ? '0.2' : '1')};
   }
 `
 
@@ -503,8 +511,9 @@ const Font13 = styled(Content.FontSize13)`
   font-style: normal;
   line-height: 1.38;
   letter-spacing: -0.13px;
-  color: #282c36;
+  // color: #282c36;
   white-space: pre-line;
+  color: ${(props) => (props.active ? '#c6c7cc' : '#282c36')};
 `
 
 const Font18 = styled(Content.FontSize18)`
