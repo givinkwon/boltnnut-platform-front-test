@@ -88,7 +88,7 @@ class Step2Container extends React.Component {
         { return true; } else
         { return false; }
     };
-
+    console.log(DetailQuestion.title_list.results)
     return (
       <>
         <TitleContainer>
