@@ -83,7 +83,7 @@ class MobileStep2Container extends React.Component {
         <TitleContainer>
           <img src={ Qimage }/>
           {/* Array 문제로 DetailQuestion 형식 고쳤음. */}
-          <TitleQue>{DetailQuestion.title_list && DetailQuestion.title_list[DetailQuestion.index-1].question}</TitleQue>
+          <TitleQue>{DetailQuestion.title_list[DetailQuestion.index-1] && DetailQuestion.title_list[DetailQuestion.index-1].question}</TitleQue>
         </TitleContainer>
         <input value={DetailQuestion.index<8 ? DetailQuestion.SelectChecked : ManufactureProcess.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>

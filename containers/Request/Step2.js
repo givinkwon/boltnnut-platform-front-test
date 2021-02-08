@@ -88,12 +88,12 @@ class Step2Container extends React.Component {
         { return true; } else
         { return false; }
     };
-
+    console.log(DetailQuestion.title_list);
     return (
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
+           {DetailQuestion.title_list &&<TitleQue>{DetailQuestion.title_list[DetailQuestion.index-1] && DetailQuestion.title_list[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
         </TitleContainer>
         <input value={DetailQuestion.index<8 ? DetailQuestion.SelectChecked : ManufactureProcess.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>

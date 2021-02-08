@@ -74,3 +74,13 @@ export function deactivateUser(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+// Schedule 에서 이름, 회사명, 직책, 부서명 보내기
+
+export function patchClientInfo(req) {
+  return axios({
+    method: 'PATCH',
+    url: `${ROOT_URL}/client/${req.clientId}/`,
+    req: req.data
+  })
+}
