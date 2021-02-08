@@ -76,7 +76,7 @@ class Week extends Component {
       else if (occupied.includes(dayInfo.yearMonthDayFormat)) {
         className = "not-book";
       }
-      if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD")) {
+      if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") && Schedule.nowMoment.format('M') === dayInfo.getMonth) {
         className += "today";
         console.log(className);
         return (
@@ -118,7 +118,7 @@ class Calendar extends Component {
   moveMonth = (month) => {
     const { Schedule } = this.props;
     Schedule.nowMoment.add(month, 'M');
-    Schedule.setTodayDate(this.state.now.format("YYYY-MM"));
+    Schedule.setTodayDate(this.state.now.format("YYYY-MM-01 "));
     this.setState({
       now : Schedule.nowMoment,
     })
@@ -335,7 +335,7 @@ const CalendarContainer = styled.div`
     pointer-events: none;
     color: #c6c7cc;
   }
-  .today {
+  .date-weekday-labeltoday {
     color: #0933b3;
     > div {
       position: absolute;

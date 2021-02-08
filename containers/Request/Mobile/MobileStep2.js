@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import * as Title from 'components/Title';
 import 'intersection-observer';
 import DetailQuestion from '../../../stores/DetailQuestion';
-import ProductInfoContainer from '../ProductInfo';
+import MobileProductInfoContainer from '../../Request/Mobile/MobileProductInfo';
 import MobileRequestCardContainer from '../Mobile/MobileRequestCard';
 
 const Qimage = "/static/images/request/Step2/MobileQ.png";
@@ -17,7 +17,6 @@ class MobileStep2Container extends React.Component {
     const {Request}  = this.props;
     let fileName;
     if (e.currentTarget.files[0]) {
-      console.log(e.currentTarget.files[0])
       fileName = e.currentTarget.files[0].name;
       Request.setDrawFile(e.currentTarget.files[0]);
       DetailQuestion.SelectChecked = idx;
@@ -72,17 +71,19 @@ class MobileStep2Container extends React.Component {
 
     let activeHandler=(idx) =>
     {
-      console.log(idx===DetailQuestion.SelectChecked)
+      // console.log(idx===DetailQuestion.SelectChecked)
       if(idx===DetailQuestion.SelectChecked)
-      { return true; } else
-      { return false; }
+      { return true; } 
+      else
+      { 
+        return false; }
     };
-
     return (
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}</TitleQue>}
+          {/* Array 문제로 DetailQuestion 형식 고쳤음. */}
+          <TitleQue>{DetailQuestion.title_list[DetailQuestion.index-1] && DetailQuestion.title_list[DetailQuestion.index-1].question}</TitleQue>
         </TitleContainer>
         <input value={DetailQuestion.index<8 ? DetailQuestion.SelectChecked : ManufactureProcess.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>
@@ -122,7 +123,7 @@ class MobileStep2Container extends React.Component {
               )}
             )
           }
-          {DetailQuestion.index===8 && <ProductInfoContainer updater={this.props.ManufactureProcess.SelectChecked}/>}
+          {DetailQuestion.index===8 && <MobileProductInfoContainer updater={this.props.ManufactureProcess.SelectChecked}/>}
         </SelectContainer>
       </>
     );
@@ -148,6 +149,8 @@ const TitleContainer = styled.div`
   flex-direction: row;
   align-items: center;
   margin-top: 30px;
+  display: inline-flex;
+  justify-content: center;
 `
 const TitleQue = styled(Title.FontSize24)`
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -163,9 +166,10 @@ const TitleQue = styled(Title.FontSize24)`
 const SelectContainer = styled.div`
   width: 100%;
   margin-top: 30px;
-  // margin-left: 33px;
-  // height:374px;
   height: ${(props) => (props.index==8 ? "auto" : '374px')};
+  flex-direction: column;
+  display: flex;
+  align-items: center;
 `
 const Text = styled(Title.FontSize16)`
   font-weight: 500;
@@ -190,10 +194,10 @@ const Select = styled.button`
   margin-bottom: 20px;
   outline: 0;
   border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
-  &:hover {
-    border: solid 2px #0933b3;
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
-  }
+  // &:hover {
+  //   border: solid 2px #0933b3;
+  //   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
+  // }
   > input {
     width: 100%;
     height: 100%;

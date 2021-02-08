@@ -26,7 +26,7 @@ class MobileBanner2Container extends React.Component {
                       </ImgContainer>
                       <Body>
                           볼트앤너트 기술팀이 제작하신 금속가공, 금형/사출<br/>
-                          도면의 생산성을 검토하고 수정해드립니다.
+                          도면의 생산성을 무료로 검토하고 수정해드립니다.
                       </Body>
                   </Fade>
               </ContentContainer>

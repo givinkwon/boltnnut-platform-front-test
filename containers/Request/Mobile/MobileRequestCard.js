@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Observer from "@researchgate/react-intersection-observer";
 import NewButton from 'components/NewButton';
-import LogoSlider from "../LogoImageSlider";
+import MobileLogoImageSlider from './MobileLogoImageSlider';
 import * as DetailQuestionApi from "axios/DetailQuestion";
 import DetailQuestion from "stores/DetailQuestion";
 
@@ -20,10 +20,13 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import MobileStepContainer from '../../../components/MobileStep';
 
+import 'react-count-animation/dist/count.min.css';
+import AnimationCount from 'react-count-animation';
+
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 var titleData=[];
 
-@inject('Request', 'DetailQuestion')
+@inject('Request', 'DetailQuestion','ManufactureProcess')
 @observer
 class MobileRequestCardContainer extends Component {
   state = {
@@ -55,7 +58,7 @@ class MobileRequestCardContainer extends Component {
 
   componentDidUpdate() {
     const { targets,active } = this.state;
-    console.log(this.state);
+    // console.log(this.state);
     if (this.fullChecker(targets) == true && active == false) {
       this.setState({...this.state, active: true})
     } else if (this.fullChecker(targets) == false && active == true) {
@@ -71,6 +74,7 @@ class MobileRequestCardContainer extends Component {
         counter += 1
       }
     }
+    // console.log(counter);
     if (counter == buttonActiveCount) {
       return true
     } else {
@@ -89,15 +93,16 @@ class MobileRequestCardContainer extends Component {
         }
         break;
       case 2:
-        titleData.pop();
-        console.log(titleData);
+        Request.titleData.pop();
+        console.log(Request.titleData);
 
         if (DetailQuestion.prevPage.length > 0)
         {
-          if (DetailQuestion.index != 4)
-          {
             DetailQuestion.pageCount -= 1;
-          }
+            if (DetailQuestion.prevPage[DetailQuestion.prevPage.length-1] == 4) {
+              DetailQuestion.pageCount += 1;
+            }
+
           DetailQuestion.index = DetailQuestion.prevPage.pop();
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
           Request.percentage -= 14;
@@ -106,14 +111,13 @@ class MobileRequestCardContainer extends Component {
           Request.step_index = 1;
           Request.percentage -= 15;
         }
-
         break;
 
     }
   }
   nextButtonClick = () => {
-    const { Request, DetailQuestion } = this.props;
-
+    const { Request, DetailQuestion,ManufactureProcess } = this.props;
+    console.log(Request.step_index);
     switch(Request.step_index)
     {
       case 1:
@@ -123,8 +127,6 @@ class MobileRequestCardContainer extends Component {
         } else {
           try {
             Request.createRequest();
-            Request.step_index = 2;
-            Request.percentage += 15;
             DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
           } catch(e) {
             console.log(e);
@@ -134,33 +136,85 @@ class MobileRequestCardContainer extends Component {
       case 2:
         if(DetailQuestion.nextPage)
         {
-          titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
-          DetailQuestion.prevPage.push(DetailQuestion.index);
-          DetailQuestion.index = DetailQuestion.nextPage;
-          DetailQuestion.nextPage=null;
-          DetailQuestion.SelectChecked='';
-          if(DetailQuestion.index!=4)
+          if(DetailQuestion.index!=4 || DetailQuestion.nextPage==8)
           {
             DetailQuestion.pageCount += 1;
           }
+          Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          DetailQuestion.prevPage.push(DetailQuestion.index);
+          DetailQuestion.index = DetailQuestion.nextPage;
+          console.log(DetailQuestion.index);
+          DetailQuestion.nextPage=null;
+          DetailQuestion.SelectChecked='';
+
           DetailQuestion.loadSelectFromTitle(DetailQuestion.index);
         }
         else {
-          titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
+          
+          // console.log(Request.drawFile);
+          if(DetailQuestion.index==8)
+          {
+            const ManufactureProcessFormData = new FormData();
+            ManufactureProcessFormData.append("blueprint",Request.drawFile);
+            ManufactureProcessFormData.append("process",ManufactureProcess.SelectedItem.process);
+            ManufactureProcessFormData.append("detailProcess",ManufactureProcess.SelectedItem.id);
+            //기본정보입력에서 받은 의뢰서로 바꾸기
+            ManufactureProcessFormData.append("request",Request.created_request);
+            ManufactureProcess.saveSelect(ManufactureProcessFormData);
+            Request.titleData= Request.titleData.slice(0,3);
+          }
+          
           var SelectSaveData = {
             "request": Request.created_request,
-            "data": titleData,
+            "data": Request.titleData,
           }
-          DetailQuestionApi.saveSelect(SelectSaveData);
-          Request.step_index = 3;
+          console.log(Request.maincategory_id)
+          // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
+          if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
+            Request.step_index = 6;
+            break;
+          }
+          // 도면에서 카테고리가 실리콘/플라스틱이 아닌 경우
+          if(DetailQuestion.index == 8 && ManufactureProcess.SelectChecked != 1 ){
+            Request.step_index = 6;
+            break;
+          }
+          DetailQuestion.loadProposalType(SelectSaveData);
+          
+          Request.step_index = 3; 
         }
         Request.percentage += 14;
         break;
     }
   }
+  countCalc () {
+    const { Request} = this.props;
+    let result = 4997
+    //console.log(Request.select_big, Request.select_mid, Request.select_small)
+  
+    if(Request.select_big != null && Request.select_mid == null){
+        result = Request.select_big.id === 0 ?  4997 : 460 * (((Request.select_big.id)/5) + 4)
+    }
+    if(Request.select_big != null && Request.select_mid != null){
+        result = Request.select_big.id === 0 ?  4997 : 460 * (((Request.select_big.id)/5) + 4) - 260* ((Request.select_mid.id/50) + 5)
+    }
+    return result
+  }
+
   render() {
     const { active } = this.state;
     const { Request, DetailQuestion } = this.props;
+    // console.log(this.props.title)
+    const countSettings1 = {
+      start: 0,
+      count : this.countCalc(), 
+      duration: 6000,
+      decimals: 0,
+      useGroup: true,
+      animation: 'up',
+      width: 100
+    };
     return(
     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
         <Header>
@@ -171,10 +225,10 @@ class MobileRequestCardContainer extends Component {
         <ContentBox>
           {this.props.content}
         </ContentBox>
-        <MatchingText>요청하신 000 제품 개발에 최적화된 제조 파트너사를 매칭중입니다.</MatchingText>
-        {/* <LogoSlider/> */}
-        <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
-        <ButtonContainer>
+      <MatchingText>해당 의뢰에 적합한 &nbsp;<AnimationCount {...countSettings1}/>  개의 볼트앤너트 파트너사가 있습니다.</MatchingText>
+        <MobileLogoImageSlider/>
+        {this.props.title == "기본 정보 입력 1/2" ? (<SliderText>의뢰에 대해 이해할 수 있도록 기본 정보를 입력해주세요</SliderText>) : (<SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>)}
+         <ButtonContainer>
           <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
           <div style={{marginRight: 14}} />
           <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
@@ -259,8 +313,12 @@ const MatchingText = styled(Content.FontSize15)`
   font-style: normal;
   letter-spacing: -0.5px;
   color: #282c36;
-  text-align:center;
+  text-align: center;
   margin-bottom:20px;
+  display: flex;
+  > span {
+    color: #0933b3;
+  }
 `
 const ButtonContainer = styled.div`
   width: 100%;

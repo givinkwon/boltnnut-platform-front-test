@@ -30,19 +30,21 @@ class InputComponent extends React.Component {
 
   onChangeFile = (e) => {
     const {Request}  = this.props;
-    const fileName = e.currentTarget.files[0].name;
-    this.setState({
-      ...this.state,
-      file: e.currentTarget.files[0],
-      fileName: fileName,
-    })
+    if(e.currentTarget.files[0]){
+      const fileName = e.currentTarget.files[0].name;
+      this.setState({
+        ...this.state,
+        file: e.currentTarget.files[0],
+        fileName: fileName,
+      })
+    }
+
     Request.setCommonFile(e.currentTarget.files[0]);
   }
 
   render() {
     const { onChange, children, label, file, Request, ...props } = this.props
     const { fileName } = this.state;
-    console.log(this.props.width);
 
     if (!file) {
     return (
@@ -98,10 +100,10 @@ const InputBox = styled.div`
     float: right;
   }
   @media (min-width: 0px) and (max-width: 767.98px) { 
+    height: 100%;
     height: 34px;
     object-fit: contain;
     border-radius: 3px;
-    border: solid 1px #c6c7cc;
     background-color: #ffffff;
     > img {
       position: relative;
@@ -129,7 +131,7 @@ const Input = styled.div`
   margin-top: ${props => props.marginTop}px;
   color: #404040;
   font-weight: 400;
-  padding-left: 16px;
+  padding-left: 2.3%;
   :focus {
     outline: none;
   }
@@ -154,11 +156,11 @@ const Input = styled.div`
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
+    padding-left: 2.3% !important;
   > input {
     width: 100%;
     height: 100%;
     border: none;
-    padding: 0 !important;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -177,6 +179,7 @@ const Input = styled.div`
       letter-spacing: -0.35px;
       text-align: left;
       color: #999999;
+      padding-left: 0;
     }
   }
 `
@@ -187,8 +190,20 @@ const FileText = styled(Content.FontSize18)`
   letter-spacing: -0.18px;
   text-align: left;
   color: #c6c7cc;
+  padding-top: 10px;
   display: flex;
   align-items: center;
   padding-left: 15px;
   position: absolute;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+      font-size: 14px !important;
+      padding-top: 0px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.43;
+      letter-spacing: -0.35px;
+      text-align: left;
+      color: #999999;
+  }
 `

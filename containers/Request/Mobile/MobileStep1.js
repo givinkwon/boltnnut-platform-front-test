@@ -90,14 +90,21 @@ class MobileStep1Container extends React.Component {
       {label: '12 개월', value: 12},
     ];
     const costArray = [
-      {label: '1000 만원 이하', value: '1000 만원 이하'},
-      {label: '1000 만원 ~ 3000 만원', value: '1000 만원 ~ 3000 만원'},
-      {label: '3000 만원 이상', value: '3000 만원 이상'}
+      {label: '100 만원 이하', value: '100 만원 이하'},
+      {label: '100 만원 ~ 300 만원', value: '100 만원 ~ 300 만원'},
+      {label: '300 만원 ~ 500 만원', value: '300 만원 ~ 500 만원'},
+      {label: '500 만원 ~ 1000 만원', value: '500 만원 ~ 1000 만원'},
+      {label: '1000 만원 ~ 2000 만원', value: '1000 만원 ~ 2000 만원'},
+      {label: '2000 만원 ~ 3000 만원', value: '2000 만원 ~ 3000 만원'},
+      {label: '3000 만원 ~ 5000 만원', value: '3000 만원 ~ 5000 만원'},
+      {label: '5000 만원 ~ 1 억원', value: '5000 만원 ~ 1 억원'},
+      {label: '1 억원 ~ 2 억원', value: '1 억원 ~ 2 억원'},
+      {label: '2 억원 이상', value: '2 억원 이상'}
     ];
      return(
      <div>
        <Header>
-         관련 분야
+         의뢰 분야
        </Header>
        <SelectRow>
         <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>
@@ -125,7 +132,7 @@ class MobileStep1Container extends React.Component {
           />
         </SelectRow>
           <Header style={{marginTop: 30}}>
-            개발 기간
+            희망 개발 기간
           </Header>
         <SelectRow style={{width: 180}}>
 
@@ -142,7 +149,7 @@ class MobileStep1Container extends React.Component {
     const {Request, Partner} = this.props;
 
     return(
-     <>
+     <div>
        <Header>
          제품명
        </Header>
@@ -171,7 +178,7 @@ class MobileStep1Container extends React.Component {
           />
        </SelectRow>
        <Header style={{marginTop: 30}}>
-        도면
+        의뢰 관련 파일
        </Header>
 
        <SelectRow style={{width: "100%"}}>
@@ -179,7 +186,7 @@ class MobileStep1Container extends React.Component {
             file={true}
           />
        </SelectRow>
-     </>
+     </div>
     );
   }
   contenthandler = () => {
@@ -187,9 +194,9 @@ class MobileStep1Container extends React.Component {
     const content1  = this.content1();
     const content2 = this.content2();
     return (
-      <div style={{width: "100%", height:470}}>
+      <RequestInfoBox>
         { page == 1 ? ( content1 ) : ( content2 ) }
-      </div>
+      </RequestInfoBox>
     )
   }
 
@@ -228,4 +235,16 @@ const Select = styled(SelectComponent)`
     border-radius: 3px;
     border: solid 1px #c6c7cc;
     background-color: #ffffff;
+`
+const RequestInfoBox = styled.div`
+  width: 100%;
+  height: 470px;
+  display: inline-flex;
+  justify-content: center;
+  > div {
+    width: 375px;
+    @media (min-width: 0px) and (max-width: 375px) {
+      width: 100%;
+    }
+  }
 `

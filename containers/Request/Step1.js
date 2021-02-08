@@ -110,7 +110,6 @@ class Step1Container extends React.Component {
             희망 예산
         </Header>
         <SelectRow style={{width: 380}}>
-
           <input style={{display: 'none'}} value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
           <Select
             styles={customStyles} options={costArray} value={Request.input_price}
@@ -120,8 +119,7 @@ class Step1Container extends React.Component {
           <Header style={{marginTop: 30}}>
             개발 기간
           </Header>
-        <SelectRow style={{width: 180}}>
-
+        <SelectRow style={{width: 380}}>
           <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/>
           <Select
             styles={customStyles} options={dueArray} value={Request.input_day}
@@ -177,7 +175,7 @@ class Step1Container extends React.Component {
     const content1  = this.content1();
     const content2 = this.content2();
     return (
-      <div style={{height:470}}>
+      <div style={{width: '100%', height: 470}}>
         { page == 1 ? ( content1 ) : ( content2 ) }
       </div>
     )
@@ -210,6 +208,20 @@ const SelectRow = styled.div`
   width: 100%;
   display: flex;
   margin-top: 10px;
+  > span {
+    margin-right: 23px;
+    margin-left: 23px;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: -0.24px;
+    text-align: left;
+    color: #282c36;
+  }
 `
 const Select = styled(SelectComponent)`
   width: 400px;

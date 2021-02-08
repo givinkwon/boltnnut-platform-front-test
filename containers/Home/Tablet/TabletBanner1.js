@@ -15,11 +15,11 @@ class TabletBanner1Container extends React.Component {
         <ContentContainer>
           <Fade bottom>
             <Head>자동 견적 알고리즘</Head>
-            <Main><span>1초만에</span> 내 제품<br/>가견적 받기</Main>
+            <Main><span>1초만에</span> 제조 의뢰<br/>가견적 받기</Main>
             <ImageContainer>
               <img src={"/static/images/Home/Mobile/MobileBanner1/MobileBanner1Img.png"}/>
             </ImageContainer>
-            <Content>{ProjectCount*3+997}건의 데이터에 기반한 자동견적 알고리즘이<br/>평균 2일의 견적 시간을 한 번에 해결해 드립니다.</Content>
+            <Content>{ProjectCount}건의 데이터에 기반한 자동견적 알고리즘이<br/>평균 2일의 견적 시간을 한 번에 해결해 드립니다.</Content>
           </Fade>
         </ContentContainer>
       </Background>

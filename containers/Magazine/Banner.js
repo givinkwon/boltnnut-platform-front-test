@@ -11,8 +11,8 @@ class BannerConatiner extends React.Component {
     return (
       <Banner>
         <Container>
-          <Text.FontSize62 color={'#0a2165'}>매거진</Text.FontSize62>
-          <Text.FontSize32 color={'#191919'}>볼트앤너트의 다양한 이야기를 만나보세요.</Text.FontSize32>
+          <Text.FontSize62 color={'#0a2165'}>제조 인사이트</Text.FontSize62>
+          <Text.FontSize32 color={'#191919'}>제조에 도움이 되는 지식들을 만나보세요.</Text.FontSize32>
         </Container>
       </Banner>
     )
