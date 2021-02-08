@@ -72,16 +72,10 @@ class MobileStep2Container extends React.Component {
 
     let activeHandler=(idx) =>
     {
-<<<<<<< HEAD
-      console.log(idx===DetailQuestion.SelectChecked)
-      if(idx===DetailQuestion.SelectChecked)
-      { return true; } else
-=======
       // console.log(idx===DetailQuestion.SelectChecked)
       if(idx===DetailQuestion.SelectChecked)
       { return true; } 
       else
->>>>>>> 0f509cca18043a293733271caa9449ad7638d8ac
       { return false; }
     };
     return (
