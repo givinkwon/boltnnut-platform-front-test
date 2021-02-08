@@ -86,9 +86,10 @@ export function deletePortfolio(req) {
 export function getNextPage(req) {
   return axios({
     method: 'GET',
-    url: req.nextUrl[4] === 's'
-      ? req.nextUrl
-      : StringUtils.insert(req.nextUrl, 's', 4),
+    url: req.nextUrl,
+    // url: req.nextUrl[4] === 's'
+    //   ? req.nextUrl
+    //   : StringUtils.insert(req.nextUrl, 's', 4),
     headers: req.headers ? req.headers : null,
   })
 }
@@ -96,9 +97,10 @@ export function getNextPage(req) {
 export function getNextJustPage(req) {
   return axios({
     method: 'GET',
-    url: req.nextUrl[4] === 's'
-      ? req.nextUrl
-      : StringUtils.insert(req.nextUrl, 's', 4),
+    url: req.nextUrl,
+    // url: req.nextUrl[4] === 's'
+    //   ? req.nextUrl
+    //   : StringUtils.insert(req.nextUrl, 's', 4),
     headers: req.headers ? req.headers : null,
   })
 }
@@ -234,3 +236,20 @@ export function getClient(id, req) {
     headers: req.headers ? req.headers : null,
   })
 }
+
+export function getMyPartner() {
+  return axios({
+    method: 'GET',
+    url: `${ROOT_URL}/randompartner/`
+  })
+}
+
+export function getRandomPartner(req) {
+  return axios({
+    method: 'POST',
+    url: `${ROOT_URL}/partner/category/`,
+    data: req.data ? req.data : null,
+  })
+}
+
+

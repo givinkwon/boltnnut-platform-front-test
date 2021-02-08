@@ -10,7 +10,7 @@ import ExpertContainer from "./Expert";
 
 class FAQConatiner extends React.Component {
   state = {
-    tab: 0,
+    tab: 1,
   };
   setTab = (val) => {
     this.setState({ tab: val });
@@ -29,14 +29,12 @@ class FAQConatiner extends React.Component {
   }
   render() {
     const { tab } = this.state;
-
     return (
       <>
-        <BannerContainer tab={tab} />
+        {/*<BannerContainer tab={tab} />*/}
         <TabContainer tab={tab} setTab={this.setTab} />
         {tab === 1 && <GeneralContainer />}
         {tab === 2 && <ClientContainer />}
-        {tab === 3 && <ExpertContainer />}
       </>
     );
   }

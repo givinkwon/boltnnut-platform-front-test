@@ -38,6 +38,31 @@ class Proposal {
 	@observable select_saves = []
 	@observable select_saves_next = null
 
+	//견적서(규석)
+	@observable estimateData = []
+	@observable estimate_year='';
+	@observable estimate_month='';
+	@observable estimate_day='';
+	@observable estimate_price='';
+
+	@action loadEstimateInfo = async (index) => {
+		await ProposalAPI.getEstimateInfo(index)
+			.then(res => {
+					this.estimateData = res.data;
+					console.log(res.data)
+				}
+			)
+		this.setEstimateInfo();
+	};
+
+	@action setEstimateInfo=()=>
+	{
+		this.estimate_year= this.estimateData.createAt.split('-')[0];
+		this.estimate_month= this.estimateData.createAt.split('-')[1];
+		this.estimate_day= this.estimateData.createAt.split('-')[2].substring(0,2);
+		this.estimate_price = this.estimateData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+	};
+
     @action setCategory = (e) => {
 		this.category = e.target.value
 		console.log('category: ' + this.category)
@@ -127,7 +152,6 @@ class Proposal {
 		this.projects_prev = data.previous
 		this.projects_next = data.next
 		this.projects_count = data.count
-
 		this.projects.forEach(project => {
 			if(project.request_set.length != 0) {
 				this.requests.push(project.request_set[0])
@@ -353,6 +377,18 @@ class Proposal {
           console.log(e)
           console.log(e.response)
         }
+			})
+	}
+
+	//프로젝트만 로드
+	@action loadProjects = () =>{
+		ProposalAPI.getMyProject()
+			.then((res) => {
+				this.projects_count = res.data.count*3+997
+			})
+			.catch(e => {
+				console.log(e);
+				console.log(e.response)
 			})
 	}
 
@@ -609,6 +645,8 @@ class Proposal {
 		// 0이면 false, 1이면 true
 		return filtered.length !== 0
 	}
+
+
 }
 
 export default new Proposal()

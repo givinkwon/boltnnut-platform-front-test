@@ -36,7 +36,6 @@ class PartnerDetailContainer extends Component {
     let answer = null
     let partner = null
     if(answerId) {
-      console.log(answerId)
       answer = Answer.getAnswerById(answerId)
     }
     if(answer) {

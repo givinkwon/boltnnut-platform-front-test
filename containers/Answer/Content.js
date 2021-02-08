@@ -25,7 +25,6 @@ class FindExperctConatiner extends React.Component {
 
   updateDimensions = () => {
     this.setState({ width: window.innerWidth });
-    console.log('window width: ' + window.innerWidth)
   };
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
@@ -42,7 +41,6 @@ class FindExperctConatiner extends React.Component {
     this.slider.slickPrev()
   }
   toDetail = (item) => {
-    console.log("toDetail")
     if (item.apply_count === 0) {
       alert('볼트앤너트 파트너스가 의뢰서를 분석 중입니다. 제안서가 곧 도착합니다');
       return;
@@ -164,10 +162,7 @@ class FindExperctConatiner extends React.Component {
                       }*/}
 
                       <p className='footer'>
-
                           {item.apply_count}개의 제안서 확인
-
-
                       </p>
                     </Card>
                   </Item>

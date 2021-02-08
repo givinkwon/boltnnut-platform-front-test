@@ -9,6 +9,8 @@ import ScrollToTop from "components/ScrollToTop";
 import stores from "stores";
 import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
 import PrepareModal from "../containers/Home/PrepareModal";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
@@ -84,14 +86,13 @@ class MyApp extends App {
   componentDidMount() {
     const { Home } = this.props
     const userAgent = window.navigator.userAgent;
-    console.log(userAgent)
-  
+
     // 네이버 애널리틱스
     this.setState({
       location:window.location,
     })
     if (!window.wcs_add) window.wcs_add = {};
-    window.wcs_add["wa"] = "a888b15a2864e";
+    window.wcs_add["wa"] = "a6e52773f17288";
     if (window.wcs) {
       window.wcs_do();
     }
@@ -121,7 +122,7 @@ class MyApp extends App {
   // 네이버애널리틱스
   componentDidUpdate() {
     if (!window.wcs_add) window.wcs_add = {};
-    window.wcs_add["wa"] = "a888b15a2864e";
+    window.wcs_add["wa"] = "a6e52773f17288";
     if (window.wcs) {
       window.wcs_do();
     }
@@ -131,14 +132,6 @@ class MyApp extends App {
     return (
       <ScrollToTop>
         <GlobalStyle />
-        {/*임시 오픈용 모달*/}
-        {/*
-            {!this.state.ie_user && <PrepareModal
-                                    open= {this.state.prepare}
-                                    handleClose={this.closeModal}/>}
-
-        */}
-        {/*브라우저 체크 모달*/}
         <CheckBrowserModal
           open={!this.state.modal_shown && this.state.ie_user}
           handleClose={this.closeModal}
