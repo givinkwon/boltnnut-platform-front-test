@@ -295,7 +295,6 @@ class Step3Container extends Component {
            : (<TaskBarContainer/>)}
           </DetailContainer>
 
-
         </HeaderBackground>
 
         <ContentBox>

@@ -17,7 +17,6 @@ class MobileStep2Container extends React.Component {
     const {Request}  = this.props;
     let fileName;
     if (e.currentTarget.files[0]) {
-      console.log(e.currentTarget.files[0])
       fileName = e.currentTarget.files[0].name;
       Request.setDrawFile(e.currentTarget.files[0]);
       DetailQuestion.SelectChecked = idx;
@@ -52,6 +51,7 @@ class MobileStep2Container extends React.Component {
         DetailQuestion.nextPage = null;
         DetailQuestion.SelectChecked='';
         DetailQuestion.SelectId = null;
+        console.log("RAKJSBKABSKCBJKSBC");
       }
       else
       {
@@ -67,25 +67,23 @@ class MobileStep2Container extends React.Component {
         return true;
       } else {
         return false;
-        console.log("바뀜 ㅋㅋㅋㅋ")
       }
     }
 
-    let activeHandler = (idx) =>
+    let activeHandler=(idx) =>
     {
-      if (idx===DetailQuestion.SelectChecked) {
-        return true;
-      }
-      else {
-        return false;
-      }
+      // console.log(idx===DetailQuestion.SelectChecked)
+      if(idx===DetailQuestion.SelectChecked)
+      { return true; } 
+      else
+      { return false; }
     };
-
     return (
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-          {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}</TitleQue>}
+          {/* Array 문제로 DetailQuestion 형식 고쳤음. */}
+          <TitleQue>{DetailQuestion.title_list && DetailQuestion.title_list[DetailQuestion.index-1].question}</TitleQue>
         </TitleContainer>
         <input value={DetailQuestion.index<8 ? DetailQuestion.SelectChecked : ManufactureProcess.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>
@@ -218,6 +216,7 @@ const Select = styled.button`
   }
 `
 const FileSelect = styled.div`
+  border: none;
   width: 686px;
   height: 46px;
   background-color: #ffffff;
@@ -229,10 +228,10 @@ const FileSelect = styled.div`
   margin-bottom: 20px;
   outline: 0;
   border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
-  //&:hover {
-  //  border: solid 2px #0933b3;
-  //  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
-  //}
+  &:hover {
+    border: solid 2px #0933b3;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
+  }
   > input {
     width: 100%;
     height: 100%;
