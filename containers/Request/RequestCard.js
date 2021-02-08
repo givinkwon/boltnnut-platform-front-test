@@ -75,7 +75,6 @@ class RequestCardContainer extends Component {
         counter += 1
       }
     }
-    console.log(counter);
     if (counter == buttonActiveCount) {
       return true
     } else {
@@ -167,7 +166,6 @@ class RequestCardContainer extends Component {
             Request.titleData= Request.titleData.slice(0,3);
           }
           
-          console.log(Request.titleData);
           var SelectSaveData = {
             "request": Request.created_request,
             "data": Request.titleData,
@@ -184,7 +182,6 @@ class RequestCardContainer extends Component {
             break;
           }
           DetailQuestion.loadProposalType(SelectSaveData);
-          
           Request.step_index = 3; 
         }
         Request.percentage += 14;
@@ -234,7 +231,6 @@ class RequestCardContainer extends Component {
         <ButtonContainer>
           <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
           <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
-          {/* <NewButton active={ true } onClick={ this.nextButtonClick }>다음</NewButton> */}
         </ButtonContainer>
       </Card>
     )
@@ -275,13 +271,13 @@ const Header = styled(Content.FontSize32)`
   object-fit: contain;
 `
 const ContentBox = styled.div`
-  // height: calc(46.3%);
-  
   margin-right: 5.4%;
   margin-left: 5.4%;
   margin-top: 4%;
   display: flex;
   flex-direction: column;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+  }
 `
 
 const CustomSlider = withStyles({

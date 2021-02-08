@@ -142,7 +142,7 @@ class MobileStep1Container extends React.Component {
     const {Request, Partner} = this.props;
 
     return(
-     <>
+     <div>
        <Header>
          제품명
        </Header>
@@ -179,7 +179,7 @@ class MobileStep1Container extends React.Component {
             file={true}
           />
        </SelectRow>
-     </>
+     </div>
     );
   }
   contenthandler = () => {
@@ -187,9 +187,9 @@ class MobileStep1Container extends React.Component {
     const content1  = this.content1();
     const content2 = this.content2();
     return (
-      <div style={{width: "100%", height:470}}>
+      <RequestInfoBox>
         { page == 1 ? ( content1 ) : ( content2 ) }
-      </div>
+      </RequestInfoBox>
     )
   }
 
@@ -228,4 +228,16 @@ const Select = styled(SelectComponent)`
     border-radius: 3px;
     border: solid 1px #c6c7cc;
     background-color: #ffffff;
+`
+const RequestInfoBox = styled.div`
+  width: 100%;
+  height: 470px;
+  display: inline-flex;
+  justify-content: center;
+  > div {
+    width: 375px;
+    @media (min-width: 0px) and (max-width: 375px) {
+      width: 100%;
+    }
+  }
 `

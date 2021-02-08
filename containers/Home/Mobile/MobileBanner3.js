@@ -25,15 +25,15 @@ class MobileBanner3Container extends React.Component {
               AI 제조사 매칭 알고리즘
             </Header>
             <Middle>
-              5000여개의 제조사 중<br/>
-              딱 맞는 <p>전문가</p>를 매칭
+            4933개 파트너사 중 <br/>
+              딱 맞는 전문가를 매칭
             </Middle>
             <div>
               <img src={image1} style={{ width: 347, height: 230,borderRadius:7}} />
             </div>
             <Body>
-              {ProjectCount}개 프로젝트 데이터를 학습한 AI 매칭<br />
-              알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
+            {ProjectCount}개 프로젝트 데이터를 학습한 AI 매칭 알고리즘이<br/>
+                내 의뢰의 전문가를 큐레이션해드립니다.
             </Body>
           </div>
 
