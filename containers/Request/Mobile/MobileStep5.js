@@ -3,11 +3,38 @@ import styled from "styled-components";
 import { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import moment from 'moment';
+import { postSchedule } from "../../../axios/Schedule";
 const BusinessCard = "/static/images/request/Step5/명함.png";
 
 @inject("Schedule")
 @observer
 class MobileStep5Container extends Component {
+  state = {
+    name: null,
+    company: null,
+    position: null,
+    department: null
+  }
+
+  onChangeName = (e) => {
+    this.setState({...this.state, name: e.currentTarget.value})
+  }
+  onChangeCompany = (e) => {
+    this.setState({...this.state, company: e.currentTarget.value})
+  }
+  onChangePosition = (e) => {
+    this.setState({...this.state, position: e.currentTarget.value})
+  }
+  onChangeDepartment = (e) => {
+    this.setState({...this.state, department: e.currentTarget.value})
+    console.log(this.state);
+  }
+  submitUpdate = () => {
+    const { Schedule } = this.props;
+    let req = this.state;
+    console.log("aa")
+    Schedule.updateClientInfo(req);
+  }
   render() {
     moment.locale('ko');
     const { Schedule } = this.props;
@@ -32,21 +59,21 @@ class MobileStep5Container extends Component {
         </Text>
         <InputBox>
           <span>이름</span>
-          <input placeholder={"이름을 입력해주세요."}/>
+          <input onChange = {this.onChangeName} placeholder={"이름을 입력해주세요."}/>
         </InputBox>
         <InputBox>
           <span>회사명</span>
-          <input placeholder={"회사명을 입력해주세요."}/>
+          <input onChange = {this.onChangeCompany} placeholder={"회사명을 입력해주세요."}/>
         </InputBox>
         <InputBox>
           <span>직책</span>
-          <input placeholder={"직책을 입력해주세요."}/>
+          <input onChange = {this.onChangePosition} placeholder={"직책을 입력해주세요."}/>
         </InputBox>
         <InputBox>
           <span>부서명</span>
-          <input placeholder={"부서명을 입력해주세요."}/>
+          <input onChange = {this.onChangeDepartment} placeholder={"부서명을 입력해주세요."}/>
         </InputBox>
-        <HomeButton>제출 하기</HomeButton>
+        <HomeButton onClick = {this.submitUpdate}>제출 하기</HomeButton>
       </Card>
     )
   }
