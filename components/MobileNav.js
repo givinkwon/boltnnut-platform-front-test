@@ -132,7 +132,7 @@ class MobileNav extends React.Component {
                   <Logo src={logo_ic} onClick={() => Router.push("/")} style={{float:'left'}}/>
                   <img src={ x_ic } style={{float: 'right'}}/>
                 </div>
-                <div>내 제품 제작 비용 지금 바로 전문가를 만나 보세요.</div>
+                <div>내 제조 의뢰 견적과 전문 제조사를 바로 만나 보세요.</div>
                 <FreeButton onClick={() => Router.push("/request")}>
                   <span>지금 무료 가견적 받기</span>
                 </FreeButton>
