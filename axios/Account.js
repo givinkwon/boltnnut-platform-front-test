@@ -77,10 +77,10 @@ export function deactivateUser(req) {
 
 // Schedule 에서 이름, 회사명, 직책, 부서명 보내기
 
-export function patchClientInfo(req) {
+export function patchClientInfo(req, id) {
   return axios({
     method: 'PATCH',
-    url: `${ROOT_URL}/client/${req.clientId}/`,
-    req: req.data
+    url: `${ROOT_URL}/client/${id}/`,
+    data: req
   })
 }
