@@ -18,7 +18,9 @@ class DetailQuestion {
     this.reset()
     await DetailQuestionAPI.loadTitle()
       .then(res => {
-          this.title_list = res.data;
+          this.title_list = res.data.results.sort(function (a,b) {
+            return a['id'] - b['id'];
+          });
         }
       )
   };
@@ -37,7 +39,7 @@ class DetailQuestion {
   @action loadSelectFromTitle = async (m_index) => {
     await DetailQuestionAPI.loadSelect(m_index)
       .then(res => {
-          this.select = res.data;
+        this.select = res.data;
         }
       )
   };
