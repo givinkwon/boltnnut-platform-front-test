@@ -70,8 +70,8 @@ class Step3Container extends Component {
   state = {
     percentage: 100,
     showEstimateDrop:true,
-    // showEstimateDetail:'none',
-    showEstimateDetail:true,
+    showEstimateDetail:'none',
+    // showEstimateDetail:true,
     showConsultantDrop: true,
     showConsultantDetail: 'none'
   }

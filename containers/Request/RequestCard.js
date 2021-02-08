@@ -170,6 +170,7 @@ class RequestCardContainer extends Component {
             "request": Request.created_request,
             "data": Request.titleData,
           }
+          DetailQuestion.loadProposalType(SelectSaveData);
           console.log(Request.maincategory_id)
           // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
           if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
@@ -181,7 +182,7 @@ class RequestCardContainer extends Component {
             Request.step_index = 6;
             break;
           }
-          DetailQuestion.loadProposalType(SelectSaveData);
+          
           Request.step_index = 3; 
         }
         Request.percentage += 14;
