@@ -2,9 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import * as Content from "components/Content";
+import { inject, observer } from "mobx-react";
 
 const Logo1 = 'static/images/request/LogoImageSlider/logo1.png';
+
+@inject('Request')
+@observer
 class EstimateLogoSlider extends React.Component {
+    
   render() {
     const SlideSettings = {
         dots: false,
@@ -13,110 +18,30 @@ class EstimateLogoSlider extends React.Component {
         slidesToShow: 6,
         slidesToScroll: 1,
         draggable: true,
-        rows:2
+        rows:2,
+        arrows:false
       };
-    
+    const { Request } = this.props;  
     return (
       <ItemBox>
         <StyledSlider {...SlideSettings}>
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>     
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div> 
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>    
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>
-            <div>
-                <Item>
-                    <ImgBox>
-                        <img src={Logo1}/>
-                    </ImgBox>
-                </Item>
-            </div>  
+        {Request.random_partner_list && Request.random_partner_list.map((item, idx) => {
+              // console.log(item)
+              return (                
+                <>
+                <div>
+                    <Item>
+                        <ImgBox>
+                            <img src={item.partnerLogo}/>
+                        </ImgBox>
+                    </Item>
+                </div>
+                </>
+                )
+                }
+                )
+            }
+            
         </StyledSlider>
       </ItemBox>
     )
@@ -143,10 +68,11 @@ const Item=styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  width: 122px;
-  height: 122px;
+  width: 105px;
+  height: 105px;
   border-radius: 10px;
-  box-shadow: 0 3px 6px 0 gray;
+  box-shadow: 0 1px 3px 0 gray;
+  margin-top:11px;
 `
 
 const TextBox=styled.div`
@@ -168,8 +94,8 @@ const HashTag = styled(Content.FontSize15)`
 const ImgBox=styled.div`
   
 //    padding-top:20px;
-   width:100px;
-   height:100px;
+   width:86px;
+   height:86px;
 //    margin:0 auto;
    >img
    {

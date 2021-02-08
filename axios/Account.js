@@ -41,7 +41,7 @@ export function partnerSignup(req) {
 export function sendPassword(req) {
   return axios({
     method: 'POST',
-    url: `${ROOT_URL}/users/password/email/`,
+    url: `${ROOT_URL}/users/password/phone/`,
     data: req.data,
   });
 }
@@ -73,4 +73,14 @@ export function deactivateUser(req) {
     data: req.data,
     headers: req.headers ? req.headers : null,
   });
+}
+
+// Schedule 에서 이름, 회사명, 직책, 부서명 보내기
+
+export function patchClientInfo(req, id) {
+  return axios({
+    method: 'PATCH',
+    url: `${ROOT_URL}/client/${id}/`,
+    data: req
+  })
 }

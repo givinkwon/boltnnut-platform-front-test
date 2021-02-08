@@ -11,6 +11,10 @@ import { inject, observer } from "mobx-react";
 
 import MobileStep1Container from "./MobileStep1";
 import MobileStep2Container from "./MobileStep2";
+import MobileStep3Container from "./MobileStep3";
+import MobileStep4Container from "./MobileStep4";
+import MobileStep5Container from "./MobileStep5";
+import MobileStep6Container from "./MobileStep6";
 
 import MobileRequestCardContainer from "./MobileRequestCard";
 
@@ -25,8 +29,10 @@ class MobileRequestContainer extends React.Component {
           <Containerv1>
             { Request.step_index == 1 && <MobileStep1Container page={Request.step1_index} />}
             { Request.step_index == 2 && <MobileStep2Container />}
-            {/*{ Request.step_index == 3 && <Step3Container />}*/}
-            {/*{ Request.step_index == 4 && <Step4Container />}*/}
+            { Request.step_index == 3 && <MobileStep3Container />}
+            { Request.step_index == 4 && <MobileStep4Container />}
+            { Request.step_index == 5 && <MobileStep5Container />}
+            { Request.step_index == 6 && <MobileStep6Container />}
           </Containerv1>
         </Background>
       </div>

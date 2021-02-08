@@ -7,7 +7,6 @@ import Router from "next/router";
 import moment from 'moment';
 
 class Request {
-  @observable client_id = -1;
   @observable select_reqs = [];
 
   @observable id = null;
@@ -22,6 +21,7 @@ class Request {
   @observable big_category_list = [];
   @observable mid_category_list = [];
   @observable small_category_list = [];
+  @observable maincategory_id = '';
 
   @observable q_big = "";
   @observable q_mid = "";
@@ -52,7 +52,6 @@ class Request {
   @observable input_phone = "";
 
   @observable input_content = "";
-
   @observable input_day = null; // 개발기간
   @observable input_price = null; // 가격
   @observable common_file = null; // 첨부 파일
@@ -61,7 +60,8 @@ class Request {
   @observable step_index = 1;
   @observable step1_index = 1;
   @observable drawFile = null;
-  @observable percentage = 0
+  @observable percentage = 0;
+  @observable titleData = [];
 
   // Client
   @observable client_id = null;
@@ -70,7 +70,12 @@ class Request {
   // Partner
   @observable random_partner_list = null;
 
+  //type
+  @observable proposal_type = 1;
+
   @action reset = () => {
+    this.titleData = [];
+    this.percentage = 0;
     this.step_index = 1;
     this.step1_index = 1;
     this.input_name = "";
@@ -78,6 +83,10 @@ class Request {
     this.input_day = null;
     this.input_price = null;
     this.common_file = null;
+    this.select_big = null;
+    this.select_mid = null;
+    this.random_partner_list = [];
+    this.maincategory_id = '';
   }
   @action setInputName = (val) => {
     this.input_name = val;
@@ -113,6 +122,12 @@ class Request {
     this.drawFile = obj;
   }
   @action createRequest = () => {
+    var cellphoneValid = /^\d{3}-\d{3,4}-\d{4}$/;
+    var homephoneValid = /^\d{2,3}-\d{3,4}-\d{4}$/;
+    if (!cellphoneValid.test(this.input_phone) || !homephoneValid.test(this.input_phone)){
+      alert('전화번호가 올바르지 않습니다. 재확인해주세요.')
+      return;
+    }
     var formData = new FormData();
 
     formData.append("product", 45);
@@ -131,6 +146,9 @@ class Request {
       this.created_request = res.data.id;
       this.client_id = res.data.clientId;
       this.has_email = res.data.hasEmail;
+      this.step_index = 2;
+      this.percentage += 15;
+      console.log(this.client_id);
     })
     .catch(error => {
       alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');
@@ -141,7 +159,6 @@ class Request {
     CategoryAPI.getMainCategory()
       .then((res) => {
         this.big_category_list = res.data.results;
-
         for(let i = 0; i < this.big_category_list.length; i++) {
           for(let j = 0; j < this.big_category_list[i].category_set; j++) {
             this.initial_contents.push(this.big_category_list[i].category_set[j].subclass_set)
@@ -153,7 +170,7 @@ class Request {
         console.log(e);
         console.log(e.response);
       });
-    console.log(this.big_category_list)
+
     this.reset();
   };
   @action setBigCategory = (obj) => {
@@ -184,6 +201,7 @@ class Request {
       contents = [...contents, ...item.subclass_set];
     }
     this.contents = contents;
+    this.maincategory_id = this.select_big.category_set[0].id
     window.history.pushState("", "", `/request`);
   };
   @action setMidCategory = (obj) => {
@@ -250,7 +268,6 @@ class Request {
   };
 
   @action loadRandomPartner = () =>{
-    //console.log(this.select_mid.id)
     const req = {
       data: {
         category: this.select_mid.id,
@@ -258,10 +275,11 @@ class Request {
         count: 20
       },
     };
-    console.log(req);
 		PartnerAPI.getRandomPartner(req)
 			.then((res) => {
-        this.random_partner_list = res.data.results;
+        console.log("받은 리스폰스",res);
+        this.random_partner_list = res.data.data;
+        console.log(this.random_partner_list)
 			})
 			.catch((e) => {
         console.log(e);

@@ -16,7 +16,7 @@ class TabletBanner9Container extends React.Component {
           <Fade bottom>
             <div>
               <Header>
-                내 제품의 제작 비용과 <br/>
+              내 제조 의뢰 견적과<br/>
                 전문 제조사를 바로 만나보세요.
               </Header>
               <Buttonv1 style={{margin:'0 auto', marginTop: 20,marginBottom:56,fontWeight:'bold'}} onClick={() => Router.push("/request")}>

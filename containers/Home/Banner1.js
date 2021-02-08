@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import Fade from 'react-reveal/Fade';
 import { inject, observer } from "mobx-react";
 
+const BannerImg = "static/images/Home/Banner1/Banner1_img.png";
+
 @inject('Proposal','Partner')
 @observer
 class Banner1Container extends React.Component {
@@ -18,13 +20,7 @@ class Banner1Container extends React.Component {
             <Image>
               <ImageContainer>
                 <div>
-                  <img src={ "/static/images/Home/Banner1/48시간.png" }/>
-                </div>
-                <div>
-                  <img style={{margin: '0px 52px 0px 45px'}} src={ "/static/images/Home/Banner1/next.png" }/>
-                </div>
-                <div>
-                  <img src={ "/static/images/Home/Banner1/1초.png" }/>
+                  <img src={BannerImg} />
                 </div>
               </ImageContainer>
             </Image>

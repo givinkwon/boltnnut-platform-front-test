@@ -9,6 +9,9 @@ import moment from "moment";
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 
+// Marketing Modal
+import MarketingModal from './MarketingModal';
+
 const dropdown = '/static/images/request/Step4/dropdown.png';
 
 @inject('Schedule', 'Request')
@@ -17,18 +20,28 @@ class Step4Container extends Component {
   state = {
     display: 'none', // display 는 FoldedComponent 기준
     display2: true, // display2 는 TimeBox 기준.
+    display3: true, // display3은 컨설팅 유형 기준
     current: null, // FoldedComponent에 넣을 현재 상태(오전 11:00 등)
-    inactive_array: []
+    inactive_array: [],
+    userEmail: null,
+    isOnline: 0, // 대면이면 0, 화상이면 1
+    open_marketing_modal: false,
+    policy_agree: true,
+    marketing_agree: true
   }
-  checkboxChange = (e) => {
-    console.log(e) // 에러피하기용 임시
+  checkboxChange_policy = (e) => {
+    this.setState({...this.state, policy_agree: e});
+    console.log(this.state)
+  }
+  checkboxChange_marketing = (e) => {
+    this.setState({...this.state, marketing_agree: e});
   }
   emailChange = (obj) => {
-    console.log(obj) // 에러피하기용 임시
+    this.setState({...this.state, userEmail: obj})
   }
   getTime = (hour) => {
-    const date = new moment();
-    return (date.format('YYYY-MM-DD ') + date.format(`${hour}:00`));
+    const { Schedule, Request } = this.props;
+    return (Schedule.today) + (`${hour}:00`);
   }
   setTime = (e, date) => {
     const { Schedule } = this.props;
@@ -43,21 +56,70 @@ class Step4Container extends Component {
       Schedule.getOccupiedDate();
     }
   }
-  handleDropDown = () => {
-    this.setState({...this.state, display: 'none', display2: true})
+  handleDropDown = (idx) => {
+    // idx == 2 면 스케쥴 시간, idx == 3 이면 컨설팅 유형 handle
+    if (idx == 2) {
+      this.setState({...this.state, display: 'none', display2: true})
+    } else {
+      this.setState({...this.state, display3: true})
+    }
   }
   timeActiveToggle = (time) => {
     const { Schedule } = this.props;
-    if (Schedule.inactive_today.includes(time)) {
-      return true
-    } else {
-      return false
+    let nowTime = new moment();
+    // console.log(time.split(' ')[1]);  ==> 10:00 과 같음.
+    if (time) {
+      if (Schedule.inactive_today.includes(time.split(' ')[1]) || (nowTime.format("HH") >= time.split(' ')[1].split(":")[0] && nowTime.format("DD") == time.split(' ')[0].split('-')[2])) {
+        return true
+      } else {
+        return false
+      }
     }
+  }
+  // 스케쥴 생성
+  createSchedule = () => {
+    const { Schedule, Request } = this.props;
+    const { policy_agree } = this.state;
+
+    if (!policy_agree) {
+      return alert("이용약관 동의에 체크해주세요.")
+    }
+    var emailval =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+ 
+    if (!emailval.test(this.state.userEmail) && !Request.has_email) {
+      return alert("올바른 이메일 주소를 입력해주세요")
+    }
+    let req = {
+      request: Request.created_request,
+      email: this.state.userEmail,
+      isOnline: this.state.isOnline,
+      marketing: this.state.marketing_agree
+    }
+    Schedule.submitSchedule(req);
+    Request.step_index = 5;
+  }
+  // 대면, 비대면 선택
+  isOnlineHandler = (e) => {
+    const { Schedule } = this.props;
+    let targetWord = e.target.innerHTML;
+    // 대면이면 0, 화상이면 1
+    if (targetWord == "화상 미팅") {
+      this.setState({...this.state, isOnline: 1, display3: false})
+      Schedule.setOnline(1);
+    } else {
+      this.setState({...this.state, isOnline: 0, display3: false})
+      Schedule.setOnline(0);
+    }
+  }
+  handleClose =()=> {
+    this.setState({...this.state, open_marketing_modal: false})
+  }
+  openMarketingModal = () => {
+    this.setState({...this.state, open_marketing_modal: true})
   }
   render() {
     const { current, display, display2 } = this.state;
     const { Request, Schedule } = this.props;
-
     const timeArr = [
       {
         start_at: this.getTime(10),
@@ -93,7 +155,7 @@ class Step4Container extends Component {
       }
     ]
     return (
-      
+    <>
       <Card>
         <Header>1:1 컨설팅 신청</Header>
         <ContentBox>
@@ -104,7 +166,7 @@ class Step4Container extends Component {
           <Title style={{marginTop: 30, marginBottom: 6}}>
             시간
           </Title>
-          <FoldedComponent onClick={()=>this.handleDropDown()} style={{display: display}}>
+          <FoldedComponent onClick={()=>this.handleDropDown(2)} style={{display: display}}>
             {current}
             <img src={dropdown} />
           </FoldedComponent>
@@ -113,9 +175,12 @@ class Step4Container extends Component {
               오전
             </SubContent>
             <TimeBox style={{marginBottom: 30}}>
-              {timeArr.slice(0,2).map((data) => {
+              {timeArr && timeArr.slice(0,2).map((data) => {
                   return (
-                    <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick={(event) => this.setTime(event, data.start_at)}>
+                    <TimeComponent 
+                      deactive={this.timeActiveToggle(data.start_at)} 
+                      onClick={(event) => this.setTime(event, data.start_at)}
+                    >
                       {data.start_at.split(' ')[1]}
                     </TimeComponent>
                   )
@@ -125,21 +190,39 @@ class Step4Container extends Component {
               오후
             </SubContent>
             <TimeBox style={{marginBottom: 60}}>
-                {timeArr.slice(2,).map((data) => {
+                {timeArr && timeArr.slice(2,).map((data) => {
                   return (
-                    <TimeComponent deactive={this.timeActiveToggle(data.start_at.split(' ')[1])} onClick = {(event) => this.setTime(event, data.start_at)}>
+                    <TimeComponent 
+                      deactive={this.timeActiveToggle(data.start_at)} 
+                      onClick = {(event) => this.setTime(event, data.start_at)}
+                    >
                       {data.start_at.split(' ')[1]}
                     </TimeComponent>
                   )
                 })}
             </TimeBox>
           </div>
-          <Title>
-            장소
+          <Title style={{marginBottom: 9}}>
+            컨설팅 유형
           </Title>
-          <SubContent>
-            서울특별시 성북구 고려대로 30길 4, 2층 볼트앤너트
-          </SubContent>
+          {this.state.display3 ? (
+            <div style={{display: 'inline-flex'}}>
+              <TimeComponent onClick = {this.isOnlineHandler}>
+                방문 미팅
+              </TimeComponent>
+              <TimeComponent onClick = {this.isOnlineHandler}>
+                화상 미팅
+              </TimeComponent>
+            </div>
+          ) : (
+            <FoldedComponent onClick={() => this.handleDropDown(3)}>
+              {this.state.isOnline == 1 ? "화상 미팅 " : "대면 미팅"}
+              <img src={dropdown} />
+            </FoldedComponent>
+          )}
+          <Tail>
+            {Schedule.isOnline == 0 ? "* 서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트" : "* 입력하신 전화번호로 화상 ZooM 미팅을 안내드립니다"}
+          </Tail>
           { !Request.has_email && (
           <>
             <Title style={{marginTop: 30}}>
@@ -157,15 +240,35 @@ class Step4Container extends Component {
           </Tail>
         </ScheduleBox>
         <CardFooter>
-          <CheckBoxComponent
-            onChange={this.checkboxChange}>
-            이용약관 및 개인정보 처리방침에 동의합니다.
-          </CheckBoxComponent>
-          <CustomButton>
+          <CheckBoxWrapper>
+            <CheckBoxComponent
+              checked={this.state.policy_agree}
+              onChange={this.checkboxChange_policy}>
+                <span>
+                  <Link target="_blank" href="/term/policy">이용약관 및 개인정보 처리방침</Link>
+                  에 동의합니다.
+                </span>
+            </CheckBoxComponent>
+            <CheckBoxComponent
+              checked={this.state.marketing_agree}
+              onChange={this.checkboxChange_marketing}>
+                <span>
+                  <span class="bold" onClick={this.openMarketingModal}>마케팅 정보 수신</span>에 동의합니다.
+                </span>
+            </CheckBoxComponent>
+          </CheckBoxWrapper>
+          <CustomButton onClick={this.createSchedule}>
             무료 컨설팅 받기
           </CustomButton>
         </CardFooter>
       </Card>
+      <div>
+        <MarketingModal
+          open={this.state.open_marketing_modal}
+          handleClose={this.handleClose}
+        />
+      </div>
+    </>
     )
   }
 }
@@ -255,9 +358,13 @@ const TimeComponent = styled.div`
   :hover {
     border: ${(props) => props.deactive ? 'none' : "solid 3px #0933b3"};
   }
+  :focus {
+    border: ${(props) => props.deactive ? 'none' : "solid 3px #0933b3"};
+  }
 `
 const Tail = styled(Content.FontSize14)`
   font-weight: 500;
+  height: 24px;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.86;
@@ -316,4 +423,28 @@ const FoldedComponent = styled.div`
     margin-left: 22px;
   }
 `
-
+const CheckBoxWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  span {
+    font-size: 16px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.88;
+    letter-spacing: -0.16px;
+    text-align: left;
+    color: #282c36;
+    .MuiIconButton-label {
+      color: #c7c7c7;
+    }
+  }
+  .bold {
+    font-weight: bold;
+  }
+`
+const Link = styled.a`
+  color: #191919;
+  display: inline-block;
+  font-weight: bold;
+  text-decoration: none;
+`;

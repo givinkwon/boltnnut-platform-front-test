@@ -15,9 +15,12 @@ const fileImage = 'static/images/components/Input2/Mask.png';
 class Step2Container extends React.Component {
   onChangeFile = (e,data,idx) => {
     const {Request}  = this.props;
+    let fileNameAvailable = ['stl', 'stp'];
     let fileName;
     if (e.currentTarget.files[0]) {
-      console.log(e.currentTarget.files[0])
+      if (!fileNameAvailable.includes(e.currentTarget.files[0].name.split('.')[e.currentTarget.files.length])) {
+        return alert("파일 확장자명 (stl, stp만 가능) 을 확인해주세요.")
+      }
       fileName = e.currentTarget.files[0].name;
       Request.setDrawFile(e.currentTarget.files[0]);
       DetailQuestion.SelectChecked = idx;
@@ -53,7 +56,6 @@ class Step2Container extends React.Component {
 
   content = () => {
     const { DetailQuestion, Request, ManufactureProcess } = this.props;
-    const { fileName } = this.state;
 
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
@@ -85,12 +87,11 @@ class Step2Container extends React.Component {
         { return true; } else
         { return false; }
     };
-
     return (
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-           {DetailQuestion.title_list.results &&<TitleQue>{DetailQuestion.title_list.results[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
+           {DetailQuestion.title_list &&<TitleQue>{DetailQuestion.title_list[DetailQuestion.index-1] && DetailQuestion.title_list[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
         </TitleContainer>
         <input value={DetailQuestion.index<8 ? DetailQuestion.SelectChecked : ManufactureProcess.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>
