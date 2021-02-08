@@ -26,8 +26,8 @@ class Step4Container extends Component {
     userEmail: null,
     isOnline: 0, // 대면이면 0, 화상이면 1
     open_marketing_modal: false,
-    policy_agree: false,
-    marketing_agree: false
+    policy_agree: true,
+    marketing_agree: true
   }
   checkboxChange_policy = (e) => {
     this.setState({...this.state, policy_agree: e});

@@ -58,7 +58,7 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
-  @observable step_index = 5;
+  @observable step_index = 1;
   @observable step1_index = 1;
   @observable drawFile = null;
   @observable percentage = 0;
@@ -75,10 +75,10 @@ class Request {
   @observable proposal_type = 1;
 
   @action reset = () => {
-    console.log(this.step1_index);
     this.titleData = [];
     this.percentage = 0;
-    this.step_index = 5;
+    this.step_index = 1;
+    this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";
     this.input_day = null;

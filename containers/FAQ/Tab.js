@@ -18,17 +18,12 @@ class TabConatiner extends React.Component {
           <Tabs>
             <Tab active={tab === 1} onClick={() => this.setTab(1)}>
               <Text.FontSize18 fontWeight={500}>
-                전반적인 질문
+                서비스 이용 관련 질문
               </Text.FontSize18>
             </Tab>
             <Tab active={tab === 2} onClick={() => this.setTab(2)}>
               <Text.FontSize18 fontWeight={500}>
-                클라이언트
-              </Text.FontSize18>
-            </Tab>
-            <Tab active={tab === 3} onClick={() => this.setTab(3)}>
-              <Text.FontSize18 fontWeight={500}>
-                전문가
+                프로젝트 관련 질문
               </Text.FontSize18>
             </Tab>
           </Tabs>
