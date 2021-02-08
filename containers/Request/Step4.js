@@ -82,8 +82,7 @@ class Step4Container extends Component {
     const { policy_agree } = this.state;
 
     if (!policy_agree) {
-      alert("이용약관 동의에 체크해주세요.")
-      break;
+      return alert("이용약관 동의에 체크해주세요.")
     }
     var emailval =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
  
