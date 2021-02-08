@@ -22,7 +22,7 @@ const background = "static/images/Home/main.jpg";
 const CountFunc = ({index,projCount=0,partnerCount=0}) => 
 {
     const countItem = {
-      0: UseScrollCount(1667400000,1000000000,0,0,900000),
+      0: UseScrollCount(5667400000,5000000000,0,0,900000),
       1: UseScrollCount(projCount,0,0,0,5),
       2: UseScrollCount(4933,0,0,0,10)
     };
