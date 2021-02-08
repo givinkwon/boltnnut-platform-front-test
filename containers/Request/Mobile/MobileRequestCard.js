@@ -74,7 +74,7 @@ class MobileRequestCardContainer extends Component {
         counter += 1
       }
     }
-    console.log(counter);
+    // console.log(counter);
     if (counter == buttonActiveCount) {
       return true
     } else {
@@ -206,7 +206,7 @@ class MobileRequestCardContainer extends Component {
   render() {
     const { active } = this.state;
     const { Request, DetailQuestion } = this.props;
-    console.log(this.props.title)
+    // console.log(this.props.title)
     const countSettings1 = {
       start: 0,
       count : this.countCalc(), 

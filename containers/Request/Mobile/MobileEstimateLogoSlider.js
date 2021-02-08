@@ -18,7 +18,8 @@ class EstimateLogoSlider extends React.Component {
         slidesToShow: 3,
         slidesToScroll: 1,
         draggable: true,
-        rows:2
+        rows:2,
+        arrows:false
       };
     const { Request } = this.props;  
     return (
