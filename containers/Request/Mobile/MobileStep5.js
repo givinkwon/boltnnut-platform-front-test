@@ -28,7 +28,7 @@ class MobileStep5Container extends Component {
     this.setState({...this.state, department: e.currentTarget.value})
     console.log(this.state);
   }
-  submitUpdate = (callback, callback2) => {
+  submitUpdate = () => {
     const { Schedule, Request } = this.props;
     // const { client_id } = Request.client_id;
     let req = this.state;
