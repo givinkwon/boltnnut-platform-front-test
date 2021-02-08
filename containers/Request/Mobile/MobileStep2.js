@@ -68,10 +68,11 @@ class MobileStep2Container extends React.Component {
         return true;
       } else {
         return false;
+        console.log("바뀜 ㅋㅋㅋㅋ")
       }
     }
 
-    let activeHandler=(idx) =>
+    let activeHandler = (idx) =>
     {
       // console.log(idx===DetailQuestion.SelectChecked)
       if(idx===DetailQuestion.SelectChecked)
@@ -150,6 +151,8 @@ const TitleContainer = styled.div`
   flex-direction: row;
   align-items: center;
   margin-top: 30px;
+  display: inline-flex;
+  justify-content: center;
 `
 const TitleQue = styled(Title.FontSize24)`
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -165,9 +168,10 @@ const TitleQue = styled(Title.FontSize24)`
 const SelectContainer = styled.div`
   width: 100%;
   margin-top: 30px;
-  // margin-left: 33px;
-  // height:374px;
   height: ${(props) => (props.index==8 ? "auto" : '374px')};
+  flex-direction: column;
+  display: flex;
+  align-items: center;
 `
 const Text = styled(Title.FontSize16)`
   font-weight: 500;
@@ -214,7 +218,6 @@ const Select = styled.button`
   }
 `
 const FileSelect = styled.div`
-  border: none;
   width: 686px;
   height: 46px;
   background-color: #ffffff;
@@ -226,10 +229,10 @@ const FileSelect = styled.div`
   margin-bottom: 20px;
   outline: 0;
   border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
-  &:hover {
-    border: solid 2px #0933b3;
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
-  }
+  //&:hover {
+  //  border: solid 2px #0933b3;
+  //  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
+  //}
   > input {
     width: 100%;
     height: 100%;

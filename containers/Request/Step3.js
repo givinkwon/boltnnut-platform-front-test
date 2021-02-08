@@ -184,8 +184,8 @@ class Step3Container extends Component {
         rows2.splice(1,1);
         rows2.pop();
         rows2.pop();
-        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/1000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/1000) + '만원', 'VAT 미포함');
-        rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개', 'VAT 미포함');
+        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/100) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/100) + '만원', 'VAT 미포함');
+        rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개(MOQ 1000개)', 'VAT 미포함');
       }  
 
     }
@@ -275,7 +275,7 @@ class Step3Container extends Component {
             </Table>
 
             <Font16 style={{marginTop:40,textAlign:'center',fontWeight:'bold',color:'#0a2165',marginBottom:40}}>
-              *해당 가견적은 의뢰 세부사항에 따라 달리질 수 있습니다.<br/>
+              *해당 가견적은 의뢰 세부사항에 따라 달라질 수 있습니다.<br/>
               보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
             </Font16>
 
@@ -285,8 +285,8 @@ class Step3Container extends Component {
             {DetailQuestion.message.includes(message) ? 
             <StyledStlViewer
             model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
-            width={300}                                  // 가로
-            height={300}                                 // 세로
+            width={400}                                  // 가로
+            height={400}                                 // 세로
             modelColor='red'                             // 색
             backgroundColor='white'                    // 배경색
             rotate={true}                                // 자동회전 유무
@@ -299,14 +299,17 @@ class Step3Container extends Component {
 
         <ContentBox>
           <ContentHeader>
-            요청하신 {estimateData.projectTitle}에 최적화된<br/>
-            <span style={{fontSize:24,color:'#0933b3'}}>{rand2}</span> 곳의 제조 파트너사가 아래와 같이 매칭되었습니다.
+            볼트앤너트에는 요청하신 {estimateData.projectTitle}에 최적화된<br/>
+            {rand2} 곳의 제조 파트너사가 있습니다.
           </ContentHeader>
 
-          <EstimateLogoSlider />
-          
-          <ThumbText> {percentage}% </ThumbText>
           <CustomSlider value={percentage}/>
+          <ThumbText> {percentage}% </ThumbText>
+
+
+          <EstimateLogoSlider />
+
+          
 
           <ConsultantHeader>
             매칭 컨설턴트 : 최낙의 기술 고문  외 2명
@@ -382,6 +385,7 @@ const DetailButtonBox = styled.div`
   display:flex;
   align-items:center;
   justify-content:center;
+  cursor: pointer;
 `
 const EstimateDetailContainer = styled.div`
   margin-left:63px;
@@ -413,6 +417,7 @@ const ConsultantDetailButtonBox = styled.div`
   margin-top:20px;
   justify-content:flex-end;
   align-items:center;
+  cursor: pointer;
   >img
   {
     width:13px;
@@ -504,7 +509,9 @@ const CustomSlider = withStyles({
     color: '#0933b3',
     height: 7,
     width: '76%',
-    margin:'0.5% 12% 6.6% 12%',
+    marginLeft: '12%',
+    marginRight: '12%',
+    marginTop:'2%',
     borderRadius: 10,
     cursor:'default'
   },
@@ -545,5 +552,4 @@ const ThumbText = styled(Content.FontSize18)`
   text-align:center;
   color: #0933b3;
   font-weight: bold;
-  margin-top:25px;
 `
