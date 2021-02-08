@@ -163,6 +163,7 @@ const Textbox = styled.div`
     color: white;
     background-color: #0933b3;
     margin-top: 72px;
+    cursor: pointer;
   }
 `
 const ImgContainer = styled.div`

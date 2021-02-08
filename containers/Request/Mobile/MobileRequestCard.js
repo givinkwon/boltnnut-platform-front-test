@@ -20,6 +20,9 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import MobileStepContainer from '../../../components/MobileStep';
 
+import 'react-count-animation/dist/count.min.css';
+import AnimationCount from 'react-count-animation';
+
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 var titleData=[];
 
@@ -55,6 +58,7 @@ class MobileRequestCardContainer extends Component {
 
   componentDidUpdate() {
     const { targets,active } = this.state;
+    // console.log(this.state);
     if (this.fullChecker(targets) == true && active == false) {
       this.setState({...this.state, active: true})
     } else if (this.fullChecker(targets) == false && active == true) {
@@ -70,6 +74,7 @@ class MobileRequestCardContainer extends Component {
         counter += 1
       }
     }
+    console.log(counter);
     if (counter == buttonActiveCount) {
       return true
     } else {
@@ -185,9 +190,33 @@ class MobileRequestCardContainer extends Component {
         break;
     }
   }
+  countCalc () {
+    const { Request} = this.props;
+    let result = 4997
+    //console.log(Request.select_big, Request.select_mid, Request.select_small)
+  
+    if(Request.select_big != null && Request.select_mid == null){
+        result = Request.select_big.id === 0 ?  4997 : 460 * (((Request.select_big.id)/5) + 4)
+    }
+    if(Request.select_big != null && Request.select_mid != null){
+        result = Request.select_big.id === 0 ?  4997 : 460 * (((Request.select_big.id)/5) + 4) - 260* ((Request.select_mid.id/50) + 5)
+    }
+    return result
+  }
+
   render() {
     const { active } = this.state;
     const { Request, DetailQuestion } = this.props;
+    console.log(this.props.title)
+    const countSettings1 = {
+      start: 0,
+      count : this.countCalc(), 
+      duration: 6000,
+      decimals: 0,
+      useGroup: true,
+      animation: 'up',
+      width: 100
+    };
     return(
     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
         <Header>
@@ -198,10 +227,10 @@ class MobileRequestCardContainer extends Component {
         <ContentBox>
           {this.props.content}
         </ContentBox>
-      <MatchingText>요청하신 000 제품 개발에 <br/>최적화된 제조 파트너사를 매칭 <span>{Request.percentage}%</span> 완료</MatchingText>
+      <MatchingText>해당 의뢰에 적합한 &nbsp;<AnimationCount {...countSettings1}/>  개의 볼트앤너트 파트너사가 있습니다.</MatchingText>
         <MobileLogoImageSlider/>
-        <SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>
-        <ButtonContainer>
+        {this.props.title == "기본 정보 입력 1/2" ? (<SliderText>의뢰에 대해 이해할 수 있도록 기본 정보를 입력해주세요</SliderText>) : (<SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>)}
+         <ButtonContainer>
           <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
           <div style={{marginRight: 14}} />
           <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
@@ -288,6 +317,7 @@ const MatchingText = styled(Content.FontSize15)`
   color: #282c36;
   text-align: center;
   margin-bottom:20px;
+  display: flex;
   > span {
     color: #0933b3;
   }
