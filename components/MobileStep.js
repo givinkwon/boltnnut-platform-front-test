@@ -26,7 +26,6 @@ class MobileStepContainer extends React.Component {
     } else {
       this.setState({...this.state, isOpen: true});
     }
-    console.log(isOpen);
   }
   render(){
     const { isOpen } = this.state;

@@ -102,7 +102,6 @@ class MobileStep3Container extends Component {
   ];
 
   handleChange = (event, newValue) => {
-    console.log(newValue)
     this.setState({ percentage: newValue })
   }
   CustomSliderThumbComponent = (props) => {
@@ -178,7 +177,6 @@ class MobileStep3Container extends Component {
   componentDidMount() {
     const { Proposal, DetailQuestion } = this.props;
     // Proposal.loadEstimateInfo(315);
-    console.log(DetailQuestion.proposal_type)
   }
 
   render() {
@@ -205,7 +203,6 @@ class MobileStep3Container extends Component {
     var message = '도면입력';
     var rand2 = 28 + Math.floor(Math.random() * 38);
 
-    console.log(ManufactureProcess.EstimateDataForDrawing);
     if(DetailQuestion.message.includes(message))
     {
       rows2.splice(1,1);

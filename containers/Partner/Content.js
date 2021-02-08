@@ -72,7 +72,6 @@ class ContentConatiner extends React.Component {
   // IE 오류 해결
   async componentDidMount() {
     const { Home, Partner } = this.props
-    console.log('componentDidMount');
 
     // setTimeout(() => 
     // this.props.Loading.setOpen(true), 4000);
@@ -97,7 +96,6 @@ class ContentConatiner extends React.Component {
   }
 
   componentWillMount() {
-    console.log('componentWillMount');
 
     if (typeof window !== "undefined") {
       window.removeEventListener('resize', this.updateDimensions);
@@ -131,10 +129,7 @@ class ContentConatiner extends React.Component {
     }
     if (this.state.current%5 == 4) {
       Partner.getNextPartner();
-      console.log(this.state.current)
     }
-    console.log(this.state.current)
-    console.log(this.state.current%5);
   }
   pagePrev = () => {
     if (this.state.current != 0) {
@@ -161,7 +156,6 @@ class ContentConatiner extends React.Component {
     while (filledPage < newPage) {
       Partner.getNextPartner();
       filledPage = filledPage + 2;
-      console.log(filledPage)
     }
     this.setState({...this.state, current: newPage-1});
   }

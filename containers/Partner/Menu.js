@@ -139,8 +139,7 @@ class MenuConatiner extends React.Component {
                     })
                   }
                   { showDetail == true && Partner.develop_list.length > 0 && Partner.develop_list.map((item, idx) => {
-                      console.log(Partner.developBig);
-                      console.log(item)
+                      
                       return (
                        <>
                        {(item.id == 3 || item.id == 4) &&

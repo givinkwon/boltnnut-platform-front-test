@@ -35,8 +35,6 @@ class HomeRequestContainer extends React.Component {
         this.setState({next: true, prev: true})
       }
     }
-    console.log(this.state.current+"alka salsa")
-    console.log(this.state.next + "next", this.state.prev + "prev")
   }
 
   sliderNext = () => {

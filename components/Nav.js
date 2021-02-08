@@ -38,7 +38,6 @@ class Nav extends React.Component {
     const token = await localStorage.getItem("token");
     const { route, pathname } = Router.router;
     const splitedRoute = route.split("/");
-    console.log(splitedRoute);
     const requestId = window.location.pathname.split('/').pop()
 
     // 사용자 접근 제어
@@ -87,7 +86,6 @@ class Nav extends React.Component {
       //  alert("로그인이 필요합니다");
       //  Router.push("/login");
       //}
-      console.log(requestId)
       this.needPermission.forEach((url) => {
         if (url === splitedRoute[1]) {
           if(requestId != 923){

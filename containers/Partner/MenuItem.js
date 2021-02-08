@@ -58,7 +58,6 @@ class MenuItemConatiner extends React.Component {
       }
     }
     if (type === "develop") {
-      console.log(data.develop_set)
       data.develop_set.forEach((develop) => {
         const idx = Partner.search_develop.findIndex(
           (developId) => developId === develop.id

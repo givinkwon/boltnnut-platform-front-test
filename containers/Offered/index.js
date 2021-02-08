@@ -32,7 +32,6 @@ class OfferedConatiner extends React.Component {
     componentDidMount() {
     const { Home } = this.props
     const userAgent = window.navigator.userAgent;
-    console.log(userAgent)
     if(userAgent.indexOf("MSIE ") !== -1 || userAgent.indexOf(".NET") !== -1
       || userAgent.indexOf("Edge") !== -1)
         {

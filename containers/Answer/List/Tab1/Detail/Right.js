@@ -57,7 +57,6 @@ class RightDetailContainer extends Component {
     })
 	}
 	setContentGood = (content) => {
-		console.log('goodReview 저장: ' + content)
 
 		const {active_review} = this.props.Answer;
 		if(active_review) {
@@ -72,7 +71,6 @@ class RightDetailContainer extends Component {
 	}
 
 	setContentBad = (content) => {
-		console.log('badReview 저장: ' + content)
 
 		const {active_review} = this.props.Answer;
 		if(active_review) {

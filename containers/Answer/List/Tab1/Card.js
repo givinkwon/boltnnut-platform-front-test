@@ -48,16 +48,13 @@ class CardContainer extends Component {
        this.setState({ ...this.state, classModal_open: true });
        return
     }
-    console.log(this.state.classModal_open)
     const {router, Answer} = this.props;
     router.push(router.asPath + '/detail/' + answerId);
-    console.log(answerId)
     Answer.seeAnswer(answerId, 1);
   }
 
   render() {
     const {Auth, Answer, item, partner, observer, handleIntersection} = this.props;
-    console.log(partner)
 
     const {requestId, classModal_open} = this.state
     const request = Answer.getRequestById(requestId)
@@ -66,7 +63,6 @@ class CardContainer extends Component {
       onChange: handleIntersection,
     };
     Auth.reloadUserInfo
-    {/*console.log(item.active, this.props.Auth.logged_in_client.client_class)*/}
     return (
       <>
       <CheckClassModal

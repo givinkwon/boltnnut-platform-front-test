@@ -89,6 +89,7 @@ class Request {
     this.maincategory_id = '';
   }
   @action setInputName = (val) => {
+    //
     this.input_name = val;
   };
   @action setType = (val) => {
