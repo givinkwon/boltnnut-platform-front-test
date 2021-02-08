@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import * as Title from 'components/Title';
 import 'intersection-observer';
 import DetailQuestion from '../../../stores/DetailQuestion';
-import ProductInfoContainer from '../ProductInfo';
+import MobileProductInfoContainer from '../../Request/Mobile/MobileProductInfo';
 import MobileRequestCardContainer from '../Mobile/MobileRequestCard';
 
 const Qimage = "/static/images/request/Step2/MobileQ.png";
@@ -83,7 +83,7 @@ class MobileStep2Container extends React.Component {
         <TitleContainer>
           <img src={ Qimage }/>
           {/* Array 문제로 DetailQuestion 형식 고쳤음. */}
-          {/* <TitleQue>{DetailQuestion.title_list && DetailQuestion.title_list[DetailQuestion.index-1].question}</TitleQue> */}
+          <TitleQue>{DetailQuestion.title_list[DetailQuestion.index-1] && DetailQuestion.title_list[DetailQuestion.index-1].question}</TitleQue>
         </TitleContainer>
         <input value={DetailQuestion.index<8 ? DetailQuestion.SelectChecked : ManufactureProcess.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>
@@ -123,7 +123,7 @@ class MobileStep2Container extends React.Component {
               )}
             )
           }
-          {DetailQuestion.index===8 && <ProductInfoContainer updater={this.props.ManufactureProcess.SelectChecked}/>}
+          {DetailQuestion.index===8 && <MobileProductInfoContainer updater={this.props.ManufactureProcess.SelectChecked}/>}
         </SelectContainer>
       </>
     );

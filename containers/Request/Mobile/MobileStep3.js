@@ -312,7 +312,7 @@ class MobileStep3Container extends Component {
 
             <Font13 style={{marginTop:35,textAlign:'center',fontWeight:'bold',color:'#0a2165',marginBottom:35}}>
               *해당 견적서는 제품 세부사항에 <br/>
-              따라 달리질 수 있습니다.<br/>
+              따라 달라질 수 있습니다.<br/>
               보다 정확한 견적을 받아보시려면<br/>
               1:1컨설팅을 신청해주세요.
             </Font13>
@@ -398,7 +398,7 @@ class MobileStep3Container extends Component {
           </ConsultantDetailButtonBox>
           
           <Font13 style={{marginTop:40,textAlign:'center',color:'#0a2165',fontWeight:'bold'}}>
-            1:1 프로젝트 매니저를 배정받아 보다 정확하고 안전한 견적을 받아보세요(워딩필요)
+          전문 컨설턴트의 무료 상담을 통해 의뢰의 정확한 견적을 받아보세요
           </Font13>
           <Buttonv1 onClick={ this.buttonClick } fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
             무료 컨설팅 받기

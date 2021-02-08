@@ -8,6 +8,7 @@ import moment from 'moment';
 @inject("Schedule")
 @observer
 class Step5Container extends Component {
+  
   render() {
     moment.locale('ko');
     const { Schedule } = this.props;

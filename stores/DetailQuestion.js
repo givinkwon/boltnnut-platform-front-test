@@ -23,6 +23,7 @@ class DetailQuestion {
           });
         }
       )
+      console.log(this.title_list);
   };
   @action reset = () => {
     this.title_list = [];
