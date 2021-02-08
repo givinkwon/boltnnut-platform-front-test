@@ -86,7 +86,7 @@ class Step4Container extends Component {
     }
     var emailval =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
  
-    if (!emailval.test(this.state.userEmail)) {
+    if (!emailval.test(this.state.userEmail) && !Request.has_email) {
       return alert("올바른 이메일 주소를 입력해주세요")
     }
     let req = {

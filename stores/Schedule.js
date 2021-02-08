@@ -68,6 +68,7 @@ class Schedule {
             "isOnline": data.isOnline,
             "marketing": data.marketing
         }
+        console.log(req);
         ScheduleAPI.postSchedule(req).then((res) => {
             alert(`${this.book_time} 부터 1시간동안의 미팅이 예약되었습니다.`);
         }).catch(error => {
