@@ -27,8 +27,8 @@ class MobileStep4Container extends Component {
     active1_target: null,
     active2_target: null,
     open_marketing_modal: false,
-    policy_agree: false,
-    marketing_agree: false
+    policy_agree: true,
+    marketing_agree: true
   }
   checkboxChange_policy = (e) => {
     this.setState({...this.state, policy_agree: e});

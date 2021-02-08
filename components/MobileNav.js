@@ -132,7 +132,7 @@ class MobileNav extends React.Component {
                   <Logo src={logo_ic} onClick={() => Router.push("/")} style={{float:'left'}}/>
                   <img src={ x_ic } style={{float: 'right'}}/>
                 </div>
-                <div>내 제품 제작 비용 지금 바로 전문가를 만나 보세요.</div>
+                <div>내 제조 의뢰 견적과 전문 제조사를 바로 만나 보세요.</div>
                 <FreeButton onClick={() => Router.push("/request")}>
                   <span>지금 무료 가견적 받기</span>
                 </FreeButton>
@@ -261,6 +261,8 @@ const ModalContent = styled.div`
     letter-spacing: -0.38px;
     text-align: left;
     color: #111111;
+    cursor: pointer;
+
   }
 `
 const HeadText = styled.div`
@@ -297,10 +299,12 @@ const Footer = styled.div`
     letter-spacing: -0.33px;
     text-align: center;
     color: #111111;
+    cursor: pointer;
   }
 `
 const FreeButton = styled(Buttonv1)`
   margin-top: 8px;
+  cursor: pointer;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 270px;
     height: 43px;
@@ -336,6 +340,8 @@ const ModalContent2 = styled.div`
     letter-spacing: -0.3px;
     color: #282c36;
     margin-bottom: 22px;
+    cursor: pointer;
+
   }
 `
 const Container = styled.div`

@@ -56,7 +56,6 @@ class Step2Container extends React.Component {
 
   content = () => {
     const { DetailQuestion, Request, ManufactureProcess } = this.props;
-    const { fileName } = this.state;
 
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)
@@ -88,7 +87,6 @@ class Step2Container extends React.Component {
         { return true; } else
         { return false; }
     };
-    console.log(DetailQuestion.title_list);
     return (
       <>
         <TitleContainer>

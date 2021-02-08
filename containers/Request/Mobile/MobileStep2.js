@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import * as Title from 'components/Title';
 import 'intersection-observer';
 import DetailQuestion from '../../../stores/DetailQuestion';
-import ProductInfoContainer from '../ProductInfo';
+import MobileProductInfoContainer from '../../Request/Mobile/MobileProductInfo';
 import MobileRequestCardContainer from '../Mobile/MobileRequestCard';
 
 const Qimage = "/static/images/request/Step2/MobileQ.png";
@@ -51,7 +51,6 @@ class MobileStep2Container extends React.Component {
         DetailQuestion.nextPage = null;
         DetailQuestion.SelectChecked='';
         DetailQuestion.SelectId = null;
-        console.log("RAKJSBKABSKCBJKSBC");
       }
       else
       {
@@ -76,7 +75,8 @@ class MobileStep2Container extends React.Component {
       if(idx===DetailQuestion.SelectChecked)
       { return true; } 
       else
-      { return false; }
+      { 
+        return false; }
     };
     return (
       <>
@@ -123,7 +123,7 @@ class MobileStep2Container extends React.Component {
               )}
             )
           }
-          {DetailQuestion.index===8 && <ProductInfoContainer updater={this.props.ManufactureProcess.SelectChecked}/>}
+          {DetailQuestion.index===8 && <MobileProductInfoContainer updater={this.props.ManufactureProcess.SelectChecked}/>}
         </SelectContainer>
       </>
     );
@@ -194,10 +194,10 @@ const Select = styled.button`
   margin-bottom: 20px;
   outline: 0;
   border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
-  &:hover {
-    border: solid 2px #0933b3;
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
-  }
+  // &:hover {
+  //   border: solid 2px #0933b3;
+  //   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
+  // }
   > input {
     width: 100%;
     height: 100%;
