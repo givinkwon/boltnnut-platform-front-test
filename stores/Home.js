@@ -39,7 +39,7 @@ class Home {
     await RequestAPI.getRequests()
       .then(res => {
         this.request_list = res.data.results
-        console.log("의뢰 데이터 로드")
+        console.log("의뢰 데이터 로드");
       }
       )
   }

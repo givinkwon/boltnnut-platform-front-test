@@ -1,7 +1,6 @@
 import React from "react";
 import { inject, observer } from "mobx-react";
 
-import BannerContainer from "../Banner";
 import InfoContainer from "./Info";
 import Step0Container from "./Step0";
 import Step1Container from "./Step1";

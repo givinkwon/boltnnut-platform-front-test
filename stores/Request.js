@@ -4,9 +4,9 @@ import * as CategoryAPI from "axios/Category";
 import * as PartnerAPI from 'axios/Partner';
 import * as RequestAPI from "axios/Request";
 import Router from "next/router";
+import moment from 'moment';
 
 class Request {
-  @observable client_id = -1;
   @observable select_reqs = [];
 
   @observable id = null;
@@ -21,6 +21,7 @@ class Request {
   @observable big_category_list = [];
   @observable mid_category_list = [];
   @observable small_category_list = [];
+  @observable maincategory_id = '';
 
   @observable q_big = "";
   @observable q_mid = "";
@@ -41,24 +42,53 @@ class Request {
   @observable common_content = "";
   @observable common_period = "";
   @observable common_price = "";
-  @observable common_file = null;
 
   @observable search_mode = '';
   @observable partners = [];
   @observable partners_next = null;
 
-   // save_writed_request
+  // save_writed_request
   @observable input_name = "";
   @observable input_phone = "";
-  @observable input_phone2 = "";
-  @observable input_phone3 = "";
+
   @observable input_content = "";
+  @observable input_day = null; // 개발기간
+  @observable input_price = null; // 가격
+  @observable common_file = null; // 첨부 파일
 
-  @observable input_day = null;
-  @observable input_price = null;
+  //new
+  @observable step_index = 1;
+  @observable step1_index = 1;
+  @observable drawFile = null;
+  @observable percentage = 0;
+  @observable titleData = [];
 
+  // Client
+  @observable client_id = null;
+  @observable has_email = false;
+
+  // Partner
+  @observable random_partner_list = null;
+
+  //type
+  @observable proposal_type = 1;
+
+  @action reset = () => {
+    this.titleData = [];
+    this.percentage = 0;
+    this.step_index = 1;
+    this.step1_index = 1;
+    this.input_name = "";
+    this.input_phone = "";
+    this.input_day = null;
+    this.input_price = null;
+    this.common_file = null;
+    this.select_big = null;
+    this.select_mid = null;
+    this.random_partner_list = [];
+    this.maincategory_id = '';
+  }
   @action setInputName = (val) => {
-    console.log(val)
     this.input_name = val;
   };
   @action setType = (val) => {
@@ -73,56 +103,83 @@ class Request {
   @action setInputPhone = (val) => {
     this.input_phone = val;
   };
-  @action setInputPhone2 = (val) => {
-    this.input_phone2 = val;
+  @action setPrice = (val) => {
+    this.input_price = val;
+  }
+  @action setDue = (val) => {
+    this.input_day = val;
   };
-  @action setInputPhone3 = (val) => {
-    this.input_phone3 = val;
-  };
+
+  @action setCommonFile = (obj) => {
+    if (typeof obj == 'object') {
+      this.common_file = obj;
+      console.log("file uploaded")
+    } else {
+      this.common_file = null;
+    }
+  }
+  @action setDrawFile = (obj) => {
+    this.drawFile = obj;
+  }
+  @action createRequest = () => {
+    var cellphoneValid = /^\d{3}-\d{3,4}-\d{4}$/;
+    var homephoneValid = /^\d{2,3}-\d{3,4}-\d{4}$/;
+    if (!cellphoneValid.test(this.input_phone) || !homephoneValid.test(this.input_phone)){
+      alert('전화번호가 올바르지 않습니다. 재확인해주세요.')
+      return;
+    }
+    var formData = new FormData();
+
+    formData.append("product", 45);
+    formData.append("name", this.input_name);
+    formData.append("price", this.input_price.value);
+    formData.append("period", this.input_day.value);
+    formData.append("phone", this.input_phone.replace("-","").replace("-",""));
+    if (this.common_file) {
+      formData.append("file", this.common_file);
+    }
+    const req = {
+      data: formData
+    };
+    RequestAPI.create(req)
+    .then ((res) => {
+      this.created_request = res.data.id;
+      this.client_id = res.data.clientId;
+      this.has_email = res.data.hasEmail;
+      this.step_index = 2;
+      this.percentage += 15;
+      console.log(this.client_id);
+    })
+    .catch(error => {
+      alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');
+      this.step_index = 1;
+    })
+  }
   @action init = (q) => {
     CategoryAPI.getMainCategory()
       .then((res) => {
-        // this.big_category_list = [{id: 0, maincategory: '전체보기', category: '전체보기'}].concat(res.data.results);
         this.big_category_list = res.data.results;
-
         for(let i = 0; i < this.big_category_list.length; i++) {
           for(let j = 0; j < this.big_category_list[i].category_set; j++) {
             this.initial_contents.push(this.big_category_list[i].category_set[j].subclass_set)
           }
         }
-        this.setQuery(q);
+        //this.setQuery(q);
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-  console.log(this.big_category_list)
+
+    this.reset();
   };
   @action setBigCategory = (obj) => {
-    /*
-    if(obj.maincategory === '전체보기') {
-      this.select_big = null;
-      this.select_mid = null;
-      this.select_small = null;
-
-      this.mid_category_list = [];
-      this.small_category_list = [];
-
-      this.contents = this.initial_contents;
-
-      window.history.pushState("", "", `/request?big=&mid=`);
-      return;
-    }
-     */
-    console.log(obj);
-
     this.select_big = obj;
     this.select_mid = null;
     this.select_small = null;
 
     if(obj.category_set[0] && obj.category_set[0].category !== '전체보기') {
       console.log(obj.category_set[0])
-      console.log('전체보기 추가')
       obj.category_set.push(
         {
           id: obj.id,
@@ -144,18 +201,18 @@ class Request {
       contents = [...contents, ...item.subclass_set];
     }
     this.contents = contents;
+    this.maincategory_id = this.select_big.category_set[0].id
     window.history.pushState("", "", `/request`);
-    //window.history.pushState("", "", `/request?big=${obj.id}&mid=`);
   };
   @action setMidCategory = (obj) => {
-    console.log(obj);
-
     if(obj.category === '전체보기') {
       this.setBigCategory(obj)
       return
     }
-
+    //console.log(obj)
     this.select_mid = obj;
+    //console.log(this.select_mid)
+    this.loadRandomPartner();
     this.select_small = null;
     this.small_category_list = obj.subclass_set;
 
@@ -209,6 +266,26 @@ class Request {
       this.tab = 2;
     }
   };
+
+  @action loadRandomPartner = () =>{
+    const req = {
+      data: {
+        category: this.select_mid.id,
+        // 제품 분야 = 가능 제품 분야
+        count: 20
+      },
+    };
+		PartnerAPI.getRandomPartner(req)
+			.then((res) => {
+        console.log("받은 리스폰스",res);
+        this.random_partner_list = res.data.data;
+        console.log(this.random_partner_list)
+			})
+			.catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  }
 
   @action loadAppropriatePartners = () => {
     if(!this.created_request) { return; }

@@ -14,9 +14,10 @@ export function getRequests(req) {
 export function getNextPage(req) {
 	return axios({
 		method: 'GET',
-		url: req.nextUrl[4] === 's'
-			? req.nextUrl
-			: StringUtils.insert(req.nextUrl, 's', 4),
+		url: req.nextUrl,
+		// url: req.nextUrl[4] === 's'
+		// 	? req.nextUrl
+		// 	: StringUtils.insert(req.nextUrl, 's', 4),
 		params: req.params ? req.params : null,
    	headers: req.headers ? req.headers : null,
 	})
@@ -55,5 +56,19 @@ export function getProject(req) {
 		url: `${ROOT_URL}/project/`,
 		params: req.params ? req.params : null,
 		headers: req.headers ? req.headers : null,
+	})
+}
+
+export function getMyProject() {
+	return axios({
+		method: 'GET',
+		url: `${ROOT_URL}/project/`
+	})
+}
+
+export function getEstimateInfo(index) {
+	return axios({
+		method: 'GET',
+		url: `${ROOT_URL}/proposal/${index}`
 	})
 }

@@ -8,7 +8,9 @@ import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 
-import InfoConatiner from "containers/Info";
+import InfoConatiner from "containers/Info2/index";
+import MobileInfoContainer from "containers/Info2/MobileIndex";
+const back_ic = "/static/images/components/MobileNav/back.png";
 
 @inject("Counter", "Post", "Loading") // *_app.js <Provider>에 넘겨준 store명과 일치해야함. *inject: 컴포넌트에서 store에 접근 가능하게 함. 해당 store에 있는 값을 컴포넌트의 props로 주입시켜줌.
 @observer
@@ -40,7 +42,6 @@ class Info extends React.Component {
       {width &&
       <div>
         {Loading.is_open}
-        {/* {Loading.is_open && <Spinner/>} */}
         <Head>
 
           {/* SEO */}
@@ -51,7 +52,7 @@ class Info extends React.Component {
           <meta property="og:image" content="/static/images/thumbnail.png"/>
           <meta property="og:title" content="서비스소개|믿을 수 있는 제조 전문가" />
           <meta property="og:description" content="전문 제조사의 가견적을 바로 받아보는 서비스. 양산 비용 최대 40%를 절감하는 제조 패키지. 맞춤 제조견적, MOQ 등 제품 수배 패키지."/>
-          <meta property="og:url" content="https://www.boltnnut.com/info"/>           
+          <meta property="og:url" content="https://www.boltnnut.com/info"/>
           {/* Title */}
           <title>볼트앤너트|서비스소개</title>
         </Head>
@@ -59,11 +60,16 @@ class Info extends React.Component {
         { width > 767.98 ? (
           <Nav />
           ) : (
-          <MobileNav width={width}/>
+          <MobileNav src={ back_ic } headText={ "회사 소개" }/>
           )
         }
         </>
-        <InfoConatiner query={this.props.query} />
+        { width > 767.98 ? (
+          <InfoConatiner/>
+        ) : (
+          <MobileInfoContainer/>
+        )
+        }
         <Footer />
       </div>
       }
