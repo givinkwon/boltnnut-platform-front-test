@@ -17,15 +17,15 @@ class MobileBanner4Container extends React.Component {
               제조 무료 상담 서비스
             </Header>
             <Middle>
-              40년 경력의 전<br/>
-              컨설턴트 <p>무료 상담</p>
+            최대 40년 경력의<br/>
+                컨설턴트 <p>무료 상담</p>
             </Middle>
             <ImgContainer>
               <img src={ Img }/>
             </ImgContainer>
             <Body>
-              프로젝트마다 해당 제품의 전문가가 배정되어<br/>
-              무료상담을 통해 최적의 견적을 알려드립니다.
+            프로젝트마다 해당 의뢰의 전문가가 배정되어<br/>
+                무료상담을 통해 최적의 견적을 알려드립니다.
             </Body>
           </Fade>
         </ContentContainer>
