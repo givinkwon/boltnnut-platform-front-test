@@ -134,6 +134,7 @@ class MobileRequestCardContainer extends Component {
           titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
           DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
+          console.log(DetailQuestion.index);
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
           if(DetailQuestion.index!=4)
