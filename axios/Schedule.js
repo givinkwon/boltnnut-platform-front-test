@@ -18,7 +18,6 @@ export function getOccupiedMonth(req) {
   })
 }
 export function postSchedule(req) {
-  console.log(req)
   return axios({
     method: 'POST',
     url: `${ROOT_URL}/schedule/`, 

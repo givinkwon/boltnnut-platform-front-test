@@ -42,6 +42,7 @@ class Partner {
     CategoryAPI.getMainCategory()
       .then((res) => {
         this.big_category_all = res.data.results;
+        console.log(res.data.results.splice(0,4))
         this.category_list = res.data.results;
         this.category_list.forEach((mainCategory) => {
           this.category_middle_list = this.category_middle_list.concat(

@@ -9,7 +9,6 @@ import {PRIMARY} from "static/style"
 class Order extends React.Component {
 	render() {
 		const {orderEnum, order, setOrder} = this.props
-		console.log('order: ' + order)
 
 		return (
 			<Wrapper>

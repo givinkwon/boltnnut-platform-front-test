@@ -19,7 +19,6 @@ class ProductContainer extends React.Component {
   };
   render() {
     const { Request } = this.props;
-    console.log(Request.tab)
 
     return (
       <>

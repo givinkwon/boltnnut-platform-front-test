@@ -94,7 +94,6 @@ class RequestCardContainer extends Component {
         break;
       case 2:
         Request.titleData.pop();
-        console.log(Request.titleData);
 
         if (DetailQuestion.prevPage.length > 0)
         {
@@ -204,7 +203,6 @@ class RequestCardContainer extends Component {
   render() {
     const { active } = this.state;
     const { Request, DetailQuestion } = this.props;
-    console.log(this.props.title)
     const countSettings1 = {
       start: 0,
       count : this.countCalc(), 

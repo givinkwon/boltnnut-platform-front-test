@@ -43,7 +43,6 @@ class Tab2Container extends Component {
     let mainCategory = null
 
     if (request) {
-      console.log(request.product)
       product = Answer.getSubclassById(request.product)
       if (product) {
         mainCategory = Answer.getDevelopBigCategoryById(product.maincategory)

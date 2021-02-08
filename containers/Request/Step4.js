@@ -31,7 +31,6 @@ class Step4Container extends Component {
   }
   checkboxChange_policy = (e) => {
     this.setState({...this.state, policy_agree: e});
-    console.log(this.state)
   }
   checkboxChange_marketing = (e) => {
     this.setState({...this.state, marketing_agree: e});

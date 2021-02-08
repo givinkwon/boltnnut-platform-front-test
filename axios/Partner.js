@@ -245,7 +245,6 @@ export function getMyPartner() {
 }
 
 export function getRandomPartner(req) {
-  console.log("보내는 데이터",req)
   return axios({
     method: 'POST',
     url: `${ROOT_URL}/partner/category/`,

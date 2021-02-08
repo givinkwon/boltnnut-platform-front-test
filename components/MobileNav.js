@@ -90,7 +90,6 @@ class MobileNav extends React.Component {
       //  alert("로그인이 필요합니다");
       //  Router.push("/login");
       //}
-      console.log(requestId)
       this.needPermission.forEach((url) => {
         if (url === splitedRoute[1]) {
           if(requestId != 923){
