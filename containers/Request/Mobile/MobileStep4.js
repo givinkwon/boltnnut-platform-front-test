@@ -81,9 +81,16 @@ class MobileStep4Container extends Component {
   createSchedule = () => {
     const { Schedule, Request } = this.props;
     const { policy_agree } = this.state;
+
     if (!policy_agree) {
       return alert("이용약관 동의에 체크해주세요.")
     }
+    var emailval =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+ 
+    if (!emailval.test(this.state.userEmail) && !Request.has_email) {
+      return alert("올바른 이메일 주소를 입력해주세요")
+    }
+    
     let req = {
       request: Request.created_request,
       email: this.state.userEmail,
