@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 
 
-@inject("Schedule")
+@inject("Schedule", 'Request')
 @observer
 class Step5Container extends Component {
   state = {
