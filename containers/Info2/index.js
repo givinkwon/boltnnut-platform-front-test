@@ -81,7 +81,7 @@ const Background = styled.div`
   background-color: white;
 `
 const Header = styled.div`
-  width: 814px;
+  width: 100%;
   height: 83px;
   object-fit: contain;
   font-family: NotoSansCJKkr;
@@ -99,7 +99,7 @@ const Header = styled.div`
   }
 `
 const SubHeader = styled.div`
-  width: 882px;
+  width: 100%;
   height: 78px;
   object-fit: contain;
   font-family: NotoSansCJKkr;
@@ -163,6 +163,7 @@ const Textbox = styled.div`
     color: white;
     background-color: #0933b3;
     margin-top: 72px;
+    cursor: pointer;
   }
 `
 const ImgContainer = styled.div`
