@@ -56,7 +56,6 @@ class Step2Container extends React.Component {
 
   content = () => {
     const { DetailQuestion, Request, ManufactureProcess } = this.props;
-    const { fileName } = this.state;
 
     let test = (e,idx) => {
       if(DetailQuestion.SelectChecked===idx)

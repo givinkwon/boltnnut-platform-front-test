@@ -74,7 +74,7 @@ class MobileRequestCardContainer extends Component {
         counter += 1
       }
     }
-    console.log(counter);
+    // console.log(counter);
     if (counter == buttonActiveCount) {
       return true
     } else {
@@ -117,7 +117,7 @@ class MobileRequestCardContainer extends Component {
   }
   nextButtonClick = () => {
     const { Request, DetailQuestion,ManufactureProcess } = this.props;
-
+    console.log(Request.step_index);
     switch(Request.step_index)
     {
       case 1:
@@ -165,7 +165,6 @@ class MobileRequestCardContainer extends Component {
             Request.titleData= Request.titleData.slice(0,3);
           }
           
-          console.log(Request.titleData);
           var SelectSaveData = {
             "request": Request.created_request,
             "data": Request.titleData,
@@ -206,7 +205,7 @@ class MobileRequestCardContainer extends Component {
   render() {
     const { active } = this.state;
     const { Request, DetailQuestion } = this.props;
-    console.log(this.props.title)
+    // console.log(this.props.title)
     const countSettings1 = {
       start: 0,
       count : this.countCalc(), 

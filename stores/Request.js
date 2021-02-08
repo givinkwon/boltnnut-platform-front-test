@@ -7,7 +7,6 @@ import Router from "next/router";
 import moment from 'moment';
 
 class Request {
-  @observable client_id = -1;
   @observable select_reqs = [];
 
   @observable id = null;
@@ -149,6 +148,7 @@ class Request {
       this.has_email = res.data.hasEmail;
       this.step_index = 2;
       this.percentage += 15;
+      console.log(this.client_id);
     })
     .catch(error => {
       alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');
