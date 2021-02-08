@@ -91,6 +91,7 @@ class MobileStep4Container extends Component {
       marketing: this.state.marketing_agree
     }
     Schedule.submitSchedule(req);
+    Request.step_index = 5;
   }
   timeComponentActiveToggle = (e) => {
     const target = this.state.active1_target

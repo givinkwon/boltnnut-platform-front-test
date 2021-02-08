@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx';
 import * as ScheduleAPI from "../axios/Schedule";
+import * as AccountAPI from "axios/Account";
 import moment from "moment";
+import Router, { withRouter } from 'next/router';
 
 class Schedule {
     @observable today = null; // 선택된 날짜
@@ -100,8 +102,14 @@ class Schedule {
         }
     }
     // Step5 에서 이름, 회사명, 직책, 부서명 업데이트하기
-    @action updateClientInfo = (data) => {
-        
+    @action updateClientInfo = (req, id) => {
+        console.log(req);
+        console.log(id)
+        AccountAPI.patchClientInfo(req, id)
+        .then((res) => {
+            alert("성공적으로 의뢰되었습니다.");
+            Router.push('/');
+        }).catch(error=>console.log(`${error} 는 에러`))
     }
 }
 

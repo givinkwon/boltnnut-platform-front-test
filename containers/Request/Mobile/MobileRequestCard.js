@@ -117,7 +117,7 @@ class MobileRequestCardContainer extends Component {
   }
   nextButtonClick = () => {
     const { Request, DetailQuestion,ManufactureProcess } = this.props;
-
+    console.log(Request.step_index);
     switch(Request.step_index)
     {
       case 1:
@@ -165,7 +165,6 @@ class MobileRequestCardContainer extends Component {
             Request.titleData= Request.titleData.slice(0,3);
           }
           
-          console.log(Request.titleData);
           var SelectSaveData = {
             "request": Request.created_request,
             "data": Request.titleData,
