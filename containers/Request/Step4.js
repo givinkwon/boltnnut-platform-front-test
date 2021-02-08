@@ -85,6 +85,11 @@ class Step4Container extends Component {
       alert("이용약관 동의에 체크해주세요.")
       break;
     }
+    var emailval =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+ 
+    if (!emailval.test(this.state.userEmail)) {
+      return alert("올바른 이메일 주소를 입력해주세요")
+    }
     let req = {
       request: Request.created_request,
       email: this.state.userEmail,
@@ -238,6 +243,7 @@ class Step4Container extends Component {
         <CardFooter>
           <CheckBoxWrapper>
             <CheckBoxComponent
+              checked={this.state.policy_agree}
               onChange={this.checkboxChange_policy}>
                 <span>
                   <Link target="_blank" href="/term/policy">이용약관 및 개인정보 처리방침</Link>

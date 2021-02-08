@@ -8,7 +8,32 @@ import moment from 'moment';
 @inject("Schedule")
 @observer
 class Step5Container extends Component {
-  
+  state = {
+    realName: null, // 사람 이름
+    name: null, // 회사명
+    title: null, // 직책
+    department: null, // 부서
+  }
+  submitUpdate = () => {
+    const { Schedule, Request } = this.props;
+    // const { client_id } = Request.client_id;
+    let req = this.state;
+    Schedule.updateClientInfo(req, Request.client_id);
+  }
+  onChangeRealname = (e) => {
+    this.setState({...this.state, realName: e.currentTarget.value})
+  }
+  onChangeName = (e) => {
+    this.setState({...this.state, name: e.currentTarget.value})
+  }
+  onChangeTitle = (e) => {
+    this.setState({...this.state, title: e.currentTarget.value})
+  }
+  onChangeDepartment = (e) => {
+    this.setState({...this.state, department: e.currentTarget.value})
+    console.log(this.state);
+  }
+
   render() {
     moment.locale('ko');
     const { Schedule } = this.props;
@@ -40,25 +65,25 @@ class Step5Container extends Component {
               <div style={{display: "flex", marginBottom: 34}}>
                 <InputBox style={{marginRight: 30}}>
                   <span>회사명</span>
-                  <input placeholder={"회사명을 입력해주세요."}/>
+                  <input onChange = {this.onChangeName} placeholder={"회사명을 입력해주세요."}/>
                 </InputBox>
                 <InputBox>
                   <span>이름</span>
-                  <input placeholder={"이름을 입력해주세요."}/>
+                  <input onChange = {this.onChangeRealname} placeholder={"이름을 입력해주세요."}/>
                 </InputBox>
               </div>
               <div style={{display: "flex"}}>
                 <InputBox style={{marginRight: 30}}>
                   <span>직책</span>
-                  <input placeholder={"직책을 입력해주세요."}/>
+                  <input onChange = {this.onChangeTitle} placeholder={"직책을 입력해주세요."}/>
                 </InputBox>
                 <InputBox>
                   <span>부서명</span>
-                  <input placeholder={"부서명을 입력해주세요."}/>
+                  <input onChange = {this.onChangeDepartment} placeholder={"부서명을 입력해주세요."}/>
                 </InputBox>
               </div>
             </MainBox>
-            <HomeButton>제출 하기</HomeButton>
+            <HomeButton onClick = {this.submitUpdate} >제출 후 홈으로</HomeButton>
           </Card>
         )
     }

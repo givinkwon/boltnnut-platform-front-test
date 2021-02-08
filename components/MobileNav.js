@@ -261,6 +261,8 @@ const ModalContent = styled.div`
     letter-spacing: -0.38px;
     text-align: left;
     color: #111111;
+    cursor: pointer;
+
   }
 `
 const HeadText = styled.div`
@@ -297,10 +299,12 @@ const Footer = styled.div`
     letter-spacing: -0.33px;
     text-align: center;
     color: #111111;
+    cursor: pointer;
   }
 `
 const FreeButton = styled(Buttonv1)`
   margin-top: 8px;
+  cursor: pointer;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 270px;
     height: 43px;
@@ -336,6 +340,8 @@ const ModalContent2 = styled.div`
     letter-spacing: -0.3px;
     color: #282c36;
     margin-bottom: 22px;
+    cursor: pointer;
+
   }
 `
 const Container = styled.div`

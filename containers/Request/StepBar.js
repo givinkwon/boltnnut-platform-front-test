@@ -54,7 +54,7 @@ class Step extends React.Component {
         <InlineDiv>
           <Relative>
             {this.props.Request.step_index==4 && <><Blue/><White/></>}
-            {this.props.Request.step_index>4 && this.props.Request.step_index!=6 && <Blue><img src={check}/></Blue>}
+            {(this.props.Request.step_index>4 && this.props.Request.step_index!=5) && this.props.Request.step_index!=6 && <Blue><img src={check}/></Blue>}
           </Relative>
         </InlineDiv>
         <TextContainer>
