@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
-import TaskBarContainer from "../TaskBar"
+import TaskBarContainer from "./MobileTaskBar"
 
 //material-ui
 import Table from '@material-ui/core/Table';
@@ -16,13 +16,12 @@ import STLViewer from 'stl-viewer'
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 // import EstimateLogoSlider from './EstimateSheetLogoSlider'
-import EstimateLogoSlider from '../EstimateSheetLogoSlider'
+import EstimateLogoSlider from './MobileEstimateLogoSlider'
 
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 // import ConsultantBoxContainer from './ConsultantBox'
-import ConsultantBoxContainer from '../ConsultantBox'
 import MobileStepContainer from '../../../components/MobileStep';
 
 //images
@@ -33,7 +32,8 @@ const DropUpArrow1 = "static/images/request/Step3/Step3_DropUp1.png";
 const DropdownArrow2 = "/static/images/request/Step3/Step3_Dropdown2.png";
 const DropUpArrow2 = "/static/images/request/Step3/Step3_DropUp2.png";
 const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
-
+const Consultant2 = "/static/images/request/Step3/Step3_Consultant2.png";
+const Consultant3 = "/static/images/request/Step3/Step3_Consultant3.png";
 const styles = {
   table: {
     // minWidth: 650
@@ -70,7 +70,8 @@ class MobileStep3Container extends Component {
     // showEstimateDetail:'none',
     showEstimateDetail:true,
     showConsultantDrop: true,
-    showConsultantDetail: 'none'
+    showConsultantDetail: 'none',
+    arrowChecked:null
   }
 
   ConsultantInfo=[
@@ -98,7 +99,8 @@ class MobileStep3Container extends Component {
       Text2:"인도네시아 (주)K.O.T.I 사출 금형부 차장(2008)",
       Text3:"중국 (주) 아성정밀 금형 금형 개발부(2011)"
     },
-  ]
+  ];
+
   handleChange = (event, newValue) => {
     console.log(newValue)
     this.setState({ percentage: newValue })
@@ -125,6 +127,31 @@ class MobileStep3Container extends Component {
     }
   }
 
+  consultantDetailDown=(idx)=>
+  {
+    if(idx==this.state.arrowChecked)
+    {
+      this.setState({ arrowChecked:null ,showConsultantDetail: 'none'})
+    }
+    else{
+      this.setState({ arrowChecked:idx,showConsultantDetail: true})
+    }
+    
+  }
+
+  arrowHandler=(idx)=>
+  {
+    const {arrowChecked} = this.state;
+    if(idx==arrowChecked)
+    {
+      return DropUpArrow2;
+    }
+    else{
+      return DropdownArrow2;
+    }
+  }
+
+
   detailUp = (type) => {
     const { showEstimateDrop, showEstimateDetail,showConsultantDrop,showConsultantDetail } = this.state;
     if(type==1)
@@ -139,7 +166,7 @@ class MobileStep3Container extends Component {
 
   componentDidMount() {
     const { Proposal, DetailQuestion } = this.props;
-    Proposal.loadEstimateInfo(315);
+    // Proposal.loadEstimateInfo(315);
     console.log(DetailQuestion.proposal_type)
   }
 
@@ -268,7 +295,6 @@ class MobileStep3Container extends Component {
                 </TableRow>
               ))}
 
-
               </TableBody>
 
             </Table>
@@ -285,14 +311,14 @@ class MobileStep3Container extends Component {
             
             {DetailQuestion.message.includes(message) ? 
             <StyledStlViewer
-            model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
-            width={400}                                  // 가로
-            height={400}                                 // 세로
-            modelColor='red'                             // 색
-            backgroundColor='white'                    // 배경색
-            rotate={true}                                // 자동회전 유무
-            orbitControls={true}                         // 마우스 제어 유무
-          />
+              model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
+              width={300}                                  // 가로
+              height={300}                                 // 세로
+              modelColor='red'                             // 색
+              backgroundColor='white'                    // 배경색
+              rotate={true}                                // 자동회전 유무
+              orbitControls={true}                         // 마우스 제어 유무
+            />
            : (
             <TaskBarContainer/>
             )}
@@ -312,19 +338,46 @@ class MobileStep3Container extends Component {
           {/* <ThumbText> {percentage}% </ThumbText>
           <CustomSlider value={percentage}/> */}
 
-          <ConsultantHeader>
-            해당 프로젝트의<br/>
-            볼트앤너트 전문 컨설턴트 이력서 확인하기
-          </ConsultantHeader>
           
-          <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/>
-
-            {/* 나중에 디비에 연결할거라 그때 map으로 바꾸기 */}
-            <DetailContainer style={{display: showConsultantDetail,paddingBottom:20}}>
-              <ConsultantBoxContainer Info={this.ConsultantInfo[1]}/>
-              <ConsultantBoxContainer Info={this.ConsultantInfo[2]}/>
+          
+          {/* <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/> */}
+          <ConsultantBox>
+            <ConsultantHeader>
+                해당 프로젝트의<br/>
+                볼트앤너트 전문 컨설턴트 이력서 확인하기
+            </ConsultantHeader>
+            <ConsultantImgBox>
+                
+                {this.ConsultantInfo.map((Info,idx) => (
+                    <div style={{display:'flex',flexDirection:'column'}}>
+                        <img src={Info.Img}/>
+                        <Font15>{Info.Name}</Font15>
+                        <Font13 style={{color:'#86888c',textAlign:'center'}}>{Info.Job}</Font13>
+                        <img src={this.arrowHandler(idx)} onClick={()=>{this.consultantDetailDown(idx)}} style={{margin:'0 auto',marginTop:15}}/>
+                        {/* {showConsultantDrop == true ? (
+                            <>
+                                <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} style={{margin:'0 auto',marginTop:15}}/>
+                            </>
+                        ) : (
+                            <>
+                                <img src={DropUpArrow2} onClick={()=>{this.detailUp(2);}} style={{margin:'0 auto',marginTop:15}}/>
+                            </>
+                            )
+                        } */}
+                    </div>
+              ))}
+            </ConsultantImgBox>
+            <DetailContainer style={{display: showConsultantDetail,paddingTop:38}}>
+                {this.state.arrowChecked!=null &&
+                      <ConsultantTextBox>
+                        <Font16>{this.ConsultantInfo[this.state.arrowChecked].Text1}</Font16>
+                        <Font14>{this.ConsultantInfo[this.state.arrowChecked].Text2}</Font14>
+                        <Font15>{this.ConsultantInfo[this.state.arrowChecked].Text3}</Font15>
+                      </ConsultantTextBox>
+                }
             </DetailContainer>
-
+          </ConsultantBox>
+            
             <ConsultantDetailButtonBox>
               {showConsultantDrop == true ? (
                     <>
@@ -358,6 +411,72 @@ class MobileStep3Container extends Component {
 }
 
 export default withStyles(styles)(MobileStep3Container);
+
+const ConsultantTextBox = styled.div`
+  width:100%;
+  display: flex;
+  flex-direction:column;
+  // margin-left:36px;
+  // margin-top:72px;
+  justify-content:center;
+  
+`
+
+const Font14 = styled(Content.FontSize14)`
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.14;
+  letter-spacing: -0.14px;
+  color: #999999;
+  text-align:center;
+`
+
+const Font16 = styled(Content.FontSize16)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: -0.16px;
+  color: #282c36;
+  text-align:center;
+`
+
+const Font15 = styled(Content.FontSize15)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: -0.38px;
+  color: #282c36;
+  white-space: pre-line;
+  text-align:center;
+`
+
+const ConsultantImgBox = styled.div`
+  display:flex;
+//   align-items:center;
+  justify-content:space-between;
+//   padding:34px 36px 13px 40px;
+  padding:38px 0 8px 0;
+  >div >img:nth-of-type(1)
+  {
+      width:94px;
+      height:109px;
+  }
+`
+
+const ConsultantBox=styled.div`
+//   width:727px;
+//   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  margin:0 auto;
+//   margin-top:20px;
+//   display:flex;
+  padding-top: 30px;
+  padding-bottom:38px;
+  border-bottom: solid 1px #c6c7cc;
+  border-top: solid 1px #c6c7cc;
+`
 
 const StyledStlViewer=styled(STLViewer)`
   margin:0 auto;

@@ -26,7 +26,7 @@ import AnimationCount from 'react-count-animation';
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 var titleData=[];
 
-@inject('Request', 'DetailQuestion')
+@inject('Request', 'DetailQuestion','ManufactureProcess')
 @observer
 class MobileRequestCardContainer extends Component {
   state = {
