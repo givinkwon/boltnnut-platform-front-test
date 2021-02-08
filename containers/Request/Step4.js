@@ -86,7 +86,7 @@ class Step4Container extends Component {
     }
     var emailval =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
  
-    if (!emailval.test(this.state.userEmail)) {
+    if (!emailval.test(this.state.userEmail) && !Request.has_email) {
       return alert("올바른 이메일 주소를 입력해주세요")
     }
     let req = {
@@ -221,7 +221,7 @@ class Step4Container extends Component {
             </FoldedComponent>
           )}
           <Tail>
-            * 서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트
+            {Schedule.isOnline == 0 ? "* 서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트" : "* 입력하신 전화번호로 화상 ZooM 미팅을 안내드립니다"}
           </Tail>
           { !Request.has_email && (
           <>
@@ -250,6 +250,7 @@ class Step4Container extends Component {
                 </span>
             </CheckBoxComponent>
             <CheckBoxComponent
+              checked={this.state.marketing_agree}
               onChange={this.checkboxChange_marketing}>
                 <span>
                   <span class="bold" onClick={this.openMarketingModal}>마케팅 정보 수신</span>에 동의합니다.
