@@ -392,7 +392,6 @@ class SearchBarContainer2 extends React.Component {
     } else {
     this.setState({...this.state, show_detail: "none"})
     }
-    console.log(this.state.show_detail)
   }
   showSkeleton = () => {
     if (this.state.show_detail == "none") {

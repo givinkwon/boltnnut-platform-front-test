@@ -103,7 +103,6 @@ class Step3Container extends Component {
     },
   ]
   handleChange = (event, newValue) => {
-    console.log(newValue)
     this.setState({ percentage: newValue })
   }
   CustomSliderThumbComponent = (props) => {
@@ -143,7 +142,6 @@ class Step3Container extends Component {
   componentDidMount() {
     const { Proposal, DetailQuestion } = this.props;
     // Proposal.loadEstimateInfo(315);
-    console.log(DetailQuestion.proposal_type)
   }
 
   render() {
@@ -170,7 +168,6 @@ class Step3Container extends Component {
     var message = '도면입력';
     var rand2 = 28 + Math.floor(Math.random() * 38);
 
-    console.log(ManufactureProcess.EstimateDataForDrawing);
     if(DetailQuestion.message.includes(message))
     {
       rows2.splice(1,1);
@@ -178,7 +175,6 @@ class Step3Container extends Component {
       rows2.pop();
       rows2[3]= createData('금형 가견적', '견적 알고리즘이 견적을 도출하고 있습니다.', 'VAT 미포함');
       rows2[4]= createData('사출 가견적', '견적 알고리즘이 견적을 도출하고 있습니다.', 'VAT 미포함');
-      console.log(ManufactureProcess.totalMinPrice, 1)
       if(ManufactureProcess.totalMinPrice > 0 && ManufactureProcess.MinPrice > 0){
         console.log(ManufactureProcess.totalMinPrice, 2)
         rows2.splice(1,1);

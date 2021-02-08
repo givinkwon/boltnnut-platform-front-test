@@ -26,7 +26,6 @@ class MobileStep5Container extends Component {
   }
   onChangeDepartment = (e) => {
     this.setState({...this.state, department: e.currentTarget.value})
-    console.log(this.state);
   }
   submitUpdate = () => {
     const { Schedule, Request } = this.props;

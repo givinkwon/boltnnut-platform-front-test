@@ -94,7 +94,6 @@ class MobileRequestCardContainer extends Component {
         break;
       case 2:
         Request.titleData.pop();
-        console.log(Request.titleData);
 
         if (DetailQuestion.prevPage.length > 0)
         {
@@ -117,7 +116,6 @@ class MobileRequestCardContainer extends Component {
   }
   nextButtonClick = () => {
     const { Request, DetailQuestion,ManufactureProcess } = this.props;
-    console.log(Request.step_index);
     switch(Request.step_index)
     {
       case 1:
@@ -143,7 +141,6 @@ class MobileRequestCardContainer extends Component {
           Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
           DetailQuestion.prevPage.push(DetailQuestion.index);
           DetailQuestion.index = DetailQuestion.nextPage;
-          console.log(DetailQuestion.index);
           DetailQuestion.nextPage=null;
           DetailQuestion.SelectChecked='';
 
@@ -169,7 +166,6 @@ class MobileRequestCardContainer extends Component {
             "request": Request.created_request,
             "data": Request.titleData,
           }
-          console.log(Request.maincategory_id)
           // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
           if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
             Request.step_index = 6;

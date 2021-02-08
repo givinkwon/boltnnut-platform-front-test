@@ -29,7 +29,6 @@ class LeftDetailContainer extends Component {
 		const partner = Answer.getPartnerById(partnerId)
 
 		if(!partner || !partner.portfolio_set.length) {
-			console.log('hello?')
 			return
 		}
 
@@ -54,7 +53,6 @@ class LeftDetailContainer extends Component {
   }
   toDetail = (item) => {
     if(!item.disabled){
-      console.log("toDetail")
       Router.push(`/answer/${item.id}`)
     }
   }

@@ -53,7 +53,6 @@ class Banner7Container extends React.Component {
     const { current, show } = this.state;
     const left = 'static/images/Home/Banner7/prev.png';
     const right = 'static/images/Home/Banner7/next.png';
-    console.log(this.state.progress);
     let progress = String(this.state.progress) + "%";
     let progress2 = "0%";
     if (this.state.progress > 100) {
