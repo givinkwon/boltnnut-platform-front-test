@@ -82,7 +82,8 @@ class Step4Container extends Component {
     const { policy_agree } = this.state;
 
     if (!policy_agree) {
-      return alert("이용약관 동의에 체크해주세요.")
+      alert("이용약관 동의에 체크해주세요.")
+      break;
     }
     let req = {
       request: Request.created_request,
