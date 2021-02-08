@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 
 
-@inject("Schedule")
+@inject("Schedule", 'Request')
 @observer
 class Step5Container extends Component {
   state = {
@@ -18,6 +18,7 @@ class Step5Container extends Component {
     const { Schedule, Request } = this.props;
     // const { client_id } = Request.client_id;
     let req = this.state;
+    console.log(Request);
     Schedule.updateClientInfo(req, Request.client_id);
   }
   onChangeRealname = (e) => {
