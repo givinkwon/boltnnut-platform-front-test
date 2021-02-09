@@ -148,7 +148,7 @@ const TitleContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 44px;
   display: inline-flex;
   justify-content: center;
 `
@@ -165,8 +165,9 @@ const TitleQue = styled(Title.FontSize24)`
 `
 const SelectContainer = styled.div`
   width: 100%;
-  margin-top: 30px;
-  height: ${(props) => (props.index==8 ? "auto" : '374px')};
+  margin-top: 21px;
+  margin-bottom: 93px;
+  height: ${(props) => (props.index==8 ? "auto" : '100%')};
   flex-direction: column;
   display: flex;
   align-items: center;
@@ -191,13 +192,9 @@ const Select = styled.button`
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   outline: 0;
   border: ${(props) => (props.active ? 'solid 2px #0933b3' : 'none')};
-  // &:hover {
-  //   border: solid 2px #0933b3;
-  //   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
-  // }
   > input {
     width: 100%;
     height: 100%;
@@ -208,7 +205,6 @@ const Select = styled.button`
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 347px;
     height: 40px;
-    //padding: 10px 152px 10px 8px;
     object-fit: contain;
     border-radius: 3px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
