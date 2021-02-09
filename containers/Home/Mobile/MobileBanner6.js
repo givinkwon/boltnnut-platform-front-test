@@ -98,22 +98,18 @@ class MobileBanner6Container extends React.Component {
       시제품 제조서비스를 이용하는 과정에서
       너무 많은 도움이 되었고, 정말 친절하게 
       알려주시고 세심히 체크해 주셨습니다. 
-      저희 입장에서 생각하고 일을 진행해주셔서
-      정말 좋게 일을 마무리 할 수 있었습니다.
-      다음에 또 시제품을 만들어야하는 상황이 온다면 볼트앤너트를
-      애용하고 싶습니다. 
       `,
       title: `다음 제품도 볼트앤너트에서
       만들고 싶습니다.`,
       logo: KMH
     }
     const settings = {
-      dots: true,
+      dots: false,
       infinite: false,
       slidesToShow: 1,
       slidesToScroll: 1,
       arrows: true,
-      vertical: false
+      // vertical: false
     }
     return (
       <Background style={{flexDirection: 'column', paddingBottom: 100}}>
@@ -123,6 +119,7 @@ class MobileBanner6Container extends React.Component {
             검증된 <span class="bold">볼트앤너트</span>를 만나보세요
           </Header>
           <RatingBox>
+
             <StarTitle>
               클라이언트 평균 만족도
             </StarTitle>
@@ -138,46 +135,31 @@ class MobileBanner6Container extends React.Component {
               </Rate>
             </div>
           </RatingBox>
-          <CustomSlider {...settings}>
-          
-          <div style={{display: 'inline-flex', flexDirection: 'column', width: "100%", justifyContent: 'center'}}>
-            <div style={{marginBottom: 7, display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard2 item = {item3} big={true}/>
-            </div>
-            <div style={{display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard item = {item1}/>
-              <div style={{marginRight: 7}} />
-              <ReviewCard item = {item2} />
-            </div>
-          </div>
 
-          <div style={{display: 'inline-flex', flexDirection: 'column', width: "100%", justifyContent: 'center'}}>
-            <div style={{marginBottom: 7, display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard2 item = {item3} big={true}/>
-            </div>
-            <div style={{display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard item = {item3}/>
-              <div style={{marginRight: 7}} />
-              <ReviewCard item = {item4} />
-            </div>
-          </div>
-
-          <div style={{display: 'inline-flex', flexDirection: 'column', width: "100%", justifyContent: 'center'}}>
-            <div style={{marginBottom: 7, display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard2 item = {item3} big={true}/>
-            </div>
-            <div style={{display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard item = {item9}/>
-              <div style={{marginRight: 7}} />
-              <ReviewCard item = {item10} />
-            </div>
-            <div style={{marginBottom: 7, display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard2 item = {item3} big={true}/>
-            </div>
-          </div>
-          
-          
-          </CustomSlider>
+          <ItemBox>
+           <CustomSlider {...settings}>
+              <Item>
+                <ReviewCard item = {item1}/>
+                <ReviewCard item = {item2}/>
+              </Item>
+              <Item>
+                <ReviewCard item = {item3}/>
+                <ReviewCard item = {item4}/>
+              </Item>
+              <Item>
+                <ReviewCard item = {item5}/>
+                <ReviewCard item = {item6}/>
+              </Item>
+              <Item>
+                <ReviewCard item = {item7}/>
+                <ReviewCard item = {item8}/>
+              </Item>
+              <Item>
+                <ReviewCard item = {item9}/>
+                <ReviewCard item = {item10}/>
+              </Item>
+            </CustomSlider>
+          </ItemBox>
         </Fade>
       </Background>
     );
@@ -186,6 +168,15 @@ class MobileBanner6Container extends React.Component {
 
 export default MobileBanner6Container;
 
+const ItemBox=styled.div`
+  // max-width:100vw;
+  // width: 100%;
+`
+
+const Item=styled.div`
+  // display:flex;
+  // flex-direction:row;
+`
 const Header = styled(Title.FontSize22)`
     font-weight: 500;
     font-stretch: normal;
@@ -248,8 +239,9 @@ const CustomSlider = styled(Slider)`
     outline: none;
   }
   .slick-list {
-    width: 100%;
+    // width: 100%;
   }
+
   .slick-track {
     width: 100%;
     > div > div > div {
@@ -258,11 +250,13 @@ const CustomSlider = styled(Slider)`
       display: inline-flex !important;
       justify-content: center;
       > div {
-        margin-right: 22px;
+        // margin-right: 22px;
+        margin-right:7px;
         :nth-of-type(3) {
           margin-right: 0px;
         }
       }
     }
+
   }
 `

@@ -68,12 +68,12 @@ class HomeConatiner extends React.Component {
         { width < 767.98 ? (
           <>
             <CustomContainer>
-              <MobileBanner0Container/>
+              {/* <MobileBanner0Container/>
               <MobileBanner1Container/>
               <MobileBanner2Container/>
               <MobileBanner3Container/>
               <MobileBanner4Container/>
-              <MobileBanner5Container/>
+              <MobileBanner5Container/> */}
               <MobileBanner6Container/>
               <MobileBanner7Container/>
               <MobileBanner8Container/>
