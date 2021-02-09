@@ -10,7 +10,7 @@ const UseScrollCount = (end, start = 0, duration = 3000, delay = 0,addAmount=1) 
   const onScroll = useCallback(
     ([entry]) => {
       const { current } = element;
-      if (entry.isIntersecting) 
+      if (current && entry.isIntersecting) 
       {
         // let currentNumber = start;
         // setCurrentNumber((currentNumber)=>start);

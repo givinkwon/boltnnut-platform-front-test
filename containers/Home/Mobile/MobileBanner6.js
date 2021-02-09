@@ -139,44 +139,26 @@ class MobileBanner6Container extends React.Component {
             </div>
           </RatingBox>
           <CustomSlider {...settings}>
-          
-          <div style={{display: 'inline-flex', flexDirection: 'column', width: "100%", justifyContent: 'center'}}>
-            <div style={{marginBottom: 7, display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard2 item = {item3} big={true}/>
-            </div>
-            <div style={{display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard item = {item1}/>
-              <div style={{marginRight: 7}} />
-              <ReviewCard item = {item2} />
-            </div>
-          </div>
-
-          <div style={{display: 'inline-flex', flexDirection: 'column', width: "100%", justifyContent: 'center'}}>
-            <div style={{marginBottom: 7, display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard2 item = {item3} big={true}/>
-            </div>
-            <div style={{display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard item = {item3}/>
-              <div style={{marginRight: 7}} />
+            <SliderCell>
+              <ReviewCard item = {item1} />
+              <ReviewCard item = {item2}/>
+            </SliderCell>
+            <SliderCell>
+              <ReviewCard item = {item3} />
               <ReviewCard item = {item4} />
-            </div>
-          </div>
-
-          <div style={{display: 'inline-flex', flexDirection: 'column', width: "100%", justifyContent: 'center'}}>
-            <div style={{marginBottom: 7, display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard2 item = {item3} big={true}/>
-            </div>
-            <div style={{display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard item = {item9}/>
-              <div style={{marginRight: 7}} />
+            </SliderCell>
+            <SliderCell>
+              <ReviewCard item = {item5}/>
+              <ReviewCard item = {item6} />
+            </SliderCell>
+            <SliderCell>
+              <ReviewCard item = {item7} />
+              <ReviewCard item = {item8}/>
+            </SliderCell>
+            <SliderCell>
+              <ReviewCard item = {item9} />
               <ReviewCard item = {item10} />
-            </div>
-            <div style={{marginBottom: 7, display: 'inline-flex', justifyContent: 'center'}}>
-              <ReviewCard2 item = {item3} big={true}/>
-            </div>
-          </div>
-          
-          
+            </SliderCell>
           </CustomSlider>
         </Fade>
       </Background>
@@ -265,4 +247,6 @@ const CustomSlider = styled(Slider)`
       }
     }
   }
+`
+const SliderCell = styled.div`
 `
