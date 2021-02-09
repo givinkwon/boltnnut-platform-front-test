@@ -260,3 +260,5 @@ const CustomSlider = styled(Slider)`
 
   }
 `
+const SliderCell = styled.div`
+`
