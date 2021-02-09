@@ -17,14 +17,14 @@ class MobileBanner5Container extends React.Component {
     return (
       <Background backgroundColor = {"#f6f6f6"}>
         <Fade bottom>
-          <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: 70}}>
-            <Header fontWeight = {"bold"} letterSpacing = { "normal" }>
+          <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: 100}}>
+            <Header>
               계약 이행 보증 서비스
             </Header>
             <Middle>
               7가지 계약 관리 서비스로 <br/> 계약 이행<span class="bold"> 100% 보증</span>
             </Middle>
-            <img src={image1} style={{marginTop: 30, marginBottom: 22}}/>
+            <img src={image1} style={{marginTop: 32, marginBottom: 18}}/>
             <Body>
               개발부터 납품까지 전달 프로젝트 매니저가 <br/> 배정되어 계약 이행을 100% 보증합니다.
             </Body>
@@ -40,6 +40,9 @@ export default MobileBanner5Container;
 const Header = styled(Title.FontSize13)`
     font-weight: bold;
     color: #0933b3;
+    height: 19px;
+  margin-bottom: 3px;
+  
 `
 const Middle = styled(Title.FontSize22)`
     font-weight: 500;
@@ -54,6 +57,7 @@ const Middle = styled(Title.FontSize22)`
     }
 `
 const Body = styled(Content.FontSize15)`
+  height: 44px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
