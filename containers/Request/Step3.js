@@ -74,7 +74,7 @@ class Step3Container extends Component {
     // showEstimateDetail:true,
     showConsultantDrop: true,
     showConsultantDetail: 'none'
-  } 
+  }
 
   ConsultantInfo=[
     {
