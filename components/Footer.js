@@ -127,9 +127,9 @@ class FooterComponent extends React.Component {
              <div style={{flexDirection: "row", display: "block", position: "relative"}}>
              <CompanyInfo>
                <span> (주) 볼트앤너트 </span>
-               <span> 대표자 윤기열, 신지섭</span>
+               <span> 대표자 : 윤기열</span>
                <span> 사업자등록번호 390-87-01669</span>
-               <span> 서울특별시 성북구 고려대길30길 4 2층</span>
+               <span> 서울특별시 성북구 고려대길27길 4, 3층</span>
              </CompanyInfo>
              <CompanyInfo2>
                <span> CONTACT </span>
