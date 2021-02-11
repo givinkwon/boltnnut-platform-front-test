@@ -48,7 +48,7 @@ class Step extends React.Component {
         </InlineDiv>
         <InlineDiv>
           <Relative>
-            {this.propuest.step_index == 4 && <img src={lineBlue}/>}
+            {this.props.Request.step_index == 4 && <img src={lineBlue}/>}
           </Relative>
         </InlineDiv>
         <InlineDiv>
