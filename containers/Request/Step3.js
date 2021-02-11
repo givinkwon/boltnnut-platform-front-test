@@ -179,7 +179,7 @@ class Step3Container extends Component {
         rows2.splice(1,1);
         rows2.pop();
         rows2.pop();
-        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/100) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/100) + '만원', 'VAT 미포함');
+        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/10000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000) + '만원', 'VAT 미포함');
         rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개(MOQ 1000개)', 'VAT 미포함');
       }  
 
