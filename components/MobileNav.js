@@ -280,6 +280,7 @@ const HeadText = styled.div`
   font-style: normal;
   letter-spacing: -0.5px;
   left: 0;
+  margin-top:2px;
 `
 const Footer = styled.div`
   width: 100%;

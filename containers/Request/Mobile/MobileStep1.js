@@ -42,7 +42,7 @@ const customStyles = {
     return { ...provided, opacity, transition };
   },
   placeholder: () => ({
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 'normal',
     fontStretch: 'normal',
     fontStyle: 'normal',
@@ -128,7 +128,7 @@ class MobileStep1Container extends React.Component {
           <input style={{display: 'none'}} value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
           <Select
             styles={customStyles} options={costArray} value={Request.input_price}
-            getOptionLabel={(option) => option.label} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
+            getOptionLabel={(option) => option.label} placeholder='예산을 선택해주세요.' onChange={Request.setPrice}
           />
         </SelectRow>
           <Header style={{marginTop: 18}}>
@@ -221,7 +221,7 @@ const Header = styled(Content.FontSize15)`
     text-align: left;
     color: #282c36;
     height: 22px;
-    margin-top: 28px;
+    margin-top: 32px;
     display: flex;
     align-items: center;
 `
