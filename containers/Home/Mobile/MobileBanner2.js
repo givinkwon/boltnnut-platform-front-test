@@ -42,13 +42,14 @@ const ContentContainer = styled(Containerv1)`
   align-items: center;
 `
 const Header = styled(Title.FontSize20)`
+    height: 19px;
   color: #0933b3;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.45;
   letter-spacing: normal;
-  margin: 100px 0px 2px 0px;
+  margin: 100px 0px 3px 0px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
   }
@@ -70,7 +71,7 @@ const Middle = styled(Title.FontSize56)`
   }
 `
 const ImgContainer = styled.div`
-  margin: 30px 0px 22px 0px;
+  margin: 32px 0px 18px 0px;
 `
 const Body = styled(Title.FontSize24)`
   text-align: center;
@@ -85,6 +86,8 @@ const Body = styled(Title.FontSize24)`
   margin-bottom: 100px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 15px;
+      height: 44px;
+      height: 44px;
   }
 `
 

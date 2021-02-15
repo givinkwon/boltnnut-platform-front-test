@@ -38,7 +38,7 @@ class MobileBanner6Container extends React.Component {
       서비스를 다시 이용하고 싶습니다.`,
       logo: lisk
     }
-    
+
     const item2 = {
       name: "움틀",
       review: `볼트앤너트와 실험용 여과기 개발 및 
@@ -53,7 +53,7 @@ class MobileBanner6Container extends React.Component {
       logo: HCLAB,
       title: '기존 거래처 견적보다\n30% 싸게 만들었습니다'
     }
-    
+
     const item4 = {
       name: "하이젠어스",
       review: `볼트앤너트에 소량의 기계부품을 의뢰하였습니다. 
@@ -67,7 +67,7 @@ class MobileBanner6Container extends React.Component {
       review: "생산 계획 수립을 위해 개발부터 전체 양산 단가까지 턴키로 알아볼 필요가 있었는데, 볼트앤너트 상담을 통해 양산 예산을 안내해주셨고 그에 따라 적합한 생산 계획을 수립할 수 있었습니다.",
       logo: JINYOUNG
     }
-    
+
     const item6 = {
       name: "MANU",
       review: "기존 거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트 가견적과 상담을 통해 합리적인 견적을 알 수 있었고, 더 나은 조건의 업체와 계약하게 되었습니다.",
@@ -137,7 +137,7 @@ class MobileBanner6Container extends React.Component {
           </RatingBox>
 
           <ItemBox>
-           <CustomSlider {...settings}>
+            <CustomSlider {...settings}>
               <Item>
                 <ReviewCard item = {item1}/>
                 <ReviewCard item = {item2}/>
@@ -260,5 +260,4 @@ const CustomSlider = styled(Slider)`
 
   }
 `
-const SliderCell = styled.div`
-`
+

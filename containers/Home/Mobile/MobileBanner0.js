@@ -59,26 +59,26 @@ class MobileBanner0Container extends React.Component {
                   총 프로젝트 금액
               </Title1>
               <Content1 color={'#ffffff'}>
-                <CountFunc index={0}/> 원
+                <CountFunc index={0}/> <span>원</span>
               </Content1>
 
-              <div style={{marginTop: 22}} />
+              <div style={{marginTop: 25}} />
               <Title1 fontWeight={300} color={'#ffffff'}>
                   의뢰 프로젝트
               </Title1>
               <Content1 color={'#ffffff'}>
-                <CountFunc index={1} projCount={ProjectCount}/> 건
+                <CountFunc index={1} projCount={ProjectCount}/> <span>건</span>
               </Content1>
 
-              <div style={{marginTop: 22}} />
+              <div style={{marginTop: 25}} />
               <Title1 fontWeight={300} color={'#ffffff'}>
                   개발 전문업체
               </Title1>
               <Content1 color={'#ffffff'}>
-                <CountFunc index={2}/> 개
+                <CountFunc index={2}/> <span>개</span>
               </Content1>
             </div>
-            <Buttonv1 style={{marginTop: 56, marginLeft:'auto', marginRight:'auto', fontWeight: 700}} onClick={() => Router.push("/request")}>
+            <Buttonv1 style={{marginTop: 59, marginLeft:'auto', marginRight:'auto', fontWeight: 700}} onClick={() => Router.push("/request")}>
               <p style={{paddingBottom:0.2}}>지금 무료 가견적 받기</p>
             </Buttonv1>
         </Fade>
@@ -92,19 +92,19 @@ export default MobileBanner0Container;
 const Header = styled(Title.FontSize23)`
   text-align: center;
   margin-bottom: 24px;
+  height: 70px;
 `
 const Title1 = styled(Content.FontSize16)`
   text-align: center;
-  line-height: 0.94;
   letter-spacing: -0.4px;
   object-fit: contain;
   font-weight:normal;
+  height: 20px;
 `
 const Content1 = styled(Content.FontSize17)`
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.29;
   letter-spacing: normal;
   text-align: center;
   margin-top: 2px;
@@ -112,6 +112,9 @@ const Content1 = styled(Content.FontSize17)`
   align-items: center;
   justify-content: center;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 28px;
+    height: 25px;
+  }
+  >span {
+    font-weight: 400;
   }
 `

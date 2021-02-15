@@ -46,25 +46,25 @@ class MobileBanner3Container extends React.Component {
 export default MobileBanner3Container;
 
 const Header = styled(Title.FontSize13)`
-  height:20px;
+  height:19px;
   color: #e8eeff;
   font-weight: 700;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.46;
   letter-spacing: normal;
-  margin-bottom:2px;
+  margin-bottom:3px;
   text-align:center;
 `
 const Middle = styled(Content.FontSize22)`
-  height:72px;
+  height:62px;
   color: #f6f6f6;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.64;
   letter-spacing: -0.55px;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
   text-align:center;
   @media (min-width: 0px) and (max-width: 767.98px) {
       line-height: 1.45;
@@ -76,13 +76,14 @@ const Middle = styled(Content.FontSize22)`
 `
 
 const Body = styled(Content.FontSize15)`
+  height: 44px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.6;
   letter-spacing: -0.38px;
   color: #cedafe;
-  margin-top:22px;
+  margin-top:18px;
   text-align:center;
 `
 
