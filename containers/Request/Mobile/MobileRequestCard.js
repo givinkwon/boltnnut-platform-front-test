@@ -225,9 +225,9 @@ class MobileRequestCardContainer extends Component {
         <MobileLogoImageSlider/>
         {this.props.title == "기본 정보 입력 1/2" ? (<SliderText>의뢰에 대해 이해할 수 있도록 기본 정보를 입력해주세요</SliderText>) : (<SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>)}
          <ButtonContainer>
-          <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
+          <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } type={1} onClick={ this.prevButtonClick }>이전</NewButton>
           <div style={{marginRight: 14}} />
-          <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
+          <NewButton active={ active } type={2} onClick={ this.nextButtonClick }>다음</NewButton>
         </ButtonContainer>
     </div>
     )
@@ -264,7 +264,7 @@ const CustomSlider = withStyles({
     color: '#0933b3',
     height: 4,
     width: '100%',
-    borderRadius: 10,
+    borderRadius: 50,
     cursor:'default',
     position: "absolute",
     left: 0,
@@ -276,12 +276,14 @@ const CustomSlider = withStyles({
   },
   track: {
     height: 4,
+    borderTopRightRadius:5,
+    borderBottomRightRadius:5
   },
   rail: {
     color: '#c6c7cc',
     opacity: 1,
     height: 4,
-    borderRadius: 10,
+    borderRadius: 0,
   },
 })(Slider);
 
