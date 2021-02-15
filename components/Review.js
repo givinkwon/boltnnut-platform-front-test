@@ -76,7 +76,7 @@ const Card = styled.div`
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     background-color: #ffffff;
     @media (min-width: 0px) and (max-width: 767.98px) {
-        width: 45%;
+        width: 14%;
         height: 236px;
     }
 `
@@ -131,6 +131,8 @@ const ContentBox = styled(Content.FontSize15)`
         text-align: left;
         color: #767676;
         margin-top: 3px;
+        padding-left:14px;
+        padding-right:15px;
     }
 `
 /////////////////// ReviewCard2 ////////////////////

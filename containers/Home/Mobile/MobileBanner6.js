@@ -241,6 +241,7 @@ const CustomSlider = styled(Slider)`
   .slick-list {
     // width: 100%;
   }
+
   .slick-track {
     width: 100%;
     > div > div > div {
@@ -256,6 +257,7 @@ const CustomSlider = styled(Slider)`
         }
       }
     }
+
   }
 `
 
