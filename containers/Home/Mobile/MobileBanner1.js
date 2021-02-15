@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Fade from 'react-reveal/Fade';
 import { inject, observer } from "mobx-react";
 
-const MobileBanner1Img = 'static/images/Home/Mobile/MobileBanner1/MobileBanner1Img.png';
+const MobileBanner1Img = 'static/images/Home/Mobile/MobileBanner1/MobileBanner1Img.svg';
 @inject('Proposal','Partner')
 @observer
 class MobileBanner1Container extends React.Component {
@@ -39,9 +39,10 @@ const ImageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin: 30px 0px 18px 0px;
+  margin: 29px 0px 18px 0px;
 `
 const Head = styled(Title.FontSize20)`
+  height: 19px;
   font-size: 14px;
   color: #0933b3;
   font-weight: bold;
@@ -49,7 +50,7 @@ const Head = styled(Title.FontSize20)`
   font-style: normal;
   line-height: 1.45;
   letter-spacing: normal;
-  margin: 70px 0px 2px 0px;
+  margin: 70px 0px 3px 0px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
   }
@@ -59,7 +60,7 @@ const Main = styled(Title.FontSize56)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.36;
+  line-height: 1.45;
   letter-spacing: -0.55px;
   text-align: center;
   > span {
@@ -82,6 +83,7 @@ const Content = styled(Title.FontSize24)`
   margin-bottom: 100px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 15px;
+    height: 44px;
   }
 `
 

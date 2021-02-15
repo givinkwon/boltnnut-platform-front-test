@@ -131,9 +131,9 @@ class MobileNav extends React.Component {
                   <Logo src={logo_ic} onClick={() => Router.push("/")} style={{float:'left'}}/>
                   <img src={ x_ic } style={{float: 'right'}}/>
                 </div>
-                <div>내 제조 의뢰 견적과 전문 제조사를 바로 만나 보세요.</div>
+                <div style={{height:14}}>내 제조 의뢰 견적과 전문 제조사를 바로 만나 보세요.</div>
                 <FreeButton onClick={() => Router.push("/request")}>
-                  <span>지금 무료 가견적 받기</span>
+                  <span style={{marginTop: 1}}>지금 무료 가견적 받기</span>
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
@@ -208,8 +208,8 @@ const Modal = styled.div`
 `
 const ProfileMenu = styled.div`
   width: 70%;
-  padding: 22px 24px;
-  height: 100%;
+  padding: 22px 22px;
+  height: 100vm;
   position: absolute;
   background-color: white;
   z-index: 10000;

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import styled from "styled-components";
+import styled, { keyframes } from 'styled-components';
 import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
@@ -148,7 +148,7 @@ class MobileRequestCardContainer extends Component {
         }
         else {
           Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
-          
+
           // console.log(Request.drawFile);
           if(DetailQuestion.index==8)
           {
@@ -161,7 +161,7 @@ class MobileRequestCardContainer extends Component {
             ManufactureProcess.saveSelect(ManufactureProcessFormData);
             Request.titleData= Request.titleData.slice(0,3);
           }
-          
+
           var SelectSaveData = {
             "request": Request.created_request,
             "data": Request.titleData,
@@ -177,8 +177,8 @@ class MobileRequestCardContainer extends Component {
             break;
           }
           DetailQuestion.loadProposalType(SelectSaveData);
-          
-          Request.step_index = 3; 
+
+          Request.step_index = 3;
         }
         Request.percentage += 14;
         break;
@@ -188,7 +188,7 @@ class MobileRequestCardContainer extends Component {
     const { Request} = this.props;
     let result = 4997
     //console.log(Request.select_big, Request.select_mid, Request.select_small)
-  
+
     if(Request.select_big != null && Request.select_mid == null){
         result = Request.select_big.id === 0 ?  4997 : 460 * (((Request.select_big.id)/5) + 4)
     }
@@ -204,7 +204,7 @@ class MobileRequestCardContainer extends Component {
     // console.log(this.props.title)
     const countSettings1 = {
       start: 0,
-      count : this.countCalc(), 
+      count : this.countCalc(),
       duration: 6000,
       decimals: 0,
       useGroup: true,
@@ -294,6 +294,17 @@ const ThumbText = styled(Title.FontSize20)`
   font-weight: bold;
 `
 
+const boxFade = keyframes`
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+`
 const SliderText = styled(Content.FontSize13)`
   position: relative;
   height: 19px;
@@ -303,6 +314,7 @@ const SliderText = styled(Content.FontSize13)`
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.16px;
+  animation: ${ boxFade } 2s linear infinite;
 `
 
 const MatchingText = styled(Content.FontSize15)`
