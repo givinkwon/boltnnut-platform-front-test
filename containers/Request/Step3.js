@@ -188,6 +188,9 @@ class Step3Container extends Component {
       if(ManufactureProcess.SelectedItem.process!=1)
       {
         rows2.splice(3,1);
+        rows2.splice(4,1);
+        rows2[3]= createData('생산가', Math.round(ManufactureProcess.MinPrice/100)*100 +'원' + '/개', 'VAT 미포함');
+     
       }
 
     }
