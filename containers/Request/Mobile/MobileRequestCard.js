@@ -178,11 +178,7 @@ class MobileRequestCardContainer extends Component {
             break;
           }
           // 도면에서 카테고리가 실리콘/플라스틱이 아닌 경우
-          // if(DetailQuestion.index == 8 && ManufactureProcess.SelectChecked != 1 && ManufactureProcess.SelectChecked != 2 ){
-          //   Request.step_index = 6;
-          //   break;
-          // }
-          
+
           Request.step_index = 3;
         }
         Request.percentage += 14;
