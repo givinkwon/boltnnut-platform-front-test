@@ -61,6 +61,7 @@ class MobileStep3Container extends Component {
 
   buttonClick = () => {
     const { Request } = this.props;
+    window.scrollTo(0, 0)
     Request.step_index = 4;
   }
 
@@ -135,7 +136,7 @@ class MobileStep3Container extends Component {
     else{
       this.setState({ arrowChecked:idx,showConsultantDetail: true})
     }
-    
+
   }
 
   arrowHandler=(idx)=>
@@ -218,7 +219,7 @@ class MobileStep3Container extends Component {
         rows2.pop();
         rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/10000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000) + '만원', 'VAT 미포함');
         rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개(MOQ 1000개)', 'VAT 미포함');
-      }  
+      }
 
     }
     return (
@@ -227,7 +228,7 @@ class MobileStep3Container extends Component {
         <span>무료 견적서 받기</span>
         <MobileStepContainer/>
     </TopHeader>
-    
+
       <Card>
         <HeaderBackground>
           <Header>
@@ -316,8 +317,8 @@ class MobileStep3Container extends Component {
 
             {/* 여기 들어간다 */}
 
-            
-            {DetailQuestion.message.includes(message) ? 
+
+            {DetailQuestion.message.includes(message) ?
             <StyledStlViewer
               model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
               width={300}                                  // 가로
@@ -337,17 +338,17 @@ class MobileStep3Container extends Component {
 
         <ContentBox>
           <ContentHeader>
-            요청하신 {estimateData.projectTitle} 제품 개발에<br/> 
+            요청하신 {estimateData.projectTitle} 제품 개발에<br/>
             최적화된 <span style={{fontSize:16,color:'#0933b3'}}>{rand2}</span> 곳의 제조 파트너사가 매칭되었습니다.
           </ContentHeader>
 
           <EstimateLogoSlider />
-          
+
           {/* <ThumbText> {percentage}% </ThumbText>
           <CustomSlider value={percentage}/> */}
 
-          
-          
+
+
           {/* <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/> */}
           <ConsultantBox>
             <ConsultantHeader>
@@ -374,7 +375,7 @@ class MobileStep3Container extends Component {
                 }
             </DetailContainer>
           </ConsultantBox>
-            
+
             <ConsultantDetailButtonBox>
               {showConsultantDrop == true ? (
                     <>
@@ -393,7 +394,7 @@ class MobileStep3Container extends Component {
                     )
                   }
           </ConsultantDetailButtonBox>
-          
+
           <Font13 style={{marginTop:40,textAlign:'center',color:'#0a2165',fontWeight:'bold'}}>
           전문 컨설턴트의 무료 상담을 통해 의뢰의 정확한 견적을 받아보세요
           </Font13>

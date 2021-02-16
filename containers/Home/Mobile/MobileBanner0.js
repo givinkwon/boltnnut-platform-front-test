@@ -48,7 +48,7 @@ class MobileBanner0Container extends React.Component {
     const PartnerCount = this.props.Partner.partner_count;
 
     return (
-    <Background src={background} style={{paddingBottom: 70, paddingTop: 54, justifyContent: 'center'}}>
+    <Background src={background} style={{paddingBottom: 70, paddingTop: 54, marginTop: 54, justifyContent: 'center'}}>
         <Fade bottom>
             <Header color={WHITE} fontWeight={"500"}>
               내 제조 의뢰 견적과<br/>
