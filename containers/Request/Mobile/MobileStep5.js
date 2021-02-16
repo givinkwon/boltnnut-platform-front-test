@@ -31,6 +31,7 @@ class MobileStep5Container extends Component {
     const { Schedule, Request } = this.props;
     // const { client_id } = Request.client_id;
     let req = this.state;
+    dataLayer.push({'event':'Step5Complete'});
     Schedule.updateClientInfo(req, Request.client_id);
   }
   render() {

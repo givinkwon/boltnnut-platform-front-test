@@ -117,6 +117,7 @@ class MobileRequestCardContainer extends Component {
   nextButtonClick = () => {
     const { Request, DetailQuestion,ManufactureProcess } = this.props;
     window.scrollTo(0, 0)
+
     switch(Request.step_index)
     {
       case 1:
@@ -126,6 +127,8 @@ class MobileRequestCardContainer extends Component {
         } else {
           try {
             Request.createRequest();
+            dataLayer.push({'event':'Step1Complete'});
+
             DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
           } catch(e) {
             console.log(e);
@@ -167,18 +170,19 @@ class MobileRequestCardContainer extends Component {
             "request": Request.created_request,
             "data": Request.titleData,
           }
+          DetailQuestion.loadProposalType(SelectSaveData);
+          dataLayer.push({'event':'Step2Complete'});
           // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
           if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
             Request.step_index = 6;
             break;
           }
           // 도면에서 카테고리가 실리콘/플라스틱이 아닌 경우
-          if(DetailQuestion.index == 8 && ManufactureProcess.SelectChecked != 1 && ManufactureProcess.SelectChecked != 2  ){
-            Request.step_index = 6;
-            break;
-          }
-          DetailQuestion.loadProposalType(SelectSaveData);
-
+          // if(DetailQuestion.index == 8 && ManufactureProcess.SelectChecked != 1 && ManufactureProcess.SelectChecked != 2 ){
+          //   Request.step_index = 6;
+          //   break;
+          // }
+          
           Request.step_index = 3;
         }
         Request.percentage += 14;

@@ -97,6 +97,7 @@ class MobileStep4Container extends Component {
       marketing: this.state.marketing_agree
     }
     Schedule.submitSchedule(req);
+    dataLayer.push({'event':'Step4Complete'});
     Request.step_index = 5;
   }
   timeComponentActiveToggle = (e) => {
