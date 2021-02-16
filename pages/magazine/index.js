@@ -49,7 +49,7 @@ class Index extends React.Component {
         { width > 767.98 ? (
           <Nav />
           ) : (
-          <MobileNav width={width} src={ back_ic }/>
+          <MobileNav headText = { "제조 인사이트" } width={width} src={ back_ic }/>
           )
         }
         </>

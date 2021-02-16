@@ -123,7 +123,7 @@ class Step2Container extends React.Component {
                   }
 
                   <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
-                    <Text id={'queText'} color={"#282c36"}>
+                    <Text active={activeHandler(idx)} id={'queText'} color={"#282c36"}>
                       {data.select}
                     </Text>
                   </Select>
@@ -177,7 +177,7 @@ const SelectContainer = styled.div`
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.16px;
-  color: ${(props) => (props.color ? props.color : '#282c36')};
+  color: ${(props) => (props.active ? '#0933b3' : 'black')};
   margin-left: 10px;
 `
 const Select = styled.button`

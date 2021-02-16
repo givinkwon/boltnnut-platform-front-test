@@ -54,7 +54,7 @@ class Policy extends React.Component {
         { width > 767.98 ? (
           <Nav />
         ) : (
-          <MobileNav src={ back_ic }/>
+          <MobileNav headText = { "이용약관" } src={ back_ic }/>
         )
         }
         <PolicyConatiner/>

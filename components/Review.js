@@ -55,7 +55,7 @@ class ReviewCard extends Component {
                         <ContentBox style={{fontWeight: 500}}>
                             김율 대표님
                         </ContentBox>
-                        <img src={person_mob} />
+                        <img src={person_mob} style={{width:173, height:149, marginRight:20}}/>
                     </ImageBox>
                     }
                 </BigCard>
@@ -122,7 +122,7 @@ const ContentBox = styled(Content.FontSize15)`
     text-align: left;
     color: black;
     padding-left: 30px;
-    padding-right: 30px;
+    padding-right: 10px;
     word-break: keep-all;
     @media (min-width: 0px) and (max-width: 767.98px) {
         font-size: 12px !important;  

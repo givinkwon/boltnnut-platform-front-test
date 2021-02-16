@@ -11,9 +11,8 @@ class PersonalConatiner extends React.Component {
     const { Auth } = this.props
     return (
       <>
-      <BannerConatiner/>
       <Section>
-        <Container>
+        <Container style={{marginTop: 56}}>
           <Content_1Conatiner/>
         </Container>
       </Section>
