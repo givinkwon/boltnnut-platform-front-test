@@ -66,6 +66,8 @@ class InputComponent extends React.Component {
           onClick = {()=>this.file.current.click()}>
           <input
             type="file"
+            multiple={ "multiple" }
+            fileName={ "fileName[]" }
             style={{display: 'none'}}
             onChange={this.onChangeFile}
             ref={this.file}
@@ -78,7 +80,7 @@ class InputComponent extends React.Component {
           src={fileImage}
         />
         </InputBox>
-      </Wrap>  
+      </Wrap>
     )
     }
   }

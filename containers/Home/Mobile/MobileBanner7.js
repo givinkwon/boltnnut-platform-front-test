@@ -166,11 +166,12 @@ const CustomContainer = styled(Containerv1)`
   align-items: center;
 `
 const Header = styled(Title.FontSize56)`
+    height: 62px;
   color: #ffffff;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.36;
+  line-height: 1.45;
   letter-spacing: normal;
   letter-spacing: -0.55px;
   margin-top: 100px;
@@ -186,22 +187,23 @@ const ContainerBanner6 = styled.div`
   margin-top: 46px;
 `
 const Head = styled(Title.FontSize24)`
+    height: 20px;
   color: #0933b3;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
   letter-spacing: -0.35px;
   white-space: pre-line;
   text-align: left;
   margin-top: 20px;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
   }
 ;
 `
 const Main = styled(Title.FontSize32)`
+    height: 22px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -215,7 +217,7 @@ const Main = styled(Title.FontSize32)`
   }
 `
 const Foot = styled(Title.FontSize24)`
-  margin: 6.4px 0px 100px 0px;
+  margin: 6px 0px 100px 0px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -225,7 +227,7 @@ const Foot = styled(Title.FontSize24)`
   white-space: pre-line;
   color: #f6f6f6;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 15px;
+    font-size: 14px;
   }
 `
 const TextContainer = styled.div`

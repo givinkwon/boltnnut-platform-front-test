@@ -42,7 +42,7 @@ const customStyles = {
     return { ...provided, opacity, transition };
   },
   placeholder: () => ({
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 'normal',
     fontStretch: 'normal',
     fontStyle: 'normal',
@@ -120,7 +120,7 @@ class MobileStep1Container extends React.Component {
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
           />
         </SelectRow>
-        <Header style={{marginTop: 30}}>
+        <Header style={{marginTop: 18}}>
             희망 예산
         </Header>
         <SelectRow style={{width: 380}}>
@@ -128,10 +128,10 @@ class MobileStep1Container extends React.Component {
           <input style={{display: 'none'}} value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
           <Select
             styles={customStyles} options={costArray} value={Request.input_price}
-            getOptionLabel={(option) => option.label} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
+            getOptionLabel={(option) => option.label} placeholder='예산을 선택해주세요.' onChange={Request.setPrice}
           />
         </SelectRow>
-          <Header style={{marginTop: 30}}>
+          <Header style={{marginTop: 18}}>
             희망 개발 기간
           </Header>
         <SelectRow style={{width: 180}}>
@@ -162,7 +162,7 @@ class MobileStep1Container extends React.Component {
             onChange={Request.setInputName}
           />
        </SelectRow>
-       <Header style={{marginTop: 30}}>
+       <Header style={{marginTop: 18}}>
             전화번호
        </Header>
        <SelectRow>
@@ -177,7 +177,7 @@ class MobileStep1Container extends React.Component {
             onChange={this.handleChange.bind(this)}
           />
        </SelectRow>
-       <Header style={{marginTop: 30}}>
+       <Header style={{marginTop: 18}}>
         의뢰 관련 파일
        </Header>
 
@@ -221,12 +221,14 @@ const Header = styled(Content.FontSize15)`
     text-align: left;
     color: #282c36;
     height: 22px;
-    margin-top: 28px;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
 `
 const SelectRow = styled.div`
   width: 100%;
   display: flex;
-  margin-top: 10px;
+  margin-top: 8px;
 `
 const Select = styled(SelectComponent)`
     width: 169px;
@@ -238,7 +240,8 @@ const Select = styled(SelectComponent)`
 `
 const RequestInfoBox = styled.div`
   width: 100%;
-  height: 470px;
+  height: 256px;
+  margin-bottom: 114px;
   display: inline-flex;
   justify-content: center;
   > div {

@@ -47,6 +47,7 @@ class Week extends Component {
   }
   mapDaysToComponents = (Days, fn = () => { }) => {
     const { Schedule } = this.props;
+    console.log(Schedule.today);
     const occupied = Schedule.date_occupied;
 
     return Days.map((dayInfo, i) => {
@@ -173,17 +174,19 @@ class MobileCalendar extends Component {
     return (
       <>
         <MainContainer>
-          <Header>
-            <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
-            <HeaderText>{now.format("YYYY.MM")}</HeaderText>
-            <div onClick={() => this.moveMonth(1)}><img src={ nextMonth }/></div>
-          </Header>
-          <DateContainer>
-            {this.mapArrayToDate(this.dateToArray(this.props.dates))}
-          </DateContainer>
-          <CalendarContainer>
-            {this.Weeks(now)}
-          </CalendarContainer>
+          <div>
+            <Header>
+              <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
+              <HeaderText>{now.format("YYYY.MM")}</HeaderText>
+              <div onClick={() => this.moveMonth(1)}><img src={ nextMonth }/></div>
+            </Header>
+            <DateContainer>
+              {this.mapArrayToDate(this.dateToArray(this.props.dates))}
+            </DateContainer>
+            <CalendarContainer>
+              {this.Weeks(now)}
+            </CalendarContainer>
+          </div>
         </MainContainer>
       </>
     )
@@ -198,9 +201,16 @@ const MainContainer = styled.div`
   align-items: center;
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  width: 347px;
+  width: 100%;
   height: 451px;
   margin-top: 6px;
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 347px;
+    height: 451px;
+  }
 `
 const Header = styled.div`
   display: flex;
@@ -309,7 +319,16 @@ const CalendarContainer = styled.div`
   }
   .not-booktoday {
     pointer-events: none;
-    color: #0933b3;
+    color: #c6c7cc;    
+    > div {
+      position: absolute;
+      margin-top: 38px;
+      color: #0933b3;
+    }
+  }
+  .date-weekday-labeltoday {
+    pointer-events: none;
+    color: #c6c7cc;
     > div {
       position: absolute;
       margin-top: 38px;

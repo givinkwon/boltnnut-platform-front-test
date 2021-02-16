@@ -24,7 +24,7 @@ class MobileRequestContainer extends React.Component {
   render() {
     const { Request } = this.props;
     return (
-      <div>
+      <div style={{marginTop:54}}>
         <Background>
           <Containerv1>
             { Request.step_index == 1 && <MobileStep1Container page={Request.step1_index} />}

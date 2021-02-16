@@ -55,7 +55,7 @@ class ReviewCard extends Component {
                         <ContentBox style={{fontWeight: 500}}>
                             김율 대표님
                         </ContentBox>
-                        <img src={person_mob} />
+                        <img src={person_mob} style={{width:173, height:149, marginRight:20}}/>
                     </ImageBox>
                     }
                 </BigCard>
@@ -76,7 +76,7 @@ const Card = styled.div`
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     background-color: #ffffff;
     @media (min-width: 0px) and (max-width: 767.98px) {
-        width: 45%;
+        width: 14%;
         height: 236px;
     }
 `
@@ -122,7 +122,7 @@ const ContentBox = styled(Content.FontSize15)`
     text-align: left;
     color: black;
     padding-left: 30px;
-    padding-right: 30px;
+    padding-right: 10px;
     word-break: keep-all;
     @media (min-width: 0px) and (max-width: 767.98px) {
         font-size: 12px !important;  
@@ -131,6 +131,8 @@ const ContentBox = styled(Content.FontSize15)`
         text-align: left;
         color: #767676;
         margin-top: 3px;
+        padding-left:14px;
+        padding-right:15px;
     }
 `
 /////////////////// ReviewCard2 ////////////////////

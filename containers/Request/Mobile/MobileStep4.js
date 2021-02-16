@@ -19,8 +19,7 @@ const dropdown = '/static/images/request/Step4/dropdown.png';
 @observer
 class MobileStep4Container extends Component {
   state = {
-    display: 'none', // display 는 FoldedComponent 기준
-    display2: true, // display2 는 TimeBox 기준.
+    display: 0,
     inactive_array: [],
     userEmail: null,
     isOnline: 0,
@@ -49,11 +48,12 @@ class MobileStep4Container extends Component {
   // 대면, 비대면 선택
   isOnlineHandler = (e) => {
     let targetWord = e.target.innerHTML;
+    console.log(targetWord);
     // 대면이면 0, 화상이면 1
     if (targetWord == "화상 미팅") {
-      this.setState({...this.state, isOnline: 1, active2_target: targetWord})
+      this.setState({...this.state, isOnline: 1, active2_target: targetWord});
     } else {
-      this.setState({...this.state, isOnline: 0, active2_target: targetWord})
+      this.setState({...this.state, isOnline: 0, active2_target: targetWord});
     }
   }
   getTime = (hour) => {
@@ -85,11 +85,11 @@ class MobileStep4Container extends Component {
       return alert("이용약관 동의에 체크해주세요.")
     }
     var emailval =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
- 
+
     if (!emailval.test(this.state.userEmail) && !Request.has_email) {
       return alert("올바른 이메일 주소를 입력해주세요")
     }
-    
+
     let req = {
       request: Request.created_request,
       email: this.state.userEmail,
@@ -114,7 +114,7 @@ class MobileStep4Container extends Component {
     }
   }
   render() {
-    const { current, display, display2 } = this.state;
+    const { display } = this.state;
     const { Request, Schedule } = this.props;
     const timeArr = [
       {
@@ -177,7 +177,7 @@ class MobileStep4Container extends Component {
            <MobileCalendar/>
         </ContentBox>
         <ScheduleBox>
-          <Title style={{marginTop: 30, marginBottom: 6}}>
+          <Title style={{marginTop: 42, marginBottom: 12}}>
             시간
           </Title>
           <TimeBox>
@@ -195,8 +195,8 @@ class MobileStep4Container extends Component {
               })}
             </div>
           </TimeBox>
-          <div style={{marginTop: 77}}>
-            <Title style={{marginBottom: 20}}>
+          <div style={{marginTop: 109}}>
+            <Title style={{marginBottom: 12}}>
               컨설팅 유형
             </Title>
             <div style={{display: 'inline-flex'}}>
@@ -209,11 +209,11 @@ class MobileStep4Container extends Component {
             </div>
           </div>
           <Tail style={{marginTop: 14}}>
-          {Schedule.isOnline == 0 ? "* 서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트" : "* 입력하신 전화번호로 화상 ZooM 미팅을 안내드립니다"}
+          {this.state.isOnline == 0 ? "* 서울특별시 성북구 고려대로 27길 4, 3층 볼트앤너트" : "* 입력하신 전화번호로 화상 ZooM 미팅을 안내드립니다"}
           </Tail>
           { !Request.has_email && (
           <>
-            <Title style={{marginTop: 30}}>
+            <Title style={{marginTop: 52}}>
               이메일
             </Title>
             <MobileInput>
@@ -225,8 +225,8 @@ class MobileStep4Container extends Component {
             </MobileInput>
           </>
           ) }
-          <Tail style={{marginTop: 10}}>
-            *컨설팅을 위한 사전 준비 사항을 E-mail로 보내드립니다.
+          <Tail style={{marginTop: 12}}>
+            * 컨설팅을 위한 사전 준비 사항을 E-mail로 보내드립니다.
           </Tail>
         </ScheduleBox>
         <CardFooter>
@@ -234,7 +234,7 @@ class MobileStep4Container extends Component {
             <CheckBoxComponent
               onChange={this.checkboxChange_policy}
               checked={this.state.policy_agree}>
-              <span>
+              <span style={{fontSize: 13}}>
                   <Link target="_blank" href="/term/policy">이용약관 및 개인정보 처리방침</Link>
                   에 동의합니다.
               </span>
@@ -244,7 +244,7 @@ class MobileStep4Container extends Component {
             <CheckBoxComponent
               checked={this.state.marketing_agree}
               onChange={this.checkboxChange_marketing}>
-              <span>
+              <span style={{fontSize: 13}}>
                 <span class="bold" onClick={this.openMarketingModal}>마케팅 정보 수신</span>에 동의합니다.
               </span>
             </CheckBoxComponent>
@@ -253,8 +253,6 @@ class MobileStep4Container extends Component {
             무료 컨설팅 신청
           </CustomButton>
         </CardFooter>
-        
-      
         <div>
         <MarketingModal
           open={this.state.open_marketing_modal}
@@ -334,7 +332,7 @@ const TimeComponent = styled.div`
   height: 43px;
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: ${(props) => props.deactive ? "gray" : "white"};
+  background-color: ${(props) => props.deactive ? "#e1e2e4" : "white"};
   pointer-events:${(props) => props.deactive && "none"};
   display: flex;
   align-items: center;
@@ -345,7 +343,7 @@ const TimeComponent = styled.div`
   line-height: 2.22;
   letter-spacing: -0.45px;
   text-align: left;
-  color: #282c36;
+  color: ${(props) => props.deactive ? "#c6c7cc" : (props.focused ? '#0933b3' : "#282c36")};
   margin-right: 19px;
   border: ${(props) => (props.focused ? "solid 1px #0933b3" : "none")};
   :focus {
@@ -383,11 +381,19 @@ const CardFooter = styled.div`
   }
 `
 const CustomButton = styled(Buttonv1)`
-  width: 220px !important;
-  height: 52px !important;
-  margin-top: 30px;
-  font-size: 20px !important;
-  margin-bottom: 60px;
+  width: 202px !important;
+  height: 50px !important;
+  margin-top: 18px;
+  margin-bottom: 120px;
+  font-family: NotoSansCJKkr;
+  font-size: 15px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.27;
+  letter-spacing: -0.38px;
+  text-align: center;
+  color: #ffffff;
 `
 const TimeBox = styled.div`
   width: 100%;
@@ -431,6 +437,7 @@ const CheckBoxWrapper = styled.div`
   }
 `
 const Link = styled.a`
+  font-size: 13px;
   color: #191919;
   display: inline-block;
   font-weight: bold;
