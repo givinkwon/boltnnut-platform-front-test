@@ -26,6 +26,7 @@ import EstimateLogoSlider from './EstimateSheetLogoSlider'
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 import ConsultantBoxContainer from './ConsultantBox'
+import Select from '../../components/Select';
 
 //images
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
@@ -37,7 +38,41 @@ const DropUpArrow2 = "/static/images/request/Step3/Step3_DropUp2.png";
 const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
 const Consultant2 = "/static/images/request/Step3/Step3_Consultant2.png";
 const Consultant3 = "/static/images/request/Step3/Step3_Consultant3.png";
+const boxquestion = "/static/images/request/Step1/boxquestion.svg"
+const square = "/static/images/request/Step1/square.svg"
 
+const customStyles = {
+  dropdownIndicator: () => ({
+    color: '#ffffff',
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? '#000000' : '#555555',
+    backgroundColor: '#fff',
+    borderRadius: 0,
+    padding: 16,
+    fontSize: 16,
+  }),
+  control: () => ({
+    fontSize: 16,
+    width: 116,
+    height: 37,
+    border: '1px solid #e6e6e6',
+    backgroundColor: '#fff',
+    display: 'flex',
+    borderRadius: 6,
+    padding: 4,
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+    return { ...provided, opacity, transition };
+  }
+}
 const styles = {
   table: {
     minWidth: 650
@@ -73,7 +108,8 @@ class Step3Container extends Component {
     showEstimateDrop:false,
     showEstimateDetail:true,
     showConsultantDrop: true,
-    showConsultantDetail: 'none'
+    showConsultantDetail: 'none',
+    display: false,
   }
 
   ConsultantInfo=[
@@ -190,7 +226,7 @@ class Step3Container extends Component {
         rows2.splice(3,1);
         rows2.splice(4,1);
         rows2[3]= createData('생산가', Math.round(ManufactureProcess.MinPrice/100)*100 +'원' + '/개', 'VAT 미포함');
-     
+
       }
 
     }
@@ -286,8 +322,8 @@ class Step3Container extends Component {
 
             {/* 여기 들어간다 */}
 
-            
-            {DetailQuestion.message.includes(message) ? 
+
+            {DetailQuestion.message.includes(message) ?
             <StyledStlViewer
             model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
             width={400}                                  // 가로
@@ -301,59 +337,86 @@ class Step3Container extends Component {
           </DetailContainer>
 
         </HeaderBackground>
+        {
+          this.state.display ? (
+            <ContentBox>
+              <ContentHeader>
+                볼트앤너트에는 요청하신 {estimateData.projectTitle}에 최적화된<br/>
+                {rand2} 곳의 제조 파트너사가 있습니다.
+              </ContentHeader>
 
-        <ContentBox>
-          <ContentHeader>
-            볼트앤너트에는 요청하신 {estimateData.projectTitle}에 최적화된<br/>
-            {rand2} 곳의 제조 파트너사가 있습니다.
-          </ContentHeader>
+              <CustomSlider value={percentage}/>
+              <ThumbText> {percentage}% </ThumbText>
+              <EstimateLogoSlider />
+              <ConsultantHeader>
+                매칭 컨설턴트 : 최낙의 기술 고문  외 2명
+              </ConsultantHeader>
 
-          <CustomSlider value={percentage}/>
-          <ThumbText> {percentage}% </ThumbText>
+              <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/>
 
+              {/* 나중에 디비에 연결할거라 그때 map으로 바꾸기 */}
+              <DetailContainer style={{display: showConsultantDetail,paddingBottom:20}}>
+                <ConsultantBoxContainer Info={this.ConsultantInfo[1]}/>
+                <ConsultantBoxContainer Info={this.ConsultantInfo[2]}/>
+              </DetailContainer>
 
-          <EstimateLogoSlider />
+              <ConsultantDetailButtonBox>
+                {showConsultantDrop == true ? (
+                  <>
+                    <Font18 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
+                      더 보기
+                    </Font18>
+                    <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} />
+                  </>
+                ) : (
+                  <>
+                    <Font18 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
+                      접기
+                    </Font18>
+                    <img src={DropUpArrow2} onClick={()=>{this.detailUp(2);}}/>
+                  </>
+                )
+                }
+              </ConsultantDetailButtonBox>
 
-          
-
-          <ConsultantHeader>
-            매칭 컨설턴트 : 최낙의 기술 고문  외 2명
-          </ConsultantHeader>
-          
-          <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/>
-
-            {/* 나중에 디비에 연결할거라 그때 map으로 바꾸기 */}
-            <DetailContainer style={{display: showConsultantDetail,paddingBottom:20}}>
-              <ConsultantBoxContainer Info={this.ConsultantInfo[1]}/>
-              <ConsultantBoxContainer Info={this.ConsultantInfo[2]}/>
-            </DetailContainer>
-
-            <ConsultantDetailButtonBox>
-              {showConsultantDrop == true ? (
-                    <>
-                      <Font18 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
-                          더 보기
-                      </Font18>
-                      <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} />
-                    </>
-                  ) : (
-                      <>
-                        <Font18 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
-                          접기
-                        </Font18>
-                        <img src={DropUpArrow2} onClick={()=>{this.detailUp(2);}}/>
-                      </>
-                    )
-                  }
-          </ConsultantDetailButtonBox>
-          
-          <Font16 style={{marginTop:100,textAlign:'center'}}>
-            전문 컨설턴트의 무료 상담을 통해 의뢰의 정확한 견적을 받아보세요
-          </Font16>
-          <Buttonv1 onClick={ this.buttonClick } fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
-            무료 컨설팅 받기
-          </Buttonv1>
-        </ContentBox>
+              <Font16 style={{marginTop:100,textAlign:'center'}}>
+                전문 컨설턴트의 무료 상담을 통해 의뢰의 정확한 견적을 받아보세요
+              </Font16>
+              <Buttonv1 onClick={ this.buttonClick } fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
+                무료 컨설팅 받기
+              </Buttonv1>
+            </ContentBox>
+          ) : (
+            <div style={{margin: '100px 0px 0px 48px'} }>
+              <Title.FontSize24>{estimateData.projectTitle}</Title.FontSize24>
+              <div style={{borderBottom: '1px solid #282c36', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: 798, height: 70}}>
+                <div style={{display: 'flex', alignItems:'center'}}>
+                  <CalText style={{ marginRight: 15 }}>수량</CalText>
+                  <Select
+                    styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
+                    getOptionLabel={(option) => option.category} placeholder='수량' onChange={Request.setMidCategory}
+                  />
+                </div>
+                <CalText>
+                  25,000,000원
+                </CalText>
+              </div>
+              <div style={{display: 'flex', justifyContent: 'space-between', width: 798, height:60, alignItems:'center'}}>
+                <div style={{display: 'flex', alignItems:'center'}}>
+                  <MoneyText style={{marginRight: 10}}>총 상품 금액</MoneyText>
+                  <div style={{position:'relative'}}>
+                    <img style={{ position: 'absolute', left: 7 , top: 2}} src={ boxquestion }/>
+                    <img src={ square }/>
+                  </div>
+                </div>
+                <div style={{display: 'flex', alignItems:'center'}}>
+                  <MoneyText style={{marginRight: 20}}>총 수량 0개</MoneyText>
+                  <Allmoney>25,000,000원</Allmoney>
+                </div>
+              </div>
+            </div>
+          )
+        }
       </Card>
     )
   }
@@ -364,7 +427,33 @@ export default withStyles(styles)(Step3Container);
 const StyledStlViewer=styled(STLViewer)`
   margin:0 auto;
 `
-
+const CalText = styled.span`
+  font-family: NotoSansCJKkr;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.5px;
+  color: #282c36;
+`
+const MoneyText = styled.span`
+  font-family: NotoSansCJKkr;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.18px;
+  color: #999999;
+`
+const Allmoney = styled.span`
+  color: #0933b3;
+  font-family: Roboto;
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+`
 
 const Font16 = styled(Content.FontSize16)`
   font-weight: 500;
