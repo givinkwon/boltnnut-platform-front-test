@@ -99,9 +99,9 @@ class FooterComponent extends React.Component {
               <div>
                 휴일( 토요일, 일요일, 공휴일 )
                 <div style={{display: 'flex'}}>
-                  <img src={instargram} />
-                  <img src={blog} />
-                  <img src={post} />
+                  <img src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')}/>
+                  <img src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')}/>
+                  <img src={post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')}/>
                 </div>
               </div>
           </CompanyInfoWrapper>
@@ -149,38 +149,63 @@ class FooterComponent extends React.Component {
       </Footer>
       </>
       ) : (
-         <MobileFooter>
-           <CompanyInfoContainer>
-             <div style={{flexDirection: "row", display: "block", position: "relative"}}>
-             <CompanyInfo>
-               <span> (주) 볼트앤너트 </span>
-               <span> 대표자 : 윤기열</span>
-               <span> 사업자등록번호 390-87-01669</span>
-               <span> 서울특별시 성북구 고려대길27길 4, 3층</span>
-             </CompanyInfo>
-             <CompanyInfo2>
-               <span> CONTACT </span>
-               <span> 02-926-6637 </span>
-               <span> 평일 오전 10시~오후7시 </span>
-               <span> boltnnut@boltnnut.com </span>
-               <SnsBox>
-                <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
-                <Sns src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')} />
-                <Sns src={post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')} />
-              </SnsBox>
-             </CompanyInfo2>
-             </div>
-             <MobileContainer>
-               {/* <span
-                onClick={() => Router.push("/partner")}> 제조사 찾기 </span>
-               <span> 자주찾는 질문 </span>
-               <span
-                onClick={() => Router.push("/term/policy")}> 이용약관 </span>
-               <span
-                onClick={() => Router.push("/term/personal")}> 개인정보 처리 방침 </span> */}
-             </MobileContainer>
-           </CompanyInfoContainer>
-         </MobileFooter>
+         
+      <>
+      <Footer>
+        <Containerv1 style={{flexDirection: 'column'}}>
+          <TelInfoWrapper>
+            TEL. 02-926-6637
+          </TelInfoWrapper>
+          <CompanyInfoWrapper>
+              <span> 오전 10:00 ~ 오후 07:00 </span>
+              <span> 점심시간 12:00 ~  01:00 </span>
+              <div>
+                휴일( 토요일, 일요일, 공휴일 )
+              </div>
+          </CompanyInfoWrapper>
+          <CompanyInfoWrapper style={{paddingTop: 14}}>
+            <FaqTable>
+              <span class="cell" onClick={() => Router.push("/faq")}>
+                자주찾는 질문
+              </span>
+              <img src={separator} />
+              <span class="cell" onClick={() => Router.push("/term/personal")}>
+                개인정보처리방침
+              </span>
+              <img src={separator} />
+              <span class="cell" onClick={() => Router.push("/term/policy")}>
+                이용약관
+              </span>
+            </FaqTable>
+            <InfoDetailContainer>
+              <span>
+                <span class="title"> 회사명 </span> (주)볼트앤너트
+              </span>
+              <span>
+                <span class="title"> 대표자 </span> 윤기열, 신지섭
+              </span>
+              <span>
+                <span class="title"> 사업자등록번호 </span> 390-87-01669
+              </span>
+              <span>
+                <span class="title"> 사업장 소재지 </span> 서울특별시 성북구 고려대길 27길 3 2층
+              </span>
+              <span>
+                <span class="title"> 이메일 </span> boltnnut@boltnnut.com
+              </span>
+            </InfoDetailContainer>
+          </CompanyInfoWrapper>
+          <ImageWrapper>
+                  <img src={campustown} style={{height: 20, alignSelf: 'center'}}/>
+                  <div class="imagebox">
+                    <img src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')}/>
+                    <img src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')}/>
+                    <img src={post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')}/>
+                  </div>
+          </ImageWrapper>
+        </Containerv1>
+      </Footer>
+      </>
       )
     }
   </>
@@ -535,6 +560,16 @@ const InfoDetailContainer = styled.div`
       font-weight: 500;
       color: #55575c;
       margin-right: 5px;
+    }
+  }
+`
+const ImageWrapper = styled.div`
+  display: flex;
+  margin-top: 14px;
+  justify-content: space-between;
+  .imagebox {
+    > img {
+      margin-left: 10px;
     }
   }
 `
