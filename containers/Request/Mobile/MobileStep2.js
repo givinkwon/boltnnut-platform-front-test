@@ -171,6 +171,16 @@ const SelectContainer = styled.div`
   flex-direction: column;
   display: flex;
   align-items: center;
+  p {
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.43;
+    letter-spacing: -0.35px;
+    text-align: left;
+    color: #282c36;
+  }
 `
 const Text = styled(Title.FontSize14)`
   font-weight: ${(props) => (props.active ? 500 : 400)};
