@@ -84,7 +84,7 @@ class RequestCardContainer extends Component {
 
   prevButtonClick = () => {
     const { Request, DetailQuestion } = this.props;
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 320)
 
     switch (Request.step_index) {
       case 1:
@@ -117,7 +117,7 @@ class RequestCardContainer extends Component {
   }
   nextButtonClick = () => {
     const { Request, DetailQuestion,ManufactureProcess } = this.props;
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 320)
 
     switch(Request.step_index)
     {
@@ -183,7 +183,7 @@ class RequestCardContainer extends Component {
           //   Request.step_index = 6;
           //   break;
           // }
-          
+
           Request.step_index = 3;
         }
         Request.percentage += 14;
