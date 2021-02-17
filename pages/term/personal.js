@@ -53,7 +53,7 @@ class Personal extends React.Component {
         { width > 767.98 ? (
           <Nav />
         ) : (
-          <MobileNav src={ back_ic }/>
+          <MobileNav headText={ "개인정보 처리방침" } src={ back_ic }/>
         )
         }
         <PersonalConatiner/>

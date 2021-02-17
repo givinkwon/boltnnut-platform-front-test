@@ -113,11 +113,13 @@ class Banner8Container extends React.Component {
     render() {
         const SlideSettings = {
             dots: true,
-            infinite: false,
+            infinite: true,
             speed: 500,
             slidesToShow: 7,
-            slidesToScroll: 1,
-            draggable:true
+            slidesToScroll: 7,
+            draggable:true,
+            autoplay: true,
+            autoplaySpeed: 3000,
         };
         return (
           <Background>

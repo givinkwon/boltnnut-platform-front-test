@@ -84,7 +84,7 @@ class MobileRequestCardContainer extends Component {
 
   prevButtonClick = () => {
     const { Request, DetailQuestion } = this.props;
-
+    window.scrollTo(0, 0)
     switch (Request.step_index) {
       case 1:
         if (Request.step1_index == 2) {
@@ -116,6 +116,8 @@ class MobileRequestCardContainer extends Component {
   }
   nextButtonClick = () => {
     const { Request, DetailQuestion,ManufactureProcess } = this.props;
+    window.scrollTo(0, 0)
+
     switch(Request.step_index)
     {
       case 1:
@@ -125,6 +127,8 @@ class MobileRequestCardContainer extends Component {
         } else {
           try {
             Request.createRequest();
+            dataLayer.push({'event':'Step1Complete'});
+
             DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
           } catch(e) {
             console.log(e);
@@ -166,17 +170,14 @@ class MobileRequestCardContainer extends Component {
             "request": Request.created_request,
             "data": Request.titleData,
           }
+          DetailQuestion.loadProposalType(SelectSaveData);
+          dataLayer.push({'event':'Step2Complete'});
           // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
           if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
             Request.step_index = 6;
             break;
           }
           // 도면에서 카테고리가 실리콘/플라스틱이 아닌 경우
-          if(DetailQuestion.index == 8 && ManufactureProcess.SelectChecked != 1 && ManufactureProcess.SelectChecked != 2  ){
-            Request.step_index = 6;
-            break;
-          }
-          DetailQuestion.loadProposalType(SelectSaveData);
 
           Request.step_index = 3;
         }
@@ -221,7 +222,7 @@ class MobileRequestCardContainer extends Component {
         <ContentBox>
           {this.props.content}
         </ContentBox>
-      <MatchingText>해당 의뢰에 적합한 <span><AnimationCount {...countSettings1}/>  개의 볼트앤너트 파트너사가 있습니다.</span></MatchingText>
+      <MatchingText>해당 의뢰에 적합한 <span><AnimationCount {...countSettings1}/>&nbsp;개의 볼트앤너트 파트너사가 있습니다.</span></MatchingText>
         <MobileLogoImageSlider/>
         {this.props.title == "기본 정보 입력 1/2" ? (<SliderText>의뢰에 대해 이해할 수 있도록 기본 정보를 입력해주세요</SliderText>) : (<SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>)}
          <ButtonContainer>

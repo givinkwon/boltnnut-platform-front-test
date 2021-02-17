@@ -30,12 +30,11 @@ class FAQConatiner extends React.Component {
   render() {
     const { tab } = this.state;
     return (
-      <>
-        {/*<BannerContainer tab={tab} />*/}
+      <div>
         <TabContainer tab={tab} setTab={this.setTab} />
         {tab === 1 && <GeneralContainer />}
         {tab === 2 && <ClientContainer />}
-      </>
+      </div>
     );
   }
 }

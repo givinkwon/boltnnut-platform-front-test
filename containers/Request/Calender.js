@@ -336,11 +336,12 @@ const CalendarContainer = styled.div`
     color: #c6c7cc;
   }
   .date-weekday-labeltoday {
-    color: #0933b3;
+    pointer-events: none;
+    color: #c6c7cc;
     > div {
       position: absolute;
       margin-top: 38px;
-      color: #0933b3;
+      color: #c6c7cc;
     }
   }
   .not-book {
@@ -349,11 +350,11 @@ const CalendarContainer = styled.div`
   }
   .not-booktoday {
     pointer-events: none;
-    color: #0933b3;
+    color: #c6c7cc;
     > div {
       position: absolute;
       margin-top: 38px;
-      color: #0933b3;
+      color: #c6c7cc;
     }
     //pointer-events: none;
     //background-color: #e1e2e4;

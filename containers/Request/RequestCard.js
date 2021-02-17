@@ -84,6 +84,7 @@ class RequestCardContainer extends Component {
 
   prevButtonClick = () => {
     const { Request, DetailQuestion } = this.props;
+    window.scrollTo(0, 0)
 
     switch (Request.step_index) {
       case 1:
@@ -116,6 +117,7 @@ class RequestCardContainer extends Component {
   }
   nextButtonClick = () => {
     const { Request, DetailQuestion,ManufactureProcess } = this.props;
+    window.scrollTo(0, 0)
 
     switch(Request.step_index)
     {
@@ -126,7 +128,7 @@ class RequestCardContainer extends Component {
         } else {
           try {
             Request.createRequest();
-
+            dataLayer.push({'event':'Step1Complete'});
 
             DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
           } catch(e) {
@@ -170,16 +172,18 @@ class RequestCardContainer extends Component {
             "data": Request.titleData,
           }
           DetailQuestion.loadProposalType(SelectSaveData);
+          dataLayer.push({'event':'Step2Complete'});
           // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
           if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
             Request.step_index = 6;
             break;
           }
           // 도면에서 카테고리가 실리콘/플라스틱이 아닌 경우
-          if(DetailQuestion.index == 8 && ManufactureProcess.SelectChecked != 1 && ManufactureProcess.SelectChecked != 2 ){
-            Request.step_index = 6;
-            break;
-          }
+          // if(DetailQuestion.index == 8 && ManufactureProcess.SelectChecked != 1 && ManufactureProcess.SelectChecked != 2 ){
+          //   Request.step_index = 6;
+          //   break;
+          // }
+          
           Request.step_index = 3;
         }
         Request.percentage += 14;
@@ -220,14 +224,14 @@ class RequestCardContainer extends Component {
         <ContentBox>
           {this.props.content}
         </ContentBox>
-        <MatchingText>해당 의뢰에 적합한 <AnimationCount {...countSettings1}/>개의 볼트앤너트 파트너사가 있습니다.</MatchingText>
+        <MatchingText>해당 의뢰에 적합한 <AnimationCount {...countSettings1}/>&nbsp;개의 볼트앤너트 파트너사가 있습니다.</MatchingText>
         <LogoSlider/>
         <ThumbText> {Request.percentage}% </ThumbText>
         <CustomSlider value={Request.percentage}/>
         {this.props.title == "기본 정보 입력" ? (<SliderText active={ true }>의뢰에 대해 이해할 수 있도록 기본 정보를 입력해주세요</SliderText>) : (<SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>)}
         <ButtonContainer>
-          <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
-          <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
+          <NewButton type={1} active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
+          <NewButton type={2} active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
         </ButtonContainer>
       </Card>
     )
@@ -311,6 +315,17 @@ const ThumbText = styled(Title.FontSize20)`
   color: #0933b3;
   font-weight: bold;
 `
+const boxFade = keyframes`
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+`
 const SliderText = styled(Content.FontSize16)`
   position: relative;
   text-align:center;
@@ -320,6 +335,7 @@ const SliderText = styled(Content.FontSize16)`
   font-style: normal;
   line-height: 1.88;
   letter-spacing: -0.16px;
+  animation: ${ boxFade } 2s linear infinite;
 `
 const MatchingText = styled(Title.FontSize20)`
   font-weight: bold;
@@ -330,8 +346,11 @@ const MatchingText = styled(Title.FontSize20)`
   text-align:center;
   margin-bottom:20px; 
   white-space: pre-line;
-  > div {
+
+  >div {
     display: inline;
+    color: #0933b3;
+
   }
 `
 const ButtonContainer = styled.div`

@@ -73,9 +73,9 @@ class MobileStep2Container extends React.Component {
     {
       // console.log(idx===DetailQuestion.SelectChecked)
       if(idx===DetailQuestion.SelectChecked)
-      { return true; } 
+      { return true; }
       else
-      { 
+      {
         return false; }
     };
     return (
@@ -115,7 +115,7 @@ class MobileStep2Container extends React.Component {
                   }
 
                   <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
-                    <Text id={'queText'} color={"#282c36"}>
+                    <Text id={'queText'} active={activeHandler(idx)}>
                       {data.select}
                     </Text>
                   </Select>
@@ -182,15 +182,13 @@ const SelectContainer = styled.div`
     color: #282c36;
   }
 `
-const Text = styled(Title.FontSize16)`
-  font-weight: 500;
+const Text = styled(Title.FontSize14)`
+  font-weight: ${(props) => (props.active ? 500 : 400)};
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.16px;
-  color: ${(props) => (props.color ? props.color : '#282c36')};
+  color: ${(props) => (props.active ? '#0933b3' : '#282c36')};
   margin-left: 10px;
-  
-  
 `
 const Select = styled.button`
   border: none;
