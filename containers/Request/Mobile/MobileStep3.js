@@ -62,6 +62,7 @@ class MobileStep3Container extends Component {
   buttonClick = () => {
     const { Request } = this.props;
     window.scrollTo(0, 0)
+    dataLayer.push({'event':'Step3Complete'});
     Request.step_index = 4;
   }
 
@@ -221,6 +222,14 @@ class MobileStep3Container extends Component {
         rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개(MOQ 1000개)', 'VAT 미포함');
       }
 
+      //금형사출이 아닐때 금형 가견적 지우기
+      if(ManufactureProcess.SelectedItem.process!=1)
+      {
+        rows2.splice(3,1);
+        rows2.splice(4,1);
+        rows2[3]= createData('생산가', Math.round(ManufactureProcess.MinPrice/100)*100 +'원' + '/개', 'VAT 미포함');
+     
+      }
     }
     return (
     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
