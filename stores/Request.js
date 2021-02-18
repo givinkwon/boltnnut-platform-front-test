@@ -131,7 +131,7 @@ class Request {
     }
     var formData = new FormData();
 
-    formData.append("product", 45);
+    formData.append("product", this.select_mid.id);
     formData.append("name", this.input_name);
     formData.append("price", this.input_price.value);
     formData.append("period", this.input_day.value);
