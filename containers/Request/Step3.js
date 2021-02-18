@@ -168,7 +168,7 @@ class Step3Container extends Component {
     var message = '도면입력';
     var rand2 = 28 + Math.floor(Math.random() * 38);
 
-    if(DetailQuestion.message.includes(message))
+    if(DetailQuestion.message.includes(message) || ManufactureProcess.message.includes(message))
     {
       rows2.splice(1,1);
       rows2.pop();
@@ -287,16 +287,16 @@ class Step3Container extends Component {
             {/* 여기 들어간다 */}
 
             
-            {DetailQuestion.message.includes(message) ? 
-            <StyledStlViewer
-            model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
-            width={400}                                  // 가로
-            height={400}                                 // 세로
-            modelColor='red'                             // 색
-            backgroundColor='white'                    // 배경색
-            rotate={true}                                // 자동회전 유무
-            orbitControls={true}                         // 마우스 제어 유무
-          />
+            {(DetailQuestion.message.includes(message) || ManufactureProcess.message.includes(message)) ? 
+              <StyledStlViewer
+              model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
+              width={400}                                  // 가로
+              height={400}                                 // 세로
+              modelColor='red'                             // 색
+              backgroundColor='white'                    // 배경색
+              rotate={true}                                // 자동회전 유무
+              orbitControls={true}                         // 마우스 제어 유무
+            />
            : (<TaskBarContainer/>)}
           </DetailContainer>
 

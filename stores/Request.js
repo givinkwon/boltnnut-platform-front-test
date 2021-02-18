@@ -71,12 +71,13 @@ class Request {
   @observable random_partner_list = null;
 
   //type
+  @observable request_type="";
   @observable proposal_type = 1;
 
   @action reset = () => {
     this.titleData = [];
     this.percentage = 7;
-    this.step_index = 1;
+    this.step_index = 0;
     this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";
@@ -87,6 +88,9 @@ class Request {
     this.select_mid = null;
     this.random_partner_list = [];
     this.maincategory_id = '';
+
+    this.request_type="";
+    // console.log("ANSLKCNAKLSCNKLASNCLAKSNCL");
   }
   @action setInputName = (val) => {
     //
@@ -131,7 +135,7 @@ class Request {
     }
     var formData = new FormData();
 
-    formData.append("product", 45);
+    formData.append("product", this.select_mid.id);
     formData.append("name", this.input_name);
     formData.append("price", this.input_price.value);
     formData.append("period", this.input_day.value);

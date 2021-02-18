@@ -42,15 +42,13 @@ class Step2Container extends React.Component {
     fileName: '',
   };
 
-  // componentDidUpdate()
-  // {
-  //   this.handleClass();
-  // }
   componentDidMount()
   {
-    if(DetailQuestion.select)
-      DetailQuestion.index=1;
+    // if(DetailQuestion.select)
+    //   DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
+
+    
   }
 
 
@@ -91,7 +89,7 @@ class Step2Container extends React.Component {
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-           {DetailQuestion.title_list &&<TitleQue>{DetailQuestion.title_list[DetailQuestion.index-1] && DetailQuestion.title_list[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
+           {DetailQuestion.title_list &&<TitleQue>{DetailQuestion.title_list[DetailQuestion.index-1] && DetailQuestion.title_list[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{Request.request_type==='development' && <>{(DetailQuestion.pageCount + 1)}/5</>}</TitleQue>}
         </TitleContainer>
         <input value={DetailQuestion.index<8 ? DetailQuestion.SelectChecked : ManufactureProcess.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>
