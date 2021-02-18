@@ -3,16 +3,62 @@ import styled from "styled-components";
 import Router from "next/router";
 import {inject, observer} from "mobx-react";
 
-// import Container from "./Container";
+// import Container from "./Container"; //
 import * as Text from "./Text";
 import { PRIMARY, WHITE } from "static/style";
+import Containerv1 from './Containerv1';
+import SelectComponent from './Select';
 
+const instargram = "/static/images/components/Footer/instargram.png";
+const blog = "/static/images/components/Footer/blog.png";
+const post = "/static/images/components/Footer/post.png";
+const dropdown = "/static/images/components/Footer/dropdown.png";
+const separator = "/static/images/components/Footer/separator.png";
+const campustown = "/static/images/components/Footer/campustown.png";
 
-const logo_footer = "/static/images/logo.png";
-const instargram = "/static/images/instargram.png";
-const facebook = "/static/images/facebook.png";
-const blog = "/static/images/blog.png";
-const blog_post = "/static/images/blog_post.png";
+const customStyles = {
+  dropdownIndicator: () => ({
+    color: '#555555',
+    width: 16,
+    height: 9,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }),
+  indicatorSeparator: () => ({
+    display: 'none',
+  }),
+  menu: (provided, state) => ({
+    ...provided,
+    width: 336,
+  }),
+  option: (provided, state) => 
+    ({
+    ...provided,
+    color: state.isSelected ? '#000000' : '#555555',
+    backgroundColor: '#fff',
+    borderRadius: 0,
+    padding: 16,
+    fontSize: 16,
+  }),
+  control: () => ({
+    fontSize: 16,
+    width: 336,
+    backgroundColor: '#fff',
+    display: 'flex',
+    borderRadius: 6,
+    marginTop: 10
+  }),
+  valueContainer: (provided, state) => ({
+    ...provided,
+    paddingLeft: 0
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+    return { ...provided, opacity, transition };
+  }
+}
 
 @inject('Auth')
 @observer
@@ -43,118 +89,123 @@ class FooterComponent extends React.Component {
     { width > 768 ? (
       <>
       <Footer>
-        <Container style={{marginBottom: 0}}>
-          <CompanyInfoContainer style={{paddingRight: 0}}>
-            <Image src={logo_footer} onClick={() => Router.push("/")} />
-            <CompanyInfo>
+        <Containerv1 style={{flexDirection: 'column'}}>
+          <TelInfoWrapper>
+            TEL. 02-926-6637
+          </TelInfoWrapper>
+          <CompanyInfoWrapper>
+              <span> 오전 10:00 ~ 오후 07:00 </span>
+              <span> 점심시간 12:00 ~  01:00 </span>
               <div>
-                <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
-                  (주)볼트앤너트
-                </Text.FontSize15>
-                <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
-                  ​대표자 : 윤기열
-                </Text.FontSize15>
-                <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
-                  사업자등록번호 390-87-01669
-                </Text.FontSize15>
-                <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
-                  서울특별시 성북구 고려대로 27길 4, 3층
-                </Text.FontSize15>
+                휴일( 토요일, 일요일, 공휴일 )
+                <div style={{display: 'flex'}}>
+                  <img src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')}/>
+                  <img src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')}/>
+                  <img src={post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')}/>
+                </div>
               </div>
-            </CompanyInfo>
-          </CompanyInfoContainer>
-        </Container>
-        <Container>
-            <TextBox>
-              <Text.FontSize18
-                color={WHITE}
-                fontWeight={500}
-                onClick={() => Router.push("/request")}
-              >
-                가견적 받기
-              </Text.FontSize18>
-              <Text.FontSize18
-                color={WHITE}
-                fontWeight={500}
-                onClick={() => Router.push("/magazine")}
-              >
-                제조 인사이트
-              </Text.FontSize18>
-
-              <Text.FontSize18
-                color={WHITE}
-                fontWeight={500}
-                onClick={() => Router.push("/term/policy")}
-              >
-                이용약관
-              </Text.FontSize18>
-              <Text.FontSize18
-                color={WHITE}
-                fontWeight={500}
-                onClick={() => Router.push("/term/personal")}
-              >
+          </CompanyInfoWrapper>
+          <CompanyInfoWrapper style={{paddingTop: 16}}>
+            <span class="title"> 
+              NOTICE
+            </span>
+            <SelectComponent 
+              styles = {customStyles} />
+          </CompanyInfoWrapper>
+          <CompanyInfoWrapper style={{paddingTop: 14}}>
+            <FaqTable>
+              <span class="cell" onClick={() => Router.push("/faq")}>
+                자주찾는 질문
+              </span>
+              <img src={separator} />
+              <span class="cell" onClick={() => Router.push("/term/personal")}>
                 개인정보처리방침
-              </Text.FontSize18>
-            </TextBox>
-        </Container>
-        <Container>
-          <ContactInfoContainer>
-            <Text.FontSize25 color="#fff" style={{marginBottom: 4},{height :30}}>
-              ​CONTACT
-            </Text.FontSize25>
-            <Text.FontSize33 color="#fff" style={{}}>
-              ​02.926.6637
-            </Text.FontSize33>
-            <Text.FontSize15 color="#fff" style={{marginBottom: 12}}>
-              평일 오전 10시 - 오후 7시
-            </Text.FontSize15>
-            <Text.FontSize16 color="#fff" style={{marginBottom: 5},{fontFamily: 'Roboto, sans-serif'}}>
-              ​E. boltnnut@boltnnut.com
-            </Text.FontSize16>
-              <SnsBox>
-                <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
-                <Sns src={facebook} onClick={() => window.open('http://www.facebook.com/boltnnut6637')} />
-                <Sns src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')} />
-                <Sns src={blog_post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')} />                
-              </SnsBox>
-          </ContactInfoContainer>
-        </Container>
+              </span>
+              <img src={separator} />
+              <span class="cell" onClick={() => Router.push("/term/policy")}>
+                이용약관
+              </span>
+            </FaqTable>
+            <InfoDetailContainer>
+              <span>
+                <span class="title"> 회사명 </span> (주)볼트앤너트
+              </span>
+              <span>
+                <span class="title"> 대표자 </span> 윤기열, 신지섭
+              </span>
+              <span>
+                <span class="title"> 사업자등록번호 </span> 390-87-01669
+              </span>
+              <span>
+                <span class="title"> 사업장 소재지 </span> 서울특별시 성북구 고려대길 27길 3 2층
+              </span>
+              <span>
+                <span class="title"> 이메일 </span> boltnnut@boltnnut.com
+              </span>
+              <img src={campustown} style={{float: 'right'}}/>
+            </InfoDetailContainer>
+          </CompanyInfoWrapper>
+        </Containerv1>
       </Footer>
       </>
       ) : (
-         <MobileFooter>
-           <CompanyInfoContainer>
-             <div style={{flexDirection: "row", display: "block", position: "relative"}}>
-             <CompanyInfo>
-               <span> (주) 볼트앤너트 </span>
-               <span> 대표자 : 윤기열</span>
-               <span> 사업자등록번호 390-87-01669</span>
-               <span> 서울특별시 성북구 고려대길27길 4, 3층</span>
-             </CompanyInfo>
-             <CompanyInfo2>
-               <span> CONTACT </span>
-               <span> 02-926-6637 </span>
-               <span> 평일 오전 10시~오후7시 </span>
-               <span> boltnnut@boltnnut.com </span>
-               <SnsBox>
-                <Sns src={facebook} onClick={() => window.open('http://www.facebook.com/boltnnut6637')} />
-                <Sns src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')} />
-                <Sns src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')} />
-                <Sns src={blog_post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')} />
-              </SnsBox>
-             </CompanyInfo2>
-             </div>
-             <MobileContainer>
-               <span
-                onClick={() => Router.push("/partner")}> 제조사 찾기 </span>
-               <span> 자주찾는 질문 </span>
-               <span
-                onClick={() => Router.push("/term/policy")}> 이용약관 </span>
-               <span
-                onClick={() => Router.push("/term/personal")}> 개인정보 처리 방침 </span>
-             </MobileContainer>
-           </CompanyInfoContainer>
-         </MobileFooter>
+         
+      <>
+      <Footer>
+        <Containerv1 style={{flexDirection: 'column'}}>
+          <TelInfoWrapper>
+            TEL. 02-926-6637
+          </TelInfoWrapper>
+          <CompanyInfoWrapper>
+              <span> 오전 10:00 ~ 오후 07:00 </span>
+              <span> 점심시간 12:00 ~  01:00 </span>
+              <div>
+                휴일( 토요일, 일요일, 공휴일 )
+              </div>
+          </CompanyInfoWrapper>
+          <CompanyInfoWrapper style={{paddingTop: 14}}>
+            <FaqTable>
+              <span class="cell" onClick={() => Router.push("/faq")}>
+                자주찾는 질문
+              </span>
+              <img src={separator} />
+              <span class="cell" onClick={() => Router.push("/term/personal")}>
+                개인정보처리방침
+              </span>
+              <img src={separator} />
+              <span class="cell" onClick={() => Router.push("/term/policy")}>
+                이용약관
+              </span>
+            </FaqTable>
+            <InfoDetailContainer>
+              <span>
+                <span class="title"> 회사명 </span> (주)볼트앤너트
+              </span>
+              <span>
+                <span class="title"> 대표자 </span> 윤기열, 신지섭
+              </span>
+              <span>
+                <span class="title"> 사업자등록번호 </span> 390-87-01669
+              </span>
+              <span>
+                <span class="title"> 사업장 소재지 </span> 서울특별시 성북구 고려대길 27길 3 2층
+              </span>
+              <span>
+                <span class="title"> 이메일 </span> boltnnut@boltnnut.com
+              </span>
+            </InfoDetailContainer>
+          </CompanyInfoWrapper>
+          <ImageWrapper>
+                  <img src={campustown} style={{height: 20, alignSelf: 'center'}}/>
+                  <div class="imagebox">
+                    <img src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')}/>
+                    <img src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')}/>
+                    <img src={post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')}/>
+                  </div>
+          </ImageWrapper>
+        </Containerv1>
+      </Footer>
+      </>
       )
     }
   </>
@@ -165,17 +216,12 @@ class FooterComponent extends React.Component {
 export default FooterComponent;
 
 const Footer = styled.div`
-  background-color: ${PRIMARY};
+  background-color: white;
   padding: 99px 0px;
   display : inline-flex;
+  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  > div:nth-of-type(1) {
-    position: relative;
-  }
-  > div:nth-of-type(2) {
-    position: relative;
-    width: 50%;
-  }
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 100%
   }
@@ -191,68 +237,7 @@ const Footer = styled.div`
     width: 100%;
   }
 `;
-// 여기
-const Container = styled.div`
-`
 
-const TextBox = styled.div`
-  display: flex;
-  margin-bottom: 20px;
-  :last-of-type {
-    margin-bottom: 0;
-  }
-  p {
-    cursor: pointer;
-    width: auto;
-    margin-left: 0px;
-    text-align: center;
-    font-weight: 100;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: -0.45px;
-
-    :nth-of-type(1) {
-      margin-left: 0px;
-    }
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    p {
-      width: 12px;
-      margin-left: 0px;
-      :nth-of-type(1) {
-        margin-left: 0px;
-      }
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    p {
-      width: 180px;
-      margin-left: 0px;
-      :nth-of-type(1) {
-        margin-left: 0px;
-      }
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    p {
-      width: 232px;
-      margin-left: 0px;
-      :nth-of-type(1) {
-        margin-left: 0px;
-      }
-    }
-  }
-  @media (min-width: 1300px) { 
-    p {
-      width: 300px;
-      margin-left: 0px;
-      :nth-of-type(1) {
-        margin-left: 0px;
-      }
-    }
-  }
-`;
 const CompanyInfoContainer = styled.div`
   float : right;
   p {
@@ -372,27 +357,6 @@ const CompanyInfo2 = styled.div`
     }
   }
 `;
-const ContactInfoContainer = styled.div`
-  p {
-    font-weight: 300;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.47;
-    letter-spacing: -0.38px;
-    top: 50%;
-  }
-  > p:nth-of-type(1) {
-    font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: 0.48px; 
-  }
-  > p:nth-of-type(2) {
-    margin: 10px 0;
-    font-weight: 500;
-    line-height: 0.76;
-    letter-spacing: normal; 
-  }
-`;
 const Image = styled.img`
   cursor: pointer;
   width: 148px;
@@ -503,3 +467,109 @@ const MobileContainer = styled.div`
     width: 100%;
   }
 `;
+const CompanyInfoWrapper = styled.div`
+  width: 100%;
+  height: auto;
+  border-bottom: solid 1px #c6c7cc;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #86888c;
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.4px;
+    text-align: left;
+    color: #282c36;
+  }
+  > div {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    > div > img {
+      margin-left: 20px;
+    }
+  }
+  > span {
+    :nth-of-type(2) {
+      padding-left: 10px;
+    }
+  }
+`
+const TelInfoWrapper = styled.div`
+  width: 100%;
+  height: auto;  
+  font-size: 24px;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #282c36;
+  margin-bottom: 20px;
+`
+const FaqTable = styled.table`
+  width: auto;
+  height: auto;
+  .cell {
+    display: table-cell;
+    font-size: 15px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.47;
+    letter-spacing: -0.38px;
+    text-align: left;
+    color: #282c36;
+    cursor: pointer;
+  }
+  > img {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+`
+const InfoDetailContainer = styled.div`
+  width: auto;
+  height: auto;
+  margin-top: 10px;
+  display: block !important;
+  justify-content: initial !important;
+  > span {
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.46;
+    letter-spacing: -0.33px;
+    text-align: left;
+    color: #86888c;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+    .title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #55575c;
+      margin-right: 5px;
+    }
+  }
+`
+const ImageWrapper = styled.div`
+  display: flex;
+  margin-top: 14px;
+  justify-content: space-between;
+  .imagebox {
+    > img {
+      margin-left: 10px;
+    }
+  }
+`

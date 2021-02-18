@@ -73,6 +73,9 @@ class Request {
   //type
   @observable proposal_type = 1;
 
+  //Payment
+  @observable numCount = null;
+
   @action reset = () => {
     this.titleData = [];
     this.percentage = 7;
@@ -87,6 +90,7 @@ class Request {
     this.select_mid = null;
     this.random_partner_list = [];
     this.maincategory_id = '';
+    this.numCount = null;
   }
   @action setInputName = (val) => {
     //
@@ -110,6 +114,10 @@ class Request {
   @action setDue = (val) => {
     this.input_day = val;
   };
+  @action setNumCount = (val) => {
+    this.numCount = val;
+  }
+
 
   @action setCommonFile = (obj) => {
     if (typeof obj == 'object') {
@@ -131,7 +139,7 @@ class Request {
     }
     var formData = new FormData();
 
-    formData.append("product", 45);
+    formData.append("product", this.select_mid.id);
     formData.append("name", this.input_name);
     formData.append("price", this.input_price.value);
     formData.append("period", this.input_day.value);
