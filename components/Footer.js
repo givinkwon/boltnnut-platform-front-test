@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Router from "next/router";
 import {inject, observer} from "mobx-react";
 
-// import Container from "./Container";
+// import Container from "./Container"; //
 import * as Text from "./Text";
 import { PRIMARY, WHITE } from "static/style";
 import Containerv1 from './Containerv1';
