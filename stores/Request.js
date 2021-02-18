@@ -73,10 +73,13 @@ class Request {
   //type
   @observable proposal_type = 1;
 
+  //Payment
+  @observable numCount = null;
+
   @action reset = () => {
     this.titleData = [];
     this.percentage = 7;
-    this.step_index = 1;
+    this.step_index = 3;
     this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";
@@ -87,6 +90,7 @@ class Request {
     this.select_mid = null;
     this.random_partner_list = [];
     this.maincategory_id = '';
+    this.numCount = null;
   }
   @action setInputName = (val) => {
     //
@@ -110,6 +114,10 @@ class Request {
   @action setDue = (val) => {
     this.input_day = val;
   };
+  @action setNumCount = (val) => {
+    this.numCount = val;
+  }
+
 
   @action setCommonFile = (obj) => {
     if (typeof obj == 'object') {

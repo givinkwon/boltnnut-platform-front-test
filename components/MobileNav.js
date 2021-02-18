@@ -118,6 +118,7 @@ class MobileNav extends React.Component {
       this.setState({...this.state, is_open: true});
     }
   }
+
   render () {
     const { Auth, Partner,width } = this.props;
     const { url, is_open, is_profile, token } = this.state;
@@ -163,7 +164,7 @@ class MobileNav extends React.Component {
           )}
         <Container>
           <NavWrap2>
-              <Logo src={this.props.src} onClick={() => Router.push("/")} />
+              <Logo src={this.props.src} onClick={() => Router.back()} />
             <HeadText>{this.props.headText}</HeadText>
             {
               !this.props.Auth.logged_in_user ? (

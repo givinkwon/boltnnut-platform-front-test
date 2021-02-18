@@ -120,10 +120,10 @@ class MobileStep1Container extends React.Component {
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
           />
         </SelectRow>
-        <Header style={{marginTop: 18}}>
+        <Header style={{marginTop: 22}}>
             희망 예산
         </Header>
-        <SelectRow style={{width: 380}}>
+        <SelectRow style={{width: '50%'}}>
 
           <input style={{display: 'none'}} value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
           <Select
@@ -131,10 +131,10 @@ class MobileStep1Container extends React.Component {
             getOptionLabel={(option) => option.label} placeholder='예산을 선택해주세요.' onChange={Request.setPrice}
           />
         </SelectRow>
-          <Header style={{marginTop: 18}}>
+          <Header style={{marginTop: 22}}>
             희망 개발 기간
           </Header>
-        <SelectRow style={{width: 180}}>
+        <SelectRow style={{width: '50%'}}>
 
           <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/>
           <Select
@@ -162,12 +162,12 @@ class MobileStep1Container extends React.Component {
             onChange={Request.setInputName}
           />
        </SelectRow>
-       <Header style={{marginTop: 18}}>
+       <Header style={{marginTop: 22}}>
             전화번호
        </Header>
        <SelectRow>
           <PhoneInputComponent
-            width = {66}
+            width = {'100%'}
             height = {34}
             phd1 = "010"
             phd2 = "1234"
@@ -177,7 +177,7 @@ class MobileStep1Container extends React.Component {
             onChange={this.handleChange.bind(this)}
           />
        </SelectRow>
-       <Header style={{marginTop: 18}}>
+       <Header style={{marginTop: 22}}>
         의뢰 관련 파일
        </Header>
 
@@ -231,7 +231,7 @@ const SelectRow = styled.div`
   margin-top: 10px;
 `
 const Select = styled(SelectComponent)`
-    width: 169px;
+    width: 100%;
     height: 34px;
     object-fit: contain;
     border-radius: 3px;
@@ -245,7 +245,7 @@ const RequestInfoBox = styled.div`
   display: inline-flex;
   justify-content: center;
   > div {
-    width: 375px;
+    width: 100%;
     @media (min-width: 0px) and (max-width: 375px) {
       width: 100%;
     }
