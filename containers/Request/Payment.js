@@ -15,6 +15,10 @@ const customStyles = {
   indicatorSeparator: () => ({
     display: "none",
   }),
+  menuList: (provided, state) => ({
+    ...provided,
+    maxHeight: "100%",
+  }),
   option: (provided, state) => ({
     ...provided,
     color: state.isSelected ? '#000000' : '#555555',
@@ -58,7 +62,7 @@ const getNumber = [
   {label: '7', value: 7},
   {label: '8', value: 8},
   {label: '9', value: 9},
-  {label: '10+', value: 10},
+  {label: '직접 입력', value: 10},
 ];
 @inject('Request','Proposal','DetailQuestion','ManufactureProcess')
 @observer

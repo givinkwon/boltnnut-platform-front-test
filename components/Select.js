@@ -55,6 +55,7 @@ class SelectComp extends React.Component {
         options={options}
         isSearchable={false}
         placeholder={placeholder}
+        menuIsOpen={true}
       />
     );
   }
