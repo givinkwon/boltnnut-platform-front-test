@@ -1,1 +1,1 @@
-export const ROOT_URL = `https:/api.boltnnut.com
+export const ROOT_URL = `https://api.boltnnut.com
