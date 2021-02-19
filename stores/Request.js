@@ -80,7 +80,7 @@ class Request {
   @action reset = () => {
     this.titleData = [];
     this.percentage = 7;
-    this.step_index = 0;
+    this.step_index = 1;//0으로 바꿔야됨. 임시방편
     this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";
@@ -91,7 +91,7 @@ class Request {
     this.select_mid = null;
     this.random_partner_list = [];
     this.maincategory_id = '';
-    this.request_type="";
+    this.request_type="development";// ""로 바꿔야됨. 임시방편
     // console.log("ANSLKCNAKLSCNKLASNCLAKSNCL");
     this.numCount = null;
   }

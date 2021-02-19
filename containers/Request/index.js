@@ -39,7 +39,8 @@ class RequestContainer extends React.Component {
         <BannerContainer />
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
-              { Request.step_index == 0 ? <RequestSelectContainer />:<Step/>}
+              {/* { Request.step_index == 0 ? <RequestSelectContainer />:<Step/>} */}
+              <Step/>
               { Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
               { Request.step_index == 2 && <Step2Container />}
               { Request.step_index == 3 && <Step3Container />}
