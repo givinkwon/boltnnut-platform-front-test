@@ -100,7 +100,7 @@ class MobileStep2Container extends React.Component {
                                   }
                       >
                         <Text id={'queText'} color={"#282c36"}>
-                          { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요." }
+                          { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요. 부품별로 첨부해야 정확한 견적이 나옵니다" }
                         </Text>
                         <img src={fileImage} />
                         <input

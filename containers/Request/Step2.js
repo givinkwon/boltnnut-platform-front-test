@@ -106,7 +106,8 @@ class Step2Container extends React.Component {
                               }
                     >
                     <Text id={'queText'} color={"#282c36"}>
-                        { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요." }
+                        { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요. 부품별로 첨부해야 정확한 견적이 나옵니다" }
+                        {/* { Request.drawFile ? "파일이 있음" : "파일을 선택해 주세요." } */}
                     </Text>
                     <img src={fileImage} />
                     <input
@@ -120,11 +121,14 @@ class Step2Container extends React.Component {
                   </>
                   }
 
-                  <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
+                  {Request.request_type==="development" &&
+                    <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
                     <Text active={activeHandler(idx)} id={'queText'} color={"#282c36"}>
                       {data.select}
                     </Text>
                   </Select>
+                  }
+                  
                 </div>
               )}
             )

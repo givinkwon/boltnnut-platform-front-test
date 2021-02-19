@@ -27,6 +27,8 @@ class MobileStep6Container extends Component {
   }
   buttonClick = () => {
     const { Request } = this.props;
+    window.scrollTo(0, 0)
+
     Request.step_index = 4;
   }
 
@@ -63,7 +65,7 @@ class MobileStep6Container extends Component {
     else{
       this.setState({ arrowChecked:idx,showConsultantDetail: true})
     }
-    
+
   }
 
   arrowHandler=(idx)=>

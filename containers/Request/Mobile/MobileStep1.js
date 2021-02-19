@@ -228,7 +228,7 @@ const Header = styled(Content.FontSize15)`
 const SelectRow = styled.div`
   width: 100%;
   display: flex;
-  margin-top: 8px;
+  margin-top: 10px;
 `
 const Select = styled(SelectComponent)`
     width: 169px;

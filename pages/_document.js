@@ -99,6 +99,7 @@ export default class MyDocument extends Document {
       <html>
         <Head>
         <>
+          <script data-ad-client="ca-pub-6441704928060549" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
           <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
           {/*--PG크로스브라우징필수내용--*/}
