@@ -92,43 +92,39 @@ class MobileStep2Container extends React.Component {
           class="Input" style={{ display: 'none' }}/>
         <SelectContainer index={DetailQuestion.index}>
           {
-            (DetailQuestion.select.data && DetailQuestion.index < 8) && DetailQuestion.select.data.map((data, idx) => {
-                return (
-                  <div style={{ width: '100%' }}>
-                    {
-                      DetailQuestion.index == 4 &&
-                      <>
-                        <FileSelect active={fileActiveHandler(1)}
-                                    onClick={() =>
-                                      document.getElementById('FileInput')
-                                        .click()
-                                    }
-                        >
-                          <Text id={'queText'} color={'#282c36'}>
-                            {Request.drawFile ? this.state.fileName : '파일을 선택해 주세요.'}
-                          </Text>
-                          <img src={fileImage}/>
-                          <input
-                            id="FileInput"
-                            type="file"
-                            style={{ display: 'none' }}
-                            onChange={(e) => this.onChangeFile(e, { nextTitle: 8 }, 1)}
-                            // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
-                          />
-                        </FileSelect>
-                      </>
-                    }
+            (DetailQuestion.select.data && DetailQuestion.index<8)&& DetailQuestion.select.data.map((data,idx) => {
+              return (
+                <div>
+                  {
+                    DetailQuestion.index == 4 &&
+                    <>
+                      <FileSelect active={fileActiveHandler(1)}
+                                  onClick = {() =>
+                                    document.getElementById("FileInput").click()
+                                  }
+                      >
+                        <Text id={'queText'} color={"#282c36"}>
+                          { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요. 부품별로 첨부해야 정확한 견적이 나옵니다" }
+                        </Text>
+                        <img src={fileImage} />
+                        <input
+                          id="FileInput"
+                          type="file"
+                          style={{display: 'none'}}
+                          onChange={(e) => this.onChangeFile(e,{nextTitle:8}, 1)}
+                          // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
+                        />
+                      </FileSelect>
+                    </>
+                  }
 
-                    <Select onClick={() => {
-                      test(data, idx);
-                    }} active={activeHandler(idx)}>
-                      <Text id={'queText'} active={activeHandler(idx)}>
-                        {data.select}
-                      </Text>
-                    </Select>
-                  </div>
-                );
-              }
+                  <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
+                    <Text id={'queText'} active={activeHandler(idx)}>
+                      {data.select}
+                    </Text>
+                  </Select>
+                </div>
+              )}
             )
           }
           {DetailQuestion.index === 8 &&

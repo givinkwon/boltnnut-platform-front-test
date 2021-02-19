@@ -98,7 +98,7 @@ class Payment {
     const req = {
       data: {
         product_name: `볼트앤너트 결제`,
-        product_price: 100,
+        product_price: this.product_price,
         count: this.count_number.value,
         phone: this.phone_number,
       },
