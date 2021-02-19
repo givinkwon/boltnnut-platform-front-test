@@ -183,5 +183,11 @@ display: flex;
   padding: 4px;
   outline: none;
   border: none;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.45px;
+  color: #282c36;
 }
 `
