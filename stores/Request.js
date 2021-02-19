@@ -116,9 +116,13 @@ class Request {
   };
   @action setNumCount = (val) => {
     if (val.label != '직접 입력') {
-      this.numCount = val;
-    } else {
-      console.log("aaa")
+        this.numCount = val;
+      }
+    if (val.label == '직접 입력' && val.value == 0) {
+        this.numCount = val;
+    }
+    if (val.label == null) {
+      this.numCount = {label:'직접 입력', value:val}
     }
   }
 

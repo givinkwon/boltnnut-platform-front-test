@@ -62,15 +62,28 @@ const getNumber = [
   {label: '7', value: 7},
   {label: '8', value: 8},
   {label: '9', value: 9},
-  {label: '직접 입력', value: 10},
+  {label: '직접 입력', value: 0},
 ];
 @inject('Request','Proposal','DetailQuestion','ManufactureProcess')
 @observer
 class PaymentBox extends Component {
+  inputHandler = () => {
+    const { Request } = this.props;
+    if (Request.numCount) {
+      if (Request.numCount.label='직접 입력') {
+        console.log(true);
+        return true
+      } else {
+        console.log(false);
+        return false;
+      }
+    }
+    return false;
+  }
   render() {
     const { Proposal, Request, ManufactureProcess } = this.props;
     const estimateData = Proposal.estimateData;
-    console.log(estimateData);
+
     return(
       <div style={{margin: '100px 0px 0px 48px'} }>
         <ProjectName>{estimateData.projectTitle}</ProjectName>
@@ -78,10 +91,17 @@ class PaymentBox extends Component {
           <div style={{display: 'flex', alignItems:'center'}}>
             <CalText style={{ marginRight: 15 }}>수량</CalText>
             <input style={{ display: 'none' }} value={Request.numCount ? Request.numCount.value : ''} className="Input"/>
-            <Select
-              styles={customStyles} options={ getNumber } value={ Request.numCount }
-              getOptionLabel={(option) => option.label} placeholder='수량' onChange={Request.setNumCount}
-            />
+            { Request.numCount && Request.numCount.label == '직접 입력' &&
+              <DirectInputBox>
+                <input onChange={(event) => Request.setNumCount(event.currentTarget.value)} />
+              </DirectInputBox>
+            }
+            { (Request.numCount == null || Request.numCount.label != '직접 입력') &&
+              <Select
+                styles={customStyles} options={ getNumber } value={ Request.numCount }
+                getOptionLabel={(option) => option.label} placeholder='수량' onChange={Request.setNumCount}
+              />
+            }
           </div>
           <CalText>
             {Request.numCount ? ((Math.round(ManufactureProcess.MinPrice/100)*100) * Request.numCount.value).toLocaleString('ko-KR') : 0}원
@@ -144,4 +164,24 @@ const Allmoney = styled.span`
   font-stretch: normal;
   font-style: normal;
   letter-spacing: normal;
+`
+const DirectInputBox = styled.div`
+font-size: 18px;
+font-weight: 500;
+font-stretch: normal;
+font-style: normal;
+letter-spacing: -0.45px;
+color: #282c36;
+width: 108px;
+height: 29px;
+border: solid 1px #c6c7cc;
+border-radius: 3px;
+padding: 4px;
+display: flex;
+> input {
+  width: 100%;
+  padding: 4px;
+  outline: none;
+  border: none;
+}
 `
