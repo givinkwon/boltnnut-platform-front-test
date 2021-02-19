@@ -141,6 +141,8 @@ export default class MyDocument extends Document {
           <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" async ></script>
           {/* Naver analic */}
           <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+          {/* Google Adsense */}
+          <script data-ad-client="ca-pub-6441704928060549" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </body>
       </html>
     );

@@ -57,7 +57,7 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
-  @observable step_index = 1;
+  @observable step_index = 3;
   @observable step1_index = 1;
   @observable drawFile = null;
   @observable percentage = 0;
@@ -115,7 +115,15 @@ class Request {
     this.input_day = val;
   };
   @action setNumCount = (val) => {
-    this.numCount = val;
+    if (val.label != '직접 입력') {
+        this.numCount = val;
+      }
+    if (val.label == '직접 입력' && val.value == 0) {
+        this.numCount = val;
+    }
+    if (val.label == null) {
+      this.numCount = {label:'직접 입력', value:val}
+    }
   }
 
 
