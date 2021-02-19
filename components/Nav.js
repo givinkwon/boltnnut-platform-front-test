@@ -111,6 +111,7 @@ class Nav extends React.Component {
     const { url, is_open, is_profile, token } = this.state;
 
     return (
+      <>
       <NavBox>
         <Containerv1 style={{display: "inline", justifyContent: "space-between"}}>
           <NavWrap>
@@ -330,6 +331,8 @@ class Nav extends React.Component {
           </NavWrap>
         </Containerv1>
       </NavBox>
+      <div style={{height: 70}} />
+    </>
     );
   }
 }
@@ -372,6 +375,8 @@ const Avatar = styled.img`
   cursor: pointer;
 `;
 const NavBox = styled.div`
+  position: fixed;
+  z-index: 100;
   height: 70px;
   width: 100%;
   background-color: ${WHITE};

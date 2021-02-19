@@ -125,7 +125,7 @@ class MobileStep1Container extends React.Component {
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
           />
         </SelectRow>
-        <Header style={{marginTop: 18}}>
+        <Header style={{marginTop: 22}}>
             희망 예산
         </Header>
         <SelectRow style={{width: '50%'}}>
@@ -136,7 +136,7 @@ class MobileStep1Container extends React.Component {
             getOptionLabel={(option) => option.label} placeholder='예산을 선택해주세요.' onChange={Request.setPrice}
           />
         </SelectRow>
-          <Header style={{marginTop: 18}}>
+          <Header style={{marginTop: 22}}>
             희망 개발 기간
           </Header>
         <SelectRow style={{width: '50%'}}>
@@ -167,12 +167,12 @@ class MobileStep1Container extends React.Component {
             onChange={Request.setInputName}
           />
        </SelectRow>
-       <Header style={{marginTop: 18}}>
+       <Header style={{marginTop: 22}}>
             전화번호
        </Header>
        <SelectRow>
           <PhoneInputComponent
-            width = {66}
+            width = {'100%'}
             height = {34}
             phd1 = "010"
             phd2 = "1234"
@@ -182,7 +182,7 @@ class MobileStep1Container extends React.Component {
             onChange={this.handleChange.bind(this)}
           />
        </SelectRow>
-       <Header style={{marginTop: 18}}>
+       <Header style={{marginTop: 22}}>
         의뢰 관련 파일
        </Header>
 
@@ -233,10 +233,10 @@ const Header = styled(Content.FontSize15)`
 const SelectRow = styled.div`
   width: 100%;
   display: flex;
-  margin-top: 8px;
+  margin-top: 10px;
 `
 const Select = styled(SelectComponent)`
-    width: ${props => props.width ? props.width : '169px'};
+    width: 100%;
     height: 34px;
     object-fit: contain;
     border-radius: 3px;
@@ -250,9 +250,10 @@ const RequestInfoBox = styled.div`
   display: inline-flex;
   justify-content: center;
   > div {
-    width: 375px;
+    width: 100%;
     @media (min-width: 0px) and (max-width: 375px) {
       width: 100%;
     }
   }
 `
+

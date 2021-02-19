@@ -84,7 +84,7 @@ class RequestCardContainer extends Component {
 
   prevButtonClick = () => {
     const { Request, DetailQuestion } = this.props;
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 320)
 
     switch (Request.step_index) {
       case 1:
@@ -117,7 +117,7 @@ class RequestCardContainer extends Component {
   }
   nextButtonClick = () => {
     const { Request, DetailQuestion,ManufactureProcess } = this.props;
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 320)
 
     switch(Request.step_index)
     {
@@ -129,12 +129,17 @@ class RequestCardContainer extends Component {
           try {
             Request.createRequest();
             dataLayer.push({'event':'Step1Complete'});
-
+           
             DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
+            if(Request.request_type==="production")
+            {
+              DetailQuestion.index=4;
+              DetailQuestion.loadSelectFromTitle(4);
+            }
           } catch(e) {
             console.log(e);
           }
-          }
+        }
         break;
       case 2:
         if(DetailQuestion.nextPage)
@@ -171,7 +176,13 @@ class RequestCardContainer extends Component {
             "request": Request.created_request,
             "data": Request.titleData,
           }
-          DetailQuestion.loadProposalType(SelectSaveData);
+
+          //처음에 선택하는 request_type이 '개발'일 때만 질문 저장. '생산'일떄는 질문이 없기때문에 저장할 필요 없음
+          if(Request.request_type==='development')
+          {
+            DetailQuestion.loadProposalType(SelectSaveData);
+          }
+          
           dataLayer.push({'event':'Step2Complete'});
           // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
           if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
@@ -183,7 +194,7 @@ class RequestCardContainer extends Component {
           //   Request.step_index = 6;
           //   break;
           // }
-          
+
           Request.step_index = 3;
         }
         Request.percentage += 14;
