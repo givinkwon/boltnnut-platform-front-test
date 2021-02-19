@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
 import TaskBarContainer from "./TaskBar"
-
+import PaymentBox from "containers/Request/Payment"
 //material-ui
 import Table from '@material-ui/core/Table';
 import Box from '@material-ui/core/Box';
@@ -27,6 +27,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import ConsultantBoxContainer from './ConsultantBox'
 import Select from '../../components/Select';
+import PaymentContainer from './Payment';
 
 //images
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
@@ -38,41 +39,9 @@ const DropUpArrow2 = "/static/images/request/Step3/Step3_DropUp2.png";
 const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
 const Consultant2 = "/static/images/request/Step3/Step3_Consultant2.png";
 const Consultant3 = "/static/images/request/Step3/Step3_Consultant3.png";
-const boxquestion = "/static/images/request/Step1/boxquestion.svg"
-const square = "/static/images/request/Step1/square.svg"
 
-const customStyles = {
-  dropdownIndicator: () => ({
-    color: '#ffffff',
 
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    color: state.isSelected ? '#000000' : '#555555',
-    backgroundColor: '#fff',
-    borderRadius: 0,
-    padding: 16,
-    fontSize: 16,
-  }),
-  control: () => ({
-    fontSize: 16,
-    width: 116,
-    height: 37,
-    border: '1px solid #e6e6e6',
-    backgroundColor: '#fff',
-    display: 'flex',
-    borderRadius: 6,
-    padding: 4,
-  }),
-  singleValue: (provided, state) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = 'opacity 300ms';
-    return { ...provided, opacity, transition };
-  }
-}
+
 const styles = {
   table: {
     minWidth: 650
@@ -345,34 +314,7 @@ class Step3Container extends Component {
         </HeaderBackground>
         {
           (ManufactureProcess.SelectedItem && (ManufactureProcess.SelectedItem.process==2 || ManufactureProcess.SelectedItem.process==3))? (
-            <div style={{margin: '100px 0px 0px 48px'} }>
-              <Title.FontSize24>{estimateData.projectTitle}</Title.FontSize24>
-              <div style={{borderBottom: '1px solid #282c36', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: 798, height: 70}}>
-                <div style={{display: 'flex', alignItems:'center'}}>
-                  <CalText style={{ marginRight: 15 }}>수량</CalText>
-                  <Select
-                    styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
-                    getOptionLabel={(option) => option.category} placeholder='수량' onChange={Request.setMidCategory}
-                  />
-                </div>
-                <CalText>
-                  25,000,000원
-                </CalText>
-              </div>
-              <div style={{display: 'flex', justifyContent: 'space-between', width: 798, height:60, alignItems:'center'}}>
-                <div style={{display: 'flex', alignItems:'center'}}>
-                  <MoneyText style={{marginRight: 10}}>총 상품 금액</MoneyText>
-                  <div style={{position:'relative'}}>
-                    <img style={{ position: 'absolute', left: 7 , top: 2}} src={ boxquestion }/>
-                    <img src={ square }/>
-                  </div>
-                </div>
-                <div style={{display: 'flex', alignItems:'center'}}>
-                  <MoneyText style={{marginRight: 20}}>총 수량 0개</MoneyText>
-                  <Allmoney>25,000,000원</Allmoney>
-                </div>
-              </div>
-            </div>
+            <PaymentBox/>
           ) :(
             <ContentBox>
               <ContentHeader>
@@ -433,33 +375,6 @@ export default withStyles(styles)(Step3Container);
 
 const StyledStlViewer=styled(STLViewer)`
   margin:0 auto;
-`
-const CalText = styled.span`
-  font-family: NotoSansCJKkr;
-  font-size: 20px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: -0.5px;
-  color: #282c36;
-`
-const MoneyText = styled.span`
-  font-family: NotoSansCJKkr;
-  font-size: 18px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: -0.18px;
-  color: #999999;
-`
-const Allmoney = styled.span`
-  color: #0933b3;
-  font-family: Roboto;
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
 `
 
 const Font16 = styled(Content.FontSize16)`
