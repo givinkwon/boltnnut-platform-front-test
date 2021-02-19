@@ -34,7 +34,7 @@ class RequestContainer extends React.Component {
     return (
       <>
       {this.props.width >= 767.99 ? (
-      <div style={{ overflow: 'hidden' }}>
+      <div style={{ overflow: 'visible' }}>
         <BannerContainer />
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
