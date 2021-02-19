@@ -5,6 +5,10 @@ import * as PaymentAPI from "axios/Payment";
 
 class Payment {
   @observable current_coin = 0
+  @observable project_name = ''
+  @observable product_price = 0
+  @observable count_number = 0
+  @observable phone_number = '';
 
   // @observable product = {id:1, coin: 50, price: 50000}
   @observable product = { id: 0, coin: 1, price: 1000 };
@@ -27,9 +31,21 @@ class Payment {
   @observable is_payed = false;
 
   @action setProduct = (val) => {
-    console.log(val);
     this.product = val;
   };
+  @action setProductPrice = (val) => {
+    this.product_price = val;
+  };
+  @action setProjectName = (val) => {
+    this.project_name = val;
+  };
+  @action setCountNumber = (val) => {
+    this.count_number = val;
+  };
+  @action setPhoneNumber = (val) => {
+    this.phone_number = val;
+  };
+
 
   @action order = (pg) => {
     this.is_payed = true;
@@ -82,8 +98,9 @@ class Payment {
     const req = {
       data: {
         product_name: `볼트앤너트 결제`,
-        product_price: this.client_product.price,
-        coin: 0,
+        product_price: 100,
+        count: this.count_number.value,
+        phone: this.phone_number,
       },
       header: { Authorization: `Token ${token}` },
     };
@@ -97,10 +114,12 @@ class Payment {
           merchant_uid: res.data.data.paylist.merchant_uid, // 주문번호
           m_redirect_url: window.location.origin + "/payment", // 모바일 리다이렉트
           amount: res.data.data.paylist.product_price, // 가격
-          name: `볼트앤너트 ${this.client_product.date}일 - 프라임 정기권`, // 주문명
+          name: `${this.project_name}`, // 주문명
           buyer_name: res.data.data.paylist.user.username.split("@")[0], // 구매자 이름
           buyer_tel: res.data.data.paylist.user.phone, // 구매자 전화번호
           buyer_email: res.data.data.paylist.user.username, // 구매자 이메일
+          count: res.data.data.paylist.count,
+          phone: res.data.data.paylist.phone,
         };
         /* 4. 결제 창 호출하기 */
         IMP.request_pay(data, this.clientPayment);
@@ -152,11 +171,12 @@ class Payment {
     const token = await localStorage.getItem("token");
     const req = {
       data: {
+        phone: this.phone_number,
         merchant_uid: res.merchant_uid,
         date: formatDate(
           new Date(
             new Date().getTime() +
-              this.client_product.date * 24 * 60 * 60 * 1000
+            this.client_product.date * 24 * 60 * 60 * 1000
           )
         ),
       },

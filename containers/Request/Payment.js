@@ -3,6 +3,7 @@ import Select from '../../components/Select';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
+import PaymentContainer from '../Store/Client/Payment/Payment';
 
 const boxquestion = "/static/images/request/Step1/boxquestion.svg"
 const square = "/static/images/request/Step1/square.svg"
@@ -60,12 +61,34 @@ const getNumber = [
   {label: '9', value: 9},
   {label: '10+', value: 10},
 ];
-@inject('Request','Proposal','DetailQuestion','ManufactureProcess')
+@inject('Request','Proposal','Payment','ManufactureProcess')
 @observer
 class PaymentBox extends Component {
-  render() {
-    const { Proposal, Request, ManufactureProcess } = this.props;
+  state = {
+    display: false,
+  }
+  ModalOnOff = () => {
+    if (this.state.display == true) {
+      this.setState({...this.state, display: false});
+      console.log(this.state.display)
+    }
+    else {
+      this.setState({...this.state, display: true});
+    }
+  }
+  PayFunction() {
+    const { Payment, Request, ManufactureProcess, Proposal } = this.props;
     const estimateData = Proposal.estimateData;
+    Payment.setProductPrice(((Math.round(ManufactureProcess.MinPrice/100)*100) * Request.numCount.value));
+    Payment.setProjectName(estimateData.projectTitle);
+    Payment.setCountNumber(Request.numCount);
+    Payment.setPhoneNumber(Request.input_phone.replace("-","").replace("-",""))
+    Payment.clientOrder('html5_inicis');
+  }
+  render() {
+    const { Proposal, Request, ManufactureProcess, Payment } = this.props;
+    const estimateData = Proposal.estimateData;
+    console.log(Payment);
     console.log(estimateData);
     return(
       <div style={{margin: '100px 0px 0px 48px'} }>
@@ -83,10 +106,10 @@ class PaymentBox extends Component {
             {Request.numCount ? ((Math.round(ManufactureProcess.MinPrice/100)*100) * Request.numCount.value).toLocaleString('ko-KR') : 0}원
           </CalText>
         </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', width: 798, height:60, alignItems:'center'}}>
+        <div style={{position: 'relative', display: 'flex', justifyContent: 'space-between', width: 798, height:60, alignItems:'center'}}>
           <div style={{display: 'flex', alignItems:'center'}}>
             <MoneyText style={{marginRight: 10}}>총 상품 금액</MoneyText>
-            <div style={{position:'relative'}}>
+            <div style={{position:'relative'}} onClick={ this.ModalOnOff }>
               <img style={{ position: 'absolute', left: 7 , top: 2}} src={ boxquestion }/>
               <img src={ square }/>
             </div>
@@ -95,6 +118,12 @@ class PaymentBox extends Component {
             <MoneyText style={{marginRight: 20}}>총 수량 {Request.numCount ? Request.numCount.value : 0}개</MoneyText>
             <Allmoney>{Request.numCount ? ((Math.round(ManufactureProcess.MinPrice/100)*100) * Request.numCount.value).toLocaleString('ko-KR') : 0}원</Allmoney>
           </div>
+          <ModalQuestion OnOff={ this.state.display }>
+            총 상품금액에 <span>배송비는 포함되어 있지 않습니다.</span><br/>결제시 배송비가 추가될 수 있습니다.
+          </ModalQuestion>
+        </div>
+        <div style={{width:'100%', display:'flex',justifyContent:'center'}}>
+          <PayButton onClick={ () => { this.PayFunction() } }>결제하기</PayButton>
         </div>
       </div>
     )
@@ -141,3 +170,47 @@ const Allmoney = styled.span`
   font-style: normal;
   letter-spacing: normal;
 `
+const PayButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 260px;
+  height: 50px;
+  border-radius: 30px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  background-color: #0933b3;
+  margin-top: 66px;
+  margin-bottom: 60px;
+  font-family: NotoSansCJKkr;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.5px;
+  color: white;
+  cursor: pointer;
+`
+const ModalQuestion = styled.div`
+  display: ${(props) => props.OnOff ? 'block' : 'none'};
+  position: absolute;
+  top: 50px;
+  left: 100px;
+  width: 274px;
+  height: 40px;
+  padding: 12px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  background-color: white;
+  font-family: NotoSansCJKkr;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: -0.14px;
+  line-height: 1.43;
+  color: #999999;
+  > span {
+    color: #111111;
+  }
+`
+
