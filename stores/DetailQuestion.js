@@ -52,8 +52,8 @@ class DetailQuestion {
           console.log(res)
           this.proposal_type = res.data.proposalId;
           this.message = res.data.message;
-          console.log(this.proposal_type)
-          console.log(this.message)
+          // console.log(this.proposal_type)
+          // console.log(this.message)
           Proposal.loadEstimateInfo(this.proposal_type);
         }
       )

@@ -7,7 +7,6 @@ export function order(req) {
     method: "POST",
     url: `${ROOT_URL}/paylist/order/`,
     data: req.data,
-    headers: req.header,
   });
 }
 
@@ -16,7 +15,6 @@ export function pay(req) {
     method: "POST",
     url: `${ROOT_URL}/paylist/payment/`,
     data: req.data,
-    headers: req.header,
   });
 }
 

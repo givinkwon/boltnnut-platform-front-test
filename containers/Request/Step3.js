@@ -78,7 +78,7 @@ class Step3Container extends Component {
     showEstimateDetail:true,
     showConsultantDrop: true,
     showConsultantDetail: 'none',
-    display: false,
+    display: true,
   }
 
   ConsultantInfo=[
@@ -110,6 +110,13 @@ class Step3Container extends Component {
   handleChange = (event, newValue) => {
     this.setState({ percentage: newValue })
   }
+
+  // handlePayment =() =>
+  // {
+  //   const {ManufactureProcess} = this.props;
+
+  //   if(ManufactureProcess.process)
+  // }
   CustomSliderThumbComponent = (props) => {
     const {percentage} = this.state;
     return (
@@ -173,7 +180,7 @@ class Step3Container extends Component {
     var message = '도면입력';
     var rand2 = 28 + Math.floor(Math.random() * 38);
 
-    if(DetailQuestion.message.includes(message))
+    if(DetailQuestion.message.includes(message) || ManufactureProcess.message.includes(message))
     {
       rows2.splice(1,1);
       rows2.pop();
@@ -195,7 +202,6 @@ class Step3Container extends Component {
         rows2.splice(3,1);
         rows2.splice(4,1);
         rows2[3]= createData('생산가', Math.round(ManufactureProcess.MinPrice/100)*100 +'원' + '/개', 'VAT 미포함');
-
       }
 
     }
@@ -291,23 +297,25 @@ class Step3Container extends Component {
 
             {/* 여기 들어간다 */}
 
-
-            {DetailQuestion.message.includes(message) ?
-            <StyledStlViewer
-            model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
-            width={400}                                  // 가로
-            height={400}                                 // 세로
-            modelColor='red'                             // 색
-            backgroundColor='white'                    // 배경색
-            rotate={true}                                // 자동회전 유무
-            orbitControls={true}                         // 마우스 제어 유무
-          />
+            
+            {(DetailQuestion.message.includes(message) || ManufactureProcess.message.includes(message)) ? 
+              <StyledStlViewer
+              model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
+              width={400}                                  // 가로
+              height={400}                                 // 세로
+              modelColor='red'                             // 색
+              backgroundColor='white'                    // 배경색
+              rotate={true}                                // 자동회전 유무
+              orbitControls={true}                         // 마우스 제어 유무
+            />
            : (<TaskBarContainer/>)}
           </DetailContainer>
 
         </HeaderBackground>
         {
-          this.state.display ? (
+          (ManufactureProcess.SelectedItem && (ManufactureProcess.SelectedItem.process==2 || ManufactureProcess.SelectedItem.process==3))? (
+            <PaymentBox/>
+          ) :(
             <ContentBox>
               <ContentHeader>
                 볼트앤너트에는 요청하신 {estimateData.projectTitle}에 최적화된<br/>
@@ -355,10 +363,9 @@ class Step3Container extends Component {
                 무료 컨설팅 받기
               </Buttonv1>
             </ContentBox>
-          ) : (
-            <PaymentBox></PaymentBox>
           )
         }
+
       </Card>
     )
   }
