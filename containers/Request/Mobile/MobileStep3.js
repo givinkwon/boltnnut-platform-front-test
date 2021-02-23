@@ -29,8 +29,8 @@ const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 const HeaderImg = "/static/images/request/Step3/Step3_Header.png";
 const DropdownArrow1 = "/static/images/request/Step3/Step3_Dropdown1.png";
 const DropUpArrow1 = "static/images/request/Step3/Step3_DropUp1.png";
-const DropdownArrow2 = "/static/images/request/Step3/Step3_Dropdown2.png";
-const DropUpArrow2 = "/static/images/request/Step3/Step3_DropUp2.png";
+const DropdownArrow2 = "/static/images/request/Mobile/MobileStep3/step3_dropdown2.png";
+const DropUpArrow2 = "/static/images/request/Mobile/MobileStep3/step3_dropup2.png";
 const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
 const Consultant2 = "/static/images/request/Step3/Step3_Consultant2.png";
 const Consultant3 = "/static/images/request/Step3/Step3_Consultant3.png";
@@ -83,14 +83,14 @@ class MobileStep3Container extends Component {
       Job:"기술고문",
       Text1:"前 삼성그룹 사업기획팀장/상무",
       Text2:"(바이오/의료기기, 신재생에너지, ESCO/BOT 등)",
-      Text3:"삼성전자 대표이사 업적공로상(2002), 사업전략/신사업기획 15년 경력"
+      Text3:"삼성전자 대표이사 업적공로상(2002),\n 사업전략/신사업기획 15년 경력"
     },
     {
       Img:Consultant2,
       Name:"안철옹",
       Job:"기술고문",
-      Text1:"삼성전자 기구/메카트로닉스 설계 25년, 다영한 제품 설계 경험",
-      Text2:"(음향기기, 광기기, 의료기기, 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
+      Text1:"삼성전자 기구/메카트로닉스 설계 25년,\n다양한 제품 설계 경험",
+      Text2:"(음향기기, 광기기, 의료기기,\n 진단기 ,BA SPEAKER, 웨어러블로봇 등)",
       Text3:"6-시그마 Black belt(삼성전자공인 2003)\n과학기술부 신기술 인증상(2007)\nCE-Show innovation Award(2016)"
     },
     {
@@ -155,6 +155,9 @@ class MobileStep3Container extends Component {
   activeHandler=(idx)=>
   {
     const {arrowChecked} = this.state;
+    if (arrowChecked == null) {
+      return false;
+    }
     if(idx==arrowChecked)
     {
       return false;
@@ -214,7 +217,6 @@ class MobileStep3Container extends Component {
       rows2[4]= createData('사출 가견적', '견적 알고리즘이 견적을 도출하고 있습니다.', 'VAT 미포함');
       console.log(ManufactureProcess.totalMinPrice, 1)
       if(ManufactureProcess.totalMinPrice > 0 && ManufactureProcess.MinPrice > 0){
-        console.log(ManufactureProcess.totalMinPrice, 2)
         rows2.splice(1,1);
         rows2.pop();
         rows2.pop();
@@ -368,7 +370,7 @@ class MobileStep3Container extends Component {
                 {this.ConsultantInfo.map((Info,idx) => (
                     <div style={{display:'flex',flexDirection:'column'}}>
                         <ConsultantImg active={this.activeHandler(idx)} onClick={()=>{this.consultantDetailDown(idx)}} src={Info.Img}/>
-                        <Font15 active={this.activeHandler(idx)}>{Info.Name}</Font15>
+                        <Font15 fontWeight={'bold'} active={this.activeHandler(idx)}>{Info.Name}</Font15>
                         <Font13 active={this.activeHandler(idx)} style={{textAlign:'center'}}>{Info.Job}</Font13>
                         <img src={this.arrowHandler(idx)} onClick={()=>{this.consultantDetailDown(idx)}} style={{margin:'0 auto',marginTop:15}}/>
                     </div>
@@ -379,7 +381,7 @@ class MobileStep3Container extends Component {
                       <ConsultantTextBox>
                         <Font16>{this.ConsultantInfo[this.state.arrowChecked].Text1}</Font16>
                         <Font14>{this.ConsultantInfo[this.state.arrowChecked].Text2}</Font14>
-                        <Font15>{this.ConsultantInfo[this.state.arrowChecked].Text3}</Font15>
+                        <Font15 fontWeight={500} style={{marginTop: 34, color: '#414550',   lineHeight: '1.87', letterSpacing: '-0.38'}}>{this.ConsultantInfo[this.state.arrowChecked].Text3}</Font15>
                       </ConsultantTextBox>
                 }
             </DetailContainer>
@@ -404,10 +406,11 @@ class MobileStep3Container extends Component {
                   }
           </ConsultantDetailButtonBox>
 
-          <Font13 style={{marginTop:40,textAlign:'center',color:'#0a2165',fontWeight:'bold'}}>
-          전문 컨설턴트의 무료 상담을 통해 의뢰의 정확한 견적을 받아보세요
-          </Font13>
-          <Buttonv1 onClick={ this.buttonClick } fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
+          <Tail>
+            1:1 프로젝트 매니저를 배정받아 보다 정확하고  <br/>
+            안전한 견적을 받아보세요.
+          </Tail>
+          <Buttonv1 onClick={ this.buttonClick } style={{margin: 'auto', marginTop: 18, marginBottom: 42}}>
             무료 컨설팅 받기
           </Buttonv1>
         </ContentBox>
@@ -439,24 +442,28 @@ const Font14 = styled(Content.FontSize14)`
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 2.14;
-  letter-spacing: -0.14px;
+  line-height: 1.77 !important;
+  letter-spacing: -0.33px !important;
   color: #999999;
   text-align:center;
+  white-space: pre-wrap;
+  margin-top: 10px;
 `
 
 const Font16 = styled(Content.FontSize16)`
-  font-weight: 500;
+  word-break: keep-all;
+  white-space: pre-wrap;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.88;
-  letter-spacing: -0.16px;
+  line-height: 1.53 !important;
+  letter-spacing: -0.38px;
   color: #282c36;
   text-align:center;
 `
 
 const Font15 = styled(Content.FontSize15)`
-  font-weight: bold;
+  font-weight: ${props=>props.fontWeight};
   font-stretch: normal;
   font-style: normal;
   line-height: 1.6;
@@ -595,11 +602,13 @@ const ConsultantDetailButtonBox = styled.div`
 `
 
 const Card = styled.div`
-  width: 347px;
+  width: 100%;
   object-fit: contain;
 //   border-radius: 10px;
   border-top-left-radius: 35px;
   border-top-right-radius: 35px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.52);
   background-color: white;
   margin: 25px 0px 120px 0px;
@@ -640,7 +649,7 @@ const Header = styled(Content.FontSize18)`
   font-stretch: normal;
   font-style: normal;
   line-height: 1.63;
-  letter-spacing: -0.8px;
+  letter-spacing: -2px;
   text-align: center;
   color: #282c36;
   margin-left: 5.4%;
@@ -717,4 +726,15 @@ const ThumbText = styled(Content.FontSize18)`
   color: #0933b3;
   font-weight: bold;
   margin-top:25px;
+`
+const Tail = styled.div`
+  object-fit: contain;
+  font-size: 13px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.54;
+  letter-spacing: -0.33px;
+  text-align: center;
+  color: #0a2165;
 `

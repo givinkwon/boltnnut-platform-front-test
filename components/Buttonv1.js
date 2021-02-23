@@ -15,7 +15,10 @@ const Buttonv1 = styled.div`
     font-size: ${(props)=> (props.fontSize ? props.fontSize : 15)}px;
     width: 202px;
     height: 50px;
-    object-fit: contain;
+    object-fit: contain;  
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
   }
   @media (min-width: 768px) and (max-width: 1279.98px) { 
     font-size: 14px;
