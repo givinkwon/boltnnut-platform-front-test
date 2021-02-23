@@ -2,6 +2,8 @@ import { observable, action } from 'mobx'
 
 import * as MagazineAPI from 'axios/Magazine'
 import * as CategoryAPI from 'axios/Category'
+import Router from "next/router";
+
 class Magazine {
   @observable current = null
   @observable magazine_list = []
@@ -65,7 +67,7 @@ class Magazine {
 
   @action setCurrent = (data) => {
     this.current = data;
-    console.log(this.current);
+    Router.push(`/magazine/${data.id}`)
   };
 }
 export default new Magazine()
