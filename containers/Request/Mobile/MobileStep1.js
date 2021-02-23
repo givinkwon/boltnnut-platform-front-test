@@ -52,10 +52,12 @@ const customStyles = {
     letterSpacing: -0.35,
     textAlign: 'left',
     color: '#999999',
-    height: 20,
+    height: '100%',
     display: 'flex',
     alignItems: 'center',
-    padding: 0
+    padding: 0,
+    whiteSpace: 'nowrap',
+    width: 'auto',
   }),
   indicatorSeparator: () => ({
       display: 'none'
