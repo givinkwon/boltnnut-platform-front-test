@@ -118,7 +118,6 @@ class FooterComponent extends React.Component {
               onChange={Magazine.setCurrent}
               value={Magazine.current ? Magazine.current : '게시글을 선택해주세요.'}
               placeholder='게시글을 선택해주세요'
-              onClick={(event) => console.log(this)}
               />
           </CompanyInfoWrapper>
           <CompanyInfoWrapper style={{paddingTop: 14}}>
