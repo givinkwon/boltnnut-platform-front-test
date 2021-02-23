@@ -2,6 +2,8 @@ import { observable, action } from 'mobx'
 
 import * as MagazineAPI from 'axios/Magazine'
 import * as CategoryAPI from 'axios/Category'
+import Router from "next/router";
+
 class Magazine {
   @observable current = null
   @observable magazine_list = []
@@ -9,6 +11,7 @@ class Magazine {
   @observable magazine_length = null
 
   @action init = () => {
+    this.magazine_list = [];
     const req = {
       params: {
         ordering: '-is_top, -id',
@@ -23,7 +26,6 @@ class Magazine {
           const req = {
             nextUrl: this.magazine_next,
           }
-          console.log(req.nextUrl[4])
 
           await MagazineAPI.getNextPage(req)
             .then(res => {
@@ -63,14 +65,9 @@ class Magazine {
       })
   };
 
-  @action setCurrent = (id) => {
-    const idx = this.magazine_list.findIndex(magazine => magazine.id == id);
-
-    if(idx !== -1) {
-      this.current = this.magazine_list[idx];
-    }
-
-    console.log(this.current);
+  @action setCurrent = (data) => {
+    this.current = data;
+    Router.push(`/magazine/${data.id}`)
   };
 }
 export default new Magazine()

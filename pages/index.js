@@ -24,7 +24,6 @@ class Home extends React.Component {
   }
   async componentDidMount() {
     this.props.Loading.setOpen(true);
-    this.props.Home.init();
     //창 크기
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });

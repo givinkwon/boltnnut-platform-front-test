@@ -33,12 +33,10 @@ class ContentConatiner extends React.Component {
   pushToDetail = async (id) => {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
-    Magazine.setCurrent(id);
   }
 
   sliderNext = () => {
     const {current, next} = this.state;
-    console.log(this.props.Magazine.magazine_list.length)
     var fullPage = parseInt((this.props.Magazine.magazine_list.length - 6)/3)+1
 
     if (current != fullPage && this.props.Magazine.magazine_list.length > 6) {
@@ -76,7 +74,7 @@ class ContentConatiner extends React.Component {
 
     return (
         <FindExperct>
-          <List style={{marginBottom:330}}>
+          <List style={{marginBottom:150}}>
             <Slider {...settings} ref={slider => (this.slider = slider)}>
             {
             this.props.Magazine.magazine_list.map((item, idx) => {
