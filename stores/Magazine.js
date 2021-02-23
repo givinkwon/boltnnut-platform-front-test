@@ -9,6 +9,7 @@ class Magazine {
   @observable magazine_length = null
 
   @action init = () => {
+    this.magazine_list = [];
     const req = {
       params: {
         ordering: '-is_top, -id',
@@ -23,7 +24,6 @@ class Magazine {
           const req = {
             nextUrl: this.magazine_next,
           }
-          console.log(req.nextUrl[4])
 
           await MagazineAPI.getNextPage(req)
             .then(res => {
@@ -63,13 +63,8 @@ class Magazine {
       })
   };
 
-  @action setCurrent = (id) => {
-    const idx = this.magazine_list.findIndex(magazine => magazine.id == id);
-
-    if(idx !== -1) {
-      this.current = this.magazine_list[idx];
-    }
-
+  @action setCurrent = (data) => {
+    this.current = data;
     console.log(this.current);
   };
 }

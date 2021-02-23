@@ -29,7 +29,6 @@ class MobileContentContainer extends React.Component {
   pushToDetail = async (id) => {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
-    Magazine.setCurrent(id);
   }
   loadScroll = () => {
     const { magazine_idx, magazineLength } = this.state;
