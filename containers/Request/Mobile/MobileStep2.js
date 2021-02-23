@@ -94,7 +94,7 @@ class MobileStep2Container extends React.Component {
           {
             (DetailQuestion.select.data && DetailQuestion.index<8)&& DetailQuestion.select.data.map((data,idx) => {
               return (
-                <div>
+                <div style={{width: '100%'}}>
                   {
                     DetailQuestion.index == 4 &&
                     <>
