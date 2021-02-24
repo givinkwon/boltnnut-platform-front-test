@@ -411,7 +411,7 @@ class MobileStep3Container extends Component {
             안전한 견적을 받아보세요.
           </Tail>
           <Buttonv1 onClick={ this.buttonClick } style={{margin: 'auto', marginTop: 18, marginBottom: 42}}>
-            무료 컨설팅 받기
+            1:1 컨설팅 신청
           </Buttonv1>
         </ContentBox>
       </Card>

@@ -258,7 +258,7 @@ class Step4Container extends Component {
             </CheckBoxComponent>
           </CheckBoxWrapper>
           <CustomButton onClick={this.createSchedule}>
-            무료 컨설팅 받기
+            1:1 컨설팅 신청
           </CustomButton>
         </CardFooter>
       </Card>

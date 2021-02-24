@@ -83,7 +83,8 @@ class MobileStep2Container extends React.Component {
     return (
       <>
         <TitleContainer>
-          <img src={Qimage}/>
+          {/* <img src={Qimage}/> */}
+          <span class="title">Q.</span>
           {/* Array 문제로 DetailQuestion 형식 고쳤음. */}
           <TitleQue>{DetailQuestion.title_list[DetailQuestion.index - 1] && DetailQuestion.title_list[DetailQuestion.index - 1].question}</TitleQue>
         </TitleContainer>
@@ -151,10 +152,19 @@ const TitleContainer = styled.div`
   height: 30px;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   margin-top: 34px;
   display: inline-flex;
   justify-content: start;
+  .title {
+    color: #0933b3;
+    font-family: Roboto;
+    font-weight: bold;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+  }
 `;
 const TitleQue = styled(Title.FontSize24)`
   @media (min-width: 0px) and (max-width: 767.98px) {
