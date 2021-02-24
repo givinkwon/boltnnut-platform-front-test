@@ -9,7 +9,6 @@ import MobileContentContainer from './MobileMagazine';
 
 class MagazineConatiner extends React.Component {
   render () {
-    console.log(this.props.length)
     return (
       <div style={{overflow: 'hidden'}}>
       <BannerConatiner/>

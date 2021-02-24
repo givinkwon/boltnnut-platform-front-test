@@ -60,7 +60,7 @@ const customStyles = {
   }
 }
 
-@inject('Auth')
+@inject('Auth', 'Magazine')
 @observer
 class FooterComponent extends React.Component {
   state = {
@@ -72,6 +72,8 @@ class FooterComponent extends React.Component {
     tab: 0,
   }
   componentDidMount() {
+    const { Magazine } = this.props;
+    Magazine.init();
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   };
@@ -82,7 +84,7 @@ class FooterComponent extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
   };
   render() {
-    const {Auth} = this.props;
+    const {Auth, Magazine} = this.props;
     const { width } = this.state;
     return (
     <>
@@ -110,7 +112,13 @@ class FooterComponent extends React.Component {
               NOTICE
             </span>
             <SelectComponent 
-              styles = {customStyles} />
+              styles = {customStyles}
+              options = {this.props.Magazine.magazine_list && this.props.Magazine.magazine_list}
+              getOptionLabel={(option) => option.title}
+              onChange={Magazine.setCurrent}
+              value={Magazine.current ? Magazine.current : '게시글을 선택해주세요.'}
+              placeholder='게시글을 선택해주세요'
+              />
           </CompanyInfoWrapper>
           <CompanyInfoWrapper style={{paddingTop: 14}}>
             <FaqTable>

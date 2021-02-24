@@ -51,7 +51,6 @@ class MagazineContainer extends React.Component {
   pushToDetail = async (id) => {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
-    Magazine.setCurrent(id);
   }
   state = {
     idx: 0,
