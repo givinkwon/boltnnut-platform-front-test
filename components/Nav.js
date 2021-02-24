@@ -11,7 +11,7 @@ import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 
 const close_ic = "/static/icon/close.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
-const logo_ic = "/static/images/logo2.jpg";
+const logo_ic = "/static/images/components/Nav/logo_ic.png";
 const profile = "/static/images/profile.png";
 
 @inject("Auth", "Partner")
@@ -111,6 +111,7 @@ class Nav extends React.Component {
     const { url, is_open, is_profile, token } = this.state;
 
     return (
+      <>
       <NavBox>
         <Containerv1 style={{display: "inline", justifyContent: "space-between"}}>
           <NavWrap>
@@ -330,6 +331,8 @@ class Nav extends React.Component {
           </NavWrap>
         </Containerv1>
       </NavBox>
+      <div style={{height: 70}} />
+    </>
     );
   }
 }
@@ -372,6 +375,8 @@ const Avatar = styled.img`
   cursor: pointer;
 `;
 const NavBox = styled.div`
+  position: fixed;
+  z-index: 100;
   height: 70px;
   width: 100%;
   background-color: ${WHITE};
@@ -387,10 +392,7 @@ const NavWrap = styled.div`
 const Logo = styled.img`
   cursor: pointer;
   width: auto;
-  height: 42.6%;
-
-
-
+  height: auto;
 `;
 const Icon = styled.img`
   cursor: pointer;

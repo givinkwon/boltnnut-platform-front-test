@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import Container from 'components/Container'
 import * as Text from 'components/Text'
-import { WHITE } from 'static/style' 
+import { WHITE } from 'static/style'
 
 
 class BannerConatiner extends React.Component {
@@ -11,7 +11,7 @@ class BannerConatiner extends React.Component {
     return (
       <Banner>
         <Container>
-          <Text.FontSize62 color={'#0a2165'}>제조 인사이트</Text.FontSize62>
+          {/*<Text.FontSize62 color={'#0a2165'}>제조 인사이트</Text.FontSize62>*/}
           <Text.FontSize32 color={'#191919'}>제조에 도움이 되는 지식들을 만나보세요.</Text.FontSize32>
         </Container>
       </Banner>
@@ -30,6 +30,7 @@ const Banner = styled.div`
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    margin-top: 40px;
     > p {
       text-align : center; 
     }
@@ -54,7 +55,7 @@ const Banner = styled.div`
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 250px;
+    height: 120px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     height: 300px;

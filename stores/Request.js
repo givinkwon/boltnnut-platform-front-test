@@ -71,12 +71,16 @@ class Request {
   @observable random_partner_list = null;
 
   //type
+  @observable request_type="";
   @observable proposal_type = 1;
+
+  //Payment
+  @observable numCount = null;
 
   @action reset = () => {
     this.titleData = [];
-    this.percentage = 0;
-    this.step_index = 1;
+    this.percentage = 7;
+    this.step_index = 1;//0으로 바꿔야됨. 임시방편
     this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";
@@ -87,6 +91,9 @@ class Request {
     this.select_mid = null;
     this.random_partner_list = [];
     this.maincategory_id = '';
+    this.request_type="development";// ""로 바꿔야됨. 임시방편
+    // console.log("ANSLKCNAKLSCNKLASNCLAKSNCL");
+    this.numCount = null;
   }
   @action setInputName = (val) => {
     //
@@ -110,6 +117,18 @@ class Request {
   @action setDue = (val) => {
     this.input_day = val;
   };
+  @action setNumCount = (val) => {
+    if (val.label != '직접 입력') {
+        this.numCount = val;
+      }
+    if (val.label == '직접 입력' && val.value == 0) {
+        this.numCount = val;
+    }
+    if (val.label == null) {
+      this.numCount = {label:'직접 입력', value:val}
+    }
+  }
+
 
   @action setCommonFile = (obj) => {
     if (typeof obj == 'object') {
@@ -131,7 +150,7 @@ class Request {
     }
     var formData = new FormData();
 
-    formData.append("product", 45);
+    formData.append("product", this.select_mid.id);
     formData.append("name", this.input_name);
     formData.append("price", this.input_price.value);
     formData.append("period", this.input_day.value);

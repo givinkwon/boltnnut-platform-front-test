@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
 import TaskBarContainer from "./TaskBar"
-
+import PaymentBox from "containers/Request/Payment"
 //material-ui
 import Table from '@material-ui/core/Table';
 import Box from '@material-ui/core/Box';
@@ -26,6 +26,8 @@ import EstimateLogoSlider from './EstimateSheetLogoSlider'
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 import ConsultantBoxContainer from './ConsultantBox'
+import Select from '../../components/Select';
+import PaymentContainer from './Payment';
 
 //images
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
@@ -37,6 +39,8 @@ const DropUpArrow2 = "/static/images/request/Step3/Step3_DropUp2.png";
 const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
 const Consultant2 = "/static/images/request/Step3/Step3_Consultant2.png";
 const Consultant3 = "/static/images/request/Step3/Step3_Consultant3.png";
+
+
 
 const styles = {
   table: {
@@ -64,6 +68,7 @@ class Step3Container extends Component {
 
   buttonClick = () => {
     const { Request } = this.props;
+    dataLayer.push({'event':'Step3Complete'});
     Request.step_index = 4;
   }
 
@@ -72,7 +77,8 @@ class Step3Container extends Component {
     showEstimateDrop:false,
     showEstimateDetail:true,
     showConsultantDrop: true,
-    showConsultantDetail: 'none'
+    showConsultantDetail: 'none',
+    display: true,
   }
 
   ConsultantInfo=[
@@ -104,6 +110,13 @@ class Step3Container extends Component {
   handleChange = (event, newValue) => {
     this.setState({ percentage: newValue })
   }
+
+  // handlePayment =() =>
+  // {
+  //   const {ManufactureProcess} = this.props;
+
+  //   if(ManufactureProcess.process)
+  // }
   CustomSliderThumbComponent = (props) => {
     const {percentage} = this.state;
     return (
@@ -167,7 +180,7 @@ class Step3Container extends Component {
     var message = '도면입력';
     var rand2 = 28 + Math.floor(Math.random() * 38);
 
-    if(DetailQuestion.message.includes(message))
+    if(DetailQuestion.message.includes(message) || ManufactureProcess.message.includes(message))
     {
       rows2.splice(1,1);
       rows2.pop();
@@ -181,7 +194,15 @@ class Step3Container extends Component {
         rows2.pop();
         rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/10000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000) + '만원', 'VAT 미포함');
         rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개(MOQ 1000개)', 'VAT 미포함');
-      }  
+      }
+
+      //금형사출이 아닐때 금형 가견적 지우기
+      if(ManufactureProcess.SelectedItem.process!=1)
+      {
+        rows2.splice(3,1);
+        rows2.splice(4,1);
+        rows2[3]= createData('생산가', Math.round(ManufactureProcess.MinPrice/100)*100 +'원' + '/개', 'VAT 미포함');
+      }
 
     }
     return (
@@ -277,73 +298,74 @@ class Step3Container extends Component {
             {/* 여기 들어간다 */}
 
             
-            {DetailQuestion.message.includes(message) ? 
-            <StyledStlViewer
-            model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
-            width={400}                                  // 가로
-            height={400}                                 // 세로
-            modelColor='red'                             // 색
-            backgroundColor='white'                    // 배경색
-            rotate={true}                                // 자동회전 유무
-            orbitControls={true}                         // 마우스 제어 유무
-          />
+            {(DetailQuestion.message.includes(message) || ManufactureProcess.message.includes(message)) ? 
+              <StyledStlViewer
+              model={ManufactureProcess.EstimateDataForDrawing.stl_file} // stl파일 주소
+              width={400}                                  // 가로
+              height={400}                                 // 세로
+              modelColor='red'                             // 색
+              backgroundColor='white'                    // 배경색
+              rotate={true}                                // 자동회전 유무
+              orbitControls={true}                         // 마우스 제어 유무
+            />
            : (<TaskBarContainer/>)}
           </DetailContainer>
 
         </HeaderBackground>
+        {
+          (ManufactureProcess.SelectedItem && (ManufactureProcess.SelectedItem.process==2 || ManufactureProcess.SelectedItem.process==3))? (
+            <PaymentBox/>
+          ) :(
+            <ContentBox>
+              <ContentHeader>
+                볼트앤너트에는 요청하신 {estimateData.projectTitle}에 최적화된<br/>
+                {rand2} 곳의 제조 파트너사가 있습니다.
+              </ContentHeader>
 
-        <ContentBox>
-          <ContentHeader>
-            볼트앤너트에는 요청하신 {estimateData.projectTitle}에 최적화된<br/>
-            {rand2} 곳의 제조 파트너사가 있습니다.
-          </ContentHeader>
+              <CustomSlider value={percentage}/>
+              <ThumbText> {percentage}% </ThumbText>
+              <EstimateLogoSlider />
+              <ConsultantHeader>
+                매칭 컨설턴트 : 최낙의 기술 고문  외 2명
+              </ConsultantHeader>
 
-          <CustomSlider value={percentage}/>
-          <ThumbText> {percentage}% </ThumbText>
+              <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/>
 
+              {/* 나중에 디비에 연결할거라 그때 map으로 바꾸기 */}
+              <DetailContainer style={{display: showConsultantDetail,paddingBottom:20}}>
+                <ConsultantBoxContainer Info={this.ConsultantInfo[1]}/>
+                <ConsultantBoxContainer Info={this.ConsultantInfo[2]}/>
+              </DetailContainer>
 
-          <EstimateLogoSlider />
+              <ConsultantDetailButtonBox>
+                {showConsultantDrop == true ? (
+                  <>
+                    <Font18 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
+                      더 보기
+                    </Font18>
+                    <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} />
+                  </>
+                ) : (
+                  <>
+                    <Font18 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
+                      접기
+                    </Font18>
+                    <img src={DropUpArrow2} onClick={()=>{this.detailUp(2);}}/>
+                  </>
+                )
+                }
+              </ConsultantDetailButtonBox>
 
-          
+              <Font16 style={{marginTop:100,textAlign:'center'}}>
+                전문 컨설턴트의 무료 상담을 통해 의뢰의 정확한 견적을 받아보세요
+              </Font16>
+              <Buttonv1 onClick={ this.buttonClick } fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
+                무료 컨설팅 받기
+              </Buttonv1>
+            </ContentBox>
+          )
+        }
 
-          <ConsultantHeader>
-            매칭 컨설턴트 : 최낙의 기술 고문  외 2명
-          </ConsultantHeader>
-          
-          <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/>
-
-            {/* 나중에 디비에 연결할거라 그때 map으로 바꾸기 */}
-            <DetailContainer style={{display: showConsultantDetail,paddingBottom:20}}>
-              <ConsultantBoxContainer Info={this.ConsultantInfo[1]}/>
-              <ConsultantBoxContainer Info={this.ConsultantInfo[2]}/>
-            </DetailContainer>
-
-            <ConsultantDetailButtonBox>
-              {showConsultantDrop == true ? (
-                    <>
-                      <Font18 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
-                          더 보기
-                      </Font18>
-                      <img src={DropdownArrow2} onClick={()=>{this.detailDown(2);}} />
-                    </>
-                  ) : (
-                      <>
-                        <Font18 fontWeight={'bold'} style={{ textAlign: 'center'}} color={'#0933b3'}>
-                          접기
-                        </Font18>
-                        <img src={DropUpArrow2} onClick={()=>{this.detailUp(2);}}/>
-                      </>
-                    )
-                  }
-          </ConsultantDetailButtonBox>
-          
-          <Font16 style={{marginTop:100,textAlign:'center'}}>
-            전문 컨설턴트의 무료 상담을 통해 의뢰의 정확한 견적을 받아보세요
-          </Font16>
-          <Buttonv1 onClick={ this.buttonClick } fontSize={20} style={{ margin: '0 auto', marginTop: 20, marginBottom: 60, width: 260, height: 50 }}>
-            무료 컨설팅 받기
-          </Buttonv1>
-        </ContentBox>
       </Card>
     )
   }
@@ -354,7 +376,6 @@ export default withStyles(styles)(Step3Container);
 const StyledStlViewer=styled(STLViewer)`
   margin:0 auto;
 `
-
 
 const Font16 = styled(Content.FontSize16)`
   font-weight: 500;

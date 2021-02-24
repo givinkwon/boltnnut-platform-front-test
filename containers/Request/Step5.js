@@ -18,7 +18,9 @@ class Step5Container extends Component {
     const { Schedule, Request } = this.props;
     // const { client_id } = Request.client_id;
     let req = this.state;
+    dataLayer.push({'event':'Step5Complete'});
     Schedule.updateClientInfo(req, Request.client_id);
+    
   }
   onChangeRealname = (e) => {
     this.setState({...this.state, realName: e.currentTarget.value})

@@ -66,6 +66,8 @@ class InputComponent extends React.Component {
           onClick = {()=>this.file.current.click()}>
           <input
             type="file"
+            multiple={ "multiple" }
+            fileName={ "fileName[]" }
             style={{display: 'none'}}
             onChange={this.onChangeFile}
             ref={this.file}
@@ -78,7 +80,7 @@ class InputComponent extends React.Component {
           src={fileImage}
         />
         </InputBox>
-      </Wrap>  
+      </Wrap>
     )
     }
   }
@@ -90,7 +92,6 @@ const InputBox = styled.div`
   display: flex;
   height: 50px;
   width: 100%;
-  margin-top: 10px;
   border: solid 0.5px #c7c7c7;
   color: #404040;
   border-radius: 3px;

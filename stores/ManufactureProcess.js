@@ -1,4 +1,5 @@
 import { observable, action } from "mobx";
+import Proposal from './Proposal'
 
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 class ManufactureProcess {
@@ -10,6 +11,7 @@ class ManufactureProcess {
   @observable MinPrice=0;
   @observable totalMinPrice=0;
   @observable totalMaxPrice=0;
+  @observable message = '';
 
   @action init = async () => {
     await ManufactureProcessAPI.loadTitle()
@@ -39,6 +41,10 @@ class ManufactureProcess {
       this.MinPrice= this.EstimateDataForDrawing.minPrice;
       this.totalMaxPrice= this.EstimateDataForDrawing.totalMaxPrice;
       this.totalMinPrice= this.EstimateDataForDrawing.totalMinPrice;
+      this.proposal_type = res.data.proposalId;
+      this.message = res.data.message;
+      Proposal.loadEstimateInfo(this.proposal_type);
+      // console.log("EStimate = proposal_type="+this.proposal_type);
     })
     .catch((e) => {
       console.log(e);

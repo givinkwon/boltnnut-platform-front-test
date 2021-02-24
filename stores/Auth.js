@@ -395,11 +395,11 @@ class Auth {
       alert("이메일을 입력해주세요.");
       return;
     }
-    var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-    if (!emailValid.test(this.email)) {
-      await alert("이메일 형식을 확인해주세요.");
-      return;
-    }
+    // var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+    // if (!emailValid.test(this.email)) {
+    //   await alert("이메일 형식을 확인해주세요.");
+    //   return;
+    // }
     if (!this.password) {
       alert("비밀번호를 입력해주세요.");
       return;
@@ -527,6 +527,7 @@ class Auth {
           setTimeout(() => {
             this.loading = false;
             alert('회원가입 성공');
+            dataLayer.push({'event':'SignUpComplete_Client'});
             this.reset();
             Router.push("/login");
           }, 800);
@@ -661,6 +662,7 @@ class Auth {
           setTimeout(() => {
             this.loading = false
             alert('회원가입 성공');
+            dataLayer.push({'event':'SignUpComplete_Partner'});
             this.reset();
             Router.push("/login");
           }, 800);

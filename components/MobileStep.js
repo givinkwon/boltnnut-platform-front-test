@@ -131,7 +131,7 @@ const StepContainer = styled.div`
   display: inline-flex;
   align-items: center;
   left: 130px;
-  z-index: 990;
+  z-index: 200;
 `
 const StepModal = styled.div`
   position: absolute;

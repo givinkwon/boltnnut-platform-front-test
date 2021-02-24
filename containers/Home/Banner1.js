@@ -63,7 +63,7 @@ const Head = styled(Title.FontSize20)`
   margin: 293px 0px 32px 0px;
 `
 const Main = styled(Title.FontSize56)`
-  font-weight: 400;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.36;

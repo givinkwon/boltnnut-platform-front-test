@@ -99,13 +99,14 @@ export default class MyDocument extends Document {
       <html>
         <Head>
         <>
+          <script data-ad-client="ca-pub-6441704928060549" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
           <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
           {/*--PG크로스브라우징필수내용--*/}
           <meta http-equiv="Cache-Control" content="no-cache"/>
           <meta http-equiv="Expires" content="0"/>
           <meta http-equiv="Pragma" content="no-cache"/>
-         
+
           {/* 네이버웹마스터도구 사이트구조개선 코드*/}
           <meta name="NaverBot" content="All"/>
           <meta name="NaverBot" content="index, follow"/>
@@ -137,10 +138,12 @@ export default class MyDocument extends Document {
           {/* Google Tag Manager */}
           <script dangerouslySetInnerHTML={{__html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PWFPPZ5');`,}} async ></script>
           {/* Iamport */}
-          {/* <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" async ></script>
-          <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" async ></script> */}
+          <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" async ></script>
+          <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" async ></script>
           {/* Naver analic */}
           <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+          {/* Google Adsense */}
+          <script data-ad-client="ca-pub-6441704928060549" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </body>
       </html>
     );

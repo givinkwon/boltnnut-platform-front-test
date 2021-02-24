@@ -16,7 +16,7 @@ class Index extends React.Component {
     width: 0,
   }
   componentDidMount() {
-    this.props.Magazine.init()
+    // this.props.Magazine.init()
     //창 크기
     // conflict..?
     window.addEventListener('resize', this.updateDimensions);
@@ -49,7 +49,7 @@ class Index extends React.Component {
         { width > 767.98 ? (
           <Nav />
           ) : (
-          <MobileNav width={width} src={ back_ic }/>
+          <MobileNav headText = { "제조 인사이트" } width={width} src={ back_ic }/>
           )
         }
         </>

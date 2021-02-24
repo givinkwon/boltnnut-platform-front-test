@@ -42,15 +42,13 @@ class Step2Container extends React.Component {
     fileName: '',
   };
 
-  // componentDidUpdate()
-  // {
-  //   this.handleClass();
-  // }
   componentDidMount()
   {
-    if(DetailQuestion.select)
-      DetailQuestion.index=1;
+    // if(DetailQuestion.select)
+    //   DetailQuestion.index=1;
     DetailQuestion.pageCount=0;
+
+    
   }
 
 
@@ -91,11 +89,19 @@ class Step2Container extends React.Component {
       <>
         <TitleContainer>
           <img src={ Qimage }/>
-           {DetailQuestion.title_list &&<TitleQue>{DetailQuestion.title_list[DetailQuestion.index-1] && DetailQuestion.title_list[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{DetailQuestion.pageCount + 1}/5</TitleQue>}
+
+           {DetailQuestion.title_list &&<TitleQue>{DetailQuestion.title_list[DetailQuestion.index-1] && DetailQuestion.title_list[DetailQuestion.index-1].question}&nbsp;&nbsp;&nbsp;&nbsp;{Request.request_type==='development' && <>{(DetailQuestion.pageCount + 1)}/5</>}</TitleQue>}
         </TitleContainer>
         <input value={DetailQuestion.index<8 ? DetailQuestion.SelectChecked : ManufactureProcess.SelectChecked} class="Input" style={{display:'none'}}/>
         <SelectContainer index={DetailQuestion.index}>
           {
+            /* 
+            [아랫줄 코드에서 매우 주의할 점]
+            DetailQuestion.select까지만 조건부 렌더링을 걸면 안된다.
+            꼭 직접 사용할 변수까지 조건을 걸어두어야 에러가 뜨지 않는다. 물론 아래에서 사용하는 'data'는 select 내부에 있는 요소이지만
+            select까지만 조건을 걸면 에러가 발생함. 아마 데이터가 들어오는 속도와 렌더링되는 속도에 차이가 있어서 발생하는 문제가 아닐까 싶은데 아무튼 
+            조건은 꼭 끝까지 달아주자. 나도 어이없었음
+            */
             (DetailQuestion.select.data && DetailQuestion.index<8)&& DetailQuestion.select.data.map((data,idx) => {
               return (
                 <div style={{marginLeft:33}}>
@@ -108,7 +114,8 @@ class Step2Container extends React.Component {
                               }
                     >
                     <Text id={'queText'} color={"#282c36"}>
-                        { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요." }
+                        { Request.drawFile ? this.state.fileName : "파일을 선택해 주세요. 부품별로 첨부해야 정확한 견적이 나옵니다" }
+                        {/* { Request.drawFile ? "파일이 있음" : "파일을 선택해 주세요." } */}
                     </Text>
                     <img src={fileImage} />
                     <input
@@ -122,11 +129,14 @@ class Step2Container extends React.Component {
                   </>
                   }
 
-                  <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
-                    <Text id={'queText'} color={"#282c36"}>
+                  {Request.request_type==="development" &&
+                    <Select onClick = {()=>{test(data,idx)}} active={activeHandler(idx)}>
+                    <Text active={activeHandler(idx)} id={'queText'} color={"#282c36"}>
                       {data.select}
                     </Text>
                   </Select>
+                  }
+                  
                 </div>
               )}
             )
@@ -177,7 +187,7 @@ const SelectContainer = styled.div`
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.16px;
-  color: ${(props) => (props.color ? props.color : '#282c36')};
+  color: ${(props) => (props.active ? '#0933b3' : 'black')};
   margin-left: 10px;
 `
 const Select = styled.button`

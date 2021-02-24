@@ -13,6 +13,9 @@ import CheckBoxComponent from 'components/CheckBox';
 import * as Content from 'components/Content';
 
 const customStyles = {
+  root: () => ({
+    width: '100%',
+  }),
   dropdownIndicator: () => ({
     color: '#555555',
     width: 30,
@@ -34,7 +37,7 @@ const customStyles = {
     backgroundColor: '#fff',
     display: 'flex',
     borderRadius: 6,
-    height: '100%'
+    height: '100%',
   }),
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
@@ -42,17 +45,19 @@ const customStyles = {
     return { ...provided, opacity, transition };
   },
   placeholder: () => ({
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 'normal',
     fontStretch: 'normal',
     fontStyle: 'normal',
     letterSpacing: -0.35,
     textAlign: 'left',
     color: '#999999',
-    height: 20,
+    height: '100%',
     display: 'flex',
     alignItems: 'center',
-    padding: 0
+    padding: 0,
+    whiteSpace: 'nowrap',
+    width: 'auto',
   }),
   indicatorSeparator: () => ({
       display: 'none'
@@ -102,13 +107,14 @@ class MobileStep1Container extends React.Component {
       {label: '2 억원 이상', value: '2 억원 이상'}
     ];
      return(
-     <div>
+     <div style={{width: '100%'}}>
        <Header>
          의뢰 분야
        </Header>
        <SelectRow>
         <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>
         <Select
+            width={'100%'}
             styles={customStyles} options={Request.big_category_list} value={Request.select_big}
             getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
           />
@@ -116,28 +122,29 @@ class MobileStep1Container extends React.Component {
 
         <input style={{display: 'none'}} value={Request.select_mid ? Request.select_mid.category : ''} class="Input"/>
         <Select
+            width={'100%'}
             styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
           />
         </SelectRow>
-        <Header style={{marginTop: 30}}>
+        <Header style={{marginTop: 22}}>
             희망 예산
         </Header>
-        <SelectRow style={{width: 380}}>
-
+        <SelectRow style={{width: '50%'}}>
           <input style={{display: 'none'}} value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
           <Select
+            width={'100%'}
             styles={customStyles} options={costArray} value={Request.input_price}
-            getOptionLabel={(option) => option.label} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
+            getOptionLabel={(option) => option.label} placeholder='예산을 선택해주세요.' onChange={Request.setPrice}
           />
         </SelectRow>
-          <Header style={{marginTop: 30}}>
+          <Header style={{marginTop: 22}}>
             희망 개발 기간
           </Header>
-        <SelectRow style={{width: 180}}>
-
+        <SelectRow style={{width: '50%'}}>
           <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/>
           <Select
+            width={'100%'}
             styles={customStyles} options={dueArray} value={Request.input_day}
             getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
           />
@@ -149,7 +156,7 @@ class MobileStep1Container extends React.Component {
     const {Request, Partner} = this.props;
 
     return(
-     <div>
+     <div style={{width: '100%'}}>
        <Header>
          제품명
        </Header>
@@ -162,12 +169,12 @@ class MobileStep1Container extends React.Component {
             onChange={Request.setInputName}
           />
        </SelectRow>
-       <Header style={{marginTop: 30}}>
+       <Header style={{marginTop: 22}}>
             전화번호
        </Header>
        <SelectRow>
           <PhoneInputComponent
-            width = {66}
+            width = {'100%'}
             height = {34}
             phd1 = "010"
             phd2 = "1234"
@@ -177,7 +184,7 @@ class MobileStep1Container extends React.Component {
             onChange={this.handleChange.bind(this)}
           />
        </SelectRow>
-       <Header style={{marginTop: 30}}>
+       <Header style={{marginTop: 22}}>
         의뢰 관련 파일
        </Header>
 
@@ -221,7 +228,9 @@ const Header = styled(Content.FontSize15)`
     text-align: left;
     color: #282c36;
     height: 22px;
-    margin-top: 28px;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
 `
 const SelectRow = styled.div`
   width: 100%;
@@ -229,7 +238,7 @@ const SelectRow = styled.div`
   margin-top: 10px;
 `
 const Select = styled(SelectComponent)`
-    width: 169px;
+    width: 100%;
     height: 34px;
     object-fit: contain;
     border-radius: 3px;
@@ -238,13 +247,15 @@ const Select = styled(SelectComponent)`
 `
 const RequestInfoBox = styled.div`
   width: 100%;
-  height: 470px;
+  height: 256px;
+  margin-bottom: 114px;
   display: inline-flex;
   justify-content: center;
   > div {
-    width: 375px;
+    width: 100%;
     @media (min-width: 0px) and (max-width: 375px) {
       width: 100%;
     }
   }
 `
+

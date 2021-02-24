@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import styled from "styled-components";
+import styled, { keyframes } from 'styled-components';
 import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
@@ -84,7 +84,7 @@ class MobileRequestCardContainer extends Component {
 
   prevButtonClick = () => {
     const { Request, DetailQuestion } = this.props;
-
+    window.scrollTo(0, 0)
     switch (Request.step_index) {
       case 1:
         if (Request.step1_index == 2) {
@@ -116,6 +116,8 @@ class MobileRequestCardContainer extends Component {
   }
   nextButtonClick = () => {
     const { Request, DetailQuestion,ManufactureProcess } = this.props;
+    window.scrollTo(0, 0)
+
     switch(Request.step_index)
     {
       case 1:
@@ -125,6 +127,8 @@ class MobileRequestCardContainer extends Component {
         } else {
           try {
             Request.createRequest();
+            dataLayer.push({'event':'Step1Complete'});
+
             DetailQuestion.index=1; //여기서 1로 초기화해주는 이유는 밑에 prev버튼 조건 때문
           } catch(e) {
             console.log(e);
@@ -148,7 +152,7 @@ class MobileRequestCardContainer extends Component {
         }
         else {
           Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
-          
+
           // console.log(Request.drawFile);
           if(DetailQuestion.index==8)
           {
@@ -161,24 +165,21 @@ class MobileRequestCardContainer extends Component {
             ManufactureProcess.saveSelect(ManufactureProcessFormData);
             Request.titleData= Request.titleData.slice(0,3);
           }
-          
+
           var SelectSaveData = {
             "request": Request.created_request,
             "data": Request.titleData,
           }
+          DetailQuestion.loadProposalType(SelectSaveData);
+          dataLayer.push({'event':'Step2Complete'});
           // 제품 및 용품이 아닌 경우 && 도면이 아닌 경우
           if(Request.maincategory_id != 1 && DetailQuestion.index != 8){
             Request.step_index = 6;
             break;
           }
           // 도면에서 카테고리가 실리콘/플라스틱이 아닌 경우
-          if(DetailQuestion.index == 8 && ManufactureProcess.SelectChecked != 1 && ManufactureProcess.SelectChecked != 2  ){
-            Request.step_index = 6;
-            break;
-          }
-          DetailQuestion.loadProposalType(SelectSaveData);
-          
-          Request.step_index = 3; 
+
+          Request.step_index = 3;
         }
         Request.percentage += 14;
         break;
@@ -188,7 +189,7 @@ class MobileRequestCardContainer extends Component {
     const { Request} = this.props;
     let result = 4997
     //console.log(Request.select_big, Request.select_mid, Request.select_small)
-  
+
     if(Request.select_big != null && Request.select_mid == null){
         result = Request.select_big.id === 0 ?  4997 : 460 * (((Request.select_big.id)/5) + 4)
     }
@@ -204,7 +205,7 @@ class MobileRequestCardContainer extends Component {
     // console.log(this.props.title)
     const countSettings1 = {
       start: 0,
-      count : this.countCalc(), 
+      count : this.countCalc(),
       duration: 6000,
       decimals: 0,
       useGroup: true,
@@ -221,13 +222,13 @@ class MobileRequestCardContainer extends Component {
         <ContentBox>
           {this.props.content}
         </ContentBox>
-      <MatchingText>해당 의뢰에 적합한 &nbsp;<AnimationCount {...countSettings1}/>  개의 볼트앤너트 파트너사가 있습니다.</MatchingText>
+      <MatchingText>해당 의뢰에 적합한 <span><AnimationCount {...countSettings1}/>&nbsp;개의 볼트앤너트 파트너사가 있습니다.</span></MatchingText>
         <MobileLogoImageSlider/>
         {this.props.title == "기본 정보 입력 1/2" ? (<SliderText>의뢰에 대해 이해할 수 있도록 기본 정보를 입력해주세요</SliderText>) : (<SliderText>5가지 질문만 완성해주면 가견적이 나옵니다!</SliderText>)}
          <ButtonContainer>
-          <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } onClick={ this.prevButtonClick }>이전</NewButton>
+          <NewButton active={ Request.step1_index!=1 && DetailQuestion.index!=1 } type={1} onClick={ this.prevButtonClick }>이전</NewButton>
           <div style={{marginRight: 14}} />
-          <NewButton active={ active } onClick={ this.nextButtonClick }>다음</NewButton>
+          <NewButton active={ active } type={2} onClick={ this.nextButtonClick }>다음</NewButton>
         </ButtonContainer>
     </div>
     )
@@ -264,7 +265,7 @@ const CustomSlider = withStyles({
     color: '#0933b3',
     height: 4,
     width: '100%',
-    borderRadius: 10,
+    borderRadius: 50,
     cursor:'default',
     position: "absolute",
     left: 0,
@@ -276,12 +277,14 @@ const CustomSlider = withStyles({
   },
   track: {
     height: 4,
+    borderTopRightRadius:5,
+    borderBottomRightRadius:5
   },
   rail: {
     color: '#c6c7cc',
     opacity: 1,
     height: 4,
-    borderRadius: 10,
+    borderRadius: 0,
   },
 })(Slider);
 
@@ -292,6 +295,17 @@ const ThumbText = styled(Title.FontSize20)`
   font-weight: bold;
 `
 
+const boxFade = keyframes`
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+`
 const SliderText = styled(Content.FontSize13)`
   position: relative;
   height: 19px;
@@ -301,19 +315,26 @@ const SliderText = styled(Content.FontSize13)`
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.16px;
+  animation: ${ boxFade } 2s linear infinite;
 `
 
 const MatchingText = styled(Content.FontSize15)`
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  letter-spacing: -0.5px;
-  color: #282c36;
+  line-height: 1.6;
+  letter-spacing: -0.38px;
   text-align: center;
-  margin-bottom:20px;
+  color: #282c36;
   display: flex;
+  flex-direction: column;
   > span {
-    color: #0933b3;
+    color: #282c36;
+    display: inline-flex;
+    > div {
+      font-weight: 900;
+      color: #0933b3;
+    }
   }
 `
 const ButtonContainer = styled.div`

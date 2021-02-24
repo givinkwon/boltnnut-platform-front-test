@@ -29,7 +29,6 @@ class MobileContentContainer extends React.Component {
   pushToDetail = async (id) => {
     const {Magazine} = this.props;
     await Router.push(`/magazine/${id}`);
-    Magazine.setCurrent(id);
   }
   loadScroll = () => {
     const { magazine_idx, magazineLength } = this.state;
@@ -42,21 +41,18 @@ class MobileContentContainer extends React.Component {
     }
     if (scrollTop + clientHeight + 5 > scrollHeight && magazineLength == null) {
       this.setState({...this.state, magazineLength: this.props.length})
-      console.log(this.props.length)
     }
     if (scrollTop + clientHeight + 5 > scrollHeight && magazineLength > magazine_idx ) {
       if (newIdx < magazineLength) {
         this.setState({...this.state, magazine_idx: newIdx})
       } else {
         this.setState({...this.state, magazine_idx: magazineLength})
-        console.log(2)
       }
     }
   }
 
   render() {
     const { magazine_idx, magazineLength } = this.state;
-    console.log(this.state);
 
     return (
         <FindExperct>
