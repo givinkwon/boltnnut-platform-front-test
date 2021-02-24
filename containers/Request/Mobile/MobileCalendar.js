@@ -222,6 +222,7 @@ const Header = styled.div`
   height: 27px;
 `
 const HeaderText = styled.span`
+  height: auto;
   height: 14px;
   font-family: Roboto;
   font-size: 18px;
@@ -239,9 +240,8 @@ const DateContainer = styled.div`
   margin-bottom: 16px;
   > div {
     text-align: center;
-    font-family: NotoSansCJKkr;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: bold;
     font-stretch: normal;
     font-style: normal;
     letter-spacing: -0.55px;
@@ -270,7 +270,7 @@ const Day = styled.div`
   margin-top: 10px;
   font-family: Roboto;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.18px;
@@ -279,7 +279,6 @@ const Day = styled.div`
     margin-top: 25px;
     position: absolute;
     color: #0933b3;
-    font-family: NotoSansCJKkr;
     font-size: 10px;
     font-weight: bold;
     font-stretch: normal;
