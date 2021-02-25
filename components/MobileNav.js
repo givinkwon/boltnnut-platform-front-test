@@ -231,9 +231,7 @@ const ModalHeader = styled.div`
   flex-direction: column;
   border-bottom: solid 1px #e1e2e4;
   align-items: center;
-
   > div {
-    font-family: NotoSansCJKkr;
     font-size: 12px;
     font-weight: 500;
     font-stretch: normal;
@@ -241,6 +239,7 @@ const ModalHeader = styled.div`
     letter-spacing: -0.3px;
     color: #111111;
     text-align: center;
+    white-space: nowrap;
   }
 `
 const ModalContent = styled.div`

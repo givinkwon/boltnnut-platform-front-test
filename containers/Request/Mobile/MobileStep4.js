@@ -359,10 +359,10 @@ const Tail = styled(Content.FontSize13)`
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 2.62;
   letter-spacing: -0.33px;
   text-align: left;
   color: #414550;
+  word-break: keep-all;
 `
 const CardFooter = styled.div`
   width: 100%;
