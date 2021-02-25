@@ -85,8 +85,7 @@ const Body = styled(Title.FontSize24)`
   color: #555963;
   margin-bottom: 100px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 15px;
-      height: 44px;
+    font-size: 16px;
       height: 44px;
   }
 `

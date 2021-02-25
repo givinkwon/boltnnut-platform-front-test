@@ -76,6 +76,7 @@ const Middle = styled(Content.FontSize22)`
 `
 
 const Body = styled(Content.FontSize15)`
+  font-size: 16px !important;
   height: 44px;
   font-weight: 500;
   font-stretch: normal;

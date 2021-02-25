@@ -57,7 +57,7 @@ const Middle = styled(Title.FontSize22)`
     }
 `
 const Body = styled(Content.FontSize15)`
-  height: 44px;
+    height: 44px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -66,4 +66,5 @@ const Body = styled(Content.FontSize15)`
     text-align: center;
     color: #555963;
     margin-bottom: 100px;
+    font-size: 16px;
 `

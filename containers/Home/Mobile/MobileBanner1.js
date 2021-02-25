@@ -72,7 +72,7 @@ const Main = styled(Title.FontSize56)`
 `
 const Content = styled(Title.FontSize24)`
   height:46px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -82,7 +82,7 @@ const Content = styled(Title.FontSize24)`
   color: #555963;
   margin-bottom: 100px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 15px;
+    font-size: 16px;
     height: 44px;
   }
 `
