@@ -64,6 +64,11 @@ const GlobalStyle = createGlobalStyle`
   .slick-disabled {
     display: none;
   }
+  @font-face {
+    font-family: "Roboto-iOS";
+    src: url("/public/fonts/Roboto-Black.ttf") format('truetype');
+    font-weight: 500;
+  }
 `;
 
 class MyApp extends App {

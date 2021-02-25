@@ -223,7 +223,6 @@ const Header = styled.div`
 `
 const HeaderText = styled.span`
   height: auto;
-  height: 14px;
   font-family: Roboto;
   font-size: 18px;
   font-weight: bold;
@@ -268,7 +267,7 @@ const Day = styled.div`
   border-radius: 35px;
   margin-left: 7px;
   margin-top: 10px;
-  font-family: Roboto;
+  font-family: Roboto-iOS;
   font-size: 15px;
   font-weight: bold;
   font-stretch: normal;
