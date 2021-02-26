@@ -13,7 +13,7 @@ import HomeConatiner from "containers/Home";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const logo_ic = "/static/images/components/MobileNav/MobileLogo.png";
+const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
 
 @inject("Home", "Loading", "Auth")

@@ -10,13 +10,10 @@ import * as Text from "./Text";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
 
-const close_ic = "/static/icon/close.svg";
+const close_ic = "/static/images/components/MobileNav/close_ic.svg";
 // const hamburger_ic = "/static/icon/hamburger.png";
-const hamburger_ic = "/static/images/components/MobileNav/hamburger.png";
-
-const x_ic = "/static/images/components/MobileNav/xBtn.png";
-const profile = "/static/images/profile.png";
-const logo_ic = "/static/images/components/MobileNav/MobileLogo.png";
+const hamburger_ic = "/static/images/components/MobileNav/hamburger.svg";
+const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 //...
 @inject("Auth", "Partner")
 @observer
@@ -122,6 +119,7 @@ class MobileNav extends React.Component {
   render () {
     const { Auth, Partner,width } = this.props;
     const { url, is_open, is_profile, token } = this.state;
+    console.log(this.props);
     return (
       <NavBox>
         {is_open && (
@@ -130,7 +128,7 @@ class MobileNav extends React.Component {
               <ModalHeader>
                 <div style={{marginBottom: 50, width: '100%'}}>
                   <Logo onClick={() => {if (is_open == true) {Router.push('/')}}} src={logo_ic} style={{float:'left'}}/>
-                  <img src={ x_ic } style={{float: 'right'}}/>
+                  <img src={ close_ic } style={{float: 'right'}}/>
                 </div>
                 <div style={{height:14}}>내 제조 의뢰 견적과 전문 제조사를 바로 만나 보세요.</div>
                 <FreeButton onClick={() => Router.push("/request")}>

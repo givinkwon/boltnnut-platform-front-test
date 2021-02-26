@@ -131,6 +131,6 @@ const BackgroundImage = styled.div`
   > img {
     width: 100%;
     height: 100%;
-    opacity: 0.62;
+    opacity: 0.65;
   }
 `

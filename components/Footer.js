@@ -9,9 +9,14 @@ import { PRIMARY, WHITE } from "static/style";
 import Containerv1 from './Containerv1';
 import SelectComponent from './Select';
 
-const instargram = "/static/images/components/Footer/instargram.png";
-const blog = "/static/images/components/Footer/blog.png";
-const post = "/static/images/components/Footer/post.png";
+const facebook_mob = "/static/images/components/Footer/facebook.svg";
+const instargram_mob = "/static/images/components/Footer/instargram.svg";
+const blog_mob = "/static/images/components/Footer/blog.svg";
+const post_mob = "/static/images/components/Footer/post.svg";
+const facebook = "/static/images/components/Footer/facebook_big.svg";
+const instargram = "/static/images/components/Footer/instargram_big.svg";
+const blog = "/static/images/components/Footer/blog_big.svg";
+const post = "/static/images/components/Footer/post_big.svg";
 const dropdown = "/static/images/components/Footer/dropdown.png";
 const separator = "/static/images/components/Footer/separator.png";
 const campustown = "/static/images/components/Footer/campustown.png";
@@ -206,9 +211,10 @@ class FooterComponent extends React.Component {
           <ImageWrapper>
                   <img src={campustown} style={{height: 20, alignSelf: 'center'}}/>
                   <div class="imagebox">
-                    <img src={instargram} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')}/>
-                    <img src={blog} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')}/>
-                    <img src={post} onClick={() => window.open('https://post.naver.com/boltnnut_korea')}/>
+                    <img src={facebook_mob} />
+                    <img src={instargram_mob} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')}/>
+                    <img src={blog_mob} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')}/>
+                    <img src={post_mob} onClick={() => window.open('https://post.naver.com/boltnnut_korea')}/>
                   </div>
           </ImageWrapper>
         </Containerv1>
