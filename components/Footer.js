@@ -15,6 +15,7 @@ const blog_mob = "/static/images/components/Footer/blog.svg";
 const post_mob = "/static/images/components/Footer/post.svg";
 const facebook = "/static/images/components/Footer/facebook_big.svg";
 const instargram = "/static/images/components/Footer/instargram_big.svg";
+
 const blog = "/static/images/components/Footer/blog_big.svg";
 const post = "/static/images/components/Footer/post_big.svg";
 const dropdown = "/static/images/components/Footer/dropdown.png";
@@ -211,8 +212,8 @@ class FooterComponent extends React.Component {
           <ImageWrapper>
                   <img src={campustown} style={{height: 20, alignSelf: 'center'}}/>
                   <div class="imagebox">
-                    <img src={facebook_mob} />
-                    <img src={instargram_mob} onClick={() => window.open('http://www.instargram.com/boltnnut_korea')}/>
+                    <img src={facebook_mob} onClick={() => window.open('https://www.facebook.com/boltnnut6637/')}/>
+                    <img src={instargram_mob} onClick={() => window.open('https://www.instargram.com/boltnnut_korea')}/>
                     <img src={blog_mob} onClick={() => window.open('https://blog.naver.com/boltnnut_korea')}/>
                     <img src={post_mob} onClick={() => window.open('https://post.naver.com/boltnnut_korea')}/>
                   </div>

@@ -49,7 +49,7 @@ class MobileBanner0Container extends React.Component {
     const PartnerCount = this.props.Partner.partner_count;
 
     return (
-    <Background class="Image" src={background} style={{paddingBottom: 70, paddingTop: 54, marginTop: 54, justifyContent: 'center'}}>
+    <Background class="Image" src={background} style={{paddingBottom: 74, paddingTop: 54, marginTop: 54, justifyContent: 'center'}}>
         <BackgroundImage>
           <img src={layer}/>
         </BackgroundImage>
@@ -104,6 +104,7 @@ const Title1 = styled(Content.FontSize16)`
   object-fit: contain;
   font-weight:normal;
   height: 20px;
+  font-size: 17px !important;
 `
 const Content1 = styled(Content.FontSize17)`
   font-weight: bold;
@@ -111,7 +112,7 @@ const Content1 = styled(Content.FontSize17)`
   font-style: normal;
   letter-spacing: normal;
   text-align: center;
-  margin-top: 2px;
+  margin-top: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
