@@ -57,6 +57,7 @@ const Header = styled(Title.FontSize13)`
   text-align:center;
 `
 const Middle = styled(Content.FontSize22)`
+  font-size: 23px !important;
   height:62px;
   color: #f6f6f6;
   font-weight: 500;
@@ -76,6 +77,7 @@ const Middle = styled(Content.FontSize22)`
 `
 
 const Body = styled(Content.FontSize15)`
+  font-size: 16px !important;
   height: 44px;
   font-weight: 500;
   font-stretch: normal;

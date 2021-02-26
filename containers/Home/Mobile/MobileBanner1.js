@@ -56,7 +56,7 @@ const Head = styled(Title.FontSize20)`
   }
 `
 const Main = styled(Title.FontSize56)`
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -67,12 +67,12 @@ const Main = styled(Title.FontSize56)`
     font-weight: bold;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 22px;
+    font-size: 23px;
   }
 `
 const Content = styled(Title.FontSize24)`
   height:46px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -82,7 +82,7 @@ const Content = styled(Title.FontSize24)`
   color: #555963;
   margin-bottom: 100px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 15px;
+    font-size: 16px;
     height: 44px;
   }
 `

@@ -10,6 +10,7 @@ const Background = styled.div`
   flex-direction: column;
   align-items: center;
   background-size: 100% 100%;
+  position: relative;
 `
 
 export default Background
