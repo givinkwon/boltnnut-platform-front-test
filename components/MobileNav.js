@@ -164,7 +164,7 @@ class MobileNav extends React.Component {
           )}
         <Container>
           <NavWrap2>
-            {Router.pathname != '/' ? (
+            {typeof window !== 'undefined' && window.location.pathname != '/' ? (
               <Logo src={this.props.src} onClick={() => Router.back()} />
             ) : (
               <Logo src={this.props.src} />
