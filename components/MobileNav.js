@@ -129,7 +129,7 @@ class MobileNav extends React.Component {
             <ProfileMenu width={this.props.width} onClick={() => this.setState({is_open: false})}>
               <ModalHeader>
                 <div style={{marginBottom: 50, width: '100%'}}>
-                  <Logo src={logo_ic} style={{float:'left'}}/>
+                  <Logo onClick={() => {if (is_open == true) {Router.push('/')}}} src={logo_ic} style={{float:'left'}}/>
                   <img src={ x_ic } style={{float: 'right'}}/>
                 </div>
                 <div style={{height:14}}>내 제조 의뢰 견적과 전문 제조사를 바로 만나 보세요.</div>
@@ -138,7 +138,7 @@ class MobileNav extends React.Component {
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
-                <p onClick={() => Router.push("/notice")}>내 의뢰 관리</p>
+                <p onClick={() => alert("준비중입니다. 문의사항이 있으시면\n 02-926-6637로 연락 주시면 감사하겠습니다.")}>내 의뢰 관리</p>
                 <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
                 <p onClick={() => Router.push("/info")}>회사소개</p>
               </ModalContent>
@@ -164,33 +164,16 @@ class MobileNav extends React.Component {
           )}
         <Container>
           <NavWrap2>
+            {Router.pathname != '/' ? (
               <Logo src={this.props.src} onClick={() => Router.back()} />
+            ) : (
+              <Logo src={this.props.src} />
+            )}
             <HeadText>{this.props.headText}</HeadText>
-            {
-              !this.props.Auth.logged_in_user ? (
-              //   <NavLink
-              //     onClick={() => {
-              //       Router.push("/login"), Auth.reset();
-              //     }}
-              //     active={url.indexOf("login") > -1}
-              //   >
-              //     로그인
-              // </NavLink>
-                <>
-                <Icon
-                  src={hamburger_ic}
-                  onClick={this.menuClick}
-                />
-                </>
-              ) : (
-              <>
               <Icon
                 src={hamburger_ic}
                 onClick={this.menuClick}
               />
-              </>
-              )
-            }
           </NavWrap2>
         </Container>
       </NavBox>
