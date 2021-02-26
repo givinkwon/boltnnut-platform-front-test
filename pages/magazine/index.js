@@ -7,7 +7,7 @@ import Footer from 'components/Footer'
 
 import MagazineConatiner from 'containers/Magazine'
 import {inject, observer} from "mobx-react";
-const back_ic = "/static/images/components/MobileNav/back.png";
+const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
 @inject('Magazine')
 @observer

@@ -11,7 +11,7 @@ import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 
 const close_ic = "/static/icon/close.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
-const logo_ic = "/static/images/components/Nav/logo_ic.png";
+const logo_ic = "/static/images/components/Nav/logo_ic.svg";
 const profile = "/static/images/profile.png";
 
 @inject("Auth", "Partner")

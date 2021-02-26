@@ -9,7 +9,7 @@ import Footer from 'components/Footer';
 import Spinner from 'components/Spinner';
 
 import RequestConatiner from 'containers/Request'
-const back_ic = "/static/images/components/MobileNav/back.png";
+const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
 @inject('Request', 'Partner','DetailQuestion','ManufactureProcess', 'Schedule')
 @observer

@@ -226,15 +226,17 @@ const MainContainer = styled.div`
 `
 const Header = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
   width: 176px;
-  align-items: flex-end;
+  align-items: center;
   margin-bottom: 50px;
   margin-top: 40px;
 `
 const HeaderText = styled.div`
-  font-family: Roboto;
+  height: auto;
+  font-family: AppleSDGothicNeoB00;
   font-size: 28px;
   font-weight: bold;
   font-stretch: normal;
@@ -242,7 +244,6 @@ const HeaderText = styled.div`
   letter-spacing: -0.7px;
   text-align: left;
   color: #282c36;
-  height: 22px;
 `
 const DateContainer = styled.div`
   width: 714px;

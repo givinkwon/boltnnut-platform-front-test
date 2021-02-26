@@ -224,7 +224,7 @@ const Header = styled.div`
 `
 const HeaderText = styled.span`
   height: auto;
-  font-family: Roboto-iOS;
+  font-family: AppleSDGothicNeoB00;
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;

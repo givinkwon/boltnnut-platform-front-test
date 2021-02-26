@@ -10,13 +10,10 @@ import * as Text from "./Text";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
 
-const close_ic = "/static/icon/close.svg";
+const close_ic = "/static/images/components/MobileNav/close_ic.svg";
 // const hamburger_ic = "/static/icon/hamburger.png";
-const hamburger_ic = "/static/images/components/MobileNav/hamburger.png";
-
-const x_ic = "/static/images/components/MobileNav/xBtn.png";
-const profile = "/static/images/profile.png";
-const logo_ic = "/static/images/components/MobileNav/MobileLogo.png";
+const hamburger_ic = "/static/images/components/MobileNav/hamburger.svg";
+const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 //...
 @inject("Auth", "Partner")
 @observer
@@ -122,6 +119,7 @@ class MobileNav extends React.Component {
   render () {
     const { Auth, Partner,width } = this.props;
     const { url, is_open, is_profile, token } = this.state;
+    console.log(this.props);
     return (
       <NavBox>
         {is_open && (
@@ -129,8 +127,8 @@ class MobileNav extends React.Component {
             <ProfileMenu width={this.props.width} onClick={() => this.setState({is_open: false})}>
               <ModalHeader>
                 <div style={{marginBottom: 50, width: '100%'}}>
-                  <Logo src={logo_ic} style={{float:'left'}}/>
-                  <img src={ x_ic } style={{float: 'right'}}/>
+                  <Logo onClick={() => {if (is_open == true) {Router.push('/')}}} src={logo_ic} style={{float:'left'}}/>
+                  <img src={ close_ic } style={{float: 'right'}}/>
                 </div>
                 <div style={{height:14}}>내 제조 의뢰 견적과 전문 제조사를 바로 만나 보세요.</div>
                 <FreeButton onClick={() => Router.push("/request")}>
@@ -138,7 +136,7 @@ class MobileNav extends React.Component {
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
-                <p onClick={() => Router.push("/notice")}>내 의뢰 관리</p>
+                <p onClick={() => alert("준비중입니다. 문의사항이 있으시면\n 02-926-6637로 연락 주시면 감사하겠습니다.")}>내 의뢰 관리</p>
                 <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
                 <p onClick={() => Router.push("/info")}>회사소개</p>
               </ModalContent>
@@ -164,33 +162,16 @@ class MobileNav extends React.Component {
           )}
         <Container>
           <NavWrap2>
+            {typeof window !== 'undefined' && window.location.pathname != '/' ? (
               <Logo src={this.props.src} onClick={() => Router.back()} />
+            ) : (
+              <Logo src={this.props.src} />
+            )}
             <HeadText>{this.props.headText}</HeadText>
-            {
-              !this.props.Auth.logged_in_user ? (
-              //   <NavLink
-              //     onClick={() => {
-              //       Router.push("/login"), Auth.reset();
-              //     }}
-              //     active={url.indexOf("login") > -1}
-              //   >
-              //     로그인
-              // </NavLink>
-                <>
-                <Icon
-                  src={hamburger_ic}
-                  onClick={this.menuClick}
-                />
-                </>
-              ) : (
-              <>
               <Icon
                 src={hamburger_ic}
                 onClick={this.menuClick}
               />
-              </>
-              )
-            }
           </NavWrap2>
         </Container>
       </NavBox>
