@@ -66,7 +66,7 @@ const Middle = styled(Title.FontSize56)`
     font-weight:bold;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 22px;
+    font-size: 23px;
   }
 `
 const ImgContainer = styled.div`
@@ -85,7 +85,7 @@ const Body = styled(Title.FontSize24)`
   color: #555963;
   margin-bottom: 100px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 15px;
+    font-size: 16px;
   }
 `
 

@@ -92,7 +92,7 @@ const InputBox = styled.div`
   display: flex;
   height: 50px;
   width: 100%;
-  border: solid 0.5px #c7c7c7;
+  border: solid 1px #c7c7c7;
   color: #404040;
   border-radius: 3px;
   > img {

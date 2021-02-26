@@ -214,7 +214,7 @@ class MobileStep4Container extends Component {
           </Tail>
           { !Request.has_email && (
           <>
-            <Title style={{marginTop: 52}}>
+            <Title style={{marginTop: 52, marginBottom: 12}}>
               이메일
             </Title>
             <MobileInput>
@@ -251,7 +251,7 @@ class MobileStep4Container extends Component {
             </CheckBoxComponent>
           </CheckBoxWrapper>
           <CustomButton onClick = {this.createSchedule}>
-            무료 컨설팅 신청
+            1:1 컨설팅 신청
           </CustomButton>
         </CardFooter>
         <div>
@@ -359,10 +359,10 @@ const Tail = styled(Content.FontSize13)`
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 2.62;
   letter-spacing: -0.33px;
   text-align: left;
   color: #414550;
+  word-break: keep-all;
 `
 const CardFooter = styled.div`
   width: 100%;

@@ -177,7 +177,7 @@ const Header = styled(Title.FontSize56)`
   margin-top: 100px;
   text-align: center;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 22px;
+    font-size: 23px;
   }
 `
 const ContainerBanner6 = styled.div`

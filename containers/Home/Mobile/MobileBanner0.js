@@ -18,6 +18,7 @@ import { inject, observer } from "mobx-react";
 
 //Image
 const background = "static/images/Home/Mobile/MobileBanner0/background.png";
+const layer = "static/images/Home/Mobile/MobileBanner9/MobileBanner9_bg2.png";
 
 const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
@@ -48,9 +49,12 @@ class MobileBanner0Container extends React.Component {
     const PartnerCount = this.props.Partner.partner_count;
 
     return (
-    <Background src={background} style={{paddingBottom: 70, paddingTop: 54, marginTop: 54, justifyContent: 'center'}}>
+    <Background class="Image" src={background} style={{paddingBottom: 74, paddingTop: 54, marginTop: 54, justifyContent: 'center'}}>
+        <BackgroundImage>
+          <img src={layer}/>
+        </BackgroundImage>
         <Fade bottom>
-            <Header color={WHITE} fontWeight={"500"}>
+            <Header color={WHITE} fontWeight={"bold"}>
               내 제조 의뢰 견적과<br/>
               전문 제조사를 바로 만나보세요.
             </Header>
@@ -82,7 +86,7 @@ class MobileBanner0Container extends React.Component {
               <p style={{paddingBottom:0.2}}>지금 무료 가견적 받기</p>
             </Buttonv1>
         </Fade>
-    </Background>
+      </Background>
     );
   }
   }
@@ -100,6 +104,7 @@ const Title1 = styled(Content.FontSize16)`
   object-fit: contain;
   font-weight:normal;
   height: 20px;
+  font-size: 17px !important;
 `
 const Content1 = styled(Content.FontSize17)`
   font-weight: bold;
@@ -107,7 +112,7 @@ const Content1 = styled(Content.FontSize17)`
   font-style: normal;
   letter-spacing: normal;
   text-align: center;
-  margin-top: 2px;
+  margin-top: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,5 +121,17 @@ const Content1 = styled(Content.FontSize17)`
   }
   >span {
     font-weight: 400;
+  }
+`
+const BackgroundImage = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  > img {
+    width: 100%;
+    height: 100%;
+    opacity: 0.65;
   }
 `

@@ -208,7 +208,8 @@ const MainContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 347px;
+    width: 100%;
+    max-width: 347px;
     height: 451px;
   }
 `
@@ -222,8 +223,8 @@ const Header = styled.div`
   height: 27px;
 `
 const HeaderText = styled.span`
-  height: 14px;
-  font-family: Roboto;
+  height: auto;
+  font-family: AppleSDGothicNeoB00;
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -232,16 +233,17 @@ const HeaderText = styled.span`
   color: #282c36;
 `
 const DateContainer = styled.div`
-  width: 347px;
-  display: flex;
+  max-width: 347px;
+  width: 100%;
+  display: table;
   flex-direction: row;
   justify-content: space-around;
   margin-bottom: 16px;
   > div {
+    display: table-cell;
     text-align: center;
-    font-family: NotoSansCJKkr;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: bold;
     font-stretch: normal;
     font-style: normal;
     letter-spacing: -0.55px;
@@ -263,14 +265,13 @@ const Day = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 35px;
+  max-width: 35px;
+  width: 100%;
   height: 35px;
   border-radius: 35px;
-  margin-left: 7px;
-  margin-top: 10px;
-  font-family: Roboto;
+  font-family: Roboto-iOS;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.18px;
@@ -279,7 +280,6 @@ const Day = styled.div`
     margin-top: 25px;
     position: absolute;
     color: #0933b3;
-    font-family: NotoSansCJKkr;
     font-size: 10px;
     font-weight: bold;
     font-stretch: normal;
@@ -289,13 +289,16 @@ const Day = styled.div`
   }
 `
 const CalendarContainer = styled.div`
-  width: 347px;
+  max-width: 347px;
+  width: 100%;
   display: grid;
   height: 315px;
   grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  justify-items: center;
+  align-items: center;
   .date-sun {
     color: #c6c7cc;
     pointer-events: none;
