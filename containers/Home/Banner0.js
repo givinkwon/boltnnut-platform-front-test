@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Router from "next/router";
 
-//Components
+//Components 
 import Button from "components/Button";
 import * as Text from "components/Text";
 import { WHITE } from "static/style";
@@ -18,7 +18,7 @@ import { inject, observer } from "mobx-react";
 
 //Image
 const background = "static/images/Home/main.jpg";
-
+//
 const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
     const countItem = {
