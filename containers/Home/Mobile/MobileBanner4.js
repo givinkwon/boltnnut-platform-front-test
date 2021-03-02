@@ -66,7 +66,7 @@ const Middle = styled(Title.FontSize56)`
     font-weight:bold;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 22px;
+    font-size: 23px;
   }
 `
 const ImgContainer = styled.div`

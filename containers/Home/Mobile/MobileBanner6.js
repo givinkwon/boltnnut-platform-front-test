@@ -178,6 +178,7 @@ const Item=styled.div`
   // flex-direction:row;
 `
 const Header = styled(Title.FontSize22)`
+    font-size: 23px !important;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;

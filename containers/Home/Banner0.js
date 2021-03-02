@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Router from "next/router";
 
-//Components
+//Components 
 import Button from "components/Button";
 import * as Text from "components/Text";
 import { WHITE } from "static/style";
@@ -18,7 +18,7 @@ import { inject, observer } from "mobx-react";
 
 //Image
 const background = "static/images/Home/main.jpg";
-
+//
 const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
     const countItem = {
@@ -49,6 +49,7 @@ class Banner0Container extends React.Component {
 
     return (
     <Background src={background}>
+        <Layer />
         <Containerv1 style={{paddingBottom: 336, paddingTop: 279, justifyContent: 'space-between'}}>
           <Fade bottom>
             <div>
@@ -127,4 +128,10 @@ const InfoCell = styled.div`
  font-style: normal;
  line-height: 1.67;
  letter-spacing: -0.6px;
+ `
+ const Layer = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0,0,0,0.45);
  `
