@@ -23,7 +23,6 @@ class Schedule {
     }
     @action init = () => {
         let today_date = new moment().format('YYYY-MM');
-        console.log(today_date.split('-'));
         //this.today = today_date.format('YYYY-MM-DD ');
         //this.book_time = this.today + this.current;
         this.active1 = null;
