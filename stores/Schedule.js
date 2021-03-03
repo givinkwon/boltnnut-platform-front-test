@@ -22,12 +22,11 @@ class Schedule {
         this.active1 = day;
     }
     @action init = () => {
-        let today_date = new moment();
-        this.today = today_date.format('YYYY-MM-DD ');
-        this.book_time = this.today + this.current;
+        let today_date = new moment().format('YYYY-MM');
+        //this.today = today_date.format('YYYY-MM-DD ');
+        //this.book_time = this.today + this.current;
         this.active1 = null;
-        this.getOccupiedDate();
-        this.getDays(this.today.split('-')[0], this.today.split('-')[1]);
+        this.getDays(today_date.split('-')[0], today_date.split('-')[1]);
     }
     @action setOnline = (obj) => {
         this.isOnline = obj;

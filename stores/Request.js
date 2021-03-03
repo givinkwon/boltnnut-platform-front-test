@@ -92,7 +92,6 @@ class Request {
     this.random_partner_list = [];
     this.maincategory_id = '';
     this.request_type="development";// ""로 바꿔야됨. 임시방편
-    // console.log("ANSLKCNAKLSCNKLASNCLAKSNCL");
     this.numCount = null;
   }
   @action setInputName = (val) => {
