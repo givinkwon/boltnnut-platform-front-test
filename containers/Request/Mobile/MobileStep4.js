@@ -177,6 +177,8 @@ class MobileStep4Container extends Component {
         <ContentBox>
            <MobileCalendar/>
         </ContentBox>
+        {Schedule.today ? (
+        <>
         <ScheduleBox>
           <Title style={{marginTop: 42, marginBottom: 12}}>
             시간
@@ -254,6 +256,14 @@ class MobileStep4Container extends Component {
             1:1 컨설팅 신청
           </CustomButton>
         </CardFooter>
+        </>
+        ) : (
+          <>
+          <EmptyDateWrapper>
+            날짜를 선택해주세요.
+          </EmptyDateWrapper>
+          </>
+        )}
         <div>
         <MarketingModal
           open={this.state.open_marketing_modal}
@@ -444,4 +454,17 @@ const Link = styled.a`
   font-weight: bold;
   text-decoration: none;
 `;
-
+const EmptyDateWrapper = styled.div`
+  width: 100%;
+  margin-top: 42px;
+  display: inline-flex;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.07;
+  letter-spacing: -0.35px;
+  text-align: left;
+  color: #ff0404;
+`
