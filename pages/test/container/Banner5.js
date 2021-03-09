@@ -1,34 +1,35 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "../../components/Containerv1";
+import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
 import Fade from 'react-reveal/Fade';
 
-const image1 = "/static/images/Home/Banner4/Banner4_img1.png"
-const backgroundImg = "/static/images/Home/Banner4/Banner4_Bg.png"
+const image1 = "/static/images/Home/Banner5/Banner5_img1.png"
+const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png"
 
-class Banner4Container extends React.Component {
+class Banner5Container extends React.Component {
   render() {
     return (
-      <Background src={backgroundImg}>
-        <Containerv1 style={{paddingBottom: 358, paddingTop: 257, justifyContent: 'space-between'}}>
+      <Background src={ backgroundImg }>
+        <Containerv1 style={{paddingBottom: 306, paddingTop: 308, justifyContent: 'space-between'}}>
           <Fade bottom>
+            <div>
+              <img src={image1}/>
+            </div>
             <div>
               <Header>
                 컨설턴트 중 해당 제품
               </Header>
               <Middle>
-                40년 경력의 전문<br/>
-                컨설턴트 <p>무료 상담</p>
+                7가지 계약 관리<br/>
+                서비스로 계약 이행<br/>
+                <p>100% 보증</p>
               </Middle>
               <Body>
-                컨설턴트 중 해당 제품의 전문가가 배정되어<br/>
-                무료상담을 통해 최적의 솔루션을 찾아드립니다.
+                200여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
+                알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
               </Body>
-            </div>
-            <div>
-              <img src={image1}/>
             </div>
           </Fade>
         </Containerv1>
@@ -37,7 +38,7 @@ class Banner4Container extends React.Component {
   }
 }
 
-export default Banner4Container;
+export default Banner5Container;
 
 const Header = styled(Title.FontSize20)`
   color: #0933b3;
@@ -46,7 +47,6 @@ const Header = styled(Title.FontSize20)`
   font-style: normal;
   line-height: 1.45;
   letter-spacing: normal;
-  margin-bottom:16px;
 `
 const Middle = styled(Title.FontSize56)`
   color: #282c36;
@@ -55,15 +55,14 @@ const Middle = styled(Title.FontSize56)`
   font-style: normal;
   line-height: 1.36;
   letter-spacing: -1.4px;
-  margin-bottom: 107px;
-
+  margin-bottom: 47px;
+  
   >p {
-    display: inline;
     font-weight:bold;
   }
 `
 const Body = styled(Title.FontSize24)`
-  white-space:nowrap;
+  // white-space:nowrap;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -72,3 +71,4 @@ const Body = styled(Title.FontSize24)`
   text-align: left;
   color: #555963;
 `
+

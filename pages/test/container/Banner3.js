@@ -1,46 +1,57 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
+import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
 import Fade from 'react-reveal/Fade';
 
-const image1 = "/static/images/Home/Banner4/Banner4_img1.png"
-const backgroundImg = "/static/images/Home/Banner4/Banner4_Bg.png"
 
-class Banner4Container extends React.Component {
+const image1 = "/static/images/Home/Banner3/image1.png"
+const backgroundImg="/static/images/Home/Banner3/Banner3_Bg.png"
+import { inject, observer } from "mobx-react";
+
+@inject('Proposal','Partner')
+@observer
+class Banner3Container extends React.Component {
+
+
   render() {
+    
+    const ProjectCount = this.props.Proposal.projects_count;
+
+
     return (
       <Background src={backgroundImg}>
-        <Containerv1 style={{paddingBottom: 358, paddingTop: 257, justifyContent: 'space-between'}}>
+        <Containerv1 style={{paddingBottom: 308, paddingTop: 306, justifyContent: 'space-between'}}>
           <Fade bottom>
+            <div>
+              <img src={image1} style={{width:588,height:392,borderRadius:10}}/>
+            </div>
             <div>
               <Header>
                 컨설턴트 중 해당 제품
               </Header>
               <Middle>
-                40년 경력의 전문<br/>
-                컨설턴트 <p>무료 상담</p>
+              5000여개의 제조사 중 <br/>
+                딱 맞는 전문가를 매칭
               </Middle>
               <Body>
-                컨설턴트 중 해당 제품의 전문가가 배정되어<br/>
-                무료상담을 통해 최적의 솔루션을 찾아드립니다.
+                {ProjectCount}여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
+                알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
               </Body>
-            </div>
-            <div>
-              <img src={image1}/>
             </div>
           </Fade>
         </Containerv1>
       </Background>
+
     );
   }
 }
 
-export default Banner4Container;
+export default Banner3Container;
 
 const Header = styled(Title.FontSize20)`
-  color: #0933b3;
+  color: #e8eeff;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -49,26 +60,21 @@ const Header = styled(Title.FontSize20)`
   margin-bottom:16px;
 `
 const Middle = styled(Title.FontSize56)`
-  color: #282c36;
+  color: #f6f6f6;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.36;
   letter-spacing: -1.4px;
-  margin-bottom: 107px;
-
-  >p {
-    display: inline;
-    font-weight:bold;
-  }
+  margin-bottom: 105px;
 `
+
 const Body = styled(Title.FontSize24)`
-  white-space:nowrap;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67;
   letter-spacing: -0.6px;
   text-align: left;
-  color: #555963;
+  color: #cedafe;
 `

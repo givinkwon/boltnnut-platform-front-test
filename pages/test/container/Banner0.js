@@ -12,7 +12,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
 import Fade from 'react-reveal/Fade';
-import UseScrollCount from "./UseScrollCount"
+import UseScrollCount from "containers/Home/UseScrollCount"
 
 import { inject, observer } from "mobx-react";
 
