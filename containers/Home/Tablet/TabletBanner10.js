@@ -20,7 +20,6 @@ class TabletBanner10Container extends React.Component{
 			<Background style = {{marginBottom: 50}}>
 				<ContentContainer>
 					<Fade bottom>
-
 						<Head>개발</Head>
 						<Block onClick={() => Router.push("/request")}>
 							<BlockLeft>
