@@ -7,6 +7,9 @@ import Section from 'components/Section'
 import ButtonComponent from 'components/Button'
 
 import * as Text from 'components/Text'
+import * as Content from 'components/Content';
+import * as Title from 'components/Title';
+
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
 
 const search_ic = 'static/icon/search.png'
@@ -57,17 +60,25 @@ class RequestSelectContainer extends React.Component {
           { width > 767.98 ? (
             <>
             <ButtonBox>
-            <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}>
-              <div style={{margin : 0}}>
-                <Text.FontSize36 color={'#191919'} fontWeight={700}>개발</Text.FontSize36>
-                <Text.FontSize24 color={'#767676'} fontWeight={500}>원래대로</Text.FontSize24>
-              </div>
-            </Button>
-            <Button id="sign_uo_button_partner" active={Request.request_type==="production"} onClick={() => Request.request_type="production"}>
-              <div style={{margin : 0}}>
-                <Text.FontSize36 color={'#191919'} fontWeight={700}>생산</Text.FontSize36>
-                <Text.FontSize24 color={'#767676'} fontWeight={500}>바로 도면첨부(제조공정부터 나오게)</Text.FontSize24>            
-              </div>
+              <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}>
+                <div style={{margin : 0}}>
+                  {/* 원래대로 */}
+                  <Font26 color={'#191919'} fontWeight={700}>제작</Font26>
+                  <Font20 color={'#767676'} fontWeight={500}>
+                    지속적인 소통과 제품 분석 시스템으로 제품 생산에 불필요한<br/>
+                    가정을 방지하여 양산 비용을 최대 40% 절감합니다. 
+                  </Font20>
+                </div>
+              </Button>
+              <Button id="sign_uo_button_partner" active={Request.request_type==="production"} onClick={() => Request.request_type="production"}>
+                <div style={{margin : 0}}>
+                  {/* 바로 도면첨부 */}
+                  <Font26 color={'#191919'} fontWeight={700}>생산</Font26>
+                  <Font20 color={'#767676'} fontWeight={500}>
+                    국내 제조사와 해외유통사 네트워크를 통해 원하는 조건에 맞는<br/>
+                    제조견적, MOQ (최소발주수량)등의 정보를 전달해드립니다.
+                  </Font20>            
+                </div>
               </Button>
             </ButtonBox>
             <NextButton backgroundColor={Request.request_type ? PRIMARY : '#0a2165'} borderColor={Request.request_type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
@@ -105,6 +116,51 @@ class RequestSelectContainer extends React.Component {
 }
 
 export default RequestSelectContainer
+
+const Font46 = styled(Content.FontSize46)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.65;
+  letter-spacing: -1.15px;
+  color: #000000;
+`
+
+const Font18 = styled(Content.FontSize18)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.22;
+  letter-spacing: -0.45px;
+  color: #0933b3;
+`
+
+const Font26 = styled(Title.FontSize26)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.54;
+  letter-spacing: -0.65px;
+  color: #0933b3;
+`
+
+const Font20 = styled(Title.FontSize20)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.8;
+  letter-spacing: -0.5px;
+  color: #282c36;
+`
+
+const Font16 = styled(Content.FontSize16)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+  color: #414550;
+`
 
 const NextButton = styled(ButtonComponent)`
   margin: auto;

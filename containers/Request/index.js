@@ -22,6 +22,7 @@ import Step5 from './Step5';
 import Step5Container from './Step5';
 import Step6Container from './Step6';
 
+import FileUploadContainer from './FileUpload'
 import MarketingModal from './MarketingModal';
 
 
@@ -36,11 +37,12 @@ class RequestContainer extends React.Component {
       <>
       {this.props.width >= 767.99 ? (
       <div style={{ overflow: 'visible' }}>
-        <BannerContainer />
+        {Request.step_index!=0 &&<BannerContainer />}
         <Background backgroundColor={"#f6f6f6"}>
           <Containerv1>
               {/* { Request.step_index == 0 ? <RequestSelectContainer />:<Step/>} */}
-              <Step/>
+              <FileUploadContainer></FileUploadContainer>
+              {/* <Step/> */}
               { Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
               { Request.step_index == 2 && <Step2Container />}
               { Request.step_index == 3 && <Step3Container />}
