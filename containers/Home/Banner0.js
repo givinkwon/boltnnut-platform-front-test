@@ -55,7 +55,7 @@ class Banner0Container extends React.Component {
           <Fade bottom>
             <div>
               <Title.FontSize56 color={WHITE} shadow={"0 3px 6px rgba(0,0,0,0.61);"} fontWeight={"bold"} style={{lineHeight: 1.49}}>
-                내 제조 의뢰 견적과<br/>
+                내 제품 제작 비용과<br/>
                 전문 제조사를<br/>
                 바로 만나보세요.
               </Title.FontSize56>

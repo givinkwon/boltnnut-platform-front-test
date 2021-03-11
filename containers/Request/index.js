@@ -38,7 +38,7 @@ class RequestContainer extends React.Component {
       {this.props.width >= 767.99 ? (
       <div style={{ overflow: 'visible' }}>
         {Request.step_index!=0 &&<BannerContainer />}
-        <Background backgroundColor={"#f6f6f6"}>
+        <Background backgroundColor={"#ffffff"}>
           <Containerv1>
               { Request.step_index == 0 ? <RequestSelectContainer />:<Step/>}
               {/* <FileUploadContainer></FileUploadContainer> */}
