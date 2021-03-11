@@ -23,9 +23,9 @@ const lock = "static/images/Home/lock.svg";
 const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
     const countItem = {
-      0: UseScrollCount(5667400000,5000000000,0,0,900000),
-      1: UseScrollCount(projCount,0,0,0,5),
-      2: UseScrollCount(4933,0,0,0,10)
+      0: UseScrollCount(5667400000,5000000000,0,0,2000000),
+      1: UseScrollCount(projCount,0,0,0,15),
+      2: UseScrollCount(4933,0,0,0,20)
     };
 
     return (
@@ -84,7 +84,7 @@ class Banner0Container extends React.Component {
                 </Content.FontSize24>
                 <Content.FontSize32 eng={true} style={{textAlign: 'center', marginLeft:30}} fontWeight={"bold"} color={'#ffffff'}>
                   {/* 300+ */}
-                  <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개 +</span>
+                  <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개</span>
                 </Content.FontSize32>
               </InfoCell>
               <InfoCell>
@@ -92,7 +92,7 @@ class Banner0Container extends React.Component {
                   파트너사
                 </Content.FontSize24>
                 <Content.FontSize32 eng={true} style={{textAlign: 'center', marginLeft:30}} fontWeight={"bold"} color={'#ffffff'}>
-                  <CountFunc index={2} partnerCount={PartnerCount}/><span style={{fontWeight:500}}>개 +</span>
+                  <CountFunc index={2} partnerCount={PartnerCount}/><span style={{fontWeight:500}}>개</span>
                 </Content.FontSize32>
               </InfoCell>
             </Info>
