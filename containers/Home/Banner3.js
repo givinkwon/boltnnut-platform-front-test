@@ -29,15 +29,15 @@ class Banner3Container extends React.Component {
             </div>
             <div>
               <Header>
-                AI 제조사 매칭 알고리즘
+                컨설턴트 중 해당 제품
               </Header>
               <Middle>
-              4933개 파트너사 중 <br/>
+              5000여개의 제조사 중 <br/>
                 딱 맞는 전문가를 매칭
               </Middle>
               <Body>
-                {ProjectCount}개 프로젝트 데이터를 학습한 AI 매칭 알고리즘이<br/>
-                내 의뢰의 전문가를 큐레이션해드립니다.
+                {ProjectCount}여개 이상의 프로젝트 데이터를 학습한 AI 매칭<br/>
+                알고리즘이 내 제품의 전문가를 큐레이션해드립니다.
               </Body>
             </div>
           </Fade>

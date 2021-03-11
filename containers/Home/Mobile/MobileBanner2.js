@@ -14,19 +14,19 @@ class MobileBanner2Container extends React.Component {
               <ContentContainer>
                   <Fade bottom>
                       <Header>
-                          무료 도면 수정 서비스
+                          제조 무료 상담 서비스
                       </Header>
                       <Middle>
-                          전문 엔지니어의<br/>
-                          <span>무료 도면 수정 </span>
-                          서비스 제공
+                          40년 경력의 전문<br/>
+                          컨설턴트<span>무료 상담 </span>
+                         
                       </Middle>
                       <ImgContainer>
                           <img src={ Img } style={{ width: 347, height: 230,borderRadius:7}}/>
                       </ImgContainer>
                       <Body>
-                          볼트앤너트 기술팀이 제작하신 금속가공, 금형/사출<br/>
-                          도면의 생산성을 무료로 검토하고 수정해드립니다.
+                      프로젝트마다 해당 제품의 전문가가 배정되어<br/>
+                      무료상담을 통해 최적의 견적을 알려드립니다.
                       </Body>
                   </Fade>
               </ContentContainer>

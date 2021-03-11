@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="46" height="45" viewBox="0 0 46 45">
+    <defs>
+        <style>
+            .cls-3{stroke:#282c36;stroke-miterlimit:10}.cls-3,.cls-4{stroke-width:.7px}.cls-3{fill:#0933b3}.cls-4{fill:none;stroke:#0933b3;stroke-linecap:round;stroke-linejoin:round}
+        </style>
+    </defs>
+    <g id="그룹_1654" transform="translate(-23 -707)">
+        <path id="사각형_2251" fill="#fff" d="M0 0H46V45H0z" transform="translate(23 707)"/>
+        <g id="그룹_1653" transform="translate(-20.336 1)">
+            <path id="패스_2278" fill="#c6c7cc" stroke="#282c36" stroke-miterlimit="10" stroke-width="0.7px" d="M974.974 542.054V530.5h-12.282v17.634h28.875v-6.083z" transform="translate(-910.794 198.123)"/>
+            <path id="패스_589" d="M1003.9 478.333h-2.805v4.733a.175.175 0 0 0 .177.173.172.172 0 0 0 .117-.049l2.455-2.244a.171.171 0 0 0 .057-.126z" class="cls-3" transform="translate(-936.91 233.604)"/>
+            <path id="패스_592" d="M1001.271 550.73h2.455a.174.174 0 0 0 .175-.174v-7.122a.175.175 0 0 0-.292-.126l-2.455 2.243a.18.18 0 0 0-.057.127v4.878a.176.176 0 0 0 .174.174z" class="cls-3" transform="translate(-936.912 189.445)"/>
+            <g id="그룹_1595" transform="translate(56.159 720.395)">
+                <path id="패스_2313" d="M373.729 805.735l2.546-.223-1.465-2.093 1.465 2.093c-1.979-.654-3.229-1.616-3.229-2.689 0-1.97 4.22-3.568 9.425-3.568" class="cls-4" transform="translate(-373.046 -799.255)"/>
+                <path id="패스_2314" d="M390.419 799.905l-2.575.208 1.374 2.11-1.374-2.11c1.887.653 3.071 1.592 3.071 2.635 0 1.971-4.219 3.568-9.425 3.568" class="cls-4" transform="translate(-372.065 -799.179)"/>
+            </g>
+            <path id="패스_590" d="M1001.383 502.306l2.455-2.244a.17.17 0 0 0 .057-.127v-4.655a.175.175 0 0 0-.292-.127l-2.455 2.245a.179.179 0 0 0-.057.127v4.656a.176.176 0 0 0 .292.127z" class="cls-3" transform="translate(-936.909 222.197)"/>
+            <path id="패스_591" d="M1001.38 526.374l2.455-2.243a.171.171 0 0 0 .057-.127v-4.658a.175.175 0 0 0-.177-.173.179.179 0 0 0-.117.049l-2.455 2.244a.18.18 0 0 0-.057.127v4.655a.175.175 0 0 0 .175.176.174.174 0 0 0 .119-.05z" class="cls-3" transform="translate(-936.905 205.83)"/>
+        </g>
+    </g>
+</svg>

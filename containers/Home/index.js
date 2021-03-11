@@ -40,6 +40,9 @@ import Banner9Container from './Banner9';
 import TabletBanner9Container from './Tablet/TabletBanner9';
 import MobileBanner9Container from './Mobile/MobileBanner9';
 
+import Banner10Container from './Banner10';
+import MobileBanner10Container from './Mobile/MobileBanner10';
+import TabletBanner10Container from './Tablet/TabletBanner10';
 
 @inject('Home')
 @observer
@@ -69,6 +72,7 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <MobileBanner0Container/>
+              <MobileBanner10Container/>
               <MobileBanner1Container/>
               <MobileBanner2Container/>
               <MobileBanner3Container/>
@@ -77,13 +81,14 @@ class HomeConatiner extends React.Component {
               <MobileBanner6Container/>
               <MobileBanner7Container/>
               <MobileBanner8Container/>
-              <MobileBanner9Container/>
+              <MobileBanner9Container/> 
             </CustomContainer>
           </>
         ) : (767.99 < width && width < 1279.98)  ? (
         <>
           <CustomContainer>
             <TabletBanner0Container/>
+            <TabletBanner10Container/>
             <TabletBanner1Container/>
             <TabletBanner2Container/>
             <TabletBanner3Container/>
@@ -99,6 +104,7 @@ class HomeConatiner extends React.Component {
           <>
           <div style={{overflow:'hidden'}}>
             <Banner0Container/>
+            <Banner10Container/>
             <Banner1Conatiner/>
             <Banner2Container/>
             <Banner3Container/>

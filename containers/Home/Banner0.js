@@ -18,6 +18,7 @@ import { inject, observer } from "mobx-react";
 
 //Image
 const background = "static/images/Home/main.jpg";
+const lock = "static/images/Home/lock.svg";
 //
 const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
@@ -61,6 +62,11 @@ class Banner0Container extends React.Component {
               <Buttonv1 style={{marginTop: 71}} onClick={() => Router.push("/request")}>
                 지금 무료 가견적 받기
               </Buttonv1>
+              
+              <div style={{color: "#ffffff", lineHeight: 1.5, fontSize: 18, opacity: 0.8, marginTop:6 }}>
+              <img src = {lock} style={{marginLeft: 50, marginRight:8}}></img>
+                모든 업로드는 안전하고 기밀입니다.
+              </div>
             </div>
             <Info>
               <InfoCell>

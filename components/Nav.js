@@ -8,7 +8,7 @@ import * as Text from "./Text";
 import Containerv1 from "components/Containerv1";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
-
+import Buttonv1 from "components/Buttonv1";
 const close_ic = "/static/icon/close.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
@@ -227,14 +227,7 @@ class Nav extends React.Component {
               ) : (
                 /* 로그인 안되어있는 경우 */
                 <Fragment>
-                  <NavLink
-                    first
-                    onClick={() => Router.push("/request")}
-                    //onClick={() => Router.push("/request?big=4&mid=")}
-                    active={url.indexOf("request") > -1}
-                  >
-                    가견적 받기
-                  </NavLink>
+                  
                   {/*<NavLink
                     onClick={
                       async () => {
@@ -248,13 +241,20 @@ class Nav extends React.Component {
                   >
                     제조사 찾기
                   </NavLink>*/}
-              
-                  
+
+                  {/* <NavLink
+                      onClick={() => Router.push("/magazine")}
+                      active={url.indexOf("magazine") > -1}
+                    >
+                      프로젝트 관리
+                  </NavLink>
+                   */}
+
                   <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      제조 인사이트
+                      매거진
                   </NavLink>
                   <NavLink
                       onClick={() => Router.push("/info")}
@@ -274,6 +274,7 @@ class Nav extends React.Component {
                   active={url.indexOf("info") > -1}>
                     서비스 소개
                 </NavLink>*/}
+                
                 </Fragment>
               )}
 
@@ -319,7 +320,16 @@ class Nav extends React.Component {
                 >
                   로그인
                 </NavLink>
+                
               )}
+              <Buttonv1 style = {{width: 130, height: 41, fontSize:16, marginLeft: 34}}
+                    first
+                    onClick={() => Router.push("/request")}
+                    //onClick={() => Router.push("/request?big=4&mid=")}
+                    active={url.indexOf("request") > -1}
+                  >
+                    가견적 받기
+                  </Buttonv1>
             </Menu>
             <Icon
               src={hamburger_ic}
@@ -430,18 +440,7 @@ const Menu = styled.div`
         right: 0%;
       `}
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-right: -12px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-right: -25px;
-  }
-  @media (min-width: 1300px) and (max-width: 1599.98px) {
-    margin-right: -25px;
-  }
-  @media (min-width: 1600px) {
-    margin-right: -30px;
-  }
+
 `;
 const NavLink = styled.p`
   margin: 0px;
