@@ -249,7 +249,7 @@ class Nav extends React.Component {
                       프로젝트 관리
                   </NavLink>
                    */}
-                   
+
                   <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
@@ -440,20 +440,7 @@ const Menu = styled.div`
         right: 0%;
       `}
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-right: -12px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-right: -25px;
-  }
 
-  @media (min-width: 1300px) and (max-width: 1599.98px) {
-    margin-right: -25px;
-  }
-  @media (min-width: 1600px) {
-    margin-right: -30px;
-  }
-  
 `;
 const NavLink = styled.p`
   margin: 0px;
