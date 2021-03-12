@@ -11,7 +11,6 @@ import InputComponent from 'components/Input2';
 import PhoneInputComponent from 'components/PhoneInput';
 import CheckBoxComponent from 'components/CheckBox';
 
-
 const customStyles = {
   dropdownIndicator: () => ({
     color: '#555555',

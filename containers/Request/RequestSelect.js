@@ -42,9 +42,9 @@ class RequestSelectContainer extends React.Component {
   searchText = (e) => {
     this.setState({ search: e.target.value })
   }
-  Next = () => {
+  Next = (type) => {
     const { Request } = this.props
-    
+    Request.request_type=type;
     // if(Request.request_type==="production")
     // {
     // //   Auth.setStep(1)
@@ -67,11 +67,12 @@ class RequestSelectContainer extends React.Component {
           { width > 767.98 ? (
             <>
             <HeadBox>
-            <Font46>가견적받기</Font46>
-            <Font18>나에게 맞는 제조방식을 선택해주세요.</Font18>
+              <Font46>가견적받기</Font46>
+              <Font18>나에게 맞는 제조방식을 선택해주세요.</Font18>
             </HeadBox>
             <ButtonBox>
-              <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}>
+              {/* <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}> */}
+              <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={()=>this.Next("development")}>
                 <ButtonText>
                   {/* 원래대로 */}
                   <Font26 style={{height: 38, marginBottom: 24}}>제작</Font26>
@@ -95,7 +96,7 @@ class RequestSelectContainer extends React.Component {
                   </ImgContainer>
                 </ImageBox>
               </Button>
-              <Button id="sign_uo_button_partner" active={Request.request_type==="production"} onClick={() => Request.request_type="production"}>
+              <Button id="sign_uo_button_partner" active={Request.request_type==="production"} onClick={() => this.Next("production")}>
                 <ButtonText>
                   {/* 바로 도면첨부 */}
                   <Font26 style={{height: 38, marginBottom: 24}}>생산</Font26>
@@ -121,10 +122,10 @@ class RequestSelectContainer extends React.Component {
                 </ImageBox>
               </Button>
             </ButtonBox>
-            <NextButton backgroundColor={Request.request_type ? PRIMARY : '#0a2165'} borderColor={Request.request_type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
+            {/* <NextButton backgroundColor={Request.request_type ? PRIMARY : '#0a2165'} borderColor={Request.request_type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
               <Text.FontSize24 color={Request.request_type ? WHITE : '#ffffff'} fontWeight={500}>다음</Text.FontSize24>
               <Image src={right}/>
-            </NextButton>
+            </NextButton> */}
             </>
           ) : (
             <>
