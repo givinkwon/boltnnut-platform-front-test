@@ -3,6 +3,8 @@ import Head from 'next/head'
 import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
+import Router from "next/router";
+
 import Nav from 'components/Nav'
 import MobileNav from 'components/MobileNav'
 import Footer from 'components/Footer'
@@ -32,12 +34,12 @@ class Project extends React.Component {
     
 
 
-    // Home.init()
-    // Loading.setOpen(true)
-    // setTimeout(() => Loading.setOpen(false), 500)
+    Home.init()
+    Loading.setOpen(true)
+    setTimeout(() => Loading.setOpen(false), 500)
 
-    // // 중복
-    // await Auth.checkLogin()
+    // 중복
+    await Auth.checkLogin()
 
     Project.getToken()
 
@@ -61,6 +63,10 @@ class Project extends React.Component {
   //       console.log('프로젝트 목록 로딩 끝')
   //       console.log(Project.project_count)
   //  })
+    }
+    else{      
+      alert("로그인이 필요합니다");
+      Router.push("/login");        
     }
     //Project.getNextPage()
     
