@@ -5,6 +5,7 @@ import { inject, observer } from 'mobx-react'
 import Container from 'components/Container'
 import Section from 'components/Section'
 import ButtonComponent from 'components/Button'
+import SelectComponent from 'components/Select';
 
 import * as Text from 'components/Text'
 import * as Content from 'components/Content';
@@ -57,6 +58,13 @@ class RequestSelectContainer extends React.Component {
     // }
     Request.step_index=1;
   }
+  // state={
+  //   click: false,
+  // }
+  // testfunc = () => {
+  //   this.setState({click: true});
+  //   console.log(this.state.click);
+  // }
    render(){
     const { Request } = this.props
     const { width } = this.state
@@ -66,6 +74,7 @@ class RequestSelectContainer extends React.Component {
         <Container>
           { width > 767.98 ? (
             <>
+            {/* <Box active={this.state.click===true} onClick ={this.testfunc}></Box> */}
             <HeadBox>
               <Font46>가견적받기</Font46>
               <Font18>나에게 맞는 제조방식을 선택해주세요.</Font18>
@@ -341,14 +350,22 @@ const Button = styled.div`
     align-items: center;
     text-align : center;
   }
+
+  :focus{
+    border: 4px solid #0933b3;
+    box-shadow: 0 3px 6px 0 var(--black-16);
+    >div >p{
+      color: #0933b3;
+    }
+  }
+//   ${props => props.active && css`
+//   border: 4px solid #0933b3;
+//   box-shadow: 0 3px 6px 0 var(--black-16);
+//   >div >p{
+//     color: #0933b3;
+//   }
+// `}
   
-  // ${props => props.active && css`
-  //   background-color: #0933b3;
-  //   p, span {
-  //     color: ${WHITE} !important;
-  //     display : flex; 
-  //   }
-  // `}
   @media (min-width: 0px) and (max-width: 767.98px) {
     height: 192px;
     text-align: center;
@@ -387,15 +404,10 @@ const Button = styled.div`
     height: 400px;
   }
   @media (min-width: 1300px) { 
-    :hover {
-      border: 4px solid #0933b3;
-      box-shadow: 0 3px 6px 0 var(--black-16);
-      >div >p{
-        color: #0933b3;
-      }
-    }
     height: 420px;
+    
   }
+  
 `
 
 const ButtonText = styled.div`
@@ -428,3 +440,15 @@ const ImgContainer = styled.div`
     margin-top: 10px;
   }
 `
+// const Box = styled.div`
+// width: 50px;
+// height: 50px;
+// background-color: red;
+// ${props => props.active && css`
+
+//   display: flex;
+//   width: 500px;
+//   height: 500px;
+
+//     `}
+// `
