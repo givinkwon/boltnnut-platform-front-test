@@ -8,14 +8,18 @@ import MobileNav from 'components/MobileNav'
 import Footer from 'components/Footer'
 import Spinner from 'components/Spinner'
 
-import AnswerContainer from 'containers/Answer'
+import ProjectContainer from 'containers/Project'
+
+const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
 @inject('Project', 'Auth', 'Home', 'Answer', 'Loading') // *_app.js <Provider>에 넘겨준 store명과 일치해야함. *inject: 컴포넌트에서 store에 접근 가능하게 함. 해당 store에 있는 값을 컴포넌트의 props로 주입시켜줌.
 @observer
-class Answer extends React.Component {
+class Project extends React.Component {
   state={
     width:null,
   }
+
+  
   async componentDidMount() {
     const { Project, Auth, Home, Answer, Loading } = this.props
 
@@ -28,34 +32,38 @@ class Answer extends React.Component {
     
 
 
-    Home.init()
-    Loading.setOpen(true)
-    setTimeout(() => Loading.setOpen(false), 500)
+    // Home.init()
+    // Loading.setOpen(true)
+    // setTimeout(() => Loading.setOpen(false), 500)
 
-    // 중복
-    await Auth.checkLogin()
+    // // 중복
+    // await Auth.checkLogin()
 
-    if(Auth.logged_in_client) {
-      console.log('클라이언트 의뢰 목록 로딩 시작')
-      Answer.loadCategories()
-      Answer.loadClientRequestList(Auth.logged_in_client.id, () => {
-        console.log('클라이언트 의뢰 목록 로딩 끝')
-      })
-    }
+    Project.getToken()
+
+    // if(Auth.logged_in_client) {
+    //   console.log('클라이언트 의뢰 목록 로딩 시작')
+    //   Answer.loadCategories()
+    //   Answer.loadClientRequestList(Auth.logged_in_client.id, () => {
+    //     console.log('클라이언트 의뢰 목록 로딩 끝')
+    //   })
+    // }
 
     if(Auth.logged_in_client) {
       console.log('프로젝트 목록 로딩 시작')
       
-      Project.init(Auth.logged_in_client.id, () => {
+      console.log(Auth.logged_in_client)
+      Project.getPage(Auth.logged_in_client.id, () => {
         console.log('프로젝트 목록 로딩 끝')
       })
 
-      // Project.init(904, () => {
-      //      console.log('프로젝트 목록 로딩 끝')
-      // })
+  //     Project.getPage(918, () => {
+  //       console.log('프로젝트 목록 로딩 끝')
+  //       console.log(Project.project_count)
+  //  })
     }
-    Project.getNextPage()
-    Project.getToken()
+    //Project.getNextPage()
+    
 
     // if(Auth.logged_in_client) {
     //   console.log('프로젝트 목록 로딩 시작')
@@ -78,8 +86,9 @@ class Answer extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
   };
   render(){
-    const { Answer, Loading } = this.props
+    const { Project, Loading } = this.props
     const { width } = this.state;
+    const gray = "#f6f6f6"
     return (
       <div>
         {Loading.is_open}
@@ -90,17 +99,20 @@ class Answer extends React.Component {
         <>
         { width > 767.98 ? (
           <Nav />
-          ) : (
-          <MobileNav width={width}/>
+          ) : (         
+          <div>
+            <MobileNav src={ back_ic } headText={ "프로젝트 관리" } width={width}/>
+            <div style={{ height: '65px'}}></div>
+          </div> 
           )
         }
         </>
-        <AnswerContainer length = { this.props.Project.project_length }/>
-  
-        <Footer/>
+        <ProjectContainer width={width} length = { Project.project_length }/>
+        
+        <Footer color={gray}/>
       </div>
     )
   }
 }
 
-export default Answer
+export default Project
