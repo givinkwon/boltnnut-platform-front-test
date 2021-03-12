@@ -149,6 +149,12 @@ class Nav extends React.Component {
                       제조사 찾기
                     </NavLink>*/}
                     <NavLink
+                      onClick={() => Router.push("/project")}
+                      active={url.indexOf("project") > -1}
+                    >
+                      <p class="line"> 프로젝트 관리 </p>
+                    </NavLink>
+                    <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
@@ -196,6 +202,12 @@ class Nav extends React.Component {
                     >
                       제조사 찾기
                     </NavLink>*/}
+                     <NavLink
+                      onClick={() => Router.push("/project")}
+                      active={url.indexOf("project") > -1}
+                    >
+                      <p class="line"> 프로젝트 관리 </p>
+                    </NavLink>
                     <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
@@ -242,6 +254,12 @@ class Nav extends React.Component {
                   </NavLink>
                    */}
 
+                  <NavLink
+                      onClick={() => Router.push("/project")}
+                      active={url.indexOf("project") > -1}
+                    >
+                      <p class="line"> 프로젝트 관리 </p>
+                    </NavLink>
                   <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
