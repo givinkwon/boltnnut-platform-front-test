@@ -133,7 +133,7 @@ const Block = styled.button`
 	align-items: center;
 	display:inline-flex;
 	flex-direction: row;
-	justify-content:center;
+	justify-content:space-between;
 	padding: 4px 18px 4px 9px;
 	:hover{
 		border: solid 0.6px #0933b3;
