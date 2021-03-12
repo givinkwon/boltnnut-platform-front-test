@@ -20,8 +20,6 @@ const customStyles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    transition: 'all 0.2s ease',
-    transform: 'scale 0.8'
   }),
   option: (provided, state) => ({
     ...provided,
@@ -42,19 +40,28 @@ const customStyles = {
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
     const transition = 'opacity 300ms';
-    return { ...provided, opacity, transition };
+    // const animation= 'all 0.5s ease-in-out';
+    // const transform= 'translateY(2rem)';
+    return { ...provided, opacity, transition};
   }
 }
+
+
 
 @inject('Request', 'Partner')
 @observer
 class Step1Container extends React.Component {
+  
   state = {
     step: 1,
     activeCount: 0,
     currentCount: 0,
+    click: false,
   }
-
+  testfunc = () => {
+    this.setState({click: true});
+    console.log(this.state.click);
+  }
   handleChange = (value) => {
     const { Request } = this.props;
     Request.setInputPhone(value);
@@ -88,7 +95,10 @@ class Step1Container extends React.Component {
       {label: '1 억원 ~ 2 억원', value: '1 억원 ~ 2 억원'},
       {label: '2 억원 이상', value: '2 억원 이상'}
     ];
+
+  
      return(
+       
      <>
        <Header> 
          의뢰 분야
@@ -96,9 +106,10 @@ class Step1Container extends React.Component {
        <SelectRow>
 
         <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>
-        <Select
-            styles={customStyles} options={Request.big_category_list} value={Request.select_big}
+        <Select   
+            styles={customStyles} options={Request.big_category_list} value={Request.select_big} 
             getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
+            active={this.state.click===true} onClick ={this.testfunc}
           />
         <div style={{marginRight: 38}}/>
 
@@ -227,6 +238,44 @@ const SelectRow = styled.div`
 `
 const Select = styled(SelectComponent)`
   width: 400px;
-`
-const CustomCheckBox = styled(CheckBoxComponent)`
+
+  
+  @keyframes fadeIn {  
+    0% {
+      opacity:0.5;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity:1;
+      transform: translateY(0);
+    }
+  }
+
+  >div: nth-of-type(2){
+    -webkit-font-smoothing: antialiased;
+    animation: fadeIn 0.2s ease-out;
+  }
+  @keyframes asdf{
+    100%{
+      transform:rotate(180deg) scale(3);
+    }
+  }
+
+
+// &:active{ 
+//   svg{
+//   display : flex; 
+//   width: 500px;
+//   height: 500px;
+//   } 
+// }
+
+${props => props.active && css`
+
+    display: flex;
+    width: 500px;
+    height: 500px;
+
+  `}
+  
 `
