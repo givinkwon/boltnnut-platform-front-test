@@ -166,14 +166,6 @@ class Nav extends React.Component {
                     >
                       이용 안내
                     </NavLink>*/}
-                    <ButtonContainer
-                    first
-                    onClick={() => Router.push("/request")}
-                    //onClick={() => Router.push("/request?big=4&mid=")}
-                    active={url.indexOf("request") > -1}
-                  >
-                    가견적 받기
-                  </ButtonContainer>
                   </Fragment>
                 ) : (
                   /* partner로 로그인 */

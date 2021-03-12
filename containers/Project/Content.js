@@ -32,21 +32,21 @@ class ProjectContentContainer extends React.Component {
     }
   }
   
-  componentDidMount() {
-    const { Project, Auth } = this.props 
+  async componentDidMount() {
+    const { Auth,Project } = this.props;
+
+    // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
+    await Auth.checkLogin();
     console.log("<Web> did mount")
-    console.log(localStorage)
+    // console.log(localStorage)
 
     // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
     // const color = document.getElementById("MyFooter").getAttribute('style');
     // console.log(color);
     // Project.init(918)
-
-    //console.log(Auth)
-    if(Auth.logged_in_client){    
-       Project.getPage(Auth.logged_in_client.id)  
-       console.log(Auth.logged_in_client)          
-    }
+    
+    Project.getPage(Auth.logged_in_client.id)
+    console.log(Auth.logged_in_client)
     
   }
 
