@@ -81,11 +81,20 @@ class FooterComponent extends React.Component {
     width: 0,
     tab: 0,
   }
+  // handleBackground = () =>
+  // {
+  //   const color = document.getElementById("MyBackground").getAttribute("style");
+  //   console.log("color");
+  // }
+
   componentDidMount() {
     const { Magazine } = this.props;
     Magazine.init();
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+
+    // const color = document.getElementById("MyBackground");
+    // console.log("asndlnaskldnalksd="+color);
   };
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
@@ -93,6 +102,7 @@ class FooterComponent extends React.Component {
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
+  
   render() {
     const {Auth, Magazine} = this.props;
     const { width } = this.state;
@@ -100,7 +110,7 @@ class FooterComponent extends React.Component {
     <>
     { width > 768 ? (
       <>
-      <Footer>
+      <Footer myColor={this.handleBackground} id="MyFooter">
         <Containerv1 style={{flexDirection: 'column'}}>
           <img src={rowline} style={{width: 16, height: 4, marginBottom: 6}}></img>
           <TelInfoWrapper>
@@ -169,7 +179,9 @@ class FooterComponent extends React.Component {
       ) : (
          
       <>
-      <Footer>
+
+      {/* backColor==='white' ? footer=회색 : FOOTER=흰색 */}
+      <Footer style = {{backgroundColor: this.props.color ? this.props.color : 'white'}}>
         <Containerv1 style={{flexDirection: 'column'}}>
         <img src={rowline} style={{width: 10, height: 2, marginBottom: 6}}></img>
           <Font14 style={{height: 17}}><span>TEL.</span>02-926-6637</Font14>
