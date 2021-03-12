@@ -6,10 +6,18 @@ import {useDropzone} from 'react-dropzone'
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 
-function MyDropzone() {
-
+const DeleteButtonImg = 'static/images/request/Step2/Q.png'
+const testData=[
+  // {
+  //   stl:'static/images/request/Step2/Q.png',
+  //   name:'asdasd'
+  // }
+]
+function MyDropzone(fileData) {
       const dropHandler = (files)=>
       {
+        testData.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})
+        console.log(testData);
         // console.log("RRRASNDLKNASLD");
         //file을 백엔드에 전해줌(1)
 
@@ -35,14 +43,52 @@ function MyDropzone() {
     const onDrop = useCallback(acceptedFiles => {
       // Do something with the files
       console.log(acceptedFiles);
-      // dropHandler(acceptedFiles);
+      dropHandler(acceptedFiles);
     }, [])
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
     return (
       <>
+      {/* <ItemList>
+
       
+      {fileData.map((data)=>
+        <>
+          <ItemBox>
+            <MainBox>
+              <StlBox>
+                <img src={DeleteButtonImg} style={{width:120,height:120}}/>
+              </StlBox>
+              <ColumnBox>
+                {data.name}
+                <ManufactureBox style={{marginTop:20}}>
+                  <div>
+                    div1
+                  </div>
+                  <div>
+                    div2
+                  </div>
+                  <div>
+                    div3
+                  </div>
+                </ManufactureBox>
+              </ColumnBox>
+              
+            </MainBox>
+
+            <TailBox>
+              <div>
+                <img src={DeleteButtonImg}/>
+              </div>
+              
+              가격: 15,000원
+            </TailBox>
+          </ItemBox>
+        </>
+
+      )}
+      </ItemList> */}
         <div {...getRootProps()}>
           <input {...getInputProps()} />
           <InputBox>
@@ -71,6 +117,45 @@ class FileUploadContainer extends Component {
               {this.props.title}
             </Header>
             <ContentBox>
+            <ItemList>
+
+      
+              {testData.map((data)=>
+                <>
+                  <ItemBox>
+                    <MainBox>
+                      <StlBox>
+                        <img src={DeleteButtonImg} style={{width:120,height:120}}/>
+                      </StlBox>
+                      <ColumnBox>
+                        {data.name}
+                        <ManufactureBox style={{marginTop:20}}>
+                          <div>
+                            div1
+                          </div>
+                          <div>
+                            div2
+                          </div>
+                          <div>
+                            div3
+                          </div>
+                        </ManufactureBox>
+                      </ColumnBox>
+                      
+                    </MainBox>
+
+                    <TailBox>
+                      <div>
+                        <img src={DeleteButtonImg}/>
+                      </div>
+                      
+                      가격: 15,000원
+                    </TailBox>
+                  </ItemBox>
+                </>
+
+              )}
+              </ItemList>
                 <MyDropzone></MyDropzone>
             </ContentBox>
           </Card>
@@ -80,6 +165,45 @@ class FileUploadContainer extends Component {
 
 export default FileUploadContainer;
 
+const ItemList=styled.div`
+
+`
+
+
+const ItemBox=styled.div`
+  display:flex;
+  justify-content:space-between;
+  // width:800px;
+  border:1px solid gray;
+`
+
+const StlBox=styled.div`
+
+`
+
+const ColumnBox = styled.div`
+
+`
+
+const MainBox=styled.div`
+  display:flex;
+`
+
+const ContentBox = styled.div`
+  // height: calc(46.3%);
+  margin-right: 5.4%;
+  margin-left: 5.4%;
+  margin-top: 2.2%;
+  display: flex;
+  flex-direction: column;
+`
+const ManufactureBox = styled.div`
+  display:flex;
+`
+
+const TailBox=styled.div`
+
+`
 const InputBox=styled.div`
     // width:500px;
     display:flex;
@@ -141,14 +265,6 @@ const ConsultantHeader = styled(Content.FontSize24)`
   padding-bottom:20px;
   border-bottom: solid 1px #c6c7cc;
   object-fit: contain;
-`
-const ContentBox = styled.div`
-  // height: calc(46.3%);
-  margin-right: 5.4%;
-  margin-left: 5.4%;
-  margin-top: 2.2%;
-  display: flex;
-  flex-direction: column;
 `
 
 const Font20 = styled(Title.FontSize20)`

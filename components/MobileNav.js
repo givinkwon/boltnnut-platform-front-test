@@ -136,6 +136,7 @@ class MobileNav extends React.Component {
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
+
                 <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
                 <p onClick={() => Router.push("/magazine")}>매거진</p>
                 <p onClick={() => Router.push("/info")}>회사소개</p>
