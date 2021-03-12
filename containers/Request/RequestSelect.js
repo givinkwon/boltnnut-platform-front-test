@@ -43,10 +43,9 @@ class RequestSelectContainer extends React.Component {
   searchText = (e) => {
     this.setState({ search: e.target.value })
   }
-  Next = () => {
+  Next = (type) => {
     const { Request } = this.props
-    
-    
+    Request.request_type=type;
     // if(Request.request_type==="production")
     // {
     // //   Auth.setStep(1)
@@ -59,13 +58,13 @@ class RequestSelectContainer extends React.Component {
     // }
     Request.step_index=1;
   }
-  state={
-    click: false,
-  }
-  testfunc = () => {
-    this.setState({click: true});
-    console.log(this.state.click);
-  }
+  // state={
+  //   click: false,
+  // }
+  // testfunc = () => {
+  //   this.setState({click: true});
+  //   console.log(this.state.click);
+  // }
    render(){
     const { Request } = this.props
     const { width } = this.state
@@ -75,13 +74,14 @@ class RequestSelectContainer extends React.Component {
         <Container>
           { width > 767.98 ? (
             <>
-            <Box active={this.state.click===true} onClick ={this.testfunc}></Box>
+            {/* <Box active={this.state.click===true} onClick ={this.testfunc}></Box> */}
             <HeadBox>
-            <Font46>가견적받기</Font46>
-            <Font18>나에게 맞는 제조방식을 선택해주세요.</Font18>
+              <Font46>가견적받기</Font46>
+              <Font18>나에게 맞는 제조방식을 선택해주세요.</Font18>
             </HeadBox>
             <ButtonBox>
-              <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}>
+              {/* <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}> */}
+              <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={()=>this.Next("development")}>
                 <ButtonText>
                   {/* 원래대로 */}
                   <Font26 style={{height: 38, marginBottom: 24}}>제작</Font26>
@@ -105,7 +105,7 @@ class RequestSelectContainer extends React.Component {
                   </ImgContainer>
                 </ImageBox>
               </Button>
-              <Button id="sign_uo_button_partner" active={Request.request_type==="production"} onClick={() => Request.request_type="production"}>
+              <Button id="sign_uo_button_partner" active={Request.request_type==="production"} onClick={() => this.Next("production")}>
                 <ButtonText>
                   {/* 바로 도면첨부 */}
                   <Font26 style={{height: 38, marginBottom: 24}}>생산</Font26>
@@ -131,10 +131,10 @@ class RequestSelectContainer extends React.Component {
                 </ImageBox>
               </Button>
             </ButtonBox>
-            <NextButton backgroundColor={Request.request_type ? PRIMARY : '#0a2165'} borderColor={Request.request_type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
+            {/* <NextButton backgroundColor={Request.request_type ? PRIMARY : '#0a2165'} borderColor={Request.request_type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
               <Text.FontSize24 color={Request.request_type ? WHITE : '#ffffff'} fontWeight={500}>다음</Text.FontSize24>
               <Image src={right}/>
-            </NextButton>
+            </NextButton> */}
             </>
           ) : (
             <>
@@ -350,13 +350,21 @@ const Button = styled.div`
     align-items: center;
     text-align : center;
   }
-  ${props => props.active && css`
-  border: 4px solid #0933b3;
-  box-shadow: 0 3px 6px 0 var(--black-16);
-  >div >p{
-    color: #0933b3;
+
+  :focus{
+    border: 4px solid #0933b3;
+    box-shadow: 0 3px 6px 0 var(--black-16);
+    >div >p{
+      color: #0933b3;
+    }
   }
-`}
+//   ${props => props.active && css`
+//   border: 4px solid #0933b3;
+//   box-shadow: 0 3px 6px 0 var(--black-16);
+//   >div >p{
+//     color: #0933b3;
+//   }
+// `}
   
   @media (min-width: 0px) and (max-width: 767.98px) {
     height: 192px;
@@ -432,15 +440,15 @@ const ImgContainer = styled.div`
     margin-top: 10px;
   }
 `
-const Box = styled.div`
-width: 50px;
-height: 50px;
-background-color: red;
-${props => props.active && css`
+// const Box = styled.div`
+// width: 50px;
+// height: 50px;
+// background-color: red;
+// ${props => props.active && css`
 
-  display: flex;
-  width: 500px;
-  height: 500px;
+//   display: flex;
+//   width: 500px;
+//   height: 500px;
 
-    `}
-`
+//     `}
+// `

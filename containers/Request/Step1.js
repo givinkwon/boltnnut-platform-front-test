@@ -11,7 +11,6 @@ import InputComponent from 'components/Input2';
 import PhoneInputComponent from 'components/PhoneInput';
 import CheckBoxComponent from 'components/CheckBox';
 
-
 const customStyles = {
   dropdownIndicator: () => ({
     color: '#555555',
@@ -56,12 +55,19 @@ class Step1Container extends React.Component {
     step: 1,
     activeCount: 0,
     currentCount: 0,
-    click: false,
+    list:[false,false,false,false,],
   }
-  testfunc = () => {
-    this.setState({click: true});
-    console.log(this.state.click);
+
+  selectClick = (idx) => {
+    const{list} = this.state;
+    this.setState({list: list.map((item, j) => {if(j==idx){return true;}})});
   }
+
+  selectOut= (idx) =>{
+    const{list} = this.state;
+    this.setState({list: list.map((item, j) => {if(j==idx){return false;}})});
+  }
+
   handleChange = (value) => {
     const { Request } = this.props;
     Request.setInputPhone(value);
@@ -104,40 +110,47 @@ class Step1Container extends React.Component {
          의뢰 분야
        </Header>
        <SelectRow>
-
-        <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>
+        
+        {/* <Box active={this.state.list[0]===true} onClick ={()=>this.state.list[0]? this.selectOut(0):this.selectClick(0)}  onBlur = {()=>this.selectOut(0)} > */}
+        <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>       
         <Select   
-            styles={customStyles} options={Request.big_category_list} value={Request.select_big} 
-            getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
-            active={this.state.click===true} onClick ={this.testfunc}
-          />
+          styles={customStyles} options={Request.big_category_list} value={Request.select_big} 
+          getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
+        />
+        {/* </Box> */}
         <div style={{marginRight: 38}}/>
-
+  
+        {/* <Box active={this.state.list[1]===true} onClick ={()=>this.state.list[1]? this.selectOut(1):this.selectClick(1)}  onBlur = {()=>this.selectOut(1)} > */}
         <input style={{display: 'none'}} value={Request.select_mid ? Request.select_mid.category : ''} class="Input"/>
         <Select
             styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
           />
+        {/* </Box> */}
         </SelectRow>
         <Header style={{marginTop: 30}}> 
             희망 예산
         </Header>
         <SelectRow style={{width: 380}}>
+          {/* <Box active={this.state.list[2]===true} onClick ={()=>this.state.list[2]? this.selectOut(2):this.selectClick(2)}  onBlur = {()=>this.selectOut(2)} > */}
           <input style={{display: 'none'}} value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
           <Select
             styles={customStyles} options={costArray} value={Request.input_price}
             getOptionLabel={(option) => option.label} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
           />
+          {/* </Box> */}
         </SelectRow>
           <Header style={{marginTop: 30}}>
             개발 기간
           </Header>
         <SelectRow style={{width: 380}}>
+          {/* <Box active={this.state.list[0]===true} onClick ={()=>this.state.list[0]? this.selectOut(0):this.selectClick(0)}  onBlur = {()=>this.selectOut(0)} > */}
           <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/>
           <Select
             styles={customStyles} options={dueArray} value={Request.input_day}
             getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
           />
+          {/* </Box> */}
         </SelectRow>
      </>
     );
@@ -255,14 +268,15 @@ const Select = styled(SelectComponent)`
     -webkit-font-smoothing: antialiased;
     animation: fadeIn 0.2s ease-out;
   }
-  @keyframes asdf{
-    100%{
-      transform:rotate(180deg) scale(3);
-    }
-  }
+
+  // @keyframes asdf{
+  //   100%{
+  //     transform:rotate(180deg) scale(3);
+  //   }
+  // }
 
 
-// &:active{ 
+// &:focus{ 
 //   svg{
 //   display : flex; 
 //   width: 500px;
@@ -270,12 +284,22 @@ const Select = styled(SelectComponent)`
 //   } 
 // }
 
-${props => props.active && css`
+`
 
-    display: flex;
-    width: 500px;
-    height: 500px;
+const Box = styled.div`
+width: 400px;
 
-  `}
-  
+  ${props => props.active && css`
+  svg{
+    @keyframes:{
+    100% {
+      opacity:1;
+      transform: rotate(180deg);
+      }
+    }
+    // transform: rotate(180deg);
+    // animation: 0.2s;
+  }
+`}
+
 `

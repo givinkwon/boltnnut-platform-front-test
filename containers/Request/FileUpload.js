@@ -10,32 +10,32 @@ function MyDropzone() {
 
       const dropHandler = (files)=>
       {
-        console.log("RRRASNDLKNASLD");
+        // console.log("RRRASNDLKNASLD");
         //file을 백엔드에 전해줌(1)
 
-      let formData = new FormData();
+      // let formData = new FormData();
 
-      const config ={
-          header:{'content-type':'multipart/form-data'}
-      }
-      formData.append("file", files[0])
+      // const config ={
+      //     header:{'content-type':'multipart/form-data'}
+      // }
+      // formData.append("file", files[0])
 
-      axios.post('/api/product/image', formData, config)
-          // 백엔드가 file저장하고 그 결과가 reponse에 담김
-          // 백엔드는 그 결과를 프론트로 보내줌(3)
-          .then(response =>{
-              if(response.data.success){
-                  setImages([...Images, response.data.filePath])
-              }else{
-                  alert('파일 저장 실패')
-              }
-          })
+      // axios.post('/api/product/image', formData, config)
+      //     // 백엔드가 file저장하고 그 결과가 reponse에 담김
+      //     // 백엔드는 그 결과를 프론트로 보내줌(3)
+      //     .then(response =>{
+      //         if(response.data.success){
+      //             setImages([...Images, response.data.filePath])
+      //         }else{
+      //             alert('파일 저장 실패')
+      //         }
+      //     })
     }
 
     const onDrop = useCallback(acceptedFiles => {
       // Do something with the files
       console.log(acceptedFiles);
-      dropHandler(acceptedFiles);
+      // dropHandler(acceptedFiles);
     }, [])
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
