@@ -30,10 +30,10 @@ class ProposalCard extends React.Component {
 
         if(data.request_set[0])
         {
-            name = data.request_set[0].name;
-            date = data.request_set[0].createdAt.substr(0, 10);
-            period  = data.request_set[0].period + "일";
-            estimate = data.request_set[0].price;
+            name = data.request_set[0].name ? data.request_set[0].name : "미지정";
+            date = data.request_set[0].createdAt ? data.request_set[0].createdAt.substr(0, 10).replaceAll('-', '.') : "미지정";
+            period  = data.request_set[0].period ? data.request_set[0].period + "일" : "미지정";
+            estimate = data.request_set[0].price ? data.request_set[0].price : "미지정";
         }
         
         const consultation = this.props.data.status;
@@ -46,8 +46,6 @@ class ProposalCard extends React.Component {
         // estimate = estimate ? estimate : "미지정"
         
         //date = date.substr(0, 10);
-
-        {console.log(width)}
 		return (
             
             <>
@@ -263,7 +261,7 @@ const Card = styled.div`
     object-fit: contain;
     border-radius: 10px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-    background-color: var(--white);
+    background-color: #ffffff;
 
     @media (min-width: 0px) and (max-width: 767.98px) {
         height: 108px;        
@@ -395,15 +393,15 @@ const Content = styled.span`
         color: #767676;    
     }
     @media (min-width: 768px) and (max-width: 991.98px) {
-        font-size: 16px;
+        font-size: 18px;
         color: #414550;
       }
       @media (min-width: 992px) and (max-width: 1299.98px) { 
-        font-size: 16px;
+        font-size: 18px;
         color: #414550;
       }
       @media (min-width: 1300px) { 
-        font-size: 16px;
+        font-size: 18px;
         color: #414550;
       }
 

@@ -4,7 +4,6 @@ import * as ProjectAPI from "axios/Project";
 import * as AccountAPI from "axios/Account";
 
 class Project {
-@observable projectData = [];
 @observable projectDataList = [];
 @observable project_next = null;
 @observable project_count = null;
@@ -12,19 +11,9 @@ class Project {
 @observable project_length = null;
 @observable project_page = null;
 @observable currentPage = 1;
-@observable user = null;
-@observable moveRenderingFlag = true;
+
 
   @action init = (clientId) => {    
-    this.projectData = []
-    this.project_next = null
-    this.current_user_id = null
-    this.project_count = null
-    this.project_length = null
-    this.project_page = null
-    this.currentPage = -1
-    this.moveRenderingFlag = true
-    this.projectDataList = [];
         
     const token = localStorage.getItem('token')
   
@@ -48,11 +37,9 @@ class Project {
   }
 
   @action getNextPage = (clientId, callback = null) => {
-    if (!this.project_next) {
-      console.log("000000")
+    if (!this.project_next) {     
       return;
     }
-    console.log("getNextPage() in Test.js");
     const token = localStorage.getItem("token");
     const req = {
       nextUrl: this.project_next,
@@ -87,17 +74,8 @@ class Project {
 
 
   @action getPage = (clientId, page=1) => {  
-    this.projectData = [];
     this.projectDataList = [];
-    this.project_next = null;
-    this.project_count = null;
-    this.current_user_id = null;
-    this.project_length = null;
-    this.project_page = null;
-    this.currentPage = 1;
-    this.moveRenderingFlag = true;
 
-    console.log(clientId)
     if (!clientId) {  
       return;
     }
@@ -112,10 +90,9 @@ class Project {
         Authorization: `Token ${token}`,
       },
     };
-
+    
     ProjectAPI.getProjects(req)
-      .then((res) => {                
-        // console.log(res.data.results);                
+      .then((res) => {                      
         this.projectDataList = res.data.results;
         this.project_next = res.data.next;        
         this.project_count = res.data.count;                  
