@@ -109,8 +109,7 @@ class EmailConatiner extends React.Component {
         { width > 767.98 ? (
           <>
           <W100>
-            <InputComponent placeholder='-없이 입력해주세요' label='휴대전화번호' type='phone' onChange={Auth.setPhone} value={Auth.phone}/>
-            
+            <InputComponent placeholder='이메일을 입력하세요' label='아이디' onChange={Auth.setEmail} value={Auth.email}/>
           </W100>
           <W50 left>
             <InputComponent placeholder='비밀번호를 입력하세요' label='비밀번호' type='password' onChange={Auth.setPassword} value={Auth.password}/>
@@ -120,7 +119,7 @@ class EmailConatiner extends React.Component {
           </W50>
 
           <W50 left>
-            <InputComponent placeholder='이메일을 입력하세요' label='이메일' onChange={Auth.setEmail} value={Auth.email}/>
+            <InputComponent placeholder='-없이 입력해주세요' label='휴대전화' type='phone' onChange={Auth.setPhone} value={Auth.phone}/>
             {/* <br/>
             {Auth.type === 'expert' ? (<Text.FontSize14 color={DARKGRAY} fontWeight={500}>제조 의뢰 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
                                      :(<Text.FontSize14 color={DARKGRAY} fontWeight={500}>파트너와 미팅 및 계약 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)

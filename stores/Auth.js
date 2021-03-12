@@ -392,10 +392,10 @@ class Auth {
   };
 
   @action login = async () => {
-    // if (!this.email) {
-    //   alert("이메일을 입력해주세요.");
-    //   return;
-    // }
+    if (!this.email) {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
     // var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
     // if (!emailValid.test(this.email)) {
     //   await alert("이메일 형식을 확인해주세요.");
@@ -408,8 +408,7 @@ class Auth {
     this.loading = true;
     const req = {
       data: {
-        // username: this.email,
-        username: this.phone,
+        username: this.email,
         password: this.password,
       },
     };
@@ -513,11 +512,9 @@ class Auth {
       this.loading = true;
       const req = {
         data: {
-          username: this.phone,
-          // username:this.phone,
+          username: this.email,
           password: this.password,
-          // phone: this.phone,
-          phone:this.email,
+          phone: this.phone,
           name: this.name,
           title: this.title,
           path: this.path.path,
@@ -634,7 +631,6 @@ class Auth {
       }
 
       formData.append("username", this.email);
-      // formData.append("username", this.phone);
       formData.append("password", this.password);
       formData.append("phone", this.phone);
       formData.append("type", 1);
