@@ -11,7 +11,6 @@ import InputComponent from 'components/Input2';
 import PhoneInputComponent from 'components/PhoneInput';
 import CheckBoxComponent from 'components/CheckBox';
 
-
 const customStyles = {
   dropdownIndicator: () => ({
     color: '#555555',
@@ -20,6 +19,8 @@ const customStyles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    transition: 'all 0.2s ease',
+    transform: 'scale 0.8'
   }),
   option: (provided, state) => ({
     ...provided,

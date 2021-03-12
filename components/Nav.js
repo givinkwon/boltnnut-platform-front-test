@@ -8,7 +8,7 @@ import * as Text from "./Text";
 import Containerv1 from "components/Containerv1";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
-
+import Buttonv1 from "components/Buttonv1";
 const close_ic = "/static/icon/close.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
@@ -129,14 +129,6 @@ class Nav extends React.Component {
                   /* client로 로그인 */
 
                   <Fragment>
-                    <NavLink
-                      first
-                      onClick={() => Router.push("/request")}
-                      //onClick={() => Router.push("/request?big=4&mid=")}
-                      active={url.indexOf("request") > -1}
-                    >
-                      가견적받기
-                    </NavLink>
                     {/* <NavLink
                       onClick={() => Router.push("/answer")}
                       active={url.indexOf("answer") > -1}
@@ -160,7 +152,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      <p class="line"> 제조 인사이트 </p>
+                      <p class="line"> 매거진 </p>
                     </NavLink>
                     <NavLink
                       onClick={() => Router.push("/info")}
@@ -174,6 +166,14 @@ class Nav extends React.Component {
                     >
                       이용 안내
                     </NavLink>*/}
+                    <ButtonContainer
+                    first
+                    onClick={() => Router.push("/request")}
+                    //onClick={() => Router.push("/request?big=4&mid=")}
+                    active={url.indexOf("request") > -1}
+                  >
+                    가견적 받기
+                  </ButtonContainer>
                   </Fragment>
                 ) : (
                   /* partner로 로그인 */
@@ -208,7 +208,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      제조 인사이트
+                      매거진
                     </NavLink>
                     <NavLink
                       onClick={() => Router.push("/info")}
@@ -227,14 +227,7 @@ class Nav extends React.Component {
               ) : (
                 /* 로그인 안되어있는 경우 */
                 <Fragment>
-                  <NavLink
-                    first
-                    onClick={() => Router.push("/request")}
-                    //onClick={() => Router.push("/request?big=4&mid=")}
-                    active={url.indexOf("request") > -1}
-                  >
-                    가견적 받기
-                  </NavLink>
+                  
                   {/*<NavLink
                     onClick={
                       async () => {
@@ -248,13 +241,20 @@ class Nav extends React.Component {
                   >
                     제조사 찾기
                   </NavLink>*/}
-              
-                  
+
+                  {/* <NavLink
+                      onClick={() => Router.push("/magazine")}
+                      active={url.indexOf("magazine") > -1}
+                    >
+                      프로젝트 관리
+                  </NavLink>
+                   */}
+
                   <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      제조 인사이트
+                      매거진
                   </NavLink>
                   <NavLink
                       onClick={() => Router.push("/info")}
@@ -274,6 +274,7 @@ class Nav extends React.Component {
                   active={url.indexOf("info") > -1}>
                     서비스 소개
                 </NavLink>*/}
+                
                 </Fragment>
               )}
 
@@ -319,7 +320,17 @@ class Nav extends React.Component {
                 >
                   로그인
                 </NavLink>
+                
               )}
+
+              <ButtonContainer
+                    first
+                    onClick={() => Router.push("/request")}
+                    //onClick={() => Router.push("/request?big=4&mid=")}
+                    active={url.indexOf("request") > -1}
+                  >
+                    가견적 받기
+              </ButtonContainer>
             </Menu>
             <Icon
               src={hamburger_ic}
@@ -331,7 +342,7 @@ class Nav extends React.Component {
           </NavWrap>
         </Containerv1>
       </NavBox>
-      <div style={{height: 70}} />
+      <div style={{height: 60}} />
     </>
     );
   }
@@ -377,7 +388,7 @@ const Avatar = styled.img`
 const NavBox = styled.div`
   position: fixed;
   z-index: 100;
-  height: 70px;
+  height: 60px;
   width: 100%;
   background-color: ${WHITE};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
@@ -387,7 +398,7 @@ const NavBox = styled.div`
 const NavWrap = styled.div`
   display: flex;
   align-items: center;
-  height: 70px;
+  height: 60px;
 `;
 const Logo = styled.img`
   cursor: pointer;
@@ -430,22 +441,11 @@ const Menu = styled.div`
         right: 0%;
       `}
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-right: -12px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-right: -25px;
-  }
-  @media (min-width: 1300px) and (max-width: 1599.98px) {
-    margin-right: -25px;
-  }
-  @media (min-width: 1600px) {
-    margin-right: -30px;
-  }
+
 `;
 const NavLink = styled.p`
   margin: 0px;
-  height: 70px;
+  height: 60px;
   cursor: pointer;
   color: #000000;
   display: flex;
@@ -462,19 +462,19 @@ const NavLink = styled.p`
     font-size: 14px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    padding-left: 25px;
-    padding-right: 25px;
-    font-size: 18px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 14px;
   }
   @media (min-width: 1300px) and (max-width: 1599.98px) {
-    padding-left: 25px;
-    padding-right: 25px;
-    font-size: 20px;
+    padding-left: 17px;
+    padding-right: 15px;
+    font-size: 16px;
   }
   @media (min-width: 1600px) {
-    padding-left: 30px;
-    padding-right: 30px;
-    font-size: 20px;
+    padding-left: 19px;
+    padding-right: 19px;
+    font-size: 16px;
   }
   ${(props) =>
     props.first &&
@@ -522,4 +522,34 @@ const Close = styled.div`
     display: flex;
   }
 `;
+
+const ButtonContainer = styled(Buttonv1)`
+@media (min-width: 768px) and (max-width: 991.98px) {
+  width: 110px;
+  height: 41px;
+  font-size: 14px;
+  margin-left: 22px;
+}
+@media (min-width: 992px) and (max-width: 1299.98px) {
+  width: 120px;
+  height: 41px;
+  font-size: 14px;
+  margin-left: 26px;
+}
+@media (min-width: 1300px) and (max-width: 1599.98px) {
+  width: 130px;
+  height: 41px;
+  font-size: 16px;
+  margin-left: 30px;
+}
+@media (min-width: 1600px) {
+  width: 130px;
+  height: 41px;
+  font-size: 16px;
+  margin-left: 34px;
+}
+
+`
+
+
 export default Nav;

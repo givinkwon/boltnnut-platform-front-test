@@ -7,10 +7,20 @@ import Section from 'components/Section'
 import ButtonComponent from 'components/Button'
 
 import * as Text from 'components/Text'
+import * as Content from 'components/Content';
+import * as Title from 'components/Title';
+
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
 
 const search_ic = 'static/icon/search.png'
 const right = "/static/images/main/main_right.png";
+
+const threedprinter = '/static/images/Home/Banner10/3Dprinter.svg'
+const cnc = '/static/images/Home/Banner10/cnc.svg'
+const mold = '/static/images/Home/Banner10/mold.svg'
+const product = '/static/images/Home/Banner10/product.svg'
+const machinery = '/static/images/Home/Mobile/MobileBanner10/machinery.svg'
+const part = '/static/images/Home/Mobile/MobileBanner10/part.svg'
 
 
 @inject('Request')
@@ -32,9 +42,9 @@ class RequestSelectContainer extends React.Component {
   searchText = (e) => {
     this.setState({ search: e.target.value })
   }
-  Next = () => {
+  Next = (type) => {
     const { Request } = this.props
-    
+    Request.request_type=type;
     // if(Request.request_type==="production")
     // {
     // //   Auth.setStep(1)
@@ -56,24 +66,66 @@ class RequestSelectContainer extends React.Component {
         <Container>
           { width > 767.98 ? (
             <>
+            <HeadBox>
+              <Font46>가견적받기</Font46>
+              <Font18>나에게 맞는 제조방식을 선택해주세요.</Font18>
+            </HeadBox>
             <ButtonBox>
-            <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}>
-              <div style={{margin : 0}}>
-                <Text.FontSize36 color={'#191919'} fontWeight={700}>개발</Text.FontSize36>
-                <Text.FontSize24 color={'#767676'} fontWeight={500}>원래대로</Text.FontSize24>
-              </div>
-            </Button>
-            <Button id="sign_uo_button_partner" active={Request.request_type==="production"} onClick={() => Request.request_type="production"}>
-              <div style={{margin : 0}}>
-                <Text.FontSize36 color={'#191919'} fontWeight={700}>생산</Text.FontSize36>
-                <Text.FontSize24 color={'#767676'} fontWeight={500}>바로 도면첨부(제조공정부터 나오게)</Text.FontSize24>            
-              </div>
+              {/* <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}> */}
+              <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={()=>this.Next("development")}>
+                <ButtonText>
+                  {/* 원래대로 */}
+                  <Font26 style={{height: 38, marginBottom: 24}}>제작</Font26>
+                  <Font20 style={{height: 65}}>
+                    지속적인 소통과 제품 분석 시스템으로 제품 생산에 불필요한<br/>
+                    가정을 방지하여 양산 비용을 최대 40% 절감합니다. 
+                  </Font20>
+                </ButtonText>
+                <ImageBox>
+                  <ImgContainer>
+                    <Image1 src={threedprinter}></Image1>
+                    <Font16>3D 프린터</Font16>
+                  </ImgContainer>
+                  <ImgContainer>
+                    <Image1 src={cnc}></Image1>
+                    <Font16>CNC</Font16>
+                  </ImgContainer>
+                  <ImgContainer>
+                    <Image1 src={mold}></Image1>
+                    <Font16>금형/사출</Font16>
+                  </ImgContainer>
+                </ImageBox>
+              </Button>
+              <Button id="sign_uo_button_partner" active={Request.request_type==="production"} onClick={() => this.Next("production")}>
+                <ButtonText>
+                  {/* 바로 도면첨부 */}
+                  <Font26 style={{height: 38, marginBottom: 24}}>생산</Font26>
+                  <Font20 style={{height:65}}>
+                    국내 제조사와 해외유통사 네트워크를 통해 원하는 조건에 맞는<br/>
+                    제조견적, MOQ (최소발주수량)등의 정보를 전달해드립니다.
+                  </Font20>            
+                </ButtonText>
+                <ImageBox>
+                  <ImgContainer>
+                    <Image1 src={product}></Image1>
+                    <Font16>제품</Font16>
+                  </ImgContainer>
+
+                  <ImgContainer>
+                    <Image1 src={machinery}></Image1>
+                    <Font16>기계/설비/장비</Font16>
+                  </ImgContainer>
+                  <ImgContainer>
+                    <Image1 src={part}></Image1>
+                    <Font16>부품/센서</Font16>
+                  </ImgContainer>
+                </ImageBox>
               </Button>
             </ButtonBox>
-            <NextButton backgroundColor={Request.request_type ? PRIMARY : '#0a2165'} borderColor={Request.request_type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
+            {/* <NextButton backgroundColor={Request.request_type ? PRIMARY : '#0a2165'} borderColor={Request.request_type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
               <Text.FontSize24 color={Request.request_type ? WHITE : '#ffffff'} fontWeight={500}>다음</Text.FontSize24>
               <Image src={right}/>
-            </NextButton>
+            </NextButton> */}
             </>
           ) : (
             <>
@@ -105,6 +157,52 @@ class RequestSelectContainer extends React.Component {
 }
 
 export default RequestSelectContainer
+
+const Font46 = styled(Content.FontSize46)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.65;
+  letter-spacing: -1.15px;
+  color: #000000;
+`
+
+const Font18 = styled(Content.FontSize18)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.22;
+  letter-spacing: -0.45px;
+  color: #0933b3;
+`
+
+const Font26 = styled(Title.FontSize26)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.54 !important;
+  letter-spacing: -0.65px !important;
+  color: #0933b3;
+`
+
+const Font20 = styled(Title.FontSize20)`
+  font-weight: 500 !important;
+  font-stretch: normal !important;
+  font-style: normal  !important;
+  line-height: 1.8 !important;
+  letter-spacing: -0.5px !important;
+  color: #282c36;
+
+`
+
+const Font16 = styled(Content.FontSize16)`
+  font-weight: 500 !important;
+  font-stretch: normal !important;
+  font-style: normal !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.4px!important;
+  color: #414550;
+`
 
 const NextButton = styled(ButtonComponent)`
   margin: auto;
@@ -172,10 +270,21 @@ const Image = styled.img`
 //     }
 //   }
 // `
+
+const HeadBox = styled.div`
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  p{
+    text-align: center;
+  }
+  margin-top: 180px;
+`
+
+
 const ButtonBox = styled.div`
   width: 100%;
   display: flex;
-  
   
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 2px;
@@ -206,10 +315,10 @@ const ButtonBox = styled.div`
   }
   @media (min-width: 1300px) {
     margin-top: 60px;
-    div:nth-of-type(1) {
+    >div:nth-of-type(1) {
       margin-right: 12px;
     }
-    div:nth-of-type(2) {
+    >div:nth-of-type(2) {
       margin-left: 12px;
     } 
   }
@@ -218,6 +327,7 @@ const Button = styled.div`
   cursor: pointer;
   width: 588px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
@@ -230,24 +340,15 @@ const Button = styled.div`
     justify-content: center;
     align-items: center;
     text-align : center;
-    :nth-of-type(1) {
-      margin-bottom : 10px; 
-      line-height: 1.35;
-      letter-spacing: -1px;
-    }
-    :nth-of-type(2) {
-      line-height: 1.42;
-      letter-spacing: -0.6px;
-    }
   }
   
-  ${props => props.active && css`
-    background-color: #0933b3;
-    p, span {
-      color: ${WHITE} !important;
-      display : flex; 
-    }
-  `}
+  // ${props => props.active && css`
+  //   background-color: #0933b3;
+  //   p, span {
+  //     color: ${WHITE} !important;
+  //     display : flex; 
+  //   }
+  // `}
   @media (min-width: 0px) and (max-width: 767.98px) {
     height: 192px;
     text-align: center;
@@ -289,7 +390,41 @@ const Button = styled.div`
     :hover {
       border: 4px solid #0933b3;
       box-shadow: 0 3px 6px 0 var(--black-16);
+      >div >p{
+        color: #0933b3;
+      }
     }
-    height: 437px;
+    height: 420px;
+  }
+`
+
+const ButtonText = styled.div`
+  justify-content: space-between;
+`
+
+const ImageBox = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 344px;
+  margin-top: 66px;
+  margin-left: 0px !important;
+`
+
+const Image1 = styled.img`
+  width: 68px;
+  height: 70px;
+`
+
+const ImgContainer = styled.div`
+  width: 68px;
+  height: 104px;
+  white-space: nowrap;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+  align-content: space-evenly;
+  >p{
+    margin-top: 10px;
   }
 `
