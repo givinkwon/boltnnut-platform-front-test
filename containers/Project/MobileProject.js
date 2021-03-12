@@ -34,17 +34,16 @@ class MobileProjectContentContainer extends React.Component {
     }
   }
   
-  componentDidMount() {
+  async componentDidMount() {
     console.log("<Mobile> did mount")
     const { Project, Auth } = this.props 
     console.log(Project.current_user_id)
-    console.log(Auth.logged_in_client)
-    // Project.init(918)
-    // if(Auth.logged_in_client){
-    //     Project.getPage(Auth.logged_in_client.id)            
-    // }
-
     
+    await Auth.checkLogin();
+    if(Auth.logged_in_client){
+      Project.getPage(Auth.logged_in_client.id)  
+    }
+    console.log(Auth.logged_in_client)    
   }
 
   // afterChangeHandler = (current) => {
@@ -59,29 +58,28 @@ class MobileProjectContentContainer extends React.Component {
   movePage = (e) => {
     const { Project, Auth } = this.props 
     const newPage = e.target.innerText*1;    
-    const length = Project.projectData.length; 
-    let filledPage = parseInt(length/5);
+    
     Project.currentPage = newPage
     Project.getPage(Auth.logged_in_client.id, newPage)
   }
 
   pageNext = () => {  
-    const { Project, Auth } = this.props 
-    const newPage = this.state.current + 1
-    console.log(`previous currentPage : ${Project.currentPage}`)
-    console.log(`after currentPage : ${Project.currentPage}`)
+    const { Project, Auth } = this.props  
 
-    Project.getPage(Auth.logged_in_client.id, Project.currentPage+1);
-    Project.currentPage = Project.currentPage+1
-    
+    if (Project.currentPage  < Project.project_page) {
+      const nextPage = Project.currentPage+1  
+      Project.currentPage = nextPage
+      Project.getPage(Auth.logged_in_client.id, Project.currentPage);
+    }        
   }
   
   pagePrev = () => {
-    if (this.props.Project.currentPage  != 0) {
-      const newPage = this.props.Project.currentPage  - 1
-      this.setState({...this.state, current: newPage, prev: true})
-      this.props.Project.currentPage = newPage
-      Project.getPage(this.props.Auth.logged_in_client.id, this.props.Project.currentPage)
+    const { Project, Auth } = this.props        
+  
+    if (Project.currentPage  > 1) {
+      const newPage = Project.currentPage  - 1
+      Project.currentPage = newPage          
+      Project.getPage(Auth.logged_in_client.id, Project.currentPage)
     }
   }
 
@@ -107,62 +105,62 @@ class MobileProjectContentContainer extends React.Component {
             )        
         })}
 
-           <PageBar>
-            <img src={pass1} style={{opacity: current_set == 1 && Project.currentPage == 0  ? 0.4 : 1 }} onClick = {this.pagePrev}/>
+        <PageBar>
+            <img src={pass1} style={{opacity: current_set == 1 && Project.currentPage <= 1  ? 0.4 : 1 }} onClick = {this.pagePrev}/>
               <PageCount onClick = {this.movePage} value = {5*(current_set - 1)} active={Project.currentPage %5 == 1} style={{display:  Project.project_page < 5*(current_set - 1) + 1 ? 'none': 'block' }}> {5*(current_set - 1) + 1} </PageCount>
               <PageCount value = {5*(current_set - 1) + 1} active={Project.currentPage %5 == 2} style={{display:  Project.project_page < 5*(current_set - 1) + 2 ? 'none': 'block' }} onClick = {this.movePage}> {5*(current_set - 1) + 2} </PageCount>
               <PageCount value = {5*(current_set - 1) + 2} active={Project.currentPage %5 == 3} style={{display:  Project.project_page < 5*(current_set - 1) + 3 ? 'none': 'block' }} onClick = {this.movePage}> {5*(current_set - 1) + 3} </PageCount>
               <PageCount value = {5*(current_set - 1) + 3} active={Project.currentPage %5 == 4} style={{display:  Project.project_page < 5*(current_set - 1) + 4 ? 'none': 'block' }} onClick = {this.movePage}> {5*(current_set - 1) + 4} </PageCount>
               <PageCount value = {5*(current_set - 1) + 4} active={Project.currentPage %5 == 0} style={{display:  Project.project_page < 5*(current_set - 1) + 5 ? 'none': 'block' }} onClick = {this.movePage}> {5*(current_set - 1) + 5} </PageCount>
               {/* <PageCount> ... </PageCount> */}
-            <img src={pass2} style={{opacity: Project.project_page == Project.currentPage  ? 0.4 : 1, visibility: Project.project_page === Project.currentPage ? 'hidden' : 'visible'}} onClick = {this.pageNext} />
+            <img src={pass2} style={{opacity: Project.project_page == Project.currentPage  ? 0.4 : 1 }} onClick = {this.pageNext} />
         </PageBar>    
         </div>          
         </>
     )}
   }
 
-const data = [
-  {
-    consultation: '상담 진행',
-    name: '컴퓨터',
-    date: '2021.03.02' ,
-    period: '120일',
-    estimate: '10,000,000원'
-  },
+// const data = [
+//   {
+//     consultation: '상담 진행',
+//     name: '컴퓨터',
+//     date: '2021.03.02' ,
+//     period: '120일',
+//     estimate: '10,000,000원'
+//   },
 
-  {
-    consultation: '상담 미진행',
-    name: '스캐너',
-    date: '2021.03.03' ,
-    period: '121일',
-    estimate: '11,000,000원'
-  },
+//   {
+//     consultation: '상담 미진행',
+//     name: '스캐너',
+//     date: '2021.03.03' ,
+//     period: '121일',
+//     estimate: '11,000,000원'
+//   },
 
-  {
-    consultation: '완료',
-    name: '키보드',
-    date: '2021.03.04' ,
-    period: '122일',
-    estimate: '12,000,000원'
-  },
+//   {
+//     consultation: '완료',
+//     name: '키보드',
+//     date: '2021.03.04' ,
+//     period: '122일',
+//     estimate: '12,000,000원'
+//   },
 
-  {
-    consultation: '상담 미진행',
-    name: '마우스',
-    date: '2021.03.05' ,
-    period: '123일',
-    estimate: '13,000,000원'
-  },
+//   {
+//     consultation: '상담 미진행',
+//     name: '마우스',
+//     date: '2021.03.05' ,
+//     period: '123일',
+//     estimate: '13,000,000원'
+//   },
 
-  {
-    consultation: '완료',
-    name: '프린터',
-    date: '2021.03.06' ,
-    period: '124일',
-    estimate: '14,000,000원'
-  },
-]
+//   {
+//     consultation: '완료',
+//     name: '프린터',
+//     date: '2021.03.06' ,
+//     period: '124일',
+//     estimate: '14,000,000원'
+//   },
+// ]
 
 const PageBar = styled.div`
   width: 351px;

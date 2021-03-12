@@ -149,6 +149,12 @@ class Nav extends React.Component {
                       제조사 찾기
                     </NavLink>*/}
                     <NavLink
+                      onClick={() => Router.push("/project")}
+                      active={url.indexOf("project") > -1}
+                    >
+                      <p class="line"> 프로젝트 관리 </p>
+                    </NavLink>
+                    <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
@@ -166,14 +172,7 @@ class Nav extends React.Component {
                     >
                       이용 안내
                     </NavLink>*/}
-                    <ButtonContainer
-                    first
-                    onClick={() => Router.push("/request")}
-                    //onClick={() => Router.push("/request?big=4&mid=")}
-                    active={url.indexOf("request") > -1}
-                  >
-                    가견적 받기
-                  </ButtonContainer>
+                   
                   </Fragment>
                 ) : (
                   /* partner로 로그인 */
@@ -204,6 +203,12 @@ class Nav extends React.Component {
                     >
                       제조사 찾기
                     </NavLink>*/}
+                     <NavLink
+                      onClick={() => Router.push("/project")}
+                      active={url.indexOf("project") > -1}
+                    >
+                      <p class="line"> 프로젝트 관리 </p>
+                    </NavLink>
                     <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
@@ -250,6 +255,12 @@ class Nav extends React.Component {
                   </NavLink>
                    */}
 
+                  <NavLink
+                      onClick={() => Router.push("/project")}
+                      active={url.indexOf("project") > -1}
+                    >
+                      <p class="line"> 프로젝트 관리 </p>
+                    </NavLink>
                   <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
