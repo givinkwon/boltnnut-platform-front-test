@@ -20,6 +20,8 @@ const customStyles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    transition: 'all 0.2s ease',
+    transform: 'scale 0.8'
   }),
   option: (provided, state) => ({
     ...provided,
