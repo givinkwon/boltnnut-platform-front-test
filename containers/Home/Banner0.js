@@ -18,13 +18,14 @@ import { inject, observer } from "mobx-react";
 
 //Image
 const background = "static/images/Home/main.jpg";
+const lock = "static/images/Home/lock.svg";
 //
 const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
     const countItem = {
-      0: UseScrollCount(5667400000,5000000000,0,0,900000),
-      1: UseScrollCount(projCount,0,0,0,5),
-      2: UseScrollCount(4933,0,0,0,10)
+      0: UseScrollCount(5667400000,5000000000,0,0,2000000),
+      1: UseScrollCount(projCount,0,0,0,15),
+      2: UseScrollCount(4933,0,0,0,20)
     };
 
     return (
@@ -54,13 +55,18 @@ class Banner0Container extends React.Component {
           <Fade bottom>
             <div>
               <Title.FontSize56 color={WHITE} shadow={"0 3px 6px rgba(0,0,0,0.61);"} fontWeight={"bold"} style={{lineHeight: 1.49}}>
-                내 제조 의뢰 견적과<br/>
+              내 제조 의뢰 견적과<br/>
                 전문 제조사를<br/>
                 바로 만나보세요.
               </Title.FontSize56>
               <Buttonv1 style={{marginTop: 71}} onClick={() => Router.push("/request")}>
                 지금 무료 가견적 받기
               </Buttonv1>
+              
+              <div style={{color: "#ffffff", lineHeight: 1.5, fontSize: 18, opacity: 0.8, marginTop:6 }}>
+              <img src = {lock} style={{marginLeft: 50, marginRight:8}}></img>
+                모든 업로드는 안전하고 기밀입니다.
+              </div>
             </div>
             <Info>
               <InfoCell>
@@ -78,7 +84,7 @@ class Banner0Container extends React.Component {
                 </Content.FontSize24>
                 <Content.FontSize32 eng={true} style={{textAlign: 'center', marginLeft:30}} fontWeight={"bold"} color={'#ffffff'}>
                   {/* 300+ */}
-                  <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개 +</span>
+                  <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개</span>
                 </Content.FontSize32>
               </InfoCell>
               <InfoCell>
@@ -86,7 +92,7 @@ class Banner0Container extends React.Component {
                   파트너사
                 </Content.FontSize24>
                 <Content.FontSize32 eng={true} style={{textAlign: 'center', marginLeft:30}} fontWeight={"bold"} color={'#ffffff'}>
-                  <CountFunc index={2} partnerCount={PartnerCount}/><span style={{fontWeight:500}}>개 +</span>
+                  <CountFunc index={2} partnerCount={PartnerCount}/><span style={{fontWeight:500}}>개</span>
                 </Content.FontSize32>
               </InfoCell>
             </Info>

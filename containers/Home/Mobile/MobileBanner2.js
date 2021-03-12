@@ -13,21 +13,21 @@ class MobileBanner2Container extends React.Component {
           <Background backgroundColor={'#f6f6f6'}>
               <ContentContainer>
                   <Fade bottom>
-                      <Header>
+                    <Header>
                           무료 도면 수정 서비스
-                      </Header>
-                      <Middle>
-                          전문 엔지니어의<br/>
-                          <span>무료 도면 수정 </span>
-                          서비스 제공
-                      </Middle>
-                      <ImgContainer>
-                          <img src={ Img } style={{ width: 347, height: 230,borderRadius:7}}/>
-                      </ImgContainer>
-                      <Body>
-                          볼트앤너트 기술팀이 제작하신 금속가공, 금형/사출<br/>
-                          도면의 생산성을 무료로 검토하고 수정해드립니다.
-                      </Body>
+                    </Header>
+                    <Middle>
+                        전문 엔지니어의<br/>
+                        <span>무료 도면 수정 </span>
+                        서비스 제공
+                    </Middle>
+                    <ImgContainer>
+                        <img src={ Img } style={{ width: 347, height: 230,borderRadius:7}}/>
+                    </ImgContainer>
+                    <Body>
+                        볼트앤너트 기술팀이 제작하신 금속가공, 금형/사출<br/>
+                        도면의 생산성을 무료로 검토하고 수정해드립니다.
+                    </Body>
                   </Fade>
               </ContentContainer>
           </Background>
