@@ -77,11 +77,20 @@ class FooterComponent extends React.Component {
     width: 0,
     tab: 0,
   }
+  // handleBackground = () =>
+  // {
+  //   const color = document.getElementById("MyBackground").getAttribute("style");
+  //   console.log("color");
+  // }
+
   componentDidMount() {
     const { Magazine } = this.props;
     Magazine.init();
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+
+    // const color = document.getElementById("MyBackground");
+    // console.log("asndlnaskldnalksd="+color);
   };
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
@@ -89,6 +98,7 @@ class FooterComponent extends React.Component {
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
+  
   render() {
     const {Auth, Magazine} = this.props;
     const { width } = this.state;
@@ -96,7 +106,7 @@ class FooterComponent extends React.Component {
     <>
     { width > 768 ? (
       <>
-      <Footer>
+      <Footer myColor={this.handleBackground} id="MyFooter">
         <Containerv1 style={{flexDirection: 'column'}}>
           <TelInfoWrapper>
             TEL. 02-926-6637
@@ -165,7 +175,9 @@ class FooterComponent extends React.Component {
       ) : (
          
       <>
-      <Footer>
+
+      {/* backColor==='white' ? footer=회색 : FOOTER=흰색 */}
+      <Footer style = {{backgroundColor: this.props.color ? this.props.color : 'white'}}>
         <Containerv1 style={{flexDirection: 'column'}}>
           <TelInfoWrapper>
             TEL. 02-926-6637
