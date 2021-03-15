@@ -185,18 +185,18 @@ class Step3Container extends Component {
       rows2.splice(1,1);
       rows2.pop();
       rows2.pop();
-      rows2[3]= createData('금형 가견적', '견적 알고리즘이 견적을 도출하고 있습니다.', 'VAT 미포함');
-      rows2[4]= createData('사출 가견적', '견적 알고리즘이 견적을 도출하고 있습니다.', 'VAT 미포함');
+      rows2[3]= createData('금형 견적', '견적 알고리즘이 견적을 도출하고 있습니다.', 'VAT 미포함');
+      rows2[4]= createData('사출 견적', '견적 알고리즘이 견적을 도출하고 있습니다.', 'VAT 미포함');
       if(ManufactureProcess.totalMinPrice > 0 && ManufactureProcess.MinPrice > 0){
         console.log(ManufactureProcess.totalMinPrice, 2)
         rows2.splice(1,1);
         rows2.pop();
         rows2.pop();
-        rows2[3]= createData('금형 가견적', Math.round(ManufactureProcess.totalMinPrice/10000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000) + '만원', 'VAT 미포함');
-        rows2[4]= createData('사출 가견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개(MOQ 1000개)', 'VAT 미포함');
+        rows2[3]= createData('금형 견적', Math.round(ManufactureProcess.totalMinPrice/10000) +'만원' +' ~ ' + Math.round(ManufactureProcess.totalMaxPrice/10000) + '만원', 'VAT 미포함');
+        rows2[4]= createData('사출 견적', Math.round(ManufactureProcess.MinPrice/10)*10 +'원' +' ~ ' + Math.round(ManufactureProcess.MaxPrice/10)*10 + '원/개(MOQ 1000개)', 'VAT 미포함');
       }
 
-      //금형사출이 아닐때 금형 가견적 지우기
+      //금형사출이 아닐때 금형 견적 지우기
       if(ManufactureProcess.SelectedItem.process!=1)
       {
         rows2.splice(3,1);

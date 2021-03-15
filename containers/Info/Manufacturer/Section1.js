@@ -59,7 +59,7 @@ class Section1Container extends React.Component {
                         <Text.FontSize30>STEP 1</Text.FontSize30>
                     </Itemheader>
                     <Step src={step1}></Step>
-                    <Text.FontSize26>가견적 의뢰</Text.FontSize26>
+                    <Text.FontSize26>견적 의뢰</Text.FontSize26>
                     <Text.FontSize20>희망 예산, 기간 등 문의하실 제품의 정보를 입력해주세요</Text.FontSize20>
                   </Item>
                   <Image src={right}></Image>
@@ -77,7 +77,7 @@ class Section1Container extends React.Component {
                         <Text.FontSize30>STEP 3</Text.FontSize30>
                     </Itemheader>
                     <Step src={step3}></Step>
-                    <Text.FontSize26>개발사 정보/가견적 전달</Text.FontSize26>
+                    <Text.FontSize26>개발사 정보/견적 전달</Text.FontSize26>
                     <Text.FontSize20>매칭된 전문 개발사의 정보와 가견적을 전달해드립니다</Text.FontSize20>
                   </Item>
                   <Image src={right}></Image>
@@ -100,7 +100,7 @@ class Section1Container extends React.Component {
                             <Text.FontSize30>STEP 1</Text.FontSize30>
                         </Itemheader>
                         <Step src={step1}></Step>
-                        <Text.FontSize26>가견적 의뢰</Text.FontSize26>
+                        <Text.FontSize26>견적 의뢰</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>희망 예산, 기간 등 문의하실 제품의 정보를 입력해주세요</Text.FontSize20>
                         </TextContainer>
@@ -122,7 +122,7 @@ class Section1Container extends React.Component {
                             <Text.FontSize30>STEP 3</Text.FontSize30>
                         </Itemheader>
                         <Step src={step3}></Step>
-                        <Text.FontSize26>개발사 정보/가견적 전달</Text.FontSize26>
+                        <Text.FontSize26>개발사 정보/견적 전달</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>매칭된 전문 개발사의 정보와 가견적을 전달해드립니다</Text.FontSize20>
                         </TextContainer>
