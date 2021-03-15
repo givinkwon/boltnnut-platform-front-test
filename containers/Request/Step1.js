@@ -296,9 +296,7 @@ width: 380px;
         transform: rotate(-180deg);
       }
     }
-
-    animation: selectOut 0.4s;
-
+    animation: selectOut 0.4s ;
   }
 `}
 

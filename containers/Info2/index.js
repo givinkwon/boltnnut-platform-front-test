@@ -30,7 +30,7 @@ class InfoContainer extends React.Component {
               그를 통해 합리적인 견적으로 성공적 발주를 할 수 있도록 돕습니다.
             </span>
             <div onClick={() => Router.push("/request")} style={{marginBottom:24}}>
-              지금 무료 가견적 받기
+              지금 무료 견적 받기
             </div>
           </Textbox>
           <ImgContainer>

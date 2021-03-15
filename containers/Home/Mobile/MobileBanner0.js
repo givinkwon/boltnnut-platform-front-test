@@ -83,7 +83,7 @@ class MobileBanner0Container extends React.Component {
               </Content1>
             </div>
             <Buttonv1 style={{marginTop: 59, marginLeft:'auto', marginRight:'auto', fontWeight: 700}} onClick={() => Router.push("/request")}>
-              <p style={{paddingBottom:0.2}}>지금 무료 가견적 받기</p>
+              <p style={{paddingBottom:0.2}}>지금 무료 견적 받기</p>
             </Buttonv1>
         </Fade>
       </Background>

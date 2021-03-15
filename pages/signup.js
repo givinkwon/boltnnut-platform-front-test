@@ -9,6 +9,7 @@ import Footer from 'components/Footer'
 import Spinner from 'components/Spinner'
 
 import SignupConatiner from 'containers/Signup'
+const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
 @inject('Counter', 'Post', 'Loading') // *_app.js <Provider>에 넘겨준 store명과 일치해야함. *inject: 컴포넌트에서 store에 접근 가능하게 함. 해당 store에 있는 값을 컴포넌트의 props로 주입시켜줌.
 @observer
@@ -52,7 +53,7 @@ class Signup extends React.Component {
         { width > 767.98 ? (
           <Nav />
           ) : (
-          <MobileNav width={width}/>
+          <MobileNav width={width} src = {logo_ic}/>
           )
         }
         </>

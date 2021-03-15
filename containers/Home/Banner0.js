@@ -51,7 +51,7 @@ class Banner0Container extends React.Component {
     return (
     <Background src={background}>
         <Layer />
-        <Containerv1 style={{paddingBottom: 336, paddingTop: 279, justifyContent: 'space-between'}}>
+        <Containerv1 style={{paddingBottom:132, paddingTop: 224, justifyContent: 'space-between'}}>
           <Fade bottom>
             <div>
               <Title.FontSize56 color={WHITE} shadow={"0 3px 6px rgba(0,0,0,0.61);"} fontWeight={"bold"} style={{lineHeight: 1.49}}>
@@ -59,8 +59,8 @@ class Banner0Container extends React.Component {
                 전문 제조사를<br/>
                 바로 만나보세요.
               </Title.FontSize56>
-              <Buttonv1 style={{marginTop: 71}} onClick={() => Router.push("/request")}>
-                지금 무료 가견적 받기
+              <Buttonv1 style={{marginTop: 61}} onClick={() => Router.push("/request")}>
+                지금 무료 견적 받기
               </Buttonv1>
               
               <div style={{color: "#ffffff", lineHeight: 1.5, fontSize: 18, opacity: 0.8, marginTop:6 }}>
