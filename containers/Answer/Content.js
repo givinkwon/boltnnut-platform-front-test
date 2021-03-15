@@ -4,371 +4,257 @@ import Router from 'next/router'
 import Slider from "react-slick";
 import { inject, observer } from 'mobx-react'
 
-import Container from 'components/Container'
-import RatioImage from 'components/RatioImage'
-import * as Text from 'components/Text'
-import { BLACK1, DARKGRAY, WHITE, PRIMARY } from 'static/style'
+import Container from 'components/Containerv1';
+import ProposalCard from 'components/ProposalCard';
+import Background from 'components/Background';
 
-/*
-const data = [
-  {id:1, name: "제조 스타트업이 망하는 72가지 이유", image: 'static/images/main/2-1.png', disabled: true},
-  {id:2, name: "제품을 만드려면 특허는 기본?", image: 'static/images/main/2-2.png', disabled: false},
-  {id:3, name: "제조 스타트업이 망하는 72가지 이유", image: 'static/images/main/2-1.png', disabled: false},
-  {id:3, name: "제조 스타트업이 망하는 72가지 이유", image: 'static/images/main/2-1.png', disabled: true},
-]
- */
+const pass1 = 'static/images/pass1.png'
+const pass2 = 'static/images/pass2.png'
 
-@inject('Answer')
+const left = 'static/icon/left-arrow.png'
+const right = 'static/icon/right-arrow.png'
+
+@inject('Project','Auth')
 @observer
-class FindExperctConatiner extends React.Component {
-  state = { width: 0 }
+class AnswerContentContainer extends React.Component {
+ 
+  // state = {
+  //   projectLength: 0,
+  //   project_idx: 3,
+  //   length: 0
+  // }
+  // componentDidMount () {
+  //   this.setState({...this.state, projectLength: this.props.length })
+  //   window.addEventListener('scroll', this.loadScroll);
+  // }
 
-  updateDimensions = () => {
-    this.setState({ width: window.innerWidth });
-  };
-  componentDidMount() {
-    window.addEventListener('resize', this.updateDimensions);
+  // loadScroll = () => {
+  //   const { project_idx, projectLength } = this.state;
+  //   var newIdx = project_idx + 3
+
+  //   if (typeof document != "undefined") {
+  //     var scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+  //     var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+  //     var clientHeight = document.documentElement.clientHeight;
+  //   }
+  //   if (scrollTop + clientHeight + 4 > scrollHeight && projectLength == null) {
+  //     this.setState({...this.state, projectLength: this.props.length})
+  //   }
+  //   if (scrollTop + clientHeight + 4 > scrollHeight && projectLength > project_idx ) {
+  //     if (newIdx < projectLength) {
+  //       this.setState({...this.state, project_idx: newIdx})
+  //     } else {
+  //       this.setState({...this.state, project_idx: projectLength})
+  //     }
+  //   }
+  // }
+  state = {
+    current: 0,
+    next: true,
+    prev: true,
+    count: 0
   }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
-  }
 
-  slider = null
-  sliderNext = () => {
-    this.slider.slickNext()
-  }
-  sliderPrev = () => {
-    this.slider.slickPrev()
-  }
-  toDetail = (item) => {
-    if (item.apply_count === 0) {
-      alert('볼트앤너트 파트너스가 의뢰서를 분석 중입니다. 제안서가 곧 도착합니다');
-      return;
-    }
-
-    Router.push(`/answer/${item.id}`)
-  }
-  render() {
-    const {Answer} = this.props
-    const data = Answer.requests
-
-    var settings = {
-      dots: false,
-      infinite: false,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      initialSlide: 0,
-      responsive: [
-        {
-          breakpoint: 1300,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 1,
-          }
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          }
-        },
-      ],
-      beforeChange: (oldIndex, newIndex) => {
-        const {Answer} = this.props
-
-        // 8번째, 18번째, ...이고 nextPage가 있을 경우 상태 업데이트?
-        // 상태가 업데이트 되면 리렌더링
-        // initialSlide 값을 조정하기
-        let prevItemNum = this.state.width > 630 ? (oldIndex + 3) : (oldIndex + 2)
-        let nextItemNum = this.state.width > 630 ? (newIndex + 3) : (newIndex + 2)
-
-        console.log(`${prevItemNum} -> ${nextItemNum}번째 item`)
-
-        if(Answer.requests && nextItemNum === (Answer.requests.length-2)) {
-          console.log('의뢰 목록 갱신하자(' + nextItemNum + ', ' + (Answer.requests.length-2) + ')')
-          Answer.loadNextClientRequestList()
-        }
-      }
-    };
-    return (
-      <FindExperct>
-        <List>
-          <Slider {...settings} ref={slider => (this.slider = slider)}>
-          {
-            data.map((item, idx) => {
-              // ToDo: 유틸로 빼기
-              const now = new Date()
-              const created_at_date = new Date(item.created_at)
-              let due_at_date = new Date(created_at_date.getTime())
-              // 마감일을 만들어진지 하루 뒤로 설정함
-              due_at_date.setDate(due_at_date.getDate() + 1)
-
-              const created_at = '' +
-                created_at_date.getUTCFullYear() + '.' +
-                (created_at_date.getUTCMonth() + 1) + '.' +
-                created_at_date.getUTCDate()
-
-              const due_at = '' +
-                due_at_date.getUTCFullYear() + '.' +
-                (due_at_date.getUTCMonth() + 1) + '.' +
-                due_at_date.getUTCDate()
-
-              const subclass = Answer.getSubclassById(item.product)
-              let category = null
-              let mainCategory = null
-              if(subclass) {
-                category = Answer.getCategoryById(subclass.category)
-                mainCategory = Answer.getMainCategoryById(subclass.maincategory)
-              }
-
-              return (
-                <ItemBox key={item.id} onClick={() => this.toDetail(item)}>
-                  <Item>
-                    <Card ratio='135%'>
-                      <div className='body'>
-                        <div className='badge'>
-                          <Text.FontSize20 color={WHITE} fontWeight={500}>
-                            {mainCategory && mainCategory.maincategory}
-                          </Text.FontSize20>
-                        </div>
-                        <Text.FontSize18 color="#4d4f5c70" fontWeight={400} style={{marginTop: 20, marginBottom:10}}>
-                          {category && category.category}
-                        </Text.FontSize18>
-                        <Text.FontSize32 style={{marginBottom: 20}} fontWeight={600}>
-                          {item.name ? item.name : '의뢰서 확인하기'}
-                        </Text.FontSize32>
-                        <Text.FontSize18 fontWeight={500} color="#4d4f5c99" style={{fontFamily: 'Montserrat, sans-serif'}}>
-                          {created_at}
-                        </Text.FontSize18>
-                      </div>
-
-                       {/*{item.active
-                              ? (*/}
-                                <div className='end_date active'>
-                                  <Text.FontSize18 style={{marginBottom: 2, marginTop: 2}} fontWeight={500}>
-                                    전문 제조사 정보를<br/>
-                                    확인해보세요.
-                                  </Text.FontSize18>
-                                </div>
-                              {/*)
-                              : (
-                                <div className='end_date'>
-                                  <Text.FontSize18 style={{marginBottom: 2, marginTop: 2}} fontWeight={500}>해당 요청 의뢰가 마감되었습니다.</Text.FontSize18>
-                                  <Text.FontSize18 color={DARKGRAY} fontWeight={500}>{due_at} 마감</Text.FontSize18>
-                                </div>
-                              )
-
-                      }*/}
-
-                      <p className='footer'>
-                          {item.apply_count}개의 제안서 확인
-                      </p>
-                    </Card>
-                  </Item>
-                </ItemBox>
-              )
-            })
-          }
-          </Slider>
-          <Arrow left onClick={this.sliderPrev}/>
-          <Arrow right onClick={this.sliderNext}/>
-        </List>
-      </FindExperct>
-    )
-  }
-}
-
-export default FindExperctConatiner
-
-const Arrow = styled.div`
-  position: absolute;
-  cursor: pointer;
-  background-size: cover;
-  background-position: center;
-  width: 60px;
-  height: 60px;
-  display: block;
-  top: calc(50% - 30px);
-  ${props => props.left && css`
-    background-image: url('/static/icon/slick_left.png');
-    left: -25px;
-    @media (min-width: 0px) and (max-width: 767.98px) {
-      left: -15px;
-    }
-  `}
-  ${props => props.right && css`
-    background-image: url('/static/icon/slick_right.png');
-    right: -25px;
-    @media (min-width: 0px) and (max-width: 767.98px) {
-      right: -15px;
-    }
-  `}
   
-  
-`
-const FindExperct = styled(Container)`
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-bottom: 20px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-  }
-  @media (min-width: 1300px) { 
-  }
-`
-const List = styled.div`
-  position: relative;
-  
-  .slick-track {
-    overflow-y: hidden !important;
-  }
-  
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 40px;
-    .slick-track {
-      height: 380px;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 50px;
-    .slick-track {
-      height: 310px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    margin-top: 60px;
-    .slick-track {
-      height: 430px;
-    }
-  }
-  @media (min-width: 1300px) { 
-    margin-top: 60px;
-    .slick-track {
-      height: 530px;
-    }
-  }
-`
-const ItemBox = styled.div`
-  :focus {
-    outline: none;
-  }
-`
-const Item = styled.div`
-  > p {
-    text-align: center;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: calc(100% - 16px);
-    margin: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-    > p {
-      margin-top: 20px;
-    }
-  }
-  @media (min-width: 630px) {
-    width: calc(100% - 16px);
-    margin: 8px;
-    > p {
-      margin-top: 20px;
-    }
-  }
-`
-const Card = styled(RatioImage)`
-  position: relative;
-  cursor: pointer;
-  border-radius: 12px;
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  box-shadow: 0 0 10px 0 rgba(122, 135, 167, 0.4); 
-  .body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: calc(100% - 155px);
-    
-    > p:nth-of-type(2) {
-      margin-bottom: 20px;
-      width: 100%;
-      padding: 10px;
-      box-sizing: border-box;
-      text-align: center;
-      //line-height: 1.3em;
-      //max-height: 2.6em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-    }
-  }
-  .footer {
-    position: absolute;
-    bottom: 0;
-  
-    margin-top: auto;
-    width: calc(100%);
-    padding: 25px 0 !important;
-    background-color: ${PRIMARY};
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items:center;
-  }
-  .end_date {
-    border-top: 2px dashed #e4e6ed;
-    height: 85px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .end_date.active > p {
-    line-height: 1.25em;
-    text-align: center;
-  }
-  .badge {
-    background-color: ${PRIMARY};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100px;
-    > p {
-      /* 위 좌우 아래 */
-      padding: 6px 12px 6px; 
-      text-align: center;
-    }
-
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    max-width: 300px;
-    height: fit-content;
-    ::before {
-      margin-top: 0;
-    }
+  handleIntersection = (event) => {
+    if(event.isIntersecting) {
+      console.log('추가 로딩을 시도합니다')
+      const {Project} = this.props
       
-    > div {
-      position: relative;
-      height: fit-content;
-    }
-    
-    .end_date {
-      height: 80px;
-    }
-    .body {
-      height: fit-content;
-      padding: 40px 0;
-    }
-    .footer {
-      position: relative;
     }
   }
-  ${props => props.disabled && css`
-    opacity: 0.6;
-    background-color: #f1f2f5;
-  `}
+  
+  componentDidMount() {
+    const { Project } = this.props
+
+    //const { current, count } = this.state;    
+    console.log("############################3="+Project.project_count)
+    this.setState({...this.state, count: Project.project_count})
+    
+    console.log("did mount")
+
+    console.log(`previous project_count: ${this.props.Project.project_count}`)
+    console.log(`previous count: ${this.state.count}`)
+    
+    console.log(`previous current: ${this.state.current}`)
+
+    
+  }
+  componentWillMount() {
+    const { Project } = this.props;    
+    this.setState({...this.state, count: Project.project_count})
+    console.log("will mount")
+  }
+  afterChangeHandler = (current) => {
+    if(current === 0){
+      this.setState({next: true, prev: false})
+    } else {
+        this.setState({next: true, prev: true})
+    }
+  }
+  updaProjectate(newPage, count){
+    this.setState({...this.state, current: newPage, count: count }, () => {
+      console.log(this.state.count);
+    });
+  }
+
+  pageNext = () => {  
+    console.log("next 버튼 눌림")
+    const { Project } = this.props;   
+    const { current, count } = this.state;
+    const newPage = this.state.current + 1
+    const page = parseInt(this.state.count/5) + 1
+    console.log(`L__project_count: ${Project.project_count}`)
+    this.setState({...this.state, current: newPage, count: Project.project_count })
+
+ 
+    this.updaProjectate(newPage, Project.project_count)
+
+    //if (this.state.current % 2 == 0) {
+      //console.log(this.state.current)
+
+    // 실제 
+    console.log(this.props.Auth.logged_in_client)
+    Project.getNextPage(this.props.Auth.logged_in_client);
+
+    // 임의
+    // Project.getNextPage(904);
+      
+    console.log(this.state)
+    console.log(`project_count: ${Project.project_count}`)
+    console.log(`count: ${this.state.count}`)
+    console.log(`page: ${page}`)
+    console.log(`this.state.current: ${this.state.current}`)
+    console.log(`current: ${current}`)
+    console.log(`newPage: ${newPage}`)
+  }
+  pagePrev = () => {
+    if (this.state.current != 0) {
+      const newPage = this.state.current - 1
+      this.setState({...this.state, current: newPage, prev: true})
+    }
+  }
+  
+  buttonClick = () => {
+    console.log("n")
+  }
+
+  render() {
+    const { Project } = this.props
+    const { prev, next, current, count } = this.state
+    const current_set = (parseInt(current/5) + 1)
+    const page = parseInt(Project.project_count/5) + 1  
+    const user = Project.current_user_id
+
+    console.log(count)
+
+    // https://velog.io/@cada/React%EC%9D%98-setState%EA%B0%80-%EC%9E%98%EB%AA%BB%EB%90%9C-%EA%B0%92%EC%9D%84-%EC%A3%BC%EB%8A%94-%EC%9D%B4%EC%9C%A0
+
+    
+// page_set == current_set
+
+    // const data = (data) => {
+    //   return data.filter((item) => 
+    //     this.props.Project.current_user_id === item.request_set[0].clientId
+    //   )
+    // }    
+      return(
+        <>                
+        
+          {/* { Project && Project.projectData.slice(5*current, 5*(current+1)).map((item, idx) => {                            
+            return(
+              <Background style={{marginBottom: '5px'}}>
+                <Container>        
+                  <ProposalCard data={item} handleIntersection={this.handleIntersection}/> 
+               </Container>          
+              </Background>
+            )        
+            })} */}
+           <PageBar>
+            <img src={pass1} style={{opacity: current_set == 1 && current == 0  ? 0.4 : 1 }} onClick = {this.pagePrev}/>
+              <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 1} active={current%5 == 0} style={{display:  page < 5*(current_set - 1) + 1 ? 'none': 'block' }}> {5*(current_set - 1) + 1} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 2} active={current%5 == 1} style={{display:  page < 5*(current_set - 1) + 2 ? 'none': 'block' }}> {5*(current_set - 1) + 2} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 3} active={current%5 == 2} style={{display:  page < 5*(current_set - 1) + 3 ? 'none': 'block' }}> {5*(current_set - 1) + 3} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 4} active={current%5 == 3} style={{display:  page < 5*(current_set - 1) + 4 ? 'none': 'block' }}> {5*(current_set - 1) + 4} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 5} active={current%5 == 4} style={{display:  page < 5*(current_set - 1) + 5 ? 'none': 'block' }}> {5*(current_set - 1) + 5} </PageCount>
+              {/* <PageCount> ... </PageCount> */}
+            <img src={pass2} style={{opacity: page == current ? 0.4 : 1, display: page == current? 'none' : 'block'}} onClick = {this.pageNext} />
+        </PageBar>        
+        </>
+    )}
+  }
+
+const data = [
+  {
+    consultation: '상담 진행',
+    name: '컴퓨터',
+    date: '2021.03.02' ,
+    period: '120일',
+    estimate: '10,000,000원'
+  },
+
+  {
+    consultation: '상담 미진행',
+    date: '2021.03.03' ,
+    period: '121일',
+    estimate: '11,000,000원'
+  },
+
+  {
+    consultation: '완료',
+    name: '키보드',
+    date: '2021.03.04' ,
+    period: '122일',
+    estimate: '12,000,000원'
+  },
+
+  {
+    consultation: '상담 미진행',
+    name: '마우스',
+    date: '2021.03.05' ,
+    period: '123일',
+    estimate: '13,000,000원'
+  },
+
+  {
+    consultation: '완료',
+    name: '프린터',
+    date: '2021.03.06' ,
+    period: '124일',
+    estimate: '14,000,000원'
+  },
+]
+
+const PageBar = styled.div`
+  width: 351px;
+  margin-top: 109px;
+  margin-bottom: 157px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
 `
+
+const PageCount = styled.span`
+    width: 14px;
+    height: 30px;
+    font-size: 25px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: 0.63px;
+    text-align: left;
+    color : #999999;
+    cursor: pointer;
+    ${(props) =>
+      props.active &&
+      css`
+      font-weight: 700;
+      color: #0933b3;
+      `
+     }
+`
+
+export default AnswerContentContainer

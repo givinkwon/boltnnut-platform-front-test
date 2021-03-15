@@ -1,29 +1,31 @@
 import React from 'react'
-import Head from 'next/head'
-
-import Banner2Container from 'Home/Banner3'
-import Banner3Container from 'Home/Banner4'
-
-import BannerContainer from './Banner'
 import ContentContainer from './Content'
-import FindExpertContainer from 'containers/Home/FindExpert'
-import ContentGroupContainer from 'containers/Home/ContentGroup'
-import MagazineContainer from 'containers/Home/Magazine'
+import BannerContainer from './Banner';
+import NavContainer from './Nav.js';
+import { inject, observer } from 'mobx-react';
 
-class AnswerConatiner extends React.Component {
+
+@inject("Project")
+@observer 
+class AnswerContainer extends React.Component {
+  async componentDidMount() {
+    // await this.props.Test.init();
+    //this.props.Partner.search_text = await this.props.query.q;
+    //await this.props.Test.searchjust();
+  }
   render(){
     return (
-      <>
-        <BannerContainer/>
-        <ContentContainer/>
-        <Banner2Container/>
-        <Banner3Container/>
-        {/*<FindExpertContainer/>
-        <ContentGroupContainer/>*/}
-        <MagazineContainer/>
+      <>        
+        <div style={{ overflow: 'visible' }}>
+          {/* {console.log(this.props.length)} */}
+          <BannerContainer/>
+          <NavContainer style={{marginTop: '50px'}}/>
+          <ContentContainer length = {this.props.length} />
+          {/* {console.log(this.props.length)} */}
+        </div>
       </>
     )
   }
 }
 
-export default AnswerConatiner
+export default AnswerContainer

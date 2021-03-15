@@ -132,11 +132,11 @@ class MobileNav extends React.Component {
                 </div>
                 <div style={{height:14}}>내 제조 의뢰 견적과 전문 제조사를 바로 만나 보세요.</div>
                 <FreeButton onClick={() => Router.push("/request")}>
-                  <span style={{marginTop: 1}}>지금 무료 가견적 받기</span>
+                  <span style={{marginTop: 1}}>지금 무료 견적 받기</span>
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
-                <p onClick={() => alert("준비중입니다. 문의사항이 있으시면\n 02-926-6637로 연락 주시면 감사하겠습니다.")}>내 의뢰 관리</p>
+                <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
                 <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
                 <p onClick={() => Router.push("/info")}>회사소개</p>
               </ModalContent>
@@ -162,11 +162,18 @@ class MobileNav extends React.Component {
           )}
         <Container>
           <NavWrap2>
-            {typeof window !== 'undefined' && window.location.pathname != '/' ? (
-              <Logo src={this.props.src} onClick={() => Router.back()} />
+            {/* {typeof window !== 'undefined' && window.location.pathname != '/' && window.location.pathname !='/login' ? ( */}
+            {this.props.src=== '/static/images/components/MobileNav/MobileLogo.svg'? (
+
+            //   <Logo src={this.props.src} onClick={() => Router.back()} />
+            // ) : (
+            //   <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
+            // )}
+            <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
             ) : (
-              <Logo src={this.props.src} />
+              <Logo src={this.props.src} onClick={() => Router.back()} />
             )}
+
             <HeadText>{this.props.headText}</HeadText>
               <Icon
                 src={hamburger_ic}
@@ -191,7 +198,7 @@ const Modal = styled.div`
 const ProfileMenu = styled.div`
   width: 70%;
   padding: 22px 22px;
-  height: 100vm;
+  height: 100%;
   position: absolute;
   background-color: white;
   z-index: 10000;
@@ -250,6 +257,7 @@ const HeadText = styled.div`
   width: 100%;
   height:29px;
   position: absolute;
+
   color: #0a2165;
   display: flex;
   align-items: center;
@@ -264,11 +272,15 @@ const HeadText = styled.div`
   margin-top:2px;
 `
 const Footer = styled.div`
-  width: 100%;
+  position: fixed;
+  bottom: 0;
+  justify-content: space-evenly;
+  width: 70%;
   height: 60px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  border-top: solid 1px #e1e2e4;
   > div {
     width: 100%;
     font-family: NotoSansCJKkr;
@@ -305,10 +317,8 @@ const FreeButton = styled(Buttonv1)`
 `
 const ModalContent2 = styled.div`
   width: 100%;
-  height: 340px;
   display: flex;
   flex-direction: column;
-  border-bottom: solid 1px #e1e2e4;
   margin-top: 27px;
 
   > p {

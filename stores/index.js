@@ -15,6 +15,8 @@ import Magazine from './Magazine';
 import DetailQuestion from './DetailQuestion';
 import ManufactureProcess from './ManufactureProcess';
 import Schedule from './Schedule';
+import Project from './Project';
+
 
 export default {
   Counter,
@@ -33,5 +35,6 @@ export default {
   Magazine,
   DetailQuestion,
   ManufactureProcess,
-  Schedule
+  Schedule,
+  Project
 };

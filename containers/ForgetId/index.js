@@ -11,10 +11,10 @@ class ForgetIdConatiner extends React.Component {
   render(){
     const { Auth } = this.props
     return (
-      <>
+      <div style={{paddingTop: 90}}>
         {Auth.step === 0 && <FormConatiner/>}
         {Auth.step === 1 && <CompleteContainer/>}
-      </>
+      </div>
     )
     
     

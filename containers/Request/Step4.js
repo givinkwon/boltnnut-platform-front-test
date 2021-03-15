@@ -162,6 +162,8 @@ class Step4Container extends Component {
           <Title>날짜</Title>
           <Calendar/>
         </ContentBox>
+        {Schedule.today ? (
+        <>
         <ScheduleBox>
           <Title style={{marginTop: 30, marginBottom: 6}}>
             시간
@@ -261,6 +263,15 @@ class Step4Container extends Component {
             1:1 컨설팅 신청
           </CustomButton>
         </CardFooter>
+        </>
+        ) : (  
+          <>
+            <EmptyDateWrapper>
+              날짜를 선택해 주세요.
+            </EmptyDateWrapper>
+          </>
+        )
+      }
       </Card>
       <div>
         <MarketingModal
@@ -448,3 +459,18 @@ const Link = styled.a`
   font-weight: bold;
   text-decoration: none;
 `;
+const EmptyDateWrapper = styled.div`
+  width: 100%;
+  margin-top: 42px;
+  margin-bottom: 120px;
+  display: inline-flex;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.07;
+  letter-spacing: -0.35px;
+  text-align: left;
+  color: #ff0404;
+`
