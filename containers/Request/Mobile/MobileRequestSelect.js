@@ -84,9 +84,9 @@ class MobileRequestSelectContainer extends React.Component {
                 <Button_inside>
                     <ButtonText>
                     {/* 원래대로 */}
-                    <Font18>제작</Font18>
+                    <Font18>생산</Font18>
                     <Font14>
-                    지속적인 소통과 제품분석 시스템으로 제품 생산에 불필요한 가정을 방지하여 양산 비용을 최대 40% 절감합니다. 
+                    볼트앤너트 자동 견적 알고리즘과 전문 품질 감리 시스템 통해 원하는 품질의 생산품을 납기에 맞춰 납품드립니다.  
                     </Font14>
                     </ButtonText>
                     <div style={{display:'flex',justifyContent:'center'}}>
@@ -111,10 +111,10 @@ class MobileRequestSelectContainer extends React.Component {
                 <Button_inside>
                     <ButtonText>
                     {/* 바로 도면첨부 */}
-                    <Font18>생산</Font18>
+                    <Font18>제작</Font18>
                     <Font14 style={{height:65}}>
-                        국내 제조사와 해외유통사 네트워크를 통해 원하는 조건에 맞는
-                        제조견적, MOQ (최소발주수량)등의 정보를 전달해드립니다.
+                        볼트앤너트 자동 견적 알고리즘과 전문 품질 감리 시스템 통해
+                        원하는 품질의 생산품을 납기에 맞춰 납품드립니다. 
                     </Font14>
                     </ButtonText>
                     <div style={{display:'flex',justifyContent:'center'}}>
