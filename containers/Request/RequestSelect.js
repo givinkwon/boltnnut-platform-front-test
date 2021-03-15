@@ -351,7 +351,7 @@ const Button = styled.div`
     text-align : center;
   }
 
-  :focus{
+  :active{
     border: 4px solid #0933b3;
     box-shadow: 0 3px 6px 0 var(--black-16);
     >div >p{

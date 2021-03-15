@@ -172,7 +172,6 @@ class Nav extends React.Component {
                     >
                       이용 안내
                     </NavLink>*/}
-                   
                   </Fragment>
                 ) : (
                   /* partner로 로그인 */
