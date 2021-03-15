@@ -29,7 +29,6 @@ import MarketingModal from './MarketingModal';
 @inject("DetailQuestion", "Partner", "Request")
 @observer
 class RequestContainer extends React.Component {
-
   render() {
     const { Request } = this.props;
 

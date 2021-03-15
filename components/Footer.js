@@ -114,7 +114,7 @@ class FooterComponent extends React.Component {
         <Containerv1 style={{flexDirection: 'column'}}>
           <img src={rowline} style={{width: 16, height: 4, marginBottom: 6}}></img>
           <TelInfoWrapper>
-            <Font14><span>TEL.</span> 02-926-6637</Font14>
+            <Font24><span>TEL.</span> 02-926-6637</Font24>
           </TelInfoWrapper>
           <CompanyInfoWrapper>
               <span> 오전 10:00 ~ 오후 07:00 </span>
@@ -132,7 +132,7 @@ class FooterComponent extends React.Component {
             <span class="title"> 
               NOTICE
             </span>
-            <SelectComponent 
+            <Select
               styles = {customStyles}
               options = {this.props.Magazine.magazine_list && this.props.Magazine.magazine_list}
               getOptionLabel={(option) => option.title}
@@ -621,21 +621,26 @@ const ImageWrapper = styled.div`
   }
 `
 
-const Font14 = styled(Content.FontSize14)`
-  font-family: Roboto;
-  font-size: 14px !important;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 0.71;
-  letter-spacing: normal !important;
-  color: #282c36;
-  >span{
-    font-family: Roboto;
-    line-height: 1.21;
-    letter-spacing: 0.27px !important;
+const Select = styled(SelectComponent)`
+  @keyframes fadeIn {  
+    0% {
+      opacity:0.5;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity:1;
+      transform: translateY(0);
+    }
+  }
+
+  >div: nth-of-type(2){
+    -webkit-font-smoothing: antialiased;
+    animation: fadeIn 0.2s ease-out;
   }
 `
+
+
+
 const Font12 = styled(Text.FontSize12)`
 justfiy-content: center;
 align-items: center;
@@ -651,4 +656,33 @@ align-items: center;
     color: #414550;
   }
   margin-top: 8px;
+`
+
+const Font14 = styled(Content.FontSize14)`
+  font-family: Roboto;
+  font-size: 14px !important;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.71;
+  letter-spacing: normal !important;
+  color: #282c36;
+  >span{
+    font-family: Roboto;
+    line-height: 1.21;
+    letter-spacing: 0.27px !important;
+  }
+`
+
+const Font24 = styled(Content.FontSize24)`
+object-fit: contain;
+font-weight: 900;
+font-stretch: normal;
+font-style: normal;
+line-height: 1.5;
+letter-spacing: -0.6px;
+color: #282c36;
+
+
+
 `

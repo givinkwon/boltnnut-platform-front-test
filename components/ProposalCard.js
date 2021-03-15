@@ -92,14 +92,15 @@ class ProposalCard extends React.Component {
                         </Content>
                     </div>
                     <PriceTagBox>
-                        <span class="tag1"> 가견적 </span>
+                        <span class="tag1"> 견적 </span>
                         <span class="tag2">{estimate}</span>
                     </PriceTagBox>
                 </FooterWrapper>
             </Card>) : (
 
             
-            <Card style={{backgroundColor: consultation ==="완료" ? '#f6f6f6' : 'var(--white)'}}>                 
+            <Card style={{backgroundColor: consultation ==="완료" ? '#f6f6f6' : 'var(--white)'}}>    
+                         
                     <StepTag>                                
                         <span style={{color: consultation === "완료" ? '#767676' : '#0933b3'}}> {consultation} </span>                            
                     </StepTag>                    
@@ -110,13 +111,14 @@ class ProposalCard extends React.Component {
                     </Title>
                 </HeaderWrapper>
                 
-                <FooterWrapper>                    
-                    <Content>
-                        {date}
-                    </Content>
-
+                <FooterWrapper>          
+                    <div style={{display: 'inline-flex'}}>          
+                        <Content>
+                            {date}
+                        </Content>
+                    </div>
                     <PriceTagBox>
-                        <span class="tag1"> 가견적 </span>
+                        <span class="tag1"> 견적 </span>
                         <span class="tag2">{estimate}</span>
                     </PriceTagBox>
                 </FooterWrapper>
@@ -133,17 +135,17 @@ export default ProposalCard
 
 const StepTag = styled.div`
     @media (min-width: 0px) and (max-width: 767.98px) {
+    
         > span {
+            width: 61px;
+            height: 19px;
             color: #0933b3;
             font-size: 13px;
             font-weight: 500;
             font-stretch: normal;
             font-style: normal;
             line-height: 34px;
-            letter-spacing: -0.33px;
-            margin-left: 14px;
-            margin-top: 14px;
-            margin-bottom: 8px;
+            letter-spacing: -0.33px;                                              
             
             
         }
@@ -167,12 +169,10 @@ const StepTag = styled.div`
             position: absolute;
             width: 0px;
             height: 0px;
-            left: 0;
-            bottom: -7.9px;
-            background-color: #0a2165;
-            border-top: 9.1px solid #0933B2;
-            border-bottom: 0px solid #f6f6f6;
-            border-left: 12px solid #f6f6f6;
+            left: 1px;
+            bottom: -10px;                        
+            border-left: 12px solid transparent;
+            border-top: 12px solid #0a2165;
         } 
         > span {
             font-size: 16px;
@@ -201,12 +201,10 @@ const StepTag = styled.div`
             position: absolute;
             width: 0px;
             height: 0px;
-            left: 0;
-            bottom: -7.9px;
-            background-color: #0a2165;
-            border-top: 9.1px solid #0933B2;
-            border-bottom: 0px solid #f6f6f6;
-            border-left: 12px solid #f6f6f6;
+            left: 1px;
+            bottom: -10px;                        
+            border-left: 12px solid transparent;
+            border-top: 12px solid #0a2165;
         } 
         > span {
             font-size: 16px;
@@ -235,12 +233,10 @@ const StepTag = styled.div`
             position: absolute;
             width: 0px;
             height: 0px;
-            left: 0;
-            bottom: -7.9px;
-            background-color: #0a2165;
-            border-top: 9.1px solid #0933B2;
-            border-bottom: 0px solid #f6f6f6;
-            border-left: 12px solid #f6f6f6;
+            left: 1px;
+            bottom: -10px;                        
+            border-left: 12px solid transparent;
+            border-top: 12px solid #0a2165;
         } 
         > span {
             font-size: 16px;
@@ -253,10 +249,8 @@ const StepTag = styled.div`
       }
 
 `
-const Card = styled.div`
-    
-    width: 100%;
-    
+const Card = styled.div`    
+    width: 100%;    
     position: relative;
     object-fit: contain;
     border-radius: 10px;
@@ -265,35 +259,31 @@ const Card = styled.div`
 
     @media (min-width: 0px) and (max-width: 767.98px) {
         height: 108px;        
-        padding-top: 14px;           
-        padding-right: 14px;       
+        
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-top: 7px;
+        padding-bottom: 14px;
         margin-top: 14px;        
-        padding-bottom: 8px; 
         box-sizing: border-box;
     }
       @media (min-width: 768px) and (max-width: 991.98px) {
         height: 100%;
         margin-top: 30px;
-        padding-top: 62px;
-        padding-left: 32px;
-        padding-bottom: 33px;
-        padding-right: 49px;
+        padding: 62px 49px 32px 32px;    
+        box-sizing: border-box;
       }
       @media (min-width: 992px) and (max-width: 1299.98px) { 
         height: 100%;
         margin-top: 30px;
-        padding-top: 62px;
-        padding-left: 32px;
-        padding-bottom: 33px;
-        padding-right: 49px;
+        padding: 62px 49px 32px 32px;
+        box-sizing: border-box;
       }
       @media (min-width: 1300px) { 
         height: 100%;
         margin-top: 30px;
-        padding-top: 62px;
-        padding-left: 32px;
-        padding-bottom: 33px;
-        padding-right: 49px;
+        padding: 62px 49px 32px 32px;
+        box-sizing: border-box;
       }
 `
 const Title = styled.span`
@@ -307,8 +297,8 @@ const Title = styled.span`
     text-align: left;
     color: #282c36;
     white-space: nowrap;
-    @media (min-width: 0px) and (max-width: 767.98px) {        
-        padding-left: 14px;     
+    margin-right: 20px;
+    @media (min-width: 0px) and (max-width: 767.98px) {                 
         font-size: 15px;
         height: 22px;
         line-height: 15px;
@@ -327,9 +317,9 @@ const SubTitle = styled.span`
     line-height: 2;
     letter-spacing: -0.5px;
     text-align: left;
-    color: #282c36;
-    padding-right: 16px;
+    color: #282c36;     
     white-space: nowrap;
+    margin-right: 15px;
 `
 const HeaderWrapper = styled.div`
     width: 100%;
@@ -349,20 +339,20 @@ const CategoryWrapper = styled.div`
 const FooterWrapper = styled.div`
     display: inline-flex;
     width: 100%;
-    height: 29px;
-    align-items: flex-end;
+    height: 29px;    
+    align-items: baseline;
     justify-content: space-between;
 `
 const CategoryBox = styled.div`
-    width: 110px;
-    height: 30px;
+
     object-fit: contain;
     border-radius: 3px;
     background-color: #e1e2e4;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     margin-right: 20px;
+    padding: 0 15px;
     > span {
         font-size: 16px;
         font-weight: 500;
@@ -378,72 +368,77 @@ const Content = styled.span`
     height: 24px;
     display: flex;
     align-items: center;
+    align-self: flex-end;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     line-height: 2.5;
     letter-spacing: -0.4px;
     text-align: left;
-    padding-left: 14px;
-    align-self: flex-end;
     white-space: nowrap;
 
     @media (min-width: 0px) and (max-width: 767.98px) {
         font-size: 12px;
-        color: #767676;    
+        color: #767676;     
     }
     @media (min-width: 768px) and (max-width: 991.98px) {
-        font-size: 18px;
+        font-size: 16px;
         color: #414550;
-      }
-      @media (min-width: 992px) and (max-width: 1299.98px) { 
-        font-size: 18px;
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) { 
+        font-size: 16px;
         color: #414550;
-      }
-      @media (min-width: 1300px) { 
-        font-size: 18px;
+    }
+    @media (min-width: 1300px) { 
+        font-size: 16px;
         color: #414550;
-      }
+    }
 
 `
-const PriceTagBox = styled.div`
-    display: inline-flex;
-    align-items: flex-end;
-
+const PriceTagBox = styled.div`    
     .tag1 {
         height: 29px;
-        display: flex;
-        align-items: center;
+        display: inline-flex;
+        
         font-size: 20px;
         font-weight: 500;
         font-stretch: normal;
         font-style: normal;
-        line-height: 2;
+        line-height: 40px;
         letter-spacing: -0.5px;
         text-align: left;
         color: #282c36;
-        padding-right: 20px;
-    
+        padding-right: 20px;   
         
     }
     .tag2 {
-        display: flex;
-        align-items: center;
-        height: 29px;
-        font-size: 30px;
+        display: inline-flex;        
         font-weight: 500;
         font-stretch: normal;
         font-style: normal;
-        line-height: 1.73;
         letter-spacing: -0.75px;
         text-align: left;
         color: #282c36;
+        height: 45px;
         @media (min-width: 0px) and (max-width: 767.98px) {
             font-size: 14px
+            line-height: 15px;
         }
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            font-size: 24px;        
+            line-height: 52px;
+          }
+          @media (min-width: 992px) and (max-width: 1299.98px) { 
+            font-size: 27px;    
+            line-height: 52px;
+          }
+          @media (min-width: 1300px) { 
+            font-size: 30px;
+            line-height: 52px;
+          }
     }
 
-    @media (min-width: 0px) and (max-width: 767.98px) {
+    @media (min-width: 0px) and (max-width: 767.98px) {    
         .tag1{
             font-size: 13px;
             padding-right: 8px;

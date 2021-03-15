@@ -18,7 +18,7 @@ class TabletBanner1Container extends React.Component {
         <ContentContainer>
           <Fade bottom>
             <Head>자동 견적 알고리즘</Head>
-            <Main><span>1초만에</span> 제조 의뢰<br/>가견적 받기</Main>
+            <Main><span>1초만에</span> 제조 의뢰<br/>견적 받기</Main>
             <ImageContainer>
               <img src={BannerImg}/>
             </ImageContainer>

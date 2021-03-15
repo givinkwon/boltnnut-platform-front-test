@@ -7,108 +7,121 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 
 const DeleteButtonImg = 'static/images/request/Step2/Q.png'
-const testData=[
+const fileList=[
   // {
   //   stl:'static/images/request/Step2/Q.png',
   //   name:'asdasd'
   // }
 ]
-function MyDropzone(fileData) {
-      const dropHandler = (files)=>
-      {
-        testData.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})
-        console.log(testData);
-        // console.log("RRRASNDLKNASLD");
-        //file을 백엔드에 전해줌(1)
-
-      // let formData = new FormData();
-
-      // const config ={
-      //     header:{'content-type':'multipart/form-data'}
-      // }
-      // formData.append("file", files[0])
-
-      // axios.post('/api/product/image', formData, config)
-      //     // 백엔드가 file저장하고 그 결과가 reponse에 담김
-      //     // 백엔드는 그 결과를 프론트로 보내줌(3)
-      //     .then(response =>{
-      //         if(response.data.success){
-      //             setImages([...Images, response.data.filePath])
-      //         }else{
-      //             alert('파일 저장 실패')
-      //         }
-      //     })
-    }
-
-    const onDrop = useCallback(acceptedFiles => {
-      // Do something with the files
-      console.log(acceptedFiles);
-      dropHandler(acceptedFiles);
-    }, [])
-
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-
-    return (
-      <>
-      {/* <ItemList>
-
-      
-      {fileData.map((data)=>
-        <>
-          <ItemBox>
-            <MainBox>
-              <StlBox>
-                <img src={DeleteButtonImg} style={{width:120,height:120}}/>
-              </StlBox>
-              <ColumnBox>
-                {data.name}
-                <ManufactureBox style={{marginTop:20}}>
-                  <div>
-                    div1
-                  </div>
-                  <div>
-                    div2
-                  </div>
-                  <div>
-                    div3
-                  </div>
-                </ManufactureBox>
-              </ColumnBox>
-              
-            </MainBox>
-
-            <TailBox>
-              <div>
-                <img src={DeleteButtonImg}/>
-              </div>
-              
-              가격: 15,000원
-            </TailBox>
-          </ItemBox>
-        </>
-
-      )}
-      </ItemList> */}
-        <div {...getRootProps()}>
-          <input {...getInputProps()} />
-          <InputBox>
-            {
-              isDragActive ?
-                <p>Drop the files here ...</p> :
-                <p>Drag 'n' drop some files here, or click to select files</p>
-            }
-          </InputBox>
-          
-        </div>
-      </>
-    )
-}
 
 @inject('Request')
 @observer
 class FileUploadContainer extends Component {
 
   static defaultProps = { title: '파일업로드' };
+
+  state={
+    fileList:[]
+  }
+  MyDropzone =() =>
+  {
+    const dropHandler = (files)=>
+    {
+      
+      const temp=this.state.fileList;
+      // console.log(files);
+      // temp.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})
+      files.forEach(file => this.setState({fileList:fileList.push({stl:'static/images/request/Step2/Q.png',name:file.name})}))
+      // this.setState({fileList:fileList.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})})
+      // this.setState({fileList:temp})
+      fileList.forEach(d=>console.log(d))
+      // console.log(temp);
+      // forceUpdate();
+      // console.log("RRRASNDLKNASLD");
+      //file을 백엔드에 전해줌(1)
+
+    // let formData = new FormData();
+
+    // const config ={
+    //     header:{'content-type':'multipart/form-data'}
+    // }
+    // formData.append("file", files[0])
+
+    // axios.post('/api/product/image', formData, config)
+    //     // 백엔드가 file저장하고 그 결과가 reponse에 담김
+    //     // 백엔드는 그 결과를 프론트로 보내줌(3)
+    //     .then(response =>{
+    //         if(response.data.success){
+    //             setImages([...Images, response.data.filePath])
+    //         }else{
+    //             alert('파일 저장 실패')
+    //         }
+    //     })
+  }
+
+  const onDrop = useCallback(acceptedFiles => {
+    // Do something with the files
+    console.log(acceptedFiles);
+    dropHandler(acceptedFiles);
+  }, [])
+
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+  return (
+    <>
+    {/* <ItemList>
+
+    
+    {fileData.map((data)=>
+      <>
+        <ItemBox>
+          <MainBox>
+            <StlBox>
+              <img src={DeleteButtonImg} style={{width:120,height:120}}/>
+            </StlBox>
+            <ColumnBox>
+              {data.name}
+              <ManufactureBox style={{marginTop:20}}>
+                <div>
+                  div1
+                </div>
+                <div>
+                  div2
+                </div>
+                <div>
+                  div3
+                </div>
+              </ManufactureBox>
+            </ColumnBox>
+            
+          </MainBox>
+
+          <TailBox>
+            <div>
+              <img src={DeleteButtonImg}/>
+            </div>
+            
+            가격: 15,000원
+          </TailBox>
+        </ItemBox>
+      </>
+
+    )}
+    </ItemList> */}
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        <InputBox>
+          {
+            isDragActive ?
+              <p>Drop the files here ...</p> :
+              <p>Drag 'n' drop some files here, or click to select files</p>
+          }
+        </InputBox>
+        
+      </div>
+    </>
+  )
+}
 
     render() {
       return(
@@ -118,9 +131,8 @@ class FileUploadContainer extends Component {
             </Header>
             <ContentBox>
             <ItemList>
-
       
-              {testData.map((data)=>
+              {fileList.map((data,idx)=>
                 <>
                   <ItemBox>
                     <MainBox>
@@ -145,7 +157,7 @@ class FileUploadContainer extends Component {
                     </MainBox>
 
                     <TailBox>
-                      <div>
+                      <div onClick={()=>this.setState({fileList:fileList.splice(idx,1)})}>
                         <img src={DeleteButtonImg}/>
                       </div>
                       
@@ -156,7 +168,7 @@ class FileUploadContainer extends Component {
 
               )}
               </ItemList>
-                <MyDropzone></MyDropzone>
+              <this.MyDropzone></this.MyDropzone>
             </ContentBox>
           </Card>
         )

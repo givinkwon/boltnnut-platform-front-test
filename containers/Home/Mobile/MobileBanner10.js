@@ -29,7 +29,7 @@ class MobileBanner10Container extends React.Component{
 							</BlockLeft>
 
 							<BlockRight>
-								<Font14 style={{color: "#0933b3"}}>가견적 받기</Font14>
+								<Font14 style={{color: "#0933b3"}}>견적 받기</Font14>
 							</BlockRight>
 						</Block>
 						
@@ -40,7 +40,7 @@ class MobileBanner10Container extends React.Component{
 							</BlockLeft>
 
 								<BlockRight>
-									<Font14 style={{color: "#0933b3"}}>가견적 받기</Font14>
+									<Font14 style={{color: "#0933b3"}}>견적 받기</Font14>
 								</BlockRight>
 						</Block>
 
@@ -51,7 +51,7 @@ class MobileBanner10Container extends React.Component{
 							</BlockLeft>
 
 							<BlockRight>
-								<Font14 style={{color: "#0933b3"}}>가견적 받기</Font14>
+								<Font14 style={{color: "#0933b3"}}>견적 받기</Font14>
 							</BlockRight>
 						</Block>
 
@@ -63,7 +63,7 @@ class MobileBanner10Container extends React.Component{
 							</BlockLeft>
 
 							<BlockRight>
-								<Font14 style={{color: "#0933b3"}}>가견적 받기</Font14>
+								<Font14 style={{color: "#0933b3"}}>견적 받기</Font14>
 							</BlockRight>
 
 						</Block>
@@ -74,7 +74,7 @@ class MobileBanner10Container extends React.Component{
 							</BlockLeft>
 
 							<BlockRight>
-								<Font14 style={{color: "#0933b3"}}>가견적 받기</Font14>
+								<Font14 style={{color: "#0933b3"}}>견적 받기</Font14>
 							</BlockRight>
 
 						</Block>
@@ -85,7 +85,7 @@ class MobileBanner10Container extends React.Component{
 							</BlockLeft>
 
 							<BlockRight>
-								<Font14 style={{color: "#0933b3"}}>가견적 받기</Font14>	
+								<Font14 style={{color: "#0933b3"}}>견적 받기</Font14>	
 							</BlockRight>
 						</Block>
 					</Fade>

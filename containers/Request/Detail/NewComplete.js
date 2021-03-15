@@ -12,7 +12,7 @@ class CompleteBannerContainer extends React.Component {
       <Banner>
         <Container>
           <MessageBox>
-            <span> 고객님의 가견적 의뢰가 접수되었습니다. </span>
+            <span> 고객님의 견적 의뢰가 접수되었습니다. </span>
           </MessageBox>
           <TextBox>
             볼트앤너트 컨설턴트가 의뢰 내용을 확인하여 가견적을 산출해드립니다.

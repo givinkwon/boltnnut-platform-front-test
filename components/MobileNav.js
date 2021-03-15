@@ -132,13 +132,12 @@ class MobileNav extends React.Component {
                 </div>
                 <div style={{height:14}}>내 제조 의뢰 견적과 전문 제조사를 바로 만나 보세요.</div>
                 <FreeButton onClick={() => Router.push("/request")}>
-                  <span style={{marginTop: 1}}>지금 무료 가견적 받기</span>
+                  <span style={{marginTop: 1}}>지금 무료 견적 받기</span>
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
-
                 <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
-                <p onClick={() => Router.push("/magazine")}>매거진</p>
+                <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
                 <p onClick={() => Router.push("/info")}>회사소개</p>
               </ModalContent>
               <ModalContent2>
@@ -163,10 +162,10 @@ class MobileNav extends React.Component {
           )}
         <Container>
           <NavWrap2>
-            {typeof window !== 'undefined' && window.location.pathname != '/' ? (
+            {typeof window !== 'undefined' && window.location.pathname != '/' && window.location.pathname !='/login' ? (
               <Logo src={this.props.src} onClick={() => Router.back()} />
             ) : (
-              <Logo src={this.props.src} />
+              <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
             )}
             <HeadText>{this.props.headText}</HeadText>
               <Icon
@@ -192,7 +191,7 @@ const Modal = styled.div`
 const ProfileMenu = styled.div`
   width: 70%;
   padding: 22px 22px;
-  height: 100vm;
+  height: 100%;
   position: absolute;
   background-color: white;
   z-index: 10000;
@@ -251,6 +250,7 @@ const HeadText = styled.div`
   width: 100%;
   height:29px;
   position: absolute;
+
   color: #0a2165;
   display: flex;
   align-items: center;
