@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled, {css, keyframes } from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
 import Container from 'components/Container'
@@ -76,7 +76,7 @@ class MobileRequestSelectContainer extends React.Component {
     //   <Section>
         <div style={{marginTop:0,width:'100%'}}>
             <HeadBox>
-              <Font15>나에게 맞는 제조방식을 선택해주세요.</Font15>
+              <Font15 active={true}>나에게 맞는 제조방식을 선택해주세요.</Font15>
             </HeadBox>
             <ButtonBox>
               {/* <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}> */}
@@ -174,6 +174,17 @@ const Font14 = styled(Title.FontSize14)`
   color: #414550;
   margin-top:16px;
 `
+const boxFade = keyframes`
+from {
+  opacity: 1;
+}
+50% {
+  opacity: 0.2;
+}
+to {
+  opacity: 1;
+}
+`
 
 const Font15 = styled(Content.FontSize15)`
   font-weight: bold !important;
@@ -182,7 +193,7 @@ const Font15 = styled(Content.FontSize15)`
   line-height: 2.67 !important;
   letter-spacing: -0.38px !important;
   color: #0933b3;
-
+  animation: ${ boxFade } 2s linear infinite;
 `
 
 const HeadBox = styled.div`
