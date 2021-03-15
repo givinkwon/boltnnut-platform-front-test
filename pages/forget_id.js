@@ -4,12 +4,36 @@ import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
 import Nav from 'components/Nav'
+import MobileNav from 'components/MobileNav'
 import Footer from 'components/Footer'
 
 import ForgetIdConatiner from 'containers/ForgetId'
 
+const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
+
+@inject("Home", "Loading", "Auth")
+@observer
 class ForgetId extends React.Component {
+  state = {
+    width: null,
+  }
+  async componentDidMount() {
+    this.props.Loading.setOpen(true);
+    //창 크기
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+    setTimeout(() => {
+      this.props.Loading.setOpen(false);
+    }, 1000);
+
+    await this.props.Auth.checkLogin();
+  }
+
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   render(){
+    const { width } = this.state;
     return (
       <div>
         <Head>
@@ -26,7 +50,8 @@ class ForgetId extends React.Component {
           {/* Title */}
           <title>볼트앤너트|아이디찾기</title>
         </Head>
-        <Nav />
+        { width && width > 767.98 && <Nav />}
+        { width && width < 768 && <MobileNav src={ logo_ic } width={ width }/>}
         <ForgetIdConatiner/>
         <Footer/>
       </div>

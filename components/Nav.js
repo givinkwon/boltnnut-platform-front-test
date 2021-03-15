@@ -534,6 +534,12 @@ const Close = styled.div`
 `;
 
 const ButtonContainer = styled(Buttonv1)`
+box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+font-weight: bold !important;
+line-height: 0.69 !important;
+letter-spacing: -0.4px !important;
+
+
 @media (min-width: 768px) and (max-width: 991.98px) {
   width: 110px;
   height: 41px;
