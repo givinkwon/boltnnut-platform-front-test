@@ -289,7 +289,7 @@ const HeadBox = styled.div`
 const ButtonBox = styled.div`
   width: 100%;
   display: flex;
-  
+  margin-bottom:160px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 2px;
     div:nth-of-type(1) {
