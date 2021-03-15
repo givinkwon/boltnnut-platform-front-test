@@ -36,7 +36,7 @@ class MobileInfoContainer extends React.Component {
             성공적 발주를 할 수 있도록 돕습니다.
           </span>
             <div onClick={() => Router.push("/request")}>
-              지금 무료로 가견적 받기
+              지금 무료로 견적 받기
             </div>
           </ContentBox>
           <ContentBox>

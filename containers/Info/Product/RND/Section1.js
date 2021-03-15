@@ -58,7 +58,7 @@ class Section1Container extends React.Component {
                         <Text.FontSize30>STEP 1</Text.FontSize30>
                     </Itemheader>
                     <Step1 src={step1}></Step1>
-                    <Text.FontSize26>가견적 의뢰</Text.FontSize26>
+                    <Text.FontSize26>견적 의뢰</Text.FontSize26>
                     <Text.FontSize20>희망 예산, 기간 등 문의하실 제품의 정보를 입력해주세요</Text.FontSize20>
                   </Item>
                   <Image src={right}></Image>
@@ -99,7 +99,7 @@ class Section1Container extends React.Component {
                             <Text.FontSize30>STEP 1</Text.FontSize30>
                         </Itemheader>
                         <Step1 src={step1}></Step1>
-                        <Text.FontSize26>가견적 의뢰</Text.FontSize26>
+                        <Text.FontSize26>견적 의뢰</Text.FontSize26>
                         <TextContainer>
                           <Text.FontSize20>희망 예산, 기간 등 문의하실 제품의 정보를 입력해주세요</Text.FontSize20>
                         </TextContainer>

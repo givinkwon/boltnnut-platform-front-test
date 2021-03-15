@@ -23,7 +23,7 @@ class Banner9Container extends React.Component {
                   전문 제조사를 바로 만나보세요.
                 </Font24>
                 <Buttonv1 style={{height: 76, width: 308, margin:'0 auto', marginTop: 50}} onClick={() => Router.push("/request")}>
-                  <Font24>지금 무료 가견적 받기</Font24>
+                  <Font24>지금 무료 견적 받기</Font24>
                 </Buttonv1>
               </div>
             </Fade>

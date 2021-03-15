@@ -20,7 +20,7 @@ class TabletBanner9Container extends React.Component {
                 전문 제조사를 바로 만나보세요.
               </Header>
               <Buttonv1 style={{margin:'0 auto', marginTop: 20,marginBottom:56,fontWeight:'bold'}} onClick={() => Router.push("/request")}>
-                지금 무료 가견적 받기
+                지금 무료 견적 받기
               </Buttonv1>
             </div>
           </Fade>
