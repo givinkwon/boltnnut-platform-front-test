@@ -163,20 +163,20 @@ class MobileProjectContentContainer extends React.Component {
 // ]
 
 const PageBar = styled.div`
-  width: 351px;
+  width: 280px;
   margin-top: 109px;
   margin-bottom: 157px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `
 
 const PageCount = styled.span`
     width: 14px;
     height: 30px;
-    font-size: 25px;
+    font-size: 18px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;

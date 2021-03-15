@@ -153,6 +153,7 @@ const ButtonBox = styled.div`
 const Form = styled.div`
   background-position: center;
   background-size: cover;
+  
   ${Container} {
     display: flex;
     flex-direction: column;

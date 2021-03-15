@@ -158,7 +158,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      <p class="line"> 매거진 </p>
+                      <p class="line"> 제조 인사이트 </p>
                     </NavLink>
                     <NavLink
                       onClick={() => Router.push("/info")}
@@ -212,7 +212,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      매거진
+                      제조 인사이트
                     </NavLink>
                     <NavLink
                       onClick={() => Router.push("/info")}
@@ -264,7 +264,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      매거진
+                      제조 인사이트
                   </NavLink>
                   <NavLink
                       onClick={() => Router.push("/info")}
