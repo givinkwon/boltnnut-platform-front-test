@@ -250,6 +250,7 @@ const HeadText = styled.div`
   width: 100%;
   height:29px;
   position: absolute;
+
   color: #0a2165;
   display: flex;
   align-items: center;
@@ -269,7 +270,6 @@ const Footer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  position: absolute;
   > div {
     width: 100%;
     font-family: NotoSansCJKkr;
