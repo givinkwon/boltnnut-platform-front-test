@@ -160,7 +160,8 @@ class AnswerContentContainer extends React.Component {
     // }    
       return(
         <>                
-          { Project.projectData.length > 0 && Project.projectData.slice(5*current, 5*(current+1)).map((item, idx) => {                            
+        
+          {/* { Project && Project.projectData.slice(5*current, 5*(current+1)).map((item, idx) => {                            
             return(
               <Background style={{marginBottom: '5px'}}>
                 <Container>        
@@ -168,7 +169,7 @@ class AnswerContentContainer extends React.Component {
                </Container>          
               </Background>
             )        
-            })}
+            })} */}
            <PageBar>
             <img src={pass1} style={{opacity: current_set == 1 && current == 0  ? 0.4 : 1 }} onClick = {this.pagePrev}/>
               <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 1} active={current%5 == 0} style={{display:  page < 5*(current_set - 1) + 1 ? 'none': 'block' }}> {5*(current_set - 1) + 1} </PageCount>
