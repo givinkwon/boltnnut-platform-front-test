@@ -270,22 +270,6 @@ const Select = styled(SelectComponent)`
     -webkit-font-smoothing: antialiased;
     animation: fadeIn 0.2s ease-out;
   }
-
-  // @keyframes asdf{
-  //   100%{
-  //     transform:rotate(180deg) scale(3);
-  //   }
-  // }
-
-
-// &:focus{ 
-//   svg{
-//   display : flex; 
-//   width: 500px;
-//   height: 500px;
-//   } 
-// }
-
 `
 
 const Box = styled.div`
