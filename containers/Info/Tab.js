@@ -114,7 +114,7 @@ class TabConatiner extends React.Component {
             slidesToShow={3}
             focusOnSelect={true}>
             <Tab class="Header" active={Request.tab == 0} onClick={async() => await Request.setTab(0)}>
-              <Text.FontSize32 fontWeight={500}>가견적 서비스</Text.FontSize32>
+              <Text.FontSize32 fontWeight={500}>견적 서비스</Text.FontSize32>
               {Request.tab === 0 ? (<UnderLineBox/>) : (<UnderLine/>)}
             </Tab>
             <Tab class="Header" active={Request.tab == 1} onClick={async() => await Request.setTab(1)}>
@@ -136,7 +136,7 @@ class TabConatiner extends React.Component {
             <Tab>
               <Container>
                 <SmallBanner>
-                  <Text.FontSize32>가견적 서비스</Text.FontSize32>
+                  <Text.FontSize32>견적 서비스</Text.FontSize32>
                 </SmallBanner>
                 <Content>
                   <Text.FontSize26>원하시는 개발 조건에 적합한<br/><span>전문 제조사의 가견적을 바로 받아보세요</span><br/>가견적을 바탕으로 상담을 통해 최적의 제조사를 매칭해드립니다.</Text.FontSize26>

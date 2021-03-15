@@ -63,7 +63,7 @@ class PrimeConatiner extends React.Component {
             ✔   제품 개발 의뢰서 무료 작성<br/><br/>
             ✔   전문컨설턴트와 1:1 상담<br/><br/>
             ✔   5개 업체 리스트 추천 받기<br/><br/>
-            ✔   제조 컨설팅 - 가견적, 예상 기간, 문의 사항 답변<br/><br/>
+            ✔   제조 컨설팅 - 견적, 예상 기간, 문의 사항 답변<br/><br/>
             ✔   추천받은 업체와 1:1 맞춤형 전화 상담<br/><br/>
 
           </Text.FontSize24>

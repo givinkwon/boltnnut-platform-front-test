@@ -51,7 +51,7 @@ class Banner10Container extends React.Component{
 								{this.state.list[0]== true &&
 									
 									<ButtonContainer onClick={() => Router.push("/request")}>
-										가견적 받기
+										견적 받기
 									</ButtonContainer>
 								}
 							</Block>
@@ -64,7 +64,7 @@ class Banner10Container extends React.Component{
 								<ImgContainer src = {cnc}></ImgContainer>
 								{this.state.list[1] == true &&
 									<ButtonContainer onMouseOver={this.cursorOn2} onClick={() => Router.push("/request")}>
-										가견적 받기
+										견적 받기
 									</ButtonContainer>
 								}
 							</Block>
@@ -77,7 +77,7 @@ class Banner10Container extends React.Component{
 								{this.state.list[2] == true &&
 									
 									<ButtonContainer onClick={() => Router.push("/request")}>
-										가견적 받기
+										견적 받기
 									</ButtonContainer>
 								}
 							</Block>
@@ -89,7 +89,7 @@ class Banner10Container extends React.Component{
 								<ImgContainer src = {product}></ImgContainer>
 								{this.state.list[3] == true &&
 									<ButtonContainer onClick={() => Router.push("/request")}>
-										가견적 받기
+										견적 받기
 									</ButtonContainer>
 								}
 							</Block>
@@ -101,7 +101,7 @@ class Banner10Container extends React.Component{
 								<ImgContainer src = {machinery}></ImgContainer>
 								{this.state.list[4] == true &&
 									<ButtonContainer onClick={() => Router.push("/request")}>
-										가견적 받기
+										견적 받기
 									</ButtonContainer>
 								}
 							</Block>
@@ -113,7 +113,7 @@ class Banner10Container extends React.Component{
 								<ImgContainer src = {part} style={{width: 119.2}}></ImgContainer>
 								{this.state.list[5] == true &&
 									<ButtonContainer onClick={() => Router.push("/request")}>
-										가견적 받기
+										견적 받기
 									</ButtonContainer>
 								}
 							</Block>

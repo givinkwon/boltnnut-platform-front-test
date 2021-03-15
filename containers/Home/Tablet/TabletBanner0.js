@@ -79,7 +79,7 @@ class TabletBanner0Container extends React.Component {
               </Content1>
             </div>
             <Buttonv1 style={{marginTop: 54, marginLeft:'auto', marginRight:'auto', fontWeight: 700}} onClick={() => Router.push("/request")}>
-              지금 무료 가견적 받기
+              지금 무료 견적 받기
             </Buttonv1>
         </Fade>
     </Background>

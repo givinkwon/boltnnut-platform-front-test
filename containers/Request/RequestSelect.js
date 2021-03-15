@@ -76,7 +76,7 @@ class RequestSelectContainer extends React.Component {
             <>
             {/* <Box active={this.state.click===true} onClick ={this.testfunc}></Box> */}
             <HeadBox>
-              <Font46>가견적받기</Font46>
+              <Font46>견적받기</Font46>
               <Font18>나에게 맞는 제조방식을 선택해주세요.</Font18>
             </HeadBox>
             <ButtonBox>

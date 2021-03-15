@@ -132,7 +132,7 @@ class MobileNav extends React.Component {
                 </div>
                 <div style={{height:14}}>내 제조 의뢰 견적과 전문 제조사를 바로 만나 보세요.</div>
                 <FreeButton onClick={() => Router.push("/request")}>
-                  <span style={{marginTop: 1}}>지금 무료 가견적 받기</span>
+                  <span style={{marginTop: 1}}>지금 무료 견적 받기</span>
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
@@ -191,7 +191,7 @@ const Modal = styled.div`
 const ProfileMenu = styled.div`
   width: 70%;
   padding: 22px 22px;
-  height: 100vm;
+  height: 100%;
   position: absolute;
   background-color: white;
   z-index: 10000;
@@ -269,6 +269,7 @@ const Footer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: absolute;
   > div {
     width: 100%;
     font-family: NotoSansCJKkr;

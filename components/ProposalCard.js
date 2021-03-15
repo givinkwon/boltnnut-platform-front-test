@@ -92,7 +92,7 @@ class ProposalCard extends React.Component {
                         </Content>
                     </div>
                     <PriceTagBox>
-                        <span class="tag1"> 가견적 </span>
+                        <span class="tag1"> 견적 </span>
                         <span class="tag2">{estimate}</span>
                     </PriceTagBox>
                 </FooterWrapper>
@@ -116,7 +116,7 @@ class ProposalCard extends React.Component {
                     </Content>
 
                     <PriceTagBox>
-                        <span class="tag1"> 가견적 </span>
+                        <span class="tag1"> 견적 </span>
                         <span class="tag2">{estimate}</span>
                     </PriceTagBox>
                 </FooterWrapper>
