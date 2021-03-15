@@ -61,7 +61,7 @@ class FormConatiner extends React.Component {
     const { Auth } = this.props
     return (
       <Form>
-        <Container style={{padding :0}}>
+        <Container >
         { width > 767.98 ? (
         <>
           <Logo src={logo_ic}/>
@@ -315,6 +315,11 @@ const ButtonBox = styled.div`
 `
 const Form = styled.div`
   /* background-image: url('/static/images/banner.jpg');
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #ffffff;
+  overflow: hidden;
   background-position: center;
   background-size: cover; */
   min-height: 500px;
@@ -349,7 +354,7 @@ const Form = styled.div`
       }
     }
     @media (min-width: 0px) and (max-width: 767.98px) {
-     margin-top : 40px;
+      padding-top: 90px;
      margin-bottom : 50px;
      width : 82%;
      
@@ -375,10 +380,10 @@ const Form = styled.div`
     @media (min-width: 992px) and (max-width: 1299.98px) { 
     }
     @media (min-width: 1300px) { 
-      
     }
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.98px) { 
+    
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin : 130px 0px; 

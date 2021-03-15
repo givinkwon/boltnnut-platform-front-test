@@ -136,9 +136,8 @@ class MobileNav extends React.Component {
                 </FreeButton>
               </ModalHeader>
               <ModalContent>
-
                 <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
-                <p onClick={() => Router.push("/magazine")}>매거진</p>
+                <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
                 <p onClick={() => Router.push("/info")}>회사소개</p>
               </ModalContent>
               <ModalContent2>
@@ -163,10 +162,10 @@ class MobileNav extends React.Component {
           )}
         <Container>
           <NavWrap2>
-            {typeof window !== 'undefined' && window.location.pathname != '/' ? (
+            {typeof window !== 'undefined' && window.location.pathname != '/' && window.location.pathname !='/login' ? (
               <Logo src={this.props.src} onClick={() => Router.back()} />
             ) : (
-              <Logo src={this.props.src} />
+              <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
             )}
             <HeadText>{this.props.headText}</HeadText>
               <Icon
