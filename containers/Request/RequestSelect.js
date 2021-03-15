@@ -70,8 +70,9 @@ class RequestSelectContainer extends React.Component {
     const { width } = this.state
 
     return (
-      <Section>
-        <Container>
+      // <Section>
+      //   <Container>
+          <div style={{flexDirection:'column',width:'100%'}}>
           { width > 767.98 ? (
             <>
             {/* <Box active={this.state.click===true} onClick ={this.testfunc}></Box> */}
@@ -82,14 +83,26 @@ class RequestSelectContainer extends React.Component {
             <ButtonBox>
               {/* <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}> */}
               <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={()=>this.Next("development")}>
+                { width > 1299.98 ? (
                 <ButtonText>
                   {/* 원래대로 */}
                   <Font26 style={{height: 38, marginBottom: 24}}>제작</Font26>
                   <Font20 style={{height: 65}}>
-                    지속적인 소통과 제품 분석 시스템으로 제품 생산에 불필요한<br/>
+                    지속적인 소통과 제품 분석 시스템으로 제품 생산에 불필요한
                     가정을 방지하여 양산 비용을 최대 40% 절감합니다. 
                   </Font20>
                 </ButtonText>
+                ) : (
+                  <ButtonText>
+                  {/* 원래대로 */}
+                  <Font22 style={{height: 38, marginBottom: 24}}>제작</Font22>
+                  <Font17 style={{height: 65, wordBreak: 'keep-all'}}>
+                    지속적인 소통과 제품 분석 시스템으로 제품 생산에 불필요한
+                    가정을 방지하여 양산 비용을 최대 40% 절감합니다. 
+                  </Font17>
+                </ButtonText>
+                )}
+                
                 <ImageBox>
                   <ImgContainer>
                     <Image1 src={threedprinter}></Image1>
@@ -106,6 +119,7 @@ class RequestSelectContainer extends React.Component {
                 </ImageBox>
               </Button>
               <Button id="sign_uo_button_partner" active={Request.request_type==="production"} onClick={() => this.Next("production")}>
+              { width > 1299.98 ? (
                 <ButtonText>
                   {/* 바로 도면첨부 */}
                   <Font26 style={{height: 38, marginBottom: 24}}>생산</Font26>
@@ -114,6 +128,16 @@ class RequestSelectContainer extends React.Component {
                     제조견적, MOQ (최소발주수량)등의 정보를 전달해드립니다.
                   </Font20>            
                 </ButtonText>
+              ) : (
+                <ButtonText>
+                  {/* 바로 도면첨부 */}
+                  <Font22 style={{height: 38, marginBottom: 24}}>생산</Font22>
+                  <Font17 style={{height: 65, wordBreak: 'keep-all'}}>
+                    국내 제조사와 해외유통사 네트워크를 통해 원하는 조건에 맞는
+                    제조견적, MOQ (최소발주수량)등의 정보를 전달해드립니다.
+                  </Font17>            
+                </ButtonText>
+              )}
                 <ImageBox>
                   <ImgContainer>
                     <Image1 src={product}></Image1>
@@ -137,7 +161,6 @@ class RequestSelectContainer extends React.Component {
             </NextButton> */}
             </>
           ) : (
-            <>
             <ButtonBox>
               <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}>
                 <div style={{margin : 0}}>
@@ -152,16 +175,13 @@ class RequestSelectContainer extends React.Component {
                 </div>
               </Button>
             </ButtonBox>
-            <NextButton backgroundColor={Request.request_type ? PRIMARY : '#0a2165'} borderColor={Request.request_type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
-              <span class="nextButtonText">다음</span>
-              <Image src={right}/>
-            </NextButton>
-            </>          
+                     
           )}
-        </Container>
-      </Section>
-
+          </div>
+      //   </Container>
+      // </Section>
     )
+    
   }
 }
 
@@ -185,6 +205,15 @@ const Font18 = styled(Content.FontSize18)`
   color: #0933b3;
 `
 
+const Font17 = styled(Content.FontSize17)`
+  font-weight: 500 !important;
+  font-stretch: normal !important;
+  font-style: normal  !important;
+  line-height: 1.7 !important;
+  letter-spacing: -0.7px !important;
+  color: #282c36;
+`
+
 const Font26 = styled(Title.FontSize26)`
   font-weight: bold;
   font-stretch: normal;
@@ -204,6 +233,16 @@ const Font20 = styled(Title.FontSize20)`
 
 `
 
+const Font22 = styled(Title.FontSize22)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.54 !important;
+  letter-spacing: -0.65px !important;
+  color: #0933b3;
+
+`
+
 const Font16 = styled(Content.FontSize16)`
   font-weight: 500 !important;
   font-stretch: normal !important;
@@ -213,54 +252,6 @@ const Font16 = styled(Content.FontSize16)`
   color: #414550;
 `
 
-const NextButton = styled(ButtonComponent)`
-  margin: auto;
-  border-radius: 3px;
-  
-  :hover {
-    background-color : #0933b3;
-  }
-  
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 96px;
-    height: 40px;
-    border-radius: 2px;
-
-    margin-top : 70px;
-    margin-bottom : 67px;
-
-    > .nextButtonText {
-      font-size: 16px;
-      font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.06;
-      letter-spacing: -0.4px;
-      color: #ffffff;
-    } 
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-    margin-top : 50px;
-
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-    margin-top : 50px;
-
-  }
-  @media (min-width: 1300px) {
-    width: 117px;
-    height: 52px;
-    border-radius: 3px;
-
-    margin-top : 50px;
-  }
-`
 const Image = styled.img`
   width: 9px;
   height: 17px;
@@ -288,6 +279,10 @@ const HeadBox = styled.div`
     text-align: center;
   }
   margin-top: 180px;
+
+  @media (min-width: 768px) and (max-width: 1299.98px){
+    margin-top: 40px;
+  }
 `
 
 
@@ -304,7 +299,7 @@ const ButtonBox = styled.div`
       margin-left: 6px;
     } 
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
+  @media (min-width: 768px) and (max-width: 1299.98px) {
     margin-top: 40px;
     div:nth-of-type(1) {
       margin-right: 8px;
@@ -313,15 +308,7 @@ const ButtonBox = styled.div`
       margin-left: 8px;
     } 
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-    margin-top: 50px;
-    div:nth-of-type(1) {
-      margin-right: 10px;
-    }
-    div:nth-of-type(2) {
-      margin-left: 10px;
-    } 
-  }
+ 
   @media (min-width: 1300px) {
     margin-top: 60px;
     >div:nth-of-type(1) {
@@ -392,13 +379,18 @@ const Button = styled.div`
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     height: 340px;
+    padding: 0 15px;
+    width: 355px;
+
   }
   @media (min-width: 992px) and (max-width: 1299.98px) { 
     height: 400px;
+    padding: 0 15px;
+
   }
   @media (min-width: 1300px) { 
     height: 420px;
-    
+    padding: 0 40px;
   }
   
 `
@@ -414,6 +406,14 @@ const ImageBox = styled.div`
   width: 344px;
   margin-top: 66px;
   margin-left: 0px !important;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    justify-content: space-evenly;
+  }
+  
+  @media (min-width:  992px) and (max-width: 1299.98px) {
+    justify-content: space-around;
+  }
 `
 
 const Image1 = styled.img`
