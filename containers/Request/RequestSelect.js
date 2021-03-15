@@ -351,20 +351,13 @@ const Button = styled.div`
     text-align : center;
   }
 
-  :focus{
+  :active{
     border: 4px solid #0933b3;
     box-shadow: 0 3px 6px 0 var(--black-16);
     >div >p{
       color: #0933b3;
     }
   }
-//   ${props => props.active && css`
-//   border: 4px solid #0933b3;
-//   box-shadow: 0 3px 6px 0 var(--black-16);
-//   >div >p{
-//     color: #0933b3;
-//   }
-// `}
   
   @media (min-width: 0px) and (max-width: 767.98px) {
     height: 192px;

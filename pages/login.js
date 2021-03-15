@@ -15,6 +15,7 @@ const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 class Home extends React.Component {
 
   state = {
+    width: null,
   }
 
   componentDidMount() {
@@ -38,7 +39,7 @@ class Home extends React.Component {
     const { width } = this.state;
     return (
       <div>
-        {Loading.is_open}
+        
         {/* {Loading.is_open && <Spinner/>} */}
         <Head>
 
@@ -54,14 +55,21 @@ class Home extends React.Component {
           {/* Title */}
           <title>볼트앤너트|로그인</title>
         </Head>
-        <>
+        <div>
+          {Loading.is_open}
+          
+          <>
+          { width && width > 767.98 && <Nav />}
+          { width && width < 768 && <MobileNav src={ logo_ic } width={ width }/>}
 
-        { width && width > 767.98 && <Nav />}
-        { width && width < 768 && <MobileNav src={ logo_ic } width={ width }/>}
-        </>
+          </>
+          <>
 
-        <LoginConatiner/>
+          {width && <LoginConatiner />}
+          </>
+        
         <Footer/>
+        </div>
       </div>
     )
   }
