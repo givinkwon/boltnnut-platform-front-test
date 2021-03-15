@@ -390,7 +390,7 @@ const Button = styled.div`
   }
   @media (min-width: 1300px) { 
     height: 420px;
-    padding: 0 40px;
+    padding: 0 36px;
   }
   
 `

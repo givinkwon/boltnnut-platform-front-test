@@ -182,6 +182,7 @@ const ImgContainer = styled.img`
 `
 
 const ButtonContainer = styled(Buttonv1)`
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;	
 	width: 128px !important;
 	height: 30px !important;
 	margin-left: 26px !important;
