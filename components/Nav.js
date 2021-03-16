@@ -480,6 +480,7 @@ const NavLink = styled.p`
     padding-left: 17px;
     padding-right: 15px;
     font-size: 16px;
+    font-weight: medium!important;
   }
   @media (min-width: 1600px) {
     padding-left: 19px;
@@ -535,7 +536,7 @@ const Close = styled.div`
 
 const ButtonContainer = styled(Buttonv1)`
 box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
-font-weight: bold !important;
+font-weight: medium !important;
 line-height: 0.69 !important;
 letter-spacing: -0.4px !important;
 

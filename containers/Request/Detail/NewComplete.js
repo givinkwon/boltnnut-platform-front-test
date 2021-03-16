@@ -15,11 +15,11 @@ class CompleteBannerContainer extends React.Component {
             <span> 고객님의 견적 의뢰가 접수되었습니다. </span>
           </MessageBox>
           <TextBox>
-            볼트앤너트 컨설턴트가 의뢰 내용을 확인하여 가견적을 산출해드립니다.
+            볼트앤너트 컨설턴트가 의뢰 내용을 확인하여 견적을 산출해드립니다.
           </TextBox>
           <ServiceBox>
             <span class="Header"> 최대 1영업일 이내 연락을 드립니다.</span>
-            <span> 가견적을 바탕으로 내 제품에 적합한 제조업체를 안내드립니다. </span>
+            <span> 견적을 바탕으로 내 제품에 적합한 제조업체를 안내드립니다. </span>
             <br/><br/>
             <span> 상담이 필요하다면 아래의 상담하기 버튼을 눌러주세요.</span>
             <span> 제조 전문 컨설턴트가 궁금하신 사항에 답변해드립니다. </span>

@@ -78,7 +78,7 @@ class Section1Container extends React.Component {
                     </Itemheader>
                     <Step src={step3}></Step>
                     <Text.FontSize26>개발사 정보/견적 전달</Text.FontSize26>
-                    <Text.FontSize20>매칭된 전문 개발사의 정보와 가견적을 전달해드립니다</Text.FontSize20>
+                    <Text.FontSize20>매칭된 전문 개발사의 정보와 견적을 전달해드립니다</Text.FontSize20>
                   </Item>
                   <Image src={right}></Image>
                   <Item>
@@ -124,7 +124,7 @@ class Section1Container extends React.Component {
                         <Step src={step3}></Step>
                         <Text.FontSize26>개발사 정보/견적 전달</Text.FontSize26>
                         <TextContainer>
-                          <Text.FontSize20>매칭된 전문 개발사의 정보와 가견적을 전달해드립니다</Text.FontSize20>
+                          <Text.FontSize20>매칭된 전문 개발사의 정보와 견적을 전달해드립니다</Text.FontSize20>
                         </TextContainer>
 
                       </Item>
