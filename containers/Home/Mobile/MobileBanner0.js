@@ -23,7 +23,7 @@ const layer = "static/images/Home/Mobile/MobileBanner9/MobileBanner9_bg2.png";
 const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
     const countItem = {
-      0: UseScrollCount(5667400000,5000000000,0,0,900000),
+      0: UseScrollCount(10787400000,5000000000,0,0,900000),
       1: UseScrollCount(projCount,0,0,0,5),
       2: UseScrollCount(4933,0,0,0,10)
     };

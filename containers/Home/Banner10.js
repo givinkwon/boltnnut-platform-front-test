@@ -44,7 +44,7 @@ class Banner10Container extends React.Component{
 							<Block onMouseEnter={()=>this.cursorOn(0)} onMouseLeave={()=>this.cursorOut(0)} >
 								<BlockText>
 									<Font18>3D 프린터</Font18>
-									<Font14>개발<br/></Font14>
+									<Font14>생산<br/></Font14>
 								</BlockText>
 								<ImgContainer src = {threedprinter}></ImgContainer>
 											
@@ -59,7 +59,7 @@ class Banner10Container extends React.Component{
 							<Block onMouseEnter={()=>this.cursorOn(1)} onMouseLeave={()=>this.cursorOut(1)} >
 								<BlockText>
 									<Font18>CNC</Font18>
-									<Font14>개발</Font14>
+									<Font14>생산</Font14>
 								</BlockText>
 								<ImgContainer src = {cnc}></ImgContainer>
 								{this.state.list[1] == true &&
@@ -71,7 +71,7 @@ class Banner10Container extends React.Component{
 							<Block onMouseEnter={()=>this.cursorOn(2)} onMouseLeave={()=>this.cursorOut(2)} >
 								<BlockText>
 									<Font18>금형/사출</Font18>
-									<Font14>개발</Font14>
+									<Font14>생산</Font14>
 								</BlockText>
 								<ImgContainer src = {mold}></ImgContainer>
 								{this.state.list[2] == true &&
@@ -84,7 +84,7 @@ class Banner10Container extends React.Component{
 							<Block onMouseEnter={()=>this.cursorOn(3)} onMouseLeave={()=>this.cursorOut(3)} >
 								<BlockText>
 									<Font18>제품</Font18>
-									<Font14 style = {{color: " #00498c"}}>생산</Font14>
+									<Font14 style = {{color: " #00498c"}}>제작</Font14>
 								</BlockText>
 								<ImgContainer src = {product}></ImgContainer>
 								{this.state.list[3] == true &&
@@ -96,7 +96,7 @@ class Banner10Container extends React.Component{
 							<Block onMouseEnter={()=>this.cursorOn(4)} onMouseLeave={()=>this.cursorOut(4)} >
 								<BlockText>
 									<Font18>기계/설비/장비<br/></Font18>
-									<Font14 style = {{color: " #00498c"}}>생산</Font14>
+									<Font14 style = {{color: " #00498c"}}>제작</Font14>
 								</BlockText>
 								<ImgContainer src = {machinery}></ImgContainer>
 								{this.state.list[4] == true &&
@@ -108,7 +108,7 @@ class Banner10Container extends React.Component{
 							<Block onMouseEnter={()=>this.cursorOn(5)} onMouseLeave={()=>this.cursorOut(5)} >
 								<BlockText>
 									<Font18>부품/센서</Font18>
-									<Font14 style = {{color: " #00498c"}}>생산</Font14>
+									<Font14 style = {{color: " #00498c"}}>제작</Font14>
 								</BlockText>
 								<ImgContainer src = {part} style={{width: 119.2}}></ImgContainer>
 								{this.state.list[5] == true &&

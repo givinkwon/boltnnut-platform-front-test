@@ -23,7 +23,7 @@ const lock = "static/images/Home/lock.svg";
 const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
     const countItem = {
-      0: UseScrollCount(5667400000,5000000000,0,0,2000000),
+      0: UseScrollCount(10787400000,10000000000,0,0,2000000),
       1: UseScrollCount(projCount,0,0,0,15),
       2: UseScrollCount(4933,0,0,0,20)
     };
@@ -65,7 +65,7 @@ class Banner0Container extends React.Component {
               
               <div style={{color: "#ffffff", lineHeight: 1.5, fontSize: 18, opacity: 0.8, marginTop:6 }}>
               <img src = {lock} style={{marginLeft: 50, marginRight:8}}></img>
-                모든 업로드는 안전하고 기밀입니다.
+                모든 의뢰 NDA(비밀유지계약) 체결
               </div>
             </div>
             <Info>
