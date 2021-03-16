@@ -12,13 +12,68 @@ class ManufactureProcess {
   @observable totalMinPrice=0;
   @observable totalMaxPrice=0;
   @observable message = '';
+  @observable ManufactureProcessList = [];
 
   @action init = async () => {
     await ManufactureProcessAPI.loadTitle()
       .then(res => {
           this.title_list = res.data;
+          console.log(this.title_list);
+
+          const arr = [...res.data.data]
+          console.log(arr)
+          // for(const data in res.data.data)
+          // {
+          //   this.ManufactureProcessList.push(
+          //       {
+          //         name:res.data.data[data].name,
+          //         id:res.data.data[data].id,
+          //         detailManufactureProcess:{
+                    
+                    
+          //           // for(const temp in res.data.data[data].detailManufactureProcess)
+          //           // {
+
+          //           // }
+
+          //         //   data.detailManufactureProcess.forEach(temp => {
+          //         //     detailManufactureProcess.push({
+          //         //       name:temp.name,
+          //         //       id:temp.id
+          //         //     })
+          //         //   })
+          //         }
+          //       }
+          //     )
+          // }
+
+          
+          arr.forEach((data)=>
+            {
+              this.ManufactureProcessList.push(
+                {
+                  name:data.name,
+                  id:data.id,
+                  detailManufactureProcess:[]
+                  // detailManufactureProcess:[
+                  //   data.detailManufactureProcess.forEach(temp => {
+                  //     detailManufactureProcess.push({
+                  //       name:temp.name,
+                  //       id:temp.id
+                  //     }
+                  //     )
+                  //   })
+                  // ]
+                },
+                
+              )
+            })
+
+
+            console.log(this.ManufactureProcessList)
         }
       )
+      
     this.reset()
   };
 
@@ -45,6 +100,7 @@ class ManufactureProcess {
       this.message = res.data.message;
       Proposal.loadEstimateInfo(this.proposal_type);
       // console.log("EStimate = proposal_type="+this.proposal_type);
+      return res;
     })
     .catch((e) => {
       console.log(e);

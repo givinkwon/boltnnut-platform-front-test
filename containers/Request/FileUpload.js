@@ -2,19 +2,50 @@ import React, {Component,useCallback} from "react";
 import styled from "styled-components";
 import { inject, observer } from 'mobx-react';
 import {useDropzone} from 'react-dropzone'
+import STLViewer from 'stl-viewer'
+
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-
+import * as ManufactureProcessAPI from "axios/ManufactureProcess";
+import SelectComponent from 'components/Select';
 const DeleteButtonImg = 'static/images/request/Step2/Q.png'
 const fileList=[
-  // {
-  //   stl:'static/images/request/Step2/Q.png',
-  //   name:'asdasd'
-  // }
 ]
 
-@inject('Request')
+const customStyles = {
+  dropdownIndicator: () => ({
+    color: '#555555',
+    width: 40,
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? '#000000' : '#555555',
+    backgroundColor: '#fff',
+    borderRadius: 0,
+    padding: 16,
+    fontSize: 16,
+  }),
+  control: () => ({
+    fontSize: 16,
+    border: '1px solid #e6e6e6',
+    backgroundColor: '#fff',
+    display: 'flex',
+    borderRadius: 6,
+    padding: 4,
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+    return { ...provided, opacity, transition};
+  }
+}
+
+@inject('Request','ManufactureProcess')
 @observer
 class FileUploadContainer extends Component {
 
@@ -25,16 +56,67 @@ class FileUploadContainer extends Component {
   }
   MyDropzone =() =>
   {
+    const {Request,ManufactureProcess} = this.props;
     const dropHandler = (files)=>
     {
       
-      const temp=this.state.fileList;
+      // const temp=this.state.fileList;
       // console.log(files);
       // temp.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})
-      files.forEach(file => this.setState({fileList:fileList.push({stl:'static/images/request/Step2/Q.png',name:file.name})}))
+      files.forEach((file) => {
+        const ManufactureProcessFormData = new FormData();
+        ManufactureProcessFormData.append("blueprint",file);
+        ManufactureProcessFormData.append("process",1);
+        ManufactureProcessFormData.append("detailProcess",1);
+        //기본정보입력에서 받은 의뢰서로 바꾸기
+        ManufactureProcessFormData.append("request",2467);
+
+        ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
+        .then((res) => {
+          this.setState(
+            {
+              fileList:fileList.push({
+                drawFile:res.data.data.stl_file,
+                fileName:file.name,
+                price:res.data.data.totalMaxPrice,
+              })
+            })
+
+          console.log("받은 리스폰스",res);
+          // this.EstimateDataForDrawing = res.data.data;
+          // console.log(this.EstimateDataForDrawing)
+          // this.MaxPrice= this.EstimateDataForDrawing.maxPrice;
+          // this.MinPrice= this.EstimateDataForDrawing.minPrice;
+          // this.totalMaxPrice= this.EstimateDataForDrawing.totalMaxPrice;
+          // this.totalMinPrice= this.EstimateDataForDrawing.totalMinPrice;
+          // this.proposal_type = res.data.proposalId;
+          // this.message = res.data.message;
+          // Proposal.loadEstimateInfo(this.proposal_type);
+          // console.log("EStimate = proposal_type="+this.proposal_type);
+          return res;
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+        // const res = ManufactureProcess.saveSelect(ManufactureProcessFormData);
+                  // if(res)
+                  // {
+                  //   console.log("DDDD");
+                  //   this.setState(
+                  //     {
+                  //       fileList:fileList.push({
+                  //         drawFile:res.stl_file,
+                  //         fileName:file.name,
+                  //         price:'견적을 계산중입니다...',
+                  //       })
+                  //     })
+                  // }
+          }
+        )
       // this.setState({fileList:fileList.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})})
       // this.setState({fileList:temp})
-      fileList.forEach(d=>console.log(d))
+      // fileList.forEach(d=>console.log(d))
       // console.log(temp);
       // forceUpdate();
       // console.log("RRRASNDLKNASLD");
@@ -69,45 +151,6 @@ class FileUploadContainer extends Component {
 
   return (
     <>
-    {/* <ItemList>
-
-    
-    {fileData.map((data)=>
-      <>
-        <ItemBox>
-          <MainBox>
-            <StlBox>
-              <img src={DeleteButtonImg} style={{width:120,height:120}}/>
-            </StlBox>
-            <ColumnBox>
-              {data.name}
-              <ManufactureBox style={{marginTop:20}}>
-                <div>
-                  div1
-                </div>
-                <div>
-                  div2
-                </div>
-                <div>
-                  div3
-                </div>
-              </ManufactureBox>
-            </ColumnBox>
-            
-          </MainBox>
-
-          <TailBox>
-            <div>
-              <img src={DeleteButtonImg}/>
-            </div>
-            
-            가격: 15,000원
-          </TailBox>
-        </ItemBox>
-      </>
-
-    )}
-    </ItemList> */}
       <div {...getRootProps()}>
         <input {...getInputProps()} />
         <InputBox>
@@ -137,20 +180,27 @@ class FileUploadContainer extends Component {
                   <ItemBox>
                     <MainBox>
                       <StlBox>
-                        <img src={DeleteButtonImg} style={{width:120,height:120}}/>
+                        {/* <img src={DeleteButtonImg} style={{width:120,height:120}}/> */}
+                        <STLViewer
+                          model={data.drawFile} // stl파일 주소
+                          width={120}                                  // 가로
+                          height={120}                                 // 세로
+                          modelColor='red'                             // 색
+                          backgroundColor='white'                    // 배경색
+                          rotate={true}                                // 자동회전 유무
+                          orbitControls={true}                         // 마우스 제어 유무
+                        />
                       </StlBox>
                       <ColumnBox>
-                        {data.name}
+                        {data.fileName}
                         <ManufactureBox style={{marginTop:20}}>
-                          <div>
-                            div1
-                          </div>
-                          <div>
-                            div2
-                          </div>
-                          <div>
-                            div3
-                          </div>
+                          {/* <Box active={this.state.list[3]===true} onClick ={()=>this.state.list[3]? this.selectOut(3):this.selectClick(3)}  onBlur = {()=>this.selectOut(3)}> */}
+                          {/* <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/> */}
+                          <Select
+                            styles={customStyles} options={dueArray} value={Request.input_day}
+                            getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
+                          />
+                          {/* </Box> */}
                         </ManufactureBox>
                       </ColumnBox>
                       
@@ -161,7 +211,7 @@ class FileUploadContainer extends Component {
                         <img src={DeleteButtonImg}/>
                       </div>
                       
-                      가격: 15,000원
+                      {data.price}
                     </TailBox>
                   </ItemBox>
                 </>
@@ -176,6 +226,58 @@ class FileUploadContainer extends Component {
 }
 
 export default FileUploadContainer;
+const Select = styled(SelectComponent)`
+  width: 380px;
+
+  
+  @keyframes fadeIn {  
+    0% {
+      opacity:0.5;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity:1;
+      transform: translateY(0);
+    }
+  }
+
+  >div: nth-of-type(2){
+    -webkit-font-smoothing: antialiased;
+    animation: fadeIn 0.2s ease-out;
+  }
+`
+
+const Box = styled.div`
+width: 380px;
+
+  
+  ${ props => props.active && css`
+  svg{
+    @keyframes select{
+      0% {
+        transform: skewY(-180deg);
+      }
+    }
+
+    animation: select 0.4s ease-out;
+    transform: rotate(-180deg);
+  }
+  `}
+
+  ${props => !props.active && css`
+  svg{
+    @keyframes selectOut{
+      0% {
+        transform: rotate(-180deg);
+      }
+    }
+    animation: selectOut 0.4s ;
+  }
+`}
+
+
+`
+
 
 const ItemList=styled.div`
 
