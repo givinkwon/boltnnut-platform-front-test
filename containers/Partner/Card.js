@@ -150,7 +150,7 @@ class CardContainer extends Component {
     if(item){
       return (
       <Card>
-        { showDrop == true ? (
+        {/* { showDrop == true ? (
           <SummaryContainer onClick = {this.detailDown}>
             <Image src={item.logo}/>
             <TextBox>
@@ -346,7 +346,7 @@ class CardContainer extends Component {
       </>
       )
       }
-    </>
+    </> */}
       </Card>
       )
     }

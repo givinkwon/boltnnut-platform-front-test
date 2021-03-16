@@ -81,11 +81,17 @@ class Nav extends React.Component {
       });
     } else
      {
-      // 로그인 하지 않고 /partner/[id]로 들어오는 사용자 리다이렉트
-      //if(splitedRoute[1] === 'partner' && splitedRoute.length >= 3) {
+
+      if(splitedRoute[1] === 'partner') {
+        alert("접근할 수 없는 페이지입니다");
+        Router.push("/login");
+       }
+
+      // // 로그인 하지 않고 /partner/[id]로 들어오는 사용자 리다이렉트
+      // if(splitedRoute[1] === 'partner' && splitedRoute.length >= 3) {
       //  alert("로그인이 필요합니다");
       //  Router.push("/login");
-      //}
+      // }
       this.needPermission.forEach((url) => {
         if (url === splitedRoute[1]) {
           if(requestId != 923){
