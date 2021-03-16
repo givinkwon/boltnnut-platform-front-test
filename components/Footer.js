@@ -637,6 +637,7 @@ const Select = styled(SelectComponent)`
     -webkit-font-smoothing: antialiased;
     animation: fadeIn 0.2s ease-out;
   }
+  
 `
 
 

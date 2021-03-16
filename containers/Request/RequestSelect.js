@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled, {css, keyframes} from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
 import Container from 'components/Container'
@@ -78,7 +78,7 @@ class RequestSelectContainer extends React.Component {
             {/* <Box active={this.state.click===true} onClick ={this.testfunc}></Box> */}
             <HeadBox>
               <Font46>견적받기</Font46>
-              <Font18>나에게 맞는 제조방식을 선택해주세요.</Font18>
+              <Font18 active={ true }>나에게 맞는 제조방식을 선택해주세요.</Font18>
             </HeadBox>
             <ButtonBox>
               {/* <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}> */}
@@ -86,19 +86,19 @@ class RequestSelectContainer extends React.Component {
                 { width > 1299.98 ? (
                 <ButtonText>
                   {/* 원래대로 */}
-                  <Font26 style={{height: 38, marginBottom: 24}}>제작</Font26>
+                  <Font26 style={{height: 38, marginBottom: 24}}>생산</Font26>
                   <Font20 style={{height: 65}}>
-                    지속적인 소통과 제품 분석 시스템으로 제품 생산에 불필요한
-                    가정을 방지하여 양산 비용을 최대 40% 절감합니다. 
+                    볼트앤너트 자동 견적 알고리즘과 전문 품질 감리 시스템 통해
+                    원하는 품질의 생산품을 납기에 맞춰 납품드립니다. 
                   </Font20>
                 </ButtonText>
                 ) : (
                   <ButtonText>
                   {/* 원래대로 */}
-                  <Font22 style={{height: 38, marginBottom: 24}}>제작</Font22>
+                  <Font22 style={{height: 38, marginBottom: 24}}>생산</Font22>
                   <Font17 style={{height: 65, wordBreak: 'keep-all'}}>
-                    지속적인 소통과 제품 분석 시스템으로 제품 생산에 불필요한
-                    가정을 방지하여 양산 비용을 최대 40% 절감합니다. 
+                    볼트앤너트 자동 견적 알고리즘과 전문 품질 감리 시스템 통해
+                    원하는 품질의 생산품을 납기에 맞춰 납품드립니다.   
                   </Font17>
                 </ButtonText>
                 )}
@@ -122,19 +122,19 @@ class RequestSelectContainer extends React.Component {
               { width > 1299.98 ? (
                 <ButtonText>
                   {/* 바로 도면첨부 */}
-                  <Font26 style={{height: 38, marginBottom: 24}}>생산</Font26>
+                  <Font26 style={{height: 38, marginBottom: 24}}>제작</Font26>
                   <Font20 style={{height:65}}>
-                    국내 제조사와 해외유통사 네트워크를 통해 원하는 조건에 맞는<br/>
-                    제조견적, MOQ (최소발주수량)등의 정보를 전달해드립니다.
+                    제작하고자 하는 제품의 전문 엔지니어가 프로젝트를 관리하여
+                    원하는 품질과 납기, 견적에 제작해드립니다.
                   </Font20>            
                 </ButtonText>
               ) : (
                 <ButtonText>
                   {/* 바로 도면첨부 */}
-                  <Font22 style={{height: 38, marginBottom: 24}}>생산</Font22>
+                  <Font22 style={{height: 38, marginBottom: 24}}>제작</Font22>
                   <Font17 style={{height: 65, wordBreak: 'keep-all'}}>
-                    국내 제조사와 해외유통사 네트워크를 통해 원하는 조건에 맞는
-                    제조견적, MOQ (최소발주수량)등의 정보를 전달해드립니다.
+                    제작하고자 하는 제품의 전문 엔지니어가 프로젝트를 관리하여
+                    원하는 품질과 납기, 견적에 제작해드립니다.
                   </Font17>            
                 </ButtonText>
               )}
@@ -187,6 +187,7 @@ class RequestSelectContainer extends React.Component {
 
 export default RequestSelectContainer
 
+
 const Font46 = styled(Content.FontSize46)`
   font-weight: bold;
   font-stretch: normal;
@@ -194,6 +195,17 @@ const Font46 = styled(Content.FontSize46)`
   line-height: 1.65;
   letter-spacing: -1.15px;
   color: #000000;
+`
+const boxFade = keyframes`
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
 `
 
 const Font18 = styled(Content.FontSize18)`
@@ -203,6 +215,7 @@ const Font18 = styled(Content.FontSize18)`
   line-height: 2.22;
   letter-spacing: -0.45px;
   color: #0933b3;
+  animation: ${ boxFade } 2s linear infinite;
 `
 
 const Font17 = styled(Content.FontSize17)`
@@ -341,6 +354,7 @@ const Button = styled.div`
   :active{
     border: 4px solid #0933b3;
     box-shadow: 0 3px 6px 0 var(--black-16);
+
     >div >p{
       color: #0933b3;
     }
@@ -390,7 +404,7 @@ const Button = styled.div`
   }
   @media (min-width: 1300px) { 
     height: 420px;
-    padding: 0 40px;
+    padding: 0 36px;
   }
   
 `
@@ -445,3 +459,5 @@ const ImgContainer = styled.div`
 
 //     `}
 // `
+
+
