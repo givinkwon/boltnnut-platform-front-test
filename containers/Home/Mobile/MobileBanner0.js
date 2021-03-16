@@ -54,30 +54,30 @@ class MobileBanner0Container extends React.Component {
           <img src={layer}/>
         </BackgroundImage>
         <Fade bottom>
-            <Header color={WHITE} fontWeight={"bold"}>
+            <Font23 color={WHITE} >
               내 제조 의뢰 견적과<br/>
               전문 제조사를 바로 만나보세요.
-            </Header>
+            </Font23>
             <div>
-              <Title1 fontWeight={300} color={'#ffffff'}>
+              <Font16 color={'#ffffff'}>
                   총 프로젝트 금액
-              </Title1>
+              </Font16>
               <Content1 color={'#ffffff'}>
                 <CountFunc index={0}/> <span>원</span>
               </Content1>
 
               <div style={{marginTop: 25}} />
-              <Title1 fontWeight={300} color={'#ffffff'}>
+              <Font16 color={'#ffffff'}>
                   의뢰 프로젝트
-              </Title1>
+              </Font16>
               <Content1 color={'#ffffff'}>
                 <CountFunc index={1} projCount={ProjectCount}/> <span>건</span>
               </Content1>
 
               <div style={{marginTop: 25}} />
-              <Title1 fontWeight={300} color={'#ffffff'}>
+              <Font16 color={'#ffffff'}>
                   개발 전문업체
-              </Title1>
+              </Font16>
               <Content1 color={'#ffffff'}>
                 <CountFunc index={2}/> <span>개</span>
               </Content1>
@@ -93,18 +93,28 @@ class MobileBanner0Container extends React.Component {
 
 export default MobileBanner0Container;
 
-const Header = styled(Title.FontSize23)`
+const Font23 = styled(Title.FontSize23)`
   text-align: center;
   margin-bottom: 24px;
   height: 70px;
+
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.57 !important;
+  letter-spacing: -1.15px !important;
+  text-align: center;
 `
-const Title1 = styled(Content.FontSize16)`
+
+const Font16 = styled(Content.FontSize16)`
   text-align: center;
   letter-spacing: -0.4px;
   object-fit: contain;
   font-weight:normal;
   height: 20px;
-  font-size: 17px !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
 `
 const Content1 = styled(Content.FontSize17)`
   font-weight: bold;

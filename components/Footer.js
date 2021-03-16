@@ -10,7 +10,7 @@ import * as Title from "components/Title";
 import { PRIMARY, WHITE } from "static/style";
 import Containerv1 from './Containerv1';
 import SelectComponent from './Select';
-
+import AnimatedSelectBox from 'components/AnimatedSelectBox'
 
 const rowline = "/static/images/components/Footer/rowline.svg";
 const facebook_mob = "/static/images/components/Footer/facebook.svg";
@@ -80,6 +80,7 @@ class FooterComponent extends React.Component {
     prev: false,
     width: 0,
     tab: 0,
+    notice: false,
   }
   // handleBackground = () =>
   // {
@@ -102,10 +103,17 @@ class FooterComponent extends React.Component {
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
-  
+  selectClick = () => {
+    this.setState({...this.state, notice:true});
+  }
+
+  selectOut= () =>{
+    this.setState({...this.state, notice:false});
+
+  }
   render() {
     const {Auth, Magazine} = this.props;
-    const { width } = this.state;
+    const { width, notice } = this.state;
     return (
     <>
     { width > 768 ? (
@@ -132,13 +140,16 @@ class FooterComponent extends React.Component {
             <span class="title"> 
               NOTICE
             </span>
-            <Select
+            {/* <div onClick = {notice? this.selectOut : this.selectClick}  onBlur = {this.selectOut}>
+            <AnimatedSelectBox
+              active = {notice===true}
               styles = {customStyles}
               options = {this.props.Magazine.magazine_list && this.props.Magazine.magazine_list}
               getOptionLabel={(option) => option.title}
               onChange={Magazine.setCurrent}
               value={Magazine.current ? Magazine.current : this.props.Magazine.magazine_list[0]}
               />
+              </div>  */}
           </CompanyInfoWrapper>
           <CompanyInfoWrapper style={{paddingTop: 14}}>
             <FaqTable>

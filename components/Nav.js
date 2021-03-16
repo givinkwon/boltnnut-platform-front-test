@@ -339,7 +339,9 @@ class Nav extends React.Component {
                     //onClick={() => Router.push("/request?big=4&mid=")}
                     active={url.indexOf("request") > -1}
                   >
+                    <div style={{marginBottom: 0.5}}>
                     견적 받기
+                    </div>
               </ButtonContainer>
             </Menu>
             <Icon
@@ -460,6 +462,7 @@ const NavLink = styled.p`
   color: #000000;
   display: flex;
   align-items: center;
+  font-weight: 500;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
     font-weight: 500;
@@ -480,7 +483,6 @@ const NavLink = styled.p`
     padding-left: 17px;
     padding-right: 15px;
     font-size: 16px;
-    font-weight: medium!important;
   }
   @media (min-width: 1600px) {
     padding-left: 19px;
@@ -536,7 +538,7 @@ const Close = styled.div`
 
 const ButtonContainer = styled(Buttonv1)`
 box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
-font-weight: medium !important;
+font-weight: 500;
 line-height: 0.69 !important;
 letter-spacing: -0.4px !important;
 

@@ -49,20 +49,19 @@ class Banner0Container extends React.Component {
     const PartnerCount = this.props.Partner.partner_count;
 
     return (
-    <Background src={background}>
+    <Background src={background} style = {{backgroundSize: '100% 120%'}}>
         <Layer />
         <Containerv1 style={{paddingBottom:132, paddingTop: 224, justifyContent: 'space-between'}}>
           <Fade bottom>
-            <div style={{height: 414}}>
+            <div style={{height: 414, whiteSpace: 'nowrap'}}>
               <Title.FontSize56 color={WHITE} shadow={"0 3px 6px rgba(0,0,0,0.61);"} fontWeight={"bold"} style={{lineHeight: 1.43}}>
               내 제조 의뢰 견적과<br/>
                 전문 제조사를<br/>
                 바로 만나보세요.
               </Title.FontSize56>
-              <Buttonv1 style={{marginTop: 61, fontWeight: 500, letterSpacing: '-0.8!important', lineHeight: 1.63}} onClick={() => Router.push("/request")}>
-                지금 무료 견적 받기
+              <Buttonv1 style = {{marginTop: 61}} onClick={() => Router.push("/request")}>
+                <Font32 style = {{ fontWeight: 550, letterSpacing: -0.8, lineHeight: 1.63}}>지금 무료 견적 받기</Font32>
               </Buttonv1>
-              
               <div style={{color: "#ffffff", lineHeight: 1.5, fontSize: 18, opacity: 0.8, marginTop:6 }}>
               <img src = {lock} style={{marginLeft: 50, marginRight:8}}></img>
                 모든 의뢰 NDA(비밀유지계약) 체결
@@ -70,30 +69,36 @@ class Banner0Container extends React.Component {
             </div>
             <Info>
               <InfoCell>
-                <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center', marginBottom:10}} color={'#ffffff'}>
-                  총 프로젝트 금액
-                </Content.FontSize24>
-                <Content.FontSize32 eng={true} fontWeight={"bold"} color={'#ffffff'}>
-                  {/* 2,000,000,000 */}
-                  <CountFunc index={0}/>원
-                </Content.FontSize32>
+                <CellHead>
+                  <Font24>총 프로젝트 금액</Font24>
+                </CellHead>
+                <CellBody>
+                  <Font32>
+                    {/* 2,000,000,000 */}
+                    <CountFunc index={0}/>원
+                  </Font32>
+                </CellBody>
               </InfoCell>
               <InfoCell style={{margin:'0px 41px'}}>
-                <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center', marginBottom:10}} color={'#ffffff'}>
-                  의뢰 프로젝트
-                </Content.FontSize24>
-                <Content.FontSize32 eng={true} style={{textAlign: 'center', marginLeft:30}} fontWeight={"bold"} color={'#ffffff'}>
-                  {/* 300+ */}
-                  <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개</span>
-                </Content.FontSize32>
+                <CellHead>
+                  <Font24>의뢰 프로젝트</Font24>
+                </CellHead>
+                <CellBody>
+                  <Font32>
+                    {/* 300+ */}
+                    <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개</span>
+                  </Font32>
+                </CellBody>
               </InfoCell>
               <InfoCell>
-                <Content.FontSize24 fontWeight={'normal'} style={{textAlign: 'center', marginBottom:10}} color={'#ffffff'}>
-                  파트너사
-                </Content.FontSize24>
-                <Content.FontSize32 eng={true} style={{textAlign: 'center', marginLeft:30}} fontWeight={"bold"} color={'#ffffff'}>
-                  <CountFunc index={2} partnerCount={PartnerCount}/><span style={{fontWeight:500}}>개</span>
-                </Content.FontSize32>
+                <CellHead>
+                  <Font24>파트너사</Font24>
+                </CellHead>
+                <CellBody>
+                  <Font32>
+                    <CountFunc index={2} partnerCount={PartnerCount}/><span style={{fontWeight:500}}>개</span>
+                  </Font32>
+                </CellBody>
               </InfoCell>
             </Info>
           </Fade>
@@ -108,17 +113,17 @@ export default Banner0Container;
 const Info = styled.div`
  display: table;
  padding-top: 140px;
-  margin-left: 30pxa;
- div:nth-of-type(1) {
+  margin-left: 30px;
+ >div:nth-of-type(1) {
   padding-right: 23.5px;
  }
- div:nth-of-type(2) {
+ >div:nth-of-type(2) {
    width: 216px;
    border : 2px;
    border-left: solid white 1px;
    border-right: solid white 1px;
  }
- div:nth-of-type(3) {
+ >div:nth-of-type(3) {
    width: 204px;
   //padding-left: 37.5px;
  }
@@ -132,7 +137,6 @@ const InfoCell = styled.div`
  font-weight: normal;
  font-stretch: normal;
  font-style: normal;
- line-height: 1.67;
  letter-spacing: -0.6px;
  `
  const Layer = styled.div`
@@ -140,4 +144,37 @@ const InfoCell = styled.div`
   height: 100%;
   position: absolute;
   background-color: rgba(0,0,0,0.45);
+ `
+const CellHead = styled.div`
+height: 36px;
+margin-bottom: 10px;
+align-items: center;
+`
+
+const CellBody = styled.div`
+height: 47px;
+align-items: center;
+white-space: nowrap;
+`
+
+
+ const Font24 = styled(Content.FontSize24)`
+ object-fit: contain;
+ font-weight: normal;
+ font-stretch: normal;
+ font-style: normal;
+ letter-spacing: -0.6px!important;
+ color: #e1e2e4;
+ text-align: center;
+ line-height: 1 !important;
+ `
+ const Font32 = styled(Content.FontSize32)`
+ object-fit: contain;
+ font-family: Roboto;
+ font-weight: bold;
+ font-stretch: normal;
+ font-style: normal;
+ letter-spacing: normal;
+ color: #e1e2e4;
+ text-align: center;
  `

@@ -43,8 +43,13 @@ class Banner10Container extends React.Component{
 						<Fade bottom>
 							<Block onMouseEnter={()=>this.cursorOn(0)} onMouseLeave={()=>this.cursorOut(0)} >
 								<BlockText>
-									<Font18>3D 프린터</Font18>
+
+									<BlockHead>
+										<Font18>3D 프린터</Font18>
+									</BlockHead>
+									<BlockBody>
 									<Font14>생산<br/></Font14>
+									</BlockBody>
 								</BlockText>
 								<ImgContainer src = {threedprinter}></ImgContainer>
 											
@@ -58,8 +63,12 @@ class Banner10Container extends React.Component{
 					
 							<Block onMouseEnter={()=>this.cursorOn(1)} onMouseLeave={()=>this.cursorOut(1)} >
 								<BlockText>
-									<Font18>CNC</Font18>
+									<BlockHead>
+										<Font18>CNC</Font18>
+									</BlockHead>
+									<BlockBody>
 									<Font14>생산</Font14>
+									</BlockBody>
 								</BlockText>
 								<ImgContainer src = {cnc}></ImgContainer>
 								{this.state.list[1] == true &&
@@ -70,8 +79,12 @@ class Banner10Container extends React.Component{
 							</Block>
 							<Block onMouseEnter={()=>this.cursorOn(2)} onMouseLeave={()=>this.cursorOut(2)} >
 								<BlockText>
-									<Font18>금형/사출</Font18>
+									<BlockHead>
+										<Font18>금형/사출</Font18>
+									</BlockHead>
+									<BlockBody>
 									<Font14>생산</Font14>
+									</BlockBody>
 								</BlockText>
 								<ImgContainer src = {mold}></ImgContainer>
 								{this.state.list[2] == true &&
@@ -83,8 +96,12 @@ class Banner10Container extends React.Component{
 							</Block>
 							<Block onMouseEnter={()=>this.cursorOn(3)} onMouseLeave={()=>this.cursorOut(3)} >
 								<BlockText>
-									<Font18>제품</Font18>
+									<BlockHead>
+										<Font18>제품</Font18>
+									</BlockHead>
+									<BlockBody>
 									<Font14 style = {{color: " #00498c"}}>제작</Font14>
+									</BlockBody>
 								</BlockText>
 								<ImgContainer src = {product}></ImgContainer>
 								{this.state.list[3] == true &&
@@ -95,8 +112,12 @@ class Banner10Container extends React.Component{
 							</Block>
 							<Block onMouseEnter={()=>this.cursorOn(4)} onMouseLeave={()=>this.cursorOut(4)} >
 								<BlockText>
-									<Font18>기계/설비/장비<br/></Font18>
+									<BlockHead>
+										<Font18>기계/설비/장비<br/></Font18>
+									</BlockHead>
+									<BlockBody>
 									<Font14 style = {{color: " #00498c"}}>제작</Font14>
+									</BlockBody>
 								</BlockText>
 								<ImgContainer src = {machinery}></ImgContainer>
 								{this.state.list[4] == true &&
@@ -107,8 +128,12 @@ class Banner10Container extends React.Component{
 							</Block>
 							<Block onMouseEnter={()=>this.cursorOn(5)} onMouseLeave={()=>this.cursorOut(5)} >
 								<BlockText>
-									<Font18>부품/센서</Font18>
+									<BlockHead>
+										<Font18>부품/센서</Font18>
+									</BlockHead>
+									<BlockBody>
 									<Font14 style = {{color: " #00498c"}}>제작</Font14>
+									</BlockBody>
 								</BlockText>
 								<ImgContainer src = {part} style={{width: 119.2}}></ImgContainer>
 								{this.state.list[5] == true &&
@@ -141,7 +166,7 @@ const Block = styled.div`
 	object-fit: contain;
 	text-align: center;
 	white-space: nowrap;
-	align-content: center;
+	justify-content: center;
 	:hover{
 		height: 247px;
 	}
@@ -154,23 +179,33 @@ const BlockText = styled.div`
 	padding-top: 20px;
 	font-stretch: normal;
 `
+const BlockHead = styled.div`
+display: flex;
+height:27px;
+justify-content: center;
+align-items: center;
+`
+const BlockBody = styled.div`
+margin-top: 2px;
+display: flex;
+height:20px;
+justify-content: center;
+align-items: center;
+`
 
+
+const Font14 = styled(Content.FontSize14)`
+	font-weight: normal;
+	font-style: normal;
+	letter-spacing: -0.35px !important;
+	color: #8c7d70;
+	text-align: center;
+`
 const Font18 = styled(Content.FontSize18)`
 	font-weight: bold;
 	font-style: normal;
-	letter-spacing: -0.45px;
+	letter-spacing: -0.45px !important;
 	color: #414550;
-	line-height: 2.22;
-	text-align: center;
-`
-
-const Font14 = styled(Content.FontSize14)`
-	margin-top: 1px;
-	font-size: 14px;
-	font-weight: normal;
-	font-style: normal;
-	letter-spacing: -0.35px;
-	color: #8c7d70;
 	text-align: center;
 `
 

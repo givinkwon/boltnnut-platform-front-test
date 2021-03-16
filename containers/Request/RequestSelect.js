@@ -344,6 +344,7 @@ const Button = styled.div`
   border-radius: 10px;
   box-sizing: border-box;
   
+  
   p{
     display : flex;
     justify-content: center;
@@ -403,8 +404,11 @@ const Button = styled.div`
 
   }
   @media (min-width: 1300px) { 
+    
     height: 420px;
-    padding: 0 36px;
+    padding: 0 54px;
+    // padding-top: 59px;
+    // padding-bottom: 64px;
   }
   
 `

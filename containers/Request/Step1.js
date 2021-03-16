@@ -10,6 +10,7 @@ import SelectComponent from 'components/Select';
 import InputComponent from 'components/Input2';
 import PhoneInputComponent from 'components/PhoneInput';
 import CheckBoxComponent from 'components/CheckBox';
+import AnimatedSelectBox from 'components/AnimatedSelectBox';
 
 const customStyles = {
   dropdownIndicator: () => ({
@@ -112,20 +113,19 @@ class Step1Container extends React.Component {
          의뢰 분야
        </Header>
        <SelectRow>
-        
-        <Box active={this.state.list[0]===true} onClick ={()=>this.state.list[0]? this.selectOut(0):this.selectClick(0)}  onBlur = {()=>this.selectOut(0)}>
-        <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>       
-        <Select   
-          styles={customStyles} options={Request.big_category_list} value={Request.select_big} 
-          getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
-        />
-        </Box>
-        <div style={{marginRight: 38}}/>
+       <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>   
+          
+        <AnimatedSelectBox  style={{marginRight: 38}} onClick ={()=>this.state.list[0]? this.selectOut(0):this.selectClick(0)}  onBlur = {()=>this.selectOut(0)}>
+          adsf
+          <SelectComponent
+          active={this.state.list[0]===true} styles={customStyles} options={Request.big_category_list} value={Request.select_big} 
+          getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}/>
+        </AnimatedSelectBox>
   
-        <Box active={this.state.list[1]===true} onClick ={()=>this.state.list[1]? this.selectOut(1):this.selectClick(1)}  onBlur = {()=>this.selectOut(1)} >
+        {/* <Box onClick ={()=>this.state.list[1]? this.selectOut(1):this.selectClick(1)}  onBlur = {()=>this.selectOut(1)} >
         <input style={{display: 'none'}} value={Request.select_mid ? Request.select_mid.category : ''} class="Input"/>
-        <Select
-            styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
+        <AnimatedSelectBox 
+            active={this.state.list[1]===true} styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
           />
         </Box>
@@ -134,10 +134,10 @@ class Step1Container extends React.Component {
             희망 예산
         </Header>
         <SelectRow style={{width: 380}}>
-          <Box active={this.state.list[2]===true} onClick ={()=>this.state.list[2]? this.selectOut(2):this.selectClick(2)}  onBlur = {()=>this.selectOut(2)}>
+          <Box onClick ={()=>this.state.list[2]? this.selectOut(2):this.selectClick(2)}  onBlur = {()=>this.selectOut(2)}>
           <input style={{display: 'none'}} value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
-          <Select
-            styles={customStyles} options={costArray} value={Request.input_price}
+          <AnimatedSelectBox 
+            active={this.state.list[2]===true} styles={customStyles} options={costArray} value={Request.input_price}
             getOptionLabel={(option) => option.label} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
           />
           </Box>
@@ -146,13 +146,13 @@ class Step1Container extends React.Component {
             개발 기간
           </Header>
         <SelectRow style={{width: 380}}>
-          <Box active={this.state.list[3]===true} onClick ={()=>this.state.list[3]? this.selectOut(3):this.selectClick(3)}  onBlur = {()=>this.selectOut(3)}>
+          <Box onClick ={()=>this.state.list[3]? this.selectOut(3):this.selectClick(3)}  onBlur = {()=>this.selectOut(3)}>
           <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/>
-          <Select
-            styles={customStyles} options={dueArray} value={Request.input_day}
+          <AnimatedSelectBox 
+            active={this.state.list[3]===true} styles={customStyles} options={dueArray} value={Request.input_day}
             getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
           />
-          </Box>
+          </Box> */}
         </SelectRow>
      </>
     );
@@ -251,54 +251,49 @@ const SelectRow = styled.div`
     color: #282c36;
   }
 `
-const Select = styled(SelectComponent)`
-  width: 380px;
+// const Select = styled(SelectComponent)`
+// cursor: pointer;
+//   width: 380px;
+//   @keyframes fadeIn {  
+//     0% {
+//       opacity:0.5;
+//       transform: translateY(-10px);
+//     }
+//     100% {
+//       opacity:1;
+//       transform: translateY(0);
+//     }
+//   }
 
-  
-  @keyframes fadeIn {  
-    0% {
-      opacity:0.5;
-      transform: translateY(-10px);
-    }
-    100% {
-      opacity:1;
-      transform: translateY(0);
-    }
-  }
+//   >div: nth-of-type(2){
+//     -webkit-font-smoothing: antialiased;
+//     animation: fadeIn 0.2s ease-out;
+//   }
+//   ${ props => props.active && css`
+//   svg{
+//     @keyframes select{
+//       0% {
+//         transform: skewY(-180deg);
+//       }
+//     }
 
-  >div: nth-of-type(2){
-    -webkit-font-smoothing: antialiased;
-    animation: fadeIn 0.2s ease-out;
-  }
-`
+//     animation: select 0.4s ease-out;
+//     transform: rotate(-180deg);
+//   }
+//   `}
+
+//   ${props => !props.active && css`
+//   svg{
+//     @keyframes selectOut{
+//       0% {
+//         transform: rotate(-180deg);
+//       }
+//     }
+//     animation: selectOut 0.4s ;
+//   }
+// `}
+
+// `
 
 const Box = styled.div`
-width: 380px;
-
-  
-  ${ props => props.active && css`
-  svg{
-    @keyframes select{
-      0% {
-        transform: skewY(-180deg);
-      }
-    }
-
-    animation: select 0.4s ease-out;
-    transform: rotate(-180deg);
-  }
-  `}
-
-  ${props => !props.active && css`
-  svg{
-    @keyframes selectOut{
-      0% {
-        transform: rotate(-180deg);
-      }
-    }
-    animation: selectOut 0.4s ;
-  }
-`}
-
-
 `
