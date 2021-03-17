@@ -13,7 +13,14 @@ class ManufactureProcess {
   @observable totalMaxPrice=0;
   @observable message = '';
   @observable ManufactureProcessList = [];
-
+  @observable selectedBigCategory=null;
+  @observable selectedMidCategory=null;
+  @observable midCategorySet=[];
+  @observable categoryDefaultValue={
+    big:null,
+    mid:null
+}
+  
   @action init = async () => {
     await ManufactureProcessAPI.loadTitle()
       .then(res => {
@@ -22,61 +29,38 @@ class ManufactureProcess {
 
           const arr = [...res.data.data]
           console.log(arr)
-          // for(const data in res.data.data)
-          // {
-          //   this.ManufactureProcessList.push(
-          //       {
-          //         name:res.data.data[data].name,
-          //         id:res.data.data[data].id,
-          //         detailManufactureProcess:{
-                    
-                    
-          //           // for(const temp in res.data.data[data].detailManufactureProcess)
-          //           // {
 
-          //           // }
+          this.ManufactureProcessList=[]; //초기화
 
-          //         //   data.detailManufactureProcess.forEach(temp => {
-          //         //     detailManufactureProcess.push({
-          //         //       name:temp.name,
-          //         //       id:temp.id
-          //         //     })
-          //         //   })
-          //         }
-          //       }
-          //     )
-          // }
-
-          
-          arr.forEach((data)=>
+          for(let i=0;i<arr.length;i++)
+          {
+            console.log("a"+arr.length)
+            this.ManufactureProcessList.push({name:arr[i].name,id:arr[i].id,detail:[]});
+            
+            for(let j=0;j<arr[i].detailManufactureProcess.length;j++)
             {
-              this.ManufactureProcessList.push(
+              // console.log("b"+arr[i].detailManufactureProcess.length)
+              this.ManufactureProcessList[i].detail.push(
                 {
-                  name:data.name,
-                  id:data.id,
-                  detailManufactureProcess:[]
-                  // detailManufactureProcess:[
-                  //   data.detailManufactureProcess.forEach(temp => {
-                  //     detailManufactureProcess.push({
-                  //       name:temp.name,
-                  //       id:temp.id
-                  //     }
-                  //     )
-                  //   })
-                  // ]
-                },
-                
-              )
-            })
-
-
-            console.log(this.ManufactureProcessList)
+                  name:arr[i].detailManufactureProcess[j].name,
+                  id:arr[i].detailManufactureProcess[j].id
+            });
+            }
+          }
+          console.log(this.ManufactureProcessList)
         }
       )
-      
+    this.setDefaultValue('CNC')
     this.reset()
   };
 
+  @action setBigCategory = (e) =>
+  {
+    this.selectedBigCategory = e;
+    this.midCategorySet = e.detail;
+    this.selectedMidCategory=e.detail[0];
+  };
+  
   @action reset = async () => {
     this.SelectChecked='';
     this.MinPrice=0;
@@ -85,6 +69,19 @@ class ManufactureProcess {
     this.totalMaxPrice=0;
   };
 
+  @action setDefaultValue = (name) => {
+    // this.categoryDefaultValue = this.ManufactureProcessList[2];
+    this.ManufactureProcessList.forEach(t=>
+      {
+        if(t.name==name)
+        {
+          this.categoryDefaultValue.big = t;
+          this.categoryDefaultValue.mid = t.detail[0];
+          this.midCategorySet=t.detail;
+
+        }
+      })
+  };
 
 @action saveSelect = (req) => {
   ManufactureProcessAPI.saveSelect(req)

@@ -4,13 +4,20 @@ import { inject, observer } from 'mobx-react';
 import {useDropzone} from 'react-dropzone'
 import STLViewer from 'stl-viewer'
 
+import TTT from 'react-select'
+
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 import SelectComponent from 'components/Select';
+import ManufactureProcess from "../../stores/ManufactureProcess";
 const DeleteButtonImg = 'static/images/request/Step2/Q.png'
-const fileList=[
+const fileList=[{
+      drawFile:null,
+      fileName:'d',
+      price:'ff'
+    }
 ]
 
 const customStyles = {
@@ -51,6 +58,7 @@ class FileUploadContainer extends Component {
 
   static defaultProps = { title: '파일업로드' };
 
+  estimateInfoList = [{}];
   state={
     fileList:[]
   }
@@ -64,12 +72,31 @@ class FileUploadContainer extends Component {
       // console.log(files);
       // temp.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})
       files.forEach((file) => {
-        const ManufactureProcessFormData = new FormData();
-        ManufactureProcessFormData.append("blueprint",file);
-        ManufactureProcessFormData.append("process",1);
-        ManufactureProcessFormData.append("detailProcess",1);
-        //기본정보입력에서 받은 의뢰서로 바꾸기
-        ManufactureProcessFormData.append("request",2467);
+        
+        ManufactureProcess.ManufactureProcessList.forEach(bigCategory=>
+          {
+            bigCategory.detail.forEach(midCategory=>
+              {
+                // console.log(bigCategory.name + ' / ' + midCategory.name)
+                const ManufactureProcessFormData = new FormData();
+                ManufactureProcessFormData.append("blueprint",file);
+                ManufactureProcessFormData.append("process",bigCategory.id);
+                ManufactureProcessFormData.append("detailProcess",midCategory.id);
+                //기본정보입력에서 받은 의뢰서로 바꾸기
+                ManufactureProcessFormData.append("request",2467);
+
+                ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
+                .then((res) => {
+
+                  return res;
+                })
+                .catch((e) => {
+                  console.log(e);
+                  console.log(e.response);
+                });
+              })
+          })
+        
 
         ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
         .then((res) => {
@@ -93,6 +120,8 @@ class FileUploadContainer extends Component {
           // this.message = res.data.message;
           // Proposal.loadEstimateInfo(this.proposal_type);
           // console.log("EStimate = proposal_type="+this.proposal_type);
+          console.log(fileList)
+          console.log(this.state.fileList[0])
           return res;
         })
         .catch((e) => {
@@ -163,10 +192,19 @@ class FileUploadContainer extends Component {
         
       </div>
     </>
-  )
-}
+    )
+  }
 
-    render() {
+    
+    render() 
+    {
+      const {ManufactureProcess} = this.props;
+      const options = [
+          { value: "apple", label: "Apple" },
+          { value: "banana", label: "Banana" },
+          { value: "orange", label: "Orange" },
+          { value: "berry", label: "Berry" },
+      ]
       return(
           <Card>
             <Header>
@@ -192,15 +230,27 @@ class FileUploadContainer extends Component {
                         />
                       </StlBox>
                       <ColumnBox>
+                      {/* <TTT options={options} defaultValue={options[2]}></TTT> */}
                         {data.fileName}
                         <ManufactureBox style={{marginTop:20}}>
                           {/* <Box active={this.state.list[3]===true} onClick ={()=>this.state.list[3]? this.selectOut(3):this.selectClick(3)}  onBlur = {()=>this.selectOut(3)}> */}
                           {/* <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/> */}
+
                           <Select
-                            styles={customStyles} options={dueArray} value={Request.input_day}
-                            getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
+                            // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
+                            defaultValue={ManufactureProcess.categoryDefaultValue.big} 
+                            styles={customStyles} options={ManufactureProcess.ManufactureProcessList} 
+                            // value={ManufactureProcess.selectedBigCategory}
+                            getOptionLabel={(option) => option.name} onChange={ManufactureProcess.setBigCategory}
                           />
+                          
                           {/* </Box> */}
+                          <Select
+                            defaultValue={ManufactureProcess.categoryDefaultValue.mid}
+                            value={ManufactureProcess.selectedBigCategory}
+                            styles={customStyles} options={ManufactureProcess.midCategorySet}
+                            getOptionLabel={(option) => option.name} placeholder='개월' onChange={Request.setDue}
+                          />
                         </ManufactureBox>
                       </ColumnBox>
                       
@@ -227,7 +277,7 @@ class FileUploadContainer extends Component {
 
 export default FileUploadContainer;
 const Select = styled(SelectComponent)`
-  width: 380px;
+  width: 180px;
 
   
   @keyframes fadeIn {  
