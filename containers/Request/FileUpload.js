@@ -58,7 +58,7 @@ class FileUploadContainer extends Component {
 
   static defaultProps = { title: '파일업로드' };
 
-  estimateInfoList = [{}];
+  estimateInfoList = [];
   state={
     fileList:[]
   }
@@ -72,7 +72,6 @@ class FileUploadContainer extends Component {
       // console.log(files);
       // temp.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})
       files.forEach((file) => {
-        
         ManufactureProcess.ManufactureProcessList.forEach(bigCategory=>
           {
             bigCategory.detail.forEach(midCategory=>
@@ -84,10 +83,20 @@ class FileUploadContainer extends Component {
                 ManufactureProcessFormData.append("detailProcess",midCategory.id);
                 //기본정보입력에서 받은 의뢰서로 바꾸기
                 ManufactureProcessFormData.append("request",2467);
-
+                 
                 ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
                 .then((res) => {
-
+                  // this.estimateInfoList.push({
+                  //   detail:midCategory.name,
+                  //   price:bigCategory.name+midCategory.name
+                  // })
+                  this.estimateInfoList.push(
+                    {
+                      process:bigCategory.id,
+                      detailProcess:midCategory.id,
+                    }
+                  )
+                  
                   return res;
                 })
                 .catch((e) => {
@@ -96,38 +105,46 @@ class FileUploadContainer extends Component {
                 });
               })
           })
-        
 
-        ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
-        .then((res) => {
-          this.setState(
-            {
-              fileList:fileList.push({
-                drawFile:res.data.data.stl_file,
-                fileName:file.name,
-                price:res.data.data.totalMaxPrice,
-              })
-            })
+          // for(let key of this.estimateInfoList[0].values())
+          // {
+          //   console.log(key);
+          // }
+          // console.log(this.estimateInfoList);
 
-          console.log("받은 리스폰스",res);
-          // this.EstimateDataForDrawing = res.data.data;
-          // console.log(this.EstimateDataForDrawing)
-          // this.MaxPrice= this.EstimateDataForDrawing.maxPrice;
-          // this.MinPrice= this.EstimateDataForDrawing.minPrice;
-          // this.totalMaxPrice= this.EstimateDataForDrawing.totalMaxPrice;
-          // this.totalMinPrice= this.EstimateDataForDrawing.totalMinPrice;
-          // this.proposal_type = res.data.proposalId;
-          // this.message = res.data.message;
-          // Proposal.loadEstimateInfo(this.proposal_type);
-          // console.log("EStimate = proposal_type="+this.proposal_type);
-          console.log(fileList)
-          console.log(this.state.fileList[0])
-          return res;
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
+        // ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
+        // .then((res) => {
+        //   this.setState(
+        //     {
+        //       fileList:fileList.push({
+        //         drawFile:res.data.data.stl_file,
+        //         fileName:file.name,
+        //         price:res.data.data.totalMaxPrice,
+        //       })
+        //     })
+
+        //   console.log("받은 리스폰스",res);
+        //   // this.EstimateDataForDrawing = res.data.data;
+        //   // console.log(this.EstimateDataForDrawing)
+        //   // this.MaxPrice= this.EstimateDataForDrawing.maxPrice;
+        //   // this.MinPrice= this.EstimateDataForDrawing.minPrice;
+        //   // this.totalMaxPrice= this.EstimateDataForDrawing.totalMaxPrice;
+        //   // this.totalMinPrice= this.EstimateDataForDrawing.totalMinPrice;
+        //   // this.proposal_type = res.data.proposalId;
+        //   // this.message = res.data.message;
+        //   // Proposal.loadEstimateInfo(this.proposal_type);
+        //   // console.log("EStimate = proposal_type="+this.proposal_type);
+        //   console.log(fileList)
+        //   console.log(this.state.fileList[0])
+        //   return res;
+        // })
+        // .catch((e) => {
+        //   console.log(e);
+        //   console.log(e.response);
+        // });
+
+
+
         // const res = ManufactureProcess.saveSelect(ManufactureProcessFormData);
                   // if(res)
                   // {
