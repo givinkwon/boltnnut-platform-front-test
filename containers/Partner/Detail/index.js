@@ -48,6 +48,7 @@ class PartnerConatiner extends React.Component {
       //     )
       //   } 
       // </>
+      //
     )
   }
 }

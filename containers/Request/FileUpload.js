@@ -1,7 +1,7 @@
-import React, {Component,useCallback} from "react";
+import React, { Component, useCallback } from "react";
 import styled from "styled-components";
 import { inject, observer } from 'mobx-react';
-import {useDropzone} from 'react-dropzone'
+import { useDropzone } from 'react-dropzone'
 import STLViewer from 'stl-viewer'
 
 import TTT from 'react-select'
@@ -13,11 +13,11 @@ import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 import SelectComponent from 'components/Select';
 import ManufactureProcess from "../../stores/ManufactureProcess";
 const DeleteButtonImg = 'static/images/request/Step2/Q.png'
-const fileList=[{
-      drawFile:null,
-      fileName:'d',
-      price:'ff'
-    }
+const fileList = [{
+  drawFile: null,
+  fileName: 'd',
+  price: 'ff'
+}
 ]
 
 const customStyles = {
@@ -48,69 +48,92 @@ const customStyles = {
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
     const transition = 'opacity 300ms';
-    return { ...provided, opacity, transition};
+    return { ...provided, opacity, transition };
   }
 }
 
-@inject('Request','ManufactureProcess')
+@inject('Request', 'ManufactureProcess')
 @observer
 class FileUploadContainer extends Component {
 
   static defaultProps = { title: '파일업로드' };
 
   estimateInfoList = [];
-  state={
-    fileList:[]
+  state = {
+    fileList: []
   }
-  MyDropzone =() =>
+
+  findDefaultArr(element)
   {
-    const {Request,ManufactureProcess} = this.props;
-    const dropHandler = (files)=>
+    console.log(element)
+    if(element.detailProcess==8)
     {
-      
+      return true;
+    }
+  }
+  MyDropzone = () => {
+    const { Request, ManufactureProcess } = this.props;
+    const dropHandler = (files) => {
+
       // const temp=this.state.fileList;
       // console.log(files);
       // temp.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})
       files.forEach((file) => {
-        ManufactureProcess.ManufactureProcessList.forEach(bigCategory=>
-          {
-            bigCategory.detail.forEach(midCategory=>
-              {
-                // console.log(bigCategory.name + ' / ' + midCategory.name)
-                const ManufactureProcessFormData = new FormData();
-                ManufactureProcessFormData.append("blueprint",file);
-                ManufactureProcessFormData.append("process",bigCategory.id);
-                ManufactureProcessFormData.append("detailProcess",midCategory.id);
-                //기본정보입력에서 받은 의뢰서로 바꾸기
-                ManufactureProcessFormData.append("request",2467);
-                 
-                ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
-                .then((res) => {
-                  // this.estimateInfoList.push({
-                  //   detail:midCategory.name,
-                  //   price:bigCategory.name+midCategory.name
-                  // })
-                  this.estimateInfoList.push(
-                    {
-                      process:bigCategory.id,
-                      detailProcess:midCategory.id,
-                    }
-                  )
-                  
-                  return res;
-                })
-                .catch((e) => {
-                  console.log(e);
-                  console.log(e.response);
-                });
-              })
-          })
+        ManufactureProcess.ManufactureProcessList.forEach((bigCategory,bigIdx) => {
+          bigCategory.detail.forEach((midCategory,midIdx) => {
+            // console.log(bigCategory.name + ' / ' + midCategory.name)
+            const ManufactureProcessFormData = new FormData();
+            ManufactureProcessFormData.append("blueprint", file);
+            ManufactureProcessFormData.append("process", bigCategory.id);
+            ManufactureProcessFormData.append("detailProcess", midCategory.id);
+            //기본정보입력에서 받은 의뢰서로 바꾸기
+            ManufactureProcessFormData.append("request", 2467);
 
-          // for(let key of this.estimateInfoList[0].values())
-          // {
-          //   console.log(key);
-          // }
-          // console.log(this.estimateInfoList);
+            ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
+              .then((res) => {
+                // this.estimateInfoList.push({
+                //   detail:midCategory.name,
+                //   price:bigCategory.name+midCategory.name
+                // })
+                this.estimateInfoList.push(
+                  {
+                    process: bigCategory.id,
+                    detailProcess: midCategory.id,
+                    price:midCategory.name+' 가격'
+                  }
+                )
+
+                if(bigIdx==ManufactureProcess.ManufactureProcessList.length-1
+                  && midIdx == bigCategory.detail.length-1)
+                {
+                  // const DefaultArr = this.estimateInfoList.find(this.isDefaultArr);
+                  const DefaultArr = this.estimateInfoList.find(element => element.detailProcess===8);
+                  const defaultPrice = DefaultArr.price;
+
+                  this.setState(
+                  {
+                    fileList:fileList.push({
+                      drawFile:res.data.data.stl_file,
+                      fileName:file.name,
+                      // price:res.data.data.totalMaxPrice,
+                      price: defaultPrice
+                    })
+                  })
+                }
+                return res;
+              })
+              .catch((e) => {
+                console.log(e);
+                console.log(e.response);
+              });
+          })
+        })
+
+        // for(let key of this.estimateInfoList[0].values())
+        // {
+        //   console.log(key);
+        // }
+        console.log(this.estimateInfoList);
 
         // ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
         // .then((res) => {
@@ -146,20 +169,20 @@ class FileUploadContainer extends Component {
 
 
         // const res = ManufactureProcess.saveSelect(ManufactureProcessFormData);
-                  // if(res)
-                  // {
-                  //   console.log("DDDD");
-                  //   this.setState(
-                  //     {
-                  //       fileList:fileList.push({
-                  //         drawFile:res.stl_file,
-                  //         fileName:file.name,
-                  //         price:'견적을 계산중입니다...',
-                  //       })
-                  //     })
-                  // }
-          }
-        )
+        // if(res)
+        // {
+        //   console.log("DDDD");
+        //   this.setState(
+        //     {
+        //       fileList:fileList.push({
+        //         drawFile:res.stl_file,
+        //         fileName:file.name,
+        //         price:'견적을 계산중입니다...',
+        //       })
+        //     })
+        // }
+      }
+      )
       // this.setState({fileList:fileList.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})})
       // this.setState({fileList:temp})
       // fileList.forEach(d=>console.log(d))
@@ -168,128 +191,127 @@ class FileUploadContainer extends Component {
       // console.log("RRRASNDLKNASLD");
       //file을 백엔드에 전해줌(1)
 
-    // let formData = new FormData();
+      // let formData = new FormData();
 
-    // const config ={
-    //     header:{'content-type':'multipart/form-data'}
-    // }
-    // formData.append("file", files[0])
+      // const config ={
+      //     header:{'content-type':'multipart/form-data'}
+      // }
+      // formData.append("file", files[0])
 
-    // axios.post('/api/product/image', formData, config)
-    //     // 백엔드가 file저장하고 그 결과가 reponse에 담김
-    //     // 백엔드는 그 결과를 프론트로 보내줌(3)
-    //     .then(response =>{
-    //         if(response.data.success){
-    //             setImages([...Images, response.data.filePath])
-    //         }else{
-    //             alert('파일 저장 실패')
-    //         }
-    //     })
-  }
+      // axios.post('/api/product/image', formData, config)
+      //     // 백엔드가 file저장하고 그 결과가 reponse에 담김
+      //     // 백엔드는 그 결과를 프론트로 보내줌(3)
+      //     .then(response =>{
+      //         if(response.data.success){
+      //             setImages([...Images, response.data.filePath])
+      //         }else{
+      //             alert('파일 저장 실패')
+      //         }
+      //     })
+    }
 
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
-    console.log(acceptedFiles);
-    dropHandler(acceptedFiles);
-  }, [])
+    const onDrop = useCallback(acceptedFiles => {
+      // Do something with the files
+      console.log(acceptedFiles);
+      dropHandler(acceptedFiles);
+    }, [])
 
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
-  return (
-    <>
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        <InputBox>
-          {
-            isDragActive ?
-              <p>Drop the files here ...</p> :
-              <p>Drag 'n' drop some files here, or click to select files</p>
-          }
-        </InputBox>
-        
-      </div>
-    </>
+    return (
+      <>
+        <div {...getRootProps()}>
+          <input {...getInputProps()} />
+          <InputBox>
+            {
+              isDragActive ?
+                <p>Drop the files here ...</p> :
+                <p>Drag 'n' drop some files here, or click to select files</p>
+            }
+          </InputBox>
+
+        </div>
+      </>
     )
   }
 
-    
-    render() 
-    {
-      const {ManufactureProcess} = this.props;
-      const options = [
-          { value: "apple", label: "Apple" },
-          { value: "banana", label: "Banana" },
-          { value: "orange", label: "Orange" },
-          { value: "berry", label: "Berry" },
-      ]
-      return(
-          <Card>
-            <Header>
-              {this.props.title}
-            </Header>
-            <ContentBox>
-            <ItemList>
-      
-              {fileList.map((data,idx)=>
-                <>
-                  <ItemBox>
-                    <MainBox>
-                      <StlBox>
-                        {/* <img src={DeleteButtonImg} style={{width:120,height:120}}/> */}
-                        <STLViewer
-                          model={data.drawFile} // stl파일 주소
-                          width={120}                                  // 가로
-                          height={120}                                 // 세로
-                          modelColor='red'                             // 색
-                          backgroundColor='white'                    // 배경색
-                          rotate={true}                                // 자동회전 유무
-                          orbitControls={true}                         // 마우스 제어 유무
-                        />
-                      </StlBox>
-                      <ColumnBox>
+
+  render() {
+    const { ManufactureProcess } = this.props;
+    const options = [
+      { value: "apple", label: "Apple" },
+      { value: "banana", label: "Banana" },
+      { value: "orange", label: "Orange" },
+      { value: "berry", label: "Berry" },
+    ]
+    return (
+      <Card>
+        <Header>
+          {this.props.title}
+        </Header>
+        <ContentBox>
+          <ItemList>
+
+            {fileList.map((data, idx) =>
+              <>
+                <ItemBox>
+                  <MainBox>
+                    <StlBox>
+                      {/* <img src={DeleteButtonImg} style={{width:120,height:120}}/> */}
+                      <STLViewer
+                        model={data.drawFile} // stl파일 주소
+                        width={120}                                  // 가로
+                        height={120}                                 // 세로
+                        modelColor='red'                             // 색
+                        backgroundColor='white'                    // 배경색
+                        rotate={true}                                // 자동회전 유무
+                        orbitControls={true}                         // 마우스 제어 유무
+                      />
+                    </StlBox>
+                    <ColumnBox>
                       {/* <TTT options={options} defaultValue={options[2]}></TTT> */}
-                        {data.fileName}
-                        <ManufactureBox style={{marginTop:20}}>
-                          {/* <Box active={this.state.list[3]===true} onClick ={()=>this.state.list[3]? this.selectOut(3):this.selectClick(3)}  onBlur = {()=>this.selectOut(3)}> */}
-                          {/* <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/> */}
+                      {data.fileName}
+                      <ManufactureBox style={{ marginTop: 20 }}>
+                        {/* <Box active={this.state.list[3]===true} onClick ={()=>this.state.list[3]? this.selectOut(3):this.selectClick(3)}  onBlur = {()=>this.selectOut(3)}> */}
+                        {/* <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/> */}
 
-                          <Select
-                            // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
-                            defaultValue={ManufactureProcess.categoryDefaultValue.big} 
-                            styles={customStyles} options={ManufactureProcess.ManufactureProcessList} 
-                            // value={ManufactureProcess.selectedBigCategory}
-                            getOptionLabel={(option) => option.name} onChange={ManufactureProcess.setBigCategory}
-                          />
-                          
-                          {/* </Box> */}
-                          <Select
-                            defaultValue={ManufactureProcess.categoryDefaultValue.mid}
-                            value={ManufactureProcess.selectedBigCategory}
-                            styles={customStyles} options={ManufactureProcess.midCategorySet}
-                            getOptionLabel={(option) => option.name} placeholder='개월' onChange={Request.setDue}
-                          />
-                        </ManufactureBox>
-                      </ColumnBox>
-                      
-                    </MainBox>
+                        <Select
+                          // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
+                          defaultValue={ManufactureProcess.categoryDefaultValue.big}
+                          styles={customStyles} options={ManufactureProcess.ManufactureProcessList}
+                          // value={ManufactureProcess.selectedBigCategory}
+                          getOptionLabel={(option) => option.name} onChange={ManufactureProcess.setBigCategory}
+                        />
 
-                    <TailBox>
-                      <div onClick={()=>this.setState({fileList:fileList.splice(idx,1)})}>
-                        <img src={DeleteButtonImg}/>
-                      </div>
-                      
-                      {data.price}
-                    </TailBox>
-                  </ItemBox>
-                </>
+                        {/* </Box> */}
+                        <Select
+                          defaultValue={ManufactureProcess.categoryDefaultValue.mid}
+                          value={ManufactureProcess.selectedBigCategory}
+                          styles={customStyles} options={ManufactureProcess.midCategorySet}
+                          getOptionLabel={(option) => option.name} placeholder='개월' onChange={Request.setDue}
+                        />
+                      </ManufactureBox>
+                    </ColumnBox>
 
-              )}
-              </ItemList>
-              <this.MyDropzone></this.MyDropzone>
-            </ContentBox>
-          </Card>
-        )
-    }
+                  </MainBox>
+
+                  <TailBox>
+                    <div onClick={() => this.setState({ fileList: fileList.splice(idx, 1) })}>
+                      <img src={DeleteButtonImg} />
+                    </div>
+
+                    {data.price}
+                  </TailBox>
+                </ItemBox>
+              </>
+
+            )}
+          </ItemList>
+          <this.MyDropzone></this.MyDropzone>
+        </ContentBox>
+      </Card>
+    )
+  }
 }
 
 export default FileUploadContainer;
@@ -318,7 +340,7 @@ const Box = styled.div`
 width: 380px;
 
   
-  ${ props => props.active && css`
+  ${props => props.active && css`
   svg{
     @keyframes select{
       0% {
@@ -346,19 +368,19 @@ width: 380px;
 `
 
 
-const ItemList=styled.div`
+const ItemList = styled.div`
 
 `
 
 
-const ItemBox=styled.div`
+const ItemBox = styled.div`
   display:flex;
   justify-content:space-between;
   // width:800px;
   border:1px solid gray;
 `
 
-const StlBox=styled.div`
+const StlBox = styled.div`
 
 `
 
@@ -366,7 +388,7 @@ const ColumnBox = styled.div`
 
 `
 
-const MainBox=styled.div`
+const MainBox = styled.div`
   display:flex;
 `
 
@@ -382,10 +404,10 @@ const ManufactureBox = styled.div`
   display:flex;
 `
 
-const TailBox=styled.div`
+const TailBox = styled.div`
 
 `
-const InputBox=styled.div`
+const InputBox = styled.div`
     // width:500px;
     display:flex;
     align-items:center;
@@ -396,7 +418,7 @@ const InputBox=styled.div`
     margin-bottom:20px;
 `
 
-const ImageBox=styled.div` 
+const ImageBox = styled.div` 
   padding-top:10px;
   display:flex;
   justify-content:space-between;
