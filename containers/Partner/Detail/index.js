@@ -28,24 +28,27 @@ class PartnerConatiner extends React.Component {
     console.log(current_partner)
     return (
       <>
-        <BannerContainer/>
-        {
-          Partner.detail && (
-            <CustomContainer>
-              <ProfileContainer id={id} />
-              {/*<CompanyInfoContainer/>*/}
-              <CompanyDetailContainer/>
-
-              <PortfolioContainer/>
-              {current_partner ? (current_partner.structure_set.length > 0 ? <StructureConatiner/> : "") : ("")}
-              {current_partner ? (current_partner.machine_set.length > 0 ? <MachineConatiner/> : "") : ("")}
-              {current_partner ? (current_partner.certification_set.length > 0 ? <CertificationConatiner/> : "") : ("")}
-              <RequestCardConatiner/>
-              {/*<ResumeContainer/>*/}
-            </CustomContainer>
-          )
-        }
       </>
+      // <>
+      //   <BannerContainer/>
+      //   {
+      //     Partner.detail && (
+      //       <CustomContainer>
+      //         <ProfileContainer id={id} />
+      //         {/*<CompanyInfoContainer/>*/}
+      //         <CompanyDetailContainer/>
+
+      //         <PortfolioContainer/>
+      //         {current_partner ? (current_partner.structure_set.length > 0 ? <StructureConatiner/> : "") : ("")}
+      //         {current_partner ? (current_partner.machine_set.length > 0 ? <MachineConatiner/> : "") : ("")}
+      //         {current_partner ? (current_partner.certification_set.length > 0 ? <CertificationConatiner/> : "") : ("")}
+      //         <RequestCardConatiner/>
+      //         {/*<ResumeContainer/>*/}
+      //       </CustomContainer>
+      //     )
+      //   } 
+      // </>
+      //
     )
   }
 }
