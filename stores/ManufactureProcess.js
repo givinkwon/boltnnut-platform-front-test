@@ -60,7 +60,12 @@ class ManufactureProcess {
     this.midCategorySet = e.detail;
     this.selectedMidCategory=e.detail[0];
   };
-  
+
+  @action setMidCategory = (e) =>
+  {
+    this.selectedMidCategory = e;
+  };
+
   @action reset = async () => {
     this.SelectChecked='';
     this.MinPrice=0;
@@ -77,6 +82,7 @@ class ManufactureProcess {
         {
           this.categoryDefaultValue.big = t;
           this.categoryDefaultValue.mid = t.detail[0];
+          console.log(this.categoryDefaultValue.mid);
           this.midCategorySet=t.detail;
 
         }
