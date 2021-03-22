@@ -140,16 +140,15 @@ class FooterComponent extends React.Component {
             <span class="title"> 
               NOTICE
             </span>
-            {/* <div onClick = {notice? this.selectOut : this.selectClick}  onBlur = {this.selectOut}>
-            <AnimatedSelectBox
-              active = {notice===true}
+            <AnimatedSelectBox active = {notice===true} onClick = {notice? this.selectOut : this.selectClick}  onBlur = {this.selectOut}>
+            <SelectComponent
               styles = {customStyles}
               options = {this.props.Magazine.magazine_list && this.props.Magazine.magazine_list}
               getOptionLabel={(option) => option.title}
               onChange={Magazine.setCurrent}
               value={Magazine.current ? Magazine.current : this.props.Magazine.magazine_list[0]}
               />
-              </div>  */}
+              </AnimatedSelectBox> 
           </CompanyInfoWrapper>
           <CompanyInfoWrapper style={{paddingTop: 14}}>
             <FaqTable>
@@ -632,24 +631,6 @@ const ImageWrapper = styled.div`
   }
 `
 
-const Select = styled(SelectComponent)`
-  @keyframes fadeIn {  
-    0% {
-      opacity:0.5;
-      transform: translateY(-10px);
-    }
-    100% {
-      opacity:1;
-      transform: translateY(0);
-    }
-  }
-
-  >div: nth-of-type(2){
-    -webkit-font-smoothing: antialiased;
-    animation: fadeIn 0.2s ease-out;
-  }
-  
-`
 
 
 

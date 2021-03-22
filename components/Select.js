@@ -1,5 +1,24 @@
+import { keyframes } from 'styled-components'
 import React from "react";
 import Select from "react-select";
+import makeAnimated from 'react-select/animated';
+
+
+// const fadeIn = keyframes`
+//   0% {
+//     opacity:0,
+//     // transform: translateY(-10px),
+//     transform: scale(4),
+//   }
+//   100% {
+//     opacity:1,
+//     transform: scale(.2) translateY(0),
+//   }
+//   `
+// const menuani = {
+//   animation: fadeIn,
+//   // transition: '0.2s ease-in-out',
+// };
 
 const customStyles = {
   dropdownIndicator: () => ({
@@ -40,15 +59,26 @@ class SelectComp extends React.Component {
   handleChange = (selectedOption) => {
     this.props.onChange(selectedOption);
   };
+  handleClick = (click) => {
+    this.props.onClick(click);
+  };
+  handleBlur = (blur) => {
+    this.props.onBlur(blur);
+  };
   render() {
-    const { options, placeholder, styles, getOptionLabel, value } = this.props;
+    const { options, placeholder, styles, getOptionLabel, value, active, onClick, onBlur} = this.props;
+  
     return (
       <Select
+        // components = {menuani}
         id={this.props.id}
         className={this.props.className}
         styles={styles ? styles : customStyles}
         value={value}
         onChange={this.handleChange}
+        onClick = {onClick}
+        onBlur = {onBlur}
+        active = {active}
         getOptionLabel={(option) =>
           getOptionLabel ? getOptionLabel(option) : option.label
         }

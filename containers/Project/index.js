@@ -21,10 +21,12 @@ class ProjectContainer extends React.Component {
         {
           this.props.width && this.props.width > 767.99 ? (
             <div style={{ overflow: 'visible'}}>
-          
-              <BannerContainer/>                    
+              
+              <BannerContainer/>            
+              {Project.step_index == 1 &&         
               <NavContainer style={{marginTop: '50px'}}/>
               <ContentContainer length = {this.props.length} />
+  }
             </div>
           ) : (
             <div>      

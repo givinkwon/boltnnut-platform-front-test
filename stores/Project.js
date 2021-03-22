@@ -2,6 +2,8 @@ import { observable, action } from "mobx";
 
 import * as ProjectAPI from "axios/Project";
 import * as AccountAPI from "axios/Account";
+import * as CategoryAPI from "axios/Category";
+
 
 class Project {
 @observable projectDataList = [];
@@ -11,6 +13,13 @@ class Project {
 @observable project_length = null;
 @observable project_page = null;
 @observable currentPage = 1;
+
+@observable projectCategoryData = [];
+@observable category = null;
+@observable maincategory = null;
+@observable categoryname = [];
+@observable projectBigCategoryData = [];
+@observable maincategoryname = [];
 
 
   @action init = (clientId) => {    
@@ -33,7 +42,7 @@ class Project {
           this.project_next = res.data.next        
           this.project_count = res.data.count;        
           this.project_page = parseInt((this.project_count-1)/5) + 1
-        });            
+        });      
   }
 
   @action getNextPage = (clientId, callback = null) => {
@@ -76,6 +85,8 @@ class Project {
   @action getPage = (clientId, page=1) => {  
     this.projectDataList = [];
 
+    this.category=null;
+
     if (!clientId) {  
       return;
     }
@@ -96,13 +107,27 @@ class Project {
         this.projectDataList = res.data.results;
         this.project_next = res.data.next;        
         this.project_count = res.data.count;                  
-        this.project_page = parseInt((this.project_count-1)/5) + 1
+        this.project_page = parseInt((this.project_count-1)/5) + 1;
+        this.category = res.data.results[0].request_set[0].product;
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
+    CategoryAPI.getCategoryMiddle(req)
+    .then((res) => {
+      this.projectCategoryData = res.data.results[this.category-1];
+      this.maincategory = res.data.results[10].maincategory;
+      this.categoryname = this.projectCategoryData.category;
+    })
+    CategoryAPI.getMainCategory(req)
+    .then((res) =>{
+      this.projectBigCategoryData = res.data.results;
+      this. maincategoryname = this.projectBigCategoryData.maincategory;
+        
+    })
   };
+  
 
   @action getToken = () => {    
     const token = localStorage.getItem('token')
