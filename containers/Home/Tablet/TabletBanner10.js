@@ -20,7 +20,7 @@ class TabletBanner10Container extends React.Component{
 			<Background style = {{marginBottom: 50}}>
 				<ContentContainer>
 					<Fade bottom>
-						<Head>개발</Head>
+						<Head>생산</Head>
 						<Block onClick={() => Router.push("/request")}>
 							<BlockLeft>
 								<ImgContainer src = {threedprinter}></ImgContainer>
@@ -54,7 +54,7 @@ class TabletBanner10Container extends React.Component{
 							</BlockRight>
 						</Block>
 
-						<Head>생산</Head>
+						<Head>제작</Head>
 						<Block onClick={() => Router.push("/request")}>
 							<BlockLeft>
 								<ImgContainer src = {product}></ImgContainer>

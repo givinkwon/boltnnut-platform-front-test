@@ -21,7 +21,7 @@ class MobileBanner10Container extends React.Component{
 				<ContentContainer>
 					<Fade bottom>
 
-						<Head>개발</Head>
+						<Head>생산</Head>
 						<Block onClick={() => Router.push("/request")}>
 							<BlockLeft>
 								<ImgContainer src = {threedprinter}></ImgContainer>
@@ -55,7 +55,7 @@ class MobileBanner10Container extends React.Component{
 							</BlockRight>
 						</Block>
 
-						<Head>생산</Head>
+						<Head>제작</Head>
 						<Block onClick={() => Router.push("/request")}>
 							<BlockLeft>
 								<ImgContainer src = {product}></ImgContainer>

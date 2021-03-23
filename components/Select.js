@@ -41,7 +41,7 @@ class SelectComp extends React.Component {
     this.props.onChange(selectedOption);
   };
   render() {
-    const { options, placeholder, styles, getOptionLabel, value } = this.props;
+    const { options, placeholder, styles, getOptionLabel,defaultValue, value } = this.props;
     return (
       <Select
         id={this.props.id}
@@ -55,6 +55,7 @@ class SelectComp extends React.Component {
         options={options}
         isSearchable={false}
         placeholder={placeholder}
+        defaultValue={defaultValue}
       />
     );
   }

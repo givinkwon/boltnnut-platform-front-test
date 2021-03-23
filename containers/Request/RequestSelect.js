@@ -86,19 +86,19 @@ class RequestSelectContainer extends React.Component {
                 { width > 1299.98 ? (
                 <ButtonText>
                   {/* 원래대로 */}
-                  <Font26 style={{height: 38, marginBottom: 24}}>제작</Font26>
+                  <Font26 style={{height: 38, marginBottom: 24}}>생산</Font26>
                   <Font20 style={{height: 65}}>
-                    지속적인 소통과 제품 분석 시스템으로 제품 생산에 불필요한
-                    가정을 방지하여 양산 비용을 최대 40% 절감합니다. 
+                    볼트앤너트 자동 견적 알고리즘과 전문 품질 감리 시스템 통해
+                    원하는 품질의 생산품을 납기에 맞춰 납품드립니다. 
                   </Font20>
                 </ButtonText>
                 ) : (
                   <ButtonText>
                   {/* 원래대로 */}
-                  <Font22 style={{height: 38, marginBottom: 24}}>제작</Font22>
+                  <Font22 style={{height: 38, marginBottom: 24}}>생산</Font22>
                   <Font17 style={{height: 65, wordBreak: 'keep-all'}}>
-                    지속적인 소통과 제품 분석 시스템으로 제품 생산에 불필요한
-                    가정을 방지하여 양산 비용을 최대 40% 절감합니다. 
+                    볼트앤너트 자동 견적 알고리즘과 전문 품질 감리 시스템 통해
+                    원하는 품질의 생산품을 납기에 맞춰 납품드립니다.   
                   </Font17>
                 </ButtonText>
                 )}
@@ -122,19 +122,19 @@ class RequestSelectContainer extends React.Component {
               { width > 1299.98 ? (
                 <ButtonText>
                   {/* 바로 도면첨부 */}
-                  <Font26 style={{height: 38, marginBottom: 24}}>생산</Font26>
+                  <Font26 style={{height: 38, marginBottom: 24}}>제작</Font26>
                   <Font20 style={{height:65}}>
-                    국내 제조사와 해외유통사 네트워크를 통해 원하는 조건에 맞는
-                    제조견적, MOQ (최소발주수량)등의 정보를 전달해드립니다.
+                    제작하고자 하는 제품의 전문 엔지니어가 프로젝트를 관리하여
+                    원하는 품질과 납기, 견적에 제작해드립니다.
                   </Font20>            
                 </ButtonText>
               ) : (
                 <ButtonText>
                   {/* 바로 도면첨부 */}
-                  <Font22 style={{height: 38, marginBottom: 24}}>생산</Font22>
+                  <Font22 style={{height: 38, marginBottom: 24}}>제작</Font22>
                   <Font17 style={{height: 65, wordBreak: 'keep-all'}}>
-                    국내 제조사와 해외유통사 네트워크를 통해 원하는 조건에 맞는
-                    제조견적, MOQ (최소발주수량)등의 정보를 전달해드립니다.
+                    제작하고자 하는 제품의 전문 엔지니어가 프로젝트를 관리하여
+                    원하는 품질과 납기, 견적에 제작해드립니다.
                   </Font17>            
                 </ButtonText>
               )}
