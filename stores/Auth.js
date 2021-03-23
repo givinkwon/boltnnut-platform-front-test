@@ -241,7 +241,7 @@ class Auth {
       console.log("userInfo 다시 불러오기");
       await this.reloadUserInfo(token);
     }
-    console.log(this.logged_in_user)
+    //console.log(this.logged_in_user)
     return true;
   };
   @action reloadUserInfo = async (token) => {
@@ -257,7 +257,7 @@ class Auth {
 
     await AccountAPI.reloadUserInfo(req)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         this.logged_in_user = res.data.data.User;
         if (this.logged_in_user.type == 0) {
           console.log("클라이언트 정보 리로딩");

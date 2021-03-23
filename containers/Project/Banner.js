@@ -7,15 +7,35 @@ import Background from 'components/Background';
 import Container from 'components/Containerv1';
 const BackImg = "static/images/answer/MaskGroup/MaskGroup77.png"
 
+import { inject, observer } from 'mobx-react';
+
+@inject("Auth")
+@observer 
 class BannerConatiner extends React.Component {
   render(){
+    const { Auth } = this.props
     return (
       <Background src={ BackImg } backgroundColor={ "#000000" } style={{height: 208, opacity: 0.9}}>
         <Container>
-          <Item>
-            <Text.FontSize48 color={WHITE} fontWeight={700}>요청한 의뢰서 확인하기</Text.FontSize48>
-            <Text.FontSize24 color={WHITE} fontWeight={400}>의뢰한 제품에 대한 전문업체들의 의뢰서를 확인해보세요</Text.FontSize24>
-          </Item>
+          {  
+            Auth.logged_in_client && (
+              <Item>            
+                  <Text.FontSize48 color={WHITE} fontWeight={700}>요청한 의뢰서 확인하기</Text.FontSize48>
+                  <Text.FontSize24 color={WHITE} fontWeight={400}>의뢰한 제품에 대한 전문업체들의 의뢰서를 확인해보세요</Text.FontSize24>
+              </Item> 
+            )
+          }
+          {
+            Auth.logged_in_partner && (
+              <Item>            
+                  <span style={{display: 'flex', alignItems: 'baseline'}}>
+                    <Text.FontSize48 color={WHITE} fontWeight={700} style={{marginRight: '24px', marginBottom: '16px'}}>프로젝트 찾기</Text.FontSize48>
+                    <Text.FontSize16 color={WHITE} fontWeight={500}>*파트너 전용 페이지 입니다.</Text.FontSize16>
+                  </span>
+                  <Text.FontSize24 color={WHITE} fontWeight={400}>프로젝트 관리 워딩 필요 프로젝트 관리 워딩 필요</Text.FontSize24>
+              </Item> 
+            )
+          }
         </Container>
       </Background>
     )
