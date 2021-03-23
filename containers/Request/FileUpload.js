@@ -64,6 +64,37 @@ class FileUploadContainer extends Component {
     fileList: []
   }
 
+  loadFileResopnse=(fileIdx)=>
+    {
+      const ManufactureProcessFormData = new FormData();
+      ManufactureProcessFormData.append("blueprint", fileList[fileIdx].originFile);
+      ManufactureProcessFormData.append("process", ManufactureProcess.selectedBigCategory.id);
+      // console.log('process:'+ManufactureProcess.selectedBigCategory.id)
+      ManufactureProcessFormData.append("detailProcess", ManufactureProcess.selectedMidCategory.id);
+      fileList[fileIdx].selectedMid=ManufactureProcess.selectedMidCategory;
+
+      // console.log('detailProcess:'+ManufactureProcess.selectedMidCategory.id)
+      //기본정보입력에서 받은 의뢰서로 바꾸기
+      ManufactureProcessFormData.append("request", 2467);
+      // this.setState({fileList:fileList})
+      ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
+      .then((res) => {
+        fileList[fileIdx].price=res.data.data.totalMaxPrice;
+        console.log(fileList);
+        this.setState(
+          {
+            fileList:fileList
+          })
+        console.log(res)
+        // return res;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+      //
+    }
+
   MyDropzone = () => {
     const { Request, ManufactureProcess } = this.props;
     const dropHandler = (files) => {
@@ -86,9 +117,11 @@ class FileUploadContainer extends Component {
                 this.setState(
                   {
                     fileList:fileList.push({
+                      originFile:file,
                       drawFile:res.data.data.stl_file,
                       fileName:file.name,
                       price:res.data.data.totalMaxPrice,
+                      selectedMid:ManufactureProcess.categoryDefaultValue.mid
                     })
                   })
                 // return res;
@@ -163,6 +196,7 @@ class FileUploadContainer extends Component {
         console.log(this.estimateInfoList);
         console.log("filelist")
         console.log(fileList)
+        console.log(this.state.fileList)
       }
       )
 
@@ -244,44 +278,21 @@ class FileUploadContainer extends Component {
                           defaultValue={ManufactureProcess.categoryDefaultValue.big}
                           styles={customStyles} options={ManufactureProcess.ManufactureProcessList}
                           // value={ManufactureProcess.selectedBigCategory}
-                          getOptionLabel={(option) => option.name} onChange={()=>{ManufactureProcess.setBigCategory}}
+                          getOptionLabel={(option) => option.name} onChange={(e)=>{ManufactureProcess.setBigCategory(e);
+                          this.loadFileResopnse(idx);
+                          }}
                         />
 
                         {/* </Box> */}
                         <Select
                           defaultValue={ManufactureProcess.categoryDefaultValue.mid}
-                          // value={ManufactureProcess.selectedBigCategory}
+                          // value={ManufactureProcess.selectedMidCategory}
+                          value={fileList[idx].selectedMid}
                           styles={customStyles} options={ManufactureProcess.midCategorySet}
-                          getOptionLabel={(option) => option.name} onChange={()=>{ManufactureProcess.setMidCategory;
+                          getOptionLabel={(option) => option.name} onChange={(e)=>{ManufactureProcess.setMidCategory(e);
                             //
-                            const ManufactureProcessFormData = new FormData();
-                            ManufactureProcessFormData.append("blueprint", file);
-                            ManufactureProcessFormData.append("process", ManufactureProcess.categoryDefaultValue.big.id);
-                            ManufactureProcessFormData.append("detailProcess", ManufactureProcess.categoryDefaultValue.mid.id);
-                            //기본정보입력에서 받은 의뢰서로 바꾸기
-                            ManufactureProcessFormData.append("request", 2467);
-
-                            ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
-                              .then((res) => {
-                                fileList.forEach(file=>
-                                  {
-                                    if(file.drawFile==res.data.data.stl_file)
-                                    {
-                                      // file.price=res.data.data.totalMaxPrice;
-                                    }
-                                  })
-                                
-                                this.setState(
-                                  {
-                                    fileList:fileList
-                                  })
-                                // return res;
-                              })
-                              .catch((e) => {
-                                console.log(e);
-                                console.log(e.response);
-                              });
-                              //
+                              this.loadFileResopnse(idx);
+                            //
                           }}
                         />
                       </ManufactureBox>
