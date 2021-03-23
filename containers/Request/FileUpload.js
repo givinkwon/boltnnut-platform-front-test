@@ -13,11 +13,12 @@ import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 import SelectComponent from 'components/Select';
 import ManufactureProcess from "../../stores/ManufactureProcess";
 const DeleteButtonImg = 'static/images/request/Step2/Q.png'
-const fileList = [{
-  drawFile: null,
-  fileName: 'd',
-  price: 'ff'
-}
+const fileList = [
+//   {
+//   drawFile: null,
+//   fileName: 'd',
+//   price: 'ff'
+// }
 ]
 
 const customStyles = {
@@ -63,151 +64,142 @@ class FileUploadContainer extends Component {
     fileList: []
   }
 
-  findDefaultArr(element)
-  {
-    console.log(element)
-    if(element.detailProcess==8)
+  loadFileResopnse=(fileIdx)=>
     {
-      return true;
+      const ManufactureProcessFormData = new FormData();
+      ManufactureProcessFormData.append("blueprint", fileList[fileIdx].originFile);
+      ManufactureProcessFormData.append("process", ManufactureProcess.selectedBigCategory.id);
+      // console.log('process:'+ManufactureProcess.selectedBigCategory.id)
+      ManufactureProcessFormData.append("detailProcess", ManufactureProcess.selectedMidCategory.id);
+      fileList[fileIdx].selectedMid=ManufactureProcess.selectedMidCategory;
+
+      // console.log('detailProcess:'+ManufactureProcess.selectedMidCategory.id)
+      //기본정보입력에서 받은 의뢰서로 바꾸기
+      ManufactureProcessFormData.append("request", 2467);
+      // this.setState({fileList:fileList})
+      ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
+      .then((res) => {
+        fileList[fileIdx].price=res.data.data.totalMaxPrice;
+        console.log(fileList);
+        this.setState(
+          {
+            fileList:fileList
+          })
+        console.log(res)
+        // return res;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+      //
     }
-  }
+
   MyDropzone = () => {
     const { Request, ManufactureProcess } = this.props;
     const dropHandler = (files) => {
-
+                  
       // const temp=this.state.fileList;
       // console.log(files);
       // temp.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})
-      files.forEach((file) => {
-        ManufactureProcess.ManufactureProcessList.forEach((bigCategory,bigIdx) => {
-          bigCategory.detail.forEach((midCategory,midIdx) => {
-            // console.log(bigCategory.name + ' / ' + midCategory.name)
+      files.forEach((file,fileIdx) => {
+
             const ManufactureProcessFormData = new FormData();
             ManufactureProcessFormData.append("blueprint", file);
-            ManufactureProcessFormData.append("process", bigCategory.id);
-            ManufactureProcessFormData.append("detailProcess", midCategory.id);
+            ManufactureProcessFormData.append("process", ManufactureProcess.categoryDefaultValue.big.id);
+            ManufactureProcessFormData.append("detailProcess", ManufactureProcess.categoryDefaultValue.mid.id);
             //기본정보입력에서 받은 의뢰서로 바꾸기
             ManufactureProcessFormData.append("request", 2467);
 
             ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
               .then((res) => {
-                // this.estimateInfoList.push({
-                //   detail:midCategory.name,
-                //   price:bigCategory.name+midCategory.name
-                // })
-                this.estimateInfoList.push(
-                  {
-                    process: bigCategory.id,
-                    detailProcess: midCategory.id,
-                    price:midCategory.name+' 가격'
-                  }
-                )
 
-                if(bigIdx==ManufactureProcess.ManufactureProcessList.length-1
-                  && midIdx == bigCategory.detail.length-1)
-                {
-                  // const DefaultArr = this.estimateInfoList.find(this.isDefaultArr);
-                  const DefaultArr = this.estimateInfoList.find(element => element.detailProcess===8);
-                  const defaultPrice = DefaultArr.price;
-
-                  this.setState(
+                this.setState(
                   {
                     fileList:fileList.push({
+                      originFile:file,
                       drawFile:res.data.data.stl_file,
                       fileName:file.name,
-                      // price:res.data.data.totalMaxPrice,
-                      price: defaultPrice
+                      price:res.data.data.totalMaxPrice,
+                      selectedMid:ManufactureProcess.categoryDefaultValue.mid
                     })
                   })
-                }
-                return res;
+                // return res;
               })
               .catch((e) => {
                 console.log(e);
                 console.log(e.response);
               });
-          })
-        })
+        //============================================================
+        // console.log(ManufactureProcess.ManufactureProcessList);
+        // console.log("fileidx="+fileIdx)
+        // ManufactureProcess.ManufactureProcessList.forEach((bigCategory,bigIdx) => {
+        //   console.log("bigIdx="+bigIdx)
+        //   bigCategory.detail.forEach((midCategory,midIdx) => {
+        //     console.log("midIdx="+midIdx)
+        //     // console.log(bigCategory.name + ' / ' + midCategory.name)
+        //     const ManufactureProcessFormData = new FormData();
+        //     ManufactureProcessFormData.append("blueprint", file);
+        //     ManufactureProcessFormData.append("process", bigCategory.id);
+        //     ManufactureProcessFormData.append("detailProcess", midCategory.id);
+        //     //기본정보입력에서 받은 의뢰서로 바꾸기
+        //     ManufactureProcessFormData.append("request", 2467);
 
-        // for(let key of this.estimateInfoList[0].values())
-        // {
-        //   console.log(key);
-        // }
-        console.log(this.estimateInfoList);
+        //     ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
+        //       .then((res) => {
+        //         // this.estimateInfoList.push({
+        //         //   detail:midCategory.name,
+        //         //   price:bigCategory.name+midCategory.name
+        //         // })
+        //         this.estimateInfoList.push(
+        //           {
+        //             fileNum:fileIdx,
+        //             process: bigCategory.id,
+        //             detailProcess: midCategory.id,
+        //             price:midCategory.name+' 가격'
+        //           }
+        //         )
+        //         // console.log('bigIdx=='+bigIdx +"/midIdx=="+midIdx+'/ManufactureProceessList.length=='+ManufactureProcess.ManufactureProcessList.length);
+        //         // if(bigIdx==ManufactureProcess.ManufactureProcessList.length-1
+        //         //   && midIdx == bigCategory.detail.length-1)
+        //         console.log('estimateInfoLength='+this.estimateInfoList.length)
+        //         console.log('fileLen='+files.length)
+        //         if(this.estimateInfoList.length==(files.length*5))
+        //         {
+        //           console.log(this.estimateInfoList)
+        //           // const DefaultArr = this.estimateInfoList.find(this.isDefaultArr);
+        //           const DefaultArr = this.estimateInfoList.find(element => 
+        //             element.detailProcess===ManufactureProcess.categoryDefaultValue.mid.id);
+        //           console.log(ManufactureProcess.categoryDefaultValue.mid.id)
+        //           console.log(DefaultArr)
+        //           const defaultPrice = DefaultArr.price;
 
-        // ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
-        // .then((res) => {
-        //   this.setState(
-        //     {
-        //       fileList:fileList.push({
-        //         drawFile:res.data.data.stl_file,
-        //         fileName:file.name,
-        //         price:res.data.data.totalMaxPrice,
+        //           this.setState(
+        //           {
+        //             fileList:fileList.push({
+        //               drawFile:res.data.data.stl_file,
+        //               fileName:file.name,
+        //               // price:res.data.data.totalMaxPrice,
+        //               price: defaultPrice
+        //             })
+        //           })
+        //         }
+        //         // return res;
         //       })
-        //     })
-
-        //   console.log("받은 리스폰스",res);
-        //   // this.EstimateDataForDrawing = res.data.data;
-        //   // console.log(this.EstimateDataForDrawing)
-        //   // this.MaxPrice= this.EstimateDataForDrawing.maxPrice;
-        //   // this.MinPrice= this.EstimateDataForDrawing.minPrice;
-        //   // this.totalMaxPrice= this.EstimateDataForDrawing.totalMaxPrice;
-        //   // this.totalMinPrice= this.EstimateDataForDrawing.totalMinPrice;
-        //   // this.proposal_type = res.data.proposalId;
-        //   // this.message = res.data.message;
-        //   // Proposal.loadEstimateInfo(this.proposal_type);
-        //   // console.log("EStimate = proposal_type="+this.proposal_type);
-        //   console.log(fileList)
-        //   console.log(this.state.fileList[0])
-        //   return res;
+        //       .catch((e) => {
+        //         console.log(e);
+        //         console.log(e.response);
+        //       });
+        //   })
         // })
-        // .catch((e) => {
-        //   console.log(e);
-        //   console.log(e.response);
-        // });
 
-
-
-        // const res = ManufactureProcess.saveSelect(ManufactureProcessFormData);
-        // if(res)
-        // {
-        //   console.log("DDDD");
-        //   this.setState(
-        //     {
-        //       fileList:fileList.push({
-        //         drawFile:res.stl_file,
-        //         fileName:file.name,
-        //         price:'견적을 계산중입니다...',
-        //       })
-        //     })
-        // }
+        console.log(this.estimateInfoList);
+        console.log("filelist")
+        console.log(fileList)
+        console.log(this.state.fileList)
       }
       )
-      // this.setState({fileList:fileList.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})})
-      // this.setState({fileList:temp})
-      // fileList.forEach(d=>console.log(d))
-      // console.log(temp);
-      // forceUpdate();
-      // console.log("RRRASNDLKNASLD");
-      //file을 백엔드에 전해줌(1)
 
-      // let formData = new FormData();
-
-      // const config ={
-      //     header:{'content-type':'multipart/form-data'}
-      // }
-      // formData.append("file", files[0])
-
-      // axios.post('/api/product/image', formData, config)
-      //     // 백엔드가 file저장하고 그 결과가 reponse에 담김
-      //     // 백엔드는 그 결과를 프론트로 보내줌(3)
-      //     .then(response =>{
-      //         if(response.data.success){
-      //             setImages([...Images, response.data.filePath])
-      //         }else{
-      //             alert('파일 저장 실패')
-      //         }
-      //     })
     }
 
     const onDrop = useCallback(acceptedFiles => {
@@ -244,6 +236,12 @@ class FileUploadContainer extends Component {
       { value: "orange", label: "Orange" },
       { value: "berry", label: "Berry" },
     ]
+
+    this.componentDidMount()
+    {
+      // ManufactureProcess.ManufactureProcessList.forEach(t=>console.log(t))
+      // console.log(ManufactureProcess.ManufactureProcessList)
+    }
     return (
       <Card>
         <Header>
@@ -262,8 +260,8 @@ class FileUploadContainer extends Component {
                         model={data.drawFile} // stl파일 주소
                         width={120}                                  // 가로
                         height={120}                                 // 세로
-                        modelColor='red'                             // 색
-                        backgroundColor='white'                    // 배경색
+                        modelColor='gray'                            // 색
+                        backgroundColor='white'                      // 배경색
                         rotate={true}                                // 자동회전 유무
                         orbitControls={true}                         // 마우스 제어 유무
                       />
@@ -280,15 +278,22 @@ class FileUploadContainer extends Component {
                           defaultValue={ManufactureProcess.categoryDefaultValue.big}
                           styles={customStyles} options={ManufactureProcess.ManufactureProcessList}
                           // value={ManufactureProcess.selectedBigCategory}
-                          getOptionLabel={(option) => option.name} onChange={ManufactureProcess.setBigCategory}
+                          getOptionLabel={(option) => option.name} onChange={(e)=>{ManufactureProcess.setBigCategory(e);
+                          this.loadFileResopnse(idx);
+                          }}
                         />
 
                         {/* </Box> */}
                         <Select
                           defaultValue={ManufactureProcess.categoryDefaultValue.mid}
-                          value={ManufactureProcess.selectedBigCategory}
+                          // value={ManufactureProcess.selectedMidCategory}
+                          value={fileList[idx].selectedMid}
                           styles={customStyles} options={ManufactureProcess.midCategorySet}
-                          getOptionLabel={(option) => option.name} placeholder='개월' onChange={Request.setDue}
+                          getOptionLabel={(option) => option.name} onChange={(e)=>{ManufactureProcess.setMidCategory(e);
+                            //
+                              this.loadFileResopnse(idx);
+                            //
+                          }}
                         />
                       </ManufactureBox>
                     </ColumnBox>

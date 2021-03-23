@@ -14,6 +14,9 @@ import Buttonv1 from "components/Buttonv1";
 import Fade from 'react-reveal/Fade';
 import UseScrollCount from "./UseScrollCount"
 
+
+import * as ProposalAPI  from 'axios/Proposal'
+
 import { inject, observer } from "mobx-react";
 
 //Image
@@ -24,7 +27,8 @@ const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 {
     const countItem = {
       0: UseScrollCount(10787400000,10000000000,0,0,2000000),
-      1: UseScrollCount(projCount,0,0,0,15),
+      // 1: UseScrollCount(projCount,0,0,0,15),
+      1: UseScrollCount(5116,0,0,0,15),
       2: UseScrollCount(4933,0,0,0,20)
     };
 
@@ -38,16 +42,30 @@ const CountFunc = ({index,projCount=0,partnerCount=0}) =>
 @observer
 class Banner0Container extends React.Component {
 
+  state=
+  {
+    projectCount:0
+  }
   componentDidMount() {
     const {Proposal,Partner} = this.props;
-    Proposal.loadProjects();
+    // Proposal.loadProjects();
+    // this.setState({projectCount:this.props.Proposal.projects_count})
+    ProposalAPI.getMyProject()
+			.then((res) => {
+        const pc=res.data.count*3+997
+        this.props.Proposal.projects_count = pc
+        this.setState({projectCount:res.data.count*3+997})
+			})
+			.catch(e => {
+				console.log(e);
+				console.log(e.response)
+			})
     Partner.loadPartnerCount();
   }
 
   render () {
     const ProjectCount = this.props.Proposal.projects_count;
     const PartnerCount = this.props.Partner.partner_count;
-
     return (
     <Background src={background}>
         <Layer />
@@ -84,7 +102,8 @@ class Banner0Container extends React.Component {
                 </Content.FontSize24>
                 <Content.FontSize32 eng={true} style={{textAlign: 'center', marginLeft:30}} fontWeight={"bold"} color={'#ffffff'}>
                   {/* 300+ */}
-                  <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개</span>
+                  {/* <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개</span> */}
+                  <CountFunc index={1} projCount={this.state.projectCount}/><span style={{fontWeight:500}}>개</span>
                 </Content.FontSize32>
               </InfoCell>
               <InfoCell>
