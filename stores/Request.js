@@ -162,6 +162,7 @@ class Request {
     };
     RequestAPI.create(req)
     .then ((res) => {
+      console.log(res)
       this.created_request = res.data.id;
       this.client_id = res.data.clientId;
       this.has_email = res.data.hasEmail;
