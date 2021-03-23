@@ -1,4 +1,4 @@
-import React from 'react'
+  import React from 'react'
 import Head from 'next/head'
 import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
@@ -10,7 +10,9 @@ import MobileNav from 'components/MobileNav'
 import Footer from 'components/Footer'
 import Spinner from 'components/Spinner'
 
-import ProjectContainer from 'containers/Project'
+//import ProjectContainer from 'containers/Project/index'
+
+import ProjectContainer from '../../containers/Project/index'
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
@@ -25,14 +27,10 @@ class Project extends React.Component {
   async componentDidMount() {
     const { Project, Auth, Home, Answer, Loading } = this.props
 
+    console.log(Auth);
     //창 크기
     window.addEventListener('resize', this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
-
-    
-    //Project.init()
-    
-
+    this.setState({ ...this.state, width: window.innerWidth });        
 
     Home.init()
     Loading.setOpen(true)
@@ -40,8 +38,6 @@ class Project extends React.Component {
 
     // 중복
     await Auth.checkLogin()
-
-    Project.getToken()
 
     // if(Auth.logged_in_client) {
     //   console.log('클라이언트 의뢰 목록 로딩 시작')
@@ -51,23 +47,33 @@ class Project extends React.Component {
     //   })
     // }
 
-    if(Auth.logged_in_client) {
-      console.log('프로젝트 목록 로딩 시작')
-      
-      console.log(Auth.logged_in_client)
-      Project.getPage(Auth.logged_in_client.id, () => {
-        console.log('프로젝트 목록 로딩 끝')
-      })
-
+    if(Auth.logged_in_user){
+      if(Auth.logged_in_partner){                
+        Project.getProjectByPrice(() => {
+          console.log('프로젝트 목록 로딩 끝')
+        })        
+      }
+      if(Auth.logged_in_client) {
+        console.log('프로젝트 목록 로딩 시작')    
+        console.log(Auth.logged_in_client)
+        Project.getPage(Auth.logged_in_client.id, () => {
+          console.log('프로젝트 목록 로딩 끝')
+        })
+      }
+    }
+    else{  
+      alert("로그인이 필요합니다");
+      Router.push("/login");        
   //     Project.getPage(918, () => {
   //       console.log('프로젝트 목록 로딩 끝')
   //       console.log(Project.project_count)
   //  })
     }
-    else{      
-      alert("로그인이 필요합니다");
-      Router.push("/login");        
-    }
+      // else{      
+      //  
+      // }
+
+  
     //Project.getNextPage()
     
 
@@ -92,7 +98,7 @@ class Project extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
   };
   render(){
-    const { Project, Loading } = this.props
+    const { Project, Loading, Auth } = this.props
     const { width } = this.state;
     const gray = "#f6f6f6"
     return (
@@ -113,8 +119,7 @@ class Project extends React.Component {
           )
         }
         </>
-        <ProjectContainer width={width} length = { Project.project_length }/>
-        
+          <ProjectContainer width={width} length = { Project.project_length }/>
         <Footer color={gray}/>
       </div>
     )

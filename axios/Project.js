@@ -30,3 +30,24 @@ export function getProjectDetail(req) {
   })
 }
 
+export function getCategoryMiddle(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/category/${req.id}/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  })
+}
+
+
+export function getMainCategory(req) {
+
+    return axios({
+      method: "GET",
+      url: `${ROOT_URL}/maincategory/${req.id}/`,
+      params: req.params ? req.params : null,
+      headers: req.headers ? req.headers : null,
+    });
+  
+
+}
