@@ -277,18 +277,21 @@ class FileUploadContainer extends Component {
             {fileList.map((data, idx) =>
               <>
                 <ItemBox>
-                  {idx}
                   <MainBox>
                     <StlBox>
                       {/* <img src={DeleteButtonImg} style={{width:120,height:120}}/> */}
                       <STLViewer
                         model={data.drawFile} // stl파일 주소
-                        width={120}                                  // 가로
-                        height={120}                                 // 세로
-                        modelColor='gray'                            // 색
+                        // width={120}                                  // 가로
+                        // height={120}                                 // 세로
+                        width={500}
+                        height={500}
+                        modelColor='green'                            // 색
                         backgroundColor='white'                      // 배경색
                         rotate={true}                                // 자동회전 유무
                         orbitControls={true}                         // 마우스 제어 유무
+                        cameraX={500}
+                        lights={[5,5,5]}
                       />
                     </StlBox>
                     <ColumnBox>
@@ -311,7 +314,8 @@ class FileUploadContainer extends Component {
                           onChange={(e)=>{
                             ManufactureProcess.setBigCategory(e);
                             this.loadFileResopnse(idx);
-                            data.optionBig = e;
+                            // data.optionBig = e;
+                            data.selectBig=e;
                             data.optionMid=e.detail;
                           }}
                         />
