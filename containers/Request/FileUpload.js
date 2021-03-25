@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone'
 import STLViewer from 'stl-viewer'
 
 import TTT from 'react-select'
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
@@ -61,7 +61,8 @@ class FileUploadContainer extends Component {
 
   estimateInfoList = [];
   state = {
-    fileList: []
+    fileList: [],
+    loading:false
   }
 
   loadFileResopnse=(fileIdx)=>
@@ -72,7 +73,11 @@ class FileUploadContainer extends Component {
       // console.log('process:'+ManufactureProcess.selectedBigCategory.id)
       ManufactureProcessFormData.append("detailProcess", ManufactureProcess.selectedMidCategory.id);
       fileList[fileIdx].selectedMid=ManufactureProcess.selectedMidCategory;
-
+      fileList[fileIdx].priceLoading=true;
+      this.setState({t:false})
+      console.log('fileIdx = '+fileIdx + ' / process = ' + ManufactureProcess.selectedBigCategory.id + ' / detailProcess =' + 
+      ManufactureProcess.selectedMidCategory.id)
+      // console.log('fileNum'+ fileIdx +'의 priceLoading='+fileList[fileIdx].priceLoading)
       // console.log('detailProcess:'+ManufactureProcess.selectedMidCategory.id)
       //기본정보입력에서 받은 의뢰서로 바꾸기
       ManufactureProcessFormData.append("request", 2467);
@@ -80,7 +85,10 @@ class FileUploadContainer extends Component {
       ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
       .then((res) => {
         fileList[fileIdx].price=res.data.data.totalMaxPrice;
+        fileList[fileIdx].priceLoading=false;
         console.log(fileList);
+        //리렌더링을 위한 state설정. 바꿔야될듯
+        this.setState({t:true})
         this.setState(
           {
             fileList:fileList
@@ -98,11 +106,12 @@ class FileUploadContainer extends Component {
   MyDropzone = () => {
     const { Request, ManufactureProcess } = this.props;
     const dropHandler = (files) => {
-                  
+      let loadingCounter=0;
       // const temp=this.state.fileList;
       // console.log(files);
       // temp.push({stl:'static/images/request/Step2/Q.png',name:files[0].name})
       files.forEach((file,fileIdx) => {
+            
 
             const ManufactureProcessFormData = new FormData();
             ManufactureProcessFormData.append("blueprint", file);
@@ -110,9 +119,11 @@ class FileUploadContainer extends Component {
             ManufactureProcessFormData.append("detailProcess", ManufactureProcess.categoryDefaultValue.mid.id);
             //기본정보입력에서 받은 의뢰서로 바꾸기
             ManufactureProcessFormData.append("request", 2467);
-
+            this.setState({loading:true})
             ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
               .then((res) => {
+
+                loadingCounter++;
 
                 this.setState(
                   {
@@ -121,15 +132,28 @@ class FileUploadContainer extends Component {
                       drawFile:res.data.data.stl_file,
                       fileName:file.name,
                       price:res.data.data.totalMaxPrice,
-                      selectedMid:ManufactureProcess.categoryDefaultValue.mid
+                      optionBig:ManufactureProcess.ManufactureProcessList,
+                      selectBig:ManufactureProcess.categoryDefaultValue.big,
+                      optionMid:ManufactureProcess.categoryDefaultValue.big.detail,
+                      selectedMid:ManufactureProcess.categoryDefaultValue.mid,
+                      priceLoading:false
                     })
                   })
                 // return res;
+                console.log(loadingCounter +'/'+files.length)
+                if(loadingCounter === files.length)
+                {
+                  this.setState({loading:false})
+                }
+                console.log("filelist")
+                console.log(fileList)
               })
               .catch((e) => {
                 console.log(e);
                 console.log(e.response);
               });
+        
+              
         //============================================================
         // console.log(ManufactureProcess.ManufactureProcessList);
         // console.log("fileidx="+fileIdx)
@@ -193,10 +217,10 @@ class FileUploadContainer extends Component {
         //   })
         // })
 
-        console.log(this.estimateInfoList);
-        console.log("filelist")
-        console.log(fileList)
-        console.log(this.state.fileList)
+        // console.log(this.estimateInfoList);
+        
+        // console.log(this.state.fileList)
+        
       }
       )
 
@@ -248,8 +272,8 @@ class FileUploadContainer extends Component {
           {this.props.title}
         </Header>
         <ContentBox>
+          
           <ItemList>
-
             {fileList.map((data, idx) =>
               <>
                 <ItemBox>
@@ -258,12 +282,16 @@ class FileUploadContainer extends Component {
                       {/* <img src={DeleteButtonImg} style={{width:120,height:120}}/> */}
                       <STLViewer
                         model={data.drawFile} // stl파일 주소
-                        width={120}                                  // 가로
-                        height={120}                                 // 세로
-                        modelColor='gray'                            // 색
+                        // width={120}                                  // 가로
+                        // height={120}                                 // 세로
+                        width={500}
+                        height={500}
+                        modelColor='green'                            // 색
                         backgroundColor='white'                      // 배경색
                         rotate={true}                                // 자동회전 유무
                         orbitControls={true}                         // 마우스 제어 유무
+                        cameraX={500}
+                        lights={[5,5,5]}
                       />
                     </StlBox>
                     <ColumnBox>
@@ -276,10 +304,19 @@ class FileUploadContainer extends Component {
                         <Select
                           // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
                           defaultValue={ManufactureProcess.categoryDefaultValue.big}
-                          styles={customStyles} options={ManufactureProcess.ManufactureProcessList}
+                          styles={customStyles} 
+                          // options={ManufactureProcess.ManufactureProcessList}
+                          value={data.selectBig}
+                          options={data.optionBig}
                           // value={ManufactureProcess.selectedBigCategory}
-                          getOptionLabel={(option) => option.name} onChange={(e)=>{ManufactureProcess.setBigCategory(e);
-                          this.loadFileResopnse(idx);
+                          
+                          getOptionLabel={(option) => option.name} 
+                          onChange={(e)=>{
+                            ManufactureProcess.setBigCategory(e);
+                            this.loadFileResopnse(idx);
+                            // data.optionBig = e;
+                            data.selectBig=e;
+                            data.optionMid=e.detail;
                           }}
                         />
 
@@ -287,12 +324,14 @@ class FileUploadContainer extends Component {
                         <Select
                           defaultValue={ManufactureProcess.categoryDefaultValue.mid}
                           // value={ManufactureProcess.selectedMidCategory}
-                          value={fileList[idx].selectedMid}
-                          styles={customStyles} options={ManufactureProcess.midCategorySet}
-                          getOptionLabel={(option) => option.name} onChange={(e)=>{ManufactureProcess.setMidCategory(e);
-                            //
-                              this.loadFileResopnse(idx);
-                            //
+                          value={data.selectedMid}
+                          styles={customStyles} 
+                          // options={ManufactureProcess.midCategorySet}
+                          options={data.optionMid}
+                          getOptionLabel={(option) => option.name} 
+                          onChange={(e)=>{
+                            ManufactureProcess.setMidCategory(e);
+                            this.loadFileResopnse(idx);
                           }}
                         />
                       </ManufactureBox>
@@ -301,17 +340,25 @@ class FileUploadContainer extends Component {
                   </MainBox>
 
                   <TailBox>
-                    <div onClick={() => this.setState({ fileList: fileList.splice(idx, 1) })}>
+                    <div style={{float:'right'}} onClick={() => {
+                      this.setState({ fileList: fileList.splice(idx, 1)});
+                      console.log(fileList)
+                      }}>
                       <img src={DeleteButtonImg} />
                     </div>
-
-                    {data.price}
+                    {data.priceLoading === true ? <CircularProgress className="spinner" /> : data.price}
                   </TailBox>
                 </ItemBox>
               </>
 
             )}
           </ItemList>
+          {this.state.loading === true ? 
+          <>
+            Uploading files...
+            <CircularProgress style={{margin:'0 auto',marginTop:20,marginBottom:20}}className="spinner" />
+            
+          </> : null}
           <this.MyDropzone></this.MyDropzone>
         </ContentBox>
       </Card>
