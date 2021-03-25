@@ -20,6 +20,9 @@ class ManufactureProcess {
     big:null,
     mid:null
 }
+
+  @observable quantity=0;
+
   
   @action init = async () => {
     await ManufactureProcessAPI.loadTitle()
@@ -53,6 +56,11 @@ class ManufactureProcess {
     this.setDefaultValue('CNC')
     this.reset()
   };
+
+  @action setQuantity = (val) => {
+    console.log(val)
+    this.quantity = val;
+  }
 
   @action setBigCategory = (e) =>
   {
