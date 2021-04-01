@@ -39,6 +39,8 @@ class ManufactureProcess {
   // 기타 요청사항 변수
   @observable requestComment="";
 
+  @observable checkPaymentButton=true;
+
 
   @action init = async () => {
     await ManufactureProcessAPI.loadTitle()

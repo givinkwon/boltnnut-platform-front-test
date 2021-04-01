@@ -103,7 +103,9 @@ class FileUploadContainer extends Component {
 
   
   componentDidMount(){
-    window.addEventListener('scroll', this.loadScroll);
+    if(!this.props.ManufactureProcess.checkPaymentButton){
+      window.addEventListener('scroll', this.loadScroll);
+    }
   }
 
   componentDidUpdate = () => {
@@ -258,6 +260,7 @@ class FileUploadContainer extends Component {
   
 
     loadScroll = () => {
+      if(!this.props.ManufactureProcess.checkPaymentButton){
       var scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
       var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
       var clientHeight = document.documentElement.clientHeight;
@@ -278,6 +281,7 @@ class FileUploadContainer extends Component {
     }else{      
       card.style.display = "flex"    
     }    
+  }
   }
        
   handleChange = (event) => {
@@ -775,7 +779,9 @@ class FileUploadContainer extends Component {
                 <span>상담 요청하기</span>
               </div>
               <div>
-                <span>주문하기</span>
+                <span onClick={() => {
+                  ManufactureProcess.checkPaymentButton = true;
+                }}>주문하기</span>
               </div>
             </Button>
             

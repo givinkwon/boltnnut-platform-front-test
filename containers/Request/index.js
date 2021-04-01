@@ -23,14 +23,16 @@ import Step5Container from './Step5';
 import Step6Container from './Step6';
 
 import FileUploadContainer from './FileUpload'
+import DisbursementContainer from './Disbursement'
+
 import MarketingModal from './MarketingModal';
 
 
-@inject("DetailQuestion", "Partner", "Request")
+@inject("DetailQuestion", "Partner", "Request", "ManufactureProcess")
 @observer
 class RequestContainer extends React.Component {
   render() {
-    const { Request } = this.props;
+    const { Request, ManufactureProcess } = this.props;
 
     return (
       <>
@@ -40,7 +42,9 @@ class RequestContainer extends React.Component {
         <Background backgroundColor={"#ffffff"}>
           <Containerv1>
               {/* { Request.step_index == 0 ? <RequestSelectContainer />:<Step/>} */}
-              <FileUploadContainer></FileUploadContainer>
+              {}
+              {ManufactureProcess.checkPaymentButton ? (<DisbursementContainer/>) : (<FileUploadContainer/>)}
+              
               {/* <Step/> */}
               { Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
               { Request.step_index == 2 && <Step2Container />}
