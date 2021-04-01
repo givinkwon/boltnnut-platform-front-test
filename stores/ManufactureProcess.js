@@ -21,9 +21,25 @@ class ManufactureProcess {
     mid:null
 }
 
+  // 수량 변수
   @observable quantity=0;
 
-  
+  // 파일을 하나 이상 올렸는지에 대한 여부 검사 변수
+  @observable checkFileUpload=false;
+
+  // 금액 관련 변수
+  @observable orderPrice=0;
+  @observable totalorderPrice=0;
+
+  // 참고 파일 관련 변수 
+  @observable file=''; 
+  @observable fileName='';
+  @observable fileArray=[];
+
+  // 기타 요청사항 변수
+  @observable requestComment="";
+
+
   @action init = async () => {
     await ManufactureProcessAPI.loadTitle()
       .then(res => {
@@ -65,7 +81,7 @@ class ManufactureProcess {
   @action setBigCategory = (e) =>
   {
     this.selectedBigCategory = e;
-    this.midCategorySet = e.detail;
+    // this.midCategorySet = e.detail;
     console.log(this.selectedBigCategory)
     this.selectedMidCategory=e.detail[0];
   };

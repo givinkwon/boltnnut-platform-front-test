@@ -39,9 +39,6 @@ const Container = styled.div`
   }
   > div{
     position: absolute;
-    // width: 22px;
-    // height: 22px;
-    // border: 1px solid red;
     left: calc(99% - 22px);
     bottom: calc(99% - 22px);
     width: 0px;
@@ -49,6 +46,5 @@ const Container = styled.div`
     border-bottom: 24px solid #d8d8d8;
     border-right: 24px solid #f6f6f6;
     border-top: 1px solid #f6f6f6;
-
   }
 `
