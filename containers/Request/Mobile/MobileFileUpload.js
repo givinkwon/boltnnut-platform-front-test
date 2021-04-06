@@ -10,8 +10,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import * as Content from "components/Content";
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 import SelectComponent from 'components/Select';
-import ManufactureProcess from "../../stores/ManufactureProcess";
-import InputComponent from 'AddFile';
+import ManufactureProcess from "../../../stores/ManufactureProcess";
+import InputComponent from '../AddFile';
 
 
 const pass3 = 'static/images/pass3.png'
@@ -100,7 +100,7 @@ class FileUploadContainer extends Component {
     const { ManufactureProcess } = this.props    
 
     if(!ManufactureProcess.checkPaymentButton){
-      window.addEventListener('scroll', this.loadScroll);
+      //window.addEventListener('scroll', this.loadScroll);
     }    
   }
 
@@ -172,31 +172,31 @@ class FileUploadContainer extends Component {
     }
 
     // 스크롤 할 때 도면 추가하는 부분 밑으로 스크롤 할 경우 헤더 부분 fix가 풀리고 다시 도면 추가하는 부분으로 스크롤 할 경우 헤더 부분이 fix가 되게끔 하는 함수
-    loadScroll = () => {
-      const { ManufactureProcess } = this.props
-      if(!ManufactureProcess.checkPaymentButton){
-        var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-        var standardHeight = 180;
-        var currentHeight = standardHeight + ((fileList.length) * 240)                
-        const card = document.getElementById("card")      
+    // loadScroll = () => {
+    //   const { ManufactureProcess } = this.props
+    //   if(!ManufactureProcess.checkPaymentButton){
+    //     var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    //     var standardHeight = 180;
+    //     var currentHeight = standardHeight + ((fileList.length) * 240)                
+    //     const card = document.getElementById("card")      
 
-        if(card){
-          if(this.props.ManufactureProcess.checkFileUpload){        
-            if(scrollTop > currentHeight && !this.state.checkScroll){                        
-              card.style.display = "none"
-              card.style.position = "static"                
-              this.setState({checkScroll : true})                              
-            }else if(scrollTop < currentHeight){                     
-              card.style.display = "flex";
-              card.style.position = "fixed"
-              this.setState({checkScroll : false}) // checkScroll 안 쓸 듯        
-            }                    
-          }      
-        }else{      
-          card.style.display = "flex"    
-        }    
-      }  
-    }
+    //     if(card){
+    //       if(this.props.ManufactureProcess.checkFileUpload){        
+    //         if(scrollTop > currentHeight && !this.state.checkScroll){                        
+    //           card.style.display = "none"
+    //           card.style.position = "static"                
+    //           this.setState({checkScroll : true})                              
+    //         }else if(scrollTop < currentHeight){                     
+    //           card.style.display = "flex";
+    //           card.style.position = "fixed"
+    //           this.setState({checkScroll : false}) // checkScroll 안 쓸 듯        
+    //         }                    
+    //       }      
+    //     }else{      
+    //       card.style.display = "flex"    
+    //     }    
+    //   }  
+    // }
     
     // 추가 요청 사항 부분 - 사용자가 멀티 라인으로 텍스트 할 경우 자동으로 높이 조절되게끔 해주는 함수
     handleChange = (event) => {
@@ -312,10 +312,10 @@ class FileUploadContainer extends Component {
 
       const card = document.getElementById("card")
 
-      if(card){                         
-        card.style.display = "flex"
-        card.style.position = "fixed"
-      }
+    //   if(card){                         
+    //     card.style.display = "flex"
+    //     card.style.position = "fixed"
+    //   }
       dropHandler(acceptedFiles);
     }, [])
 
@@ -340,11 +340,11 @@ class FileUploadContainer extends Component {
                   {!this.props.ManufactureProcess.checkFileUpload && (
                     
                   <>
-                    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '24px'}}>
-                      <div style={{color: '#0933b3', fontSize: '20px', fontWeight: 'bold', marginBottom: '-3px'}}>↑</div>
-                      <div style={{width: '22px', height: '7px', border: '3px solid #0933b3', borderTop: 'none'}}></div>
+                    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '18px', marginTop: '40px'}}>
+                      <div style={{color: '#0933b3', fontSize: '16px', fontWeight: 'bold', marginBottom: '-3px'}}>↑</div>
+                      <div style={{width: '18px', height: '7px', border: '2px solid #0933b3', borderTop: 'none'}}></div>
                     </div>
-                    <p>3D 도면 파일을 이곳에 드래그 또는 <span>파일찾기</span></p>
+                    <p>3D 도면 파일을 <span>파일찾기</span><span> 클릭</span></p>
                     <p>*한 파일에 한 파트만 업로드 해주세요.</p>
                     <FileImageContainer>
                       <FileImage name=".STP"/>                                                            
@@ -387,18 +387,13 @@ class FileUploadContainer extends Component {
         <Card checkFileUpload={this.props.ManufactureProcess.checkFileUpload} onChange={this.scrollChange} id="card">      
           <Header>
             {this.props.ManufactureProcess.checkFileUpload ? "도면 추가" : this.props.title}
-          </Header>         
+          </Header>        
 
-          <TableHeader checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
-            <div></div>
-            <span>파일명</span>
-            <span>기본가공</span>
-            <span>재료</span>
-            <span>마감</span>
-            <span>색상</span>
-            <span>수량</span>
-          </TableHeader>
+
         </Card>
+        <ContentBox checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>          
+            <this.MyDropzone onChange={this.scrollChange}></this.MyDropzone>                                 
+        </ContentBox> 
         
         <ItemList checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
           {fileList.map((data, idx) =>            
@@ -608,9 +603,7 @@ class FileUploadContainer extends Component {
             )}
           </ItemList>
                     
-          <ContentBox checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>          
-            <this.MyDropzone onChange={this.scrollChange}></this.MyDropzone>                                 
-          </ContentBox>
+
                  
           <Price checkFileUpload = {this.props.ManufactureProcess.checkFileUpload} id="price">              
               <PriceLabel>
@@ -794,15 +787,15 @@ const MainBox = styled.div`
 `
 
 const ContentBox = styled.div`
-  width: 1199px;
-  height: ${props => props.checkFileUpload ? '100px' : '313px'};
+  width: 98%;
+  height: ${props => props.checkFileUpload ? '60px' : ''};
   display: flex;
   flex-direction: column;
   border: 2px dashed #a4aab4;
   border-radius: 5px;
   background-color: #f6f6f6;
   margin-left: 1px;
-  margin-bottom: ${props => props.checkFileUpload ? '0' : '600px'};
+  margin-bottom: ${props => props.checkFileUpload ? '0' : '120px'};
   :focus{
     outline: none;
   }
@@ -899,7 +892,7 @@ const InputBox = styled.div`
   display:flex;
   align-items:center;
   justify-content:center;
-  height: ${props => props.checkFileUpload ? '100px' : '313px'};
+  height: ${props => props.checkFileUpload ? '100px' : ''};
   text-align:center;
   :focus{
     outline: 0;
@@ -908,30 +901,31 @@ const InputBox = styled.div`
 `
 
 const Card = styled.div`
-  width: 1210px;
-  height: ${props => props.checkFileUpload ? '210px' : '100px'};
+  width: 100%;
+  height: ${props => props.checkFileUpload ? '27px' : '60px'};
   object-fit: contain;
   background-color: white;
-  margin: 60px 0px 20px 0;
+//   margin: 60px 0px 20px 0;
+    margin-bottom: ${props => props.checkFileUpload ? '20px' : ''};
   display: flex;
   flex-direction: column;
-  position: ${props => props.checkFileUpload ? 'fixed' : 'static'};
+  //position: ${props => props.checkFileUpload ? 'fixed' : 'static'};
   top: 0;
   z-index: 99;
   box-sizing: border-box;
 `
 
-const Header = styled(Content.FontSize32)`
-  font-weight: bold;
+const Header = styled(Content.FontSize16)`
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.06;
-  letter-spacing: -0.8px;
-  text-align: left;
-  color: #0a2165;
-  padding-top: 38px;
+  line-height: 18px;
+  letter-spacing: -0.4px;
+  color: #282c36;
+  padding-top: 16px;
   padding-bottom:20px;
   object-fit: contain;
+  text-align: center;
 `
 
 const FileImageContainer = styled.div`
@@ -1002,15 +996,19 @@ const DropZoneContainer = styled.div`
   }
   
   p:nth-of-type(1){
-    font-size: 20px;
-    line-height: 40px;
-    letter-spacing: -0.5px;
+    font-size: 15px;
+    line-height: 30px;
+    letter-spacing: -0.38px;
     color: #282c36;
     margin-bottom: 4px;
+    height: 22px;
     
+    span:nth-of-type(1){
+        border-bottom: 1px solid #0933b3;
+    }
     span{
       color: #0933b3;
-      font-weight: 600;
+      font-weight: normal;
     }
     
     :focus{
@@ -1018,10 +1016,11 @@ const DropZoneContainer = styled.div`
     }
   }
   >p:nth-of-type(2){
-    font-size: 16px;
-    line-height: 40px;
-    letter-spacing: -0.4px;
+    font-size: 14px;
+    line-height: 30px;
+    letter-spacing: -0.35px;
     color: #767676;
+    height: 20px;
   }
 `
 
