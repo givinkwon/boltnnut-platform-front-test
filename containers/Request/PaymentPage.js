@@ -10,7 +10,21 @@ const img = '/static/images/request/PaymentPage/*.png';
 const passimg = '/static/images/request/PaymentPage/pass.png';
 
 class PaymentPageContainer extends React.Component {
+	state = {
+		selectedIdx: 0,
+	};
+	paymentWayClick = idx => {
+		this.setState({ selectedIdx: idx });
+	};
+
 	render() {
+		let activeHandler = idx => {
+			if (this.state.selectedIdx === idx) {
+				return true;
+			} else {
+				return false;
+			}
+		};
 		return (
 			<Background>
 				<PaymentPageDiv>
@@ -66,14 +80,37 @@ class PaymentPageContainer extends React.Component {
 							<img src={img} />
 						</FontSize20>
 						<PaymentWayBox>
-							<PaymentWay>
-								<div>신용카드</div>
+							<PaymentWay
+								onClick={() => this.paymentWayClick(1)}
+								active={activeHandler(1)}
+							>
+								<PaymentCheckImg
+									src={passimg}
+									active={activeHandler(1)}
+								/>
+								<PaymentWayTitle>신용카드</PaymentWayTitle>
 							</PaymentWay>
-							<PaymentWay>
-								<div>실시간 계좌이체</div>
+							<PaymentWay
+								onClick={() => this.paymentWayClick(2)}
+								active={activeHandler(2)}
+							>
+								<PaymentCheckImg
+									src={passimg}
+									active={activeHandler(2)}
+								/>
+								<PaymentWayTitle>
+									실시간 계좌이체
+								</PaymentWayTitle>
 							</PaymentWay>
-							<PaymentWay>
-								<div>후불결제</div>
+							<PaymentWay
+								onClick={() => this.paymentWayClick(3)}
+								active={activeHandler(3)}
+							>
+								<PaymentCheckImg
+									src={passimg}
+									active={activeHandler(3)}
+								/>
+								<PaymentWayTitle>후불결제</PaymentWayTitle>
 							</PaymentWay>
 						</PaymentWayBox>
 					</PaymentPageLeft>
@@ -262,10 +299,29 @@ const PaymentWayBox = styled.div`
 `;
 
 const PaymentWay = styled.div`
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
 	width: 188px;
 	height: 118px;
 	border-radius: 3px;
-	border: solid 2px #e1e2e4;
+	// border: solid 2px #e1e2e4;
+	border: ${props =>
+		props.active ? 'solid 2px #0933b3' : 'solid 2px #e1e2e4'};
+`;
+
+const PaymentWayTitle = styled(Title.FontSize18)`
+	object-fit: contain;
+	font-family: NotoSansCJKkr;
+	font-weight: normal;
+	font-stretch: normal;
+	font-style: normal;
+	color: #414550;
+`;
+
+const PaymentCheckImg = styled.img`
+	padding-bottom: 5px;
+	display: ${props => (props.active ? 'block' : 'none')};
 `;
 
 // right
