@@ -135,8 +135,7 @@ const Input = styled.div`
   margin-top: ${(props) => props.marginTop}px;
   color: #404040;
   font-weight: 400;
-//   padding-left: 2.3%;
-  margin-left:16px;
+  padding-left:16px;
   :focus {
     outline: none;
   }
@@ -144,7 +143,7 @@ const Input = styled.div`
     width: 100%;
     height: 100%;
     border: none;
-    padding: 0 !important;
+	padding: 0 !important;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;

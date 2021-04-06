@@ -38,17 +38,16 @@ class PaymentPageContainer extends React.Component {
               <div>전화번호</div>
               <img src={img} />
             </FontSize20>
-            <PhoneNumBox placeholder={"010"} width={90} />
             <InlineFlexDiv>
-              <PhoneNumBox placeholder={"010"} />
+              <PhoneNumBox placeholder={"010"} width="90px" />
               {/* <div style={{ width: 90 }}>dd</div> */}
               {/* <div style={{ width: 90 }}>dd</div> */}
               <PhoneNumDash />
 
-              <PhoneNumBox placeholder={"1234"} />
+              <PhoneNumBox placeholder={"1234"} width="90px" />
               <PhoneNumDash />
               {/* <PhoneNumDash /> */}
-              <PhoneNumBox placeholder={"5678"} />
+              <PhoneNumBox placeholder={"5678"} width="90px" />
             </InlineFlexDiv>
 
             <FontSize20>
