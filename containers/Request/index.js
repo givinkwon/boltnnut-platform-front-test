@@ -23,6 +23,8 @@ import Step5Container from './Step5';
 import Step6Container from './Step6';
 
 import FileUploadContainer from './FileUpload';
+import DisbursementContainer from './Disbursement';
+
 import MarketingModal from './MarketingModal';
 import PaymentPageContainer from './PaymentPage';
 

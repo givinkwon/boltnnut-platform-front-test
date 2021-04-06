@@ -157,6 +157,7 @@ const InputBox = styled.div`
 
     >div:nth-of-type(1){        
       margin-right: 40px;
+      cursor: pointer;
 
       >span{
         font-size: 18px;
@@ -178,7 +179,7 @@ const InputBox = styled.div`
       word-break:break-all;
       
       >span{
-        >span{
+        >span{          
           >span{
             margin-right: 10px;
             font-size: 18px;
@@ -186,6 +187,7 @@ const InputBox = styled.div`
             letter-spacing: -0.45px;
             color: #282c36;
             font-weight: normal;
+            cursor: pointer;
           }
         }
       }
@@ -331,4 +333,5 @@ const DeleteFile = styled.img`
   letter-spacing: -0.45px;
   margin-right: 29px;
   vertical-align : middle;
+  cursor: pointer;
 `
