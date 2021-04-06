@@ -33,11 +33,11 @@ class PaymentPageContainer extends React.Component {
 							}}
 						/>
 						{/* <NameBox placeholder='옵션을 선택해주세요.' /> */}
+
 						<FontSize20>
 							<div>전화번호</div>
 							<img src={img} />
 						</FontSize20>
-
 						<InlineFlexDiv>
 							<PhoneNumBox placeholder={'010'} width={90} />
 							{/* <div style={{ width: 90 }}>dd</div> */}
@@ -47,6 +47,7 @@ class PaymentPageContainer extends React.Component {
 							<PhoneNumDash />
 							<PhoneNumBox placeholder={'5678'} />
 						</InlineFlexDiv>
+
 						<FontSize20>
 							<div>배송주소</div>
 							<img src={img} />
@@ -59,10 +60,22 @@ class PaymentPageContainer extends React.Component {
 						<DeliveryAddressBox3
 							placeholder={'상세주소를 입력해 주세요'}
 						/>
+
 						<FontSize20>
 							<div>결제방법</div>
 							<img src={img} />
 						</FontSize20>
+						<PaymentWayBox>
+							<PaymentWay>
+								<div>신용카드</div>
+							</PaymentWay>
+							<PaymentWay>
+								<div>실시간 계좌이체</div>
+							</PaymentWay>
+							<PaymentWay>
+								<div>후불결제</div>
+							</PaymentWay>
+						</PaymentWayBox>
 					</PaymentPageLeft>
 
 					<PaymentPageRight>
@@ -241,6 +254,18 @@ const DeliveryAddressBox3 = styled.input`
 	::placeholder {
 		color: #c6c7cc;
 	}
+`;
+
+const PaymentWayBox = styled.div`
+	display: inline-flex;
+	justify-content: space-between;
+`;
+
+const PaymentWay = styled.div`
+	width: 188px;
+	height: 118px;
+	border-radius: 3px;
+	border: solid 2px #e1e2e4;
 `;
 
 // right
