@@ -11,6 +11,9 @@ class ManufactureProcess {
   @observable MinPrice=0;
   @observable totalMinPrice=0;
   @observable totalMaxPrice=0;
+  @observable moldPrice=0;
+  @observable ejaculationPrice=0;
+  @observable productionPrice=0;
   @observable message = '';
   @observable ManufactureProcessList = [];
   @observable selectedBigCategory=null;
@@ -28,6 +31,7 @@ class ManufactureProcess {
   @observable checkFileUpload=false;
 
   // 금액 관련 변수
+  @observable dataPrice=[]; 
   @observable orderPrice=0;
   @observable totalorderPrice=0;
 
@@ -38,6 +42,8 @@ class ManufactureProcess {
 
   // 기타 요청사항 변수
   @observable requestComment="";
+
+  @observable checkPaymentButton=false;
 
 
   @action init = async () => {
@@ -69,7 +75,7 @@ class ManufactureProcess {
           console.log(this.ManufactureProcessList)
         }
       )
-    this.setDefaultValue('CNC')
+    this.setDefaultValue('금형사출')
     this.reset()
   };
 
@@ -104,6 +110,7 @@ class ManufactureProcess {
     // this.categoryDefaultValue = this.ManufactureProcessList[2];
     this.ManufactureProcessList.forEach(t=>
       {
+        console.log(t)
         if(t.name==name)
         {
           this.categoryDefaultValue.big = t;
@@ -123,6 +130,10 @@ class ManufactureProcess {
       console.log("받은 리스폰스",res);
       this.EstimateDataForDrawing = res.data.data;
       console.log(this.EstimateDataForDrawing)
+      
+      this.moldPrice = Math.round(this.EstimateDataForDrawing.totalMinPrice/10000)
+      this.ejaculationPrice = Math.round(this.EstimateDataForDrawing.MinPrice/10) * 10
+
       this.MaxPrice= this.EstimateDataForDrawing.maxPrice;
       this.MinPrice= this.EstimateDataForDrawing.minPrice;
       this.totalMaxPrice= this.EstimateDataForDrawing.totalMaxPrice;
