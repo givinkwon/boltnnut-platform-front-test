@@ -56,7 +56,7 @@ class Request extends React.Component {
           <title>볼트앤너트|견적받기</title>
         </Head>
         <>
-          {width && width > 767.98 && <Nav />}
+          {width && width > 767.98 && <Nav style={{zIndex: '1000'}}/>}
           {width && width < 768 && <MobileNav src={ back_ic } headText={ "견적 받기" } width={width}/>}
         </>
         {width && <RequestConatiner width={width}/>}
