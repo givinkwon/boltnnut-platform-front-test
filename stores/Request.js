@@ -117,6 +117,7 @@ class Request {
     this.input_day = val;
   };
   @action setNumCount = (val) => {
+    console.log(val)
     if (val.label != '직접 입력') {
         this.numCount = val;
       }
