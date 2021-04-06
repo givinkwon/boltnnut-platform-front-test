@@ -20,7 +20,26 @@ class ManufactureProcess {
     big:null,
     mid:null
 }
-  
+
+  // 수량 변수
+  @observable quantity=0;
+
+  // 파일을 하나 이상 올렸는지에 대한 여부 검사 변수
+  @observable checkFileUpload=false;
+
+  // 금액 관련 변수
+  @observable orderPrice=0;
+  @observable totalorderPrice=0;
+
+  // 참고 파일 관련 변수 
+  @observable file=''; 
+  @observable fileName='';
+  @observable fileArray=[];
+
+  // 기타 요청사항 변수
+  @observable requestComment="";
+
+
   @action init = async () => {
     await ManufactureProcessAPI.loadTitle()
       .then(res => {
@@ -54,13 +73,25 @@ class ManufactureProcess {
     this.reset()
   };
 
+  @action setQuantity = (val) => {
+    console.log(val)
+    this.quantity = val;
+  }
+
   @action setBigCategory = (e) =>
   {
     this.selectedBigCategory = e;
-    this.midCategorySet = e.detail;
+    // this.midCategorySet = e.detail;
+    console.log(this.selectedBigCategory)
     this.selectedMidCategory=e.detail[0];
   };
-  
+
+  @action setMidCategory = (e) =>
+  {
+    this.selectedMidCategory = e;
+    console.log('setMidCategory()');
+  };
+
   @action reset = async () => {
     this.SelectChecked='';
     this.MinPrice=0;
@@ -77,6 +108,9 @@ class ManufactureProcess {
         {
           this.categoryDefaultValue.big = t;
           this.categoryDefaultValue.mid = t.detail[0];
+          this.selectedBigCategory= t;
+          this.selectedMidCategory=t.detail[0];
+          console.log(this.categoryDefaultValue.mid);
           this.midCategorySet=t.detail;
 
         }

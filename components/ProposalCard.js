@@ -20,91 +20,156 @@ class ProposalCard extends React.Component {
 
 
 	render() {        
-        const {data} = this.props;
+        const {data, middleCategory, mainCategory, newData, checkTotal, customer } = this.props;
         const {width} = this.state;
+
         // console.log(this.props.data.request_set[0].name);
         let name=""
         let date=""
         let period=""
         let estimate=""
+        let status =""
 
         if(data.request_set[0])
         {
+            // console.log(typeof(data.project_status))
             name = data.request_set[0].name ? data.request_set[0].name : "미지정";
             date = data.request_set[0].createdAt ? data.request_set[0].createdAt.substr(0, 10).replaceAll('-', '.') : "미지정";
-            period  = data.request_set[0].period ? data.request_set[0].period + "일" : "미지정";
+            period  = data.request_set[0].period ? data.request_set[0].period + "개월" : "미지정";
             estimate = data.request_set[0].price ? data.request_set[0].price : "미지정";
+            if(customer == "partner"){
+                status = data.project_status == 21 ? "모집 완료" : "모집 중"
+            } else{
+                //status = data.status
+                // console.log(data.project_status)
+                switch(data.project_status){
+                    case 1:
+                        status = "상담 미진행"
+                        break
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:                       
+                    case 7:                        
+                    case 8:                       
+                    case 9:                       
+                    case 10:
+                    case 11:                       
+                    case 13:                     
+                    case 14:                      
+                    case 15:                       
+                    case 17:                    
+                    case 19:
+                        status = "상담 중"
+                        break
+                    case 21:
+                        status = "상담 완료"
+                        break
+                    default:
+                        status = "미정"
+                        break
+                }                
+            }                
         }
         
-        const consultation = this.props.data.status;
-        
-        // let { consultation, name, date, period, estimate } = this.props.data;
-        // consultation = consultation ? consultation : "상담 미지정"
-        // name = name ? name : "이름 없음"
-        // date = date ? date.substr(0, 10) : "날짜 미지정"
-        // period = period ? period : "기간 미지정"
-        // estimate = estimate ? estimate : "미지정"
-        
-        //date = date.substr(0, 10);
+        const consultation = data.status;
+      
 		return (
             
             <>
-            { width > 767.98 ? (
-            <Card>
-                { consultation === "완료" ? 
-                    <StepTag style={{backgroundColor: '#999999'}}>                                
-                        <span> {consultation} </span>                    
-                        <div style={{borderTop: '9.1px solid #414550'}}></div>                                
-                    </StepTag>                    
-                    :
-                    <StepTag>                                        
-                        <span> {consultation} </span>                    
-                        <div></div>                                
-                    </StepTag>
-                }
-                    
-                <HeaderWrapper>
-                    <Title>
-                        {name}
-                    </Title>
-                    <Content>
-                        {date}
-                    </Content>
-                </HeaderWrapper>
-                <CategoryWrapper>
-                    <SubTitle>
-                        <span>카테고리</span>
-                    </SubTitle>
-                    <CategoryBox>
-                        <span>제품 및 용품</span>
-                    </CategoryBox>
-                    <CategoryBox>
-                        <span>반려 동물 용품</span>
-                    </CategoryBox>
-                </CategoryWrapper>
-                <FooterWrapper>
-                    <div style={{display: 'inline-flex'}}>
-                        <SubTitle>
-                            희망개발기간
-                        </SubTitle>
-                        <Content>
-                            {period}
-                        </Content>
-                    </div>
-                    <PriceTagBox>
-                        <span class="tag1"> 견적 </span>
-                        <span class="tag2">{estimate}</span>
-                    </PriceTagBox>
-                </FooterWrapper>
-            </Card>) : (
+            {/* {console.log(newData)} */}
+            { width > 767.98 ? ( 
+                // checkTotal === "전체" && newData === 0 ? (                    
+                //     <Card>                        
+                //         { status === "모집 완료" ? 
+                //             <StepTag style={{backgroundColor: '#999999'}}>                                
+                //                 <span> {status} </span>                    
+                //                 <div style={{borderTop: '9.1px solid #414550'}}></div>                                
+                //             </StepTag>                    
+                //             :
+                //             <StepTag>                                        
+                //                 <span> {status} </span>                    
+                //                 <div></div>                                
+                //             </StepTag>
+                //         }                                            
+                //         <HeaderWrapper>
+                //             <Title>
+                //                 오래된 데이터 입니다.
+                //             </Title>                        
+                //         </HeaderWrapper>
+                //         <CategoryWrapper>
+                //             <SubTitle>
+                //                 <span>카테고리</span>
+                //             </SubTitle>                                   
+                //         </CategoryWrapper>
+                //         <FooterWrapper>
+                //             <div style={{display: 'inline-flex'}}>
+                //                 <SubTitle>
+                //                     희망개발기간
+                //                 </SubTitle>                                
+                //             </div>
+                //             <PriceTagBox>
+                //                 <span class="tag1"> 견적 </span>
+                //                 <span class="tag2"></span>
+                //             </PriceTagBox>
+                //         </FooterWrapper>
+                //     </Card>
+                // ) : (               
+                    <Card>                    
+                        { data.project_status === 21 ? 
+                            <StepTag style={{backgroundColor: '#999999'}}>                                
+                                <span> {status} </span>                    
+                                <div style={{borderTop: '9.1px solid #414550'}}></div>                                
+                            </StepTag>                    
+                            :
+                            <StepTag>                                        
+                                <span> {status} </span>                    
+                                <div></div>                                
+                            </StepTag>
+                        }                                    
+                        <HeaderWrapper>
+                            <Title>
+                                {name}
+                            </Title>
+                            <Content>
+                                {date}
+                            </Content>
+                        </HeaderWrapper>
+                        <CategoryWrapper>
+                            <SubTitle>
+                                <span>카테고리</span>
+                            </SubTitle>
+                            <CategoryBox>
+                                <span>{mainCategory}</span>
+                            </CategoryBox>
+                            <CategoryBox>
+                                <span>{middleCategory}</span>
+                            </CategoryBox>                
+                        </CategoryWrapper>
+                        <FooterWrapper>
+                            <div style={{display: 'inline-flex'}}>
+                                <SubTitle>
+                                    희망개발기간
+                                </SubTitle>
+                                <Content>
+                                    {period}
+                                </Content>
+                            </div>
+                            <PriceTagBox>
+                                <span class="tag1"> 견적 </span>
+                                <span class="tag2">{estimate}</span>
+                            </PriceTagBox>
+                        </FooterWrapper>
+                    </Card>
+            //    ) 
+                ) : (
 
             
-            <Card style={{backgroundColor: consultation ==="완료" ? '#f6f6f6' : 'var(--white)'}}>    
-                         
+            <Card style={{backgroundColor: data.project_status === 21 ? '#f6f6f6' : 'var(--white)'}}>                             
                     <StepTag>                                
-                        <span style={{color: consultation === "완료" ? '#767676' : '#0933b3'}}> {consultation} </span>                            
-                    </StepTag>                    
-                                                           
+                        <span style={{color: data.project_status === 21 ? '#767676' : '#0933b3'}}> {status} </span>                            
+                    </StepTag>                                                                               
                 <HeaderWrapper>
                     <Title>
                         {name}
@@ -123,9 +188,7 @@ class ProposalCard extends React.Component {
                     </PriceTagBox>
                 </FooterWrapper>
             </Card>
-            )}
-            
-            
+            )}                        
             </>
         )
 	}
@@ -157,7 +220,7 @@ const StepTag = styled.div`
         position: absolute;
         background-color: #0933b3;
         top: 0;
-        left: -12px;  
+        left: -9px;  
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
         border-radius: 3px;
         color: white;        
@@ -170,9 +233,9 @@ const StepTag = styled.div`
             width: 0px;
             height: 0px;
             left: 1px;
-            bottom: -10px;                        
-            border-left: 12px solid transparent;
-            border-top: 12px solid #0a2165;
+            bottom: -8px;                        
+            border-left: 9px solid transparent;
+            border-top: 9px solid #0a2165;
         } 
         > span {
             font-size: 16px;
@@ -189,7 +252,7 @@ const StepTag = styled.div`
         position: absolute;
         background-color: #0933b3;
         top: 0;
-        left: -12px;  
+        left: -9px;  
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
         border-radius: 3px; 
         color: white;
@@ -202,9 +265,9 @@ const StepTag = styled.div`
             width: 0px;
             height: 0px;
             left: 1px;
-            bottom: -10px;                        
-            border-left: 12px solid transparent;
-            border-top: 12px solid #0a2165;
+            bottom: -8px;                        
+            border-left: 9px solid transparent;
+            border-top: 9px solid #0a2165;
         } 
         > span {
             font-size: 16px;
@@ -221,7 +284,7 @@ const StepTag = styled.div`
         position: absolute;
         background-color: #0933b3;
         top: 0;
-        left: -12px;  
+        left: -9px;  
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
         border-radius: 3px;
         color: white;
@@ -234,9 +297,9 @@ const StepTag = styled.div`
             width: 0px;
             height: 0px;
             left: 1px;
-            bottom: -10px;                        
-            border-left: 12px solid transparent;
-            border-top: 12px solid #0a2165;
+            bottom: -8px;                        
+            border-left: 9px solid transparent;
+            border-top: 9px solid #0a2165;
         } 
         > span {
             font-size: 16px;
@@ -249,8 +312,9 @@ const StepTag = styled.div`
       }
 
 `
-const Card = styled.div`    
-    width: 100%;    
+const Card = styled.div`   
+    width: 100%;
+    //width: 987px;    
     position: relative;
     object-fit: contain;
     border-radius: 10px;
@@ -269,19 +333,19 @@ const Card = styled.div`
     }
       @media (min-width: 768px) and (max-width: 991.98px) {
         height: 100%;
-        margin-top: 30px;
+        margin-bottom: 34px;
         padding: 62px 49px 32px 32px;    
         box-sizing: border-box;
       }
       @media (min-width: 992px) and (max-width: 1299.98px) { 
         height: 100%;
-        margin-top: 30px;
+        margin-bottom: 34px;
         padding: 62px 49px 32px 32px;
         box-sizing: border-box;
       }
       @media (min-width: 1300px) { 
         height: 100%;
-        margin-top: 30px;
+        margin-bottom: 34px;
         padding: 62px 49px 32px 32px;
         box-sizing: border-box;
       }
