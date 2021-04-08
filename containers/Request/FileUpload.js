@@ -14,6 +14,7 @@ import ManufactureProcess from "../../stores/ManufactureProcess";
 import InputComponent from 'AddFile';
 
 
+const pass2 = 'static/images/pass2.png'
 const pass3 = 'static/images/pass3.png'
 const deleteButtonImg = "/static/images/delete.png";
 
@@ -627,6 +628,13 @@ class FileUploadContainer extends Component {
             <this.MyDropzone onChange={this.scrollChange}></this.MyDropzone>                                 
           </ContentBox>
                  
+          <NoFileButton checkFileUpload = {ManufactureProcess.checkFileUpload}>
+            <div>*혹시 도면 파일이 없으신가요?</div>
+            <div>
+              <span>도면 파일 없이 견적 받기</span>
+              <span><img src={pass2}/></span>
+            </div>
+          </NoFileButton>
           <Price checkFileUpload = {this.props.ManufactureProcess.checkFileUpload} id="price">              
               <PriceLabel>
                 <span>총 주문금액</span>
@@ -817,9 +825,47 @@ const ContentBox = styled.div`
   border-radius: 5px;
   background-color: #f6f6f6;
   margin-left: 1px;
-  margin-bottom: ${props => props.checkFileUpload ? '0' : '600px'};
+  margin-bottom: ${props => props.checkFileUpload ? '0' : '66px'};
   :focus{
     outline: none;
+  }
+
+`
+const NoFileButton = styled.div`
+  width: 100%;
+  margin-bottom: ${props => props.checkFileUpload ? '0' : '425px'};
+  text-align: center;
+  display: ${props => props.checkFileUpload? 'none' : 'flex'};
+  flex-direction: ${props => props.checkFileUpload? '' : 'column'};
+  align-items: ${props => props.checkFileUpload? '' : 'center'};
+  >div:nth-of-type(1){
+    font-size: 20px;
+    line-height: 40px;
+    letter-spacing: -0.5px;
+    color: #86888c;
+    margin-bottom: 14px;
+  }
+  >div:nth-of-type(2){
+    border: 1px solid #a4aab4;
+    border-radius: 60px;
+    width: 268px;
+
+    >span:nth-of-type(1){      
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #414550;
+      margin-right: 11px;
+    }
+    >span:nth-of-type(2){
+      position: relative;    
+      >img{
+        vertical-align: middle;
+        color: #414550;
+        position: absolute;
+        top: 15%;
+      }
+    }
   }
 
 `
