@@ -1,14 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import * as Text from './Text';
-import { DARKGRAY } from 'static/style';
-import * as Content from 'components/Content';
-import { inject, observer } from 'mobx-react'
+import React from "react";
+import styled from "styled-components";
+import * as Text from "./Text";
+import { DARKGRAY } from "static/style";
+import * as Content from "components/Content";
+import { inject, observer } from "mobx-react";
 
+const fileImage = "static/images/components/Input2/Mask.png";
 
-const fileImage = 'static/images/components/Input2/Mask.png';
-
-@inject('Request')
+@inject("Request")
 @observer
 class InputComponent extends React.Component {
   constructor(props) {
@@ -16,77 +15,81 @@ class InputComponent extends React.Component {
     this.file = React.createRef();
   }
   state = {
-    fileName: '',
-    file:''
+    fileName: "",
+    file: "",
   };
   onChange = (e) => {
-    if(this.props.type === 'file'){
-      this.props.onChange(e.currentTarget.files[0])
+    if (this.props.type === "file") {
+      this.props.onChange(e.currentTarget.files[0]);
+    } else {
+      this.props.onChange(e.currentTarget.value);
     }
-    else {
-      this.props.onChange(e.currentTarget.value)
-    }
-  }
+  };
 
   onChangeFile = (e) => {
-    const {Request}  = this.props;
-    if(e.currentTarget.files[0]){
+    const { Request } = this.props;
+    if (e.currentTarget.files[0]) {
       const fileName = e.currentTarget.files[0].name;
       this.setState({
         ...this.state,
         file: e.currentTarget.files[0],
         fileName: fileName,
-      })
+      });
     }
 
     Request.setCommonFile(e.currentTarget.files[0]);
-  }
+  };
 
   render() {
-    const { onChange, children, label, file, Request, ...props } = this.props
+    const { onChange, children, label, file, Request, ...props } = this.props;
     const { fileName } = this.state;
 
     if (!file) {
-    return (
-      <Wrap width={this.props.width}>
-        { label && <Text.FontSize20 color={DARKGRAY} fontWeight={500}>{label}</Text.FontSize20> }
-        <InputBox marginTop={label ? 12 : 0}>
-          <Input>
-            <input {...props} onChange={this.onChange}/>
-          </Input>
-          {children}
-        </InputBox>
-      </Wrap>
-    )
+      return (
+        <Wrap width={this.props.width}>
+          {label && (
+            <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
+              {label}
+            </Text.FontSize20>
+          )}
+          <InputBox marginTop={label ? 12 : 0}>
+            <Input>
+              <input {...props} onChange={this.onChange} />
+            </Input>
+            {children}
+          </InputBox>
+        </Wrap>
+      );
     } else {
-    return (
-      <Wrap width={this.props.width}>
-        <InputBox
-          style={{width: '100%', display: 'inline-block'}}
-          onClick = {()=>this.file.current.click()}>
-          <input
-            type="file"
-            multiple={ "multiple" }
-            fileName={ "fileName[]" }
-            style={{display: 'none'}}
-            onChange={this.onChangeFile}
-            ref={this.file}
-            placeholder={"파일을 선택해 주세요."}
-          />
-        <FileText>
-          { Request.common_file ? this.state.fileName : "파일을 선택해 주세요." }
-        </FileText>
-        <img
-          src={fileImage}
-        />
-        </InputBox>
-      </Wrap>
-    )
+      return (
+        <Wrap width={this.props.width}>
+          <InputBox
+            style={{ width: "100%", display: "inline-block" }}
+            onClick={() => this.file.current.click()}
+          >
+            <input
+              type="file"
+              multiple={"multiple"}
+              fileName={"fileName[]"}
+              style={{ display: "none" }}
+              onChange={this.onChangeFile}
+              ref={this.file}
+              placeholder={"파일을 선택해 주세요."}
+            />
+            <FileText>
+              {Request.common_file
+                ? this.state.fileName
+                : "파일을 선택해 주세요."}
+            </FileText>
+            <img src={fileImage} />
+          </InputBox>
+        </Wrap>
+      );
     }
   }
 }
 
-export default InputComponent
+export default InputComponent;
 
 const InputBox = styled.div`
   display: flex;
@@ -100,7 +103,7 @@ const InputBox = styled.div`
     position: relative;
     float: right;
   }
-  @media (min-width: 0px) and (max-width: 767.98px) { 
+  @media (min-width: 0px) and (max-width: 767.98px) {
     height: 100%;
     height: 34px;
     object-fit: contain;
@@ -116,23 +119,24 @@ const InputBox = styled.div`
       height: 18px;
     }
   }
-`
+`;
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: ${(props) => props.width ? props.width : "100%"};
+  width: ${(props) => (props.width ? props.width : "100%")};
   > p {
     margin-top: 15px;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
   }
-`
+`;
 const Input = styled.div`
   width: 100%;
-  margin-top: ${props => props.marginTop}px;
+  margin-top: ${(props) => props.marginTop}px;
   color: #404040;
   font-weight: 400;
-  padding-left: 2.3%;
+//   padding-left: 2.3%;
+  margin-left:16px;
   :focus {
     outline: none;
   }
@@ -183,7 +187,7 @@ const Input = styled.div`
       padding-left: 0;
     }
   }
-`
+`;
 const FileText = styled(Content.FontSize18)`
   font-stretch: normal;
   font-style: normal;
@@ -197,14 +201,14 @@ const FileText = styled(Content.FontSize18)`
   padding-left: 15px;
   position: absolute;
   @media (min-width: 0px) and (max-width: 767.98px) {
-      font-size: 14px !important;
-      padding-top: 0px;
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 2.43;
-      letter-spacing: -0.35px;
-      text-align: left;
-      color: #999999;
+    font-size: 14px !important;
+    padding-top: 0px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.43;
+    letter-spacing: -0.35px;
+    text-align: left;
+    color: #999999;
   }
-`
+`;

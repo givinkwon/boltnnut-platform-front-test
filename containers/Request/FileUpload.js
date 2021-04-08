@@ -78,15 +78,17 @@ class FileUploadContainer extends Component {
   
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
   setNumCount = (data, val) => {
+    console.log(val)
     if (val.label != '직접 입력') {
       data.quantity = {label: val, value: val};
     }
-    if (val.label == '직접 입력' && val.value == 0) {      
+    if (val.label == '직접 입력' && (val.value == 0 || val.value == '')) {      
       data.quantity = {label: "직접 입력", value: val};
     }
     if (val.value == 0) {      
       data.quantity = {label:'직접 입력', value:val.value}
     }
+    console.log(data.quantity)
   }
   
   // ESC 버튼을 눌렀을 경우 발생하는 함수 (삭제 에정)
@@ -95,6 +97,33 @@ class FileUploadContainer extends Component {
       console.log("esc")
     }
   }
+
+  checkQuantityData = (e, data, idx) => {
+    const directInput = document.getElementsByClassName("directInput")
+    console.log(directInput) 
+    console.log(this)
+    const re = /^[0-9\b]+$/;    
+    console.log(idx)
+    if(e.target.value === ''){
+      e.target.placeholder = '직접 입력하세요'
+    }else if (!(re.test(e.target.value))) {
+      data.quantity = {label: '직접 입력', val: ''}
+    }
+                      
+    if(data.selectBig.name === "금형사출"){
+      if(e.target.value > 0 && e.target.value < 100){
+        alert("최소 주문 수량은 100개입니다!")
+        data.quantity = {label: '직접 입력', val: 0}
+        e.target.value = ''
+        directInput[idx].focus();
+      }else{
+        this.countPrice()
+      }                                    
+    }else{
+      this.countPrice()
+    }                                                                            
+  }
+  
 
   componentDidMount(){
     const { ManufactureProcess } = this.props    
@@ -107,18 +136,19 @@ class FileUploadContainer extends Component {
   componentWillUnmount = () => {
     const { ManufactureProcess } = this.props
     ManufactureProcess.dataPrice = []
+    window.removeEventListener('scroll', this.loadScroll);
   }
 
   // 각각의 도면 데이터들의 가격과 총 주문금액을 계산하는 함수 
   async countPrice(){
     const { ManufactureProcess } = this.props
     let price = 0;
-    await fileList.map((data, idx) => {      
+    await fileList.map((data, idx) => {          
       data.totalMoldPrice = Math.round(data.moldPrice/10000) * 10000    
-      data.totalEjaculationPrice = Math.round(data.ejaculationPrice/10) * 10 * data.quantity.value
+      data.totalEjaculationPrice = Math.round(data.ejaculationPrice/10) * 10 * ( data.quantity.value ? data.quantity.value : 0 )
       data.totalPrice = Math.round(data.productionPrice/100) * 100 * data.quantity.value
 
-      // 도면 데이터가 체크 되어 있는 경우에만 금액 계산
+      // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
       if(data.checked){        
         if(data.selectBig.name === "금형사출"){        
           price += data.totalMoldPrice
@@ -126,7 +156,9 @@ class FileUploadContainer extends Component {
         }else{          
           price += data.totalPrice
         }
-      }      
+      }else{
+        this.setState({g:3})
+      }     
     })    
     ManufactureProcess.orderPrice = price;    
   }
@@ -192,8 +224,9 @@ class FileUploadContainer extends Component {
               this.setState({checkScroll : false}) // checkScroll 안 쓸 듯        
             }                    
           }      
-        }else{      
-          card.style.display = "flex"    
+          else{      
+            card.style.display = "flex"    
+          }
         }    
       }  
     }
@@ -227,7 +260,7 @@ class FileUploadContainer extends Component {
 
   // 수량이 변경되는 경우 수량 정보를 저장
   onQuantityChange(data, value){          
-    if(data.selectBig.name == "금형사출" && value.value > 0 && value.value < 100){
+    if(data.selectBig.name === "금형사출" && value.value > 0 && value.value < 100){
        alert("최소 주문 수량은 100개입니다!")          
     }else{
       this.setState(() => {
@@ -374,13 +407,7 @@ class FileUploadContainer extends Component {
 
   render() {
     const { ManufactureProcess } = this.props;
-    const options = [
-      { value: "apple", label: "Apple" },
-      { value: "banana", label: "Banana" },
-      { value: "orange", label: "Orange" },
-      { value: "berry", label: "Berry" },
-    ]
-
+    
     return (
       <>
       <Container>
@@ -406,7 +433,6 @@ class FileUploadContainer extends Component {
                 <ItemBox>
                   <MainBox>              
                      <CheckBox active={data.checked} onClick = {()=>{
-                      this.setCheck(idx);
                       if(!data.checked)
                       {
                         data.checked=true;
@@ -513,45 +539,34 @@ class FileUploadContainer extends Component {
                     { (data.quantity.label == '직접 입력' || data.selectBig.name === "금형사출") &&                      
                       <DirectInputBox quantity={data.quantity.label} id="directInputBox">                                                                                                      
                           <input
-                            id="morethanTen"                            
-                            placeholder="직접 입력하세요"  
-                              onFocus={(e) => {
-                                e.target.placeholder = ''                                                 
+                            id="morethanTen"
+                            className="directInput"               
+                            placeholder="직접 입력하세요" 
+                            onKeyPress = {(e) => {
+                              if (e.key === "Enter") {                                
+                                this.checkQuantityData(e, data, idx)
+                              }                              
+                            }} 
+                            onFocus={(e) => {
+                                e.target.placeholder = ''    
+                                this.onBlur                                             
                               }
-                             }
-                            onBlur={(e) => {        
-                              const re = /^[0-9\b]+$/;
-                                   
-                              if(e.target.value === ''){
-                                e.target.placeholder = '직접 입력하세요'
-                              }else if (!(re.test(e.target.value))) {
-                                data.quantity = {label: '직접 입력', val: ''}
-                              }
-                                                
-                              if(data.selectBig.name === "금형사출" && e.target.value > 0 && e.target.value < 100){
-                                alert("최소 주문 수량은 100개입니다!")
-                                const morethanTen = document.getElementById("morethanTen")                                                              
-                                  setTimeout(function(){morethanTen.focus();}, 1);                                                                                        
-                              }else{
-                                this.countPrice()
-                              }                    
+                            }
+                            onBlur={(e) => {                                                           
+                              this.checkQuantityData(e, data, idx)                         
                             }}       
                             onChange={(e) => {
-                              this.escFunction(e)
                               const re = /^[0-9\b]+$/;
                             
                               if (e.target.value === '' || re.test(e.target.value)) {
                                 this.setNumCount(data, e.target.value)
                               }else{
-                                data.quantity = {label: '직접 입력', val: ''}
+                                data.quantity = {label: '직접 입력', val: '0'}
                                 e.target.value =''
                                 this.setNumCount(data, e.target.value)
                                 alert("숫자를 입력하세요")                                
                               }                                                   
-                            }}            
-
-                            class="Input"
-                            // onKeyDown={this.handleKeyDown}                                                      
+                            }}                                                              
                           />            
                           
                         </DirectInputBox>
@@ -1186,7 +1201,7 @@ const Request = styled.div`
     width: 100%;
     padding: 14px 16px;
     box-sizing: border-box;
-    font-size: 18px;
+    font-size: 15px;
     line-height: 34px;
     letter-spzcing: -0.45px;
     color: #282c36;  	

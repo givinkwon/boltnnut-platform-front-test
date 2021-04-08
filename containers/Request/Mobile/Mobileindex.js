@@ -27,8 +27,9 @@ class MobileRequestContainer extends React.Component {
     return (
       <div style={{marginTop:54}}>
         <Background>
+        { <MobileFileUploadContainer/>}
           <Containerv1>
-            { <MobileFileUploadContainer/>}
+            
             {/* { Request.step_index == 0 && <MobileRequestSelectContainer />} */}
             { Request.step_index == 1 && <MobileStep1Container page={Request.step1_index} />}
             { Request.step_index == 2 && <MobileStep2Container />}

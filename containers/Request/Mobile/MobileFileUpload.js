@@ -12,6 +12,7 @@ import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 import SelectComponent from 'components/Select';
 import ManufactureProcess from "../../../stores/ManufactureProcess";
 import InputComponent from '../AddFile';
+import Containerv1 from "../../../components/Containerv1";
 
 
 const pass3 = 'static/images/pass3.png'
@@ -40,10 +41,10 @@ const customStyles = {
     backgroundColor: '#fff',
     borderRadius: 0,
     padding: 16,
-    fontSize: 16,
+    fontSize: 15,
   }),
   control: () => ({
-    fontSize: 16,
+    fontSize: 15,
     border: '1px solid #e6e6e6',
     backgroundColor: '#fff',
     display: 'flex',
@@ -73,15 +74,15 @@ class FileUploadContainer extends Component {
     loading:false,
     checkScroll: false,
     orderPrice: [],
-
   }
   
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
   setNumCount = (data, val) => {
+    console.log(val)
     if (val.label != '직접 입력') {
       data.quantity = {label: val, value: val};
     }
-    if (val.label == '직접 입력' && val.value == 0) {      
+    if (val.label == '직접 입력' && (val.value == 0 || val.value == '')) {      
       data.quantity = {label: "직접 입력", value: val};
     }
     if (val.value == 0) {      
@@ -94,6 +95,29 @@ class FileUploadContainer extends Component {
     if(event.keyCode === 27) {
       console.log("esc")
     }
+  }
+
+  checkQuantityData = (e, data, idx) => {
+    const directInput = document.getElementsByClassName("directInput")
+    const re = /^[0-9\b]+$/;    
+    if(e.target.value === ''){
+      e.target.placeholder = '직접 입력하세요'
+    }else if (!(re.test(e.target.value))) {
+      data.quantity = {label: '직접 입력', val: ''}
+    }
+                      
+    if(data.selectBig.name === "금형사출"){
+      if(e.target.value > 0 && e.target.value < 100){
+        alert("최소 주문 수량은 100개입니다!")
+        data.quantity = {label: '직접 입력', val: 0}
+        e.target.value = ''
+        directInput[idx].focus();
+      }else{
+        this.countPrice()
+      }                                    
+    }else{
+      this.countPrice()
+    }                                                                            
   }
 
   componentDidMount(){
@@ -113,12 +137,12 @@ class FileUploadContainer extends Component {
   async countPrice(){
     const { ManufactureProcess } = this.props
     let price = 0;
-    await fileList.map((data, idx) => {      
+    await fileList.map((data, idx) => {           
       data.totalMoldPrice = Math.round(data.moldPrice/10000) * 10000    
-      data.totalEjaculationPrice = Math.round(data.ejaculationPrice/10) * 10 * data.quantity.value
+      data.totalEjaculationPrice = Math.round(data.ejaculationPrice/10) * 10 * ( data.quantity.value ? data.quantity.value : 0 )
       data.totalPrice = Math.round(data.productionPrice/100) * 100 * data.quantity.value
 
-      // 도면 데이터가 체크 되어 있는 경우에만 금액 계산
+      // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
       if(data.checked){        
         if(data.selectBig.name === "금형사출"){        
           price += data.totalMoldPrice
@@ -126,8 +150,11 @@ class FileUploadContainer extends Component {
         }else{          
           price += data.totalPrice
         }
-      }      
-    })    
+      }else{
+        
+      }     
+    })  
+    this.setState({g:3})  
     ManufactureProcess.orderPrice = price;    
   }
   
@@ -171,32 +198,33 @@ class FileUploadContainer extends Component {
       this.setState({...this.state, checkCard: e});
     }
 
-    // 스크롤 할 때 도면 추가하는 부분 밑으로 스크롤 할 경우 헤더 부분 fix가 풀리고 다시 도면 추가하는 부분으로 스크롤 할 경우 헤더 부분이 fix가 되게끔 하는 함수
-    // loadScroll = () => {
-    //   const { ManufactureProcess } = this.props
-    //   if(!ManufactureProcess.checkPaymentButton){
-    //     var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-    //     var standardHeight = 180;
-    //     var currentHeight = standardHeight + ((fileList.length) * 240)                
-    //     const card = document.getElementById("card")      
+      // 스크롤 할 때 도면 추가하는 부분 밑으로 스크롤 할 경우 헤더 부분 fix가 풀리고 다시 도면 추가하는 부분으로 스크롤 할 경우 헤더 부분이 fix가 되게끔 하는 함수
+      // loadScroll = () => {
+      //   const { ManufactureProcess } = this.props
+      //   if(!ManufactureProcess.checkPaymentButton){
+      //     var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+      //     var standardHeight = 180;
+      //     var currentHeight = standardHeight + ((fileList.length) * 240)                
+      //     const card = document.getElementById("card")      
 
-    //     if(card){
-    //       if(this.props.ManufactureProcess.checkFileUpload){        
-    //         if(scrollTop > currentHeight && !this.state.checkScroll){                        
-    //           card.style.display = "none"
-    //           card.style.position = "static"                
-    //           this.setState({checkScroll : true})                              
-    //         }else if(scrollTop < currentHeight){                     
-    //           card.style.display = "flex";
-    //           card.style.position = "fixed"
-    //           this.setState({checkScroll : false}) // checkScroll 안 쓸 듯        
-    //         }                    
-    //       }      
-    //     }else{      
-    //       card.style.display = "flex"    
-    //     }    
-    //   }  
-    // }
+      //     if(card){
+      //       if(this.props.ManufactureProcess.checkFileUpload){        
+      //         if(scrollTop > currentHeight && !this.state.checkScroll){                        
+      //           card.style.display = "none"
+      //           card.style.position = "static"                
+      //           this.setState({checkScroll : true})                              
+      //         }else if(scrollTop < currentHeight){                     
+      //           card.style.display = "flex";
+      //           card.style.position = "fixed"
+      //           this.setState({checkScroll : false}) // checkScroll 안 쓸 듯        
+      //         }                    
+      //       }      
+      //       else{      
+      //         card.style.display = "flex"    
+      //       }
+      //     }    
+      //   }  
+      // }
     
     // 추가 요청 사항 부분 - 사용자가 멀티 라인으로 텍스트 할 경우 자동으로 높이 조절되게끔 해주는 함수
     handleChange = (event) => {
@@ -310,8 +338,7 @@ class FileUploadContainer extends Component {
       this.setState({checkFileUpload: true })
       this.props.ManufactureProcess.checkFileUpload = true
 
-      const card = document.getElementById("card")
-
+      //const card = document.getElementById("card")
     //   if(card){                         
     //     card.style.display = "flex"
     //     card.style.position = "fixed"
@@ -329,11 +356,11 @@ class FileUploadContainer extends Component {
           <InputBox checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>{
             isDragActive ?
               <p>Drop the files here ...</p> :
-              <DropZoneContainer>
+              <DropZoneContainer checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
                  {this.state.loading === true ? 
               <>
-                <div>Uploading files...</div>
-                <CircularProgress style={{margin:'10px auto', width: '22px', height: '22px'}}className="spinner" />
+                <div style={{fontSize: '10px'}}>Uploading files...</div>
+                <CircularProgress style={{margin:'5px auto', width: '12px', height: '12px'}}className="spinner" />
             
               </> : 
               <>                          
@@ -374,34 +401,27 @@ class FileUploadContainer extends Component {
 
   render() {
     const { ManufactureProcess } = this.props;
-    const options = [
-      { value: "apple", label: "Apple" },
-      { value: "banana", label: "Banana" },
-      { value: "orange", label: "Orange" },
-      { value: "berry", label: "Berry" },
-    ]
 
     return (
       <>
-      <Container>
+      <Containerv1 style={{flexDirection:'column'}}>
         <Card checkFileUpload={this.props.ManufactureProcess.checkFileUpload} onChange={this.scrollChange} id="card">      
-          <Header>
+          <Header checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
             {this.props.ManufactureProcess.checkFileUpload ? "도면 추가" : this.props.title}
           </Header>        
-
-
-        </Card>
-        <ContentBox checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>          
+          <ContentBox checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>          
             <this.MyDropzone onChange={this.scrollChange}></this.MyDropzone>                                 
-        </ContentBox> 
+          </ContentBox> 
+        </Card>
+        
         
         <ItemList checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
           {fileList.map((data, idx) =>            
             <>
-                <ItemBox>
+                <ItemBox id="itemBox">
                   <MainBox>              
-                     <CheckBox active={data.checked} onClick = {()=>{
-                      this.setCheck(idx);
+                     <CheckBox active={data.checked}>                                             
+                        <div active={data.checked} onClick = {()=>{
                       if(!data.checked)
                       {
                         data.checked=true;
@@ -413,15 +433,16 @@ class FileUploadContainer extends Component {
                       
                       this.setState({f:3})
                       this.countPrice()
-                    }}>                                             
-                        <div active={data.checked}>
+                    }}>
                           <img src={pass3} active={data.checked}/>
                         </div>                                    
                      </CheckBox>
                     
                     <StlBox>
-                      {data.fileName}
-
+                      <div>{data.fileName}</div>
+                      <Length>
+                        {data.x_length + " x " + data.y_length + " x " + data.z_length + " mm"}
+                      </Length>
                       <STLViewer
                         model={data.drawFile} // stl파일 주소
                         width={120}                                  // 가로
@@ -439,12 +460,11 @@ class FileUploadContainer extends Component {
                         lights={[0, 0, 1]}
                         //lightColor={'red'}
                       />
-                      <Length>
-                        {data.x_length + " x " + data.y_length + " x " + data.z_length + " mm"}
-                      </Length>
+                      
                     </StlBox>
                     <ColumnBox>                        
-                      <ManufactureBox>                        
+                      <ManufactureBox> 
+                        <Label>생산공정</Label>                       
                         <Select                          // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
                           defaultValue={ManufactureProcess.categoryDefaultValue.big}
                           styles={customStyles}                           
@@ -467,7 +487,8 @@ class FileUploadContainer extends Component {
                         />                         
                       </ManufactureBox>
                     </ColumnBox>
-                    <MaterialBox>                       
+                    <MaterialBox>     
+                        <Label>재료</Label>                                         
                        <Select                  
                           defaultValue={ManufactureProcess.categoryDefaultValue.mid}                          
                           value={data.selectedMid}
@@ -481,18 +502,21 @@ class FileUploadContainer extends Component {
                           }}
                         />
                     </MaterialBox>
-                    <WrapBox checkQuantity={data.quantity.value}>
+                    <WCLabel>
+                        <Label>마감</Label>     
+                        <Label>색상</Label>     
+                    </WCLabel>
+                    <WCBox>
                         <span>기본가공</span>
-                    </WrapBox>
-                    <ColorBox>
                         <span>검정</span>
-                    </ColorBox>
-                    <QuantityBox quantity={data.quantity.value}>                    
+                    </WCBox>
+
+                    <QuantityBox quantity={data.quantity.value} id="quantityBox">  
+                    <Label>수량</Label>                   
                     {(data.quantity.label != '직접 입력' && data.selectBig.name !== "금형사출") &&
                       <Select 
                         id="select"
-                        quantity={data.quantity.label} 
-                        width="118px" 
+                        quantity={data.quantity.label}                         
                         styles={customStyles} 
                         style={{overflow: 'visible'}} 
                         options={quantityAry} 
@@ -505,50 +529,38 @@ class FileUploadContainer extends Component {
                       }/>                                        
                     }
                       
-                    { (data.quantity.label == '직접 입력' || data.selectBig.name === "금형사출") &&                      
+                      { (data.quantity.label == '직접 입력' || data.selectBig.name === "금형사출") &&                      
                       <DirectInputBox quantity={data.quantity.label} id="directInputBox">                                                                                                      
                           <input
-                            id="morethanTen"                            
+                            id="morethanTen"
+                            className="directInput"               
                             placeholder="직접 입력하세요"  
-                              onFocus={(e) => {
-                                e.target.placeholder = ''                                                 
+                            onKeyPress = {(e) => {
+                              if (e.key === "Enter") {                                
+                                this.checkQuantityData(e, data, idx)
+                              }                              
+                            }} 
+                            
+                            onFocus={(e) => {
+                                e.target.placeholder = ''                                                                         
                               }
                              }
                             onBlur={(e) => {        
-                              const re = /^[0-9\b]+$/;
-                                   
-                              if(e.target.value === ''){
-                                e.target.placeholder = '직접 입력하세요'
-                              }else if (!(re.test(e.target.value))) {
-                                data.quantity = {label: '직접 입력', val: ''}
-                              }
-                                                
-                              if(data.selectBig.name === "금형사출" && e.target.value > 0 && e.target.value < 100){
-                                alert("최소 주문 수량은 100개입니다!")
-                                const morethanTen = document.getElementById("morethanTen")                                                              
-                                  setTimeout(function(){morethanTen.focus();}, 1);                                                                                        
-                              }else{
-                                this.countPrice()
-                              }                    
+                              this.checkQuantityData(e, data, idx)                                                                        
                             }}       
                             onChange={(e) => {
-                              this.escFunction(e)
                               const re = /^[0-9\b]+$/;
-                            
+
                               if (e.target.value === '' || re.test(e.target.value)) {
                                 this.setNumCount(data, e.target.value)
                               }else{
-                                data.quantity = {label: '직접 입력', val: ''}
+                                data.quantity = {label: '직접 입력', val: '0'}
                                 e.target.value =''
                                 this.setNumCount(data, e.target.value)
                                 alert("숫자를 입력하세요")                                
                               }                                                   
-                            }}            
-
-                            class="Input"
-                            // onKeyDown={this.handleKeyDown}                                                      
-                          />            
-                          
+                            }}                                                               
+                          />                                      
                         </DirectInputBox>
                           }
                     </QuantityBox>
@@ -556,7 +568,7 @@ class FileUploadContainer extends Component {
 
                   
                   <div style={{textAlign: 'right'}}>
-                  <TailBox checkSelectBig = {data.selectBig.name} style={{float:'right', display: 'inline-block'}}>                                   
+                  <TailBox id="tailBox" checkSelectBig = {data.selectBig.name} style={{float:'right', display: 'inline-block'}}>                                   
                     <div>                                      
                       <span>{data.priceLoading === true ? <CircularProgress style={{ width: '22px', height: '22px'}} className="spinner" /> 
                       : (data.selectBig.name === "금형사출" ? 
@@ -564,7 +576,7 @@ class FileUploadContainer extends Component {
                             <span>금형가 </span> 
                             <span>{data.totalMoldPrice.toLocaleString('ko-KR') + " 원"}</span>
                             
-                            <span style={{marginLeft: '30px'}}>사출가</span>
+                            <span style={{marginLeft: '15px'}}>사출가</span>
                             <span>{data.totalEjaculationPrice.toLocaleString('ko-KR') + " 원"}</span>                          
                         </>
                       :
@@ -604,8 +616,8 @@ class FileUploadContainer extends Component {
           </ItemList>
                     
 
-                 
-          <Price checkFileUpload = {this.props.ManufactureProcess.checkFileUpload} id="price">              
+                
+          {/* <Price checkFileUpload = {this.props.ManufactureProcess.checkFileUpload} id="price">              
               <PriceLabel>
                 <span>총 주문금액</span>
                 <span>총 배송비</span>
@@ -625,23 +637,10 @@ class FileUploadContainer extends Component {
                     {ManufactureProcess.orderPrice.toLocaleString('ko-KR')}<span> 원</span>
                   </span>
               </PriceData>                                                          
-            </Price>      
+            </Price>        */}
 
-          <Request checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>        
-            <div>기타 요청사항</div>            
-              <textarea                                              
-                placeholder="특이사항 및 요청을 입력해주세요"                
-                onFocus={(e) => e.target.placeholder = ''}
-                onBlur={(e) => e.target.placeholder = '특이사항 및 요청을 입력해주세요'}
-                rows={this.state.rows}
-				        value={this.state.value}
-				
-				        className={'textarea'}
-                placeholderStyle={{ fontWeight: '400' }}
-				        onChange={this.handleChange}                
-              />                        
-          </Request>
-          <Reference checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
+
+          {/* <Reference checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
             <div>
               <span>참고 파일</span>
               <span>이미지 혹은 PDF 자료만 업로드 가능합니다. 전문 설계 용어와 기호를 사용해 주시면 좋습니다.</span>
@@ -652,9 +651,9 @@ class FileUploadContainer extends Component {
               <div></div>
             </span>
             
-          </Reference>
+          </Reference> */}
           
-          <Button checkFileUpload={ManufactureProcess.checkFileUpload}>
+          {/* <Button checkFileUpload={ManufactureProcess.checkFileUpload}>
               <div>
                 <span>상담 요청하기</span>
               </div>
@@ -663,9 +662,22 @@ class FileUploadContainer extends Component {
                   ManufactureProcess.checkPaymentButton = true;
                 }}>주문하기</span>
               </div>
-            </Button>
+            </Button> */}
             
-        </Container>
+        </Containerv1>
+        <Request checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>        
+                    
+          <textarea                                              
+            placeholder="요청 사항을 입력해주세요."                
+            onFocus={(e) => e.target.placeholder = ''}
+            onBlur={(e) => e.target.placeholder = '요청 사항을 입력해주세요.'}
+            rows={this.state.rows}
+            value={this.state.value}              
+            className={'textarea'}
+            placeholderStyle={{ fontWeight: '400' }}
+            onChange={this.handleChange}                
+                    />                        
+        </Request>
       </>
     )
   }
@@ -686,10 +698,10 @@ const quantityAry = [
   {label: '직접 입력', value: ''},
 ];
 
-
 const Select = styled(SelectComponent)`
-  width: ${props => props.width ? props.width : '180px'};
+  width: ${props => props.width ? props.width : '100%'};
   display: ${props => props.quantity === "직접 입력" ? 'none' : 'block'};
+  margin: 8px 0 12px 0;
 
   @keyframes fadeIn {  
     0% {
@@ -708,57 +720,29 @@ const Select = styled(SelectComponent)`
   }
 `
 
-const Box = styled.div`
-  width: 380px;
-  
-  ${props => props.active && css`
-  svg{
-    @keyframes select{
-      0% {
-        transform: skewY(-180deg);
-      }
-    }
-
-    animation: select 0.4s ease-out;
-    transform: rotate(-180deg);
-  }
-  `}
-
-  ${props => !props.active && css`
-  svg{
-    @keyframes selectOut{
-      0% {
-        transform: rotate(-180deg);
-      }
-    }
-    animation: selectOut 0.4s ;
-  }
-`}
-
-
-`
 const ItemList = styled.div`
-  width: 101%;
+  width: 97%;
   height: 100%;
   padding-left: 3px;
-  padding-top: ${props => props.checkFileUpload ? '215px' : '0'};
+  
+  padding-top: ${props => props.checkFileUpload ? '130px' : ''};
 `
 
 
 const ItemBox = styled.div`
   display:flex;
   justify-content:space-between;
-  width: 1204px;
-  height: 201px;
+  width: 100%;
+  height: 557px;
   position: relative;
 
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
   background-color: #ffffff;
-  margin-bottom: 40px;
-  padding: 0 44px 0 15px;
+  margin-bottom: 40px;  
   box-sizing: border-box;
+  padding: 20px 14px;
 `
 
 const StlBox = styled.div`
@@ -766,35 +750,39 @@ const StlBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 280px;
-  margin-right: 30px;
-  padding-right: 50px;
   box-sizing: border-box;
+  >div{
+    width: 90%;
+    text-align: center;
+    word-wrap: break-word;
+  }
 `
 
 const Length = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   line-height: 40px;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.35px;
   color: #282c36;
 `
 
 const ColumnBox = styled.div`
-  margin-right: 30px;
+  width: 100%;
 `
 const MainBox = styled.div`
   display:flex;
+  flex-direction: column;
   align-items: center;
+  width: 100%;
 `
 
 const ContentBox = styled.div`
-  width: 98%;
-  height: ${props => props.checkFileUpload ? '60px' : ''};
+  width: ${props => props.checkFileUpload ? 'calc(100%-3px)' : '100%'};
+  height: ${props => props.checkFileUpload ? '50px' : ''};
   display: flex;
   flex-direction: column;
   border: 2px dashed #a4aab4;
   border-radius: 5px;
   background-color: #f6f6f6;
-  margin-left: 1px;
   margin-bottom: ${props => props.checkFileUpload ? '0' : '120px'};
   :focus{
     outline: none;
@@ -803,80 +791,84 @@ const ContentBox = styled.div`
 `
 const ManufactureBox = styled.div`
   display:flex;
+  flex-direction: column;
 `
 
 const MaterialBox = styled.div`
-  margin-right: 39px;
+  width: 100%;
 `
-
-// WrapBox와 ColorBox 합칠 예정
-const WrapBox = styled.div`
-  width: 89px;
-  height: 40px;
-  margin-right: 36px;
-  box-sizing: border-box;
-  >span{
-    width: 100%;
-    text-align:left;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 40px;
-    letter-spacing: -0.45px;
-    color: #282c36;
-    background-color: #e1e2e4;
-    text-align: center;
-    padding: 6px 12px 7px 12px;
-    border: 1px solid #e1e2e4;
-    border-radius: 3px;
+const Label = styled.div`
+  font-size: 15px;
+  letter-spzcing: -0.38px;
+  color: #282c36;  
+  font-weight: normal;  
+`
+const WCLabel = styled.div`
+  display: flex;
+  width: 100%;
+  >div{
+    flex-grow: 1;
+  }
+  >div:nth-of-type(2){
+    padding-left: 5px;
   }
 `
 
-const ColorBox = styled.div`
-  width: 57px;
-  height: 40px;
-  margin-right: 39px;
+const WCBox = styled.div`
+  width: 100%;
+  display: flex;
   >span{
+    flex-grow: 1;
     width: 100%;
     text-align:left;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
+    font-size: 15px;
     line-height: 40px;
-    letter-spacing: -0.45px;
+    letter-spacing: -0.38px;
     color: #282c36;
-    background-color: #e1e2e4;
-    text-align: center;
-    padding: 6px 12px 7px 12px;
+    background-color: #e1e2e4;        
+    padding-left: 11px;
     border: 1px solid #e1e2e4;
     border-radius: 3px;
+    margin: 8px 12px 12px 0;
+    box-sizing: border-box;
+    height: 38px;
+  }
+  >span:nth-of-type(2){
+    margin-right: 0;
   }
 `
 
 const QuantityBox = styled.div`
-  width: 120px;
-  height: 40px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `
 
 const TailBox = styled.div`
-  width: 800px;  
+  width: 100%;  
   position: absolute;
-  top: 70%;
-  left: 32%;
+  top: 90%;
+  left: -5%;
   >div{
     >span{    
-      >span:nth-of-type(odd){
-        color: #282c36;
-        font-weight: 500;
-        text-align: left;
+      >span{
+        font-size: 18px;
+        color: #0933b3;
+        letter-spacing: -0.45px;                
         line-height: 40px;
-        margin-right: 20px;
+        font-weight: bold;
+      }
+      >span:nth-of-type(odd){        
+        font-weight: 500;
+        text-align: left;        
+        margin-right: 10px;
       }
       
-      >span:nth-of-type(even){
-        font-size: 24px;        
-        letter-spacing: -0.6px;                
+      >span:nth-of-type(even){        
+        
       }      
     }
   }
@@ -884,15 +876,15 @@ const TailBox = styled.div`
 
 const DeleteBox = styled.div`
   position: absolute;
-  top: 8%;
-  left: 97%;
+  top: 3%;
+  left: 91%;
 `
 
 const InputBox = styled.div`
   display:flex;
   align-items:center;
   justify-content:center;
-  height: ${props => props.checkFileUpload ? '100px' : ''};
+  height: ${props => props.checkFileUpload ? '50px' : ''};
   text-align:center;
   :focus{
     outline: 0;
@@ -901,22 +893,21 @@ const InputBox = styled.div`
 `
 
 const Card = styled.div`
-  width: 100%;
-  height: ${props => props.checkFileUpload ? '27px' : '60px'};
+  width: ${props => props.checkFileUpload ? 'calc(100% - 30px)' : '100%'};
+  height: ${props => props.checkFileUpload ? '120px' : ''};
   object-fit: contain;
   background-color: white;
-//   margin: 60px 0px 20px 0;
-    margin-bottom: ${props => props.checkFileUpload ? '20px' : ''};
+  margin-bottom: ${props => props.checkFileUpload ? '20px' : ''};
   display: flex;
   flex-direction: column;
-  //position: ${props => props.checkFileUpload ? 'fixed' : 'static'};
-  top: 0;
+  position: ${props => props.checkFileUpload ? 'fixed' : 'static'};
+  top: 50px;
   z-index: 99;
   box-sizing: border-box;
 `
 
-const Header = styled(Content.FontSize16)`
-  font-weight: normal;
+const Header = styled.div`
+  font-weight: ${props => props.checkFileUpload ? "bold" : "normal"};
   font-stretch: normal;
   font-style: normal;
   line-height: 18px;
@@ -925,7 +916,8 @@ const Header = styled(Content.FontSize16)`
   padding-top: 16px;
   padding-bottom:20px;
   object-fit: contain;
-  text-align: center;
+  text-align: ${props => props.checkFileUpload ? "left" : 'center'};
+  font-size: ${props => props.checkFileUpload ? "18px" : "16px"};
 `
 
 const FileImageContainer = styled.div`
@@ -934,14 +926,12 @@ const FileImageContainer = styled.div`
   align-items: center;
 `
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-`
 const CheckBox = styled.div`
-  width:75px;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  position: absolute;
+  top: 3%;
+  left: 5%;
+  
   > div{        
     width: 19px;
     height: 19px;
@@ -965,14 +955,14 @@ const CheckBox = styled.div`
 const DropZoneContainer = styled.div`
   >div{
     display: flex;
-    align-items: center;
+    align-items: center;    
     
     >span{
-      width: 26px;
-      height: 26px;
-      border-radius: 13px;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
       background-color: #0933b3;
-      margin-right: 20px;
+      margin-right: 16px;
       position: relative;
 
       >div{
@@ -984,13 +974,12 @@ const DropZoneContainer = styled.div`
         border: 1px solid white;
       }
       >div:nth-of-type(1){
-        //border: 3px solid red;
-        width: 14px;
+        width: 8px;
         height: 0px;    
       }
       >div:nth-of-type(2){
         width: 0px;
-        height: 14px;
+        height: 8px;
       }
     }  
   }
@@ -1001,14 +990,14 @@ const DropZoneContainer = styled.div`
     letter-spacing: -0.38px;
     color: #282c36;
     margin-bottom: 4px;
-    height: 22px;
+    height: ${props => props.checkFileUpload ? '' : '22px'};
     
     span:nth-of-type(1){
-        border-bottom: 1px solid #0933b3;
+        border-bottom: ${props => props.checkFileUpload ? '' : '1px solid #0933b3'};
     }
     span{
       color: #0933b3;
-      font-weight: normal;
+      font-weight: bold;
     }
     
     :focus{
@@ -1069,18 +1058,14 @@ const TableHeader = styled.div`
 `
 
 const Price = styled.div`
-  flex-direction: column;
- 
+  flex-direction: column; 
   width: 100%;
   height: 197px;
   border-top: 3px solid #414550;
-  border-bottom: 2px solid #c6c7cc;
-  
+  border-bottom: 2px solid #c6c7cc;  
   margin-top: 60px;
   margin-bottom: 70px;
-
   display: ${props => props.checkFileUpload ? 'flex' : 'none'};
-
 `
 const PriceLabel = styled.div`
   height: 75px;
@@ -1160,30 +1145,19 @@ const Button = styled.div`
 `
 
 const Request = styled.div`
-  width: 1200px;
+  width: 100%;
   display: ${props => props.checkFileUpload ? 'static' : 'none'};
-  background-color: #f6f6f6;
-  border: 1px solid #ffffff;
-  border-radius: 5px;
-  padding: 26px 24px 22px 24px;
+  padding: 16px 0 16px 14px;
   box-sizing: border-box;
   margin-bottom: 40px;
-  margin-top: 70px;
+  margin-top: 50px;
+  border-top: 1px solid #c6c7cc;
+  border-bottom: 1px solid #c6c7cc;
 
-  >div{
-    height: 27px;
-    font-size: 18px;
-    line-height: 40px;
-    letter-spacing: -0.45px;
-    color: #282c36;
-    font-weight: bold;
-    margin-bottom: 16px;
-  }
   >textarea{
     resize: none;
     border: 1px solid #ffffff;
     width: 100%;
-    padding: 14px 16px;
     box-sizing: border-box;
     font-size: 18px;
     line-height: 34px;
@@ -1243,30 +1217,33 @@ const Reference = styled.div`
 ` 
   
 const DirectInputBox = styled.div`
-font-size: 18px;
-font-weight: 500;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: -0.45px;
-color: #282c36;
-width: 108px;
-height: 29px;
-border: solid 1px #c6c7cc;
-border-radius: 3px;
-padding: 4px;   
-> input {
-  width: 90%;
-  padding: 4px;
-  outline: none;
-  border: none;
   font-size: 18px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.45px;
   color: #282c36;
-  ::placeholder{
-    font-size: 14px;
+  height: 37px;
+  border: solid 1px #c6c7cc;
+  border-radius: 3px;
+  padding: 4px;   
+  width: 97%;
+  display: block;
+  margin: 8px 0 12px 0;
+  > input {
+    width: 90%;
+    padding: 4px;
+    outline: none;
+    border: none;
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: -0.45px;
+    color: #282c36;
+    ::placeholder{
+      font-size: 14px;
+    }
   }
-}
 `
