@@ -18,6 +18,7 @@ class Magazine {
   @observable category_checked_idx = 0;
   @observable category_detail_checked_idx = 0;
   @observable current_page = 1;
+  @observable full_page = 1;
   @observable next_page = 0;
 
   @action init = () => {
@@ -49,6 +50,7 @@ class Magazine {
         }
         console.log(`magazine length: ${this.magazine_list.length}`)
         this.magazine_length = this.magazine_list.length
+        this.full_page = parseInt((this.magazine_list.length)/12)+1
       })
       .catch(e => {
         console.log(e)

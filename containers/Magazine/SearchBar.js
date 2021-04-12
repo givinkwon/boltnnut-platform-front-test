@@ -20,13 +20,13 @@ class SearchBarConatiner extends React.Component {
   };
 
   selectClick = () => {
-    const{list} = this.state;
+    const {list} = this.state;
     this.setState({ list: true });
 
   }
 
   selectOut= () =>{
-    const{list} = this.state;
+    const {list} = this.state;
     this.setState({ list: false });
 
   }
@@ -65,7 +65,10 @@ class SearchBarConatiner extends React.Component {
     const { Project } = this.props;
     return (
       <Form>
-        <Box active={this.state.list===true} onClick ={()=>this.state.list ? this.selectOut():this.selectClick()}  onBlur = {()=>this.selectOut()}>
+        <Box active={this.state.list===true} onClick ={() => {
+          this.state.list ? this.selectOut():this.selectClick()
+          console.log(this.state.list)
+        }}  onBlur = {()=>this.selectOut()}>
         <input style={{display: 'none'}} class="Input"/>       
           <Select placeholder='전체' options={categoryArray}  getOptionLabel={(option) => option.label}/>    
         </Box>
@@ -158,6 +161,7 @@ const Form = styled.div`
   display: flex;
   justify-content: flex-start;
   height: 50px;
+  margin-bottom: 40px;
 `;
 
 const SearchButton = styled(ButtonComponent)`
