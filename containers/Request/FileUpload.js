@@ -13,6 +13,7 @@ import SelectComponent from "components/Select";
 import ManufactureProcess from "../../stores/ManufactureProcess";
 import InputComponent from "AddFile";
 
+const pass2 = "static/images/pass2.png";
 const pass3 = "static/images/pass3.png";
 const deleteButtonImg = "/static/images/delete.png";
 
@@ -76,15 +77,17 @@ class FileUploadContainer extends Component {
 
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
   setNumCount = (data, val) => {
+    console.log(val);
     if (val.label != "직접 입력") {
       data.quantity = { label: val, value: val };
     }
-    if (val.label == "직접 입력" && val.value == 0) {
+    if (val.label == "직접 입력" && (val.value == 0 || val.value == "")) {
       data.quantity = { label: "직접 입력", value: val };
     }
     if (val.value == 0) {
       data.quantity = { label: "직접 입력", value: val.value };
     }
+    console.log(data.quantity);
   };
 
   // ESC 버튼을 눌렀을 경우 발생하는 함수 (삭제 에정)
@@ -93,6 +96,32 @@ class FileUploadContainer extends Component {
       console.log("esc");
     }
   }
+
+  checkQuantityData = (e, data, idx) => {
+    const directInput = document.getElementsByClassName("directInput");
+    console.log(directInput);
+    console.log(this);
+    const re = /^[0-9\b]+$/;
+    console.log(idx);
+    if (e.target.value === "") {
+      e.target.placeholder = "직접 입력하세요";
+    } else if (!re.test(e.target.value)) {
+      data.quantity = { label: "직접 입력", val: "" };
+    }
+
+    if (data.selectBig.name === "금형사출") {
+      if (e.target.value > 0 && e.target.value < 100) {
+        alert("최소 주문 수량은 100개입니다!");
+        data.quantity = { label: "직접 입력", val: 0 };
+        e.target.value = "";
+        directInput[idx].focus();
+      } else {
+        this.countPrice();
+      }
+    } else {
+      this.countPrice();
+    }
+  };
 
   componentDidMount() {
     const { ManufactureProcess } = this.props;
@@ -105,6 +134,7 @@ class FileUploadContainer extends Component {
   componentWillUnmount = () => {
     const { ManufactureProcess } = this.props;
     ManufactureProcess.dataPrice = [];
+    window.removeEventListener("scroll", this.loadScroll);
   };
 
   // 각각의 도면 데이터들의 가격과 총 주문금액을 계산하는 함수
@@ -114,11 +144,13 @@ class FileUploadContainer extends Component {
     await fileList.map((data, idx) => {
       data.totalMoldPrice = Math.round(data.moldPrice / 10000) * 10000;
       data.totalEjaculationPrice =
-        Math.round(data.ejaculationPrice / 10) * 10 * data.quantity.value;
+        Math.round(data.ejaculationPrice / 10) *
+        10 *
+        (data.quantity.value ? data.quantity.value : 0);
       data.totalPrice =
         Math.round(data.productionPrice / 100) * 100 * data.quantity.value;
 
-      // 도면 데이터가 체크 되어 있는 경우에만 금액 계산
+      // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
       if (data.checked) {
         if (data.selectBig.name === "금형사출") {
           price += data.totalMoldPrice;
@@ -126,6 +158,8 @@ class FileUploadContainer extends Component {
         } else {
           price += data.totalPrice;
         }
+      } else {
+        this.setState({ g: 3 });
       }
     });
     ManufactureProcess.orderPrice = price;
@@ -206,9 +240,9 @@ class FileUploadContainer extends Component {
             card.style.position = "fixed";
             this.setState({ checkScroll: false }); // checkScroll 안 쓸 듯
           }
+        } else {
+          card.style.display = "flex";
         }
-      } else {
-        card.style.display = "flex";
       }
     }
   };
@@ -243,7 +277,7 @@ class FileUploadContainer extends Component {
   // 수량이 변경되는 경우 수량 정보를 저장
   onQuantityChange(data, value) {
     if (
-      data.selectBig.name == "금형사출" &&
+      data.selectBig.name === "금형사출" &&
       value.value > 0 &&
       value.value < 100
     ) {
@@ -439,12 +473,6 @@ class FileUploadContainer extends Component {
 
   render() {
     const { ManufactureProcess } = this.props;
-    const options = [
-      { value: "apple", label: "Apple" },
-      { value: "banana", label: "Banana" },
-      { value: "orange", label: "Orange" },
-      { value: "berry", label: "Berry" },
-    ];
 
     return (
       <>
@@ -483,7 +511,6 @@ class FileUploadContainer extends Component {
                     <CheckBox
                       active={data.checked}
                       onClick={() => {
-                        this.setCheck(idx);
                         if (!data.checked) {
                           data.checked = true;
                         } else {
@@ -508,7 +535,7 @@ class FileUploadContainer extends Component {
                         height={120} // 세로
                         // width={250}
                         // height={210}
-                        modelColor="gray" // 색
+                        modelColor="red" // 색
                         backgroundColor="white" // 배경색
                         rotate={true} // 자동회전 유무
                         orbitControls={true} // 마우스 제어 유무
@@ -516,7 +543,7 @@ class FileUploadContainer extends Component {
                         //cameraZ={500}
                         //lights={[2,4,1]}
                         //lights={[2, 2, 2]}
-                        lights={[0, 0, 1]}
+                        // lights={[0, 0, 1]}
                         //lightColor={'red'}
                       />
                       <Length>
@@ -603,37 +630,21 @@ class FileUploadContainer extends Component {
                         >
                           <input
                             id="morethanTen"
+                            className="directInput"
                             placeholder="직접 입력하세요"
+                            onKeyPress={(e) => {
+                              if (e.key === "Enter") {
+                                this.checkQuantityData(e, data, idx);
+                              }
+                            }}
                             onFocus={(e) => {
                               e.target.placeholder = "";
+                              this.onBlur;
                             }}
                             onBlur={(e) => {
-                              const re = /^[0-9\b]+$/;
-
-                              if (e.target.value === "") {
-                                e.target.placeholder = "직접 입력하세요";
-                              } else if (!re.test(e.target.value)) {
-                                data.quantity = { label: "직접 입력", val: "" };
-                              }
-
-                              if (
-                                data.selectBig.name === "금형사출" &&
-                                e.target.value > 0 &&
-                                e.target.value < 100
-                              ) {
-                                alert("최소 주문 수량은 100개입니다!");
-                                const morethanTen = document.getElementById(
-                                  "morethanTen"
-                                );
-                                setTimeout(function () {
-                                  morethanTen.focus();
-                                }, 1);
-                              } else {
-                                this.countPrice();
-                              }
+                              this.checkQuantityData(e, data, idx);
                             }}
                             onChange={(e) => {
-                              this.escFunction(e);
                               const re = /^[0-9\b]+$/;
 
                               if (
@@ -642,14 +653,15 @@ class FileUploadContainer extends Component {
                               ) {
                                 this.setNumCount(data, e.target.value);
                               } else {
-                                data.quantity = { label: "직접 입력", val: "" };
+                                data.quantity = {
+                                  label: "직접 입력",
+                                  val: "0",
+                                };
                                 e.target.value = "";
                                 this.setNumCount(data, e.target.value);
                                 alert("숫자를 입력하세요");
                               }
                             }}
-                            class="Input"
-                            // onKeyDown={this.handleKeyDown}
                           />
                         </DirectInputBox>
                       )}
@@ -730,6 +742,15 @@ class FileUploadContainer extends Component {
             <this.MyDropzone onChange={this.scrollChange}></this.MyDropzone>
           </ContentBox>
 
+          <NoFileButton checkFileUpload={ManufactureProcess.checkFileUpload}>
+            <div>*혹시 도면 파일이 없으신가요?</div>
+            <div>
+              <span>도면 파일 없이 견적 받기</span>
+              <span>
+                <img src={pass2} />
+              </span>
+            </div>
+          </NoFileButton>
           <Price
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
             id="price"
@@ -829,7 +850,6 @@ const quantityAry = [
 const Select = styled(SelectComponent)`
   width: ${(props) => (props.width ? props.width : "180px")};
   display: ${(props) => (props.quantity === "직접 입력" ? "none" : "block")};
-
   @keyframes fadeIn {
     0% {
       opacity: 0.5;
@@ -840,7 +860,6 @@ const Select = styled(SelectComponent)`
       transform: translateY(0);
     }
   }
-
   >div: nth-of-type(2) {
     -webkit-font-smoothing: antialiased;
     animation: fadeIn 0.2s ease-out;
@@ -859,12 +878,10 @@ const Box = styled.div`
             transform: skewY(-180deg);
           }
         }
-
         animation: select 0.4s ease-out;
         transform: rotate(-180deg);
       }
     `}
-
   ${(props) =>
     !props.active &&
     css`
@@ -891,7 +908,6 @@ const ItemBox = styled.div`
   width: 1204px;
   height: 201px;
   position: relative;
-
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
@@ -935,9 +951,45 @@ const ContentBox = styled.div`
   border-radius: 5px;
   background-color: #f6f6f6;
   margin-left: 1px;
-  margin-bottom: ${(props) => (props.checkFileUpload ? "0" : "600px")};
+  margin-bottom: ${(props) => (props.checkFileUpload ? "0" : "66px")};
   :focus {
     outline: none;
+  }
+`;
+const NoFileButton = styled.div`
+  width: 100%;
+  margin-bottom: ${(props) => (props.checkFileUpload ? "0" : "425px")};
+  text-align: center;
+  display: ${(props) => (props.checkFileUpload ? "none" : "flex")};
+  flex-direction: ${(props) => (props.checkFileUpload ? "" : "column")};
+  align-items: ${(props) => (props.checkFileUpload ? "" : "center")};
+  > div:nth-of-type(1) {
+    font-size: 20px;
+    line-height: 40px;
+    letter-spacing: -0.5px;
+    color: #86888c;
+    margin-bottom: 14px;
+  }
+  > div:nth-of-type(2) {
+    border: 1px solid #a4aab4;
+    border-radius: 60px;
+    width: 268px;
+    > span:nth-of-type(1) {
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #414550;
+      margin-right: 11px;
+    }
+    > span:nth-of-type(2) {
+      position: relative;
+      > img {
+        vertical-align: middle;
+        color: #414550;
+        position: absolute;
+        top: 15%;
+      }
+    }
   }
 `;
 const ManufactureBox = styled.div`
@@ -1112,7 +1164,6 @@ const DropZoneContainer = styled.div`
       background-color: #0933b3;
       margin-right: 20px;
       position: relative;
-
       > div {
         position: absolute;
         top: 50%;
@@ -1164,7 +1215,6 @@ const TableHeader = styled.div`
   border-bottom: 1px solid #c6c7cc;
   padding-bottom: 18px;
   display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
-
   > div {
     width: 19px;
     height: 19px;
@@ -1211,7 +1261,6 @@ const Price = styled.div`
 
   margin-top: 60px;
   margin-bottom: 70px;
-
   display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
 `;
 const PriceLabel = styled.div`
@@ -1235,7 +1284,6 @@ const PriceData = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-
   > span {
     font-size: 30px;
     line-height: 40px;
@@ -1278,7 +1326,6 @@ const Button = styled.div`
       transform: translate(-50%, -50%);
     }
   }
-
   > div:nth-of-type(1) {
     border: 1px solid #0933b3;
     background-color: #ffffff;
@@ -1302,7 +1349,6 @@ const Request = styled.div`
   box-sizing: border-box;
   margin-bottom: 40px;
   margin-top: 70px;
-
   > div {
     height: 27px;
     font-size: 18px;
@@ -1318,7 +1364,7 @@ const Request = styled.div`
     width: 100%;
     padding: 14px 16px;
     box-sizing: border-box;
-    font-size: 18px;
+    font-size: 15px;
     line-height: 34px;
     letter-spzcing: -0.45px;
     color: #282c36;
@@ -1326,7 +1372,6 @@ const Request = styled.div`
     overflow: auto;
     height: auto;
     font-family: inherit;
-
     :focus {
       outline: none;
     }
@@ -1345,7 +1390,6 @@ const Reference = styled.div`
   border-radius: 5px;
   padding: 0 24px 22px 24px;  
   box-sizing: border-box;
-
   >div:nth-of-type(1){
     height: 27px;
     margin-top: 26px;

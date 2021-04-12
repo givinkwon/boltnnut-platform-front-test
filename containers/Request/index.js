@@ -33,7 +33,6 @@ import PaymentPageContainer from "./PaymentPage";
 class RequestContainer extends React.Component {
   componentDidMount = () => {
     this.props.Auth.bgColor = "#f6f6f6";
-    console.log("RRANSCNASNCLKANSCLNASKLCNLAKSC");
   };
   render() {
     const { Request } = this.props;
