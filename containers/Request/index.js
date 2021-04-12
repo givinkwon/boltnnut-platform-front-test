@@ -28,9 +28,13 @@ import DisbursementContainer from "./Disbursement";
 import MarketingModal from "./MarketingModal";
 import PaymentPageContainer from "./PaymentPage";
 
-@inject("DetailQuestion", "Partner", "Request")
+@inject("DetailQuestion", "Partner", "Request", "Auth")
 @observer
 class RequestContainer extends React.Component {
+  componentDidMount = () => {
+    this.props.Auth.bgColor = "#f6f6f6";
+    console.log("RRANSCNASNCLKANSCLNASKLCNLAKSC");
+  };
   render() {
     const { Request } = this.props;
 
