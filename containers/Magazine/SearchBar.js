@@ -66,8 +66,8 @@ class SearchBarConatiner extends React.Component {
     return (
       <Form>
         <Box active={this.state.list===true} onClick ={()=>this.state.list ? this.selectOut():this.selectClick()}  onBlur = {()=>this.selectOut()}>
-        <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>       
-          <Select placeholder='전체' options={categoryArray}  getOptionLabel={(option) => option.label} value={Project.input_category} onChange={Project.setCategory}/>    
+        <input style={{display: 'none'}} class="Input"/>       
+          <Select placeholder='전체' options={categoryArray}  getOptionLabel={(option) => option.label}/>    
         </Box>
           <SearchBar>        
               <input
@@ -107,7 +107,7 @@ const categoryArray = [
 
 const SearchBar = styled.div`
   display: flex;
-  width: 690px;
+  width: 640px;
   height: 44px;
   box-sizing: border-box;
   margin 0 24px;
@@ -153,7 +153,7 @@ const SearchBar = styled.div`
   }
 `;
 const Form = styled.div`
-  margin-top: 90px;
+  // margin-top: 90px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -176,7 +176,7 @@ const SearchButton = styled(ButtonComponent)`
 
 
 const Select = styled(SelectComponent)`
-  width: 220px;
+  width: 180px;
   height: 44px;
   box-sizing: border-box;
 
@@ -199,7 +199,7 @@ const Select = styled(SelectComponent)`
 `
 
 const Box = styled.div`
-width: 220px;
+  width: 180px;
 
   ${ props => props.active && css`
   svg{
