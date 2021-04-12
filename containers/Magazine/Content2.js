@@ -609,7 +609,9 @@ const PageBar = styled.div`
   width: 250px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 150px;
+  margin-bottom: 250px;
+  margin-top: 100px;
+  //margin: 100px auto 200px auto;
   text-align: center;
   display: flex;
   justify-content: space-evenly;
