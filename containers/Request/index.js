@@ -12,7 +12,7 @@ import 'react-count-animation/dist/count.min.css';
 //Mobile
 import MobileRequestContainer from './Mobile/Mobileindex';
 
-import { inject, observer } from "mobx-react";
+import { inject, observer } from 'mobx-react';
 
 import RequestSelectContainer from './RequestSelect';
 import Step1Container from './Step1';
@@ -42,24 +42,15 @@ class RequestContainer extends React.Component {
 						{Request.step_index != 0 && <BannerContainer />}
 						<Background backgroundColor={'#ffffff'}>
 							<Containerv1>
-                <FileUploadContainer></FileUploadContainer>
-								{/* {Request.step_index == 0 ? (
-									<RequestSelectContainer />
-								) : (
-									<Step />
-								)}
-								
-								{Request.step_index == 1 && (
-									<Step1Container
-										page={Request.step1_index}
-									/>
-								)}
+								{/* <PaymentPageContainer /> */}
+								{Request.step_index == 0 ? <RequestSelectContainer /> : <Step />}
+								{/* <FileUploadContainer></FileUploadContainer> */}
+								{Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
 								{Request.step_index == 2 && <Step2Container />}
 								{Request.step_index == 3 && <Step3Container />}
 								{Request.step_index == 4 && <Step4Container />}
 								{Request.step_index == 5 && <Step5Container />}
-								{Request.step_index == 6 && <Step6Container />} */}
-								{/* <PaymentPageContainer/> */}
+								{Request.step_index == 6 && <Step6Container />}
 							</Containerv1>
 						</Background>
 					</div>
