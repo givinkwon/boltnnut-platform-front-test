@@ -42,7 +42,7 @@ class SearchBarConatiner extends React.Component {
     const { Magazine } = this.props
  
     Magazine.current_page = 1
-    Magazine.getMagazineByContent(Magazine.search_text)
+    Magazine.init(Magazine.search_text)
     
   };
   closeModal = () => {
@@ -55,12 +55,12 @@ class SearchBarConatiner extends React.Component {
     const { Magazine } = this.props
     if (e.key === "Enter") {      
       Magazine.current_page = 1
-      Magazine.getMagazineByContent(Magazine.search_text)
+      Magazine.init(Magazine.search_text)
     }
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-    //console.log(this.props.Project.input_category)
+    //console.log(this.props.Project.input_category) 
   }
   render() {    
     const { Magazine } = this.props;

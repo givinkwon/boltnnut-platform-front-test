@@ -46,50 +46,12 @@ class Magazine {
 
   @observable search_text = '';
 
-  @action getMagazineByContent = (content) => {
+  @action init = (search_text) => {
     this.magazine_list = [];
     const req = {
       params: {
         ordering: '-is_top, -id',
-        search: content,
-      },
-    }   
-    MagazineAPI.getMagazine(req)
-    .then(async (res) => {
-      this.magazine_list = res.data.results
-      this.magazine_next = res.data.next
-
-      while(this.magazine_next) {
-        const req = {
-          nextUrl: this.magazine_next,
-        }
-
-        await MagazineAPI.getNextPage(req)
-          .then(res => {
-            this.magazine_list = this.magazine_list.concat(res.data.results)
-            this.magazine_next = res.data.next
-          })
-          .catch(e => {
-            console.log(e)
-            console.log(e.response)
-          })
-      }
-      console.log(`magazine length: ${this.magazine_list.length}`)
-      this.magazine_length = this.magazine_list.length
-      this.full_page = parseInt((this.magazine_list.length)/12)+1
-      this.mobile_full_page = parseInt((this.magazine_list.length)/6)+1
-    })
-    .catch(e => {
-      console.log(e)
-      console.log(e.response)
-    })     
-  }
-
-  @action init = () => {
-    this.magazine_list = [];
-    const req = {
-      params: {
-        ordering: '-is_top, -id',
+        search: search_text,
       },
     }    
     MagazineAPI.getMagazine(req)
