@@ -11,11 +11,13 @@ const Banner1Img2 = '/static/images/Info/Banner1Img2.png';
 const Banner2Img = '/static/images/Info/Banner2Img.png';
 const Banner3Img = '/static/images/Info/Banner3Img.png';
 import PaymentPageContainer from '../Request/PaymentPage';
+import PaymentCompleteContainer from '../Request/PaymentComplete';
 class InfoContainer extends React.Component {
 	render() {
 		return (
 			<>
 				<PaymentPageContainer />
+				{/* <PaymentCompleteContainer /> */}
 			</>
 			// <Background>
 			//   <Header>온라인 맞춤 제조 플랫폼, <span>볼트앤너트</span></Header>

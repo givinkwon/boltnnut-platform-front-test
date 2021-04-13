@@ -41,14 +41,7 @@ class InputComponent extends React.Component {
 	};
 
 	render() {
-		const {
-			onChange,
-			children,
-			label,
-			file,
-			Request,
-			...props
-		} = this.props;
+		const { onChange, children, label, file, Request, ...props } = this.props;
 		const { fileName } = this.state;
 
 		if (!file) {
@@ -70,10 +63,7 @@ class InputComponent extends React.Component {
 		} else {
 			return (
 				<Wrap width={this.props.width}>
-					<InputBox
-						style={{ width: '100%', display: 'inline-block' }}
-						onClick={() => this.file.current.click()}
-					>
+					<InputBox style={{ width: '100%', display: 'inline-block' }} onClick={() => this.file.current.click()}>
 						<input
 							type='file'
 							multiple={'multiple'}
@@ -83,11 +73,7 @@ class InputComponent extends React.Component {
 							ref={this.file}
 							placeholder={'파일을 선택해 주세요.'}
 						/>
-						<FileText>
-							{Request.common_file
-								? this.state.fileName
-								: '파일을 선택해 주세요.'}
-						</FileText>
+						<FileText>{Request.common_file ? this.state.fileName : '파일을 선택해 주세요.'}</FileText>
 						<img src={fileImage} />
 					</InputBox>
 				</Wrap>
@@ -142,7 +128,7 @@ const Input = styled.div`
   margin-top: ${props => props.marginTop}px;
   color: #404040;
   font-weight: 400;
-  padding-left: 2.3%;
+  padding-left:16px;
   :focus {
     outline: none;
   }
@@ -150,7 +136,7 @@ const Input = styled.div`
     width: 100%;
     height: 100%;
     border: none;
-    padding: 0 !important;
+	padding: 0 !important;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -167,7 +153,8 @@ const Input = styled.div`
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    padding-left: 2.3% !important;
+    // padding-left: 2.3% !important;
+    padding-left:16px;
   > input {
     width: 100%;
     height: 100%;
