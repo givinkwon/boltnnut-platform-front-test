@@ -110,7 +110,8 @@ const categoryArray = [
 
 const SearchBar = styled.div`
   display: flex;
-  width: 640px;
+  //width: 640px;
+  width: 63%;
   height: 44px;
   box-sizing: border-box;
   margin 0 24px;
@@ -130,7 +131,7 @@ const SearchBar = styled.div`
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 30px;
+    // margin-top: 30px;
     flex-direction: column;
     input {
       font-size: 12px;
@@ -138,13 +139,13 @@ const SearchBar = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 30px;
+    // margin-top: 30px;
     input {
       font-size: 16px;
     }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-top: 40px;
+    // margin-top: 40px;
     input {
       font-size: 17px;
     }
@@ -166,6 +167,7 @@ const Form = styled.div`
 
 const SearchButton = styled(ButtonComponent)`
   border-radius: 3px;
+  width: 9%;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 70px;
     border: 1px solid #ffffff80;
@@ -203,7 +205,7 @@ const Select = styled(SelectComponent)`
 `
 
 const Box = styled.div`
-  width: 180px;
+  width: 18%;
 
   ${ props => props.active && css`
   svg{

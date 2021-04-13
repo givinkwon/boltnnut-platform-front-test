@@ -3,6 +3,9 @@ import styled, {css} from 'styled-components'
 import Router from 'next/router'
 import Slider from "react-slick";
 
+import Background from 'components/Background';
+import Containerv1 from 'components/Containerv1';
+
 import Container from 'components/Container'
 import RatioImage from 'components/RatioImage'
 import * as Text from 'components/Text'
@@ -20,7 +23,8 @@ const right = 'static/icon/right-arrow.png'
 class MobileContentContainer extends React.Component {
   state = {
     magazineLength: 0,
-    magazine_idx: 3
+    magazine_idx: 3,
+    checked: false
   }
   componentDidMount () {
     this.setState({...this.state, magazineLength: this.props.length})
@@ -31,6 +35,157 @@ class MobileContentContainer extends React.Component {
     window.removeEventListener("scroll", this.loadScroll);
   }
 
+  activeHandler = (idx) => {
+    // console.log(`this.state.index : ${this.state.index}`)
+    // console.log(`idx : ${idx}`)
+    if(idx=== this.props.Magazine.mobile_category_checked_idx) {
+      // console.log("equal")
+      
+
+       return true; 
+    } else { 
+      return false; 
+    }
+  };
+
+  // onClickHandler = (item, idx) => {
+  //   const { Magazine } = this.props;
+   
+  //   // 동일한 상위 카테고리를 클릭했을 경우
+  //   if(idx === Magazine.category_checked_idx){
+  //     const categoryMenuItem = document.querySelectorAll(`.CategoryMenuItem${idx}`)
+    
+  //     // 선택되어있는 경우 하위 카테고리 보이게 하기
+  //     if(item.checked){              
+  //       for(var i = 0; i< categoryMenuItem.length; i++){
+  //         categoryMenuItem[i].style.display = 'block'  
+  //       }        
+  //     }
+  //     // 선택 안 되어있는 경우 하위 카테고리 감추기
+  //     else{
+  //       for(var i = 0; i< categoryMenuItem.length; i++){
+  //         categoryMenuItem[i].style.display = 'none'
+  //       }        
+  //     }
+  //   }
+  //   // 다른 상위 카테고리를 클릭했을 경우
+  //   else if(idx !== Magazine.category_checked_idx) {
+  //     const categoryMenuPrevItem = document.querySelectorAll(`.CategoryMenuItem${Magazine.category_checked_idx}`)
+  //     const categoryMenuItem = document.querySelectorAll(`.CategoryMenuItem${idx}`)
+
+  //     // 이전 상위 카테고리의 첫 번째 하위 카테고리가 선택되고 나머지는 해제시킴
+  //     Magazine.categoryAry[Magazine.category_checked_idx].item[Magazine.category_detail_checked_idx].checked = false
+  //     Magazine.categoryAry[Magazine.category_checked_idx].item[0].checked = true
+  //     Magazine.category_detail_checked_idx = 0
+
+  //     // if(Magazine.category_checked_idx !== -1){
+      
+  //     // 이전에 선택한 상위 카테고리 체크 해제하고 지금 선택한 상위 카테고리는 체크
+  //     Magazine.categoryAry[Magazine.category_checked_idx].checked = false;
+  //     // }            
+  //     Magazine.category_checked_idx = idx      
+  //     Magazine.categoryAry[idx].checked = true;
+
+  //     // 이전에 선택한 상위 카테고리의 하위 카테고리 화면에 보이게 하는 여부
+  //     if(!item.checked){
+  //       for(var i = 0; i< categoryMenuPrevItem.length; i++){
+  //         categoryMenuPrevItem[i].style.display = 'block'  
+  //       }
+  //     }else{
+  //       for(var i = 0; i< categoryMenuPrevItem.length; i++){
+  //         categoryMenuPrevItem[i].style.display = 'none'
+  //       }        
+  //     }
+
+  //     // 현재 선택한 상위 카테고리의 하위 카테고리 화면에 보이게 하는 여부
+  //     if(Magazine.categoryAry[idx].checked){
+  //       for(var i = 0; i< categoryMenuItem.length; i++){
+  //         categoryMenuItem[i].style.display = 'block'  
+  //       }
+  //     }else{
+  //       for(var i = 0; i< categoryMenuItem.length; i++){
+  //         categoryMenuItem[i].style.display = 'none'
+  //       }        
+  //     }
+  //   }
+  //   this.setState({f:3})
+  // }
+
+  // onClickDetailHandler = (data, idx, id) => {
+  //   const { Magazine } = this.props
+   
+  //   if(id === Magazine.category_detail_checked_idx){
+    
+  //   }
+  //   else{
+  //     if(Magazine.categoryAry[idx].item[Magazine.category_detail_checked_idx]){
+  //       Magazine.categoryAry[idx].item[Magazine.category_detail_checked_idx].checked = false
+  //     }
+  //     Magazine.category_detail_checked_idx = id
+  //     Magazine.categoryAry[idx].item[id].checked = true
+      
+  //   }
+  // this.setState({g:3})
+    
+  // }
+  categoryClickHandler = (item, idx) => {
+    const { Magazine } = this.props
+    const lowerCategory = document.getElementById("LowerCategory")
+    //console.log(lowerCategory)
+
+    if(Magazine.mobile_category_checked_idx !== idx){
+      if(Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx].item[Magazine.mobile_category_detail_checked_idx]){
+        //console.log(Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx])
+        Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx].item[Magazine.mobile_category_detail_checked_idx].checked = false      
+        Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx].item[0].checked = true  
+        Magazine.mobile_category_detail_checked_idx = 0
+      }
+
+      //console.log(item)
+      item.checked = true
+      //console.log(Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx])
+      Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx].checked = false
+      Magazine.mobile_category_checked_idx = idx
+    }
+    if(item.name === "전체"){
+      
+    //  console.log(lowerCategory)
+    console.log("전체O")
+      lowerCategory.style.display = 'none'
+      this.setState({checked : false })
+      Magazine.checked = false
+      //lowerCategory.style.display = 'none'
+      
+    }else{
+      console.log("전체X")
+      lowerCategory.style.display = 'flex'
+      this.setState({checked : true })
+      Magazine.checked = true
+    }
+    console.log(this.state.checked)
+    console.log(Magazine.checked)
+  }
+
+  lowerCategoryClickHandler = (data, idx, id) => {
+    //console.log("click!")
+    const { Magazine } = this.props
+
+    // console.log(Magazine.mobile_category_detail_checked_idx)
+    // console.log(id)
+    if(Magazine.mobile_category_detail_checked_idx !== id){
+      data.checked = true
+      // console.log(Magazine.mobileUpperCategoryAry[idx].item[id])
+      Magazine.mobileUpperCategoryAry[idx].item[Magazine.mobile_category_detail_checked_idx].checked = false
+
+      // if(Magazine.categoryAry[idx].item[Magazine.category_detail_checked_idx]){
+      //   Magazine.categoryAry[idx].item[Magazine.category_detail_checked_idx].checked = false
+      // }
+      Magazine.mobile_category_detail_checked_idx = id
+      Magazine.mobileUpperCategoryAry[idx].item[id].checked = true
+
+    }
+    this.setState({f:'3'})
+  }
 
   pushToDetail = async (id) => {
     const {Magazine} = this.props;
@@ -57,31 +212,147 @@ class MobileContentContainer extends React.Component {
     }
   }
 
+  prevPage = () => {
+    const {current, next} = this.state;
+    const { Magazine } = this.props;
+    //var fullPage = parseInt((this.props.Magazine.magazine_list.length)/6)+1
+
+    //console.log("nextPage")
+    console.log(Magazine.current_page)
+    if (Magazine.current_page > 1) {
+      console.log("current != fullPage")
+      const newPage = current - 1
+
+      Magazine.current_page = Magazine.current_page - 1
+      this.setState({...this.state, current: newPage, show:'hidden'})
+      this.setState({...this.state, show:'visible'})
+      //this.slider.slickNext();
+    }
+  }
+
+
+  movePage = (e) => {
+    const { Magazine } = this.props;
+
+    const newPage = e.target.innerText*1;    
+    
+    Magazine.current_page = newPage
+
+    //Magazine.magazine_list.slice((Magazine.current_page-1)*6, (Magazine.current_page)*6)
+
+   // Project.getProjectByPrice(Project.search_text, newPage)
+  }
+
+  nextPage = () => {
+    const {current, next} = this.state;
+    const { Magazine } = this.props;
+    
+    var fullPage = parseInt((this.props.Magazine.magazine_list.length)/6)+1
+    Magazine.mobile_full_page = parseInt((this.props.Magazine.magazine_list.length)/6)+1
+    console.log("nextPage")
+    // console.log(fullPage)
+    // console.log(current)
+    console.log(Magazine.current_page)
+    console.log(fullPage)
+    if (Magazine.current_page < Magazine.mobile_full_page) {
+      console.log("current != fullPage")
+      const newPage = current + 1
+
+      Magazine.current_page = Magazine.current_page + 1
+      this.setState({...this.state, current: newPage, show:'hidden'})
+      this.setState({...this.state, show:'visible'})
+      //this.slider.slickNext();
+    }
+  }
+
   render() {
     const { magazine_idx, magazineLength } = this.state;
+    const { Magazine } = this.props;    
+    const current_set = (parseInt((Magazine.current_page-1) /5)+1)   
 
     return (
       <>
-        <Nav>
-          <span>전체</span>
-          <span>가공</span>
-          <span>연구원</span>
-          <span>공정</span>
-          <span>비교견적</span>
-        </Nav>
-        <FindExperct>
-            {
+      
+        <CategoryMenu checked={Magazine.checked}>
+        {/* <Containerv1> */}
+          <div></div>
+          <div>
+            { Magazine.mobileUpperCategoryAry.map((item, idx) => {
+              return (  
+                <UpperItem onClick={() => {this.categoryClickHandler(item, idx)}} checkUpperMenu={item.checked} checkBoxShadow={item}>
+                  <span>{item.name}</span>
+                </UpperItem>
+              )
+            })}             
+            </div>
+          {/* </Containerv1> */}
+          <div id="LowerCategory">
+            
+          { Magazine.mobileUpperCategoryAry.map((item, idx) => {
+            return(
+              item.item && item.item.map((data, id) => {                                     
+                return (     
+                  <LowerItem checkUpperMenu={item} checkLowerMenu={data} checkBoxShadow={item} onClick={() => {this.lowerCategoryClickHandler(data, idx, id)}}>
+                    <span>{data.name}</span>               
+                  </LowerItem>                         
+               )
+              })            
+            )
+          })}
+          </div>
+        </CategoryMenu>
+        
+     
+        {/* <FindExperct>
+            {              
             magazine_idx && this.props.Magazine.magazine_list.slice(0,magazine_idx).map((item, idx) => {
               return (
+              // <Row>
                 <Item
                   onClick={() => this.pushToDetail(item.id)}>
                   <Image ratio='45%' src={item.image}/>
                   <span> {item.title} </span>
                 </Item>
+                // </Row>
               )
               })
             }
-        </FindExperct>
+        </FindExperct> */}
+
+        <Row checked={Magazine.checked}>
+        {this.props.Magazine.magazine_list.slice((Magazine.current_page-1)*6, (Magazine.current_page)*6).map((item, idx) => {
+                        
+          return (     
+          <>
+            {item && (
+              <Item onClick={() => this.pushToDetail(item.id)}>
+                <Image ratio='45%' src={item.image}/>
+                  <span> {item.title} </span>
+              </Item>
+            )}
+                          {/* </div> */}
+          </>
+          )
+                    
+                      
+        })}  
+        </Row>
+        <PageBar>
+            
+              
+                  
+              <img src={left} style={{opacity: current_set == 1 && Magazine.current_page <= 1  ? 0.4 : 1, cursor: 'pointer'}} onClick = {this.prevPage}/>
+            
+              <PageCount value = {5*(current_set - 1) + 1} active={Magazine.current_page % 5 == 1} style={{display:  Magazine.mobile_full_page < 5*(current_set - 1) + 1 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 1} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 2} active={Magazine.current_page % 5 == 2} style={{display:  Magazine.mobile_full_page < 5*(current_set - 1) + 2 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 2} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 3} active={Magazine.current_page % 5 == 3} style={{display:  Magazine.mobile_full_page < 5*(current_set - 1) + 3 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 3} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 4} active={Magazine.current_page % 5 == 4} style={{display:  Magazine.mobile_full_page < 5*(current_set - 1) + 4 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 4} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 5} active={Magazine.current_page % 5 == 0} style={{display:  Magazine.mobile_full_page < 5*(current_set - 1) + 5 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 5} </PageCount>
+              {/* <PageCount> ... </PageCount> */}
+                     
+              <img src={right} onClick = {this.nextPage} style={{opacity: Magazine.current_page == Magazine.mobile_full_page  ? 0.4 : 1}}/>
+      
+          </PageBar>
       </>
   )}
 }
@@ -90,6 +361,8 @@ export default MobileContentContainer;
 
 const FindExperct = styled(Container)`
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
   /* @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 20px 0px;
     margin-bottom: 20px;
@@ -104,30 +377,112 @@ const FindExperct = styled(Container)`
     padding: 80px 0px;
   } */
 `
-const Nav = styled.div`
-  display: flex;
-  width: 100%;
-  height: 125px;
-  margin-top: 50px;
-  align-items: center;
-  justify-content: space-between;
-  //box-shadow: 0 4px 2px -2px gray;
-  box-shadow: 2px 3px 6px 0 rgba(0, 0, 0, 0.4);
-
-   position: absolute;
-   top: 0;
-   width: 100%; 
-   height: 50px;
-   background-color: #ffffff;
-
-  >span{
-    // flex-grow: 1;
-    text-align: center;
-    font-size: 15px;
-    line-height: 18px;
-    letter-spacing: -0.38px;
-    color: #282c36;
+const CategoryMenu = styled.div`
+  //width: 800px;
+  >div:nth-of-type(1){
+    width: 100%;
+    height: 6px;
+    position: fixed;
+    top: 6%;
+    background-color: white;
+    z-index:1001;
   }
+  >div:nth-of-type(2){    
+    display: flex;    
+    margin-top: 50px;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 6px 3px -2px rgba(0, 0, 0, 0.1);
+    //box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    //box-shadow: 2px 3px 6px 0 rgba(0, 0, 0, 0.4);
+  
+     position: fixed;
+     top: -5px;
+
+    //  width: calc(100% - 22px); 
+    //  transform: translateX(11px);
+     
+     width: 100%;
+     height: 50px;
+     background-color: #ffffff;
+     z-index: 1000; 
+     padding-bottom: ${props => props.checked ? '45px' : ''};
+     //padding-bottom: 45px;
+
+     span{
+      // flex-grow: 1;
+      //border: 3px solid red;
+      text-align: center;
+      font-size: 15px;
+      line-height: 18px;
+      letter-spacing: -0.38px;
+      color: #282c36;
+      width: 100%;
+    }
+  }   
+
+  >div:nth-of-type(3){    
+    display: none;
+    width: 100%;
+    height: 125px;
+    //margin-top: 50px;
+    align-items: center;
+    justify-content: flex-start;
+    //box-shadow: 0 6px 3px -2px rgba(0, 0, 0, 0.1);
+    //box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    //box-shadow: 2px 3px 6px 0 rgba(0, 0, 0, 0.4);
+  
+     position: fixed;
+     top: 10%;
+     //width: 100%; 
+
+     width: calc(100% - 22px); 
+     transform: translateX(11px);
+
+     height: 50px;
+     background-color: #ffffff;
+     z-index: 1001; 
+     border-top: 2px solid rgba(0, 0, 0, 0.1);
+     //box-shadow: 0 6px 3px -2px rgb(0 0 0 / 10%);
+
+     span{
+      // flex-grow: 1;
+      //border: 3px solid red;
+      text-align: center;
+      font-size: 15px;
+      line-height: 18px;
+      letter-spacing: -0.38px;
+      //color: #282c36;
+    }
+  }   
+`
+const UpperItem = styled.div`
+  // width: 100%;
+  // text-align: center;
+  //border: 3px solid blue;
+  >span{
+    font-weight: ${(props) => props.checkUpperMenu ? 'bold' : 'normal'};
+  }
+`
+
+const LowerItem = styled.div`
+  //width: 50%;
+  text-align: center;
+  //border: 3px solid green;
+  display: ${(props) => props.checkUpperMenu.checked ? 'block' : 'none'};
+
+  // padding-left: 20px;
+  // margin-right: 30px;
+  >span{
+    //font-weight: ${(props) => props.checkLowerMenu.checked ? 'bold' : 'normal'};
+    color: ${(props) => props.checkLowerMenu.checked ? '#0933b3' : '#a4aab4'};
+    border-bottom: ${(props) => props.checkLowerMenu.checked ? '3px solid #0933b3' : ''};
+    padding-bottom: ${(props) => props.checkLowerMenu.checked ? '12px' : ''};
+  }
+`
+
+const CategoryMenuItem = styled.div`
+
 `
 const List = styled.div`
   display: inline-flex;
@@ -161,8 +516,22 @@ const ItemBox = styled.a`
   }
   text-decoration: none;
 `
+const Row = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  //flex-direction: row;
+  width: 105%;
+  margin-top: ${(props) => (props.checked ? '140px' : '116px')};
+  //margin-top: 140px;
+  //border-top: 3px solid red;
+  // >div:nth-of-type(1){
+  //   width: 33%;
+  //   min-width: 500px;
+  // }
+`
 const Item = styled.div`
-  width: calc(100%);
+  //width: calc(100%);
+  width: 48%;
   display: flex !important;
   flex-direction: column;
   align-items: center;
@@ -172,7 +541,7 @@ const Item = styled.div`
     height: 100%;
     object-fit: contain;
     font-size: 24px;
-    font-weight: 500;
+    // font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.42;
@@ -181,10 +550,15 @@ const Item = styled.div`
     color: var(--black);
     white-space: nowrap;
     @media (max-width: 1299.98px) {
-        font-size: 18px;
+        font-size: 15px;
+        line-height: 22px;
+        letter-spacing: -0.38px;
+        color: #414550;
         width: 90%;
-        height: 50px;
+        height: 114px;
         white-space: initial;
+        word-break: keep-all;
+        margin-top: 8px;
       }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -200,7 +574,7 @@ const Image = styled(RatioImage)`
   cursor: pointer;
   border-radius: 25px;
   width: calc(90%);
-  height: 310px ;
+  height: 222px ;
   @media (min-width: 0px) and (max-width: 767.98px) {
     border-radius: 10px;
     max-width: 400px;
@@ -235,12 +609,13 @@ const PageBar = styled.div`
   align-items: center;
   > img {
     cursor: pointer;
+    width: 7px;
   }
 `
 const PageCount = styled.span`
     width: 14px;
-    height: 30px;
-    font-size: 25px;
+    height: 19px;
+    font-size: 14px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;

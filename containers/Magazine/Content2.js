@@ -178,9 +178,7 @@ class ContentConatiner extends React.Component {
   }
   movePage = (e) => {
     const { Magazine } = this.props;
-
-    const newPage = e.target.innerText*1;    
-    
+    const newPage = e.target.innerText*1;        
     Magazine.current_page = newPage
 
     //Magazine.magazine_list.slice((Magazine.current_page-1)*12, (Magazine.current_page)*12)
