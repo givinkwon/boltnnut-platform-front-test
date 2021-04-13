@@ -3,6 +3,18 @@ import Proposal from './Proposal'
 
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 class ManufactureProcess {
+
+  /* 
+  
+  + import makeObservable
+
+  constructor(value){
+    mskeObservable(this)
+  }
+
+  */
+
+
   @observable title_list = [];
   @observable SelectChecked='';
   @observable SelectedItem=null;
@@ -37,7 +49,7 @@ class ManufactureProcess {
 
 
   @observable calendar_checked = false;
-  
+
   // 참고 파일 관련 변수 
   @observable file=''; 
   @observable fileName='';

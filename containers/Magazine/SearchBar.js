@@ -10,7 +10,7 @@ import Container from 'components/Containerv1';
 
 import { PRIMARY2 } from "static/style";
 
-@inject("Auth", "Project")
+@inject("Auth", "Magazine")
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -33,16 +33,17 @@ class SearchBarConatiner extends React.Component {
 
 
   searchText = (e) => {
-    const { Project } = this.props
+    const { Magazine } = this.props
     // this.props.Partner.search_text = e.target.value;
-    this.setState({search : e.target.value})
-    Project.search_text = e.target.value
+    //this.setState({search : e.target.value})
+    Magazine.search_text = e.target.value
   };
   search = () => {
-    const { Project } = this.props
+    const { Magazine } = this.props
  
-    Project.currentPage = 1
-    Project.getProjectByPrice(Project.search_text)
+    Magazine.current_page = 1
+    Magazine.getMagazineByContent(Magazine.search_text)
+    
   };
   closeModal = () => {
     this.setState({
@@ -51,18 +52,18 @@ class SearchBarConatiner extends React.Component {
     });
   };
   handleKeyDown = (e) => {
-    const { Project } = this.props
+    const { Magazine } = this.props
     if (e.key === "Enter") {      
-      Project.currentPage = 1
-      Project.getProjectByPrice(Project.search_text)
+      Magazine.current_page = 1
+      Magazine.getMagazineByContent(Magazine.search_text)
     }
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-    console.log(this.props.Project.input_category)
+    //console.log(this.props.Project.input_category)
   }
   render() {    
-    const { Project } = this.props;
+    const { Magazine } = this.props;
     return (
       <Form>
         <Box active={this.state.list===true} onClick ={() => {

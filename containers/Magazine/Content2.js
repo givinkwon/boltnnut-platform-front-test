@@ -489,6 +489,7 @@ const CategoryMenuItem = styled.div`
 
 const ContentBox = styled.div`
   //width: 1000px;
+  width: 100%;
 
 `
 const FindExperct = styled(Container)`
