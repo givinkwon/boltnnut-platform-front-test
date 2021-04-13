@@ -535,7 +535,7 @@ class FileUploadContainer extends Component {
                         height={120} // 세로
                         // width={250}
                         // height={210}
-                        modelColor="red" // 색
+                        modelColor="gray" // 색
                         backgroundColor="white" // 배경색
                         rotate={true} // 자동회전 유무
                         orbitControls={true} // 마우스 제어 유무
