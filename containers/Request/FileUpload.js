@@ -820,6 +820,7 @@ class FileUploadContainer extends Component {
               <span
                 onClick={() => {
                   ManufactureProcess.checkPaymentButton = true;
+                  this.props.Request.newIndex = 1;
                 }}
               >
                 주문하기
