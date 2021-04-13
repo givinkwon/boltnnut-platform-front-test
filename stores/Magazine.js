@@ -9,6 +9,16 @@ class Magazine {
   @observable magazine_list = []
   @observable magazine_next = null
   @observable magazine_length = null
+  @observable categoryAry = [
+    { id : 1, name : '실시간 클릭', item: [{name : 'A', checked: true}, {name : 'B', checked: false}, {name : 'C', checked: false}, {name : 'D', checked: false}, {name : 'E', checked: false}], checked: false},
+    { id : 2, name : '베스트 브랜드', item: [{name : '가', checked: true}, {name : '나', checked: false}], checked: false},
+    { id : 3, name : '베스트 상품', item: [{name : 'CNC', checked: true}, {name : '3D 프린터', checked: false}, {name : '금형사출', checked: false}], checked: false},
+    { id : 4, name : '베스트 베스트', item: [{name : '1', checked: true}, {name : '2', checked: false}, {name : '3', checked: false}, {name : '4', checked: false}], checked: false},
+  ]
+  @observable category_checked_idx = 0;
+  @observable category_detail_checked_idx = 0;
+  @observable current_page = 1;
+  @observable next_page = 0;
 
   @action init = () => {
     this.magazine_list = [];

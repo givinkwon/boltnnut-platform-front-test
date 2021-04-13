@@ -39,6 +39,7 @@ class Request extends React.Component {
 
   render(){
     const { width } = this.state;
+    const gray = "#f6f6f6"
 
     return (
       <div style={{overflow: 'hidden'}}>
@@ -60,7 +61,9 @@ class Request extends React.Component {
           {width && width < 768 && <MobileNav src={ back_ic } headText={ "견적 받기" } width={width}/>}
         </>
         {width && <RequestConatiner width={width}/>}
-        {width && <Footer/>}
+        {width > 767.98 && <Footer/>}
+        {width < 768 && <Footer color={gray}/>}        
+
       </div>
     )
   }
