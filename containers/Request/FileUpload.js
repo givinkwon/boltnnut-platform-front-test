@@ -13,10 +13,13 @@ import SelectComponent from 'components/Select';
 import ManufactureProcess from "../../stores/ManufactureProcess";
 import InputComponent from 'AddFile';
 
+import Calendar from './Calendar2';
+import Magazine from "../../stores/Magazine";
 
 const pass2 = 'static/images/pass2.png'
 const pass3 = 'static/images/pass3.png'
 const deleteButtonImg = "/static/images/delete.png";
+const calendar = "/static/images/facebook.png";
 
 const fileList = []
 
@@ -132,6 +135,8 @@ class FileUploadContainer extends Component {
     if(!ManufactureProcess.checkPaymentButton){
       window.addEventListener('scroll', this.loadScroll);
     }    
+
+    
   }
 
   componentWillUnmount = () => {
@@ -142,21 +147,26 @@ class FileUploadContainer extends Component {
 
   // 각각의 도면 데이터들의 가격과 총 주문금액을 계산하는 함수 
   async countPrice(){
+    
     const { ManufactureProcess } = this.props
+    console.log(ManufactureProcess.quantity)
     let price = 0;
-    await fileList.map((data, idx) => {          
+    await fileList.map((data, idx) => {                
       data.totalMoldPrice = Math.round(data.moldPrice/10000) * 10000    
       data.totalEjaculationPrice = Math.round(data.ejaculationPrice/10) * 10 * ( data.quantity.value ? data.quantity.value : 0 )
       data.totalPrice = Math.round(data.productionPrice/100) * 100 * data.quantity.value
 
       // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
-      if(data.checked){        
+      if(data.checked){                
         if(data.selectBig.name === "금형사출"){        
-          price += data.totalMoldPrice
+          price += data.totalMoldPrice          
           price += data.totalEjaculationPrice
         }else{          
           price += data.totalPrice
         }
+
+        ManufactureProcess.quantity += parseInt(data.quantity.value)
+        console.log(typeof(ManufactureProcess.quantity))
       }else{
         this.setState({g:3})
       }     
@@ -310,7 +320,7 @@ class FileUploadContainer extends Component {
               selectedMid:ManufactureProcess.categoryDefaultValue.mid,
               checked:true,
                       
-              quantity: {label: "", value: "0"},
+              quantity: {label: "", value: 0},
               inputQuantity: 0,
 
               totalPrice: 0,
@@ -490,9 +500,9 @@ class FileUploadContainer extends Component {
                             data.optionMid=e.detail;
                             
                             if(data.selectBig.name === "금형사출"){
-                              data.quantity = {label: "0", value: '0'};
+                              data.quantity = {label: "0", value: 0};
                             }else{
-                              data.quantity = {label: "1", value: '1'};
+                              data.quantity = {label: "1", value: 1};
                             }                            
                             this.countPrice()
                           }}
@@ -562,7 +572,7 @@ class FileUploadContainer extends Component {
                               if (e.target.value === '' || re.test(e.target.value)) {
                                 this.setNumCount(data, e.target.value)
                               }else{
-                                data.quantity = {label: '직접 입력', val: '0'}
+                                data.quantity = {label: '직접 입력', val: 0}
                                 e.target.value =''
                                 this.setNumCount(data, e.target.value)
                                 alert("숫자를 입력하세요")                                
@@ -637,19 +647,15 @@ class FileUploadContainer extends Component {
           </NoFileButton>
           <Price checkFileUpload = {this.props.ManufactureProcess.checkFileUpload} id="price">              
               <PriceLabel>
-                <span>총 주문금액</span>
-                <span>총 배송비</span>
-                <span>총 결제 금액</span>
+                <div>자동 견적 가격</div>
+                <p>해당 사항은 볼트앤너트 알고리즘이 도출한 견적으로 가공품의 발주 요건에 따라 변경될 수 있습니다.</p>
+                <p>본 견적은 후처리를 제외한 순수 단품 가공 견적입니다.</p>
+                
+                {/* <span>총 배송비</span>
+                <span>총 결제 금액</span> */}
               </PriceLabel>
 
               <PriceData>                                              
-                  <span>
-                    {ManufactureProcess.orderPrice.toLocaleString('ko-KR')}<span> 원</span>
-                  </span>
-                  <span>+</span>                
-                  <span>
-                    0<span> 원</span>
-                  </span>
                   <span>=</span>
                   <span>
                     {ManufactureProcess.orderPrice.toLocaleString('ko-KR')}<span> 원</span>
@@ -657,6 +663,22 @@ class FileUploadContainer extends Component {
               </PriceData>                                                          
             </Price>      
 
+          <DeliveryDate checkCalendar={Magazine.calendar_checked} checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
+            <div>납기 일</div>
+            <div>
+              {/* <span onClick={() => {
+                if(Magazine.calendar_checked){
+                  console.log("true")
+                  Magazine.calendar_checked = false
+                }else{
+                  console.log("false")
+                  Magazine.calendar_checked = true
+                }
+                this.setState({f:3})
+              }}><img src={calendar}></img></span> */}
+              <div style={{height: '50px'}}><Calendar fileUpload={Magazine.calendar_checked} style={{ width: "100px", height: '100px', border: '3px solid blue'}}/></div>
+            </div>            
+          </DeliveryDate>
           <Request checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>        
             <div>기타 요청사항</div>            
               <textarea                                              
@@ -704,15 +726,15 @@ class FileUploadContainer extends Component {
 export default FileUploadContainer;
 
 const quantityAry = [
-  {label: '1', value: '1'},
-  {label: '2', value: '2'},
-  {label: '3', value: '3'},
-  {label: '4', value: '4'},
-  {label: '5', value: '5'},
-  {label: '6', value: '6'},
-  {label: '7', value: '7'},
-  {label: '8', value: '8'},
-  {label: '9', value: '9'},
+  {label: '1', value: 1},
+  {label: '2', value: 2},
+  {label: '3', value: 3},
+  {label: '4', value: 4},
+  {label: '5', value: 5},
+  {label: '6', value: 6},
+  {label: '7', value: 7},
+  {label: '8', value: 8},
+  {label: '9', value: 9},
   {label: '직접 입력', value: ''},
 ];
 
@@ -1134,7 +1156,7 @@ const Price = styled.div`
   flex-direction: column;
  
   width: 100%;
-  height: 197px;
+  //height: 197px;
   border-top: 3px solid #414550;
   border-bottom: 2px solid #c6c7cc;
   
@@ -1145,25 +1167,32 @@ const Price = styled.div`
 
 `
 const PriceLabel = styled.div`
-  height: 75px;
+  height: 171px;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  //justify-content: space-around;
   align-items: center;
   border-bottom: 1px solid #e1e2e4;
-  >span{
-    font-size: 20px;
+  padding: 30px 0;
+  box-sizing: border-box;
+  >div{
+    font-size: 24px;
     line-height: 40px;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.6px;
     color: #282c36;
-  }
-  >span:last-child{
     font-weight: bold;
+  }
+  >p{
+    font-size: 18px;
+    line-height: 34px;
+    letter-spacing: -0.45px;
+    color: #999999;
   }
 `
 const PriceData = styled.div`
-  height: 122px;
+  height: 105px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 
   >span{
@@ -1171,13 +1200,12 @@ const PriceData = styled.div`
     line-height: 40px;
     letter-spacing: -0.75px;
     color: #282c36;
-    font-weight: bold;
+    font-weight: normal;
+    margin-right: 45px;
   }
   >span:last-child{
     color: #0933b3;
-  }
-  >span:nth-child(2n), >span>span{
-    font-weight: normal;
+    font-weight: bold;
   }
 `
 
@@ -1220,7 +1248,50 @@ const Button = styled.div`
     color: #ffffff;
   }
 `
+const DeliveryDate = styled.div`
+  width: 1200px;
+  display: ${props => props.checkFileUpload ? 'static' : 'none'};
+  background-color: #f6f6f6;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding: 26px 24px 22px 24px;
+  box-sizing: border-box;
+  margin-bottom: 40px;
+  margin-top: 70px;
 
+  >div:nth-of-type(1){
+    height: 27px;
+    font-size: 18px;
+    line-height: 40px;
+    letter-spacing: -0.45px;
+    color: #282c36;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+
+  >div:nth-of-type(2){
+    width: 66%;
+    height: 55px;
+    font-size: 18px;
+    line-height: 40px;
+    letter-spacing: -0.45px;
+    color: #282c36;
+    font-weight: bold;
+    margin-bottom: 16px;
+    //border: 3px solid red;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: relative;
+    >span{
+      position: absolute;
+      right: 2%;
+      bottom: 6%;
+    }
+    >div{
+      display: ${props => props.checkCalendar ? "block" : 'none'};
+    }
+  }
+
+`
 const Request = styled.div`
   width: 1200px;
   display: ${props => props.checkFileUpload ? 'static' : 'none'};

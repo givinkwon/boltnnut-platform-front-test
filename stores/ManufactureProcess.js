@@ -35,6 +35,9 @@ class ManufactureProcess {
   @observable orderPrice=0;
   @observable totalorderPrice=0;
 
+
+  @observable calendar_checked = false;
+  
   // 참고 파일 관련 변수 
   @observable file=''; 
   @observable fileName='';
