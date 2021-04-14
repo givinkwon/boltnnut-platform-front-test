@@ -34,10 +34,6 @@ class ContentConatiner extends React.Component {
 
   }
 
-  componentDidMount = () => {
-    //this.props.Magazine.reset()
-  }
-
   activeHandler = (idx) => {
     // console.log(`this.state.index : ${this.state.index}`)
     // console.log(`idx : ${idx}`)
@@ -169,7 +165,8 @@ class ContentConatiner extends React.Component {
     //var fullPage = parseInt((this.props.Magazine.magazine_list.length)/12)+1
 
     //console.log("nextPage")
-    if (Magazine.current_page != 0) {
+    console.log(Magazine.current_page)
+    if (Magazine.current_page > 1) {
       console.log("current != fullPage")
       const newPage = current - 1
 
@@ -179,14 +176,28 @@ class ContentConatiner extends React.Component {
       //this.slider.slickNext();
     }
   }
+  movePage = (e) => {
+    const { Magazine } = this.props;
+    const newPage = e.target.innerText*1;        
+    Magazine.current_page = newPage
+
+    //Magazine.magazine_list.slice((Magazine.current_page-1)*12, (Magazine.current_page)*12)
+
+   // Project.getProjectByPrice(Project.search_text, newPage)
+  }
 
   nextPage = () => {
     const {current, next} = this.state;
     const { Magazine } = this.props;
+    
     var fullPage = parseInt((this.props.Magazine.magazine_list.length)/12)+1
-
+    Magazine.full_page = parseInt((this.props.Magazine.magazine_list.length)/12)+1
     console.log("nextPage")
-    if (current != fullPage) {
+    // console.log(fullPage)
+    // console.log(current)
+    console.log(Magazine.current_page)
+    console.log(fullPage)
+    if (Magazine.current_page < Magazine.full_page) {
       console.log("current != fullPage")
       const newPage = current + 1
 
@@ -204,6 +215,7 @@ class ContentConatiner extends React.Component {
     //const current_set = (parseInt(Magazine.) + 1)
     const current_set = (parseInt((Magazine.current_page-1) /5)+1)   
   
+    //Magazine.full_page = parseInt((this.props.Magazine.magazine_list.length)/12)+1
     var fullPage = parseInt((this.props.Magazine.magazine_list.length)/12)+1
 
     var settings = {
@@ -353,7 +365,7 @@ class ContentConatiner extends React.Component {
                 <Row>
                   {/* <div> */}
                       {/* <div style={{width: '280px', height: '140px', border: '3px solid red'}}>A</div> */}
-                      <SearchBar />
+                      <SearchBar/>
                       {/* {console.log(this.props.Magazine.magazine_list.slice((Magazine.current_page-1)*12, 12))} */}
                       {console.log(Magazine.current_page)}
                       {this.props.Magazine.magazine_list.slice((Magazine.current_page-1)*12, (Magazine.current_page)*12).map((item, idx) => {
@@ -386,17 +398,17 @@ class ContentConatiner extends React.Component {
               <img src={left} style={{opacity: current_set == 1 && Magazine.currentPage <= 1  ? 0.4 : 1, cursor: 'pointer'}} onClick = {this.prevPage}/>
               )
             }
-              <PageCount value = {5*(current_set - 1) + 1} active={Magazine.current_page % 5 == 1} style={{display:  fullPage < 5*(current_set - 1) + 1 ? 'none': 'block' }}> {5*(current_set - 1) + 1} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 2} active={Magazine.current_page % 5 == 2} style={{display:  fullPage < 5*(current_set - 1) + 2 ? 'none': 'block' }}> {5*(current_set - 1) + 2} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 3} active={Magazine.current_page % 5 == 3} style={{display:  fullPage < 5*(current_set - 1) + 3 ? 'none': 'block' }}> {5*(current_set - 1) + 3} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 4} active={Magazine.current_page % 5 == 4} style={{display:  fullPage < 5*(current_set - 1) + 4 ? 'none': 'block' }}> {5*(current_set - 1) + 4} </PageCount>
-              <PageCount value = {5*(current_set - 1) + 5} active={Magazine.current_page % 5 == 0} style={{display:  fullPage < 5*(current_set - 1) + 5 ? 'none': 'block' }}> {5*(current_set - 1) + 5} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 1} active={Magazine.current_page % 5 == 1} style={{display:  Magazine.full_page < 5*(current_set - 1) + 1 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 1} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 2} active={Magazine.current_page % 5 == 2} style={{display:  Magazine.full_page < 5*(current_set - 1) + 2 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 2} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 3} active={Magazine.current_page % 5 == 3} style={{display:  Magazine.full_page < 5*(current_set - 1) + 3 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 3} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 4} active={Magazine.current_page % 5 == 4} style={{display:  Magazine.full_page < 5*(current_set - 1) + 4 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 4} </PageCount>
+              <PageCount value = {5*(current_set - 1) + 5} active={Magazine.current_page % 5 == 0} style={{display:  Magazine.full_page < 5*(current_set - 1) + 5 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 5} </PageCount>
               {/* <PageCount> ... </PageCount> */}
             {
             current == fullPage ? (
-              <img src={right} onClick = {this.nextPage} style={{opacity: 0.4, visibility: this.state.show}}/>
+              <img src={right} onClick = {this.nextPage} style={{opacity: Magazine.current_page == Magazine.full_page  ? 0.4 : 1}}/>
               ) : (
-              <img src={right} onClick = {this.nextPage} style={{visibility: this.state.show}}/>
+              <img src={right} onClick = {this.nextPage} style={{opacity: Magazine.current_page == Magazine.full_page  ? 0.4 : 1}}/>
               )
             }
           </PageBar>
@@ -441,6 +453,7 @@ const CategoryMenu = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 70%;
+    cursor: pointer;
     >span:nth-of-type(1){
       font-size: 18px;
       line-height: 34px;
@@ -462,7 +475,9 @@ const CategoryMenuItem = styled.div`
   // width: 100px;
   // height: 100px;
   // border: 3px solid red;
+  width: 70%;
   >div{
+    cursor: pointer;
     font-size:16px;
     line-height: 34px;
     letter-spacing: -0.4px;
@@ -477,6 +492,7 @@ const CategoryMenuItem = styled.div`
 
 const ContentBox = styled.div`
   //width: 1000px;
+  width: 100%;
 
 `
 const FindExperct = styled(Container)`
@@ -558,7 +574,8 @@ const Item = styled.div`
     line-height: 26px;
     letter-spacing: -0.45px;
     text-align: center;
-    color: var(--black);
+    //color: var(--black);
+    color: #414550;
     //white-space: nowrap;
     word-break: keep-all;
     @media (max-width: 1299.98px) {
@@ -609,7 +626,9 @@ const PageBar = styled.div`
   width: 250px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 150px;
+  margin-bottom: 250px;
+  margin-top: 100px;
+  //margin: 100px auto 200px auto;
   text-align: center;
   display: flex;
   justify-content: space-evenly;
