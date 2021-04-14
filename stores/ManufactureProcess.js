@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { observable, action, makeObservable } from "mobx";
 import Proposal from './Proposal'
 
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
@@ -14,7 +14,9 @@ class ManufactureProcess {
 
   */
 
-
+  constructor() {
+    makeObservable(this);
+  }
   @observable title_list = [];
   @observable SelectChecked='';
   @observable SelectedItem=null;
@@ -62,6 +64,12 @@ class ManufactureProcess {
 
   @observable checkPaymentButton=false;
 
+  
+  @action countQuantity = (data) => {
+    data.map((item, idx) => {
+      console.log(item) 
+    }) 
+  }
 
   @action init = async () => {
     await ManufactureProcessAPI.loadTitle()

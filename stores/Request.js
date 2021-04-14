@@ -1,12 +1,15 @@
-import { observable, action } from "mobx";
+import { observable, action, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Category";
-import * as PartnerAPI from 'axios/Partner';
+import * as PartnerAPI from "axios/Partner";
 import * as RequestAPI from "axios/Request";
 import Router from "next/router";
-import moment from 'moment';
+import moment from "moment";
 
 class Request {
+  constructor() {
+    makeObservable(this);
+  }
   @observable select_reqs = [];
 
   @observable id = null;
@@ -21,7 +24,7 @@ class Request {
   @observable big_category_list = [];
   @observable mid_category_list = [];
   @observable small_category_list = [];
-  @observable maincategory_id = '';
+  @observable maincategory_id = "";
 
   @observable q_big = "";
   @observable q_mid = "";
@@ -43,7 +46,7 @@ class Request {
   @observable common_period = "";
   @observable common_price = "";
 
-  @observable search_mode = '';
+  @observable search_mode = "";
   @observable partners = [];
   @observable partners_next = null;
 
@@ -62,6 +65,7 @@ class Request {
   @observable drawFile = null;
   @observable percentage = 0;
   @observable titleData = [];
+  @observable newIndex = 0;
 
   // Client
   @observable client_id = null;
@@ -71,16 +75,17 @@ class Request {
   @observable random_partner_list = null;
 
   //type
-  @observable request_type="";
+  @observable request_type = "";
   @observable proposal_type = 1;
 
   //Payment
   @observable numCount = null;
 
   @action reset = () => {
+    this.newIndex = 0;
     this.titleData = [];
     this.percentage = 7;
-    this.step_index = 0;//0으로 바꿔야됨. 임시방편
+    this.step_index = 0; //0으로 바꿔야됨. 임시방편
     this.step1_index = 1;
     this.input_name = "";
     this.input_phone = "";
@@ -90,10 +95,10 @@ class Request {
     this.select_big = null;
     this.select_mid = null;
     this.random_partner_list = [];
-    this.maincategory_id = '';
-    this.request_type="";// ""로 바꿔야됨. 임시방편
+    this.maincategory_id = "";
+    this.request_type = ""; // ""로 바꿔야됨. 임시방편
     this.numCount = null;
-  }
+  };
   @action setInputName = (val) => {
     //
     this.input_name = val;
@@ -112,40 +117,42 @@ class Request {
   };
   @action setPrice = (val) => {
     this.input_price = val;
-  }
+  };
   @action setDue = (val) => {
     this.input_day = val;
   };
   @action setNumCount = (val) => {
-    console.log(val)
-    if (val.label != '직접 입력') {
-        this.numCount = val;
-      }
-    if (val.label == '직접 입력' && val.value == 0) {
-        this.numCount = val;
+    console.log(val);
+    if (val.label != "직접 입력") {
+      this.numCount = val;
+    }
+    if (val.label == "직접 입력" && val.value == 0) {
+      this.numCount = val;
     }
     if (val.label == null) {
-      this.numCount = {label:'직접 입력', value:val}
+      this.numCount = { label: "직접 입력", value: val };
     }
-  }
-
+  };
 
   @action setCommonFile = (obj) => {
-    if (typeof obj == 'object') {
+    if (typeof obj == "object") {
       this.common_file = obj;
-      console.log("file uploaded")
+      console.log("file uploaded");
     } else {
       this.common_file = null;
     }
-  }
+  };
   @action setDrawFile = (obj) => {
     this.drawFile = obj;
-  }
+  };
   @action createRequest = () => {
     var cellphoneValid = /^\d{3}-\d{3,4}-\d{4}$/;
     var homephoneValid = /^\d{2,3}-\d{3,4}-\d{4}$/;
-    if (!cellphoneValid.test(this.input_phone) || !homephoneValid.test(this.input_phone)){
-      alert('전화번호가 올바르지 않습니다. 재확인해주세요.')
+    if (
+      !cellphoneValid.test(this.input_phone) ||
+      !homephoneValid.test(this.input_phone)
+    ) {
+      alert("전화번호가 올바르지 않습니다. 재확인해주세요.");
       return;
     }
     var formData = new FormData();
@@ -154,35 +161,40 @@ class Request {
     formData.append("name", this.input_name);
     formData.append("price", this.input_price.value);
     formData.append("period", this.input_day.value);
-    formData.append("phone", this.input_phone.replace("-","").replace("-",""));
+    formData.append(
+      "phone",
+      this.input_phone.replace("-", "").replace("-", "")
+    );
     if (this.common_file) {
       formData.append("file", this.common_file);
     }
     const req = {
-      data: formData
+      data: formData,
     };
     RequestAPI.create(req)
-    .then ((res) => {
-      console.log(res)
-      this.created_request = res.data.id;
-      this.client_id = res.data.clientId;
-      this.has_email = res.data.hasEmail;
-      this.step_index = 2;
-      this.percentage += 15;
-      console.log(this.client_id);
-    })
-    .catch(error => {
-      alert('정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.');
-      this.step_index = 1;
-    })
-  }
+      .then((res) => {
+        console.log(res);
+        this.created_request = res.data.id;
+        this.client_id = res.data.clientId;
+        this.has_email = res.data.hasEmail;
+        this.step_index = 2;
+        this.percentage += 15;
+        console.log(this.client_id);
+      })
+      .catch((error) => {
+        alert("정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.");
+        this.step_index = 1;
+      });
+  };
   @action init = (q) => {
     CategoryAPI.getMainCategory()
       .then((res) => {
         this.big_category_list = res.data.results;
-        for(let i = 0; i < this.big_category_list.length; i++) {
-          for(let j = 0; j < this.big_category_list[i].category_set; j++) {
-            this.initial_contents.push(this.big_category_list[i].category_set[j].subclass_set)
+        for (let i = 0; i < this.big_category_list.length; i++) {
+          for (let j = 0; j < this.big_category_list[i].category_set; j++) {
+            this.initial_contents.push(
+              this.big_category_list[i].category_set[j].subclass_set
+            );
           }
         }
         //this.setQuery(q);
@@ -199,20 +211,18 @@ class Request {
     this.select_mid = null;
     this.select_small = null;
 
-    if(obj.category_set[0] && obj.category_set[0].category !== '전체보기') {
-      console.log(obj.category_set[0])
-      obj.category_set.push(
-        {
-          id: obj.id,
-          maincategory: obj.maincategory,
-          category: '전체보기',
-          category_set: obj.category_set,
-          subclass_set: [],
-        }
-      )
+    if (obj.category_set[0] && obj.category_set[0].category !== "전체보기") {
+      console.log(obj.category_set[0]);
+      obj.category_set.push({
+        id: obj.id,
+        maincategory: obj.maincategory,
+        category: "전체보기",
+        category_set: obj.category_set,
+        subclass_set: [],
+      });
       const tmp = obj.category_set[0];
-      obj.category_set[0] = obj.category_set[obj.category_set.length - 1]
-      obj.category_set[obj.category_set.length - 1] = tmp
+      obj.category_set[0] = obj.category_set[obj.category_set.length - 1];
+      obj.category_set[obj.category_set.length - 1] = tmp;
     }
 
     this.mid_category_list = obj.category_set;
@@ -222,13 +232,13 @@ class Request {
       contents = [...contents, ...item.subclass_set];
     }
     this.contents = contents;
-    this.maincategory_id = this.select_big.category_set[0].id
+    this.maincategory_id = this.select_big.category_set[0].id;
     window.history.pushState("", "", `/request`);
   };
   @action setMidCategory = (obj) => {
-    if(obj.category === '전체보기') {
-      this.setBigCategory(obj)
-      return
+    if (obj.category === "전체보기") {
+      this.setBigCategory(obj);
+      return;
     }
     //console.log(obj)
     this.select_mid = obj;
@@ -250,7 +260,7 @@ class Request {
     this.contents = [obj];
 
     // 자동으로 넘기기
-    Router.push(`/request/${obj.id}`)
+    Router.push(`/request/${obj.id}`);
   };
   @action setCategoryMiddleSet = (id, category) => {
     const index = this.category_middle_set.indexOf(id);
@@ -277,7 +287,7 @@ class Request {
     } else {
       for (var cate of check_list) {
         for (var dev of cate.develop_set) {
-          console.log(this.category_middle_set)
+          console.log(this.category_middle_set);
 
           if (this.category_middle_set.indexOf(dev.id) > -1) {
             this.selected = [...dev.select_set, ...this.selected];
@@ -288,31 +298,33 @@ class Request {
     }
   };
 
-  @action loadRandomPartner = () =>{
+  @action loadRandomPartner = () => {
     const req = {
       data: {
         category: this.select_mid.id,
         // 제품 분야 = 가능 제품 분야
-        count: 20
+        count: 20,
       },
     };
-		PartnerAPI.getRandomPartner(req)
-			.then((res) => {
-        console.log("받은 리스폰스",res);
+    PartnerAPI.getRandomPartner(req)
+      .then((res) => {
+        console.log("받은 리스폰스", res);
         this.random_partner_list = res.data.data;
-        console.log(this.random_partner_list)
-			})
-			.catch((e) => {
+        console.log(this.random_partner_list);
+      })
+      .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-  }
+  };
 
   @action loadAppropriatePartners = () => {
-    if(!this.created_request) { return; }
-    const subclass = this.created_request.product.toString()
+    if (!this.created_request) {
+      return;
+    }
+    const subclass = this.created_request.product.toString();
 
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
     const req = {
       // headers
       headers: {
@@ -321,8 +333,8 @@ class Request {
       // params
       params: {
         subclass: subclass,
-      }
-    }
+      },
+    };
 
     PartnerAPI.matchPartner(req)
       .then(async (res) => {
@@ -333,59 +345,60 @@ class Request {
           },
           // params
           data: {
-            ordering: '-avg_score',
+            ordering: "-avg_score",
             page: 1,
-          }
-        }
+          },
+        };
 
-        if(res.data.data.length <= 3) {
-          console.log('search로 가져올')
-          this.search_mode = 'search'
+        if (res.data.data.length <= 3) {
+          console.log("search로 가져올");
+          this.search_mode = "search";
 
           PartnerAPI.search(req)
-            .then(res => {
+            .then((res) => {
               this.partners = res.data.results.slice(0, 5);
-              console.log(res.data)
+              console.log(res.data);
             })
-            .catch(e => {
+            .catch((e) => {
               console.log(e);
               console.log(e.response);
-            })
-        }
-        else {
-          this.search_mode = 'match'
+            });
+        } else {
+          this.search_mode = "match";
 
-          console.log('partner로 가져올게')
-          this.partners = res.data.data
+          console.log("partner로 가져올게");
+          this.partners = res.data.data;
         }
       })
-      .catch(e => {
-        console.log(e)
-        console.log(e.response)
-      })
-  }
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
   @action loadNextPartners = () => {
-    if(!this.partners_next) { return }
+    if (!this.partners_next) {
+      return;
+    }
 
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
     const req = {
       // headers
       headers: {
         Authorization: `Token ${token}`,
       },
       nextUrl: this.partners_next,
-    }
+    };
 
     PartnerAPI.getNextPage(req)
-      .then(res => {
-        this.partners = this.partners.concat(res.data.results)
-        this.partners_next = res.data.next
+      .then((res) => {
+        this.partners = this.partners.concat(res.data.results);
+        this.partners_next = res.data.next;
       })
-      .catch(e => {
-        console.log(e)
-        console.log(e.response)
-      })
-  }
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 
   @action setQuery = async (q) => {
     this.q_big = q.big ? q.big : "";
@@ -396,19 +409,18 @@ class Request {
       );
       this.select_big = big_cate[0];
 
-      console.log(big_cate[0])
-      big_cate[0].category_set.push(
-        {
-          id: big_cate[0].id,
-          maincategory: big_cate[0].maincategory,
-          category: '전체보기',
-          category_set: big_cate[0].category_set,
-          subclass_set: [],
-        }
-      )
+      console.log(big_cate[0]);
+      big_cate[0].category_set.push({
+        id: big_cate[0].id,
+        maincategory: big_cate[0].maincategory,
+        category: "전체보기",
+        category_set: big_cate[0].category_set,
+        subclass_set: [],
+      });
       const tmp = big_cate[0].category_set[0];
-      big_cate[0].category_set[0] = big_cate[0].category_set[big_cate[0].category_set.length - 1]
-      big_cate[0].category_set[big_cate[0].category_set.length - 1] = tmp
+      big_cate[0].category_set[0] =
+        big_cate[0].category_set[big_cate[0].category_set.length - 1];
+      big_cate[0].category_set[big_cate[0].category_set.length - 1] = tmp;
 
       this.mid_category_list = big_cate[0].category_set;
       const mid_cate = this.mid_category_list.filter(
@@ -425,18 +437,17 @@ class Request {
         );
         this.select_big = big_cate[0];
 
-        big_cate[0].category_set.push(
-          {
-            id: big_cate[0].id,
-            maincategory: big_cate[0].maincategory,
-            category: '전체보기',
-            category_set: big_cate[0].category_set,
-            subclass_set: [],
-          }
-        )
+        big_cate[0].category_set.push({
+          id: big_cate[0].id,
+          maincategory: big_cate[0].maincategory,
+          category: "전체보기",
+          category_set: big_cate[0].category_set,
+          subclass_set: [],
+        });
         const tmp = big_cate[0].category_set[0];
-        big_cate[0].category_set[0] = big_cate[0].category_set[big_cate[0].category_set.length - 1]
-        big_cate[0].category_set[big_cate[0].category_set.length - 1] = tmp
+        big_cate[0].category_set[0] =
+          big_cate[0].category_set[big_cate[0].category_set.length - 1];
+        big_cate[0].category_set[big_cate[0].category_set.length - 1] = tmp;
 
         this.mid_category_list = big_cate[0].category_set;
         var contents = [];

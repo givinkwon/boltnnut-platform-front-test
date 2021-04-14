@@ -1,10 +1,14 @@
-import { observable, action, toJS } from "mobx";
+import { observable, action, makeObservable } from "mobx";
 import Router from "next/router";
 import * as AccountAPI from "axios/Account";
 import * as CategoryAPI from "axios/Category";
 import Account from "../pages/account";
 
 class Auth {
+  constructor() {
+    makeObservable(this);
+  }
+  @observable bgColor = "#ffffff";
   @observable logged_in_user = null;
   @observable logged_in_client = null;
   @observable logged_in_partner = null;
@@ -87,7 +91,7 @@ class Auth {
   };
   @action setNewPassword = (val) => {
     this.new_password = val;
-  }
+  };
   @action setPassword2 = (val) => {
     this.password2 = val;
   };
@@ -222,13 +226,13 @@ class Auth {
     const token = localStorage.getItem("token");
     const expiry = localStorage.getItem("expiry");
 
-    if(expiry) {
+    if (expiry) {
       const now = new Date();
-      if(now.getTime() > parseFloat(expiry)) {
-        localStorage.removeItem("token")
-        localStorage.removeItem("expiry")
+      if (now.getTime() > parseFloat(expiry)) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("expiry");
 
-        Router.reload()
+        Router.reload();
 
         return false;
       }
@@ -300,15 +304,15 @@ class Auth {
         this.loading = false;
         this.password_checked = true;
 
-        Router.push('/account?tab=1');
+        Router.push("/account?tab=1");
       })
-      .catch(e => {
+      .catch((e) => {
         alert("비밀번호가 일치하지 않습니다.");
 
-        console.log(e)
-        console.log(e.response)
-      })
-  }
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 
   @action deactivateUser = () => {
     if (!this.password) {
@@ -316,7 +320,7 @@ class Auth {
       return;
     }
 
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     const req = {
       headers: {
         Authorization: `Token ${token}`,
@@ -324,47 +328,49 @@ class Auth {
       data: {
         password: this.password,
       },
-    }
+    };
 
     AccountAPI.deactivateUser(req)
-      .then(res => {
-        alert('계정탈퇴 되었습니다.');
+      .then((res) => {
+        alert("계정탈퇴 되었습니다.");
 
-        console.log('회원탈퇴 성공');
+        console.log("회원탈퇴 성공");
         console.log(res.data);
 
-        localStorage.removeItem("token")
-        if(localStorage.getItem("expiry")) {
-          localStorage.removeItem("expiry")
+        localStorage.removeItem("token");
+        if (localStorage.getItem("expiry")) {
+          localStorage.removeItem("expiry");
         }
 
         this.logged_in_user = null;
         this.logged_in_client = null;
         this.logged_in_partner = null;
 
-        Router.push('/');
+        Router.push("/");
       })
-      .catch(e => {
-        alert('비밀번호가 맞지 않습니다');
+      .catch((e) => {
+        alert("비밀번호가 맞지 않습니다");
 
         console.log(e);
         console.log(e.response);
-      })
-  }
+      });
+  };
 
   @action changePassword = () => {
-    if(this.new_password !== this.password2) {
+    if (this.new_password !== this.password2) {
       alert("두 개의 입력이 동일하지 않습니다");
       return;
     }
-    if(!this.password) {
-      alert("기존 비밀번호를 다시 입력해주세요")
-      this.password_checked = false
+    if (!this.password) {
+      alert("기존 비밀번호를 다시 입력해주세요");
+      this.password_checked = false;
       return;
     }
 
-    const token = localStorage.getItem("token")
-    if(!token) { return }
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return;
+    }
 
     const req = {
       headers: {
@@ -374,21 +380,21 @@ class Auth {
         password: this.password,
         new_password: this.password2,
       },
-    }
+    };
 
-    console.log(req)
+    console.log(req);
 
     AccountAPI.changePassword(req)
-      .then(res => {
-        alert('비밀번호 변경에 성공했습니다.')
+      .then((res) => {
+        alert("비밀번호 변경에 성공했습니다.");
         this.password_checked = false;
       })
-      .catch(e => {
-        alert('비밀번호 변경에 실패했습니다. 관리자에게 연락바랍니다')
+      .catch((e) => {
+        alert("비밀번호 변경에 실패했습니다. 관리자에게 연락바랍니다");
 
-        console.log(e)
-        console.log(e.response)
-      })
+        console.log(e);
+        console.log(e.response);
+      });
   };
 
   @action login = async () => {
@@ -425,12 +431,12 @@ class Auth {
         }
 
         const token = res.data.data.token;
-        if(!this.always_login) {
-          const now = new Date()
-          let tomorrow = new Date()
-          tomorrow.setDate(now.getDate() + 1)
+        if (!this.always_login) {
+          const now = new Date();
+          let tomorrow = new Date();
+          tomorrow.setDate(now.getDate() + 1);
 
-          localStorage.setItem("expiry", tomorrow.getTime().toString())
+          localStorage.setItem("expiry", tomorrow.getTime().toString());
         }
         localStorage.setItem("token", token);
 
@@ -450,7 +456,6 @@ class Auth {
       });
   };
   @action signup = async () => {
-
     if (!this.email) {
       await alert("이메일을 입력해주세요.");
       return;
@@ -482,7 +487,7 @@ class Auth {
     console.log("business : ", this.business);
     console.log("business2 : ", this.business2);
     console.log("phone : ", this.phone);
-    console.log('marketing : ', this.marketing);
+    console.log("marketing : ", this.marketing);
     if (this.type === "client") {
       if (!this.name) {
         await alert("상호명을 입력해주세요.");
@@ -493,21 +498,18 @@ class Auth {
         return;
       }
       if (!this.path) {
-
         await alert("방문경로를 입력해주세요");
         return;
       }
       if (!this.business) {
-
         await alert("업종을 입력해주세요");
         return;
       }
 
-       if (this.business.business == "기타") {
+      if (this.business.business == "기타") {
         //console.log(this.business.business)
-        this.business.business = this.business2
+        this.business.business = this.business2;
       }
-
 
       this.loading = true;
       const req = {
@@ -527,8 +529,8 @@ class Auth {
         .then((res) => {
           setTimeout(() => {
             this.loading = false;
-            alert('회원가입 성공');
-            dataLayer.push({'event':'SignUpComplete_Client'});
+            alert("회원가입 성공");
+            dataLayer.push({ event: "SignUpComplete_Client" });
             this.reset();
             Router.push("/login");
           }, 800);
@@ -547,7 +549,8 @@ class Auth {
         await alert("상호명을 입력해주세요.");
         return;
       }
-      {/*if (!this.employee) {
+      {
+        /*if (!this.employee) {
         await alert("종업원 수를 입력해주세요.");
         return;
       }
@@ -558,12 +561,14 @@ class Auth {
       if (!this.revenue) {
         await alert("매출액을 입력해주세요.");
         return;
-      }*/}
+      }*/
+      }
       if (!this.city) {
         await alert("시/도를 입력해주세요.");
         return;
       }
-      {/*if (!this.region) {
+      {
+        /*if (!this.region) {
         await alert("지역을 입력해주세요.");
         return;
       }
@@ -571,7 +576,8 @@ class Auth {
       if (!this.info_biz) {
         await alert("주요사업을 입력해주세요.");
         return;
-      }*/}
+      }*/
+      }
       if (!this.deal) {
         await alert("주요거래처를 입력해주세요.");
         return;
@@ -581,17 +587,19 @@ class Auth {
         return;
       }
       if (this.info_company.length < 100) {
-        await alert("회사소개를 100자 이상 입력해주세요")
+        await alert("회사소개를 100자 이상 입력해주세요");
         return;
       }
 
-      {/*if (toJS(this.possible_set).length === 0) {
+      {
+        /*if (toJS(this.possible_set).length === 0) {
         await alert("가능한 제품을 입력해주세요.");
         return;
-      }*/}
+      }*/
+      }
       if (!this.histories) {
         await alert("진행한 제품들을 10개 이상 입력해 주세요.");
-        return
+        return;
       }
 
       if (this.category_middle_set.length === 0) {
@@ -603,28 +611,29 @@ class Auth {
         await alert("회사소개서를 입력해주세요.");
         return;
       }
-    //  if (!this.logo) {
-    //    await alert("로고를 입력해주세요.");
-    //    return;
-    //  }
+      //  if (!this.logo) {
+      //    await alert("로고를 입력해주세요.");
+      //    return;
+      //  }
       if (!this.resume) {
         await alert("이력서를 첨부해 주세요.");
         return;
       } // 0923
 
-      if (this.marketing == true){
-         this.marketing = 1
-      }
-      else {
-         this.marketing = 0
+      if (this.marketing == true) {
+        this.marketing = 1;
+      } else {
+        this.marketing = 0;
       }
       var formData = new FormData();
 
-      {/*var possible_set = [];
+      {
+        /*var possible_set = [];
       for (var i of this.possible_set) {
         await possible_set.push(i.id);
       }
-      */}
+      */
+      }
       var history_set = [];
       for (var i of this.history_set) {
         await history_set.push(i.id);
@@ -636,17 +645,19 @@ class Auth {
       formData.append("type", 1);
       formData.append("marketing", this.marketing);
 
-       formData.append("name", this.company_name);
-    //   formData.append("employee", this.employee);
-    //  formData.append("career", this.career);
-    //  formData.append("revenue", this.revenue);
-       formData.append("city", this.city.id);
-    //  formData.append("region", this.region.id);
+      formData.append("name", this.company_name);
+      //   formData.append("employee", this.employee);
+      //  formData.append("career", this.career);
+      //  formData.append("revenue", this.revenue);
+      formData.append("city", this.city.id);
+      //  formData.append("region", this.region.id);
 
       formData.append("info_biz", this.info_biz);
       formData.append("deal", this.deal);
       formData.append("info_company", this.info_company);
-      {/*formData.append("possible_set", possible_set);*/}
+      {
+        /*formData.append("possible_set", possible_set);*/
+      }
       formData.append("history", this.histories);
 
       formData.append("category_middle", this.category_middle_set);
@@ -661,9 +672,9 @@ class Auth {
       AccountAPI.partnerSignup(req)
         .then((res) => {
           setTimeout(() => {
-            this.loading = false
-            alert('회원가입 성공');
-            dataLayer.push({'event':'SignUpComplete_Partner'});
+            this.loading = false;
+            alert("회원가입 성공");
+            dataLayer.push({ event: "SignUpComplete_Partner" });
             this.reset();
             Router.push("/login");
           }, 800);
@@ -692,12 +703,12 @@ class Auth {
       alert("이메일을 입력해주세요.");
       return;
     }
-    
+
     if (!this.phone) {
       alert("휴대폰 번호를 입력해주세요.");
       return;
     }
-    
+
     this.loading = true;
     const req = {
       data: {
@@ -717,7 +728,7 @@ class Auth {
       .catch((e) => {
         try {
           alert(e.response.data.message);
-          console.log(e.response)
+          console.log(e.response);
         } catch {
           console.log(e);
           console.log(e.response);
@@ -735,9 +746,9 @@ class Auth {
       alert("휴대폰 번호를 입력해주세요.");
       return;
     }
-    
+
     this.loading = true;
-    console.log(this.phone)
+    console.log(this.phone);
     const req = {
       data: {
         phone: this.phone,
