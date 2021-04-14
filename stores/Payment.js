@@ -113,8 +113,10 @@ class Payment {
       header: { Authorization: `Token ${token}` },
     };
     console.log("req : ", req);
+
     PaymentAPI.order(req)
       .then((res) => {
+        console.log(token);
         console.log(res);
         const data = {
           pg: pg, // PG사
@@ -133,6 +135,7 @@ class Payment {
         IMP.request_pay(data, this.clientPayment);
       })
       .catch((e) => {
+        console.log(token);
         console.log(e);
         console.log(e.response);
       });
