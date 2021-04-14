@@ -11,6 +11,7 @@ class Schedule {
     @observable book_time = null; // today + current (2021-11-11 10:00:00)
     @observable nowMoment = moment();
     @observable calendarOnOff = true;
+    @observable calendarOnOffV2 = false;
     @observable clickDay = 0;
     @observable date_occupied = [];
     @observable userEmail = null;

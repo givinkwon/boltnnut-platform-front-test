@@ -453,6 +453,7 @@ const CategoryMenu = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 70%;
+    cursor: pointer;
     >span:nth-of-type(1){
       font-size: 18px;
       line-height: 34px;
@@ -474,7 +475,9 @@ const CategoryMenuItem = styled.div`
   // width: 100px;
   // height: 100px;
   // border: 3px solid red;
+  width: 70%;
   >div{
+    cursor: pointer;
     font-size:16px;
     line-height: 34px;
     letter-spacing: -0.4px;

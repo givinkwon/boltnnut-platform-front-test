@@ -49,6 +49,8 @@ class ManufactureProcess {
 
 
   @observable calendar_checked = false;
+  @observable date_conference = false;
+  @observable date_undefined = false;
 
   // 참고 파일 관련 변수 
   @observable file=''; 

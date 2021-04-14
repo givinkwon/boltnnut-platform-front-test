@@ -128,7 +128,27 @@ class FileUploadContainer extends Component {
     }                                                                            
   }
   
-
+  countQuantity = (prev_value=0, current_value=0, checked = 0) => {
+    const { ManufactureProcess } = this.props
+    console.log(typeof(prev_value))
+    console.log(typeof(current_value))
+    console.log(prev_value)
+    console.log(current_value)
+    console.log(checked)
+    console.log(typeof(checked))
+    //console.log(data)
+    if(!checked){
+      ManufactureProcess.quantity = ManufactureProcess.quantity - prev_value + current_value
+      console.log(ManufactureProcess.quantity)
+    }else if(checked === 1){
+      ManufactureProcess.quantity = ManufactureProcess.quantity - current_value
+      console.log(ManufactureProcess.quantity)
+    }else{
+      ManufactureProcess.quantity = ManufactureProcess.quantity + current_value
+      console.log(ManufactureProcess.quantity)
+    }
+    
+  }
   componentDidMount(){
     const { ManufactureProcess } = this.props    
 
@@ -149,7 +169,7 @@ class FileUploadContainer extends Component {
   async countPrice(){
     
     const { ManufactureProcess } = this.props
-    console.log(ManufactureProcess.quantity)
+ //   console.log(ManufactureProcess.quantity)
     let price = 0;
     await fileList.map((data, idx) => {                
       data.totalMoldPrice = Math.round(data.moldPrice/10000) * 10000    
@@ -165,8 +185,10 @@ class FileUploadContainer extends Component {
           price += data.totalPrice
         }
 
-        ManufactureProcess.quantity += parseInt(data.quantity.value)
-        console.log(typeof(ManufactureProcess.quantity))
+        //console.log(typeof(data.quantity.value))
+        //ManufactureProcess.quantity = ManufactureProcess.quantity + parseInt(data.quantity.value)
+        //console.log(typeof(ManufactureProcess.quantity))
+        //console.log(ManufactureProcess.quantity)
       }else{
         this.setState({g:3})
       }     
@@ -277,7 +299,14 @@ class FileUploadContainer extends Component {
       this.setState(() => {
         return { quantity: value.value };
       });
+      console.log(this.props.ManufactureProcess.quantity)
+      console.log(parseInt(data.quantity.value))
+      // this.props.ManufactureProcess.quantity = this.props.ManufactureProcess.quantity - parseInt(data.quantity.value)
       data.quantity = value
+      // this.props.ManufactureProcess.quantity = this.props.ManufactureProcess.quantity + parseInt(data.quantity.value)
+      // //this.props.ManufactureProcess.quantity = parseInt(value.value)
+      // console.log(this.props.ManufactureProcess.quantity)
+      //this.props.ManufactureProcess.countQuantity(fileList)
     }                  
   }
 
@@ -321,6 +350,7 @@ class FileUploadContainer extends Component {
               checked:true,
                       
               quantity: {label: "", value: 0},
+              prevQuantity : 0,
               inputQuantity: 0,
 
               totalPrice: 0,
@@ -447,10 +477,12 @@ class FileUploadContainer extends Component {
                       if(!data.checked)
                       {
                         data.checked=true;
+                        this.countQuantity(0, parseInt(data.quantity.value), 2)
                       }
                       else
                       {
                         data.checked=false
+                        this.countQuantity(0, parseInt(data.quantity.value), 1)
                       }
                       
                       this.setState({f:3})
@@ -495,13 +527,16 @@ class FileUploadContainer extends Component {
                           getOptionLabel={(option) => option.name} 
                           onChange={(e)=>{
                             ManufactureProcess.setBigCategory(e);
-                            this.loadFileResopnse(idx);                                                        
+                            this.loadFileResopnse(idx);          
+                                                                          
                             data.selectBig=e;
                             data.optionMid=e.detail;
                             
                             if(data.selectBig.name === "금형사출"){
+                              this.countQuantity(data.quantity.value, 0)
                               data.quantity = {label: "0", value: 0};
                             }else{
+                              this.countQuantity(data.quantity.value, 1)
                               data.quantity = {label: "1", value: 1};
                             }                            
                             this.countPrice()
@@ -518,6 +553,8 @@ class FileUploadContainer extends Component {
                           getOptionLabel={(option) => option.name} 
                           onChange={(e)=>{
                             ManufactureProcess.setMidCategory(e);
+                            //this.countQuantity(data.quantity.value, value.value)
+                            this.countQuantity(0, 0)
                             this.loadFileResopnse(idx);                            
                             this.countPrice()
                           }}
@@ -541,8 +578,11 @@ class FileUploadContainer extends Component {
                         getOptionLabel={(option) => option.label} 
                         value={data.quantity} 
                         onChange={(value) => {                       
+                          console.log(data.selectBig.name)
+                          this.countQuantity(data.quantity.value, value.value)
                           this.onQuantityChange(data, value)                                                                              
                           this.countPrice()
+                          
                         }                          
                       }/>                                        
                     }
@@ -563,12 +603,18 @@ class FileUploadContainer extends Component {
                                 this.onBlur                                             
                               }
                             }
-                            onBlur={(e) => {                                                           
+                            onBlur={(e) => {                                        
+                              console.log(e.target.value)     
+                              console.log(data.prevQuantity)                 
+                              if(e.target.value >= 100){             
+                                this.countQuantity(parseInt(data.prevQuantity), parseInt(e.target.value))            
+                                data.prevQuantity = e.target.value
+                              }
                               this.checkQuantityData(e, data, idx)                         
                             }}       
                             onChange={(e) => {
                               const re = /^[0-9\b]+$/;
-                            
+                              
                               if (e.target.value === '' || re.test(e.target.value)) {
                                 this.setNumCount(data, e.target.value)
                               }else{
@@ -611,7 +657,7 @@ class FileUploadContainer extends Component {
                   <DeleteBox>
                     <span onClick={() => {                      
                       this.setState({ fileList: fileList.splice(idx, 1) });             
-                      
+                      this.countQuantity(0, parseInt(data.quantity.value), 1)
                       if(fileList.length === 0){                        
                         this.setState({checkFileUpload: false})       
                         this.props.ManufactureProcess.checkFileUpload = false 
@@ -629,10 +675,22 @@ class FileUploadContainer extends Component {
                       <img src={deleteButtonImg} />
                     </span>
                   </DeleteBox>
-                </ItemBox>            
+                </ItemBox>                           
               </>
             )}
           </ItemList>
+
+          <NoticeBox checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
+            <EntireDelete>
+              <span>선택항목 삭제</span>
+            </EntireDelete>
+            <EntireDelete>
+              <span>전체 삭제</span>
+            </EntireDelete>
+            <div>
+              * 금형사출의 경우 최소수량 100개 이상만 가능합니다.
+            </div>
+          </NoticeBox>
                     
           <ContentBox checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>          
             <this.MyDropzone onChange={this.scrollChange}></this.MyDropzone>                                 
@@ -663,24 +721,53 @@ class FileUploadContainer extends Component {
               </PriceData>                                                          
             </Price>      
 
-          <DeliveryDate checkCalendar={Magazine.calendar_checked} checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
+          <DeliveryDate checkDateConference={ManufactureProcess.date_conference} checkDateUndefined={ManufactureProcess.date_undefined} checkCalendar={ManufactureProcess.calendar_checked} checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>
             <div>납기 일</div>
-            <div>
-              {/* <span onClick={() => {
-                if(Magazine.calendar_checked){
-                  console.log("true")
-                  Magazine.calendar_checked = false
-                }else{
-                  console.log("false")
-                  Magazine.calendar_checked = true
-                }
-                this.setState({f:3})
-              }}><img src={calendar}></img></span> */}
-              <div style={{height: '50px'}}><Calendar fileUpload={Magazine.calendar_checked} style={{ width: "100px", height: '100px', border: '3px solid blue'}}/></div>
+            <div> 
+              
+                <div style={{height: '50px'}}><Calendar/></div>
+                <div onClick={() => {
+                  console.log("click1")
+                  if(ManufactureProcess.date_conference){
+                    ManufactureProcess.date_conference = false
+                  }else{
+                    ManufactureProcess.date_conference = true
+                  }
+                  console.log(ManufactureProcess.date_conference)
+                }}>
+                  <div>
+                    <img src={pass3}/>
+                  </div>
+                  <span>납기일 협의 가능</span>
+                </div>
+                <div onClick={() => {
+                  console.log("click2")
+                  if(ManufactureProcess.date_undefined){
+                    ManufactureProcess.date_undefined = false
+                  }else{
+                    ManufactureProcess.date_undefined = true
+                  }
+                  console.log(ManufactureProcess.date_undefined)
+                }}>
+                  <div>
+                    <img src={pass3}/>
+                  </div>
+                  <span>납기일 미정</span>
+                </div>
+              
             </div>            
           </DeliveryDate>
           <Request checkFileUpload={this.props.ManufactureProcess.checkFileUpload}>        
-            <div>기타 요청사항</div>            
+            <div>
+              <span>발주 요청사항</span>
+              <span>?</span>
+            </div>            
+            <div>
+              <div>다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.</div>
+              <div>1. 가공품 목적 및 사용 환경</div>
+              <div>2. 가공 부품별 특이 사항</div>
+              <div>3. 공급처가 충족해야하는 발주 조건</div>
+            </div>
               <textarea                                              
                 placeholder="특이사항 및 요청을 입력해주세요"                
                 onFocus={(e) => e.target.placeholder = ''}
@@ -836,6 +923,35 @@ const ColumnBox = styled.div`
 const MainBox = styled.div`
   display:flex;
   align-items: center;
+`
+
+const NoticeBox = styled.div`
+  width: 100%;
+  height: 92px;
+  border: 3px solid red;
+  display: ${props => props.checkFileUpload ? 'flex' : 'none'};
+  position: relative;
+  align-items: center;
+  >div:last-child{ 
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+  }
+`
+const EntireDelete = styled.div`
+  height: 40px;
+  border: 1px solid #999999;
+  border-radius: 3px;
+  padding: 7px 12px 6px 12px;
+  box-sizing: border-box;
+  margin-right: 16px;
+  >span{
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: -0.45px;
+    color: #999999;
+  }
 `
 
 const ContentBox = styled.div`
@@ -1270,25 +1386,78 @@ const DeliveryDate = styled.div`
   }
 
   >div:nth-of-type(2){
-    width: 66%;
-    height: 55px;
-    font-size: 18px;
-    line-height: 40px;
-    letter-spacing: -0.45px;
-    color: #282c36;
-    font-weight: bold;
-    margin-bottom: 16px;
-    //border: 3px solid red;
-    background-color: rgba(0, 0, 0, 0.2);
-    position: relative;
-    >span{
-      position: absolute;
-      right: 2%;
-      bottom: 6%;
+    display: flex;
+    //justify-content: center;
+    align-items: center;
+
+    >div:nth-of-type(1){
+      width: 66%;
+      height: 55px;
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #282c36;
+      font-weight: bold;
+      //margin-bottom: 16px;
+      //border: 3px solid red;
+      background-color: #ffffff;
+      position: relative;
+      display: flex;
+      align-items: center;
+      >span{
+        position: absolute;
+        right: 2%;
+        bottom: 6%;
+      }
+      >div{
+        //display: ${props => props.checkCalendar ? "block" : 'none'};
+        //display: block;
+      }
     }
-    >div{
-      display: ${props => props.checkCalendar ? "block" : 'none'};
+    >div:nth-of-type(2){
+      margin: 0 30px;
+      >div{
+        //background-color: ${props => props.checkDateConference ? '#999999' : '#ffffff'};
+        background-color: #999999;
+        >img{
+          display: ${props => props.checkDateConference ? 'block' : 'none'};
+         // display: none;
+        }
+      }
+      
     }
+    >div:nth-of-type(3){
+      >div{
+        //background-color: ${props => props.checkDateUndefined ? '#999999' : '#ffffff'};
+        background-color: #999999;
+        >img{
+          display: ${props => props.checkDateUndefined ? 'block' : 'none'};
+        }
+      }
+
+    }
+    >div:nth-of-type(2), >div:nth-of-type(3){
+      //position: relative;
+      //padding-left: 35px;
+      display: flex;
+      >div{
+        width: 19px;
+        height: 19px;
+        border: 1px solid white;
+        border-radius: 2px;
+        position: relative;
+        margin-right: 18px;        
+        box-sizing: border-box;
+        
+        
+        >img{
+          position: absolute;
+          top: 18%;
+          left: 18%;
+        }
+      }
+    }
+    
   }
 
 `
@@ -1302,15 +1471,42 @@ const Request = styled.div`
   box-sizing: border-box;
   margin-bottom: 40px;
   margin-top: 70px;
+  position: relative;
 
-  >div{
-    height: 27px;
-    font-size: 18px;
-    line-height: 40px;
-    letter-spacing: -0.45px;
-    color: #282c36;
-    font-weight: bold;
-    margin-bottom: 16px;
+  >div:nth-of-type(1){
+    >span:nth-of-type(1){
+      height: 27px;
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #282c36;
+      font-weight: bold;
+      margin-bottom: 16px;
+      margin-right: 7px;
+    }    
+
+    >span:last-child{
+      width: 20px;
+      height: 20px;
+      border: 1px solid #000000;
+      border-radius: 10px;
+      display: inline-block;
+      text-align: center;
+      font-size: 16px;      
+      letter-spacing: -0.4px;
+      color: #414550;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+  }
+  >div:nth-of-type(2){
+    width: 600px;
+    height: 180px;
+    border: 3px solid green;
+    position: absolute;
+    top: 13%;
+    left: 70px;
+    background-color: #ffffff;
   }
   >textarea{
     resize: none;

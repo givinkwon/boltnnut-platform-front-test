@@ -35,11 +35,11 @@ class Week extends Component {
   }
   calendarOnOff = (e) => {
     const { Request, Schedule } = this.props;
-      if (Schedule.calendarOnOff == true) {
-        Schedule.calendarOnOff = false;
+      if (Schedule.calendarOnOffV2 == true) {
+        Schedule.calendarOnOffV2 = false;
       }
       else {
-        Schedule.calendarOnOff = true;
+        Schedule.calendarOnOffV2 = true;
       }
       let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
       const dayValue = Schedule.nowMoment;
@@ -161,12 +161,13 @@ class Calendar extends Component {
   }
   calendarOnOff = () => {
     const { Schedule } = this.props;
-    if (Schedule.calendarOnOff == true) {
-      Schedule.calendarOnOff = false;
+    if (Schedule.calendarOnOffV2 == true) {
+      Schedule.calendarOnOffV2 = false;
     }
     else {
-      Schedule.calendarOnOff = true;
+      Schedule.calendarOnOffV2 = true;
     }
+    console.log(Schedule.calendarOnOffV2)
   }
 
   // 날짜 입력
@@ -184,11 +185,12 @@ class Calendar extends Component {
   }
   render() {
     const { now } = this.state;
-    const { Schedule, fileUpload } = this.props;
+    const { Schedule } = this.props;
     return (
       <>
-        { Schedule.calendarOnOff == true &&
-          <MainContainer display1={ this.state.hid }>
+        { Schedule.calendarOnOffV2 == true &&
+          <MainContainer>
+            {console.log(Schedule.calendarOnOffV2)}
             <Header>
               <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
               <HeaderText>{now.format("YYYY.MM")}</HeaderText>
@@ -205,9 +207,25 @@ class Calendar extends Component {
        
          <FoldedComponent>
           <span>
-            ~{ Schedule.clickDay }
+            { Schedule.clickDay !== 0 ?
+            <>
+              ~ { Schedule.clickDay }                         
+             </>
+             : 
+             <>
+              <span></span>
+             </>
+             
+            }
+             
           </span>          
-          <div onClick ={this.calendarOnOff}><img src = {calendar}></img></div>
+          {/* <div><img src = {calendar}></img></div> */}
+          <div onClick ={this.calendarOnOff}>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
           
          </FoldedComponent>        
         
@@ -220,6 +238,7 @@ class Calendar extends Component {
 export default Calendar;
 
 const MainContainer = styled.div`
+  //display: ${props => props.fileUpload ? 'flex' : 'none'};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -239,9 +258,12 @@ const Header = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 176px;
-  align-items: center;
+  align-items: baseline;
   margin-bottom: 50px;
   margin-top: 40px;
+  >div:nth-of-type(1), div:nth-of-type(3){
+    cursor: pointer;
+  }
 `
 const HeaderText = styled.div`
   height: auto;
@@ -305,6 +327,7 @@ const CalendarContainer = styled.div`
     font-style: normal;
     letter-spacing: -0.18px;
     color: #282c36;
+    cursor: pointer;
     > div {
       font-family: Roboto;
       line-height: 1.4;
@@ -316,8 +339,9 @@ const CalendarContainer = styled.div`
       color: #282c36;
     }
     :hover {
-      background-color: #e1e2e4;
-      color: black;
+      //background-color: #e1e2e4;
+      background-color: #0933b3;
+      color: white;
       > div {
         color: black;
         display: none;
@@ -393,6 +417,13 @@ const FoldedComponent = styled.div`
   margin-top : 6px;
   //line-height: 1.3;
   //position: relative;
+  height: 50px;
+  box-sizing: border-box;
+  >span{
+    align-self: flex-end;
+    color: #999999;
+    font-weight: normal;
+  }
   > img {
     width: 14px;
     height: 8px;
@@ -402,5 +433,38 @@ const FoldedComponent = styled.div`
     position: absolute;
     right: 30px;
 
+  }
+  >div:last-child{
+    width: 25px;
+    height: 20px;
+    border: 3px solid #999999;
+    border-top: 6px solid #999999;    
+    //position: relative;
+    border-radius: 3px;
+    box-sizing: border-box;
+    >div{
+      position: absolute;
+      width: 2px;
+      height: 7px;
+      //border: 1px solid blue;
+      top: -8px;
+      background-color: #767676;
+    }
+    
+    >div:nth-of-type(1){
+      left: 1px;
+    }
+
+    >div:nth-of-type(2){
+      left: 6px;
+    }
+    
+    >div:nth-of-type(3){
+      left: 11px;
+    }
+    >div:nth-of-type(4){
+      left: 16px;
+    }
+    
   }
 `
