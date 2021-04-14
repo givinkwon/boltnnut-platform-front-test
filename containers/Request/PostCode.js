@@ -1,16 +1,17 @@
 import DaumPostcode from "react-daum-postcode";
 import { useState } from "react";
 import styled, { css } from "styled-components";
-// import { MobXProviderContext } from "mobx-react";
+import { MobXProviderContext } from "mobx-react";
 
-// function useStores() {
-//   return React.useContext(MobXProviderContext);
-// }
+function useStores() {
+  return React.useContext(MobXProviderContext);
+}
 
 function Postcode() {
   const [isAddress, setIsAddress] = useState("");
   const [isZoneCode, setIsZoneCode] = useState();
 
+  const { Payment } = useStores();
   const handleComplete = (data) => {
     let fullAddress = data.address;
     let extraAddress = "";
@@ -27,33 +28,28 @@ function Postcode() {
     }
     setIsZoneCode(data.zonecode);
     setIsAddress(fullAddress);
+    Payment.address = fullAddress;
+    Payment.zipCode = data.zonecode;
     console.log(isAddress);
+    Payment.modalActive = false;
+
     // setIsPostOpen(false);
   };
 
   return (
-    <>
-      asd
-      <DaumPostcode style={postCodeStyle} onComplete={handleComplete} />
-    </>
+    <DaumPostcode style={postCodeStyle} autoclose onComplete={handleComplete} />
   );
 }
 
 const postCodeStyle = {
   display: "block",
   position: "absolute",
-  top: "50%",
+  top: "25%",
+  left: "40%",
   width: "400px",
   height: "500px",
-  padding: "7px",
+  // padding: "7px",
   border: "2px solid gray",
+  // zIndex: "100",
 };
-// const postCodeStyle = styled.div`
-//     display: block
-//     position: absolute
-//     top: 50%
-//     width: 400px
-//     height: 500px
-//     padding: 7px
-// `;
 export default Postcode;

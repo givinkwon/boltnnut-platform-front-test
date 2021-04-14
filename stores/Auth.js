@@ -1,10 +1,13 @@
-import { observable, action, toJS } from "mobx";
+import { observable, action, makeObservable } from "mobx";
 import Router from "next/router";
 import * as AccountAPI from "axios/Account";
 import * as CategoryAPI from "axios/Category";
 import Account from "../pages/account";
 
 class Auth {
+  constructor() {
+    makeObservable(this);
+  }
   @observable bgColor = "#ffffff";
   @observable logged_in_user = null;
   @observable logged_in_client = null;

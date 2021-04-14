@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { observable, action, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Category";
 import * as PartnerAPI from "axios/Partner";
@@ -7,6 +7,9 @@ import Router from "next/router";
 import moment from "moment";
 
 class Request {
+  constructor() {
+    makeObservable(this);
+  }
   @observable select_reqs = [];
 
   @observable id = null;

@@ -32,9 +32,19 @@ class PaymentPageContainer extends React.Component {
     if (!cellphoneValid.test(cellphone)) {
       return alert("전화번호가 잘못 입력되었습니다. 다시 확인해 주세요");
     }
-    Payment.phone_number = cellphone;
-    // Payment.product_price = 300;
-    // Payment.clientOrder('html5_inicis');
+    // Payment.phone_number = cellphone;
+    // console.log(cellphone.replace("-", "").replace("-", ""));
+    Payment.setPhoneNumber(cellphone.replace("-", "").replace("-", ""));
+    Payment.product_price = 10;
+    Payment.setProjectName("MASDASCNASKLCNASKLCNL");
+    // Payment.count_number = 3;
+    Payment.setCountNumber(3);
+    Payment.clientOrder("html5_inicis");
+  };
+
+  modalHandler = () => {
+    const { Payment } = this.props;
+    Payment.modalActive = !Payment.modalActive;
   };
   paymentWayClick = (idx) => {
     this.setState({ selectedIdx: idx });
@@ -57,10 +67,16 @@ class PaymentPageContainer extends React.Component {
       }
     };
 
+    const { Payment } = this.props;
     return (
       <Background>
         <PaymentPageDiv>
-          <Postcode></Postcode>
+          {Payment.modalActive && (
+            <Layer onClick={this.modalHandler}>
+              <Postcode />
+            </Layer>
+          )}
+
           <PaymentPageLeft>
             {this.state.lastNum}
             <LeftHeader>결제 정보 입력</LeftHeader>
@@ -119,20 +135,26 @@ class PaymentPageContainer extends React.Component {
               <img src={img} />
             </InlineFlexDiv>
             <InlineFlexDiv style={{ justifyContent: "space-between" }}>
-              <DeliveryAddressBox1 />
-              <SearchBtn>주소검색</SearchBtn>
+              <DeliveryAddressBox1>
+                {this.props.Payment.zipCode}
+              </DeliveryAddressBox1>
+              <SearchBtn onClick={this.modalHandler}>주소검색</SearchBtn>
             </InlineFlexDiv>
-            <DeliveryAddressBox2 />
-            <div style={{ marginBottom: "26px" }}>
-              <InputComponent
-                class="Input"
-                placeholder="상세주소를 입력해 주세요"
-                // value={Request.input_name}
-                onChange={() => {
-                  console.log("r");
-                }}
-              />
-            </div>
+            <DeliveryAddressBox2>
+              {this.props.Payment.address}
+            </DeliveryAddressBox2>
+            {this.props.Payment.address != "" && (
+              <div style={{ marginBottom: "26px" }}>
+                <InputComponent
+                  class="Input"
+                  placeholder="상세주소를 입력해 주세요"
+                  // value={Request.input_name}
+                  onChange={() => {
+                    console.log("r");
+                  }}
+                />
+              </div>
+            )}
 
             <InlineFlexDiv>
               <FontSize20>결제방법</FontSize20>
@@ -308,15 +330,16 @@ class PaymentPageContainer extends React.Component {
 
 export default PaymentPageContainer;
 
-const postCodeStyle = styled.div`
-    display: block
-    position: absolute
-    top: 50%
-    width: 400px
-    height: 500px
-    padding: 7px
-`;
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
 
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  background: #00000080;
+`;
 const PaymentPageDiv = styled(Containerv1)`
   justify-content: space-between;
 `;

@@ -44,9 +44,9 @@ class RequestContainer extends React.Component {
             {Request.step_index != 0 && <BannerContainer />}
             <Background backgroundColor={"#ffffff"}>
               <Containerv1>
-                {/* {Request.newIndex == 0 && <FileUploadContainer />}
-                {Request.newIndex == 1 && <PaymentPageContainer />} */}
-                <PaymentPageContainer />
+                {Request.newIndex == 0 && <FileUploadContainer />}
+                {Request.newIndex == 1 && <PaymentPageContainer />}
+                {/* <PaymentPageContainer /> */}
                 {/* <PaymentPageContainer /> */}
                 {/* {Request.step_index == 0 ? (
                   <RequestSelectContainer />
