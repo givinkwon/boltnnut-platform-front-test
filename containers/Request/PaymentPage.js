@@ -10,30 +10,36 @@ const img = '/static/images/request/PaymentPage/star.png';
 const passimg = '/static/images/request/PaymentPage/pass.png';
 const pass3 = 'static/images/pass3.png';
 
-@inject('Payment')
+@inject('Payment', 'ManufactureProcess')
 @observer
 class PaymentPageContainer extends React.Component {
 	state = {
 		selectedIdx: 0,
 		checkbox: false,
+		name: '',
 		defaultNum: '010',
 		middleNum: '0',
 		lastNum: '0',
+		detailaddress: '',
+		deliveryprice: 0,
 	};
 
 	payButtonClick = () => {
 		const { Payment } = this.props;
 		var cellphoneValid = /^\d{3}-\d{3,4}-\d{4}$/;
 		let cellphone = `${this.state.defaultNum}-${this.state.middleNum}-${this.state.lastNum}`;
-		console.log(cellphone);
 
 		if (!cellphoneValid.test(cellphone)) {
 			return alert('전화번호가 잘못 입력되었습니다. 다시 확인해 주세요');
 		}
-		Payment.phone_number = cellphone;
-		// Payment.product_price = 300;
-		// Payment.clientOrder('html5_inicis');
+		// Payment.phone_number = cellphone;
+		Payment.phone_number = '01031323232';
+		// Payment.product_price = resultPrice + deliveryPrice;
+		Payment.product_price = 100;
+		Payment.count_number = 3;
+		Payment.clientOrder('html5_inicis');
 	};
+
 	paymentWayClick = idx => {
 		this.setState({ selectedIdx: idx });
 	};
@@ -47,6 +53,10 @@ class PaymentPageContainer extends React.Component {
 	};
 
 	render() {
+		const { ManufactureProcess } = this.props;
+		const resultPrice = ManufactureProcess.orderPrice;
+		const deliveryPrice = this.state.deliveryprice;
+
 		let activeHandler = idx => {
 			if (this.state.selectedIdx === idx) {
 				return true;
@@ -74,8 +84,8 @@ class PaymentPageContainer extends React.Component {
 								class='Input'
 								placeholder='옵션을 선택해주세요.'
 								// value={Request.input_name}
-								onChange={() => {
-									console.log('r');
+								onChange={e => {
+									this.setState({ name: e });
 								}}
 							/>
 						</div>
@@ -89,7 +99,6 @@ class PaymentPageContainer extends React.Component {
 								value={this.state.defaultNum}
 								width='90px'
 								onChange={e => {
-									console.log(e);
 									this.setState({ defaultNum: e });
 								}}
 							/>
@@ -125,8 +134,8 @@ class PaymentPageContainer extends React.Component {
 								class='Input'
 								placeholder='상세주소를 입력해 주세요'
 								// value={Request.input_name}
-								onChange={() => {
-									console.log('r');
+								onChange={e => {
+									this.setState({ detailaddress: e });
 								}}
 							/>
 						</div>
@@ -176,17 +185,17 @@ class PaymentPageContainer extends React.Component {
 								</InlineFlexDiv>
 								<InlineFlexDiv style={{ justifyContent: 'space-between' }}>
 									<FontSize18 style={{ color: '#767676', marginBottom: '20px' }}>부품 가격</FontSize18>
-									<FontSize18 style={{ color: '#414550', fontWeight: '500' }}>3,513,000원</FontSize18>
+									<FontSize18 style={{ color: '#414550', fontWeight: '500' }}>{ManufactureProcess.orderPrice}원</FontSize18>
 								</InlineFlexDiv>
 								<InlineFlexDiv style={{ justifyContent: 'space-between', marginBottom: '30px' }}>
 									<FontSize18 style={{ color: '#767676' }}>배송비</FontSize18>
-									<FontSize18 style={{ color: '#414550', fontWeight: '500' }}>5,000원</FontSize18>
+									<FontSize18 style={{ color: '#414550', fontWeight: '500' }}>{this.state.deliveryprice}원</FontSize18>
 								</InlineFlexDiv>
 							</PaymentInfo2>
 
 							<InlineFlexDiv style={{ justifyContent: 'space-between', width: '512px', marginBottom: '26px' }}>
 								<PaymentInfoText24>최종 결제가격</PaymentInfoText24>
-								<PaymentInfoText24 style={{ color: '#282c36' }}>3,518,000원</PaymentInfoText24>
+								<PaymentInfoText24 style={{ color: '#282c36' }}>{resultPrice + deliveryPrice}원</PaymentInfoText24>
 							</InlineFlexDiv>
 						</PaymentInfoWrap>
 
