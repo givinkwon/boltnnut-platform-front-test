@@ -1,14 +1,20 @@
-import { observable, action } from "mobx";
+import { observable, action, makeObservable } from "mobx";
 import Router from "next/router";
 
 import * as PaymentAPI from "axios/Payment";
 
 class Payment {
-  @observable current_coin = 0
-  @observable project_name = ''
-  @observable product_price = 0
-  @observable count_number = 0
-  @observable phone_number = '';
+  constructor() {
+    makeObservable(this);
+  }
+  @observable modalActive = false;
+  @observable current_coin = 0;
+  @observable project_name = "";
+  @observable product_price = 0;
+  @observable count_number = 0;
+  @observable phone_number = "";
+  @observable address = "";
+  @observable zipCode = "";
 
   // @observable product = {id:1, coin: 50, price: 50000}
   @observable product = { id: 0, coin: 1, price: 1000 };
@@ -26,7 +32,9 @@ class Payment {
     { id: 0, date: 7, price: 0 },
     { id: 1, date: 8, price: 19800 },
     { id: 2, date: 9, price: 198000 },
-    {/* id: 3, date: 365, price: 598000 */},
+    {
+      /* id: 3, date: 365, price: 598000 */
+    },
   ];
   @observable is_payed = false;
 
@@ -45,7 +53,6 @@ class Payment {
   @action setPhoneNumber = (val) => {
     this.phone_number = val;
   };
-
 
   @action order = (pg) => {
     this.is_payed = true;
@@ -95,6 +102,7 @@ class Payment {
     /* 2. 결제 데이터 정의하기 */
     const token = localStorage.getItem("token");
     console.log(token);
+
     const req = {
       data: {
         product_name: `볼트앤너트 결제`,
@@ -150,7 +158,11 @@ class Payment {
         console.log(req);
         await PaymentAPI.addCoin(req)
           .then((res) => {
-            alert(`${this.product.coin}개의 코인이 충전되었습니다. 현재 코인은 ${this.current_coin + this.product.coin}개 입니다.`);
+            alert(
+              `${this.product.coin}개의 코인이 충전되었습니다. 현재 코인은 ${
+                this.current_coin + this.product.coin
+              }개 입니다.`
+            );
             Router.push("/");
           })
           .catch((e) => {
@@ -176,7 +188,7 @@ class Payment {
         date: formatDate(
           new Date(
             new Date().getTime() +
-            this.client_product.date * 24 * 60 * 60 * 1000
+              this.client_product.date * 24 * 60 * 60 * 1000
           )
         ),
       },
