@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Router from 'next/router';
+import ChatIndexContainer from "./ChatIndex";
 
 const Map = '/static/images/Info/InfoMap.svg';
 const Line = '/static/images/Info/Line.svg';
@@ -16,7 +17,8 @@ class InfoContainer extends React.Component {
 	render() {
 		return (
 			<>
-				<PaymentPageContainer />
+				{/* <PaymentPageContainer /> */}
+				<ChatIndexContainer/>
 				{/* <PaymentCompleteContainer /> */}
 			</>
 			// <Background>
