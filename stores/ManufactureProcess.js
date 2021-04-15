@@ -1,8 +1,22 @@
-import { observable, action } from "mobx";
+import { observable, action, makeObservable } from "mobx";
 import Proposal from './Proposal'
 
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 class ManufactureProcess {
+
+  /* 
+  
+  + import makeObservable
+
+  constructor(value){
+    mskeObservable(this)
+  }
+
+  */
+
+  constructor() {
+    makeObservable(this);
+  }
   @observable title_list = [];
   @observable SelectChecked='';
   @observable SelectedItem=null;
@@ -11,6 +25,9 @@ class ManufactureProcess {
   @observable MinPrice=0;
   @observable totalMinPrice=0;
   @observable totalMaxPrice=0;
+  @observable moldPrice=0;
+  @observable ejaculationPrice=0;
+  @observable productionPrice=0;
   @observable message = '';
   @observable ManufactureProcessList = [];
   @observable selectedBigCategory=null;
@@ -20,7 +37,40 @@ class ManufactureProcess {
     big:null,
     mid:null
 }
+
+  // 수량 변수
+  @observable quantity=0;
+
+  // 파일을 하나 이상 올렸는지에 대한 여부 검사 변수
+  @observable checkFileUpload=false;
+
+  // 금액 관련 변수
+  @observable dataPrice=[]; 
+  @observable orderPrice=0;
+  @observable totalorderPrice=0;
+
+
+  @observable calendar_checked = false;
+  @observable date_conference = false;
+  @observable date_undefined = false;
+
+  // 참고 파일 관련 변수 
+  @observable file=''; 
+  @observable fileName='';
+  @observable fileArray=[];
+
+  // 기타 요청사항 변수
+  @observable requestComment="";
+
+  @observable checkPaymentButton=false;
+
   
+  @action countQuantity = (data) => {
+    data.map((item, idx) => {
+      console.log(item) 
+    }) 
+  }
+
   @action init = async () => {
     await ManufactureProcessAPI.loadTitle()
       .then(res => {
@@ -50,17 +100,29 @@ class ManufactureProcess {
           console.log(this.ManufactureProcessList)
         }
       )
-    this.setDefaultValue('CNC')
+    this.setDefaultValue('금형사출')
     this.reset()
   };
+
+  @action setQuantity = (val) => {
+    console.log(val)
+    this.quantity = val;
+  }
 
   @action setBigCategory = (e) =>
   {
     this.selectedBigCategory = e;
-    this.midCategorySet = e.detail;
+    // this.midCategorySet = e.detail;
+    console.log(this.selectedBigCategory)
     this.selectedMidCategory=e.detail[0];
   };
-  
+
+  @action setMidCategory = (e) =>
+  {
+    this.selectedMidCategory = e;
+    console.log('setMidCategory()');
+  };
+
   @action reset = async () => {
     this.SelectChecked='';
     this.MinPrice=0;
@@ -73,10 +135,14 @@ class ManufactureProcess {
     // this.categoryDefaultValue = this.ManufactureProcessList[2];
     this.ManufactureProcessList.forEach(t=>
       {
+        console.log(t)
         if(t.name==name)
         {
           this.categoryDefaultValue.big = t;
           this.categoryDefaultValue.mid = t.detail[0];
+          this.selectedBigCategory= t;
+          this.selectedMidCategory=t.detail[0];
+          console.log(this.categoryDefaultValue.mid);
           this.midCategorySet=t.detail;
 
         }
@@ -89,6 +155,10 @@ class ManufactureProcess {
       console.log("받은 리스폰스",res);
       this.EstimateDataForDrawing = res.data.data;
       console.log(this.EstimateDataForDrawing)
+      
+      this.moldPrice = Math.round(this.EstimateDataForDrawing.totalMinPrice/10000)
+      this.ejaculationPrice = Math.round(this.EstimateDataForDrawing.MinPrice/10) * 10
+
       this.MaxPrice= this.EstimateDataForDrawing.maxPrice;
       this.MinPrice= this.EstimateDataForDrawing.minPrice;
       this.totalMaxPrice= this.EstimateDataForDrawing.totalMaxPrice;

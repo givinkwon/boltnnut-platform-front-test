@@ -1,43 +1,55 @@
-import { observable, action } from "mobx";
+import { observable, action, makeObservable } from "mobx";
 
 import * as ProjectAPI from "axios/Project";
 import * as AccountAPI from "axios/Account";
 
 class Project {
-@observable projectDataList = [];
-@observable project_next = null;
-@observable project_count = null;
-@observable current_user_id = null;
-@observable project_length = null;
-@observable project_page = null;
-@observable currentPage = 1;
-
-
-  @action init = (clientId) => {    
-        
-    const token = localStorage.getItem('token')
-  
-    const req = {            
-      params: {
-        client: clientId,      
-      },
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    }
-       
-    ProjectAPI.getProjects(req)
-        .then((res) => {
-          // this.projectDataList = res.data;
-          this.projectData = res.data.results          
-          this.project_next = res.data.next        
-          this.project_count = res.data.count;        
-          this.project_page = parseInt((this.project_count-1)/5) + 1
-        });            
+  constructor() {
+    makeObservable(this);
   }
+  // 프로젝트 데이터 관련 변수
+  @observable projectDataList = [];
+  @observable projectData = [];
+  @observable project_next = null;
+  @observable project_count = null;
+  @observable project_status = "";
 
+  // 페이지 관련 변수
+  @observable project_page = ["", "", "", "", ""];
+  @observable currentPage = 1;
+
+  // 필터 & 라디오박스 관련 변수
+  @observable filter_price = "전체";
+  @observable radiobox_checked_idx = "1";
+
+  // 카테고리 데이터 관련 변수
+  @observable input_category = null;
+  @observable product_idx = 0;
+  @observable middle_category_idx = [0, 0, 0, 0, 0];
+  @observable middle_category_name = ["", "", "", "", ""];
+  @observable main_category_idx = [0, 0, 0, 0, 0];
+  @observable main_category_name = ["", "", "", "", ""];
+
+  // * 삭제 예정 * 옛날 데이터 관련 변수
+  @observable data_dt = [];
+
+  // 검색 관련 변수
+  @observable search_text = "";
+
+  @action setCategory = (val) => {
+    this.input_category = val;
+  };
+
+  @action category_reset = () => {
+    this.middle_category_idx = [0, 0, 0, 0, 0];
+    this.middle_category_name = ["", "", "", "", ""];
+    this.main_category_idx = [0, 0, 0, 0, 0];
+    this.main_category_name = ["", "", "", "", ""];
+  };
+
+  /* 삭제 검토 중 */
   @action getNextPage = (clientId, callback = null) => {
-    if (!this.project_next) {     
+    if (!this.project_next) {
       return;
     }
     const token = localStorage.getItem("token");
@@ -48,23 +60,20 @@ class Project {
         // page: page
       },
       headers: {
-       //  Authorization: `Token ${token}`,
+        //  Authorization: `Token ${token}`,
       },
     };
 
     ProjectAPI.getNextPage(req)
-      .then((res) => {        
+      .then((res) => {
         console.log(res.data.results);
-                
+
         this.projectData = this.projectData.concat(res.data.results);
         this.project_next = res.data.next;
-        // console.log(this.projectData)
         //this.project_page = parseInt(this.project_count/5) + 1
-        if(callback) {
-          callback()
+        if (callback) {
+          callback();
         }
-
-
       })
       .catch((e) => {
         console.log(e);
@@ -72,31 +81,32 @@ class Project {
       });
   };
 
-
-  @action getPage = (clientId, page=1) => {  
+  /* 클라이언트 - project API 데이터 가져오기 */
+  @action getPage = (clientId, page = 1) => {
     this.projectDataList = [];
 
-    if (!clientId) {  
+    if (!clientId) {
       return;
     }
     const token = localStorage.getItem("token");
     const req = {
-      // nextUrl: this.project_next,
       params: {
         client: clientId,
-        page: page,        
+        page: page,
       },
       headers: {
         Authorization: `Token ${token}`,
       },
     };
-    
+
     ProjectAPI.getProjects(req)
-      .then((res) => {                      
+      .then((res) => {
         this.projectDataList = res.data.results;
-        this.project_next = res.data.next;        
-        this.project_count = res.data.count;                  
-        this.project_page = parseInt((this.project_count-1)/5) + 1
+        this.project_next = res.data.next;
+        this.project_count = res.data.count;
+        this.project_page = parseInt((this.project_count - 1) / 5) + 1;
+
+        this.getCategory();
       })
       .catch((e) => {
         console.log(e);
@@ -104,28 +114,88 @@ class Project {
       });
   };
 
-  @action getToken = () => {    
-    const token = localStorage.getItem('token')
-    // console.log(localStorage)
-    const req = {
-      headers: {
-        'Authorization': `Token ${token}`,
-      }
-    }
+  /* 파트너 - 전체 + 가격 별 + search별 다 포함시켰음 */
+  @action getProjectByPrice = (search_text, page = 1) => {
+    this.projectDataList = [];
+    this.data_dt = [];
 
-    AccountAPI.reloadUserInfo(req)
-    .then(res => {
-      this.current_user_id = null        
-      // 가입자 아이디
-      this.current_user_id = res.data.data.User.id 
-      console.log(this.current_user_id)
-      //this.current_user_id = 917
-      //this.current_user_id = 23
-      //this.current_user_id = res.data.data.Client[0].id
-    })
-  } 
+    const token = localStorage.getItem("token");
+    const req = {
+      params: {
+        request__price: this.filter_price === "전체" ? "" : this.filter_price,
+        search: search_text,
+        page: page,
+        ordering: "-id",
+      },
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
+
+    ProjectAPI.getProjects(req)
+      .then((res) => {
+        this.projectDataList = [];
+
+        /* 오래된 데이터 제외하기 위함 */
+        //   this.filter_price == "전체" && res.data.results.map((item, idx) => {
+        //     this.projectData.push(item)
+        //     if(item.id > 2098){
+        //       this.data_dt.push(1);
+        //     }
+        //     else{
+        //       this.data_dt.push(0);
+        //     }
+        //   })
+        // if(this.filter_price != "전체") {
+        this.projectDataList = res.data.results;
+        //}
+
+        this.project_next = res.data.next;
+        this.project_count = res.data.count;
+        this.project_page = parseInt((this.project_count - 1) / 5) + 1;
+
+        this.getCategory();
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  /* 카테고리 데이터 가져오는 함수 */
+  @action getCategory = () => {
+    const token = localStorage.getItem("token");
+
+    this.projectDataList.map((item, idx) => {
+      const req = {
+        id: item.request_set[0].product,
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      };
+
+      ProjectAPI.getCategoryMiddle(req)
+        .then((res) => {
+          this.middle_category_name[idx] = res.data.category;
+          this.main_category_idx[idx] = res.data.maincategory;
+          const req = {
+            id: this.main_category_idx[idx],
+          };
+          ProjectAPI.getMainCategory(req)
+            .then((res) => {
+              this.main_category_name[idx] = res.data.maincategory;
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+    });
+  };
 }
 
-
-
-export default new Project()
+export default new Project();
