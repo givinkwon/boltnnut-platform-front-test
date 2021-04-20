@@ -25,21 +25,8 @@ const fileImg = "/static/images/file.png";
 const calendar = "/static/images/facebook.png";
 
 const fileList = [];
-let checkHeight = false;
 let checkBox = false;
 let checkBox_one = false;
-
-// let fileNameAvailable = ["stl", "stp"];
-
-// let fileName;
-// if (e.currentTarget.files[0]) {
-//   if (
-//     !fileNameAvailable.includes(
-//       e.currentTarget.files[0].name.split(".")[e.currentTarget.files.length]
-//     )
-//   ) {
-//     return alert("파일 확장자명 (stl, stp만 가능) 을 확인해주세요.");
-//   }
 
 const customStyles = {
   container: (base, state) => {
@@ -143,13 +130,6 @@ class FileUploadContainer extends Component {
         }
       }
     }
-
-    // for(var i=directInputs.length-1; i>idx; i--){
-    //   console.log(directInputs[i].value)
-    //   console.log(fileList[i].quantity.value)
-
-    //     directInputs[i].value = fileList[i].quantity.value
-    //  }
   }
 
   async deleteValue(idx) {
@@ -168,9 +148,7 @@ class FileUploadContainer extends Component {
         if (fileList[i].selectBig.name === "금형사출") {
           const str_idx = valueAry.findIndex((e) => e === i);
           const str = directInputs[str_idx].className;
-
           const num = str.slice(str.length - 1, str.length);
-
           const directInput = document.querySelector(`.directInput${num}`);
 
           directInput.value = fileList[i].quantity.value;
@@ -191,59 +169,11 @@ class FileUploadContainer extends Component {
 
     for (var i = checked_ary.length; i > 0; i--) {
       this.setState({ fileList: fileList.splice(checked_ary[i - 1], 1) });
-      // if(fileList[checked_ary[i-1]]){
-      // //  if(!checked_ary[i]){
-      //     console.log("!!!!!")
-      //     for(var j=checked_ary[i-1]; j<fileList.length; j++){
-      //       const directInput = document.querySelectorAll(`.directInput${j}`)
-      //       // console.log(j)
-      //       // console.log(directInput)
-      //       // if(fileList[j]){
-      //       //   if(fileList[j].selectBig.name === "금형사출"){
-      //       //     console.log(fileList[j].quantity.value)
-      //       //     if(directInputs[j-1]){
-      //       //       directInputs[j-1].value = fileList[j].quantity.value
-      //       //     }
-      //       //   //directInput.value = fileList[j].quantity.value
-      //       //   }
-      //       // }
-
-      //     }
-      //}
-      // else{
-      //   for(var j=checked_ary[i-1]; j<checked_ary[i]; j++){
-      //   //if(fileList[j]){
-      //     const directInput = document.querySelectorAll(`.directInput${j}`)
-      //     console.log(j)
-      //     //console.log(directinput)
-      //     //console.log(fileList[checked_ary[j]].quantity.value)
-      //     if(fileList[checked_ary[j]]){
-      //       //if(checked_ary[j]){
-      //         console.log(directInput)
-      //         console.log(fileList[checked_ary[j]].quantity.value)
-      //         directInput.value = fileList[checked_ary[j]].quantity.value
-      //      // }
-      //     }
-
-      //  // }
-      //   }
-
-      // }
-      //directInputs[checked_ary[i-1]].value = fileList[checked_ary[i-1]].quantity.value
-      //console.log(directInputs[checked_ary[i-1]].value)
-      //}
     }
 
     if (fileList.length) {
       const directInputs = document.getElementsByClassName("directInput");
-      //const directInput
-      //const directInput = document.querySelectorAll(`.directInput${idx}`)
       const valueAry = [];
-
-      console.log(directInputs);
-
-      console.log(fileList);
-      console.log(directInputs);
 
       for (var i = 0; i < directInputs.length; i++) {
         const string = directInputs[i].className;
@@ -257,33 +187,6 @@ class FileUploadContainer extends Component {
 
         directInput.value = fileList[num].quantity.value;
       }
-      console.log(valueAry);
-
-      // for(var i=0; i<directInputs.length; i++){
-
-      // }
-
-      // for(var i=0; i<fileList.length; i++){
-      //   if(fileList[i]){
-      //     if(fileList[i].selectBig.name === "금형사출"){
-      //       console.log(valueAry[0])
-      //       console.log(i)
-      //       console.log(typeof(valueAry[0]))
-      //       console.log(typeof(i))
-      //       const str_idx = valueAry.findIndex((e) => e === i)
-      //       console.log(str_idx)
-      //       const str = directInputs[str_idx].className
-      //       console.log(str)
-      //       const num = str.slice(str.length-1, str.length);
-      //       console.log(num)
-
-      //       const directInput = document.querySelector(`.directInput${num}`);
-
-      //       directInput.value = fileList[i].quantity.value
-      //     }
-
-      //   }
-      // }
     }
     this.setState({ variation: true });
   }
@@ -324,27 +227,14 @@ class FileUploadContainer extends Component {
 
   countQuantity = (prev_value = 0, current_value = 0, checked = 0) => {
     const { ManufactureProcess } = this.props;
-    // console.log(typeof(prev_value))
-    // console.log(typeof(current_value))
-    // console.log(typeof(ManufactureProcess.quantity))
-    // console.log(ManufactureProcess.quantity)
-    // console.log(prev_value)
-    // console.log(current_value)
-    // console.log(checked)
-    // console.log(typeof(checked))
-    //console.log(data)
+
     if (!checked) {
       ManufactureProcess.quantity =
         ManufactureProcess.quantity - prev_value + current_value;
-      // console.log(checked)
     } else if (checked === 1) {
       ManufactureProcess.quantity = ManufactureProcess.quantity - current_value;
-      // console.log(checked)
-      //  console.log(ManufactureProcess.quantity)
     } else {
       ManufactureProcess.quantity = ManufactureProcess.quantity + current_value;
-      // console.log(checked)
-      // console.log(ManufactureProcess.quantity)
     }
     console.log(ManufactureProcess.quantity);
   };
@@ -390,11 +280,6 @@ class FileUploadContainer extends Component {
           } else {
             price += data.totalPrice;
           }
-
-          //console.log(typeof(data.quantity.value))
-          //ManufactureProcess.quantity = ManufactureProcess.quantity + parseInt(data.quantity.value)
-          //console.log(typeof(ManufactureProcess.quantity))
-          //console.log(ManufactureProcess.quantity)
         } else {
           this.setState({ g: 3 });
         }
@@ -405,9 +290,6 @@ class FileUploadContainer extends Component {
   }
 
   loadFileResopnse = (fileIdx) => {
-    console.log(fileIdx);
-    console.log(fileList);
-    console.log(fileList[fileIdx].originFile);
     const ManufactureProcessFormData = new FormData();
     ManufactureProcessFormData.append(
       "blueprint",
@@ -476,8 +358,8 @@ class FileUploadContainer extends Component {
         paddingHeight + standardHeight + fileList.length * 240;
       const card = document.getElementById("card");
 
-      console.log(scrollTop);
-      console.log(currentHeight);
+      // console.log(scrollTop);
+      // console.log(currentHeight);
 
       if (card) {
         if (this.props.ManufactureProcess.checkFileUpload) {
@@ -496,13 +378,11 @@ class FileUploadContainer extends Component {
               card.style.position = "fixed";
               // console.log("scrollTop > bannerHeight")
               this.setState({ checkHeight: true });
-              //checkHeight = true
             } else if (scrollTop < bannerHeight + 40) {
               card.style.display = "flex";
               card.style.position = "static";
               // console.log("scrollTop < bannerHeight")
               this.setState({ checkHeight: false });
-              //checkHeight = false
             }
             //this.setState({g:3})
           }
@@ -722,14 +602,10 @@ class FileUploadContainer extends Component {
         let fileNameAvailable = ["stl", "stp"];
         const extension = data.name.split(".");
 
-        //console.log(fileNameAvailable)
-
         if (!fileNameAvailable.includes(extension[extension.length - 1])) {
-          console.log("stl X");
           check_stl = false;
           data["check_stl"] = check_stl;
         } else {
-          console.log("stl O");
           check_stl = true;
           data["check_stl"] = check_stl;
           stl_count++;
