@@ -2,7 +2,7 @@ import React from "react";
 import * as ProposalAPI from "axios/Proposal";
 import { inject, observer } from "mobx-react";
 import styled, { css } from "styled-components";
-
+import ChatCardContainer from "./ChatCard";
 @inject("Auth")
 @observer
 class ChatTestContainer extends React.Component {
@@ -57,11 +57,12 @@ class ChatTestContainer extends React.Component {
   render() {
     return (
       <>
-        <textarea id="chat-log" cols="100" rows="20"></textarea>
+        {/* <textarea id="chat-log" cols="100" rows="20"></textarea>
         <br />
         <input id="chat-message-input" type="text" size="100" />
         <br />
-        <input id="chat-message-submit" type="button" value="Send" />
+        <input id="chat-message-submit" type="button" value="Send" /> */}
+        <ChatCardContainer />
       </>
     );
   }
