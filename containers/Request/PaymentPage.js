@@ -12,7 +12,7 @@ const img = "/static/images/request/PaymentPage/star.png";
 const passimg = "/static/images/request/PaymentPage/pass.png";
 const pass3 = "static/images/pass3.png";
 
-@inject("Payment")
+@inject("Payment", "ManufactureProcess")
 @observer
 class PaymentPageContainer extends React.Component {
   state = {
@@ -34,6 +34,7 @@ class PaymentPageContainer extends React.Component {
     }
     // Payment.phone_number = cellphone;
     // console.log(cellphone.replace("-", "").replace("-", ""));
+    console.log(this.props.ManufactureProcess.quantity);
     Payment.setPhoneNumber(cellphone.replace("-", "").replace("-", ""));
     Payment.product_price = 10;
     Payment.setProjectName("MASDASCNASKLCNASKLCNL");
