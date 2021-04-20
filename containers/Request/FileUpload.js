@@ -8,6 +8,7 @@ import FileImage from "FileImage.js";
 import CircularProgress from "@material-ui/core/CircularProgress";
 // Components
 import * as Content from "components/Content";
+import * as Title from "components/Title";
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 import SelectComponent from "components/Select";
 import ManufactureProcess from "../../stores/ManufactureProcess";
@@ -15,13 +16,30 @@ import InputComponent from "AddFile";
 
 import Calendar from "./Calendar2";
 import Magazine from "../../stores/Magazine";
+import { toJS } from "mobx";
 
 const pass2 = "static/images/pass2.png";
 const pass3 = "static/images/pass3.png";
 const deleteButtonImg = "/static/images/delete.png";
+const fileImg = "/static/images/file.png";
 const calendar = "/static/images/facebook.png";
 
 const fileList = [];
+let checkHeight = false;
+let checkBox = false;
+let checkBox_one = false;
+
+// let fileNameAvailable = ["stl", "stp"];
+
+// let fileName;
+// if (e.currentTarget.files[0]) {
+//   if (
+//     !fileNameAvailable.includes(
+//       e.currentTarget.files[0].name.split(".")[e.currentTarget.files.length]
+//     )
+//   ) {
+//     return alert("파일 확장자명 (stl, stp만 가능) 을 확인해주세요.");
+//   }
 
 const customStyles = {
   container: (base, state) => {
@@ -71,12 +89,15 @@ class FileUploadContainer extends Component {
     checkFileUpload: false,
     checkCard: true,
     value: "",
-    rows: 1,
-    minRows: 1,
+    rows: 7,
+    minRows: 7,
     maxRows: 100,
+    checkHeight: false,
     loading: false,
     checkScroll: false,
     orderPrice: [],
+    checkBox,
+    variation: false,
   };
 
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
@@ -87,12 +108,185 @@ class FileUploadContainer extends Component {
     }
     if (val.label == "직접 입력" && (val.value == 0 || val.value == "")) {
       data.quantity = { label: "직접 입력", value: val };
+      data.currentQuantity = value;
     }
     if (val.value == 0) {
       data.quantity = { label: "직접 입력", value: val.value };
+      data.currentQuantity = val.value;
     }
     console.log(data.quantity);
   };
+
+  async setValue(idx) {
+    await this.setState({ g: 3 });
+    const directInputs = document.querySelectorAll(".directInput");
+
+    const valueAry = [];
+    for (var i = 0; i < directInputs.length; i++) {
+      const string = directInputs[i].className;
+      await valueAry.push(
+        parseInt(string.slice(string.length - 1, string.length))
+      );
+    }
+
+    for (var i = idx; i < fileList.length; i++) {
+      if (fileList[i]) {
+        if (fileList[i].selectBig.name === "금형사출") {
+          const str_idx = valueAry.findIndex((e) => e === i);
+          const str = directInputs[str_idx].className;
+
+          const num = str.slice(str.length - 1, str.length);
+
+          const directInput = document.querySelector(`.directInput${num}`);
+
+          directInput.value = fileList[i].quantity.value;
+        }
+      }
+    }
+
+    // for(var i=directInputs.length-1; i>idx; i--){
+    //   console.log(directInputs[i].value)
+    //   console.log(fileList[i].quantity.value)
+
+    //     directInputs[i].value = fileList[i].quantity.value
+    //  }
+  }
+
+  async deleteValue(idx) {
+    await this.setState({ g: 3 });
+    const directInputs = document.getElementsByClassName("directInput");
+    const valueAry = [];
+    for (var i = 0; i < directInputs.length; i++) {
+      const string = directInputs[i].className;
+      await valueAry.push(
+        parseInt(string.slice(string.length - 1, string.length))
+      );
+    }
+
+    for (var i = idx; i < fileList.length; i++) {
+      if (fileList[i]) {
+        if (fileList[i].selectBig.name === "금형사출") {
+          const str_idx = valueAry.findIndex((e) => e === i);
+          const str = directInputs[str_idx].className;
+
+          const num = str.slice(str.length - 1, str.length);
+
+          const directInput = document.querySelector(`.directInput${num}`);
+
+          directInput.value = fileList[i].quantity.value;
+        }
+      }
+    }
+  }
+  async deleteHandler() {
+    const checked_ary = [];
+
+    fileList.map((item, id) => {
+      if (item.checked) {
+        checked_ary.push(id);
+        this.countQuantity(0, parseInt(item.quantity.value), 1);
+      }
+    });
+    console.log(checked_ary);
+
+    for (var i = checked_ary.length; i > 0; i--) {
+      this.setState({ fileList: fileList.splice(checked_ary[i - 1], 1) });
+      // if(fileList[checked_ary[i-1]]){
+      // //  if(!checked_ary[i]){
+      //     console.log("!!!!!")
+      //     for(var j=checked_ary[i-1]; j<fileList.length; j++){
+      //       const directInput = document.querySelectorAll(`.directInput${j}`)
+      //       // console.log(j)
+      //       // console.log(directInput)
+      //       // if(fileList[j]){
+      //       //   if(fileList[j].selectBig.name === "금형사출"){
+      //       //     console.log(fileList[j].quantity.value)
+      //       //     if(directInputs[j-1]){
+      //       //       directInputs[j-1].value = fileList[j].quantity.value
+      //       //     }
+      //       //   //directInput.value = fileList[j].quantity.value
+      //       //   }
+      //       // }
+
+      //     }
+      //}
+      // else{
+      //   for(var j=checked_ary[i-1]; j<checked_ary[i]; j++){
+      //   //if(fileList[j]){
+      //     const directInput = document.querySelectorAll(`.directInput${j}`)
+      //     console.log(j)
+      //     //console.log(directinput)
+      //     //console.log(fileList[checked_ary[j]].quantity.value)
+      //     if(fileList[checked_ary[j]]){
+      //       //if(checked_ary[j]){
+      //         console.log(directInput)
+      //         console.log(fileList[checked_ary[j]].quantity.value)
+      //         directInput.value = fileList[checked_ary[j]].quantity.value
+      //      // }
+      //     }
+
+      //  // }
+      //   }
+
+      // }
+      //directInputs[checked_ary[i-1]].value = fileList[checked_ary[i-1]].quantity.value
+      //console.log(directInputs[checked_ary[i-1]].value)
+      //}
+    }
+
+    if (fileList.length) {
+      const directInputs = document.getElementsByClassName("directInput");
+      //const directInput
+      //const directInput = document.querySelectorAll(`.directInput${idx}`)
+      const valueAry = [];
+
+      console.log(directInputs);
+
+      console.log(fileList);
+      console.log(directInputs);
+
+      for (var i = 0; i < directInputs.length; i++) {
+        const string = directInputs[i].className;
+        await valueAry.push(
+          parseInt(string.slice(string.length - 1, string.length))
+        );
+        const str = directInputs[i].className;
+
+        const num = str.slice(str.length - 1, str.length);
+        const directInput = document.querySelector(`.directInput${num}`);
+
+        directInput.value = fileList[num].quantity.value;
+      }
+      console.log(valueAry);
+
+      // for(var i=0; i<directInputs.length; i++){
+
+      // }
+
+      // for(var i=0; i<fileList.length; i++){
+      //   if(fileList[i]){
+      //     if(fileList[i].selectBig.name === "금형사출"){
+      //       console.log(valueAry[0])
+      //       console.log(i)
+      //       console.log(typeof(valueAry[0]))
+      //       console.log(typeof(i))
+      //       const str_idx = valueAry.findIndex((e) => e === i)
+      //       console.log(str_idx)
+      //       const str = directInputs[str_idx].className
+      //       console.log(str)
+      //       const num = str.slice(str.length-1, str.length);
+      //       console.log(num)
+
+      //       const directInput = document.querySelector(`.directInput${num}`);
+
+      //       directInput.value = fileList[i].quantity.value
+      //     }
+
+      //   }
+      // }
+    }
+    this.setState({ variation: true });
+  }
 
   // ESC 버튼을 눌렀을 경우 발생하는 함수 (삭제 에정)
   escFunction(event) {
@@ -103,10 +297,9 @@ class FileUploadContainer extends Component {
 
   checkQuantityData = (e, data, idx) => {
     const directInput = document.getElementsByClassName("directInput");
-    console.log(directInput);
-    console.log(this);
+
     const re = /^[0-9\b]+$/;
-    console.log(idx);
+
     if (e.target.value === "") {
       e.target.placeholder = "직접 입력하세요";
     } else if (!re.test(e.target.value)) {
@@ -118,7 +311,9 @@ class FileUploadContainer extends Component {
         alert("최소 주문 수량은 100개입니다!");
         data.quantity = { label: "직접 입력", val: 0 };
         e.target.value = "";
-        // directInput[idx].focus();
+        if (directInput[idx]) {
+          //directInput[idx].focus();
+        }
       } else {
         this.countPrice();
       }
@@ -129,31 +324,41 @@ class FileUploadContainer extends Component {
 
   countQuantity = (prev_value = 0, current_value = 0, checked = 0) => {
     const { ManufactureProcess } = this.props;
-    console.log(typeof prev_value);
-    console.log(typeof current_value);
-    console.log(prev_value);
-    console.log(current_value);
-    console.log(checked);
-    console.log(typeof checked);
+    // console.log(typeof(prev_value))
+    // console.log(typeof(current_value))
+    // console.log(typeof(ManufactureProcess.quantity))
+    // console.log(ManufactureProcess.quantity)
+    // console.log(prev_value)
+    // console.log(current_value)
+    // console.log(checked)
+    // console.log(typeof(checked))
     //console.log(data)
     if (!checked) {
       ManufactureProcess.quantity =
         ManufactureProcess.quantity - prev_value + current_value;
-      console.log(ManufactureProcess.quantity);
+      // console.log(checked)
     } else if (checked === 1) {
       ManufactureProcess.quantity = ManufactureProcess.quantity - current_value;
-      console.log(ManufactureProcess.quantity);
+      // console.log(checked)
+      //  console.log(ManufactureProcess.quantity)
     } else {
       ManufactureProcess.quantity = ManufactureProcess.quantity + current_value;
-      console.log(ManufactureProcess.quantity);
+      // console.log(checked)
+      // console.log(ManufactureProcess.quantity)
     }
+    console.log(ManufactureProcess.quantity);
   };
   componentDidMount() {
     const { ManufactureProcess } = this.props;
-
+    //console.log("didMount")
     if (!ManufactureProcess.checkPaymentButton) {
       window.addEventListener("scroll", this.loadScroll);
     }
+  }
+
+  componentDidUpdate() {
+    const { ManufactureProcess } = this.props;
+    //console.log("didUpdate")
   }
 
   componentWillUnmount = () => {
@@ -168,35 +373,41 @@ class FileUploadContainer extends Component {
     //   console.log(ManufactureProcess.quantity)
     let price = 0;
     await fileList.map((data, idx) => {
-      data.totalMoldPrice = Math.round(data.moldPrice / 10000) * 10000;
-      data.totalEjaculationPrice =
-        Math.round(data.ejaculationPrice / 10) *
-        10 *
-        (data.quantity.value ? data.quantity.value : 0);
-      data.totalPrice =
-        Math.round(data.productionPrice / 100) * 100 * data.quantity.value;
+      if (data.stl_file) {
+        data.totalMoldPrice = Math.round(data.moldPrice / 10000) * 10000;
+        data.totalEjaculationPrice =
+          Math.round(data.ejaculationPrice / 10) *
+          10 *
+          (data.quantity.value ? data.quantity.value : 0);
+        data.totalPrice =
+          Math.round(data.productionPrice / 100) * 100 * data.quantity.value;
 
-      // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
-      if (data.checked) {
-        if (data.selectBig.name === "금형사출") {
-          price += data.totalMoldPrice;
-          price += data.totalEjaculationPrice;
+        // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
+        if (data.checked) {
+          if (data.selectBig.name === "금형사출") {
+            price += data.totalMoldPrice;
+            price += data.totalEjaculationPrice;
+          } else {
+            price += data.totalPrice;
+          }
+
+          //console.log(typeof(data.quantity.value))
+          //ManufactureProcess.quantity = ManufactureProcess.quantity + parseInt(data.quantity.value)
+          //console.log(typeof(ManufactureProcess.quantity))
+          //console.log(ManufactureProcess.quantity)
         } else {
-          price += data.totalPrice;
+          this.setState({ g: 3 });
         }
-
-        //console.log(typeof(data.quantity.value))
-        //ManufactureProcess.quantity = ManufactureProcess.quantity + parseInt(data.quantity.value)
-        //console.log(typeof(ManufactureProcess.quantity))
-        //console.log(ManufactureProcess.quantity)
-      } else {
-        this.setState({ g: 3 });
       }
     });
     ManufactureProcess.orderPrice = price;
+    console.log(ManufactureProcess.orderPrice);
   }
 
   loadFileResopnse = (fileIdx) => {
+    console.log(fileIdx);
+    console.log(fileList);
+    console.log(fileList[fileIdx].originFile);
     const ManufactureProcessFormData = new FormData();
     ManufactureProcessFormData.append(
       "blueprint",
@@ -256,20 +467,44 @@ class FileUploadContainer extends Component {
         document.documentElement.scrollTop,
         document.body.scrollTop
       );
-      var standardHeight = 180;
-      var currentHeight = standardHeight + fileList.length * 240;
+      //var standardHeight = 180;
+      const bannerHeight = 208;
+      const paddingHeight = 215;
+      const noticeBoxHeight = 90;
+      var standardHeight = 80 + bannerHeight;
+      var currentHeight =
+        paddingHeight + standardHeight + fileList.length * 240;
       const card = document.getElementById("card");
+
+      console.log(scrollTop);
+      console.log(currentHeight);
 
       if (card) {
         if (this.props.ManufactureProcess.checkFileUpload) {
-          if (scrollTop > currentHeight && !this.state.checkScroll) {
+          if (scrollTop > currentHeight) {
             card.style.display = "none";
             card.style.position = "static";
-            this.setState({ checkScroll: true });
+            // this.setState({ checkScroll: true });
+            // console.log("scrollTop > currentHeight")
           } else if (scrollTop < currentHeight) {
-            card.style.display = "flex";
-            card.style.position = "fixed";
-            this.setState({ checkScroll: false }); // checkScroll 안 쓸 듯
+            //card.style.display = "flex";
+            //card.style.position = "fixed";
+            //this.setState({ checkScroll: false }); // checkScroll 안 쓸 듯
+            // console.log("scrollTop < currentHeight")
+            if (scrollTop > bannerHeight + 30) {
+              card.style.display = "flex";
+              card.style.position = "fixed";
+              // console.log("scrollTop > bannerHeight")
+              this.setState({ checkHeight: true });
+              //checkHeight = true
+            } else if (scrollTop < bannerHeight + 40) {
+              card.style.display = "flex";
+              card.style.position = "static";
+              // console.log("scrollTop < bannerHeight")
+              this.setState({ checkHeight: false });
+              //checkHeight = false
+            }
+            //this.setState({g:3})
           }
         } else {
           card.style.display = "flex";
@@ -321,83 +556,187 @@ class FileUploadContainer extends Component {
     }
   }
 
+  setIsShown = (flag, idx = 0) => {
+    console.log(checkBox_one);
+    //console.log(this.state.checkBox_one)
+    if (idx === 0) {
+      checkBox = flag;
+      this.setState({ checkBox: flag });
+    } else if (idx === 1) {
+      checkBox_one = flag;
+      this.setState({ checkBox_one: flag });
+    }
+  };
+
   MyDropzone = () => {
     const { ManufactureProcess } = this.props;
-    const dropHandler = (files) => {
+    const dropHandler = (files, stl_count) => {
       let loadingCounter = 0;
       console.log("dropHandler");
+      console.log(files);
       files.forEach((file, fileIdx) => {
-        const ManufactureProcessFormData = new FormData();
-        ManufactureProcessFormData.append("blueprint", file);
-        ManufactureProcessFormData.append(
-          "process",
-          ManufactureProcess.categoryDefaultValue.big.id
-        );
-        ManufactureProcessFormData.append(
-          "detailProcess",
-          ManufactureProcess.categoryDefaultValue.mid.id
-        );
-        //기본정보입력에서 받은 의뢰서로 바꾸기
-        ManufactureProcessFormData.append("request", 2467);
-        console.log(ManufactureProcessFormData);
-        this.setState({ loading: true });
+        if (file.check_stl) {
+          const ManufactureProcessFormData = new FormData();
+          ManufactureProcessFormData.append("blueprint", file);
+          ManufactureProcessFormData.append(
+            "process",
+            ManufactureProcess.categoryDefaultValue.big.id
+          );
+          ManufactureProcessFormData.append(
+            "detailProcess",
+            ManufactureProcess.categoryDefaultValue.mid.id
+          );
+          //기본정보입력에서 받은 의뢰서로 바꾸기
+          ManufactureProcessFormData.append("request", 2467);
+          console.log(ManufactureProcessFormData);
+          this.setState({ loading: true });
 
-        //this.props.ManufactureProcess.saveSelect(ManufactureProcessFormData)
-        ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
-          .then((res) => {
-            loadingCounter++;
-            this.setState({
-              fileList: fileList.push({
-                originFile: file,
-                drawFile: res.data.data.stl_file,
-                fileName: file.name,
-                price: res.data.data.maxPrice,
-                //MaxPrice: res.data.data.maxPrice,
+          //this.props.ManufactureProcess.saveSelect(ManufactureProcessFormData)
+          ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
+            .then((res) => {
+              loadingCounter++;
+              this.setState({
+                fileList: fileList.push({
+                  originFile: file,
+                  stl_file: true,
+                  drawFile: res.data.data.stl_file,
+                  fileName: file.name,
+                  price: res.data.data.maxPrice,
+                  //MaxPrice: res.data.data.maxPrice,
 
-                productionPrice: res.data.data.maxPrice, // 생산가
-                moldPrice:
-                  Math.round(res.data.data.totalMaxPrice / 10000) * 10000, // 금형가
-                ejaculationPrice: Math.round(res.data.data.maxPrice / 10) * 10, // 사출가
+                  productionPrice: res.data.data.maxPrice, // 생산가
+                  moldPrice:
+                    Math.round(res.data.data.totalMaxPrice / 10000) * 10000, // 금형가
+                  ejaculationPrice:
+                    Math.round(res.data.data.maxPrice / 10) * 10, // 사출가
 
-                x_length: Math.round(res.data.data.x_length),
-                y_length: Math.round(res.data.data.y_length),
-                z_length: Math.round(res.data.data.z_length),
+                  x_length: Math.round(res.data.data.x_length),
+                  y_length: Math.round(res.data.data.y_length),
+                  z_length: Math.round(res.data.data.z_length),
 
-                selectedMid: ManufactureProcess.categoryDefaultValue.mid,
-                checked: true,
+                  selectedMid: ManufactureProcess.categoryDefaultValue.mid,
+                  checked: true,
 
-                quantity: { label: "", value: 0 },
-                prevQuantity: 0,
-                inputQuantity: 0,
+                  quantity: { label: "", value: 0 },
+                  prevQuantity: 0,
+                  currentQuantity: 0,
 
-                totalPrice: 0,
-                totalMoldPrice: res.data.data.totalMaxPrice,
-                totalEjaculationPrice: res.data.data.maxPrice,
+                  totalPrice: 0,
+                  totalMoldPrice: res.data.data.totalMaxPrice,
+                  totalEjaculationPrice: res.data.data.maxPrice,
 
-                optionBig: ManufactureProcess.ManufactureProcessList,
-                selectBig: ManufactureProcess.categoryDefaultValue.big,
-                optionMid: ManufactureProcess.categoryDefaultValue.big.detail,
-                selectedMid: ManufactureProcess.categoryDefaultValue.mid,
-                priceLoading: false,
-              }),
+                  optionBig: ManufactureProcess.ManufactureProcessList,
+                  selectBig: ManufactureProcess.categoryDefaultValue.big,
+                  optionMid: ManufactureProcess.categoryDefaultValue.big.detail,
+                  selectedMid: ManufactureProcess.categoryDefaultValue.mid,
+                  priceLoading: false,
+                }),
+              });
+
+              console.log(loadingCounter + "/" + files.length);
+              // if (loadingCounter === files.length) {
+              //   this.setState({ loading: false });
+              // }
+
+              console.log(loadingCounter + "/" + stl_count);
+              if (loadingCounter === stl_count) {
+                this.setState({ loading: false });
+              }
+
+              this.countPrice();
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
             });
+        } else {
+          console.log(file.name);
 
-            console.log(loadingCounter + "/" + files.length);
-            if (loadingCounter === files.length) {
-              this.setState({ loading: false });
-            }
+          const ManufactureProcessFormData = new FormData();
+          ManufactureProcessFormData.append("blueprint", file);
+          ManufactureProcessFormData.append(
+            "process",
+            ManufactureProcess.categoryDefaultValue.big.id
+          );
+          ManufactureProcessFormData.append(
+            "detailProcess",
+            ManufactureProcess.categoryDefaultValue.mid.id
+          );
+          //기본정보입력에서 받은 의뢰서로 바꾸기
+          ManufactureProcessFormData.append("request", 2467);
 
-            this.countPrice();
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
+          console.log(ManufactureProcessFormData);
+          console.log(file);
+
+          // ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
+          // .then((res) => {
+          this.setState({
+            fileList: fileList.push({
+              originFile: file,
+              fileName: file.name,
+              stl_file: false,
+              //price:res.data.data.maxPrice,
+              //MaxPrice: res.data.data.maxPrice,
+
+              // productionPrice: res.data.data.maxPrice, // 생산가
+              // moldPrice: Math.round(res.data.data.totalMaxPrice/10000) * 10000,  // 금형가
+              // ejaculationPrice: Math.round(res.data.data.maxPrice/10) * 10, // 사출가
+
+              // x_length: Math.round(res.data.data.x_length),
+              // y_length: Math.round(res.data.data.y_length),
+              // z_length: Math.round(res.data.data.z_length),
+
+              selectedMid: ManufactureProcess.categoryDefaultValue.mid,
+              checked: true,
+
+              quantity: { label: "", value: 0 },
+              prevQuantity: 0,
+              currentQuantity: 0,
+
+              // totalPrice: 0,
+              // totalMoldPrice: res.data.data.totalMaxPrice,
+              // totalEjaculationPrice: res.data.data.maxPrice,
+
+              optionBig: ManufactureProcess.ManufactureProcessList,
+              selectBig: ManufactureProcess.categoryDefaultValue.big,
+              optionMid: ManufactureProcess.categoryDefaultValue.big.detail,
+              selectedMid: ManufactureProcess.categoryDefaultValue.mid,
+              //priceLoading:false
+            }),
           });
+          //  })
+          //  .catch((e) => {
+          //     console.log(e);
+          //     console.log(e.response);
+          //  });
+        }
       });
     };
 
     const onDrop = useCallback((acceptedFiles) => {
       // Do something with the files
+      console.log(acceptedFiles);
+      let check_stl = false;
+      let stl_count = 0;
+      acceptedFiles.map((data, idx) => {
+        let fileNameAvailable = ["stl", "stp"];
+        const extension = data.name.split(".");
+
+        //console.log(fileNameAvailable)
+
+        if (!fileNameAvailable.includes(extension[extension.length - 1])) {
+          console.log("stl X");
+          check_stl = false;
+          data["check_stl"] = check_stl;
+        } else {
+          console.log("stl O");
+          check_stl = true;
+          data["check_stl"] = check_stl;
+          stl_count++;
+        }
+        console.log(data);
+      });
+
       this.setState({ checkFileUpload: true });
       this.props.ManufactureProcess.checkFileUpload = true;
 
@@ -405,9 +744,9 @@ class FileUploadContainer extends Component {
 
       if (card) {
         card.style.display = "flex";
-        card.style.position = "fixed";
+        //card.style.position = "fixed";
       }
-      dropHandler(acceptedFiles);
+      dropHandler(acceptedFiles, stl_count);
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -478,6 +817,7 @@ class FileUploadContainer extends Component {
                           <FileImage name=".STP" />
                           <FileImage name=".STEP" />
                           <FileImage name=".STL" />
+                          <FileImage name=".DWG" />
                         </FileImageContainer>
                       </>
                     )}
@@ -535,257 +875,628 @@ class FileUploadContainer extends Component {
 
           <ItemList
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+            checkBannerHeight={this.state.checkHeight}
           >
             {fileList.map((data, idx) => (
               <>
-                <ItemBox>
-                  <MainBox>
-                    <CheckBox
-                      active={data.checked}
+                {data.stl_file ? (
+                  <ItemBox>
+                    <MainBox>
+                      <CheckBox
+                        active={data.checked}
+                        onClick={() => {
+                          if (!data.checked) {
+                            data.checked = true;
+                            this.countQuantity(
+                              0,
+                              parseInt(data.quantity.value),
+                              2
+                            );
+                            console.log(fileList);
+                          } else {
+                            data.checked = false;
+                            this.countQuantity(
+                              0,
+                              parseInt(data.quantity.value),
+                              1
+                            );
+                            console.log(fileList);
+                          }
+
+                          this.setState({ f: 3 });
+                          this.countPrice();
+                        }}
+                      >
+                        <div active={data.checked}>
+                          <img src={pass3} active={data.checked} />
+                        </div>
+                      </CheckBox>
+
+                      <StlBox>
+                        {data.fileName}
+
+                        <STLViewer
+                          model={data.drawFile} // stl파일 주소
+                          width={120} // 가로
+                          height={120} // 세로
+                          // width={250}
+                          // height={210}
+                          modelColor="gray" // 색
+                          backgroundColor="white" // 배경색
+                          rotate={true} // 자동회전 유무
+                          orbitControls={true} // 마우스 제어 유무
+                          cameraX={500}
+                          //cameraZ={500}
+                          //lights={[2,4,1]}
+                          //lights={[2, 2, 2]}
+                          // lights={[0, 0, 1]}
+                          //lightColor={'red'}
+                        />
+                        <Length>
+                          {data.x_length +
+                            " x " +
+                            data.y_length +
+                            " x " +
+                            data.z_length +
+                            " mm"}
+                        </Length>
+                      </StlBox>
+                      <ColumnBox>
+                        <ManufactureBox>
+                          <Select // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
+                            defaultValue={
+                              ManufactureProcess.categoryDefaultValue.big
+                            }
+                            styles={customStyles}
+                            value={data.selectBig}
+                            options={data.optionBig}
+                            getOptionLabel={(option) => option.name}
+                            onChange={(e) => {
+                              ManufactureProcess.setBigCategory(e);
+                              this.loadFileResopnse(idx);
+
+                              data.selectBig = e;
+                              data.optionMid = e.detail;
+
+                              if (data.selectBig.name === "금형사출") {
+                                if (data.checked) {
+                                  this.countQuantity(data.quantity.value, 0);
+                                }
+                                data.quantity = { label: "0", value: 0 };
+                              } else {
+                                if (data.checked) {
+                                  this.countQuantity(data.quantity.value, 1);
+                                }
+                                data.quantity = { label: "1", value: 1 };
+                              }
+                              this.countPrice();
+                            }}
+                          />
+                        </ManufactureBox>
+                      </ColumnBox>
+                      <MaterialBox>
+                        <Select
+                          defaultValue={
+                            ManufactureProcess.categoryDefaultValue.mid
+                          }
+                          value={data.selectedMid}
+                          styles={customStyles}
+                          options={data.optionMid}
+                          getOptionLabel={(option) => option.name}
+                          onChange={(e) => {
+                            ManufactureProcess.setMidCategory(e);
+                            //this.countQuantity(data.quantity.value, value.value)
+                            this.countQuantity(0, 0);
+                            this.loadFileResopnse(idx);
+                            this.countPrice();
+                          }}
+                        />
+                      </MaterialBox>
+                      <WrapBox checkQuantity={data.quantity.value}>
+                        <span>기본가공</span>
+                      </WrapBox>
+                      <ColorBox>
+                        <span>검정</span>
+                      </ColorBox>
+                      <QuantityBox quantity={data.quantity.value}>
+                        {data.quantity.label != "직접 입력" &&
+                          data.selectBig.name !== "금형사출" && (
+                            <Select
+                              id="select"
+                              quantity={data.quantity.label}
+                              width="118px"
+                              styles={customStyles}
+                              style={{ overflow: "visible" }}
+                              options={quantityAry}
+                              getOptionLabel={(option) => option.label}
+                              value={data.quantity}
+                              onChange={(value) => {
+                                console.log(data.selectBig.name);
+                                if (data.checked) {
+                                  this.countQuantity(
+                                    data.quantity.value,
+                                    value.value
+                                  );
+                                }
+                                this.onQuantityChange(data, value);
+                                this.countPrice();
+                              }}
+                            />
+                          )}
+
+                        {(data.quantity.label == "직접 입력" ||
+                          data.selectBig.name === "금형사출") && (
+                          <DirectInputBox
+                            quantity={data.quantity.label}
+                            id="directInputBox"
+                          >
+                            <input
+                              className={`directInput directInput${idx}`}
+                              placeholder="직접 입력하세요"
+                              onKeyPress={(e) => {
+                                if (e.key === "Enter") {
+                                  this.checkQuantityData(e, data, idx);
+                                  if (e.target.value >= 100) {
+                                    if (data.checked) {
+                                      this.countQuantity(
+                                        parseInt(data.prevQuantity),
+                                        parseInt(e.target.value)
+                                      );
+                                    }
+                                    data.prevQuantity = e.target.value;
+                                  }
+                                }
+                              }}
+                              // value = {data.quantity}
+                              onBlur={(e) => {
+                                console.log(e.target.value);
+                                console.log(data.prevQuantity);
+                                if (e.target.value >= 100) {
+                                  if (data.checked) {
+                                    this.countQuantity(
+                                      parseInt(data.prevQuantity),
+                                      parseInt(e.target.value)
+                                    );
+                                  }
+                                  data.prevQuantity = e.target.value;
+                                }
+                                this.checkQuantityData(e, data, idx);
+                              }}
+                              onChange={(e) => {
+                                console.log("onChange!!");
+                                console.log(this.value);
+                                const re = /^[0-9\b]+$/;
+
+                                if (
+                                  e.target.value === "" ||
+                                  re.test(e.target.value)
+                                ) {
+                                  this.setNumCount(data, e.target.value);
+                                } else {
+                                  data.quantity = {
+                                    label: "직접 입력",
+                                    val: 0,
+                                  };
+                                  e.target.value = "";
+                                  this.setNumCount(data, e.target.value);
+                                  alert("숫자를 입력하세요");
+                                }
+                              }}
+                            />
+                          </DirectInputBox>
+                        )}
+                      </QuantityBox>
+                    </MainBox>
+
+                    <div style={{ textAlign: "right" }}>
+                      <TailBox
+                        checkSelectBig={data.selectBig.name}
+                        style={{ float: "right", display: "inline-block" }}
+                      >
+                        <div>
+                          <span>
+                            {data.priceLoading === true ? (
+                              <CircularProgress
+                                style={{ width: "22px", height: "22px" }}
+                                className="spinner"
+                              />
+                            ) : data.selectBig.name === "금형사출" ? (
+                              <>
+                                <div>
+                                  <span>금형비 </span>
+                                  <span>
+                                    {data.totalMoldPrice.toLocaleString(
+                                      "ko-KR"
+                                    ) + " 원"}
+                                  </span>
+                                  <span> + </span>
+                                  <span>사출비 </span>
+                                  <span>
+                                    {data.totalEjaculationPrice.toLocaleString(
+                                      "ko-KR"
+                                    ) + " 원"}
+                                  </span>
+                                </div>
+
+                                <div>
+                                  <span>가격 </span>
+                                  <span>
+                                    {(
+                                      data.totalMoldPrice +
+                                      data.totalEjaculationPrice
+                                    ).toLocaleString("ko-KR") + " 원"}
+                                  </span>
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <span>가격 </span>
+                                <span>
+                                  {data.totalPrice.toLocaleString("ko-KR") +
+                                    " 원"}
+                                </span>
+                              </>
+                            )}
+                          </span>
+                        </div>
+                      </TailBox>
+                    </div>
+                    <FileAddBox
                       onClick={() => {
-                        if (!data.checked) {
-                          data.checked = true;
+                        //fileList.push(fileList[idx])
+                        //fileList.push(JSON.parse(JSON.stringify(fileList[idx])))
+                        //this.loadFileResopnse(idx)
+                        const temp = JSON.parse(JSON.stringify(fileList[idx]));
+                        temp.originFile = fileList[idx].originFile;
+                        console.log(temp.originFile);
+                        //  console.log(fileList[idx])
+
+                        this.setState({
+                          fileList: fileList.splice(idx, 0, temp),
+                        });
+                        //console.log(fileList)
+                        //this.setState({f:3})
+                        //console.log(fileList[idx].originFile)
+                        //console.log(fileList[idx+1].originFile)
+
+                        //fileList[fileList.length-1].priceLoading = false
+
+                        this.loadFileResopnse(idx + 1);
+
+                        this.setValue(idx);
+                        if (fileList[idx].checked) {
                           this.countQuantity(
                             0,
-                            parseInt(data.quantity.value),
+                            parseInt(fileList[idx].quantity.value),
                             2
                           );
-                        } else {
-                          data.checked = false;
+                        }
+                      }}
+                    >
+                      <img src={fileImg}></img>
+                    </FileAddBox>
+                    <DeleteBox>
+                      <span
+                        onClick={() => {
+                          //const directInput = document.querySelectorAll(`.directInput${idx}`)
+
+                          // console.log(directInput)
+
+                          //ManufactureProcess.orderPrice = ManufactureProcess.orderPrice - fileList[idx].price
+                          this.setState({ fileList: fileList.splice(idx, 1) });
+
+                          this.deleteValue(idx);
+
+                          // const directInput = document.getElementsByClassName("directInput");
+                          // //console.log(directInput[idx].value)
+                          // // console.log(directInput)
+                          // // console.log(idx)
+                          // console.log(fileList)
+                          // // console.log(directInput[idx])
+                          // for(var i=idx; i<fileList.length; i++){
+                          //   if(fileList[i]){
+                          //     console.log(directInput[i])
+                          //     directInput[i].value = fileList[i].quantity.value
+                          //     console.log(directInput[i].value)
+                          //   }
+                          // }
+                          //console.log(directInput[idx].value)
                           this.countQuantity(
                             0,
                             parseInt(data.quantity.value),
                             1
                           );
-                        }
+                          if (fileList.length === 0) {
+                            this.setState({ checkFileUpload: false });
+                            this.props.ManufactureProcess.checkFileUpload = false;
 
-                        this.setState({ f: 3 });
-                        this.countPrice();
-                      }}
-                    >
-                      <div active={data.checked}>
-                        <img src={pass3} active={data.checked} />
-                      </div>
-                    </CheckBox>
-
-                    <StlBox>
-                      {data.fileName}
-
-                      <STLViewer
-                        model={data.drawFile} // stl파일 주소
-                        width={120} // 가로
-                        height={120} // 세로
-                        // width={250}
-                        // height={210}
-                        modelColor="gray" // 색
-                        backgroundColor="white" // 배경색
-                        rotate={true} // 자동회전 유무
-                        orbitControls={true} // 마우스 제어 유무
-                        cameraX={500}
-                        //cameraZ={500}
-                        //lights={[2,4,1]}
-                        //lights={[2, 2, 2]}
-                        // lights={[0, 0, 1]}
-                        //lightColor={'red'}
-                      />
-                      <Length>
-                        {data.x_length +
-                          " x " +
-                          data.y_length +
-                          " x " +
-                          data.z_length +
-                          " mm"}
-                      </Length>
-                    </StlBox>
-                    <ColumnBox>
-                      <ManufactureBox>
-                        <Select // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
-                          defaultValue={
-                            ManufactureProcess.categoryDefaultValue.big
-                          }
-                          styles={customStyles}
-                          value={data.selectBig}
-                          options={data.optionBig}
-                          getOptionLabel={(option) => option.name}
-                          onChange={(e) => {
-                            ManufactureProcess.setBigCategory(e);
-                            this.loadFileResopnse(idx);
-
-                            data.selectBig = e;
-                            data.optionMid = e.detail;
-
-                            if (data.selectBig.name === "금형사출") {
-                              this.countQuantity(data.quantity.value, 0);
-                              data.quantity = { label: "0", value: 0 };
-                            } else {
-                              this.countQuantity(data.quantity.value, 1);
-                              data.quantity = { label: "1", value: 1 };
+                            if (
+                              !this.props.ManufactureProcess.checkFileUpload
+                            ) {
+                              const card = document.getElementById("card");
+                              if (card) {
+                                card.style.display = "flex";
+                                card.style.position = "static";
+                              }
+                              this.countPrice();
                             }
-                            this.countPrice();
-                          }}
-                        />
-                      </ManufactureBox>
-                    </ColumnBox>
-                    <MaterialBox>
-                      <Select
-                        defaultValue={
-                          ManufactureProcess.categoryDefaultValue.mid
-                        }
-                        value={data.selectedMid}
-                        styles={customStyles}
-                        options={data.optionMid}
-                        getOptionLabel={(option) => option.name}
-                        onChange={(e) => {
-                          ManufactureProcess.setMidCategory(e);
-                          //this.countQuantity(data.quantity.value, value.value)
-                          this.countQuantity(0, 0);
-                          this.loadFileResopnse(idx);
+                          }
                           this.countPrice();
                         }}
-                      />
-                    </MaterialBox>
-                    <WrapBox checkQuantity={data.quantity.value}>
-                      <span>기본가공</span>
-                    </WrapBox>
-                    <ColorBox>
-                      <span>검정</span>
-                    </ColorBox>
-                    <QuantityBox quantity={data.quantity.value}>
-                      {data.quantity.label != "직접 입력" &&
-                        data.selectBig.name !== "금형사출" && (
-                          <Select
-                            id="select"
-                            quantity={data.quantity.label}
-                            width="118px"
-                            styles={customStyles}
-                            style={{ overflow: "visible" }}
-                            options={quantityAry}
-                            getOptionLabel={(option) => option.label}
-                            value={data.quantity}
-                            onChange={(value) => {
-                              console.log(data.selectBig.name);
+                      >
+                        <img src={deleteButtonImg} />
+                      </span>
+                    </DeleteBox>
+                  </ItemBox>
+                ) : (
+                  <>
+                    <ItemBox>
+                      <MainBox>
+                        <CheckBox
+                          active={data.checked}
+                          onClick={() => {
+                            if (!data.checked) {
+                              data.checked = true;
                               this.countQuantity(
-                                data.quantity.value,
-                                value.value
+                                0,
+                                parseInt(data.quantity.value),
+                                2
                               );
-                              this.onQuantityChange(data, value);
-                              this.countPrice();
+                            } else {
+                              data.checked = false;
+                              this.countQuantity(
+                                0,
+                                parseInt(data.quantity.value),
+                                1
+                              );
+                            }
+
+                            this.setState({ f: 3 });
+                            //this.countPrice()
+                          }}
+                        >
+                          <div active={data.checked}>
+                            <img src={pass3} active={data.checked} />
+                          </div>
+                        </CheckBox>
+
+                        <StlBox>{data.fileName}</StlBox>
+                        <ColumnBox>
+                          <ManufactureBox>
+                            <Select // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
+                              defaultValue={
+                                ManufactureProcess.categoryDefaultValue.big
+                              }
+                              styles={customStyles}
+                              value={data.selectBig}
+                              options={data.optionBig}
+                              getOptionLabel={(option) => option.name}
+                              onChange={(e) => {
+                                ManufactureProcess.setBigCategory(e);
+                                //this.loadFileResopnse(idx);
+
+                                data.selectBig = e;
+                                data.optionMid = e.detail;
+
+                                if (data.selectBig.name === "금형사출") {
+                                  if (data.checked) {
+                                    this.countQuantity(data.quantity.value, 0);
+                                  }
+                                  data.quantity = { label: "0", value: 0 };
+                                } else {
+                                  if (data.checked) {
+                                    this.countQuantity(data.quantity.value, 1);
+                                  }
+                                  data.quantity = { label: "1", value: 1 };
+                                }
+                                //this.countPrice()
+                                this.setState({ g: 3 });
+                              }}
+                            />
+                          </ManufactureBox>
+                        </ColumnBox>
+                        <MaterialBox>
+                          <Select
+                            defaultValue={
+                              ManufactureProcess.categoryDefaultValue.mid
+                            }
+                            value={data.selectedMid}
+                            styles={customStyles}
+                            options={data.optionMid}
+                            getOptionLabel={(option) => option.name}
+                            onChange={(e) => {
+                              ManufactureProcess.setMidCategory(e);
+                              //this.countQuantity(data.quantity.value, value.value)
+                              this.countQuantity(0, 0);
+                              //this.loadFileResopnse(idx);
+                              //this.countPrice()
+                              this.setState({ g: 3 });
                             }}
                           />
-                        )}
+                        </MaterialBox>
+                        <WrapBox checkQuantity={data.quantity.value}>
+                          <span>기본가공</span>
+                        </WrapBox>
+                        <ColorBox>
+                          <span>검정</span>
+                        </ColorBox>
+                        <QuantityBox quantity={data.quantity.value}>
+                          {data.quantity.label != "직접 입력" &&
+                            data.selectBig.name !== "금형사출" && (
+                              <Select
+                                id="select"
+                                quantity={data.quantity.label}
+                                width="118px"
+                                styles={customStyles}
+                                style={{ overflow: "visible" }}
+                                options={quantityAry}
+                                getOptionLabel={(option) => option.label}
+                                value={data.quantity}
+                                onChange={(value) => {
+                                  console.log(data.selectBig.name);
+                                  if (data.checked) {
+                                    this.countQuantity(
+                                      data.quantity.value,
+                                      value.value
+                                    );
+                                  }
+                                  this.onQuantityChange(data, value);
+                                  //this.countPrice()
+                                }}
+                              />
+                            )}
 
-                      {(data.quantity.label == "직접 입력" ||
-                        data.selectBig.name === "금형사출") && (
-                        <DirectInputBox
-                          quantity={data.quantity.label}
-                          id="directInputBox"
-                        >
-                          <input
-                            id="morethanTen"
-                            className="directInput"
-                            placeholder="직접 입력하세요"
-                            onKeyPress={(e) => {
-                              if (e.key === "Enter") {
-                                this.checkQuantityData(e, data, idx);
-                              }
-                            }}
-                            onBlur={(e) => {
-                              console.log(e.target.value);
-                              console.log(data.prevQuantity);
-                              if (e.target.value >= 100) {
-                                this.countQuantity(
-                                  parseInt(data.prevQuantity),
-                                  parseInt(e.target.value)
-                                );
-                                data.prevQuantity = e.target.value;
-                              }
-                              this.checkQuantityData(e, data, idx);
-                            }}
-                            onChange={(e) => {
-                              const re = /^[0-9\b]+$/;
+                          {(data.quantity.label == "직접 입력" ||
+                            data.selectBig.name === "금형사출") && (
+                            <DirectInputBox
+                              quantity={data.quantity.label}
+                              id="directInputBox"
+                            >
+                              <input
+                                className={`directInput directInput${idx}`}
+                                placeholder="직접 입력하세요"
+                                onKeyPress={(e) => {
+                                  if (e.key === "Enter") {
+                                    this.checkQuantityData(e, data, idx);
+                                    if (e.target.value >= 100) {
+                                      if (data.checked) {
+                                        this.countQuantity(
+                                          parseInt(data.prevQuantity),
+                                          parseInt(e.target.value)
+                                        );
+                                      }
+                                      data.prevQuantity = e.target.value;
+                                    }
+                                  }
+                                }}
+                                // value = {data.quantity}
+                                onBlur={(e) => {
+                                  console.log(e.target.value);
+                                  console.log(data.prevQuantity);
+                                  if (e.target.value >= 100) {
+                                    if (data.checked) {
+                                      this.countQuantity(
+                                        parseInt(data.prevQuantity),
+                                        parseInt(e.target.value)
+                                      );
+                                    }
+                                    data.prevQuantity = e.target.value;
+                                  }
+                                  //this.checkQuantityData(e, data, idx)
+                                  if (data.selectBig.name === "금형사출") {
+                                    if (
+                                      e.target.value > 0 &&
+                                      e.target.value < 100
+                                    ) {
+                                      alert("최소 주문 수량은 100개입니다!");
+                                      data.quantity = {
+                                        label: "직접 입력",
+                                        val: 0,
+                                      };
+                                      e.target.value = "";
+                                    }
+                                  }
+                                }}
+                                onChange={(e) => {
+                                  console.log("onChange!!");
+                                  console.log(this.value);
+                                  const re = /^[0-9\b]+$/;
+
+                                  if (
+                                    e.target.value === "" ||
+                                    re.test(e.target.value)
+                                  ) {
+                                    this.setNumCount(data, e.target.value);
+                                  } else {
+                                    data.quantity = {
+                                      label: "직접 입력",
+                                      val: 0,
+                                    };
+                                    e.target.value = "";
+                                    this.setNumCount(data, e.target.value);
+                                    alert("숫자를 입력하세요");
+                                  }
+                                }}
+                              />
+                            </DirectInputBox>
+                          )}
+                        </QuantityBox>
+                        <div style={{ textAlign: "right" }}>
+                          <TailBox
+                            checkSelectBig={data.selectBig.name}
+                            style={{ float: "right", display: "inline-block" }}
+                          >
+                            <Font20>
+                              *해당 도면은 자동견척 산출이 어렵습니다.
+                            </Font20>
+                          </TailBox>
+                        </div>
+                      </MainBox>
+                      <FileAddBox
+                        onClick={() => {
+                          //fileList.push(fileList[idx])
+                          //fileList.push(JSON.parse(JSON.stringify(fileList[idx])))
+                          //this.loadFileResopnse(idx)
+                          const temp = JSON.parse(
+                            JSON.stringify(fileList[idx])
+                          );
+                          temp.originFile = fileList[idx].originFile;
+                          console.log(temp.originFile);
+                          //  console.log(fileList[idx])
+
+                          this.setState({
+                            fileList: fileList.splice(idx, 0, temp),
+                          });
+                          //console.log(fileList)
+                          //this.setState({f:3})
+                          //console.log(fileList[idx].originFile)
+                          //console.log(fileList[idx+1].originFile)
+
+                          //fileList[fileList.length-1].priceLoading = false
+
+                          //this.loadFileResopnse(idx+1)
+
+                          this.setValue(idx);
+                          // if(fileList[idx].checked){
+                          //   this.countQuantity(0, parseInt(fileList[idx].quantity.value), 2)
+                          // }
+                        }}
+                      >
+                        <img src={fileImg}></img>
+                      </FileAddBox>
+                      <DeleteBox>
+                        <span
+                          onClick={() => {
+                            this.setState({
+                              fileList: fileList.splice(idx, 1),
+                            });
+
+                            this.deleteValue(idx);
+
+                            //this.countQuantity(0, parseInt(data.quantity.value), 1)
+                            if (fileList.length === 0) {
+                              this.setState({ checkFileUpload: false });
+                              this.props.ManufactureProcess.checkFileUpload = false;
 
                               if (
-                                e.target.value === "" ||
-                                re.test(e.target.value)
+                                !this.props.ManufactureProcess.checkFileUpload
                               ) {
-                                this.setNumCount(data, e.target.value);
-                              } else {
-                                data.quantity = { label: "직접 입력", val: 0 };
-                                e.target.value = "";
-                                this.setNumCount(data, e.target.value);
-                                alert("숫자를 입력하세요");
+                                const card = document.getElementById("card");
+                                if (card) {
+                                  card.style.display = "flex";
+                                  card.style.position = "static";
+                                }
                               }
-                            }}
-                          />
-                        </DirectInputBox>
-                      )}
-                    </QuantityBox>
-                  </MainBox>
-
-                  <div style={{ textAlign: "right" }}>
-                    <TailBox
-                      checkSelectBig={data.selectBig.name}
-                      style={{ float: "right", display: "inline-block" }}
-                    >
-                      <div>
-                        <span>
-                          {data.priceLoading === true ? (
-                            <CircularProgress
-                              style={{ width: "22px", height: "22px" }}
-                              className="spinner"
-                            />
-                          ) : data.selectBig.name === "금형사출" ? (
-                            <>
-                              <span>금형가 </span>
-                              <span>
-                                {data.totalMoldPrice.toLocaleString("ko-KR") +
-                                  " 원"}
-                              </span>
-
-                              <span style={{ marginLeft: "30px" }}>사출가</span>
-                              <span>
-                                {data.totalEjaculationPrice.toLocaleString(
-                                  "ko-KR"
-                                ) + " 원"}
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              <span>가격 </span>
-                              <span>
-                                {data.totalPrice.toLocaleString("ko-KR") +
-                                  " 원"}{" "}
-                              </span>
-                            </>
-                          )}
-                        </span>
-                      </div>
-                    </TailBox>
-                  </div>
-                  <DeleteBox>
-                    <span
-                      onClick={() => {
-                        this.setState({ fileList: fileList.splice(idx, 1) });
-                        this.countQuantity(0, parseInt(data.quantity.value), 1);
-                        if (fileList.length === 0) {
-                          this.setState({ checkFileUpload: false });
-                          this.props.ManufactureProcess.checkFileUpload = false;
-
-                          if (!this.props.ManufactureProcess.checkFileUpload) {
-                            const card = document.getElementById("card");
-                            if (card) {
-                              card.style.display = "flex";
-                              card.style.position = "static";
+                              //this.countPrice();
                             }
-                          }
-                          this.countPrice();
-                        }
-                      }}
-                    >
-                      <img src={deleteButtonImg} />
-                    </span>
-                  </DeleteBox>
-                </ItemBox>
+                          }}
+                        >
+                          <img src={deleteButtonImg} />
+                        </span>
+                      </DeleteBox>
+                    </ItemBox>
+                  </>
+                )}
               </>
             ))}
           </ItemList>
@@ -793,10 +1504,41 @@ class FileUploadContainer extends Component {
           <NoticeBox
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
-            <EntireDelete>
+            <EntireDelete
+              onClick={() => {
+                this.deleteHandler();
+                if (fileList.length === 0) {
+                  this.setState({ checkFileUpload: false });
+                  this.props.ManufactureProcess.checkFileUpload = false;
+                }
+
+                if (!this.props.ManufactureProcess.checkFileUpload) {
+                  const card = document.getElementById("card");
+                  if (card) {
+                    card.style.display = "flex";
+                    card.style.position = "static";
+                  }
+                }
+                this.countPrice();
+              }}
+            >
               <span>선택항목 삭제</span>
             </EntireDelete>
-            <EntireDelete>
+
+            <EntireDelete
+              onClick={() => {
+                console.log("111");
+                fileList.splice(0, fileList.length);
+                //this.setState({f:3})
+                this.props.ManufactureProcess.checkFileUpload = false;
+                const card = document.getElementById("card");
+                if (card) {
+                  card.style.display = "flex";
+                  card.style.position = "static";
+                }
+                ManufactureProcess.quantity = 0;
+              }}
+            >
               <span>전체 삭제</span>
             </EntireDelete>
             <div>* 금형사출의 경우 최소수량 100개 이상만 가능합니다.</div>
@@ -821,26 +1563,62 @@ class FileUploadContainer extends Component {
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
             id="price"
           >
-            <PriceLabel>
-              <div>자동 견적 가격</div>
-              <p>
-                해당 사항은 볼트앤너트 알고리즘이 도출한 견적으로 가공품의 발주
-                요건에 따라 변경될 수 있습니다.
-              </p>
-              <p>본 견적은 후처리를 제외한 순수 단품 가공 견적입니다.</p>
+            <PriceLabel active={checkBox_one}>
+              <div>
+                <span>자동 견적 가격</span>
+                <span
+                  onMouseOver={() => {
+                    this.setIsShown(true, 1);
+                    console.log("mouse-enter");
+                  }}
+                  onMouseOut={() => {
+                    this.setIsShown(false, 1);
+                    console.log("mouse-out");
+                  }}
+                >
+                  ?
+                </span>
+              </div>
+              <div>
+                <p>해당 사항은 볼트앤너트 알고리즘이 도출한 견적으로</p>
+                <p>가공품의 발주 요건에 따라 변경될 수 있습니다.</p>
+                <p>본 견적은 후처리를 제외한 순수 단품 가공 견적입니다.</p>
+              </div>
 
               {/* <span>총 배송비</span>
                 <span>총 결제 금액</span> */}
             </PriceLabel>
 
             <PriceData>
-              <span>=</span>
+              <span>~</span>
               <span>
+                {/* {console.log(ManufactureProcess.orderPrice)} */}
                 {ManufactureProcess.orderPrice.toLocaleString("ko-KR")}
                 <span> 원</span>
               </span>
             </PriceData>
           </Price>
+
+          <Projectbox>
+            <Label>
+              <span>프로젝트 제목</span>
+            </Label>
+            <ProjectTitle>
+              <input
+                placeholder="프로젝트 제목을 입력해주세요."
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) =>
+                  (e.target.placeholder = "프로젝트 제목을 입력해주세요")
+                }
+              />
+            </ProjectTitle>
+          </Projectbox>
+
+          <Purposebox>
+            <Label>
+              <span>문의 목적</span>
+            </Label>
+          </Purposebox>
 
           <DeliveryDate
             checkDateConference={ManufactureProcess.date_conference}
@@ -887,21 +1665,31 @@ class FileUploadContainer extends Component {
               </div>
             </div>
           </DeliveryDate>
-          <Request
+          <PublicRequest
+            active={checkBox}
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
             <div>
-              <span>발주 요청사항</span>
-              <span>?</span>
+              <span>문의 및 요청사항 (공개) </span>
+              <span
+                onMouseOver={() => {
+                  this.setIsShown(true);
+                }}
+                onMouseOut={() => {
+                  this.setIsShown(false);
+                }}
+              >
+                ?
+              </span>
             </div>
             <div>
-              <div>
+              <p>
                 다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이
                 높습니다.
-              </div>
-              <div>1. 가공품 목적 및 사용 환경</div>
-              <div>2. 가공 부품별 특이 사항</div>
-              <div>3. 공급처가 충족해야하는 발주 조건</div>
+              </p>
+              <p>1. 가공품 목적 및 사용 환경</p>
+              <p>2. 가공 부품별 특이 사항</p>
+              <p>3. 공급처가 충족해야하는 발주 조건</p>
             </div>
             <textarea
               placeholder="특이사항 및 요청을 입력해주세요"
@@ -915,7 +1703,27 @@ class FileUploadContainer extends Component {
               placeholderStyle={{ fontWeight: "400" }}
               onChange={this.handleChange}
             />
-          </Request>
+          </PublicRequest>
+          <PrivateRequest
+            active={this.state.checkBox}
+            checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+          >
+            <div>
+              <span>문의 및 요청사항 (비공개) </span>
+            </div>
+            <textarea
+              placeholder="특이사항 및 요청을 입력해주세요"
+              onFocus={(e) => (e.target.placeholder = "")}
+              onBlur={(e) =>
+                (e.target.placeholder = "특이사항 및 요청을 입력해주세요")
+              }
+              rows={this.state.rows}
+              value={this.state.value}
+              className={"textarea"}
+              placeholderStyle={{ fontWeight: "400" }}
+              onChange={this.handleChange}
+            />
+          </PrivateRequest>
           <Reference
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
@@ -935,16 +1743,34 @@ class FileUploadContainer extends Component {
 
           <Button checkFileUpload={ManufactureProcess.checkFileUpload}>
             <div>
-              <span>상담 요청하기</span>
-            </div>
-            <div>
               <span
                 onClick={() => {
+                  fileList.map((item, idx) => {
+                    item.fileName;
+                    let fileNameAvailable = ["txt"];
+                    const extension = item.fileName.split(".");
+
+                    //console.log(fileNameAvailable)
+
+                    if (
+                      fileNameAvailable.includes(
+                        extension[extension.length - 1]
+                      )
+                    ) {
+                      this.props.ManufactureProcess.fileArray.push({
+                        file: item,
+                      });
+                    }
+                  });
                   ManufactureProcess.checkPaymentButton = true;
                   this.props.Request.newIndex = 1;
+                  console.log(toJS(this.props.ManufactureProcess.fileArray));
+                  ManufactureProcess.fileArray.map((item, idx) => {
+                    console.log(item.file);
+                  });
                 }}
               >
-                주문하기
+                상담 및 가격 요청하기
               </span>
             </div>
           </Button>
@@ -1021,21 +1847,23 @@ const ItemList = styled.div`
   width: 101%;
   height: 100%;
   padding-left: 3px;
-  padding-top: ${(props) => (props.checkFileUpload ? "215px" : "0")};
+  //padding-top: ${(props) => (props.checkFileUpload ? "215px" : "0")};
+  padding-top: ${(props) =>
+    props.checkBannerHeight && props.checkFileUpload ? "215px" : "0"};
 `;
 
 const ItemBox = styled.div`
   display: flex;
   justify-content: space-between;
   width: 1204px;
-  height: 201px;
+  height: 219px;
   position: relative;
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
   background-color: #ffffff;
   margin-bottom: 40px;
-  padding: 0 44px 0 15px;
+  padding: 28px 44px 26px 15px;
   box-sizing: border-box;
 `;
 
@@ -1067,13 +1895,15 @@ const MainBox = styled.div`
 const NoticeBox = styled.div`
   width: 100%;
   height: 92px;
-  border: 3px solid red;
+  //border: 3px solid red;
   display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
   position: relative;
   align-items: center;
+  padding-bottom: 40px;
+  box-sizing: border-box;
   > div:last-child {
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
@@ -1087,7 +1917,7 @@ const EntireDelete = styled.div`
   margin-right: 16px;
   > span {
     font-size: 18px;
-    line-height: 28px;
+    line-height: 24px;
     letter-spacing: -0.45px;
     color: #999999;
   }
@@ -1205,9 +2035,28 @@ const TailBox = styled.div`
   width: 800px;
   position: absolute;
   top: 70%;
+  //top: ${(props) => (props.checkSelectBig === "금형사출" ? "70%" : "80%")}
   left: 32%;
   > div {
     > span {
+      > div:nth-of-type(1) {
+        margin-bottom: 6px;
+      }
+      > div:last-child {
+        > span:nth-of-type(odd) {
+          color: #282c36;
+          font-weight: 500;
+          text-align: left;
+          line-height: 40px;
+          margin-right: 20px;
+        }
+
+        > span:nth-of-type(even) {
+          font-size: 24px;
+          letter-spacing: -0.6px;
+          font-weight: 500;
+        }
+      }
       > span:nth-of-type(odd) {
         color: #282c36;
         font-weight: 500;
@@ -1222,6 +2071,12 @@ const TailBox = styled.div`
       }
     }
   }
+`;
+
+const FileAddBox = styled.div`
+  position: absolute;
+  top: 7%;
+  left: 94%;
 `;
 
 const DeleteBox = styled.div`
@@ -1247,10 +2102,12 @@ const Card = styled.div`
   height: ${(props) => (props.checkFileUpload ? "210px" : "100px")};
   object-fit: contain;
   background-color: white;
-  margin: 60px 0px 20px 0;
+  //margin: 60px 0px 20px 0;
+  margin: 30px 0px 20px 0;
   display: flex;
   flex-direction: column;
-  position: ${(props) => (props.checkFileUpload ? "fixed" : "static")};
+  //position: ${(props) => (props.checkFileUpload ? "fixed" : "static")};
+  position: static;
   top: 0;
   z-index: 99;
   box-sizing: border-box;
@@ -1415,26 +2272,58 @@ const Price = styled.div`
   display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
 `;
 const PriceLabel = styled.div`
-  height: 171px;
+  height: 76px;
   display: flex;
   flex-direction: column;
   //justify-content: space-around;
   align-items: center;
   border-bottom: 1px solid #e1e2e4;
-  padding: 30px 0;
+  padding: 20px 0;
   box-sizing: border-box;
-  > div {
-    font-size: 24px;
-    line-height: 40px;
-    letter-spacing: -0.6px;
-    color: #282c36;
-    font-weight: bold;
+  position: relative;
+  > div:nth-of-type(1) {
+    display: flex;
+    align-items: center;
+    > span:nth-of-type(1) {
+      font-size: 24px;
+      line-height: 40px;
+      letter-spacing: -0.6px;
+      color: #282c36;
+      font-weight: bold;
+    }
+    > span:last-child {
+      margin-left: 13px;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #000000;
+      border-radius: 10px;
+      display: inline-block;
+      text-align: center;
+      font-size: 16px;
+      letter-spacing: -0.4px;
+      color: #414550;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
   }
-  > p {
-    font-size: 18px;
-    line-height: 34px;
-    letter-spacing: -0.45px;
-    color: #999999;
+  > div:nth-of-type(2) {
+    display: ${(props) => (props.active ? "block" : "none")};
+    width: 448px;
+    height: 135px;
+    border: 1px solid #707070;
+    border-radius: 5px;
+    position: absolute;
+    background-color: #ffffff;
+    top: 75px;
+    right: 8%;
+    padding: 20px 10px 20px 30px;
+    box-sizing: border-box;
+    > p {
+      font-size: 18px;
+      line-height: 34px;
+      letter-spacing: -0.45px;
+      color: #999999;
+    }
   }
 `;
 const PriceData = styled.div`
@@ -1446,9 +2335,9 @@ const PriceData = styled.div`
     font-size: 30px;
     line-height: 40px;
     letter-spacing: -0.75px;
-    color: #282c36;
-    font-weight: normal;
-    margin-right: 45px;
+    color: #0933b3;
+    font-weight: bold;
+    margin-right: 22px;
   }
   > span:last-child {
     color: #0933b3;
@@ -1472,8 +2361,11 @@ const Button = styled.div`
     font-weight: bold;
     border-radius: 5px;
     text-align: center;
-
     position: relative;
+    border: 1px solid #ffffff;
+    background-color: #0933b3;
+    color: #ffffff;
+
     > span {
       position: absolute;
       width: 100%;
@@ -1482,18 +2374,46 @@ const Button = styled.div`
       transform: translate(-50%, -50%);
     }
   }
-  > div:nth-of-type(1) {
-    border: 1px solid #0933b3;
-    background-color: #ffffff;
-    color: #0933b3;
-    margin-right: 22px;
-  }
-  > div:nth-of-type(2) {
-    border: 1px solid #ffffff;
-    background-color: #0933b3;
-    color: #ffffff;
+`;
+
+const Projectbox = styled.div``;
+const Purposebox = styled.div``;
+
+const Label = styled.div`
+  > span {
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: -0.6px;
+    color: #282c36;
+    font-weight: bold;
   }
 `;
+const ProjectTitle = styled.div`
+  height: 55px;
+  border: 1px solid #e1e2e4;
+  border-radius: 5px;
+  padding: 14px 14px;
+  box-sizing: border-box;
+  margin-top: 16px;
+  margin-bottom: 10px;
+
+  > input {
+    width: 100%;
+    padding: 4px;
+    outline: none;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: -0.45px;
+    color: #282c36;
+    ::placeholder {
+      font-size: 14px;
+    }
+  }
+`;
+
 const DeliveryDate = styled.div`
   width: 1200px;
   display: ${(props) => (props.checkFileUpload ? "static" : "none")};
@@ -1589,7 +2509,7 @@ const DeliveryDate = styled.div`
     }
   }
 `;
-const Request = styled.div`
+const PublicRequest = styled.div`
   width: 1200px;
   display: ${(props) => (props.checkFileUpload ? "static" : "none")};
   background-color: #f6f6f6;
@@ -1628,13 +2548,23 @@ const Request = styled.div`
     }
   }
   > div:nth-of-type(2) {
+    display: ${(props) => (props.active ? "block" : "none")};
     width: 600px;
     height: 180px;
-    border: 3px solid green;
+    // border: 3px solid green;
     position: absolute;
-    top: 13%;
-    left: 70px;
+    top: 44%;
+    left: 17%;
     background-color: #ffffff;
+    z-index: 1;
+    padding: 20px 10px 20px 30px;
+    box-sizing: border-box;
+    > p {
+      color: #767676;
+      line-height: 34px;
+      letter-spacing: -0.45px;
+      font-size: 18px;
+    }
   }
   > textarea {
     resize: none;
@@ -1660,20 +2590,68 @@ const Request = styled.div`
   }
 `;
 
+const PrivateRequest = styled.div`
+  width: 1200px;
+  display: ${(props) => (props.checkFileUpload ? "static" : "none")};
+  background-color: #f6f6f6;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding: 26px 24px 22px 24px;
+  box-sizing: border-box;
+  margin-bottom: 40px;
+  margin-top: 70px;
+  position: relative;
+
+  >div:nth-of-type(1){
+    >span:nth-of-type(1){
+      height: 27px;
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #282c36;
+      font-weight: bold;
+      margin-bottom: 16px;
+      margin-right: 7px;
+    }            
+  }
+  >textarea{
+    resize: none;
+    border: 1px solid #ffffff;
+    width: 100%;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 34px;
+    letter-spzcing: -0.45px;
+    color: #282c36;
+    border-radius: 5px;
+    overflow: auto;
+    height: auto;
+    font-family: inherit;
+    :focus {
+      outline: none;
+    }
+    :placeholder {
+      font-weight: 300;
+    }
+    white-space: pre-line;
+  }
+}
+`;
 const Reference = styled.div`
   display: ${(props) => (props.checkFileUpload ? "static" : "none")};
   width: 1200px;
   background-color: #f6f6f6;
   border: 1px solid #ffffff;
   border-radius: 5px;
-  padding: 0 24px 22px 24px;  
+  padding: 0 24px 22px 24px;
   box-sizing: border-box;
-  >div:nth-of-type(1){
+  > div:nth-of-type(1) {
     height: 27px;
     margin-top: 26px;
     margin-bottom: 16px;
     box-sizing: border-box;
-    >span:nth-of-type(1){
+    > span:nth-of-type(1) {
       font-size: 18px;
       line-height: 40px;
       letter-spacing: -0.45px;
@@ -1681,19 +2659,18 @@ const Reference = styled.div`
       font-weight: bold;
       margin-right: 10px;
     }
-    >span:nth-of-type(2){
+    > span:nth-of-type(2) {
       font-size: 16px;
       line-height: 40px;
       letter-spacing: -0.4px;
-      color: #86888c;      
+      color: #86888c;
     }
   }
-  >div:nth-of-type(2){
+  > div:nth-of-type(2) {
     border: 1px solid #ffffff;
     background-color: #ffffff;
     position: relative;
   }
-}
 `;
 
 const DirectInputBox = styled.div`
@@ -1723,4 +2700,10 @@ const DirectInputBox = styled.div`
       font-size: 14px;
     }
   }
+`;
+
+const Font20 = styled(Title.FontSize20)`
+  color: #0933b3;
+  text-align: right;
+  font-weight: normal;
 `;

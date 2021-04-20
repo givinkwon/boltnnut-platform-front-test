@@ -265,6 +265,7 @@ class Auth {
         this.logged_in_user = res.data.data.User;
         if (this.logged_in_user.type == 0) {
           console.log("클라이언트 정보 리로딩");
+          // console.log(this.logged_in_user.type);
           this.logged_in_client = res.data.data.Client[0];
           console.log(this.logged_in_client);
         } else if (this.logged_in_user.type == 1) {
