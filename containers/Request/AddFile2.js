@@ -31,17 +31,13 @@ class InputComponent extends React.Component {
 		}
 	};
 
-	onChangeFile = e => {
+	openOnChangeFile = e => {
 		const { Request, ManufactureProcess } = this.props;
 
 		if (e && e.currentTarget.files[0]) {
 			const fileName = e.currentTarget.files[0].name;
-			this.setState({
-				fileArray: this.state.fileArray.push({
-					file: e.currentTarget.files[0],
-				}),
-			});
-			ManufactureProcess.fileArray.push({ file: e.currentTarget.files[0] });
+			// this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
+			ManufactureProcess.openFileArray.push({ file: e.currentTarget.files[0] });
 
 			this.setState({
 				...this.state,
@@ -49,26 +45,31 @@ class InputComponent extends React.Component {
 				fileName: fileName,
 				checkFileUpload: true,
 			});
-			// 단일 첨부 방식
-			// ManufactureProcess.file = e.currentTarget.files[0]
-			// ManufactureProcess.fileName = fileName
 
 			Request.setCommonFile(e.currentTarget.files[0]);
-			// console.log(ManufactureProcess.fileArray);
+		}
+	};
+
+	privateOnChangeFile = e => {
+		const { Request, ManufactureProcess } = this.props;
+
+		if (e && e.currentTarget.files[0]) {
+			const fileName = e.currentTarget.files[0].name;
+			// this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
+			ManufactureProcess.privateFileArray.push({ file: e.currentTarget.files[0] });
+
+			this.setState({
+				...this.state,
+				file: e.currentTarget.files[0],
+				fileName: fileName,
+				checkFileUpload: true,
+			});
+			Request.setCommonFile(e.currentTarget.files[0]);
 		}
 	};
 
 	render() {
-		const {
-			onChange,
-			children,
-			label,
-			file,
-			Request,
-			ManufactureProcess,
-			isOpen,
-			...props
-		} = this.props;
+		const { onChange, children, label, file, Request, ManufactureProcess, isOpen, ...props } = this.props;
 		const { fileName, checkFileUpload } = this.state;
 
 		if (!file) {
@@ -87,82 +88,95 @@ class InputComponent extends React.Component {
 					</InputBox>
 				</Wrap>
 			);
-		} else {
-			return (
-				<Wrap width={this.props.width}>
-					<FileText checkFileUpload={this.state.checkFileUpload}>
-						<InputBox style={{ width: '100%', display: 'inline-flex' }}>
-							<div>
-								<input
-									type='file'
-									multiple={'multiple'}
-									fileName={'fileName[]'}
-									style={{ display: 'none' }}
-									onChange={this.onChangeFile}
-									id='inputFile'
-									ref={this.file}
-									value=''
-									placeholder={'파일을 선택해 주세요.'}
-								/>
-
-								<div
-									onClick={() => {
-										this.file.current.click();
-									}}
-								>
-									<span>파일 첨부</span>
-									<img src={addButtonImg} />
-								</div>
-								<div>
-									{ManufactureProcess.fileArray.map((item, idx) => {
-										return (
-											<>
-												<span
-													onClick={() => {
-														if (checkFileUpload) {
-															ManufactureProcess.fileArray.splice(idx, 1);
-
-															/* 
-                                A라는 파일을 올리고 그 파일을 삭제한 후 다시 A라는 파일을 올리려고 할 경우 
-                                onChange 이벤트가 발생하지 않아서 아래와 같이 삭제할 때 강제적으로 innerHTML에 공백을 주어서 설정함으로써
-                                위와 같은 문제 발생 시 onChange 이벤트가 발생하게끔 함
-                            */
-															const inputFile = document.getElementById(
-																'inputFile'
-															);
-															inputFile.innerHTML = '';
-
-															if (ManufactureProcess.fileArray.length === 0) {
-																this.setState({ checkFileUpload: false });
-															}
-														}
-													}}
-												>
-													<span>
-														<span>{item.file.name}</span>
-														<DeleteFile
-															src={deleteButtonImg}
-															style={{
-																display: this.state.checkFileUpload
-																	? 'inline'
-																	: 'none',
-															}}
-														/>
-
-														{/* 삭제 예정 */}
-														{/* <span>{(ManufactureProcess.fileArray.length-1) !== idx && <span>,</span>}</span> */}
-													</span>
-												</span>
-											</>
-										);
-									})}
-								</div>
-							</div>
-						</InputBox>
-					</FileText>
-				</Wrap>
-			);
 		}
+
+		return (
+			<Wrap width={this.props.width}>
+				<FileText checkFileUpload={this.state.checkFileUpload}>
+					<InputBox style={{ width: '100%', display: 'inline-flex' }}>
+						<div>
+							<input
+								type='file'
+								multiple={'multiple'}
+								fileName={'fileName[]'}
+								style={{ display: 'none' }}
+								onChange={isOpen ? this.openOnChangeFile : this.privateOnChangeFile}
+								id='inputFile'
+								ref={this.file}
+								value=''
+								placeholder={'파일을 선택해 주세요.'}
+							/>
+
+							<div
+								onClick={() => {
+									this.file.current.click();
+								}}
+							>
+								<span>파일 첨부</span>
+								<img src={addButtonImg} />
+							</div>
+							<div>
+								{isOpen ? (
+									<>
+										{ManufactureProcess.openFileArray.map((item, idx) => {
+											return (
+												<>
+													<span
+														onClick={() => {
+															if (checkFileUpload) {
+																ManufactureProcess.openFileArray.splice(idx, 1);
+																const inputFile = document.getElementById('inputFile');
+																inputFile.innerHTML = '';
+
+																if (ManufactureProcess.openFileArray.length === 0) {
+																	this.setState({ checkFileUpload: false });
+																}
+															}
+														}}
+													>
+														<span>
+															<span>{item.file.name}</span>
+															<DeleteFile src={deleteButtonImg} style={{ display: this.state.checkFileUpload ? 'inline' : 'none' }} />
+														</span>
+													</span>
+												</>
+											);
+										})}
+									</>
+								) : (
+									<>
+										{ManufactureProcess.privateFileArray.map((item, idx) => {
+											return (
+												<>
+													<span
+														onClick={() => {
+															if (checkFileUpload) {
+																ManufactureProcess.privateFileArray.splice(idx, 1);
+																const inputFile = document.getElementById('inputFile');
+																inputFile.innerHTML = '';
+
+																if (ManufactureProcess.privateFileArray.length === 0) {
+																	this.setState({ checkFileUpload: false });
+																}
+															}
+														}}
+													>
+														<span>
+															<span>{item.file.name}</span>
+															<DeleteFile src={deleteButtonImg} style={{ display: this.state.checkFileUpload ? 'inline' : 'none' }} />
+														</span>
+													</span>
+												</>
+											);
+										})}
+									</>
+								)}
+							</div>
+						</div>
+					</InputBox>
+				</FileText>
+			</Wrap>
+		);
 	}
 }
 

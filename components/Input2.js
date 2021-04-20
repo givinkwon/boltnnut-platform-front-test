@@ -64,15 +64,7 @@ class InputComponent extends React.Component {
 			return (
 				<Wrap width={this.props.width}>
 					<InputBox style={{ width: '100%', display: 'inline-block' }} onClick={() => this.file.current.click()}>
-						<input
-							type='file'
-							multiple={'multiple'}
-							fileName={'fileName[]'}
-							style={{ display: 'none' }}
-							onChange={this.onChangeFile}
-							ref={this.file}
-							placeholder={'파일을 선택해 주세요.'}
-						/>
+						<input type='file' multiple={'multiple'} fileName={'fileName[]'} style={{ display: 'none' }} onChange={this.onChangeFile} ref={this.file} placeholder={'파일을 선택해 주세요.'} />
 						<FileText>{Request.common_file ? this.state.fileName : '파일을 선택해 주세요.'}</FileText>
 						<img src={fileImage} />
 					</InputBox>
