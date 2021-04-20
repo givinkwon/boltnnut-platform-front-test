@@ -5,6 +5,8 @@ import Containerv1 from '../../components/Containerv1';
 import * as Title from '../../components/Title';
 import InputComponent from 'components/Input2';
 import { inject, observer } from 'mobx-react';
+import Postcode from './PostCode';
+import { XRHitTestTrackableType } from 'three';
 
 const img = '/static/images/request/PaymentPage/star.png';
 const passimg = '/static/images/request/PaymentPage/pass.png';
@@ -16,30 +18,37 @@ class PaymentPageContainer extends React.Component {
 	state = {
 		selectedIdx: 0,
 		checkbox: false,
-		name: '',
 		defaultNum: '010',
 		middleNum: '0',
 		lastNum: '0',
-		detailaddress: '',
-		deliveryprice: 0,
 	};
 
 	payButtonClick = () => {
 		const { Payment } = this.props;
 		var cellphoneValid = /^\d{3}-\d{3,4}-\d{4}$/;
 		let cellphone = `${this.state.defaultNum}-${this.state.middleNum}-${this.state.lastNum}`;
+		console.log(cellphone);
 
 		if (!cellphoneValid.test(cellphone)) {
 			return alert('전화번호가 잘못 입력되었습니다. 다시 확인해 주세요');
+		} else if (!this.state.checkbox) {
+			return alert('구매진행 동의에 체크를 하셔야 결제가 진행됩니다.');
 		}
 		// Payment.phone_number = cellphone;
-		Payment.phone_number = '01031323232';
-		// Payment.product_price = resultPrice + deliveryPrice;
-		Payment.product_price = 100;
-		Payment.count_number = 3;
+		// console.log(cellphone.replace("-", "").replace("-", ""));
+		console.log(this.props.ManufactureProcess.quantity);
+		Payment.setPhoneNumber(cellphone.replace('-', '').replace('-', ''));
+		Payment.product_price = 10;
+		Payment.setProjectName('MASDASCNASKLCNASKLCNL');
+		// Payment.count_number = 3;
+		Payment.setCountNumber(3);
 		Payment.clientOrder('html5_inicis');
 	};
 
+	modalHandler = () => {
+		const { Payment } = this.props;
+		Payment.modalActive = !Payment.modalActive;
+	};
 	paymentWayClick = idx => {
 		this.setState({ selectedIdx: idx });
 	};
@@ -53,10 +62,6 @@ class PaymentPageContainer extends React.Component {
 	};
 
 	render() {
-		const { ManufactureProcess } = this.props;
-		const resultPrice = ManufactureProcess.orderPrice;
-		const deliveryPrice = this.state.deliveryprice;
-
 		let activeHandler = idx => {
 			if (this.state.selectedIdx === idx) {
 				return true;
@@ -65,11 +70,17 @@ class PaymentPageContainer extends React.Component {
 			}
 		};
 
+		const { Payment } = this.props;
 		return (
 			<Background>
 				<PaymentPageDiv>
+					{Payment.modalActive && (
+						<Layer onClick={this.modalHandler}>
+							<Postcode />
+						</Layer>
+					)}
+
 					<PaymentPageLeft>
-						{this.state.lastNum}
 						<LeftHeader>결제 정보 입력</LeftHeader>
 						<OrderInfoBox>
 							<OrderInfoTitle>주문자 정보</OrderInfoTitle>
@@ -84,8 +95,8 @@ class PaymentPageContainer extends React.Component {
 								class='Input'
 								placeholder='옵션을 선택해주세요.'
 								// value={Request.input_name}
-								onChange={e => {
-									this.setState({ name: e });
+								onChange={() => {
+									console.log('r');
 								}}
 							/>
 						</div>
@@ -99,6 +110,7 @@ class PaymentPageContainer extends React.Component {
 								value={this.state.defaultNum}
 								width='90px'
 								onChange={e => {
+									console.log(e);
 									this.setState({ defaultNum: e });
 								}}
 							/>
@@ -125,20 +137,22 @@ class PaymentPageContainer extends React.Component {
 							<img src={img} />
 						</InlineFlexDiv>
 						<InlineFlexDiv style={{ justifyContent: 'space-between' }}>
-							<DeliveryAddressBox1 />
-							<SearchBtn>주소검색</SearchBtn>
+							<DeliveryAddressBox1>{this.props.Payment.zipCode}</DeliveryAddressBox1>
+							<SearchBtn onClick={this.modalHandler}>주소검색</SearchBtn>
 						</InlineFlexDiv>
-						<DeliveryAddressBox2 />
-						<div style={{ marginBottom: '26px' }}>
-							<InputComponent
-								class='Input'
-								placeholder='상세주소를 입력해 주세요'
-								// value={Request.input_name}
-								onChange={e => {
-									this.setState({ detailaddress: e });
-								}}
-							/>
-						</div>
+						<DeliveryAddressBox2>{this.props.Payment.address}</DeliveryAddressBox2>
+						{this.props.Payment.address != '' && (
+							<div style={{ marginBottom: '26px' }}>
+								<InputComponent
+									class='Input'
+									placeholder='상세주소를 입력해 주세요'
+									// value={Request.input_name}
+									onChange={() => {
+										console.log('r');
+									}}
+								/>
+							</div>
+						)}
 
 						<InlineFlexDiv>
 							<FontSize20>결제방법</FontSize20>
@@ -167,12 +181,23 @@ class PaymentPageContainer extends React.Component {
 							</div>
 
 							<PaymentInfo1>
-								<InlineFlexDiv style={{ justifyContent: 'space-between', marginTop: '30px', marginTop: '20px' }}>
+								<InlineFlexDiv
+									style={{
+										justifyContent: 'space-between',
+										marginTop: '30px',
+										marginTop: '20px',
+									}}
+								>
 									<FontSize18 style={{ marginBottom: '20px' }}>생산 소요 시간</FontSize18>
 									<FontSize18 style={{ color: '#414550', fontWeight: '500' }}>7일</FontSize18>
 								</InlineFlexDiv>
 
-								<InlineFlexDiv style={{ justifyContent: 'space-between', marginBottom: '30px' }}>
+								<InlineFlexDiv
+									style={{
+										justifyContent: 'space-between',
+										marginBottom: '30px',
+									}}
+								>
 									<FontSize18>도착 예정일</FontSize18>
 									<FontSize18 style={{ color: '#414550', fontWeight: '500' }}>4.1(목)~4.3(토)</FontSize18>
 								</InlineFlexDiv>
@@ -185,29 +210,54 @@ class PaymentPageContainer extends React.Component {
 								</InlineFlexDiv>
 								<InlineFlexDiv style={{ justifyContent: 'space-between' }}>
 									<FontSize18 style={{ color: '#767676', marginBottom: '20px' }}>부품 가격</FontSize18>
-									<FontSize18 style={{ color: '#414550', fontWeight: '500' }}>{ManufactureProcess.orderPrice}원</FontSize18>
+									<FontSize18 style={{ color: '#414550', fontWeight: '500' }}>3,513,000원</FontSize18>
 								</InlineFlexDiv>
-								<InlineFlexDiv style={{ justifyContent: 'space-between', marginBottom: '30px' }}>
+								<InlineFlexDiv
+									style={{
+										justifyContent: 'space-between',
+										marginBottom: '30px',
+									}}
+								>
 									<FontSize18 style={{ color: '#767676' }}>배송비</FontSize18>
-									<FontSize18 style={{ color: '#414550', fontWeight: '500' }}>{this.state.deliveryprice}원</FontSize18>
+									<FontSize18 style={{ color: '#414550', fontWeight: '500' }}>5,000원</FontSize18>
 								</InlineFlexDiv>
 							</PaymentInfo2>
 
-							<InlineFlexDiv style={{ justifyContent: 'space-between', width: '512px', marginBottom: '26px' }}>
+							<InlineFlexDiv
+								style={{
+									justifyContent: 'space-between',
+									width: '512px',
+									marginBottom: '26px',
+								}}
+							>
 								<PaymentInfoText24>최종 결제가격</PaymentInfoText24>
-								<PaymentInfoText24 style={{ color: '#282c36' }}>{resultPrice + deliveryPrice}원</PaymentInfoText24>
+								<PaymentInfoText24 style={{ color: '#282c36' }}>3,518,000원</PaymentInfoText24>
 							</InlineFlexDiv>
 						</PaymentInfoWrap>
 
 						<PaymentInfo3>
 							<PaymentInfoWrap style={{ marginTop: '26px' }}>
 								<FontSize18 style={{ fontWeight: '500', color: '#282c36' }}>주문동의</FontSize18>
-								<FontSize18 style={{ fontWeight: 'normal', color: '#767676', marginTop: '14px', lineHeight: '1.56' }}>
+								<FontSize18
+									style={{
+										fontWeight: 'normal',
+										color: '#767676',
+										marginTop: '14px',
+										lineHeight: '1.56',
+									}}
+								>
 									주문할 상품의 상품, 상품가격, 배송정보를 확인하였으며, 구매에 동의 하시겠습니까?
 									<br /> (전자상거래법 제8조 제2항)
 								</FontSize18>
 
-								<FontSize18 style={{ fontWeight: 'normal', color: '#767676', marginTop: '18px', lineHeight: '1.56' }}>
+								<FontSize18
+									style={{
+										fontWeight: 'normal',
+										color: '#767676',
+										marginTop: '18px',
+										lineHeight: '1.56',
+									}}
+								>
 									주문제작상품의 경우, 교환/환불이 불가능 하다는 내용을 확인하였으며 이에 동의합니다.
 								</FontSize18>
 								<InlineFlexDiv style={{ justifyContent: 'center', marginTop: '28px' }}>
@@ -231,6 +281,7 @@ class PaymentPageContainer extends React.Component {
 						</PaymentBtn>
 					</PaymentPageRight>
 				</PaymentPageDiv>
+				{/* <TestC></TestC> */}
 			</Background>
 		);
 	}
@@ -238,6 +289,16 @@ class PaymentPageContainer extends React.Component {
 
 export default PaymentPageContainer;
 
+const Layer = styled.div`
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	right: 0;
+	bottom: 0;
+	z-index: 10000;
+	background: #00000080;
+`;
 const PaymentPageDiv = styled(Containerv1)`
 	justify-content: space-between;
 `;
@@ -316,22 +377,30 @@ const PhoneNumDash = styled.div`
 `;
 
 const DeliveryAddressBox1 = styled.div`
+	display: flex;
+	align-items: center;
 	width: 463px;
 	height: 44px;
 	margin-top: 10px;
+	padding-left: 16px;
 	border: none;
 	background-color: #f6f6f6;
 	font-size: 18px;
+	box-sizing: border-box;
 `;
 
 const DeliveryAddressBox2 = styled.div`
+	display: flex;
+	align-items: center;
 	width: 588px;
 	height: 44px;
 	margin-top: 14px;
 	margin-bottom: 14px;
+	padding-left: 16px;
 	border: none;
 	background-color: #f6f6f6;
 	font-size: 18px;
+	box-sizing: border-box;
 `;
 
 const SearchBtn = styled.button`

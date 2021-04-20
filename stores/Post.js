@@ -1,23 +1,26 @@
-import { observable, action } from 'mobx'
-import * as PostAPI  from 'axios/post'
+import { observable, action, makeObservable } from "mobx";
+import * as PostAPI from "axios/post";
 
-import Loading from './Loading'
+import Loading from "./Loading";
 
 class Post {
-    @observable data = [];
-    
-    @action getData = async () => {
-        // await Loading.setOpen(true)
-        // await PostAPI.getPosts()
-        // .then(res => {
-        //     this.data = res.data
-        // })
-        // .catch(e => {
-        //     console.log(e)
-        //     console.log(e.response)
-        // })
-        // setTimeout(() => { Loading.setOpen(false) }, 1000);
-    }
+  constructor() {
+    makeObservable(this);
+  }
+  @observable data = [];
+
+  @action getData = async () => {
+    // await Loading.setOpen(true)
+    // await PostAPI.getPosts()
+    // .then(res => {
+    //     this.data = res.data
+    // })
+    // .catch(e => {
+    //     console.log(e)
+    //     console.log(e.response)
+    // })
+    // setTimeout(() => { Loading.setOpen(false) }, 1000);
+  };
 }
 
-export default new Post()
+export default new Post();

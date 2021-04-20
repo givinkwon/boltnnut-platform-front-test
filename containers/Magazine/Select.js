@@ -42,8 +42,15 @@ const customStyles = {
 };
 
 class SelectComp extends React.Component {
+  constructor() {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+
   handleChange = (selectedOption) => {
-    this.props.onChange(selectedOption);
+    this.props.onChange
+     //this.props.onChange(selectedOption);
   };
   render() {
     const { options, placeholder, styles, getOptionLabel, value } = this.props;
