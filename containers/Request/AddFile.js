@@ -39,7 +39,7 @@ class InputComponent extends React.Component {
     if(e && e.currentTarget.files[0]){
       const fileName = e.currentTarget.files[0].name
       this.setState({ fileArray: this.state.fileArray.push({file: e.currentTarget.files[0]})})
-      ManufactureProcess.fileArray.push({ file: e.currentTarget.files[0] })
+      ManufactureProcess.fileArray.push({ ...ManufactureProcess.fileArray, file: e.currentTarget.files[0] })
     
       this.setState({
         ...this.state,
@@ -52,8 +52,13 @@ class InputComponent extends React.Component {
       // ManufactureProcess.fileName = fileName
 
       Request.setCommonFile(e.currentTarget.files[0])
-      console.log(ManufactureProcess.fileArray)
+      
     }
+    console.log((ManufactureProcess.fileArray))
+    console.log(this.state.fileArray)
+    ManufactureProcess.fileArray.map((item, idx) => {
+      console.log(item.file)
+    })
   }
 
   render() {
