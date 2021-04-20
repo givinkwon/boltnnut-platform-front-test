@@ -36,7 +36,11 @@ class InputComponent extends React.Component {
 
 		if (e && e.currentTarget.files[0]) {
 			const fileName = e.currentTarget.files[0].name;
-			this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
+			this.setState({
+				fileArray: this.state.fileArray.push({
+					file: e.currentTarget.files[0],
+				}),
+			});
 			ManufactureProcess.fileArray.push({ file: e.currentTarget.files[0] });
 
 			this.setState({
@@ -55,7 +59,16 @@ class InputComponent extends React.Component {
 	};
 
 	render() {
-		const { onChange, children, label, file, Request, ManufactureProcess, isOpen, ...props } = this.props;
+		const {
+			onChange,
+			children,
+			label,
+			file,
+			Request,
+			ManufactureProcess,
+			isOpen,
+			...props
+		} = this.props;
 		const { fileName, checkFileUpload } = this.state;
 
 		if (!file) {
@@ -114,7 +127,9 @@ class InputComponent extends React.Component {
                                 onChange 이벤트가 발생하지 않아서 아래와 같이 삭제할 때 강제적으로 innerHTML에 공백을 주어서 설정함으로써
                                 위와 같은 문제 발생 시 onChange 이벤트가 발생하게끔 함
                             */
-															const inputFile = document.getElementById('inputFile');
+															const inputFile = document.getElementById(
+																'inputFile'
+															);
 															inputFile.innerHTML = '';
 
 															if (ManufactureProcess.fileArray.length === 0) {
@@ -125,7 +140,14 @@ class InputComponent extends React.Component {
 												>
 													<span>
 														<span>{item.file.name}</span>
-														<DeleteFile src={deleteButtonImg} style={{ display: this.state.checkFileUpload ? 'inline' : 'none' }} />
+														<DeleteFile
+															src={deleteButtonImg}
+															style={{
+																display: this.state.checkFileUpload
+																	? 'inline'
+																	: 'none',
+															}}
+														/>
 
 														{/* 삭제 예정 */}
 														{/* <span>{(ManufactureProcess.fileArray.length-1) !== idx && <span>,</span>}</span> */}
