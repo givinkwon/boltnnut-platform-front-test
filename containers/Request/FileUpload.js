@@ -12,7 +12,8 @@ import * as Title from "components/Title";
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 import SelectComponent from "components/Select";
 import ManufactureProcess from "../../stores/ManufactureProcess";
-import InputComponent from "AddFile";
+//import InputComponent from "AddFile";
+import InputComponent from "AddFile2";
 
 import Calendar from "./Calendar2";
 import Magazine from "../../stores/Magazine";
@@ -75,8 +76,10 @@ class FileUploadContainer extends Component {
     fileList: [],
     checkFileUpload: false,
     checkCard: true,
-    value: "",
-    rows: 7,
+    publicValue: "",
+    privateValue: "",
+    publicRows: 7,
+    privateRows: 7,
     minRows: 7,
     maxRows: 100,
     checkHeight: false,
@@ -85,6 +88,14 @@ class FileUploadContainer extends Component {
     orderPrice: [],
     checkBox,
     variation: false,
+    purposeselected1: false,
+    purposeselected2: false,
+    purposeselected3: false,
+    purposeAry: [
+      { id: 1, name: "상담 요청", checked: false },
+      { id: 2, name: "견적 요청", checked: false },
+      { id: 3, name: "업체 수배", checked: false },
+    ],
   };
 
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
@@ -130,6 +141,13 @@ class FileUploadContainer extends Component {
         }
       }
     }
+
+    // for(var i=directInputs.length-1; i>idx; i--){
+    //   console.log(directInputs[i].value)
+    //   console.log(fileList[i].quantity.value)
+
+    //     directInputs[i].value = fileList[i].quantity.value
+    //  }
   }
 
   async deleteValue(idx) {
@@ -148,7 +166,9 @@ class FileUploadContainer extends Component {
         if (fileList[i].selectBig.name === "금형사출") {
           const str_idx = valueAry.findIndex((e) => e === i);
           const str = directInputs[str_idx].className;
+
           const num = str.slice(str.length - 1, str.length);
+
           const directInput = document.querySelector(`.directInput${num}`);
 
           directInput.value = fileList[i].quantity.value;
@@ -169,11 +189,59 @@ class FileUploadContainer extends Component {
 
     for (var i = checked_ary.length; i > 0; i--) {
       this.setState({ fileList: fileList.splice(checked_ary[i - 1], 1) });
+      // if(fileList[checked_ary[i-1]]){
+      // //  if(!checked_ary[i]){
+      //     console.log("!!!!!")
+      //     for(var j=checked_ary[i-1]; j<fileList.length; j++){
+      //       const directInput = document.querySelectorAll(`.directInput${j}`)
+      //       // console.log(j)
+      //       // console.log(directInput)
+      //       // if(fileList[j]){
+      //       //   if(fileList[j].selectBig.name === "금형사출"){
+      //       //     console.log(fileList[j].quantity.value)
+      //       //     if(directInputs[j-1]){
+      //       //       directInputs[j-1].value = fileList[j].quantity.value
+      //       //     }
+      //       //   //directInput.value = fileList[j].quantity.value
+      //       //   }
+      //       // }
+
+      //     }
+      //}
+      // else{
+      //   for(var j=checked_ary[i-1]; j<checked_ary[i]; j++){
+      //   //if(fileList[j]){
+      //     const directInput = document.querySelectorAll(`.directInput${j}`)
+      //     console.log(j)
+      //     //console.log(directinput)
+      //     //console.log(fileList[checked_ary[j]].quantity.value)
+      //     if(fileList[checked_ary[j]]){
+      //       //if(checked_ary[j]){
+      //         console.log(directInput)
+      //         console.log(fileList[checked_ary[j]].quantity.value)
+      //         directInput.value = fileList[checked_ary[j]].quantity.value
+      //      // }
+      //     }
+
+      //  // }
+      //   }
+
+      // }
+      //directInputs[checked_ary[i-1]].value = fileList[checked_ary[i-1]].quantity.value
+      //console.log(directInputs[checked_ary[i-1]].value)
+      //}
     }
 
     if (fileList.length) {
       const directInputs = document.getElementsByClassName("directInput");
+      //const directInput
+      //const directInput = document.querySelectorAll(`.directInput${idx}`)
       const valueAry = [];
+
+      console.log(directInputs);
+
+      console.log(fileList);
+      console.log(directInputs);
 
       for (var i = 0; i < directInputs.length; i++) {
         const string = directInputs[i].className;
@@ -187,6 +255,33 @@ class FileUploadContainer extends Component {
 
         directInput.value = fileList[num].quantity.value;
       }
+      console.log(valueAry);
+
+      // for(var i=0; i<directInputs.length; i++){
+
+      // }
+
+      // for(var i=0; i<fileList.length; i++){
+      //   if(fileList[i]){
+      //     if(fileList[i].selectBig.name === "금형사출"){
+      //       console.log(valueAry[0])
+      //       console.log(i)
+      //       console.log(typeof(valueAry[0]))
+      //       console.log(typeof(i))
+      //       const str_idx = valueAry.findIndex((e) => e === i)
+      //       console.log(str_idx)
+      //       const str = directInputs[str_idx].className
+      //       console.log(str)
+      //       const num = str.slice(str.length-1, str.length);
+      //       console.log(num)
+
+      //       const directInput = document.querySelector(`.directInput${num}`);
+
+      //       directInput.value = fileList[i].quantity.value
+      //     }
+
+      //   }
+      // }
     }
     this.setState({ variation: true });
   }
@@ -197,6 +292,16 @@ class FileUploadContainer extends Component {
       console.log("esc");
     }
   }
+
+  purposeHandler = (item) => {
+    if (item.checked) {
+      item.checked = false;
+      //this.setState({ purposeAry : })
+    } else {
+      item.checked = true;
+    }
+    this.setState({ g: 3 });
+  };
 
   checkQuantityData = (e, data, idx) => {
     const directInput = document.getElementsByClassName("directInput");
@@ -227,14 +332,27 @@ class FileUploadContainer extends Component {
 
   countQuantity = (prev_value = 0, current_value = 0, checked = 0) => {
     const { ManufactureProcess } = this.props;
-
+    // console.log(typeof(prev_value))
+    // console.log(typeof(current_value))
+    // console.log(typeof(ManufactureProcess.quantity))
+    // console.log(ManufactureProcess.quantity)
+    // console.log(prev_value)
+    // console.log(current_value)
+    // console.log(checked)
+    // console.log(typeof(checked))
+    //console.log(data)
     if (!checked) {
       ManufactureProcess.quantity =
         ManufactureProcess.quantity - prev_value + current_value;
+      // console.log(checked)
     } else if (checked === 1) {
       ManufactureProcess.quantity = ManufactureProcess.quantity - current_value;
+      // console.log(checked)
+      //  console.log(ManufactureProcess.quantity)
     } else {
       ManufactureProcess.quantity = ManufactureProcess.quantity + current_value;
+      // console.log(checked)
+      // console.log(ManufactureProcess.quantity)
     }
     console.log(ManufactureProcess.quantity);
   };
@@ -280,6 +398,11 @@ class FileUploadContainer extends Component {
           } else {
             price += data.totalPrice;
           }
+
+          //console.log(typeof(data.quantity.value))
+          //ManufactureProcess.quantity = ManufactureProcess.quantity + parseInt(data.quantity.value)
+          //console.log(typeof(ManufactureProcess.quantity))
+          //console.log(ManufactureProcess.quantity)
         } else {
           this.setState({ g: 3 });
         }
@@ -290,6 +413,9 @@ class FileUploadContainer extends Component {
   }
 
   loadFileResopnse = (fileIdx) => {
+    console.log(fileIdx);
+    console.log(fileList);
+    console.log(fileList[fileIdx].originFile);
     const ManufactureProcessFormData = new FormData();
     ManufactureProcessFormData.append(
       "blueprint",
@@ -378,11 +504,13 @@ class FileUploadContainer extends Component {
               card.style.position = "fixed";
               // console.log("scrollTop > bannerHeight")
               this.setState({ checkHeight: true });
+              //checkHeight = true
             } else if (scrollTop < bannerHeight + 40) {
               card.style.display = "flex";
               card.style.position = "static";
               // console.log("scrollTop < bannerHeight")
               this.setState({ checkHeight: false });
+              //checkHeight = false
             }
             //this.setState({g:3})
           }
@@ -394,7 +522,7 @@ class FileUploadContainer extends Component {
   };
 
   // 추가 요청 사항 부분 - 사용자가 멀티 라인으로 텍스트 할 경우 자동으로 높이 조절되게끔 해주는 함수
-  handleChange = (event) => {
+  publicRequestHandler = (event) => {
     const textareaLineHeight = 34;
     const { minRows, maxRows } = this.state;
     const { ManufactureProcess } = this.props;
@@ -413,11 +541,37 @@ class FileUploadContainer extends Component {
     }
 
     this.setState({
-      value: event.target.value,
-      rows: currentRows < maxRows ? currentRows : maxRows,
+      publicValue: event.target.value,
+      publicRows: currentRows < maxRows ? currentRows : maxRows,
     });
 
     ManufactureProcess.requestComment = event.target.value;
+  };
+
+  privateRequestHandler = (event) => {
+    const textareaLineHeight = 34;
+    const { minRows, maxRows } = this.state;
+    const { ManufactureProcess } = this.props;
+    const previousRows = event.target.rows;
+    event.target.rows = minRows; // reset number of rows in textarea
+
+    const currentRows = ~~(event.target.scrollHeight / textareaLineHeight);
+
+    if (currentRows === previousRows) {
+      event.target.rows = currentRows;
+    }
+
+    if (currentRows >= maxRows) {
+      event.target.rows = maxRows;
+      event.target.scrollTop = event.target.scrollHeight;
+    }
+
+    this.setState({
+      privateValue: event.target.value,
+      privateRows: currentRows < maxRows ? currentRows : maxRows,
+    });
+
+    ManufactureProcess.requestComment2 = event.target.value;
   };
 
   // 수량이 변경되는 경우 수량 정보를 저장
@@ -602,10 +756,14 @@ class FileUploadContainer extends Component {
         let fileNameAvailable = ["stl", "stp"];
         const extension = data.name.split(".");
 
+        //console.log(fileNameAvailable)
+
         if (!fileNameAvailable.includes(extension[extension.length - 1])) {
+          console.log("stl X");
           check_stl = false;
           data["check_stl"] = check_stl;
         } else {
+          console.log("stl O");
           check_stl = true;
           data["check_stl"] = check_stl;
           stl_count++;
@@ -721,6 +879,15 @@ class FileUploadContainer extends Component {
 
   render() {
     const { ManufactureProcess } = this.props;
+
+    const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
+		다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
+		1. 가공품 목적 및 사용 환경
+		2. 가공 부품별 특이 사항
+		3. 공급처가 충족해야하는 발주 조건
+		`;
+
+    const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
 
     return (
       <>
@@ -1300,7 +1467,11 @@ class FileUploadContainer extends Component {
                         <div style={{ textAlign: "right" }}>
                           <TailBox
                             checkSelectBig={data.selectBig.name}
-                            style={{ float: "right", display: "inline-block" }}
+                            style={{
+                              float: "right",
+                              display: "inline-block",
+                              top: "80%",
+                            }}
                           >
                             <Font20>
                               *해당 도면은 자동견척 산출이 어렵습니다.
@@ -1428,7 +1599,12 @@ class FileUploadContainer extends Component {
 
           <NoFileButton checkFileUpload={ManufactureProcess.checkFileUpload}>
             <div>*혹시 도면 파일이 없으신가요?</div>
-            <div>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                this.props.Request.newIndex = 2;
+              }}
+            >
               <span>도면 파일 없이 견적 받기</span>
               <span>
                 <img src={pass2} />
@@ -1475,7 +1651,66 @@ class FileUploadContainer extends Component {
             </PriceData>
           </Price>
 
-          <Projectbox>
+          <Purposebox
+            checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+          >
+            <Label>
+              <span>문의 목적</span>
+              <p style={{ fontSize: "16px", letterSpacing: "-0.4px" }}>
+                (중복 선택 가능)
+              </p>
+            </Label>
+
+            <SelectBox style={{ width: "555px", marginTop: "16px" }}>
+              <InlineDiv style={{ alignItems: "flex-end" }}>
+                {purposeAry.map((item, idx) => {
+                  return (
+                    <PurposeSelectCircle
+                      active={item.checked}
+                      onClick={() => {
+                        this.purposeHandler(item);
+                        console.log(idx);
+                      }}
+                    >
+                      <PurposeFont18 active={item.checked}>
+                        {item.name}
+                      </PurposeFont18>
+                    </PurposeSelectCircle>
+                  );
+                })}
+              </InlineDiv>
+            </SelectBox>
+
+            {/* <SelectBox style={{ width: "555px", marginTop: "16px" }}>
+              <InlineDiv style={{ alignItems: "flex-end" }}>
+                <PurposeSelectCircle active={this.state.purposeselected1}>
+                  <PurposeFont18 active={this.state.purposeselected1}>
+                    상담요청
+                  </PurposeFont18>
+                </PurposeSelectCircle>
+              </InlineDiv>
+
+              <InlineDiv style={{ alignItems: "flex-end" }}>
+                <PurposeSelectCircle active={this.state.purposeselected2}>
+                  <PurposeFont18 active={this.state.purposeselected2}>
+                    견적요청
+                  </PurposeFont18>
+                </PurposeSelectCircle>
+              </InlineDiv>
+
+              <InlineDiv style={{ alignItems: "flex-end" }}>
+                <PurposeSelectCircle active={this.state.purposeselected3}>
+                  <PurposeFont18 active={this.state.purposeselected3}>
+                    업체수배
+                  </PurposeFont18>
+                </PurposeSelectCircle>
+              </InlineDiv> 
+            </SelectBox> */}
+          </Purposebox>
+
+          <Projectbox
+            checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+          >
             <Label>
               <span>프로젝트 제목</span>
             </Label>
@@ -1490,157 +1725,175 @@ class FileUploadContainer extends Component {
             </ProjectTitle>
           </Projectbox>
 
-          <Purposebox>
+          <DeliveryBox
+            checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+          >
             <Label>
-              <span>문의 목적</span>
+              <span>납기 일</span>
             </Label>
-          </Purposebox>
+            <DeliveryDate
+              checkDateConference={ManufactureProcess.date_conference}
+              checkDateUndefined={ManufactureProcess.date_undefined}
+              checkCalendar={ManufactureProcess.calendar_checked}
+              checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+            >
+              <div>
+                <div style={{ height: "50px" }}>
+                  <Calendar />
+                </div>
+                <div
+                  onClick={() => {
+                    console.log("click1");
+                    if (ManufactureProcess.date_conference) {
+                      ManufactureProcess.date_conference = false;
+                    } else {
+                      ManufactureProcess.date_conference = true;
+                    }
+                    console.log(ManufactureProcess.date_conference);
+                  }}
+                >
+                  <div>
+                    <img src={pass3} />
+                  </div>
+                  <span>납기일 협의 가능</span>
+                </div>
+                <div
+                  onClick={() => {
+                    console.log("click2");
+                    if (ManufactureProcess.date_undefined) {
+                      ManufactureProcess.date_undefined = false;
+                    } else {
+                      ManufactureProcess.date_undefined = true;
+                    }
+                    console.log(ManufactureProcess.date_undefined);
+                  }}
+                >
+                  <div>
+                    <img src={pass3} />
+                  </div>
+                  <span>납기일 미정</span>
+                </div>
+              </div>
+            </DeliveryDate>
+          </DeliveryBox>
+          <RequestBox
+            checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+          >
+            <Label>
+              <span>프로젝트 설명 및 요청사항</span>
+            </Label>
+            <Request
+              active={checkBox}
+              checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+            >
+              <div>
+                <span>공개 내용</span>
+              </div>
 
-          <DeliveryDate
-            checkDateConference={ManufactureProcess.date_conference}
-            checkDateUndefined={ManufactureProcess.date_undefined}
-            checkCalendar={ManufactureProcess.calendar_checked}
+              <textarea
+                placeholder={`${openPlaceHolderText}`}
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) =>
+                  (e.target.placeholder = `${openPlaceHolderText}`)
+                }
+                rows={this.state.publicRows}
+                value={this.state.publicValue}
+                className={"textarea"}
+                placeholderStyle={{ fontWeight: "400" }}
+                onChange={this.publicRequestHandler}
+              />
+
+              <div>
+                <span>비공개 내용 </span>
+              </div>
+              <textarea
+                placeholder={`${privatePlaceholderText}`}
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) =>
+                  (e.target.placeholder = `${privatePlaceholderText}`)
+                }
+                rows={this.state.privateRows}
+                value={this.state.privateValue}
+                className={"textarea"}
+                placeholderStyle={{ fontWeight: "400" }}
+                onChange={this.privateRequestHandler}
+              />
+            </Request>
+          </RequestBox>
+          <ReferenceBox
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
-            <div>납기 일</div>
-            <div>
-              <div style={{ height: "50px" }}>
-                <Calendar />
-              </div>
-              <div
-                onClick={() => {
-                  console.log("click1");
-                  if (ManufactureProcess.date_conference) {
-                    ManufactureProcess.date_conference = false;
-                  } else {
-                    ManufactureProcess.date_conference = true;
-                  }
-                  console.log(ManufactureProcess.date_conference);
-                }}
-              >
-                <div>
-                  <img src={pass3} />
-                </div>
-                <span>납기일 협의 가능</span>
-              </div>
-              <div
-                onClick={() => {
-                  console.log("click2");
-                  if (ManufactureProcess.date_undefined) {
-                    ManufactureProcess.date_undefined = false;
-                  } else {
-                    ManufactureProcess.date_undefined = true;
-                  }
-                  console.log(ManufactureProcess.date_undefined);
-                }}
-              >
-                <div>
-                  <img src={pass3} />
-                </div>
-                <span>납기일 미정</span>
-              </div>
-            </div>
-          </DeliveryDate>
-          <PublicRequest
-            active={checkBox}
-            checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
-          >
-            <div>
-              <span>문의 및 요청사항 (공개) </span>
-              <span
-                onMouseOver={() => {
-                  this.setIsShown(true);
-                }}
-                onMouseOut={() => {
-                  this.setIsShown(false);
-                }}
-              >
-                ?
-              </span>
-            </div>
-            <div>
+            <Label>
+              <span>참고파일</span>
               <p>
-                다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이
-                높습니다.
-              </p>
-              <p>1. 가공품 목적 및 사용 환경</p>
-              <p>2. 가공 부품별 특이 사항</p>
-              <p>3. 공급처가 충족해야하는 발주 조건</p>
-            </div>
-            <textarea
-              placeholder="특이사항 및 요청을 입력해주세요"
-              onFocus={(e) => (e.target.placeholder = "")}
-              onBlur={(e) =>
-                (e.target.placeholder = "특이사항 및 요청을 입력해주세요")
-              }
-              rows={this.state.rows}
-              value={this.state.value}
-              className={"textarea"}
-              placeholderStyle={{ fontWeight: "400" }}
-              onChange={this.handleChange}
-            />
-          </PublicRequest>
-          <PrivateRequest
-            active={this.state.checkBox}
-            checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
-          >
-            <div>
-              <span>문의 및 요청사항 (비공개) </span>
-            </div>
-            <textarea
-              placeholder="특이사항 및 요청을 입력해주세요"
-              onFocus={(e) => (e.target.placeholder = "")}
-              onBlur={(e) =>
-                (e.target.placeholder = "특이사항 및 요청을 입력해주세요")
-              }
-              rows={this.state.rows}
-              value={this.state.value}
-              className={"textarea"}
-              placeholderStyle={{ fontWeight: "400" }}
-              onChange={this.handleChange}
-            />
-          </PrivateRequest>
-          <Reference
-            checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
-          >
-            <div>
-              <span>참고 파일</span>
-              <span>
                 이미지 혹은 PDF 자료만 업로드 가능합니다. 전문 설계 용어와
                 기호를 사용해 주시면 좋습니다.
-              </span>
-            </div>
+              </p>
+            </Label>
+            <Reference
+              checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+            >
+              <div>
+                <span>공개 자료</span>
+                <p>모두에게 공개될 수 있는 자료를 첨부해주세요.</p>
+              </div>
 
-            <span style={{ display: "inline-block" }}>
-              <InputComponent file={true} onChange={this.handleChange} />
-              <div></div>
-            </span>
-          </Reference>
+              <span style={{ display: "inline-block" }}>
+                <InputComponent file={true} isOpen={true} />
+                <div></div>
+              </span>
+
+              <div>
+                <span>비공개 자료</span>
+              </div>
+
+              <span style={{ display: "inline-block" }}>
+                <InputComponent file={true} isOpen={false} />
+                <div></div>
+              </span>
+            </Reference>
+          </ReferenceBox>
 
           <Button checkFileUpload={ManufactureProcess.checkFileUpload}>
             <div>
               <span
                 onClick={() => {
+                  let check_count = 0;
                   fileList.map((item, idx) => {
                     item.fileName;
                     let fileNameAvailable = ["txt"];
                     const extension = item.fileName.split(".");
 
                     //console.log(fileNameAvailable)
+                    if (
+                      item.quantity.value === 0 ||
+                      item.quantity.value === ""
+                    ) {
+                      console.log("수량을 입력해주세요");
+                      check_count++;
+                    }
 
                     if (
                       fileNameAvailable.includes(
                         extension[extension.length - 1]
                       )
                     ) {
-                      this.props.ManufactureProcess.fileArray.push({
+                      this.props.ManufactureProcess.privateFileArray.push({
                         file: item,
                       });
                     }
                   });
-                  ManufactureProcess.checkPaymentButton = true;
-                  this.props.Request.newIndex = 1;
-                  console.log(toJS(this.props.ManufactureProcess.fileArray));
+
+                  if (check_count) {
+                    alert("수량을 입력해주세요");
+                  } else {
+                    ManufactureProcess.checkPaymentButton = true;
+                    this.props.Request.newIndex = 1;
+                  }
+
+                  console.log(
+                    toJS(this.props.ManufactureProcess.privateFileArray)
+                  );
                   ManufactureProcess.fileArray.map((item, idx) => {
                     console.log(item.file);
                   });
@@ -1671,6 +1924,11 @@ const quantityAry = [
   { label: "직접 입력", value: "" },
 ];
 
+const purposeAry = [
+  { id: 1, name: "상담 요청", checked: false },
+  { id: 2, name: "견적 요청", checked: false },
+  { id: 3, name: "업체 수배", checked: false },
+];
 const Select = styled(SelectComponent)`
   width: ${(props) => (props.width ? props.width : "180px")};
   display: ${(props) => (props.quantity === "직접 입력" ? "none" : "block")};
@@ -1724,8 +1982,10 @@ const ItemList = styled.div`
   height: 100%;
   padding-left: 3px;
   //padding-top: ${(props) => (props.checkFileUpload ? "215px" : "0")};
-  padding-top: ${(props) =>
+  //padding-top: ${(props) =>
     props.checkBannerHeight && props.checkFileUpload ? "215px" : "0"};
+  padding-top: ${(props) =>
+    props.checkBannerHeight && props.checkFileUpload ? "250px" : "0"};
 `;
 
 const ItemBox = styled.div`
@@ -1815,7 +2075,7 @@ const ContentBox = styled.div`
 `;
 const NoFileButton = styled.div`
   width: 100%;
-  margin-bottom: ${(props) => (props.checkFileUpload ? "0" : "425px")};
+  margin-bottom: ${(props) => (props.checkFileUpload ? "0" : "411px")};
   text-align: center;
   display: ${(props) => (props.checkFileUpload ? "none" : "flex")};
   flex-direction: ${(props) => (props.checkFileUpload ? "" : "column")};
@@ -2252,16 +2512,57 @@ const Button = styled.div`
   }
 `;
 
-const Projectbox = styled.div``;
-const Purposebox = styled.div``;
+const Projectbox = styled.div`
+  display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+`;
+const Purposebox = styled.div`
+  display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+  margin-bottom: 70px;
+`;
+const SelectBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const InlineDiv = styled.div`
+  display: inline-flex;
+`;
+const PurposeSelectCircle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 44px;
+  border-radius: 30px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  background-color: ${(props) => (props.active ? "#0933b3" : "#ffffff")};
+  cursor: pointer;
+  margin-right: 30px;
+`;
+const PurposeFont18 = styled.div`
+  font-weight: normal;
+  line-height: 1.89;
+  letter-spacing: -0.45px;
+  color: ${(props) => (props.active ? "#ffffff" : "#414550")};
+`;
 
 const Label = styled.div`
+  //display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+  margin-bottom: 16px;
   > span {
     font-size: 24px;
     line-height: 40px;
     letter-spacing: -0.6px;
     color: #282c36;
     font-weight: bold;
+    margin-right: 12px;
+  }
+  > p {
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 18px;
+    line-height: 40px;
+    letter-spacing: -0.45px;
+    color: #86888c;
   }
 `;
 const ProjectTitle = styled.div`
@@ -2270,7 +2571,7 @@ const ProjectTitle = styled.div`
   border-radius: 5px;
   padding: 14px 14px;
   box-sizing: border-box;
-  margin-top: 16px;
+  //margin-top: 16px;
   margin-bottom: 10px;
 
   > input {
@@ -2290,6 +2591,21 @@ const ProjectTitle = styled.div`
   }
 `;
 
+const DeliveryBox = styled.div`
+  display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+  margin-top: 70px;
+  margin-bottom: 40px;
+
+  // > div:nth-of-type(1) {
+  //   height: 27px;
+  //   font-size: 18px;
+  //   line-height: 40px;
+  //   letter-spacing: -0.45px;
+  //   color: #282c36;
+  //   font-weight: bold;
+  //   margin-bottom: 16px;
+  // }
+`;
 const DeliveryDate = styled.div`
   width: 1200px;
   display: ${(props) => (props.checkFileUpload ? "static" : "none")};
@@ -2298,20 +2614,8 @@ const DeliveryDate = styled.div`
   border-radius: 5px;
   padding: 26px 24px 22px 24px;
   box-sizing: border-box;
-  margin-bottom: 40px;
-  margin-top: 70px;
 
   > div:nth-of-type(1) {
-    height: 27px;
-    font-size: 18px;
-    line-height: 40px;
-    letter-spacing: -0.45px;
-    color: #282c36;
-    font-weight: bold;
-    margin-bottom: 16px;
-  }
-
-  > div:nth-of-type(2) {
     display: flex;
     //justify-content: center;
     align-items: center;
@@ -2343,22 +2647,24 @@ const DeliveryDate = styled.div`
     > div:nth-of-type(2) {
       margin: 0 30px;
       > div {
-        //background-color: ${(props) =>
-          props.checkDateConference ? "#999999" : "#ffffff"};
-        background-color: #999999;
+        background-color: ${(props) =>
+          props.checkDateConference ? "#0933b3" : "#999999"};
+        //background-color: #999999;
         > img {
-          display: ${(props) => (props.checkDateConference ? "block" : "none")};
+          //display: ${(props) =>
+            props.checkDateConference ? "block" : "none"};
           // display: none;
         }
       }
     }
     > div:nth-of-type(3) {
       > div {
-        //background-color: ${(props) =>
-          props.checkDateUndefined ? "#999999" : "#ffffff"};
-        background-color: #999999;
+        background-color: ${(props) =>
+          props.checkDateUndefined ? "#0933b3" : "#999999"};
+        //background-color: #999999;
         > img {
-          display: ${(props) => (props.checkDateUndefined ? "block" : "none")};
+          //display: ${(props) =>
+            props.checkDateUndefined ? "block" : "none"};
         }
       }
     }
@@ -2383,65 +2689,70 @@ const DeliveryDate = styled.div`
         }
       }
     }
-  }
+  
 `;
-const PublicRequest = styled.div`
+const RequestBox = styled.div`
+  display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+`;
+const Request = styled.div`
   width: 1200px;
-  display: ${(props) => (props.checkFileUpload ? "static" : "none")};
+  // display: ${(props) => (props.checkFileUpload ? "static" : "none")};
   background-color: #f6f6f6;
   border: 1px solid #ffffff;
   border-radius: 5px;
-  padding: 26px 24px 22px 24px;
+  padding: 0 24px 30px 24px;
   box-sizing: border-box;
   margin-bottom: 40px;
-  margin-top: 70px;
+  margin-top: 16px;
   position: relative;
 
-  > div:nth-of-type(1) {
+  > div {
+    margin-top: 24px;
+    margin-bottom: 12px;
     > span:nth-of-type(1) {
       height: 27px;
       font-size: 18px;
       line-height: 40px;
       letter-spacing: -0.45px;
       color: #282c36;
-      font-weight: bold;
+      font-weight: 500;
       margin-bottom: 16px;
       margin-right: 7px;
     }
 
-    > span:last-child {
-      width: 20px;
-      height: 20px;
-      border: 1px solid #000000;
-      border-radius: 10px;
-      display: inline-block;
-      text-align: center;
-      font-size: 16px;
-      letter-spacing: -0.4px;
-      color: #414550;
-      font-weight: bold;
-      box-sizing: border-box;
-    }
+    // > span:last-child {
+    //   width: 20px;
+    //   height: 20px;
+    //   border: 1px solid #000000;
+    //   border-radius: 10px;
+    //   display: inline-block;
+    //   text-align: center;
+    //   font-size: 16px;
+    //   letter-spacing: -0.4px;
+    //   color: #414550;
+    //   font-weight: bold;
+    //   box-sizing: border-box;
+    // }
   }
-  > div:nth-of-type(2) {
-    display: ${(props) => (props.active ? "block" : "none")};
-    width: 600px;
-    height: 180px;
-    // border: 3px solid green;
-    position: absolute;
-    top: 44%;
-    left: 17%;
-    background-color: #ffffff;
-    z-index: 1;
-    padding: 20px 10px 20px 30px;
-    box-sizing: border-box;
-    > p {
-      color: #767676;
-      line-height: 34px;
-      letter-spacing: -0.45px;
-      font-size: 18px;
-    }
-  }
+  // > div:nth-of-type(2) {
+  //   display: ${(props) => (props.active ? "block" : "none")};
+  //   width: 600px;
+  //   height: 180px;
+  //   // border: 3px solid green;
+  //   position: absolute;
+  //   top: 44%;
+  //   left: 17%;
+  //   background-color: #ffffff;
+  //   z-index: 1;
+  //   padding: 20px 10px 20px 30px;
+  //   box-sizing: border-box;
+  //   > p {
+  //     color: #767676;
+  //     line-height: 34px;
+  //     letter-spacing: -0.45px;
+  //     font-size: 18px;
+  //   }
+
   > textarea {
     resize: none;
     border: 1px solid #ffffff;
@@ -2472,14 +2783,14 @@ const PrivateRequest = styled.div`
   background-color: #f6f6f6;
   border: 1px solid #ffffff;
   border-radius: 5px;
-  padding: 26px 24px 22px 24px;
+  padding: 0 24px 30px 24px;
   box-sizing: border-box;
   margin-bottom: 40px;
   margin-top: 70px;
   position: relative;
 
-  >div:nth-of-type(1){
-    >span:nth-of-type(1){
+  > div:nth-of-type(1) {
+    > span:nth-of-type(1) {
       height: 27px;
       font-size: 18px;
       line-height: 40px;
@@ -2488,9 +2799,9 @@ const PrivateRequest = styled.div`
       font-weight: bold;
       margin-bottom: 16px;
       margin-right: 7px;
-    }            
+    }
   }
-  >textarea{
+  > textarea {
     resize: none;
     border: 1px solid #ffffff;
     width: 100%;
@@ -2512,22 +2823,23 @@ const PrivateRequest = styled.div`
     }
     white-space: pre-line;
   }
-}
+`;
+const ReferenceBox = styled.div`
+  display: ${(props) => (props.checkFileUpload ? "static" : "none")};
 `;
 const Reference = styled.div`
-  display: ${(props) => (props.checkFileUpload ? "static" : "none")};
   width: 1200px;
   background-color: #f6f6f6;
   border: 1px solid #ffffff;
   border-radius: 5px;
   padding: 0 24px 22px 24px;
   box-sizing: border-box;
-  > div:nth-of-type(1) {
+  > div {
     height: 27px;
     margin-top: 26px;
     margin-bottom: 16px;
     box-sizing: border-box;
-    > span:nth-of-type(1) {
+    > span {
       font-size: 18px;
       line-height: 40px;
       letter-spacing: -0.45px;
@@ -2535,18 +2847,19 @@ const Reference = styled.div`
       font-weight: bold;
       margin-right: 10px;
     }
-    > span:nth-of-type(2) {
+    > p {
+      display: inline-block;
       font-size: 16px;
       line-height: 40px;
       letter-spacing: -0.4px;
       color: #86888c;
     }
   }
-  > div:nth-of-type(2) {
-    border: 1px solid #ffffff;
-    background-color: #ffffff;
-    position: relative;
-  }
+  // > div:nth-of-type(even) {
+  //   border: 1px solid #ffffff;
+  //   background-color: #ffffff;
+  //   position: relative;
+  // }
 `;
 
 const DirectInputBox = styled.div`

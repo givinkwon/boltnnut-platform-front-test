@@ -52,9 +52,7 @@ class PaymentCompleteContainer extends React.Component {
 								</InlineFlexDiv>
 
 								<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-									<FontSize18 style={{ color: '#767676', width: '312px', fontWeight: 'normal', textAlign: 'right' }}>
-										(03111) 서울 특별시 종로구 보문로 7길 4-4 (숭인동) 아쿠아빌 202호
-									</FontSize18>
+									<FontSize18 style={{ color: '#767676', width: '312px', fontWeight: 'normal', textAlign: 'right' }}>(03111) 서울 특별시 종로구 보문로 7길 4-4 (숭인동) 아쿠아빌 202호</FontSize18>
 								</div>
 							</CompleteInfoLeft>
 

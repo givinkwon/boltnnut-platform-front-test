@@ -60,7 +60,7 @@ class Request {
   @observable common_file = null; // 첨부 파일
 
   //new
-  @observable step_index = 1;
+  @observable step_index = 4;
   @observable step1_index = 1;
   @observable drawFile = null;
   @observable percentage = 0;
@@ -183,6 +183,7 @@ class Request {
       })
       .catch((error) => {
         alert("정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.");
+        console.log(error.response);
         this.step_index = 1;
       });
   };
