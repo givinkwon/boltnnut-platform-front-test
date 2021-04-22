@@ -6,7 +6,7 @@ class ChatIndexContainer extends React.Component {
     super(props);
     this.state = {
       room: "",
-      isIn: false,
+      isIn: true,
     };
     this.roomHandler = this.roomHandler.bind(this);
     this.enterHandler = this.enterHandler.bind(this);
