@@ -34,6 +34,25 @@ class InputComponent extends React.Component {
 
   openOnChangeFile = (e) => {
     const { Request, ManufactureProcess } = this.props;
+    var file = document.getElementById("inputFile");
+
+    var filePath = file.value;
+    console.log(filePath);
+
+    const reader = new FileReader();
+    reader.readAsDataURL(e.currentTarget.files[0]);
+    reader.addEventListener("load", () => {
+      this.setState({ src: reader.result });
+      console.log(reader);
+      console.log(reader.result);
+    });
+
+    // var reader = new FileReader();
+    // reader.readAsText(e.currentTarget.files[0]);
+    // reader.onload = function (event) {
+    //   // The file's text will be printed here
+    //   console.log(event.target.result);
+    // };
 
     if (e && e.currentTarget.files[0]) {
       for (var item in e.currentTarget.files) {

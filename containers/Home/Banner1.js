@@ -6,7 +6,8 @@ import styled from "styled-components";
 import Fade from "react-reveal/Fade";
 import { inject, observer } from "mobx-react";
 
-const BannerImg = "static/images/Home/Banner1/Banner1_img.png";
+const BannerImg = "static/images/Home/Banner1/Banner1.png";
+const backgroundImg = "/static/images/Home/Banner3/Banner3_Bg.png";
 
 @inject("Proposal", "Partner")
 @observer
@@ -14,7 +15,7 @@ class Banner1Container extends React.Component {
   render() {
     const ProjectCount = this.props.Proposal.projects_count;
     return (
-      <Background>
+      <Background src={backgroundImg}>
         <ContentContainer>
           <Fade bottom>
             <Image>
@@ -25,16 +26,19 @@ class Banner1Container extends React.Component {
               </ImageContainer>
             </Image>
             <div>
-              <Head>자동 견적 알고리즘</Head>
+              <Head>컨설턴트 중 해당 제품</Head>
               <Main>
-                <span>1초만에</span> 제조 의뢰
-                <br />
-                견적 받기
+                <span>
+                  바로 나오는 <br />
+                  AI 자동 견적
+                </span>
               </Main>
               <Content>
-                {ProjectCount}건의 데이터에 기반한 자동견적 알고리즘이
+                {/* {ProjectCount}건의 데이터에 기반한 자동견적 알고리즘이
                 <br />
-                평균 2일의 견적 시간을 한 번에 해결해 드립니다.
+                평균 2일의 견적 시간을 한 번에 해결해 드립니다. */}
+                볼트앤너트 AI 자동 견적 알고리즘이 <br />
+                제작품에 대한 견적 범위를 바로 안내해드립니다.
               </Content>
             </div>
           </Fade>
@@ -62,7 +66,8 @@ const ImageContainer = styled.div`
   margin-top: 385px;
 `;
 const Head = styled(Title.FontSize20)`
-  color: #0933b3;
+  //color: #0933b3;
+  color: #ffffff;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -71,12 +76,13 @@ const Head = styled(Title.FontSize20)`
   margin: 293px 0px 32px 0px;
 `;
 const Main = styled(Title.FontSize56)`
+  color: #ffffff;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.36;
   letter-spacing: -1.4px;
-  margin-bottom: 106px;
+  margin-bottom: 128px;
   > span {
     font-weight: bold;
   }
@@ -88,6 +94,7 @@ const Content = styled(Title.FontSize24)`
   line-height: 1.67;
   letter-spacing: -0.6px;
   text-align: left;
-  color: #282c36;
+  // color: #282c36;
+  color: #ffffff;
   margin-bottom: 331px;
 `;
