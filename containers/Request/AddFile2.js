@@ -1,279 +1,223 @@
-import React from "react";
-import styled from "styled-components";
-import * as Text from "components/Text";
-import { DARKGRAY } from "static/style";
-import * as Content from "components/Content";
-import { inject, observer } from "mobx-react";
-import { CompressedPixelFormat } from "three";
-import { toJS } from "mobx";
+import React from 'react';
+import styled from 'styled-components';
+import * as Text from 'components/Text';
+import { DARKGRAY } from 'static/style';
+import * as Content from 'components/Content';
+import { inject, observer } from 'mobx-react';
+import { CompressedPixelFormat } from 'three';
+import { toJS } from 'mobx';
 
-const addButtonImg = "static/images/components/Input2/Mask.png";
-const deleteButtonImg = "/static/images/delete.png";
+const addButtonImg = 'static/images/components/Input2/Mask.png';
+const deleteButtonImg = '/static/images/delete.png';
 
-@inject("Request", "ManufactureProcess")
+@inject('Request', 'ManufactureProcess')
 @observer
 class InputComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.file = React.createRef();
-  }
-  state = {
-    fileArray: [],
-    fileName: "",
-    file: "",
-    checkFileUpload: false,
-  };
+	constructor(props) {
+		super(props);
+		this.file = React.createRef();
+	}
+	state = {
+		fileArray: [],
+		fileName: '',
+		file: '',
+		checkFileUpload: false,
+	};
 
-  onChange = (e) => {
-    if (this.props.type === "file") {
-      this.props.onChange(e.currentTarget.files[0]);
-    } else {
-      this.props.onChange(e.currentTarget.value);
-    }
-  };
+	onChange = e => {
+		if (this.props.type === 'file') {
+			this.props.onChange(e.currentTarget.files[0]);
+		} else {
+			this.props.onChange(e.currentTarget.value);
+		}
+	};
 
-  openOnChangeFile = (e) => {
-    const { Request, ManufactureProcess } = this.props;
-    var file = document.getElementById("inputFile");
+	openOnChangeFile = e => {
+		const { Request, ManufactureProcess } = this.props;
 
-    var filePath = file.value;
-    console.log(filePath);
+		if (e && e.currentTarget.files[0]) {
+			const fileName = e.currentTarget.files[0].name;
+			// this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
+			ManufactureProcess.openFileArray.push({ file: e.currentTarget.files[0] });
 
-    const reader = new FileReader();
-    reader.readAsDataURL(e.currentTarget.files[0]);
-    reader.addEventListener("load", () => {
-      this.setState({ src: reader.result });
-      //console.log(reader);
-      //console.log(reader.result);
-    });
+			this.setState({
+				...this.state,
+				file: e.currentTarget.files[0],
+				fileName: fileName,
+				checkFileUpload: true,
+			});
 
-    // var reader = new FileReader();
-    // reader.readAsText(e.currentTarget.files[0]);
-    // reader.onload = function (event) {
-    //   // The file's text will be printed here
-    //   console.log(event.target.result);
-    // };
+			Request.setCommonFile(e.currentTarget.files[0]);
+		}
+	};
 
-    if (e && e.currentTarget.files[0]) {
-      for (var item in e.currentTarget.files) {
-        if (typeof e.currentTarget.files[item] === "object") {
-          ManufactureProcess.openFileArray.append(e.currentTarget.files[item]);
-        } else {
-          break;
-        }
-      }
+	privateOnChangeFile = e => {
+		const { Request, ManufactureProcess } = this.props;
 
-      const fileName = e.currentTarget.files[0].name;
-      // this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
-      //ManufactureProcess.openFileArray.push({ file: e.currentTarget.files[0] });
+		if (e && e.currentTarget.files[0]) {
+			const fileName = e.currentTarget.files[0].name;
+			// this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
+			ManufactureProcess.privateFileArray.push({
+				file: e.currentTarget.files[0],
+			});
 
-      this.setState({
-        ...this.state,
-        file: e.currentTarget.files[0],
-        fileName: fileName,
-        checkFileUpload: true,
-      });
+			this.setState({
+				...this.state,
+				file: e.currentTarget.files[0],
+				fileName: fileName,
+				checkFileUpload: true,
+			});
+			Request.setCommonFile(e.currentTarget.files[0]);
+		}
+	};
 
-      const formData = new FormData();
-      const files = e.target.files;
+	render() {
+		const {
+			onChange,
+			children,
+			label,
+			file,
+			Request,
+			ManufactureProcess,
+			isOpen,
+			...props
+		} = this.props;
+		const { fileName, checkFileUpload } = this.state;
 
-      //formData.append('file', ManufactureProcess.openFileArray)
-      // for (let i = 0; i < ManufactureProcess.openFileArray.length; i++) {
-      //   formData.append(`file[${i}]`, ManufactureProcess.openFileArray[i].file);
-      //   console.log(toJS(ManufactureProcess.openFileArray[i]).file);
-      //   console.log(toJS(ManufactureProcess.openFileArray[i]));
-      // }
-      // for (let value of formData.values()) {
-      //   console.log(value);
-      // }
+		if (!file) {
+			return (
+				<Wrap width={this.props.width}>
+					{label && (
+						<Text.FontSize20 color={DARKGRAY} fontWeight={500}>
+							{label}
+						</Text.FontSize20>
+					)}
+					<InputBox marginTop={label ? 12 : 0}>
+						<Input>
+							<input {...props} onChange={this.onChange} />
+						</Input>
+						{children}
+					</InputBox>
+				</Wrap>
+			);
+		}
 
-      //console.log(formData.values);
-      //console.log(formData);
+		return (
+			<Wrap width={this.props.width}>
+				<FileText checkFileUpload={this.state.checkFileUpload}>
+					<InputBox style={{ width: '100%', display: 'inline-flex' }}>
+						<div>
+							<input
+								type='file'
+								multiple={'multiple'}
+								fileName={'fileName[]'}
+								style={{ display: 'none' }}
+								onChange={
+									isOpen ? this.openOnChangeFile : this.privateOnChangeFile
+								}
+								id='inputFile'
+								ref={this.file}
+								value=''
+								placeholder={'파일을 선택해 주세요.'}
+							/>
 
-      Request.setCommonFile(e.currentTarget.files[0]);
-      console.log(toJS(ManufactureProcess.openFileArray));
-    }
-  };
+							<div
+								onClick={() => {
+									this.file.current.click();
+								}}
+							>
+								<span>파일 첨부</span>
+								<img src={addButtonImg} />
+							</div>
+							<div>
+								{isOpen ? (
+									<>
+										{ManufactureProcess.openFileArray.map((item, idx) => {
+											return (
+												<>
+													<span
+														onClick={() => {
+															if (checkFileUpload) {
+																ManufactureProcess.openFileArray.splice(idx, 1);
+																const inputFile = document.getElementById(
+																	'inputFile'
+																);
+																inputFile.innerHTML = '';
 
-  privateOnChangeFile = (e) => {
-    const { Request, ManufactureProcess } = this.props;
+																if (
+																	ManufactureProcess.openFileArray.length === 0
+																) {
+																	this.setState({ checkFileUpload: false });
+																}
+															}
+														}}
+													>
+														<span>
+															<span>{item.file.name}</span>
+															<DeleteFile
+																src={deleteButtonImg}
+																style={{
+																	display: this.state.checkFileUpload
+																		? 'inline'
+																		: 'none',
+																}}
+															/>
+														</span>
+													</span>
+												</>
+											);
+										})}
+									</>
+								) : (
+									<>
+										{ManufactureProcess.privateFileArray.map((item, idx) => {
+											return (
+												<>
+													<span
+														onClick={() => {
+															if (checkFileUpload) {
+																ManufactureProcess.privateFileArray.splice(
+																	idx,
+																	1
+																);
+																const inputFile = document.getElementById(
+																	'inputFile'
+																);
+																inputFile.innerHTML = '';
 
-    if (e && e.currentTarget.files[0]) {
-      for (var item in e.currentTarget.files) {
-        if (typeof e.currentTarget.files[item] === "object") {
-          ManufactureProcess.privateFileArray.push({
-            file: e.currentTarget.files[item],
-          });
-        } else {
-          break;
-        }
-      }
-
-      //console.log(e.currentTarget.files[0]);
-      //console.log(e.currentTarget.files[1]);
-      const fileName = e.currentTarget.files[0].name;
-      // this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
-
-      this.setState({
-        ...this.state,
-        file: e.currentTarget.files[0],
-        fileName: fileName,
-        checkFileUpload: true,
-      });
-      Request.setCommonFile(e.currentTarget.files[0]);
-    }
-    console.log(ManufactureProcess.privateFileArray);
-    console.log(toJS(ManufactureProcess.privateFileArray));
-  };
-
-  render() {
-    const {
-      onChange,
-      children,
-      label,
-      file,
-      Request,
-      ManufactureProcess,
-      isOpen,
-      ...props
-    } = this.props;
-    const { fileName, checkFileUpload } = this.state;
-
-    if (!file) {
-      return (
-        <Wrap width={this.props.width}>
-          {label && (
-            <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-              {label}
-            </Text.FontSize20>
-          )}
-          <InputBox marginTop={label ? 12 : 0}>
-            <Input>
-              <input {...props} onChange={this.onChange} />
-            </Input>
-            {children}
-          </InputBox>
-        </Wrap>
-      );
-    }
-
-    return (
-      <Wrap width={this.props.width}>
-        <FileText checkFileUpload={this.state.checkFileUpload}>
-          <InputBox style={{ width: "100%", display: "inline-flex" }}>
-            <div>
-              <input
-                type="file"
-                multiple={"multiple"}
-                fileName={"fileName[]"}
-                style={{ display: "none" }}
-                onChange={
-                  isOpen ? this.openOnChangeFile : this.privateOnChangeFile
-                }
-                id="inputFile"
-                ref={this.file}
-                value=""
-                placeholder={"파일을 선택해 주세요."}
-              />
-
-              <div
-                onClick={() => {
-                  console.log(this.file);
-                  this.file.current.click();
-                }}
-              >
-                <span>파일 첨부</span>
-                <img src={addButtonImg} />
-              </div>
-              <div>
-                {isOpen ? (
-                  <>
-                    {ManufactureProcess.openFileArray.map((item, idx) => {
-                      return (
-                        <>
-                          <span
-                            onClick={() => {
-                              if (checkFileUpload) {
-                                ManufactureProcess.openFileArray.splice(idx, 1);
-                                const inputFile = document.getElementById(
-                                  "inputFile"
-                                );
-                                inputFile.innerHTML = "";
-
-                                if (
-                                  ManufactureProcess.openFileArray.length === 0
-                                ) {
-                                  this.setState({ checkFileUpload: false });
-                                }
-                              }
-                            }}
-                          >
-                            <span>
-                              <span>{item.file.name}</span>
-                              <DeleteFile
-                                src={deleteButtonImg}
-                                style={{
-                                  display: this.state.checkFileUpload
-                                    ? "inline"
-                                    : "none",
-                                }}
-                              />
-                            </span>
-                          </span>
-                        </>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <>
-                    {ManufactureProcess.privateFileArray.map((item, idx) => {
-                      return (
-                        <>
-                          <span
-                            onClick={() => {
-                              if (checkFileUpload) {
-                                ManufactureProcess.privateFileArray.splice(
-                                  idx,
-                                  1
-                                );
-                                const inputFile = document.getElementById(
-                                  "inputFile"
-                                );
-                                inputFile.innerHTML = "";
-
-                                if (
-                                  ManufactureProcess.privateFileArray.length ===
-                                  0
-                                ) {
-                                  this.setState({ checkFileUpload: false });
-                                }
-                              }
-                            }}
-                          >
-                            <span>
-                              <span>{item.file.name}</span>
-                              <DeleteFile
-                                src={deleteButtonImg}
-                                style={{
-                                  display: this.state.checkFileUpload
-                                    ? "inline"
-                                    : "none",
-                                }}
-                              />
-                            </span>
-                          </span>
-                        </>
-                      );
-                    })}
-                  </>
-                )}
-              </div>
-            </div>
-          </InputBox>
-        </FileText>
-      </Wrap>
-    );
-  }
+																if (
+																	ManufactureProcess.privateFileArray.length ===
+																	0
+																) {
+																	this.setState({ checkFileUpload: false });
+																}
+															}
+														}}
+													>
+														<span>
+															<span>{item.file.name}</span>
+															<DeleteFile
+																src={deleteButtonImg}
+																style={{
+																	display: this.state.checkFileUpload
+																		? 'inline'
+																		: 'none',
+																}}
+															/>
+														</span>
+													</span>
+												</>
+											);
+										})}
+									</>
+								)}
+							</div>
+						</div>
+					</InputBox>
+				</FileText>
+			</Wrap>
+		);
+	}
 }
 
 export default InputComponent;
@@ -349,13 +293,13 @@ const InputBox = styled.div`
   }
 `;
 const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: ${(props) => (props.width ? props.width : "100%")};
+	display: flex;
+	flex-direction: column;
+	width: ${props => (props.width ? props.width : '100%')};
 `;
 const Input = styled.div`
   width: 100%;
-  margin-top: ${(props) => props.marginTop}px;
+  margin-top: ${props => props.marginTop}px;
   color: #404040;
   font-weight: 400;
   padding-left: 2.3%;
@@ -411,63 +355,63 @@ const Input = styled.div`
   }
 `;
 const FileText = styled(Content.FontSize18)`
-  width: 1152px;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 40px;
-  letter-spacing: -0.18px;
-  text-align: left;
-  color: #c6c7cc;
-  display: inline-flex;
-  align-items: center;
-  padding: 14px 16px;
-  flex-wrap: wrap;
-  background-color: #ffffff;
-  box-sizing: border-box;
-  > span:nth-of-type(1) {
-    > span {
-      > img {
-        margin: auto;
-      }
-    }
-  }
-  > span {
-    align-self: center;
+	width: 1152px;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 40px;
+	letter-spacing: -0.18px;
+	text-align: left;
+	color: #c6c7cc;
+	display: inline-flex;
+	align-items: center;
+	padding: 14px 16px;
+	flex-wrap: wrap;
+	background-color: #ffffff;
+	box-sizing: border-box;
+	> span:nth-of-type(1) {
+		> span {
+			> img {
+				margin: auto;
+			}
+		}
+	}
+	> span {
+		align-self: center;
 
-    > span {
-      margin-right: 10px;
-      color: #282c36;
-      font-weight: normal;
-    }
+		> span {
+			margin-right: 10px;
+			color: #282c36;
+			font-weight: normal;
+		}
 
-    > img:last-child {
-      margin-right: 20px;
-    }
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 14px !important;
-    padding-top: 0px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 2.43;
-    letter-spacing: -0.35px;
-    text-align: left;
-    color: #999999;
-  }
+		> img:last-child {
+			margin-right: 20px;
+		}
+	}
+	@media (min-width: 0px) and (max-width: 767.98px) {
+		font-size: 14px !important;
+		padding-top: 0px;
+		font-weight: normal;
+		font-stretch: normal;
+		font-style: normal;
+		line-height: 2.43;
+		letter-spacing: -0.35px;
+		text-align: left;
+		color: #999999;
+	}
 `;
 const DeleteFile = styled.img`
-  width: 18px;
-  height: 18px;
-  padding: 2px;
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  border-radius: 9px;
-  background-color: #e1e2e4;
-  align-self: center;
-  line-height: 40px;
-  letter-spacing: -0.45px;
-  margin-right: 29px;
-  vertical-align: middle;
-  cursor: pointer;
+	width: 18px;
+	height: 18px;
+	padding: 2px;
+	box-sizing: border-box;
+	border: 1px solid transparent;
+	border-radius: 9px;
+	background-color: #e1e2e4;
+	align-self: center;
+	line-height: 40px;
+	letter-spacing: -0.45px;
+	margin-right: 29px;
+	vertical-align: middle;
+	cursor: pointer;
 `;

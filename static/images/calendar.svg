@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.948" height="24.219" viewBox="0 0 24.948 24.219">
+    <defs>
+        <style>
+            .cls-2{fill:none}.cls-4{fill:#767676}
+        </style>
+    </defs>
+    <g id="그룹_2021" transform="translate(-1139.074 -1425.391)">
+        <rect id="사각형_2843" width="24.346" height="22.495" fill="#999" rx="1" transform="translate(1139.375 1426.813)"/>
+        <path id="패스_2538" d="M380.892 397.239h-24.948v-23.1h24.948zm-24.346-.6h23.745v-21.895h-23.745z" class="cls-2" transform="translate(783.13 1052.371)"/>
+        <rect id="사각형_2844" width="20.346" height="15.168" fill="#fff" rx="1" transform="translate(1141.375 1432.141)"/>
+        <path id="패스_2539" d="M380.892 401.1h-24.948v-19.77h24.948zm-24.346-.6h23.745v-18.57h-23.745z" class="cls-2" transform="translate(783.13 1048.512)"/>
+        <path id="사각형_2856" d="M0 0H1.543V3.498H0z" class="cls-4" transform="translate(1142.77 1425.391)"/>
+        <path id="사각형_2857" d="M0 0H1.543V3.498H0z" class="cls-4" transform="translate(1148.108 1425.391)"/>
+        <path id="사각형_2858" d="M0 0H1.543V3.498H0z" class="cls-4" transform="translate(1153.446 1425.391)"/>
+        <path id="사각형_2859" d="M0 0H1.543V3.498H0z" class="cls-4" transform="translate(1158.784 1425.391)"/>
+    </g>
+</svg>
