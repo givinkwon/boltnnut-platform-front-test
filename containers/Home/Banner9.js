@@ -40,7 +40,7 @@ class Banner9Container extends React.Component {
                     margin: "0 auto",
                     marginTop: 55,
                   }}
-                  onClick={() => Router.push("/request")}
+                  onClick={() => Router.push("/login")}
                 >
                   <Font24>파트너 가입하기</Font24>
                 </Buttonv1>
