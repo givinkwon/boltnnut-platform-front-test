@@ -5,6 +5,7 @@ import { DARKGRAY } from 'static/style';
 import * as Content from 'components/Content';
 import { inject, observer } from 'mobx-react';
 import { CompressedPixelFormat } from 'three';
+import { toJS } from 'mobx';
 
 const addButtonImg = 'static/images/components/Input2/Mask.png';
 const deleteButtonImg = '/static/images/delete.png';
