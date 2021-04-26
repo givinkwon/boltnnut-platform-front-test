@@ -56,7 +56,9 @@ class InputComponent extends React.Component {
 		if (e && e.currentTarget.files[0]) {
 			const fileName = e.currentTarget.files[0].name;
 			// this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
-			ManufactureProcess.privateFileArray.push({ file: e.currentTarget.files[0] });
+			ManufactureProcess.privateFileArray.push({
+				file: e.currentTarget.files[0],
+			});
 
 			this.setState({
 				...this.state,
@@ -69,7 +71,16 @@ class InputComponent extends React.Component {
 	};
 
 	render() {
-		const { onChange, children, label, file, Request, ManufactureProcess, isOpen, ...props } = this.props;
+		const {
+			onChange,
+			children,
+			label,
+			file,
+			Request,
+			ManufactureProcess,
+			isOpen,
+			...props
+		} = this.props;
 		const { fileName, checkFileUpload } = this.state;
 
 		if (!file) {
@@ -100,7 +111,9 @@ class InputComponent extends React.Component {
 								multiple={'multiple'}
 								fileName={'fileName[]'}
 								style={{ display: 'none' }}
-								onChange={isOpen ? this.openOnChangeFile : this.privateOnChangeFile}
+								onChange={
+									isOpen ? this.openOnChangeFile : this.privateOnChangeFile
+								}
 								id='inputFile'
 								ref={this.file}
 								value=''
@@ -125,10 +138,14 @@ class InputComponent extends React.Component {
 														onClick={() => {
 															if (checkFileUpload) {
 																ManufactureProcess.openFileArray.splice(idx, 1);
-																const inputFile = document.getElementById('inputFile');
+																const inputFile = document.getElementById(
+																	'inputFile'
+																);
 																inputFile.innerHTML = '';
 
-																if (ManufactureProcess.openFileArray.length === 0) {
+																if (
+																	ManufactureProcess.openFileArray.length === 0
+																) {
 																	this.setState({ checkFileUpload: false });
 																}
 															}
@@ -136,7 +153,14 @@ class InputComponent extends React.Component {
 													>
 														<span>
 															<span>{item.file.name}</span>
-															<DeleteFile src={deleteButtonImg} style={{ display: this.state.checkFileUpload ? 'inline' : 'none' }} />
+															<DeleteFile
+																src={deleteButtonImg}
+																style={{
+																	display: this.state.checkFileUpload
+																		? 'inline'
+																		: 'none',
+																}}
+															/>
 														</span>
 													</span>
 												</>
@@ -151,11 +175,19 @@ class InputComponent extends React.Component {
 													<span
 														onClick={() => {
 															if (checkFileUpload) {
-																ManufactureProcess.privateFileArray.splice(idx, 1);
-																const inputFile = document.getElementById('inputFile');
+																ManufactureProcess.privateFileArray.splice(
+																	idx,
+																	1
+																);
+																const inputFile = document.getElementById(
+																	'inputFile'
+																);
 																inputFile.innerHTML = '';
 
-																if (ManufactureProcess.privateFileArray.length === 0) {
+																if (
+																	ManufactureProcess.privateFileArray.length ===
+																	0
+																) {
 																	this.setState({ checkFileUpload: false });
 																}
 															}
@@ -163,7 +195,14 @@ class InputComponent extends React.Component {
 													>
 														<span>
 															<span>{item.file.name}</span>
-															<DeleteFile src={deleteButtonImg} style={{ display: this.state.checkFileUpload ? 'inline' : 'none' }} />
+															<DeleteFile
+																src={deleteButtonImg}
+																style={{
+																	display: this.state.checkFileUpload
+																		? 'inline'
+																		: 'none',
+																}}
+															/>
 														</span>
 													</span>
 												</>

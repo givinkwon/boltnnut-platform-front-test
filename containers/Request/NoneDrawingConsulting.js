@@ -8,11 +8,13 @@ import { inject, observer } from 'mobx-react';
 import Calendar from './Calendar2';
 import AddFile from 'AddFile';
 import AddFile2 from 'AddFile2';
+import * as RequestAPI from '../../axios/Request';
 
-const checkcircle = '/static/images/request/NoneDrawingConsulting/checkcircle.svg';
+const checkcircle =
+	'/static/images/request/NoneDrawingConsulting/checkcircle.svg';
 const pass3 = 'static/images/pass3.png';
 
-@inject('ManufactureProcess')
+@inject('ManufactureProcess', 'Schedule', 'Auth')
 @observer
 class NoneDrawingConsultingContainer extends React.Component {
 	state = {
@@ -21,17 +23,37 @@ class NoneDrawingConsultingContainer extends React.Component {
 		purposeselected2: false,
 		purposeselected3: false,
 		projectname: '',
-		row: '',
-		column: '',
-		height: '',
-		unit: [],
 		purpose: {},
-		duedate: '',
 		duecheck: '',
 		checkFileUpload: false,
 		minRows: 7,
 		maxRows: 100,
 		rows: 7,
+		opendesc: '',
+		privatedesc: '',
+	};
+
+	submit = () => {
+		const { purpose, projectname } = this.state;
+		const { Schedule, ManufactureProcess, Auth } = this.props;
+
+		const formData = {
+			user: Auth.logged_in_user.id,
+			request_state: purpose,
+			name: projectname,
+			deadline: Schedule.clickDay,
+			deadline_state: ManufactureProcess.deliverystate,
+			order_request_open: ManufactureProcess.requestComment,
+			order_request_close: ManufactureProcess.requestComment2,
+			file_open: ManufactureProcess.openFileArray,
+			file_close: ManufactureProcess.privateFileArray,
+		};
+
+		const req = {
+			data: formData,
+		};
+		console.log(formData);
+		// RequestAPI.create(formData).then(res => console.log(res));
 	};
 
 	// unitCheckboxhandler
@@ -52,11 +74,15 @@ class NoneDrawingConsultingContainer extends React.Component {
 		const { purpose } = this.state;
 		if (this.state.purposeselected1 === false) {
 			this.setState({ purposeselected1: true });
-			this.setState({ state: { ...this.state.state, purpose: (purpose.id1 = index) } });
+			this.setState({
+				state: { ...this.state.state, purpose: (purpose.id1 = index) },
+			});
 			console.log(purpose);
 		} else if (this.state.purposeselected1 === true) {
 			this.setState({ purposeselected1: false });
-			this.setState({ state: { ...this.state.state, purpose: delete purpose.id1 } });
+			this.setState({
+				state: { ...this.state.state, purpose: delete purpose.id1 },
+			});
 			console.log(purpose);
 		}
 	};
@@ -65,25 +91,61 @@ class NoneDrawingConsultingContainer extends React.Component {
 		const { purpose } = this.state;
 		if (this.state.purposeselected2 === false) {
 			this.setState({ purposeselected2: true });
-			this.setState({ state: { ...this.state.state, purpose: (purpose.id2 = index) } });
+			this.setState({
+				state: { ...this.state.state, purpose: (purpose.id2 = index) },
+			});
 			console.log(purpose);
 		} else if (this.state.purposeselected2 === true) {
 			this.setState({ purposeselected2: false });
-			this.setState({ state: { ...this.state.state, purpose: delete purpose.id2 } });
+			this.setState({
+				state: { ...this.state.state, purpose: delete purpose.id2 },
+			});
 			console.log(purpose);
 		}
 	};
 
 	purposeCheckboxHandlerthree = index => {
 		const { purpose } = this.state;
+
 		if (this.state.purposeselected3 === false) {
 			this.setState({ purposeselected3: true });
-			this.setState({ state: { ...this.state.state, purpose: (purpose.id3 = index) } });
+			this.setState({
+				state: { ...this.state.state, purpose: (purpose.id3 = index) },
+			});
 			console.log(purpose);
 		} else {
 			this.setState({ purposeselected3: false });
-			this.setState({ state: { ...this.state.state, purpose: delete purpose.id3 } });
+			this.setState({
+				state: { ...this.state.state, purpose: delete purpose.id3 },
+			});
 			console.log(purpose);
+		}
+	};
+
+	// date_conference
+	dateConferenceWayClick = idx => {
+		const { ManufactureProcess } = this.props;
+
+		ManufactureProcess.date_conference_idx = idx;
+
+		if (ManufactureProcess.date_conference_idx === 1) {
+			ManufactureProcess.deliverystate = '납기일 협의 가능';
+		}
+
+		if (ManufactureProcess.date_conference_idx === 2) {
+			ManufactureProcess.deliverystate = '납기일 미정';
+		}
+		console.log(ManufactureProcess.date_conference_idx);
+		console.log(ManufactureProcess.deliverystate);
+	};
+
+	dateConferenceActiveHandler = idx => {
+		const { ManufactureProcess } = this.props;
+
+		if (ManufactureProcess.date_conference_idx === idx) {
+			return true;
+		} else {
+			return false;
 		}
 	};
 
@@ -107,7 +169,7 @@ class NoneDrawingConsultingContainer extends React.Component {
 		}
 
 		this.setState({
-			value: event.target.value,
+			opendesc: event.target.opendesc,
 			rows: currentRows < maxRows ? currentRows : maxRows,
 		});
 
@@ -115,6 +177,7 @@ class NoneDrawingConsultingContainer extends React.Component {
 	};
 
 	handleChange2 = event => {
+		console.log(event.target.value);
 		const textareaLineHeight = 34;
 		const { minRows, maxRows } = this.state;
 		const { ManufactureProcess } = this.props;
@@ -133,22 +196,11 @@ class NoneDrawingConsultingContainer extends React.Component {
 		}
 
 		this.setState({
-			value2: event.target.value2,
+			privatedesc: event.target.privatedesc,
 			rows: currentRows < maxRows ? currentRows : maxRows,
 		});
 
-		ManufactureProcess.requestComment2 = event.target.value2;
-	};
-
-	// axios data
-	requestSubmit = () => {
-		const { projectname, row, column, height, unit, purpose, duedate, duecheck } = this.state;
-		return alert(`
-		프로젝트이름: ${projectname}
-		가로: ${row}
-		세로: ${column}
-		높이: ${height}
-		`);
+		ManufactureProcess.requestComment2 = event.target.value;
 	};
 
 	render() {
@@ -163,7 +215,16 @@ class NoneDrawingConsultingContainer extends React.Component {
 
 		const { ManufactureProcess } = this.props;
 
-		const { projectname, row, column, height, unit, purpose, duedate, duecheck } = this.state;
+		const {
+			projectname,
+			row,
+			column,
+			height,
+			unit,
+			purpose,
+			duedate,
+			duecheck,
+		} = this.state;
 
 		return (
 			<Background>
@@ -172,26 +233,43 @@ class NoneDrawingConsultingContainer extends React.Component {
 						<InlineDiv>
 							<FontSize24>문의 목적</FontSize24>
 							<div style={{ display: 'flex', alignItems: 'flex-end' }}>
-								<FontSize16 style={{ height: '24px', lineHeight: '1' }}>(중복 선택 가능)</FontSize16>
+								<FontSize16 style={{ height: '24px', lineHeight: '1' }}>
+									(중복 선택 가능)
+								</FontSize16>
 							</div>
 						</InlineDiv>
 
 						<SelectBox style={{ width: '555px', marginTop: '16px' }}>
 							<InlineDiv style={{ alignItems: 'flex-end' }}>
-								<PurposeSelectCircle active={this.state.purposeselected1} onClick={() => this.purposeCheckboxHandlerOne('상담요청')}>
-									<PusrposeFontSize18 active={this.state.purposeselected1}>상담요청</PusrposeFontSize18>
+								<PurposeSelectCircle
+									active={this.state.purposeselected1}
+									onClick={() => this.purposeCheckboxHandlerOne('상담요청')}
+								>
+									<PusrposeFontSize18 active={this.state.purposeselected1}>
+										상담요청
+									</PusrposeFontSize18>
 								</PurposeSelectCircle>
 							</InlineDiv>
 
 							<InlineDiv style={{ alignItems: 'flex-end' }}>
-								<PurposeSelectCircle active={this.state.purposeselected2} onClick={() => this.purposeCheckboxHandlerTwo('견적요청')}>
-									<PusrposeFontSize18 active={this.state.purposeselected2}>견적요청</PusrposeFontSize18>
+								<PurposeSelectCircle
+									active={this.state.purposeselected2}
+									onClick={() => this.purposeCheckboxHandlerTwo('견적요청')}
+								>
+									<PusrposeFontSize18 active={this.state.purposeselected2}>
+										견적요청
+									</PusrposeFontSize18>
 								</PurposeSelectCircle>
 							</InlineDiv>
 
 							<InlineDiv style={{ alignItems: 'flex-end' }}>
-								<PurposeSelectCircle active={this.state.purposeselected3} onClick={() => this.purposeCheckboxHandlerthree('업체수배')}>
-									<PusrposeFontSize18 active={this.state.purposeselected3}>업체수배</PusrposeFontSize18>
+								<PurposeSelectCircle
+									active={this.state.purposeselected3}
+									onClick={() => this.purposeCheckboxHandlerthree('업체수배')}
+								>
+									<PusrposeFontSize18 active={this.state.purposeselected3}>
+										업체수배
+									</PusrposeFontSize18>
 								</PurposeSelectCircle>
 							</InlineDiv>
 						</SelectBox>
@@ -212,129 +290,46 @@ class NoneDrawingConsultingContainer extends React.Component {
 						</InlineDiv>
 					</ProjectTitleBox>
 
-					{/* <ProductInfoBox>
-						<InlineDiv>
-							<FontSize24>가견적을 위한 제품 정보</FontSize24>
-						</InlineDiv>
+					<DeliveryDateBox>
+						<FontSize24>납기 일</FontSize24>
 
-						<div style={{ display: 'flex', marginBottom: '24px' }}>
-							<LengthHeightBox>
-								<InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-									<FontSize18 style={{ marginRight: '13px', width: '33px' }}>가로</FontSize18>
-									<InputComponent
-										class='Input'
-										placeholder='0'
-										onChange={e => {
-											this.setState({ row: e });
-										}}
-										width='144px'
-									/>
-								</InlineDiv>
-
-								<InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-									<FontSize18 style={{ marginRight: '13px', width: '33px' }}>세로</FontSize18>
-									<InputComponent
-										class='Input'
-										placeholder='0'
-										onChange={e => {
-											this.setState({ column: e });
-										}}
-										width='144px'
-									/>
-								</InlineDiv>
-
-								<InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-									<FontSize18 style={{ marginRight: '13px', width: '33px' }}>높이</FontSize18>
-									<InputComponent
-										class='Input'
-										placeholder='0'
-										onChange={e => {
-											this.setState({ height: e });
-										}}
-										width='144px'
-									/>
-								</InlineDiv>
-							</LengthHeightBox>
-
-							<SelectBox style={{ marginLeft: '70px', width: '316px' }}>
-								<InlineDiv style={{ alignItems: 'flex-end' }}>
-									<FontSize18 style={{ width: '33px' }}>단위</FontSize18>
-								</InlineDiv>
-
-								<InlineDiv style={{ alignItems: 'flex-end' }}>
-									<SelectCircle active={this.activeHandler(1)} onClick={() => this.unitCheckboxHandler(1)}>
-										<CheckCircleImg src={checkcircle} active={this.activeHandler(1)} />
-									</SelectCircle>
-									<FontSize18>mm</FontSize18>
-								</InlineDiv>
-
-								<InlineDiv style={{ alignItems: 'flex-end' }}>
-									<SelectCircle active={this.activeHandler(2)} onClick={() => this.unitCheckboxHandler(2)}>
-										<CheckCircleImg src={checkcircle} active={this.activeHandler(2)} />
-									</SelectCircle>
-									<FontSize18>cm</FontSize18>
-								</InlineDiv>
-
-								<InlineDiv style={{ alignItems: 'flex-end' }}>
-									<SelectCircle active={this.activeHandler(3)} onClick={() => this.unitCheckboxHandler(3)}>
-										<CheckCircleImg src={checkcircle} active={this.activeHandler(3)} />
-									</SelectCircle>
-									<FontSize18>m</FontSize18>
-								</InlineDiv>
-							</SelectBox>
-						</div>
-					</ProductInfoBox>
-					<ImageShape>
-						<FontSize24>이미지 형상</FontSize24>
-					</ImageShape> */}
-
-					<FontSize24 style={{ marginTop: '30px' }}>납기 일</FontSize24>
-					<DeliveryDate
-						checkDateConference={ManufactureProcess.date_conference}
-						checkDateUndefined={ManufactureProcess.date_undefined}
-						checkCalendar={ManufactureProcess.calendar_checked}
-						checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
-					>
-						<div>
-							<div style={{ height: '50px' }}>
+						<DeliveryDateInnerBox>
+							<InlineDiv style={{ width: '798px', backgroundColor: '#ffffff' }}>
 								<Calendar />
-							</div>
-							<div
-								onClick={() => {
-									if (ManufactureProcess.date_conference) {
-										ManufactureProcess.date_conference = false;
-									} else {
-										ManufactureProcess.date_conference = true;
-									}
-								}}
-							>
-								<div>
+							</InlineDiv>
+
+							<CenterInlineDiv>
+								<DateImgBox
+									onClick={() => {
+										this.dateConferenceWayClick(1);
+									}}
+									active={this.dateConferenceActiveHandler(1)}
+								>
 									<img src={pass3} />
-								</div>
-								<span>납기일 협의 가능</span>
-							</div>
-							<div
-								onClick={() => {
-									if (ManufactureProcess.date_undefined) {
-										ManufactureProcess.date_undefined = false;
-									} else {
-										ManufactureProcess.date_undefined = true;
-									}
-								}}
-							>
-								<div>
+								</DateImgBox>
+								<FontSize16>납기일 협의 가능</FontSize16>
+							</CenterInlineDiv>
+
+							<CenterInlineDiv>
+								<DateImgBox
+									onClick={() => {
+										this.dateConferenceWayClick(2);
+									}}
+									active={this.dateConferenceActiveHandler(2)}
+								>
 									<img src={pass3} />
-								</div>
-								<span>납기일 미정</span>
-							</div>
-						</div>
-					</DeliveryDate>
+								</DateImgBox>
+								<FontSize16>납기일 미정</FontSize16>
+							</CenterInlineDiv>
+						</DeliveryDateInnerBox>
+					</DeliveryDateBox>
 
 					<FontSize24>프로젝트 설명 및 요청사항</FontSize24>
-
 					<Request>
 						<div>
-							<FontSize20 style={{ lineHeight: '1', fontWeight: '500' }}>공개 내용</FontSize20>
+							<FontSize20 style={{ lineHeight: '1', fontWeight: '500' }}>
+								공개 내용
+							</FontSize20>
 						</div>
 
 						<textarea
@@ -342,7 +337,7 @@ class NoneDrawingConsultingContainer extends React.Component {
 							onFocus={e => (e.target.placeholder = `${openPlaceHolderText}`)}
 							onBlur={e => (e.target.placeholder = `${openPlaceHolderText}`)}
 							rows={this.state.rows}
-							value={this.state.value}
+							value={this.state.opendesc}
 							className={'textarea'}
 							placeholderStyle={{ fontWeight: '400' }}
 							onChange={this.handleChange}
@@ -351,15 +346,19 @@ class NoneDrawingConsultingContainer extends React.Component {
 
 					<Request>
 						<div>
-							<FontSize20 style={{ lineHeight: '1', fontWeight: '500' }}>비공개 내용</FontSize20>
+							<FontSize20 style={{ lineHeight: '1', fontWeight: '500' }}>
+								비공개 내용
+							</FontSize20>
 						</div>
 
 						<textarea
 							placeholder={`${privatePlaceholderText}`}
-							onFocus={e => (e.target.placeholder = `${privatePlaceholderText}`)}
+							onFocus={e =>
+								(e.target.placeholder = `${privatePlaceholderText}`)
+							}
 							onBlur={e => (e.target.placeholder = `${privatePlaceholderText}`)}
 							rows={this.state.rows}
-							value2={this.state.value2}
+							value={this.state.privatedesc}
 							className={'textarea'}
 							placeholderStyle={{ fontWeight: '400' }}
 							onChange={this.handleChange2}
@@ -369,43 +368,81 @@ class NoneDrawingConsultingContainer extends React.Component {
 					<InlineDiv style={{ marginBottom: '15px' }}>
 						<FontSize24>참고 파일</FontSize24>
 						<div style={{ display: 'flex', alignItems: 'flex-end' }}>
-							<FontSize18 style={{ color: '#86888c', marginLeft: '12px' }}>이미지 혹은 PDF 자료만 업로드 가능합니다. 전문 설계 용어와 기호를 사용해 주시면 좋습니다.</FontSize18>
+							<FontSize18 style={{ color: '#86888c', marginLeft: '12px' }}>
+								이미지 혹은 PDF 자료만 업로드 가능합니다. 전문 설계 용어와
+								기호를 사용해 주시면 좋습니다.
+							</FontSize18>
 						</div>
 					</InlineDiv>
 
 					<Reference>
-						<InlineDiv style={{ marginBottom: '12px', backgroundColor: '#f6f6f6', border: 'none' }}>
+						<InlineDiv
+							style={{
+								marginBottom: '12px',
+								backgroundColor: '#f6f6f6',
+								border: 'none',
+							}}
+						>
 							<div style={{ display: 'flex', alignItems: 'flex-end' }}>
-								<FontSize20 style={{ fontWeight: '500', lineHeight: '1' }}>공개 자료</FontSize20>
+								<FontSize20 style={{ fontWeight: '500', lineHeight: '1' }}>
+									공개 자료
+								</FontSize20>
 							</div>
 							<div style={{ display: 'flex', alignItems: 'flex-end' }}>
-								<FontSize18 style={{ color: '#86888c', marginLeft: '12px', lineHeight: '1' }}>모두에게 공개될 수 있는 자료를 첨부해주세요.</FontSize18>
+								<FontSize18
+									style={{
+										color: '#86888c',
+										marginLeft: '12px',
+										lineHeight: '1',
+									}}
+								>
+									모두에게 공개될 수 있는 자료를 첨부해주세요.
+								</FontSize18>
 							</div>
 						</InlineDiv>
 
 						<span style={{ display: 'inline-block' }}>
-							<AddFile2 file={true} isOpen={true} onChange={this.handleChange} />
+							<AddFile2
+								file={true}
+								isOpen={true}
+								onChange={this.handleChange}
+							/>
 							<div></div>
 						</span>
 
-						<InlineDiv style={{ marginBottom: '12px', backgroundColor: '#f6f6f6', border: 'none', marginTop: '25px' }}>
+						<InlineDiv
+							style={{
+								marginBottom: '12px',
+								backgroundColor: '#f6f6f6',
+								border: 'none',
+								marginTop: '25px',
+							}}
+						>
 							<div style={{ display: 'flex', alignItems: 'flex-end' }}>
-								<FontSize20 style={{ fontWeight: '500', lineHeight: '1' }}>비공개 자료</FontSize20>
+								<FontSize20 style={{ fontWeight: '500', lineHeight: '1' }}>
+									비공개 자료
+								</FontSize20>
 							</div>
 						</InlineDiv>
 
 						<span style={{ display: 'inline-block' }}>
-							<AddFile2 file={true} isOpen={false} onChange={this.handleChange} />
+							<AddFile2
+								file={true}
+								isOpen={false}
+								onChange={this.handleChange}
+							/>
 							<div></div>
 						</span>
 					</Reference>
 					<CompleteBtnBox>
 						<CompleteBtn
 							onClick={() => {
-								this.requestSubmit();
+								this.submit();
 							}}
 						>
-							<FontSize20 style={{ color: '#ffffff' }}>상담 및 가격 요청하기</FontSize20>
+							<FontSize20 style={{ color: '#ffffff' }}>
+								상담 및 가격 요청하기
+							</FontSize20>
 						</CompleteBtn>
 					</CompleteBtnBox>
 				</Containerv1>
@@ -419,6 +456,12 @@ export default NoneDrawingConsultingContainer;
 // global
 const InlineDiv = styled.div`
 	display: inline-flex;
+`;
+
+const CenterInlineDiv = styled.div`
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 // fontsize
@@ -505,10 +548,6 @@ const PurposeSelectCircle = styled.div`
 	cursor: pointer;
 `;
 
-const CheckCircleImg = styled.img`
-	display: ${props => (props.active ? 'block' : 'none')};
-`;
-
 const PurposeBox = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -561,101 +600,6 @@ const CompleteBtn = styled.div`
 	background-color: #0933b3;
 	margin-bottom: 80px;
 	cursor: pointer;
-`;
-
-const DeliveryDate = styled.div`
-	width: 1200px;
-	// display: ${props => (props.checkFileUpload ? 'static' : 'none')};
-	background-color: #f6f6f6;
-	border: 1px solid #ffffff;
-	border-radius: 5px;
-	padding: 26px 24px 22px 24px;
-	box-sizing: border-box;
-	margin-bottom: 40px;
-	margin-top: 16px;
-
-	// > div:nth-of-type(1) {
-	// 	height: 27px;
-	// 	font-size: 18px;
-	// 	line-height: 40px;
-	// 	letter-spacing: -0.45px;
-	// 	color: #282c36;
-	// 	font-weight: bold;
-	// 	margin-bottom: 16px;
-	// }
-
-	> div:nth-of-type(1) {
-		display: flex;
-		//justify-content: center;
-		align-items: center;
-
-		> div:nth-of-type(1) {
-			width: 66%;
-			height: 55px;
-			font-size: 18px;
-			line-height: 40px;
-			letter-spacing: -0.45px;
-			color: #282c36;
-			font-weight: bold;
-			//margin-bottom: 16px;
-			//border: 3px solid red;
-			background-color: #ffffff;
-			position: relative;
-			display: flex;
-			align-items: center;
-			> span {
-				position: absolute;
-				right: 2%;
-				bottom: 6%;
-			}
-			> div {
-				//display: ${props => (props.checkCalendar ? 'block' : 'none')};
-				//display: block;
-			}
-		}
-		> div:nth-of-type(2) {
-			margin: 0 30px;
-			> div {
-				background-color: ${props => (props.checkDateConference ? '#0933b3' : '#999999')};
-				// background-color: #999999;
-				> img {
-					// display: ${props => (props.checkDateConference ? 'block' : 'none')};
-					display: block;
-				}
-			}
-		}
-		> div:nth-of-type(3) {
-			> div {
-				background-color: ${props => (props.checkDateUndefined ? '#0933b3' : '#999999')};
-				// background-color: #999999;
-				> img {
-					// display: ${props => (props.checkDateUndefined ? 'block' : 'none')};
-					display: block;
-				}
-			}
-		}
-		> div:nth-of-type(2),
-		> div:nth-of-type(3) {
-			//position: relative;
-			//padding-left: 35px;
-			display: flex;
-			> div {
-				width: 19px;
-				height: 19px;
-				border: 1px solid white;
-				border-radius: 2px;
-				position: relative;
-				margin-right: 18px;
-				box-sizing: border-box;
-
-				> img {
-					position: absolute;
-					top: 18%;
-					left: 18%;
-				}
-			}
-		}
-	}
 `;
 
 const Request = styled.div`
@@ -753,4 +697,33 @@ const Reference = styled.div`
 		background-color: #ffffff;
 		position: relative;
 	}
+`;
+
+const DeliveryDateBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-top: 70px;
+	margin-bottom: 70px;
+`;
+
+const DeliveryDateInnerBox = styled.div`
+	width: 1200px;
+	height: 103px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-around;
+	margin-top: 16px;
+	background-color: #f6f6f6;
+	border: 1px solid #ffffff;
+	border-radius: 5px;
+`;
+
+const DateImgBox = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 19px;
+	height: 19px;
+	margin-right: 14px;
+	background-color: ${props => (props.active ? '#0933b3' : '#999999')};
 `;

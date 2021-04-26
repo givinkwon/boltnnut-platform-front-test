@@ -51,6 +51,8 @@ class ManufactureProcess {
 	@observable calendar_checked = false;
 	@observable date_conference = false;
 	@observable date_undefined = false;
+	@observable date_conference_idx = 0;
+	@observable deliverystate = '';
 
 	// 참고 파일 관련 변수
 	@observable file = '';
@@ -83,7 +85,11 @@ class ManufactureProcess {
 
 			for (let i = 0; i < arr.length; i++) {
 				console.log('a' + arr.length);
-				this.ManufactureProcessList.push({ name: arr[i].name, id: arr[i].id, detail: [] });
+				this.ManufactureProcessList.push({
+					name: arr[i].name,
+					id: arr[i].id,
+					detail: [],
+				});
 
 				for (let j = 0; j < arr[i].detailManufactureProcess.length; j++) {
 					// console.log("b"+arr[i].detailManufactureProcess.length)
@@ -146,8 +152,11 @@ class ManufactureProcess {
 				this.EstimateDataForDrawing = res.data.data;
 				console.log(this.EstimateDataForDrawing);
 
-				this.moldPrice = Math.round(this.EstimateDataForDrawing.totalMinPrice / 10000);
-				this.ejaculationPrice = Math.round(this.EstimateDataForDrawing.MinPrice / 10) * 10;
+				this.moldPrice = Math.round(
+					this.EstimateDataForDrawing.totalMinPrice / 10000
+				);
+				this.ejaculationPrice =
+					Math.round(this.EstimateDataForDrawing.MinPrice / 10) * 10;
 
 				this.MaxPrice = this.EstimateDataForDrawing.maxPrice;
 				this.MinPrice = this.EstimateDataForDrawing.minPrice;
