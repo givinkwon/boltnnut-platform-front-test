@@ -23,8 +23,24 @@ class ChatCardContainer extends React.Component {
   executeScroll = () =>
     this.myRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
+  checkRead = (fullMessage, currentMessage) => {
+    // console.log(fullMessage);
+    // console.log(currentMessage);
+    // console.log(this.props.currentUserType);
+
+    fullMessage.forEach((element) => {
+      if (
+        currentMessage.member != element.member &&
+        element.time <= currentMessage.time
+      ) {
+        element.bRead = true;
+      }
+    });
+  };
   renderMessage(message) {
-    const { member, text } = message;
+    // this.checkRead(this.props.messages, message);
+
+    const { member, text, time, bRead } = message;
     const { currentUserType } = this.props;
     const messageFromMe = member === currentUserType;
     // setTimeout(this.executeScroll, 100);
@@ -45,13 +61,13 @@ class ChatCardContainer extends React.Component {
           {!messageFromMe && <Message_User>상대</Message_User>}
           <Message_text>{text}</Message_text>
           <Message_Info>
-            {true && (
+            {bRead && (
               <>
                 읽음
                 <br />
               </>
             )}
-            시간
+            {time}
           </Message_Info>
         </MessageContent>
       </Messages_li>
@@ -78,7 +94,23 @@ class ChatCardContainer extends React.Component {
               autofocus="true"
             />
             <SendButton>Send</SendButton>
-            <div onClick={this.executeScroll}>f</div>
+            {/* <div
+              onClick={() => {
+                this.setState({ f: 3 });
+                // console.log(this.props.messages);
+                // this.setState({ f: 3 });
+                // this.props.messages.forEach((element) => {
+                //   // if (
+                //   //   currentMessage.member != element.member &&
+                //   //   element.time <= currentMessage.time
+                //   // ) {
+                //   element.bRead = true;
+                //   // }
+                // });
+              }}
+            >
+              f
+            </div> */}
           </SubmitForm>
         </div>
       </Card>
