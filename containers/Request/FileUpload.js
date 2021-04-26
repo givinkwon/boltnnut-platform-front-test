@@ -21,6 +21,7 @@ import { toJS } from "mobx";
 
 const pass2 = "static/images/pass2.png";
 const pass3 = "static/images/pass3.png";
+const pass7 = "static/images/pass7.png";
 const deleteButtonImg = "/static/images/delete.png";
 const fileImg = "/static/images/file.png";
 const calendar = "/static/images/facebook.png";
@@ -1607,7 +1608,7 @@ class FileUploadContainer extends Component {
             >
               <span>도면 파일 없이 견적 받기</span>
               <span>
-                <img src={pass2} />
+                <img src={pass7} />
               </span>
             </div>
           </NoFileButton>
@@ -2084,27 +2085,31 @@ const NoFileButton = styled.div`
     font-size: 20px;
     line-height: 40px;
     letter-spacing: -0.5px;
-    color: #86888c;
+    color: #282c36;
     margin-bottom: 14px;
   }
   > div:nth-of-type(2) {
     border: 1px solid #a4aab4;
     border-radius: 60px;
     width: 268px;
+    height: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     > span:nth-of-type(1) {
       font-size: 18px;
       line-height: 40px;
       letter-spacing: -0.45px;
-      color: #414550;
+      color: #0933b3;
       margin-right: 11px;
     }
     > span:nth-of-type(2) {
-      position: relative;
+      // position: relative;
       > img {
         vertical-align: middle;
         color: #414550;
-        position: absolute;
-        top: 15%;
+        // position: absolute;
+        // top: 15%;
       }
     }
   }
@@ -2346,7 +2351,7 @@ const DropZoneContainer = styled.div`
   }
   > p:nth-of-type(2) {
     font-size: 16px;
-    line-height: 40px;
+    //line-height: 40px;
     letter-spacing: -0.4px;
     color: #767676;
   }

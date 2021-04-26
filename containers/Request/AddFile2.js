@@ -43,8 +43,8 @@ class InputComponent extends React.Component {
     reader.readAsDataURL(e.currentTarget.files[0]);
     reader.addEventListener("load", () => {
       this.setState({ src: reader.result });
-      console.log(reader);
-      console.log(reader.result);
+      //console.log(reader);
+      //console.log(reader.result);
     });
 
     // var reader = new FileReader();
@@ -57,9 +57,7 @@ class InputComponent extends React.Component {
     if (e && e.currentTarget.files[0]) {
       for (var item in e.currentTarget.files) {
         if (typeof e.currentTarget.files[item] === "object") {
-          ManufactureProcess.openFileArray.push({
-            file: e.currentTarget.files[item],
-          });
+          ManufactureProcess.openFileArray.append(e.currentTarget.files[item]);
         } else {
           break;
         }
@@ -76,7 +74,24 @@ class InputComponent extends React.Component {
         checkFileUpload: true,
       });
 
+      const formData = new FormData();
+      const files = e.target.files;
+
+      //formData.append('file', ManufactureProcess.openFileArray)
+      // for (let i = 0; i < ManufactureProcess.openFileArray.length; i++) {
+      //   formData.append(`file[${i}]`, ManufactureProcess.openFileArray[i].file);
+      //   console.log(toJS(ManufactureProcess.openFileArray[i]).file);
+      //   console.log(toJS(ManufactureProcess.openFileArray[i]));
+      // }
+      // for (let value of formData.values()) {
+      //   console.log(value);
+      // }
+
+      //console.log(formData.values);
+      //console.log(formData);
+
       Request.setCommonFile(e.currentTarget.files[0]);
+      console.log(toJS(ManufactureProcess.openFileArray));
     }
   };
 
