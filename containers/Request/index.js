@@ -28,6 +28,7 @@ import DisbursementContainer from './Disbursement';
 import MarketingModal from './MarketingModal';
 import PaymentPageContainer from './PaymentPage';
 import NoneDrawingConsultingContainer from './NoneDrawingConsulting';
+import RequestComplete from './RequestComplete';
 
 @inject('DetailQuestion', 'Partner', 'Request', 'Auth')
 @observer
@@ -47,24 +48,27 @@ class RequestContainer extends React.Component {
 
 						<Background backgroundColor={'#ffffff'}>
 							<Containerv1>
+								<RequestComplete />
 								{/* <NoneDrawingConsultingContainer /> */}
-								{/* <PaymentPageContainer /> */}
-								{Request.newIndex == 0 && <FileUploadContainer />}
-								{Request.newIndex == 1 && <PaymentPageContainer />}
-								{Request.newIndex == 2 && <NoneDrawingConsultingContainer />}
+								{/* <PaymentPageContainer />
+								// {Request.newIndex == 0 && <FileUploadContainer />}
+								// {Request.newIndex == 1 && <PaymentPageContainer />}
+								// {Request.newIndex == 2 && <NoneDrawingConsultingContainer />} */}
 
 								{/* {Request.step_index == 0 ? (
                   <RequestSelectContainer />
                 ) : (
                   <Step />
-                )} */}
+                )}
 
-								{/* {Request.step_index == 1 && <Step1Container page={Request.step1_index} />}
-								{Request.step_index == 2 && <Step2Container />}
-								{Request.step_index == 3 && <Step3Container />}
-								{Request.step_index == 4 && <Step4Container />}
-								{Request.step_index == 5 && <Step5Container />}
-								{Request.step_index == 6 && <Step6Container />} */}
+                {Request.step_index == 1 && (
+                  <Step1Container page={Request.step1_index} />
+                )}
+                {Request.step_index == 2 && <Step2Container />}
+                {Request.step_index == 3 && <Step3Container />}
+                {Request.step_index == 4 && <Step4Container />}
+                {Request.step_index == 5 && <Step5Container />}
+                {Request.step_index == 6 && <Step6Container />} */}
 							</Containerv1>
 						</Background>
 					</div>
