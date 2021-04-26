@@ -70,24 +70,29 @@ class Banner0Container extends React.Component {
           }}
         >
           <Fade bottom>
-            <div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
               <Title.FontSize56
                 color={WHITE}
                 shadow={"0 3px 6px rgba(0,0,0,0.61);"}
                 fontWeight={"bold"}
                 style={{ lineHeight: 1.49 }}
               >
-                내 제조 의뢰 견적과
-                <br />
-                전문 제조사를
-                <br />
-                바로 만나보세요.
+                엔지니어와 연구원을 위한 제조 상담 플랫폼
               </Title.FontSize56>
-              <Buttonv1
-                style={{ marginTop: 61 }}
-                onClick={() => Router.push("/request")}
-              >
-                지금 무료 견적 받기
+              <Explanation>
+                <Font24>자동 견적 & 비교 견적</Font24>
+                <Font24>도면 & BOM 검토 등 생산 문의 상담</Font24>
+                <Font24>전문 업체 수배</Font24>
+              </Explanation>
+              <Buttonv1 onClick={() => Router.push("/request")}>
+                견적 받기
               </Buttonv1>
 
               <div
@@ -99,14 +104,11 @@ class Banner0Container extends React.Component {
                   marginTop: 6,
                 }}
               >
-                <img
-                  src={lock}
-                  style={{ marginLeft: 50, marginRight: 8 }}
-                ></img>
-                모든 의뢰 NDA(비밀유지계약) 체결
+                <img src={lock} style={{ marginRight: 8 }}></img>
+                모든 업로드는 안전하고 기밀입니다.
               </div>
             </div>
-            <Info>
+            {/* <Info>
               <InfoCell>
                 <Content.FontSize24
                   fontWeight={"normal"}
@@ -119,9 +121,9 @@ class Banner0Container extends React.Component {
                   eng={true}
                   fontWeight={"bold"}
                   color={"#ffffff"}
-                >
-                  {/* 2,000,000,000 */}
-                  <CountFunc index={0} />원
+                > */}
+            {/* 2,000,000,000 */}
+            {/* <CountFunc index={0} />원
                 </Content.FontSize32>
               </InfoCell>
               <InfoCell style={{ margin: "0px 41px" }}>
@@ -137,10 +139,10 @@ class Banner0Container extends React.Component {
                   style={{ textAlign: "center", marginLeft: 30 }}
                   fontWeight={"bold"}
                   color={"#ffffff"}
-                >
-                  {/* 300+ */}
-                  {/* <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개</span> */}
-                  <CountFunc index={1} projCount={this.state.projectCount} />
+                > */}
+            {/* 300+ */}
+            {/* <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개</span> */}
+            {/* <CountFunc index={1} projCount={this.state.projectCount} />
                   <span style={{ fontWeight: 500 }}>개</span>
                 </Content.FontSize32>
               </InfoCell>
@@ -162,7 +164,7 @@ class Banner0Container extends React.Component {
                   <span style={{ fontWeight: 500 }}>개</span>
                 </Content.FontSize32>
               </InfoCell>
-            </Info>
+            </Info> */}
           </Fade>
         </Containerv1>
       </Background>
@@ -201,6 +203,20 @@ const InfoCell = styled.div`
   font-style: normal;
   line-height: 1.67;
   letter-spacing: -0.6px;
+`;
+
+const Explanation = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 71px 0;
+`;
+
+const Font24 = styled(Content.FontSize24)`
+  font-weight: normal;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #ffffff;
 `;
 const Layer = styled.div`
   width: 100%;
