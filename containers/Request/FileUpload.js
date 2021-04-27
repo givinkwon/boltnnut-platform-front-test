@@ -1613,7 +1613,7 @@ class FileUploadContainer extends Component {
                 this.props.Request.newIndex = 2;
               }}
             >
-              <span>도면 파일 없이 견적 받기</span>
+              <span>도면 파일 없이 상담 받기</span>
               <span>
                 <img src={pass7} />
               </span>

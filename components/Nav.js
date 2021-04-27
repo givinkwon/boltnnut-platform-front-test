@@ -166,12 +166,12 @@ class Nav extends React.Component {
                       >
                         <p class="line"> 제조 인사이트 </p>
                       </NavLink>
-                      <NavLink
+                      {/* <NavLink
                         onClick={() => Router.push("/info")}
                         active={url.indexOf("info") > -1}
                       >
                         <p class="line"> 회사소개 </p>
-                      </NavLink>
+                      </NavLink> */}
                       {/*<NavLink
                       onClick={() => Router.push("/info?tab=1")}
                       active={url.indexOf("info") > -1}
@@ -271,12 +271,12 @@ class Nav extends React.Component {
                     >
                       제조 인사이트
                     </NavLink>
-                    <NavLink
+                    {/* <NavLink
                       onClick={() => Router.push("/info")}
                       active={url.indexOf("info") > -1}
                     >
                       회사소개
-                    </NavLink>
+                    </NavLink> */}
                     {/*<NavLink
                   onClick={
                     async () => {

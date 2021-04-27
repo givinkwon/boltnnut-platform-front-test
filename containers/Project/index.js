@@ -26,8 +26,8 @@ class ProjectContainer extends React.Component {
 							<BannerContainer />
 							<PartnerAnswer />
 							{/* <RequestComplete /> */}
-							{/* <NavContainer style={{ marginTop: '50px' }} />
-							<ClientContentContainer length={this.props.length} /> */}
+							<NavContainer style={{ marginTop: '50px' }} />
+							<ClientContentContainer length={this.props.length} />
 						</div>
 					) : (
 						<div>
