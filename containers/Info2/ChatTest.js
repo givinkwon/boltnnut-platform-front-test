@@ -39,15 +39,30 @@ class ChatTestContainer extends React.Component {
   };
 
   async componentDidMount() {
+    this.setState({ messages: [] });
     ChatAPI.loadChat(238).then((res) => {
-      console.log(res.data.results);
-      res.data.results.forEach((message) => {
-        const Messages = this.state.messages;
-        Messages.push({
-          member: message.user_type,
-          text: message.text_content,
-          time: message.createdAt,
-          bRead: true,
+      const reverseChat = res.data.results.reverse();
+      ChatAPI.loadChatCount(238).then((m_res) => {
+        reverseChat.forEach((message) => {
+          const Messages = this.state.messages;
+          let readState = true;
+          if (message.user_type === 0) {
+            console.log(m_res.data.check_count_partner); // 이건 밀리세컨드고
+            console.log(message.createdAt); // 이건 파이썬에서 그냥 표준 시간형식으로 저장돼서 둘 중 하나 바꿔줘야함 비교할때
+            //여기서 바꿔줘야함
+            if (m_res.data.check_count_partner < message.createdAt) {
+              console.log("RR");
+              readState = false;
+            }
+          } else {
+          }
+          Messages.push({
+            member: message.user_type,
+            text: message.text_content,
+            time: message.createdAt,
+            bRead: readState,
+          });
+          this.setState({ f: 3 });
         });
       });
     });
@@ -57,6 +72,7 @@ class ChatTestContainer extends React.Component {
       await this.props.Auth.checkLogin();
       if (this.props.Auth.logged_in_user) {
         this.userType = this.props.Auth.logged_in_user.type;
+        console.log("로그인된 유저는 " + this.userType);
       }
       console.log("onOpen() 호출");
       this.chatSocket.send(
@@ -75,7 +91,7 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.onmessage = (e) => {
       // console.log("Aaaasdasd");
       const data = JSON.parse(e.data);
-      console.log(data);
+      // console.log(data);
       // if (data.type != 2) {
 
       // if (data.message != "receive") {
@@ -88,7 +104,7 @@ class ChatTestContainer extends React.Component {
       //   );
       // }
 
-      console.log(data.bReceive);
+      // console.log(data.bReceive);
       const messages = this.state.messages;
       if (!data.bReceive) {
         if (data.member != this.userType) {
@@ -125,20 +141,57 @@ class ChatTestContainer extends React.Component {
       // this.setState({ messages });
       // this.setState
 
+      let tempAnswerNum = 238;
+      let chatCount = 0;
+
       if (data.message != "접속완료" && data.message != "수신완료") {
         if (data.type === this.userType) {
           const req = {
             text_content: data.message,
             user_type: data.type,
             chat_type: 0,
-            answer: 238,
+            answer: tempAnswerNum,
           };
-          ChatAPI.saveChat(req);
+          ChatAPI.saveChat(req).then((res) => {
+            console.log(res);
+          });
+
           // console.log(this.state.messages.length);
           // AnswerAPI.getAnswerById(238).then((res) => console.log(res.data));
         }
       }
+      ChatAPI.loadChatCount(tempAnswerNum).then((res) => {
+        let clientChatCount = res.check_count_client;
+        let partnerChatCount = res.check_count_partner;
 
+        this.userType === 0
+          ? (clientChatCount = Date.now())
+          : (partnerChatCount = Date.now());
+        const answerReq = {
+          extraUrl: `${tempAnswerNum}/`,
+          params: {
+            partner: 265,
+            check_count_client: clientChatCount,
+            check_count_partner: partnerChatCount,
+          },
+        };
+        ChatAPI.saveChatCount(answerReq);
+        // ChatAPI.loadChat(tempAnswerNum).then((res) => {
+        //   console.log("loadchat");
+        //   this.userType === 0
+        //     ? (clientChatCount = res.data.count)
+        //     : (partnerChatCount = res.data.count);
+        //   const answerReq = {
+        //     extraUrl: `${tempAnswerNum}/`,
+        //     params: {
+        //       partner: 265,
+        //       check_count_client: clientChatCount,
+        //       check_count_partner: partnerChatCount,
+        //     },
+        //   };
+        //   ChatAPI.saveChatCount(answerReq);
+        // });
+      });
       // const message = `${data["type"]}: ${data["message"]}`; //+ data["message"];
       // console.log(message);
       // document.querySelector("#chat-log").value += message + "\n";

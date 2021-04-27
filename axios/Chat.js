@@ -17,10 +17,20 @@ export function loadChat(id) {
   });
 }
 
-export function saveChatCount(id, req) {
+export function loadChatCount(id) {
   return axios({
-    method: "POST",
+    method: "GET",
     url: `${ROOT_URL}/answer/${id}`,
-    data: req,
+  });
+}
+
+export function saveChatCount(req) {
+  // console.log("RRRQWEWEWEEWEWEWEWE");
+  console.log(req.params);
+  console.log(`${ROOT_URL}/answer/${req.extraUrl}`);
+  return axios({
+    method: "PUT",
+    url: `${ROOT_URL}/answer/${req.extraUrl}`,
+    data: req.params ? req.params : null,
   });
 }

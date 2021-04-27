@@ -170,8 +170,14 @@ class ChatCardContainer extends React.Component {
               </MessageList>
               <TypingBox>
                 <SubmitForm
-                  onSubmit={(e) => this.onSubmit(e)}
+                  // onSubmit={(e) => this.onSubmit(e)}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      this.onSubmit(e);
+                    }
+                  }}
                   bottom={this.state.rows}
+                  // onKeyPress={() => console.log("RR")}
                 >
                   {/* <InputBox
                     onChange={(e) => this.onChange(e)}
