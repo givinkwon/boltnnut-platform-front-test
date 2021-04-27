@@ -10,6 +10,7 @@ import AddFile from "AddFile";
 import AddFile2 from "AddFile2";
 
 import * as RequestAPI from "axios/Request";
+import Router from "next/router";
 
 const checkcircle =
   "/static/images/request/NoneDrawingConsulting/checkcircle.svg";
@@ -54,9 +55,6 @@ class NoneDrawingConsultingContainer extends React.Component {
     }
   };
 
-  componentDidUpdate = () => {
-    console.log(this.props.ManufactureProcess.openFileArray);
-  };
   // purposecheckboxhandler
   purposeCheckboxHandlerOne = (index) => {
     const { purpose } = this.state;
@@ -110,7 +108,13 @@ class NoneDrawingConsultingContainer extends React.Component {
   };
 
   // textarea
-  handleChange = (event) => {
+  handleChange = async (event) => {
+    this.props.Auth.checkLogin();
+    if (!this.props.Auth.logged_in_user) {
+      alert("로그인이 필요한 서비스입니다.");
+      Router.push("/login");
+      return;
+    }
     const textareaLineHeight = 34;
     const { minRows, maxRows } = this.state;
     const { ManufactureProcess } = this.props;
@@ -272,11 +276,11 @@ class NoneDrawingConsultingContainer extends React.Component {
 
   render() {
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
-		다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
-		1. 가공품 목적 및 사용 환경
-		2. 가공 부품별 특이 사항
-		3. 공급처가 충족해야하는 발주 조건
-		`;
+      다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
+      1. 가공품 목적 및 사용 환경
+      2. 가공 부품별 특이 사항
+      3. 공급처가 충족해야하는 발주 조건
+      `;
 
     const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
 
@@ -298,7 +302,7 @@ class NoneDrawingConsultingContainer extends React.Component {
         <Containerv1 style={{ flexDirection: "column" }}>
           <PurposeBox>
             <InlineDiv>
-              <FontSize24>문의 목적</FontSize24>
+              <FontSize24>문의 목적 </FontSize24>
               <div style={{ display: "flex", alignItems: "flex-end" }}>
                 <FontSize16 style={{ height: "24px", lineHeight: "1" }}>
                   (중복 선택 가능)
@@ -358,80 +362,80 @@ class NoneDrawingConsultingContainer extends React.Component {
           </ProjectTitleBox>
 
           {/* <ProductInfoBox>
-						<InlineDiv>
-							<FontSize24>가견적을 위한 제품 정보</FontSize24>
-						</InlineDiv>
+                  <InlineDiv>
+                     <FontSize24>가견적을 위한 제품 정보</FontSize24>
+                  </InlineDiv>
 
-						<div style={{ display: 'flex', marginBottom: '24px' }}>
-							<LengthHeightBox>
-								<InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-									<FontSize18 style={{ marginRight: '13px', width: '33px' }}>가로</FontSize18>
-									<InputComponent
-										class='Input'
-										placeholder='0'
-										onChange={e => {
-											this.setState({ row: e });
-										}}
-										width='144px'
-									/>
-								</InlineDiv>
+                  <div style={{ display: 'flex', marginBottom: '24px' }}>
+                     <LengthHeightBox>
+                        <InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
+                           <FontSize18 style={{ marginRight: '13px', width: '33px' }}>가로</FontSize18>
+                           <InputComponent
+                              class='Input'
+                              placeholder='0'
+                              onChange={e => {
+                                 this.setState({ row: e });
+                              }}
+                              width='144px'
+                           />
+                        </InlineDiv>
 
-								<InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-									<FontSize18 style={{ marginRight: '13px', width: '33px' }}>세로</FontSize18>
-									<InputComponent
-										class='Input'
-										placeholder='0'
-										onChange={e => {
-											this.setState({ column: e });
-										}}
-										width='144px'
-									/>
-								</InlineDiv>
+                        <InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
+                           <FontSize18 style={{ marginRight: '13px', width: '33px' }}>세로</FontSize18>
+                           <InputComponent
+                              class='Input'
+                              placeholder='0'
+                              onChange={e => {
+                                 this.setState({ column: e });
+                              }}
+                              width='144px'
+                           />
+                        </InlineDiv>
 
-								<InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-									<FontSize18 style={{ marginRight: '13px', width: '33px' }}>높이</FontSize18>
-									<InputComponent
-										class='Input'
-										placeholder='0'
-										onChange={e => {
-											this.setState({ height: e });
-										}}
-										width='144px'
-									/>
-								</InlineDiv>
-							</LengthHeightBox>
+                        <InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
+                           <FontSize18 style={{ marginRight: '13px', width: '33px' }}>높이</FontSize18>
+                           <InputComponent
+                              class='Input'
+                              placeholder='0'
+                              onChange={e => {
+                                 this.setState({ height: e });
+                              }}
+                              width='144px'
+                           />
+                        </InlineDiv>
+                     </LengthHeightBox>
 
-							<SelectBox style={{ marginLeft: '70px', width: '316px' }}>
-								<InlineDiv style={{ alignItems: 'flex-end' }}>
-									<FontSize18 style={{ width: '33px' }}>단위</FontSize18>
-								</InlineDiv>
+                     <SelectBox style={{ marginLeft: '70px', width: '316px' }}>
+                        <InlineDiv style={{ alignItems: 'flex-end' }}>
+                           <FontSize18 style={{ width: '33px' }}>단위</FontSize18>
+                        </InlineDiv>
 
-								<InlineDiv style={{ alignItems: 'flex-end' }}>
-									<SelectCircle active={this.activeHandler(1)} onClick={() => this.unitCheckboxHandler(1)}>
-										<CheckCircleImg src={checkcircle} active={this.activeHandler(1)} />
-									</SelectCircle>
-									<FontSize18>mm</FontSize18>
-								</InlineDiv>
+                        <InlineDiv style={{ alignItems: 'flex-end' }}>
+                           <SelectCircle active={this.activeHandler(1)} onClick={() => this.unitCheckboxHandler(1)}>
+                              <CheckCircleImg src={checkcircle} active={this.activeHandler(1)} />
+                           </SelectCircle>
+                           <FontSize18>mm</FontSize18>
+                        </InlineDiv>
 
-								<InlineDiv style={{ alignItems: 'flex-end' }}>
-									<SelectCircle active={this.activeHandler(2)} onClick={() => this.unitCheckboxHandler(2)}>
-										<CheckCircleImg src={checkcircle} active={this.activeHandler(2)} />
-									</SelectCircle>
-									<FontSize18>cm</FontSize18>
-								</InlineDiv>
+                        <InlineDiv style={{ alignItems: 'flex-end' }}>
+                           <SelectCircle active={this.activeHandler(2)} onClick={() => this.unitCheckboxHandler(2)}>
+                              <CheckCircleImg src={checkcircle} active={this.activeHandler(2)} />
+                           </SelectCircle>
+                           <FontSize18>cm</FontSize18>
+                        </InlineDiv>
 
-								<InlineDiv style={{ alignItems: 'flex-end' }}>
-									<SelectCircle active={this.activeHandler(3)} onClick={() => this.unitCheckboxHandler(3)}>
-										<CheckCircleImg src={checkcircle} active={this.activeHandler(3)} />
-									</SelectCircle>
-									<FontSize18>m</FontSize18>
-								</InlineDiv>
-							</SelectBox>
-						</div>
-					</ProductInfoBox>
-					<ImageShape>
-						<FontSize24>이미지 형상</FontSize24>
-					</ImageShape> */}
+                        <InlineDiv style={{ alignItems: 'flex-end' }}>
+                           <SelectCircle active={this.activeHandler(3)} onClick={() => this.unitCheckboxHandler(3)}>
+                              <CheckCircleImg src={checkcircle} active={this.activeHandler(3)} />
+                           </SelectCircle>
+                           <FontSize18>m</FontSize18>
+                        </InlineDiv>
+                     </SelectBox>
+                  </div>
+               </ProductInfoBox>
+               <ImageShape>
+                  <FontSize24>이미지 형상</FontSize24>
+               </ImageShape> */}
 
           <FontSize24 style={{ marginTop: "30px" }}>납기 일</FontSize24>
           <DeliveryDate
@@ -766,13 +770,13 @@ const DeliveryDate = styled.div`
   margin-top: 16px;
 
   // > div:nth-of-type(1) {
-  // 	height: 27px;
-  // 	font-size: 18px;
-  // 	line-height: 40px;
-  // 	letter-spacing: -0.45px;
-  // 	color: #282c36;
-  // 	font-weight: bold;
-  // 	margin-bottom: 16px;
+  //    height: 27px;
+  //    font-size: 18px;
+  //    line-height: 40px;
+  //    letter-spacing: -0.45px;
+  //    color: #282c36;
+  //    font-weight: bold;
+  //    margin-bottom: 16px;
   // }
 
   > div:nth-of-type(1) {
@@ -892,13 +896,13 @@ const Request = styled.div`
     }
   }
   // > div:nth-of-type(2) {
-  // 	width: 600px;
-  // 	height: 180px;
-  // 	border: 3px solid green;
-  // 	position: absolute;
-  // 	top: 13%;
-  // 	left: 70px;
-  // 	background-color: #ffffff;
+  //    width: 600px;
+  //    height: 180px;
+  //    border: 3px solid green;
+  //    position: absolute;
+  //    top: 13%;
+  //    left: 70px;
+  //    background-color: #ffffff;
   // }
   > textarea {
     resize: none;

@@ -43,7 +43,7 @@ class MobileBanner12Container extends React.Component {
             <Fade bottom>
               <ContainerBox>
                 <ImgBox>
-                  <img src={image1} style={{ width: `${width}px` }} />
+                  <img src={image1} style={{ width: `${width - 48}px` }} />
                 </ImgBox>
                 <Header>1. 문의 사항 입력하기</Header>
                 <Body>
@@ -63,7 +63,7 @@ class MobileBanner12Container extends React.Component {
 
               <ContainerBox>
                 <ImgBox>
-                  <img src={image2} />
+                  <img src={image2} style={{ width: `${width - 48}px` }} />
                 </ImgBox>
                 <Header>2. 제조사의 상담 확인하기</Header>
                 <Body>
@@ -81,7 +81,7 @@ class MobileBanner12Container extends React.Component {
 
               <ContainerBox>
                 <ImgBox>
-                  <img src={image3} />
+                  <img src={image3} style={{ width: `${width - 48}px` }} />
                 </ImgBox>
                 <Header>3. 제조사와 소통하기</Header>
                 <Body>

@@ -23,13 +23,13 @@ class Banner4Container extends React.Component {
               <img src={image1} />
             </div>
             <div>
-              <Header>컨설턴트 중 해당 제품</Header>
+              <Header>무료 생산 상담</Header>
               <Middle>
                 <span>내가 설계한 부품장비</span>
                 <span>생산에 문제가 없을까?</span>
               </Middle>
               <Body>
-                생산에 대한 모든 문의사항을 4000개
+                생산에 대한 모든 문의사항을 4000여 개
                 <br />
                 전문 제조사들이 바로 상담해드립니다.
               </Body>

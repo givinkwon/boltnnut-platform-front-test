@@ -8,7 +8,7 @@ import Containerv1 from "../../components/Containerv1";
 const prevMonth = "/static/images/request/Calendar/prevMonth.png";
 const nextMonth = "/static/images/request/Calendar/nextMonth.png";
 const dropdown = "/static/images/request/Step4/dropdown.png";
-const calendar = "/static/images/facebook.png";
+const calendar = "/static/images/calendar.svg";
 
 @inject("Request", "Schedule")
 @observer
@@ -209,21 +209,32 @@ class Calendar extends Component {
         )}
 
         <FoldedComponent>
-          <span>
-            {Schedule.clickDay !== 0 ? (
-              <>~ {Schedule.clickDay}</>
-            ) : (
-              <>
-                <span></span>
-              </>
-            )}
-          </span>
-          {/* <div><img src = {calendar}></img></div> */}
-          <div onClick={this.calendarOnOff}>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "764px",
+            }}
+          >
+            <span
+              style={{
+                marginLeft: "16px",
+                color: "#999999",
+                fontWeight: "normal",
+              }}
+            >
+              {Schedule.clickDay !== 0 ? (
+                <>~ {Schedule.clickDay}</>
+              ) : (
+                <>
+                  <span></span>
+                </>
+              )}
+            </span>
+            <div>
+              <img src={calendar} onClick={this.calendarOnOff} />
+            </div>
           </div>
         </FoldedComponent>
       </>
@@ -245,7 +256,7 @@ const MainContainer = styled.div`
   margin-top: 6px;
   background-color: white;
   position: absolute;
-  top: 100%;
+  top: 28%;
   z-index: 1;
 `;
 const Header = styled.div`
@@ -397,69 +408,15 @@ const CalendarContainer = styled.div`
   }
 `;
 const FoldedComponent = styled.div`
-  width: fit-content;
-  font-family: NotoSansCJKkr;
-  font-size: 18px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: -0.45px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  padding: 8px 16px;
-  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  // background-color: var(--white);
-  margin-top: 6px;
-  //line-height: 1.3;
-  //position: relative;
-  height: 50px;
-  box-sizing: border-box;
-  > span {
-    align-self: flex-end;
-    color: #999999;
-    font-weight: normal;
-  }
-  > img {
-    width: 14px;
-    height: 8px;
-    margin-left: 22px;
-  }
-  > div {
-    position: absolute;
-    right: 30px;
-  }
-  > div:last-child {
-    width: 25px;
-    height: 20px;
-    border: 3px solid #999999;
-    border-top: 6px solid #999999;
-    //position: relative;
-    border-radius: 3px;
-    box-sizing: border-box;
-    > div {
-      position: absolute;
-      width: 2px;
-      height: 7px;
-      //border: 1px solid blue;
-      top: -8px;
-      background-color: #767676;
-    }
-
-    > div:nth-of-type(1) {
-      left: 1px;
-    }
-
-    > div:nth-of-type(2) {
-      left: 6px;
-    }
-
-    > div:nth-of-type(3) {
-      left: 11px;
-    }
-    > div:nth-of-type(4) {
-      left: 16px;
-    }
-  }
+	font-family: NotoSansCJKkr;
+	font-size: 18px;
+	font-weight: 500;
+	letter-spacing: -0.45px;
+	border-radius: 5px;
+	margin-top: 6px;
+	height: 50px;
+}
 `;
