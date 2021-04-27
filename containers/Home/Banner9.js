@@ -74,7 +74,7 @@ const Font32 = styled(Content.FontSize32)`
   line-height: 1.67 !important;
   letter-spacing: -0.6px !important;
   text-align: center;
-  margin: 0 auto 55px auto;
+  margin: 35px auto 55px auto;
 `;
 
 const Layer = styled.div`

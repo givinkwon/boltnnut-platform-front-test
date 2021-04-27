@@ -21,7 +21,7 @@ class Banner11Container extends React.Component {
         >
           <Fade bottom>
             <div>
-              <Header>민감 정보 선택 공개 서비스</Header>
+              <Header>무료 도면 수정 서비스</Header>
               <Middle>
                 <p>
                   원하는 업체만 <br />
@@ -75,5 +75,5 @@ const Body = styled(Title.FontSize24)`
   line-height: 1.67;
   letter-spacing: -0.6px;
   text-align: left;
-  color: #555963;
+  color: #282c36;
 `;
