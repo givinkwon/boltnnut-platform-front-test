@@ -57,7 +57,7 @@ class InputComponent extends React.Component {
     if (e && e.currentTarget.files[0]) {
       for (var item in e.currentTarget.files) {
         if (typeof e.currentTarget.files[item] === "object") {
-          ManufactureProcess.openFileArray.append(e.currentTarget.files[item]);
+          ManufactureProcess.openFileArray.push(e.currentTarget.files[item]);
         } else {
           break;
         }
@@ -101,9 +101,7 @@ class InputComponent extends React.Component {
     if (e && e.currentTarget.files[0]) {
       for (var item in e.currentTarget.files) {
         if (typeof e.currentTarget.files[item] === "object") {
-          ManufactureProcess.privateFileArray.push({
-            file: e.currentTarget.files[item],
-          });
+          ManufactureProcess.privateFileArray.push(e.currentTarget.files[item]);
         } else {
           break;
         }
@@ -198,6 +196,9 @@ class InputComponent extends React.Component {
                                 const inputFile = document.getElementById(
                                   "inputFile"
                                 );
+                                console.log(
+                                  toJS(ManufactureProcess.openFileArray)
+                                );
                                 inputFile.innerHTML = "";
 
                                 if (
@@ -209,7 +210,7 @@ class InputComponent extends React.Component {
                             }}
                           >
                             <span>
-                              <span>{item.file.name}</span>
+                              <span>{item.name}</span>
                               <DeleteFile
                                 src={deleteButtonImg}
                                 style={{
@@ -251,7 +252,7 @@ class InputComponent extends React.Component {
                             }}
                           >
                             <span>
-                              <span>{item.file.name}</span>
+                              <span>{item.name}</span>
                               <DeleteFile
                                 src={deleteButtonImg}
                                 style={{
