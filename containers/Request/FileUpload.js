@@ -18,6 +18,7 @@ import InputComponent from "AddFile2";
 import Calendar from "./Calendar2";
 import Magazine from "../../stores/Magazine";
 import { toJS } from "mobx";
+import Router from "next/router";
 
 const pass2 = "static/images/pass2.png";
 const pass3 = "static/images/pass3.png";
@@ -67,7 +68,7 @@ const customStyles = {
   },
 };
 
-@inject("Request", "ManufactureProcess")
+@inject("Request", "ManufactureProcess", "Auth")
 @observer
 class FileUploadContainer extends Component {
   static defaultProps = { title: "도면 파일을 업로드 해주세요." };
@@ -524,6 +525,12 @@ class FileUploadContainer extends Component {
 
   // 추가 요청 사항 부분 - 사용자가 멀티 라인으로 텍스트 할 경우 자동으로 높이 조절되게끔 해주는 함수
   publicRequestHandler = (event) => {
+    this.props.Auth.checkLogin();
+    if(!this.props.Auth.logged_in_user) {
+      alert("로그인이 필요한 서비스입니다.");
+      Router.push("/login")
+      return
+    }
     const textareaLineHeight = 34;
     const { minRows, maxRows } = this.state;
     const { ManufactureProcess } = this.props;
