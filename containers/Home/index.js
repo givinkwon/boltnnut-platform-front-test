@@ -45,6 +45,7 @@ import TabletBanner10Container from "./Tablet/TabletBanner10";
 
 import Banner11Container from "./Banner11";
 import Banner12Container from "./Banner12";
+import MobileBanner12Container from "./Mobile/MobileBanner12";
 
 @inject("Home")
 @observer
@@ -74,14 +75,21 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <MobileBanner0Container />
-              <MobileBanner10Container />
-              <MobileBanner1Container />
+              {/* <MobileBanner10Container /> */}
+
               <MobileBanner2Container />
-              <MobileBanner3Container />
-              <MobileBanner4Container />
+
               <MobileBanner5Container />
-              <MobileBanner6Container />
-              <MobileBanner7Container />
+
+              <MobileBanner1Container />
+
+              <MobileBanner3Container />
+              {/* <MobileBanner4Container /> */}
+
+              {/* <MobileBanner6Container />
+              <MobileBanner7Container /> */}
+              {/* <MobileBanner10Container /> */}
+              <MobileBanner12Container width={width} />
               <MobileBanner8Container />
               <MobileBanner9Container />
             </CustomContainer>

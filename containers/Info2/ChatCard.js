@@ -29,10 +29,11 @@ class ChatCardContainer extends React.Component {
     maxRows: 20,
     height: 576,
   };
-  componentDidMount() {
-    if (this.props.Auth) {
-      console.log(toJS(this.props.Auth));
-    }
+  async componentDidMount() {
+    // await this.props.Auth.checkLogin();
+    // if (this.props.Auth.logged_in_user) {
+    //   console.log(toJS(this.props.Auth));
+    // }
   }
 
   onChangeHandler = (event) => {
@@ -99,6 +100,7 @@ class ChatCardContainer extends React.Component {
     const { member, text, time, bRead } = message;
     const { currentUserType } = this.props;
     const messageFromMe = member === currentUserType;
+    //const messageFromMe = true;
     // setTimeout(this.executeScroll, 100);
     // const messageFromMe = true; //임시
     const scrollTo = (ref) => {
@@ -114,8 +116,13 @@ class ChatCardContainer extends React.Component {
           style={{ backgroundColor: "red" }}
         /> */}
         <MessageContent ref={scrollTo} fromMe={messageFromMe}>
-          {!messageFromMe && <Message_User>상대</Message_User>}
-          <Message_text>{text}</Message_text>
+          {!messageFromMe && (
+            <Message_User>
+              <img src={logo_img} />
+            </Message_User>
+          )}
+          {/* {!messageFromMe && <Message_User>상대</Message_User>} */}
+          <Message_text fromMe={messageFromMe}>{text}</Message_text>
           <Message_Info>
             {bRead && (
               <>
@@ -149,7 +156,8 @@ class ChatCardContainer extends React.Component {
                   {messages.map((m) => this.renderMessage(m))}
                   {/* {this.renderMessage({
                     member: "볼트앤너트",
-                    text: "비공개 자료오픈이 요청되었습니다.",
+                    text:
+                      "비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다.",
                   })}
                   {this.renderMessage({
                     member: "볼트앤너트",
@@ -158,6 +166,8 @@ class ChatCardContainer extends React.Component {
                   {/* {this.renderMessage({ member: "client", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
+                  {this.renderMessage({ member: 0, text: "Hi" })}
+                  {this.renderMessage({ member: 0, text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
@@ -233,13 +243,17 @@ class ChatCardContainer extends React.Component {
                 <Font20 style={{ alignSelf: "flex-start" }}>파트너 목록</Font20>
                 <PartnerContainer>
                   <PartnerCard>
-                    <img src={logo_img} />
+                    <div>
+                      <img src={logo_img} />
+                    </div>
                     <span>볼트앤너트</span>
                     <span></span>
                     <span>21-04-19</span>
                   </PartnerCard>
                   <PartnerCard>
-                    <img src={logo_img} />
+                    <div>
+                      <img src={logo_img} />
+                    </div>
                     <span>진영엔지니어링</span>
                     <span></span>
                     <span>오후 03:25</span>
@@ -288,23 +302,39 @@ const Message_User = styled.div`
   padding: 10px;
   max-width: 400px;
   margin: 0;
-  border-radius: 12px;
-  background-color: purple;
+  border-radius: 34px;
+  width: 34px;
+  height: 34px;
+
+  //background-color: purple;
+  border: 1px solid #c6c7cc;
+
   color: white;
   display: inline-block;
 
   //   margin-right: 10px;
   margin-right: 10px;
+  align-self: center;
+  position: relative;
+  box-sizing: border-box;
+  > img {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 15%;
+    left: 15%;
+  }
 `;
 const Message_text = styled.div`
   //padding: 10px;
   padding: 0 24px;
   max-width: 400px;
   margin: 0;
-  border-radius: 7px 7px 7px 0;
-  background-color: cornflowerblue;
+  border-radius: ${(props) =>
+    props.fromMe ? "7px 7px 0 7px" : "7px 7px 7px 0"};
+  background-color: ${(props) => (props.fromMe ? "#0933b3" : "#f6f6f6")};
   //color: white;
-  color: #282c36;
+  color: ${(props) => (props.fromMe ? "#ffffff" : "#282c36")};
   font-weight: 500;
   display: inline-block;
   margin-right: 10px;
@@ -313,6 +343,9 @@ const Message_text = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 18px;
+  line-height: 40px;
+  letter-spacing: -0.45px;
 `;
 
 const ChattingRoom = styled.div`
@@ -591,6 +624,21 @@ const PartnerCard = styled.div`
   //padding: 12px 20px 11px 18px;
   box-sizing: border-box;
   justify-content: space-between;
+  > div {
+    width: 46px;
+    height: 46px;
+    position: relative;
+    //background-color: blue;
+    border: 1px solid #c6c7cc;
+    border-radius: 46px;
+    > img {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      top: 15%;
+      left: 15%;
+    }
+  }
   > span:last-child {
     font-size: 10px;
     line-height: 40px;

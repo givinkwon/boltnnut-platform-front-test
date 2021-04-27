@@ -251,35 +251,12 @@ class ContentConatiner extends React.Component {
                 }else{
                   item.checked=true
                 }
-                // {console.log(item.checked)}
-                this.onClickHandler(item, idx)}
+              }
               }>
                 {/* {console.log(item.name)} */}
                 <span className={`CategoryName${idx}`}>{item.name}</span>
-                <img src= {item.checked ? 'static/images/pass6.png' : 'static/images/pass5.png'}></img>
               </div>
-              
-              
-                { item.item.map((data, id) => {
-                  return(
-                    <>
-                    <CategoryMenuItem checkUpperMenu = {item.checked} checkMenu={data.checked} className={`CategoryMenuItem${idx}`}>                                  
-                    <div onClick={() => {
-                      // if(data.checked){
-                      //   data.checked=false
-                      // }else{
-                      //   data.checked=true
-                      // }                      
-                      this.onClickDetailHandler(data, idx, id)
-                    }}>
-                      {data.name}
-                    </div>
-                    {/* {console.log(data)} */}
-                    </CategoryMenuItem>    
-                    </>
-                  )
-                  
-                })}                
+                           
                 
               
             </CategoryMenu>

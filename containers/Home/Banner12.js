@@ -191,7 +191,7 @@ class Banner12Container extends React.Component {
                     style={{ width: "304px", height: "64px" }}
                     fontSize="23"
                   >
-                    1:1 컨설팅 받기
+                    바로 무료 상담 받기
                   </Buttonv1>
                 </Contents>
               </ContainerBox>
