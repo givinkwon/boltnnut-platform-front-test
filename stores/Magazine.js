@@ -13,10 +13,10 @@ class Magazine {
   @observable magazine_next = null;
   @observable magazine_length = null;
   @observable categoryAry = [
-    { id : 1, name : '실시간 클릭', item: [{name : 'A', checked: true}, {name : 'B', checked: false}, {name : 'C', checked: false}, {name : 'D', checked: false}, {name : 'E', checked: false}], checked: false},
-    { id : 2, name : '베스트 브랜드', item: [{name : '가', checked: true}, {name : '나', checked: false}], checked: false},
-    { id : 3, name : '베스트 상품', item: [{name : 'CNC', checked: true}, {name : '3D 프린터', checked: false}, {name : '금형사출', checked: false}], checked: false},
-    { id : 4, name : '베스트 베스트', item: [{name : '1', checked: true}, {name : '2', checked: false}, {name : '3', checked: false}, {name : '4', checked: false}], checked: false},
+    { id : 1, name : '실시간 클릭', checked: false},
+    { id : 2, name : '베스트 브랜드', checked: false},
+    { id : 3, name : '베스트 상품', checked: false},
+    { id : 4, name : '베스트 베스트', checked: false},
   ]
   @observable mobileUpperCategoryAry = [
     { id : 1, name : '전체', item: [], checked: true},

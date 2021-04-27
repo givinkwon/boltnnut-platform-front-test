@@ -166,12 +166,12 @@ class Nav extends React.Component {
                       >
                         <p class="line"> 제조 인사이트 </p>
                       </NavLink>
-                      <NavLink
+                      {/* <NavLink
                         onClick={() => Router.push("/info")}
                         active={url.indexOf("info") > -1}
                       >
                         <p class="line"> 회사소개 </p>
-                      </NavLink>
+                      </NavLink> */}
                       {/*<NavLink
                       onClick={() => Router.push("/info?tab=1")}
                       active={url.indexOf("info") > -1}
@@ -220,12 +220,12 @@ class Nav extends React.Component {
                       >
                         제조 인사이트
                       </NavLink>
-                      <NavLink
+                      {/* <NavLink
                         onClick={() => Router.push("/info")}
                         active={url.indexOf("info") > -1}
                       >
                         회사 소개
-                      </NavLink>
+                      </NavLink> */}
                       {/*<NavLink
                       onClick={() => Router.push("/info?tab=2")}
                       active={url.indexOf("info") > -1}
@@ -271,12 +271,12 @@ class Nav extends React.Component {
                     >
                       제조 인사이트
                     </NavLink>
-                    <NavLink
+                    {/* <NavLink
                       onClick={() => Router.push("/info")}
                       active={url.indexOf("info") > -1}
                     >
                       회사소개
-                    </NavLink>
+                    </NavLink> */}
                     {/*<NavLink
                   onClick={
                     async () => {
@@ -300,7 +300,7 @@ class Nav extends React.Component {
                     />
                     {is_profile && (
                       <ProfileMenu>
-                        {Auth.logged_in_user.type == 1 ? (
+                        {/* {Auth.logged_in_user.type == 1 ? (
                           <div
                             onClick={async () => await Router.push("/profile")}
                           >
@@ -308,7 +308,7 @@ class Nav extends React.Component {
                               프로필
                             </Text.FontSize16>
                           </div>
-                        ) : null}
+                        ) : null} */}
                         {/* <div onClick={() => Router.push("/store?tab=1")}>
                         <Text.FontSize16 fontWeight={500}>
                           {Auth.logged_in_user.type == 1 ? '이용요금' : '이용요금'}
