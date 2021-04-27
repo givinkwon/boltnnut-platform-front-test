@@ -110,10 +110,10 @@ class NoneDrawingConsultingContainer extends React.Component {
   // textarea
   handleChange = async (event) => {
     this.props.Auth.checkLogin();
-    if(!this.props.Auth.logged_in_user) {
+    if (!this.props.Auth.logged_in_user) {
       alert("로그인이 필요한 서비스입니다.");
-      Router.push("/login")
-      return
+      Router.push("/login");
+      return;
     }
     const textareaLineHeight = 34;
     const { minRows, maxRows } = this.state;
@@ -162,8 +162,8 @@ class NoneDrawingConsultingContainer extends React.Component {
       value2: event.target.value2,
       rows: currentRows < maxRows ? currentRows : maxRows,
     });
-
-    ManufactureProcess.requestComment2 = event.target.value2;
+    console.log(event.target.value);
+    ManufactureProcess.requestComment2 = event.target.value;
   };
 
   // axios data
@@ -180,26 +180,63 @@ class NoneDrawingConsultingContainer extends React.Component {
     } = this.state;
     const { ManufactureProcess, Schedule } = this.props;
     // return alert(`
-    //    프로젝트이름: ${projectname}
-    //    가로: ${row}
-    //    세로: ${column}
-    //    높이: ${height}
-    //    `);
+    // 	프로젝트이름: ${projectname}
+    // 	가로: ${row}
+    // 	세로: ${column}
+    // 	높이: ${height}
+    // 	`);
+
+    let str = "";
+    var result = Object.keys(purpose).map((key) => [key, purpose[key]]);
+
+    result.map((item, idx) => {
+      console.log(result[idx][1]);
+      str += result[idx][1];
+      if (idx !== result.length - 1) {
+        str += ", ";
+      }
+    });
+    console.log(result);
+    console.log(str);
+
+    console.log(purpose);
+    console.log(ManufactureProcess.requestComment);
+    console.log(ManufactureProcess.requestComment2);
+    console.log(purpose.id1);
+    // let str = "";
+    // for (var i = 0; i < purpose.length; i++) {
+    //   str += `purpose.id[${i + 1}]`;
+    // }
+    // console.log(str);
 
     console.log("requestSubmit");
     console.log(Schedule.clickDay);
+
+    console.log(ManufactureProcess.openFileArray);
+
     var formData = new FormData();
     formData.append("request_state", "상담요청");
+
+    //formData.append("request_state", str);
     //formData.append("purpose", purpose)
     formData.append("name", projectname);
-    //formData.append("deadline", Schedule.clickDay + "   09:00");
-    formData.append("deadline", "2020-11-11 11:11");
-    formData.append("deadline_state", "납기일미정");
+    formData.append("deadline", Schedule.clickDay + " 09:00");
+    //formData.append("deadline", "2020-11-11 11:11");
+    formData.append(
+      "deadline_state",
+      ManufactureProcess.date_undefined ? "납기일미정" : ""
+    );
     //ManufactureProcess.date_undefined
     formData.append("order_request_open", ManufactureProcess.requestComment);
-    formData.append("order_request_open", ManufactureProcess.requestComment2);
-    // formData.append("file_open", ManufactureProcess.openFileArray);
-    // formData.append("file_close", ManufactureProcess.privateFileArray);
+    formData.append("order_request_close", ManufactureProcess.requestComment2);
+    //formData.append("file_open", ManufactureProcess.openFileArray[0]);
+    for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
+      formData.append(`file_open`, ManufactureProcess.openFileArray[i]);
+    }
+    //formData.append("file_close", ManufactureProcess.privateFileArray);
+    for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
+      formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
+    }
     formData.append("blueprint_exist", 0);
 
     // const formData = {
@@ -232,7 +269,6 @@ class NoneDrawingConsultingContainer extends React.Component {
       .catch((e) => {
         console.log(e);
         console.log(e.response);
-        console.log(e.response.data);
       });
 
     //

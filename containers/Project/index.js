@@ -1,18 +1,18 @@
-import React from 'react';
-import ClientContentContainer from './Client/Content';
-import ClientMobileContentContainer from './Client/MobileProject';
-import PartnerContentContainer from './Partner/Content';
-import PartnerMobileContentContainer from './Partner/MobileProject';
-import BannerContainer from './Banner';
-import NavContainer from './Nav.js';
-import SearchBar from './SearchBar';
-import styled from 'styled-components';
-import RequestComplete from './RequestComplete';
-import PartnerAnswer from './PartnerAnswer';
+import React from "react";
+import ClientContentContainer from "./Client/Content";
+import ClientMobileContentContainer from "./Client/MobileProject";
+import PartnerContentContainer from "./Partner/Content";
+import PartnerMobileContentContainer from "./Partner/MobileProject";
+import BannerContainer from "./Banner";
+import NavContainer from "./Nav.js";
+import SearchBar from "./SearchBar";
+import styled from "styled-components";
+import RequestComplete from "./RequestComplete";
+import PartnerAnswer from "./PartnerAnswer";
 
-import { inject, observer } from 'mobx-react';
+import { inject, observer } from "mobx-react";
 
-@inject('Project', 'Auth')
+@inject("Project", "Auth")
 @observer
 class ProjectContainer extends React.Component {
 	async componentDidMount() {}
