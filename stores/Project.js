@@ -116,7 +116,9 @@ class Project {
       });
     CategoryAPI.getCategoryMiddle(req)
     .then((res) => {
-      this.projectCategoryData = res.data.results[this.category-1];
+      this.projectCategoryData = res.data.results;
+      this.project_next = res.data.next;        
+      this.project_count = res.data.count;  
       this.maincategory = res.data.results[10].maincategory;
       this.categoryname = this.projectCategoryData.category;
     })
