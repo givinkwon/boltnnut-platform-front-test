@@ -1,12 +1,11 @@
 import axios from "axios";
 import { ROOT_URL } from "./index";
 
-
 export function getRequests(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/requests/?ordering=-id`,
-  })
+  });
 }
 export function findSelect(req) {
   return axios({
@@ -17,9 +16,11 @@ export function findSelect(req) {
 }
 
 export function create(req) {
+  console.log(req);
   return axios({
     method: "POST",
     url: `${ROOT_URL}/requests/`,
+    headers: req.headers ? req.headers : null,
     data: req.data,
   });
 }

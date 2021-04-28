@@ -1,66 +1,47 @@
-import React from 'react'
-import Head from 'next/head'
-import styled from 'styled-components'
-import { inject, observer } from 'mobx-react'
-import BannerContainer from 'containers/Project/Banner';
-import Router from "next/router";
+import React from 'react';
+import styled from 'styled-components';
+import Containerv1 from 'components/Containerv1';
+import Background from 'components/Background';
 
-import Nav from 'components/Nav'
-import MobileNav from 'components/MobileNav'
-import Footer from 'components/Footer'
-import Spinner from 'components/Spinner'
+import Content1 from 'containers/Project/Detail/Content1';
+import Content2 from 'containers/Project/Detail/Content2';
+import ContentSub from 'containers/Project/Detail/ContentSub';
+import Content3 from 'containers/Project/Detail/Content3';
+//import BannerContainer from './Banner';
 
-import Test from 'containers/Project/test'
+class Test extends React.Component {
+	render() {
+		return (
+			<>
+				<Background
+					style={{
+						display: 'inline-flex',
+						flexDirection: 'row',
+						justifyContent: 'center',
+						alignItems: 'start',
+						marginTop: 50,
+					}}
+				>
+					<Containerv1>
+						<Container13>
+							<Content1 />
+							<Content2 />
+						</Container13>
+						<ContentSub />
+					</Containerv1>
+				</Background>
 
-const back_ic = "/static/images/components/MobileNav/back_ic.svg";
-
-@inject('Project', 'Loading')
-@observer
-class Test2 extends React.Component{
-  state={
-    width:null,
-  }
-  componentDidMount() {
-    window.addEventListener('resize', this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
-  };
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
-  };
-  updateDimensions = () => {
-    this.setState({ ...this.state, width: window.innerWidth });
-  };
-  render(){
-    const { Project, Loading } = this.props
-    const { width } = this.state;
-    const gray = "#f6f6f6"
-    return (
-      <div>
-        {Loading.is_open}
-        {/* {Loading.is_open && <Spinner/>} */}
-        <Head>
-          <title>볼트앤너트</title>
-        </Head>
-        <>
-        { width > 767.98 ? (
-          <Nav />
-          ) : (         
-          <div>
-            <MobileNav src={ back_ic } headText={ "프로젝트 관리" } width={width}/>
-            <div style={{ height: '65px'}}></div>
-          </div> 
-          )
-        }
-        </>
-        <div style={{ overflow: 'visible'}}>
-        <BannerContainer/>        
-        </div>            
-        <Test width={width} length = { Project.project_length }/>
-        
-        <Footer color={gray}/>
-      </div>
-    )
-  }
+				<Content3 />
+			</>
+		);
+	}
 }
 
-export default Test2;
+export default Test;
+
+const Container13 = styled.div`
+	width: 996px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+`;

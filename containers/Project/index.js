@@ -1,42 +1,61 @@
-import React from 'react'
-import ContentContainer from './Content'
-import MobileContentContainer from './MobileProject'
-import BannerContainer from './Banner';
-import NavContainer from './Nav.js';
-import { inject, observer } from 'mobx-react';
+import React from "react";
+import ClientContentContainer from "./Client/Content";
+import ClientMobileContentContainer from "./Client/MobileProject";
+import PartnerContentContainer from "./Partner/Content";
+import PartnerMobileContentContainer from "./Partner/MobileProject";
+import BannerContainer from "./Banner";
+import NavContainer from "./Nav.js";
+import SearchBar from "./SearchBar";
+import styled from "styled-components";
+import RequestComplete from "./RequestComplete";
+import PartnerAnswer from "./PartnerAnswer";
+
+import { inject, observer } from "mobx-react";
 
 @inject("Project", "Auth")
-@observer 
+@observer
 class ProjectContainer extends React.Component {
-  async componentDidMount() {
-    console.log("AAAAAAAAAAAAAAa")
-     console.log(this.props.Auth.logged_in_client) 
-    // await this.props.Test.init();
-    //this.props.Partner.search_text = await this.props.query.q;
-    //await this.props.Test.searchjust();
-  }
-  render(){
-    return (
-      <>  
-        {
-          this.props.width && this.props.width > 767.99 ? (
-            <div style={{ overflow: 'visible'}}>
-              
-              <BannerContainer/>            
-              {Project.step_index == 1 &&         
-              <NavContainer style={{marginTop: '50px'}}/>
-              <ContentContainer length = {this.props.length} />
-  }
-            </div>
-          ) : (
-            <div>      
-              <MobileContentContainer width={this.props.width}/>             
-            </div>
-          )
-        }                                                                
-      </>
-    )
-  }
+	async componentDidMount() {}
+	render() {
+		const { Auth } = this.props;
+		return (
+			<>
+				{Auth.logged_in_client &&
+					(this.props.width && this.props.width > 767.99 ? (
+						<div style={{ overflow: 'visible' }}>
+							<BannerContainer />
+							<PartnerAnswer />
+							{/* <RequestComplete /> */}
+							<NavContainer style={{ marginTop: '50px' }} />
+							<ClientContentContainer length={this.props.length} />
+						</div>
+					) : (
+						<div>
+							<ClientMobileContentContainer width={this.props.width} />
+						</div>
+					))}
+				{Auth.logged_in_partner &&
+					(this.props.width && this.props.width > 767.99 ? (
+						<div style={{ overflow: 'visible' }}>
+							<BannerContainer />
+							<SearchBar />
+							<PartnerContentContainer length={this.props.length} />
+						</div>
+					) : (
+						<div>
+							<PartnerMobileContentContainer width={this.props.width} />
+						</div>
+					))}
+			</>
+		);
+	}
 }
 
-export default ProjectContainer
+export default ProjectContainer;
+
+// const Header = styled.div`
+//   margin-top: 90px;
+//   width: 100%;
+//   display: flex;
+//   justify-content: center;
+// `
