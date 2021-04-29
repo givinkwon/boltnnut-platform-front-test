@@ -32,13 +32,10 @@ class BannerConatiner extends React.Component {
 									marginBottom: '15px',
 								}}
 							>
-								<FontSize40>프로젝트 찾기</FontSize40>
-								<FontSize16 style={{ marginLeft: '25px' }}>
-									*파트너 전용 페이지 입니다.
-								</FontSize16>
+								<FontSize40>프로젝트 관리</FontSize40>
 							</div>
 							<FontSize22>
-								프로젝트 관리 프로젝트 관리 프로젝트 관리 워딩필요
+								문의한 프로젝트에 대한 상담 내용을 확인하세요.
 							</FontSize22>
 						</Item>
 					)}
@@ -54,7 +51,7 @@ class BannerConatiner extends React.Component {
 								</Text.FontSize48>
 							</span>
 							<Text.FontSize24 color={WHITE} fontWeight={400}>
-								프로젝트 관리 워딩 필요 프로젝트 관리 워딩 필요
+								문의한 프로젝트에 대한 상담을 통해 신규 거래처를 찾아보세요.
 							</Text.FontSize24>
 						</Item>
 					)}

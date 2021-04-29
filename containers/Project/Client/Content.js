@@ -7,7 +7,11 @@ import { inject, observer } from "mobx-react";
 import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
+<<<<<<< HEAD
 import { toJS } from "mobx";
+=======
+import Project from "../../../stores/Project";
+>>>>>>> 8a899becd411d54ae0fc6fbc226ea2d9b0d3e585
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -33,12 +37,18 @@ class ProjectContentContainer extends React.Component {
 
   async componentDidMount() {
     const { Project, Auth } = this.props;
+<<<<<<< HEAD
 
     console.log("<Web> did mount");
 
     console.log(toJS(Auth));
     console.log(toJS(Auth.logged_in_client));
     console.log(toJS(Auth.logged_in_client.id));
+=======
+
+    console.log("<Web> did mount");
+
+>>>>>>> 8a899becd411d54ae0fc6fbc226ea2d9b0d3e585
     // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
     // const color = document.getElementById("MyFooter").getAttribute('style');
     // console.log(color);

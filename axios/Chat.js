@@ -9,9 +9,39 @@ export function saveChat(req) {
   });
 }
 
-export function loadChat() {
+export function loadChat(id) {
   return axios({
     method: "GET",
-    url: `${ROOT_URL}/chatlog/`,
+    url: `${ROOT_URL}/chatlog/?answer=${id}&ordering=-id`,
+    // order: [["id", "DESC"]], //DESC
+  });
+}
+
+export function loadChatCount(id) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/answer/${id}`,
+  });
+}
+
+export function saveChatCount(req) {
+  // console.log("RRRQWEWEWEEWEWEWEWE");
+  // console.log(req.params);
+  // console.log(`${ROOT_URL}/answer/${req.extraUrl}`);
+  return axios({
+    method: "PUT",
+    url: `${ROOT_URL}/answer/${req.extraUrl}`,
+    data: req.params ? req.params : null,
+  });
+}
+
+export function patchShareInform(req) {
+  // console.log("RRRQWEWEWEEWEWEWEWE");
+  console.log(req.params);
+  console.log(`${ROOT_URL}/answer/${req.extraUrl}`);
+  return axios({
+    method: "PATCH",
+    url: `${ROOT_URL}/answer/${req.extraUrl}`,
+    data: req.params ? req.params : null,
   });
 }
