@@ -14,9 +14,35 @@ class ChatTestContainer extends React.Component {
     this.state = {
       isIn: false,
       messages: [],
+      currentTime: null,
+      currentFile: null,
     };
   }
 
+  onChangeFile = (e) => {
+    // let fileNameAvailable = ["stl", "stp"];
+    let fileName;
+    if (e.currentTarget.files[0]) {
+      // !fileNameAvailable.includes(
+      // e.currentTarget.files[0].name.split(".")[e.currentTarget.files.length];
+      // )
+      // {
+      //   return alert("파일 확장자명 (stl, stp만 가능) 을 확인해주세요.");
+      // }
+      fileName = e.currentTarget.files[0].name;
+      this.setState({ currentFile: e.currentTarget.files[0] });
+    }
+  };
+  shareButtonClick = () => {
+    const req = {
+      extraUrl: `238/`,
+      params: {
+        partner: 265,
+        share_inform: true,
+      },
+    };
+    ChatAPI.patchShareInform(req);
+  };
   chatSocket = new WebSocket("wss://test.boltnnut.com/ws/chat/" + `1234` + "/");
   userType = null;
   // componentDidMount = () => {
@@ -25,6 +51,7 @@ class ChatTestContainer extends React.Component {
   // messages = [{}];
   // onSendMessage = null;
   checkRead = (fullMessage, currentMessage) => {
+    // console.log("CHECKREAD!!!!!!!");
     // console.log(fullMessage);
     // console.log(currentMessage);
     // console.log(this.props.currentUserType);
@@ -39,34 +66,43 @@ class ChatTestContainer extends React.Component {
   };
 
   async componentDidMount() {
-    this.setState({ messages: [] });
+    let temp = new Date();
+    let timezone = temp.getTimezoneOffset();
+    temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
+    this.setState({ messages: [], currentTime: temp });
     ChatAPI.loadChat(238).then((res) => {
       const reverseChat = res.data.results.reverse();
       ChatAPI.loadChatCount(238).then((m_res) => {
+        console.log(m_res);
         reverseChat.forEach((message) => {
           const Messages = this.state.messages;
           let readState = true;
           if (message.user_type === 0) {
-            console.log(m_res.data.check_count_partner); // 이건 밀리세컨드고
-            console.log(message.createdAt); // 이건 파이썬에서 그냥 표준 시간형식으로 저장돼서 둘 중 하나 바꿔줘야함 비교할때
+            console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
+            // console.log(message.createdAt); // 이건 파이썬에서 그냥 표준 시간형식으로 저장돼서 둘 중 하나 바꿔줘야함 비교할때
             //여기서 바꿔줘야함
-            if (m_res.data.check_count_partner < message.createdAt) {
-              console.log("RR");
+            if (m_res.data.check_time_partner < message.createdAt) {
               readState = false;
             }
           } else {
+            if (m_res.data.check_time_client < message.createdAt) {
+              readState = false;
+            }
           }
+
           Messages.push({
             member: message.user_type,
             text: message.text_content,
             time: message.createdAt,
             bRead: readState,
           });
+          // if (Messages[0].time < Messages[1].time) {
+          //   console.log("asdnklasndlkasndlknaslkdnalksdnladsnkl");
+          // }
           this.setState({ f: 3 });
         });
       });
     });
-
     // this.setState({ messages: [] });
     this.chatSocket.onopen = async () => {
       await this.props.Auth.checkLogin();
@@ -79,7 +115,7 @@ class ChatTestContainer extends React.Component {
         JSON.stringify({
           message: "접속완료",
           type: this.userType,
-          time: Date.now(),
+          time: this.state.currentTime,
           bReceive: true,
         })
       );
@@ -91,7 +127,7 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.onmessage = (e) => {
       // console.log("Aaaasdasd");
       const data = JSON.parse(e.data);
-      // console.log(data);
+      console.log(data);
       // if (data.type != 2) {
 
       // if (data.message != "receive") {
@@ -106,6 +142,15 @@ class ChatTestContainer extends React.Component {
 
       // console.log(data.bReceive);
       const messages = this.state.messages;
+      // if (messages[0] && messages[1]) {
+      //   console.log(messages[0].time);
+      //   console.log(messages[1].time);
+      //   if (messages[0].time > messages[1].time) {
+      //     console.log("!!!!!!!!!!!");
+      //   }
+      // }
+
+      // console.log(new Date().setHours(new Date().getHours() + 9));
       if (!data.bReceive) {
         if (data.member != this.userType) {
           console.log(
@@ -115,7 +160,7 @@ class ChatTestContainer extends React.Component {
             JSON.stringify({
               message: "수신완료",
               type: this.userType,
-              time: Date.now(),
+              time: this.state.currentTime,
               bReceive: true,
             })
           );
@@ -161,21 +206,22 @@ class ChatTestContainer extends React.Component {
         }
       }
       ChatAPI.loadChatCount(tempAnswerNum).then((res) => {
-        let clientChatCount = res.check_count_client;
-        let partnerChatCount = res.check_count_partner;
+        let clientChatCount = res.check_time_client;
+        let partnerChatCount = res.check_time_partner;
 
         this.userType === 0
-          ? (clientChatCount = Date.now())
-          : (partnerChatCount = Date.now());
+          ? (clientChatCount = new Date())
+          : (partnerChatCount = new Date());
         const answerReq = {
           extraUrl: `${tempAnswerNum}/`,
           params: {
             partner: 265,
-            check_count_client: clientChatCount,
-            check_count_partner: partnerChatCount,
+            check_time_client: clientChatCount,
+            check_time_partner: partnerChatCount,
           },
         };
         ChatAPI.saveChatCount(answerReq);
+        this.setState({ f: 3 });
         // ChatAPI.loadChat(tempAnswerNum).then((res) => {
         //   console.log("loadchat");
         //   this.userType === 0
@@ -185,8 +231,8 @@ class ChatTestContainer extends React.Component {
         //     extraUrl: `${tempAnswerNum}/`,
         //     params: {
         //       partner: 265,
-        //       check_count_client: clientChatCount,
-        //       check_count_partner: partnerChatCount,
+        //       check_time_client: clientChatCount,
+        //       check_time_partner: partnerChatCount,
         //     },
         //   };
         //   ChatAPI.saveChatCount(answerReq);
@@ -218,14 +264,15 @@ class ChatTestContainer extends React.Component {
     console.log("front");
     // console.log(userType);
     // console.log("RR");
-    // console.log(Date.now());
+    // console.log(new Date()());
 
     this.chatSocket.send(
       JSON.stringify({
         message: myMessage,
         type: this.userType,
-        time: Date.now(),
+        time: this.state.currentTime,
         bReceive: false,
+        file: this.state.currentFile,
       })
     );
     // console.log("e");
@@ -241,10 +288,19 @@ class ChatTestContainer extends React.Component {
         <input id="chat-message-input" type="text" size="100" />
         <br />
         <input id="chat-message-submit" type="button" value="Send" /> */}
+        <input
+          id="FileInput"
+          type="file"
+          onChange={(e) => {
+            this.onChangeFile(e);
+          }}
+          // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
+        />
         <ChatCardContainer
           messages={this.state.messages}
           onSendMessage={this.onSendMessage}
           currentUserType={this.userType}
+          shareButtonClick={this.shareButtonClick}
         />
       </>
     );

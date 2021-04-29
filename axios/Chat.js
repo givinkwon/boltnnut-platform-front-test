@@ -26,10 +26,21 @@ export function loadChatCount(id) {
 
 export function saveChatCount(req) {
   // console.log("RRRQWEWEWEEWEWEWEWE");
+  // console.log(req.params);
+  // console.log(`${ROOT_URL}/answer/${req.extraUrl}`);
+  return axios({
+    method: "PUT",
+    url: `${ROOT_URL}/answer/${req.extraUrl}`,
+    data: req.params ? req.params : null,
+  });
+}
+
+export function patchShareInform(req) {
+  // console.log("RRRQWEWEWEEWEWEWEWE");
   console.log(req.params);
   console.log(`${ROOT_URL}/answer/${req.extraUrl}`);
   return axios({
-    method: "PUT",
+    method: "PATCH",
     url: `${ROOT_URL}/answer/${req.extraUrl}`,
     data: req.params ? req.params : null,
   });

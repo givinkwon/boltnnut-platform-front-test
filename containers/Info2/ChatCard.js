@@ -64,8 +64,8 @@ class ChatCardContainer extends React.Component {
           : 0,
       //height: this.state.height > 35 ? 580 - (currentRows - 1) * 35 : 0,
     });
-    console.log(currentRows);
-    console.log(this.state.height);
+    // console.log(currentRows);
+    // console.log(this.state.height);
   };
 
   onChange(e) {
@@ -237,7 +237,9 @@ class ChatCardContainer extends React.Component {
                   회사 소개서 보러가기
                   <img src={pass2_img} />
                 </Button>
-                <Button>관심있는 회사 추가하기</Button>
+                <Button onClick={this.props.shareButtonClick}>
+                  비공개 정보 공개하기
+                </Button>
               </Profile>
               <Partner>
                 <Font20 style={{ alignSelf: "flex-start" }}>파트너 목록</Font20>
