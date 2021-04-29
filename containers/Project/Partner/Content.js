@@ -95,11 +95,11 @@ class ProjectContentContainer extends React.Component {
         {/* { Project.projectDataList.length > 0 && Project.projectDataList.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
         <Main>
           <Header style={{paddingTop: '32px'}}>
-            <Font20 style={{marginLeft: '-9px'}}><span style={{fontWeight: 'bold'}}>{ Project.project_count}개</span>의 프로젝트가 진행 중입니다.</Font20>
-            <span>
+            <Font20 style={{marginLeft: '-9px'}}><span style={{fontWeight: 'bold'}}>{ Project.project_count}개</span>의 상담 요청 프로젝트가 있습니다.</Font20>
+            {/* <span>
               <Font14>모든 제조의뢰</Font14>
               <img src={pass4}/>
-            </span>
+            </span> */}
 
             
           </Header>

@@ -91,7 +91,7 @@ class Project {
     const token = localStorage.getItem("token");
     const req = {
       params: {
-        client: clientId,
+        request__client: clientId,
         page: page,
       },
       headers: {
