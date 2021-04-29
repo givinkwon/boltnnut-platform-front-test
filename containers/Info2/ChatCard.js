@@ -64,8 +64,8 @@ class ChatCardContainer extends React.Component {
           : 0,
       //height: this.state.height > 35 ? 580 - (currentRows - 1) * 35 : 0,
     });
-    console.log(currentRows);
-    console.log(this.state.height);
+    // console.log(currentRows);
+    // console.log(this.state.height);
   };
 
   onChange(e) {
@@ -80,8 +80,24 @@ class ChatCardContainer extends React.Component {
   executeScroll = () =>
     this.myRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
+  checkRead = (fullMessage, currentMessage) => {
+    // console.log(fullMessage);
+    // console.log(currentMessage);
+    // console.log(this.props.currentUserType);
+
+    fullMessage.forEach((element) => {
+      if (
+        currentMessage.member != element.member &&
+        element.time <= currentMessage.time
+      ) {
+        element.bRead = true;
+      }
+    });
+  };
   renderMessage(message) {
-    const { member, text } = message;
+    // this.checkRead(this.props.messages, message);
+
+    const { member, text, time, bRead } = message;
     const { currentUserType } = this.props;
     const messageFromMe = member === currentUserType;
     //const messageFromMe = true;
@@ -108,13 +124,13 @@ class ChatCardContainer extends React.Component {
           {/* {!messageFromMe && <Message_User>상대</Message_User>} */}
           <Message_text fromMe={messageFromMe}>{text}</Message_text>
           <Message_Info>
-            {true && (
+            {bRead && (
               <>
                 읽음
                 <br />
               </>
             )}
-            시간
+            {time}
           </Message_Info>
         </MessageContent>
       </Messages_li>
@@ -137,8 +153,8 @@ class ChatCardContainer extends React.Component {
               </Header>
               <MessageList height={this.state.height}>
                 <div style={{ padding: "0 10px 0 10px", height: "80%" }}>
-                  {/* {messages.map((m) => this.renderMessage(m))} */}
-                  {this.renderMessage({
+                  {messages.map((m) => this.renderMessage(m))}
+                  {/* {this.renderMessage({
                     member: "볼트앤너트",
                     text:
                       "비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다.",
@@ -146,24 +162,32 @@ class ChatCardContainer extends React.Component {
                   {this.renderMessage({
                     member: "볼트앤너트",
                     text: "혹시 도면 파일 보내주실 수 있나요?",
-                  })}
+                  })} */}
+                  {/* {this.renderMessage({ member: "client", text: "Hi" })}
+                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
+                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
+                  {this.renderMessage({ member: 0, text: "Hi" })}
                   {this.renderMessage({ member: 0, text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: 0, text: "Hi" })}
-                  {this.renderMessage({ member: 0, text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
+                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })} */}
                 </div>
               </MessageList>
               <TypingBox>
                 <SubmitForm
-                  onSubmit={(e) => this.onSubmit(e)}
+                  // onSubmit={(e) => this.onSubmit(e)}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      this.onSubmit(e);
+                    }
+                  }}
                   bottom={this.state.rows}
+                  // onKeyPress={() => console.log("RR")}
                 >
                   {/* <InputBox
                     onChange={(e) => this.onChange(e)}
@@ -213,7 +237,9 @@ class ChatCardContainer extends React.Component {
                   회사 소개서 보러가기
                   <img src={pass2_img} />
                 </Button>
-                <Button>관심있는 회사 추가하기</Button>
+                <Button onClick={this.props.shareButtonClick}>
+                  비공개 정보 공개하기
+                </Button>
               </Profile>
               <Partner>
                 <Font20 style={{ alignSelf: "flex-start" }}>파트너 목록</Font20>
