@@ -26,7 +26,7 @@ class Banner3Container extends React.Component {
         >
           <Fade bottom>
             <div>
-              <Header>컨설턴트 중 해당 제품</Header>
+              <Header>무료 비교 견적 서비스</Header>
               <Middle>
                 전문 제조사들에게 <br />
                 다양한 비교 견적
