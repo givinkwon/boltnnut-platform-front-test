@@ -7,6 +7,7 @@ import Content1 from "./Content1";
 import Content2 from "./Content2";
 import ContentSub from "./ContentSub";
 import Content3 from "./Content3";
+import Content4 from "./Content4";
 //import BannerContainer from './Banner';
 
 class ProjectDetailContainer extends React.Component {
@@ -26,12 +27,13 @@ class ProjectDetailContainer extends React.Component {
             <Container13>
               <Content1 />
               <Content2 />
+              <Content4 />
             </Container13>
             <ContentSub />
           </Containerv1>
         </Background>
 
-        <Content3 />
+        {/* <Content3 /> */}
       </>
     );
   }
