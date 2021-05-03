@@ -77,6 +77,7 @@ class ChatCardContainer extends React.Component {
     this.setState({ text: "" });
     this.props.onSendMessage(this.state.text);
   }
+
   executeScroll = () =>
     this.myRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -94,6 +95,65 @@ class ChatCardContainer extends React.Component {
       }
     });
   };
+
+  onChangeFile = async (e) => {
+    // let fileNameAvailable = ["stl", "stp"];
+    let fileName;
+
+    let file = [];
+    // let fileNameAvailable = ["txt"];
+
+    if (e.currentTarget.files[0]) {
+      // !fileNameAvailable.includes(
+      // e.currentTarget.files[0].name.split(".")[e.currentTarget.files.length];
+      // )
+      // {
+      //   return alert("파일 확장자명 (stl, stp만 가능) 을 확인해주세요.");
+      // }
+      fileName = e.currentTarget.files[0].name;
+      await this.setState({ currentFile: e.currentTarget.files[0] });
+
+      // const extension = item.fileName.split(".");
+      //console.log(e.currentTarget.files[0]);
+
+      console.log(this.state.currentFile);
+      console.log(this.state.currentFile.name.split(".").pop());
+      const extension = this.state.currentFile.name.split(".").pop();
+      if (
+        extension === "jpg" ||
+        extension === "jpeg" ||
+        extension === "png" ||
+        extension === "gif"
+      ) {
+        file.push({
+          chat_type: 1,
+          // message: "이미지",
+          file: this.state.currentFile,
+          answer: 238,
+          user,
+        });
+
+        // }else if(extension === "ppt" || extension==="pdf" || extension==="stl" || extension==="stp" || extension==="xlex"){
+      }
+      // else if (extension === "txt") {
+      //   file.push({
+      //     chat_type: 0,
+      //     // message: "텍스트",
+      //     origin_file: this.state.currentFile,
+      //   });
+      // }
+      else {
+        file.push({
+          chat_type: 2,
+          // message: "파일",
+          origin_file: this.state.currentFile,
+        });
+      }
+
+      console.log(file);
+    }
+  };
+
   renderMessage(message) {
     // this.checkRead(this.props.messages, message);
 
@@ -148,7 +208,7 @@ class ChatCardContainer extends React.Component {
               <Header>
                 <Font24>볼트앤너트</Font24>
                 <img src={search_img} />
-                <img src={prevent_img} />
+                <img src={star_img} />
                 <img src={star_img} />
               </Header>
               <MessageList height={this.state.height}>
@@ -211,12 +271,33 @@ class ChatCardContainer extends React.Component {
                     onChange={(e) => this.onChangeHandler(e)}
                     value={this.state.text}
                   />
-                  <img src={clip_img} />
+
+                  {/* // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
+                  /> */}
+                  <input
+                    id="FileInput"
+                    style={{ border: "1px solid red", display: "none" }}
+                    type="file"
+                    onChange={(e) => {
+                      console.log("onChange");
+                      this.onChangeFile(e);
+                    }}
+                  />
+                  <img
+                    src={clip_img}
+                    onClick={() => {
+                      const realInput = document.querySelector("#FileInput");
+                      console.log(realInput);
+                      realInput.click();
+                      //realInput.innerHTML = "";
+                    }}
+                  ></img>
                   <img src={camera_img} />
                   <img src={emoticon_img} />
                   <SendButton
-                    onClick={() => {
+                    onClick={(e) => {
                       this.setState({ ...this.state, rows: 1, height: 576 });
+                      this.onSubmit(e);
                     }}
                   >
                     전송
@@ -483,6 +564,12 @@ const SubmitForm = styled.form`
       font-weight: 300;
     }
     white-space: pre-line;
+  }
+  > input {
+    position: absolute;
+    //left: 75%;
+    right: 140px;
+    width: 30px;
   }
   > img {
     position: absolute;

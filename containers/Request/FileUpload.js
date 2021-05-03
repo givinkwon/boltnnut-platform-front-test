@@ -270,6 +270,7 @@ class FileUploadContainer extends Component {
     formData.append("order_request_close", ManufactureProcess.requestComment2);
 
     //formData.append("file_open", ManufactureProcess.openFileArray[0]);
+    console.log(toJS(ManufactureProcess.openFileArray));
     for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
       formData.append(`file_open`, ManufactureProcess.openFileArray[i]);
     }

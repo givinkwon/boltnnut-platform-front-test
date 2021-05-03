@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import * as Content from "components/Content";
 import * as Title from "components/Title";
+import Content4 from "./Content4";
 import { inject, observer } from "mobx-react";
 import Background from "components/Background";
 import Container from "components/Containerv1";
@@ -289,6 +290,7 @@ class Content1 extends React.Component {
                 </Font20>
               </div>
             </InfoDetail>
+            <Content4 />
           </InnerContainer>
         </Container1>
       </>
