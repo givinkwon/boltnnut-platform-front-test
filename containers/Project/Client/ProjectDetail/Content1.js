@@ -6,23 +6,33 @@ import { inject, observer } from "mobx-react";
 import Background from "components/Background";
 import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
+import { Toolbar } from "material-ui";
+import { toJS } from "mobx";
 
 const money = "/static/images/project/money.svg";
 const calendar = "/static/images/project/period.svg";
 const applicant = "/static/images/project/applicant.svg";
 const fileimg = "/static/images/project/fileimg.svg";
-const search_img = "static/images/project/search.png";
+const logoImg = "/static/images/project/Logo.png";
+const toolBarImg = "/static/images/project/ToolBar.svg";
+const callImg = "/static/images/project/Call.svg";
+const messagesImg = "/static/images/project/Messages.svg";
 
-import Content4 from "./Content4";
-
-@inject("Project", "Auth")
+@inject("Project", "Auth", "Answer")
 @observer
 class Content1 extends React.Component {
   state = {
     item: [],
+    partnerList: [],
+  };
+  handler = {
+    get(item, property, itemProxy) {
+      console.log(`Property ${property} has been read.`);
+      return target[property];
+    },
   };
   async componentDidMount() {
-    const { Project, Auth } = this.props;
+    const { Project, Auth, Answer } = this.props;
 
     console.log("<Web> did mount");
 
@@ -36,12 +46,16 @@ class Content1 extends React.Component {
     await Auth.checkLogin();
     if (Auth.logged_in_client) {
       Project.getPage(Auth.logged_in_client.id);
+      Answer.loadAnswerListByProjectId(379).then(() => {
+        // console.log(toJS(Answer.answers));
+        this.setState({ partnerList: Answer.answers });
+      });
     }
-    console.log(Auth.logged_in_client);
   }
 
   render() {
     const { Project } = this.props;
+
     let name = "";
     let date = "";
     let period = "";
@@ -77,160 +91,205 @@ class Content1 extends React.Component {
     return (
       <>
         <Container1>
-          <Top>
-            <Box1>
-              <Font18
-                style={{
-                  color: "#ffffff",
-                  fontWeight: "500",
-                  letterSpacing: -0.18,
-                }}
+          <InnerContainer>
+            <Top>
+              <Box1>
+                <Font18
+                  style={{
+                    color: "#ffffff",
+                    fontWeight: "500",
+                    letterSpacing: -0.18,
+                  }}
+                >
+                  모집 중
+                </Font18>
+              </Box1>
+              <div style={{ display: "inline-flex", flexDirection: "row" }}>
+                <Font16 style={{ color: "#999999", marginRight: 17 }}>
+                  등록 일자
+                </Font16>{" "}
+                <Font16 style={{ color: "#999999" }}>{date}</Font16>
+              </div>
+            </Top>
+            <Head>
+              <Font26
+                style={{ height: 38, fontWeight: "bold", letterSpacing: -0.65 }}
               >
-                모집 중
-              </Font18>
-            </Box1>
-            <div style={{ display: "inline-flex", flexDirection: "row" }}>
-              <Font16 style={{ color: "#999999", marginRight: 17 }}>
-                등록 일자
-              </Font16>{" "}
-              <Font16 style={{ color: "#999999" }}>{date}</Font16>
-            </div>
-          </Top>
-          <Head>
-            <Font26
-              style={{ height: 38, fontWeight: "bold", letterSpacing: -0.65 }}
-            >
-              {name}
-            </Font26>
-            {/* <div>
+                {name}d
+              </Font26>
+              {/* <div>
               <Font17 style={{ color: "#86888c" }}>
                 {maincategory}
                 {maincategoryname}
               </Font17>
             </div> */}
-            {/* <div></div> */}
-            <div>
-              <Font17 style={{ color: "#86888c" }}>
-                {category}
-                {categoryname}
-              </Font17>
-            </div>
-          </Head>
-          <Box2Container>
-            <Box2>
-              <Box2ImageContainer>
-                <img src={money}></img>
-              </Box2ImageContainer>
-              <div style={{ marginBottom: 27 }}>
-                <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
-                <Font18 style={{ fontWeight: "bold" }}>{estimate}</Font18>
-              </div>
-            </Box2>
-
-            <Box2>
-              <Box2ImageContainer>
-                <img src={calendar}></img>
-              </Box2ImageContainer>
-              <div style={{ marginBottom: 27 }}>
-                <Font18 style={{ color: "#86888c" }}>예상 기간</Font18>
-                <Font18 style={{ fontWeight: "bold" }}>{period}</Font18>
-              </div>
-            </Box2>
-
-            <Box2>
-              <Box2ImageContainer>
-                <img src={applicant}></img>
-              </Box2ImageContainer>
-              <div style={{ marginBottom: 27 }}>
-                <Font18 style={{ color: "#86888c" }}>지원자 수</Font18>
-                <Font18 style={{ fontWeight: "bold" }}>2 명</Font18>
-              </div>
-            </Box2>
-          </Box2Container>
-          <Info>
-            <div style={{ width: 125 }}>
-              <Font20>모집 마감일</Font20>
-              <Font20>진행 분류</Font20>
-              <Font20>관련 기술</Font20>
-            </div>
-            <div>
+              {/* <div></div> */}
               <div>
-                <Font20 style={{ color: "#282c36" }}>2021년 3월 24일</Font20>
-                <Font16 style={{ color: "#0933b3", marginLeft: 28 }}>
-                  10일 남음
-                </Font16>
+                <Font17 style={{ color: "#86888c" }}>
+                  {category}
+                  {categoryname}
+                </Font17>
               </div>
-              <Font20 style={{ color: "#282c36" }}>뜨악</Font20>
-              <Font20 style={{ color: "#282c36" }}>CNC</Font20>
-            </div>
-          </Info>
-          {/* <InfoDetail>
-            <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
-              프로젝트 내용 상세 설명
-            </Font20>
-            <Font18
-              style={{
-                letterSpacing: -0.45,
-                fontWeight: "normal",
-                marginBottom: 40,
-                lineHeight: 1.67,
-              }}
-            >
-              저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이 없는데
-              이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기 자체에 파일로만
-              업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게
-              할까요 동해물과 백도산이 마르고 닳도록저희 의뢰하 기 자체에
-              파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
-              어떻게 할까요 저희 의뢰하기 자체에 파일로만 업 로드 되어있고 상세
-              설명이 없는데 이부분은 꼭 필요한데 어떻게 할까요 동해물과 백도산이
-              마르고 닳도록 희 의뢰하기 자체에 파 일로만 업로드 되어있고 상세
-              설명이 없는데 이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기
-              자체에 파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭
-              필요한데 어떻게 할까요 동해물과 백도산이 마르고 닳도록저희
-              의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이 없는데
-              이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기 자체에 파일로만
-              업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게
-              할까요 동해물과 백도산이 마르고 닳도록 희 의뢰하기 자체에 파일로만
-              업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게
-              할까요 저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이
-              없
-            </Font18>
-            <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
-              프로젝트 관련 파일
-            </Font20>
-            <div>
-              <Font20>
-                <img
-                  src={fileimg}
-                  style={{ marginLeft: 15, marginRight: 12 }}
-                ></img>
-                계약서 및 기능명세서.hwp
-              </Font20>
-              <Font20>
-                <img
-                  src={fileimg}
-                  style={{ marginLeft: 15, marginRight: 12 }}
-                ></img>
-                계약서 및 기능명세서.hwp
-              </Font20>
-              <Font20>
-                <img
-                  src={fileimg}
-                  style={{ marginLeft: 15, marginRight: 12 }}
-                ></img>
-                계약서 및 기능명세서.hwp
-              </Font20>
-              <Font20>
-                <img
-                  src={fileimg}
-                  style={{ marginLeft: 15, marginRight: 12 }}
-                ></img>
-                계약서 및 기능명세서.hwp
-              </Font20>
-            </div>
-          </InfoDetail> */}
+            </Head>
+            <Box2Container>
+              <Box2>
+                <Box2ImageContainer>
+                  <img src={money}></img>
+                </Box2ImageContainer>
+                <div style={{ marginBottom: 27 }}>
+                  <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
+                  <Font18 style={{ fontWeight: "bold" }}>{estimate}</Font18>
+                </div>
+              </Box2>
 
-          <Content4 />
+              <Box2>
+                <Box2ImageContainer>
+                  <img src={calendar}></img>
+                </Box2ImageContainer>
+                <div style={{ marginBottom: 27 }}>
+                  <Font18 style={{ color: "#86888c" }}>예상 기간</Font18>
+                  <Font18 style={{ fontWeight: "bold" }}>{period}</Font18>
+                </div>
+              </Box2>
+
+              <Box2>
+                <Box2ImageContainer>
+                  <img src={applicant}></img>
+                </Box2ImageContainer>
+                <div style={{ marginBottom: 27 }}>
+                  <Font18 style={{ color: "#86888c" }}>지원자 수</Font18>
+                  <Font18 style={{ fontWeight: "bold" }}>2 명</Font18>
+                </div>
+              </Box2>
+            </Box2Container>
+            {/* =================================================== */}
+            {/* 지원한 파트너 */}
+            <AppliedPartner>
+              <Font20
+                style={{
+                  color: "#282c36",
+                  fontWeight: "bold",
+                  marginBottom: 20,
+                }}
+              >
+                지원한 파트너
+                <p style={{ color: "#0933b3", marginLeft: 6 }}>5</p>
+              </Font20>
+
+              {/* map으로 뿌리기 */}
+              {this.state.partnerList.map((data, idx) => {
+                return (
+                  <PartnerBox>
+                    <PartnerInfo>
+                      <img src={logoImg} width={36} height={36}></img>
+                      <Font18 style={{ marginLeft: 10 }}>{data.partner}</Font18>
+                    </PartnerInfo>
+                    <Font16>
+                      " 프로젝트 보고 연락드립니다 . 비공개 자료 공개해주실수
+                      있나요 "
+                    </Font16>
+                    <IconBox>
+                      <Icon>
+                        <img src={toolBarImg}></img>
+                      </Icon>
+                      <Icon>
+                        <img src={callImg}></img>
+                      </Icon>
+                      <Icon>
+                        <img src={messagesImg}></img>
+                        <ChatNotice>
+                          <Font14>N</Font14>
+                        </ChatNotice>
+                      </Icon>
+                    </IconBox>
+                  </PartnerBox>
+                );
+              })}
+            </AppliedPartner>
+            {/* =================================================== */}
+            <Info>
+              <div style={{ width: 125 }}>
+                <Font20>모집 마감일</Font20>
+                <Font20>진행 분류</Font20>
+                <Font20>관련 기술</Font20>
+              </div>
+              <div>
+                <div>
+                  <Font20 style={{ color: "#282c36" }}>2021년 3월 24일</Font20>
+                  <Font16 style={{ color: "#0933b3", marginLeft: 28 }}>
+                    10일 남음
+                  </Font16>
+                </div>
+                <Font20 style={{ color: "#282c36" }}>뜨악</Font20>
+                <Font20 style={{ color: "#282c36" }}>CNC</Font20>
+              </div>
+            </Info>
+            <InfoDetail>
+              <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
+                프로젝트 내용 상세 설명
+              </Font20>
+              <Font18
+                style={{
+                  letterSpacing: -0.45,
+                  fontWeight: "normal",
+                  marginBottom: 40,
+                  lineHeight: 1.67,
+                }}
+              >
+                저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이 없는데
+                이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기 자체에 파일로만
+                업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게
+                할까요 동해물과 백도산이 마르고 닳도록저희 의뢰하 기 자체에
+                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
+                어떻게 할까요 저희 의뢰하기 자체에 파일로만 업 로드 되어있고
+                상세 설명이 없는데 이부분은 꼭 필요한데 어떻게 할까요 동해물과
+                백도산이 마르고 닳도록 희 의뢰하기 자체에 파 일로만 업로드
+                되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게 할까요
+                저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이 없는데
+                이부분은 꼭 필요한데 어떻게 할까요 동해물과 백도산이 마르고
+                닳도록저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이
+                없는데 이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기 자체에
+                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
+                어떻게 할까요 동해물과 백도산이 마르고 닳도록 희 의뢰하기 자체에
+                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
+                어떻게 할까요 저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세
+                설명이 없
+              </Font18>
+              <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
+                프로젝트 관련 파일
+              </Font20>
+              <div>
+                <Font20>
+                  <img
+                    src={fileimg}
+                    style={{ marginLeft: 15, marginRight: 12 }}
+                  ></img>
+                  계약서 및 기능명세서.hwp
+                </Font20>
+                <Font20>
+                  <img
+                    src={fileimg}
+                    style={{ marginLeft: 15, marginRight: 12 }}
+                  ></img>
+                  계약서 및 기능명세서.hwp
+                </Font20>
+                <Font20>
+                  <img
+                    src={fileimg}
+                    style={{ marginLeft: 15, marginRight: 12 }}
+                  ></img>
+                  계약서 및 기능명세서.hwp
+                </Font20>
+                <Font20>
+                  <img
+                    src={fileimg}
+                    style={{ marginLeft: 15, marginRight: 12 }}
+                  ></img>
+                  계약서 및 기능명세서.hwp
+                </Font20>
+              </div>
+            </InfoDetail>
+          </InnerContainer>
         </Container1>
       </>
     );
@@ -239,16 +298,72 @@ class Content1 extends React.Component {
 
 export default Content1;
 
+const Icon = styled.div`
+  position: relative;
+`;
+const Font14 = styled(Content.FontSize14)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.86;
+  letter-spacing: -0.35px;
+  text-align: left;
+  color: #ffffff;
+`;
+const ChatNotice = styled.div`
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  // bottom: 15px;
+  bottom: 8px;
+  left: 12px;
+  border-radius: 50%;
+  // padding: 3px 7px 2px;
+  display: ${(props) => (props.active ? "flex" : "none")};
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
+  background-color: #ff3400;
+`;
+const IconBox = styled.div`
+  width: 110px;
+  display: flex;
+  justify-content: space-between;
+`;
+const PartnerInfo = styled.div`
+  display: flex;
+`;
+const PartnerBox = styled.div`
+  margin-bottom: 12px;
+  // width: 100%;
+  height: 56px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  background-color: var(--white);
+  display: flex;
+  // justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 28px 0 28px;
+`;
+const AppliedPartner = styled.div`
+  margin-bottom: 90px;
+`;
+
 const Container1 = styled.div`
-  width: 912px;
+  width: 936px;
   display: flex;
   flex-direction: column;
-  padding: 52px 42px 50px;
+  align-items: center;
+  padding: 54px 32px 52px 32px;
   border-radius: 10px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   background-color: var(--white);
 `;
-
+const InnerContainer = styled.div`
+  // width: 932px;
+  // padding: 54px 0 52px 0;
+`;
 const Top = styled.div`
   width: 100%;
   display: inline-flex;

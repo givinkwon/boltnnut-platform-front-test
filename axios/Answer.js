@@ -35,6 +35,7 @@ export function getNextClientRequestList(req) {
 }
 
 export function getAnswer(req) {
+  console.log(`${ROOT_URL}/answer/${req.extraUrl}`);
   return axios({
     method: "GET",
     url: `${ROOT_URL}/answer/${req.extraUrl}`,
