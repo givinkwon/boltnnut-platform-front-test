@@ -47,8 +47,8 @@ class MobileBanner12Container extends React.Component {
                 <Header>1. 문의 사항 입력하기</Header>
                 <Body>
                   문의하고자 하는 정보를 적어주세요. <br />
-                  민감 정보는 비공개로 제조사의 정보 확인 후 <br />
-                  공개처리 할 수 있습니다. <br />
+                  민감 정보는 비공개로 내가 소통하고 <br />
+                  검증한 업체에게만 공개할 수 있습니다. <br />
                   *도면이 있다면 자동 견적을 받아 볼 수 있습니다. <br />
                 </Body>
                 {/* <Buttonv1
@@ -66,8 +66,8 @@ class MobileBanner12Container extends React.Component {
                 </ImgBox>
                 <Header>2. 제조사의 상담 확인하기</Header>
                 <Body>
-                  제조사는 공개정보를 확인하고 간단한 댓글 문의 <br />
-                  혹은 상세한 제안 문의를 진행할 수 있습니다. <br />
+                  4000여 개의 전문 제조사들이 정보 확인 후 <br />
+                  상세한 상담과 제안을 진행할 수 있습니다. <br />
                 </Body>
                 {/* <Buttonv1
                   onClick={() => Router.push("/request")}

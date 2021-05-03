@@ -26,8 +26,8 @@ class ProjectDetailContainer extends React.Component {
           <Containerv1>
             <Container13>
               <Content1 />
-              <Content2 />
-              <Content4 />
+              {/* <Content2 /> */}
+              {/* <Content4 /> */}
             </Container13>
             <ContentSub />
           </Containerv1>

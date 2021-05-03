@@ -3,31 +3,38 @@ import styled from "styled-components";
 import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
-import Fade from 'react-reveal/Fade';
+import Fade from "react-reveal/Fade";
 
-const image1 = "/static/images/Home/Banner5/Banner5_img1.png"
-const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png"
+const image1 = "/static/images/Home/Banner5/Banner5_img1.png";
+const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 
 class Banner5Container extends React.Component {
   render() {
     return (
-      <Background src={ backgroundImg }>
-        <Containerv1 style={{paddingBottom: 306, paddingTop: 308, justifyContent: 'space-between'}}>
+      <Background src={backgroundImg}>
+        <Containerv1
+          style={{
+            paddingBottom: 306,
+            paddingTop: 308,
+            justifyContent: "space-between",
+          }}
+        >
           <Fade bottom>
             <div>
-              <img src={image1}/>
+              <img src={image1} />
             </div>
             <div>
-              <Header>
-                계약 이행 보증 서비스
-              </Header>
+              <Header>계약 이행 보증 서비스</Header>
               <Middle>
-                7가지 계약 관리<br/>
-                서비스로 계약 이행<br/>
+                7가지 계약 관리
+                <br />
+                서비스로 계약 이행
+                <br />
                 <p>100% 보증</p>
               </Middle>
               <Body>
-                개발부터 납품까지 전담 프로젝트 매니저가<br/>
+                개발부터 납품까지 전담 프로젝트 매니저가
+                <br />
                 배정되어 계약 이행을 100% 보증합니다.
               </Body>
             </div>
@@ -47,7 +54,7 @@ const Header = styled(Title.FontSize20)`
   font-style: normal;
   line-height: 1.45;
   letter-spacing: normal;
-`
+`;
 const Middle = styled(Title.FontSize56)`
   color: #282c36;
   font-weight: 500;
@@ -56,11 +63,11 @@ const Middle = styled(Title.FontSize56)`
   line-height: 1.36;
   letter-spacing: -1.4px;
   margin-bottom: 47px;
-  
-  >p {
-    font-weight:bold;
+
+  > p {
+    font-weight: bold;
   }
-`
+`;
 const Body = styled(Title.FontSize24)`
   // white-space:nowrap;
   font-weight: 500;
@@ -70,5 +77,4 @@ const Body = styled(Title.FontSize24)`
   letter-spacing: -0.6px;
   text-align: left;
   color: #555963;
-`
-
+`;

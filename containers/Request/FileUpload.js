@@ -70,7 +70,7 @@ const customStyles = {
   },
 };
 
-@inject("Request", "ManufactureProcess", "Auth", "Schedule")
+@inject("Request", "ManufactureProcess", "Auth", "Schedule", "Project")
 @observer
 class FileUploadContainer extends Component {
   static defaultProps = { title: "도면 파일을 업로드 해주세요." };
@@ -194,47 +194,6 @@ class FileUploadContainer extends Component {
 
     for (var i = checked_ary.length; i > 0; i--) {
       this.setState({ fileList: fileList.splice(checked_ary[i - 1], 1) });
-      // if(fileList[checked_ary[i-1]]){
-      // //  if(!checked_ary[i]){
-      //     console.log("!!!!!")
-      //     for(var j=checked_ary[i-1]; j<fileList.length; j++){
-      //       const directInput = document.querySelectorAll(`.directInput${j}`)
-      //       // console.log(j)
-      //       // console.log(directInput)
-      //       // if(fileList[j]){
-      //       //   if(fileList[j].selectBig.name === "금형사출"){
-      //       //     console.log(fileList[j].quantity.value)
-      //       //     if(directInputs[j-1]){
-      //       //       directInputs[j-1].value = fileList[j].quantity.value
-      //       //     }
-      //       //   //directInput.value = fileList[j].quantity.value
-      //       //   }
-      //       // }
-
-      //     }
-      //}
-      // else{
-      //   for(var j=checked_ary[i-1]; j<checked_ary[i]; j++){
-      //   //if(fileList[j]){
-      //     const directInput = document.querySelectorAll(`.directInput${j}`)
-      //     console.log(j)
-      //     //console.log(directinput)
-      //     //console.log(fileList[checked_ary[j]].quantity.value)
-      //     if(fileList[checked_ary[j]]){
-      //       //if(checked_ary[j]){
-      //         console.log(directInput)
-      //         console.log(fileList[checked_ary[j]].quantity.value)
-      //         directInput.value = fileList[checked_ary[j]].quantity.value
-      //      // }
-      //     }
-
-      //  // }
-      //   }
-
-      // }
-      //directInputs[checked_ary[i-1]].value = fileList[checked_ary[i-1]].quantity.value
-      //console.log(directInputs[checked_ary[i-1]].value)
-      //}
     }
 
     if (fileList.length) {
@@ -261,32 +220,6 @@ class FileUploadContainer extends Component {
         directInput.value = fileList[num].quantity.value;
       }
       console.log(valueAry);
-
-      // for(var i=0; i<directInputs.length; i++){
-
-      // }
-
-      // for(var i=0; i<fileList.length; i++){
-      //   if(fileList[i]){
-      //     if(fileList[i].selectBig.name === "금형사출"){
-      //       console.log(valueAry[0])
-      //       console.log(i)
-      //       console.log(typeof(valueAry[0]))
-      //       console.log(typeof(i))
-      //       const str_idx = valueAry.findIndex((e) => e === i)
-      //       console.log(str_idx)
-      //       const str = directInputs[str_idx].className
-      //       console.log(str)
-      //       const num = str.slice(str.length-1, str.length);
-      //       console.log(num)
-
-      //       const directInput = document.querySelector(`.directInput${num}`);
-
-      //       directInput.value = fileList[i].quantity.value
-      //     }
-
-      //   }
-      // }
     }
     this.setState({ variation: true });
   }
@@ -298,39 +231,16 @@ class FileUploadContainer extends Component {
     }
   }
 
-  requestSubmit = () => {
+  changeSubmit = () => {};
+  requestSubmit = (flag, id) => {
     const { projectname } = this.state;
     const { ManufactureProcess, Schedule } = this.props;
-    // return alert(`
-    // 	프로젝트이름: ${projectname}
-    // 	가로: ${row}
-    // 	세로: ${column}
-    // 	높이: ${height}
-    // 	`);
 
-    // let str = "";
-    // var result = Object.keys(purpose).map((key) => [key, purpose[key]]);
-
-    // result.map((item, idx) => {
-    //   console.log(result[idx][1]);
-    //   str += result[idx][1];
-    //   if (idx !== result.length - 1) {
-    //     str += ", ";
-    //   }
-    // });
-    // console.log(result);
-    // console.log(str);
-
-    // console.log(purpose);
-    // console.log(ManufactureProcess.requestComment);
-    // console.log(ManufactureProcess.requestComment2);
-    // console.log(purpose.id1);
-    // // let str = "";
-    // // for (var i = 0; i < purpose.length; i++) {
-    // //   str += `purpose.id[${i + 1}]`;
-    // // }
-    // // console.log(str);
     let deadline_state = "";
+    let processData = "";
+    let detailProcessData = "";
+    let quantityData = "";
+
     ManufactureProcess.date_undefined
       ? (deadline_state = "납기일미정")
       : ManufactureProcess.date_conference
@@ -360,6 +270,7 @@ class FileUploadContainer extends Component {
     formData.append("order_request_close", ManufactureProcess.requestComment2);
 
     //formData.append("file_open", ManufactureProcess.openFileArray[0]);
+    console.log(toJS(ManufactureProcess.openFileArray));
     for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
       formData.append(`file_open`, ManufactureProcess.openFileArray[i]);
     }
@@ -367,6 +278,8 @@ class FileUploadContainer extends Component {
     for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
       formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
     }
+
+    formData.append("price", ManufactureProcess.totalorderPrice);
     //formData.append("blueprint_exist", 0);
     formData.append("blueprint_exist", 1);
 
@@ -376,34 +289,77 @@ class FileUploadContainer extends Component {
       console.log(toJS(fileList[i].selectedMid.id));
       console.log(toJS(fileList[i].originFile));
       formData.append(`blueprint`, fileList[i].originFile);
+
+      processData = processData + fileList[i].selectBig.id;
+      detailProcessData = detailProcessData + fileList[i].selectedMid.id;
+      quantityData = quantityData + fileList[i].quantity.value;
+
+      console.log(quantityData);
+      console.log(fileList[i].quantity.value);
+      if (i < fileList.length - 1) {
+        processData = processData + ",";
+        detailProcessData = detailProcessData + ",";
+        quantityData = quantityData + ",";
+      }
+      //formData.append('ㅐ', fileList[i].selectBig.id)
+      // formData.append('', fileList[i].selectedMid.id)
     }
-    formData.append("process", 2);
-    formData.append("detailprocess", 5);
+
+    console.log(processData);
+    console.log(detailProcessData);
+    console.log(quantityData);
+
+    formData.append("process", processData);
+    formData.append("detailprocess", detailProcessData);
+    formData.append("number", quantityData);
 
     //console.log(fileList[0].originFile);
 
     const Token = localStorage.getItem("token");
     //const token = "179bb0b55811073a76bc0894a7c73220da9a191d";
-    const req = {
-      headers: {
-        Authorization: `Token ${Token}`,
-      },
-      data: formData,
-    };
+    if (flag) {
+      const req = {
+        headers: {
+          Authorization: `Token ${Token}`,
+        },
+        data: formData,
+      };
 
-    console.log(req);
+      console.log(req);
 
-    RequestAPI.create(req)
-      .then((res) => {
-        console.log("create: ", res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-        console.log(e.response.data);
-      });
+      RequestAPI.create(req)
+        .then((res) => {
+          console.log("create: ", res);
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+          console.log(e.response.data);
+        });
 
-    //
+      //
+      const processAry = processData.split(",");
+      const detailProcessAry = detailProcessData.split(",");
+      ManufactureProcess.getProcessList(processAry, detailProcessAry);
+    } else {
+      const req = {
+        // headers: {
+        //   Authorization: `Token ${Token}`,
+        // },
+        id: id,
+        data: formData,
+      };
+
+      RequestAPI.patch(req)
+        .then((res) => {
+          console.log("change: ", res);
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+          console.log(e.response.data);
+        });
+    }
   };
 
   purposeHandler = (item) => {
@@ -477,9 +433,83 @@ class FileUploadContainer extends Component {
     }
     console.log(ManufactureProcess.quantity);
   };
-  componentDidMount() {
-    const { ManufactureProcess } = this.props;
+  async componentDidMount() {
+    const { ManufactureProcess, Project, Schedule } = this.props;
     //console.log("didMount")
+    // console.log(ManufactureProcess.changeProject);
+    console.log(ManufactureProcess.checkFileUpload);
+    if (ManufactureProcess.changeProject) {
+      await ManufactureProcess.init();
+      console.log(toJS(Project.projectDetailData.request_set[0].estimate_set));
+      this.state.projectname = Project.projectDetailData.request_set[0].name;
+      this.state.publicValue =
+        Project.projectDetailData.request_set[0].order_request_open;
+      this.state.privateValue =
+        Project.projectDetailData.request_set[0].order_request_close;
+      const clickDayAry = Project.projectDetailData.request_set[0].deadline.split(
+        "T"
+      );
+      Schedule.clickDay = clickDayAry[0];
+      if (
+        Project.projectDetailData.request_set[0].deadline_state ===
+        "납기일협의가능"
+      ) {
+        ManufactureProcess.date_conference = true;
+      } else {
+        ManufactureProcess.date_undefined = true;
+      }
+      ManufactureProcess.date_conference;
+
+      //ManufactureProcess.openFileArray.push(Project.projectDetailData.request_set[0].requestfile_set)
+
+      await purposeAry.map((item, idx) => {
+        if (
+          item.name === Project.projectDetailData.request_set[0].request_state
+        ) {
+          item.checked = true;
+        }
+      });
+      await Project.projectDetailData.request_set[0].estimate_set.map(
+        (item, idx) => {
+          this.setState({
+            fileList: fileList.push({
+              //originFile: file,
+              originFile: item.stl_file,
+              stl_file: true,
+              drawFile: item.stl_file,
+              //fileName: file.name,
+              fileName: "efweerr.stl",
+              price: item.maxPrice,
+              //MaxPrice: res.data.data.maxPrice,
+              productionPrice: item.maxPrice, // 생산가
+              moldPrice: Math.round(item.totalMaxPrice / 10000) * 10000, // 금형가
+              ejaculationPrice: Math.round(item.maxPrice / 10) * 10, // 사출가
+              x_length: Math.round(item.x_length),
+              y_length: Math.round(item.y_length),
+              z_length: Math.round(item.z_length),
+              //selectedMid: ManufactureProcess.categoryDefaultValue.mid,
+              checked: true,
+              quantity: { label: "", value: item.number },
+              prevQuantity: 0,
+              currentQuantity: 0,
+              totalPrice: 0,
+              totalMoldPrice: item.totalMaxPrice,
+              totalEjaculationPrice: item.maxPrice,
+              optionBig: ManufactureProcess.ManufactureProcessList,
+              //selectBig: ManufactureProcess.categoryDefaultValue.big,
+              selectBig: { name: "금형사출", id: item.process, detial: [] },
+
+              optionMid: ManufactureProcess.categoryDefaultValue.big.detail,
+              selectedMid: { name: "플라스틱", id: item.category },
+              priceLoading: true,
+            }),
+          });
+          console.log(this.fileList);
+        }
+      );
+
+      //   ManufactureProcess.checkFileUpload = true;
+    }
     if (!ManufactureProcess.checkPaymentButton) {
       window.addEventListener("scroll", this.loadScroll);
     }
@@ -1788,9 +1818,7 @@ class FileUploadContainer extends Component {
           >
             <Label>
               <span>문의 목적</span>
-              <p style={{ fontSize: "16px", letterSpacing: "-0.4px" }}>
-                (중복 선택 가능)
-              </p>
+              <p style={{ fontSize: "16px", letterSpacing: "-0.4px" }}></p>
             </Label>
 
             <SelectBox style={{ width: "555px", marginTop: "16px" }}>
@@ -1853,6 +1881,7 @@ class FileUploadContainer extends Component {
                 onBlur={(e) =>
                   (e.target.placeholder = "프로젝트 제목을 입력해주세요")
                 }
+                value={this.state.projectname}
                 onChange={(e) => {
                   console.log(e.target.value);
                   this.setState({ projectname: e.target.value });
@@ -2004,53 +2033,66 @@ class FileUploadContainer extends Component {
 
           <Button checkFileUpload={ManufactureProcess.checkFileUpload}>
             <div>
-              <span
-                onClick={() => {
-                  let check_count = 0;
-                  fileList.map((item, idx) => {
-                    item.fileName;
-                    let fileNameAvailable = ["txt"];
-                    const extension = item.fileName.split(".");
+              {ManufactureProcess.changeProject ? (
+                <span
+                  onClick={() => {
+                    this.requestSubmit(
+                      0,
+                      this.props.Project.projectDetailData.request_set[0].id
+                    );
+                  }}
+                >
+                  프로젝트 수정 완료
+                </span>
+              ) : (
+                <span
+                  onClick={() => {
+                    let check_count = 0;
+                    fileList.map((item, idx) => {
+                      item.fileName;
+                      let fileNameAvailable = ["txt"];
+                      const extension = item.fileName.split(".");
 
-                    //console.log(fileNameAvailable)
-                    if (
-                      item.quantity.value === 0 ||
-                      item.quantity.value === ""
-                    ) {
-                      console.log("수량을 입력해주세요");
-                      check_count++;
+                      //console.log(fileNameAvailable)
+                      if (
+                        item.quantity.value === 0 ||
+                        item.quantity.value === ""
+                      ) {
+                        console.log("수량을 입력해주세요");
+                        check_count++;
+                      }
+
+                      if (
+                        fileNameAvailable.includes(
+                          extension[extension.length - 1]
+                        )
+                      ) {
+                        this.props.ManufactureProcess.privateFileArray.push({
+                          file: item,
+                        });
+                      }
+                    });
+
+                    if (check_count) {
+                      alert("수량을 입력해주세요");
+                    } else {
+                      ManufactureProcess.checkPaymentButton = true;
+                      this.props.Request.newIndex = 1;
                     }
 
-                    if (
-                      fileNameAvailable.includes(
-                        extension[extension.length - 1]
-                      )
-                    ) {
-                      this.props.ManufactureProcess.privateFileArray.push({
-                        file: item,
-                      });
-                    }
-                  });
+                    // console.log(
+                    //   toJS(this.props.ManufactureProcess.privateFileArray)
+                    // );
+                    // ManufactureProcess.fileArray.map((item, idx) => {
+                    //   console.log(item.file);
+                    // });
 
-                  if (check_count) {
-                    alert("수량을 입력해주세요");
-                  } else {
-                    ManufactureProcess.checkPaymentButton = true;
-                    this.props.Request.newIndex = 1;
-                  }
-
-                  // console.log(
-                  //   toJS(this.props.ManufactureProcess.privateFileArray)
-                  // );
-                  // ManufactureProcess.fileArray.map((item, idx) => {
-                  //   console.log(item.file);
-                  // });
-
-                  this.requestSubmit();
-                }}
-              >
-                상담 및 가격 요청하기
-              </span>
+                    this.requestSubmit(1);
+                  }}
+                >
+                  상담 및 가격 요청하기
+                </span>
+              )}
             </div>
           </Button>
         </Container>

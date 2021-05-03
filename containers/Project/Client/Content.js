@@ -7,7 +7,8 @@ import { inject, observer } from "mobx-react";
 import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
-import Project from "../../../stores/Project";
+
+import { toJS } from "mobx";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -18,11 +19,27 @@ const right = "static/icon/right-arrow.png";
 @inject("Project", "Auth")
 @observer
 class ProjectContentContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.pushToDetail = this.pushToDetail.bind(this);
+  }
+
   state = {
     current: 0,
     next: true,
     prev: true,
     count: 0,
+  };
+
+  pushToDetail = async (id) => {
+    const { Project } = this.props;
+    console.log(id);
+
+    await Project.getProjectDetail(id);
+    Project.newIndex = 1;
+
+    // await Router.push(`/project/${id}`);
+    Project.setProjectDetailData(id);
   };
 
   handleIntersection = (event) => {
@@ -33,9 +50,8 @@ class ProjectContentContainer extends React.Component {
 
   async componentDidMount() {
     const { Project, Auth } = this.props;
-
     console.log("<Web> did mount");
-
+    console.log(Project.newIndex);
     // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
     // const color = document.getElementById("MyFooter").getAttribute('style');
     // console.log(color);
@@ -107,18 +123,27 @@ class ProjectContentContainer extends React.Component {
           {Project.projectDataList &&
             Project.currentPage > 0 &&
             Project.projectDataList.map((item, idx) => {
+              {
+                console.log(toJS(item));
+              }
               return (
                 <Background
                   style={{ marginBottom: "5px", backgroundColor: "#f9f9f9" }}
                 >
                   <Container>
-                    <ProposalCard
-                      data={item}
-                      middleCategory={Project.middle_category_name[idx]}
-                      mainCategory={Project.main_category_name[idx]}
-                      newData={Project.data_dt[idx]}
-                      handleIntersection={this.handleIntersection}
-                    />
+                    <div
+                      style={{ cursor: "pointer", width: "100%" }}
+                      onClick={() => this.pushToDetail(item.id)}
+                    >
+                      <ProposalCard
+                        data={item}
+                        middleCategory={Project.middle_category_name[idx]}
+                        mainCategory={Project.main_category_name[idx]}
+                        newData={Project.data_dt[idx]}
+                        handleIntersection={this.handleIntersection}
+                        // onClick={() => this.pushToDetail(item.id)}
+                      />
+                    </div>
                   </Container>
                 </Background>
               );

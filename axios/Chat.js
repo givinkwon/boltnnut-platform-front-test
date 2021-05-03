@@ -6,9 +6,19 @@ export function saveChat(req) {
     method: "POST",
     url: `${ROOT_URL}/chatlog/`,
     data: req,
+    // headers: req.headers ? req.headers : null,
   });
 }
 
+export function saveFile(req) {
+  console.log(req.data);
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/chatlog/`,
+    data: req.data,
+    // headers: req.headers ? req.headers : null,
+  });
+}
 export function loadChat(id) {
   return axios({
     method: "GET",
