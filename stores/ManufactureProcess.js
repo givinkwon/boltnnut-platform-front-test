@@ -1,5 +1,6 @@
 import { observable, action, makeObservable } from "mobx";
 import Proposal from "./Proposal";
+import { toJS } from "mobx";
 
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 class ManufactureProcess {
@@ -67,12 +68,77 @@ class ManufactureProcess {
   @observable requestComment = "";
   @observable requestComment2 = "";
 
+  @observable processDataAry = [];
+  @observable detailProcessDataAry = [];
+
   @observable checkPaymentButton = false;
+
+  @observable changeProject = false;
 
   @action countQuantity = (data) => {
     data.map((item, idx) => {
       console.log(item);
     });
+  };
+
+  @action async getProcess(idx) {
+    const req = {
+      id: idx,
+    };
+    await ManufactureProcessAPI.loadProcess(req).then((res) => {
+      const data = res.data;
+      console.log(data.name);
+      return data.name;
+    });
+  }
+
+  @action getProcessList = async (process, detailProcess) => {
+    await ManufactureProcessAPI.loadTitle().then((res) => {
+      const arr = [...res.data.data];
+      const detailArr = [];
+      const arr2 = [];
+      console.log(arr);
+
+      this.ManufactureProcessList = [];
+      console.log(process);
+      console.log(detailProcess);
+      for (let i = 0; i < process.length; i++) {
+        this.processDataAry.push(arr[process[i] - 1].name);
+        detailArr.push(arr[process[i] - 1].detailManufactureProcess);
+        // console.log(toJS(this.processDataAry));
+        // console.log(detailArr);
+        // for (let j = 0; j < detailArr.length; j++) {
+        //   console.log(detailArr[i][j].id);
+        //   console.log(detailProcess[i].id);
+        //   if (detailArr[i][j].id === detailProcess[i].id) {
+        //     this.detailProcessDataAry.push(detailArr[i][j].name);
+        //     console.log(toJS(this.detailProcessDataAry));
+        //   }
+        // }
+        arr2.push(detailArr[i]);
+      }
+      console.log(detailArr);
+      console.log(arr2);
+      // for (let i = 0; i < arr.length; i++) {
+      //   this.processDataAry.push({
+      //     name: arr[i].name,
+      //     // id: arr[i].id,
+      //     detail: [],
+      //   });
+
+      //   for (let j = 0; j < arr[i].detailManufactureProcess.length; j++) {
+      //     // console.log("b"+arr[i].detailManufactureProcess.length)
+      //     this.ManufactureProcessList[i].detail.push({
+      //       name: arr[i].detailManufactureProcess[j].name,
+      //       id: arr[i].detailManufactureProcess[j].id,
+      //     });
+
+      //   }
+      // }
+      // console.log(this.ManufactureProcessList);
+    });
+    console.log(toJS(this.processDataAry));
+    console.log(toJS(this.detailProcessDataAry));
   };
 
   @action init = async () => {

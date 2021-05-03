@@ -27,7 +27,7 @@ class MobileBanner3Container extends React.Component {
       >
         <Fade bottom>
           <div>
-            <Header>제조 무료 상담 서비스</Header>
+            <Header>무료 비교 견적 서비스</Header>
             <Middle>
               전문 제조사들에게 <br />
               다양한 비교 견적

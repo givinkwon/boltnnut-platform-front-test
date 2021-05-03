@@ -1,28 +1,73 @@
 import React from "react";
 import styled from "styled-components";
+import { inject, observer } from "mobx-react";
 import * as Content from "components/Content";
 import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
+import Router from "next/router";
 
 const profile = "/static/images/project/user.svg";
 const partnerbadge = "/static/images/project/partnerbadge.svg";
 
+@inject("Request", "ManufactureProcess", "Auth", "Schedule")
+@observer
 class ContentSub extends React.Component {
+  state = {
+    activeOne: false,
+    activeTwo: false,
+  };
+  changeProject = () => {
+    this.props.ManufactureProcess.changeProject = true;
+    this.props.ManufactureProcess.checkFileUpload = true;
+  };
+
+  activeHandler = (active) => {
+    if (active === "activeOne") {
+      if (this.state.activeOne) {
+        this.setState({ activeOne: false });
+      } else {
+        this.setState({ activeOne: true });
+      }
+    } else {
+      if (this.state.activeTwo) {
+        this.setState({ activeTwo: false });
+      } else {
+        this.setState({ activeTwo: true });
+      }
+    }
+  };
+
   render() {
     return (
       <ContainerSub>
-        <Box3 style={{ marginBottom: 20 }}>
-          <Font18 style={{ color: "#ffffff", fontWeight: "bold" }}>
-            프로젝트 지원하기
+        <Box3
+          style={{ marginBottom: 20 }}
+          active={this.state.activeOne}
+          onMouseOver={() => this.activeHandler("activeOne")}
+          onMouseOut={() => this.activeHandler("activeOne")}
+          onClick={async () => {
+            console.log("click!");
+            this.changeProject();
+            await Router.push(`/request`);
+
+            //this.props.ManufactureProcess.checkFileUpload = true;
+          }}
+        >
+          <Font18 style={{ fontWeight: "bold" }} active={this.state.activeOne}>
+            프로젝트 수정하기
           </Font18>
         </Box3>
-        <Box3 style={{ backgroundColor: "#ffffff" }}>
-          <Font18 style={{ color: "#0933b3", fontWeight: "bold" }}>
-            관심 프로젝트 등록
+        <Box3
+          active={this.state.activeTwo}
+          onMouseOver={() => this.activeHandler("activeTwo")}
+          onMouseOut={() => this.activeHandler("activeTwo")}
+        >
+          <Font18 style={{ fontWeight: "bold" }} active={this.state.activeTwo}>
+            프로젝트 종료하기
           </Font18>
         </Box3>
 
-        <PartnerContainer>
+        {/* <PartnerContainer>
           <img src={profile} style={{ width: 42, height: 35 }}></img>
           <img src={partnerbadge} style={{ marginLeft: 22 }}></img>
         </PartnerContainer>
@@ -35,7 +80,7 @@ class ContentSub extends React.Component {
             <Font16 style={{ color: "#0933b3" }}>2</Font16>
             <Font16 style={{ color: "#0933b3" }}>4</Font16>
           </div>
-        </ApplicationStatus>
+        </ApplicationStatus> */}
       </ContainerSub>
     );
   }
@@ -60,6 +105,7 @@ const Box3 = styled(Buttonv1)`
   align-items: center;
   border: solid 1px #0933b3;
   box-sizing: border-box;
+  background-color: ${(props) => (props.active ? "#0933b3" : "#ffffff")};
 `;
 
 const PartnerContainer = styled.div`
@@ -89,7 +135,8 @@ const Font16 = styled(Content.FontSize16)`
 `;
 
 const Font18 = styled(Content.FontSize18)`
-  color: #282c36;
+  color: ${(props) => (props.active ? "#ffffff" : "#0933b3")};
+
   display: flex;
   align-items: center;
   line-height: 1.5;

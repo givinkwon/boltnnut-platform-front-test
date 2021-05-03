@@ -27,7 +27,7 @@ class MobileBanner2Container extends React.Component {
               />
             </ImgContainer>
             <Body>
-              생산에 대한 모든 문의사항은 4000개
+              생산에 대한 모든 문의사항은 4000여 개
               <br />
               전문 제조사들이 바로 상담해드립니다.
             </Body>

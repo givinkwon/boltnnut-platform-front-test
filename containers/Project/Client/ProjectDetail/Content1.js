@@ -11,6 +11,9 @@ const money = "/static/images/project/money.svg";
 const calendar = "/static/images/project/period.svg";
 const applicant = "/static/images/project/applicant.svg";
 const fileimg = "/static/images/project/fileimg.svg";
+const search_img = "static/images/project/search.png";
+
+import Content4 from "./Content4";
 
 @inject("Project", "Auth")
 @observer
@@ -67,6 +70,7 @@ class Content1 extends React.Component {
           maincategory = Project.maincategory;
           categoryname = Project.categoryname;
           maincategoryname = Project.maincategoryname;
+          console.log(item);
         }
       });
 
@@ -160,7 +164,7 @@ class Content1 extends React.Component {
               <Font20 style={{ color: "#282c36" }}>CNC</Font20>
             </div>
           </Info>
-          <InfoDetail>
+          {/* <InfoDetail>
             <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
               프로젝트 내용 상세 설명
             </Font20>
@@ -224,7 +228,9 @@ class Content1 extends React.Component {
                 계약서 및 기능명세서.hwp
               </Font20>
             </div>
-          </InfoDetail>
+          </InfoDetail> */}
+
+          <Content4 />
         </Container1>
       </>
     );

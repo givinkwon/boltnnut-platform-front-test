@@ -55,7 +55,9 @@ class InputComponent extends React.Component {
     // };
 
     if (e && e.currentTarget.files[0]) {
+      console.log(e.currentTarget.files[0]);
       for (var item in e.currentTarget.files) {
+        console.log(item);
         if (typeof e.currentTarget.files[item] === "object") {
           ManufactureProcess.openFileArray.push(e.currentTarget.files[item]);
         } else {
