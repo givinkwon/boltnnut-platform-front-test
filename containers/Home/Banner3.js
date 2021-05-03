@@ -26,7 +26,7 @@ class Banner3Container extends React.Component {
         >
           <Fade bottom>
             <div>
-              <Header>무료 비교 견적 서비스</Header>
+              <Header>컨설턴트 중 해당 제품</Header>
               <Middle>
                 전문 제조사들에게 <br />
                 다양한 비교 견적
@@ -82,5 +82,5 @@ const Body = styled(Title.FontSize24)`
   letter-spacing: -0.6px;
   text-align: left;
   //color: #cedafe;
-  color: #555963;
+  color: #282c36;
 `;

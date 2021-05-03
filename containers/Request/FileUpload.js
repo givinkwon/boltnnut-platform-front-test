@@ -84,7 +84,7 @@ class FileUploadContainer extends Component {
     privateValue: "",
     publicRows: 7,
     privateRows: 7,
-    minRows: 7,
+    minRows: 1,
     maxRows: 100,
     checkHeight: false,
     loading: false,
@@ -96,9 +96,9 @@ class FileUploadContainer extends Component {
     purposeselected2: false,
     purposeselected3: false,
     purposeAry: [
-      { id: 1, name: "상담 요청", checked: false },
-      { id: 2, name: "견적 요청", checked: false },
-      { id: 3, name: "업체 수배", checked: false },
+      { id: 1, name: "상담요청", checked: false },
+      { id: 2, name: "견적문의", checked: false },
+      { id: 3, name: "업체수배", checked: false },
     ],
     projectname: "",
   };
@@ -330,22 +330,31 @@ class FileUploadContainer extends Component {
     // //   str += `purpose.id[${i + 1}]`;
     // // }
     // // console.log(str);
+    let deadline_state = "";
+    ManufactureProcess.date_undefined
+      ? (deadline_state = "납기일미정")
+      : ManufactureProcess.date_conference
+      ? (deadline_state = "납기일협의가능")
+      : "";
+
+    let request_state = "";
+    if (ManufactureProcess.purposeContent) {
+      console.log(purposeAry[ManufactureProcess.purposeContent - 1].name);
+      request_state = purposeAry[ManufactureProcess.purposeContent - 1].name;
+    }
 
     console.log("requestSubmit");
     console.log(Schedule.clickDay);
     console.log(fileList);
     var formData = new FormData();
-    //formData.append("request_state", "상담요청");
+    //formData.append("request_state", "업체수배");
 
-    formData.append("request_state", "상담요청");
+    formData.append("request_state", request_state);
     //formData.append("purpose", purpose)
     formData.append("name", projectname);
     formData.append("deadline", Schedule.clickDay + " 09:00");
     //formData.append("deadline", "2020-11-11 11:11");
-    formData.append(
-      "deadline_state",
-      ManufactureProcess.date_undefined ? "납기일미정" : ""
-    );
+    formData.append("deadline_state", deadline_state);
     //ManufactureProcess.date_undefined
     formData.append("order_request_open", ManufactureProcess.requestComment);
     formData.append("order_request_close", ManufactureProcess.requestComment2);
@@ -371,7 +380,7 @@ class FileUploadContainer extends Component {
     formData.append("process", 2);
     formData.append("detailprocess", 5);
 
-    console.log(fileList[0].originFile);
+    //console.log(fileList[0].originFile);
 
     const Token = localStorage.getItem("token");
     //const token = "179bb0b55811073a76bc0894a7c73220da9a191d";
@@ -398,11 +407,19 @@ class FileUploadContainer extends Component {
   };
 
   purposeHandler = (item) => {
+    const { ManufactureProcess } = this.props;
+    console.log(ManufactureProcess.purposeContent);
     if (item.checked) {
       item.checked = false;
+      // purposeAry[ManufactureProcess.purposeComment - 1] = false;
+      ManufactureProcess.purposeContent = 0;
       //this.setState({ purposeAry : })
     } else {
       item.checked = true;
+      if (ManufactureProcess.purposeContent) {
+        purposeAry[ManufactureProcess.purposeContent - 1].checked = false;
+      }
+      ManufactureProcess.purposeContent = item.id;
     }
     this.setState({ g: 3 });
   };
@@ -1867,6 +1884,9 @@ class FileUploadContainer extends Component {
                       ManufactureProcess.date_conference = false;
                     } else {
                       ManufactureProcess.date_conference = true;
+                      if (ManufactureProcess.date_undefined) {
+                        ManufactureProcess.date_undefined = false;
+                      }
                     }
                     console.log(ManufactureProcess.date_conference);
                   }}
@@ -1883,6 +1903,9 @@ class FileUploadContainer extends Component {
                       ManufactureProcess.date_undefined = false;
                     } else {
                       ManufactureProcess.date_undefined = true;
+                      if (ManufactureProcess.date_conference) {
+                        ManufactureProcess.date_conference = false;
+                      }
                     }
                     console.log(ManufactureProcess.date_undefined);
                   }}
@@ -1912,9 +1935,12 @@ class FileUploadContainer extends Component {
               <textarea
                 placeholder={`${openPlaceHolderText}`}
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) =>
-                  (e.target.placeholder = `${openPlaceHolderText}`)
-                }
+                onBlur={(e) => {
+                  e.target.placeholder = `${openPlaceHolderText}`;
+                  if (this.state.publicValue === "") {
+                    this.setState({ publicRows: 7 });
+                  }
+                }}
                 rows={this.state.publicRows}
                 value={this.state.publicValue}
                 className={"textarea"}
@@ -1928,9 +1954,12 @@ class FileUploadContainer extends Component {
               <textarea
                 placeholder={`${privatePlaceholderText}`}
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) =>
-                  (e.target.placeholder = `${privatePlaceholderText}`)
-                }
+                onBlur={(e) => {
+                  e.target.placeholder = `${privatePlaceholderText}`;
+                  if (this.state.privateValue == "") {
+                    this.setState({ privateRows: 7 });
+                  }
+                }}
                 rows={this.state.privateRows}
                 value={this.state.privateValue}
                 className={"textarea"}
@@ -2046,9 +2075,9 @@ const quantityAry = [
 ];
 
 const purposeAry = [
-  { id: 1, name: "상담 요청", checked: false },
-  { id: 2, name: "견적 요청", checked: false },
-  { id: 3, name: "업체 수배", checked: false },
+  { id: 1, name: "상담요청", checked: false },
+  { id: 2, name: "견적문의", checked: false },
+  { id: 3, name: "업체수배", checked: false },
 ];
 const Select = styled(SelectComponent)`
   width: ${(props) => (props.width ? props.width : "180px")};
