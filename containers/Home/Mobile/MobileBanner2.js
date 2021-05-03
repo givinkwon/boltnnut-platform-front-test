@@ -13,7 +13,7 @@ class MobileBanner2Container extends React.Component {
       <Background backgroundColor={"#ffffff"}>
         <ContentContainer>
           <Fade bottom>
-            <Header>무료 도면 수정 서비스</Header>
+            <Header>제조 무료 상담 서비스</Header>
             <Middle>
               내가 설계한 부품장비
               <br />
@@ -84,7 +84,7 @@ const Body = styled(Title.FontSize16)`
   font-style: normal;
   line-height: 1.67;
   letter-spacing: -0.38px;
-  text-align: left;
+  // text-align: left;
   color: #414550;\
   margin-bottom: 100px;
   @media (min-width: 0px) and (max-width: 767.98px) {

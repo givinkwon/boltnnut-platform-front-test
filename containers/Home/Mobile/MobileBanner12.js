@@ -35,7 +35,6 @@ class MobileBanner12Container extends React.Component {
 
         <Containerv1
           style={{
-            paddingBottom: 250,
             justifyContent: "space-between",
           }}
         >
@@ -49,7 +48,7 @@ class MobileBanner12Container extends React.Component {
                 <Body>
                   문의하고자 하는 정보를 적어주세요. <br />
                   민감 정보는 비공개로 제조사의 정보 확인 후 <br />
-                  공개 처리 할 수 있습니다. <br />
+                  공개처리 할 수 있습니다. <br />
                   *도면이 있다면 자동 견적을 받아 볼 수 있습니다. <br />
                 </Body>
                 {/* <Buttonv1
@@ -67,8 +66,8 @@ class MobileBanner12Container extends React.Component {
                 </ImgBox>
                 <Header>2. 제조사의 상담 확인하기</Header>
                 <Body>
-                  제조사는 공개정보를 확인하고 간단한 댓글 문의 혹은 <br />
-                  상세한 제안 문의를 진행할 수 있습니다. <br />
+                  제조사는 공개정보를 확인하고 간단한 댓글 문의 <br />
+                  혹은 상세한 제안 문의를 진행할 수 있습니다. <br />
                 </Body>
                 {/* <Buttonv1
                   onClick={() => Router.push("/request")}
@@ -88,7 +87,7 @@ class MobileBanner12Container extends React.Component {
                   제조사의 회사 정보와 상담 내용을 확인하고 <br />
                   적합한 제조사와 소통해보세요. <br />
                   채팅과 통화 등 다양한 형태로 소통할 수 있습니다. <br />
-                  *원하는 제조사만 민감 정보를 볼 수 있게 <br />
+                  *원하는 제조사만 민감정보를 볼 수 있게 <br />
                   공개 할 수 있습니다. <br />
                 </Body>
               </ContainerBox>
