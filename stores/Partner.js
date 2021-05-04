@@ -28,6 +28,7 @@ class Partner {
   @observable partner_page = 0;
 
   @observable page = 1;
+  @observable currentPage = 1;
 
   @observable search_text = "";
   @observable search_category = [];
@@ -37,6 +38,10 @@ class Partner {
   @observable select_big = null;
   @observable select_mid = null;
   @observable loading = 0;
+
+  // 필터 & 라디오박스 관련 변수
+  @observable filter_region = 0;
+  @observable radiobox_checked_idx = 0;
 
   @action setLoading = () => {
     this.loading = 1;
@@ -566,30 +571,64 @@ class Partner {
     return this.clients[idx];
   };
 
-  @action getPartner = (page = 1) => {
+  @action getPartner = async (page = 1) => {
     this.partner_list = [];
 
+    console.log(page);
     const token = localStorage.getItem("token");
     const req = {
-      params: {
+      data: {
         page: page,
-      },
-      headers: {
-        Authorization: `Token ${token}`,
       },
     };
 
-    PartnerAPI.search(req)
+    await PartnerAPI.search(req)
       .then((res) => {
         this.partner_list = res.data.results;
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
-        this.partner_page = parseInt((this.partner_count - 1) / 5) + 1;
+        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
 
         console.log(toJS(this.partner_list));
         console.log(toJS(this.partner_next));
         console.log(toJS(this.partner_count));
         console.log(toJS(this.partner_page));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action getPartnerByRegion = (page = 1) => {
+    this.partner_list = [];
+    //this.data_dt = [];
+
+    const token = localStorage.getItem("token");
+    const req = {
+      params: {
+        city: this.filter_region === 0 ? "" : this.filter_region,
+        // search: search_text,
+        page: page,
+        // ordering: "-id",
+      },
+      // headers: {
+      //   Authorization: `Token ${token}`,
+      // },
+    };
+
+    PartnerAPI.getPartner(req)
+      .then((res) => {
+        this.partner_list = [];
+
+        this.partner_list = res.data.results;
+
+        this.partner_next = res.data.next;
+        this.partner_count = res.data.count;
+        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+        console.log(toJS(this.partner_list));
+
+        //this.getCategory();
       })
       .catch((e) => {
         console.log(e);

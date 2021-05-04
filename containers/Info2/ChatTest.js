@@ -302,22 +302,22 @@ class ChatTestContainer extends React.Component {
       let tempAnswerNum = 238;
       let chatCount = 0;
 
-      // if (data.message != "접속완료" && data.message != "수신완료") {
-      //   if (data.type === this.userType) {
-      //     const req = {
-      //       text_content: data.message,
-      //       user_type: data.type,
-      //       chat_type: 0,
-      //       answer: tempAnswerNum,
-      //     };
-      //     ChatAPI.saveChat(req).then((res) => {
-      //       console.log(res);
-      //     });
+      if (data.message != "접속완료" && data.message != "수신완료") {
+        if (data.type === this.userType) {
+          const req = {
+            text_content: data.message,
+            user_type: data.type,
+            chat_type: 0,
+            answer: tempAnswerNum,
+          };
+          ChatAPI.saveChat(req).then((res) => {
+            console.log(res);
+          });
 
-      //     // console.log(this.state.messages.length);
-      //     // AnswerAPI.getAnswerById(238).then((res) => console.log(res.data));
-      //   }
-      // }
+          // console.log(this.state.messages.length);
+          // AnswerAPI.getAnswerById(238).then((res) => console.log(res.data));
+        }
+      }
       ChatAPI.loadChatCount(tempAnswerNum).then((res) => {
         let clientChatCount = res.check_time_client;
         let partnerChatCount = res.check_time_partner;
