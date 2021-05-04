@@ -127,6 +127,7 @@ class ChatTestContainer extends React.Component {
               time: this.state.currentTime,
               bReceive: false,
               file: file_url,
+              chatType: 0,
             })
           );
           console.log("send");
@@ -222,6 +223,7 @@ class ChatTestContainer extends React.Component {
           time: this.state.currentTime,
           bReceive: true,
           file: this.state.currentFile,
+          chatType: 0,
         })
       );
     };
@@ -267,6 +269,8 @@ class ChatTestContainer extends React.Component {
               type: this.userType,
               time: this.state.currentTime,
               bReceive: true,
+              file: null,
+              chatType: 0,
             })
           );
         }
@@ -381,6 +385,7 @@ class ChatTestContainer extends React.Component {
         time: this.state.currentTime,
         bReceive: false,
         file: this.state.currentFile,
+        chatType: 0,
       })
     );
     // console.log("e");

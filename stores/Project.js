@@ -40,6 +40,8 @@ class Project {
   // 검색 관련 변수
   @observable search_text = "";
 
+  //채팅 모달
+  @observable chatModalActive = false;
   @action setCategory = (val) => {
     this.input_category = val;
   };

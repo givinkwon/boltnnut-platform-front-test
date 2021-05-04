@@ -73,9 +73,6 @@ class Content4 extends React.Component {
     const { Project, ManufactureProcess } = this.props;
     const { projectDetailData } = Project;
 
-    console.log(
-      "호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출"
-    );
     // console.log(toJS(item));
     // console.log(toJS(projectDetailData));
     // console.log(toJS(projectDetailData.request_set[0].estimate_set));
@@ -148,7 +145,7 @@ class Content4 extends React.Component {
     const { projectDetailData } = Project;
     return (
       <Background>
-        {console.log("renderrenderrenderrenderrenderrender")}
+        {/* {console.log("renderrenderrenderrenderrenderrender")} */}
         {/* <Containerv1 style={{ display: "flex", flexDirection: "column" }}> */}
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>

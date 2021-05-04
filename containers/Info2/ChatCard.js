@@ -4,6 +4,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 //import Button from "components/Buttonv2";
 import { toJS } from "mobx";
+import { inject, observer } from "mobx-react";
 
 const star_img = "static/images/main/star_gray.png";
 const prevent_img = "static/images/info.png";
@@ -15,6 +16,8 @@ const camera_img = "static/images/camera.png";
 const emoticon_img = "static/images/emoticon.png";
 const pass2_img = "static/images/pass2.png";
 
+@inject("Project")
+@observer
 class ChatCardContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -308,7 +311,10 @@ class ChatCardContainer extends React.Component {
             </Chat>
             <Info>
               <Profile>
-                <img src={close_img} />
+                <img
+                  src={close_img}
+                  onClick={() => (this.props.Project.chatModalActive = false)}
+                />
                 <ProfileImg>
                   <img src={logo_img} />
                 </ProfileImg>

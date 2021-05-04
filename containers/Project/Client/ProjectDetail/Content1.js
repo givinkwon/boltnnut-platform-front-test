@@ -9,6 +9,7 @@ import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import { Toolbar } from "material-ui";
 import { toJS } from "mobx";
+import ChatTestContainer from "containers/Info2/ChatTest";
 
 const money = "/static/images/project/money.svg";
 const calendar = "/static/images/project/period.svg";
@@ -25,12 +26,19 @@ class Content1 extends React.Component {
   state = {
     item: [],
     partnerList: [],
+    modalActive: false,
   };
   handler = {
     get(item, property, itemProxy) {
       console.log(`Property ${property} has been read.`);
       return target[property];
     },
+  };
+
+  modalHandler = () => {
+    const { Project } = this.props;
+    Project.chatModalActive = !Project.chatModalActive;
+    // this.setState({ modalActive: !this.state.modalActive });
   };
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
@@ -92,6 +100,14 @@ class Content1 extends React.Component {
     return (
       <>
         <Container1>
+          {Project.chatModalActive && (
+            // <Layer onClick={this.modalHandler}>
+            <Layer>
+              {/* <Postcode /> */}
+              <ChatTestContainer></ChatTestContainer>
+            </Layer>
+          )}
+
           <InnerContainer>
             <Top>
               <Box1>
@@ -174,13 +190,15 @@ class Content1 extends React.Component {
                 }}
               >
                 지원한 파트너
-                <p style={{ color: "#0933b3", marginLeft: 6 }}>5</p>
+                <p style={{ color: "#0933b3", marginLeft: 6 }}>
+                  {this.state.partnerList.length}
+                </p>
               </Font20>
 
               {/* map으로 뿌리기 */}
               {this.state.partnerList.map((data, idx) => {
                 return (
-                  <PartnerBox>
+                  <PartnerBox onClick={this.modalHandler}>
                     <PartnerInfo>
                       <img src={logoImg} width={36} height={36}></img>
                       <Font18 style={{ marginLeft: 10 }}>{data.partner}</Font18>
@@ -299,7 +317,16 @@ class Content1 extends React.Component {
 }
 
 export default Content1;
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
 
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  background: #00000080;
+`;
 const Icon = styled.div`
   position: relative;
 `;
