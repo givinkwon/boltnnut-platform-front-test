@@ -26,6 +26,7 @@ class InputComponent extends React.Component {
 
   async componentDidMount() {
     const { ManufactureProcess, Project } = this.props;
+    console.log("AddFile2AddFile2AddFile2AddFile2AddFile2AddFile2");
     if (ManufactureProcess.changeProject) {
       this.setState({ checkFileUpload: true });
 

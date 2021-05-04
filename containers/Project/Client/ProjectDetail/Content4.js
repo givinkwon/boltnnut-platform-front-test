@@ -168,24 +168,26 @@ class Content4 extends React.Component {
                 {projectDetailData &&
                   projectDetailData.request_set[0].requestfile_set.map(
                     (item, idx) => {
-                      return (
-                        <div>
+                      if (item.share_inform) {
+                        return (
                           <div>
-                            <img src={file_img} />
-                            {/* <DownloadFile
+                            <div>
+                              <img src={file_img} />
+                              {/* <DownloadFile
                               file={item.file}
                               href={decodeURI(item.file)}
                               download
                             ></DownloadFile> */}
-                            <span
-                              onClick={() => this.downloadFile(item.file)}
-                              style={{ cursor: "pointer" }}
-                            >
-                              {decodeURI(item.file.split("/").pop())}
-                            </span>
+                              <span
+                                onClick={() => this.downloadFile(item.file)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                {decodeURI(item.file.split("/").pop())}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      );
+                        );
+                      }
                     }
                   )}
               </File>

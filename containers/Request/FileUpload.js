@@ -271,10 +271,17 @@ class FileUploadContainer extends Component {
 
     //formData.append("file_open", ManufactureProcess.openFileArray[0]);
     console.log(toJS(ManufactureProcess.openFileArray));
+    if (ManufactureProcess.openFileArray.length === 0) {
+      formData.append(`file_open`, "");
+    }
     for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
       formData.append(`file_open`, ManufactureProcess.openFileArray[i]);
     }
     //formData.append("file_close", ManufactureProcess.privateFileArray);
+    console.log(toJS(ManufactureProcess.privateFileArray));
+    if (ManufactureProcess.privateFileArray.length === 0) {
+      formData.append(`file_close`, "");
+    }
     for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
       formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
     }
@@ -350,7 +357,7 @@ class FileUploadContainer extends Component {
         data: formData,
       };
 
-      RequestAPI.patch(req)
+      RequestAPI.put(req)
         .then((res) => {
           console.log("change: ", res);
         })
@@ -444,7 +451,11 @@ class FileUploadContainer extends Component {
       this.state.projectname = Project.projectDetailData.request_set[0].name;
       this.state.publicValue =
         Project.projectDetailData.request_set[0].order_request_open;
+      ManufactureProcess.requestComment =
+        Project.projectDetailData.request_set[0].order_request_open;
       this.state.privateValue =
+        Project.projectDetailData.request_set[0].order_request_close;
+      ManufactureProcess.requestComment2 =
         Project.projectDetailData.request_set[0].order_request_close;
       const clickDayAry = Project.projectDetailData.request_set[0].deadline.split(
         "T"

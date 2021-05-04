@@ -8,7 +8,7 @@ import * as Title from "components/Title";
 import * as Content from "components/Content";
 
 import Container from "components/Containerv1";
-import ProposalCard from "components/ProposalCard";
+import ProposalCard from "./ProposalCard";
 import Background from "components/Background";
 import RadioBox from "./RadioBox";
 
@@ -19,7 +19,7 @@ const pass4 = "static/images/pass4.png";
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 
-@inject("Project", "Auth")
+@inject("Project", "Auth", "Partner")
 @observer
 class ManufacturerContentContainer extends React.Component {
   handleIntersection = (event) => {
@@ -29,12 +29,14 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   async componentDidMount() {
-    const { Project, Auth } = this.props;
+    const { Partner } = this.props;
 
-    Project.search_text = "";
-    Project.currentPage = 1;
+    // Project.search_text = "";
+    // Project.currentPage = 1;
 
     console.log("did mount");
+
+    Partner.getPartner(1);
 
     // await Auth.checkLogin();
     // if(Auth.logged_in_partner){
@@ -74,7 +76,7 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   render() {
-    const { Project } = this.props;
+    const { Project, Partner } = this.props;
     const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
@@ -105,17 +107,17 @@ class ManufacturerContentContainer extends React.Component {
               <img src={pass4}/>
             </span> */}
                 </Header>
-                {Project.projectDataList &&
-                  Project.currentPage > 0 &&
-                  Project.projectDataList.map((item, idx) => {
+                {Partner.partner_list &&
+                  // Partner.currentPage > 0 &&
+                  Partner.partner_list.map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         <ProposalCard
                           data={item}
-                          middleCategory={Project.middle_category_name[idx]}
-                          mainCategory={Project.main_category_name[idx]}
-                          newData={Project.data_dt[idx]}
-                          checkTotal={Project.filter_price}
+                          // middleCategory={Project.middle_category_name[idx]}
+                          // mainCategory={Project.main_category_name[idx]}
+                          // newData={Project.data_dt[idx]}
+                          // checkTotal={Project.filter_price}
                           handleIntersection={this.handleIntersection}
                           customer="partner"
                         />
