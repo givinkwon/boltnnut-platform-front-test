@@ -208,7 +208,7 @@ class ChatCardContainer extends React.Component {
               <Header>
                 <Font24>볼트앤너트</Font24>
                 <img src={search_img} />
-                <img src={star_img} />
+                <img src={prevent_img} />
                 <img src={star_img} />
               </Header>
               <MessageList height={this.state.height}>
@@ -228,9 +228,6 @@ class ChatCardContainer extends React.Component {
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: 0, text: "Hi" })}
                   {this.renderMessage({ member: 0, text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
@@ -271,31 +268,13 @@ class ChatCardContainer extends React.Component {
                     onChange={(e) => this.onChangeHandler(e)}
                     value={this.state.text}
                   />
-
-                  {/* // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
-                  /> */}
-                  <input
-                    id="FileInput"
-                    style={{ border: "1px solid red", display: "none" }}
-                    type="file"
-                    onChange={(e) => {
-                      console.log("onChange");
-                      this.onChangeFile(e);
-                    }}
-                  />
-                  <img
-                    src={clip_img}
-                    onClick={() => {
-                      const realInput = document.querySelector("#FileInput");
-                      console.log(realInput);
-                      realInput.click();
-                      //realInput.innerHTML = "";
-                    }}
-                  ></img>
+                  <img src={clip_img} />
                   <img src={camera_img} />
                   <img src={emoticon_img} />
                   <SendButton
                     onClick={(e) => {
+                      // e.preventDefault();
+                      console.log("hellp");
                       this.setState({ ...this.state, rows: 1, height: 576 });
                       this.onSubmit(e);
                     }}
