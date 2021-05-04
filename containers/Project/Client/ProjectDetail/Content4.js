@@ -15,6 +15,8 @@ import ManufactureProcess from "../../../../stores/ManufactureProcess";
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 import { createNoSubstitutionTemplateLiteral } from "typescript";
 
+const file_img = "static/images/file2.png";
+
 @inject("Project", "Auth", "ManufactureProcess")
 @observer
 class Content4 extends React.Component {
@@ -166,24 +168,26 @@ class Content4 extends React.Component {
                 {projectDetailData &&
                   projectDetailData.request_set[0].requestfile_set.map(
                     (item, idx) => {
-                      return (
-                        <div>
+                      if (item.share_inform) {
+                        return (
                           <div>
-                            <span>img1</span>
-                            {/* <DownloadFile
+                            <div>
+                              <img src={file_img} />
+                              {/* <DownloadFile
                               file={item.file}
                               href={decodeURI(item.file)}
                               download
                             ></DownloadFile> */}
-                            <span
-                              onClick={() => this.downloadFile(item.file)}
-                              style={{ cursor: "pointer" }}
-                            >
-                              {decodeURI(item.file.split("/").pop())}
-                            </span>
+                              <span
+                                onClick={() => this.downloadFile(item.file)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                {decodeURI(item.file.split("/").pop())}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      );
+                        );
+                      }
                     }
                   )}
               </File>
@@ -315,20 +319,31 @@ class Content4 extends React.Component {
                   projectDetailData.request_set[0].order_request_close}
               </RequestContent>
               <File>
-                <div>
-                  <div>
-                    <span>img1</span>
-                    <span>파일 이름1</span>
-                  </div>
-                  <div>
-                    <span>img2</span>
-                    <span>파일 이름2</span>
-                  </div>
-                  <div>
-                    <span>img3</span>
-                    <span>파일 이름3</span>
-                  </div>
-                </div>
+                {projectDetailData &&
+                  projectDetailData.request_set[0].requestfile_set.map(
+                    (item, idx) => {
+                      if (!item.share_inform) {
+                        return (
+                          <div>
+                            <div>
+                              <img src={file_img} />
+                              {/* <DownloadFile
+                              file={item.file}
+                              href={decodeURI(item.file)}
+                              download
+                            ></DownloadFile> */}
+                              <span
+                                onClick={() => this.downloadFile(item.file)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                {decodeURI(item.file.split("/").pop())}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      }
+                    }
+                  )}
               </File>
             </RequestBox>
           </RequestSubContainer>
