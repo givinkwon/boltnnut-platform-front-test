@@ -108,6 +108,7 @@ class Project {
     ProjectAPI.getProjects(req)
       .then((res) => {
         this.projectDataList = res.data.results;
+        console.log(res.data.results);
         this.project_next = res.data.next;
         this.project_count = res.data.count;
         this.project_page = parseInt((this.project_count - 1) / 5) + 1;

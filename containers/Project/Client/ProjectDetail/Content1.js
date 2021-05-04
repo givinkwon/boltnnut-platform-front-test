@@ -27,6 +27,7 @@ class Content1 extends React.Component {
     item: [],
     partnerList: [],
     modalActive: false,
+    selectedRoom: null,
   };
   handler = {
     get(item, property, itemProxy) {
@@ -35,7 +36,8 @@ class Content1 extends React.Component {
     },
   };
 
-  modalHandler = () => {
+  modalHandler = (id) => {
+    this.setState({ selectedRoom: id });
     const { Project } = this.props;
     Project.chatModalActive = !Project.chatModalActive;
     // this.setState({ modalActive: !this.state.modalActive });
@@ -104,7 +106,9 @@ class Content1 extends React.Component {
             // <Layer onClick={this.modalHandler}>
             <Layer>
               {/* <Postcode /> */}
-              <ChatTestContainer></ChatTestContainer>
+              <ChatTestContainer
+                roomName={this.state.selectedRoom}
+              ></ChatTestContainer>
             </Layer>
           )}
 
@@ -198,7 +202,7 @@ class Content1 extends React.Component {
               {/* map으로 뿌리기 */}
               {this.state.partnerList.map((data, idx) => {
                 return (
-                  <PartnerBox onClick={this.modalHandler}>
+                  <PartnerBox onClick={() => this.modalHandler(data.id)}>
                     <PartnerInfo>
                       <img src={logoImg} width={36} height={36}></img>
                       <Font18 style={{ marginLeft: 10 }}>{data.partner}</Font18>
