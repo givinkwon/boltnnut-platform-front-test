@@ -10,7 +10,7 @@ import { toJS } from "mobx";
 const addButtonImg = "static/images/components/Input2/Mask.png";
 const deleteButtonImg = "/static/images/delete.png";
 
-@inject("Request", "ManufactureProcess")
+@inject("Request", "ManufactureProcess", "Project")
 @observer
 class InputComponent extends React.Component {
   constructor(props) {
@@ -24,6 +24,28 @@ class InputComponent extends React.Component {
     checkFileUpload: false,
   };
 
+  async componentDidMount() {
+    const { ManufactureProcess, Project } = this.props;
+    console.log("AddFile2AddFile2AddFile2AddFile2AddFile2AddFile2");
+    if (ManufactureProcess.changeProject) {
+      this.setState({ checkFileUpload: true });
+
+      await Project.projectDetailData.request_set[0].requestfile_set.map(
+        (item, idx) => {
+          console.log(toJS(item));
+          if (item.share_inform) {
+            ManufactureProcess.openFileArray.push(item);
+          } else {
+            ManufactureProcess.privateFileArray.push(item);
+          }
+        }
+      );
+      // await ManufactureProcess.openFileArray.push(
+      //   Project.projectDetailData.request_set[0].requestfile_set
+      // );
+    }
+    console.log(toJS(ManufactureProcess.openFileArray));
+  }
   onChange = (e) => {
     if (this.props.type === "file") {
       this.props.onChange(e.currentTarget.files[0]);
@@ -55,7 +77,9 @@ class InputComponent extends React.Component {
     // };
 
     if (e && e.currentTarget.files[0]) {
+      console.log(e.currentTarget.files[0]);
       for (var item in e.currentTarget.files) {
+        console.log(item);
         if (typeof e.currentTarget.files[item] === "object") {
           ManufactureProcess.openFileArray.push(e.currentTarget.files[item]);
         } else {
@@ -214,7 +238,11 @@ class InputComponent extends React.Component {
                             }}
                           >
                             <span>
-                              <span>{item.name}</span>
+                              <span>
+                                {!item.name
+                                  ? decodeURI(item.file.split("/").pop())
+                                  : item.name}
+                              </span>
                               <DeleteFile
                                 src={deleteButtonImg}
                                 style={{
@@ -256,7 +284,11 @@ class InputComponent extends React.Component {
                             }}
                           >
                             <span>
-                              <span>{item.name}</span>
+                              <span>
+                                {!item.name
+                                  ? decodeURI(item.file.split("/").pop())
+                                  : item.name}
+                              </span>
                               <DeleteFile
                                 src={deleteButtonImg}
                                 style={{

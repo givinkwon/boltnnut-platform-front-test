@@ -26,7 +26,7 @@ class Banner1Container extends React.Component {
               </ImageContainer>
             </Image>
             <div>
-              <Head>볼트앤너트 AI 자동 견적</Head>
+              <Head>무료 생산 상담</Head>
               <Main>
                 <span>
                   바로 나오는 <br />

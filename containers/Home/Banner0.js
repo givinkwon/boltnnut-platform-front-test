@@ -92,7 +92,7 @@ class Banner0Container extends React.Component {
                 <Font24 style={{ marginBottom: 0 }}>전문 업체 수배</Font24>
               </Explanation>
               <Buttonv1 onClick={() => Router.push("/request")}>
-                견적 받기
+                무료 상담 및 견적 받기
               </Buttonv1>
 
               <div

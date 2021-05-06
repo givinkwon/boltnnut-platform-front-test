@@ -4,59 +4,349 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
+import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
+import STLViewer from "stl-viewer";
+const search_img = "/static/images/project/search.png";
+import Modal from "./Modal";
+import CloseModalButton from "components/CloseModalButton";
+import DownloadFile from "components/DownloadFile";
+import ManufactureProcess from "../../../../stores/ManufactureProcess";
+import * as ManufactureProcessAPI from "axios/ManufactureProcess";
+import { createNoSubstitutionTemplateLiteral } from "typescript";
 
+const file_img = "static/images/file2.png";
+
+@inject("Project", "Auth", "ManufactureProcess")
+@observer
 class Content4 extends React.Component {
+  process = [];
+  detailProcess = [];
+  count = 0;
+  state = {
+    modalOpen: false,
+    modal_open: false,
+    classModal_open: false,
+    render_process: false,
+    process: [],
+    detailProcess: [],
+  };
+
+  openModal = () => {
+    this.setState({ modalOpen: true });
+  };
+  closeModal = () => {
+    this.setState({ modalOpen: false });
+  };
+
+  // openModal = () => {
+  //   this.setState({
+  //     ...this.state,
+  //     modal_open: true,
+  //   });
+  // };
+  // closeModal = () => {
+  //   this.setState({
+  //     ...this.state,
+  //     modal_open: false,
+  //   });
+  // };
+  // closeClassModal = () => {
+  //   this.setState({
+  //     ...this.state,
+  //     classModal_open: false,
+  //   });
+  // };
+
+  downloadFile(urls) {
+    console.log(urls);
+
+    const blob = new Blob([this.content], { type: "text/plain" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = `${urls}`;
+    a.download = `${urls}`;
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  }
+
+  async loadProcess(item, idx, process_idx, material_idx, detail_idx) {
+    const { Project, ManufactureProcess } = this.props;
+    const { projectDetailData } = Project;
+
+    console.log(
+      "호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출"
+    );
+    // console.log(toJS(item));
+    // console.log(toJS(projectDetailData));
+    // console.log(toJS(projectDetailData.request_set[0].estimate_set));
+
+    //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
+
+    // console.log(idx);
+    console.log(process_idx);
+    // console.log(material_idx);
+    // console.log(detail_idx);
+
+    let item_detail_idx = 0;
+    if (process_idx === "1") {
+      item_detail_idx = detail_idx - material_idx + 1;
+    } else {
+      item_detail_idx = detail_idx - material_idx;
+    }
+
+    // console.log(item_detail_idx);
+    // console.log(this.state.process.length);
+    // console.log(projectDetailData.request_set[0].estimate_set.length);
+    if (
+      // projectDetailData.request_set[0].estimate_set.length >
+      // this.state.process.length
+      projectDetailData.request_set[0].estimate_set.length > this.count
+    ) {
+      this.count++;
+      console.log("통과통과통과통과통과통과통과통과");
+      const req = {
+        id: process_idx,
+      };
+      await ManufactureProcessAPI.loadProcess(req).then((res) => {
+        const data = res.data;
+        // console.log(data.name);
+        // console.log(data);
+        console.log(data.detailmanufactureprocess_set);
+        console.log(item_detail_idx);
+        console.log(data.detailmanufactureprocess_set[item_detail_idx - 1]);
+
+        this.setState({ process: this.state.process.concat(data.name) });
+        //this.process = this.process.concat(data.name);
+        this.setState({
+          detailProcess:
+            data.detailmanufactureprocess_set[item_detail_idx - 1] &&
+            this.state.detailProcess.concat(
+              data.detailmanufactureprocess_set[item_detail_idx - 1].name
+            ),
+        });
+        // this.detailProcess = this.detailProcess.concat(
+        //   data.detailmanufactureprocess_set[item_detail_idx - 1].name
+        // );
+      });
+      console.log(this.state.process);
+      console.log(this.state.detailProcess);
+
+      //})
+      //this.setState({ render_process });
+    }
+  }
+
+  componentDidMount() {
+    // const { Project, ManufactureProcess } = this.props;
+    // const { projectDetailData } = Project;
+    // count = projectDetailData.request_set[0].estimate_set.length
+    console.log("componentDidMount");
+    console.log(this.props.Project.projectDetailData);
+  }
   render() {
+    const { Project, ManufactureProcess } = this.props;
+    const { projectDetailData } = Project;
     return (
       <Background>
+        {console.log("renderrenderrenderrenderrenderrender")}
         {/* <Containerv1 style={{ display: "flex", flexDirection: "column" }}> */}
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
-          <PublicRequestContainer>
+          <RequestSubContainer>
             <Font20>공개내용</Font20>
-            <PublicRequestBox>rewerwerwerewr</PublicRequestBox>
-          </PublicRequestContainer>
-          <PrivateRequestContainer>
+            <RequestBox>
+              <RequestContent>
+                <pre style={{ whiteSpace: "break-spaces" }}>
+                  {projectDetailData &&
+                    projectDetailData.request_set[0].order_request_open}
+                  {/* {Project.projectDetailData.request_set[0].order_request_open} */}
+                </pre>
+              </RequestContent>
+              <File>
+                {projectDetailData &&
+                  projectDetailData.request_set[0].requestfile_set.map(
+                    (item, idx) => {
+                      if (item.share_inform) {
+                        return (
+                          <div>
+                            <div>
+                              <img src={file_img} />
+                              {/* <DownloadFile
+                              file={item.file}
+                              href={decodeURI(item.file)}
+                              download
+                            ></DownloadFile> */}
+                              <span
+                                onClick={() => this.downloadFile(item.file)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                {decodeURI(item.file.split("/").pop())}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      }
+                    }
+                  )}
+              </File>
+            </RequestBox>
+          </RequestSubContainer>
+          <RequestSubContainer>
             <Font20>비공개내용</Font20>
-            <DrawingCard>
-              <Header>
-                <div>이름</div>
-                <div>사진</div>
-                <div>
-                  <span>도면 상세보기</span>
-                </div>
-              </Header>
-              <Body>
-                <div>
-                  <span>생산공정</span>
-                  <span>3D프린팅</span>
-                </div>
-                <div>
-                  <span>재료</span>
-                  <span>유사ARS검정레진</span>
-                </div>
-                <div>
-                  <span>마감</span>
-                  <span>기본가공</span>
-                </div>
-                <div>
-                  <span>색상</span>
-                  <span>검정</span>
-                </div>
-              </Body>
-              <Tail>
-                <div>
-                  <span>수량</span>
-                  <span>1</span>
-                </div>
-                <div>
-                  <span>가격</span>
-                  <span>2,979,850원</span>
-                </div>
-              </Tail>
-            </DrawingCard>
-            <PrivateRequestBox>werewrewrewrewr</PrivateRequestBox>
-          </PrivateRequestContainer>
+            {projectDetailData &&
+              projectDetailData.request_set[0].estimate_set.map((item, idx) => {
+                {
+                  // console.log(toJS(item));
+                  //if (!this.state.render_process) {
+                  this.loadProcess(
+                    item,
+                    idx,
+                    item.process,
+                    item.material,
+                    item.category
+                  );
+                  //}
+                  // console.log(process);
+                }
+                return (
+                  <DrawingCard>
+                    <Header>
+                      <div>이름</div>
+
+                      <div>
+                        <STLViewer
+                          model={item.stl_file} // stl파일 주소
+                          width={120} // 가로
+                          height={120} // 세로
+                          // width={250}
+                          // height={210}
+                          modelColor="gray" // 색
+                          backgroundColor="white" // 배경색
+                          rotate={true} // 자동회전 유무
+                          orbitControls={true} // 마우스 제어 유무
+                          cameraX={500}
+                          //cameraZ={500}
+                          //lights={[2,4,1]}
+                          //lights={[2, 2, 2]}
+                          // lights={[0, 0, 1]}
+                          //lightColor={'red'}
+                        />
+                      </div>
+                      <div
+                        onClick={() => {
+                          console.log("stl download");
+                          this.downloadFile(item.stl_file);
+                        }}
+                      >
+                        {/* <div onClick={this.openModal}> */}
+                        <span onClick={() => {}} style={{ cursor: "pointer" }}>
+                          다운로드
+                        </span>
+                        <img src={search_img} />
+                      </div>
+                      {/* <CloseModalButton handleClose={this.closeModal} /> */}
+                      <Modal
+                        open={this.state.modalOpen}
+                        close={this.closeModal}
+                        header="도면"
+                        title="dd"
+                      >
+                        <p>
+                          dddddddddddddddddddddddddddddddddddddddddddddddd
+                          dddddddddddddddddddd dddd dddddddd dddd dddd dddd dddd
+                          dddddddd dddddddd
+                        </p>
+                      </Modal>
+                    </Header>
+                    <Body>
+                      <div>
+                        <span>생산공정</span>
+                        {/* <span>{this.loadProcess(item.process)}</span> */}
+                        {/* {console.log(process)}
+                        {console.log(this.state.process)} */}
+                        {/* <span>{process ? process : ""}</span> */}
+                        {/* <span>dssfdf</span> */}
+                        <span>{this.state.process[idx]}</span>
+                        {/* <span>{this.process[idx]}</span> */}
+                      </div>
+                      <div>
+                        <span>재료</span>
+                        {/* <span>dd</span> */}
+                        <span>{this.state.detailProcess[idx]}</span>
+                        {/* <span>{this.detailProcess[idx]}</span> */}
+                      </div>
+                      <div>
+                        <span>마감</span>
+                        <span>기본가공</span>
+                      </div>
+                      <div>
+                        <span>색상</span>
+                        <span>검정</span>
+                      </div>
+                    </Body>
+                    <Tail>
+                      <div>
+                        <span>수량</span>
+                        <span>{item.number}</span>
+                      </div>
+                      <div>
+                        <span>가격</span>
+                        {item.process === "1" ? (
+                          <span>
+                            {(
+                              Math.round(item.totalMaxPrice / 10000) * 10000 +
+                              Math.round(item.maxPrice / 10) * 10 * item.number
+                            ).toLocaleString("ko-KR") + "원"}
+                          </span>
+                        ) : (
+                          <span>
+                            {(
+                              Math.round(item.maxPrice) * item.number
+                            ).toLocaleString("ko-KR") + "원"}
+                          </span>
+                        )}
+                      </div>
+                    </Tail>
+                  </DrawingCard>
+                );
+              })}
+            <RequestBox>
+              {" "}
+              <RequestContent>
+                {projectDetailData &&
+                  projectDetailData.request_set[0].order_request_close}
+              </RequestContent>
+              <File>
+                {projectDetailData &&
+                  projectDetailData.request_set[0].requestfile_set.map(
+                    (item, idx) => {
+                      if (!item.share_inform) {
+                        return (
+                          <div>
+                            <div>
+                              <img src={file_img} />
+                              {/* <DownloadFile
+                              file={item.file}
+                              href={decodeURI(item.file)}
+                              download
+                            ></DownloadFile> */}
+                              <span
+                                onClick={() => this.downloadFile(item.file)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                {decodeURI(item.file.split("/").pop())}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      }
+                    }
+                  )}
+              </File>
+            </RequestBox>
+          </RequestSubContainer>
         </RequestContainer>
         {/* </Containerv1> */}
       </Background>
@@ -89,20 +379,40 @@ const Font20 = styled(Title.FontSize20)`
 const RequestContainer = styled.div`
   width: 100%;
 `;
-const PublicRequestContainer = styled.div`
+const RequestSubContainer = styled.div`
   width: 100%;
 `;
 
-const PublicRequestBox = styled.div`
-  height: 383px;
+const RequestBox = styled.div`
+  //height: 383px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   padding: 26px 43px;
   box-sizing: border-box;
 `;
 
-const PrivateRequestContainer = styled.div`
-  width: 100%;
+const RequestContent = styled.div`
+  //border: 1px solid red;
+  margin-bottom: 52px;
 `;
+
+const File = styled.div`
+  //border: 1px solid blue;
+  > div {
+    > div {
+      > span {
+        font-size: 18px;
+        font-weight: normal;
+        line-height: 40px;
+        letter-spacing: -0.45px;
+        color: #767676;
+      }
+    }
+  }
+`;
+
+// const RequestContainer = styled.div`
+//   width: 100%;
+// `;
 
 const DrawingCard = styled.div`
   width: 100%;
@@ -115,8 +425,7 @@ const DrawingCard = styled.div`
 
 const Header = styled.div`
   //width: 100%;
-  border: 2px solid red;
-  flex-grow: 2;
+  flex-grow: 3;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -132,10 +441,12 @@ const Header = styled.div`
   > div:nth-of-type(3) {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
     border-radius: 10px;
-    width: 50%;
+    width: 40%;
     height: 32px;
     display: flex;
     align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
     > span {
       font-size: 16px;
       line-height: 2.5;
@@ -147,17 +458,54 @@ const Header = styled.div`
 `;
 
 const Body = styled.div`
-  border: 2px solid blue;
   flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  > div {
+    > span:nth-of-type(1) {
+      width: 30%;
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 2.22;
+      letter-spacing: -0.45px;
+      color: #282c36;
+    }
+    > span:nth-of-type(2) {
+    }
+  }
 `;
 const Tail = styled.div`
-  border: 2px solid green;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  > div {
+    > span:nth-of-type(1) {
+      width: 30%;
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 2.22;
+      letter-spacing: -0.45px;
+      color: #282c36;
+    }
+    > span:nth-of-type(2) {
+    }
+  }
+  > div:nth-of-type(1) {
+    margin-bottom: 18px;
+  }
+  > div:last-child {
+    margin-bottom: 10px;
+  }
 `;
 
-const PrivateRequestBox = styled.div`
-  height: 383px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
-  padding: 26px 43px;
-  box-sizing: border-box;
-`;
+// const RequestBox = styled.div`
+//   height: 383px;
+//   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+//   padding: 26px 43px;
+//   box-sizing: border-box;
+// `;

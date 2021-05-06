@@ -19,9 +19,13 @@ class ChatTestContainer extends React.Component {
     };
   }
 
-  onChangeFile = (e) => {
+  onChangeFile = async (e) => {
     // let fileNameAvailable = ["stl", "stp"];
     let fileName;
+
+    let file = [];
+    // let fileNameAvailable = ["txt"];
+
     if (e.currentTarget.files[0]) {
       // !fileNameAvailable.includes(
       // e.currentTarget.files[0].name.split(".")[e.currentTarget.files.length];
@@ -30,7 +34,111 @@ class ChatTestContainer extends React.Component {
       //   return alert("파일 확장자명 (stl, stp만 가능) 을 확인해주세요.");
       // }
       fileName = e.currentTarget.files[0].name;
-      this.setState({ currentFile: e.currentTarget.files[0] });
+      await this.setState({ currentFile: e.currentTarget.files[0] });
+
+      // const extension = item.fileName.split(".");
+      //console.log(e.currentTarget.files[0]);
+
+      console.log(this.userType);
+
+      console.log(this.state.currentFile);
+      console.log(this.state.currentFile.name.split(".").pop());
+      const extension = this.state.currentFile.name.split(".").pop();
+      if (
+        extension === "jpg" ||
+        extension === "jpeg" ||
+        extension === "png" ||
+        extension === "gif"
+      ) {
+        file.push({
+          chat_type: 1,
+
+          //message: "이미지",
+          answer: 238,
+          origin_file: this.state.currentFile,
+          type: this.userType,
+        });
+
+        // }else if(extension === "ppt" || extension==="pdf" || extension==="stl" || extension==="stp" || extension==="xlex"){
+      }
+      // else if (extension === "txt") {
+      //   file.push({
+      //     chat_type: 2,
+      //     message: "텍스트",
+      //     origin_file: this.state.currentFile,
+      //   });
+      // }
+      else {
+        file.push({
+          chat_type: 2,
+          // message: "파일",
+          answer: 238,
+          origin_file: this.state.currentFile,
+          type: this.userType,
+        });
+      }
+
+      console.log(file);
+      console.log(file[0].answer);
+      console.log(file[0].origin_file);
+      console.log(this.userType);
+      console.log(file[0].type);
+
+      var formData = new FormData();
+      //formData.append("request_state", "업체수배");
+
+      //formData.append("request_state", 1);
+
+      formData.append("chat_type", file[0].chat_type);
+      formData.append("answer", file[0].answer);
+      formData.append("file", file[0].origin_file);
+      formData.append("user_type", 0);
+      //formData.append("user_type", this.userType);
+
+      for (let key of formData.keys()) {
+        console.log(key);
+      }
+
+      // FormData의 value 확인
+      for (let value of formData.values()) {
+        console.log(value);
+      }
+      // const req = {
+      //   data: formData,
+      // };
+
+      const Token = localStorage.getItem("token");
+      const req = {
+        // headers: {
+        //   Authorization: `Token ${Token}`,
+        // },
+        data: formData,
+      };
+
+      ChatAPI.saveFile(req)
+        .then((res) => {
+          console.log("dsfdfdsfdsfsdf");
+          console.log(res);
+
+          const file_url = res.data.file;
+
+          this.chatSocket.send(
+            JSON.stringify({
+              //message: decodeURI(file_url.split("/").pop()),
+              type: res.data.chat_type,
+              message: file_url,
+              chatType: res.data.chat_type,
+              time: this.state.currentTime,
+              bReceive: false,
+              file: file_url,
+            })
+          );
+          console.log("send");
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
     }
   };
   shareButtonClick = () => {
@@ -117,6 +225,8 @@ class ChatTestContainer extends React.Component {
           type: this.userType,
           time: this.state.currentTime,
           bReceive: true,
+          file: this.state.currentFile,
+          chatType: 0,
         })
       );
     };
@@ -127,7 +237,7 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.onmessage = (e) => {
       // console.log("Aaaasdasd");
       const data = JSON.parse(e.data);
-      console.log(data);
+      //console.log(data);
       // if (data.type != 2) {
 
       // if (data.message != "receive") {
@@ -162,6 +272,8 @@ class ChatTestContainer extends React.Component {
               type: this.userType,
               time: this.state.currentTime,
               bReceive: true,
+              file: this.state.currentFile,
+              chatType: 0,
             })
           );
         }
@@ -170,6 +282,7 @@ class ChatTestContainer extends React.Component {
           text: data["message"],
           time: data["time"],
           bRead: false,
+          // file: this.state.currentFile,
         });
       }
 
@@ -266,6 +379,9 @@ class ChatTestContainer extends React.Component {
     // console.log("RR");
     // console.log(new Date()());
 
+    console.log(myMessage);
+    console.log(this.userType);
+
     this.chatSocket.send(
       JSON.stringify({
         message: myMessage,
@@ -273,6 +389,7 @@ class ChatTestContainer extends React.Component {
         time: this.state.currentTime,
         bReceive: false,
         file: this.state.currentFile,
+        chatType: 0,
       })
     );
     // console.log("e");
@@ -295,6 +412,7 @@ class ChatTestContainer extends React.Component {
             this.onChangeFile(e);
           }}
           // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
+          style={{ display: "none" }}
         />
         <ChatCardContainer
           messages={this.state.messages}

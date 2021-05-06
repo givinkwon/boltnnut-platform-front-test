@@ -22,7 +22,7 @@ class MobileBanner1Container extends React.Component {
       <Background backgroundColor={"#0a2165"}>
         <ContentContainer>
           <Fade bottom>
-            <Head>AI 제조사 매칭 알고리즘</Head>
+            <Head>무료 생산 상담</Head>
             <Main>
               {/* <span>
                 바로 나오는 <br />{" "}

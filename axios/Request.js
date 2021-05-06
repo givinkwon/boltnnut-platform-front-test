@@ -29,6 +29,16 @@ export function patch(req) {
   return axios({
     method: "PATCH",
     url: `${ROOT_URL}/requests/${req.id}/`,
+    headers: req.headers ? req.headers : null,
+    data: req.data,
+  });
+}
+
+export function put(req) {
+  return axios({
+    method: "PUT",
+    url: `${ROOT_URL}/requests/${req.id}/`,
+    headers: req.headers ? req.headers : null,
     data: req.data,
   });
 }

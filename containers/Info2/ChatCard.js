@@ -4,6 +4,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 //import Button from "components/Buttonv2";
 import { toJS } from "mobx";
+import * as ChatAPI from "axios/Chat";
 
 const star_img = "static/images/main/star_gray.png";
 const prevent_img = "static/images/info.png";
@@ -16,6 +17,7 @@ const emoticon_img = "static/images/emoticon.png";
 const pass2_img = "static/images/pass2.png";
 
 class ChatCardContainer extends React.Component {
+  chatSocket = new WebSocket("wss://test.boltnnut.com/ws/chat/" + `1234` + "/");
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -77,6 +79,7 @@ class ChatCardContainer extends React.Component {
     this.setState({ text: "" });
     this.props.onSendMessage(this.state.text);
   }
+
   executeScroll = () =>
     this.myRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -94,12 +97,22 @@ class ChatCardContainer extends React.Component {
       }
     });
   };
+
+  onChangeFile = async (e) => {};
+
   renderMessage(message) {
     // this.checkRead(this.props.messages, message);
 
     const { member, text, time, bRead } = message;
     const { currentUserType } = this.props;
     const messageFromMe = member === currentUserType;
+    const text_message = { text };
+    const temp = text;
+
+    console.log(member);
+    console.log(currentUserType);
+    //const temp2 = text.split("/").pop();
+
     //const messageFromMe = true;
     // setTimeout(this.executeScroll, 100);
     // const messageFromMe = true; //임시
@@ -122,7 +135,29 @@ class ChatCardContainer extends React.Component {
             </Message_User>
           )}
           {/* {!messageFromMe && <Message_User>상대</Message_User>} */}
-          <Message_text fromMe={messageFromMe}>{text}</Message_text>
+          {text_message.text &&
+            (text_message.text.split("/").pop().split(".").pop() === "png" ||
+            text_message.text.split("/").pop().split(".").pop() === "jpg" ||
+            text_message.text.split("/").pop().split(".").pop() === "jpeg" ||
+            text_message.text.split("/").pop().split(".").pop() === "gif" ? (
+              <Message_text fromMe={messageFromMe}>
+                {console.log("이미지")}
+                {/* <a href={temp}>{decodeURI(text_message.text.split("/").pop())}</a> */}
+                <img src={temp} style={{ width: "250px", height: "250px" }} />
+              </Message_text>
+            ) : text_message.text.split("/").pop().split(".").pop() ===
+              "docx" ? (
+              <Message_text fromMe={messageFromMe}>
+                {console.log("파일")}
+                {console.log(text_message.text.split("/").pop())}
+                <a href={temp} download>
+                  {decodeURI(text_message.text.split("/").pop())}
+                </a>
+                {/* <img src={temp} /> */}
+              </Message_text>
+            ) : (
+              <Message_text fromMe={messageFromMe}>{text}</Message_text>
+            ))}
           <Message_Info>
             {bRead && (
               <>
@@ -172,9 +207,6 @@ class ChatCardContainer extends React.Component {
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })} */}
                 </div>
               </MessageList>
@@ -211,12 +243,34 @@ class ChatCardContainer extends React.Component {
                     onChange={(e) => this.onChangeHandler(e)}
                     value={this.state.text}
                   />
-                  <img src={clip_img} />
+                  {/* // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
+                  /> */}
+                  <input
+                    id="FileInput"
+                    style={{ border: "1px solid red", display: "none" }}
+                    type="file"
+                    onChange={(e) => {
+                      console.log("onChange");
+                      this.onChangeFile(e);
+                    }}
+                  />
+                  <img
+                    src={clip_img}
+                    onClick={() => {
+                      const realInput = document.querySelector("#FileInput");
+                      console.log(realInput);
+                      realInput.click();
+                      //realInput.innerHTML = "";
+                    }}
+                  ></img>
                   <img src={camera_img} />
                   <img src={emoticon_img} />
                   <SendButton
-                    onClick={() => {
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      console.log("hellp");
                       this.setState({ ...this.state, rows: 1, height: 576 });
+                      this.onSubmit(e);
                     }}
                   >
                     전송
@@ -483,6 +537,12 @@ const SubmitForm = styled.form`
       font-weight: 300;
     }
     white-space: pre-line;
+  }
+  > input {
+    position: absolute;
+    //left: 75%;
+    right: 140px;
+    width: 30px;
   }
   > img {
     position: absolute;

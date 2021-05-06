@@ -18,7 +18,7 @@ import { inject, observer } from "mobx-react";
 class ProjectContainer extends React.Component {
   async componentDidMount() {}
   render() {
-    const { Auth } = this.props;
+    const { Auth, Project } = this.props;
     return (
       <>
         {Auth.logged_in_client &&
@@ -29,8 +29,13 @@ class ProjectContainer extends React.Component {
               {/* <RequestComplete /> */}
               {/* <NavContainer style={{ marginTop: "50px" }} /> */}
 
+              {console.log(Project.newIndex)}
+
+              {Project.newIndex == 0 && <ClientContentContainer />}
               {/* <ClientContentContainer length={this.props.length} /> */}
-              <ProjectDetailContainer></ProjectDetailContainer>
+
+              {Project.newIndex == 1 && <ProjectDetailContainer />}
+              {/* <ProjectDetailContainer></ProjectDetailContainer> */}
             </div>
           ) : (
             <div>
