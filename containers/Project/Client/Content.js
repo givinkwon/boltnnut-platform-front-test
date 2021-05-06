@@ -34,7 +34,7 @@ class ProjectContentContainer extends React.Component {
   pushToDetail = async (id) => {
     const { Project } = this.props;
     console.log(id);
-
+    Project.selectedProjectId = id;
     await Project.getProjectDetail(id);
     Project.newIndex = 1;
 
@@ -61,6 +61,7 @@ class ProjectContentContainer extends React.Component {
 
     await Auth.checkLogin();
     if (Auth.logged_in_client) {
+      console.log(Auth.logged_in_client.id);
       Project.getPage(Auth.logged_in_client.id);
     }
     console.log(Auth.logged_in_client);
@@ -148,7 +149,6 @@ class ProjectContentContainer extends React.Component {
                 </Background>
               );
             })}
-
           <PageBar>
             <img
               src={pass1}

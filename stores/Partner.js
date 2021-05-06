@@ -97,6 +97,21 @@ class Partner {
     this.search_develop = [];
     this.search_region = [];
   };
+
+  @action getPartnerDetail = async (id) => {
+    PartnerAPI.detail(id)
+      .then((res) => {
+        console.log(res);
+        // return res.data;
+        this.detail = res.data;
+        console.log(this.detail);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
   @action setBigCategory = (obj) => {
     this.select_mid = null;
     this.select_big = obj;
