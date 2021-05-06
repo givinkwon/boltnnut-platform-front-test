@@ -7,7 +7,7 @@ import { inject, observer } from "mobx-react";
 import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
-
+import NoProject from "../NoProject";
 import { toJS } from "mobx";
 
 const pass1 = "static/images/pass1.png";
@@ -118,9 +118,11 @@ class ProjectContentContainer extends React.Component {
           style={{ backgroundColor: "#f9f9f9", paddingTop: "49px" }}
           id="MyBackground"
         >
+          {!Project.project_existence && <NoProject />}
           {/* <Background> */}
           {/* { Project.projectData.length > 0 && Project.projectData.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
-          {Project.projectDataList &&
+          {Project.project_existence &&
+            Project.projectDataList &&
             Project.currentPage > 0 &&
             Project.projectDataList.map((item, idx) => {
               {
@@ -148,96 +150,99 @@ class ProjectContentContainer extends React.Component {
                 </Background>
               );
             })}
-
-          <PageBar>
-            <img
-              src={pass1}
-              style={{
-                opacity: current_set == 1 && Project.currentPage <= 1 ? 0.4 : 1,
-                cursor: "pointer",
-              }}
-              onClick={this.pagePrev}
-            />
-            <PageCount
-              onClick={this.movePage}
-              value={5 * (current_set - 1)}
-              active={Project.currentPage % 5 == 1}
-              style={{
-                display:
-                  Project.project_page < 5 * (current_set - 1) + 1
-                    ? "none"
-                    : "block",
-              }}
-            >
-              {" "}
-              {5 * (current_set - 1) + 1}{" "}
-            </PageCount>
-            <PageCount
-              value={5 * (current_set - 1) + 1}
-              active={Project.currentPage % 5 == 2}
-              style={{
-                display:
-                  Project.project_page < 5 * (current_set - 1) + 2
-                    ? "none"
-                    : "block",
-              }}
-              onClick={this.movePage}
-            >
-              {" "}
-              {5 * (current_set - 1) + 2}{" "}
-            </PageCount>
-            <PageCount
-              value={5 * (current_set - 1) + 2}
-              active={Project.currentPage % 5 == 3}
-              style={{
-                display:
-                  Project.project_page < 5 * (current_set - 1) + 3
-                    ? "none"
-                    : "block",
-              }}
-              onClick={this.movePage}
-            >
-              {" "}
-              {5 * (current_set - 1) + 3}{" "}
-            </PageCount>
-            <PageCount
-              value={5 * (current_set - 1) + 3}
-              active={Project.currentPage % 5 == 4}
-              style={{
-                display:
-                  Project.project_page < 5 * (current_set - 1) + 4
-                    ? "none"
-                    : "block",
-              }}
-              onClick={this.movePage}
-            >
-              {" "}
-              {5 * (current_set - 1) + 4}{" "}
-            </PageCount>
-            <PageCount
-              value={5 * (current_set - 1) + 4}
-              active={Project.currentPage % 5 == 0}
-              style={{
-                display:
-                  Project.project_page < 5 * (current_set - 1) + 5
-                    ? "none"
-                    : "block",
-              }}
-              onClick={this.movePage}
-            >
-              {" "}
-              {5 * (current_set - 1) + 5}{" "}
-            </PageCount>
-            {/* <PageCount> ... </PageCount> */}
-            <img
-              src={pass2}
-              style={{
-                opacity: Project.project_page == Project.currentPage ? 0.4 : 1,
-                cursor: "pointer",
-              }}
-              onClick={this.pageNext}
-            />
-          </PageBar>
+          {Project.project_existence && (
+            <PageBar>
+              <img
+                src={pass1}
+                style={{
+                  opacity:
+                    current_set == 1 && Project.currentPage <= 1 ? 0.4 : 1,
+                  cursor: "pointer",
+                }}
+                onClick={this.pagePrev}
+              />
+              <PageCount
+                onClick={this.movePage}
+                value={5 * (current_set - 1)}
+                active={Project.currentPage % 5 == 1}
+                style={{
+                  display:
+                    Project.project_page < 5 * (current_set - 1) + 1
+                      ? "none"
+                      : "block",
+                }}
+              >
+                {" "}
+                {5 * (current_set - 1) + 1}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 1}
+                active={Project.currentPage % 5 == 2}
+                style={{
+                  display:
+                    Project.project_page < 5 * (current_set - 1) + 2
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 2}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 2}
+                active={Project.currentPage % 5 == 3}
+                style={{
+                  display:
+                    Project.project_page < 5 * (current_set - 1) + 3
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 3}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 3}
+                active={Project.currentPage % 5 == 4}
+                style={{
+                  display:
+                    Project.project_page < 5 * (current_set - 1) + 4
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 4}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 4}
+                active={Project.currentPage % 5 == 0}
+                style={{
+                  display:
+                    Project.project_page < 5 * (current_set - 1) + 5
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 5}{" "}
+              </PageCount>
+              {/* <PageCount> ... </PageCount> */}
+              <img
+                src={pass2}
+                style={{
+                  opacity:
+                    Project.project_page == Project.currentPage ? 0.4 : 1,
+                  cursor: "pointer",
+                }}
+                onClick={this.pageNext}
+              />
+            </PageBar>
+          )}
         </Background>
       </>
     );

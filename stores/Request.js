@@ -462,6 +462,25 @@ class Request {
       }
     }
   };
+
+  @action getRequestFile = () => {};
+
+  @action deleteRequestFile = () => {
+    const req = {
+      // headers
+      // headers: {
+      //   Authorization: `Token ${token}`,
+      // },
+      // nextUrl: this.partners_next,
+    };
+
+    RequestAPI.deleteRequest(req)
+      .then((res) => {})
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 }
 
 export default new Request();

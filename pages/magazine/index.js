@@ -22,6 +22,7 @@ class Index extends React.Component {
     this.props.Auth.bgColor = "#f6f6f6";
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+    console.log(this.state.width);
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -56,14 +57,18 @@ class Index extends React.Component {
           <title>볼트앤너트|제조 인사이트</title>
         </Head>
         <>
-          {width > 767.98 ? (
-            <Nav />
-          ) : (
-          <>
-          <MobileNav headText = { "제조 인사이트" } width={width} src={ back_ic }/>          
-          </>
-          )
-        }
+          {width &&
+            (width > 767.98 ? (
+              <Nav />
+            ) : (
+              <>
+                <MobileNav
+                  headText={"제조 인사이트"}
+                  width={width}
+                  src={back_ic}
+                />
+              </>
+            ))}
         </>
         <MagazineConatiner
           width={width}

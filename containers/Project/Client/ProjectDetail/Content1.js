@@ -55,7 +55,7 @@ class Content1 extends React.Component {
   }
 
   render() {
-    const { Project } = this.props;
+    const { Project, user } = this.props;
 
     let name = "";
     let date = "";
@@ -290,7 +290,7 @@ class Content1 extends React.Component {
                 </Font20>
               </div>
             </InfoDetail>
-            <Content4 />
+            <Content4 user={user} />
           </InnerContainer>
         </Container1>
       </>
