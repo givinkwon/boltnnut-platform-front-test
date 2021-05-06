@@ -43,6 +43,19 @@ class Partner {
   @observable filter_region = 0;
   @observable radiobox_checked_idx = 0;
 
+  @observable filter_checked_idx = 0;
+
+  @observable input_process_filter = null;
+  @observable input_category = null;
+
+  @action setProcessFilter = (val) => {
+    this.input_process_filter = val;
+  };
+
+  @action setCategory = (val) => {
+    this.input_category = val;
+  };
+
   @action setLoading = () => {
     this.loading = 1;
   };
@@ -588,26 +601,48 @@ class Partner {
 
   @action getPartner = async (page = 1) => {
     this.partner_list = [];
-
-    console.log(page);
+    //this.data_dt = [];
+    console.log(this.filter_region);
     const token = localStorage.getItem("token");
-    const req = {
-      data: {
-        page: page,
-      },
-    };
+    let req = {};
+    if (!this.filter_region) {
+      req = {
+        params: {
+          // search: search_text,
+          page: page,
+          // ordering: "-id",
+        },
+        // headers: {
+        //   Authorization: `Token ${token}`,
+        // },
+      };
+    } else {
+      req = {
+        params: {
+          //city: this.filter_region === 0 ? "" : this.filter_region,
+          city: this.filter_region,
+          // search: search_text,
+          page: page,
+          // ordering: "-id",
+        },
+        // headers: {
+        //   Authorization: `Token ${token}`,
+        // },
+      };
+    }
 
-    await PartnerAPI.search(req)
+    PartnerAPI.getPartner(req)
       .then((res) => {
+        this.partner_list = [];
+
         this.partner_list = res.data.results;
+
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
         this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-
         console.log(toJS(this.partner_list));
-        console.log(toJS(this.partner_next));
-        console.log(toJS(this.partner_count));
-        console.log(toJS(this.partner_page));
+
+        //this.getCategory();
       })
       .catch((e) => {
         console.log(e);
@@ -615,22 +650,37 @@ class Partner {
       });
   };
 
-  @action getPartnerByRegion = (page = 1) => {
+  @action getPartnerByRegion = async (page = 1) => {
     this.partner_list = [];
     //this.data_dt = [];
-
+    console.log(this.filter_region);
     const token = localStorage.getItem("token");
-    const req = {
-      params: {
-        city: this.filter_region === 0 ? "" : this.filter_region,
-        // search: search_text,
-        page: page,
-        // ordering: "-id",
-      },
-      // headers: {
-      //   Authorization: `Token ${token}`,
-      // },
-    };
+    let req = {};
+    if (!this.filter_region) {
+      req = {
+        params: {
+          // search: search_text,
+          page: page,
+          // ordering: "-id",
+        },
+        // headers: {
+        //   Authorization: `Token ${token}`,
+        // },
+      };
+    } else {
+      req = {
+        params: {
+          //city: this.filter_region === 0 ? "" : this.filter_region,
+          city: this.filter_region,
+          // search: search_text,
+          page: page,
+          // ordering: "-id",
+        },
+        // headers: {
+        //   Authorization: `Token ${token}`,
+        // },
+      };
+    }
 
     PartnerAPI.getPartner(req)
       .then((res) => {

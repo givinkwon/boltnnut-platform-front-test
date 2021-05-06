@@ -12,9 +12,12 @@ class ProposalCard extends React.Component {
     introduction: false,
     call: false,
     message: false,
+    active: false,
   };
 
   componentDidMount() {
+    const { width } = this.props;
+    console.log(width);
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   }
@@ -50,6 +53,12 @@ class ProposalCard extends React.Component {
           this.setState({ message: true });
         }
         break;
+      case "active":
+        if (this.state.active) {
+          this.setState({ active: false });
+        } else {
+          this.setState({ active: true });
+        }
     }
   };
   render() {
@@ -61,14 +70,23 @@ class ProposalCard extends React.Component {
     //   checkTotal,
     //   customer,
     // } = this.props;
-    const { data } = this.props;
+    const { data, width } = this.props;
+    console.log(width);
     // console.log(toJS(data));
-    const { width } = this.state;
 
     return (
       <>
-        <Card>
-          {/* <HeaderWrapper>
+        {width > 767.98 ? (
+          <Card
+            active={this.state.active}
+            onMouseOver={() => {
+              this.activeHandler("active");
+            }}
+            onMouseOut={() => {
+              this.activeHandler("active");
+            }}
+          >
+            {/* <HeaderWrapper>
             <Title>sdfdsf</Title>
             <Content>sdfdsf</Content>
           </HeaderWrapper>
@@ -93,80 +111,201 @@ class ProposalCard extends React.Component {
               <span class="tag2">dsfdsf</span>
             </PriceTagBox>
           </FooterWrapper> */}
-          <Header>
-            <Logo>
-              <img src={data.logo} />
-            </Logo>
-          </Header>
-          <Main>
-            <Name>{data.name}</Name>
-            <InfoOne>{data.info_company}</InfoOne>
-            <InfoTwo>
-              <span>디자인</span>
-              <span>기구설계</span>
-              <span>금형제작</span>
-              <span>양산</span>
-            </InfoTwo>
-          </Main>
-          <AdditionBox>
-            <div>
-              <img
-                src={file_img}
-                active={this.state.introduction}
-                onMouseOver={() => {
-                  this.activeHandler("file");
-                }}
-                onMouseOut={() => {
-                  this.activeHandler("file");
-                }}
-              />
-              <img
-                src={call_img}
-                active={this.state.call}
-                onMouseOver={() => {
-                  this.activeHandler("call");
-                }}
-                onMouseOut={() => {
-                  this.activeHandler("call");
-                }}
-              />
-              <img
-                src={message_img}
-                active={this.state.message}
-                onMouseOver={() => {
-                  this.activeHandler("message");
-                }}
-                onMouseOut={() => {
-                  this.activeHandler("message");
-                }}
-              />
+            <Header>
+              <Logo>
+                <img src={data.logo} />
+              </Logo>
+            </Header>
+            <Main>
+              <Name>{data.name}</Name>
+              <InfoOne>{data.info_company}</InfoOne>
+              <InfoTwo>
+                <span>디자인</span>
+                <span>기구설계</span>
+                <span>금형제작</span>
+                <span>양산</span>
+              </InfoTwo>
+            </Main>
+            <AdditionBox>
               <div>
-                <span
-                  style={{
-                    display: `${this.state.introduction ? "block" : "none"}`,
+                <img
+                  src={file_img}
+                  active={this.state.introduction}
+                  onMouseOver={() => {
+                    this.activeHandler("file");
                   }}
-                >
-                  <span>회사 소개서 보기</span>
-                </span>
-                <span
-                  style={{
-                    display: `${this.state.call ? "block" : "none"}`,
+                  onMouseOut={() => {
+                    this.activeHandler("file");
                   }}
-                >
-                  <span>전화 번호</span>
-                </span>
-                <span
-                  style={{
-                    display: `${this.state.message ? "block" : "none"}`,
+                />
+                <img
+                  src={call_img}
+                  active={this.state.call}
+                  onMouseOver={() => {
+                    this.activeHandler("call");
                   }}
-                >
-                  <span>톡톡톡</span>
-                </span>
+                  onMouseOut={() => {
+                    this.activeHandler("call");
+                  }}
+                />
+                <img
+                  src={message_img}
+                  active={this.state.message}
+                  onMouseOver={() => {
+                    this.activeHandler("message");
+                  }}
+                  onMouseOut={() => {
+                    this.activeHandler("message");
+                  }}
+                />
+                <div>
+                  <span
+                    style={{
+                      display: `${this.state.introduction ? "block" : "none"}`,
+                    }}
+                  >
+                    <span>회사 소개서 보기</span>
+                  </span>
+                  <span
+                    style={{
+                      display: `${this.state.call ? "block" : "none"}`,
+                    }}
+                  >
+                    {data.real_phone ? (
+                      <span>{data.real_phone}</span>
+                    ) : (
+                      <span>전화번호 없음</span>
+                    )}
+                  </span>
+                  <span
+                    style={{
+                      display: `${this.state.message ? "block" : "none"}`,
+                    }}
+                  >
+                    <span>톡톡톡</span>
+                  </span>
+                </div>
               </div>
-            </div>
-            <div></div>
-          </AdditionBox>
-        </Card>
+              <div></div>
+            </AdditionBox>
+          </Card>
+        ) : (
+          <Card
+            active={this.state.active}
+            onMouseOver={() => {
+              this.activeHandler("active");
+            }}
+            onMouseOut={() => {
+              this.activeHandler("active");
+            }}
+          >
+            {/* <HeaderWrapper>
+          <Title>sdfdsf</Title>
+          <Content>sdfdsf</Content>
+        </HeaderWrapper>
+        <CategoryWrapper>
+          <SubTitle>
+            <span>카테고리</span>
+          </SubTitle>
+          <CategoryBox>
+            <span>sdfdsf</span>
+          </CategoryBox>
+          <CategoryBox>
+            <span>dsfdsf</span>
+          </CategoryBox>
+        </CategoryWrapper>
+        <FooterWrapper>
+          <div style={{ display: "inline-flex" }}>
+            <SubTitle>희망개발기간</SubTitle>
+            <Content>sdfdsf</Content>
+          </div>
+          <PriceTagBox>
+            <span class="tag1"> 견적 </span>
+            <span class="tag2">dsfdsf</span>
+          </PriceTagBox>
+        </FooterWrapper> */}
+            <Main>
+              <Name>{data.name}</Name>
+              <InfoOne>{data.info_company}</InfoOne>
+              <Information>
+                <div>
+                  <img src={call_img} />
+                  {data.real_phone ? (
+                    <span>{data.real_phone}</span>
+                  ) : (
+                    <span>전화번호 없음</span>
+                  )}
+                </div>
+                <div>
+                  <span>회사 소개서 보기</span>
+                </div>
+              </Information>
+            </Main>
+
+            {/* <AdditionBox>
+              <div>
+                <img
+                  src={file_img}
+                  active={this.state.introduction}
+                  onMouseOver={() => {
+                    this.activeHandler("file");
+                  }}
+                  onMouseOut={() => {
+                    this.activeHandler("file");
+                  }}
+                />
+                <img
+                  src={call_img}
+                  active={this.state.call}
+                  onMouseOver={() => {
+                    this.activeHandler("call");
+                  }}
+                  onMouseOut={() => {
+                    this.activeHandler("call");
+                  }}
+                />
+                <img
+                  src={message_img}
+                  active={this.state.message}
+                  onMouseOver={() => {
+                    this.activeHandler("message");
+                  }}
+                  onMouseOut={() => {
+                    this.activeHandler("message");
+                  }}
+                />
+                <div>
+                  <span
+                    style={{
+                      display: `${this.state.introduction ? "block" : "none"}`,
+                    }}
+                  >
+                    <span>회사 소개서 보기</span>
+                  </span>
+                  <span
+                    style={{
+                      display: `${this.state.call ? "block" : "none"}`,
+                    }}
+                  >
+                    {data.real_phone ? (
+                      <span>{data.real_phone}</span>
+                    ) : (
+                      <span>전화번호 없음</span>
+                    )}
+                  </span>
+                  <span
+                    style={{
+                      display: `${this.state.message ? "block" : "none"}`,
+                    }}
+                  >
+                    <span>톡톡톡</span>
+                  </span>
+                </div>
+              </div>
+              <div></div>
+            </AdditionBox> */}
+          </Card>
+        )}
       </>
     );
   }
@@ -181,12 +320,15 @@ const Card = styled.div`
   object-fit: contain;
   border-radius: 10px;
   //box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  border: 2px solid #0933b3;
+  border: ${(props) =>
+    props.active ? "2px solid #0933b3" : "1px solid #c6c7cc"};
   background-color: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+
   display: flex;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 108px;
+    // height: 108px;
 
     padding-left: 14px;
     padding-right: 14px;
@@ -230,7 +372,19 @@ const Logo = styled.div`
 const Main = styled.div`
   //border: 2px solid blue;
   //flex-grow: 5;
-  width: 60%;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 60%;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 60%;
+  }
+  @media (min-width: 1300px) {
+    width: 60%;
+  }
 `;
 const Name = styled.div`
   font-size: 20px;
@@ -242,9 +396,10 @@ const Name = styled.div`
 `;
 const InfoOne = styled.div`
   //height: 100%;
-  height: 50px;
+  //height: 50px;
 `;
 const InfoTwo = styled.div`
+margin-top: 16px;
   > span {
     background-color: #e1e2e4;
     border: 1px solid #ffffff;
@@ -279,14 +434,18 @@ const AdditionBox = styled.div`
         position: absolute;
 
         top: 0;
-        left: 40%;
+        // left: 40%;
         width: 100%;
         color: #0933b3;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         > span {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
+          // position: absolute;
+          // top: 50%;
+          // left: 50%;
+          // transform: translate(-50%, -50%);
         }
       }
       > span:nth-of-type(1) {
@@ -305,5 +464,24 @@ const AdditionBox = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+  }
+`;
+
+const Information = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  > div:nth-of-type(1) {
+    > img {
+      margin-right: 4px;
+    }
+  }
+  > div:nth-of-type(2) {
+    > span {
+      font-size: 14px;
+      color: #282c36;
+      font-weight: bold;
+    }
   }
 `;

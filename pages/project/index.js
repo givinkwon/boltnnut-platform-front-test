@@ -10,6 +10,8 @@ import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 
+import { toJS } from "mobx";
+
 //import ProjectContainer from 'containers/Project/index'
 
 import ProjectContainer from "../../containers/Project/index";
@@ -27,6 +29,7 @@ class Project extends React.Component {
     const { Project, Auth, Home, Answer, Loading } = this.props;
 
     console.log(Auth);
+    console.log(toJS(Auth.logged_in_user));
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -47,11 +50,11 @@ class Project extends React.Component {
     //   })
     // }
 
+    console.log(toJS(Auth));
     if (Auth.logged_in_user) {
       if (Auth.logged_in_partner) {
-        Project.getProjectByPrice(() => {
-          console.log("프로젝트 목록 로딩 끝");
-        });
+        await Project.getProjectByPrice();
+        console.log("프로젝트 목록 로딩 끝");
       }
       if (Auth.logged_in_client) {
         console.log("프로젝트 목록 로딩 시작");

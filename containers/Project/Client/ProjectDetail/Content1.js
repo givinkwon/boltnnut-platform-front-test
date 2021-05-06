@@ -86,7 +86,7 @@ class Content1 extends React.Component {
   }
 
   render() {
-    const { Project, Partner } = this.props;
+    const { Project, Partner, user } = this.props;
     // if (this.state.partnerDetailList[0]) {
     //   console.log(this.state.partnerDetailList[0].name);
     // }
@@ -350,7 +350,7 @@ class Content1 extends React.Component {
                 </Font20>
               </div>
             </InfoDetail>
-            <Content4 />
+            <Content4 user={user} />
           </InnerContainer>
         </Container1>
       </>

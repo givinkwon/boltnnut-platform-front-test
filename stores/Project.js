@@ -8,6 +8,8 @@ class Project {
   constructor() {
     makeObservable(this);
   }
+  @observable project_existence = true;
+
   // 프로젝트 데이터 관련 변수
   @observable projectDataList = [];
   @observable projectData = [];
@@ -92,6 +94,7 @@ class Project {
   @action getPage = (clientId, page = 1) => {
     this.projectDataList = [];
 
+    console.log(clientId);
     if (!clientId) {
       return;
     }
@@ -119,6 +122,21 @@ class Project {
       .catch((e) => {
         console.log(e);
         console.log(e.response);
+        console.log(e.response.statusText);
+        console.log(e.response.data.detail);
+        if (e.response.statusText === "Not Found") {
+          console.log(toJS(this.projectDataList));
+
+          if (
+            Array.isArray(this.projectDataList) &&
+            this.projectDataList.length === 0
+          ) {
+            // this.project_existence = false;
+            console.log("aaaaaaaaaaaaaaaaaaaa");
+          } else {
+            console.log("bbbbbbbbbbbbbbbbbbbbb");
+          }
+        }
       });
   };
 
