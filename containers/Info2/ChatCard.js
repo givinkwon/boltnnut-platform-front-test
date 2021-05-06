@@ -4,6 +4,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 //import Button from "components/Buttonv2";
 import { toJS } from "mobx";
+import { inject, observer } from "mobx-react";
 import * as ChatAPI from "axios/Chat";
 
 const star_img = "static/images/main/star_gray.png";
@@ -16,6 +17,8 @@ const camera_img = "static/images/camera.png";
 const emoticon_img = "static/images/emoticon.png";
 const pass2_img = "static/images/pass2.png";
 
+@inject("Project")
+@observer
 class ChatCardContainer extends React.Component {
   chatSocket = new WebSocket("wss://test.boltnnut.com/ws/chat/" + `1234` + "/");
   constructor(props) {
@@ -36,6 +39,9 @@ class ChatCardContainer extends React.Component {
     // if (this.props.Auth.logged_in_user) {
     //   console.log(toJS(this.props.Auth));
     // }
+    // setTimeout(() => {
+    //   this.setState({ f: 3 });
+    // }, 1000);
   }
 
   onChangeHandler = (event) => {
@@ -109,8 +115,8 @@ class ChatCardContainer extends React.Component {
     const text_message = { text };
     const temp = text;
 
-    console.log(member);
-    console.log(currentUserType);
+    // console.log(member);
+    // console.log(currentUserType);
     //const temp2 = text.split("/").pop();
 
     //const messageFromMe = true;
@@ -281,7 +287,10 @@ class ChatCardContainer extends React.Component {
             </Chat>
             <Info>
               <Profile>
-                <img src={close_img} />
+                <img
+                  src={close_img}
+                  onClick={() => (this.props.Project.chatModalActive = false)}
+                />
                 <ProfileImg>
                   <img src={logo_img} />
                 </ProfileImg>
@@ -464,6 +473,7 @@ const Card = styled.div`
   height: 100vh;
   width: 80vw;
   margin-top: 160px;
+  background: skyblue; //
 `;
 
 const Container = styled.div`

@@ -59,3 +59,12 @@ export function sendKakao(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function sendKakaoTalk(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/kakaotalk/chat/`,
+    data: req,
+    // headers: req.headers ? req.headers : null,
+  });
+}

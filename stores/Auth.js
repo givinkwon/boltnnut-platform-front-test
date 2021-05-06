@@ -243,8 +243,9 @@ class Auth {
     }
     if (token && !this.logged_in_user) {
       console.log("userInfo 다시 불러오기");
+
       await this.reloadUserInfo(token);
-      // console.log(this.logged_in_client.id);
+      // console.log(this.logged_in_user.id);
     }
     //console.log(this.logged_in_user)
     return true;
