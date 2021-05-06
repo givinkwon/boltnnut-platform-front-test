@@ -13,10 +13,8 @@ class Magazine {
   @observable magazine_next = null;
   @observable magazine_length = null;
   @observable categoryAry = [
-    { id : 1, name : '실시간 클릭', checked: false},
-    { id : 2, name : '베스트 브랜드', checked: false},
-    { id : 3, name : '베스트 상품', checked: false},
-    { id : 4, name : '베스트 베스트', checked: false},
+    { id : 1, name : '제조 공정', checked: false},
+    { id : 2, name : '제조 사전', checked: false},
   ]
   @observable mobileUpperCategoryAry = [
     { id : 1, name : '전체', item: [], checked: true},
