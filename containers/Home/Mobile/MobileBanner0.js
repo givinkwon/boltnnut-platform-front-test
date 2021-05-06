@@ -132,12 +132,11 @@ class MobileBanner0Container extends React.Component {
 
 export default MobileBanner0Container;
 
-const Font23 = styled(Title.FontSize23)`
+const Header = styled(Title.FontSize23)`
   text-align: center;
-  //margin-top: 100px;
   margin-bottom: 24px;
   height: 70px;
-`;
+`
 const Title1 = styled(Content.FontSize16)`
   text-align: center;
   letter-spacing: -0.4px;
