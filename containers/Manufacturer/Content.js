@@ -11,6 +11,7 @@ import Container from "components/Containerv1";
 import ProposalCard from "./ProposalCard";
 import Background from "components/Background";
 import RadioBox from "./RadioBox";
+import { toJS } from "mobx";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -32,11 +33,11 @@ class ManufacturerContentContainer extends React.Component {
     const { Partner } = this.props;
 
     // Project.search_text = "";
-    // Project.currentPage = 1;
+    Partner.currentPage = 1;
 
     console.log("did mount");
 
-    Partner.getPartner(1);
+    Partner.getPartner();
 
     // await Auth.checkLogin();
     // if(Auth.logged_in_partner){
@@ -45,39 +46,45 @@ class ManufacturerContentContainer extends React.Component {
   }
 
   movePage = (e) => {
-    // const { Project, Auth } = this.props
-    // e.preventDefault();
-    // // Project.category_reset()
-    // const newPage = e.target.innerText*1;
-    // Project.currentPage = newPage
+    const { Partner, Auth } = this.props;
+    e.preventDefault();
+    // Project.category_reset()
+    const newPage = e.target.innerText * 1;
+    Partner.currentPage = newPage;
     // Project.getProjectByPrice(Project.search_text, newPage)
+    Partner.getPartner(newPage);
   };
 
   pageNext = (e) => {
-    // const { Project, Auth } = this.props
-    // e.preventDefault()
-    // if (Project.currentPage  < Project.project_page) {
-    //   // Project.category_reset()
-    //   const nextPage = Project.currentPage+1
-    //   Project.currentPage = nextPage
-    //   Project.getProjectByPrice(Project.search_text, Project.currentPage)
-    // }
+    const { Partner } = this.props;
+    e.preventDefault();
+    console.log(toJS(Partner.currentPage));
+    console.log(toJS(Partner.partner_page));
+    if (Partner.currentPage < Partner.partner_page) {
+      // Project.category_reset()
+      const nextPage = Partner.currentPage + 1;
+      Partner.currentPage = nextPage;
+      // Project.getProjectByPrice(Project.search_text, Project.currentPage)
+      console.log(nextPage);
+      Partner.getPartner(nextPage);
+    }
   };
 
   pagePrev = (e) => {
-    // const { Project } = this.props
-    // e.preventDefault();
-    // if (Project.currentPage  > 1) {
-    //   // Project.category_reset()
-    //   const newPage = Project.currentPage  - 1
-    //   Project.currentPage = newPage
-    //   Project.getProjectByPrice(Project.search_text, Project.currentPage)
-    // }
+    const { Partner } = this.props;
+    e.preventDefault();
+    if (Partner.currentPage > 1) {
+      // Project.category_reset()
+      const newPage = Partner.currentPage - 1;
+      Partner.currentPage = newPage;
+      Partner.getPartner(newPage);
+      // Project.getProjectByPrice(Project.search_text, Project.currentPage)
+    }
   };
 
   render() {
     const { Project, Partner } = this.props;
-    const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
+    const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
 
@@ -88,7 +95,7 @@ class ManufacturerContentContainer extends React.Component {
             <Body>
               <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
-                <RadioBox data={price_data} />
+                <RadioBox data={region_data} />
               </Filter>
 
               {/* <Background> */}
@@ -97,7 +104,7 @@ class ManufacturerContentContainer extends React.Component {
                 <Header style={{ paddingTop: "32px" }}>
                   <Font20 style={{ marginLeft: "-9px" }}>
                     <span style={{ fontWeight: "bold" }}>
-                      {Project.project_count}
+                      {Partner.project_count}
                       {/* 개 */}
                     </span>
                     {/* 의 상담 요청 프로젝트가 있습니다. */}
@@ -132,7 +139,7 @@ class ManufacturerContentContainer extends React.Component {
           <img
             src={pass1}
             style={{
-              opacity: current_set == 1 && Project.currentPage <= 1 ? 0.4 : 1,
+              opacity: current_set == 1 && Partner.currentPage <= 1 ? 0.4 : 1,
               cursor: "pointer",
             }}
             onClick={this.pagePrev}
@@ -140,10 +147,10 @@ class ManufacturerContentContainer extends React.Component {
           <PageCount
             onClick={this.movePage}
             value={5 * (current_set - 1)}
-            active={Project.currentPage % 5 == 1}
+            active={Partner.currentPage % 5 == 1}
             style={{
               display:
-                Project.project_page < 5 * (current_set - 1) + 1
+                Partner.partner_page < 5 * (current_set - 1) + 1
                   ? "none"
                   : "block",
             }}
@@ -153,10 +160,10 @@ class ManufacturerContentContainer extends React.Component {
           </PageCount>
           <PageCount
             value={5 * (current_set - 1) + 1}
-            active={Project.currentPage % 5 == 2}
+            active={Partner.currentPage % 5 == 2}
             style={{
               display:
-                Project.project_page < 5 * (current_set - 1) + 2
+                Partner.partner_page < 5 * (current_set - 1) + 2
                   ? "none"
                   : "block",
             }}
@@ -167,10 +174,10 @@ class ManufacturerContentContainer extends React.Component {
           </PageCount>
           <PageCount
             value={5 * (current_set - 1) + 2}
-            active={Project.currentPage % 5 == 3}
+            active={Partner.currentPage % 5 == 3}
             style={{
               display:
-                Project.project_page < 5 * (current_set - 1) + 3
+                Partner.partner_page < 5 * (current_set - 1) + 3
                   ? "none"
                   : "block",
             }}
@@ -181,10 +188,10 @@ class ManufacturerContentContainer extends React.Component {
           </PageCount>
           <PageCount
             value={5 * (current_set - 1) + 3}
-            active={Project.currentPage % 5 == 4}
+            active={Partner.currentPage % 5 == 4}
             style={{
               display:
-                Project.project_page < 5 * (current_set - 1) + 4
+                Partner.partner_page < 5 * (current_set - 1) + 4
                   ? "none"
                   : "block",
             }}
@@ -195,10 +202,10 @@ class ManufacturerContentContainer extends React.Component {
           </PageCount>
           <PageCount
             value={5 * (current_set - 1) + 4}
-            active={Project.currentPage % 5 == 0}
+            active={Partner.currentPage % 5 == 0}
             style={{
               display:
-                Project.project_page < 5 * (current_set - 1) + 5
+                Partner.partner_page < 5 * (current_set - 1) + 5
                   ? "none"
                   : "block",
             }}
@@ -211,7 +218,7 @@ class ManufacturerContentContainer extends React.Component {
           <img
             src={pass2}
             style={{
-              opacity: Project.project_page == Project.currentPage ? 0.4 : 1,
+              opacity: Partner.partner_page == Partner.currentPage ? 0.4 : 1,
               cursor: "pointer",
             }}
             onClick={this.pageNext}
@@ -222,55 +229,50 @@ class ManufacturerContentContainer extends React.Component {
   }
 }
 
-const price_data = [
+const region_data = [
   {
-    id: "1",
+    id: 0,
     name: "전체",
     checked: "false",
   },
   {
-    id: "2",
-    name: "100 만원 이하",
+    id: 1,
+    name: "인천 남동|시화|반월공단",
     checked: "false",
   },
   {
-    id: "3",
-    name: "100 만원 ~ 300 만원",
+    id: 2,
+    name: "인천 서구",
     checked: "false",
   },
   {
-    id: "4",
-    name: "300 만원 ~ 500 만원",
+    id: 3,
+    name: "경기도 화성",
     checked: "false",
   },
   {
-    id: "5",
-    name: "500 만원 ~ 1000 만원",
+    id: 4,
+    name: "경기도 부천",
     checked: "false",
   },
   {
-    id: "6",
-    name: "1000 만원 ~ 2000 만원",
+    id: 5,
+    name: "경기도 파주|양주|고양",
     checked: "false",
   },
   {
-    id: "7",
-    name: "2000 만원 ~ 3000 만원",
+    id: 6,
+    name: "서울 문래동",
     checked: "false",
   },
   {
-    id: "8",
-    name: "3000 만원 ~ 5000 만원",
+    id: 7,
+    name: "서울 성수동",
     checked: "false",
   },
   {
-    id: "9",
-    name: "5000 만원 ~ 1 억원",
-    checked: "false",
-  },
-  {
-    id: "10",
-    name: "1 억원 ~ 2 억원",
+    id: 8,
+    name: "서울 을지로",
     checked: "false",
   },
 ];
