@@ -57,6 +57,34 @@ class Content1 extends React.Component {
     //console.log(Auth)
 
     await Auth.checkLogin();
+
+    // if (Auth.logged_in_partner) {
+    //   Project.getPage(1069);
+    //   console.log(Project.selectedProjectId);
+    //   Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+    //     console.log(toJS(Answer.answers));
+    //     this.setState({ partnerList: Answer.answers });
+
+    //     Answer.answers.forEach((answer) => {
+    //       const PartnerDetailList = this.state.partnerDetailList;
+    //       PartnerAPI.detail(answer.partner)
+    //         .then((res) => {
+    //           // console.log(res);
+    //           // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+    //           PartnerDetailList.push({
+    //             logo: res.data.logo,
+    //             name: res.data.name,
+    //           });
+    //           this.setState({ partnerDetailList: PartnerDetailList });
+    //         })
+    //         .catch((e) => {
+    //           console.log(e);
+    //           console.log(e.response);
+    //         });
+    //     });
+    //   });
+    // }
+
     if (Auth.logged_in_client) {
       Project.getPage(Auth.logged_in_client.id);
       console.log(Project.selectedProjectId);
