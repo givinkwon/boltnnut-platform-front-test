@@ -14,7 +14,6 @@ class ManufacturerConatiner extends React.Component {
         <BannerConatiner />
         <SearchBar />
         <ContentConatiner />
-        <h1>content</h1>
       </>
     );
   }

@@ -1,9 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { toJS } from "mobx";
+
+const message_img = "static/images/manufacturer/message.png";
+const call_img = "static/images/manufacturer/call.png";
+const file_img = "static/images/file.png";
 
 class ProposalCard extends React.Component {
   state = {
     width: null,
+    introduction: false,
+    call: false,
+    message: false,
   };
 
   componentDidMount() {
@@ -18,6 +26,32 @@ class ProposalCard extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
   };
 
+  activeHandler = (type) => {
+    switch (type) {
+      case "file":
+        if (this.state.introduction) {
+          this.setState({ introduction: false });
+        } else {
+          this.setState({ introduction: true });
+        }
+
+        break;
+      case "call":
+        if (this.state.call) {
+          this.setState({ call: false });
+        } else {
+          this.setState({ call: true });
+        }
+        break;
+      case "message":
+        if (this.state.message) {
+          this.setState({ message: false });
+        } else {
+          this.setState({ message: true });
+        }
+        break;
+    }
+  };
   render() {
     // const {
     //   data,
@@ -28,6 +62,7 @@ class ProposalCard extends React.Component {
     //   customer,
     // } = this.props;
     const { data } = this.props;
+    // console.log(toJS(data));
     const { width } = this.state;
 
     return (
@@ -60,14 +95,77 @@ class ProposalCard extends React.Component {
           </FooterWrapper> */}
           <Header>
             <Logo>
-              <img src={data.results.logo} />
+              <img src={data.logo} />
             </Logo>
           </Header>
           <Main>
-            <Name>{data.results.name}</Name>
-            <InfoOne>Info1</InfoOne>
-            <InfoTwo>Info2</InfoTwo>
+            <Name>{data.name}</Name>
+            <InfoOne>{data.info_company}</InfoOne>
+            <InfoTwo>
+              <span>디자인</span>
+              <span>기구설계</span>
+              <span>금형제작</span>
+              <span>양산</span>
+            </InfoTwo>
           </Main>
+          <AdditionBox>
+            <div>
+              <img
+                src={file_img}
+                active={this.state.introduction}
+                onMouseOver={() => {
+                  this.activeHandler("file");
+                }}
+                onMouseOut={() => {
+                  this.activeHandler("file");
+                }}
+              />
+              <img
+                src={call_img}
+                active={this.state.call}
+                onMouseOver={() => {
+                  this.activeHandler("call");
+                }}
+                onMouseOut={() => {
+                  this.activeHandler("call");
+                }}
+              />
+              <img
+                src={message_img}
+                active={this.state.message}
+                onMouseOver={() => {
+                  this.activeHandler("message");
+                }}
+                onMouseOut={() => {
+                  this.activeHandler("message");
+                }}
+              />
+              <div>
+                <span
+                  style={{
+                    display: `${this.state.introduction ? "block" : "none"}`,
+                  }}
+                >
+                  <span>회사 소개서 보기</span>
+                </span>
+                <span
+                  style={{
+                    display: `${this.state.call ? "block" : "none"}`,
+                  }}
+                >
+                  <span>전화 번호</span>
+                </span>
+                <span
+                  style={{
+                    display: `${this.state.message ? "block" : "none"}`,
+                  }}
+                >
+                  <span>톡톡톡</span>
+                </span>
+              </div>
+            </div>
+            <div></div>
+          </AdditionBox>
         </Card>
       </>
     );
@@ -118,14 +216,94 @@ const Card = styled.div`
 `;
 
 const Header = styled.div`
-  border: 2px solid red;
-  flex-grow: 1;
+  //border: 2px solid red;
+  //width: 14%;
+  //flex-grow: 1;
+  margin-right: 34px;
 `;
-const Logo = styled.div``;
+const Logo = styled.div`
+  > img {
+    width: 123px;
+    height: 123px;
+  }
+`;
 const Main = styled.div`
-  border: 2px solid blue;
-  flex-grow: 3;
+  //border: 2px solid blue;
+  //flex-grow: 5;
+  width: 60%;
 `;
-const Name = styled.div``;
-const InfoOne = styled.div``;
-const InfoTwo = styled.div``;
+const Name = styled.div`
+  font-size: 20px;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+  color: #282c36;
+  font-weight: bold;
+  margin-bottom: 26px;
+`;
+const InfoOne = styled.div`
+  //height: 100%;
+  height: 50px;
+`;
+const InfoTwo = styled.div`
+  > span {
+    background-color: #e1e2e4;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    padding 5px 12px;
+    box-sizing: border-box;
+    margin-right: 21px;
+  }
+`;
+
+const AdditionBox = styled.div`
+  //border: 2px solid green;
+  > div {
+    position: absolute;
+    top: 80%;
+    left: 87%;
+    > img {
+      margin-left: 14px;
+    }
+    > div {
+      position: absolute;
+      width: 130%;
+
+      span {
+        // border: 2px solid orange;
+
+        height: 34px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+        background-color: #ffffff;
+        border: 1px solid #ffffff;
+        border-radius: 5px;
+        position: absolute;
+
+        top: 0;
+        left: 40%;
+        width: 100%;
+        color: #0933b3;
+        > span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+      > span:nth-of-type(1) {
+        left: -30%;
+      }
+      > span:nth-of-type(2) {
+        left: 0%;
+      }
+      > span:nth-of-type(3) {
+        left: 30%;
+      }
+    }
+  }
+  > div:nth-child {
+    border: 2px solid orange;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+`;

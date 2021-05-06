@@ -39,6 +39,9 @@ class ChatCardContainer extends React.Component {
     // if (this.props.Auth.logged_in_user) {
     //   console.log(toJS(this.props.Auth));
     // }
+    // setTimeout(() => {
+    //   this.setState({ f: 3 });
+    // }, 1000);
   }
 
   onChangeHandler = (event) => {
@@ -470,6 +473,7 @@ const Card = styled.div`
   height: 100vh;
   width: 80vw;
   margin-top: 160px;
+  background: skyblue; //
 `;
 
 const Container = styled.div`

@@ -34,7 +34,7 @@ class ProjectContentContainer extends React.Component {
   pushToDetail = async (id) => {
     const { Project } = this.props;
     console.log(id);
-
+    Project.selectedProjectId = id;
     await Project.getProjectDetail(id);
     Project.newIndex = 1;
 

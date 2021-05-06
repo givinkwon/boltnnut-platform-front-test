@@ -5,8 +5,10 @@ import styled, { css } from "styled-components";
 import ChatCardContainer from "./ChatCard";
 import * as ChatAPI from "axios/Chat";
 import * as AnswerAPI from "axios/Answer";
+import * as RequestAPI from "axios/Request";
 
-@inject("Auth")
+import { toJS } from "mobx";
+@inject("Auth", "Project")
 @observer
 class ChatTestContainer extends React.Component {
   constructor(props) {
@@ -78,11 +80,11 @@ class ChatTestContainer extends React.Component {
         });
       }
 
-      console.log(file);
-      console.log(file[0].answer);
-      console.log(file[0].origin_file);
-      console.log(this.userType);
-      console.log(file[0].type);
+      // console.log(file);
+      // console.log(file[0].answer);
+      // console.log(file[0].origin_file);
+      // console.log(this.userType);
+      // console.log(file[0].type);
 
       var formData = new FormData();
       //formData.append("request_state", "업체수배");
@@ -162,16 +164,39 @@ class ChatTestContainer extends React.Component {
   // messages = [{}];
   // onSendMessage = null;
   checkRead = (fullMessage, currentMessage) => {
-    // console.log("CHECKREAD!!!!!!!");
+    console.log("CHECKREAD!!!!!!!");
     // console.log(fullMessage);
     // console.log(currentMessage);
     // console.log(this.props.currentUserType);
+    let notReadCount = 0;
+
+    console.log(toJS(fullMessage));
     fullMessage.forEach((element) => {
+      console.log("FULLMESSAGES");
       if (
         currentMessage.type != element.member &&
         element.time <= currentMessage.time
       ) {
         element.bRead = true;
+        console.log("READ complete");
+      } else {
+        notReadCount += 1;
+        // if (notReadCount === 1)
+        {
+          const req = {
+            phoneNumber: "01075731803",
+            username: "",
+            title: "",
+          };
+          console.log("Send KAKAO");
+          RequestAPI.sendKakaoTalk(req)
+            .then((res) => console.log(res))
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+        console.log("읽지않음");
       }
     });
   };
@@ -183,12 +208,13 @@ class ChatTestContainer extends React.Component {
     let timezone = temp.getTimezoneOffset();
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
     this.setState({ messages: [], currentTime: temp });
+    this.props.Project.chatMessages = [];
     ChatAPI.loadChat(roomNum).then((res) => {
       const reverseChat = res.data.results.reverse();
       ChatAPI.loadChatCount(roomNum).then((m_res) => {
         console.log(m_res);
         reverseChat.forEach((message) => {
-          const Messages = this.state.messages;
+          const Messages = this.props.Project.chatMessages;
           let readState = true;
           if (message.user_type === 0) {
             console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
@@ -209,7 +235,7 @@ class ChatTestContainer extends React.Component {
             time: message.createdAt,
             bRead: readState,
           });
-          console.log(this.state.messages);
+          // console.log(this.props.Project.chatMessages);
           // if (Messages[0].time < Messages[1].time) {
           //   console.log("asdnklasndlkasndlknaslkdnalksdnladsnkl");
           // }
@@ -258,7 +284,7 @@ class ChatTestContainer extends React.Component {
       // }
 
       // console.log(data.bReceive);
-      const messages = this.state.messages;
+      const messages = this.props.Project.chatMessages;
       // if (messages[0] && messages[1]) {
       //   console.log(messages[0].time);
       //   console.log(messages[1].time);
@@ -294,15 +320,15 @@ class ChatTestContainer extends React.Component {
       }
 
       // if (data.message == "receive") {
-      //   this.checkRead(this.state.messages, data);
+      //   this.checkRead(this.props.Project.chatMessages, data);
       // }
       if (data.bReceive) {
-        this.checkRead(this.state.messages, data);
+        this.checkRead(this.props.Project.chatMessages, data);
       }
       this.setState({ messages });
-      // this.checkRead(this.state.messages, data);
+      // this.checkRead(this.props.Project.chatMessages, data);
 
-      // this.checkRead(this.state.messages, data);
+      // this.checkRead(this.props.Project.chatMessages, data);
       // this.setState({ messages });
       // this.setState
 
@@ -321,22 +347,23 @@ class ChatTestContainer extends React.Component {
             console.log(res);
           });
 
-          // console.log(this.state.messages.length);
+          // console.log(this.props.Project.chatMessages.length);
           // AnswerAPI.getAnswerById(238).then((res) => console.log(res.data));
         }
       }
-
       ChatAPI.loadChatCount(tempAnswerNum).then((res) => {
-        let clientChatCount = res.check_time_client;
-        let partnerChatCount = res.check_time_partner;
-
+        let clientChatCount = res.data.check_time_client;
+        // console.log(clientChatCount);
+        let partnerChatCount = res.data.check_time_partner;
+        // console.log(res);
+        // console.log(res.data.partner);
         this.userType === 0
           ? (clientChatCount = new Date())
           : (partnerChatCount = new Date());
         const answerReq = {
           extraUrl: `${tempAnswerNum}/`,
           params: {
-            partner: 265,
+            partner: res.data.partner,
             check_time_client: clientChatCount,
             check_time_partner: partnerChatCount,
           },
@@ -423,7 +450,7 @@ class ChatTestContainer extends React.Component {
           style={{ display: "none" }}
         />
         <ChatCardContainer
-          messages={this.state.messages}
+          messages={this.props.Project.chatMessages}
           onSendMessage={this.onSendMessage}
           currentUserType={this.userType}
           shareButtonClick={this.shareButtonClick}
@@ -434,290 +461,3 @@ class ChatTestContainer extends React.Component {
 }
 
 export default ChatTestContainer;
-
-// import React from "react";
-// import * as ProposalAPI from "axios/Proposal";
-// import { inject, observer } from "mobx-react";
-// import styled, { css } from "styled-components";
-// import ChatCardContainer from "./ChatCard";
-// import * as ChatAPI from "axios/Chat";
-
-// @inject("Auth")
-// @observer
-// class ChatTestContainer extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       isIn: false,
-//       messages: [],
-//     };
-//   }
-
-//   testMessage = [];
-//   chatSocket = new WebSocket("wss://test.boltnnut.com/ws/chat/" + `1234` + "/");
-//   userType = null;
-//   // messages = [{}];
-//   // onSendMessage = null;
-//   checkRead = (fullMessage, currentMessage) => {
-//     // console.log(fullMessage);
-//     // console.log(currentMessage);
-//     // console.log(this.props.currentUserType);
-//     fullMessage.forEach((element) => {
-//       if (
-//         currentMessage.type != element.member &&
-//         element.time <= currentMessage.time
-//       ) {
-//         element.bRead = true;
-//       }
-//     });
-//     console.log("111111");
-//     // this.setState({ messages: fullMessage });
-//   };
-
-//   // async componentDidMount() {
-//   //   this.chatSocket.onopen = async () => {
-//   //     await this.props.Auth.checkLogin();
-//   //     if (this.props.Auth.logged_in_user) {
-//   //       this.userType = this.props.Auth.logged_in_user.type;
-//   //     }
-//   //     console.log("onOpen() 호출");
-//   //     this.chatSocket.send(
-//   //       JSON.stringify({
-//   //         message: "receive",
-//   //         type: this.userType,
-//   //         time: Date.now(),
-//   //       })
-//   //     );
-//   //   };
-//   //   // console.log(this.props.Auth.logged_in_user.type);
-
-//   //   console.log(this.chatSocket);
-
-//   //   this.chatSocket.onmessage = (e) => {
-//   //     // console.log("Aaaasdasd");
-//   //     const data = JSON.parse(e.data);
-//   //     console.log(data);
-//   //     // if (data.type != 2) {
-
-//   //     // if (data.message != "receive") {
-//   //     //   this.chatSocket.send(
-//   //     //     JSON.stringify({
-//   //     //       message: "receive",
-//   //     //       type: this.userType,
-//   //     //       time: Date.now(),
-//   //     //     })
-//   //     //   );
-//   //     // }
-
-//   //     if (data.message != "receive") {
-//   //       if (data.member != this.userType)
-//   //         this.chatSocket.send(
-//   //           JSON.stringify({
-//   //             message: "receive",
-//   //             type: this.userType,
-//   //             time: Date.now(),
-//   //           })
-//   //         );
-//   //     }
-
-//   //     const messages = this.state.messages;
-//   //     messages.push({
-//   //       member: data["type"],
-//   //       text: data["message"],
-//   //       time: data["time"],
-//   //       bRead: false,
-//   //     });
-
-//   //     if (data.message == "receive") {
-//   //       console.log("checkRead()!!!!!!!!");
-//   //       this.checkRead(this.state.messages, data);
-//   //     }
-//   //     // this.checkRead(this.state.messages, data);
-//   //     // if (data.bReceive) {
-//   //     //   this.checkRead(this.state.messages, data);
-//   //     // }
-//   //     this.setState({ messages });
-//   //     // this.checkRead(this.state.messages, data);
-
-//   //     // this.checkRead(this.state.messages, data);
-//   //     // this.setState({ messages });
-//   //     // this.setState
-
-//   //     // if (data.message != "접속") {
-//   //     //   if (data.type === this.userType) {
-//   //     //     const req = {
-//   //     //       text_content: data.message,
-//   //     //       user_type: data.type,
-//   //     //       chat_type: 0,
-//   //     //       answer: 238,
-//   //     //     };
-//   //     //     ChatAPI.saveChat(req);
-//   //     //   }
-//   //     // }
-
-//   //     // const message = `${data["type"]}: ${data["message"]}`; //+ data["message"];
-//   //     // console.log(message);
-//   //     // document.querySelector("#chat-log").value += message + "\n";
-//   //   };
-
-//   //   this.chatSocket.onclose = (e) => {
-//   //     console.error("Chat socket closed unexpectedly");
-//   //     // ProposalAPI.getMyProject()
-//   //     //   .then((res) => {
-//   //     //     console.log(res.data);
-//   //     //   })
-//   //     //   .catch((e) => {
-//   //     //     console.log(e);
-//   //     //     console.log(e.response);
-//   //     //   });
-//   //   };
-
-//   //   // console.log("q");
-//   // }
-
-//   componentDidMount() {
-//     this.chatSocket.onopen = () => {
-//       // await this.props.Auth.checkLogin();
-//       // if (this.props.Auth.logged_in_user) {
-//       //   this.userType = this.props.Auth.logged_in_user.type;
-//       // }
-//       this.userType = 0;
-//       console.log("onOpen() 호출");
-//       this.chatSocket.send(
-//         JSON.stringify({
-//           message: "receive",
-//           type: this.userType,
-//           time: Date.now(),
-//         })
-//       );
-//     };
-//     // console.log(this.props.Auth.logged_in_user.type);
-
-//     console.log(this.chatSocket);
-
-//     this.chatSocket.onmessage = async (e) => {
-//       // console.log("Aaaasdasd");
-//       const data = JSON.parse(e.data);
-//       console.log(data);
-//       // if (data.type != 2) {
-
-//       // if (data.message != "receive") {
-//       //   this.chatSocket.send(
-//       //     JSON.stringify({
-//       //       message: "receive",
-//       //       type: this.userType,
-//       //       time: Date.now(),
-//       //     })
-//       //   );
-//       // }
-
-//       if (data.message != "receive") {
-//         // if (data.member != this.userType)
-//         this.chatSocket.send(
-//           JSON.stringify({
-//             message: "receive",
-//             type: this.userType,
-//             time: Date.now(),
-//           })
-//         );
-//       }
-
-//       const messages = this.testMessage;
-//       messages.push({
-//         member: data["type"],
-//         text: data["message"],
-//         time: data["time"],
-//         bRead: false,
-//       });
-
-//       // if (data.message == "receive") {
-//       //   console.log("checkRead()!!!!!!!!");
-//       //   await this.checkRead(this.state.messages, data);
-//       // }
-//       this.checkRead(this.testMessage, data);
-//       // this.checkRead(this.state.messages, data);
-//       // if (data.bReceive) {
-//       //   this.checkRead(this.state.messages, data);
-//       // }
-//       // this.setState({ messages });
-//       this.testMessage = messages;
-//       this.setState({ f: 3 });
-//       console.log("22222222");
-//       // this.checkRead(this.state.messages, data);
-
-//       // this.checkRead(this.state.messages, data);
-//       // this.setState({ messages });
-//       // this.setState
-
-//       // if (data.message != "접속") {
-//       //   if (data.type === this.userType) {
-//       //     const req = {
-//       //       text_content: data.message,
-//       //       user_type: data.type,
-//       //       chat_type: 0,
-//       //       answer: 238,
-//       //     };
-//       //     ChatAPI.saveChat(req);
-//       //   }
-//       // }
-
-//       // const message = `${data["type"]}: ${data["message"]}`; //+ data["message"];
-//       // console.log(message);
-//       // document.querySelector("#chat-log").value += message + "\n";
-//     };
-
-//     this.chatSocket.onclose = (e) => {
-//       console.error("Chat socket closed unexpectedly");
-//       // ProposalAPI.getMyProject()
-//       //   .then((res) => {
-//       //     console.log(res.data);
-//       //   })
-//       //   .catch((e) => {
-//       //     console.log(e);
-//       //     console.log(e.response);
-//       //   });
-//     };
-
-//     // console.log("q");
-//   }
-
-//   onSendMessage = (myMessage) => {
-//     // const messageInput = document.querySelector("#chat-message-input");
-//     // const message = messageInput.value;
-//     console.log("front");
-//     // console.log(userType);
-//     // console.log("RR");
-//     // console.log(Date.now());
-
-//     this.chatSocket.send(
-//       JSON.stringify({
-//         message: myMessage,
-//         type: this.userType,
-//         time: Date.now(),
-//         // bReceive: false,
-//       })
-//     );
-//     // console.log("e");
-//     // messageInput.value = "";
-//   };
-
-//   render() {
-//     // this.onSendMessage("fff");
-//     return (
-//       <>
-//         {/* <textarea id="chat-log" cols="100" rows="20"></textarea>
-//           <br />
-//           <input id="chat-message-input" type="text" size="100" />
-//           <br />
-//           <input id="chat-message-submit" type="button" value="Send" /> */}
-//         <ChatCardContainer
-//           messages={this.testMessage}
-//           onSendMessage={this.onSendMessage}
-//           currentUserType={this.userType}
-//         />
-//       </>
-//     );
-//   }
-// }
-
-// export default ChatTestContainer;

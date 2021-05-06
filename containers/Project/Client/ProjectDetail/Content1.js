@@ -10,6 +10,7 @@ import ProposalCard from "components/ProposalCard";
 import { Toolbar } from "material-ui";
 import { toJS } from "mobx";
 import ChatTestContainer from "containers/Info2/ChatTest";
+import * as PartnerAPI from "axios/Partner";
 
 const money = "/static/images/project/money.svg";
 const calendar = "/static/images/project/period.svg";
@@ -20,7 +21,7 @@ const toolBarImg = "/static/images/project/ToolBar.svg";
 const callImg = "/static/images/project/Call.svg";
 const messagesImg = "/static/images/project/Messages.svg";
 
-@inject("Project", "Auth", "Answer")
+@inject("Project", "Auth", "Answer", "Partner")
 @observer
 class Content1 extends React.Component {
   state = {
@@ -28,6 +29,7 @@ class Content1 extends React.Component {
     partnerList: [],
     modalActive: false,
     selectedRoom: null,
+    partnerDetailList: [],
   };
   handler = {
     get(item, property, itemProxy) {
@@ -57,15 +59,37 @@ class Content1 extends React.Component {
     await Auth.checkLogin();
     if (Auth.logged_in_client) {
       Project.getPage(Auth.logged_in_client.id);
-      Answer.loadAnswerListByProjectId(379).then(() => {
-        // console.log(toJS(Answer.answers));
+      console.log(Project.selectedProjectId);
+      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+        console.log(toJS(Answer.answers));
         this.setState({ partnerList: Answer.answers });
+
+        Answer.answers.forEach((answer) => {
+          const PartnerDetailList = this.state.partnerDetailList;
+          PartnerAPI.detail(answer.partner)
+            .then((res) => {
+              // console.log(res);
+              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+              PartnerDetailList.push({
+                logo: res.data.logo,
+                name: res.data.name,
+              });
+              this.setState({ partnerDetailList: PartnerDetailList });
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        });
       });
     }
   }
 
   render() {
-    const { Project } = this.props;
+    const { Project, Partner } = this.props;
+    // if (this.state.partnerDetailList[0]) {
+    //   console.log(this.state.partnerDetailList[0].name);
+    // }
 
     let name = "";
     let date = "";
@@ -201,11 +225,25 @@ class Content1 extends React.Component {
 
               {/* map으로 뿌리기 */}
               {this.state.partnerList.map((data, idx) => {
+                // Partner.getPartnerDetail(data.partner);
                 return (
                   <PartnerBox onClick={() => this.modalHandler(data.id)}>
                     <PartnerInfo>
-                      <img src={logoImg} width={36} height={36}></img>
-                      <Font18 style={{ marginLeft: 10 }}>{data.partner}</Font18>
+                      <img
+                        // src={
+                        //   this.state.partnerDetailList[idx] &&
+                        //   this.state.partnerDetailList[idx].logo
+                        // }
+                        src={
+                          "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
+                        }
+                        width={36}
+                        height={36}
+                      ></img>
+                      <Font18 style={{ marginLeft: 10 }}>
+                        {this.state.partnerDetailList[idx] &&
+                          this.state.partnerDetailList[idx].name}
+                      </Font18>
                     </PartnerInfo>
                     <Font16>
                       " 프로젝트 보고 연락드립니다 . 비공개 자료 공개해주실수
