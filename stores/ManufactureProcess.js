@@ -46,7 +46,8 @@ class ManufactureProcess {
 
   // 금액 관련 변수
   @observable dataPrice = [];
-  @observable orderPrice = 0;
+  @observable orderMinPrice = 0;
+  @observable orderMaxPrice = 0;  
   @observable totalorderPrice = 0;
 
   @observable calendar_checked = false;
@@ -225,9 +226,10 @@ class ManufactureProcess {
         );
         this.ejaculationPrice =
           Math.round(this.EstimateDataForDrawing.MinPrice / 10) * 10;
-
+          
         this.MaxPrice = this.EstimateDataForDrawing.maxPrice;
         this.MinPrice = this.EstimateDataForDrawing.minPrice;
+
         this.totalMaxPrice = this.EstimateDataForDrawing.totalMaxPrice;
         this.totalMinPrice = this.EstimateDataForDrawing.totalMinPrice;
         this.proposal_type = res.data.proposalId;
