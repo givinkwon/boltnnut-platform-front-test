@@ -17,7 +17,7 @@ const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 class Banner12Container extends React.Component {
   render() {
     return (
-      <Background backgroundColor="#ffffff">
+      <Background backgroundColor="#f6f6f6">
         <Fade bottom>
           <MainTitle>
             <Font56>볼트앤너트 제조상담을 위한</Font56>
@@ -300,6 +300,7 @@ const ContainerBox = styled.div`
 `;
 const Contents = styled.div`
   width: 100%;
+  align-self: center;
 `;
 const Header = styled.div`
   //color: #e8eeff;

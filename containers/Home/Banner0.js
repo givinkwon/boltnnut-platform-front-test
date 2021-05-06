@@ -82,14 +82,14 @@ class Banner0Container extends React.Component {
                 color={WHITE}
                 shadow={"0 3px 6px rgba(0,0,0,0.61);"}
                 fontWeight={"bold"}
-                style={{ lineHeight: 1.49 }}
+                style={{ lineHeight: 1.49, fontSize: "52px" }}
               >
                 엔지니어와 연구원을 위한 제조 상담 플랫폼
               </Title.FontSize56>
               <Explanation>
                 <Font24>자동 견적 & 비교 견적</Font24>
                 <Font24>도면 & BOM 검토 등 생산 문의 상담</Font24>
-                <Font24>전문 업체 수배</Font24>
+                <Font24 style={{ marginBottom: 0 }}>전문 업체 수배</Font24>
               </Explanation>
               <Buttonv1 onClick={() => Router.push("/request")}>
                 무료 상담 및 견적 받기
@@ -215,7 +215,7 @@ const Explanation = styled.div`
 const Font24 = styled(Content.FontSize24)`
   font-weight: normal;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 34px;
   color: #ffffff;
 `;
 const Layer = styled.div`

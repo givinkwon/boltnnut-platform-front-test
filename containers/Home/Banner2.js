@@ -10,17 +10,17 @@ const image1 = "/static/images/Home/Banner2/image1.png";
 class Banner4Container extends React.Component {
   render() {
     return (
-      <Background backgroundColor={"#f6f6f6"}>
+      <Background backgroundColor={"#ffffff"}>
         <Containerv1
           style={{
-            paddingBottom: 358,
-            paddingTop: 257,
+            paddingBottom: 300,
+            paddingTop: 300,
             justifyContent: "space-between",
           }}
         >
           <Fade bottom>
             <div style={{ marginRight: "126px" }}>
-              <img src={image1} />
+              <img src={image1} style={{ height: "100%" }} />
             </div>
             <div>
               <Header>무료 생산 상담</Header>
@@ -75,5 +75,5 @@ const Body = styled(Title.FontSize24)`
   line-height: 1.67;
   letter-spacing: -0.6px;
   text-align: left;
-  color: #555963;
+  color: #282c36;
 `;

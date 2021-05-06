@@ -2,8 +2,7 @@ import { observable, action, makeObservable } from "mobx";
 
 import * as ProjectAPI from "axios/Project";
 import * as AccountAPI from "axios/Account";
-import * as CategoryAPI from "axios/Category";
-
+import { toJS } from "mobx";
 
 class Project {
   constructor() {
@@ -15,6 +14,7 @@ class Project {
   @observable project_next = null;
   @observable project_count = null;
   @observable project_status = "";
+  @observable projectDetailData = "";
 
   // 페이지 관련 변수
   @observable project_page = ["", "", "", "", ""];
@@ -31,6 +31,8 @@ class Project {
   @observable middle_category_name = ["", "", "", "", ""];
   @observable main_category_idx = [0, 0, 0, 0, 0];
   @observable main_category_name = ["", "", "", "", ""];
+
+  @observable newIndex = 0;
 
   // * 삭제 예정 * 옛날 데이터 관련 변수
   @observable data_dt = [];
@@ -104,6 +106,7 @@ class Project {
     ProjectAPI.getProjects(req)
       .then((res) => {
         this.projectDataList = res.data.results;
+        console.log(res.data.results);
         this.project_next = res.data.next;
         this.project_count = res.data.count;
         this.project_page = parseInt((this.project_count - 1) / 5) + 1;
@@ -181,37 +184,57 @@ class Project {
 
   /* 카테고리 데이터 가져오는 함수 */
   @action getCategory = () => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    // this.projectDataList.map((item, idx) => {
+    //   const req = {
+    //     id: item.request_set[0].product,
+    //     headers: {
+    //       Authorization: `Token ${token}`,
+    //     },
+    //   };
+    //   ProjectAPI.getCategoryMiddle(req)
+    //     .then((res) => {
+    //       this.middle_category_name[idx] = res.data.category;
+    //       this.main_category_idx[idx] = res.data.maincategory;
+    //       const req = {
+    //         id: this.main_category_idx[idx],
+    //       };
+    //       ProjectAPI.getMainCategory(req)
+    //         .then((res) => {
+    //           this.main_category_name[idx] = res.data.maincategory;
+    //         })
+    //         .catch((e) => {
+    //           console.log(e);
+    //           console.log(e.response);
+    //         });
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //       console.log(e.response);
+    //     });
+    // });
+  };
+  @action getProjectDetail = (id) => {
+    console.log(id);
+    const req = {
+      id: id,
+    };
 
-    this.projectDataList.map((item, idx) => {
-      const req = {
-        id: item.request_set[0].product,
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      };
+    ProjectAPI.getProjectDetail(req)
+      .then((res) => {
+        this.projectDetailData = res.data;
+        console.log(res.data);
+        console.log(toJS(this.projectDetailData));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 
-      ProjectAPI.getCategoryMiddle(req)
-        .then((res) => {
-          this.middle_category_name[idx] = res.data.category;
-          this.main_category_idx[idx] = res.data.maincategory;
-          const req = {
-            id: this.main_category_idx[idx],
-          };
-          ProjectAPI.getMainCategory(req)
-            .then((res) => {
-              this.main_category_name[idx] = res.data.maincategory;
-            })
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
-    });
+  @action setProjectDetailData = (data) => {
+    // this.projectDetailData = data;
+    // Router.push(`/project/${data.id}`);
   };
 }
 

@@ -82,5 +82,5 @@ const Body = styled(Title.FontSize24)`
   letter-spacing: -0.6px;
   text-align: left;
   //color: #cedafe;
-  color: #555963;
+  color: #282c36;
 `;

@@ -186,7 +186,7 @@ class Calendar extends Component {
   };
   render() {
     const { now } = this.state;
-    const { Schedule } = this.props;
+    const { Schedule, mobile } = this.props;
     return (
       <>
         {Schedule.calendarOnOffV2 == true && (
@@ -208,7 +208,7 @@ class Calendar extends Component {
           </MainContainer>
         )}
 
-        <FoldedComponent>
+        <FoldedComponent mobile={mobile}>
           <div
             style={{
               display: "flex",
@@ -411,12 +411,20 @@ const FoldedComponent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-	font-family: NotoSansCJKkr;
-	font-size: 18px;
-	font-weight: 500;
-	letter-spacing: -0.45px;
-	border-radius: 5px;
-	margin-top: 6px;
-	height: 50px;
-}
+  font-family: NotoSansCJKkr;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.45px;
+  border-radius: 5px;
+  margin-top: 6px;
+  height: ${(props) => (props.mobile ? "34px" : "50px")};
+  > div {
+    > div {
+      margin-right: 24px;
+      > img {
+        width: ${(props) => (props.mobile ? "21px" : "")};
+        height: ${(props) => (props.mobile ? "20px" : "")};
+      }
+    }
+  }
 `;

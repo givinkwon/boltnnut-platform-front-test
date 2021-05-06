@@ -4,6 +4,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 //import Button from "components/Buttonv2";
 import { toJS } from "mobx";
+import * as ChatAPI from "axios/Chat";
 
 const star_img = "static/images/main/star_gray.png";
 const prevent_img = "static/images/info.png";
@@ -16,6 +17,7 @@ const emoticon_img = "static/images/emoticon.png";
 const pass2_img = "static/images/pass2.png";
 
 class ChatCardContainer extends React.Component {
+  chatSocket = new WebSocket("wss://test.boltnnut.com/ws/chat/" + `1234` + "/");
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -64,8 +66,8 @@ class ChatCardContainer extends React.Component {
           : 0,
       //height: this.state.height > 35 ? 580 - (currentRows - 1) * 35 : 0,
     });
-    console.log(currentRows);
-    console.log(this.state.height);
+    // console.log(currentRows);
+    // console.log(this.state.height);
   };
 
   onChange(e) {
@@ -77,13 +79,40 @@ class ChatCardContainer extends React.Component {
     this.setState({ text: "" });
     this.props.onSendMessage(this.state.text);
   }
+
   executeScroll = () =>
     this.myRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
+  checkRead = (fullMessage, currentMessage) => {
+    // console.log(fullMessage);
+    // console.log(currentMessage);
+    // console.log(this.props.currentUserType);
+
+    fullMessage.forEach((element) => {
+      if (
+        currentMessage.member != element.member &&
+        element.time <= currentMessage.time
+      ) {
+        element.bRead = true;
+      }
+    });
+  };
+
+  onChangeFile = async (e) => {};
+
   renderMessage(message) {
-    const { member, text } = message;
+    // this.checkRead(this.props.messages, message);
+
+    const { member, text, time, bRead } = message;
     const { currentUserType } = this.props;
     const messageFromMe = member === currentUserType;
+    const text_message = { text };
+    const temp = text;
+
+    console.log(member);
+    console.log(currentUserType);
+    //const temp2 = text.split("/").pop();
+
     //const messageFromMe = true;
     // setTimeout(this.executeScroll, 100);
     // const messageFromMe = true; //임시
@@ -106,15 +135,37 @@ class ChatCardContainer extends React.Component {
             </Message_User>
           )}
           {/* {!messageFromMe && <Message_User>상대</Message_User>} */}
-          <Message_text fromMe={messageFromMe}>{text}</Message_text>
+          {text_message.text &&
+            (text_message.text.split("/").pop().split(".").pop() === "png" ||
+            text_message.text.split("/").pop().split(".").pop() === "jpg" ||
+            text_message.text.split("/").pop().split(".").pop() === "jpeg" ||
+            text_message.text.split("/").pop().split(".").pop() === "gif" ? (
+              <Message_text fromMe={messageFromMe}>
+                {console.log("이미지")}
+                {/* <a href={temp}>{decodeURI(text_message.text.split("/").pop())}</a> */}
+                <img src={temp} style={{ width: "250px", height: "250px" }} />
+              </Message_text>
+            ) : text_message.text.split("/").pop().split(".").pop() ===
+              "docx" ? (
+              <Message_text fromMe={messageFromMe}>
+                {console.log("파일")}
+                {console.log(text_message.text.split("/").pop())}
+                <a href={temp} download>
+                  {decodeURI(text_message.text.split("/").pop())}
+                </a>
+                {/* <img src={temp} /> */}
+              </Message_text>
+            ) : (
+              <Message_text fromMe={messageFromMe}>{text}</Message_text>
+            ))}
           <Message_Info>
-            {true && (
+            {bRead && (
               <>
                 읽음
                 <br />
               </>
             )}
-            시간
+            {time}
           </Message_Info>
         </MessageContent>
       </Messages_li>
@@ -137,8 +188,8 @@ class ChatCardContainer extends React.Component {
               </Header>
               <MessageList height={this.state.height}>
                 <div style={{ padding: "0 10px 0 10px", height: "80%" }}>
-                  {/* {messages.map((m) => this.renderMessage(m))} */}
-                  {this.renderMessage({
+                  {messages.map((m) => this.renderMessage(m))}
+                  {/* {this.renderMessage({
                     member: "볼트앤너트",
                     text:
                       "비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다.",
@@ -146,24 +197,29 @@ class ChatCardContainer extends React.Component {
                   {this.renderMessage({
                     member: "볼트앤너트",
                     text: "혹시 도면 파일 보내주실 수 있나요?",
-                  })}
+                  })} */}
+                  {/* {this.renderMessage({ member: "client", text: "Hi" })}
+                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
+                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
+                  {this.renderMessage({ member: 0, text: "Hi" })}
                   {this.renderMessage({ member: 0, text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: 0, text: "Hi" })}
-                  {this.renderMessage({ member: 0, text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
                   {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
+                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })} */}
                 </div>
               </MessageList>
               <TypingBox>
                 <SubmitForm
-                  onSubmit={(e) => this.onSubmit(e)}
+                  // onSubmit={(e) => this.onSubmit(e)}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      this.onSubmit(e);
+                    }
+                  }}
                   bottom={this.state.rows}
+                  // onKeyPress={() => console.log("RR")}
                 >
                   {/* <InputBox
                     onChange={(e) => this.onChange(e)}
@@ -187,12 +243,34 @@ class ChatCardContainer extends React.Component {
                     onChange={(e) => this.onChangeHandler(e)}
                     value={this.state.text}
                   />
-                  <img src={clip_img} />
+                  {/* // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
+                  /> */}
+                  <input
+                    id="FileInput"
+                    style={{ border: "1px solid red", display: "none" }}
+                    type="file"
+                    onChange={(e) => {
+                      console.log("onChange");
+                      this.onChangeFile(e);
+                    }}
+                  />
+                  <img
+                    src={clip_img}
+                    onClick={() => {
+                      const realInput = document.querySelector("#FileInput");
+                      console.log(realInput);
+                      realInput.click();
+                      //realInput.innerHTML = "";
+                    }}
+                  ></img>
                   <img src={camera_img} />
                   <img src={emoticon_img} />
                   <SendButton
-                    onClick={() => {
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      console.log("hellp");
                       this.setState({ ...this.state, rows: 1, height: 576 });
+                      this.onSubmit(e);
                     }}
                   >
                     전송
@@ -213,7 +291,9 @@ class ChatCardContainer extends React.Component {
                   회사 소개서 보러가기
                   <img src={pass2_img} />
                 </Button>
-                <Button>관심있는 회사 추가하기</Button>
+                <Button onClick={this.props.shareButtonClick}>
+                  비공개 정보 공개하기
+                </Button>
               </Profile>
               <Partner>
                 <Font20 style={{ alignSelf: "flex-start" }}>파트너 목록</Font20>
@@ -457,6 +537,12 @@ const SubmitForm = styled.form`
       font-weight: 300;
     }
     white-space: pre-line;
+  }
+  > input {
+    position: absolute;
+    //left: 75%;
+    right: 140px;
+    width: 30px;
   }
   > img {
     position: absolute;

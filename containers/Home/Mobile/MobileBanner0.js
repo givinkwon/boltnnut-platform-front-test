@@ -51,7 +51,7 @@ class MobileBanner0Container extends React.Component {
         style={{
           paddingBottom: 74,
           paddingTop: 54,
-          marginTop: 54,
+          marginTop: 100,
           justifyContent: "center",
         }}
       >
@@ -101,10 +101,12 @@ class MobileBanner0Container extends React.Component {
               marginLeft: "auto",
               marginRight: "auto",
               fontWeight: 700,
+              width: "202px",
+              height: "49px",
             }}
             onClick={() => Router.push("/request")}
           >
-            <p style={{ paddingBottom: 0.2 }}>지금 견적 받기</p>
+            <p style={{ paddingBottom: 0.2 }}>무료 상담 및 견적 받기</p>
           </Buttonv1>
           <div
             style={{
@@ -118,7 +120,7 @@ class MobileBanner0Container extends React.Component {
           >
             <img
               src={lock}
-              style={{ marginRight: 8, width: 10, height: 11 }}
+              style={{ marginRight: 8, width: 10, height: 11, opacity: 0.5 }}
             ></img>
             모든 업로드는 안전하고 기밀입니다.
           </div>
@@ -132,7 +134,7 @@ export default MobileBanner0Container;
 
 const Font23 = styled(Title.FontSize23)`
   text-align: center;
-  margin-top: 100px;
+  //margin-top: 100px;
   margin-bottom: 24px;
   height: 70px;
 `;

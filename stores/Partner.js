@@ -25,6 +25,7 @@ class Partner {
   @observable random_partner_list = [];
   @observable partner_count = 0;
   @observable partner_next = null;
+  @observable partner_page = 0;
 
   @observable page = 1;
 
@@ -563,6 +564,37 @@ class Partner {
     const idx = this.clients.findIndex((client) => client.id == id);
 
     return this.clients[idx];
+  };
+
+  @action getPartner = (page = 1) => {
+    this.partner_list = [];
+
+    const token = localStorage.getItem("token");
+    const req = {
+      params: {
+        page: page,
+      },
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
+
+    PartnerAPI.search(req)
+      .then((res) => {
+        this.partner_list = res.data.results;
+        this.partner_next = res.data.next;
+        this.partner_count = res.data.count;
+        this.partner_page = parseInt((this.partner_count - 1) / 5) + 1;
+
+        console.log(toJS(this.partner_list));
+        console.log(toJS(this.partner_next));
+        console.log(toJS(this.partner_count));
+        console.log(toJS(this.partner_page));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 }
 

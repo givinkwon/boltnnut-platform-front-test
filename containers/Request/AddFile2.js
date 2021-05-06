@@ -10,7 +10,7 @@ import { toJS } from "mobx";
 const addButtonImg = "static/images/components/Input2/Mask.png";
 const deleteButtonImg = "/static/images/delete.png";
 
-@inject("Request", "ManufactureProcess")
+@inject("Request", "ManufactureProcess", "Project")
 @observer
 class InputComponent extends React.Component {
   constructor(props) {
@@ -24,6 +24,28 @@ class InputComponent extends React.Component {
     checkFileUpload: false,
   };
 
+  async componentDidMount() {
+    const { ManufactureProcess, Project } = this.props;
+    console.log("AddFile2AddFile2AddFile2AddFile2AddFile2AddFile2");
+    if (ManufactureProcess.changeProject) {
+      this.setState({ checkFileUpload: true });
+
+      await Project.projectDetailData.request_set[0].requestfile_set.map(
+        (item, idx) => {
+          console.log(toJS(item));
+          if (item.share_inform) {
+            ManufactureProcess.openFileArray.push(item);
+          } else {
+            ManufactureProcess.privateFileArray.push(item);
+          }
+        }
+      );
+      // await ManufactureProcess.openFileArray.push(
+      //   Project.projectDetailData.request_set[0].requestfile_set
+      // );
+    }
+    console.log(toJS(ManufactureProcess.openFileArray));
+  }
   onChange = (e) => {
     if (this.props.type === "file") {
       this.props.onChange(e.currentTarget.files[0]);
@@ -55,7 +77,9 @@ class InputComponent extends React.Component {
     // };
 
     if (e && e.currentTarget.files[0]) {
+      console.log(e.currentTarget.files[0]);
       for (var item in e.currentTarget.files) {
+        console.log(item);
         if (typeof e.currentTarget.files[item] === "object") {
           ManufactureProcess.openFileArray.push(e.currentTarget.files[item]);
         } else {
@@ -133,6 +157,7 @@ class InputComponent extends React.Component {
       Request,
       ManufactureProcess,
       isOpen,
+      mobile,
       ...props
     } = this.props;
     const { fileName, checkFileUpload } = this.state;
@@ -157,8 +182,11 @@ class InputComponent extends React.Component {
 
     return (
       <Wrap width={this.props.width}>
-        <FileText checkFileUpload={this.state.checkFileUpload}>
-          <InputBox style={{ width: "100%", display: "inline-flex" }}>
+        <FileText mobile={mobile} checkFileUpload={this.state.checkFileUpload}>
+          <InputBox
+            mobile={mobile}
+            style={{ width: "100%", display: "inline-flex" }}
+          >
             <div>
               <input
                 type="file"
@@ -180,7 +208,7 @@ class InputComponent extends React.Component {
                   this.file.current.click();
                 }}
               >
-                <span>파일 첨부</span>
+                <span>파일첨부</span>
                 <img src={addButtonImg} />
               </div>
               <div>
@@ -210,7 +238,11 @@ class InputComponent extends React.Component {
                             }}
                           >
                             <span>
-                              <span>{item.name}</span>
+                              <span>
+                                {!item.name
+                                  ? decodeURI(item.file.split("/").pop())
+                                  : item.name}
+                              </span>
                               <DeleteFile
                                 src={deleteButtonImg}
                                 style={{
@@ -252,7 +284,11 @@ class InputComponent extends React.Component {
                             }}
                           >
                             <span>
-                              <span>{item.name}</span>
+                              <span>
+                                {!item.name
+                                  ? decodeURI(item.file.split("/").pop())
+                                  : item.name}
+                              </span>
                               <DeleteFile
                                 src={deleteButtonImg}
                                 style={{
@@ -290,23 +326,27 @@ const InputBox = styled.div`
   box-sizing: border-box;
 
   >div{
-    display: inline-flex;
+    display: ${(props) => (props.mobile ? "" : "inline-flex")};
+    width: ${(props) => (props.mobile ? "100%" : "")};
 
     >div:nth-of-type(1){        
       margin-right: 40px;
       cursor: pointer;
+      width: ${(props) => (props.mobile ? "100%" : "")};
 
       >span{
-        font-size: 18px;
+        font-size: ${(props) => (props.mobile ? "14px" : "18px")};
         line-height: 40px;
-        letter-sacing: -0.45px;
+        letter-sacing: ${(props) => (props.mobile ? "-0.35px" : "-0.45px")};
         color: #0933b3;
         font-weight: normal;
         box-sizing: border-box;
         margin-right: 5px;
       }
       >img {
-        vertical-align : text-top;
+        vertical-align : baseline;
+        width: ${(props) => (props.mobile ? "20px" : "")};
+        height: ${(props) => (props.mobile ? "18px" : "")};
       }      
     }
       
@@ -315,7 +355,7 @@ const InputBox = styled.div`
       word-wrap: break-word;
       word-break:break-all;
       
-      >span{
+      >span{      
         >span{          
           >span{
             margin-right: 10px;
@@ -332,22 +372,22 @@ const InputBox = styled.div`
   }
 }
 
-  @media (min-width: 0px) and (max-width: 767.98px) { 
-    height: 100%;
-    height: 34px;
-    object-fit: contain;
-    border-radius: 3px;
-    background-color: #ffffff;
-    > img {
-      position: relative;
-      padding-top: 8px;
-      padding-bottom: 8px;
-      padding-right: 20px;
-      padding-left: 0;
-      width: 20px;
-      height: 18px;
-    }
-  }
+  // @media (min-width: 0px) and (max-width: 767.98px) { 
+  //   height: 100%;
+  //   height: 34px;
+  //   object-fit: contain;
+  //   border-radius: 3px;
+  //   background-color: #ffffff;
+  //   > img {
+  //     position: relative;
+  //     padding-top: 8px;
+  //     padding-bottom: 8px;
+  //     padding-right: 20px;
+  //     padding-left: 0;
+  //     width: 20px;
+  //     height: 18px;
+  //   }
+  // }
 `;
 const Wrap = styled.div`
   display: flex;
@@ -412,7 +452,8 @@ const Input = styled.div`
   }
 `;
 const FileText = styled(Content.FontSize18)`
-  width: 1152px;
+  //width: 1152px;
+  width: ${(props) => (props.mobile ? "100%" : "1152px")}
   font-stretch: normal;
   font-style: normal;
   line-height: 40px;
@@ -421,10 +462,11 @@ const FileText = styled(Content.FontSize18)`
   color: #c6c7cc;
   display: inline-flex;
   align-items: center;
-  padding: 14px 16px;
+  padding: ${(props) => (props.mobile ? "0 0 0 14px" : "14px 16px")};
   flex-wrap: wrap;
   background-color: #ffffff;
   box-sizing: border-box;
+  height: ${(props) => (props.mobile ? "100%" : "")}
   > span:nth-of-type(1) {
     > span {
       > img {
@@ -445,17 +487,17 @@ const FileText = styled(Content.FontSize18)`
       margin-right: 20px;
     }
   }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 14px !important;
-    padding-top: 0px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 2.43;
-    letter-spacing: -0.35px;
-    text-align: left;
-    color: #999999;
-  }
+  // @media (min-width: 0px) and (max-width: 767.98px) {
+  //   font-size: 14px !important;
+  //   padding-top: 0px;
+  //   font-weight: normal;
+  //   font-stretch: normal;
+  //   font-style: normal;
+  //   line-height: 2.43;
+  //   letter-spacing: -0.35px;
+  //   text-align: left;
+  //   color: #999999;
+  // }
 `;
 const DeleteFile = styled.img`
   width: 18px;
