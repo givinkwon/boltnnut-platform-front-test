@@ -17,7 +17,7 @@ class Project {
   @observable project_count = null;
   @observable project_status = "";
   @observable projectDetailData = "";
-
+  @observable selectedProjectId = null;
   // 페이지 관련 변수
   @observable project_page = ["", "", "", "", ""];
   @observable currentPage = 1;
@@ -42,6 +42,9 @@ class Project {
   // 검색 관련 변수
   @observable search_text = "";
 
+  //채팅 관련 변수
+  @observable chatModalActive = false;
+  @observable chatMessages = [];
   @action setCategory = (val) => {
     this.input_category = val;
   };

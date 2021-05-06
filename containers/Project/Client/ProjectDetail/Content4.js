@@ -75,9 +75,6 @@ class Content4 extends React.Component {
     const { Project, ManufactureProcess } = this.props;
     const { projectDetailData } = Project;
 
-    console.log(
-      "호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출호출"
-    );
     // console.log(toJS(item));
     // console.log(toJS(projectDetailData));
     // console.log(toJS(projectDetailData.request_set[0].estimate_set));
