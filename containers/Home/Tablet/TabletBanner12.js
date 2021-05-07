@@ -284,11 +284,11 @@ const MainTitle = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const Font32 = styled(Title.FontSize40)`
+const Font32 = styled(Title.FontSize32)`
   font-weight: bold;
   color: #0933b3;
 `;
-const Font40 = styled(Title.FontSize48)`
+const Font40 = styled(Title.FontSize40)`
   font-weight: bold;
   margin-bottom: 20px;
 `;

@@ -27,15 +27,15 @@ class TabletBanner9Container extends React.Component {
           > */}
           <Fade bottom>
             <div>
-              <Font32 style={{ fontSize: "32px" }}>
-                메일로 회사소개서 보내기, 박람회 영업하기는 이제 그만
-              </Font32>
               <Font24>
+                메일로 회사소개서 보내기, 박람회 영업하기는 이제 그만
+              </Font24>
+              <Font16>
                 프로젝트 상담을 통해 기획 단계부터 실무자 분들과 소통해보세요.{" "}
                 <br />
                 전문 상담을 통해 자사의 전문성을 제안하고 신규 거래처를
                 탐색해보세요.
-              </Font24>
+              </Font16>
               <Buttonv1
                 style={{
                   margin: "0 auto",
@@ -77,7 +77,7 @@ const Layer = styled.div`
   // justify-content: center;
 `;
 
-const Font24 = styled(Content.FontSize24)`
+const Font16 = styled(Content.FontSize16)`
   color: #ffffff;
   font-weight: 500;
   font-stretch: normal;
@@ -88,7 +88,7 @@ const Font24 = styled(Content.FontSize24)`
   margin: 0 auto;
 `;
 
-const Font32 = styled(Content.FontSize32)`
+const Font24 = styled(Content.FontSize24)`
   color: #ffffff;
   font-weight: 500;
   font-stretch: normal;
