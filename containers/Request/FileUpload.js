@@ -1985,32 +1985,6 @@ class FileUploadContainer extends Component {
                 })}
               </InlineDiv>
             </SelectBox>
-
-            {/* <SelectBox style={{ width: "555px", marginTop: "16px" }}>
-              <InlineDiv style={{ alignItems: "flex-end" }}>
-                <PurposeSelectCircle active={this.state.purposeselected1}>
-                  <PurposeFont18 active={this.state.purposeselected1}>
-                    상담요청
-                  </PurposeFont18>
-                </PurposeSelectCircle>
-              </InlineDiv>
-
-              <InlineDiv style={{ alignItems: "flex-end" }}>
-                <PurposeSelectCircle active={this.state.purposeselected2}>
-                  <PurposeFont18 active={this.state.purposeselected2}>
-                    견적요청
-                  </PurposeFont18>
-                </PurposeSelectCircle>
-              </InlineDiv>
-
-              <InlineDiv style={{ alignItems: "flex-end" }}>
-                <PurposeSelectCircle active={this.state.purposeselected3}>
-                  <PurposeFont18 active={this.state.purposeselected3}>
-                    업체수배
-                  </PurposeFont18>
-                </PurposeSelectCircle>
-              </InlineDiv> 
-            </SelectBox> */}
           </Purposebox>
 
           <Projectbox
