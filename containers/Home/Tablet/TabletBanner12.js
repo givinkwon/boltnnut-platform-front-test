@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "../../components/Containerv1";
+import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
 import * as Content from "components/Content";
@@ -14,14 +14,14 @@ const image3 = "/static/images/Home/Banner12/Banner12_img3.png";
 const Ellipse = "/static/images/Home/Banner12/Ellipse.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 
-class Banner12Container extends React.Component {
+class TabletBanner12Container extends React.Component {
   render() {
     return (
       <Background backgroundColor="#f6f6f6">
         <Fade bottom>
           <MainTitle>
-            <Font56>볼트앤너트 제조상담을 위한</Font56>
-            <Font48>3단계 프로세스</Font48>
+            <Font40>볼트앤너트 제조상담을 위한</Font40>
+            <Font32>3단계 프로세스</Font32>
           </MainTitle>
 
           <div
@@ -45,7 +45,7 @@ class Banner12Container extends React.Component {
               src={Ellipse}
               style={{
                 position: "absolute",
-                left: "407px",
+                left: "220px",
                 top: "39%",
                 backgroundColor: "#ffffff",
                 zIndex: "1",
@@ -61,7 +61,7 @@ class Banner12Container extends React.Component {
             />
             <div
               style={{
-                width: "415px",
+                width: "220px",
                 height: "1px",
                 backgroundColor: "#a4aab4",
                 position: "absolute",
@@ -75,7 +75,7 @@ class Banner12Container extends React.Component {
                 backgroundColor: "#a4aab4",
                 position: "absolute",
                 top: "78px",
-                left: "415px",
+                left: "227px",
               }}
             />
           </div>
@@ -100,7 +100,7 @@ class Banner12Container extends React.Component {
                   </Body>
                   <Buttonv1
                     onClick={() => Router.push("/request")}
-                    style={{ width: "304px", height: "64px" }}
+                    style={{ width: "180px", height: "45px" }}
                     fontSize="23"
                   >
                     바로 무료 상담 받기
@@ -108,11 +108,11 @@ class Banner12Container extends React.Component {
                 </Contents>
                 <ImgBox
                   width={369}
-                  height={481}
+                  height={360}
                   style={{ position: "relative" }}
                 >
                   <div style={{ position: "absolute" }}></div>
-                  <img src={image1} />
+                  <img src={image1} style={{ width: "255px" }} />
                 </ImgBox>
               </ContainerBox>
               <div
@@ -126,7 +126,7 @@ class Banner12Container extends React.Component {
                   src={Ellipse}
                   style={{
                     position: "absolute",
-                    right: "15%",
+                    right: "19%",
                     top: "64%",
                     backgroundColor: "#ffffff",
                     zIndex: "1",
@@ -136,7 +136,7 @@ class Banner12Container extends React.Component {
                   src={Ellipse}
                   style={{
                     position: "absolute",
-                    left: "16%",
+                    left: "19%",
                     top: "64%",
                     backgroundColor: "#ffffff",
                     zIndex: "1",
@@ -148,17 +148,17 @@ class Banner12Container extends React.Component {
                     height: "165px",
                     backgroundColor: "#a4aab4",
                     position: "absolute",
-                    left: "calc(100% - 188px)",
+                    left: "calc(100% - 145px)",
                   }}
                 />
                 <div
                   style={{
-                    width: "818px",
+                    width: "432px",
                     height: "1px",
                     backgroundColor: "#a4aab4",
                     position: "absolute",
                     top: "165px",
-                    left: "calc(0% + 200px)",
+                    left: "calc(0% + 144px)",
                   }}
                 ></div>
                 <div
@@ -168,17 +168,17 @@ class Banner12Container extends React.Component {
                     backgroundColor: "#a4aab4",
                     position: "absolute",
                     top: "165px",
-                    left: "200px",
+                    left: "144px",
                   }}
                 />
               </div>
               <ContainerBox>
                 <ImgBox
-                  style={{ marginRight: "304px" }}
+                  style={{ marginRight: "140px" }}
                   width={387}
-                  height={512}
+                  height={368}
                 >
-                  <img src={image2} />
+                  <img src={image2} style={{ width: "255px" }} />
                 </ImgBox>
                 <Contents>
                   <Header>2. 제조사의 상담 확인하기</Header>
@@ -188,7 +188,7 @@ class Banner12Container extends React.Component {
                   </Body>
                   <Buttonv1
                     onClick={() => Router.push("/request")}
-                    style={{ width: "304px", height: "64px" }}
+                    style={{ width: "180px", height: "45px" }}
                     fontSize="23"
                   >
                     바로 무료 상담 받기
@@ -206,7 +206,7 @@ class Banner12Container extends React.Component {
                   src={Ellipse}
                   style={{
                     position: "absolute",
-                    right: "15%",
+                    right: "22%",
                     top: "64%",
                     backgroundColor: "#ffffff",
                     zIndex: "1",
@@ -216,7 +216,7 @@ class Banner12Container extends React.Component {
                   src={Ellipse}
                   style={{
                     position: "absolute",
-                    left: "16%",
+                    left: "18%",
                     top: "64%",
                     backgroundColor: "#ffffff",
                     zIndex: "1",
@@ -225,20 +225,20 @@ class Banner12Container extends React.Component {
                 <div
                   style={{
                     width: "1px",
-                    height: "165px",
+                    height: "160px",
                     backgroundColor: "#a4aab4",
                     position: "absolute",
-                    left: "200px",
+                    left: "137px",
                   }}
                 />
                 <div
                   style={{
-                    width: "818px",
+                    width: "405px",
                     height: "1px",
                     backgroundColor: "#a4aab4",
                     position: "absolute",
                     top: "165px",
-                    left: "calc(0% + 200px)",
+                    left: "calc(0% + 144px)",
                   }}
                 ></div>
                 <div
@@ -248,7 +248,7 @@ class Banner12Container extends React.Component {
                     backgroundColor: "#a4aab4",
                     position: "absolute",
                     top: "165px",
-                    left: "calc(100% - 188px)",
+                    left: "553px",
                   }}
                 />
               </div>
@@ -263,8 +263,8 @@ class Banner12Container extends React.Component {
                     공개 할 수 있습니다. <br />
                   </Body>
                 </Contents>
-                <ImgBox width={588} height={370}>
-                  <img src={image3} />
+                <ImgBox width={588} height={215}>
+                  <img src={image3} style={{ width: "270px" }} />
                 </ImgBox>
               </ContainerBox>
             </Fade>
@@ -275,7 +275,7 @@ class Banner12Container extends React.Component {
   }
 }
 
-export default Banner12Container;
+export default TabletBanner12Container;
 
 const MainTitle = styled.div`
   margin-top: 64px;
@@ -284,11 +284,11 @@ const MainTitle = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const Font48 = styled(Title.FontSize48)`
+const Font32 = styled(Title.FontSize40)`
   font-weight: bold;
   color: #0933b3;
 `;
-const Font56 = styled(Title.FontSize56)`
+const Font40 = styled(Title.FontSize48)`
   font-weight: bold;
   margin-bottom: 20px;
 `;
@@ -304,22 +304,22 @@ const Contents = styled.div`
 `;
 const Header = styled.div`
   //color: #e8eeff;
-  font-size: 40px;
+  font-size: 26px;
   color: #282c36;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 92px;
   letter-spacing: -1px;
-  margin-bottom: 16px;
+  //margin-bottom: 16px;
 `;
-const Body = styled(Title.FontSize24)`
+const Body = styled(Title.FontSize18)`
   //color: #f6f6f6;
   color: #282c36;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 40px;
+  line-height: 26px;
   letter-spacing: -0.6px;
   margin-bottom: 70px;
 `;
