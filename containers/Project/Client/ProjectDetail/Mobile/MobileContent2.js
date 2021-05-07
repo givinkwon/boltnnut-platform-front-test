@@ -319,7 +319,7 @@ class MobileContent2 extends React.Component {
                         }
                         return(              
                           <Box1 style = {{flexDirection: "column", paddingTop: 20, paddingBottom: 0}}>
-                            <Font16 style = {{paddingBottom: 8}}>47c2f5474824497c9b00a3_stl.stl</Font16>
+                            <Font16 style = {{paddingBottom: 8}}>{decodeURI(item.stl_file.split("/").pop())}</Font16>
                             <Font14 style = {{paddingBottom: 17}}>345 x 265 x 21 mm</Font14> 
                             <div style = {{display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center"}}>
                               <div>

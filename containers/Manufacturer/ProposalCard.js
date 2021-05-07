@@ -350,7 +350,7 @@ const Card = styled.div`
     box-sizing: border-box;
   }
   @media (min-width: 1300px) {
-    height: 195px;
+    //height: 195px;
     margin-bottom: 34px;
     padding: 33px 0px 30px 34px;
     box-sizing: border-box;

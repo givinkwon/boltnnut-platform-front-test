@@ -11,6 +11,8 @@ import MobileProjectDetailContainer from "./Client/ProjectDetail/Mobile/MobilePr
 import styled from "styled-components";
 import RequestComplete from "./RequestComplete";
 import PartnerAnswer from "./PartnerAnswer";
+import Container from "components/Containerv1";
+import Background from "components/Background";
 
 import { inject, observer } from "mobx-react";
 
@@ -49,7 +51,11 @@ class ProjectContainer extends React.Component {
 
               {Project.newIndex == 0 && (
                 <>
-                  <SearchBar />
+                  <Background>
+                    <Container>
+                      <SearchBar />
+                    </Container>
+                  </Background>
                   <PartnerContentContainer length={this.props.length} />
                   {/* <PartnerAnswer></PartnerAnswer> */}
                 </>

@@ -98,7 +98,7 @@ class ProjectContentContainer extends React.Component {
             <Body>
               <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
-                <RadioBox data={price_data} />
+                <RadioBox data={request_data} />
               </Filter>
 
               {/* <Background> */}
@@ -236,7 +236,7 @@ class ProjectContentContainer extends React.Component {
   }
 }
 
-const price_data = [
+const request_data = [
   {
     id: "1",
     name: "전체",
@@ -244,91 +244,20 @@ const price_data = [
   },
   {
     id: "2",
-    name: "100 만원 이하",
+    name: "상담요청",
     checked: "false",
   },
   {
     id: "3",
-    name: "100 만원 ~ 300 만원",
+    name: "견적문의",
     checked: "false",
   },
   {
     id: "4",
-    name: "300 만원 ~ 500 만원",
+    name: "업체수배",
     checked: "false",
   },
-  {
-    id: "5",
-    name: "500 만원 ~ 1000 만원",
-    checked: "false",
-  },
-  {
-    id: "6",
-    name: "1000 만원 ~ 2000 만원",
-    checked: "false",
-  },
-  {
-    id: "7",
-    name: "2000 만원 ~ 3000 만원",
-    checked: "false",
-  },
-  {
-    id: "8",
-    name: "3000 만원 ~ 5000 만원",
-    checked: "false",
-  },
-  {
-    id: "9",
-    name: "5000 만원 ~ 1 억원",
-    checked: "false",
-  },
-  {
-    id: "10",
-    name: "1 억원 ~ 2 억원",
-    checked: "false",
-  },
-];
-
-// const data = [
-//   {
-//     consultation: '상담 진행',
-//     name: '컴퓨터',
-//     date: '2021.03.02' ,
-//     period: '120일',
-//     estimate: '10,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     date: '2021.03.03' ,
-//     period: '121일',
-//     estimate: '11,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '키보드',
-//     date: '2021.03.04' ,
-//     period: '122일',
-//     estimate: '12,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     name: '마우스',
-//     date: '2021.03.05' ,
-//     period: '123일',
-//     estimate: '13,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '프린터',
-//     date: '2021.03.06' ,
-//     period: '124일',
-//     estimate: '14,000,000원'
-//   },
-// ]
+]
 
 const PageBar = styled.div`
   width: 351px;
