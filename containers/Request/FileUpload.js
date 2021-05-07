@@ -2817,7 +2817,7 @@ const Button = styled.div`
   display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
   justify-content: center;
   align-items: center;
-
+  cursor: pointer;
   > div {
     width: 226px;
     height: 61px;

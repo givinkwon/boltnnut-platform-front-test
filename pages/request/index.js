@@ -45,13 +45,13 @@ class Request extends React.Component {
       <div style={{overflow: 'hidden'}}>
         <Head>
           {/* SEO */}
-          <meta name="description" content="볼트앤너트의 큐레이션 시스템이 최대 1영업일 이내로 제작하고자하는 제품의 가견적을 안내드립니다. 나에게 맞는 업체를 찾고, 적합한 업체로부터 가견적을 받아보세요!" />
+          <meta name="description" content="볼트앤너트의 큐레이션 시스템이 최대 1영업일 이내로 제작하고자하는 제품의 견적을 안내드립니다. 나에게 맞는 업체를 찾고, 적합한 업체로부터 견적을 받아보세요!" />
           <meta name="keywords" content="제조, 제조업, 제조업체, 제조회사, 제품개발, 외주용역, 제조업체찾기, 제품제작, ODM, 제품제조"/>
           {/* SEO - open graph*/}
           <meta property="og:type" content="website"/>
           <meta property="og:image" content="/static/images/thumbnail.png"/>
           <meta property="og:title" content="의뢰하기|믿을 수 있는 제조 전문가" />
-          <meta property="og:description" content="볼트앤너트의 큐레이션 시스템이 최대 1영업일 이내로 제작하고자하는 제품의 가견적을 안내드립니다. 나에게 맞는 업체를 찾고, 적합한 업체로부터 가견적을 받아보세요!"/>
+          <meta property="og:description" content="볼트앤너트의 큐레이션 시스템이 최대 1영업일 이내로 제작하고자하는 제품의 견적을 안내드립니다. 나에게 맞는 업체를 찾고, 적합한 업체로부터 견적을 받아보세요!"/>
           <meta property="og:url" content="https://www.boltnnut.com/request"/>
           {/* Title */}
           <title>볼트앤너트|견적받기</title>

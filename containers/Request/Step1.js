@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled, {css, keyframes } from 'styled-components'
 import { inject, observer } from 'mobx-react'
 import Router from "next/router";
 
@@ -10,6 +10,9 @@ import SelectComponent from 'components/Select';
 import InputComponent from 'components/Input2';
 import PhoneInputComponent from 'components/PhoneInput';
 import CheckBoxComponent from 'components/CheckBox';
+import AnimatedSelectBox from 'components/AnimatedSelectBox';
+import { BoxBufferGeometry } from 'three';
+import { NonceProvider } from 'react-select';
 
 const customStyles = {
   dropdownIndicator: () => ({
@@ -53,30 +56,53 @@ class Step1Container extends React.Component {
     step: 1,
     activeCount: 0,
     currentCount: 0,
-    list:[false,false,false,false,],
+    // list:[false,false,false,false,],
+    check:'none',
+  }
+  selectCheck = (idx) =>{
+    const{check} = this.state;
+    if(check==idx){
+      this.setState({check: 'none'})
+    }
+    else{
+      this.setState({check: idx})
+    }
+  }
+  selectBlur = () =>{
+    const{check} = this.state;
+    this.setState({check: 'none'})
+  }
+  activeHandler = (idx) =>{
+    const{check} = this.state;
+    if(check == idx){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
-  selectClick = (idx) => {
-    const{list} = this.state;
-    this.setState({list: list.map((item, j) => {if(j==idx){return true;}})});
 
-  }
+  // selectClick = (idx) => {
+  //   const{list} = this.state;
+  //   this.setState({list: list.map((item, j) => {if(j==idx){return true;}})});
 
-  selectOut= (idx) =>{
-    const{list} = this.state;
-    this.setState({list: list.map((item, j) => {if(j==idx){return false;}})});
+  // }
 
-  }
+  // selectOut= (idx) =>{
+  //   const{list} = this.state;
+  //   this.setState({list: list.map((item, j) => {if(j==idx){return false;}})});
+
+  // }
 
   handleChange = (value) => {
     const { Request } = this.props;
     Request.setInputPhone(value);
   }
-  clickChange = () =>{
-    const{list} = this.state;
-    consol.log(onChange(list[0]));  }
+
   content1 = () => {
     const {Request, Partner} = this.props;
+    const {check} = this.state;
     const dueArray = [
       {label: '1 개월', value: 1},
       {label: '2 개월', value: 2},
@@ -111,49 +137,93 @@ class Step1Container extends React.Component {
        <Header> 
          의뢰 분야
        </Header>
-       <SelectRow>
-        
-        <Box active={this.state.list[0]===true} onClick ={()=>this.state.list[0]? this.selectOut(0):this.selectClick(0)}  onBlur = {()=>this.selectOut(0)}>
-        <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>       
-        <Select   
-          styles={customStyles} options={Request.big_category_list} value={Request.select_big} 
-          getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
-        />
-        </Box>
+
+        <SelectRow>      
+        <AnimatedSelectBox onClick ={()=>this.selectCheck(0)} onBlur = {this.selectBlur} active={this.activeHandler(0)}> 
+          <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>   
+          <SelectComponent
+            styles={customStyles} options={Request.big_category_list} value={Request.select_big} 
+            getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
+          
+          />
+        </AnimatedSelectBox >
         <div style={{marginRight: 38}}/>
   
-        <Box active={this.state.list[1]===true} onClick ={()=>this.state.list[1]? this.selectOut(1):this.selectClick(1)}  onBlur = {()=>this.selectOut(1)} >
+        <AnimatedSelectBox onClick ={()=>this.selectCheck(1)} onBlur = {this.selectBlur} active={this.activeHandler(1)}>
         <input style={{display: 'none'}} value={Request.select_mid ? Request.select_mid.category : ''} class="Input"/>
-        <Select
-            styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
+        <SelectComponent
+             styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
             getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
           />
-        </Box>
+        </AnimatedSelectBox>
+        </SelectRow>
+       <Header style={{marginTop: 30}}> 
+            희망 예산
+        </Header>
+        <SelectRow style={{width: 380}}>
+          <AnimatedSelectBox onClick ={()=>this.selectCheck(2)} onBlur = {this.selectBlur} active={this.activeHandler(2)}>
+          <input style={{display: 'none'}} value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
+          <SelectComponent
+             styles={customStyles} options={costArray} value={Request.input_price}
+            getOptionLabel={(option) => option.label} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
+          />
+          </AnimatedSelectBox>
+        </SelectRow>
+          <Header style={{marginTop: 30}}>
+            개발 기간
+          </Header>
+        <SelectRow >
+          <AnimatedSelectBox onClick ={()=>this.selectCheck(3)} onBlur = {this.selectBlur} active={this.activeHandler(3)} >
+          <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/>
+          <SelectComponent
+            styles={customStyles} options={dueArray} value={Request.input_day}
+            getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
+          />
+          </AnimatedSelectBox>
+        </SelectRow>
+
+       {/* <SelectRow>      
+        <AnimatedSelectBox active={this.state.list[0]===true} onClick ={()=>this.state.list[0]? this.selectOut(0):this.selectClick(0)}  onBlur = {()=>this.selectOut(0)} >
+          <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>   
+          <SelectComponent
+             styles={customStyles} options={Request.big_category_list} value={Request.select_big} 
+          getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
+          />
+        </AnimatedSelectBox>
+        <div style={{marginRight: 38}}/>
+  
+        <AnimatedSelectBox active={this.state.list[1]===true} onClick ={()=>this.state.list[1]? this.selectOut(1):this.selectClick(1)}  onBlur = {()=>this.selectOut(1)} >
+        <input style={{display: 'none'}} value={Request.select_mid ? Request.select_mid.category : ''} class="Input"/>
+        <SelectComponent
+             styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
+            getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
+          />
+        </AnimatedSelectBox>
         </SelectRow>
         <Header style={{marginTop: 30}}> 
             희망 예산
         </Header>
         <SelectRow style={{width: 380}}>
-          <Box active={this.state.list[2]===true} onClick ={()=>this.state.list[2]? this.selectOut(2):this.selectClick(2)}  onBlur = {()=>this.selectOut(2)}>
+          <AnimatedSelectBox active={this.state.list[2]===true} onClick ={()=>this.state.list[2]? this.selectOut(2):this.selectClick(2)}  onBlur = {()=>this.selectOut(2)}>
           <input style={{display: 'none'}} value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
-          <Select
-            styles={customStyles} options={costArray} value={Request.input_price}
+          <SelectComponent
+             styles={customStyles} options={costArray} value={Request.input_price}
             getOptionLabel={(option) => option.label} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
           />
-          </Box>
+          </AnimatedSelectBox>
         </SelectRow>
           <Header style={{marginTop: 30}}>
             개발 기간
           </Header>
-        <SelectRow style={{width: 380}}>
-          <Box active={this.state.list[3]===true} onClick ={()=>this.state.list[3]? this.selectOut(3):this.selectClick(3)}  onBlur = {()=>this.selectOut(3)}>
+        <SelectRow >
+          <AnimatedSelectBox active={this.state.list[3]===true} onClick ={()=>this.state.list[3]? this.selectOut(3):this.selectClick(3)}  onBlur = {()=>this.selectOut(3)}>
           <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/>
-          <Select
+          <SelectComponent
             styles={customStyles} options={dueArray} value={Request.input_day}
             getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
           />
-          </Box>
-        </SelectRow>
+          </AnimatedSelectBox>
+        </SelectRow>  */}
      </>
     );
   }
@@ -252,9 +322,8 @@ const SelectRow = styled.div`
   }
 `
 const Select = styled(SelectComponent)`
+cursor: pointer;
   width: 380px;
-
-  
   @keyframes fadeIn {  
     0% {
       opacity:0.5;
@@ -270,12 +339,6 @@ const Select = styled(SelectComponent)`
     -webkit-font-smoothing: antialiased;
     animation: fadeIn 0.2s ease-out;
   }
-`
-
-const Box = styled.div`
-width: 380px;
-
-  
   ${ props => props.active && css`
   svg{
     @keyframes select{
@@ -300,5 +363,7 @@ width: 380px;
   }
 `}
 
+`
 
+const Box = styled.div`
 `

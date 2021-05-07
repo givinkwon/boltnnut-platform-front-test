@@ -291,7 +291,7 @@ class Step3Container extends Component {
             </Table>
 
             <Font16 style={{marginTop:40,textAlign:'center',fontWeight:'bold',color:'#0a2165',marginBottom:40}}>
-              *해당 가견적은 의뢰 세부사항에 따라 달라질 수 있습니다.<br/>
+              *해당 견적은 의뢰 세부사항에 따라 달라질 수 있습니다.<br/>
               보다 정확한 견적을 받아보시려면 1:1컨설팅을 신청해주세요.
             </Font16>
 

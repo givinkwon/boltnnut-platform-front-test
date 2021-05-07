@@ -141,12 +141,12 @@ class Nav extends React.Component {
                       >
                         <p class="line"> 프로젝트 관리 </p>
                       </NavLink>
-                      <NavLink
+                      {/* <NavLink
                         onClick={() => Router.push("/manufacturer")}
                         active={url.indexOf("manufacturer") > -1}
                       >
                         <p class="line"> 제조사 찾기 </p>
-                      </NavLink>
+                      </NavLink> */}
                       <NavLink
                         onClick={() => Router.push("/magazine")}
                         active={url.indexOf("magazine") > -1}
@@ -183,6 +183,12 @@ class Nav extends React.Component {
                     >
                       <p class="line"> 프로젝트 찾기 </p>
                     </NavLink>
+                    {/* <NavLink
+                        onClick={() => Router.push("/manufacturer")}
+                        active={url.indexOf("manufacturer") > -1}
+                      >
+                        <p class="line"> 제조사 찾기 </p>
+                      </NavLink> */}
                     <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
@@ -365,6 +371,7 @@ const NavLink = styled.p`
   color: #000000;
   display: flex;
   align-items: center;
+  font-weight: 500;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
     font-weight: 500;

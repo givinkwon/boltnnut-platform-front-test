@@ -79,15 +79,14 @@ export default FormConatiner
 
 const Move = styled.div`
   display : flex ;
+  width: 508px;
   margin-top : 30px;
-  p:nth-of-type(1){
-    margin-right : 430px;
-  }
+  justify-content: space-between;
 `
-const MovePage = styled.p`
+const MovePage = styled.div`
+  align-items: center;
   color: #0a2165;
   cursor: pointer;
-  margin-left: auto;
   font-size: 20px;
   font-weight: 500;
   font-stretch: normal;
