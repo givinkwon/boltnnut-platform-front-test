@@ -59,7 +59,19 @@ export function sendKakao(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+export function deleteRequest(req) {
+  return axios({
+    method: "Delete",
+    url: `${ROOT_URL}/requestfile/${req.id}/`,
+  });
+}
 
+export function getRequestFile(req) {
+  return axios({
+    method: "Get",
+    url: `${ROOT_URL}/requestfile/${req.id}/`,
+  });
+}
 export function sendKakaoTalk(req) {
   return axios({
     method: "POST",

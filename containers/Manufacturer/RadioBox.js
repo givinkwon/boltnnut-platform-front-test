@@ -43,7 +43,7 @@ class RadioBoxContainer extends React.Component {
       // }
       //Partner.getPartnerByRegion(Partner.search_text);
       console.log(Partner.radiobox_checked_idx);
-      Partner.getPartnerByRegion();
+      Partner.getPartner();
     }
   };
 

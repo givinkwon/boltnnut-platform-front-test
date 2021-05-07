@@ -11,9 +11,10 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import ProposalCard from "./ProposalCard";
 
+import Select from "./MobileSelect";
 import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
-import SearchBar from "./SearchBar";
+import MobileSearchBar from "./MobileSearchBar";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -24,7 +25,7 @@ const right = "static/icon/right-arrow.png";
 
 @inject("Project", "Auth", "Partner")
 @observer
-class ManufacturerContentContainer extends React.Component {
+class MobileManufacturerContentContainer extends React.Component {
   handleIntersection = (event) => {
     if (event.isIntersecting) {
       console.log("추가 로딩을 시도합니다");
@@ -85,7 +86,7 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   render() {
-    const { Project, Partner } = this.props;
+    const { Project, Partner, width } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
@@ -94,28 +95,55 @@ class ManufacturerContentContainer extends React.Component {
       <>
         <Background id="MyBackground">
           <Container>
-            {/* <SearchBar /> */}
+            {console.log(width)}
+            {/* <MobileSearchBar /> */}
             <Body>
-              <Filter style={{ paddingTop: "32px" }}>
+              {/* <FilterSearch>dsfsdfds</FilterSearch> */}
+              {/* <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
                 <RadioBox data={region_data} />
-              </Filter>
+              </Filter> */}
 
               {/* <Background> */}
               {/* { Project.projectDataList.length > 0 && Project.projectDataList.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
               <Main>
-                <Header style={{ paddingTop: "32px" }}>
-                  <Font20 style={{ marginLeft: "-9px" }}>
-                    <span style={{ fontWeight: "bold" }}>
-                      {Partner.partner_count}개
-                    </span>
-                    의 제조사가 있습니다.
-                  </Font20>
-                  {/* <span>
+                <div>
+                  <Header
+                    style={{
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Font15>
+                      <span style={{ fontWeight: "bold" }}>
+                        {Partner.partner_count}개
+                      </span>
+                      의 제조사가 있습니다.
+                    </Font15>
+                    {/* <span>
               <Font14>모든 제조의뢰</Font14>
               <img src={pass4}/>
             </span> */}
-                </Header>
+                    <div style={{ width: "30%" }}>
+                      <input
+                        style={{ display: "none" }}
+                        value={
+                          Request.select_big
+                            ? Request.select_big.maincategory
+                            : ""
+                        }
+                        class="Input"
+                      />
+                      <Select
+                        placeholder="상담미진행"
+                        styles={customStyles}
+                        options={processArray}
+                        getOptionLabel={(option) => option.label}
+                        value={Partner.input_process_filter}
+                        onChange={Partner.setProcessFilter}
+                      />
+                    </div>
+                  </Header>
+                </div>
                 {Partner.partner_list &&
                   // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
@@ -232,6 +260,49 @@ class ManufacturerContentContainer extends React.Component {
     );
   }
 }
+const customStyles = {
+  dropdownIndicator: () => ({
+    backgroundColor: "#fff",
+    color: "#c1b1bf",
+    width: 44,
+    height: 44,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }),
+  indicatorSeparator: () => ({
+    display: "none",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? "#000000" : "#555555",
+    backgroundColor: "#fff",
+    borderRadius: 0,
+    // padding: 16,
+    fontSize: 14,
+  }),
+  control: () => ({
+    fontSize: 14,
+    fontWeight: "normal",
+    lineHeight: 34,
+    letterSpacing: "-0.45px",
+    // border: "1px solid #c7c7c7",
+    // borderRadius: "3px",
+    color: "#c1bfbf",
+    display: "flex",
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+
+    return { ...provided, opacity, transition };
+  },
+};
+
+const processArray = [
+  { label: "상담미진행", value: "상담미진행" },
+  { label: "상담진행", value: "상담진행" },
+];
 
 const region_data = [
   {
@@ -331,12 +402,31 @@ const PageBar = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-between;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > img {
+      width: 10px;
+      height: 19px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    > img {
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    > img {
+    }
+  }
+  @media (min-width: 1300px) {
+    > img {
+    }
+  }
 `;
 
 const PageCount = styled.span`
   width: 14px;
   height: 30px;
-  font-size: 25px;
+
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -351,17 +441,36 @@ const PageCount = styled.span`
       font-weight: 700;
       color: #0933b3;
     `}
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 16px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 19px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    font-size: 22px;
+  }
+  @media (min-width: 1300px) {
+    font-size: 25px;
+  }
 `;
 const Body = styled.div`
   display: flex;
   justify-content: center;
-  border-top: 1px solid #e1e2e4;
-  border-bottom: 1px solid #e1e2e4;
+  //border-top: 1px solid #e1e2e4;
+  //border-bottom: 1px solid #e1e2e4;
   margin-top: 40px;
 `;
 const Main = styled.div`
-  width: 984px;
+  width: 100%;
 `;
+
+const FilterSearch = styled.div`
+  height: 134px;
+  border: 1px solid red;
+`;
+
 const Filter = styled.div`
   width: 220px;
   border-right: 1px solid #e1e2e4;
@@ -371,8 +480,9 @@ const Filter = styled.div`
 `;
 
 const Header = styled.div`
-  width: 993px;
+  width: 100%;
   display: flex;
+  //justify-content: center;
   align-items: center;
   margin-bottom: 28px;
   position: relative;
@@ -387,9 +497,21 @@ const Header = styled.div`
       margin-left: 10px;
     }
   }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    paddingtop: 32px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    paddingtop: 32px;
+  }
+  @media (min-width: 1300px) {
+    paddingtop: 32px;
+  }
 `;
 
-const Font20 = styled(Title.FontSize20)`
+const Font15 = styled(Title.FontSize15)`
   font-weight: 500 !important;
   font-stretch: normal !important;
   font-style: normal !important;
@@ -407,4 +529,4 @@ const Font14 = styled(Content.FontSize14)`
   color: #0933b3;
 `;
 
-export default ManufacturerContentContainer;
+export default MobileManufacturerContentContainer;

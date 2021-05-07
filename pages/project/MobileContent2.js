@@ -25,8 +25,8 @@ const callImg = "/static/images/project/Call.svg";
 const messagesImg = "/static/images/project/Messages.svg";
 @inject('Project', "Auth", "ManufactureProcess")
 @observer
-class MobileDetail extends React.Component {
-  
+
+class MobileContent2 extends React.Component {
   process = [];
   detailProcess = [];
   count = 0;
@@ -37,34 +37,7 @@ class MobileDetail extends React.Component {
     render_process: false,
     process: [],
     detailProcess: [],
-    check: null,
   };
-
-  openModal = () => {
-    this.setState({ modalOpen: true });
-  };
-  closeModal = () => {
-    this.setState({ modalOpen: false });
-  };
-
-  // openModal = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     modal_open: true,
-  //   });
-  // };
-  // closeModal = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     modal_open: false,
-  //   });
-  // };
-  // closeClassModal = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     classModal_open: false,
-  //   });
-  // };
 
   downloadFile(urls) {
     console.log(urls);
@@ -151,127 +124,15 @@ class MobileDetail extends React.Component {
     console.log(this.props.Project.projectDetailData);
   }
 
-  boxChecked = (idx) => {
-    this.setState({check: idx})
-  }
 
-  activeHandler = (idx) => {
-    const{check} = this.state;
-
-    if(check == idx){
-      console.log('true')
-      return true;
-    }
-    else{
-      console.log('false')
-      return false;
-      
-    }
-  }
-
-
-
-	render() {
-
-		const { width, check } = this.state;
+  render() {
     const { Project, ManufactureProcess, user } = this.props;
     const { projectDetailData } = Project;
-    const gray = "#f6f6f6";
-    
-
-		return (
-      <>
-        <div>
-          { width && width < 768 && <MobileNav src={ back_ic } headText={"프로젝트 관리"} width={ width }/>}
-
-        </div>
-        <Background>
-          <Containerv1 style = {{display: 'flex', flexDirection:'column', paddingTop: 90}}>
-            <div style = {{marginBottom: 40}}>
-              <Font15 style = {{color: "#0933b3", marginBottom: 14, fontWeight: 'bold'}}>모집중</Font15>
-              <Font16 style = {{marginBottom: 8, fontWeight: 'bold', color: '#282c36'}}>실리콘 반려동물 샤워기</Font16>
-              <div style = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Font14 style = {{color: "#999999"}}>제품 및 용품 반려동물 용품</Font14>
-                <img src={separator} />
-                <Font14 style = {{color: "#999999"}}>2021.03.11</Font14>
-              </div>
-
-              <Box1>
-                <Font14 style = {{color: "#999999"}}>예상 금액</Font14><Font14 style = {{color: "#414550"}}>25,000,000원</Font14>
-              </Box1>
-              <Box1>
-                <Font14 style = {{color: "#999999"}}>예상 기간</Font14><Font14 style = {{color: "#414550"}}>2달</Font14>
-              </Box1>
-              <Box1>
-                <Font14 style = {{color: "#999999"}}>지원 수</Font14><Font14 style = {{color: "#414550"}}>2명</Font14>
-              </Box1>
-            </div>
-            <div style = {{marginBottom: 40}}>
-              
+    return(
 
 
-
-              
-              <Font16 style = {{fontWeight: 'bold', color: '#282c36'}}>지원한 파트너</Font16>
-              <Box2 
-                active = {this.activeHandler(0)}
-                onMouseOver = {()=>this.boxChecked(0)}
-                onMouseOut = {()=>this.boxChecked(null)}
-                style = {{
-                flexDirection: 'column', 
-                alignItems: "center", 
-                boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)"
-                }}>
-
-                <div style = {{width: "100%", display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
-                  <Font14 style = {{fontWeight: '500', color: '#282c36'}}>하이젠어스</Font14>
-                  <Font14 style = {{color: '#999999'}}>"프로젝트 보고 연락...</Font14>
-                  {this.activeHandler(0)? (
-                      <img src = {uppass} style = {{height: 8, width: 15}}></img>
-                    ):(
-                    <img src = {downpass} style = {{height: 8, width: 15}}></img>
-                    )
-                  }
-                </div>
-
-
-                <div active = {this.activeHandler(0)} 
-                  style = {{  
-                  width: "100%", 
-                  display: 'flex', 
-                  flexDirection: 'row', 
-                  alignItems: "center", 
-                  justifyContent: "space-evenly", 
-                  marginTop: 20,
-                  }}>
-                  <Icon>
-                    <img src = {fileimgBlack}></img>
-                    <Font12>회사소개서</Font12>
-                  </Icon>
-                  <img src = {separator} style = {{width: 1, height: 32}}></img>
-                  <Icon>
-                    <img src={callImg}></img>
-                    <Font12>111-111-1111</Font12>
-                  </Icon>
-                  <img src = {separator} style = {{width: 1, height: 32}}></img>
-                  <Icon>
-                    <img src={messagesImg}></img>
-                    <ChatNotice>
-                      <Font14>N</Font14>
-                    </ChatNotice>
-                    <Font12>채팅하기</Font12>
-                  </Icon>
-                </div>
-                
-
-              </Box2>
-              <Box2 style = {{alignItems: "center",boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)"}}>
-                <Font14 style = {{fontWeight: '500', color: '#282c36'}}>하이젠어스</Font14>
-                <Font14 style = {{color: '#999999'}}>"프로젝트 보고 연락...</Font14>
-                <img src = {downpass} style = {{height: 8, width: 15}}></img>
-              </Box2>
-            </div>
-            <div>
+            
+          <div>
               <div style = {{marginBottom: 40}}>
                 <Font16 style = {{marginBottom: 14}}>프로젝트 설명 및 요청사항</Font16>
                 <Font15>공개 내용</Font15>
@@ -279,7 +140,6 @@ class MobileDetail extends React.Component {
                   <pre style={{ whiteSpace: "break-spaces" }}>
                     {projectDetailData &&
                       projectDetailData.request_set[0].order_request_open}
-
                   </pre>
                   <Font14 style = {{color: "#282c36", marginBottom: 40, lineHeight: '26px', letterSpacing: -0.35}}>생산 공정 금형사출로 부탁 어쩌고 찬아짱짱맨 최고 두루루루루루 두루치기 싫다</Font14>
                   <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -450,19 +310,15 @@ class MobileDetail extends React.Component {
 
 
           
-
-
-
             </div>
-          </Containerv1>
-        </Background>
-        <Footer color = {gray}/>
-      </>
-		);
-	}
-}
 
-export default MobileDetail;
+
+    );
+  }
+
+}
+export default MobileContent2;
+
 
 const Box1= styled.div`
 border-radius: 5px;
