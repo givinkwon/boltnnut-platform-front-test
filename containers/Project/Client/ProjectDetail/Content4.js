@@ -82,9 +82,9 @@ class Content4 extends React.Component {
     //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
 
     // console.log(idx);
-    console.log(process_idx);
-    console.log(material_idx);
-    console.log(detail_idx);
+    // console.log(process_idx);
+    // console.log(material_idx);
+    // console.log(detail_idx);
 
     let item_detail_idx = 0;
     if (process_idx === "1") {
@@ -173,7 +173,7 @@ class Content4 extends React.Component {
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
           <RequestSubContainer>
-            <Font20>공개내용</Font20>
+            <Font20>공개 내용</Font20>
             <RequestBox>
               <RequestContent>
                 <pre style={{ whiteSpace: "break-spaces" }}>
