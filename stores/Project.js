@@ -122,19 +122,8 @@ class Project {
       .catch((e) => {
         console.log(e);
         console.log(e.response);
-        console.log(e.response.statusText);
-        console.log(e.response.data.detail);
-        if (e.response.statusText === "Not Found") {
-          console.log(toJS(this.projectDataList));
 
-          if (
-            Array.isArray(this.projectDataList) &&
-            this.projectDataList.length === 0
-          ) {
-            this.project_existence = false;
-          } else {
-          }
-        }
+
       });
   };
 
