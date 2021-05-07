@@ -47,7 +47,7 @@ class ProjectContainer extends React.Component {
                 <>
                   <SearchBar />
                   <PartnerContentContainer length={this.props.length} />
-                  <PartnerAnswer/>
+                  {/*<PartnerAnswer></PartnerAnswer>*/}
                 </>
               )}
               {Project.newIndex == 1 && (
