@@ -47,6 +47,7 @@ class Content1 extends React.Component {
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
 
+    console.log(Project.selectedProjectId);
     console.log("<Web> did mount");
 
     // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
@@ -86,6 +87,7 @@ class Content1 extends React.Component {
     // }
 
     if (Auth.logged_in_client) {
+      // console.log(Auth.logged_in_client);
       Project.getPage(Auth.logged_in_client.id);
       console.log(Project.selectedProjectId);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
@@ -117,6 +119,8 @@ class Content1 extends React.Component {
     const { Project, Partner, user } = this.props;
     // if (this.state.partnerDetailList[0]) {
     //   console.log(this.state.partnerDetailList[0].name);
+
+    const { projectDetailData } = Project;
     // }
 
     let name = "";
@@ -154,6 +158,7 @@ class Content1 extends React.Component {
     return (
       <>
         <Container1>
+          {console.log(toJS(projectDetailData))}
           {Project.chatModalActive && (
             // <Layer onClick={this.modalHandler}>
             <Layer>
@@ -188,7 +193,7 @@ class Content1 extends React.Component {
               <Font26
                 style={{ height: 38, fontWeight: "bold", letterSpacing: -0.65 }}
               >
-                {name}
+                {projectDetailData && projectDetailData.request_set[0].name}
               </Font26>
               {/* <div>
               <Font17 style={{ color: "#86888c" }}>
@@ -211,7 +216,12 @@ class Content1 extends React.Component {
                 </Box2ImageContainer>
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
-                  <Font18 style={{ fontWeight: "bold" }}>{estimate}</Font18>
+                  <Font18 style={{ fontWeight: "bold" }}>
+                    {/* {console.log(toJS())} */}
+                    {/* {projectDetailData.request_set[0].price} */}
+                    {projectDetailData &&
+                      projectDetailData.request_set[0].price}
+                  </Font18>
                 </div>
               </Box2>
 
@@ -296,7 +306,7 @@ class Content1 extends React.Component {
               })}
             </AppliedPartner>
             {/* =================================================== */}
-            <Info>
+            {/* <Info>
               <div style={{ width: 125 }}>
                 <Font20>모집 마감일</Font20>
                 <Font20>진행 분류</Font20>
@@ -312,12 +322,12 @@ class Content1 extends React.Component {
                 <Font20 style={{ color: "#282c36" }}>뜨악</Font20>
                 <Font20 style={{ color: "#282c36" }}>CNC</Font20>
               </div>
-            </Info>
+            </Info> */}
             <InfoDetail>
-              <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
+              {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
                 프로젝트 내용 상세 설명
-              </Font20>
-              <Font18
+              </Font20> */}
+              {/* <Font18
                 style={{
                   letterSpacing: -0.45,
                   fontWeight: "normal",
@@ -343,8 +353,8 @@ class Content1 extends React.Component {
                 파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
                 어떻게 할까요 저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세
                 설명이 없
-              </Font18>
-              <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
+              </Font18> */}
+              {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
                 프로젝트 관련 파일
               </Font20>
               <div>
@@ -376,7 +386,7 @@ class Content1 extends React.Component {
                   ></img>
                   계약서 및 기능명세서.hwp
                 </Font20>
-              </div>
+              </div> */}
             </InfoDetail>
             <Content4 user={user} />
           </InnerContainer>

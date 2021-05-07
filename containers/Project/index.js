@@ -19,25 +19,19 @@ class ProjectContainer extends React.Component {
   async componentDidMount() {}
   render() {
     const { Auth, Project } = this.props;
+    console.log(Project.newIndex);
     return (
       <>
         {Auth.logged_in_client &&
           (this.props.width && this.props.width > 767.99 ? (
             <div style={{ overflow: "visible" }}>
               <BannerContainer />
-              {/* <PartnerAnswer /> */}
-              {/* <RequestComplete /> */}
-              {/* <NavContainer style={{ marginTop: "50px" }} /> */}
 
               {console.log(Project.newIndex)}
-
               {Project.newIndex == 0 && <ClientContentContainer />}
-              {/* <ClientContentContainer length={this.props.length} /> */}
-
               {Project.newIndex == 1 && (
                 <ProjectDetailContainer user="client" />
               )}
-              {/* <ProjectDetailContainer></ProjectDetailContainer> */}
             </div>
           ) : (
             <div>
@@ -51,13 +45,15 @@ class ProjectContainer extends React.Component {
 
               {Project.newIndex == 0 && (
                 <>
-                  <SearchBar />
-                  <PartnerContentContainer length={this.props.length} />
+                  {/* <SearchBar />
+                  <PartnerContentContainer length={this.props.length} /> */}
+                  <PartnerAnswer></PartnerAnswer>
                 </>
               )}
               {Project.newIndex == 1 && (
                 <ProjectDetailContainer user="partner" />
               )}
+              {Project.newIndex == 2 && <PartnerAnswer />}
             </div>
           ) : (
             <div>

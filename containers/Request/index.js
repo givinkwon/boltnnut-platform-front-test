@@ -28,7 +28,7 @@ import DisbursementContainer from './Disbursement';
 import MarketingModal from './MarketingModal';
 import PaymentPageContainer from './PaymentPage';
 import NoneDrawingConsultingContainer from './NoneDrawingConsulting';
-import RequestComplete from './RequestComplete';
+import RequestCompleteContainer from './RequestComplete';
 
 @inject('DetailQuestion', 'Partner', 'Request', 'Auth')
 @observer
@@ -49,7 +49,7 @@ class RequestContainer extends React.Component {
 						<Background backgroundColor={'#ffffff'}>
 							<Containerv1>
 								{Request.newIndex == 0 && <FileUploadContainer />}
-								{Request.newIndex == 1 && <PaymentPageContainer />}
+								{Request.newIndex == 1 && <RequestCompleteContainer />}
 								{Request.newIndex == 2 && <NoneDrawingConsultingContainer />} 
 
 								{/* {Request.step_index == 0 ? (

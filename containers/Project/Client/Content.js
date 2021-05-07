@@ -9,6 +9,7 @@ import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
 import NoProject from "../NoProject";
 import { toJS } from "mobx";
+import ProjectNoneContainer from './ProjectNone';
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -108,18 +109,13 @@ class ProjectContentContainer extends React.Component {
     const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
 
-    // const data = (data) => {
-    //   return data.filter((item) =>
-    //     this.props.Project.current_user_id === item.request_set[0].clientId
-    //   )
-    // }
     return (
       <>
         <Background
           style={{ backgroundColor: "#f9f9f9", paddingTop: "49px" }}
           id="MyBackground"
         >
-          {!Project.project_existence && <NoProject />}
+          {!Project.project_existence && <ProjectNoneContainer /> }
           {/* <Background> */}
           {/* { Project.projectData.length > 0 && Project.projectData.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
           {Project.project_existence &&

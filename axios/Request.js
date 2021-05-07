@@ -69,7 +69,8 @@ export function deleteRequest(req) {
 export function getRequestFile(req) {
   return axios({
     method: "Get",
-    url: `${ROOT_URL}/requestfile/${req.id}/`,
+    url: `${ROOT_URL}/requestfile/`,
+    params: req.params ? req.params : null,
   });
 }
 export function sendKakaoTalk(req) {

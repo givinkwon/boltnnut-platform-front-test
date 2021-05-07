@@ -82,7 +82,7 @@ class Content4 extends React.Component {
     //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
 
     // console.log(idx);
-    console.log(process_idx);
+    // console.log(process_idx);
     // console.log(material_idx);
     // console.log(detail_idx);
 
@@ -108,8 +108,8 @@ class Content4 extends React.Component {
       };
       await ManufactureProcessAPI.loadProcess(req).then((res) => {
         const data = res.data;
-        // console.log(data.name);
-        // console.log(data);
+        console.log(data.name);
+        console.log(data);
         console.log(data.detailmanufactureprocess_set);
         console.log(item_detail_idx);
         console.log(data.detailmanufactureprocess_set[item_detail_idx - 1]);
@@ -152,7 +152,7 @@ class Content4 extends React.Component {
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
           <RequestSubContainer>
-            <Font20>공개내용</Font20>
+            <Font20>공개 내용</Font20>
             <RequestBox>
               <RequestContent>
                 <pre style={{ whiteSpace: "break-spaces" }}>
@@ -445,14 +445,14 @@ class Content4 extends React.Component {
                             <span>{this.state.detailProcess[idx]}</span>
                             {/* <span>{this.detailProcess[idx]}</span> */}
                           </div>
-                          <div>
+                          {/* <div>
                             <span>마감</span>
                             <span>기본가공</span>
                           </div>
                           <div>
                             <span>색상</span>
                             <span>검정</span>
-                          </div>
+                          </div> */}
                         </Body>
                         <Tail>
                           <div>
