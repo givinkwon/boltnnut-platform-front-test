@@ -188,7 +188,7 @@ class Content1 extends React.Component {
               <Font26
                 style={{ height: 38, fontWeight: "bold", letterSpacing: -0.65 }}
               >
-                {name}d
+                {name}
               </Font26>
               {/* <div>
               <Font17 style={{ color: "#86888c" }}>
