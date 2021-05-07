@@ -11,7 +11,7 @@ const image1 = "/static/images/Home/Banner2/image1.png";
 class TabletBanner2Container extends React.Component {
   render() {
     return (
-      <Background backgroundColor={"#f6f6f6"}>
+      <Background backgroundColor={"#ffffff"}>
         <Containerv1
           style={{
             paddingBottom: 150,
@@ -21,7 +21,7 @@ class TabletBanner2Container extends React.Component {
         >
           <Fade bottom>
             <div style={{ marginRight: "-50px" }}>
-              <img src={image1} style={{ height: "80%" }} />
+              <img src={image1} style={{ height: "80%", width: "80%" }} />
             </div>
             <div>
               <Header>무료 생산 상담</Header>
@@ -76,7 +76,7 @@ const Middle = styled(Title.FontSize56)`
   font-style: normal;
   line-height: 1.45;
   letter-spacing: -0.55px;
-  margin-bottom: 155px;
+  margin-bottom: 55px;
   > p {
     display: inline;
     font-weight: bold;
