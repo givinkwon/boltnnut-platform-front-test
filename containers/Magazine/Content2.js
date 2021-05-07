@@ -31,6 +31,10 @@ class ContentConatiner extends React.Component {
   };
   test = (item, idx) => {};
 
+  componentDidMount = () => {
+    this.props.Magazine.getMagazineCategory()
+	};
+
   activeHandler = (idx) => {
     // console.log(`this.state.index : ${this.state.index}`)
     // console.log(`idx : ${idx}`)
@@ -45,77 +49,21 @@ class ContentConatiner extends React.Component {
 
   onClickHandler = (item, idx) => {
     const { Magazine } = this.props;
+    this.props.Magazine.getMagazine(item.id)
 
     if (item.checked) {
       item.checked = false;
-      // purposeAry[ManufactureProcess.purposeComment - 1] = false;
-      Magazine.category_checked_idx = 0;
-      //this.setState({ purposeAry : })
+      this.props.Magazine.init()
+      
     } else {
       item.checked = true;
-      if (Magazine.category_checked_idx) {
-        Magazine.categoryAry[Magazine.category_checked_idx - 1].checked = false;
+      if (Magazine.category_checked_idx > -1) {
+        Magazine.categoryAry[Magazine.category_checked_idx].checked = false;
       }
-      Magazine.category_checked_idx = item.id;
+      // category_checked_idx 설정
+      Magazine.category_checked_idx = idx
     }
 
-    // // 동일한 상위 카테고리를 클릭했을 경우
-    // if(idx === Magazine.category_checked_idx){
-    //   const categoryMenuItem = document.querySelectorAll(`.CategoryMenuItem${idx}`)
-
-    //   // 선택되어있는 경우 하위 카테고리 보이게 하기
-    //   if(item.checked){
-    //     for(var i = 0; i< categoryMenuItem.length; i++){
-    //       categoryMenuItem[i].style.display = 'block'
-    //     }
-    //   }
-    //   // 선택 안 되어있는 경우 하위 카테고리 감추기
-    //   else{
-    //     for(var i = 0; i< categoryMenuItem.length; i++){
-    //       categoryMenuItem[i].style.display = 'none'
-    //     }
-    //   }
-    // }
-    // // 다른 상위 카테고리를 클릭했을 경우
-    // else if(idx !== Magazine.category_checked_idx) {
-    //   const categoryMenuPrevItem = document.querySelectorAll(`.CategoryMenuItem${Magazine.category_checked_idx}`)
-    //   const categoryMenuItem = document.querySelectorAll(`.CategoryMenuItem${idx}`)
-
-    //   // 이전 상위 카테고리의 첫 번째 하위 카테고리가 선택되고 나머지는 해제시킴
-    //   Magazine.categoryAry[Magazine.category_checked_idx].item[Magazine.category_detail_checked_idx].checked = false
-    //   Magazine.categoryAry[Magazine.category_checked_idx].item[0].checked = true
-    //   Magazine.category_detail_checked_idx = 0
-
-    //   // if(Magazine.category_checked_idx !== -1){
-
-    //   // 이전에 선택한 상위 카테고리 체크 해제하고 지금 선택한 상위 카테고리는 체크
-    //   Magazine.categoryAry[Magazine.category_checked_idx].checked = false;
-    //   // }
-    //   Magazine.category_checked_idx = idx
-    //   Magazine.categoryAry[idx].checked = true;
-
-    //   // 이전에 선택한 상위 카테고리의 하위 카테고리 화면에 보이게 하는 여부
-    //   if(!item.checked){
-    //     for(var i = 0; i< categoryMenuPrevItem.length; i++){
-    //       categoryMenuPrevItem[i].style.display = 'block'
-    //     }
-    //   }else{
-    //     for(var i = 0; i< categoryMenuPrevItem.length; i++){
-    //       categoryMenuPrevItem[i].style.display = 'none'
-    //     }
-    //   }
-
-    //   // 현재 선택한 상위 카테고리의 하위 카테고리 화면에 보이게 하는 여부
-    //   if(Magazine.categoryAry[idx].checked){
-    //     for(var i = 0; i< categoryMenuItem.length; i++){
-    //       categoryMenuItem[i].style.display = 'block'
-    //     }
-    //   }else{
-    //     for(var i = 0; i< categoryMenuItem.length; i++){
-    //       categoryMenuItem[i].style.display = 'none'
-    //     }
-    //   }
-    // }
     this.setState({ f: 3 });
   };
 
@@ -136,12 +84,7 @@ class ContentConatiner extends React.Component {
     }
     this.setState({ g: 3 });
   };
-  // buttonClick = (e) => {
-  //   const { current } = this.state;
-  //   const newPage = e.target.innerText*1;
-  //   this.setState({...this.state, current: newPage-1});
-  //   this.slider.slickGoTo(newPage-1)
-  // }
+
   pushToDetail = async (id) => {
     const { Magazine } = this.props;
     await Router.push(`/magazine/${id}`);
@@ -259,97 +202,18 @@ class ContentConatiner extends React.Component {
                   <div
                     active={this.activeHandler(item.id)}
                     onClick={() => {
-                      // console.log(idx)
-
-                      // if (item.checked) {
-                      //   item.checked = false;
-                      // } else {
-                      //   item.checked = true;
-                      // }
                       this.onClickHandler(item, idx);
                     }}
                   >
-                    {/* {console.log(item.name)} */}
-                    <span className={`CategoryName${idx}`}>{item.name}</span>
+                    <span className={`CategoryName${idx}`}>{item.category}</span>
                   </div>
                 </CategoryMenu>
               );
             })}
-            {/* <CategoryMenu className="CategoryMenu">
-            <div id="menu1" onClick={this.onClickHandler}>
-              <span>실시간 클릭</span>
-              <img src = {dropDown}></img>
-            </div>
-            <CategoryMenuItem className="CategoryMenuItem">
-              <div>A</div>
-              <div>B</div>
-              <div>C</div>
-            </CategoryMenuItem>
-          </CategoryMenu>
-
-          <CategoryMenu className="CategoryMenu">
-            <div id="menu2" onClick={this.onClickHandler}>
-              <span>실시간 브랜드</span>
-              <img src = {dropDown}></img>
-            </div>
-            <CategoryMenuItem className="CategoryMenuItem">
-              <div>a</div>
-              <div>b</div>
-              <div>c</div>
-            </CategoryMenuItem>
-          </CategoryMenu>
-
-          <CategoryMenu className="CategoryMenu">
-            <div id="menu3" onClick={this.onClickHandler}>
-              <span>베스트 상품</span>
-              <img src = {dropDown} ></img>
-            </div>
-            <CategoryMenuItem className="CategoryMenuItem">
-              <div>CNC</div>
-              <div>3D 프린터</div>
-              <div>금형사출</div>
-            </CategoryMenuItem>
-          </CategoryMenu>
-
-          <CategoryMenu className="CategoryMenu">
-            <div id="menu4" onClick={this.onClickHandler}>
-              <span>베스트 상품</span>
-              <img src = {dropDown}></img>
-            </div>
-            <CategoryMenuItem className="CategoryMenuItem">
-              <div>1</div>
-              <div>2</div>
-              <div>3</div>
-            </CategoryMenuItem>
-          </CategoryMenu> */}
+          
           </CategoryBox>
           <ContentBox>
-            {/* <Background>
-            <Containerv1>  */}
-
-            {/* <span>1</span>
-          <span>2</span>
-          <span>3</span> */}
-
-            {/* <FindExperct>
-          <List style={{marginBottom:150}}> */}
-            {/* <Slider {...settings} rows="3" ref={slider => (this.slider = slider)}>
-            {
-            this.props.Magazine.magazine_list.map((item, idx) => {
-              return (
-                <Item
-                  onClick={() => this.pushToDetail(item.id)}>
-                  <Image ratio='45%' src={item.image}/>
-                  <span> {item.title} </span>
-                </Item>
-              )
-              })
-            }
-            </Slider> */}
-
-            {/* <div>
-                   <div>A</div>
-                </div>            */}
+           
             <Row>
               {/* <div> */}
               {/* <div style={{width: '280px', height: '140px', border: '3px solid red'}}>A</div> */}
@@ -499,12 +363,7 @@ class ContentConatiner extends React.Component {
     );
   }
 }
-// const categoryAry = [
-//   { id : 1, name : '실시간 클릭', item: [{name : 'A', checked: 'true'}, {name : 'B', checked: 'false'}, {name : 'C', checked: 'false'}, {name : 'D', checked: 'false'}, {name : 'E', checked: 'false'}], checked: 'true'},
-//   { id : 2, name : '베스트 브랜드', item: [{name : '가', checked: 'true'}, {name : '나', checked: 'false'}], checked: 'false'},
-//   { id : 3, name : '베스트 상품', item: [{name : 'CNC', checked: 'true'}, {name : '3D 프린터', checked: 'false'}, {name : '금형사출', checked: 'false'}], checked: 'false'},
-//   { id : 4, name : '베스트 베스트', item: [{name : '1', checked: 'true'}, {name : '2', checked: 'false'}, {name : '3', checked: 'false'}, {name : '4', checked: 'false'}], checked: 'false'},
-// ]
+
 
 export default ContentConatiner;
 
