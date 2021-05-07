@@ -5,12 +5,12 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
-import {toJS} from "mobx";
+import { toJS } from "mobx";
 
 const profile = "/static/images/project/user.svg";
 const partnerbadge = "/static/images/project/partnerbadge.svg";
 
-@inject("Request", "ManufactureProcess", "Auth", "Schedule","Project")
+@inject("Request", "ManufactureProcess", "Auth", "Schedule", "Project")
 @observer
 class ContentSub extends React.Component {
   state = {
@@ -24,8 +24,8 @@ class ContentSub extends React.Component {
 
   exitProject = () => {
     this.props.Project.exitProject(this.props.Project.projectDetailData.id),
-    console.log(this.props.Project.projectDetailData.id)
-  }
+      console.log(this.props.Project.projectDetailData.id);
+  };
 
   activeHandler = (active) => {
     if (active === "activeOne") {
@@ -46,36 +46,84 @@ class ContentSub extends React.Component {
   render() {
     return (
       <ContainerSub>
-        <Box3
-          style={{ marginBottom: 20 }}
-          active={this.state.activeOne}
-          onMouseOver={() => this.activeHandler("activeOne")}
-          onMouseOut={() => this.activeHandler("activeOne")}
-          onClick={async () => {
-            console.log("click!");
-            this.changeProject();
-            await Router.push(`/request`);
+        {this.props.user === "client" ? (
+          <>
+            <Box3
+              style={{ marginBottom: 20 }}
+              active={this.state.activeOne}
+              onMouseOver={() => this.activeHandler("activeOne")}
+              onMouseOut={() => this.activeHandler("activeOne")}
+              onClick={async () => {
+                console.log("click!");
+                this.changeProject();
+                await Router.push(`/request`);
 
-            //this.props.ManufactureProcess.checkFileUpload = true;
-          }}
-        >
-          <Font18 style={{ fontWeight: "bold" }} active={this.state.activeOne}>
-            프로젝트 수정하기
-          </Font18>
-        </Box3>
-        <Box3
-          active={this.state.activeTwo}
-          onMouseOver={() => this.activeHandler("activeTwo")}
-          onMouseOut={() => this.activeHandler("activeTwo")}
-          onClick={async () => {
-            console.log("click!");
-            this.exitProject();
-          }}
-        >
-          <Font18 style={{ fontWeight: "bold" }} active={this.state.activeTwo}>
-            프로젝트 종료하기
-          </Font18>
-        </Box3>
+                //this.props.ManufactureProcess.checkFileUpload = true;
+              }}
+            >
+              <Font18
+                style={{ fontWeight: "bold" }}
+                active={this.state.activeOne}
+              >
+                프로젝트 수정하기
+              </Font18>
+            </Box3>
+            <Box3
+              active={this.state.activeTwo}
+              onMouseOver={() => this.activeHandler("activeTwo")}
+              onMouseOut={() => this.activeHandler("activeTwo")}
+              onClick={async () => {
+                console.log("click!");
+                this.exitProject();
+              }}
+            >
+              <Font18
+                style={{ fontWeight: "bold" }}
+                active={this.state.activeTwo}
+              >
+                프로젝트 종료하기
+              </Font18>
+            </Box3>
+          </>
+        ) : (
+          <>
+            <Box3
+              style={{ marginBottom: 20 }}
+              active={this.state.activeOne}
+              onMouseOver={() => this.activeHandler("activeOne")}
+              onMouseOut={() => this.activeHandler("activeOne")}
+              onClick={async () => {
+                console.log(this.props.Project.newIndex);
+                this.props.Project.newIndex = 2;
+                // await Router.push(`/request`);
+
+                //this.props.ManufactureProcess.checkFileUpload = true;
+              }}
+            >
+              <Font18
+                style={{ fontWeight: "bold" }}
+                active={this.state.activeOne}
+              >
+                프로젝트 답변하기
+              </Font18>
+            </Box3>
+            <Box3
+              active={this.state.activeTwo}
+              onMouseOver={() => this.activeHandler("activeTwo")}
+              onMouseOut={() => this.activeHandler("activeTwo")}
+              onClick={async () => {
+                console.log("click!");
+              }}
+            >
+              <Font18
+                style={{ fontWeight: "bold" }}
+                active={this.state.activeTwo}
+              >
+                비공개 자료 요청
+              </Font18>
+            </Box3>
+          </>
+        )}
 
         {/* <PartnerContainer>
           <img src={profile} style={{ width: 42, height: 35 }}></img>

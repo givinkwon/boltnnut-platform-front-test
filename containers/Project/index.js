@@ -19,6 +19,7 @@ class ProjectContainer extends React.Component {
   async componentDidMount() {}
   render() {
     const { Auth, Project } = this.props;
+    console.log(Project.newIndex);
     return (
       <>
         {Auth.logged_in_client &&
@@ -44,13 +45,15 @@ class ProjectContainer extends React.Component {
 
               {Project.newIndex == 0 && (
                 <>
-                  <SearchBar />
-                  <PartnerContentContainer length={this.props.length} />
+                  {/* <SearchBar />
+                  <PartnerContentContainer length={this.props.length} /> */}
+                  <PartnerAnswer></PartnerAnswer>
                 </>
               )}
               {Project.newIndex == 1 && (
                 <ProjectDetailContainer user="partner" />
               )}
+              {Project.newIndex == 2 && <PartnerAnswer />}
             </div>
           ) : (
             <div>
