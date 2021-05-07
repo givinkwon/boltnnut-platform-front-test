@@ -135,79 +135,29 @@ class Nav extends React.Component {
                     /* client로 로그인 */
 
                     <Fragment>
-                      {/* <NavLink
-                      onClick={() => Router.push("/answer")}
-                      active={url.indexOf("answer") > -1}
-                    >
-                      보낸 의뢰
-                    </NavLink> */}
-                      {/*<NavLink
-                      onClick={
-                        async () => {
-                          Router.push("/partner");
-                          if(Router.pathname === '/partner') {
-                            Router.reload();
-                          }
-                        }
-                      }
-                      active={url.indexOf("partner") > -1}
-                    >
-                      제조사 찾기
-                    </NavLink>*/}
                       <NavLink
                         onClick={() => Router.push("/project")}
                         active={url.indexOf("project") > -1}
                       >
                         <p class="line"> 프로젝트 관리 </p>
                       </NavLink>
+                      {/* <NavLink
+                        onClick={() => Router.push("/manufacturer")}
+                        active={url.indexOf("manufacturer") > -1}
+                      >
+                        <p class="line"> 제조사 찾기 </p>
+                      </NavLink> */}
                       <NavLink
                         onClick={() => Router.push("/magazine")}
                         active={url.indexOf("magazine") > -1}
                       >
                         <p class="line"> 제조 인사이트 </p>
                       </NavLink>
-                      {/* <NavLink
-                        onClick={() => Router.push("/info")}
-                        active={url.indexOf("info") > -1}
-                      >
-                        <p class="line"> 회사소개 </p>
-                      </NavLink> */}
-                      {/*<NavLink
-                      onClick={() => Router.push("/info?tab=1")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      이용 안내
-                    </NavLink>*/}
                     </Fragment>
                   ) : (
                     /* partner로 로그인 */
                     <Fragment>
-                      {/*<NavLink
-                      first
-                      onClick={() => Router.push("/proposal")}
-                      active={url.indexOf("proposal") > -1}
-                    >
-                      받은 의뢰
-                    </NavLink>*/}
-                      {/*<NavLink
-                      onClick={() => Router.push("/offered?tab=1")}
-                      active={url.indexOf("offered") > -1}
-                    >
-                      보낸 제안서
-                    </NavLink>*/}
-                      {/*<NavLink
-                      onClick={
-                        async () => {
-                          await Router.push("/partner");
-                          if(Router.pathname === '/partner') {
-                            Router.reload();
-                          }
-                        }
-                      }
-                      active={url.indexOf("partner") > -1}
-                    >
-                      제조사 찾기
-                    </NavLink>*/}
+          
                       <NavLink
                         onClick={() => Router.push("/project")}
                         active={url.indexOf("project") > -1}
@@ -220,44 +170,12 @@ class Nav extends React.Component {
                       >
                         제조 인사이트
                       </NavLink>
-                      {/* <NavLink
-                        onClick={() => Router.push("/info")}
-                        active={url.indexOf("info") > -1}
-                      >
-                        회사 소개
-                      </NavLink> */}
-                      {/*<NavLink
-                      onClick={() => Router.push("/info?tab=2")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      이용 안내
-                    </NavLink>*/}
+                     
                     </Fragment>
                   )
                 ) : (
                   /* 로그인 안되어있는 경우 */
                   <Fragment>
-                    {/*<NavLink
-                    onClick={
-                      async () => {
-                        await Router.push("/partner");
-                        if(Router.pathname === '/partner') {
-                          Router.reload();
-                        }
-                      }
-                    }
-                    active={url.indexOf("partner") > -1}
-                  >
-                    제조사 찾기
-                  </NavLink>*/}
-
-                    {/* <NavLink
-                      onClick={() => Router.push("/magazine")}
-                      active={url.indexOf("magazine") > -1}
-                    >
-                      프로젝트 관리
-                  </NavLink>
-                   */}
 
                     <NavLink
                       onClick={() => Router.push("/project")}
@@ -265,33 +183,21 @@ class Nav extends React.Component {
                     >
                       <p class="line"> 프로젝트 찾기 </p>
                     </NavLink>
+                    {/* <NavLink
+                        onClick={() => Router.push("/manufacturer")}
+                        active={url.indexOf("manufacturer") > -1}
+                      >
+                        <p class="line"> 제조사 찾기 </p>
+                      </NavLink> */}
                     <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
                       제조 인사이트
                     </NavLink>
-                    {/* <NavLink
-                      onClick={() => Router.push("/info")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      회사소개
-                    </NavLink> */}
-                    {/*<NavLink
-                  onClick={
-                    async () => {
-                      await Router.push("/info");
-                      if(Router.pathname === '/info') {
-                        Router.reload();
-                      }
-                    }
-                  }
-                  active={url.indexOf("info") > -1}>
-                    서비스 소개
-                </NavLink>*/}
                   </Fragment>
                 )}
-
+                {/* 로그인한/안한 경우 */}
                 {token ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <Avatar
@@ -300,20 +206,6 @@ class Nav extends React.Component {
                     />
                     {is_profile && (
                       <ProfileMenu>
-                        {/* {Auth.logged_in_user.type == 1 ? (
-                          <div
-                            onClick={async () => await Router.push("/profile")}
-                          >
-                            <Text.FontSize16 fontWeight={500}>
-                              프로필
-                            </Text.FontSize16>
-                          </div>
-                        ) : null} */}
-                        {/* <div onClick={() => Router.push("/store?tab=1")}>
-                        <Text.FontSize16 fontWeight={500}>
-                          {Auth.logged_in_user.type == 1 ? '이용요금' : '이용요금'}
-                        </Text.FontSize16>
-                      </div> */}
                         <div onClick={() => Router.push("/account?tab=1")}>
                           <Text.FontSize16 fontWeight={500}>
                             계정설정
@@ -338,14 +230,29 @@ class Nav extends React.Component {
                   </NavLink>
                 )}
 
+                {this.props.Auth.logged_in_user && this.props.Auth.logged_in_user.type === 1 ? 
+                (
+                    /* partner로 로그인 */
+                    <ButtonContainer
+                    first
+                    onClick={() => Router.push("/project")}
+
+                    active={url.indexOf("project") > -1}
+                  >
+                    프로젝트 찾기
+                  </ButtonContainer>
+
+                ) : (
                 <ButtonContainer
                   first
                   onClick={() => Router.push("/request")}
-                  //onClick={() => Router.push("/request?big=4&mid=")}
+
                   active={url.indexOf("request") > -1}
                 >
                   상담 받기
                 </ButtonContainer>
+                )
+              }
               </Menu>
               <Icon
                 src={hamburger_ic}
@@ -464,6 +371,7 @@ const NavLink = styled.p`
   color: #000000;
   display: flex;
   align-items: center;
+  font-weight: 500;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
     font-weight: 500;

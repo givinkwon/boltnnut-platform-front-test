@@ -75,15 +75,15 @@ class MobileBanner0Container extends React.Component {
 
             {/* <Title1 fontWeight={300} color={'#ffffff'}>
                   총 프로젝트 금액
-              </Title1>
+              </Font16>
               <Content1 color={'#ffffff'}>
                 <CountFunc index={0}/> <span>원</span>
               </Content1>
 
               <div style={{marginTop: 25}} />
-              <Title1 fontWeight={300} color={'#ffffff'}>
+              <Font16 color={'#ffffff'}>
                   의뢰 프로젝트
-              </Title1>
+              </Font16>
               <Content1 color={'#ffffff'}>
                 <CountFunc index={1} projCount={ProjectCount}/> <span>건</span>
               </Content1> */}
@@ -134,10 +134,9 @@ export default MobileBanner0Container;
 
 const Header = styled(Title.FontSize23)`
   text-align: center;
-  //margin-top: 100px;
   margin-bottom: 24px;
   height: 70px;
-`;
+`
 const Title1 = styled(Content.FontSize16)`
   text-align: center;
   letter-spacing: -0.4px;

@@ -74,13 +74,13 @@ class ProposalCard extends React.Component {
             <HeaderWrapper>
               {console.log(name)}
               <Title>{name}</Title>
-              <Content>{date}</Content>
+              <Content style = {{color: "#86888c", width: "20%"}}>{date}</Content>
             </HeaderWrapper>
             <CategoryWrapper>
               <SubTitle>
                 <span>공개내용</span>
               </SubTitle>
-              <Content>{content}</Content>
+              <Content> {content}     </Content>
               <CategoryBox>
                 <span>{mainCategory}</span>
               </CategoryBox>
@@ -89,14 +89,13 @@ class ProposalCard extends React.Component {
               </CategoryBox>
             </CategoryWrapper>
             <FooterWrapper>
-              <div style={{ display: "inline-flex" }}>
-                <SubTitle>희망납기</SubTitle>
-                <Content>{period}</Content>
-              </div>
+              <SubTitle>희망납기</SubTitle>
+              <Content>{period}</Content>
             </FooterWrapper>
           </Card>
         ) : (
           //    )
+          
           <Card
             style={{
               backgroundColor:
@@ -115,18 +114,33 @@ class ProposalCard extends React.Component {
             </StepTag>
             <HeaderWrapper>
               <Title>{name}</Title>
+              <Content style = {{color: "#86888c", width:"20%"}}>{date}</Content>
             </HeaderWrapper>
-
+            <CategoryWrapper>
+              <SubTitle>
+                <span>공개내용</span>
+              </SubTitle>
+              <Content> {content}</Content>
+              <CategoryBox>
+                <span>{mainCategory}</span>
+              </CategoryBox>
+              <CategoryBox>
+                <span>{middleCategory}</span>
+              </CategoryBox>
+            </CategoryWrapper>
             <FooterWrapper>
-              <div style={{ display: "inline-flex" }}>
+                <SubTitle><span>희망납기</span></SubTitle>
+                <Content>{period}</Content>
+              {/* <div style={{ display: "inline-flex" }}>
                 <Content>{date}</Content>
-              </div>
-              <PriceTagBox>
+              </div> */}
+              {/* <PriceTagBox>
                 <span class="tag1"> 견적 </span>
                 <span class="tag2">{estimate}</span>
-              </PriceTagBox>
+              </PriceTagBox> */}
             </FooterWrapper>
           </Card>
+          
         )}
       </>
     );
@@ -256,31 +270,36 @@ const Card = styled.div`
   background-color: #ffffff;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 108px;
+    height: 100%;
 
     padding-left: 14px;
     padding-right: 14px;
     padding-top: 7px;
-    padding-bottom: 14px;
-    margin-top: 14px;
+    // padding-bottom: 14px;
+    
     box-sizing: border-box;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     height: 100%;
-    margin-bottom: 34px;
+    // margin-bottom: 34px;
     padding: 62px 49px 32px 32px;
+    padding-bottom: 0;
+
     box-sizing: border-box;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     height: 100%;
-    margin-bottom: 34px;
+    // margin-bottom: 34px;
     padding: 62px 49px 32px 32px;
+    padding-bottom: 0;
     box-sizing: border-box;
+
   }
   @media (min-width: 1300px) {
     height: 100%;
-    margin-bottom: 34px;
+    // margin-bottom: 34px;
     padding: 62px 49px 32px 32px;
+    padding-bottom: 0;
     box-sizing: border-box;
   }
 `;
@@ -296,11 +315,15 @@ const Title = styled.span`
   color: #282c36;
   white-space: nowrap;
   margin-right: 20px;
+  width: 80%;
+  overflow : hidden;
+  text-overflow : ellipsis;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 15px;
     height: 22px;
     line-height: 15px;
     letter-spacing: -0.38px;
+    margin-bottom: 5px;
   }
 `;
 const SubTitle = styled.span`
@@ -317,6 +340,12 @@ const SubTitle = styled.span`
   color: #282c36;
   white-space: nowrap;
   margin-right: 15px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 100%;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.38px;
+  }
 `;
 const HeaderWrapper = styled.div`
   width: 100%;
@@ -332,13 +361,29 @@ const CategoryWrapper = styled.div`
   align-items: center;
   width: 100%;
   margin-bottom: 13px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-bottom: 2px;
+    box-sizing: border-box;
+  }
 `;
 const FooterWrapper = styled.div`
   display: inline-flex;
   width: 100%;
-  height: 29px;
-  align-items: baseline;
+  // height: 29px;
+  align-items: center;
   justify-content: space-between;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-bottom: 14px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-bottom: 34px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-bottom: 34px;
+  }
+  @media (min-width: 1300px) {
+    margin-bottom: 34px;
+  }
 `;
 const CategoryBox = styled.div`
   object-fit: contain;
@@ -346,6 +391,7 @@ const CategoryBox = styled.div`
   background-color: #e1e2e4;
   display: inline-flex;
   align-items: center;
+  align-content: center;
   justify-content: center;
   margin-right: 20px;
   padding: 0 15px;
@@ -361,18 +407,23 @@ const CategoryBox = styled.div`
   }
 `;
 const Content = styled.span`
-  height: 24px;
-  display: flex;
+
+  // height: 24px;
+  display: inline-block;
   align-items: center;
-  align-self: flex-end;
+  // align-self: flex-end;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 2.5;
+  // line-height: 2.5;
   letter-spacing: -0.4px;
   text-align: left;
   white-space: nowrap;
+  width: 100%;
+  overflow : hidden;
+  text-overflow : ellipsis;
 
+  
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 12px;
     color: #767676;

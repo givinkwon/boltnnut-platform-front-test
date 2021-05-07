@@ -7,16 +7,22 @@ import BannerContainer from "./Banner";
 import NavContainer from "./Nav.js";
 import SearchBar from "./SearchBar";
 import ProjectDetailContainer from "./Client/ProjectDetail/ProjectDetail";
+import MobileProjectDetailContainer from "./Client/ProjectDetail/Mobile/MobileProjectDetail";
 import styled from "styled-components";
 import RequestComplete from "./RequestComplete";
 import PartnerAnswer from "./PartnerAnswer";
+import Container from "components/Containerv1";
+import Background from "components/Background";
 
 import { inject, observer } from "mobx-react";
 
 @inject("Project", "Auth")
 @observer
 class ProjectContainer extends React.Component {
-  async componentDidMount() {}
+  async componentDidMount() {
+    const { Auth, Project } = this.props;
+    Project.newIndex = 0;
+  }
   render() {
     const { Auth, Project } = this.props;
     console.log(Project.newIndex);
@@ -35,7 +41,13 @@ class ProjectContainer extends React.Component {
             </div>
           ) : (
             <div>
-              <ClientMobileContentContainer width={this.props.width} />
+              {Project.newIndex == 0 && (
+                <ClientMobileContentContainer width={this.props.width} />
+              )}
+
+              {Project.newIndex == 1 && (
+                <MobileProjectDetailContainer user="client" />
+              )}
             </div>
           ))}
         {Auth.logged_in_partner &&
@@ -45,7 +57,11 @@ class ProjectContainer extends React.Component {
 
               {Project.newIndex == 0 && (
                 <>
-                  <SearchBar />
+                  <Background>
+                    <Container>
+                      <SearchBar />
+                    </Container>
+                  </Background>
                   <PartnerContentContainer length={this.props.length} />
                   {/* <PartnerAnswer></PartnerAnswer> */}
                 </>

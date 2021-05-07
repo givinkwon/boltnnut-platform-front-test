@@ -378,7 +378,7 @@ class FileUploadContainer extends Component {
         .catch((e) => {
           console.log(e);
           console.log(e.response);
-          console.log(e.response.data);
+          // console.log(e.response.data);
         });
 
       //
@@ -386,6 +386,23 @@ class FileUploadContainer extends Component {
       const detailProcessAry = detailProcessData.split(",");
       ManufactureProcess.getProcessList(processAry, detailProcessAry);
     } else {
+      const RequestFormData = new FormData();
+
+      // if (ManufactureProcess.openFileArray.length === 0) {
+      //   RequestFormData.append(`file`, "");
+      // }
+
+      // for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
+      //   RequestFormData.append(`file`, ManufactureProcess.openFileArray[i]);
+      //   RequestFormData.append("request", )
+      //   RequestFormData.append("share_inform", )
+      // }
+
+      //RequestFormData.append("file", )
+
+      const request = {};
+      RequestAPI.setRequestFile;
+
       const req = {
         // headers: {
         //   Authorization: `Token ${Token}`,
@@ -2800,7 +2817,7 @@ const Button = styled.div`
   display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
   justify-content: center;
   align-items: center;
-
+  cursor: pointer;
   > div {
     width: 226px;
     height: 61px;

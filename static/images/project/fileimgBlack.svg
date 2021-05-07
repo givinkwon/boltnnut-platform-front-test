@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke:#c6c7cc;stroke-linecap:round;stroke-width:1.5px}
+        </style>
+    </defs>
+    <g id="그룹_2288" transform="translate(-1416.641 -681.641)">
+        <g id="그룹_2226" transform="translate(1422.063 684.624)">
+            <g id="그룹_2181">
+                <path id="빼기_2" fill="#999" d="M727.281 393.553h-11.609a1.822 1.822 0 0 1-1.822-1.822V375.3a1.822 1.822 0 0 1 1.822-1.822h8.27l5.16 5.374v12.874a1.822 1.822 0 0 1-1.821 1.827z" transform="translate(-713.85 -373.483)"/>
+                <path id="선_1462" d="M0 0L8.198 0" class="cls-2" transform="translate(3.527 9.673)"/>
+                <path id="선_1463" d="M0 0L8.198 0" class="cls-2" transform="translate(3.527 13.317)"/>
+                <path id="패스_2709" fill="#c6c7cc" d="M724.929 373.483l5.16 5.374h-4.421a.738.738 0 0 1-.739-.738z" transform="translate(-714.837 -373.483)"/>
+            </g>
+        </g>
+        <path id="사각형_3418" fill="none" d="M0 0H26V26H0z" transform="translate(1416.641 681.641)"/>
+    </g>
+</svg>

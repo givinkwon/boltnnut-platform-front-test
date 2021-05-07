@@ -70,7 +70,7 @@ class TabletBanner6Container extends React.Component {
     
     const item6 = {
       name: "MANU",
-      review: "기존 거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트 가견적과 상담을 통해 합리적인 견적을 알 수 있었고, 더 나은 조건의 업체와 계약하게 되었습니다.",
+      review: "기존 거래처에서 받은 조건이 찜찜해도 다른 방법이 없었는데 볼트앤너트 견적과 상담을 통해 합리적인 견적을 알 수 있었고, 더 나은 조건의 업체와 계약하게 되었습니다.",
       logo: MANU
     }
 

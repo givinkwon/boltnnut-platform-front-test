@@ -81,7 +81,6 @@ class MobileRequestSelectContainer extends React.Component {
             <ButtonBox>
               {/* <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}> */}
               <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={()=>this.Next("development")}>
-                <Button_inside>
                     <ButtonText>
                     {/* 원래대로 */}
                     <Font18>생산</Font18>
@@ -105,16 +104,14 @@ class MobileRequestSelectContainer extends React.Component {
                             </ImgContainer>
                         </ImageBox>
                     </div>
-                </Button_inside>
               </Button>
               <Button id="sign_uo_button_partner" active={Request.request_type==="production"} onClick={() => this.Next("production")}>
-                <Button_inside>
                     <ButtonText>
                     {/* 바로 도면첨부 */}
                     <Font18>제작</Font18>
                     <Font14 style={{height:65}}>
-                        볼트앤너트 자동 견적 알고리즘과 전문 품질 감리 시스템 통해
-                        원하는 품질의 생산품을 납기에 맞춰 납품드립니다. 
+                      제작하고자 하는 제품의 전문 엔지니어가 프로젝트를 관리하여
+                      원하는 품질과 납기, 견적에 제작해드립니다.
                     </Font14>
                     </ButtonText>
                     <div style={{display:'flex',justifyContent:'center'}}>
@@ -134,7 +131,6 @@ class MobileRequestSelectContainer extends React.Component {
                             </ImgContainer>
                         </ImageBox>
                     </div>
-                </Button_inside>
               </Button>
             </ButtonBox>
          </div>
@@ -213,8 +209,8 @@ const ButtonBox = styled.div`
 const Button = styled.div`
   cursor: pointer;
   margin-top:28px;
+  padding:25px 14px 26px 14px;
 //   width: 588px;
-  
 //   display: flex;
 //   flex-direction: column;
 //   justify-content: center;
@@ -223,7 +219,6 @@ const Button = styled.div`
   border: 1px solid #c7c7c7;
   border-radius: 10px;
 //   box-sizing: border-box;
-  
 //   p{
 //     display : flex;
 //     justify-content: center;
@@ -234,9 +229,10 @@ const Button = styled.div`
   :active{
     border: 4px solid #0933b3;
     box-shadow: 0 3px 6px 0 var(--black-16);
-    >div >p{
+    >div p{
       color: #0933b3;
     }
+    padding: 22px 11px 23px 11px;
   }
   
 `
@@ -244,9 +240,9 @@ const Button = styled.div`
 const ButtonText = styled.div`
 //   justify-content: space-between;
 `
-const Button_inside = styled.div`
-  padding:25px 14px 26px 14px;
-`
+// const Button_inside = styled.div`
+//   padding:25px 14px 26px 14px;
+// `
 const ImageBox = styled.div`
   display: inline-flex;
   flex-direction: row;

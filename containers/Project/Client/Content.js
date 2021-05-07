@@ -55,6 +55,8 @@ class ProjectContentContainer extends React.Component {
     const { Project, Auth } = this.props;
     console.log("<Web> did mount");
     console.log(Project.newIndex);
+    Project.newIndex = 0;
+    this.props.Project.currentPage = 1;
     // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
     // const color = document.getElementById("MyFooter").getAttribute('style');
     // console.log(color);
@@ -128,7 +130,7 @@ class ProjectContentContainer extends React.Component {
               }
               return (
                 <Background
-                  style={{ marginBottom: "5px", backgroundColor: "#f9f9f9" }}
+                  style={{ marginTop: 34, backgroundColor: "#f9f9f9" }}
                 >
                   <Container>
                     <div

@@ -8,9 +8,9 @@ import Fade from "react-reveal/Fade";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
 
-const image1 = "/static/images/Home/Banner12/Banner12_img1.png";
+const image1 = "/static/images/Home/Banner12/Banner12_img1.svg";
 const image2 = "/static/images/Home/Banner12/Banner12_img2.png";
-const image3 = "/static/images/Home/Banner12/Banner12_img3.png";
+const image3 = "/static/images/Home/Banner12/Banner12_img3.svg";
 const Ellipse = "/static/images/Home/Banner12/Ellipse.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 

@@ -139,8 +139,8 @@ class TabConatiner extends React.Component {
                   <Text.FontSize32>견적 서비스</Text.FontSize32>
                 </SmallBanner>
                 <Content>
-                  <Text.FontSize26>원하시는 개발 조건에 적합한<br/><span>전문 제조사의 가견적을 바로 받아보세요</span><br/>가견적을 바탕으로 상담을 통해 최적의 제조사를 매칭해드립니다.</Text.FontSize26>
-                  <Text.FontSize20 style={{color : "#707070"}}>* 제조사찾기 의뢰시 무료로 가견적을 드립니다.</Text.FontSize20>
+                  <Text.FontSize26>원하시는 개발 조건에 적합한<br/><span>전문 제조사의 견적을 바로 받아보세요</span><br/>견적을 바탕으로 상담을 통해 최적의 제조사를 매칭해드립니다.</Text.FontSize26>
+                  <Text.FontSize20 style={{color : "#707070"}}>* 제조사찾기 의뢰시 무료로 견적을 드립니다.</Text.FontSize20>
                 </Content>
               </Container>
             </Tab>
