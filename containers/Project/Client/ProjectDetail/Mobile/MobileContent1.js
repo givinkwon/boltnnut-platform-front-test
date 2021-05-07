@@ -1,22 +1,14 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
 import { inject, observer } from 'mobx-react';
-import BannerContainer from 'containers/Project/Banner';
-import Router from 'next/router';
-import Container from 'components/Container'
-import Containerv1 from 'components/Containerv1'
-import Nav from 'components/Nav';
-import MobileNav from 'components/MobileNav';
-import Footer from 'components/Footer';
-import Spinner from 'components/Spinner';
 import * as Text from "components/Text";
 import * as Content from "components/Content";
-import * as Title from "components/Title";
-import Background from "components/Background";
 import MobileContent2 from './MobileContent2';
+import {toJS} from "mobx";
+import * as PartnerAPI from "axios/Partner";
+import ChatTestContainer from "containers/Info2/ChatTest";
 
 const fileimgBlack = "/static/images/project/fileimgBlack.svg";
-const back_ic = '/static/images/components/MobileNav/back_ic.svg';
 const separator = "/static/images/components/Footer/separator.png";
 const downpass = '/static/images/pass5.png';
 const uppass = '/static/images/pass6.png';
@@ -30,6 +22,9 @@ class MobileContent1 extends React.Component {
     item: [],
     partnerList: [],
     check: null,
+    modalActive: false,
+    selectedRoom: null,
+    partnerDetailList: [],
   };
   handler = {
     get(item, property, itemProxy) {
@@ -37,6 +32,15 @@ class MobileContent1 extends React.Component {
       return target[property];
     },
   };
+
+  modalHandler = (id) => {
+    this.setState({ selectedRoom: id });
+    const { Project } = this.props;
+    Project.chatModalActive = !Project.chatModalActive;
+    console.log('modalHanlder')
+    // this.setState({ modalActive: !this.state.modalActive });
+  };
+
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
 
@@ -52,9 +56,27 @@ class MobileContent1 extends React.Component {
     await Auth.checkLogin();
     if (Auth.logged_in_client) {
       Project.getPage(Auth.logged_in_client.id);
-      Answer.loadAnswerListByProjectId(379).then(() => {
-        // console.log(toJS(Answer.answers));
+      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         this.setState({ partnerList: Answer.answers });
+
+        Answer.answers.forEach((answer) => {
+          const PartnerDetailList = this.state.partnerDetailList;
+          PartnerAPI.detail(answer.partner)
+            .then((res) => {
+              // console.log(res);
+              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+              PartnerDetailList.push({
+                logo: res.data.logo,
+                name: res.data.name,
+                phonenum: res.data.user.phone,
+              });
+              this.setState({ partnerDetailList: PartnerDetailList });
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        });
       });
     }
   }
@@ -66,18 +88,19 @@ class MobileContent1 extends React.Component {
     const{check} = this.state;
 
     if(check == idx){
-      console.log('true')
       return true;
     }
     else{
-      console.log('false')
       return false;
-      
     }
   }
 
 render() {
-  const { Project } = this.props;
+  const { Project, Partner, user } = this.props;
+    // if (this.state.partnerDetailList[0]) {
+    //   console.log(this.state.partnerDetailList[0].name);
+
+    const { projectDetailData } = Project;
 
   let name = "";
   let date = "";
@@ -107,108 +130,139 @@ render() {
         maincategory = Project.maincategory;
         categoryname = Project.categoryname;
         maincategoryname = Project.maincategoryname;
-        console.log(item);
+        console.log(toJS(item));
       }
     });
 
     return(
-
-      <div style = {{display: 'flex', flexDirection:'column'}}>
+      <Container1>
+        {console.log("프로젝트 데이터리스트 확인")}
+        {console.log(toJS(projectDetailData))}
+        {console.log(toJS(Project.projectDataList))}
+          {Project.chatModalActive && (
+            // <Layer onClick={this.modalHandler}>
+            <Layer>
+              {/* <Postcode /> */}
+              <ChatTestContainer
+                roomName={this.state.selectedRoom}
+              ></ChatTestContainer>
+            </Layer>
+          )}
+          <Head></Head>
         <div style = {{marginBottom: 40}}>
-          <Font15 style = {{color: "#0933b3", marginBottom: 14, fontWeight: 'bold'}}>모집중</Font15>
-          <Font16 style = {{marginBottom: 8, fontWeight: 'bold', color: '#282c36'}}>실리콘 반려동물 샤워기</Font16>
-          <div style = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            <div style = {{display: 'flex', flexDirection: 'row'}}>
-              <Font14 style = {{color: "#999999"}}>제품 및 용품</Font14>
-              <img src={separator} style = {{marginLeft: 11, marginRight: 11}}/>
-              <Font14 style = {{color: "#999999"}}> 반려동물 용품</Font14>
+          <Head>
+            <Font15 style = {{color: "#0933b3", marginBottom: 14, fontWeight: 'bold'}}>{projectDetailData && projectDetailData.status}</Font15>
+
+            <Font16 style = {{marginBottom: 8, fontWeight: 'bold', color: '#282c36', }}>{projectDetailData && projectDetailData.request_set[0].name}</Font16>
+            <div style = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <div style = {{display: 'flex', flexDirection: 'row'}}>
+                <Font14 style = {{color: "#999999"}}>제품 및 용품</Font14>
+                <img src={separator} style = {{marginLeft: 11, marginRight: 11}}/>
+                <Font14 style = {{color: "#999999"}}> 반려동물 용품</Font14>
+              </div>
+              
+              <Font14 style = {{color: "#c6c7cc"}}>{date}</Font14>
             </div>
-            
-            <Font14 style = {{color: "#999999"}}>2021.03.11</Font14>
-          </div>
+          </Head>
 
           <Box1>
-            <Font14 style = {{color: "#999999"}}>예상 금액</Font14><Font14 style = {{color: "#414550"}}>{estimate}</Font14>
+            <Font14 style = {{color: "#999999"}}>예상 금액</Font14>
+            <Font14 style = {{color: "#414550"}}>
+              {projectDetailData && projectDetailData.request_set[0].price}
+            </Font14>
           </Box1>
           <Box1>
-            <Font14 style = {{color: "#999999"}}>예상 기간</Font14><Font14 style = {{color: "#414550"}}>{period}</Font14>
+            <Font14 style = {{color: "#999999"}}>예상 기간</Font14>
+            <Font14 style = {{color: "#414550"}}>{period}</Font14>
           </Box1>
           <Box1>
-            <Font14 style = {{color: "#999999"}}>지원 수</Font14><Font14 style = {{color: "#414550"}}>2명</Font14>
+            <Font14 style = {{color: "#999999"}}>지원 수</Font14>
+            <Font14 style = {{color: "#414550"}}>{this.state.partnerList.length}</Font14>
           </Box1>
         </div>
         <div style = {{marginBottom: 40}}>
-          
-
-
-
+        
           
           <Font16 style = {{fontWeight: 'bold', color: '#282c36'}}>지원한 파트너</Font16>
-          <Box2 
-            active = {this.activeHandler(0)}
-            onMouseOver = {()=>this.boxChecked(0)}
-            onMouseOut = {()=>this.boxChecked(null)}
-            style = {{
-            flexDirection: 'column', 
-            alignItems: "center", 
-            boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)"
-            }}>
+          {/* map으로 뿌리기 */}
+          {this.state.partnerList.map((data, idx) => {
+            return(
+              <Box2 
+                  active = {this.activeHandler(idx)}
+                  onMouseOver = {()=>this.boxChecked(idx)}
+                  onMouseOut = {()=>this.boxChecked(null)}  
+                  style = {{
+                  flexDirection: 'column', 
+                  alignItems: "center", 
+                  boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)"
+                  }}>
+                  <div style = {{width: "100%", display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
+                    {console.log("업체명")}
+   
+                    <Font14 style = {{fontWeight: '500', color: '#282c36'}}>{this.state.partnerDetailList[idx] &&
+                                this.state.partnerDetailList[idx].name}</Font14>
+                    <Font14 style = {{color: '#999999'}}>"프로젝트 보고 연락...</Font14>
+                    {this.activeHandler(idx)? (
+                        <img src = {uppass} style = {{height: 8, width: 15}}></img>
+                      ):(
+                      <img src = {downpass} style = {{height: 8, width: 15}}></img>
+                      )
+                    }
+                  </div>
+                  <div 
+                    active = {this.activeHandler(idx)} 
+                    onMouseover={() => this.modalHandler(data.id)}
+                    style = {{  
+                    width: "100%", 
+                    display: 'flex', 
+                    flexDirection: 'row', 
+                    alignItems: "center", 
+                    justifyContent: "space-evenly", 
+                    marginTop: 20,
+                    }}>
+                    <Icon>
+                      <img src = {fileimgBlack}></img>
+                      <Font12>회사소개서</Font12>
+                    </Icon>
+                    <img src = {separator} style = {{width: 1, height: 32}}></img>
+                    <Icon>
+                      <img src={callImg}></img>
 
-            <div style = {{width: "100%", display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
-              <Font14 style = {{fontWeight: '500', color: '#282c36'}}>하이젠어스</Font14>
-              <Font14 style = {{color: '#999999'}}>"프로젝트 보고 연락...</Font14>
-              {this.activeHandler(0)? (
-                  <img src = {uppass} style = {{height: 8, width: 15}}></img>
-                ):(
-                <img src = {downpass} style = {{height: 8, width: 15}}></img>
-                )
-              }
-            </div>
+                      <Font12>{this.state.partnerDetailList[idx] &&
+                                this.state.partnerDetailList[idx].phonenum}</Font12>
 
-
-            <div active = {this.activeHandler(0)} 
-              style = {{  
-              width: "100%", 
-              display: 'flex', 
-              flexDirection: 'row', 
-              alignItems: "center", 
-              justifyContent: "space-evenly", 
-              marginTop: 20,
-              }}>
-              <Icon>
-                <img src = {fileimgBlack}></img>
-                <Font12>회사소개서</Font12>
-              </Icon>
-              <img src = {separator} style = {{width: 1, height: 32}}></img>
-              <Icon>
-                <img src={callImg}></img>
-                <Font12>111-111-1111</Font12>
-              </Icon>
-              <img src = {separator} style = {{width: 1, height: 32}}></img>
-              <Icon>
-                <img src={messagesImg}></img>
-                <ChatNotice>
-                  <Font14>N</Font14>
-                </ChatNotice>
-                <Font12>채팅하기</Font12>
-              </Icon>
-            </div>
-            
-
-          </Box2>
-          <Box2 style = {{alignItems: "center",boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)"}}>
-            <Font14 style = {{fontWeight: '500', color: '#282c36'}}>하이젠어스</Font14>
-            <Font14 style = {{color: '#999999'}}>"프로젝트 보고 연락...</Font14>
-            <img src = {downpass} style = {{height: 8, width: 15}}></img>
-          </Box2>
+                    </Icon>
+                    <img src = {separator} style = {{width: 1, height: 32}}></img>
+                    <Icon>
+                      <img src={messagesImg}></img>
+                      <ChatNotice>
+                        <Font14>N</Font14>
+                      </ChatNotice>
+                      <Font12>채팅하기</Font12>
+                    </Icon>
+                    
+                  </div>
+                </Box2>
+            );
+            }
+          )}
         </div>
         < MobileContent2/>
-        </div>
+        </Container1>
     );
   }
 }
 export default MobileContent1
 
+const Container1 = styled.div`
+display: flex;
+flex-direction:column;
+width: 100%;
+`
+
+const Head = styled.div`
+  word-break: break-all;
+`
 const Box1= styled.div`
 border-radius: 5px;
   border: solid 1px #c6c7cc;
@@ -218,7 +272,7 @@ border-radius: 5px;
   justify-content: space-between;
   padding: 10px 14px 10px 14px;
   margin-top: 14px;
-  
+  word-break: break-all;
 `
 
 const Box2 = styled.div`
@@ -306,3 +360,13 @@ const Font16 = styled(Content.FontSize16)`
   letter-spacing: -0.4px;
 `
 
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  background: #00000080;
+`;

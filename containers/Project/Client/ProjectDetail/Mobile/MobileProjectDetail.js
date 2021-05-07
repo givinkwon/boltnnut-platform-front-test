@@ -27,10 +27,10 @@ class MobileProjectDetailContainer extends React.Component {
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "start",
-            marginTop: 50,
+            marginTop: 15,
           }}
         >
-          <Containerv1>
+          <Containerv1 style = {{justifyContent: "center"}}>
               <MobileContent1 user={user} />
           </Containerv1>
         </Background>

@@ -1,29 +1,14 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
 import { inject, observer } from 'mobx-react';
-import BannerContainer from 'containers/Project/Banner';
-import Router from 'next/router';
-import Container from 'components/Container'
-import Containerv1 from 'components/Containerv1'
-import Nav from 'components/Nav';
-import MobileNav from 'components/MobileNav';
-import Footer from 'components/Footer';
-import Spinner from 'components/Spinner';
 import * as Text from "components/Text";
 import * as Content from "components/Content";
-import * as Title from "components/Title";
 import Background from "components/Background";
 import STLViewer from "stl-viewer";
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 const search_img = "/static/images/project/search.png";
 const fileimg = "/static/images/project/fileimg.svg";
-const fileimgBlack = "/static/images/project/fileimgBlack.svg";
-const back_ic = '/static/images/components/MobileNav/back_ic.svg';
-const separator = "/static/images/components/Footer/separator.png";
-const downpass = '/static/images/pass5.png';
-const uppass = '/static/images/pass6.png';
-const callImg = "/static/images/project/Call.svg";
-const messagesImg = "/static/images/project/Messages.svg";
+
 @inject('Project', "Auth", "ManufactureProcess")
 @observer
 
@@ -130,64 +115,36 @@ class MobileContent2 extends React.Component {
     const { Project, ManufactureProcess, user } = this.props;
     const { projectDetailData } = Project;
     return(
-
-
-            
           <div>
               <div style = {{marginBottom: 40}}>
                 <Font16 style = {{marginBottom: 14}}>프로젝트 설명 및 요청사항</Font16>
                 <Font15>공개 내용</Font15>
                 <Box1 style = {{flexDirection: "column", paddingTop: 14, paddingBottom: 14}}>
-                  <pre style={{ whiteSpace: "break-spaces" }}>
+
+                  <Font14 style={{color: "#282c36", lineHeight: '26px', letterSpacing: -0.35, whiteSpace: "break-spaces" }}>
                     {projectDetailData &&
                       projectDetailData.request_set[0].order_request_open}
-                  </pre>
-                  <Font14 style = {{color: "#282c36", marginBottom: 40, lineHeight: '26px', letterSpacing: -0.35}}>생산 공정 금형사출로 부탁 어쩌고 찬아짱짱맨 최고 두루루루루루 두루치기 싫다</Font14>
-                  <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    <img
-                      src={fileimg}
-                      style={{width:20, height: 20, marginRight: 2 }}
-                      />
-                      {projectDetailData &&
-                  projectDetailData.request_set[0].requestfile_set.map(
-                    (item, idx) => {
-                      if (item.share_inform) {
-                        return (
-                          <div>
-                            <div>
-                              <img src={file_img} />
+                  </Font14>
+                  <div style = {{display: 'flex', flexDirection: 'column', marginTop: 40}}>
+                      {projectDetailData && projectDetailData.request_set[0].requestfile_set.map((item, idx) => {
+                        if (item.share_inform) {
+                          return (
+                              <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                                <img src={fileimg} style={{width:20, height: 20, marginRight: 2 }} />
 
-                              <span
-                                onClick={() => this.downloadFile(item.file)}
-                                style={{ cursor: "pointer" }}
-                              >
-                                {decodeURI(item.file.split("/").pop())}
-                              </span>
-                            </div>
-                          </div>
-                        );
+                                <Font14
+                                  onClick={() => this.downloadFile(item.file)}
+                                  style={{ color: "#767676", cursor: "pointer" }}
+                                >
+                                  {decodeURI(item.file.split("/").pop())}
+                                </Font14>
+                              </div>
+                          );
+                        }
                       }
-                    }
-                  )}
-                    <Font14 style = {{color: "#767676", alignItems: "center"}}>계약서 및 기능명세서.hwp</Font14>
+                      )}
                   </div>
-
-
-
-                  <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    <img
-                      src={fileimg}
-                      style={{width:20, height: 20, marginRight: 2 }}
-                      />
-                    <Font14 style = {{color: "#767676"}}>미팅 아카이빙.pdf</Font14>
-                  </div>
-                  <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    <img
-                      src={fileimg}
-                      style={{width:20, height: 20, marginRight: 2 }}
-                      />
-                    <Font14 style = {{color: "#767676"}}>설계파일 업로드.pdf</Font14>
-                  </div>
+                  
                 </Box1>
                 
               </div>
@@ -209,11 +166,33 @@ class MobileContent2 extends React.Component {
                           item.category
                         );
                       }
-                <Box1 style = {{flexDirection: "column", paddingTop: 20, paddingBottom: 0}}>
-                  <Font16 style = {{paddingBottom: 8}}>47c2f5474824497c9b00a3_stl.stl</Font16>
-                  <Font14 style = {{paddingBottom: 17}}>345 x 265 x 21 mm</Font14> 
-                  <div style = {{display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center"}}>
-                    <img src = {fileimg}></img>
+
+                      return(              
+                        <Box1 style = {{flexDirection: "column", paddingTop: 20, paddingBottom: 0}}>
+                          <Font16 style = {{paddingBottom: 8}}>47c2f5474824497c9b00a3_stl.stl</Font16>
+                          <Font14 style = {{paddingBottom: 17}}>345 x 265 x 21 mm</Font14> 
+                          <div style = {{display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center"}}>
+                            <div>
+                              <STLViewer
+                                model={item.stl_file} // stl파일 주소
+                                width={120} // 가로
+                                height={120} // 세로
+                                // width={250}
+                                // height={210}
+                                modelColor="gray" // 색
+                                backgroundColor="white" // 배경색
+                                rotate={true} // 자동회전 유무
+                                orbitControls={true} // 마우스 제어 유무
+                                cameraX={500}
+                                //cameraZ={500}
+                                //lights={[2,4,1]}
+                                //lights={[2, 2, 2]}
+                                // lights={[0, 0, 1]}
+                                //lightColor={'red'}
+                              />
+                            </div>
+
+
                     <Box1 
                     onClick={() => {
                       console.log("stl download");
@@ -274,43 +253,48 @@ class MobileContent2 extends React.Component {
                       </Font15>
                     )}
                   </div>
-
                 </Box1>
-                    }
-                  )}
-
+                      );  
+                  }
+                
+                )
+              }
 
                 <Box1 style = {{flexDirection: "column", paddingTop: 14, paddingBottom: 14}}>
-                  <Font14 style = {{color: "#282c36", marginBottom: 40, lineHeight: '26px', letterSpacing: -0.35}}>생산 공정 금형사출로 부탁 어쩌고 찬아짱짱맨 최고 두루루루루루 두루치기 싫다</Font14>
-                  <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    <img
-                      src={fileimg}
-                      style={{width:20, height: 20, marginRight: 2 }}
-                      />
-                    <Font14 style = {{color: "#767676", alignItems: "center"}}>계약서 및 기능명세서.hwp</Font14>
-                  </div>
+                  <Font14 style = {{color: "#282c36", marginBottom: 40, lineHeight: '26px', letterSpacing: -0.35}}>
+                    {projectDetailData &&
+                    projectDetailData.request_set[0].order_request_close}
+                    </Font14>
+                  <div style = {{display: 'flex', flexDirection: 'column'}}>
+                    {projectDetailData &&
+                      projectDetailData.request_set[0].requestfile_set.map(
+                        (item, idx) => {
+                          if (!item.share_inform) {
+                            return (
 
+                                <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}} >
+                                  <img src={fileimg} style={{width:20, height: 20, marginRight: 2 }} />
+                                  {/* <DownloadFile
+                                file={item.file}
+                                href={decodeURI(item.file)}
+                                download
+                              ></DownloadFile> */}
+                                  <Font14 style = {{color: "#767676", alignItems: "center"}}
+                                    onClick={() => this.downloadFile(item.file)}
+                                    style={{ cursor: "pointer" }}
+                                  >
+                                    {decodeURI(item.file.split("/").pop())}
+                                  </Font14>
+                                </div>
+                           
+                            );
+                          }
+                        }
+                      )}
 
-
-                  <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    <img
-                      src={fileimg}
-                      style={{width:20, height: 20, marginRight: 2 }}
-                      />
-                    <Font14 style = {{color: "#767676"}}>미팅 아카이빙.pdf</Font14>
-                  </div>
-                  <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    <img
-                      src={fileimg}
-                      style={{width:20, height: 20, marginRight: 2 }}
-                      />
-                    <Font14 style = {{color: "#767676"}}>설계파일 업로드.pdf</Font14>
                   </div>
                 </Box1>
               </div>
-
-
-          
             </div>
 
 
@@ -330,7 +314,7 @@ border-radius: 5px;
   justify-content: space-between;
   padding: 10px 14px 10px 14px;
   margin-top: 14px;
-  
+  word-break: break-all;
 `
 
 const Box2 = styled.div`
