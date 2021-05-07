@@ -146,7 +146,7 @@ class Project {
     const token = localStorage.getItem("token");
     const req = {
       params: {
-        request__price: this.filter_price === "전체" ? "" : this.filter_price,
+        request__request_state: this.filter === "전체" ? "" : this.filter,
         search: search_text,
         page: page,
         ordering: "-id",
@@ -159,26 +159,12 @@ class Project {
     ProjectAPI.getProjects(req)
       .then((res) => {
         this.projectDataList = [];
-
         /* 오래된 데이터 제외하기 위함 */
-        //   this.filter_price == "전체" && res.data.results.map((item, idx) => {
-        //     this.projectData.push(item)
-        //     if(item.id > 2098){
-        //       this.data_dt.push(1);
-        //     }
-        //     else{
-        //       this.data_dt.push(0);
-        //     }
-        //   })
-        // if(this.filter_price != "전체") {
-        this.projectDataList = res.data.results;
-        //}
 
+        this.projectDataList = res.data.results;
         this.project_next = res.data.next;
         this.project_count = res.data.count;
         this.project_page = parseInt((this.project_count - 1) / 5) + 1;
-
-        this.getCategory();
       })
       .catch((e) => {
         console.log(e);
@@ -186,38 +172,6 @@ class Project {
       });
   };
 
-  /* 카테고리 데이터 가져오는 함수 */
-  @action getCategory = () => {
-    // const token = localStorage.getItem("token");
-    // this.projectDataList.map((item, idx) => {
-    //   const req = {
-    //     id: item.request_set[0].product,
-    //     headers: {
-    //       Authorization: `Token ${token}`,
-    //     },
-    //   };
-    //   ProjectAPI.getCategoryMiddle(req)
-    //     .then((res) => {
-    //       this.middle_category_name[idx] = res.data.category;
-    //       this.main_category_idx[idx] = res.data.maincategory;
-    //       const req = {
-    //         id: this.main_category_idx[idx],
-    //       };
-    //       ProjectAPI.getMainCategory(req)
-    //         .then((res) => {
-    //           this.main_category_name[idx] = res.data.maincategory;
-    //         })
-    //         .catch((e) => {
-    //           console.log(e);
-    //           console.log(e.response);
-    //         });
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //       console.log(e.response);
-    //     });
-    // });
-  };
   @action getProjectDetail = (id) => {
     console.log(id);
     const req = {
