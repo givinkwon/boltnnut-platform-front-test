@@ -5,11 +5,12 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
+import {toJS} from "mobx";
 
 const profile = "/static/images/project/user.svg";
 const partnerbadge = "/static/images/project/partnerbadge.svg";
 
-@inject("Request", "ManufactureProcess", "Auth", "Schedule")
+@inject("Request", "ManufactureProcess", "Auth", "Schedule","Project")
 @observer
 class ContentSub extends React.Component {
   state = {
@@ -20,6 +21,11 @@ class ContentSub extends React.Component {
     this.props.ManufactureProcess.changeProject = true;
     this.props.ManufactureProcess.checkFileUpload = true;
   };
+
+  exitProject = () => {
+    this.props.Project.exitProject(this.props.Project.projectDetailData.id),
+    console.log(this.props.Project.projectDetailData.id)
+  }
 
   activeHandler = (active) => {
     if (active === "activeOne") {
@@ -61,6 +67,10 @@ class ContentSub extends React.Component {
           active={this.state.activeTwo}
           onMouseOver={() => this.activeHandler("activeTwo")}
           onMouseOut={() => this.activeHandler("activeTwo")}
+          onClick={async () => {
+            console.log("click!");
+            this.exitProject();
+          }}
         >
           <Font18 style={{ fontWeight: "bold" }} active={this.state.activeTwo}>
             프로젝트 종료하기

@@ -98,14 +98,16 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <TabletBanner0Container />
-              <TabletBanner10Container />
-              <TabletBanner1Container />
+              {/* <TabletBanner10Container /> */}
+
               <TabletBanner2Container />
+
+              <TabletBanner1Container />
               <TabletBanner3Container />
-              <TabletBanner4Container />
+              {/* <TabletBanner4Container />
               <TabletBanner5Container />
               <TabletBanner6Container />
-              <TabletBanner7Container />
+              <TabletBanner7Container /> */}
               <TabletBanner8Container />
               <TabletBanner9Container />
             </CustomContainer>

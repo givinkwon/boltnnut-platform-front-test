@@ -19,7 +19,7 @@ class Banner4Container extends React.Component {
           }}
         >
           <Fade bottom>
-            <div style={{ marginRight: "126px" }}>
+            <div style={{ marginRight: "-75px" }}>
               <img src={image1} style={{ height: "100%" }} />
             </div>
             <div>
