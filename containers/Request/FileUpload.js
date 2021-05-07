@@ -90,6 +90,8 @@ class FileUploadContainer extends Component {
     loading: false,
     checkScroll: false,
     orderPrice: [],
+    orderMinPrice: [],
+    orderMaxPrice: [],
     checkBox,
     variation: false,
     purposeselected1: false,
@@ -542,23 +544,39 @@ class FileUploadContainer extends Component {
     const { ManufactureProcess } = this.props;
     //   console.log(ManufactureProcess.quantity)
     let price = 0;
+    let minprice = 0;
+    let maxprice = 0;
     await fileList.map((data, idx) => {
       if (data.stl_file) {
         data.totalMoldPrice = Math.round(data.moldPrice / 10000) * 10000;
-        data.totalEjaculationPrice =
-          Math.round(data.ejaculationPrice / 10) *
-          10 *
-          (data.quantity.value ? data.quantity.value : 0);
+        console.log(data.totalMoldPrice)
+        
         data.totalPrice =
-          Math.round(data.productionPrice / 100) * 100 * data.quantity.value;
-
-        // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
+          Math.round(data.productionPrice / 10) * 10 * data.quantity.value;
+        
+        data.totalMaxPrice =
+          Math.round(data.productionMaxPrice / 10) * 10 * data.quantity.value;
+        data.totalMinPrice =
+          Math.round(data.productionMinPrice / 10) * 10 * data.quantity.value;
+        
+          // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
         if (data.checked) {
           if (data.selectBig.name === "금형사출") {
             price += data.totalMoldPrice;
-            price += data.totalEjaculationPrice;
+            price += data.totalPrice;
+
+            minprice += Math.round(data.totalMoldMinPrice/10000) * 10000;
+            minprice += data.totalMinPrice;
+            
+            maxprice += Math.round(data.totalMoldMaxPrice/10000) * 10000;
+            maxprice += data.totalMaxPrice;
           } else {
             price += data.totalPrice;
+            console.log(data.totalMinPrice)
+            console.log(data.totalMaxPrice)
+            minprice += data.totalMinPrice;
+            maxprice += data.totalMaxPrice;
+            
           }
 
           //console.log(typeof(data.quantity.value))
@@ -571,6 +589,8 @@ class FileUploadContainer extends Component {
       }
     });
     ManufactureProcess.orderPrice = price;
+    ManufactureProcess.orderMinPrice = minprice;
+    ManufactureProcess.orderMaxPrice = maxprice;
     console.log(ManufactureProcess.orderPrice);
   }
 
@@ -593,6 +613,7 @@ class FileUploadContainer extends Component {
       "detailprocess",
       ManufactureProcess.selectedMidCategory.id
     );
+    console.log(ManufactureProcess.selectedMidCategory.id)
     fileList[fileIdx].selectedMid = ManufactureProcess.selectedMidCategory;
     fileList[fileIdx].priceLoading = true;
     this.setState({ t: false });
@@ -612,15 +633,28 @@ class FileUploadContainer extends Component {
     ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
       .then((res) => {
         console.log(res);
+        
+        // Range 제공을 위함 몰드 비용
+        fileList[fileIdx].moldPrice = res.data.data.totalMaxPrice;
+        fileList[fileIdx].totalMoldMaxPrice = res.data.data.totalMaxPrice;
+        fileList[fileIdx].totalMoldMinPrice = res.data.data.totalMinPrice;
         fileList[fileIdx].price = res.data.data.totalMaxPrice;
+        // Range 제공을위함. 사출/생산 비용.
         fileList[fileIdx].productionPrice = res.data.data.maxPrice;
+        fileList[fileIdx].productionMinPrice = res.data.data.minPrice;
+        fileList[fileIdx].productionMaxPrice = res.data.data.maxPrice;
+        // 사출비용
+        fileList[fileIdx].productionMaxPrice = res.data.data.maxPrice;
         fileList[fileIdx].priceLoading = false;
+
         this.countPrice();
+
         //리렌더링을 위한 state설정. 바꿔야될듯
         this.setState({ t: true });
         this.setState({
           fileList: fileList,
         });
+
       })
       .catch((e) => {
         console.log(e);
@@ -811,10 +845,15 @@ class FileUploadContainer extends Component {
                   //MaxPrice: res.data.data.maxPrice,
 
                   productionPrice: res.data.data.maxPrice, // 생산가
+                  productionMaxPrice: res.data.data.maxPrice,
+                  productionMinPrice: res.data.data.minPrice,
+                  
+                  moldminPrice: Math.round(res.data.data.totalMinPrice / 10000) * 10000, // 금형최소가
+                  moldmaxPrice: Math.round(res.data.data.totalMaxPrice / 10000) * 10000, // 금형최대가
+
                   moldPrice:
                     Math.round(res.data.data.totalMaxPrice / 10000) * 10000, // 금형가
-                  ejaculationPrice:
-                    Math.round(res.data.data.maxPrice / 10) * 10, // 사출가
+
 
                   x_length: Math.round(res.data.data.x_length),
                   y_length: Math.round(res.data.data.y_length),
@@ -829,6 +868,8 @@ class FileUploadContainer extends Component {
 
                   totalPrice: 0,
                   totalMoldPrice: res.data.data.totalMaxPrice,
+                  totalMoldMinPrice: res.data.data.totalMinPrice,
+                  totalMoldMaxPrice: res.data.data.totalMaxPrice,
                   totalEjaculationPrice: res.data.data.maxPrice,
 
                   optionBig: ManufactureProcess.ManufactureProcessList,
@@ -1177,7 +1218,7 @@ class FileUploadContainer extends Component {
 
                                   data.selectBig = e;
                                   data.optionMid = e.detail;
-
+                                  
                                   if (data.selectBig.name === "금형사출") {
                                     if (data.checked) {
                                       this.countQuantity(
@@ -1338,7 +1379,7 @@ class FileUploadContainer extends Component {
                                       <span> + </span>
                                       <span>사출비 </span>
                                       <span>
-                                        {data.totalEjaculationPrice.toLocaleString(
+                                        {data.totalPrice.toLocaleString(
                                           "ko-KR"
                                         ) + " 원"}
                                       </span>
@@ -1349,7 +1390,7 @@ class FileUploadContainer extends Component {
                                       <span>
                                         {(
                                           data.totalMoldPrice +
-                                          data.totalEjaculationPrice
+                                          data.totalPrice
                                         ).toLocaleString("ko-KR") + " 원"}
                                       </span>
                                     </div>
@@ -1544,8 +1585,8 @@ class FileUploadContainer extends Component {
                                   ManufactureProcess.setMidCategory(e);
                                   //this.countQuantity(data.quantity.value, value.value)
                                   this.countQuantity(0, 0);
-                                  //this.loadFileResopnse(idx);
-                                  //this.countPrice()
+                                  this.loadFileResopnse(idx);
+                                  this.countPrice()
                                   this.setState({ g: 3 });
                                 }}
                               />
@@ -1841,10 +1882,13 @@ class FileUploadContainer extends Component {
                 </PriceLabel>
 
                 <PriceData>
+                  <span>
+                  {ManufactureProcess.orderMinPrice.toLocaleString("ko-KR")}
+                  </span>
                   <span>~</span>
                   <span>
                     {/* {console.log(ManufactureProcess.orderPrice)} */}
-                    {ManufactureProcess.orderPrice.toLocaleString("ko-KR")}
+                    {ManufactureProcess.orderMaxPrice.toLocaleString("ko-KR")}
                     <span> 원</span>
                   </span>
                 </PriceData>

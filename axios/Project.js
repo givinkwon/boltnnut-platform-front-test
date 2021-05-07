@@ -45,3 +45,12 @@ export function getMainCategory(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function exitProject(req) {
+  console.log(req)
+  return axios({
+    method: "PUT",
+    url: `${ROOT_URL}/project/${req.id}/`,
+    data: req.data,
+  });
+}

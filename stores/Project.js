@@ -223,6 +223,25 @@ class Project {
     // this.projectDetailData = data;
     // Router.push(`/project/${data.id}`);
   };
+
+  @action exitProject = (id) => {
+    const req = {
+      id: id,
+      data : {
+        status: "모집종료" 
+      }
+    };
+    ProjectAPI.exitProject(req)
+      .then((res) => {
+        this.projectDetailData = res.data;
+        console.log(res.data);
+        console.log(toJS(this.projectDetailData));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 }
 
 export default new Project();
