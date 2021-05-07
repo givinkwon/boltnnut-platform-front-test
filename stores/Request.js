@@ -1,8 +1,9 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action, makeObservable, toJS } from "mobx";
 
 import * as CategoryAPI from "axios/Category";
 import * as PartnerAPI from "axios/Partner";
 import * as RequestAPI from "axios/Request";
+
 import Router from "next/router";
 import moment from "moment";
 
@@ -80,6 +81,8 @@ class Request {
 
   //Payment
   @observable numCount = null;
+
+  @observable request_file_set = [];
 
   @action reset = () => {
     this.newIndex = 0;
@@ -463,10 +466,36 @@ class Request {
     }
   };
 
-  @action getRequestFile = () => {};
-
-  @action deleteRequestFile = () => {
+  @action getRequestFile = async (id) => {
+    console.log(id);
     const req = {
+      // headers: {
+      //   Authorization: `Token ${token}`,
+      // },
+      // params
+      params: {
+        request: id,
+      },
+    };
+    await RequestAPI.getRequestFile(req)
+      .then((res) => {
+        console.log(toJS(res));
+        console.log(toJS(res.data.results));
+        res.data.results.map((item, idx) => {
+          console.log(item.id);
+          this.request_file_set.push(item.id);
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action deleteRequestFile = (id) => {
+    console.log(id);
+    const req = {
+      id: id,
       // headers
       // headers: {
       //   Authorization: `Token ${token}`,
@@ -475,7 +504,9 @@ class Request {
     };
 
     RequestAPI.deleteRequest(req)
-      .then((res) => {})
+      .then((res) => {
+        console.log(toJS(res));
+      })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
