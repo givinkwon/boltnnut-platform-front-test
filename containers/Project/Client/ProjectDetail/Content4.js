@@ -172,7 +172,7 @@ class Content4 extends React.Component {
         {/* <Containerv1 style={{ display: "flex", flexDirection: "column" }}> */}
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
-          <RequestSubContainer>
+          <RequestSubContainer style = {{marginBottom: 70}}>
             <Font20>공개 내용</Font20>
             <RequestBox>
               <RequestContent>

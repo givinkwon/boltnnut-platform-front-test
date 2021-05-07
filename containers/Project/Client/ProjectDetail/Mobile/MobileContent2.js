@@ -152,114 +152,262 @@ class MobileContent2 extends React.Component {
               <div style = {{marginBottom: 120}}>
                 
                 <Font15>비공개 내용</Font15>
-                {projectDetailData &&
-                  projectDetailData.request_set[0].estimate_set.map(
-                    (item, idx) => {
-                      {
-                        // console.log(toJS(item));
-                        //if (!this.state.render_process) {
-                        this.loadProcess(
-                          item,
-                          idx,
-                          item.process,
-                          item.material,
-                          item.category
-                        );
-                      }
+                {user === "partner" ? (
+                  <>
+                  <span>문의 답변을 해주셔야만 열람할 수 있습니다.</span>  
+                  <BlackBox style={{ filter: "blur(5px)" }}>
+                  
+                  {projectDetailData &&
+                    projectDetailData.request_set[0].estimate_set.map(
+                      (item, idx) => {
+                        {
+                          // console.log(toJS(item));
+                          //if (!this.state.render_process) {
+                          this.loadProcess(
+                            item,
+                            idx,
+                            item.process,
+                            item.material,
+                            item.category
+                          );
+                        }
 
-                      return(              
-                        <Box1 style = {{flexDirection: "column", paddingTop: 20, paddingBottom: 0}}>
-                          <Font16 style = {{paddingBottom: 8}}>47c2f5474824497c9b00a3_stl.stl</Font16>
-                          <Font14 style = {{paddingBottom: 17}}>345 x 265 x 21 mm</Font14> 
-                          <div style = {{display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center"}}>
-                            <div>
-                              <STLViewer
-                                model={item.stl_file} // stl파일 주소
-                                width={120} // 가로
-                                height={120} // 세로
-                                // width={250}
-                                // height={210}
-                                modelColor="gray" // 색
-                                backgroundColor="white" // 배경색
-                                rotate={true} // 자동회전 유무
-                                orbitControls={true} // 마우스 제어 유무
-                                cameraX={500}
-                                //cameraZ={500}
-                                //lights={[2,4,1]}
-                                //lights={[2, 2, 2]}
-                                // lights={[0, 0, 1]}
-                                //lightColor={'red'}
-                              />
-                            </div>
+                        return(              
+                          <Box1 style = {{flexDirection: "column", paddingTop: 20, paddingBottom: 0}}>
+                            <Font16 style = {{paddingBottom: 8}}>47c2f5474824497c9b00a3_stl.stl</Font16>
+                            <Font14 style = {{paddingBottom: 17}}>345 x 265 x 21 mm</Font14> 
+                            <div style = {{display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center"}}>
+                              <div>
+                                <STLViewer
+                                  model={item.stl_file} // stl파일 주소
+                                  width={120} // 가로
+                                  height={120} // 세로
+                                  // width={250}
+                                  // height={210}
+                                  modelColor="gray" // 색
+                                  backgroundColor="white" // 배경색
+                                  rotate={true} // 자동회전 유무
+                                  orbitControls={true} // 마우스 제어 유무
+                                  cameraX={500}
+                                  //cameraZ={500}
+                                  //lights={[2,4,1]}
+                                  //lights={[2, 2, 2]}
+                                  // lights={[0, 0, 1]}
+                                  //lightColor={'red'}
+                                />
+                              </div>
 
 
-                    <Box1 
-                    onClick={() => {
-                      console.log("stl download");
-                      this.downloadFile(item.stl_file);
-                    }}
+                      <Box1 
+                      onClick={() => {
+                        console.log("stl download");
+                        this.downloadFile(item.stl_file);
+                      }}
+                      
+                      style = {{padding: 0, 
+                        marginTop: 14,
+                        marginBottom: 11, 
+                        alignItems: "center", 
+                        justifyContent: "center", 
+                        width: 141, 
+                        height: 32,
+                        cursor: "pointer"
+                        }}>
+                        <Font14 style = {{letterSpacing: -0.35, color: "#414550"}}>도면 상세보기</Font14>
+                        <img src = {search_img} style = {{width: 16, height: 16, marginLeft: 15}}></img>
+                      </Box1>
+                    </div>
+
+                    <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                      <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>생산공정</Font15><Font15>{this.state.process[idx]}</Font15>
+                    </div>
+                    <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
+                    <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                      <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>재료</Font15><Font15>{this.state.detailProcess[idx]}</Font15>
+                    </div>
+                    {/* <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
+                     <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                       <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>마감</Font15><Font15>금형/사출</Font15>
+                     </div>
+                     <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
+                     <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                       <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>색상</Font15><Font15>금형/사출</Font15>
+                     </div>
+                     <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
+                     <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                       <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>수량</Font15><Font15>금형/사출</Font15>
+                     </div> */}
+                    <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
+                    <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                      <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>가격</Font15>
+                      {item.process === "1" ? (
+                        <Font15>
+                          {(
+                            Math.round(item.totalMaxPrice / 10000) *
+                              10000 +
+                            Math.round(item.maxPrice / 10) *
+                              10 *
+                              item.number
+                          ).toLocaleString("ko-KR") + "원"}
+                        </Font15>
+                      ) : (
+                        <Font15>
+                          {(
+                            Math.round(item.maxPrice) * item.number
+                          ).toLocaleString("ko-KR") + "원"}
+                        </Font15>
+                      )}
+                    </div>
+                  </Box1>
+                        );  
+                    }
                     
-                    style = {{padding: 0, 
-                      marginTop: 14,
-                      marginBottom: 11, 
-                      alignItems: "center", 
-                      justifyContent: "center", 
-                      width: 141, 
-                      height: 32,
-                      cursor: "pointer"
-                      }}>
-                      <Font14 style = {{letterSpacing: -0.35, color: "#414550"}}>도면 상세보기</Font14>
-                      <img src = {search_img} style = {{width: 16, height: 16, marginLeft: 15}}></img>
-                    </Box1>
-                  </div>
-                
-                  <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-                    <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>생산공정</Font15><Font15>{this.state.process[idx]}</Font15>
-                  </div>
-                  <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
-                  <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-                    <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>재료</Font15><Font15>{this.state.detailProcess[idx]}</Font15>
-                  </div>
-                  <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
-                  <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-                    <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>마감</Font15><Font15>금형/사출</Font15>
-                  </div>
-                  <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
-                  <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-                    <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>색상</Font15><Font15>금형/사출</Font15>
-                  </div>
-                  <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
-                  <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-                    <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>수량</Font15><Font15>금형/사출</Font15>
-                  </div>
-                  <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
-                  <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-                    <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>가격</Font15>
-                    {item.process === "1" ? (
-                      <Font15>
-                        {(
-                          Math.round(item.totalMaxPrice / 10000) *
-                            10000 +
-                          Math.round(item.maxPrice / 10) *
-                            10 *
-                            item.number
-                        ).toLocaleString("ko-KR") + "원"}
-                      </Font15>
-                    ) : (
-                      <Font15>
-                        {(
-                          Math.round(item.maxPrice) * item.number
-                        ).toLocaleString("ko-KR") + "원"}
-                      </Font15>
-                    )}
-                  </div>
-                </Box1>
-                      );  
+                  )
                   }
-                
-                )
-              }
+                  <Box1 style = {{flexDirection: "column", paddingTop: 14, paddingBottom: 14}}>
+                    <Font14 style = {{color: "#282c36", marginBottom: 40, lineHeight: '26px', letterSpacing: -0.35}}>
+                      {projectDetailData &&
+                      projectDetailData.request_set[0].order_request_close}
+                      </Font14>
+                    <div style = {{display: 'flex', flexDirection: 'column'}}>
+                      {projectDetailData &&
+                        projectDetailData.request_set[0].requestfile_set.map(
+                          (item, idx) => {
+                            if (!item.share_inform) {
+                              return (
 
+                                  <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}} >
+                                    <img src={fileimg} style={{width:20, height: 20, marginRight: 2 }} />
+                                    {/* <DownloadFile
+                                  file={item.file}
+                                  href={decodeURI(item.file)}
+                                  download
+                                ></DownloadFile> */}
+                                    <Font14 style = {{color: "#767676", alignItems: "center"}}
+                                      onClick={() => this.downloadFile(item.file)}
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      {decodeURI(item.file.split("/").pop())}
+                                    </Font14>
+                                  </div>
+                            
+                              );
+                            }
+                          }
+                        )}
+
+                      </div>
+                    </Box1>
+                  </BlackBox>
+                  </>
+
+                ):(
+                    <>
+                  {projectDetailData &&
+                    projectDetailData.request_set[0].estimate_set.map(
+                      (item, idx) => {
+                        {
+                          // console.log(toJS(item));
+                          //if (!this.state.render_process) {
+                          this.loadProcess(
+                            item,
+                            idx,
+                            item.process,
+                            item.material,
+                            item.category
+                          );
+                        }
+                        return(              
+                          <Box1 style = {{flexDirection: "column", paddingTop: 20, paddingBottom: 0}}>
+                            <Font16 style = {{paddingBottom: 8}}>47c2f5474824497c9b00a3_stl.stl</Font16>
+                            <Font14 style = {{paddingBottom: 17}}>345 x 265 x 21 mm</Font14> 
+                            <div style = {{display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center"}}>
+                              <div>
+                                <STLViewer
+                                  model={item.stl_file} // stl파일 주소
+                                  width={120} // 가로
+                                  height={120} // 세로
+                                  // width={250}
+                                  // height={210}
+                                  modelColor="gray" // 색
+                                  backgroundColor="white" // 배경색
+                                  rotate={true} // 자동회전 유무
+                                  orbitControls={true} // 마우스 제어 유무
+                                  cameraX={500}
+                                  //cameraZ={500}
+                                  //lights={[2,4,1]}
+                                  //lights={[2, 2, 2]}
+                                  // lights={[0, 0, 1]}
+                                  //lightColor={'red'}
+                                />
+                              </div>
+                              <Box1 
+                                onClick={() => {
+                                  console.log("stl download");
+                                  this.downloadFile(item.stl_file);
+                                }}
+                                
+                                style = {{padding: 0, 
+                                  marginTop: 14,
+                                  marginBottom: 11, 
+                                  alignItems: "center", 
+                                  justifyContent: "center", 
+                                  width: 141, 
+                                  height: 32,
+                                  cursor: "pointer"
+                                  }}>
+                                  <Font14 style = {{letterSpacing: -0.35, color: "#414550"}}>도면 상세보기</Font14>
+                                  <img src = {search_img} style = {{width: 16, height: 16, marginLeft: 15}}></img>
+                                </Box1>
+                            </div>
+                          
+                            <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                              <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>생산공정</Font15><Font15>{this.state.process[idx]}</Font15>
+                            </div>
+                            <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
+                            <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                              <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>재료</Font15><Font15>{this.state.detailProcess[idx]}</Font15>
+                            </div>
+                            {/* <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
+                            <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                              <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>마감</Font15><Font15>금형/사출</Font15>
+                            </div>
+                            <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
+                            <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                              <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>색상</Font15><Font15>금형/사출</Font15>
+                            </div>
+                            <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
+                            <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                              <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>수량</Font15><Font15>금형/사출</Font15>
+                            </div> */}
+                            <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
+                            <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                              <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>가격</Font15>
+                              {item.process === "1" ? (
+                                <Font15>
+                                  {(
+                                    Math.round(item.totalMaxPrice / 10000) *
+                                      10000 +
+                                    Math.round(item.maxPrice / 10) *
+                                      10 *
+                                      item.number
+                                  ).toLocaleString("ko-KR") + "원"}
+                                </Font15>
+                              ) : (
+                                <Font15>
+                                  {(
+                                    Math.round(item.maxPrice) * item.number
+                                  ).toLocaleString("ko-KR") + "원"}
+                                </Font15>
+                              )}
+                            </div>
+                          </Box1>
+                  
+                        );  
+                        
+                    }
+                  )
+                }
                 <Box1 style = {{flexDirection: "column", paddingTop: 14, paddingBottom: 14}}>
                   <Font14 style = {{color: "#282c36", marginBottom: 40, lineHeight: '26px', letterSpacing: -0.35}}>
                     {projectDetailData &&
@@ -294,6 +442,11 @@ class MobileContent2 extends React.Component {
 
                   </div>
                 </Box1>
+                </>
+                )}
+                
+
+                
               </div>
             </div>
 
@@ -335,8 +488,20 @@ border-radius: 5px;
   border-color: #0933b3;
   height: 114px;
 }
-
 `
+
+const BlackBox = styled.div`
+  position: relative;
+  // > span {
+  //   font-size: 18px;
+  //   color: #0933b3;
+  //   font-weight: bold;
+  //   position: absolute;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -50%);
+  // }
+`;
 
 const Icon = styled.div`
 display: flex;

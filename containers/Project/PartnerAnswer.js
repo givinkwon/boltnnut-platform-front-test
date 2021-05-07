@@ -5,18 +5,64 @@ import Containerv1 from "../../components/Containerv1";
 import * as Title from "../../components/Title";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
-
+import {toJS} from "mobx";
+import DownloadFile from "components/DownloadFile";
 const infoImg = "static/images/info.svg";
-
+const file_img = "static/images/file2.png";
 @inject("Project", "Auth", "ManufactureProcess")
 @observer
 class PartnerAnswer extends React.Component {
   state = {
     value: null,
+    partnerDetailList: [],
   };
+  downloadFile(urls) {
+    console.log(urls);
+
+    const blob = new Blob([this.content], { type: "text/plain" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = `${urls}`;
+    a.download = `${urls}`;
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  }
+
   render() {
     const { Project, ManufactureProcess, user } = this.props;
     const { projectDetailData } = Project;
+    let name = "";
+    let date = "";
+    let period = "";
+    let estimate = "";
+    let applicantnumber = "";
+    let category = Project.category;
+    let maincategory = "";
+    let categoryname = "";
+    let maincategoryname = "";
+
+    Project.projectDataList &&
+    Project.currentPage > 0 &&
+    Project.projectDataList.map((item, idx) => {
+      if (idx === 0) {
+        name = item.request_set[0].name ? item.request_set[0].name : "미지정";
+        date = item.request_set[0].createdAt
+          ? item.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
+          : "미지정";
+        period = item.request_set[0].period
+          ? item.request_set[0].period + " 달"
+          : "미지정";
+        estimate = item.request_set[0].price
+          ? item.request_set[0].price
+          : "미지정";
+        category = Project.category;
+        maincategory = Project.maincategory;
+        categoryname = Project.categoryname;
+        maincategoryname = Project.maincategoryname;
+        console.log(toJS(item));
+      }
+    });
     const openPlaceHolderText = `<프로젝트와 관련된 보유 기술>
     예시) 보유 기술명, 기술 사용 기간, 기술 숙련도
     
@@ -28,8 +74,11 @@ class PartnerAnswer extends React.Component {
     
     <착수 가능일 및 계약 결정 기한>
     예시) n월 n일부터 착수 가능하고, n월 n일까지는 계약 결정을 희망합니다.`;
+    
     return (
       <Background>
+        {console.log("프로젝트 데이터리스트 확인")}
+        {console.log(toJS(projectDetailData))}
         <Containerv1>
           <Wrap>
             <MainBox>
@@ -41,13 +90,16 @@ class PartnerAnswer extends React.Component {
                       예상금액
                     </FontSize18>
                     <FontSize18 style={{ color: "#414550", marginLeft: 20 }}>
-                      0 원
+                    {projectDetailData &&
+                      projectDetailData.request_set[0].price.toLocaleString(
+                        "ko-KR"
+                      ) + " 원"}
                     </FontSize18>
                     <FontSize18 style={{ color: "#86888c", marginLeft: 90 }}>
                       납기 기간
                     </FontSize18>
                     <FontSize18 style={{ color: "#414550", marginLeft: 20 }}>
-                      21.06.21
+                      {period}
                     </FontSize18>
                   </InlineDiv>
                 </ProjectInfoBox>
@@ -139,12 +191,12 @@ class PartnerAnswer extends React.Component {
             </MainBox>
             <SubBox>
               <InlineDiv
-                style={{ justifyContent: "space-around", width: "133px" }}
+                style={{ justifyContent: "space-around", width: "133px", marginLeft: 0}}
               >
                 <img src={infoImg} />
                 <FontSize18
                   style={{
-                    fontWeight: "500",
+                    fontWeight: 500,
                     color: "#0933b3",
                   }}
                 >
@@ -152,7 +204,7 @@ class PartnerAnswer extends React.Component {
                 </FontSize18>
               </InlineDiv>
 
-              <InlineDiv style={{ width: "150px", textAlign: "center" }}>
+              <InlineDiv style={{ width: "150px", marginLeft: 0 }}>
                 <FontSize14>
                   프로젝트 답변을 해주시면 1:1 채팅 및 비공개 자료를 요청하실 수
                   있습니다.
@@ -259,6 +311,7 @@ const RequestBox = styled.div`
 const RequestContent = styled.div`
   //border: 1px solid red;
   margin-bottom: 52px;
+  padding: 26px 24px 26px 24px;
 `;
 
 const File = styled.div`
@@ -327,7 +380,6 @@ const FontSize18 = styled(Title.FontSize18)`
 `;
 
 const FontSize14 = styled.p`
-  font-family: NotoSansCJKkr;
   font-size: 14px;
   font-weight: 500;
   line-height: 1.86;
