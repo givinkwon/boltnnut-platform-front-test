@@ -18,7 +18,10 @@ import { inject, observer } from "mobx-react";
 @inject("Project", "Auth")
 @observer
 class ProjectContainer extends React.Component {
-  async componentDidMount() {}
+  async componentDidMount() {
+    const { Auth, Project } = this.props;
+    Project.newIndex == 0
+  }
   render() {
     const { Auth, Project } = this.props;
     console.log(Project.newIndex);
