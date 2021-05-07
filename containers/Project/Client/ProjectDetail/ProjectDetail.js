@@ -16,7 +16,7 @@ class ProjectDetailContainer extends React.Component {
   componentWillUnmount() {
     console.log("bbbbbbbbbbbbbb");
     const { Project } = this.props;
-    Project.newIndex = 0;
+    // Project.newIndex = 0;
   }
   render() {
     const { user } = this.props;
@@ -38,7 +38,7 @@ class ProjectDetailContainer extends React.Component {
               {/* <Content2 /> */}
               {/* <Content4 /> */}
             </Container13>
-            <ContentSub />
+            <ContentSub user={user} />
           </Containerv1>
         </Background>
 

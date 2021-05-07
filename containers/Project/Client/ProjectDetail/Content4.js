@@ -16,6 +16,7 @@ import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 import { createNoSubstitutionTemplateLiteral } from "typescript";
 
 const file_img = "static/images/file2.png";
+const download_img = "static/images/download.png";
 
 @inject("Project", "Auth", "ManufactureProcess")
 @observer
@@ -74,6 +75,11 @@ class Content4 extends React.Component {
     const { projectDetailData } = Project;
 
     //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
+
+    // console.log(idx);
+    // console.log(process_idx);
+    // console.log(material_idx);
+    // console.log(detail_idx);
 
     let item_detail_idx = 0;
     if (process_idx === "1") {
@@ -134,7 +140,7 @@ class Content4 extends React.Component {
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
           <RequestSubContainer>
-            <Font20>공개내용</Font20>
+            <Font20>공개 내용</Font20>
             <RequestBox>
               <RequestContent>
                 <pre style={{ whiteSpace: "break-spaces" }}>
@@ -234,7 +240,7 @@ class Content4 extends React.Component {
                               >
                                 다운로드
                               </span>
-                              <img src={search_img} />
+                              <img src={download_img} />
                             </div>
                             {/* <CloseModalButton handleClose={this.closeModal} /> */}
                             <Modal
@@ -388,7 +394,7 @@ class Content4 extends React.Component {
                             >
                               다운로드
                             </span>
-                            <img src={search_img} />
+                            <img src={download_img} />
                           </div>
                           {/* <CloseModalButton handleClose={this.closeModal} /> */}
                           <Modal
