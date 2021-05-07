@@ -16,7 +16,7 @@ class BannerConatiner extends React.Component {
 					<Item>
 						{/*<Text.FontSize62 color={'#0a2165'}>제조 인사이트</Text.FontSize62>*/}
 						<Text.FontSize32 color={WHITE}>제조 인사이트</Text.FontSize32>
-						<Content.FontSize22 color={WHITE}>제조 관련 인사이트를 모아놓았습니다.</Content.FontSize22>
+						<Content.FontSize22 color={WHITE}>제조 관련 인사이트를 읽어보세요.</Content.FontSize22>
 					</Item>
 				</Container>
 			</Background>
