@@ -30,16 +30,16 @@ class InputComponent extends React.Component {
     if (ManufactureProcess.changeProject) {
       this.setState({ checkFileUpload: true });
 
-      await Project.projectDetailData.request_set[0].requestfile_set.map(
-        (item, idx) => {
-          console.log(toJS(item));
-          if (item.share_inform) {
-            ManufactureProcess.openFileArray.push(item);
-          } else {
-            ManufactureProcess.privateFileArray.push(item);
-          }
-        }
-      );
+      // await Project.projectDetailData.request_set[0].requestfile_set.map(
+      //   (item, idx) => {
+      //     console.log(toJS(item));
+      //     if (item.share_inform) {
+      //       ManufactureProcess.openFileArray.push(item);
+      //     } else {
+      //       ManufactureProcess.privateFileArray.push(item);
+      //     }
+      //   }
+      // );
       // await ManufactureProcess.openFileArray.push(
       //   Project.projectDetailData.request_set[0].requestfile_set
       // );

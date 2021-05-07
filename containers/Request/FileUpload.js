@@ -232,7 +232,7 @@ class FileUploadContainer extends Component {
   }
 
   changeSubmit = () => {};
-  requestSubmit = (flag, id) => {
+  requestSubmit = async (flag, id) => {
     const { projectname } = this.state;
     const { ManufactureProcess, Schedule } = this.props;
 
@@ -444,8 +444,15 @@ class FileUploadContainer extends Component {
     const { ManufactureProcess, Project, Schedule } = this.props;
     //console.log("didMount")
     // console.log(ManufactureProcess.changeProject);
+    console.log(toJS(this.props.Project.projectDetailData.id));
     console.log(ManufactureProcess.checkFileUpload);
+    console.log(toJS(ManufactureProcess.purposeContent));
+
     if (ManufactureProcess.changeProject) {
+      await purposeAry.map((item, idx) => {
+        item.checked = false;
+      });
+
       await ManufactureProcess.init();
       console.log(toJS(Project.projectDetailData.request_set[0].estimate_set));
       this.state.projectname = Project.projectDetailData.request_set[0].name;
@@ -472,12 +479,13 @@ class FileUploadContainer extends Component {
       ManufactureProcess.date_conference;
 
       //ManufactureProcess.openFileArray.push(Project.projectDetailData.request_set[0].requestfile_set)
-
+      console.log(purposeAry);
       await purposeAry.map((item, idx) => {
         if (
           item.name === Project.projectDetailData.request_set[0].request_state
         ) {
           item.checked = true;
+          ManufactureProcess.purposeContent = idx + 1;
         }
       });
       // await Project.projectDetailData.request_set[0].estimate_set.map(
@@ -520,6 +528,19 @@ class FileUploadContainer extends Component {
       // );
 
       //   ManufactureProcess.checkFileUpload = true;
+      console.log(toJS(this.props.Project.projectDetailData));
+      await this.props.Request.getRequestFile(
+        this.props.Project.projectDetailData.request_set[0].id
+      );
+      console.log(toJS(this.props.Request.request_file_set));
+      //request_file_set
+
+      for (let i = 0; i < this.props.Request.request_file_set.length; i++) {
+        await this.props.Request.deleteRequestFile(
+          this.props.Request.request_file_set[i]
+        );
+      }
+      this.setState({ g: 3 });
     }
     if (!ManufactureProcess.checkPaymentButton) {
       window.addEventListener("scroll", this.loadScroll);
@@ -578,8 +599,8 @@ class FileUploadContainer extends Component {
     console.log(fileIdx);
     console.log(fileList);
     console.log(fileList[fileIdx].originFile);
-    console.log(ManufactureProcess.selectedBigCategory.id);
-    console.log(ManufactureProcess.selectedMidCategory.id);
+    console.log(toJS(ManufactureProcess.selectedBigCategory.id));
+    console.log(toJS(ManufactureProcess.selectedMidCategory.id));
     const ManufactureProcessFormData = new FormData();
     ManufactureProcessFormData.append(
       "blueprint",
@@ -612,9 +633,17 @@ class FileUploadContainer extends Component {
     ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
       .then((res) => {
         console.log(res);
-        fileList[fileIdx].price = res.data.data.totalMaxPrice;
+        fileList[fileIdx].price = res.data.data.maxPrice;
         fileList[fileIdx].productionPrice = res.data.data.maxPrice;
         fileList[fileIdx].priceLoading = false;
+        (fileList[fileIdx].moldPrice =
+          Math.round(res.data.data.totalMaxPrice / 10000) * 10000),
+          (fileList[fileIdx].ejaculationPrice =
+            Math.round(res.data.data.maxPrice / 10) * 10),
+          (fileList[fileIdx].totalPrice = 0),
+          (fileList[fileIdx].totalMoldPrice = res.data.data.totalMaxPrice);
+        fileList[fileIdx].totalEjaculationPrice = res.data.data.maxPrice;
+
         this.countPrice();
         //리렌더링을 위한 state설정. 바꿔야될듯
         this.setState({ t: true });
