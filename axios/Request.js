@@ -73,6 +73,16 @@ export function getRequestFile(req) {
     params: req.params ? req.params : null,
   });
 }
+
+export function setRequestFile(req) {
+  return axios({
+    method: "Post",
+    url: `${ROOT_URL}/requestfile/`,
+    data: req,
+    params: req.params ? req.params : null,
+  });
+}
+
 export function sendKakaoTalk(req) {
   return axios({
     method: "POST",

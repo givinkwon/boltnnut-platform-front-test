@@ -635,7 +635,7 @@ class Partner {
       };
     }
 
-    PartnerAPI.getPartner(req)
+    await PartnerAPI.getPartner(req)
       .then((res) => {
         this.partner_list = [];
         this.category_ary = [];
@@ -662,7 +662,7 @@ class Partner {
             PartnerAPI.getPartnerCategory(request)
               .then((res) => {
                 //this.category_name_ary.push({ index[key_index + idx] : res.data.category});
-                //this.category_name_ary.push({ `${count}` : res.data.category});
+                this.category_name_ary.push(res.data.category);
                 console.log(res.data.category);
               })
               .catch((e) => {
@@ -680,10 +680,6 @@ class Partner {
         // }
 
         // Partner.getPartnerCategory()
-        console.log(toJS(this.partner_list));
-
-        console.log(toJS(this.category_ary));
-        console.log(toJS(this.category_name_ary));
 
         //this.getCategory();
       })
@@ -691,6 +687,10 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    // console.log(toJS(this.partner_list));
+
+    console.log(toJS(this.category_ary));
+    console.log(toJS(this.category_name_ary));
   };
 
   @action getPartnerByRegion = async (page = 1) => {

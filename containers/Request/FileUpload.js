@@ -386,6 +386,23 @@ class FileUploadContainer extends Component {
       const detailProcessAry = detailProcessData.split(",");
       ManufactureProcess.getProcessList(processAry, detailProcessAry);
     } else {
+      const RequestFormData = new FormData();
+
+      // if (ManufactureProcess.openFileArray.length === 0) {
+      //   RequestFormData.append(`file`, "");
+      // }
+
+      // for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
+      //   RequestFormData.append(`file`, ManufactureProcess.openFileArray[i]);
+      //   RequestFormData.append("request", )
+      //   RequestFormData.append("share_inform", )
+      // }
+
+      //RequestFormData.append("file", )
+
+      const request = {};
+      RequestAPI.setRequestFile;
+
       const req = {
         // headers: {
         //   Authorization: `Token ${Token}`,
