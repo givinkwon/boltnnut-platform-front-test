@@ -34,7 +34,7 @@ class RadioBoxContainer extends React.Component {
         if(Project.radiobox_checked_idx !== idx){        
           this.setState({index : idx})    
           Project.radiobox_checked_idx = idx
-          Project.filter_price = item.name     
+          Project.filter = item.name     
           Project.project_next = null;
           Project.project_count = null;
     // this.count = 0;
@@ -70,7 +70,7 @@ class RadioBoxContainer extends React.Component {
       return (
         <FormControl component="fieldset">
         {/* <FormLabel component="legend" style={{marginTop: '28px'}}>금액</FormLabel> */}
-        <Font16>금액</Font16>
+        <Font16>상담 유형</Font16>
         {/* <RadioGroup aria-label="number" name="number1">
           <FormControlLabel value="one" control={<Checkbox />} label="정제의뢰" />
           <FormControlLabel value="two" control={<Checkbox />} label="정제의뢰" />
