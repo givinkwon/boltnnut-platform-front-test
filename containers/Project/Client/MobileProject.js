@@ -113,7 +113,7 @@ class MobileProjectContentContainer extends React.Component {
               <Background style={{marginBottom: '3px'}}>
                 <Container>        
                 <div
-                      style={{ cursor: "pointer", width: "100%" }}
+                      style={{ cursor: "pointer", width: "100%", marginTop: 14}}
                       onClick={() => this.pushToDetail(item.id)}
                     >
                   <ProposalCard width={this.props.width} data={item} handleIntersection={this.handleIntersection}/> 
