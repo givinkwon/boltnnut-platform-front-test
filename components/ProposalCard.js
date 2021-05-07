@@ -36,18 +36,28 @@ class ProposalCard extends React.Component {
     let estimate = "";
     let status = "";
     let content = "";
-    console.log(data.request_set[0])
+    console.log(data.request_set[0]);
     if (data.request_set[0]) {
-      name = data.request_set[0].name && data.request_set[0].name
-      date = data.request_set[0].createdAt && data.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
-      content = data.request_set[0].order_request_open && data.request_set[0].order_request_open
-      period = data.request_set[0].deadline=="2020-11-11T11:11:00+09:00" ? ("납기일미정") : (data.request_set[0].deadline.substring(0,10) + "(" + data.request_set[0].deadline_state + ")")
-      status = data.request_set[0].request_state && data.request_set[0].request_state
+      name = data.request_set[0].name && data.request_set[0].name;
+      date =
+        data.request_set[0].createdAt &&
+        data.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".");
+      content =
+        data.request_set[0].order_request_open &&
+        data.request_set[0].order_request_open;
+      period =
+        data.request_set[0].deadline == "2020-11-11T11:11:00+09:00"
+          ? "납기일미정"
+          : data.request_set[0].deadline.substring(0, 10) +
+            "(" +
+            data.request_set[0].deadline_state +
+            ")";
+      status =
+        data.request_set[0].request_state && data.request_set[0].request_state;
     }
 
     return (
       <>
-
         {width > 767.98 ? (
           <Card>
             {data.project_status === 21 ? (
@@ -62,6 +72,7 @@ class ProposalCard extends React.Component {
               </StepTag>
             )}
             <HeaderWrapper>
+              {console.log(name)}
               <Title>{name}</Title>
               <Content>{date}</Content>
             </HeaderWrapper>
