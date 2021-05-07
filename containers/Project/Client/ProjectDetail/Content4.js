@@ -59,8 +59,6 @@ class Content4 extends React.Component {
   // };
 
   downloadFile(urls) {
-    console.log(urls);
-
     const blob = new Blob([this.content], { type: "text/plain" });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -75,16 +73,7 @@ class Content4 extends React.Component {
     const { Project, ManufactureProcess } = this.props;
     const { projectDetailData } = Project;
 
-    // console.log(toJS(item));
-    // console.log(toJS(projectDetailData));
-    // console.log(toJS(projectDetailData.request_set[0].estimate_set));
-
     //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
-
-    // console.log(idx);
-    console.log(process_idx);
-    console.log(material_idx);
-    console.log(detail_idx);
 
     let item_detail_idx = 0;
     if (process_idx === "1") {
@@ -93,31 +82,22 @@ class Content4 extends React.Component {
       item_detail_idx = detail_idx - material_idx;
     }
 
-    // console.log(item_detail_idx);
-    // console.log(this.state.process.length);
-    // console.log(projectDetailData.request_set[0].estimate_set.length);
     if (
       // projectDetailData.request_set[0].estimate_set.length >
       // this.state.process.length
       projectDetailData.request_set[0].estimate_set.length > this.count
     ) {
       this.count++;
-      console.log("통과통과통과통과통과통과통과통과");
       const req = {
         id: process_idx,
       };
       await ManufactureProcessAPI.loadProcess(req).then((res) => {
         const data = res.data;
-        console.log(data.name);
-        console.log(data);
+
         this.setState({ process: this.state.process.concat(data.name) });
-        console.log(toJS(data.detailmanufactureprocess_set.length));
+
         for (let i = 0; i < data.detailmanufactureprocess_set.length; i++) {
-          console.log(detail_idx);
-          console.log(toJS(data.detailmanufactureprocess_set[i].id));
           if (detail_idx == data.detailmanufactureprocess_set[i].id) {
-            console.log("=======");
-            console.log(toJS(data.detailmanufactureprocess_set[i].name));
             this.setState({
               detailProcess: this.state.detailProcess.concat(
                 data.detailmanufactureprocess_set[i].name
@@ -125,24 +105,7 @@ class Content4 extends React.Component {
             });
           }
         }
-        // console.log(data.detailmanufactureprocess_set);
-        // console.log(item_detail_idx);
-        // console.log(data.detailmanufactureprocess_set[item_detail_idx - 1]);
-
-        //this.process = this.process.concat(data.name);
-        // this.setState({
-        //   detailProcess:
-        //     data.detailmanufactureprocess_set[item_detail_idx - 1] &&
-        //     this.state.detailProcess.concat(
-        //       data.detailmanufactureprocess_set[item_detail_idx - 1].name
-        //     ),
-        // });
-        // this.detailProcess = this.detailProcess.concat(
-        //   data.detailmanufactureprocess_set[item_detail_idx - 1].name
-        // );
       });
-      console.log(this.state.process);
-      console.log(this.state.detailProcess);
 
       //})
       //this.setState({ render_process });
@@ -153,22 +116,20 @@ class Content4 extends React.Component {
     // const { Project, ManufactureProcess } = this.props;
     // const { projectDetailData } = Project;
     // count = projectDetailData.request_set[0].estimate_set.length
-    console.log("componentDidMount");
-    console.log(this.props.Project.projectDetailData);
-
-    (await this.props.ProjectprojectDetailData) &&
-      this.props.Project.projectDetailData.request_set[0].estimate_set.map(
-        (item, idx) => {
-          console.log(toJS(decodeURI(item.stl_file.split("/").pop())));
-        }
-      );
+    // console.log("componentDidMount");
+    // console.log(this.props.Project.projectDetailData);
+    // (await this.props.ProjectprojectDetailData) &&
+    //   this.props.Project.projectDetailData.request_set[0].estimate_set.map(
+    //     (item, idx) => {
+    //       console.log(toJS(decodeURI(item.stl_file.split("/").pop())));
+    //     }
+    //   );
   }
   render() {
     const { Project, ManufactureProcess, user } = this.props;
     const { projectDetailData } = Project;
     return (
       <Background>
-        {console.log("renderrenderrenderrenderrenderrender")}
         {/* <Containerv1 style={{ display: "flex", flexDirection: "column" }}> */}
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
@@ -220,9 +181,9 @@ class Content4 extends React.Component {
                   projectDetailData.request_set[0].estimate_set.map(
                     (item, idx) => {
                       {
-                        console.log(
-                          toJS(decodeURI(item.stl_file.split("/").pop()))
-                        );
+                        // console.log(
+                        //   toJS(decodeURI(item.stl_file.split("/").pop()))
+                        // );
 
                         //if (!this.state.render_process) {
                         this.loadProcess(
@@ -263,7 +224,6 @@ class Content4 extends React.Component {
                             </div>
                             <div
                               onClick={() => {
-                                console.log("stl download");
                                 this.downloadFile(item.stl_file);
                               }}
                             >
@@ -293,19 +253,11 @@ class Content4 extends React.Component {
                           <Body>
                             <div>
                               <span>생산공정</span>
-                              {/* <span>{this.loadProcess(item.process)}</span> */}
-                              {/* {console.log(process)}
-             {console.log(this.state.process)} */}
-                              {/* <span>{process ? process : ""}</span> */}
-                              {/* <span>dssfdf</span> */}
                               <span>{this.state.process[idx]}</span>
-                              {/* <span>{this.process[idx]}</span> */}
                             </div>
                             <div>
                               <span>재료</span>
-                              {/* <span>dd</span> */}
                               <span>{this.state.detailProcess[idx]}</span>
-                              {/* <span>{this.detailProcess[idx]}</span> */}
                             </div>
                             {/* <div>
                               <span>마감</span>
@@ -664,7 +616,7 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
+  padding: 0 20px;
   > div:nth-of-type(1) {
     > span:nth-of-type(1) {
       width: 30%;
@@ -720,7 +672,6 @@ const BlackBox = styled.div`
 `;
 
 const DrawingName = styled.div`
-  border: 3px solid red;
   > div:nth-of-type(1) {
     font-size: 18px;
     font-weight: bold;
@@ -730,11 +681,26 @@ const DrawingName = styled.div`
   }
 `;
 const DrawingInfo = styled.div`
-  border: 3px solid blue;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   > div {
     display: flex;
     flex-direction: column;
+    > span:nth-of-type(1) {
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #282c36;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    > span:nth-of-type(2) {
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #282c36;
+    }
   }
 `;
 // const RequestBox = styled.div`
