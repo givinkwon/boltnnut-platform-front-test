@@ -20,14 +20,27 @@ import * as Content from "components/Content";
 @inject('Project','Auth')
 @observer
 class MobileProjectContentContainer extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.pushToDetail = this.pushToDetail.bind(this);
+  }
   state = {
     current: 0,
     next: true,
     prev: true,
     count: 0
   }
-  
+  pushToDetail = async (id) => {
+    const { Project } = this.props;
+    console.log(id);
+    Project.selectedProjectId = id;
+    await Project.getProjectDetail(id);
+    Project.newIndex = 1;
+
+    // await Router.push(`/project/${id}`);
+    Project.setProjectDetailData(id);
+  };
+
   handleIntersection = (event) => {
     if(event.isIntersecting) {
       console.log('추가 로딩을 시도합니다')            
@@ -99,7 +112,12 @@ class MobileProjectContentContainer extends React.Component {
             return(            
               <Background style={{marginBottom: '3px'}}>
                 <Container>        
+                <div
+                      style={{ cursor: "pointer", width: "100%" }}
+                      onClick={() => this.pushToDetail(item.id)}
+                    >
                   <ProposalCard width={this.props.width} data={item} handleIntersection={this.handleIntersection}/> 
+                  </div>
                 </Container>          
               </Background>
             )        

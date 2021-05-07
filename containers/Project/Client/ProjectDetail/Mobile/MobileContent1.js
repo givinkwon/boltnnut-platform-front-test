@@ -112,14 +112,18 @@ render() {
     });
 
     return(
-      <Background>
-      <Containerv1 style = {{display: 'flex', flexDirection:'column', paddingTop: 90}}>
+
+      <div style = {{display: 'flex', flexDirection:'column'}}>
         <div style = {{marginBottom: 40}}>
           <Font15 style = {{color: "#0933b3", marginBottom: 14, fontWeight: 'bold'}}>모집중</Font15>
           <Font16 style = {{marginBottom: 8, fontWeight: 'bold', color: '#282c36'}}>실리콘 반려동물 샤워기</Font16>
           <div style = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Font14 style = {{color: "#999999"}}>제품 및 용품 반려동물 용품</Font14>
-            <img src={separator} />
+            <div style = {{display: 'flex', flexDirection: 'row'}}>
+              <Font14 style = {{color: "#999999"}}>제품 및 용품</Font14>
+              <img src={separator} style = {{marginLeft: 11, marginRight: 11}}/>
+              <Font14 style = {{color: "#999999"}}> 반려동물 용품</Font14>
+            </div>
+            
             <Font14 style = {{color: "#999999"}}>2021.03.11</Font14>
           </div>
 
@@ -199,8 +203,7 @@ render() {
           </Box2>
         </div>
         < MobileContent2/>
-        </Containerv1>
-        </Background>
+        </div>
     );
   }
 }

@@ -7,6 +7,7 @@ import BannerContainer from "./Banner";
 import NavContainer from "./Nav.js";
 import SearchBar from "./SearchBar";
 import ProjectDetailContainer from "./Client/ProjectDetail/ProjectDetail";
+import MobileProjectDetailContainer from "./Client/ProjectDetail/Mobile/MobileProjectDetail";
 import styled from "styled-components";
 import RequestComplete from "./RequestComplete";
 import PartnerAnswer from "./PartnerAnswer";
@@ -41,7 +42,10 @@ class ProjectContainer extends React.Component {
             </div>
           ) : (
             <div>
-              <ClientMobileContentContainer width={this.props.width} />
+              {Project.newIndex == 0 && <ClientMobileContentContainer width={this.props.width} />}
+
+              {Project.newIndex == 1 && (
+                <MobileProjectDetailContainer user="client" />)}
             </div>
           ))}
         {Auth.logged_in_partner &&

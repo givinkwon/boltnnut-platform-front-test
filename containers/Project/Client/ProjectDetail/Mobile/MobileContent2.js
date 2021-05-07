@@ -14,6 +14,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import Background from "components/Background";
 import STLViewer from "stl-viewer";
+import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 const search_img = "/static/images/project/search.png";
 const fileimg = "/static/images/project/fileimg.svg";
 const fileimgBlack = "/static/images/project/fileimgBlack.svg";
