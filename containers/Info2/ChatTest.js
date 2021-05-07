@@ -158,19 +158,10 @@ class ChatTestContainer extends React.Component {
     "wss://test.boltnnut.com/ws/chat/" + `${this.props.roomName}` + "/"
   );
   userType = null;
-  // componentDidMount = () => {
-  //   this.setState({ messages: [] });
-  // };
-  // messages = [{}];
-  // onSendMessage = null;
+
   checkRead = (fullMessage, currentMessage) => {
     console.log("CHECKREAD!!!!!!!");
-    // console.log(fullMessage);
-    // console.log(currentMessage);
-    // console.log(this.props.currentUserType);
-    let notReadCount = 0;
 
-    console.log(toJS(fullMessage));
     fullMessage.forEach((element) => {
       console.log("FULLMESSAGES");
       if (
@@ -179,26 +170,32 @@ class ChatTestContainer extends React.Component {
       ) {
         element.bRead = true;
         console.log("READ complete");
-      } else {
-        notReadCount += 1;
-        // if (notReadCount === 1)
-        {
-          const req = {
-            phoneNumber: "01075731803",
-            username: "",
-            title: "",
-          };
-          console.log("Send KAKAO");
-          RequestAPI.sendKakaoTalk(req)
-            .then((res) => console.log(res))
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-        }
+      } else {     
         console.log("읽지않음");
       }
+
     });
+
+    // 메세지를 보낸 경우에 체크하여 카카오톡 보내기
+    if(fullMessage.length > 0 && toJS(fullMessage)[fullMessage.length-1].bRead == false && toJS(fullMessage)[fullMessage.length-2].bRead == true){
+      {
+        console.log("우왕")
+
+        const req = {
+          phoneNumber: "01075731803",
+          username: "",
+          title: "",
+        };
+        console.log("Send KAKAO");
+        RequestAPI.sendKakaoTalk(req)
+          .then((res) => console.log(res))
+          .catch((e) => {
+            console.log(e);
+            console.log(e.response);
+          });
+      }
+    }
+
   };
 
   async componentDidMount() {
