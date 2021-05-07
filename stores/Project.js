@@ -131,10 +131,8 @@ class Project {
             Array.isArray(this.projectDataList) &&
             this.projectDataList.length === 0
           ) {
-            // this.project_existence = false;
-            console.log("aaaaaaaaaaaaaaaaaaaa");
+            this.project_existence = false;
           } else {
-            console.log("bbbbbbbbbbbbbbbbbbbbb");
           }
         }
       });

@@ -103,25 +103,27 @@ class Content1 extends React.Component {
     let categoryname = "";
     let maincategoryname = "";
 
-    Project.projectDataList.map((item, idx) => {
-      if (idx === 0) {
-        name = item.request_set[0].name ? item.request_set[0].name : "미지정";
-        date = item.request_set[0].createdAt
-          ? item.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
-          : "미지정";
-        period = item.request_set[0].period
-          ? item.request_set[0].period + " 달"
-          : "미지정";
-        estimate = item.request_set[0].price
-          ? item.request_set[0].price
-          : "미지정";
-        category = Project.category;
-        maincategory = Project.maincategory;
-        categoryname = Project.categoryname;
-        maincategoryname = Project.maincategoryname;
-        console.log(item);
-      }
-    });
+    Project.projectDataList &&
+      Project.currentPage > 0 &&
+      Project.projectDataList.map((item, idx) => {
+        if (idx === 0) {
+          name = item.request_set[0].name ? item.request_set[0].name : "미지정";
+          date = item.request_set[0].createdAt
+            ? item.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
+            : "미지정";
+          period = item.request_set[0].period
+            ? item.request_set[0].period + " 달"
+            : "미지정";
+          estimate = item.request_set[0].price
+            ? item.request_set[0].price
+            : "미지정";
+          category = Project.category;
+          maincategory = Project.maincategory;
+          categoryname = Project.categoryname;
+          maincategoryname = Project.maincategoryname;
+          console.log(item);
+        }
+      });
 
     return (
       <>
