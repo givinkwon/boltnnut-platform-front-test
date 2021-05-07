@@ -238,35 +238,36 @@ class FileUploadContainer extends Component {
     const { projectname } = this.state;
     const { ManufactureProcess, Schedule } = this.props;
 
+    console.log(toJS(ManufactureProcess.totalorderPrice));
     let deadline_state = "";
     let processData = "";
     let detailProcessData = "";
     let quantityData = "";
 
-    console.log(ManufactureProcess.purposeContent)
+    console.log(ManufactureProcess.purposeContent);
     // error 처리
-    if(ManufactureProcess.purposeContent==0) {
-      alert("문의 목적을 선택해주세요")
-      return false
+    if (ManufactureProcess.purposeContent == 0) {
+      alert("문의 목적을 선택해주세요");
+      return false;
     }
-    if(projectname.length == 0) {
-      alert("프로젝트 제목을 입력해주세요")
-      return false
+    if (projectname.length == 0) {
+      alert("프로젝트 제목을 입력해주세요");
+      return false;
     }
-    if(projectname.length > 200) {
-        alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.")
-        return false
+    if (projectname.length > 200) {
+      alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
+      return false;
     }
 
-    if(ManufactureProcess.requestComment.length > 4500){
-        alert("공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.")
-        return false
+    if (ManufactureProcess.requestComment.length > 4500) {
+      alert("공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      return false;
     }
-    if(ManufactureProcess.requestComment2.length > 4500){
-        alert("비공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.")
-        return false
+    if (ManufactureProcess.requestComment2.length > 4500) {
+      alert("비공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      return false;
     }
-    
+
     ManufactureProcess.date_undefined
       ? (deadline_state = "납기일미정")
       : ManufactureProcess.date_conference
@@ -278,7 +279,7 @@ class FileUploadContainer extends Component {
       console.log(purposeAry[ManufactureProcess.purposeContent - 1].name);
       request_state = purposeAry[ManufactureProcess.purposeContent - 1].name;
     }
-    console.log(request_state)
+    console.log(request_state);
 
     console.log("requestSubmit");
     console.log(Schedule.clickDay);
@@ -289,18 +290,16 @@ class FileUploadContainer extends Component {
     formData.append("name", projectname);
 
     // 선택한 날짜가 없으면, 기본 날짜 추가하기
-    if (Schedule.clickDay){
+    if (Schedule.clickDay) {
       formData.append("deadline", Schedule.clickDay + " 09:00");
-    }
-    else{
+    } else {
       formData.append("deadline", "2020-11-11 11:11");
     }
 
     // 선택한 납기 선택이 없으면 납기일 미정으로
-    if (deadline_state.length == 0){
-      formData.append("deadline_state", "납기일미정")
-    }
-    else{
+    if (deadline_state.length == 0) {
+      formData.append("deadline_state", "납기일미정");
+    } else {
       formData.append("deadline_state", deadline_state);
     }
     formData.append("order_request_open", ManufactureProcess.requestComment);
@@ -323,7 +322,7 @@ class FileUploadContainer extends Component {
       formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
     }
 
-    formData.append("price", ManufactureProcess.totalorderPrice);
+    formData.append("price", ManufactureProcess.orderMaxPrice);
     //formData.append("blueprint_exist", 0);
     formData.append("blueprint_exist", 1);
 

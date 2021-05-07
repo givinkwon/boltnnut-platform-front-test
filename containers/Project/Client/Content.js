@@ -9,7 +9,7 @@ import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
 import NoProject from "../NoProject";
 import { toJS } from "mobx";
-import ProjectNoneContainer from './ProjectNone';
+import ProjectNoneContainer from "./ProjectNone";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -239,7 +239,7 @@ class ProjectContentContainer extends React.Component {
               />
             </PageBar>
           )}
-        {!Project.project_existence && <ProjectNoneContainer /> }
+          {/* {!Project.project_existence && <ProjectNoneContainer /> } */}
         </Background>
       </>
     );
