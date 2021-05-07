@@ -194,7 +194,10 @@ class Content1 extends React.Component {
                     letterSpacing: -0.18,
                   }}
                 >
-                  {this.props.Project.projectDetailData.request_set[0].request_state}
+                  {
+                    this.props.Project.projectDetailData.request_set[0]
+                      .request_state
+                  }
                 </Font18>
               </Box1>
               <div style={{ display: "inline-flex", flexDirection: "row" }}>
@@ -263,7 +266,9 @@ class Content1 extends React.Component {
                 </Box2ImageContainer>
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>지원자 수</Font18>
-                  <Font18 style={{ fontWeight: "bold" }}>{this.state.partnerList.length} 명</Font18>
+                  <Font18 style={{ fontWeight: "bold" }}>
+                    {this.state.partnerList.length} 명
+                  </Font18>
                 </div>
               </Box2>
             </Box2Container>

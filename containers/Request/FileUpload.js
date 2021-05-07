@@ -378,7 +378,7 @@ class FileUploadContainer extends Component {
         .catch((e) => {
           console.log(e);
           console.log(e.response);
-          console.log(e.response.data);
+          // console.log(e.response.data);
         });
 
       //

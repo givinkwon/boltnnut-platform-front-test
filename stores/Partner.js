@@ -48,6 +48,9 @@ class Partner {
   @observable input_process_filter = null;
   @observable input_category = null;
 
+  @observable category_ary = [];
+  @observable category_name_ary = [];
+
   @action setProcessFilter = (val) => {
     this.input_process_filter = val;
   };
@@ -601,6 +604,7 @@ class Partner {
 
   @action getPartner = async (page = 1) => {
     this.partner_list = [];
+    this.category_ary = [];
     //this.data_dt = [];
     console.log(this.filter_region);
     const token = localStorage.getItem("token");
@@ -634,13 +638,52 @@ class Partner {
     PartnerAPI.getPartner(req)
       .then((res) => {
         this.partner_list = [];
+        this.category_ary = [];
+        let index = {};
+        let key_index = "category ";
+        let count = 0;
 
         this.partner_list = res.data.results;
 
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
+        //this.category_ary = res.data.results.category_middle;
         this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+
+        this.partner_list.map((item, idx) => {
+          this.category_ary.push(item.category_middle);
+          console.log(toJS(item));
+
+          console.log(toJS(this.category_ary[idx]));
+          for (let i = 0; i < this.category_ary[idx].length; i++) {
+            const request = {
+              id: this.category_ary[idx][i],
+            };
+            PartnerAPI.getPartnerCategory(request)
+              .then((res) => {
+                //this.category_name_ary.push({ index[key_index + idx] : res.data.category});
+                //this.category_name_ary.push({ `${count}` : res.data.category});
+                console.log(res.data.category);
+              })
+              .catch((e) => {
+                console.log(e);
+                console.log(e.response);
+              });
+          }
+        });
+
+        // for(let i=0; i<this.category_ary.length; i++){
+        //   req = {
+        //     id: this.category_ary
+
+        //    };
+        // }
+
+        // Partner.getPartnerCategory()
         console.log(toJS(this.partner_list));
+
+        console.log(toJS(this.category_ary));
+        console.log(toJS(this.category_name_ary));
 
         //this.getCategory();
       })
@@ -685,9 +728,12 @@ class Partner {
     PartnerAPI.getPartner(req)
       .then((res) => {
         this.partner_list = [];
+        this.category_ary = [];
 
         this.partner_list = res.data.results;
+        // this.category_ary = res.data.results.category_middle;
 
+        // console.log(toJS(category_ary));
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
         this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
@@ -700,6 +746,34 @@ class Partner {
         console.log(e.response);
       });
   };
+  // @action getPartnerCategory = async (page = 1) => {
+  //   req = {
+  //     params: {
+  //       // search: search_text,
+  //       page: page,
+  //       // ordering: "-id",
+  //     },
+  //     // headers: {
+  //     //   Authorization: `Token ${token}`,
+  //     // },
+  //   };
+
+  //   PartnerAPI.getPartner(req)
+  //     .then((res) => {
+  //       this.category_list = [];
+
+  //       this.category_list = res.data.results.category_middle;
+  //       // this.partner_next = res.data.next;
+  //       // this.partner_count = res.data.count;
+  //       // this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+  //       // console.log(toJS(this.partner_list));
+  //       //this.getCategory();
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //       console.log(e.response);
+  //     });
+  // };
 }
 
 export default new Partner();
