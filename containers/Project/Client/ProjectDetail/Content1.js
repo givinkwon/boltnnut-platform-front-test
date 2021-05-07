@@ -195,7 +195,7 @@ class Content1 extends React.Component {
                   }}
                 >
                   {
-                    this.props.Project.projectDetailData.request_set[0].request_state
+                    this.props.Project.projectDetailData && this.props.Project.projectDetailData.request_set[0].request_state
                   }
                 </Font18>
               </Box1>
