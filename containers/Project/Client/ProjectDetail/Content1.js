@@ -235,11 +235,10 @@ class Content1 extends React.Component {
                   <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
                     {projectDetailData && console.log(toJS(projectDetailData))}
-                    {/* {projectDetailData.request_set[0].price} */}
-                    {projectDetailData &&
-                      projectDetailData.request_set[0].price.toLocaleString(
-                        "ko-KR"
-                      ) + " 원"}
+                    {/* 예상금액 0원일 때 미정으로 변경 */}
+                    {projectDetailData && projectDetailData.request_set[0].price.toLocaleString("ko-KR")!=0 ?
+                      (projectDetailData.request_set[0].price.toLocaleString("ko-KR") + " 원") : ("미정")
+                    }
                   </Font18>
                 </div>
               </Box2>
