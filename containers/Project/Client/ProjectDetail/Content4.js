@@ -167,7 +167,7 @@ class Content4 extends React.Component {
                                 onClick={() => this.downloadFile(item.file)}
                                 style={{ cursor: "pointer" }}
                               >
-                                {decodeURI(item.file.split("/").pop())}
+                                {decodeURI(item.stl_file.split("/").pop())}
                               </span>
                             </div>
                           </div>
@@ -181,7 +181,10 @@ class Content4 extends React.Component {
           <Font20>비공개내용</Font20>
           {user === "partner" ? (
             <BlackBox>
-              <span>문의 답변을 해주셔야만 열람할 수 있습니다.</span>
+              <span>
+                상담을 요청한 클라이언트 분이 비공개 자료를 공개 했을 때는
+                열람이 가능합니다.
+              </span>
               <RequestSubContainer style={{ filter: "blur(5px)" }}>
                 {projectDetailData &&
                   projectDetailData.request_set[0].estimate_set.map(
@@ -495,7 +498,7 @@ class Content4 extends React.Component {
                                   onClick={() => this.downloadFile(item.file)}
                                   style={{ cursor: "pointer" }}
                                 >
-                                  {decodeURI(item.file.split("/").pop())}
+                                  {decodeURI(item.stl_file.split("/").pop())}
                                 </span>
                               </div>
                             </div>
