@@ -33,9 +33,13 @@ class NoneDrawingConsultingContainer extends React.Component {
     duedate: "",
     duecheck: "",
     checkFileUpload: false,
-    minRows: 7,
+    minRows: 1,
     maxRows: 100,
     rows: 7,
+    publicValue: "",
+    privateValue: "",
+    publicRows: 7,
+    privateRows: 7,
   };
 
   // unitCheckboxhandler
@@ -53,6 +57,24 @@ class NoneDrawingConsultingContainer extends React.Component {
     } else {
       return false;
     }
+  };
+
+  purposeHandler = (item) => {
+    const { ManufactureProcess } = this.props;
+    console.log(ManufactureProcess.purposeContent);
+    if (item.checked) {
+      item.checked = false;
+      // purposeAry[ManufactureProcess.purposeComment - 1] = false;
+      ManufactureProcess.purposeContent = 0;
+      //this.setState({ purposeAry : })
+    } else {
+      item.checked = true;
+      if (ManufactureProcess.purposeContent) {
+        purposeAry[ManufactureProcess.purposeContent - 1].checked = false;
+      }
+      ManufactureProcess.purposeContent = item.id;
+    }
+    this.setState({ g: 3 });
   };
 
   // purposecheckboxhandler
@@ -108,7 +130,7 @@ class NoneDrawingConsultingContainer extends React.Component {
   };
 
   // textarea
-  handleChange = async (event) => {
+  publicRequestHandler = async (event) => {
     this.props.Auth.checkLogin();
     if (!this.props.Auth.logged_in_user) {
       alert("로그인이 필요한 서비스입니다.");
@@ -133,14 +155,14 @@ class NoneDrawingConsultingContainer extends React.Component {
     }
 
     this.setState({
-      value: event.target.value,
-      rows: currentRows < maxRows ? currentRows : maxRows,
+      publicValue: event.target.value,
+      publicRows: currentRows < maxRows ? currentRows : maxRows,
     });
 
     ManufactureProcess.requestComment = event.target.value;
   };
 
-  handleChange2 = (event) => {
+  privateRequestHandler = (event) => {
     const textareaLineHeight = 34;
     const { minRows, maxRows } = this.state;
     const { ManufactureProcess } = this.props;
@@ -159,10 +181,10 @@ class NoneDrawingConsultingContainer extends React.Component {
     }
 
     this.setState({
-      value2: event.target.value2,
-      rows: currentRows < maxRows ? currentRows : maxRows,
+      privateValue: event.target.value,
+      privateRows: currentRows < maxRows ? currentRows : maxRows,
     });
-    console.log(event.target.value);
+
     ManufactureProcess.requestComment2 = event.target.value;
   };
 
@@ -185,6 +207,10 @@ class NoneDrawingConsultingContainer extends React.Component {
     // 	세로: ${column}
     // 	높이: ${height}
     // 	`);
+    let deadline_state = "";
+    let processData = "";
+    let detailProcessData = "";
+    let quantityData = "";
 
     let str = "";
     var result = Object.keys(purpose).map((key) => [key, purpose[key]]);
@@ -196,6 +222,19 @@ class NoneDrawingConsultingContainer extends React.Component {
         str += ", ";
       }
     });
+
+    ManufactureProcess.date_undefined
+      ? (deadline_state = "납기일미정")
+      : ManufactureProcess.date_conference
+      ? (deadline_state = "납기일협의가능")
+      : "";
+
+    let request_state = "";
+    if (ManufactureProcess.purposeContent) {
+      console.log(purposeAry[ManufactureProcess.purposeContent - 1].name);
+      request_state = purposeAry[ManufactureProcess.purposeContent - 1].name;
+    }
+
     console.log(result);
     console.log(str);
 
@@ -215,17 +254,19 @@ class NoneDrawingConsultingContainer extends React.Component {
     console.log(ManufactureProcess.openFileArray);
 
     var formData = new FormData();
-    formData.append("request_state", "상담요청");
+    formData.append("request_state", request_state);
 
     //formData.append("request_state", str);
     //formData.append("purpose", purpose)
     formData.append("name", projectname);
     formData.append("deadline", Schedule.clickDay + " 09:00");
     //formData.append("deadline", "2020-11-11 11:11");
-    formData.append(
-      "deadline_state",
-      ManufactureProcess.date_undefined ? "납기일미정" : ""
-    );
+    // 선택한 납기 선택이 없으면 납기일 미정으로
+    if (deadline_state.length == 0) {
+      formData.append("deadline_state", "납기일미정");
+    } else {
+      formData.append("deadline_state", deadline_state);
+    }
     //ManufactureProcess.date_undefined
     formData.append("order_request_open", ManufactureProcess.requestComment);
     formData.append("order_request_close", ManufactureProcess.requestComment2);
@@ -237,7 +278,12 @@ class NoneDrawingConsultingContainer extends React.Component {
     for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
       formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
     }
+
+    formData.append("price", 0);
     formData.append("blueprint_exist", 0);
+    formData.append("process", 1);
+    formData.append("detailprocess", 1);
+    formData.append("number", 1);
 
     // const formData = {
     //   user: this.props.Auth.logged_in_user.id,
@@ -272,6 +318,9 @@ class NoneDrawingConsultingContainer extends React.Component {
       });
 
     //
+    // const processAry = processData.split(",");
+    // const detailProcessAry = detailProcessData.split(",");
+    // ManufactureProcess.getProcessList(processAry, detailProcessAry);
   };
 
   render() {
@@ -303,45 +352,25 @@ class NoneDrawingConsultingContainer extends React.Component {
           <PurposeBox>
             <InlineDiv>
               <FontSize24>문의 목적 </FontSize24>
-              <div style={{ display: "flex", alignItems: "flex-end" }}>
-                <FontSize16 style={{ height: "24px", lineHeight: "1" }}>
-                  (중복 선택 가능)
-                </FontSize16>
-              </div>
             </InlineDiv>
 
             <SelectBox style={{ width: "555px", marginTop: "16px" }}>
               <InlineDiv style={{ alignItems: "flex-end" }}>
-                <PurposeSelectCircle
-                  active={this.state.purposeselected1}
-                  onClick={() => this.purposeCheckboxHandlerOne("상담요청")}
-                >
-                  <PusrposeFontSize18 active={this.state.purposeselected1}>
-                    상담요청
-                  </PusrposeFontSize18>
-                </PurposeSelectCircle>
-              </InlineDiv>
-
-              <InlineDiv style={{ alignItems: "flex-end" }}>
-                <PurposeSelectCircle
-                  active={this.state.purposeselected2}
-                  onClick={() => this.purposeCheckboxHandlerTwo("견적요청")}
-                >
-                  <PusrposeFontSize18 active={this.state.purposeselected2}>
-                    견적요청
-                  </PusrposeFontSize18>
-                </PurposeSelectCircle>
-              </InlineDiv>
-
-              <InlineDiv style={{ alignItems: "flex-end" }}>
-                <PurposeSelectCircle
-                  active={this.state.purposeselected3}
-                  onClick={() => this.purposeCheckboxHandlerthree("업체수배")}
-                >
-                  <PusrposeFontSize18 active={this.state.purposeselected3}>
-                    업체수배
-                  </PusrposeFontSize18>
-                </PurposeSelectCircle>
+                {purposeAry.map((item, idx) => {
+                  return (
+                    <PurposeSelectCircle
+                      active={item.checked}
+                      onClick={() => {
+                        this.purposeHandler(item);
+                        console.log(idx);
+                      }}
+                    >
+                      <PurposeFont18 active={item.checked}>
+                        {item.name}
+                      </PurposeFont18>
+                    </PurposeSelectCircle>
+                  );
+                })}
               </InlineDiv>
             </SelectBox>
           </PurposeBox>
@@ -354,7 +383,14 @@ class NoneDrawingConsultingContainer extends React.Component {
               <InputComponent
                 class="Input"
                 placeholder="프로젝트 제목을 입력해주세요."
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) =>
+                  (e.target.placeholder = "프로젝트 제목을 입력해주세요")
+                }
+                value={this.state.projectname}
                 onChange={(e) => {
+                  //console.log(e.target.value);
+                  console.log(e);
                   this.setState({ projectname: e });
                 }}
               />
@@ -450,11 +486,16 @@ class NoneDrawingConsultingContainer extends React.Component {
               </div>
               <div
                 onClick={() => {
+                  console.log("click1");
                   if (ManufactureProcess.date_conference) {
                     ManufactureProcess.date_conference = false;
                   } else {
                     ManufactureProcess.date_conference = true;
+                    if (ManufactureProcess.date_undefined) {
+                      ManufactureProcess.date_undefined = false;
+                    }
                   }
+                  console.log(ManufactureProcess.date_conference);
                 }}
               >
                 <div>
@@ -464,11 +505,16 @@ class NoneDrawingConsultingContainer extends React.Component {
               </div>
               <div
                 onClick={() => {
+                  console.log("click2");
                   if (ManufactureProcess.date_undefined) {
                     ManufactureProcess.date_undefined = false;
                   } else {
                     ManufactureProcess.date_undefined = true;
+                    if (ManufactureProcess.date_conference) {
+                      ManufactureProcess.date_conference = false;
+                    }
                   }
+                  console.log(ManufactureProcess.date_undefined);
                 }}
               >
                 <div>
@@ -490,13 +536,18 @@ class NoneDrawingConsultingContainer extends React.Component {
 
             <textarea
               placeholder={`${openPlaceHolderText}`}
-              onFocus={(e) => (e.target.placeholder = `${openPlaceHolderText}`)}
-              onBlur={(e) => (e.target.placeholder = `${openPlaceHolderText}`)}
-              rows={this.state.rows}
-              value={this.state.value}
+              onFocus={(e) => (e.target.placeholder = "")}
+              onBlur={(e) => {
+                e.target.placeholder = `${openPlaceHolderText}`;
+                if (this.state.publicValue === "") {
+                  this.setState({ publicRows: 7 });
+                }
+              }}
+              rows={this.state.publicRows}
+              value={this.state.publicValue}
               className={"textarea"}
               placeholderStyle={{ fontWeight: "400" }}
-              onChange={this.handleChange}
+              onChange={this.publicRequestHandler}
             />
           </Request>
 
@@ -509,17 +560,18 @@ class NoneDrawingConsultingContainer extends React.Component {
 
             <textarea
               placeholder={`${privatePlaceholderText}`}
-              onFocus={(e) =>
-                (e.target.placeholder = `${privatePlaceholderText}`)
-              }
-              onBlur={(e) =>
-                (e.target.placeholder = `${privatePlaceholderText}`)
-              }
-              rows={this.state.rows}
-              value2={this.state.value2}
+              onFocus={(e) => (e.target.placeholder = "")}
+              onBlur={(e) => {
+                e.target.placeholder = `${privatePlaceholderText}`;
+                if (this.state.privateValue == "") {
+                  this.setState({ privateRows: 7 });
+                }
+              }}
+              rows={this.state.privateRows}
+              value={this.state.privateValue}
               className={"textarea"}
               placeholderStyle={{ fontWeight: "400" }}
-              onChange={this.handleChange2}
+              onChange={this.privateRequestHandler}
             />
           </Request>
 
@@ -563,7 +615,7 @@ class NoneDrawingConsultingContainer extends React.Component {
               <AddFile2
                 file={true}
                 isOpen={true}
-                onChange={this.handleChange}
+                ///onChange={this.handleChange}
               />
               <div></div>
             </span>
@@ -587,7 +639,7 @@ class NoneDrawingConsultingContainer extends React.Component {
               <AddFile2
                 file={true}
                 isOpen={false}
-                onChange={this.handleChange}
+                //onChange={this.handleChange}
               />
               <div></div>
             </span>
@@ -610,6 +662,12 @@ class NoneDrawingConsultingContainer extends React.Component {
 }
 
 export default NoneDrawingConsultingContainer;
+
+const purposeAry = [
+  { id: 1, name: "상담요청", checked: false },
+  { id: 2, name: "견적문의", checked: false },
+  { id: 3, name: "업체수배", checked: false },
+];
 
 // global
 const InlineDiv = styled.div`
@@ -698,6 +756,7 @@ const PurposeSelectCircle = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: ${(props) => (props.active ? "#0933b3" : "#ffffff")};
   cursor: pointer;
+  margin-right: 30px;
 `;
 
 const CheckCircleImg = styled.img`
@@ -952,4 +1011,11 @@ const Reference = styled.div`
     background-color: #ffffff;
     position: relative;
   }
+`;
+
+const PurposeFont18 = styled.div`
+  font-weight: normal;
+  line-height: 1.89;
+  letter-spacing: -0.45px;
+  color: ${(props) => (props.active ? "#ffffff" : "#414550")};
 `;

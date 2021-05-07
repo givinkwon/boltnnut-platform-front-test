@@ -38,6 +38,18 @@ class Content1 extends React.Component {
     },
   };
 
+  getToday(date) {
+    //let date = new Date();
+    console.log(date);
+    // let year = date.getFullYear();
+    // let month = ("0" + (1 + date.getMonth())).slice(-2);
+    // let day = ("0" + date.getDate()).slice(-2);
+
+    // console.log(year);
+    // console.log(month);
+    // console.log(day);
+    // return year + month + day;
+  }
   modalHandler = (id) => {
     this.setState({ selectedRoom: id });
     const { Project } = this.props;
@@ -47,6 +59,7 @@ class Content1 extends React.Component {
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
 
+    console.log(Project.selectedProjectId);
     console.log("<Web> did mount");
 
     // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
@@ -55,9 +68,41 @@ class Content1 extends React.Component {
     // Project.init(918)
 
     //console.log(Auth)
-
+    this.getToday(
+      Project.projectDetailData &&
+        Project.projectDetailData.request_set[0].deadline
+    );
     await Auth.checkLogin();
+
+    // if (Auth.logged_in_partner) {
+    //   Project.getPage(1069);
+    //   console.log(Project.selectedProjectId);
+    //   Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+    //     console.log(toJS(Answer.answers));
+    //     this.setState({ partnerList: Answer.answers });
+
+    //     Answer.answers.forEach((answer) => {
+    //       const PartnerDetailList = this.state.partnerDetailList;
+    //       PartnerAPI.detail(answer.partner)
+    //         .then((res) => {
+    //           // console.log(res);
+    //           // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+    //           PartnerDetailList.push({
+    //             logo: res.data.logo,
+    //             name: res.data.name,
+    //           });
+    //           this.setState({ partnerDetailList: PartnerDetailList });
+    //         })
+    //         .catch((e) => {
+    //           console.log(e);
+    //           console.log(e.response);
+    //         });
+    //     });
+    //   });
+    // }
+
     if (Auth.logged_in_client) {
+      // console.log(Auth.logged_in_client);
       Project.getPage(Auth.logged_in_client.id);
       console.log(Project.selectedProjectId);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
@@ -187,10 +232,12 @@ class Content1 extends React.Component {
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
-                    {/* {console.log(toJS())} */}
+                    {projectDetailData && console.log(toJS(projectDetailData))}
                     {/* {projectDetailData.request_set[0].price} */}
                     {projectDetailData &&
-                      projectDetailData.request_set[0].price}
+                      projectDetailData.request_set[0].price.toLocaleString(
+                        "ko-KR"
+                      ) + " 원"}
                   </Font18>
                 </div>
               </Box2>
@@ -201,7 +248,12 @@ class Content1 extends React.Component {
                 </Box2ImageContainer>
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>예상 기간</Font18>
-                  <Font18 style={{ fontWeight: "bold" }}>{period}</Font18>
+                  <Font18 style={{ fontWeight: "bold" }}>
+                    {projectDetailData &&
+                      projectDetailData.request_set[0].deadline
+                        .slice(2, 10)
+                        .replace(/-/gi, ".")}
+                  </Font18>
                 </div>
               </Box2>
 
@@ -293,11 +345,11 @@ class Content1 extends React.Component {
                 <Font20 style={{ color: "#282c36" }}>CNC</Font20>
               </div>
             </Info> */}
-            <InfoDetail>
-              {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
+            {/* <InfoDetail> */}
+            {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
                 프로젝트 내용 상세 설명
               </Font20> */}
-              {/* <Font18
+            {/* <Font18
                 style={{
                   letterSpacing: -0.45,
                   fontWeight: "normal",
@@ -324,7 +376,7 @@ class Content1 extends React.Component {
                 어떻게 할까요 저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세
                 설명이 없
               </Font18> */}
-              <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
+            {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
                 프로젝트 관련 파일
               </Font20>
               <div>
@@ -357,7 +409,7 @@ class Content1 extends React.Component {
                   계약서 및 기능명세서.hwp
                 </Font20>
               </div>
-            </InfoDetail>
+            </InfoDetail> */}
             <Content4 user={user} />
           </InnerContainer>
         </Container1>

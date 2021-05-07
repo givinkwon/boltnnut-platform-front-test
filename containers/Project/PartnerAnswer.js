@@ -4,11 +4,30 @@ import Background from "../../components/Background";
 import Containerv1 from "../../components/Containerv1";
 import * as Title from "../../components/Title";
 import Router from "next/router";
+import { inject, observer } from "mobx-react";
 
 const infoImg = "static/images/info.svg";
 
+@inject("Project", "Auth", "ManufactureProcess")
+@observer
 class PartnerAnswer extends React.Component {
+  state = {
+    value: null,
+  };
   render() {
+    const { Project, ManufactureProcess, user } = this.props;
+    const { projectDetailData } = Project;
+    const openPlaceHolderText = `<프로젝트와 관련된 보유 기술>
+    예시) 보유 기술명, 기술 사용 기간, 기술 숙련도
+    
+    <유사 프로젝트 진행 경험>
+    예시) 프로젝트 설명, 사용한 기술, 담당 업무
+    
+    <프로젝트 진행 제안>
+    예시) 개발 작업 순서와 일정
+    
+    <착수 가능일 및 계약 결정 기한>
+    예시) n월 n일부터 착수 가능하고, n월 n일까지는 계약 결정을 희망합니다.`;
     return (
       <Background>
         <Containerv1>
@@ -16,14 +35,106 @@ class PartnerAnswer extends React.Component {
             <MainBox>
               <MainInnerBox>
                 <FontSize26>실리콘 반려동물 샤워기</FontSize26>
-
                 <ProjectInfoBox>
                   <InlineDiv>
                     <FontSize18 style={{ color: "#86888c" }}>
                       예상금액
                     </FontSize18>
+                    <FontSize18 style={{ color: "#414550", marginLeft: 20 }}>
+                      0 원
+                    </FontSize18>
+                    <FontSize18 style={{ color: "#86888c", marginLeft: 90 }}>
+                      납기 기간
+                    </FontSize18>
+                    <FontSize18 style={{ color: "#414550", marginLeft: 20 }}>
+                      21.06.21
+                    </FontSize18>
                   </InlineDiv>
                 </ProjectInfoBox>
+                <FontSize26>프로젝트 설명 및 요청사항</FontSize26>
+                <RequestSubContainer>
+                  <Font20>공개 내용</Font20>
+                  <RequestBox>
+                    <RequestContent>
+                      <pre style={{ whiteSpace: "break-spaces" }}>
+                        {projectDetailData &&
+                          projectDetailData.request_set[0].order_request_open}
+                        {/* {Project.projectDetailData.request_set[0].order_request_open} */}
+                      </pre>
+                    </RequestContent>
+                    <File>
+                      {projectDetailData &&
+                        projectDetailData.request_set[0].requestfile_set.map(
+                          (item, idx) => {
+                            if (item.share_inform) {
+                              return (
+                                <div>
+                                  <div>
+                                    <img src={file_img} />
+                                    {/* <DownloadFile
+                              file={item.file}
+                              href={decodeURI(item.file)}
+                              download
+                            ></DownloadFile> */}
+                                    <span
+                                      onClick={() =>
+                                        this.downloadFile(item.file)
+                                      }
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      {decodeURI(item.file.split("/").pop())}
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            }
+                          }
+                        )}
+                    </File>
+                  </RequestBox>
+                </RequestSubContainer>
+                {/* 프로젝트 답변하기 */}
+                <RequestSubContainer>
+                  <Font20>프로젝트 답변하기</Font20>
+                  <RequestBox>
+                    <RequestContent>
+                      <TextAreaContent>
+                        <textarea
+                          placeholder={`${openPlaceHolderText}`}
+                          onFocus={(e) =>
+                            (e.target.placeholder = `${openPlaceHolderText}`)
+                          }
+                          onBlur={(e) =>
+                            (e.target.placeholder = `${openPlaceHolderText}`)
+                          }
+                          rows={8}
+                          value={this.state.value}
+                          className={"textarea"}
+                          placeholderStyle={{ fontWeight: "400" }}
+                          onChange={this.handleChange}
+                        />
+                      </TextAreaContent>
+                    </RequestContent>
+                  </RequestBox>
+                </RequestSubContainer>
+                {/* 버튼 2개 */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: 50,
+                  }}
+                >
+                  <ButtonBox>
+                    <HomeBtn onClick={() => Router.push("/project")}>
+                      취소
+                    </HomeBtn>
+
+                    <MyProjectBtn>프로젝트 답변 등록</MyProjectBtn>
+                  </ButtonBox>
+                </div>
+
+                {/* 버튼 2개 */}
               </MainInnerBox>
             </MainBox>
             <SubBox>
@@ -57,9 +168,126 @@ class PartnerAnswer extends React.Component {
 
 export default PartnerAnswer;
 
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 520px;
+`;
+
+const TextAreaContent = styled.div`
+  // width: 1200px;
+  // display: ${(props) => (props.checkFileUpload ? "static" : "none")};
+  // background-color: #f6f6f6;
+  // border: 1px solid black;
+  border-radius: 5px;
+  // padding: 26px 24px 22px 24px;
+  box-sizing: border-box;
+  margin-bottom: 40px;
+  margin-top: 16px;
+  position: relative;
+
+  > div:nth-of-type(1) {
+    > span:nth-of-type(1) {
+      height: 27px;
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #282c36;
+      font-weight: bold;
+      margin-bottom: 16px;
+      margin-right: 7px;
+    }
+
+    > span:last-child {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #000000;
+      border-radius: 10px;
+      display: inline-block;
+      text-align: center;
+      font-size: 16px;
+      letter-spacing: -0.4px;
+      color: #414550;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+  }
+  // > div:nth-of-type(2) {
+  //    width: 600px;
+  //    height: 180px;
+  //    border: 3px solid green;
+  //    position: absolute;
+  //    top: 13%;
+  //    left: 70px;
+  //    background-color: #ffffff;
+  // }
+  > textarea {
+    resize: none;
+    border: 1px solid #ffffff;
+    width: 100%;
+    padding: 14px 16px;
+    margin-top: 12px;
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 34px;
+    letter-spzcing: -0.45px;
+    color: #282c36;
+    border-radius: 5px;
+    overflow: auto;
+    height: auto;
+
+    font-family: inherit;
+    :focus {
+      outline: none;
+    }
+    :placeholder {
+      font-weight: 300;
+    }
+    white-space: pre-line;
+  }
+`;
+const RequestSubContainer = styled.div`
+  width: 100%;
+`;
+const RequestBox = styled.div`
+  //height: 383px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  // padding: 26px 43px;
+  box-sizing: border-box;
+`;
+
+const RequestContent = styled.div`
+  //border: 1px solid red;
+  margin-bottom: 52px;
+`;
+
+const File = styled.div`
+  //border: 1px solid blue;
+  > div {
+    > div {
+      > span {
+        font-size: 18px;
+        font-weight: normal;
+        line-height: 40px;
+        letter-spacing: -0.45px;
+        color: #767676;
+      }
+    }
+  }
+`;
+
+const Font20 = styled(Title.FontSize20)`
+  line-height: 1.7;
+  font-weight: normal;
+  letter-spacing: -0.5px !important;
+  color: #414550;
+  margin-bottom: 12px;
+`;
+
 // global
 const InlineDiv = styled.div`
   display: inline-flex;
+  margin-left: 30px;
 `;
 
 // fontsize
@@ -119,7 +347,7 @@ const Wrap = styled.div`
 const MainBox = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
   width: 996px;
   border-radius: 10px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
@@ -130,6 +358,7 @@ const MainInnerBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 932px;
+  padding: 30px 0 94px 0;
 `;
 
 const SubBox = styled.div`
@@ -142,12 +371,6 @@ const SubBox = styled.div`
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: #ffffff;
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 520px;
 `;
 
 const HomeBtn = styled.div`
@@ -196,10 +419,12 @@ const MyProjectBtn = styled.div`
 
 const ProjectInfoBox = styled.div`
   display: inline-flex;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
-  width: 932px;
+  // width: 932px;
+  width: 100%;
   height: 63px;
   border-radius: 5px;
   border: solid 1px #c6c7cc;
+  margin: 26px 0 90px 0;
 `;

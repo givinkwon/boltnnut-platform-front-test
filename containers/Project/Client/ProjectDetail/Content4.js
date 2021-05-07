@@ -82,9 +82,9 @@ class Content4 extends React.Component {
     //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
 
     // console.log(idx);
-    console.log(process_idx);
-    console.log(material_idx);
-    console.log(detail_idx);
+    // console.log(process_idx);
+    // console.log(material_idx);
+    // console.log(detail_idx);
 
     let item_detail_idx = 0;
     if (process_idx === "1") {
@@ -110,19 +110,33 @@ class Content4 extends React.Component {
         const data = res.data;
         console.log(data.name);
         console.log(data);
-        console.log(data.detailmanufactureprocess_set);
-        console.log(item_detail_idx);
-        console.log(data.detailmanufactureprocess_set[item_detail_idx - 1]);
-
         this.setState({ process: this.state.process.concat(data.name) });
+        console.log(toJS(data.detailmanufactureprocess_set.length));
+        for (let i = 0; i < data.detailmanufactureprocess_set.length; i++) {
+          console.log(detail_idx);
+          console.log(toJS(data.detailmanufactureprocess_set[i].id));
+          if (detail_idx == data.detailmanufactureprocess_set[i].id) {
+            console.log("=======");
+            console.log(toJS(data.detailmanufactureprocess_set[i].name));
+            this.setState({
+              detailProcess: this.state.detailProcess.concat(
+                data.detailmanufactureprocess_set[i].name
+              ),
+            });
+          }
+        }
+        // console.log(data.detailmanufactureprocess_set);
+        // console.log(item_detail_idx);
+        // console.log(data.detailmanufactureprocess_set[item_detail_idx - 1]);
+
         //this.process = this.process.concat(data.name);
-        this.setState({
-          detailProcess:
-            data.detailmanufactureprocess_set[item_detail_idx - 1] &&
-            this.state.detailProcess.concat(
-              data.detailmanufactureprocess_set[item_detail_idx - 1].name
-            ),
-        });
+        // this.setState({
+        //   detailProcess:
+        //     data.detailmanufactureprocess_set[item_detail_idx - 1] &&
+        //     this.state.detailProcess.concat(
+        //       data.detailmanufactureprocess_set[item_detail_idx - 1].name
+        //     ),
+        // });
         // this.detailProcess = this.detailProcess.concat(
         //   data.detailmanufactureprocess_set[item_detail_idx - 1].name
         // );
@@ -135,12 +149,19 @@ class Content4 extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // const { Project, ManufactureProcess } = this.props;
     // const { projectDetailData } = Project;
     // count = projectDetailData.request_set[0].estimate_set.length
     console.log("componentDidMount");
     console.log(this.props.Project.projectDetailData);
+
+    (await this.props.ProjectprojectDetailData) &&
+      this.props.Project.projectDetailData.request_set[0].estimate_set.map(
+        (item, idx) => {
+          console.log(toJS(decodeURI(item.stl_file.split("/").pop())));
+        }
+      );
   }
   render() {
     const { Project, ManufactureProcess, user } = this.props;
@@ -152,7 +173,7 @@ class Content4 extends React.Component {
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
           <RequestSubContainer>
-            <Font20>공개내용</Font20>
+            <Font20>공개 내용</Font20>
             <RequestBox>
               <RequestContent>
                 <pre style={{ whiteSpace: "break-spaces" }}>
@@ -199,7 +220,10 @@ class Content4 extends React.Component {
                   projectDetailData.request_set[0].estimate_set.map(
                     (item, idx) => {
                       {
-                        // console.log(toJS(item));
+                        console.log(
+                          toJS(decodeURI(item.stl_file.split("/").pop()))
+                        );
+
                         //if (!this.state.render_process) {
                         this.loadProcess(
                           item,
@@ -214,7 +238,9 @@ class Content4 extends React.Component {
                       return (
                         <DrawingCard>
                           <Header>
-                            <div>이름</div>
+                            <div>
+                              {decodeURI(item.stl_file.split("/").pop())}
+                            </div>
 
                             <div>
                               <STLViewer
@@ -281,14 +307,14 @@ class Content4 extends React.Component {
                               <span>{this.state.detailProcess[idx]}</span>
                               {/* <span>{this.detailProcess[idx]}</span> */}
                             </div>
-                            <div>
+                            {/* <div>
                               <span>마감</span>
                               <span>기본가공</span>
                             </div>
                             <div>
                               <span>색상</span>
                               <span>검정</span>
-                            </div>
+                            </div> */}
                           </Body>
                           <Tail>
                             <div>
@@ -344,7 +370,7 @@ class Content4 extends React.Component {
                                     onClick={() => this.downloadFile(item.file)}
                                     style={{ cursor: "pointer" }}
                                   >
-                                    {decodeURI(item.file.split("/").pop())}
+                                    {decodeURI(item.stl_file.split("/").pop())}
                                   </span>
                                 </div>
                               </div>
@@ -378,8 +404,6 @@ class Content4 extends React.Component {
                     return (
                       <DrawingCard>
                         <Header>
-                          <div>이름</div>
-
                           <div>
                             <STLViewer
                               model={item.stl_file} // stl파일 주소
@@ -429,22 +453,50 @@ class Content4 extends React.Component {
                           </Modal>
                         </Header>
                         <Body>
-                          <div>
-                            <span>생산공정</span>
-                            {/* <span>{this.loadProcess(item.process)}</span> */}
-                            {/* {console.log(process)}
-                        {console.log(this.state.process)} */}
-                            {/* <span>{process ? process : ""}</span> */}
-                            {/* <span>dssfdf</span> */}
-                            <span>{this.state.process[idx]}</span>
-                            {/* <span>{this.process[idx]}</span> */}
-                          </div>
-                          <div>
-                            <span>재료</span>
-                            {/* <span>dd</span> */}
-                            <span>{this.state.detailProcess[idx]}</span>
-                            {/* <span>{this.detailProcess[idx]}</span> */}
-                          </div>
+                          <DrawingName>
+                            <div>
+                              {decodeURI(item.stl_file.split("/").pop())}
+                            </div>
+                          </DrawingName>
+                          <DrawingInfo>
+                            <div>
+                              <span>생산공정</span>
+
+                              <span>{this.state.process[idx]}</span>
+                            </div>
+
+                            <div>
+                              <span>재료</span>
+
+                              <span>{this.state.detailProcess[idx]}</span>
+                            </div>
+
+                            <div>
+                              <span>수량</span>
+                              <span>{item.number}</span>
+                            </div>
+                            <div>
+                              <span>가격</span>
+                              {item.process === "1" ? (
+                                <span>
+                                  {(
+                                    Math.round(item.totalMaxPrice / 10000) *
+                                      10000 +
+                                    Math.round(item.maxPrice / 10) *
+                                      10 *
+                                      item.number
+                                  ).toLocaleString("ko-KR") + "원"}
+                                </span>
+                              ) : (
+                                <span>
+                                  {(
+                                    Math.round(item.maxPrice) * item.number
+                                  ).toLocaleString("ko-KR") + "원"}
+                                </span>
+                              )}
+                            </div>
+                          </DrawingInfo>
+
                           {/* <div>
                             <span>마감</span>
                             <span>기본가공</span>
@@ -454,32 +506,9 @@ class Content4 extends React.Component {
                             <span>검정</span>
                           </div> */}
                         </Body>
-                        <Tail>
-                          <div>
-                            <span>수량</span>
-                            <span>{item.number}</span>
-                          </div>
-                          <div>
-                            <span>가격</span>
-                            {item.process === "1" ? (
-                              <span>
-                                {(
-                                  Math.round(item.totalMaxPrice / 10000) *
-                                    10000 +
-                                  Math.round(item.maxPrice / 10) *
-                                    10 *
-                                    item.number
-                                ).toLocaleString("ko-KR") + "원"}
-                              </span>
-                            ) : (
-                              <span>
-                                {(
-                                  Math.round(item.maxPrice) * item.number
-                                ).toLocaleString("ko-KR") + "원"}
-                              </span>
-                            )}
-                          </div>
-                        </Tail>
+                        {/* <Tail>
+                         
+                        </Tail> */}
                       </DrawingCard>
                     );
                   }
@@ -603,15 +632,15 @@ const Header = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  > div:nth-of-type(1) {
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 2.22;
-    letter-spacinig: -0.45px;
-    color: #282c36;
-  }
+  // > div:nth-of-type(1) {
+  //   font-size: 18px;
+  //   font-weight: bold;
+  //   line-height: 2.22;
+  //   letter-spacinig: -0.45px;
+  //   color: #282c36;
+  // }
 
-  > div:nth-of-type(3) {
+  > div:nth-of-type(2) {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
     border-radius: 10px;
     width: 40%;
@@ -635,7 +664,8 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  > div {
+
+  > div:nth-of-type(1) {
     > span:nth-of-type(1) {
       width: 30%;
       display: inline-block;
@@ -686,6 +716,25 @@ const BlackBox = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+`;
+
+const DrawingName = styled.div`
+  border: 3px solid red;
+  > div:nth-of-type(1) {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 2.22;
+    letter-spacinig: -0.45px;
+    color: #282c36;
+  }
+`;
+const DrawingInfo = styled.div`
+  border: 3px solid blue;
+  display: flex;
+  > div {
+    display: flex;
+    flex-direction: column;
   }
 `;
 // const RequestBox = styled.div`

@@ -56,7 +56,7 @@ class ChatTestContainer extends React.Component {
           chat_type: 1,
 
           //message: "이미지",
-          answer: 238,
+          answer: 17378,
           origin_file: this.state.currentFile,
           type: this.userType,
         });
@@ -159,6 +159,7 @@ class ChatTestContainer extends React.Component {
   );
   userType = null;
 
+  // 메세지 읽음 표시 함수
   checkRead = (fullMessage, currentMessage) => {
     console.log("CHECKREAD!!!!!!!");
 
@@ -182,7 +183,7 @@ class ChatTestContainer extends React.Component {
         console.log("우왕")
 
         const req = {
-          phoneNumber: "01075731803",
+          phoneNumber: "01041126637",
           username: "",
           title: "",
         };
@@ -199,13 +200,16 @@ class ChatTestContainer extends React.Component {
   };
 
   async componentDidMount() {
+    // RoomNumber 체크하기
     const roomNum = this.props.roomName;
-    console.log(this.props.roomName);
+
     let temp = new Date();
     let timezone = temp.getTimezoneOffset();
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
+    // 메세지 및 시간 초기화
     this.setState({ messages: [], currentTime: temp });
     this.props.Project.chatMessages = [];
+    
     ChatAPI.loadChat(roomNum).then((res) => {
       const reverseChat = res.data.results.reverse();
       ChatAPI.loadChatCount(roomNum).then((m_res) => {
@@ -267,32 +271,12 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.onmessage = (e) => {
       // console.log("Aaaasdasd");
       const data = JSON.parse(e.data);
-      //console.log(data);
-      // if (data.type != 2) {
 
-      // if (data.message != "receive") {
-      //   this.chatSocket.send(
-      //     JSON.stringify({
-      //       message: "receive",
-      //       type: this.userType,
-      //       time: Date.now(),
-      //     })
-      //   );
-      // }
-
-      // console.log(data.bReceive);
       const messages = this.props.Project.chatMessages;
-      // if (messages[0] && messages[1]) {
-      //   console.log(messages[0].time);
-      //   console.log(messages[1].time);
-      //   if (messages[0].time > messages[1].time) {
-      //     console.log("!!!!!!!!!!!");
-      //   }
-      // }
 
-      // console.log(new Date().setHours(new Date().getHours() + 9));
       if (!data.bReceive) {
-        if (data.member != this.userType) {
+        //console.log(typeof(data.type), typeof(this.userType))
+        if (data.type != this.userType) {
           console.log(
             "수신완료체크!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
           );
@@ -307,31 +291,24 @@ class ChatTestContainer extends React.Component {
             })
           );
         }
+        console.log(toJS(messages))
         messages.push({
           member: data["type"],
           text: data["message"],
           time: data["time"],
           bRead: false,
-          // file: this.state.currentFile,
         });
       }
 
-      // if (data.message == "receive") {
-      //   this.checkRead(this.props.Project.chatMessages, data);
-      // }
+
       if (data.bReceive) {
         this.checkRead(this.props.Project.chatMessages, data);
       }
       this.setState({ messages });
-      // this.checkRead(this.props.Project.chatMessages, data);
-
-      // this.checkRead(this.props.Project.chatMessages, data);
-      // this.setState({ messages });
-      // this.setState
 
       let tempAnswerNum = roomNum;
       let chatCount = 0;
-
+      console.log(data.message)
       if (data.message != "접속완료" && data.message != "수신완료") {
         if (data.type === this.userType) {
           const req = {
@@ -344,8 +321,6 @@ class ChatTestContainer extends React.Component {
             console.log(res);
           });
 
-          // console.log(this.props.Project.chatMessages.length);
-          // AnswerAPI.getAnswerById(238).then((res) => console.log(res.data));
         }
       }
       ChatAPI.loadChatCount(tempAnswerNum).then((res) => {
@@ -367,49 +342,20 @@ class ChatTestContainer extends React.Component {
         };
         ChatAPI.saveChatCount(answerReq);
         this.setState({ f: 3 });
-        // ChatAPI.loadChat(tempAnswerNum).then((res) => {
-        //   console.log("loadchat");
-        //   this.userType === 0
-        //     ? (clientChatCount = res.data.count)
-        //     : (partnerChatCount = res.data.count);
-        //   const answerReq = {
-        //     extraUrl: `${tempAnswerNum}/`,
-        //     params: {
-        //       partner: 265,
-        //       check_time_client: clientChatCount,
-        //       check_time_partner: partnerChatCount,
-        //     },
-        //   };
-        //   ChatAPI.saveChatCount(answerReq);
-        // });
+
       });
-      // const message = `${data["type"]}: ${data["message"]}`; //+ data["message"];
-      // console.log(message);
-      // document.querySelector("#chat-log").value += message + "\n";
+
     };
 
     this.chatSocket.onclose = (e) => {
       console.error("Chat socket closed unexpectedly");
-      // ProposalAPI.getMyProject()
-      //   .then((res) => {
-      //     console.log(res.data);
-      //   })
-      //   .catch((e) => {
-      //     console.log(e);
-      //     console.log(e.response);
-      //   });
+
     };
 
-    // console.log("q");
   }
 
   onSendMessage = (myMessage) => {
-    // const messageInput = document.querySelector("#chat-message-input");
-    // const message = messageInput.value;
-    console.log("front");
-    // console.log(userType);
-    // console.log("RR");
-    // console.log(new Date()());
+
 
     console.log(myMessage);
     console.log(this.userType);
@@ -424,26 +370,18 @@ class ChatTestContainer extends React.Component {
         chatType: 0,
       })
     );
-    // console.log("e");
-    // messageInput.value = "";
+
   };
 
   render() {
-    // this.onSendMessage("fff");
     return (
       <>
-        {/* <textarea id="chat-log" cols="100" rows="20"></textarea>
-        <br />
-        <input id="chat-message-input" type="text" size="100" />
-        <br />
-        <input id="chat-message-submit" type="button" value="Send" /> */}
         <input
           id="FileInput"
           type="file"
           onChange={(e) => {
             this.onChangeFile(e);
           }}
-          // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
           style={{ display: "none" }}
         />
         <ChatCardContainer

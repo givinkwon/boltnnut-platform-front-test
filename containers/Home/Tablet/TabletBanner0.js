@@ -102,8 +102,11 @@ class TabletBanner0Container extends React.Component {
               marginTop: 6,
             }}
           >
-            <img src={lock} style={{ marginRight: 8 }}></img>
-            <span style={{ fontSize: "13px" }}>
+            <img
+              src={lock}
+              style={{ marginRight: 8, width: "12px", height: "12px" }}
+            ></img>
+            <span style={{ fontSize: "13px", opacity: "0.8" }}>
               모든 업로드는 안전하고 기밀입니다.
             </span>
           </div>

@@ -83,7 +83,11 @@ class ChatCardContainer extends React.Component {
     e.preventDefault();
     console.log("onsubmit()");
     this.setState({ text: "" });
+
+    // 빈메세지 제거
+    if(this.state.text.length > 0){
     this.props.onSendMessage(this.state.text);
+    }
   }
 
   executeScroll = () =>
