@@ -20,7 +20,7 @@ import { inject, observer } from "mobx-react";
 class ProjectContainer extends React.Component {
   async componentDidMount() {
     const { Auth, Project } = this.props;
-    Project.newIndex == 0
+    Project.newIndex = 0;
   }
   render() {
     const { Auth, Project } = this.props;
