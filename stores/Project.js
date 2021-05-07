@@ -110,7 +110,8 @@ class Project {
       .catch((e) => {
         console.log(e);
         console.log(e.response);
-   
+
+
       });
   };
   /* 파트너 - 전체 + 가격 별 + search별 다 포함시켰음 */

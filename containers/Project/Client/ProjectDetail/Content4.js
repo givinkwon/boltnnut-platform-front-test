@@ -153,6 +153,7 @@ class Content4 extends React.Component {
                 {projectDetailData &&
                   projectDetailData.request_set[0].requestfile_set.map(
                     (item, idx) => {
+                      {console.log(toJS(item))}
                       if (item.share_inform) {
                         return (
                           <div>
@@ -167,7 +168,7 @@ class Content4 extends React.Component {
                                 onClick={() => this.downloadFile(item.file)}
                                 style={{ cursor: "pointer" }}
                               >
-                                {decodeURI(item.stl_file.split("/").pop())}
+                                {decodeURI(item.file.split("/").pop())}
                               </span>
                             </div>
                           </div>
@@ -182,165 +183,20 @@ class Content4 extends React.Component {
           {user === "partner" ? (
             <BlackBox>
               <span>
-                상담을 요청한 클라이언트 분이 비공개 자료를 공개 했을 때는
-                열람이 가능합니다.
+                '문의 답변을 해주셔야만 열람 할 수 있습니다.'
               </span>
               <RequestSubContainer style={{ filter: "blur(5px)" }}>
-                {projectDetailData &&
-                  projectDetailData.request_set[0].estimate_set.map(
-                    (item, idx) => {
-                      {
-                        // console.log(
-                        //   toJS(decodeURI(item.stl_file.split("/").pop()))
-                        // );
-
-                        //if (!this.state.render_process) {
-                        this.loadProcess(
-                          item,
-                          idx,
-                          item.process,
-                          item.material,
-                          item.category
-                        );
-                        //}
-                        // console.log(process);
-                      }
-                      return (
-                        <DrawingCard>
-                          <Header>
-                            <div>
-                              {decodeURI(item.stl_file.split("/").pop())}
-                            </div>
-
-                            <div>
-                              <STLViewer
-                                model={item.stl_file} // stl파일 주소
-                                width={120} // 가로
-                                height={120} // 세로
-                                // width={250}
-                                // height={210}
-                                modelColor="gray" // 색
-                                backgroundColor="white" // 배경색
-                                rotate={true} // 자동회전 유무
-                                orbitControls={true} // 마우스 제어 유무
-                                cameraX={500}
-                                //cameraZ={500}
-                                //lights={[2,4,1]}
-                                //lights={[2, 2, 2]}
-                                // lights={[0, 0, 1]}
-                                //lightColor={'red'}
-                              />
-                            </div>
-                            <div
-                              onClick={() => {
-                                this.downloadFile(item.stl_file);
-                              }}
-                            >
-                              {/* <div onClick={this.openModal}> */}
-                              <span
-                                onClick={() => {}}
-                                style={{ cursor: "pointer" }}
-                              >
-                                다운로드
-                              </span>
-                              <img src={download_img} />
-                            </div>
-                            {/* <CloseModalButton handleClose={this.closeModal} /> */}
-                            <Modal
-                              open={this.state.modalOpen}
-                              close={this.closeModal}
-                              header="도면"
-                              title="dd"
-                            >
-                              <p>
-                                dddddddddddddddddddddddddddddddddddddddddddddddd
-                                dddddddddddddddddddd dddd dddddddd dddd dddd
-                                dddd dddd dddddddd dddddddd
-                              </p>
-                            </Modal>
-                          </Header>
-                          <Body>
-                            <div>
-                              <span>생산공정</span>
-                              <span>{this.state.process[idx]}</span>
-                            </div>
-                            <div>
-                              <span>재료</span>
-                              <span>{this.state.detailProcess[idx]}</span>
-                            </div>
-                            {/* <div>
-                              <span>마감</span>
-                              <span>기본가공</span>
-                            </div>
-                            <div>
-                              <span>색상</span>
-                              <span>검정</span>
-                            </div> */}
-                          </Body>
-                          <Tail>
-                            <div>
-                              <span>수량</span>
-                              <span>{item.number}</span>
-                            </div>
-                            <div>
-                              <span>가격</span>
-                              {item.process === "1" ? (
-                                <span>
-                                  {(
-                                    Math.round(item.totalMaxPrice / 10000) *
-                                      10000 +
-                                    Math.round(item.maxPrice / 10) *
-                                      10 *
-                                      item.number
-                                  ).toLocaleString("ko-KR") + "원"}
-                                </span>
-                              ) : (
-                                <span>
-                                  {(
-                                    Math.round(item.maxPrice) * item.number
-                                  ).toLocaleString("ko-KR") + "원"}
-                                </span>
-                              )}
-                            </div>
-                          </Tail>
-                        </DrawingCard>
-                      );
-                    }
-                  )}
+              <DrawingCard></DrawingCard>
                 <RequestBox>
                   {" "}
                   <RequestContent>
-                    {projectDetailData &&
-                      projectDetailData.request_set[0].order_request_close}
+                    
                   </RequestContent>
                   <File>
-                    {projectDetailData &&
-                      projectDetailData.request_set[0].requestfile_set.map(
-                        (item, idx) => {
-                          if (!item.share_inform) {
-                            return (
-                              <div>
-                                <div>
-                                  <img src={file_img} />
-                                  {/* <DownloadFile
-                   file={item.file}
-                   href={decodeURI(item.file)}
-                   download
-                 ></DownloadFile> */}
-                                  <span
-                                    onClick={() => this.downloadFile(item.file)}
-                                    style={{ cursor: "pointer" }}
-                                  >
-                                    {decodeURI(item.stl_file.split("/").pop())}
-                                  </span>
-                                </div>
-                              </div>
-                            );
-                          }
-                        }
-                      )}
+                    
                   </File>
                 </RequestBox>
+                
               </RequestSubContainer>
             </BlackBox>
           ) : (
