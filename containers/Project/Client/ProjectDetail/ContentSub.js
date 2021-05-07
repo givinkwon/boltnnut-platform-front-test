@@ -107,6 +107,18 @@ class ContentSub extends React.Component {
                 프로젝트 답변하기
               </Font18>
             </Box3>
+            {/* {user == "partner" ? ( */}
+              {/* <Box3
+                style = {{backgroundColor: "#c6c7cc", color: "#ffffff"}}
+            >
+              <Font18
+                style={{ fontWeight: "bold" }}
+              >
+                비공개 자료 요청
+              </Font18>
+            </Box3> */}
+            {/* ):(
+
             <Box3
               active={this.state.activeTwo}
               onMouseOver={() => this.activeHandler("activeTwo")}
@@ -122,6 +134,12 @@ class ContentSub extends React.Component {
                 비공개 자료 요청
               </Font18>
             </Box3>
+
+
+            )} */}
+
+
+            
           </>
         )}
 

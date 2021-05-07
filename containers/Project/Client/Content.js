@@ -128,7 +128,7 @@ class ProjectContentContainer extends React.Component {
               }
               return (
                 <Background
-                  style={{ marginBottom: "5px", backgroundColor: "#f9f9f9" }}
+                  style={{ marginTop: 34, backgroundColor: "#f9f9f9" }}
                 >
                   <Container>
                     <div

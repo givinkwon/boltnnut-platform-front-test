@@ -371,6 +371,7 @@ const NavLink = styled.p`
   color: #000000;
   display: flex;
   align-items: center;
+  font-weight: 500;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
     font-weight: 500;

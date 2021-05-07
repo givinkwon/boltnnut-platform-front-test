@@ -13936,7 +13936,7 @@ stealthy-require@^1.1.1:
 
 stl-viewer@^0.12.0:
   version "0.12.0"
-  resolved "https://registry.npmjs.org/stl-viewer/-/stl-viewer-0.12.0.tgz"
+  resolved "https://registry.yarnpkg.com/stl-viewer/-/stl-viewer-0.12.0.tgz#9ffab49ebfe471d3884c5f5f429c2838b35bf769"
   integrity sha512-6RDmJhhibNUVrBaSaUVKPHxxwisEyD473p78r90ElI6jn82T29jgm9tCihh3z+AVwC8YH9AM+k1YulzAMxaEOA==
   dependencies:
     halogenium "^2.2.3"
