@@ -26,19 +26,12 @@ class ProjectContainer extends React.Component {
           (this.props.width && this.props.width > 767.99 ? (
             <div style={{ overflow: "visible" }}>
               <BannerContainer />
-              {/* <PartnerAnswer /> */}
-              {/* <RequestComplete /> */}
-              {/* <NavContainer style={{ marginTop: "50px" }} /> */}
 
               {console.log(Project.newIndex)}
-
               {Project.newIndex == 0 && <ClientContentContainer />}
-              {/* <ClientContentContainer length={this.props.length} /> */}
-
               {Project.newIndex == 1 && (
                 <ProjectDetailContainer user="client" />
               )}
-              {/* <ProjectDetailContainer></ProjectDetailContainer> */}
             </div>
           ) : (
             <div>
