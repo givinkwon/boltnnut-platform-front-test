@@ -12,6 +12,7 @@ import { toJS } from "mobx";
 import ChatTestContainer from "containers/Info2/ChatTest";
 import * as PartnerAPI from "axios/Partner";
 
+
 const money = "/static/images/project/money.svg";
 const calendar = "/static/images/project/period.svg";
 const applicant = "/static/images/project/applicant.svg";
@@ -83,8 +84,9 @@ class Content1 extends React.Component {
         });
       });
     }
+    
   }
-
+  
   render() {
     const { Project, Partner, user } = this.props;
     // if (this.state.partnerDetailList[0]) {
@@ -100,7 +102,7 @@ class Content1 extends React.Component {
     let maincategory = "";
     let categoryname = "";
     let maincategoryname = "";
-
+    
     Project.projectDataList &&
       Project.currentPage > 0 &&
       Project.projectDataList.map((item, idx) => {
@@ -122,6 +124,7 @@ class Content1 extends React.Component {
           console.log(item);
         }
       });
+
 
     return (
       <>

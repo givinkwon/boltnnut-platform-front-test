@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import Background from '../../components/Background';
-import Containerv1 from '../../components/Containerv1';
-import * as Title from '../../components/Title';
+import Background from 'components/Background';
+import Containerv1 from 'components/Containerv1';
+import * as Title from 'components/Title';
 import Router from 'next/router';
 
-class RequestComplete extends React.Component {
+class ProjectNone extends React.Component {
 	render() {
 		return (
 			<Background>
@@ -13,7 +13,7 @@ class RequestComplete extends React.Component {
 					<RequestCompleteBox>
 						<RequestCompleteTitle>
 							<FontSize26 style={{ marginBottom: '20px' }}>
-								고객님의 제조 의뢰가 접수 되었습니다.
+								첫 상담을 시작해보세요.
 							</FontSize26>
 						</RequestCompleteTitle>
 
@@ -22,15 +22,15 @@ class RequestComplete extends React.Component {
 								style={{ alignItems: 'center', justifyContent: 'center' }}
 							>
 								<FontSize22>
-									의뢰주신 프로젝트는 전문 컨설턴트의 검토가 필요한 사항입니다.
+									의뢰주신 상담이 아직 없습니다. 첫 상담을 시작해보세요.
 								</FontSize22>
 							</InlineDiv>
 							<InlineDiv
 								style={{ alignItems: 'center', justifyContent: 'center' }}
 							>
 								<FontSize22>
-									볼트앤너트 전문 컨설턴트가 정밀 검토 후 최대 1 영업일 내로
-									상담 안내드립니다.
+									생산에 대한 모든 문의사항을 4000 여 개 전문 제조사들이
+									바로 상담해드립니다.
 								</FontSize22>
 							</InlineDiv>
 						</RequestCompleteDesc>
@@ -38,7 +38,7 @@ class RequestComplete extends React.Component {
 						<ButtonBox>
 							<HomeBtn onClick={() => Router.push('/')}>홈으로 가기</HomeBtn>
 
-							<MyProjectBtn onClick={() => Router.push('/project')}>내 프로젝트 보기</MyProjectBtn>
+							<MyProjectBtn onClick={() => Router.push('/request')}>상담 및 견적 요청하기</MyProjectBtn>
 						</ButtonBox>
 					</RequestCompleteBox>
 				</Containerv1>
@@ -47,7 +47,7 @@ class RequestComplete extends React.Component {
 	}
 }
 
-export default RequestComplete;
+export default ProjectNone;
 
 // global
 const InlineDiv = styled.div`
