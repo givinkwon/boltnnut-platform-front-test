@@ -35,8 +35,10 @@ class ProjectContentContainer extends React.Component {
   pushToDetail = async (id) => {
     const { Project } = this.props;
     console.log(id);
-    Project.selectedProjectId = id;
+
     await Project.getProjectDetail(id);
+    console.log("pushToDetail()");
+    Project.selectedProjectId = id;
     Project.newIndex = 1;
 
     // await Router.push(`/project/${id}`);

@@ -59,7 +59,7 @@ class Content4 extends React.Component {
   // };
 
   downloadFile(urls) {
-    console.log(urls);
+    //console.log(urls);
 
     const blob = new Blob([this.content], { type: "text/plain" });
     const url = window.URL.createObjectURL(blob);
@@ -75,16 +75,16 @@ class Content4 extends React.Component {
     const { Project, ManufactureProcess } = this.props;
     const { projectDetailData } = Project;
 
-    // console.log(toJS(item));
-    // console.log(toJS(projectDetailData));
-    // console.log(toJS(projectDetailData.request_set[0].estimate_set));
+    // //console.log(toJS(item));
+    // //console.log(toJS(projectDetailData));
+    // //console.log(toJS(projectDetailData.request_set[0].estimate_set));
 
     //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
 
-    // console.log(idx);
-    // console.log(process_idx);
-    // console.log(material_idx);
-    // console.log(detail_idx);
+    // //console.log(idx);
+    // //console.log(process_idx);
+    // //console.log(material_idx);
+    // //console.log(detail_idx);
 
     let item_detail_idx = 0;
     if (process_idx === "1") {
@@ -93,31 +93,31 @@ class Content4 extends React.Component {
       item_detail_idx = detail_idx - material_idx;
     }
 
-    // console.log(item_detail_idx);
-    // console.log(this.state.process.length);
-    // console.log(projectDetailData.request_set[0].estimate_set.length);
+    // //console.log(item_detail_idx);
+    // //console.log(this.state.process.length);
+    // //console.log(projectDetailData.request_set[0].estimate_set.length);
     if (
       // projectDetailData.request_set[0].estimate_set.length >
       // this.state.process.length
       projectDetailData.request_set[0].estimate_set.length > this.count
     ) {
       this.count++;
-      console.log("통과통과통과통과통과통과통과통과");
+      //console.log("통과통과통과통과통과통과통과통과");
       const req = {
         id: process_idx,
       };
       await ManufactureProcessAPI.loadProcess(req).then((res) => {
         const data = res.data;
-        console.log(data.name);
-        console.log(data);
+        //console.log(data.name);
+        //console.log(data);
         this.setState({ process: this.state.process.concat(data.name) });
-        console.log(toJS(data.detailmanufactureprocess_set.length));
+        //console.log(toJS(data.detailmanufactureprocess_set.length));
         for (let i = 0; i < data.detailmanufactureprocess_set.length; i++) {
-          console.log(detail_idx);
-          console.log(toJS(data.detailmanufactureprocess_set[i].id));
+          //console.log(detail_idx);
+          //console.log(toJS(data.detailmanufactureprocess_set[i].id));
           if (detail_idx == data.detailmanufactureprocess_set[i].id) {
-            console.log("=======");
-            console.log(toJS(data.detailmanufactureprocess_set[i].name));
+            //console.log("=======");
+            //console.log(toJS(data.detailmanufactureprocess_set[i].name));
             this.setState({
               detailProcess: this.state.detailProcess.concat(
                 data.detailmanufactureprocess_set[i].name
@@ -141,8 +141,8 @@ class Content4 extends React.Component {
         //   data.detailmanufactureprocess_set[item_detail_idx - 1].name
         // );
       });
-      console.log(this.state.process);
-      console.log(this.state.detailProcess);
+      // console.log(this.state.process);
+      // console.log(this.state.detailProcess);
 
       //})
       //this.setState({ render_process });
@@ -153,13 +153,13 @@ class Content4 extends React.Component {
     // const { Project, ManufactureProcess } = this.props;
     // const { projectDetailData } = Project;
     // count = projectDetailData.request_set[0].estimate_set.length
-    console.log("componentDidMount");
-    console.log(this.props.Project.projectDetailData);
+    // console.log("componentDidMount");
+    // console.log(this.props.Project.projectDetailData);
 
     (await this.props.ProjectprojectDetailData) &&
       this.props.Project.projectDetailData.request_set[0].estimate_set.map(
         (item, idx) => {
-          console.log(toJS(decodeURI(item.stl_file.split("/").pop())));
+          // console.log(toJS(decodeURI(item.stl_file.split("/").pop())));
         }
       );
   }
@@ -168,7 +168,7 @@ class Content4 extends React.Component {
     const { projectDetailData } = Project;
     return (
       <Background>
-        {console.log("renderrenderrenderrenderrenderrender")}
+        {/* {console.log("renderrenderrenderrenderrenderrender")} */}
         {/* <Containerv1 style={{ display: "flex", flexDirection: "column" }}> */}
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
@@ -220,9 +220,9 @@ class Content4 extends React.Component {
                   projectDetailData.request_set[0].estimate_set.map(
                     (item, idx) => {
                       {
-                        console.log(
-                          toJS(decodeURI(item.stl_file.split("/").pop()))
-                        );
+                        // console.log(
+                        //   toJS(decodeURI(item.stl_file.split("/").pop()))
+                        // );
 
                         //if (!this.state.render_process) {
                         this.loadProcess(
@@ -263,7 +263,7 @@ class Content4 extends React.Component {
                             </div>
                             <div
                               onClick={() => {
-                                console.log("stl download");
+                                //console.log("stl download");
                                 this.downloadFile(item.stl_file);
                               }}
                             >
@@ -370,7 +370,7 @@ class Content4 extends React.Component {
                                     onClick={() => this.downloadFile(item.file)}
                                     style={{ cursor: "pointer" }}
                                   >
-                                    {decodeURI(item.stl_file.split("/").pop())}
+                                    {decodeURI(item.file.split("/").pop())}
                                   </span>
                                 </div>
                               </div>

@@ -238,7 +238,7 @@ class Auth {
       }
     }
 
-    console.log(toJS(this.logged_in_user));
+    // console.log(toJS(this.logged_in_user));
     if (!token) {
       return false;
     }
@@ -266,7 +266,7 @@ class Auth {
       .then((res) => {
         //console.log(res);
         this.logged_in_user = res.data.data.User;
-        console.log(toJS(this.logged_in_user));
+        // console.log(toJS(this.logged_in_user));
         if (this.logged_in_user.type == 0) {
           console.log("클라이언트 정보 리로딩");
           // console.log(this.logged_in_user.type);

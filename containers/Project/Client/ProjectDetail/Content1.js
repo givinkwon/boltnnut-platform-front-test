@@ -59,9 +59,6 @@ class Content1 extends React.Component {
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
 
-    console.log(Project.selectedProjectId);
-    console.log("<Web> did mount");
-
     // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
     // const color = document.getElementById("MyFooter").getAttribute('style');
     // console.log(color);
@@ -74,41 +71,53 @@ class Content1 extends React.Component {
     );
     await Auth.checkLogin();
 
-    // if (Auth.logged_in_partner) {
-    //   Project.getPage(1069);
-    //   console.log(Project.selectedProjectId);
-    //   Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
-    //     console.log(toJS(Answer.answers));
-    //     this.setState({ partnerList: Answer.answers });
-
-    //     Answer.answers.forEach((answer) => {
-    //       const PartnerDetailList = this.state.partnerDetailList;
-    //       PartnerAPI.detail(answer.partner)
-    //         .then((res) => {
-    //           // console.log(res);
-    //           // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
-    //           PartnerDetailList.push({
-    //             logo: res.data.logo,
-    //             name: res.data.name,
-    //           });
-    //           this.setState({ partnerDetailList: PartnerDetailList });
-    //         })
-    //         .catch((e) => {
-    //           console.log(e);
-    //           console.log(e.response);
-    //         });
-    //     });
-    //   });
-    // }
-
-    if (Auth.logged_in_client) {
-      // console.log(Auth.logged_in_client);
-      Project.getPage(Auth.logged_in_client.id);
-      console.log(Project.selectedProjectId);
+    if (Auth.logged_in_partner) {
+      // Project.getPage(1069);
+      // console.log(Project.selectedProjectId);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         console.log(toJS(Answer.answers));
         this.setState({ partnerList: Answer.answers });
 
+        console.log("====================================================");
+        console.log("해당 프로젝트의 정보입니다.");
+        console.log("프로젝트 번호: " + Project.selectedProjectId);
+        console.log("지원한 파트너 정보들");
+        console.log(toJS(Answer.answers));
+        console.log("====================================================");
+        Answer.answers.forEach((answer) => {
+          const PartnerDetailList = this.state.partnerDetailList;
+          PartnerAPI.detail(answer.partner)
+            .then((res) => {
+              // console.log(res);
+              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+              PartnerDetailList.push({
+                logo: res.data.logo,
+                name: res.data.name,
+              });
+              this.setState({ partnerDetailList: PartnerDetailList });
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        });
+      });
+    }
+
+    if (Auth.logged_in_client) {
+      // console.log(Auth.logged_in_client);
+      Project.getPage(Auth.logged_in_client.id);
+      // console.log(Project.selectedProjectId);
+      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+        console.log(toJS(Answer.answers));
+        this.setState({ partnerList: Answer.answers });
+
+        console.log("====================================================");
+        console.log("해당 프로젝트의 정보입니다.");
+        console.log("프로젝트 번호: " + Project.selectedProjectId);
+        console.log("지원한 파트너 정보들");
+        console.log(toJS(Answer.answers));
+        console.log("====================================================");
         Answer.answers.forEach((answer) => {
           const PartnerDetailList = this.state.partnerDetailList;
           PartnerAPI.detail(answer.partner)
@@ -166,14 +175,14 @@ class Content1 extends React.Component {
           maincategory = Project.maincategory;
           categoryname = Project.categoryname;
           maincategoryname = Project.maincategoryname;
-          console.log(item);
+          // console.log(item);
         }
       });
 
     return (
       <>
         <Container1>
-          {console.log(toJS(projectDetailData))}
+          {/* {console.log(toJS(projectDetailData))} */}
           {Project.chatModalActive && (
             // <Layer onClick={this.modalHandler}>
             <Layer>
@@ -232,7 +241,7 @@ class Content1 extends React.Component {
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
-                    {projectDetailData && console.log(toJS(projectDetailData))}
+                    {/* {projectDetailData && console.log(toJS(projectDetailData))} */}
                     {/* {projectDetailData.request_set[0].price} */}
                     {projectDetailData &&
                       projectDetailData.request_set[0].price.toLocaleString(

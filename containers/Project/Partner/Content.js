@@ -34,7 +34,7 @@ class ProjectContentContainer extends React.Component {
 
     await Project.getProjectDetail(id);
     Project.newIndex = 1;
-
+    Project.selectedProjectId = id;
     // await Router.push(`/project/${id}`);
     Project.setProjectDetailData(id);
   };
