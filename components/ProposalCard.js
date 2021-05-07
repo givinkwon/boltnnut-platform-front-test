@@ -35,97 +35,20 @@ class ProposalCard extends React.Component {
     let period = "";
     let estimate = "";
     let status = "";
-
+    let content = "";
+    console.log(data.request_set[0])
     if (data.request_set[0]) {
-      // console.log(typeof(data.project_status))
-      name = data.request_set[0].name ? data.request_set[0].name : "미지정";
-      date = data.request_set[0].createdAt
-        ? data.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
-        : "미지정";
-      period = data.request_set[0].period
-        ? data.request_set[0].period + "개월"
-        : "미지정";
-      estimate = data.request_set[0].price
-        ? data.request_set[0].price
-        : "미지정";
-      if (customer == "partner") {
-        status = data.project_status == 21 ? "모집 완료" : "모집 중";
-      } else {
-        //status = data.status
-        // console.log(data.project_status)
-        switch (data.project_status) {
-          case 1:
-            status = "상담 미진행";
-            break;
-          case 2:
-          case 3:
-          case 4:
-          case 5:
-          case 6:
-          case 7:
-          case 8:
-          case 9:
-          case 10:
-          case 11:
-          case 13:
-          case 14:
-          case 15:
-          case 17:
-          case 19:
-            status = "상담 중";
-            break;
-          case 21:
-            status = "상담 완료";
-            break;
-          default:
-            status = "미정";
-            break;
-        }
-      }
+      name = data.request_set[0].name && data.request_set[0].name
+      date = data.request_set[0].createdAt && data.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
+      content = data.request_set[0].order_request_open && data.request_set[0].order_request_open
+      period = data.request_set[0].deadline=="2020-11-11T11:11:00+09:00" ? ("납기일미정") : (data.request_set[0].deadline.substring(0,10) + "(" + data.request_set[0].deadline_state + ")")
+      status = data.request_set[0].request_state && data.request_set[0].request_state
     }
-
-    const consultation = data.status;
 
     return (
       <>
-        {/* {console.log(newData)} */}
+
         {width > 767.98 ? (
-          // checkTotal === "전체" && newData === 0 ? (
-          //     <Card>
-          //         { status === "모집 완료" ?
-          //             <StepTag style={{backgroundColor: '#999999'}}>
-          //                 <span> {status} </span>
-          //                 <div style={{borderTop: '9.1px solid #414550'}}></div>
-          //             </StepTag>
-          //             :
-          //             <StepTag>
-          //                 <span> {status} </span>
-          //                 <div></div>
-          //             </StepTag>
-          //         }
-          //         <HeaderWrapper>
-          //             <Title>
-          //                 오래된 데이터 입니다.
-          //             </Title>
-          //         </HeaderWrapper>
-          //         <CategoryWrapper>
-          //             <SubTitle>
-          //                 <span>카테고리</span>
-          //             </SubTitle>
-          //         </CategoryWrapper>
-          //         <FooterWrapper>
-          //             <div style={{display: 'inline-flex'}}>
-          //                 <SubTitle>
-          //                     희망개발기간
-          //                 </SubTitle>
-          //             </div>
-          //             <PriceTagBox>
-          //                 <span class="tag1"> 견적 </span>
-          //                 <span class="tag2"></span>
-          //             </PriceTagBox>
-          //         </FooterWrapper>
-          //     </Card>
-          // ) : (
           <Card>
             {data.project_status === 21 ? (
               <StepTag style={{ backgroundColor: "#999999" }}>
@@ -144,8 +67,9 @@ class ProposalCard extends React.Component {
             </HeaderWrapper>
             <CategoryWrapper>
               <SubTitle>
-                <span>카테고리</span>
+                <span>공개내용</span>
               </SubTitle>
+              <Content>{content}</Content>
               <CategoryBox>
                 <span>{mainCategory}</span>
               </CategoryBox>
@@ -155,13 +79,9 @@ class ProposalCard extends React.Component {
             </CategoryWrapper>
             <FooterWrapper>
               <div style={{ display: "inline-flex" }}>
-                <SubTitle>희망개발기간</SubTitle>
+                <SubTitle>희망납기</SubTitle>
                 <Content>{period}</Content>
               </div>
-              <PriceTagBox>
-                <span class="tag1"> 견적 </span>
-                <span class="tag2">{estimate}</span>
-              </PriceTagBox>
             </FooterWrapper>
           </Card>
         ) : (

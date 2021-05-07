@@ -115,7 +115,6 @@ class ProjectContentContainer extends React.Component {
           style={{ backgroundColor: "#f9f9f9", paddingTop: "49px" }}
           id="MyBackground"
         >
-          {!Project.project_existence && <ProjectNoneContainer /> }
           {/* <Background> */}
           {/* { Project.projectData.length > 0 && Project.projectData.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
           {Project.project_existence &&
@@ -240,52 +239,12 @@ class ProjectContentContainer extends React.Component {
               />
             </PageBar>
           )}
+        {!Project.project_existence && <ProjectNoneContainer /> }
         </Background>
       </>
     );
   }
 }
-
-// const data = [
-//   {
-//     consultation: '상담 진행',
-//     name: '컴퓨터',
-//     date: '2021.03.02' ,
-//     period: '120일',
-//     estimate: '10,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     date: '2021.03.03' ,
-//     period: '121일',
-//     estimate: '11,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '키보드',
-//     date: '2021.03.04' ,
-//     period: '122일',
-//     estimate: '12,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     name: '마우스',
-//     date: '2021.03.05' ,
-//     period: '123일',
-//     estimate: '13,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '프린터',
-//     date: '2021.03.06' ,
-//     period: '124일',
-//     estimate: '14,000,000원'
-//   },
-// ]
 
 const PageBar = styled.div`
   width: 351px;

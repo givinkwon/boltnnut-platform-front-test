@@ -243,6 +243,30 @@ class FileUploadContainer extends Component {
     let detailProcessData = "";
     let quantityData = "";
 
+    console.log(ManufactureProcess.purposeContent)
+    // error 처리
+    if(ManufactureProcess.purposeContent==0) {
+      alert("문의 목적을 선택해주세요")
+      return false
+    }
+    if(projectname.length == 0) {
+      alert("프로젝트 제목을 입력해주세요")
+      return false
+    }
+    if(projectname.length > 200) {
+        alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.")
+        return false
+    }
+
+    if(ManufactureProcess.requestComment.length > 4500){
+        alert("공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.")
+        return false
+    }
+    if(ManufactureProcess.requestComment2.length > 4500){
+        alert("비공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.")
+        return false
+    }
+    
     ManufactureProcess.date_undefined
       ? (deadline_state = "납기일미정")
       : ManufactureProcess.date_conference
@@ -254,20 +278,31 @@ class FileUploadContainer extends Component {
       console.log(purposeAry[ManufactureProcess.purposeContent - 1].name);
       request_state = purposeAry[ManufactureProcess.purposeContent - 1].name;
     }
+    console.log(request_state)
 
     console.log("requestSubmit");
     console.log(Schedule.clickDay);
     console.log(fileList);
     var formData = new FormData();
-    //formData.append("request_state", "업체수배");
 
     formData.append("request_state", request_state);
-    //formData.append("purpose", purpose)
     formData.append("name", projectname);
-    formData.append("deadline", Schedule.clickDay + " 09:00");
-    //formData.append("deadline", "2020-11-11 11:11");
-    formData.append("deadline_state", deadline_state);
-    //ManufactureProcess.date_undefined
+
+    // 선택한 날짜가 없으면, 기본 날짜 추가하기
+    if (Schedule.clickDay){
+      formData.append("deadline", Schedule.clickDay + " 09:00");
+    }
+    else{
+      formData.append("deadline", "2020-11-11 11:11");
+    }
+
+    // 선택한 납기 선택이 없으면 납기일 미정으로
+    if (deadline_state.length == 0){
+      formData.append("deadline_state", "납기일미정")
+    }
+    else{
+      formData.append("deadline_state", deadline_state);
+    }
     formData.append("order_request_open", ManufactureProcess.requestComment);
     formData.append("order_request_close", ManufactureProcess.requestComment2);
 
@@ -339,6 +374,7 @@ class FileUploadContainer extends Component {
       RequestAPI.create(req)
         .then((res) => {
           console.log("create: ", res);
+          this.props.Request.newIndex = 1;
         })
         .catch((e) => {
           console.log(e);
@@ -1949,32 +1985,6 @@ class FileUploadContainer extends Component {
                 })}
               </InlineDiv>
             </SelectBox>
-
-            {/* <SelectBox style={{ width: "555px", marginTop: "16px" }}>
-              <InlineDiv style={{ alignItems: "flex-end" }}>
-                <PurposeSelectCircle active={this.state.purposeselected1}>
-                  <PurposeFont18 active={this.state.purposeselected1}>
-                    상담요청
-                  </PurposeFont18>
-                </PurposeSelectCircle>
-              </InlineDiv>
-
-              <InlineDiv style={{ alignItems: "flex-end" }}>
-                <PurposeSelectCircle active={this.state.purposeselected2}>
-                  <PurposeFont18 active={this.state.purposeselected2}>
-                    견적요청
-                  </PurposeFont18>
-                </PurposeSelectCircle>
-              </InlineDiv>
-
-              <InlineDiv style={{ alignItems: "flex-end" }}>
-                <PurposeSelectCircle active={this.state.purposeselected3}>
-                  <PurposeFont18 active={this.state.purposeselected3}>
-                    업체수배
-                  </PurposeFont18>
-                </PurposeSelectCircle>
-              </InlineDiv> 
-            </SelectBox> */}
           </Purposebox>
 
           <Projectbox
@@ -2003,7 +2013,7 @@ class FileUploadContainer extends Component {
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
             <Label>
-              <span>납기 일</span>
+              <span>희망 납기일</span>
             </Label>
             <DeliveryDate
               checkDateConference={ManufactureProcess.date_conference}
@@ -2186,7 +2196,6 @@ class FileUploadContainer extends Component {
                       alert("수량을 입력해주세요");
                     } else {
                       ManufactureProcess.checkPaymentButton = true;
-                      this.props.Request.newIndex = 1;
                     }
 
                     // console.log(
