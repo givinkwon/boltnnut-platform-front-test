@@ -41,10 +41,13 @@ class ProjectContainer extends React.Component {
             </div>
           ) : (
             <div>
-              {Project.newIndex == 0 && <ClientMobileContentContainer width={this.props.width} />}
+              {Project.newIndex == 0 && (
+                <ClientMobileContentContainer width={this.props.width} />
+              )}
 
               {Project.newIndex == 1 && (
-                <MobileProjectDetailContainer user="client" />)}
+                <MobileProjectDetailContainer user="client" />
+              )}
             </div>
           ))}
         {Auth.logged_in_partner &&

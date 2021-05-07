@@ -59,9 +59,6 @@ class Content1 extends React.Component {
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
 
-    console.log(Project.selectedProjectId);
-    console.log("<Web> did mount");
-
     // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
     // const color = document.getElementById("MyFooter").getAttribute('style');
     // console.log(color);
@@ -74,41 +71,53 @@ class Content1 extends React.Component {
     );
     await Auth.checkLogin();
 
-    // if (Auth.logged_in_partner) {
-    //   Project.getPage(1069);
-    //   console.log(Project.selectedProjectId);
-    //   Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
-    //     console.log(toJS(Answer.answers));
-    //     this.setState({ partnerList: Answer.answers });
-
-    //     Answer.answers.forEach((answer) => {
-    //       const PartnerDetailList = this.state.partnerDetailList;
-    //       PartnerAPI.detail(answer.partner)
-    //         .then((res) => {
-    //           // console.log(res);
-    //           // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
-    //           PartnerDetailList.push({
-    //             logo: res.data.logo,
-    //             name: res.data.name,
-    //           });
-    //           this.setState({ partnerDetailList: PartnerDetailList });
-    //         })
-    //         .catch((e) => {
-    //           console.log(e);
-    //           console.log(e.response);
-    //         });
-    //     });
-    //   });
-    // }
-
-    if (Auth.logged_in_client) {
-      // console.log(Auth.logged_in_client);
-      Project.getPage(Auth.logged_in_client.id);
-      console.log(Project.selectedProjectId);
+    if (Auth.logged_in_partner) {
+      // Project.getPage(1069);
+      // console.log(Project.selectedProjectId);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         console.log(toJS(Answer.answers));
         this.setState({ partnerList: Answer.answers });
 
+        console.log("====================================================");
+        console.log("해당 프로젝트의 정보입니다.");
+        console.log("프로젝트 번호: " + Project.selectedProjectId);
+        console.log("지원한 파트너 정보들");
+        console.log(toJS(Answer.answers));
+        console.log("====================================================");
+        Answer.answers.forEach((answer) => {
+          const PartnerDetailList = this.state.partnerDetailList;
+          PartnerAPI.detail(answer.partner)
+            .then((res) => {
+              // console.log(res);
+              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+              PartnerDetailList.push({
+                logo: res.data.logo,
+                name: res.data.name,
+              });
+              this.setState({ partnerDetailList: PartnerDetailList });
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        });
+      });
+    }
+
+    if (Auth.logged_in_client) {
+      // console.log(Auth.logged_in_client);
+      Project.getPage(Auth.logged_in_client.id);
+      // console.log(Project.selectedProjectId);
+      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+        console.log(toJS(Answer.answers));
+        this.setState({ partnerList: Answer.answers });
+
+        console.log("====================================================");
+        console.log("해당 프로젝트의 정보입니다.");
+        console.log("프로젝트 번호: " + Project.selectedProjectId);
+        console.log("지원한 파트너 정보들");
+        console.log(toJS(Answer.answers));
+        console.log("====================================================");
         Answer.answers.forEach((answer) => {
           const PartnerDetailList = this.state.partnerDetailList;
           PartnerAPI.detail(answer.partner)
@@ -166,14 +175,14 @@ class Content1 extends React.Component {
           maincategory = Project.maincategory;
           categoryname = Project.categoryname;
           maincategoryname = Project.maincategoryname;
-          console.log(item);
+          // console.log(item);
         }
       });
 
     return (
       <>
         <Container1>
-          {console.log(toJS(projectDetailData))}
+          {/* {console.log(toJS(projectDetailData))} */}
           {Project.chatModalActive && (
             // <Layer onClick={this.modalHandler}>
             <Layer>
@@ -194,10 +203,8 @@ class Content1 extends React.Component {
                     letterSpacing: -0.18,
                   }}
                 >
-                  {
-
-                    projectDetailData && projectDetailData.request_set[0].request_state
-                  }
+                  {projectDetailData &&
+                    projectDetailData.request_set[0].request_state}
                 </Font18>
               </Box1>
               <div style={{ display: "inline-flex", flexDirection: "row" }}>
@@ -237,9 +244,14 @@ class Content1 extends React.Component {
                   <Font18 style={{ fontWeight: "bold" }}>
                     {projectDetailData && console.log(toJS(projectDetailData))}
                     {/* 예상금액 0원일 때 미정으로 변경 */}
-                    {projectDetailData && projectDetailData.request_set[0].price.toLocaleString("ko-KR")!=0 ?
-                      (projectDetailData.request_set[0].price.toLocaleString("ko-KR") + " 원") : ("미정")
-                    }
+                    {projectDetailData &&
+                    projectDetailData.request_set[0].price.toLocaleString(
+                      "ko-KR"
+                    ) != 0
+                      ? projectDetailData.request_set[0].price.toLocaleString(
+                          "ko-KR"
+                        ) + " 원"
+                      : "미정"}
                   </Font18>
                 </div>
               </Box2>
@@ -282,72 +294,69 @@ class Content1 extends React.Component {
                 }}
               >
                 지원한 파트너
-                {user == "client" && <p style={{ color: "#0933b3", marginLeft: 6 }}>
-                  {this.state.partnerList.length}
-                </p>}
-                
+                {user == "client" && (
+                  <p style={{ color: "#0933b3", marginLeft: 6 }}>
+                    {this.state.partnerList.length}
+                  </p>
+                )}
               </Font20>
               {user === "partner" ? (
-                /* 파트너일 때 */ 
-                
+                /* 파트너일 때 */
+
                 <BlackBox>
-                  <span>
-                  '해당 프로젝트 담당자만 확인할 수 있습니다.'
-                </span>
-                <div style={{ filter: "blur(5px)" }}>
-                  <PartnerBox/>
-                  <PartnerBox/>
-                  <PartnerBox/>
+                  <span>'해당 프로젝트 담당자만 확인할 수 있습니다.'</span>
+                  <div style={{ filter: "blur(5px)" }}>
+                    <PartnerBox />
+                    <PartnerBox />
+                    <PartnerBox />
                   </div>
                 </BlackBox>
-                
-                
-              ):(
-                /* 클라이언트일 때 */ 
+              ) : (
+                /* 클라이언트일 때 */
                 <>
-                {/* map으로 뿌리기 */}
-                {this.state.partnerList.map((data, idx) => {
-                  // Partner.getPartnerDetail(data.partner);
-                  return (
-                    <PartnerBox onClick={() => this.modalHandler(data.id)}>
-                      <PartnerInfo>
-                        <img
-                          // src={
-                          //   this.state.partnerDetailList[idx] &&
-                          //   this.state.partnerDetailList[idx].logo
-                          // }
-                          src={
-                            "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-                          }
-                          width={36}
-                          height={36}
-                        ></img>
-                        <Font18 style={{ marginLeft: 10 }}>
-                          {this.state.partnerDetailList[idx] &&
-                            this.state.partnerDetailList[idx].name}
-                        </Font18>
-                      </PartnerInfo>
-                      <Font16>
-                        " 프로젝트 보고 연락드립니다 . 비공개 자료 공개해주실수
-                        있나요 "
-                      </Font16>
-                      <IconBox>
-                        <Icon>
-                          <img src={toolBarImg}></img>
-                        </Icon>
-                        <Icon>
-                          <img src={callImg}></img>
-                        </Icon>
-                        <Icon>
-                          <img src={messagesImg}></img>
-                          <ChatNotice>
-                            <Font14>N</Font14>
-                          </ChatNotice>
-                        </Icon>
-                      </IconBox>
-                    </PartnerBox>
-                  );
-                })}
+                  {/* map으로 뿌리기 */}
+                  {this.state.partnerList.map((data, idx) => {
+                    // Partner.getPartnerDetail(data.partner);
+                    return (
+                      <PartnerBox onClick={() => this.modalHandler(data.id)}>
+                        <PartnerInfo>
+                          <img
+                            // src={
+                            //   this.state.partnerDetailList[idx] &&
+                            //   this.state.partnerDetailList[idx].logo
+                            // }
+                            src={
+                              "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
+                            }
+                            width={36}
+                            height={36}
+                          ></img>
+                          <Font18 style={{ marginLeft: 10 }}>
+                            {this.state.partnerDetailList[idx] &&
+                              this.state.partnerDetailList[idx].name}
+                          </Font18>
+                        </PartnerInfo>
+                        <Font16>
+                          " 프로젝트 보고 연락드립니다 . 비공개 자료
+                          공개해주실수 있나요 "
+                        </Font16>
+                        <IconBox>
+                          <Icon>
+                            <img src={toolBarImg}></img>
+                          </Icon>
+                          <Icon>
+                            <img src={callImg}></img>
+                          </Icon>
+                          <Icon>
+                            <img src={messagesImg}></img>
+                            <ChatNotice>
+                              <Font14>N</Font14>
+                            </ChatNotice>
+                          </Icon>
+                        </IconBox>
+                      </PartnerBox>
+                    );
+                  })}
                 </>
               )}
             </AppliedPartner>

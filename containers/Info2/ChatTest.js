@@ -127,13 +127,12 @@ class ChatTestContainer extends React.Component {
           this.chatSocket.send(
             JSON.stringify({
               //message: decodeURI(file_url.split("/").pop()),
-              type: res.data.chat_type,
+              type: this.userType,
               message: file_url,
               chatType: res.data.chat_type,
               time: this.state.currentTime,
               bReceive: false,
               file: file_url,
-              chatType: 0,
             })
           );
           console.log("send");
@@ -154,6 +153,11 @@ class ChatTestContainer extends React.Component {
     };
     ChatAPI.patchShareInform(req);
   };
+
+  socketClose = () => {
+    this.chatSocket.close();
+  };
+
   chatSocket = new WebSocket(
     "wss://test.boltnnut.com/ws/chat/" + `${this.props.roomName}` + "/"
   );
@@ -164,23 +168,27 @@ class ChatTestContainer extends React.Component {
     console.log("CHECKREAD!!!!!!!");
 
     fullMessage.forEach((element) => {
-      console.log("FULLMESSAGES");
+      // console.log("FULLMESSAGES");
       if (
         currentMessage.type != element.member &&
         element.time <= currentMessage.time
       ) {
         element.bRead = true;
         console.log("READ complete");
-      } else {     
-        console.log("읽지않음");
       }
-
+      // else {
+      //   // console.log("읽지않음");
+      // }
     });
 
     // 메세지를 보낸 경우에 체크하여 카카오톡 보내기
-    if(fullMessage.length > 0 && toJS(fullMessage)[fullMessage.length-1].bRead == false && toJS(fullMessage)[fullMessage.length-2].bRead == true){
+    if (
+      fullMessage.length > 0 &&
+      toJS(fullMessage)[fullMessage.length - 1].bRead == false &&
+      toJS(fullMessage)[fullMessage.length - 2].bRead == true
+    ) {
       {
-        console.log("우왕")
+        console.log("우왕");
 
         const req = {
           phoneNumber: "01041126637",
@@ -196,7 +204,6 @@ class ChatTestContainer extends React.Component {
           });
       }
     }
-
   };
 
   async componentDidMount() {
@@ -209,7 +216,7 @@ class ChatTestContainer extends React.Component {
     // 메세지 및 시간 초기화
     this.setState({ messages: [], currentTime: temp });
     this.props.Project.chatMessages = [];
-    
+
     ChatAPI.loadChat(roomNum).then((res) => {
       const reverseChat = res.data.results.reverse();
       ChatAPI.loadChatCount(roomNum).then((m_res) => {
@@ -291,7 +298,8 @@ class ChatTestContainer extends React.Component {
             })
           );
         }
-        console.log(toJS(messages))
+        console.log(toJS(messages));
+
         messages.push({
           member: data["type"],
           text: data["message"],
@@ -300,15 +308,14 @@ class ChatTestContainer extends React.Component {
         });
       }
 
-
       if (data.bReceive) {
         this.checkRead(this.props.Project.chatMessages, data);
       }
-      this.setState({ messages });
+      // this.setState({ messages });
 
       let tempAnswerNum = roomNum;
       let chatCount = 0;
-      console.log(data.message)
+      console.log(data.message);
       if (data.message != "접속완료" && data.message != "수신완료") {
         if (data.type === this.userType) {
           const req = {
@@ -320,7 +327,6 @@ class ChatTestContainer extends React.Component {
           ChatAPI.saveChat(req).then((res) => {
             console.log(res);
           });
-
         }
       }
       ChatAPI.loadChatCount(tempAnswerNum).then((res) => {
@@ -342,21 +348,15 @@ class ChatTestContainer extends React.Component {
         };
         ChatAPI.saveChatCount(answerReq);
         this.setState({ f: 3 });
-
       });
-
     };
 
     this.chatSocket.onclose = (e) => {
       console.error("Chat socket closed unexpectedly");
-
     };
-
   }
 
   onSendMessage = (myMessage) => {
-
-
     console.log(myMessage);
     console.log(this.userType);
 
@@ -370,7 +370,6 @@ class ChatTestContainer extends React.Component {
         chatType: 0,
       })
     );
-
   };
 
   render() {
@@ -389,6 +388,7 @@ class ChatTestContainer extends React.Component {
           onSendMessage={this.onSendMessage}
           currentUserType={this.userType}
           shareButtonClick={this.shareButtonClick}
+          socketClose={this.socketClose}
         />
       </>
     );
