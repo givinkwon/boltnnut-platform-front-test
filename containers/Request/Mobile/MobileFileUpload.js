@@ -26,7 +26,7 @@ const pass3 = "static/images/pass3.png";
 const pass7 = "static/images/pass7.png";
 const deleteButtonImg = "/static/images/delete.png";
 
-const fileList = [];
+let fileList = [];
 
 let checkBox = false;
 
@@ -77,20 +77,35 @@ class FileUploadContainer extends Component {
     fileList: [],
     checkFileUpload: false,
     checkCard: true,
-    value: "",
-    rows: 1,
     publicValue: "",
     privateValue: "",
     publicRows: 7,
     privateRows: 7,
     minRows: 1,
     maxRows: 100,
+    checkHeight: false,
     loading: false,
     checkScroll: false,
     orderPrice: [],
+    orderMinPrice: [],
+    orderMaxPrice: [],
+    checkBox,
+    variation: false,
+    purposeselected1: false,
+    purposeselected2: false,
+    purposeselected3: false,
+    purposeAry: [
+      { id: 1, name: "상담요청", checked: false },
+      { id: 2, name: "견적문의", checked: false },
+      { id: 3, name: "업체수배", checked: false },
+    ],
     projectname: "",
   };
-
+  
+  componentDidMount = () => {
+    this.props.ManufactureProcess.reset()
+    fileList = []
+  }
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
   setNumCount = (data, val) => {
     console.log(val);
@@ -99,163 +114,22 @@ class FileUploadContainer extends Component {
     }
     if (val.label == "직접 입력" && (val.value == 0 || val.value == "")) {
       data.quantity = { label: "직접 입력", value: val };
+      data.currentQuantity = value;
     }
     if (val.value == 0) {
       data.quantity = { label: "직접 입력", value: val.value };
+      data.currentQuantity = val.value;
     }
-  };
-
-  purposeHandler = (item) => {
-    const { ManufactureProcess } = this.props;
-    console.log(ManufactureProcess.purposeContent);
-    if (item.checked) {
-      item.checked = false;
-      // purposeAry[ManufactureProcess.purposeComment - 1] = false;
-      ManufactureProcess.purposeContent = 0;
-      //this.setState({ purposeAry : })
-    } else {
-      item.checked = true;
-      if (ManufactureProcess.purposeContent) {
-        purposeAry[ManufactureProcess.purposeContent - 1].checked = false;
-      }
-      ManufactureProcess.purposeContent = item.id;
-    }
-    this.setState({ g: 3 });
-  };
-
-  // ESC 버튼을 눌렀을 경우 발생하는 함수 (삭제 에정)
-  escFunction(event) {
-    if (event.keyCode === 27) {
-      console.log("esc");
-    }
-  }
-
-  requestSubmit = () => {
-    const { projectname } = this.state;
-    const { ManufactureProcess, Schedule } = this.props;
-
-    let deadline_state = "";
-    ManufactureProcess.date_undefined
-      ? (deadline_state = "납기일미정")
-      : ManufactureProcess.date_conference
-      ? (deadline_state = "납기일협의가능")
-      : "";
-
-    let request_state = "";
-    if (ManufactureProcess.purposeContent) {
-      console.log(purposeAry[ManufactureProcess.purposeContent - 1].name);
-      request_state = purposeAry[ManufactureProcess.purposeContent - 1].name;
-    }
-
-    console.log("requestSubmit");
-    console.log(Schedule.clickDay);
-    console.log(fileList);
-    var formData = new FormData();
-    //formData.append("request_state", "업체수배");
-
-    formData.append("request_state", request_state);
-    //formData.append("purpose", purpose)
-    formData.append("name", projectname);
-    formData.append("deadline", Schedule.clickDay + " 09:00");
-    //formData.append("deadline", "2020-11-11 11:11");
-    formData.append("deadline_state", deadline_state);
-    //ManufactureProcess.date_undefined
-    formData.append("order_request_open", ManufactureProcess.requestComment);
-    formData.append("order_request_close", ManufactureProcess.requestComment2);
-
-    //formData.append("file_open", ManufactureProcess.openFileArray[0]);
-    for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
-      formData.append(`file_open`, ManufactureProcess.openFileArray[i]);
-    }
-    //formData.append("file_close", ManufactureProcess.privateFileArray);
-    for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
-      formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
-    }
-    //formData.append("blueprint_exist", 0);
-    formData.append("blueprint_exist", 1);
-
-    //formData.append("blueprint", fileList[0].originFile);
-    for (var i = 0; i < fileList.length; i++) {
-      console.log(toJS(fileList[i].selectBig.id));
-      console.log(toJS(fileList[i].selectedMid.id));
-      console.log(toJS(fileList[i].originFile));
-      formData.append(`blueprint`, fileList[i].originFile);
-    }
-    formData.append("process", 2);
-    formData.append("detailprocess", 5);
-
-    //console.log(fileList[0].originFile);
-
-    const Token = localStorage.getItem("token");
-    //const token = "179bb0b55811073a76bc0894a7c73220da9a191d";
-    const req = {
-      headers: {
-        Authorization: `Token ${Token}`,
-      },
-      data: formData,
-    };
-
-    console.log(req);
-
-    RequestAPI.create(req)
-      .then((res) => {
-        console.log("create: ", res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-        console.log(e.response.data);
-      });
-
-    //
-  };
-
-  checkQuantityData = (e, data, idx) => {
-    const directInput = document.getElementsByClassName("directInput");
-    const re = /^[0-9\b]+$/;
-    if (e.target.value === "") {
-      e.target.placeholder = "직접 입력하세요";
-    } else if (!re.test(e.target.value)) {
-      data.quantity = { label: "직접 입력", val: "" };
-    }
-
-    if (data.selectBig.name === "금형사출") {
-      if (e.target.value > 0 && e.target.value < 100) {
-        alert("최소 주문 수량은 100개입니다!");
-        data.quantity = { label: "직접 입력", val: 0 };
-        e.target.value = "";
-        directInput[idx].focus();
-      } else {
-        this.countPrice();
-      }
-    } else {
-      this.countPrice();
-    }
-  };
-
-  countQuantity = (prev_value = 0, current_value = 0, checked = 0) => {
-    const { ManufactureProcess } = this.props;
-
-    if (!checked) {
-      ManufactureProcess.quantity =
-        ManufactureProcess.quantity - prev_value + current_value;
-    } else if (checked === 1) {
-      ManufactureProcess.quantity = ManufactureProcess.quantity - current_value;
-    } else {
-      ManufactureProcess.quantity = ManufactureProcess.quantity + current_value;
-    }
-    console.log(ManufactureProcess.quantity);
+    console.log(data.quantity);
   };
 
   async setValue(idx) {
     await this.setState({ g: 3 });
     const directInputs = document.querySelectorAll(".directInput");
-    console.log(directInputs);
 
     const valueAry = [];
     for (var i = 0; i < directInputs.length; i++) {
       const string = directInputs[i].className;
-      console.log(string);
       await valueAry.push(
         parseInt(string.slice(string.length - 1, string.length))
       );
@@ -265,7 +139,6 @@ class FileUploadContainer extends Component {
       if (fileList[i]) {
         if (fileList[i].selectBig.name === "금형사출") {
           const str_idx = valueAry.findIndex((e) => e === i);
-          console.log(directInputs[str_idx]);
           const str = directInputs[str_idx].className;
 
           const num = str.slice(str.length - 1, str.length);
@@ -285,48 +158,527 @@ class FileUploadContainer extends Component {
     //  }
   }
 
-  componentDidMount() {
-    const { ManufactureProcess } = this.props;
+  async deleteValue(idx) {
+    await this.setState({ g: 3 });
+    const directInputs = document.getElementsByClassName("directInput");
+    const valueAry = [];
+    for (var i = 0; i < directInputs.length; i++) {
+      const string = directInputs[i].className;
+      await valueAry.push(
+        parseInt(string.slice(string.length - 1, string.length))
+      );
+    }
 
+    for (var i = idx; i < fileList.length; i++) {
+      if (fileList[i]) {
+        if (fileList[i].selectBig.name === "금형사출") {
+          const str_idx = valueAry.findIndex((e) => e === i);
+          const str = directInputs[str_idx].className;
+
+          const num = str.slice(str.length - 1, str.length);
+
+          const directInput = document.querySelector(`.directInput${num}`);
+
+          directInput.value = fileList[i].quantity.value;
+        }
+      }
+    }
+  }
+  async deleteHandler() {
+    const checked_ary = [];
+
+    fileList.map((item, id) => {
+      if (item.checked) {
+        checked_ary.push(id);
+        this.countQuantity(0, parseInt(item.quantity.value), 1);
+      }
+    });
+    console.log(checked_ary);
+
+    for (var i = checked_ary.length; i > 0; i--) {
+      this.setState({ fileList: fileList.splice(checked_ary[i - 1], 1) });
+    }
+
+    if (fileList.length) {
+      const directInputs = document.getElementsByClassName("directInput");
+      //const directInput
+      //const directInput = document.querySelectorAll(`.directInput${idx}`)
+      const valueAry = [];
+
+      console.log(directInputs);
+
+      console.log(fileList);
+      console.log(directInputs);
+
+      for (var i = 0; i < directInputs.length; i++) {
+        const string = directInputs[i].className;
+        await valueAry.push(
+          parseInt(string.slice(string.length - 1, string.length))
+        );
+        const str = directInputs[i].className;
+
+        const num = str.slice(str.length - 1, str.length);
+        const directInput = document.querySelector(`.directInput${num}`);
+
+        directInput.value = fileList[num].quantity.value;
+      }
+      console.log(valueAry);
+    }
+    this.setState({ variation: true });
+  }
+
+  // ESC 버튼을 눌렀을 경우 발생하는 함수 (삭제 에정)
+  escFunction(event) {
+    if (event.keyCode === 27) {
+      console.log("esc");
+    }
+  }
+
+  changeSubmit = () => {};
+  requestSubmit = async (flag, id) => {
+    const { projectname, purposeAry } = this.state;
+    const { ManufactureProcess, Schedule } = this.props;
+
+    console.log(toJS(ManufactureProcess.totalorderPrice));
+    let deadline_state = "";
+    let processData = "";
+    let detailProcessData = "";
+    let quantityData = "";
+
+    console.log(ManufactureProcess.purposeContent);
+    // error 처리
+    if (ManufactureProcess.purposeContent == 0) {
+      alert("문의 목적을 선택해주세요");
+      return false;
+    }
+    if (projectname.length == 0) {
+      alert("프로젝트 제목을 입력해주세요");
+      return false;
+    }
+    if (projectname.length > 200) {
+      alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
+      return false;
+    }
+    if (ManufactureProcess.requestComment.length == 0 ) {
+      alert("공개내용을 작성해주세요");
+      return false;
+    }
+
+    if (ManufactureProcess.requestComment.length > 4500) {
+      alert("공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      return false;
+    }
+    if (ManufactureProcess.requestComment2.length > 4500) {
+      alert("비공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      return false;
+    }
+
+    ManufactureProcess.date_undefined
+      ? (deadline_state = "납기일미정")
+      : ManufactureProcess.date_conference
+      ? (deadline_state = "납기일협의가능")
+      : "";
+
+    let request_state = "";
+    if (ManufactureProcess.purposeContent) {
+
+      request_state = this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
+    }
+    console.log(request_state);
+
+    console.log("requestSubmit");
+    console.log(Schedule.clickDay);
+    console.log(fileList);
+    var formData = new FormData();
+
+    formData.append("request_state", request_state);
+    formData.append("name", projectname);
+
+    // 선택한 날짜가 없으면, 기본 날짜 추가하기
+    if (Schedule.clickDay) {
+      formData.append("deadline", Schedule.clickDay + " 09:00");
+    } else {
+      formData.append("deadline", "2020-11-11 11:11");
+    }
+
+    // 선택한 납기 선택이 없으면 납기일 미정으로
+    if (deadline_state.length == 0) {
+      formData.append("deadline_state", "납기일미정");
+    } else {
+      formData.append("deadline_state", deadline_state);
+    }
+    formData.append("order_request_open", ManufactureProcess.requestComment);
+    formData.append("order_request_close", ManufactureProcess.requestComment2);
+
+    //formData.append("file_open", ManufactureProcess.openFileArray[0]);
+    console.log(toJS(ManufactureProcess.openFileArray));
+    if (ManufactureProcess.openFileArray.length === 0) {
+      formData.append(`file_open`, "");
+    }
+    for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
+      formData.append(`file_open`, ManufactureProcess.openFileArray[i]);
+    }
+    //formData.append("file_close", ManufactureProcess.privateFileArray);
+    console.log(toJS(ManufactureProcess.privateFileArray));
+    if (ManufactureProcess.privateFileArray.length === 0) {
+      formData.append(`file_close`, "");
+    }
+    for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
+      formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
+    }
+
+    formData.append("price", ManufactureProcess.orderMaxPrice);
+    //formData.append("blueprint_exist", 0);
+    formData.append("blueprint_exist", 1);
+
+    //formData.append("blueprint", fileList[0].originFile);
+    for (var i = 0; i < fileList.length; i++) {
+      console.log(toJS(fileList[i].selectBig.id));
+      console.log(toJS(fileList[i].selectedMid.id));
+      console.log(toJS(fileList[i].originFile));
+      formData.append(`blueprint`, fileList[i].originFile);
+
+      processData = processData + fileList[i].selectBig.id;
+      detailProcessData = detailProcessData + fileList[i].selectedMid.id;
+      quantityData = quantityData + fileList[i].quantity.value;
+
+      console.log(quantityData);
+      console.log(fileList[i].quantity.value);
+      if (i < fileList.length - 1) {
+        processData = processData + ",";
+        detailProcessData = detailProcessData + ",";
+        quantityData = quantityData + ",";
+      }
+      //formData.append('ㅐ', fileList[i].selectBig.id)
+      // formData.append('', fileList[i].selectedMid.id)
+    }
+
+    console.log(processData);
+    console.log(detailProcessData);
+    console.log(quantityData);
+
+    formData.append("process", processData);
+    formData.append("detailprocess", detailProcessData);
+    formData.append("number", quantityData);
+
+    //console.log(fileList[0].originFile);
+
+    const Token = localStorage.getItem("token");
+    //const token = "179bb0b55811073a76bc0894a7c73220da9a191d";
+    if (flag) {
+      const req = {
+        headers: {
+          Authorization: `Token ${Token}`,
+        },
+        data: formData,
+      };
+
+      console.log(req);
+
+      RequestAPI.create(req)
+        .then((res) => {
+          console.log("create: ", res);
+          this.props.Request.newIndex = 1;
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+          // console.log(e.response.data);
+        });
+
+      //
+      const processAry = processData.split(",");
+      const detailProcessAry = detailProcessData.split(",");
+      ManufactureProcess.getProcessList(processAry, detailProcessAry);
+    } else {
+      const RequestFormData = new FormData();
+
+      // if (ManufactureProcess.openFileArray.length === 0) {
+      //   RequestFormData.append(`file`, "");
+      // }
+
+      // for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
+      //   RequestFormData.append(`file`, ManufactureProcess.openFileArray[i]);
+      //   RequestFormData.append("request", )
+      //   RequestFormData.append("share_inform", )
+      // }
+
+      //RequestFormData.append("file", )
+
+      const request = {};
+      RequestAPI.setRequestFile;
+
+      const req = {
+        // headers: {
+        //   Authorization: `Token ${Token}`,
+        // },
+        id: id,
+        data: formData,
+      };
+
+      RequestAPI.put(req)
+        .then((res) => {
+          console.log("change: ", res);
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+          console.log(e.response.data);
+        });
+    }
+  };
+
+  purposeHandler = (item) => {
+    const { ManufactureProcess } = this.props;
+    const { purposeAry } = this.state;
+    console.log(ManufactureProcess.purposeContent);
+    if (item.checked) {
+      item.checked = false;
+      // purposeAry[ManufactureProcess.purposeComment - 1] = false;
+      ManufactureProcess.purposeContent = 0;
+      //this.setState({ purposeAry : })
+    } else {
+      item.checked = true;
+      if (ManufactureProcess.purposeContent) {
+        this.state.purposeAry[ManufactureProcess.purposeContent - 1].checked = false;
+      }
+      ManufactureProcess.purposeContent = item.id;
+    }
+    this.setState({ g: 3 });
+  };
+
+  checkQuantityData = (e, data, idx) => {
+    const directInput = document.getElementsByClassName("directInput");
+
+    const re = /^[0-9\b]+$/;
+
+    if (e.target.value === "") {
+      e.target.placeholder = "직접 입력하세요";
+    } else if (!re.test(e.target.value)) {
+      data.quantity = { label: "직접 입력", val: "" };
+    }
+
+    if (data.selectBig.name === "금형사출") {
+      if (e.target.value > 0 && e.target.value < 100) {
+        alert("최소 주문 수량은 100개입니다!");
+        data.quantity = { label: "직접 입력", val: 0 };
+        e.target.value = "";
+        if (directInput[idx]) {
+          //directInput[idx].focus();
+        }
+      } else {
+        this.countPrice();
+      }
+    } else {
+      this.countPrice();
+    }
+  };
+
+  countQuantity = (prev_value = 0, current_value = 0, checked = 0) => {
+    const { ManufactureProcess } = this.props;
+    // console.log(typeof(prev_value))
+    // console.log(typeof(current_value))
+    // console.log(typeof(ManufactureProcess.quantity))
+    // console.log(ManufactureProcess.quantity)
+    // console.log(prev_value)
+    // console.log(current_value)
+    // console.log(checked)
+    // console.log(typeof(checked))
+    //console.log(data)
+    if (!checked) {
+      ManufactureProcess.quantity =
+        ManufactureProcess.quantity - prev_value + current_value;
+      // console.log(checked)
+    } else if (checked === 1) {
+      ManufactureProcess.quantity = ManufactureProcess.quantity - current_value;
+      // console.log(checked)
+      //  console.log(ManufactureProcess.quantity)
+    } else {
+      ManufactureProcess.quantity = ManufactureProcess.quantity + current_value;
+      // console.log(checked)
+      // console.log(ManufactureProcess.quantity)
+    }
+    console.log(ManufactureProcess.quantity);
+  };
+  async componentDidMount() {
+    const { ManufactureProcess, Project, Schedule } = this.props;
+    const { purposeAry } = this.state;
+    //console.log("didMount")
+    // console.log(ManufactureProcess.changeProject);
+    console.log(toJS(this.props.Project.projectDetailData.id));
+    console.log(ManufactureProcess.checkFileUpload);
+    console.log(toJS(ManufactureProcess.purposeContent));
+
+    if (ManufactureProcess.changeProject) {
+      await this.state.purposeAry.map((item, idx) => {
+        item.checked = false;
+      });
+
+      await ManufactureProcess.init();
+      console.log(toJS(Project.projectDetailData.request_set[0].estimate_set));
+      this.state.projectname = Project.projectDetailData.request_set[0].name;
+      this.state.publicValue =
+        Project.projectDetailData.request_set[0].order_request_open;
+      ManufactureProcess.requestComment =
+        Project.projectDetailData.request_set[0].order_request_open;
+      this.state.privateValue =
+        Project.projectDetailData.request_set[0].order_request_close;
+      ManufactureProcess.requestComment2 =
+        Project.projectDetailData.request_set[0].order_request_close;
+      const clickDayAry = Project.projectDetailData.request_set[0].deadline.split(
+        "T"
+      );
+      Schedule.clickDay = clickDayAry[0];
+      if (
+        Project.projectDetailData.request_set[0].deadline_state ===
+        "납기일협의가능"
+      ) {
+        ManufactureProcess.date_conference = true;
+      } else {
+        ManufactureProcess.date_undefined = true;
+      }
+      ManufactureProcess.date_conference;
+
+      //ManufactureProcess.openFileArray.push(Project.projectDetailData.request_set[0].requestfile_set)
+
+      await this.state.purposeAry.map((item, idx) => {
+        if (
+          item.name === Project.projectDetailData.request_set[0].request_state
+        ) {
+          item.checked = true;
+          ManufactureProcess.purposeContent = idx + 1;
+        }
+      });
+      // await Project.projectDetailData.request_set[0].estimate_set.map(
+      //   (item, idx) => {
+      //     this.setState({
+      //       fileList: fileList.push({
+      //         //originFile: file,
+      //         originFile: item.stl_file,
+      //         stl_file: true,
+      //         drawFile: item.stl_file,
+      //         //fileName: file.name,
+      //         fileName: "efweerr.stl",
+      //         price: item.maxPrice,
+      //         //MaxPrice: res.data.data.maxPrice,
+      //         productionPrice: item.maxPrice, // 생산가
+      //         moldPrice: Math.round(item.totalMaxPrice / 10000) * 10000, // 금형가
+      //         ejaculationPrice: Math.round(item.maxPrice / 10) * 10, // 사출가
+      //         x_length: Math.round(item.x_length),
+      //         y_length: Math.round(item.y_length),
+      //         z_length: Math.round(item.z_length),
+      //         //selectedMid: ManufactureProcess.categoryDefaultValue.mid,
+      //         checked: true,
+      //         quantity: { label: "", value: item.number },
+      //         prevQuantity: 0,
+      //         currentQuantity: 0,
+      //         totalPrice: 0,
+      //         totalMoldPrice: item.totalMaxPrice,
+      //         totalEjaculationPrice: item.maxPrice,
+      //         optionBig: ManufactureProcess.ManufactureProcessList,
+      //         //selectBig: ManufactureProcess.categoryDefaultValue.big,
+      //         selectBig: { name: "금형사출", id: item.process, detial: [] },
+
+      //         optionMid: ManufactureProcess.categoryDefaultValue.big.detail,
+      //         selectedMid: { name: "플라스틱", id: item.category },
+      //         priceLoading: true,
+      //       }),
+      //     });
+      //     console.log(this.fileList);
+      //   }
+      // );
+
+      //   ManufactureProcess.checkFileUpload = true;
+      console.log(toJS(this.props.Project.projectDetailData));
+      await this.props.Request.getRequestFile(
+        this.props.Project.projectDetailData.request_set[0].id
+      );
+      console.log(toJS(this.props.Request.request_file_set));
+      //request_file_set
+
+      for (let i = 0; i < this.props.Request.request_file_set.length; i++) {
+        await this.props.Request.deleteRequestFile(
+          this.props.Request.request_file_set[i]
+        );
+      }
+      this.setState({ g: 3 });
+    }
     if (!ManufactureProcess.checkPaymentButton) {
       window.addEventListener("scroll", this.loadScroll);
     }
   }
 
+  componentDidUpdate() {
+    const { ManufactureProcess } = this.props;
+    //console.log("didUpdate")
+  }
+
   componentWillUnmount = () => {
     const { ManufactureProcess } = this.props;
     ManufactureProcess.dataPrice = [];
+    window.removeEventListener("scroll", this.loadScroll);
   };
 
   // 각각의 도면 데이터들의 가격과 총 주문금액을 계산하는 함수
   async countPrice() {
     const { ManufactureProcess } = this.props;
+    //   console.log(ManufactureProcess.quantity)
     let price = 0;
+    let minprice = 0;
+    let maxprice = 0;
     await fileList.map((data, idx) => {
-      data.totalMoldPrice = Math.round(data.moldPrice / 10000) * 10000;
-      data.totalEjaculationPrice =
-        Math.round(data.ejaculationPrice / 10) *
-        10 *
-        (data.quantity.value ? data.quantity.value : 0);
-      data.totalPrice =
-        Math.round(data.productionPrice / 100) * 100 * data.quantity.value;
+      if (data.stl_file) {
+        data.totalMoldPrice = Math.round(data.moldPrice / 10000) * 10000;
+        console.log(data.totalMoldPrice);
 
-      // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
-      if (data.checked) {
-        if (data.selectBig.name === "금형사출") {
-          price += data.totalMoldPrice;
-          price += data.totalEjaculationPrice;
+        data.totalPrice =
+          Math.round(data.productionPrice / 10) * 10 * data.quantity.value;
+
+        data.totalMaxPrice =
+          Math.round(data.productionMaxPrice / 10) * 10 * data.quantity.value;
+        data.totalMinPrice =
+          Math.round(data.productionMinPrice / 10) * 10 * data.quantity.value;
+
+        // 도면 데이터가 체크 되어 있는 경우에만 총 주문금액 계산
+        if (data.checked) {
+          if (data.selectBig.name === "금형사출") {
+            price += data.totalMoldPrice;
+            price += data.totalPrice;
+
+            minprice += Math.round(data.totalMoldMinPrice / 10000) * 10000;
+            minprice += data.totalMinPrice;
+
+            maxprice += Math.round(data.totalMoldMaxPrice / 10000) * 10000;
+            maxprice += data.totalMaxPrice;
+          } else {
+            price += data.totalPrice;
+            console.log(data.totalMinPrice);
+            console.log(data.totalMaxPrice);
+            minprice += data.totalMinPrice;
+            maxprice += data.totalMaxPrice;
+          }
+
+          //console.log(typeof(data.quantity.value))
+          //ManufactureProcess.quantity = ManufactureProcess.quantity + parseInt(data.quantity.value)
+          //console.log(typeof(ManufactureProcess.quantity))
+          //console.log(ManufactureProcess.quantity)
         } else {
-          price += data.totalPrice;
+          this.setState({ g: 3 });
         }
-      } else {
       }
     });
-    this.setState({ g: 3 });
     ManufactureProcess.orderPrice = price;
+    ManufactureProcess.orderMinPrice = minprice;
+    ManufactureProcess.orderMaxPrice = maxprice;
+    console.log(ManufactureProcess.orderPrice);
   }
 
   loadFileResopnse = (fileIdx) => {
+    console.log(fileIdx);
+    console.log(fileList);
+    console.log(fileList[fileIdx].originFile);
+    console.log(toJS(ManufactureProcess.selectedBigCategory.id));
+    console.log(toJS(ManufactureProcess.selectedMidCategory.id));
     const ManufactureProcessFormData = new FormData();
     ManufactureProcessFormData.append(
       "blueprint",
@@ -340,6 +692,7 @@ class FileUploadContainer extends Component {
       "detailprocess",
       ManufactureProcess.selectedMidCategory.id
     );
+    console.log(ManufactureProcess.selectedMidCategory.id);
     fileList[fileIdx].selectedMid = ManufactureProcess.selectedMidCategory;
     fileList[fileIdx].priceLoading = true;
     this.setState({ t: false });
@@ -348,7 +701,7 @@ class FileUploadContainer extends Component {
         fileIdx +
         " / process = " +
         ManufactureProcess.selectedBigCategory.id +
-        " / detailprocess =" +
+        " / detailProcess =" +
         ManufactureProcess.selectedMidCategory.id
     );
 
@@ -358,10 +711,30 @@ class FileUploadContainer extends Component {
     console.log(ManufactureProcessFormData);
     ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
       .then((res) => {
+        console.log(res);
+
+        // Range 제공을 위함 몰드 비용
+        fileList[fileIdx].moldPrice = res.data.data.totalMaxPrice;
+        fileList[fileIdx].totalMoldMaxPrice = res.data.data.totalMaxPrice;
+        fileList[fileIdx].totalMoldMinPrice = res.data.data.totalMinPrice;
         fileList[fileIdx].price = res.data.data.totalMaxPrice;
+        // Range 제공을위함. 사출/생산 비용.
         fileList[fileIdx].productionPrice = res.data.data.maxPrice;
+        fileList[fileIdx].productionMinPrice = res.data.data.minPrice;
+        fileList[fileIdx].productionMaxPrice = res.data.data.maxPrice;
+        // 사출비용
+        fileList[fileIdx].productionMaxPrice = res.data.data.maxPrice;
         fileList[fileIdx].priceLoading = false;
+        // (fileList[fileIdx].moldPrice =
+        //   Math.round(res.data.data.totalMaxPrice / 10000) * 10000),
+        //   (fileList[fileIdx].ejaculationPrice =
+        //     Math.round(res.data.data.maxPrice / 10) * 10),
+        //   (fileList[fileIdx].totalPrice = 0),
+        //   (fileList[fileIdx].totalMoldPrice = res.data.data.totalMaxPrice);
+        // fileList[fileIdx].totalEjaculationPrice = res.data.data.maxPrice;
+
         this.countPrice();
+
         //리렌더링을 위한 state설정. 바꿔야될듯
         this.setState({ t: true });
         this.setState({
@@ -386,20 +759,44 @@ class FileUploadContainer extends Component {
         document.documentElement.scrollTop,
         document.body.scrollTop
       );
-      var standardHeight = 50;
-      var currentHeight = standardHeight + fileList.length * 592;
+      //var standardHeight = 180;
+      const bannerHeight = 208;
+      const paddingHeight = 215;
+      const noticeBoxHeight = 90;
+      var standardHeight = 80 + bannerHeight;
+      var currentHeight =
+        paddingHeight + standardHeight + fileList.length * 240;
       const card = document.getElementById("card");
+
+      // console.log(scrollTop);
+      // console.log(currentHeight);
 
       if (card) {
         if (this.props.ManufactureProcess.checkFileUpload) {
-          if (scrollTop > currentHeight && !this.state.checkScroll) {
+          if (scrollTop > currentHeight) {
             card.style.display = "none";
             card.style.position = "static";
-            this.setState({ checkScroll: true });
+            // this.setState({ checkScroll: true });
+            // console.log("scrollTop > currentHeight")
           } else if (scrollTop < currentHeight) {
-            card.style.display = "flex";
-            card.style.position = "fixed";
-            this.setState({ checkScroll: false }); // checkScroll 안 쓸 듯
+            //card.style.display = "flex";
+            //card.style.position = "fixed";
+            //this.setState({ checkScroll: false }); // checkScroll 안 쓸 듯
+            // console.log("scrollTop < currentHeight")
+            if (scrollTop > bannerHeight + 30) {
+              card.style.display = "flex";
+              card.style.position = "fixed";
+              // console.log("scrollTop > bannerHeight")
+              this.setState({ checkHeight: true });
+              //checkHeight = true
+            } else if (scrollTop < bannerHeight + 40) {
+              card.style.display = "flex";
+              card.style.position = "static";
+              // console.log("scrollTop < bannerHeight")
+              this.setState({ checkHeight: false });
+              //checkHeight = false
+            }
+            //this.setState({g:3})
           }
         } else {
           card.style.display = "flex";
@@ -408,33 +805,7 @@ class FileUploadContainer extends Component {
     }
   };
 
-  // // 추가 요청 사항 부분 - 사용자가 멀티 라인으로 텍스트 할 경우 자동으로 높이 조절되게끔 해주는 함수
-  // handleChange = (event) => {
-  //   const textareaLineHeight = 34;
-  //   const { minRows, maxRows } = this.state;
-  //   const { ManufactureProcess } = this.props;
-  //   const previousRows = event.target.rows;
-  //   event.target.rows = minRows; // reset number of rows in textarea
-
-  //   const currentRows = ~~(event.target.scrollHeight / textareaLineHeight);
-
-  //   if (currentRows === previousRows) {
-  //     event.target.rows = currentRows;
-  //   }
-
-  //   if (currentRows >= maxRows) {
-  //     event.target.rows = maxRows;
-  //     event.target.scrollTop = event.target.scrollHeight;
-  //   }
-
-  //   this.setState({
-  //     value: event.target.value,
-  //     rows: currentRows < maxRows ? currentRows : maxRows,
-  //   });
-
-  //   ManufactureProcess.requestComment = event.target.value;
-  // };
-
+  // 추가 요청 사항 부분 - 사용자가 멀티 라인으로 텍스트 할 경우 자동으로 높이 조절되게끔 해주는 함수
   publicRequestHandler = (event) => {
     this.props.Auth.checkLogin();
     if (!this.props.Auth.logged_in_user) {
@@ -496,7 +867,7 @@ class FileUploadContainer extends Component {
   // 수량이 변경되는 경우 수량 정보를 저장
   onQuantityChange(data, value) {
     if (
-      data.selectBig.name == "금형사출" &&
+      data.selectBig.name === "금형사출" &&
       value.value > 0 &&
       value.value < 100
     ) {
@@ -509,11 +880,24 @@ class FileUploadContainer extends Component {
     }
   }
 
+  setIsShown = (flag, idx = 0) => {
+    console.log(checkBox_one);
+    //console.log(this.state.checkBox_one)
+    if (idx === 0) {
+      checkBox = flag;
+      this.setState({ checkBox: flag });
+    } else if (idx === 1) {
+      checkBox_one = flag;
+      this.setState({ checkBox_one: flag });
+    }
+  };
+
   MyDropzone = () => {
     const { ManufactureProcess } = this.props;
     const dropHandler = (files, stl_count) => {
       let loadingCounter = 0;
       console.log("dropHandler");
+      console.log(files);
       files.forEach((file, fileIdx) => {
         if (file.check_stl) {
           const ManufactureProcessFormData = new FormData();
@@ -546,10 +930,16 @@ class FileUploadContainer extends Component {
                   //MaxPrice: res.data.data.maxPrice,
 
                   productionPrice: res.data.data.maxPrice, // 생산가
+                  productionMaxPrice: res.data.data.maxPrice,
+                  productionMinPrice: res.data.data.minPrice,
+
+                  moldminPrice:
+                    Math.round(res.data.data.totalMinPrice / 10000) * 10000, // 금형최소가
+                  moldmaxPrice:
+                    Math.round(res.data.data.totalMaxPrice / 10000) * 10000, // 금형최대가
+
                   moldPrice:
                     Math.round(res.data.data.totalMaxPrice / 10000) * 10000, // 금형가
-                  ejaculationPrice:
-                    Math.round(res.data.data.maxPrice / 10) * 10, // 사출가
 
                   x_length: Math.round(res.data.data.x_length),
                   y_length: Math.round(res.data.data.y_length),
@@ -564,6 +954,8 @@ class FileUploadContainer extends Component {
 
                   totalPrice: 0,
                   totalMoldPrice: res.data.data.totalMaxPrice,
+                  totalMoldMinPrice: res.data.data.totalMinPrice,
+                  totalMoldMaxPrice: res.data.data.totalMaxPrice,
                   totalEjaculationPrice: res.data.data.maxPrice,
 
                   optionBig: ManufactureProcess.ManufactureProcessList,
@@ -706,17 +1098,15 @@ class FileUploadContainer extends Component {
             {isDragActive ? (
               <p>Drop the files here ...</p>
             ) : (
-              <DropZoneContainer
-                checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
-              >
+              <DropZoneContainer>
                 {this.state.loading === true ? (
                   <>
-                    <div style={{ fontSize: "10px" }}>Uploading files...</div>
+                    <div>Uploading files...</div>
                     <CircularProgress
                       style={{
-                        margin: "5px auto",
-                        width: "12px",
-                        height: "12px",
+                        margin: "10px auto",
+                        width: "22px",
+                        height: "22px",
                       }}
                       className="spinner"
                     />
@@ -730,14 +1120,13 @@ class FileUploadContainer extends Component {
                             display: "flex",
                             alignItems: "center",
                             flexDirection: "column",
-                            marginBottom: "18px",
-                            marginTop: "40px",
+                            marginBottom: "24px",
                           }}
                         >
                           <div
                             style={{
                               color: "#0933b3",
-                              fontSize: "16px",
+                              fontSize: "20px",
                               fontWeight: "bold",
                               marginBottom: "-3px",
                             }}
@@ -746,22 +1135,23 @@ class FileUploadContainer extends Component {
                           </div>
                           <div
                             style={{
-                              width: "18px",
+                              width: "22px",
                               height: "7px",
-                              border: "2px solid #0933b3",
+                              border: "3px solid #0933b3",
                               borderTop: "none",
                             }}
                           ></div>
                         </div>
                         <p>
-                          3D 도면 파일을 <span>파일찾기</span>
-                          <span> 클릭</span>
+                          3D 도면 파일을 이곳에 드래그 또는{" "}
+                          <span>파일찾기</span>
                         </p>
                         <p>*한 파일에 한 파트만 업로드 해주세요.</p>
                         <FileImageContainer>
                           <FileImage name=".STP" />
                           <FileImage name=".STEP" />
                           <FileImage name=".STL" />
+                          <FileImage name=".DWG" />
                         </FileImageContainer>
                       </>
                     )}
@@ -771,7 +1161,7 @@ class FileUploadContainer extends Component {
                           <div></div>
                           <div></div>
                         </span>
-                        <p style={{ fontSize: "14px" }}>
+                        <p>
                           3D 도면 파일을 이곳에 드래그 또는{" "}
                           <span>파일찾기</span>
                         </p>
@@ -786,15 +1176,14 @@ class FileUploadContainer extends Component {
       </>
     );
   };
-
   render() {
     const { ManufactureProcess } = this.props;
-
+    const { purposeAry} = this.state;
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
 
-		다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
-		1. 가공품 목적 및 사용 환경
-		2. 가공 부품별 특이 사항
+		다음 사항이 명확하게 작성되어야 정확한 답변을 받을 가능성이 높습니다.
+		1. 제작품 목적 및 사용 환경
+		2. 제작 부품별 특이 사항
 		3. 공급처가 충족해야하는 발주 조건
 		`;
 
@@ -876,47 +1265,50 @@ class FileUploadContainer extends Component {
                         <ManufactureBox>
                           <Label>생산공정</Label>
                           <Select // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
-                            defaultValue={
-                              ManufactureProcess.categoryDefaultValue.big
-                            }
-                            styles={customStyles}
-                            value={data.selectBig}
-                            options={data.optionBig}
-                            getOptionLabel={(option) => option.name}
-                            onChange={(e) => {
-                              ManufactureProcess.setBigCategory(e);
-                              this.loadFileResopnse(idx);
-                              data.selectBig = e;
-                              data.optionMid = e.detail;
+                                defaultValue={
+                                  ManufactureProcess.categoryDefaultValue.big
+                                }
+                                styles={customStyles}
+                                value={data.selectBig}
+                                options={data.optionBig}
+                                getOptionLabel={(option) => option.name}
+                                onChange={(e) => {
+                                  ManufactureProcess.setBigCategory(e);
+                                  this.loadFileResopnse(idx);
 
-                              if (data.selectBig.name === "금형사출") {
-                                data.quantity = { label: "0", value: "0" };
-                              } else {
-                                data.quantity = { label: "1", value: "1" };
-                              }
-                              this.countPrice();
-                            }}
-                          />
+                                  data.selectBig = e;
+                                  data.optionMid = e.detail;
+
+                                  if (data.selectBig.name === "금형사출") {
+                                    data.quantity = { label: "0", value: "0" };
+                                  } else {
+                                    data.quantity = { label: "1", value: "1" };
+                                  }
+                                  this.countPrice();
+                                }}
+                              />
                         </ManufactureBox>
                       </ColumnBox>
                       <MaterialBox>
                         <Label>재료</Label>
                         <Select
-                          defaultValue={
-                            ManufactureProcess.categoryDefaultValue.mid
-                          }
-                          value={data.selectedMid}
-                          styles={customStyles}
-                          options={data.optionMid}
-                          getOptionLabel={(option) => option.name}
-                          onChange={(e) => {
-                            ManufactureProcess.setMidCategory(e);
-                            this.loadFileResopnse(idx);
-                            this.countPrice();
-                          }}
-                        />
+                              defaultValue={
+                                ManufactureProcess.categoryDefaultValue.mid
+                              }
+                              value={data.selectedMid}
+                              styles={customStyles}
+                              options={data.optionMid}
+                              getOptionLabel={(option) => option.name}
+                              onChange={(e) => {
+                                ManufactureProcess.setMidCategory(e);
+                                //this.countQuantity(data.quantity.value, value.value)
+                                this.countQuantity(0, 0);
+                                this.loadFileResopnse(idx);
+                                this.countPrice();
+                              }}
+                            />
                       </MaterialBox>
-                      <WCLabel>
+                      <WCLabel checkQuantity={data.quantity.value}>
                         <Label>마감</Label>
                         <Label>색상</Label>
                       </WCLabel>
@@ -925,74 +1317,94 @@ class FileUploadContainer extends Component {
                         <span>검정</span>
                       </WCBox>
 
-                      <QuantityBox
-                        quantity={data.quantity.value}
-                        id="quantityBox"
-                      >
-                        <Label>
-                          수량 <span>금형/사출 최소수량 100개</span>
-                        </Label>
+                      <QuantityBox quantity={data.quantity.value}>
+                            {data.quantity.label != "직접 입력" &&
+                              data.selectBig.name !== "금형사출" && (
+                                <Select
+                                  id="select"
+                                  quantity={data.quantity.label}
+                                  width="118px"
+                                  styles={customStyles}
+                                  style={{ overflow: "visible" }}
+                                  options={quantityAry}
+                                  getOptionLabel={(option) => option.label}
+                                  value={data.quantity}
+                                  onChange={(value) => {
+                                    console.log(data.selectBig.name);
+                                    if (data.checked) {
+                                      this.countQuantity(
+                                        data.quantity.value,
+                                        value.value
+                                      );
+                                    }
+                                    this.onQuantityChange(data, value);
+                                    this.countPrice();
+                                  }}
+                                />
+                              )}
 
-                        {data.quantity.label != "직접 입력" &&
-                          data.selectBig.name !== "금형사출" && (
-                            <Select
-                              id="select"
-                              quantity={data.quantity.label}
-                              styles={customStyles}
-                              style={{ overflow: "visible" }}
-                              options={quantityAry}
-                              getOptionLabel={(option) => option.label}
-                              value={data.quantity}
-                              onChange={(value) => {
-                                this.onQuantityChange(data, value);
-                                this.countPrice();
-                              }}
-                            />
-                          )}
+                            {(data.quantity.label == "직접 입력" ||
+                              data.selectBig.name === "금형사출") && (
+                              <DirectInputBox
+                                quantity={data.quantity.label}
+                                id="directInputBox"
+                              >
+                                <input
+                                  className={`directInput directInput${idx}`}
+                                  placeholder="직접 입력하세요"
+                                  onKeyPress={(e) => {
+                                    if (e.key === "Enter") {
+                                      this.checkQuantityData(e, data, idx);
+                                      if (e.target.value >= 100) {
+                                        if (data.checked) {
+                                          this.countQuantity(
+                                            parseInt(data.prevQuantity),
+                                            parseInt(e.target.value)
+                                          );
+                                        }
+                                        data.prevQuantity = e.target.value;
+                                      }
+                                    }
+                                  }}
+                                  // value = {data.quantity}
+                                  onBlur={(e) => {
+                                    console.log(e.target.value);
+                                    console.log(data.prevQuantity);
+                                    if (e.target.value >= 100) {
+                                      if (data.checked) {
+                                        this.countQuantity(
+                                          parseInt(data.prevQuantity),
+                                          parseInt(e.target.value)
+                                        );
+                                      }
+                                      data.prevQuantity = e.target.value;
+                                    }
+                                    this.checkQuantityData(e, data, idx);
+                                  }}
+                                  onChange={(e) => {
+                                    console.log("onChange!!");
+                                    console.log(this.value);
+                                    const re = /^[0-9\b]+$/;
 
-                        {(data.quantity.label == "직접 입력" ||
-                          data.selectBig.name === "금형사출") && (
-                          <DirectInputBox
-                            quantity={data.quantity.label}
-                            id="directInputBox"
-                          >
-                            <input
-                              id="morethanTen"
-                              className={`directInput directInput${idx}`}
-                              placeholder="직접 입력하세요"
-                              onKeyPress={(e) => {
-                                if (e.key === "Enter") {
-                                  this.checkQuantityData(e, data, idx);
-                                }
-                              }}
-                              onFocus={(e) => {
-                                e.target.placeholder = "";
-                              }}
-                              onBlur={(e) => {
-                                this.checkQuantityData(e, data, idx);
-                              }}
-                              onChange={(e) => {
-                                const re = /^[0-9\b]+$/;
-
-                                if (
-                                  e.target.value === "" ||
-                                  re.test(e.target.value)
-                                ) {
-                                  this.setNumCount(data, e.target.value);
-                                } else {
-                                  data.quantity = {
-                                    label: "직접 입력",
-                                    val: "0",
-                                  };
-                                  e.target.value = "";
-                                  this.setNumCount(data, e.target.value);
-                                  alert("숫자를 입력하세요");
-                                }
-                              }}
-                            />
-                          </DirectInputBox>
-                        )}
-                      </QuantityBox>
+                                    if (
+                                      e.target.value === "" ||
+                                      re.test(e.target.value)
+                                    ) {
+                                      this.setNumCount(data, e.target.value);
+                                    } else {
+                                      data.quantity = {
+                                        label: "직접 입력",
+                                        val: 0,
+                                      };
+                                      e.target.value = "";
+                                      this.setNumCount(data, e.target.value);
+                                      alert("숫자를 입력하세요");
+                                    }
+                                  }}
+                                />
+                              </DirectInputBox>
+                            )}
+                          </QuantityBox>
                     </MainBox>
 
                     <div style={{ textAlign: "right" }}>
@@ -1001,50 +1413,53 @@ class FileUploadContainer extends Component {
                         checkSelectBig={data.selectBig.name}
                         style={{ display: "inline-block" }}
                       >
-                        <div>
-                          <span>
-                            {data.priceLoading === true ? (
-                              <CircularProgress
-                                style={{ width: "22px", height: "22px" }}
-                                className="spinner"
-                              />
-                            ) : data.selectBig.name === "금형사출" ? (
-                              <>
-                                <span>금형가 </span>
-                                <span>
-                                  {data.totalMoldPrice.toLocaleString("ko-KR") +
-                                    " 원 + "}
-                                </span>
+                         <div>
+                              <span>
+                                {data.priceLoading === true ? (
+                                  <CircularProgress
+                                    style={{ width: "22px", height: "22px" }}
+                                    className="spinner"
+                                  />
+                                ) : data.selectBig.name === "금형사출" ? (
+                                  <>
+                                    <div>
+                                      <span>금형비 </span>
+                                      <span>
+                                        {data.totalMoldPrice.toLocaleString(
+                                          "ko-KR"
+                                        ) + " 원"}
+                                      </span>
+                                      <span> + </span>
+                                      <span>사출비 </span>
+                                      <span>
+                                        {data.totalPrice.toLocaleString(
+                                          "ko-KR"
+                                        ) + " 원"}
+                                      </span>
+                                    </div>
 
-                                <span>사출가 </span>
-                                <span>
-                                  {data.totalEjaculationPrice.toLocaleString(
-                                    "ko-KR"
-                                  ) + " 원"}
-                                </span>
-                                <div>
-                                  <span>가격 </span>
-                                  <span>
-                                    {(
-                                      data.totalMoldPrice +
-                                      data.totalEjaculationPrice
-                                    ).toLocaleString("ko-KR") + " 원"}
-                                  </span>
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <div>
-                                  <span>가격 </span>
-                                  <span>
-                                    {data.totalPrice.toLocaleString("ko-KR") +
-                                      " 원"}{" "}
-                                  </span>
-                                </div>
-                              </>
-                            )}
-                          </span>
-                        </div>
+                                    <div>
+                                      <span>가격 </span>
+                                      <span>
+                                        {(
+                                          data.totalMoldPrice + data.totalPrice
+                                        ).toLocaleString("ko-KR") + " 원"}
+                                      </span>
+                                    </div>
+                                  </>
+                                ) : (
+                                  <>
+                                  <div>
+                                    <span>가격 </span>
+                                    <span>
+                                      {(data.totalPrice).toLocaleString("ko-KR") +
+                                        " 원"}
+                                    </span>
+                                  </div>
+                                  </>
+                                )}
+                              </span>
+                            </div>
                       </TailBox>
                     </div>
                     <FileAddBox
@@ -1112,76 +1527,68 @@ class FileUploadContainer extends Component {
                           >
                             DWG
                           </div>
-                          {/* <Length>
-                            {data.x_length +
-                              " x " +
-                              data.y_length +
-                              " x " +
-                              data.z_length +
-                              " mm"}
-                          </Length> */}
-                          {/* <STLViewer
-                            model={data.drawFile} // stl파일 주소
-                            width={120} // 가로
-                            height={120} // 세로
-                            // width={250}
-                            // height={210}
-                            modelColor="gray" // 색
-                            backgroundColor="white" // 배경색
-                            rotate={true} // 자동회전 유무
-                            orbitControls={true} // 마우스 제어 유무
-                            cameraX={500}
-                            //cameraZ={500}
-                            //lights={[2,4,1]}
-                            //lights={[2, 2, 2]}
-                            lights={[0, 0, 1]}
-                            //lightColor={'red'}
-                          /> */}
                         </StlBox>
                         <ColumnBox>
                           <ManufactureBox>
                             <Label>생산공정</Label>
                             <Select // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
-                              defaultValue={
-                                ManufactureProcess.categoryDefaultValue.big
-                              }
-                              styles={customStyles}
-                              value={data.selectBig}
-                              options={data.optionBig}
-                              getOptionLabel={(option) => option.name}
-                              onChange={(e) => {
-                                ManufactureProcess.setBigCategory(e);
-                                this.loadFileResopnse(idx);
-                                data.selectBig = e;
-                                data.optionMid = e.detail;
+                                  defaultValue={
+                                    ManufactureProcess.categoryDefaultValue.big
+                                  }
+                                  styles={customStyles}
+                                  value={data.selectBig}
+                                  options={data.optionBig}
+                                  getOptionLabel={(option) => option.name}
+                                  onChange={(e) => {
+                                    ManufactureProcess.setBigCategory(e);
+                                    //this.loadFileResopnse(idx);
 
-                                if (data.selectBig.name === "금형사출") {
-                                  data.quantity = { label: "0", value: "0" };
-                                } else {
-                                  data.quantity = { label: "1", value: "1" };
-                                }
-                                this.countPrice();
-                              }}
-                            />
-                          </ManufactureBox>
+                                    data.selectBig = e;
+                                    data.optionMid = e.detail;
+
+                                    if (data.selectBig.name === "금형사출") {
+                                      if (data.checked) {
+                                        this.countQuantity(
+                                          data.quantity.value,
+                                          0
+                                        );
+                                      }
+                                      data.quantity = { label: "0", value: 0 };
+                                    } else {
+                                      if (data.checked) {
+                                        this.countQuantity(
+                                          data.quantity.value,
+                                          1
+                                        );
+                                      }
+                                      data.quantity = { label: "1", value: 1 };
+                                    }
+                                    //this.countPrice()
+                                    this.setState({ g: 3 });
+                                  }}
+                                />
+                              </ManufactureBox>
                         </ColumnBox>
                         <MaterialBox>
                           <Label>재료</Label>
                           <Select
-                            defaultValue={
-                              ManufactureProcess.categoryDefaultValue.mid
-                            }
-                            value={data.selectedMid}
-                            styles={customStyles}
-                            options={data.optionMid}
-                            getOptionLabel={(option) => option.name}
-                            onChange={(e) => {
-                              ManufactureProcess.setMidCategory(e);
-                              this.loadFileResopnse(idx);
-                              this.countPrice();
-                            }}
-                          />
-                        </MaterialBox>
+                                defaultValue={
+                                  ManufactureProcess.categoryDefaultValue.mid
+                                }
+                                value={data.selectedMid}
+                                styles={customStyles}
+                                options={data.optionMid}
+                                getOptionLabel={(option) => option.name}
+                                onChange={(e) => {
+                                  ManufactureProcess.setMidCategory(e);
+                                  //this.countQuantity(data.quantity.value, value.value)
+                                  this.countQuantity(0, 0);
+                                  this.loadFileResopnse(idx);
+                                  this.countPrice();
+                                  this.setState({ g: 3 });
+                                }}
+                              />
+                            </MaterialBox>
                         <WCLabel>
                           <Label>마감</Label>
                           <Label>색상</Label>
@@ -1191,71 +1598,109 @@ class FileUploadContainer extends Component {
                           <span>검정</span>
                         </WCBox>
 
-                        <QuantityBox
-                          quantity={data.quantity.value}
-                          id="quantityBox"
-                        >
-                          <Label>수량</Label>
-                          {data.quantity.label != "직접 입력" &&
-                            data.selectBig.name !== "금형사출" && (
-                              <Select
-                                id="select"
-                                quantity={data.quantity.label}
-                                styles={customStyles}
-                                style={{ overflow: "visible" }}
-                                options={quantityAry}
-                                getOptionLabel={(option) => option.label}
-                                value={data.quantity}
-                                onChange={(value) => {
-                                  this.onQuantityChange(data, value);
-                                  this.countPrice();
-                                }}
-                              />
-                            )}
+                        <QuantityBox quantity={data.quantity.value}>
+                              {data.quantity.label != "직접 입력" &&
+                                data.selectBig.name !== "금형사출" && (
+                                  <Select
+                                    id="select"
+                                    quantity={data.quantity.label}
+                                    width="118px"
+                                    styles={customStyles}
+                                    style={{ overflow: "visible" }}
+                                    options={quantityAry}
+                                    getOptionLabel={(option) => option.label}
+                                    value={data.quantity}
+                                    onChange={(value) => {
+                                      console.log(data.selectBig.name);
+                                      if (data.checked) {
+                                        this.countQuantity(
+                                          data.quantity.value,
+                                          value.value
+                                        );
+                                      }
+                                      this.onQuantityChange(data, value);
+                                      //this.countPrice()
+                                    }}
+                                  />
+                                )}
 
-                          {(data.quantity.label == "직접 입력" ||
-                            data.selectBig.name === "금형사출") && (
-                            <DirectInputBox
-                              quantity={data.quantity.label}
-                              id="directInputBox"
-                            >
-                              <input
-                                id="morethanTen"
-                                className={`directInput directInput${idx}`}
-                                placeholder="직접 입력하세요"
-                                onKeyPress={(e) => {
-                                  if (e.key === "Enter") {
-                                    this.checkQuantityData(e, data, idx);
-                                  }
-                                }}
-                                onFocus={(e) => {
-                                  e.target.placeholder = "";
-                                }}
-                                onBlur={(e) => {
-                                  this.checkQuantityData(e, data, idx);
-                                }}
-                                onChange={(e) => {
-                                  const re = /^[0-9\b]+$/;
+                              {(data.quantity.label == "직접 입력" ||
+                                data.selectBig.name === "금형사출") && (
+                                <DirectInputBox
+                                  quantity={data.quantity.label}
+                                  id="directInputBox"
+                                >
+                                  <input
+                                    className={`directInput directInput${idx}`}
+                                    placeholder="직접 입력하세요"
+                                    onKeyPress={(e) => {
+                                      if (e.key === "Enter") {
+                                        this.checkQuantityData(e, data, idx);
+                                        if (e.target.value >= 100) {
+                                          if (data.checked) {
+                                            this.countQuantity(
+                                              parseInt(data.prevQuantity),
+                                              parseInt(e.target.value)
+                                            );
+                                          }
+                                          data.prevQuantity = e.target.value;
+                                        }
+                                      }
+                                    }}
+                                    // value = {data.quantity}
+                                    onBlur={(e) => {
+                                      console.log(e.target.value);
+                                      console.log(data.prevQuantity);
+                                      if (e.target.value >= 100) {
+                                        if (data.checked) {
+                                          this.countQuantity(
+                                            parseInt(data.prevQuantity),
+                                            parseInt(e.target.value)
+                                          );
+                                        }
+                                        data.prevQuantity = e.target.value;
+                                      }
+                                      //this.checkQuantityData(e, data, idx)
+                                      if (data.selectBig.name === "금형사출") {
+                                        if (
+                                          e.target.value > 0 &&
+                                          e.target.value < 100
+                                        ) {
+                                          alert(
+                                            "최소 주문 수량은 100개입니다!"
+                                          );
+                                          data.quantity = {
+                                            label: "직접 입력",
+                                            val: 0,
+                                          };
+                                          e.target.value = "";
+                                        }
+                                      }
+                                    }}
+                                    onChange={(e) => {
+                                      console.log("onChange!!");
+                                      console.log(this.value);
+                                      const re = /^[0-9\b]+$/;
 
-                                  if (
-                                    e.target.value === "" ||
-                                    re.test(e.target.value)
-                                  ) {
-                                    this.setNumCount(data, e.target.value);
-                                  } else {
-                                    data.quantity = {
-                                      label: "직접 입력",
-                                      val: "0",
-                                    };
-                                    e.target.value = "";
-                                    this.setNumCount(data, e.target.value);
-                                    alert("숫자를 입력하세요");
-                                  }
-                                }}
-                              />
-                            </DirectInputBox>
-                          )}
-                        </QuantityBox>
+                                      if (
+                                        e.target.value === "" ||
+                                        re.test(e.target.value)
+                                      ) {
+                                        this.setNumCount(data, e.target.value);
+                                      } else {
+                                        data.quantity = {
+                                          label: "직접 입력",
+                                          val: 0,
+                                        };
+                                        e.target.value = "";
+                                        this.setNumCount(data, e.target.value);
+                                        alert("숫자를 입력하세요");
+                                      }
+                                    }}
+                                  />
+                                </DirectInputBox>
+                              )}
+                            </QuantityBox>
                       </MainBox>
 
                       <div style={{ textAlign: "right" }}>
@@ -1347,13 +1792,16 @@ class FileUploadContainer extends Component {
           </PriceLabel>
 
           <PriceData>
-            <span>~</span>
-            <span>
-              {/* {console.log(ManufactureProcess.orderPrice)} */}
-              {ManufactureProcess.orderPrice.toLocaleString("ko-KR")}
-              <span> 원</span>
-            </span>
-          </PriceData>
+                  <span>
+                    {ManufactureProcess.orderMinPrice.toLocaleString("ko-KR")}
+                  </span>
+                  <span>~</span>
+                  <span>
+                    {/* {console.log(ManufactureProcess.orderPrice)} */}
+                    {ManufactureProcess.orderMaxPrice.toLocaleString("ko-KR")}
+                    <span> 원</span>
+                  </span>
+                </PriceData>
         </Price>
 
         <Containerv1 style={{ flexDirection: "column" }}>
@@ -1362,21 +1810,19 @@ class FileUploadContainer extends Component {
           >
             <TitleLabel>
               <span>문의 목적</span>
-              <p style={{ fontSize: "16px", letterSpacing: "-0.4px" }}>
-                (중복 선택 가능)
-              </p>
+
             </TitleLabel>
 
             <SelectBox>
-              {purposeAry.map((item, idx) => {
-                return (
-                  <PurposeSelectCircle
-                    active={item.checked}
-                    onClick={() => {
-                      this.purposeHandler(item);
-                      console.log(idx);
-                    }}
-                  >
+              {this.state.purposeAry.map((item, idx) => {
+                  return (
+                    <PurposeSelectCircle
+                      active={item.checked}
+                      onClick={() => {
+                        this.purposeHandler(item);
+                        console.log(idx);
+                      }}
+                    >
                     <PurposeFont18 active={item.checked}>
                       {item.name}
                     </PurposeFont18>
@@ -1398,6 +1844,7 @@ class FileUploadContainer extends Component {
                 onBlur={(e) =>
                   (e.target.placeholder = "프로젝트 제목을 입력해주세요")
                 }
+                value={this.state.projectname}
                 onChange={(e) => {
                   console.log(e.target.value);
                   this.setState({ projectname: e.target.value });
@@ -1410,30 +1857,33 @@ class FileUploadContainer extends Component {
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
             <TitleLabel>
-              <span>납기 일</span>
+              <span>희망 납기일</span>
             </TitleLabel>
             <DeliveryDate
               checkDateConference={ManufactureProcess.date_conference}
               checkDateUndefined={ManufactureProcess.date_undefined}
               checkCalendar={ManufactureProcess.calendar_checked}
-              checkFileUpload={ManufactureProcess.checkFileUpload}
+              checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
             >
               <div>
                 <div>
                   <Calendar mobile={true} />
                 </div>
                 <div>
-                  <div
-                    onClick={() => {
-                      console.log("click1");
-                      if (ManufactureProcess.date_conference) {
-                        ManufactureProcess.date_conference = false;
-                      } else {
-                        ManufactureProcess.date_conference = true;
+                <div
+                  onClick={() => {
+                    console.log("click1");
+                    if (ManufactureProcess.date_conference) {
+                      ManufactureProcess.date_conference = false;
+                    } else {
+                      ManufactureProcess.date_conference = true;
+                      if (ManufactureProcess.date_undefined) {
+                        ManufactureProcess.date_undefined = false;
                       }
-                      console.log(ManufactureProcess.date_conference);
-                    }}
-                  >
+                    }
+                    console.log(ManufactureProcess.date_conference);
+                  }}
+                >
                     <div>
                       <img src={pass3} />
                     </div>
@@ -1540,54 +1990,66 @@ class FileUploadContainer extends Component {
             </Reference>
           </ReferenceBox>
           <Button checkFileUpload={ManufactureProcess.checkFileUpload}>
-            <div>
-              <span
-                onClick={() => {
-                  let check_count = 0;
-                  fileList.map((item, idx) => {
-                    item.fileName;
-                    let fileNameAvailable = ["txt"];
-                    const extension = item.fileName.split(".");
+          <div>
+              {ManufactureProcess.changeProject ? (
+                <span
+                  onClick={() => {
+                    this.requestSubmit(
+                      0,
+                      this.props.Project.projectDetailData.request_set[0].id
+                    );
+                  }}
+                >
+                  프로젝트 수정 완료
+                </span>
+              ) : (
+                <span
+                  onClick={() => {
+                    let check_count = 0;
+                    fileList.map((item, idx) => {
+                      item.fileName;
+                      let fileNameAvailable = ["txt"];
+                      const extension = item.fileName.split(".");
 
-                    //console.log(fileNameAvailable)
-                    if (
-                      item.quantity.value === 0 ||
-                      item.quantity.value === ""
-                    ) {
-                      console.log("수량을 입력해주세요");
-                      check_count++;
+                      //console.log(fileNameAvailable)
+                      if (
+                        item.quantity.value === 0 ||
+                        item.quantity.value === ""
+                      ) {
+                        console.log("수량을 입력해주세요");
+                        check_count++;
+                      }
+
+                      if (
+                        fileNameAvailable.includes(
+                          extension[extension.length - 1]
+                        )
+                      ) {
+                        this.props.ManufactureProcess.privateFileArray.push({
+                          file: item,
+                        });
+                      }
+                    });
+
+                    if (check_count) {
+                      alert("수량을 입력해주세요");
+                    } else {
+                      ManufactureProcess.checkPaymentButton = true;
                     }
 
-                    if (
-                      fileNameAvailable.includes(
-                        extension[extension.length - 1]
-                      )
-                    ) {
-                      this.props.ManufactureProcess.privateFileArray.push({
-                        file: item,
-                      });
-                    }
-                  });
+                    // console.log(
+                    //   toJS(this.props.ManufactureProcess.privateFileArray)
+                    // );
+                    // ManufactureProcess.fileArray.map((item, idx) => {
+                    //   console.log(item.file);
+                    // });
 
-                  if (check_count) {
-                    alert("수량을 입력해주세요");
-                  } else {
-                    ManufactureProcess.checkPaymentButton = true;
-                    this.props.Request.newIndex = 1;
-                  }
-
-                  // console.log(
-                  //   toJS(this.props.ManufactureProcess.privateFileArray)
-                  // );
-                  // ManufactureProcess.fileArray.map((item, idx) => {
-                  //   console.log(item.file);
-                  // });
-
-                  this.requestSubmit();
-                }}
-              >
-                상담 및 견적 신청
-              </span>
+                    this.requestSubmit(1);
+                  }}
+                  >
+                  상담 및 가격 요청하기
+                </span>
+              )}
             </div>
           </Button>
         </Containerv1>
@@ -1695,7 +2157,7 @@ const MainBox = styled.div`
 
 const ContentBox = styled.div`
   width: ${(props) => (props.checkFileUpload ? "calc(100%-3px)" : "100%")};
-  height: ${(props) => (props.checkFileUpload ? "50px" : "")};
+  height: ${(props) => (props.checkFileUpload ? "100px" : "")};
   display: flex;
   flex-direction: column;
   border: 2px dashed #a4aab4;
@@ -1813,6 +2275,7 @@ const DeleteBox = styled.div`
 `;
 
 const InputBox = styled.div`
+  margin-top : ${(props) => (props.checkFileUpload ? "" : "50px")};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1839,6 +2302,7 @@ const Card = styled.div`
 `;
 
 const Header = styled.div`
+  margin-top: ${(props) => (props.checkFileUpload ? "0px" : "80px")};
   font-weight: ${(props) => (props.checkFileUpload ? "bold" : "normal")};
   font-stretch: normal;
   font-style: normal;

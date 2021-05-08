@@ -34,7 +34,7 @@ class MobileBanner9Container extends React.Component {
                 }}
                 onClick={() => Router.push("/request")}
               >
-                <p style={{ paddingBottom: 1 }}>지금 무료 견적 받기</p>
+                <p style={{ paddingBottom: 1 }}>파트너 가입하기</p>
               </Buttonv1>
             </div>
           </Fade>

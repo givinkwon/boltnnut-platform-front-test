@@ -31,6 +31,7 @@ class Schedule {
     //this.today = today_date.format('YYYY-MM-DD ');
     //this.book_time = this.today + this.current;
     this.active1 = null;
+    this.clickDay = 0;
     this.getDays(today_date.split("-")[0], today_date.split("-")[1]);
   };
   @action setOnline = (obj) => {

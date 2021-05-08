@@ -1,11 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import Background from "../../components/Background";
-import Containerv1 from "../../components/Containerv1";
-import * as Title from "../../components/Title";
+import Background from "components/Background";
+import Containerv1 from "components/Containerv1";
+import * as Title from "components/Title";
 import InputComponent from "components/Input2";
 import { inject, observer } from "mobx-react";
-import Calendar from "./Calendar2";
+import Calendar from "../Calendar2";
 import AddFile from "AddFile";
 import AddFile2 from "AddFile2";
 
@@ -19,7 +19,7 @@ const pass3 = "static/images/pass3.png";
 
 @inject("ManufactureProcess", "Request", "Schedule", "Auth")
 @observer
-class NoneDrawingConsultingContainer extends React.Component {
+class MobileNoneDrawingConsultingContainer extends React.Component {
   state = {
     selectedIdx: 0,
     purposeselected1: false,
@@ -438,136 +438,70 @@ class NoneDrawingConsultingContainer extends React.Component {
             </InlineDiv>
           </ProjectTitleBox>
 
-          {/* <ProductInfoBox>
-                  <InlineDiv>
-                     <FontSize24>가견적을 위한 제품 정보</FontSize24>
-                  </InlineDiv>
-
-                  <div style={{ display: 'flex', marginBottom: '24px' }}>
-                     <LengthHeightBox>
-                        <InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-                           <FontSize18 style={{ marginRight: '13px', width: '33px' }}>가로</FontSize18>
-                           <InputComponent
-                              class='Input'
-                              placeholder='0'
-                              onChange={e => {
-                                 this.setState({ row: e });
-                              }}
-                              width='144px'
-                           />
-                        </InlineDiv>
-
-                        <InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-                           <FontSize18 style={{ marginRight: '13px', width: '33px' }}>세로</FontSize18>
-                           <InputComponent
-                              class='Input'
-                              placeholder='0'
-                              onChange={e => {
-                                 this.setState({ column: e });
-                              }}
-                              width='144px'
-                           />
-                        </InlineDiv>
-
-                        <InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-                           <FontSize18 style={{ marginRight: '13px', width: '33px' }}>높이</FontSize18>
-                           <InputComponent
-                              class='Input'
-                              placeholder='0'
-                              onChange={e => {
-                                 this.setState({ height: e });
-                              }}
-                              width='144px'
-                           />
-                        </InlineDiv>
-                     </LengthHeightBox>
-
-                     <SelectBox style={{ marginLeft: '70px', width: '316px' }}>
-                        <InlineDiv style={{ alignItems: 'flex-end' }}>
-                           <FontSize18 style={{ width: '33px' }}>단위</FontSize18>
-                        </InlineDiv>
-
-                        <InlineDiv style={{ alignItems: 'flex-end' }}>
-                           <SelectCircle active={this.activeHandler(1)} onClick={() => this.unitCheckboxHandler(1)}>
-                              <CheckCircleImg src={checkcircle} active={this.activeHandler(1)} />
-                           </SelectCircle>
-                           <FontSize18>mm</FontSize18>
-                        </InlineDiv>
-
-                        <InlineDiv style={{ alignItems: 'flex-end' }}>
-                           <SelectCircle active={this.activeHandler(2)} onClick={() => this.unitCheckboxHandler(2)}>
-                              <CheckCircleImg src={checkcircle} active={this.activeHandler(2)} />
-                           </SelectCircle>
-                           <FontSize18>cm</FontSize18>
-                        </InlineDiv>
-
-                        <InlineDiv style={{ alignItems: 'flex-end' }}>
-                           <SelectCircle active={this.activeHandler(3)} onClick={() => this.unitCheckboxHandler(3)}>
-                              <CheckCircleImg src={checkcircle} active={this.activeHandler(3)} />
-                           </SelectCircle>
-                           <FontSize18>m</FontSize18>
-                        </InlineDiv>
-                     </SelectBox>
-                  </div>
-               </ProductInfoBox>
-               <ImageShape>
-                  <FontSize24>이미지 형상</FontSize24>
-               </ImageShape> */}
-
-          <FontSize24 style={{ marginTop: "30px" }}>납기 일</FontSize24>
-          <DeliveryDate
-            checkDateConference={ManufactureProcess.date_conference}
-            checkDateUndefined={ManufactureProcess.date_undefined}
-            checkCalendar={ManufactureProcess.calendar_checked}
+          <DeliveryBox
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
-            <div>
-              <div style={{ height: "50px" }}>
-                <Calendar />
-              </div>
-              <div
-                onClick={() => {
-                  console.log("click1");
-                  if (ManufactureProcess.date_conference) {
-                    ManufactureProcess.date_conference = false;
-                  } else {
-                    ManufactureProcess.date_conference = true;
-                    if (ManufactureProcess.date_undefined) {
-                      ManufactureProcess.date_undefined = false;
-                    }
-                  }
-                  console.log(ManufactureProcess.date_conference);
-                }}
-              >
+          <InlineDiv>
+             <FontSize24 style={{ marginTop: "30px" }}>희망 납기일</FontSize24>
+          </InlineDiv>
+
+          <DeliveryDate
+              checkDateConference={ManufactureProcess.date_conference}
+              checkDateUndefined={ManufactureProcess.date_undefined}
+              checkCalendar={ManufactureProcess.calendar_checked}
+              checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+            >
+              <div>
                 <div>
-                  <img src={pass3} />
+                  <Calendar mobile={true} />
                 </div>
-                <span>납기일 협의 가능</span>
-              </div>
-              <div
-                onClick={() => {
-                  console.log("click2");
-                  if (ManufactureProcess.date_undefined) {
-                    ManufactureProcess.date_undefined = false;
-                  } else {
-                    ManufactureProcess.date_undefined = true;
+                <div>
+                <div
+                  onClick={() => {
+                    console.log("click1");
                     if (ManufactureProcess.date_conference) {
                       ManufactureProcess.date_conference = false;
+                    } else {
+                      ManufactureProcess.date_conference = true;
+                      if (ManufactureProcess.date_undefined) {
+                        ManufactureProcess.date_undefined = false;
+                      }
                     }
-                  }
-                  console.log(ManufactureProcess.date_undefined);
-                }}
-              >
-                <div>
-                  <img src={pass3} />
+                    console.log(ManufactureProcess.date_conference);
+                  }}
+                >
+                    <div>
+                      <img src={pass3} />
+                    </div>
+                    <span >납기일 협의 가능</span>
+                  </div>
+                  <div
+                    onClick={() => {
+                      console.log("click2");
+                      if (ManufactureProcess.date_undefined) {
+                        ManufactureProcess.date_undefined = false;
+                      } else {
+                        ManufactureProcess.date_undefined = true;
+                      }
+                      console.log(ManufactureProcess.date_undefined);
+                    }}
+                  >
+                    <div>
+                      <img src={pass3} />
+                    </div>
+                    <span>납기일 미정</span>
+                  </div>
                 </div>
-                <span>납기일 미정</span>
               </div>
-            </div>
-          </DeliveryDate>
+            </DeliveryDate>
+            </DeliveryBox> 
 
-          <FontSize24>프로젝트 설명 및 요청사항</FontSize24>
-
+          <RequestBox
+            checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+          >          
+          <InlineDiv> 
+            <FontSize24>프로젝트 설명 및 요청사항</FontSize24>
+          </InlineDiv>          
           <Request>
             <div>
               <FontSize20 style={{ lineHeight: "1", fontWeight: "500" }}>
@@ -615,13 +549,15 @@ class NoneDrawingConsultingContainer extends React.Component {
               onChange={this.privateRequestHandler}
             />
           </Request>
-
+          </RequestBox>
+          <ReferenceBox
+            checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+          >
           <InlineDiv style={{ marginBottom: "15px" }}>
             <FontSize24>참고 파일</FontSize24>
             <div style={{ display: "flex", alignItems: "flex-end" }}>
               <FontSize18 style={{ color: "#86888c", marginLeft: "12px" }}>
-                이미지 혹은 PDF 자료만 업로드 가능합니다. 전문 설계 용어와
-                기호를 사용해 주시면 좋습니다.
+              이미지 혹은 PDF 자료만 업로드 가능합니다.
               </FontSize18>
             </div>
           </InlineDiv>
@@ -652,7 +588,7 @@ class NoneDrawingConsultingContainer extends React.Component {
               </div>
             </InlineDiv>
 
-            <span style={{ display: "inline-block" }}>
+            <span style={{ display: "inline-block", width: "100%" }}>
               <AddFile2
                 file={true}
                 isOpen={true}
@@ -676,7 +612,7 @@ class NoneDrawingConsultingContainer extends React.Component {
               </div>
             </InlineDiv>
 
-            <span style={{ display: "inline-block" }}>
+            <span style={{ display: "inline-block", width: "100%" }}>
               <AddFile2
                 file={true}
                 isOpen={false}
@@ -685,6 +621,7 @@ class NoneDrawingConsultingContainer extends React.Component {
               <div></div>
             </span>
           </Reference>
+          </ReferenceBox>
           <CompleteBtnBox>
             <CompleteBtn
               onClick={() => {
@@ -702,7 +639,7 @@ class NoneDrawingConsultingContainer extends React.Component {
   }
 }
 
-export default NoneDrawingConsultingContainer;
+export default MobileNoneDrawingConsultingContainer;
 
 
 // global
@@ -750,6 +687,9 @@ const FontSize16 = styled(Title.FontSize16)`
 const ProjectTitleBox = styled.div`
   display: flex;
   flex-direction: column;
+  width : 90%;
+  margin-left : 5%;
+  margin-right : 5%;
 `;
 
 const ProductInfoBox = styled.div`
@@ -804,6 +744,9 @@ const PurposeBox = styled.div`
   flex-direction: column;
   margin-top: 60px;
   margin-bottom: 70px;
+  width : 90%;
+  margin-left : 5%;
+  margin-right : 5%;
 `;
 
 const ImageShape = styled.div`
@@ -854,34 +797,24 @@ const CompleteBtn = styled.div`
 `;
 
 const DeliveryDate = styled.div`
-  width: 1200px;
-  // display: ${(props) => (props.checkFileUpload ? "static" : "none")};
+  //width: 1200px;
+  display: static;
   background-color: #f6f6f6;
   border: 1px solid #ffffff;
   border-radius: 5px;
   padding: 26px 24px 22px 24px;
   box-sizing: border-box;
-  margin-bottom: 40px;
-  margin-top: 16px;
-
-  // > div:nth-of-type(1) {
-  //    height: 27px;
-  //    font-size: 18px;
-  //    line-height: 40px;
-  //    letter-spacing: -0.45px;
-  //    color: #282c36;
-  //    font-weight: bold;
-  //    margin-bottom: 16px;
-  // }
 
   > div:nth-of-type(1) {
     display: flex;
     //justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    // align-items: center;
 
     > div:nth-of-type(1) {
-      width: 66%;
-      height: 55px;
+      //width: 66%;
+      margin-bottom: 18px;
+      height: 37px;
       font-size: 18px;
       line-height: 40px;
       letter-spacing: -0.45px;
@@ -891,8 +824,8 @@ const DeliveryDate = styled.div`
       //border: 3px solid red;
       background-color: #ffffff;
       position: relative;
-      display: flex;
-      align-items: center;
+      // display: flex;
+      // align-items: center;
       > span {
         position: absolute;
         right: 2%;
@@ -903,57 +836,56 @@ const DeliveryDate = styled.div`
         //display: block;
       }
     }
+    >div:nth-of-type(2){
+      display: flex;
+      justify-content: space-around;
+    > div:nth-of-type(1) {        
+      > div {
+        background-color: ${(props) =>
+          props.checkDateConference ? "#0933b3" : "#999999"};        
+        > img {          
+        }
+      }   
+    }
     > div:nth-of-type(2) {
-      margin: 0 30px;
       > div {
         background-color: ${(props) =>
-          props.checkDateConference ? "#0933b3" : "#999999"};
-        // background-color: #999999;
+          props.checkDateUndefined ? "#0933b3" : "#999999"};       
         > img {
-          // display: ${(props) =>
-            props.checkDateConference ? "block" : "none"};
-          display: block;
         }
       }
     }
-    > div:nth-of-type(3) {
-      > div {
-        background-color: ${(props) =>
-          props.checkDateUndefined ? "#0933b3" : "#999999"};
-        // background-color: #999999;
-        > img {
-          // display: ${(props) =>
-            props.checkDateUndefined ? "block" : "none"};
-          display: block;
-        }
-      }
-    }
-    > div:nth-of-type(2),
-    > div:nth-of-type(3) {
+    > div:nth-of-type(1),
+    > div:nth-of-type(2) {
       //position: relative;
       //padding-left: 35px;
       display: flex;
       > div {
-        width: 19px;
-        height: 19px;
+        width: 17px;
+        height: 17px;
         border: 1px solid white;
         border-radius: 2px;
         position: relative;
-        margin-right: 18px;
+        margin-right: 8px;
         box-sizing: border-box;
 
         > img {
           position: absolute;
           top: 18%;
-          left: 18%;
+          left: 14%;
         }
+      }
+      >span{
+        font-size: 14px;
+        //line-height: 40px;
+        letter-spacing: -0.35px;
+        color: #86888c;
       }
     }
   }
 `;
 
 const Request = styled.div`
-  width: 1200px;
   // display: ${(props) => (props.checkFileUpload ? "static" : "none")};
   background-color: #f6f6f6;
   border: 1px solid #ffffff;
@@ -1026,27 +958,37 @@ const Request = styled.div`
 `;
 
 const Reference = styled.div`
-  // display: ${(props) => (props.checkFileUpload ? "static" : "none")};
-  width: 1200px;
   background-color: #f6f6f6;
   border: 1px solid #ffffff;
   border-radius: 5px;
-  padding: 24px 24px 22px 24px;
+  padding: 0 24px 22px 24px;
   box-sizing: border-box;
-  margin-bottom: 60px;
-
-  > span:nth-of-type(1) {
-    font-size: 16px;
-    line-height: 40px;
-    letter-spacing: -0.4px;
-    color: #86888c;
+  > div {
+    height: 27px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    box-sizing: border-box;
+    > span {
+      font-size: 14px;
+      line-height: 40px;
+      letter-spacing: -0.35px;
+      color: #282c36;
+      font-weight: normal;
+      margin-right: 10px;
+    }
+    // > p {
+    //   display: inline-block;
+    //   font-size: 16px;
+    //   line-height: 40px;
+    //   letter-spacing: -0.4px;
+    //   color: #86888c;
+    // }
   }
-
-  > div:nth-of-type(1) {
-    border: 1px solid #ffffff;
-    background-color: #ffffff;
-    position: relative;
-  }
+  // > div:nth-of-type(even) {
+  //   border: 1px solid #ffffff;
+  //   background-color: #ffffff;
+  //   position: relative;
+  // }
 `;
 
 const PurposeFont18 = styled.div`
@@ -1054,4 +996,34 @@ const PurposeFont18 = styled.div`
   line-height: 1.89;
   letter-spacing: -0.45px;
   color: ${(props) => (props.active ? "#ffffff" : "#414550")};
+`;
+const DeliveryBox = styled.div`
+  width : 90%;
+  margin-left : 5%;
+  margin-right : 5%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  // > div:nth-of-type(1) {
+  //   height: 27px;
+  //   font-size: 18px;
+  //   line-height: 40px;
+  //   letter-spacing: -0.45px;
+  //   color: #282c36;
+  //   font-weight: bold;
+  //   margin-bottom: 16px;
+  // }
+`;
+
+const RequestBox = styled.div`
+  width : 90%;
+  margin-left : 5%;
+  margin-right : 5%;
+`;
+
+const ReferenceBox = styled.div`
+  width : 90%;
+  margin-left : 5%;
+  margin-right : 5%;
+  margin-bottom: 40px;
 `;

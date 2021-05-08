@@ -10,6 +10,15 @@ export function search(req) {
   });
 }
 
+export function getPartner(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partner/${req.extraUrl}`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
 export function searchjust(req) {
   return axios({
     method: "GET",
@@ -252,14 +261,6 @@ export function getRandomPartner(req) {
   });
 }
 
-export function getPartner(req) {
-  return axios({
-    method: "GET",
-    url: `${ROOT_URL}/partner/`,
-    params: req.params ? req.params : null,
-    headers: req.headers ? req.headers : null,
-  });
-}
 
 export function getPartnerCategory(req) {
   return axios({

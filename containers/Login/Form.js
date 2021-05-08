@@ -65,7 +65,7 @@ class FormConatiner extends React.Component {
         { width > 767.98 ? (
         <>
           <Logo src={logo_ic}/>
-          <Text.FontSize24 color={'#0a2165'} style={{marginBottom:90}}>온라인 맞춤 제조 플랫폼</Text.FontSize24>
+          <Text.FontSize24 color={'#0a2165'} style={{marginBottom:90}}>온라인 제조 상담 플랫폼</Text.FontSize24>
           <Input id="custom-css-outlined-input" placeholder="아이디"  onChange={Auth.setEmail}/>
           <Input id="custom-css-outlined-input" placeholder="비밀번호" type='password' onChange={Auth.setPassword} onKeyDown={this.handleKeyDown}/>
           <ButtonBox>

@@ -17,7 +17,7 @@ const camera_img = "static/images/camera.png";
 const emoticon_img = "static/images/emoticon.png";
 const pass2_img = "static/images/pass2.png";
 
-@inject("Project")
+@inject("Project", "Partner")
 @observer
 class ChatCardContainer extends React.Component {
   chatSocket = new WebSocket("wss://test.boltnnut.com/ws/chat/" + `1234` + "/");
@@ -145,18 +145,7 @@ class ChatCardContainer extends React.Component {
             </Message_User>
           )}
           {/* {!messageFromMe && <Message_User>상대</Message_User>} */}
-          {text_message.text &&
-            (text_message.text.split("/").pop().split(".").pop() === "png" ||
-            text_message.text.split("/").pop().split(".").pop() === "jpg" ||
-            text_message.text.split("/").pop().split(".").pop() === "jpeg" ||
-            text_message.text.split("/").pop().split(".").pop() === "gif" ? (
-              <Message_text fromMe={messageFromMe}>
-                {console.log("이미지")}
-                {/* <a href={temp}>{decodeURI(text_message.text.split("/").pop())}</a> */}
-                <img src={temp} style={{ width: "250px", height: "250px" }} />
-              </Message_text>
-            ) : text_message.text.split("/").pop().split(".").pop() ===
-              "docx" ? (
+          {text_message.text && text_message.text.indexOf("https://") > -1 ? (
               <Message_text fromMe={messageFromMe}>
                 {console.log("파일")}
                 {console.log(text_message.text.split("/").pop())}
@@ -167,7 +156,7 @@ class ChatCardContainer extends React.Component {
               </Message_text>
             ) : (
               <Message_text fromMe={messageFromMe}>{text}</Message_text>
-            ))}
+            )}
           <Message_Info>
             {bRead && (
               <>
@@ -175,7 +164,7 @@ class ChatCardContainer extends React.Component {
                 <br />
               </>
             )}
-            {time}
+            {time.slice(0,10) + " " + time.slice(11,16)}
           </Message_Info>
         </MessageContent>
       </Messages_li>
@@ -191,8 +180,7 @@ class ChatCardContainer extends React.Component {
           <ChattingRoom>
             <Chat>
               <Header>
-                <Font24>볼트앤너트</Font24>
-                <img src={search_img} />
+                <Font24></Font24>
                 <img src={prevent_img} />
                 <img src={star_img} />
               </Header>
@@ -299,7 +287,7 @@ class ChatCardContainer extends React.Component {
                   }}
                 />
                 <ProfileImg>
-                  <img src={logo_img} />
+                  {/* <img src={logo_img} /> */}
                 </ProfileImg>
                 <Font20>볼트앤너트</Font20>
                 <Font18>02-926-6637</Font18>
@@ -314,22 +302,6 @@ class ChatCardContainer extends React.Component {
               <Partner>
                 <Font20 style={{ alignSelf: "flex-start" }}>파트너 목록</Font20>
                 <PartnerContainer>
-                  <PartnerCard>
-                    <div>
-                      <img src={logo_img} />
-                    </div>
-                    <span>볼트앤너트</span>
-                    <span></span>
-                    <span>21-04-19</span>
-                  </PartnerCard>
-                  <PartnerCard>
-                    <div>
-                      <img src={logo_img} />
-                    </div>
-                    <span>진영엔지니어링</span>
-                    <span></span>
-                    <span>오후 03:25</span>
-                  </PartnerCard>
                 </PartnerContainer>
               </Partner>
             </Info>
@@ -351,6 +323,7 @@ const Messages_li = styled.li`
 `;
 
 const MessageContent = styled.div`
+  word-break: break-all;
   display: flex;
   flex-direction: ${(props) => (!props.fromMe ? "row" : "row-reverse")};
 `;
@@ -418,11 +391,15 @@ const Message_text = styled.div`
   font-size: 18px;
   line-height: 40px;
   letter-spacing: -0.45px;
+  > a {
+    color: ${(props) => (props.fromMe ? "#ffffff" : "#282c36")};
+  }
 `;
 
 const ChattingRoom = styled.div`
   //padding: 20px 0;
   //max-width: 900px;
+  background-color: white;
   width: 100%;
   margin: 0 auto;
   //list-style: none;

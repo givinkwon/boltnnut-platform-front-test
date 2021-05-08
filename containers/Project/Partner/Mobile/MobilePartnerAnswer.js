@@ -1,21 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import Background from "../../components/Background";
-import Containerv1 from "../../components/Containerv1";
-import * as Title from "../../components/Title";
+import Background from "components/Background";
+import Containerv1 from "components/Containerv1";
+import * as Title from "components/Title";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import {toJS} from "mobx";
 import DownloadFile from "components/DownloadFile";
+import Answer from "stores/Answer";
 const infoImg = "static/images/info.svg";
 const file_img = "static/images/file2.png";
-@inject("Project", "Auth", "ManufactureProcess")
+@inject("Project", "Answer","Auth")
 @observer
 class PartnerAnswer extends React.Component {
   state = {
     value: null,
     partnerDetailList: [],
+    minRows: 1,
+    maxRows: 100,
   };
+
   downloadFile(urls) {
     console.log(urls);
 
@@ -27,6 +31,47 @@ class PartnerAnswer extends React.Component {
     a.click();
     a.remove();
     window.URL.revokeObjectURL(url);
+  }
+  
+  cancel = () => {
+    const {Project} = this.props;
+    Project.newIndex = 1;
+  }
+
+  submit = () => {
+    const {Project, Answer, Auth} = this.props;
+    //console.log(Project.projectDataList[0].id);
+    //console.log(Project.projectDataList[0].request_set[0].id);
+    //console.log(toJS(Auth.logged_in_partner.id));
+    //console.log(Answer.content1);
+    Answer.CreateAnswer(Project.projectDataList[0].id,toJS(Auth.logged_in_partner.id),Project.projectDataList[0].request_set[0].id,Answer.content1); // project, partner, request, content1
+    Project.newIndex = 3;
+  }
+  
+  answercontent = async (event) => {
+    const textareaLineHeight = 34;
+    const { minRows, maxRows } = this.state;
+    const { ManufactureProcess } = this.props;
+    const previousRows = event.target.rows;
+    event.target.rows = minRows; // reset number of rows in textarea
+
+    const currentRows = ~~(event.target.scrollHeight / textareaLineHeight);
+
+    if (currentRows === previousRows) {
+      event.target.rows = currentRows;
+    }
+
+    if (currentRows >= maxRows) {
+      event.target.rows = maxRows;
+      event.target.scrollTop = event.target.scrollHeight;
+    }
+
+    this.setState({
+      publicValue: event.target.value,
+      publicRows: currentRows < maxRows ? currentRows : maxRows,
+    });
+
+    Answer.content1 = event.target.value;
   }
 
   render() {
@@ -77,35 +122,38 @@ class PartnerAnswer extends React.Component {
     
     return (
       <Background>
-        {console.log("프로젝트 데이터리스트 확인")}
-        {console.log(toJS(projectDetailData))}
+
         <Containerv1>
           <Wrap>
             <MainBox>
               <MainInnerBox>
-                <FontSize26>실리콘 반려동물 샤워기</FontSize26>
+                <FontSize18>{projectDetailData.request_set[0].name}</FontSize18>
                 <ProjectInfoBox>
                   <InlineDiv>
-                    <FontSize18 style={{ color: "#86888c" }}>
-                      예상금액
-                    </FontSize18>
-                    <FontSize18 style={{ color: "#414550", marginLeft: 20 }}>
+                    <FontSize14 style={{ color: "#86888c" }}>
+                      예상견적
+                    </FontSize14>
+                    <FontSize14 style={{ color: "#414550", marginLeft: 20 }}>
                     {projectDetailData &&
-                      projectDetailData.request_set[0].price.toLocaleString(
-                        "ko-KR"
-                      ) + " 원"}
-                    </FontSize18>
-                    <FontSize18 style={{ color: "#86888c", marginLeft: 90 }}>
+                    projectDetailData.request_set[0].price.toLocaleString(
+                      "ko-KR"
+                    ) != 0
+                      ? projectDetailData.request_set[0].price.toLocaleString(
+                          "ko-KR"
+                        ) + " 원"
+                      : "미정"}
+                    </FontSize14>
+                    <FontSize14 style={{ color: "#86888c", marginLeft: 90 }}>
                       납기 기간
-                    </FontSize18>
-                    <FontSize18 style={{ color: "#414550", marginLeft: 20 }}>
+                    </FontSize14>
+                    <FontSize14 style={{ color: "#414550", marginLeft: 20 }}>
                       {period}
-                    </FontSize18>
+                    </FontSize14>
                   </InlineDiv>
                 </ProjectInfoBox>
-                <FontSize26>프로젝트 설명 및 요청사항</FontSize26>
+                <FontSize18>프로젝트 설명 및 요청사항</FontSize18>
                 <RequestSubContainer>
-                  <Font20>공개 내용</Font20>
+                  <FontSize14>공개 내용</FontSize14>
                   <RequestBox>
                     <RequestContent>
                       <pre style={{ whiteSpace: "break-spaces" }}>
@@ -147,7 +195,7 @@ class PartnerAnswer extends React.Component {
                 </RequestSubContainer>
                 {/* 프로젝트 답변하기 */}
                 <RequestSubContainer>
-                  <Font20>프로젝트 답변하기</Font20>
+                  <FontSize14>프로젝트 답변하기</FontSize14>
                   <RequestBox>
                     <RequestContent>
                       <TextAreaContent>
@@ -163,7 +211,7 @@ class PartnerAnswer extends React.Component {
                           value={this.state.value}
                           className={"textarea"}
                           placeholderStyle={{ fontWeight: "400" }}
-                          onChange={this.handleChange}
+                          onChange={this.answercontent}
                         />
                       </TextAreaContent>
                     </RequestContent>
@@ -178,39 +226,18 @@ class PartnerAnswer extends React.Component {
                   }}
                 >
                   <ButtonBox>
-                    <HomeBtn onClick={() => Router.push("/project")}>
+                    <HomeBtn onClick={() => this.cancel()}>
                       취소
                     </HomeBtn>
 
-                    <MyProjectBtn>프로젝트 답변 등록</MyProjectBtn>
+                    <MyProjectBtn onClick={() => this.submit()}>프로젝트 답변 등록</MyProjectBtn>
                   </ButtonBox>
                 </div>
 
                 {/* 버튼 2개 */}
               </MainInnerBox>
             </MainBox>
-            <SubBox>
-              <InlineDiv
-                style={{ justifyContent: "space-around", width: "133px", marginLeft: 0}}
-              >
-                <img src={infoImg} />
-                <FontSize18
-                  style={{
-                    fontWeight: 500,
-                    color: "#0933b3",
-                  }}
-                >
-                  프로젝트 답변
-                </FontSize18>
-              </InlineDiv>
-
-              <InlineDiv style={{ width: "150px", marginLeft: 0 }}>
-                <FontSize14>
-                  프로젝트 답변을 해주시면 1:1 채팅 및 비공개 자료를 요청하실 수
-                  있습니다.
-                </FontSize14>
-              </InlineDiv>
-            </SubBox>
+            
           </Wrap>
         </Containerv1>
       </Background>
@@ -391,16 +418,17 @@ const FontSize14 = styled.p`
 const Wrap = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 1200px;
+  width: 100%;
   margin-top: 50px;
   margin-bottom: 43px;
 `;
 
 const MainBox = styled.div`
+  padding
   display: flex;
   justify-content: center;
   // align-items: center;
-  width: 996px;
+  width: 100%;
   border-radius: 10px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   background-color: #ffffff;
@@ -409,8 +437,9 @@ const MainBox = styled.div`
 const MainInnerBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 932px;
   padding: 30px 0 94px 0;
+  margin-left : 5%;
+  margin-right : 5%;
 `;
 
 const SubBox = styled.div`
@@ -452,16 +481,18 @@ const MyProjectBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 242px;
+  width: 100%;
   height: 61px;
   border-radius: 5px;
   border: solid 1px #0933b3;
   cursor: pointer;
   background-color: #0933b3;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   line-height: 2.6;
   letter-spacing: -0.5px;
+  margin-left : 5%;
+  margin-right : 5%;
   color: #ffffff;
   &:hover {
     transition: all 0.5s;

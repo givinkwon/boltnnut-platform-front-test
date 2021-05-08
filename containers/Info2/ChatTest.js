@@ -4,11 +4,12 @@ import { inject, observer } from "mobx-react";
 import styled, { css } from "styled-components";
 import ChatCardContainer from "./ChatCard";
 import * as ChatAPI from "axios/Chat";
-import * as AnswerAPI from "axios/Answer";
+import * as PartnerAPI from "axios/Partner";
 import * as RequestAPI from "axios/Request";
 
+
 import { toJS } from "mobx";
-@inject("Auth", "Project")
+@inject("Auth", "Project", "Partner")
 @observer
 class ChatTestContainer extends React.Component {
   constructor(props) {
@@ -208,8 +209,8 @@ class ChatTestContainer extends React.Component {
 
   async componentDidMount() {
     // RoomNumber 체크하기
+    const {Partner} = this.props;
     const roomNum = this.props.roomName;
-
     let temp = new Date();
     let timezone = temp.getTimezoneOffset();
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
@@ -221,6 +222,18 @@ class ChatTestContainer extends React.Component {
       const reverseChat = res.data.results.reverse();
       ChatAPI.loadChatCount(roomNum).then((m_res) => {
         console.log(m_res);
+        // answer data 가져오기
+        const req = {
+          extraUrl: m_res.data.partner + `/`,
+          params: {
+          },
+        };
+        PartnerAPI.getPartner(req)
+        .then((res) => {
+          Partner.partnerdata = res.data;
+          console.log(toJS(Partner.partnerdata))
+        })
+
         reverseChat.forEach((message) => {
           const Messages = this.props.Project.chatMessages;
           let readState = true;

@@ -45,7 +45,7 @@ class TabletBanner9Container extends React.Component {
                 }}
                 onClick={() => Router.push("/request")}
               >
-                지금 무료 견적 받기
+                파트너 가입하기
               </Buttonv1>
             </div>
           </Fade>

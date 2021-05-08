@@ -29,7 +29,7 @@ const deleteButtonImg = "/static/images/delete.png";
 const fileImg = "/static/images/file.png";
 const calendar = "/static/images/facebook.png";
 
-const fileList = [];
+let fileList = [];
 let checkBox = false;
 let checkBox_one = false;
 
@@ -104,7 +104,11 @@ class FileUploadContainer extends Component {
     ],
     projectname: "",
   };
-
+  
+  componentDidMount = () => {
+    this.props.ManufactureProcess.reset()
+    fileList = []
+  }
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
   setNumCount = (data, val) => {
     console.log(val);
@@ -235,7 +239,7 @@ class FileUploadContainer extends Component {
 
   changeSubmit = () => {};
   requestSubmit = async (flag, id) => {
-    const { projectname } = this.state;
+    const { projectname, purposeAry } = this.state;
     const { ManufactureProcess, Schedule } = this.props;
 
     console.log(toJS(ManufactureProcess.totalorderPrice));
@@ -258,6 +262,10 @@ class FileUploadContainer extends Component {
       alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
       return false;
     }
+    if (ManufactureProcess.requestComment.length == 0 ) {
+      alert("공개내용을 작성해주세요");
+      return false;
+    }
 
     if (ManufactureProcess.requestComment.length > 4500) {
       alert("공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
@@ -276,8 +284,8 @@ class FileUploadContainer extends Component {
 
     let request_state = "";
     if (ManufactureProcess.purposeContent) {
-      console.log(purposeAry[ManufactureProcess.purposeContent - 1].name);
-      request_state = purposeAry[ManufactureProcess.purposeContent - 1].name;
+
+      request_state = this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
     }
     console.log(request_state);
 
@@ -425,6 +433,7 @@ class FileUploadContainer extends Component {
 
   purposeHandler = (item) => {
     const { ManufactureProcess } = this.props;
+    const { purposeAry } = this.state;
     console.log(ManufactureProcess.purposeContent);
     if (item.checked) {
       item.checked = false;
@@ -434,7 +443,7 @@ class FileUploadContainer extends Component {
     } else {
       item.checked = true;
       if (ManufactureProcess.purposeContent) {
-        purposeAry[ManufactureProcess.purposeContent - 1].checked = false;
+        this.state.purposeAry[ManufactureProcess.purposeContent - 1].checked = false;
       }
       ManufactureProcess.purposeContent = item.id;
     }
@@ -496,6 +505,7 @@ class FileUploadContainer extends Component {
   };
   async componentDidMount() {
     const { ManufactureProcess, Project, Schedule } = this.props;
+    const { purposeAry } = this.state;
     //console.log("didMount")
     // console.log(ManufactureProcess.changeProject);
     console.log(toJS(this.props.Project.projectDetailData.id));
@@ -503,7 +513,7 @@ class FileUploadContainer extends Component {
     console.log(toJS(ManufactureProcess.purposeContent));
 
     if (ManufactureProcess.changeProject) {
-      await purposeAry.map((item, idx) => {
+      await this.state.purposeAry.map((item, idx) => {
         item.checked = false;
       });
 
@@ -533,8 +543,8 @@ class FileUploadContainer extends Component {
       ManufactureProcess.date_conference;
 
       //ManufactureProcess.openFileArray.push(Project.projectDetailData.request_set[0].requestfile_set)
-      console.log(purposeAry);
-      await purposeAry.map((item, idx) => {
+
+      await this.state.purposeAry.map((item, idx) => {
         if (
           item.name === Project.projectDetailData.request_set[0].request_state
         ) {
@@ -1172,11 +1182,11 @@ class FileUploadContainer extends Component {
 
   render() {
     const { ManufactureProcess } = this.props;
-
+    const { purposeAry} = this.state;
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
-		다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
-		1. 가공품 목적 및 사용 환경
-		2. 가공 부품별 특이 사항
+		다음 사항이 명확하게 작성되어야 정확한 답변을 받을 가능성이 높습니다.
+		1. 제작품 목적 및 사용 환경
+		2. 제작 부품별 특이 사항
 		3. 공급처가 충족해야하는 발주 조건
 		`;
 
@@ -1299,21 +1309,9 @@ class FileUploadContainer extends Component {
                                   data.optionMid = e.detail;
 
                                   if (data.selectBig.name === "금형사출") {
-                                    if (data.checked) {
-                                      this.countQuantity(
-                                        data.quantity.value,
-                                        0
-                                      );
-                                    }
-                                    data.quantity = { label: "0", value: 0 };
+                                    data.quantity = { label: "0", value: "0" };
                                   } else {
-                                    if (data.checked) {
-                                      this.countQuantity(
-                                        data.quantity.value,
-                                        1
-                                      );
-                                    }
-                                    data.quantity = { label: "1", value: 1 };
+                                    data.quantity = { label: "1", value: "1" };
                                   }
                                   this.countPrice();
                                 }}
@@ -1984,7 +1982,7 @@ class FileUploadContainer extends Component {
 
             <SelectBox style={{ width: "555px", marginTop: "16px" }}>
               <InlineDiv style={{ alignItems: "flex-end" }}>
-                {purposeAry.map((item, idx) => {
+                {this.state.purposeAry.map((item, idx) => {
                   return (
                     <PurposeSelectCircle
                       active={item.checked}
@@ -2250,11 +2248,6 @@ const quantityAry = [
   { label: "직접 입력", value: "" },
 ];
 
-const purposeAry = [
-  { id: 1, name: "상담요청", checked: false },
-  { id: 2, name: "견적문의", checked: false },
-  { id: 3, name: "업체수배", checked: false },
-];
 const Select = styled(SelectComponent)`
   width: ${(props) => (props.width ? props.width : "180px")};
   display: ${(props) => (props.quantity === "직접 입력" ? "none" : "block")};

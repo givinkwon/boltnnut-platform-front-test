@@ -1,8 +1,8 @@
 import React from "react";
 import ClientContentContainer from "./Client/Content";
-import ClientMobileContentContainer from "./Client/MobileProject";
+import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobileProject";
 import PartnerContentContainer from "./Partner/Content";
-import PartnerMobileContentContainer from "./Partner/MobileProject";
+import PartnerMobileContentContainer from "./Partner/Mobile/MobileProject";
 import BannerContainer from "./Banner";
 import NavContainer from "./Nav.js";
 import SearchBar from "./SearchBar";
@@ -10,11 +10,16 @@ import ProjectDetailContainer from "./Client/ProjectDetail/ProjectDetail";
 import MobileProjectDetailContainer from "./Client/ProjectDetail/Mobile/MobileProjectDetail";
 import styled from "styled-components";
 import RequestComplete from "./RequestComplete";
-import PartnerAnswer from "./PartnerAnswer";
+import PartnerAnswer from "./Partner/PartnerAnswer";
+import MobilePartnerAnswer from "./Partner/Mobile/MobilePartnerAnswer";
 import Container from "components/Containerv1";
 import Background from "components/Background";
+import AnswerCompleteContainer from "./Partner/AnswerComplete"; 
+import MobileAnswerCompleteContainer from "./Partner/Mobile/MobileAnswerComplete"; 
+import AnswerComplete from "./Partner/AnswerComplete";
 
 import { inject, observer } from "mobx-react";
+
 
 @inject("Project", "Auth")
 @observer
@@ -29,12 +34,12 @@ class ProjectContainer extends React.Component {
     return (
       <>
         {Auth.logged_in_client &&
-          (this.props.width && this.props.width > 767.99 ? (
+          (this.props.width && this.props.width > 1279.98 ? (
             <div style={{ overflow: "visible" }}>
               <BannerContainer />
 
               {console.log(Project.newIndex)}
-              {Project.newIndex == 0 && <ClientContentContainer />}
+              {Project.newIndex == 0 && <ClientContentContainer length={this.props.length} />}
               {Project.newIndex == 1 && (
                 <ProjectDetailContainer user="client" />
               )}
@@ -51,7 +56,7 @@ class ProjectContainer extends React.Component {
             </div>
           ))}
         {Auth.logged_in_partner &&
-          (this.props.width && this.props.width > 767.99 ? (
+          (this.props.width && this.props.width > 1279.98 ? (
             <div style={{ overflow: "visible" }}>
               <BannerContainer />
 
@@ -63,17 +68,25 @@ class ProjectContainer extends React.Component {
                     </Container>
                   </Background>
                   <PartnerContentContainer length={this.props.length} />
-                  {/* <PartnerAnswer></PartnerAnswer> */}
                 </>
               )}
               {Project.newIndex == 1 && (
                 <ProjectDetailContainer user="partner" />
               )}
               {Project.newIndex == 2 && <PartnerAnswer />}
+              {Project.newIndex == 3 && <AnswerCompleteContainer />}
             </div>
           ) : (
             <div>
-              <PartnerMobileContentContainer width={this.props.width} />
+              {Project.newIndex == 0 && (
+                <PartnerMobileContentContainer width={this.props.width} />
+              )}
+              {Project.newIndex == 1 && (
+                <MobileProjectDetailContainer user="partner" />
+              )}
+              {Project.newIndex == 2 && <MobilePartnerAnswer />}
+              {Project.newIndex == 3 && <MobileAnswerCompleteContainer />}
+
             </div>
           ))}
       </>

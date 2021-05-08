@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import Background from '../../components/Background';
-import Containerv1 from '../../components/Containerv1';
-import * as Title from '../../components/Title';
+import Background from 'components/Background';
+import Containerv1 from 'components/Containerv1';
+import * as Title from 'components/Title';
 import Router from 'next/router';
 
-class RequestComplete extends React.Component {
+class MobileRequestComplete extends React.Component {
 	render() {
 		return (
 			<Background>
@@ -13,7 +13,7 @@ class RequestComplete extends React.Component {
 					<RequestCompleteBox>
 						<RequestCompleteTitle>
 							<FontSize26 style={{ marginBottom: '20px' }}>
-							고객님의 제조 상담이 접수 되었습니다.
+								고객님의 제조 상담이 접수 되었습니다.
 							</FontSize26>
 						</RequestCompleteTitle>
 
@@ -46,7 +46,7 @@ class RequestComplete extends React.Component {
 	}
 }
 
-export default RequestComplete;
+export default MobileRequestComplete;
 
 // global
 const InlineDiv = styled.div`
@@ -95,20 +95,24 @@ const RequestCompleteBox = styled.div`
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	width: 1200px;
+	width: 100%;
 	height: 496px;
 	margin-top: 60px;
 	margin-bottom: 200px;
 	border-radius: 10px;
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 	background-color: #ffffff;
+	padding-left : 5%;
+	padding-right : 5%;
 `;
 
 const RequestCompleteTitle = styled.div`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	width: 996px;
+	width: 100%;
+	margin-left: 5%;
+	margin-right: 5%;
 	border-bottom: solid 1px #c6c7cc;
 `;
 
@@ -119,24 +123,31 @@ const RequestCompleteDesc = styled.div`
 	flex-direction: column;
 	margin-top: 30px;
 	margin-bottom: 90px;
+	width: 100%;
+	margin-left: 5%;
+	margin-right: 5%;
 `;
 
 const ButtonBox = styled.div`
 	display: flex;
 	justify-content: space-between;
-	width: 520px;
+	width: 100%;
+	margin-left: 5%;
+	margin-right: 5%;
 `;
 
 const HomeBtn = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 242px;
+	width: 100%;
 	height: 61px;
 	border-radius: 5px;
 	border: solid 1px #0933b3;
 	cursor: pointer;
 	font-size: 20px;
+	margin-left : 5%;
+	margin-right : 5%;
 	font-weight: bold;
 	line-height: 2.6;
 	letter-spacing: -0.5px;
@@ -151,22 +162,32 @@ const HomeBtn = styled.div`
 `;
 
 const MyProjectBtn = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 242px;
-	height: 61px;
-	border-radius: 5px;
-	border: solid 1px #0933b3;
-	cursor: pointer;
-	background-color: #0933b3;
-	font-size: 20px;
-	font-weight: bold;
-	line-height: 2.6;
-	letter-spacing: -0.5px;
-	color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 61px;
+  border-radius: 5px;
+  border: solid 1px #0933b3;
+  cursor: pointer;
+  background-color: #0933b3;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 2.6;
+  letter-spacing: -0.5px;
+  margin-left : 5%;
+  margin-right : 5%;
+  color: #ffffff;
 	&:hover {
 		transition: all 0.5s;
 		background-color: #0a2165;
 	}
+`;
+
+const FontSize14 = styled.p`
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.86;
+  letter-spacing: -0.14px;
+  color: #282c36;
 `;

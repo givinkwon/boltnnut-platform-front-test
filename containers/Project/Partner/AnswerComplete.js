@@ -1,19 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
-import Background from '../../components/Background';
-import Containerv1 from '../../components/Containerv1';
-import * as Title from '../../components/Title';
+import Background from 'components/Background';
+import Containerv1 from 'components/Containerv1';
+import * as Title from 'components/Title';
+import { inject, observer } from "mobx-react";
+import {toJS} from "mobx";
 import Router from 'next/router';
 
-class RequestComplete extends React.Component {
+
+@inject("Project")
+@observer
+class AnswerComplete extends React.Component {
+
+	search = () => {
+		const { Project } = this.props;
+		Project.newIndex = 0;
+	}
+
 	render() {
+
 		return (
 			<Background>
 				<Containerv1>
 					<RequestCompleteBox>
 						<RequestCompleteTitle>
 							<FontSize26 style={{ marginBottom: '20px' }}>
-							고객님의 제조 상담이 접수 되었습니다.
+								고객님의 답변이 전달 되었습니다.
 							</FontSize26>
 						</RequestCompleteTitle>
 
@@ -22,14 +34,14 @@ class RequestComplete extends React.Component {
 								style={{ alignItems: 'center', justifyContent: 'center' }}
 							>
 								<FontSize22>
-									문의에 적합한 전문 제조사들이 의뢰주신 상담 내용을 확인한 후
+									해당 상담을 의뢰주신 클라이언트님이 고객님의 답변 내용을 확인하고
 								</FontSize22>
 							</InlineDiv>
 							<InlineDiv
 								style={{ alignItems: 'center', justifyContent: 'center' }}
 							>
 								<FontSize22>
-									상담에 대한 답변을 드립니다. 답변이 도착하면 카카오톡으로 알려드립니다.
+									답변을 주실 예정입니다. 메세지가 도착하면 카카오톡으로 알려드립니다.
 								</FontSize22>
 							</InlineDiv>
 						</RequestCompleteDesc>
@@ -37,7 +49,7 @@ class RequestComplete extends React.Component {
 						<ButtonBox>
 							<HomeBtn onClick={() => Router.push('/')}>홈으로 가기</HomeBtn>
 
-							<MyProjectBtn onClick={() => Router.push('/project')}>내 프로젝트 보기</MyProjectBtn>
+							<MyProjectBtn onClick={() => this.search() }>프로젝트 찾기</MyProjectBtn>
 						</ButtonBox>
 					</RequestCompleteBox>
 				</Containerv1>
@@ -46,7 +58,7 @@ class RequestComplete extends React.Component {
 	}
 }
 
-export default RequestComplete;
+export default AnswerComplete;
 
 // global
 const InlineDiv = styled.div`
