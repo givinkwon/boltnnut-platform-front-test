@@ -2210,6 +2210,7 @@ class FileUploadContainer extends Component {
                       alert("수량을 입력해주세요");
                     } else {
                       ManufactureProcess.checkPaymentButton = true;
+                      this.requestSubmit(1);
                     }
 
                     // console.log(
@@ -2219,7 +2220,7 @@ class FileUploadContainer extends Component {
                     //   console.log(item.file);
                     // });
 
-                    this.requestSubmit(1);
+
                   }}
                 >
                   상담 및 가격 요청하기
