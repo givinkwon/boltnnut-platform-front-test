@@ -1,50 +1,67 @@
-import React from 'react';
-import Background from 'components/Background';
-import Containerv1 from 'components/Containerv1';
-import * as Title from 'components/Title';
-import styled from 'styled-components';
-import Fade from 'react-reveal/Fade';
+import React from "react";
+import Background from "components/Background";
+import Containerv1 from "components/Containerv1";
+import * as Title from "components/Title";
+import styled from "styled-components";
+import Fade from "react-reveal/Fade";
 import { inject, observer } from "mobx-react";
 
-const MobileBanner1Img = 'static/images/Home/Mobile/MobileBanner1/MobileBanner1Img.svg';
-@inject('Proposal','Partner')
+// const MobileBanner1Img =
+//   "static/images/Home/Mobile/MobileBanner1/MobileBanner1Img.svg";
+
+const MobileBannerImg =
+  "static/images/Home/Mobile/MobileBanner1/MobileBannerImg.png";
+const backgroundImg = "/static/images/Home/Banner3/Banner3_Bg.png";
+
+@inject("Proposal", "Partner")
 @observer
 class MobileBanner1Container extends React.Component {
   render() {
     const ProjectCount = this.props.Proposal.projects_count;
     return (
-      <Background>
+      <Background backgroundColor={"#0a2165"}>
         <ContentContainer>
-            <Fade bottom>
-              <Head>자동 견적 알고리즘</Head>
-              <Main><span>1초만에</span> 제조 의뢰<br/>견적 받기</Main>
-              <ImageContainer>
-                <img src={MobileBanner1Img}/>
-              </ImageContainer>
-              <Content>{ProjectCount}건의 데이터에 기반한 자동견적 알고리즘이<br/>평균 2일의 견적 시간을 한 번에 해결해 드립니다.</Content>
-            </Fade>
+          <Fade bottom>
+            <Head>볼트앤너트 AI 자동 견적</Head>
+            <Main>
+              {/* <span>
+                바로 나오는 <br />{" "}
+              </span>{" "} */}
+              바로 나오는
+              <br />
+              AI 자동 견적
+            </Main>
+            <ImageContainer>
+              <img src={MobileBannerImg} />
+            </ImageContainer>
+            <Content>
+              볼트앤너트 AI 자동 견적 알고리즘이
+              <br />
+              제작품에 대한 견적 범위를 바로 안내해드립니다.
+            </Content>
+          </Fade>
         </ContentContainer>
       </Background>
     );
   }
-};
+}
 export default MobileBanner1Container;
 const ContentContainer = styled(Containerv1)`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   margin: 29px 0px 18px 0px;
-`
+`;
 const Head = styled(Title.FontSize20)`
   height: 19px;
   font-size: 14px;
-  color: #0933b3;
+  color: #ffffff;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -54,8 +71,9 @@ const Head = styled(Title.FontSize20)`
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
   }
-`
+`;
 const Main = styled(Title.FontSize56)`
+  color: #ffffff;
   font-size: 23px;
   font-weight: 500;
   font-stretch: normal;
@@ -69,21 +87,20 @@ const Main = styled(Title.FontSize56)`
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 23px;
   }
-`
+`;
 const Content = styled(Title.FontSize24)`
-  height:46px;
+  height: 46px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.47;
-  letter-spacing: -0.38x;
+  letter-spacing: -0.4px;
   text-align: center;
-  color: #555963;
+  color: #ffffff;
   margin-bottom: 100px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 16px;
     height: 44px;
   }
-`
-
+`;

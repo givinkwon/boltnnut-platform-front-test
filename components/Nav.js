@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import { withRouter } from 'next/router'
+import { withRouter } from "next/router";
 import Router from "next/router";
 // components
 import * as Text from "./Text";
@@ -28,7 +28,7 @@ class Nav extends React.Component {
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
   logout = () => {
     localStorage.removeItem("token");
-    if(localStorage.getItem("expiry")) {
+    if (localStorage.getItem("expiry")) {
       localStorage.removeItem("expiry");
     }
     window.location.href = "/";
@@ -38,7 +38,7 @@ class Nav extends React.Component {
     const token = await localStorage.getItem("token");
     const { route, pathname } = Router.router;
     const splitedRoute = route.split("/");
-    const requestId = window.location.pathname.split('/').pop()
+    const requestId = window.location.pathname.split("/").pop();
 
     // 사용자 접근 제어
     if (token) {
@@ -79,13 +79,11 @@ class Nav extends React.Component {
           }
         }
       });
-    } else
-     {
-
-      if(splitedRoute[1] === 'partner') {
+    } else {
+      if (splitedRoute[1] === "partner") {
         alert("접근할 수 없는 페이지입니다");
         Router.push("/login");
-       }
+      }
 
       // // 로그인 하지 않고 /partner/[id]로 들어오는 사용자 리다이렉트
       // if(splitedRoute[1] === 'partner' && splitedRoute.length >= 3) {
@@ -94,13 +92,13 @@ class Nav extends React.Component {
       // }
       this.needPermission.forEach((url) => {
         if (url === splitedRoute[1]) {
-          if(requestId != 923){
-          alert("로그인이 필요합니다");
-          Router.push("/login");
+          if (requestId != 923) {
+            alert("로그인이 필요합니다");
+            Router.push("/login");
           }
         }
       });
-     }
+    }
 
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     await Auth.checkLogin();
@@ -112,254 +110,162 @@ class Nav extends React.Component {
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     Auth.checkLogin();
   }
-  render () {
+  render() {
     const { Auth, Partner } = this.props;
     const { url, is_open, is_profile, token } = this.state;
 
     return (
       <>
-      <NavBox>
-        <Containerv1 style={{display: "inline", justifyContent: "space-between"}}>
-          <NavWrap>
-            <Logo src={logo_ic} onClick={() => Router.push("/")} />
-            <Menu is_open={is_open}>
-              <Close>
-                <Icon
-                  src={close_ic}
-                  onClick={() => this.setState({ is_open: false })}
-                />
-              </Close>
-
-              {this.props.Auth.logged_in_user ? (
-                this.props.Auth.logged_in_user.type === 0 ? (
-                  /* client로 로그인 */
-
-                  <Fragment>
-                    {/* <NavLink
-                      onClick={() => Router.push("/answer")}
-                      active={url.indexOf("answer") > -1}
-                    >
-                      보낸 의뢰
-                    </NavLink> */}
-                    {/*<NavLink
-                      onClick={
-                        async () => {
-                          Router.push("/partner");
-                          if(Router.pathname === '/partner') {
-                            Router.reload();
-                          }
-                        }
-                      }
-                      active={url.indexOf("partner") > -1}
-                    >
-                      제조사 찾기
-                    </NavLink>*/}
-                    <NavLink
-                      onClick={() => Router.push("/project")}
-                      active={url.indexOf("project") > -1}
-                    >
-                      <p class="line"> 프로젝트 관리 </p>
-                    </NavLink>
-                    <NavLink
-                      onClick={() => Router.push("/magazine")}
-                      active={url.indexOf("magazine") > -1}
-                    >
-                      <p class="line"> 제조 인사이트 </p>
-                    </NavLink>
-                    <NavLink
-                      onClick={() => Router.push("/info")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      <p class="line"> 회사소개 </p>
-                    </NavLink>
-                    {/*<NavLink
-                      onClick={() => Router.push("/info?tab=1")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      이용 안내
-                    </NavLink>*/}
-                  </Fragment>
-                ) : (
-                  /* partner로 로그인 */
-                  <Fragment>
-                    {/*<NavLink
-                      first
-                      onClick={() => Router.push("/proposal")}
-                      active={url.indexOf("proposal") > -1}
-                    >
-                      받은 의뢰
-                    </NavLink>*/}
-                    {/*<NavLink
-                      onClick={() => Router.push("/offered?tab=1")}
-                      active={url.indexOf("offered") > -1}
-                    >
-                      보낸 제안서
-                    </NavLink>*/}
-                    {/*<NavLink
-                      onClick={
-                        async () => {
-                          await Router.push("/partner");
-                          if(Router.pathname === '/partner') {
-                            Router.reload();
-                          }
-                        }
-                      }
-                      active={url.indexOf("partner") > -1}
-                    >
-                      제조사 찾기
-                    </NavLink>*/}
-                     <NavLink
-                      onClick={() => Router.push("/project")}
-                      active={url.indexOf("project") > -1}
-                    >
-                      <p class="line"> 프로젝트 관리 </p>
-                    </NavLink>
-                    <NavLink
-                      onClick={() => Router.push("/magazine")}
-                      active={url.indexOf("magazine") > -1}
-                    >
-                      제조 인사이트
-                    </NavLink>
-                    <NavLink
-                      onClick={() => Router.push("/info")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      회사 소개
-                    </NavLink>
-                    {/*<NavLink
-                      onClick={() => Router.push("/info?tab=2")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      이용 안내
-                    </NavLink>*/}
-                  </Fragment>
-                )
-              ) : (
-                /* 로그인 안되어있는 경우 */
-                <Fragment>
-                  
-                  {/*<NavLink
-                    onClick={
-                      async () => {
-                        await Router.push("/partner");
-                        if(Router.pathname === '/partner') {
-                          Router.reload();
-                        }
-                      }
-                    }
-                    active={url.indexOf("partner") > -1}
-                  >
-                    제조사 찾기
-                  </NavLink>*/}
-
-                  {/* <NavLink
-                      onClick={() => Router.push("/magazine")}
-                      active={url.indexOf("magazine") > -1}
-                    >
-                      프로젝트 관리
-                  </NavLink>
-                   */}
-
-                  <NavLink
-                      onClick={() => Router.push("/project")}
-                      active={url.indexOf("project") > -1}
-                    >
-                      <p class="line"> 프로젝트 관리 </p>
-                    </NavLink>
-                  <NavLink
-                      onClick={() => Router.push("/magazine")}
-                      active={url.indexOf("magazine") > -1}
-                    >
-                      제조 인사이트
-                  </NavLink>
-                  <NavLink
-                      onClick={() => Router.push("/info")}
-                      active={url.indexOf("info") > -1}
-                    >
-                      회사소개
-                  </NavLink>
-                  {/*<NavLink
-                  onClick={
-                    async () => {
-                      await Router.push("/info");
-                      if(Router.pathname === '/info') {
-                        Router.reload();
-                      }
-                    }
-                  }
-                  active={url.indexOf("info") > -1}>
-                    서비스 소개
-                </NavLink>*/}
-                
-                </Fragment>
-              )}
-
-              {token ? (
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <Avatar
-                    src={profile}
-                    onClick={() => this.setState({ is_profile: !is_profile })}
+        <NavBox>
+          <Containerv1
+            style={{ display: "inline", justifyContent: "space-between" }}
+          >
+            <NavWrap>
+              <Logo src={logo_ic} onClick={() => Router.push("/")} />
+              <Menu is_open={is_open}>
+                <Close>
+                  <Icon
+                    src={close_ic}
+                    onClick={() => this.setState({ is_open: false })}
                   />
-                  {is_profile && (
-                    <ProfileMenu>
-                      {Auth.logged_in_user.type == 1 ? (
-                        <div onClick={async () => await Router.push("/profile")}>
+                </Close>
+
+                {this.props.Auth.logged_in_user ? (
+                  this.props.Auth.logged_in_user.type === 0 ? (
+                    /* client로 로그인 */
+
+                    <Fragment>
+                      <NavLink
+                        onClick={() => Router.push("/project")}
+                        active={url.indexOf("project") > -1}
+                      >
+                        <p class="line"> 프로젝트 관리 </p>
+                      </NavLink>
+                      {/* <NavLink
+                        onClick={() => Router.push("/manufacturer")}
+                        active={url.indexOf("manufacturer") > -1}
+                      >
+                        <p class="line"> 제조사 찾기 </p>
+                      </NavLink> */}
+                      <NavLink
+                        onClick={() => Router.push("/magazine")}
+                        active={url.indexOf("magazine") > -1}
+                      >
+                        <p class="line"> 제조 인사이트 </p>
+                      </NavLink>
+                    </Fragment>
+                  ) : (
+                    /* partner로 로그인 */
+                    <Fragment>
+          
+                      <NavLink
+                        onClick={() => Router.push("/project")}
+                        active={url.indexOf("project") > -1}
+                      >
+                        <p class="line"> 프로젝트 찾기 </p>
+                      </NavLink>
+                      <NavLink
+                        onClick={() => Router.push("/magazine")}
+                        active={url.indexOf("magazine") > -1}
+                      >
+                        제조 인사이트
+                      </NavLink>
+                     
+                    </Fragment>
+                  )
+                ) : (
+                  /* 로그인 안되어있는 경우 */
+                  <Fragment>
+
+                    <NavLink
+                      onClick={() => Router.push("/project")}
+                      active={url.indexOf("project") > -1}
+                    >
+                      <p class="line"> 프로젝트 찾기 </p>
+                    </NavLink>
+                    {/* <NavLink
+                        onClick={() => Router.push("/manufacturer")}
+                        active={url.indexOf("manufacturer") > -1}
+                      >
+                        <p class="line"> 제조사 찾기 </p>
+                      </NavLink> */}
+                    <NavLink
+                      onClick={() => Router.push("/magazine")}
+                      active={url.indexOf("magazine") > -1}
+                    >
+                      제조 인사이트
+                    </NavLink>
+                  </Fragment>
+                )}
+                {/* 로그인한/안한 경우 */}
+                {token ? (
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Avatar
+                      src={profile}
+                      onClick={() => this.setState({ is_profile: !is_profile })}
+                    />
+                    {is_profile && (
+                      <ProfileMenu>
+                        <div onClick={() => Router.push("/account?tab=1")}>
                           <Text.FontSize16 fontWeight={500}>
-                            프로필
+                            계정설정
                           </Text.FontSize16>
                         </div>
-                      ) : null}
-                      {/* <div onClick={() => Router.push("/store?tab=1")}>
-                        <Text.FontSize16 fontWeight={500}>
-                          {Auth.logged_in_user.type == 1 ? '이용요금' : '이용요금'}
-                        </Text.FontSize16>
-                      </div> */}
-                      <div onClick={() => Router.push('/account?tab=1')}>
-                        <Text.FontSize16 fontWeight={500}>
-                          계정설정
-                        </Text.FontSize16>
-                      </div>
-                      <div onClick={this.logout}>
-                        <Text.FontSize16 fontWeight={500}>
-                          로그아웃
-                        </Text.FontSize16>
-                      </div>
-                    </ProfileMenu>
-                  )}
-                </div>
-              ) : (
-                <NavLink
-                  onClick={() => {
-                    Router.push("/login"), Auth.reset();
-                  }}
-                  active={url.indexOf("login") > -1}
-                >
-                  로그인
-                </NavLink>
-                
-              )}
-
-              <ButtonContainer
-                    first
-                    onClick={() => Router.push("/request")}
-                    //onClick={() => Router.push("/request?big=4&mid=")}
-                    active={url.indexOf("request") > -1}
+                        <div onClick={this.logout}>
+                          <Text.FontSize16 fontWeight={500}>
+                            로그아웃
+                          </Text.FontSize16>
+                        </div>
+                      </ProfileMenu>
+                    )}
+                  </div>
+                ) : (
+                  <NavLink
+                    onClick={() => {
+                      Router.push("/login"), Auth.reset();
+                    }}
+                    active={url.indexOf("login") > -1}
                   >
-                    견적 받기
-              </ButtonContainer>
-            </Menu>
-            <Icon
-              src={hamburger_ic}
-              onClick={() => this.setState({ is_open: true })}
-            />
-            {is_open && (
-              <BG onClick={() => this.setState({ is_open: false })} />
-            )}
-          </NavWrap>
-        </Containerv1>
-      </NavBox>
-      <div style={{height: 60}} />
-    </>
+                    로그인
+                  </NavLink>
+                )}
+
+                {this.props.Auth.logged_in_user && this.props.Auth.logged_in_user.type === 1 ? 
+                (
+                    /* partner로 로그인 */
+                    <ButtonContainer
+                    first
+                    onClick={() => Router.push("/project")}
+
+                    active={url.indexOf("project") > -1}
+                  >
+                    프로젝트 관리
+                  </ButtonContainer>
+
+                ) : (
+                <ButtonContainer
+                  first
+                  onClick={() => Router.push("/request")}
+
+                  active={url.indexOf("request") > -1}
+                >
+                  상담 받기
+                </ButtonContainer>
+                )
+              }
+              </Menu>
+              <Icon
+                src={hamburger_ic}
+                onClick={() => this.setState({ is_open: true })}
+              />
+              {is_open && (
+                <BG onClick={() => this.setState({ is_open: false })} />
+              )}
+            </NavWrap>
+          </Containerv1>
+        </NavBox>
+        <div style={{ height: 60 }} />
+      </>
     );
   }
 }
@@ -393,7 +299,7 @@ const Container = styled.div`
   margin-right: 0% !important;
   margin-left: 0% !important;
   width: 100%;
-`
+`;
 const Avatar = styled.img`
   width: 32px;
   height: 32px;
@@ -457,7 +363,6 @@ const Menu = styled.div`
         right: 0%;
       `}
   }
-
 `;
 const NavLink = styled.p`
   margin: 0px;
@@ -466,6 +371,7 @@ const NavLink = styled.p`
   color: #000000;
   display: flex;
   align-items: center;
+  font-weight: 500;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
     font-weight: 500;
@@ -498,24 +404,20 @@ const NavLink = styled.p`
       margin-left: 0px !important;
     `}
   ${(props) =>
-    props.active ?
-    (
-    css`
-      font-weight: 700;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #0a2165;
-      font-size: 22px;
-      border-bottom: 4px solid #0a2165;
-    `) :
-    (
-    css`
-      font-weight: 500;
-      background-color: rgba(255, 255, 255, 0.1);
-      font-size: 20px;
-      font-weight: 500;
-    `
-    )
-    }
+    props.active
+      ? css`
+          font-weight: 700;
+          background-color: rgba(255, 255, 255, 0.1);
+          color: #0a2165;
+          font-size: 22px;
+          border-bottom: 4px solid #0a2165;
+        `
+      : css`
+          font-weight: 500;
+          background-color: rgba(255, 255, 255, 0.1);
+          font-size: 20px;
+          font-weight: 500;
+        `}
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
   }
@@ -540,38 +442,35 @@ const Close = styled.div`
 `;
 
 const ButtonContainer = styled(Buttonv1)`
-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
-font-weight: bold !important;
-line-height: 0.69 !important;
-letter-spacing: -0.4px !important;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+  font-weight: bold !important;
+  line-height: 0.69 !important;
+  letter-spacing: -0.4px !important;
 
-
-@media (min-width: 768px) and (max-width: 991.98px) {
-  width: 110px;
-  height: 41px;
-  font-size: 14px;
-  margin-left: 22px;
-}
-@media (min-width: 992px) and (max-width: 1299.98px) {
-  width: 120px;
-  height: 41px;
-  font-size: 14px;
-  margin-left: 26px;
-}
-@media (min-width: 1300px) and (max-width: 1599.98px) {
-  width: 130px;
-  height: 41px;
-  font-size: 16px;
-  margin-left: 30px;
-}
-@media (min-width: 1600px) {
-  width: 130px;
-  height: 41px;
-  font-size: 16px;
-  margin-left: 34px;
-}
-
-`
-
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 110px;
+    height: 41px;
+    font-size: 14px;
+    margin-left: 22px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 120px;
+    height: 41px;
+    font-size: 14px;
+    margin-left: 26px;
+  }
+  @media (min-width: 1300px) and (max-width: 1599.98px) {
+    width: 130px;
+    height: 41px;
+    font-size: 16px;
+    margin-left: 30px;
+  }
+  @media (min-width: 1600px) {
+    width: 130px;
+    height: 41px;
+    font-size: 16px;
+    margin-left: 34px;
+  }
+`;
 
 export default Nav;

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="63" height="24" viewBox="0 0 63 24">
+    <text fill="#0a2165" font-family="NotoSansCJKkr-Regular, Noto Sans CJK KR" font-size="15px" letter-spacing="-0.025em" transform="translate(11 18)">
+        <tspan x="0" y="0">파트너</tspan>
+    </text>
+    <g fill="none" stroke="#0a2165">
+        <rect width="63" height="24" stroke="none" rx="12"/>
+        <rect width="62" height="23" x=".5" y=".5" rx="11.5"/>
+    </g>
+</svg>

@@ -15,6 +15,7 @@ export function getNextPage(req) {
 }
 
 export function getMagazine(req) {
+  console.log(req)
   return axios({
     method: 'GET',
     url: `${ROOT_URL}/magazine/`,
@@ -29,5 +30,12 @@ export function getMagazineDetail(req) {
     url: `${ROOT_URL}/magazine/${req.id}/`,
     params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
+  })
+}
+
+export function getMagazineCategory(req) {
+  return axios({
+    method: 'GET',
+    url: `${ROOT_URL}/magazine_category`,
   })
 }

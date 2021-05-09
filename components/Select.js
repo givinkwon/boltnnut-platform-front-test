@@ -1,5 +1,7 @@
+import { keyframes } from 'styled-components'
 import React from "react";
 import Select from "react-select";
+import makeAnimated from 'react-select/animated';
 
 const customStyles = {
   dropdownIndicator: () => ({
@@ -40,10 +42,17 @@ class SelectComp extends React.Component {
   handleChange = (selectedOption) => {
     this.props.onChange(selectedOption);
   };
+  handleClick = (click) => {
+    this.props.onClick(click);
+  };
+  handleBlur = (blur) => {
+    this.props.onBlur(blur);
+  };
   render() {
     const { options, placeholder, styles, getOptionLabel,defaultValue, value } = this.props;
     return (
       <Select
+        // components = {menuani}
         id={this.props.id}
         className={this.props.className}
         styles={styles ? styles : customStyles}

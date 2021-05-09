@@ -7,8 +7,8 @@ import { inject, observer } from 'mobx-react'
 import Container from 'components/Containerv1';
 import ProposalCard from 'components/ProposalCard';
 import Background from 'components/Background';
-import Project from '../../stores/Project';
-
+import Project from 'stores/Project';
+import { toJS } from "mobx";
 const pass1 = 'static/images/pass1.png'
 const pass2 = 'static/images/pass2.png'
 
@@ -34,73 +34,97 @@ class MobileProjectContentContainer extends React.Component {
     }
   }
   
-  async componentDidMount() {
-    console.log("<Mobile> did mount")
-    const { Project, Auth } = this.props 
-    console.log(Project.current_user_id)
-    
-    await Auth.checkLogin();
-    if(Auth.logged_in_client){
-      Project.getPage(Auth.logged_in_client.id)  
-    }
-    console.log(Auth.logged_in_client)    
-  }
 
-  // afterChangeHandler = (current) => {
-  //   if(current === 0){
-  //     this.setState({next: true, prev: false})
-  //   } else {
-  //       this.setState({next: true, prev: true})
-  //   }
-  // }
- 
+  pushToDetail = async (id) => {
+    const { Project } = this.props;
+    console.log(id, Project.newIndex);
+
+    await Project.getProjectDetail(id);
+    Project.newIndex = 1;
+    Project.selectedProjectId = id;
+    // await Router.push(`/project/${id}`);
+    Project.setProjectDetailData(id);
+  };
+
+  async componentDidMount() {
+    const { Project, Auth } = this.props;
+    Project.newIndex = 0;
+    Project.search_text = "";
+    Project.currentPage = 1;
+
+    console.log("did mount");
+
+    await Auth.checkLogin();
+    if (Auth.logged_in_partner) {
+      Project.getProjectByPrice();
+    }
+  }
 
   movePage = (e) => {
-    const { Project, Auth } = this.props 
-    const newPage = e.target.innerText*1;    
-    
-    Project.currentPage = newPage
-    Project.getPage(Auth.logged_in_client.id, newPage)
-  }
+    const { Project, Auth } = this.props;
+    e.preventDefault();
+    // Project.category_reset()
+    const newPage = e.target.innerText * 1;
 
-  pageNext = () => {  
-    const { Project, Auth } = this.props  
+    Project.currentPage = newPage;
+    Project.getProjectByPrice(Project.search_text, newPage);
+  };
 
-    if (Project.currentPage  < Project.project_page) {
-      const nextPage = Project.currentPage+1  
-      Project.currentPage = nextPage
-      Project.getPage(Auth.logged_in_client.id, Project.currentPage);
-    }        
-  }
-  
-  pagePrev = () => {
-    const { Project, Auth } = this.props        
-  
-    if (Project.currentPage  > 1) {
-      const newPage = Project.currentPage  - 1
-      Project.currentPage = newPage          
-      Project.getPage(Auth.logged_in_client.id, Project.currentPage)
+  pageNext = (e) => {
+    const { Project, Auth } = this.props;
+    e.preventDefault();
+    if (Project.currentPage < Project.project_page) {
+      // Project.category_reset()
+      const nextPage = Project.currentPage + 1;
+      Project.currentPage = nextPage;
+      Project.getProjectByPrice(Project.search_text, Project.currentPage);
     }
-  }
+  };
 
+  pagePrev = (e) => {
+    const { Project } = this.props;
+    e.preventDefault();
+    if (Project.currentPage > 1) {
+      // Project.category_reset()
+      const newPage = Project.currentPage - 1;
+      Project.currentPage = newPage;
+      Project.getProjectByPrice(Project.search_text, Project.currentPage);
+    }
+  };
+ 
   render() {
     const { Project } = this.props
     const current_set = (parseInt((Project.currentPage-1) /5)+1)    
-
-    // { Project.projectData.length > 0 && Project.projectData.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             
+    console.log(toJS(Project.projectDataList))
+                           
       return(
         <>          
         <div>
         <Header style={{marginBottom: '0px'}}>
             <Font16>전체 프로젝트</Font16>
         </Header>
-          {Project.projectDataList && Project.projectDataList.map((item, idx) => {
+          {Project.projectDataList && Project.currentPage > 0 && Project.projectDataList.map((item, idx) => {
             //   {data.map((item, idx) => {
             return(            
               <Background style={{marginBottom: '3px'}}>
-                <Container>        
-                  <ProposalCard width={this.props.width} data={item} handleIntersection={this.handleIntersection}/> 
-                </Container>          
+                
+                <Container>
+                  
+                <div
+                          style={{ cursor: "pointer", width: "100%" }}
+                          onClick={() => this.pushToDetail(item.id)}
+                >    
+
+                  <ProposalCard data={item}
+                                middleCategory={Project.middle_category_name[idx]}
+                                mainCategory={Project.main_category_name[idx]}
+                                newData={Project.data_dt[idx]}
+                                checkTotal={Project.filter_price}
+                                handleIntersection={this.handleIntersection}
+                                customer="partner"/> 
+                </div>  
+                </Container>
+                           
               </Background>
             )        
         })}

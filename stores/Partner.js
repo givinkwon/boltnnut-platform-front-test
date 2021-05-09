@@ -1,9 +1,12 @@
-import { observable, action, toJS } from "mobx";
+import { observable, action, toJS, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Category";
 import * as PartnerAPI from "axios/Partner";
 
 class Partner {
+  constructor() {
+    makeObservable(this);
+  }
   @observable detail = null;
   @observable requests = [];
   @observable clients = [];
@@ -22,27 +25,50 @@ class Partner {
   @observable random_partner_list = [];
   @observable partner_count = 0;
   @observable partner_next = null;
+  @observable partner_page = 0;
 
   @observable page = 1;
+  @observable currentPage = 1;
 
   @observable search_text = "";
   @observable search_category = [];
   @observable search_develop = [];
   @observable search_region = [];
 
+  @observable partnerdata = "";
   @observable select_big = null;
   @observable select_mid = null;
   @observable loading = 0;
-  
+
+  // 필터 & 라디오박스 관련 변수
+  @observable filter_region = 0;
+  @observable radiobox_checked_idx = 0;
+
+  @observable filter_checked_idx = 0;
+
+  @observable input_process_filter = null;
+  @observable input_category = null;
+
+  @observable category_ary = [];
+  @observable category_name_ary = [];
+
+  @action setProcessFilter = (val) => {
+    this.input_process_filter = val;
+  };
+
+  @action setCategory = (val) => {
+    this.input_category = val;
+  };
+
   @action setLoading = () => {
     this.loading = 1;
-  }
+  };
 
   @action init = () => {
     CategoryAPI.getMainCategory()
       .then((res) => {
         this.big_category_all = res.data.results;
-        console.log(res.data.results.splice(0,4))
+        console.log(res.data.results.splice(0, 4));
         this.category_list = res.data.results;
         this.category_list.forEach((mainCategory) => {
           this.category_middle_list = this.category_middle_list.concat(
@@ -72,30 +98,45 @@ class Partner {
       });
   };
   @action reset = () => {
-    this.detail = null
-    this.category_list = []
-    this.category_middle_list = []
-    this.develop_list = []
-    this.city_list = []
+    this.detail = null;
+    this.category_list = [];
+    this.category_middle_list = [];
+    this.develop_list = [];
+    this.city_list = [];
 
-    this.partner_list = []
-    this.partner_count = 0
-    this.partner_next = null
-    this.page = 1
+    this.partner_list = [];
+    this.partner_count = 0;
+    this.partner_next = null;
+    this.page = 1;
 
-    this.search_text = ""
-    this.search_category = []
-    this.search_develop = []
-    this.search_region = []
-  }
+    this.search_text = "";
+    this.search_category = [];
+    this.search_develop = [];
+    this.search_region = [];
+  };
+
+  @action getPartnerDetail = async (id) => {
+    PartnerAPI.detail(id)
+      .then((res) => {
+        console.log(res);
+        // return res.data;
+        this.detail = res.data;
+        console.log(this.detail);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
   @action setBigCategory = (obj) => {
     this.select_mid = null;
     this.select_big = obj;
     this.request_middle_list = this.select_big.category_set;
-  }
+  };
   @action setMidCategory = (obj) => {
     this.select_mid = obj;
-  }
+  };
 
   @action setParentList = (state, data, type) => {
     if (type === "category") {
@@ -103,7 +144,9 @@ class Partner {
       if (state) {
         for (var d of data.category_set) {
           const index = this.search_category.indexOf(d.id);
-          if(index !== -1) { continue; }
+          if (index !== -1) {
+            continue;
+          }
 
           list.push(d.id);
         }
@@ -120,12 +163,14 @@ class Partner {
       if (state) {
         for (var d of data.develop_set) {
           const index = this.search_develop.indexOf(d.id);
-          if(index !== -1) { continue; }
+          if (index !== -1) {
+            continue;
+          }
 
           list.push(d.id);
         }
         this.search_develop = [...list, ...this.search_develop];
-        console.log(this.search_develop)
+        console.log(this.search_develop);
       } else {
         for (var d of data.develop_set) {
           const index = this.search_develop.indexOf(d.id);
@@ -137,7 +182,9 @@ class Partner {
       if (state) {
         for (var d of data.region_set) {
           const index = this.search_region.indexOf(d.id);
-          if(index !== -1) { continue; }
+          if (index !== -1) {
+            continue;
+          }
 
           list.push(d.id);
         }
@@ -329,7 +376,7 @@ class Partner {
       nextUrl: this.partner_next,
       // headers
       headers: {
-       //  Authorization: `Token ${token}`,
+        //  Authorization: `Token ${token}`,
       },
     };
 
@@ -357,7 +404,7 @@ class Partner {
       nextUrl: this.partner_next,
       // headers
       headers: {
-       //  Authorization: `Token ${token}`,
+        //  Authorization: `Token ${token}`,
       },
     };
 
@@ -385,7 +432,7 @@ class Partner {
       nextUrl: this.partner_next,
       // headers
       headers: {
-       //  Authorization: `Token ${token}`,
+        //  Authorization: `Token ${token}`,
       },
     };
 
@@ -404,19 +451,21 @@ class Partner {
   };
 
   //파트너 숫자만 로드
-	@action loadPartnerCount = () =>{
-		PartnerAPI.getMyPartner()
-			.then((res) => {
-				this.partner_count = res.data.count;
-			})
-			.catch((e) => {
+  @action loadPartnerCount = () => {
+    PartnerAPI.getMyPartner()
+      .then((res) => {
+        this.partner_count = res.data.count;
+      })
+      .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-  }
+  };
 
   @action getRequestsByAnswers = () => {
-    if(!this.detail) { return; }
+    if (!this.detail) {
+      return;
+    }
 
     this.detail.answer_set.forEach((answer, idx) => {
       const projectId = answer.project;
@@ -429,39 +478,41 @@ class Partner {
       };
 
       PartnerAPI.getProject(projectId, req)
-        .then(res => {
+        .then((res) => {
           this.requests.push(res.data.request_set[0]);
           console.log(res.data);
 
-          if(idx === this.detail.answer_set.length - 1) {
+          if (idx === this.detail.answer_set.length - 1) {
             this.getClientsByRequests();
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
           console.log(e.response);
-        })
+        });
     });
   };
 
   @action getCountRequest = () => {
     PartnerAPI.getProject(projectId, req)
-        .then(res => {
-          this.requests.push(res.data.request_set[0]);
-          console.log(res.data);
+      .then((res) => {
+        this.requests.push(res.data.request_set[0]);
+        console.log(res.data);
 
-          if(idx === this.detail.answer_set.length - 1) {
-            this.getClientsByRequests();
-          }
-        })
-        .catch(e => {
-          console.log(e);
-          console.log(e.response);
-        })
-  }
-  
+        if (idx === this.detail.answer_set.length - 1) {
+          this.getClientsByRequests();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
   @action getClientsByRequests = () => {
-    if(!this.detail) { return; }
+    if (!this.detail) {
+      return;
+    }
 
     this.requests.forEach((request, idx) => {
       const token = localStorage.getItem("token");
@@ -473,14 +524,14 @@ class Partner {
       };
 
       PartnerAPI.getClient(request.client, req)
-        .then(res => {
+        .then((res) => {
           this.clients.push(res.data);
           console.log(res.data);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
           console.log(e.response);
-        })
+        });
     });
   };
 
@@ -494,7 +545,7 @@ class Partner {
     );
 
     return this.requests[idx];
-  }
+  };
   getCategoryById = (id) => {
     if (id == -1) {
       return;
@@ -547,12 +598,183 @@ class Partner {
       return;
     }
 
-    const idx = this.clients.findIndex(
-      (client) => client.id == id
-    );
+    const idx = this.clients.findIndex((client) => client.id == id);
 
     return this.clients[idx];
-  }
+  };
+
+  @action getPartner = async (page = 1) => {
+    this.partner_list = [];
+    this.category_ary = [];
+    //this.data_dt = [];
+    console.log(this.filter_region);
+    const token = localStorage.getItem("token");
+    let req = {};
+    if (!this.filter_region) {
+      req = {
+        params: {
+          // search: search_text,
+          page: page,
+          // ordering: "-id",
+        },
+        // headers: {
+        //   Authorization: `Token ${token}`,
+        // },
+      };
+    } else {
+      req = {
+        params: {
+          //city: this.filter_region === 0 ? "" : this.filter_region,
+          city: this.filter_region,
+          // search: search_text,
+          page: page,
+          // ordering: "-id",
+        },
+        // headers: {
+        //   Authorization: `Token ${token}`,
+        // },
+      };
+    }
+
+    await PartnerAPI.getPartner(req)
+      .then((res) => {
+        this.partner_list = [];
+        this.category_ary = [];
+        let index = {};
+        let key_index = "category ";
+        let count = 0;
+
+        this.partner_list = res.data.results;
+
+        this.partner_next = res.data.next;
+        this.partner_count = res.data.count;
+        //this.category_ary = res.data.results.category_middle;
+        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+
+        this.partner_list.map((item, idx) => {
+          this.category_ary.push(item.category_middle);
+          console.log(toJS(item));
+
+          console.log(toJS(this.category_ary[idx]));
+          for (let i = 0; i < this.category_ary[idx].length; i++) {
+            const request = {
+              id: this.category_ary[idx][i],
+            };
+            PartnerAPI.getPartnerCategory(request)
+              .then((res) => {
+                //this.category_name_ary.push({ index[key_index + idx] : res.data.category});
+                this.category_name_ary.push(res.data.category);
+                console.log(res.data.category);
+              })
+              .catch((e) => {
+                console.log(e);
+                console.log(e.response);
+              });
+          }
+        });
+
+        // for(let i=0; i<this.category_ary.length; i++){
+        //   req = {
+        //     id: this.category_ary
+
+        //    };
+        // }
+
+        // Partner.getPartnerCategory()
+
+        //this.getCategory();
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    // console.log(toJS(this.partner_list));
+
+    console.log(toJS(this.category_ary));
+    console.log(toJS(this.category_name_ary));
+  };
+
+  @action getPartnerByRegion = async (page = 1) => {
+    this.partner_list = [];
+    //this.data_dt = [];
+    console.log(this.filter_region);
+    const token = localStorage.getItem("token");
+    let req = {};
+    if (!this.filter_region) {
+      req = {
+        params: {
+          // search: search_text,
+          page: page,
+          // ordering: "-id",
+        },
+        // headers: {
+        //   Authorization: `Token ${token}`,
+        // },
+      };
+    } else {
+      req = {
+        params: {
+          //city: this.filter_region === 0 ? "" : this.filter_region,
+          city: this.filter_region,
+          // search: search_text,
+          page: page,
+          // ordering: "-id",
+        },
+        // headers: {
+        //   Authorization: `Token ${token}`,
+        // },
+      };
+    }
+
+    PartnerAPI.getPartner(req)
+      .then((res) => {
+        this.partner_list = [];
+        this.category_ary = [];
+
+        this.partner_list = res.data.results;
+        // this.category_ary = res.data.results.category_middle;
+
+        // console.log(toJS(category_ary));
+        this.partner_next = res.data.next;
+        this.partner_count = res.data.count;
+        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+        console.log(toJS(this.partner_list));
+
+        //this.getCategory();
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+  // @action getPartnerCategory = async (page = 1) => {
+  //   req = {
+  //     params: {
+  //       // search: search_text,
+  //       page: page,
+  //       // ordering: "-id",
+  //     },
+  //     // headers: {
+  //     //   Authorization: `Token ${token}`,
+  //     // },
+  //   };
+
+  //   PartnerAPI.getPartner(req)
+  //     .then((res) => {
+  //       this.category_list = [];
+
+  //       this.category_list = res.data.results.category_middle;
+  //       // this.partner_next = res.data.next;
+  //       // this.partner_count = res.data.count;
+  //       // this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+  //       // console.log(toJS(this.partner_list));
+  //       //this.getCategory();
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //       console.log(e.response);
+  //     });
+  // };
 }
 
 export default new Partner();
