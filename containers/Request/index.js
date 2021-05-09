@@ -29,6 +29,7 @@ import MarketingModal from './MarketingModal';
 import PaymentPageContainer from './PaymentPage';
 import NoneDrawingConsultingContainer from './NoneDrawingConsulting';
 import MobileNoneDrawingConsultingContainer from './Mobile/MobileNoneDrawingConsulting';
+import RequestCompleteContainer from './RequestComplete';
 import MobileRequestCompleteContainer from './Mobile/MobileRequestComplete';
 
 @inject('DetailQuestion', 'Partner','ManufactureProcess', 'Request', 'Auth')
