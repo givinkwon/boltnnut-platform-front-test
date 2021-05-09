@@ -17,7 +17,7 @@ class MobileBanner9Container extends React.Component {
             <div>
               <Header>
                 메일로 회사소개서 보내기, <br />
-                박함회 영업하기는 이제 그만
+                박람회 영업하기는 이제 그만
               </Header>
               <Body>
                 프로젝트 상담을 통해 <br />
