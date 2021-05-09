@@ -58,13 +58,9 @@ class Content1 extends React.Component {
   };
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
+    //init
+    Project.chatModalActive = false;
 
-    // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
-    // const color = document.getElementById("MyFooter").getAttribute('style');
-    // console.log(color);
-    // Project.init(918)
-
-    //console.log(Auth)
     this.getToday(
       Project.projectDetailData &&
         Project.projectDetailData.request_set[0].deadline

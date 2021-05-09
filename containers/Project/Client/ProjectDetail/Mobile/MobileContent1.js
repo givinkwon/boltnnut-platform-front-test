@@ -68,7 +68,7 @@ class MobileContent1 extends React.Component {
   };
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
-
+    Project.chatModalActive = false;
     // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
     // const color = document.getElementById("MyFooter").getAttribute('style');
     // console.log(color);

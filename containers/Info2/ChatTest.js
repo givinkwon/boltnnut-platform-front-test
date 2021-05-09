@@ -22,6 +22,14 @@ class ChatTestContainer extends React.Component {
     };
   }
 
+    componentWillUnmount() {
+      window.removeEventListener('resize', this.updateDimensions);
+    };
+  
+    updateDimensions = () => {
+      this.setState({ ...this.state, width: window.innerWidth });
+    };
+
   onChangeFile = async (e) => {
     // let fileNameAvailable = ["stl", "stp"];
     let fileName;
@@ -217,7 +225,10 @@ class ChatTestContainer extends React.Component {
     // 메세지 및 시간 초기화
     this.setState({ messages: [], currentTime: temp });
     this.props.Project.chatMessages = [];
-
+    //창 크기
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth});
+    
     ChatAPI.loadChat(roomNum).then((res) => {
       const reverseChat = res.data.results.reverse();
       ChatAPI.loadChatCount(roomNum).then((m_res) => {
@@ -231,7 +242,6 @@ class ChatTestContainer extends React.Component {
         PartnerAPI.getPartner(req)
         .then((res) => {
           Partner.partnerdata = res.data;
-          console.log(toJS(Partner.partnerdata))
         })
 
         reverseChat.forEach((message) => {

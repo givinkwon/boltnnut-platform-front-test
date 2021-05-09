@@ -35,14 +35,20 @@ class ChatCardContainer extends React.Component {
     height: 576,
   };
   async componentDidMount() {
-    // await this.props.Auth.checkLogin();
-    // if (this.props.Auth.logged_in_user) {
-    //   console.log(toJS(this.props.Auth));
-    // }
-    // setTimeout(() => {
-    //   this.setState({ f: 3 });
-    // }, 1000);
+    //창 크기
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth});
+   
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  };
+
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+
 
   onChangeHandler = (event) => {
     const textareaLineHeight = 34;
@@ -172,7 +178,8 @@ class ChatCardContainer extends React.Component {
   }
 
   render() {
-    const { messages } = this.props;
+    const { messages, Partner } = this.props;
+    const { width } = this.state;
     // console.log(this.props.messages);
     return (
       <Container>
@@ -180,32 +187,14 @@ class ChatCardContainer extends React.Component {
           <ChattingRoom>
             <Chat>
               <Header>
-                <Font24></Font24>
+                <Font24>{width > 779.98 ? (Partner.partnerdata && Partner.partnerdata.name) : ("")}</Font24>
                 <img src={prevent_img} />
                 <img src={star_img} />
               </Header>
               <MessageList height={this.state.height}>
                 <div style={{ padding: "0 10px 0 10px", height: "80%" }}>
                   {messages.map((m) => this.renderMessage(m))}
-                  {/* {this.renderMessage({
-                    member: "볼트앤너트",
-                    text:
-                      "비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다. 비공개 자료오픈이 요청되었습니다.",
-                  })}
-                  {this.renderMessage({
-                    member: "볼트앤너트",
-                    text: "혹시 도면 파일 보내주실 수 있나요?",
-                  })} */}
-                  {/* {this.renderMessage({ member: "client", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: 0, text: "Hi" })}
-                  {this.renderMessage({ member: 0, text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })}
-                  {this.renderMessage({ member: "볼트앤너트", text: "Hi" })} */}
+                  
                 </div>
               </MessageList>
               <TypingBox>
@@ -219,14 +208,6 @@ class ChatCardContainer extends React.Component {
                   bottom={this.state.rows}
                   // onKeyPress={() => console.log("RR")}
                 >
-                  {/* <InputBox
-                    onChange={(e) => this.onChange(e)}
-                    value={this.state.text}
-                    type="text"
-                    placeholder="메세지를 입력하세요."
-                    autofocus="true"
-                  /> */}
-
                   <textarea
                     placeholder="메세지를 입력하세요."
                     autofocus="true"
@@ -277,6 +258,7 @@ class ChatCardContainer extends React.Component {
                 </SubmitForm>
               </TypingBox>
             </Chat>
+            {width > 779.98 ? (
             <Info>
               <Profile>
                 <img
@@ -287,24 +269,29 @@ class ChatCardContainer extends React.Component {
                   }}
                 />
                 <ProfileImg>
-                  {/* <img src={logo_img} /> */}
+                  <img src={Partner.partnerdata && Partner.partnerdata.logo} />
                 </ProfileImg>
-                <Font20>볼트앤너트</Font20>
-                <Font18>02-926-6637</Font18>
-                <Button style={{ marginBottom: "20px" }}>
-                  회사 소개서 보러가기
-                  <img src={pass2_img} />
-                </Button>
+                <Font20>{Partner.partnerdata && Partner.partnerdata.name}</Font20>
+                <Font18>{Partner.partnerdata && Partner.partnerdata.user.phone}</Font18>
+                <a href={Partner.partnerdata && Partner.partnerdata.file} download>
+                  <Button style={ {marginBottom: "20px"} }>
+                    회사 소개서 보러가기
+                    <img src={pass2_img} />
+                  </Button>
+                </a>
                 <Button onClick={this.props.shareButtonClick}>
                   비공개 정보 공개하기
                 </Button>
               </Profile>
-              <Partner>
+              <PartnerList>
                 <Font20 style={{ alignSelf: "flex-start" }}>파트너 목록</Font20>
                 <PartnerContainer>
+                  
                 </PartnerContainer>
-              </Partner>
+              </PartnerList>
             </Info>
+            ) : ("")
+            }
           </ChattingRoom>
         </Card>
       </Container>
@@ -412,7 +399,7 @@ const ChattingRoom = styled.div`
   margin-bottom: 10px;
   //border: 3px solid green;
   display: flex;
-  height: 100%;
+  height: 80%;
 `;
 const MessageList = styled.ul`
   padding: 20px 0;
@@ -451,13 +438,13 @@ const TypingBox = styled.div`
   //position: relative;
 `;
 const Card = styled.div`
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
+  height: 100%;
   width: 80vw;
   margin-top: 160px;
-  background: skyblue; //
 `;
 
 const Container = styled.div`
@@ -618,8 +605,8 @@ const Profile = styled.div`
   }
 `;
 const ProfileImg = styled.div`
-  width: 134px;
-  height: 134px;
+  width: 100px;
+  height: 100px;
   border: 1px solid #e1e2e4;
   border-radius: 134px;
   position: relative;
@@ -659,7 +646,7 @@ const Button = styled.button`
   margin: 0 18px;
 `;
 
-const Partner = styled.div`
+const PartnerList = styled.div`
   margin-top: 126px;
   display: flex;
   flex-direction: column;
