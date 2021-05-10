@@ -20,7 +20,7 @@ const logoImg = "/static/images/project/Logo.png";
 const toolBarImg = "/static/images/project/ToolBar.svg";
 const callImg = "/static/images/project/Call.svg";
 const messagesImg = "/static/images/project/Messages.svg";
-let partnerdata = [];
+
 @inject("Project", "Auth", "Answer", "Partner")
 @observer
 class Content1 extends React.Component {
@@ -58,66 +58,62 @@ class Content1 extends React.Component {
   };
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
-    //init
-    Project.chatModalActive = false;
 
+    console.log(Project.selectedProjectId);
+    console.log("<Web> did mount");
+
+    // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
+    // const color = document.getElementById("MyFooter").getAttribute('style');
+    // console.log(color);
+    // Project.init(918)
+
+    //console.log(Auth)
     this.getToday(
       Project.projectDetailData &&
         Project.projectDetailData.request_set[0].deadline
     );
     await Auth.checkLogin();
 
-    if (Auth.logged_in_partner) {
-      
-      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
-        console.log(toJS(Answer.answers));
-        this.setState({ partnerList: Answer.answers });
+    // if (Auth.logged_in_partner) {
+    //   Project.getPage(1069);
+    //   console.log(Project.selectedProjectId);
+    //   Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+    //     console.log(toJS(Answer.answers));
+    //     this.setState({ partnerList: Answer.answers });
 
-        console.log("====================================================");
-        console.log("해당 프로젝트의 정보입니다.");
-        console.log("프로젝트 번호: " + Project.selectedProjectId);
-        console.log("지원한 파트너 정보들");
-        console.log(toJS(Answer.answers));
-        console.log("====================================================");
-        Answer.answers.forEach((answer) => {
-          const PartnerDetailList = this.state.partnerDetailList;
-          PartnerAPI.detail(answer.partner)
-            .then((res) => {
-
-              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
-              PartnerDetailList.push({
-                logo: res.data.logo,
-                name: res.data.name,
-              });
-              this.setState({ partnerDetailList: PartnerDetailList });
-            })
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-        });
-      });
-    }
+    //     Answer.answers.forEach((answer) => {
+    //       const PartnerDetailList = this.state.partnerDetailList;
+    //       PartnerAPI.detail(answer.partner)
+    //         .then((res) => {
+    //           // console.log(res);
+    //           // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+    //           PartnerDetailList.push({
+    //             logo: res.data.logo,
+    //             name: res.data.name,
+    //           });
+    //           this.setState({ partnerDetailList: PartnerDetailList });
+    //         })
+    //         .catch((e) => {
+    //           console.log(e);
+    //           console.log(e.response);
+    //         });
+    //     });
+    //   });
+    // }
 
     if (Auth.logged_in_client) {
-
+      // console.log(Auth.logged_in_client);
       Project.getPage(Auth.logged_in_client.id);
+      console.log(Project.selectedProjectId);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         console.log(toJS(Answer.answers));
         this.setState({ partnerList: Answer.answers });
 
-        console.log("====================================================");
-        console.log("해당 프로젝트의 정보입니다.");
-        console.log("프로젝트 번호: " + Project.selectedProjectId);
-        console.log("지원한 파트너 정보들");
-        console.log(toJS(Answer.answers));
-        console.log("====================================================");
         Answer.answers.forEach((answer) => {
           const PartnerDetailList = this.state.partnerDetailList;
           PartnerAPI.detail(answer.partner)
             .then((res) => {
-              partnerdata = res.data;
-              console.log(res.data);
+              // console.log(res);
               // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
               PartnerDetailList.push({
                 logo: res.data.logo,
@@ -151,17 +147,20 @@ class Content1 extends React.Component {
     let maincategory = "";
     let categoryname = "";
     let maincategoryname = "";
-    let request_state = "";
+
     Project.projectDataList &&
       Project.currentPage > 0 &&
       Project.projectDataList.map((item, idx) => {
+        console.log("전체 프로젝트 데이터 리스트")
+        console.log(toJS(Project.projectDataList));
         if (idx === 0) {
-          request_state = item.request_set[0].request_state ? item.request_set[0].request_state : "";
           name = item.request_set[0].name ? item.request_set[0].name : "미지정";
           date = item.request_set[0].createdAt
             ? item.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
             : "미지정";
-          period = item.request_set[0].deadline && item.request_set[0].deadline=="2020-11-11T11:11:00+09:00" ? "미지정" : item.request_set[0].deadline;
+          period = item.request_set[0].period
+            ? item.request_set[0].period + " 달"
+            : "미지정";
           estimate = item.request_set[0].price
             ? item.request_set[0].price
             : "미지정";
@@ -169,13 +168,16 @@ class Content1 extends React.Component {
           maincategory = Project.maincategory;
           categoryname = Project.categoryname;
           maincategoryname = Project.maincategoryname;
-          // console.log(item);
+          console.log("아이템");
+          console.log(toJS(item));
+          
         }
       });
 
     return (
       <>
         <Container1>
+          {console.log("projectDetailData")}
           {console.log(toJS(projectDetailData))}
           {Project.chatModalActive && (
             // <Layer onClick={this.modalHandler}>
@@ -197,25 +199,21 @@ class Content1 extends React.Component {
                     letterSpacing: -0.18,
                   }}
                 >
-<<<<<<< HEAD
-<<<<<<< HEAD
                   {
+
                     projectDetailData && projectDetailData.request_set[0].request_state
                   }
-=======
-                  {projectDetailData &&
-                    projectDetailData.request_set[0].request_state}
->>>>>>> a05cf93ea4e6ffb60af104e6f3a0886fbd559685
-=======
-                  {request_state}
->>>>>>> c5a21b7f483c93161eb0fe94454edaa1efd676cf
                 </Font18>
               </Box1>
               <div style={{ display: "inline-flex", flexDirection: "row" }}>
                 <Font16 style={{ color: "#999999", marginRight: 17 }}>
                   등록 일자
                 </Font16>{" "}
-                <Font16 style={{ color: "#999999" }}>{date}</Font16>
+                <Font16 style={{ color: "#999999" }}>
+                  
+                  {projectDetailData && 
+                  projectDetailData.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")}
+                </Font16>
               </div>
             </Top>
             <Head>
@@ -224,7 +222,13 @@ class Content1 extends React.Component {
               >
                 {projectDetailData && projectDetailData.request_set[0].name}
               </Font26>
-
+              {/* <div>
+              <Font17 style={{ color: "#86888c" }}>
+                {maincategory}
+                {maincategoryname}
+              </Font17>
+            </div> */}
+              {/* <div></div> */}
               <div>
                 <Font17 style={{ color: "#86888c" }}>
                   {category}
@@ -240,16 +244,15 @@ class Content1 extends React.Component {
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
-                    {projectDetailData && console.log(toJS(projectDetailData))}
                     {/* 예상금액 0원일 때 미정으로 변경 */}
-                    {projectDetailData &&
-                    projectDetailData.request_set[0].price.toLocaleString(
-                      "ko-KR"
-                    ) != 0
-                      ? projectDetailData.request_set[0].price.toLocaleString(
-                          "ko-KR"
-                        ) + " 원"
-                      : "미정"}
+                    {/* {projectDetailData && projectDetailData.request_set[0].price.toLocaleString("ko-KR")!=0 ?
+                      (projectDetailData.request_set[0].price.toLocaleString("ko-KR") + " 원") : ("미정")
+                    } */}
+                    
+                    {projectDetailData && 
+                    projectDetailData.request_set[0].price ?  
+                    projectDetailData.request_set[0].price.toLocaleString("ko-KR")+"원" : "미정"}
+
                   </Font18>
                 </div>
               </Box2>
@@ -261,7 +264,10 @@ class Content1 extends React.Component {
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>희망 납기</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
-                    {period}
+                    {projectDetailData &&
+                      projectDetailData.request_set[0].deadline
+                        .slice(2, 10)
+                        .replace(/-/gi, ".")}
                   </Font18>
                 </div>
               </Box2>
@@ -289,72 +295,158 @@ class Content1 extends React.Component {
                 }}
               >
                 지원한 파트너
-                {user == "client" && (
-                  <p style={{ color: "#0933b3", marginLeft: 6 }}>
-                    {this.state.partnerList.length}
-                  </p>
-                )}
+                {user == "client" && <p style={{ color: "#0933b3", marginLeft: 6 }}>
+                  {this.state.partnerList.length}
+                </p>}
+                
               </Font20>
               {user === "partner" ? (
-                /* 파트너일 때 */
-
+                /* 파트너일 때 */ 
+                
                 <BlackBox>
-                  <span>'해당 프로젝트 담당자만 확인할 수 있습니다.'</span>
-                  <div style={{ filter: "blur(5px)" }}>
-                    <PartnerBox />
-                    <PartnerBox />
-                    <PartnerBox />
+                  <span>
+                  '해당 프로젝트 담당자만 확인할 수 있습니다.'
+                </span>
+                <div style={{ filter: "blur(5px)" }}>
+                  <PartnerBox/>
+                  <PartnerBox/>
+                  <PartnerBox/>
                   </div>
                 </BlackBox>
-              ) : (
-                /* 클라이언트일 때 */
+                
+                
+              ):(
+                /* 클라이언트일 때 */ 
                 <>
-                  {/* map으로 뿌리기 */}
-                  {this.state.partnerList.map((data, idx) => {
-                    // Partner.getPartnerDetail(data.partner);
-                    return (
-                      <PartnerBox onClick={() => this.modalHandler(data.id)}>
-                        <PartnerInfo>
-                          <img
-                            // src={
-                            //   this.state.partnerDetailList[idx] &&
-                            //   this.state.partnerDetailList[idx].logo
-                            // }
-                            src={
-                              "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-                            }
-                            width={36}
-                            height={36}
-                          ></img>
-                          <Font18 style={{ marginLeft: 10 }}>
-                            {this.state.partnerDetailList[idx] &&
-                              this.state.partnerDetailList[idx].name}
-                          </Font18>
-                        </PartnerInfo>
-                        <Font16>
-                          " 프로젝트 보고 연락드립니다. "
-                        </Font16>
-                        <IconBox>
-                          <Icon>
-                            <img src={toolBarImg}></img>
-                          </Icon>
-                          <Icon>
-                            <img src={callImg}></img>
-                          </Icon>
-                          <Icon>
-                            <img src={messagesImg}></img>
-                            <ChatNotice>
-                              <Font14>N</Font14>
-                            </ChatNotice>
-                          </Icon>
-                        </IconBox>
-                      </PartnerBox>
-                    );
-                  })}
+                {/* map으로 뿌리기 */}
+                {this.state.partnerList.map((data, idx) => {
+                  // Partner.getPartnerDetail(data.partner);
+                  return (
+                    <PartnerBox onClick={() => this.modalHandler(data.id)}>
+                      <PartnerInfo>
+                        <img
+                          // src={
+                          //   this.state.partnerDetailList[idx] &&
+                          //   this.state.partnerDetailList[idx].logo
+                          // }
+                          src={
+                            "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
+                          }
+                          width={36}
+                          height={36}
+                        ></img>
+                        <Font18 style={{ marginLeft: 10 }}>
+                          {this.state.partnerDetailList[idx] &&
+                            this.state.partnerDetailList[idx].name}
+                        </Font18>
+                      </PartnerInfo>
+                      <Font16>
+                        " 프로젝트 보고 연락드립니다 . 비공개 자료 공개해주실수
+                        있나요 "
+                      </Font16>
+                      <IconBox>
+                        <Icon>
+                          <img src={toolBarImg}></img>
+                        </Icon>
+                        <Icon>
+                          <img src={callImg}></img>
+                        </Icon>
+                        <Icon>
+                          <img src={messagesImg}></img>
+                          <ChatNotice>
+                            <Font14>N</Font14>
+                          </ChatNotice>
+                        </Icon>
+                      </IconBox>
+                    </PartnerBox>
+                  );
+                })}
                 </>
               )}
             </AppliedPartner>
-         
+            {/* =================================================== */}
+            {/* <Info>
+              <div style={{ width: 125 }}>
+                <Font20>모집 마감일</Font20>
+                <Font20>진행 분류</Font20>
+                <Font20>관련 기술</Font20>
+              </div>
+              <div>
+                <div>
+                  <Font20 style={{ color: "#282c36" }}>2021년 3월 24일</Font20>
+                  <Font16 style={{ color: "#0933b3", marginLeft: 28 }}>
+                    10일 남음
+                  </Font16>
+                </div>
+                <Font20 style={{ color: "#282c36" }}>뜨악</Font20>
+                <Font20 style={{ color: "#282c36" }}>CNC</Font20>
+              </div>
+            </Info> */}
+            {/* <InfoDetail> */}
+            {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
+                프로젝트 내용 상세 설명
+              </Font20> */}
+            {/* <Font18
+                style={{
+                  letterSpacing: -0.45,
+                  fontWeight: "normal",
+                  marginBottom: 40,
+                  lineHeight: 1.67,
+                }}
+              >
+                저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이 없는데
+                이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기 자체에 파일로만
+                업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게
+                할까요 동해물과 백도산이 마르고 닳도록저희 의뢰하 기 자체에
+                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
+                어떻게 할까요 저희 의뢰하기 자체에 파일로만 업 로드 되어있고
+                상세 설명이 없는데 이부분은 꼭 필요한데 어떻게 할까요 동해물과
+                백도산이 마르고 닳도록 희 의뢰하기 자체에 파 일로만 업로드
+                되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게 할까요
+                저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이 없는데
+                이부분은 꼭 필요한데 어떻게 할까요 동해물과 백도산이 마르고
+                닳도록저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이
+                없는데 이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기 자체에
+                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
+                어떻게 할까요 동해물과 백도산이 마르고 닳도록 희 의뢰하기 자체에
+                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
+                어떻게 할까요 저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세
+                설명이 없
+              </Font18> */}
+            {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
+                프로젝트 관련 파일
+              </Font20>
+              <div>
+                <Font20>
+                  <img
+                    src={fileimg}
+                    style={{ marginLeft: 15, marginRight: 12 }}
+                  ></img>
+                  계약서 및 기능명세서.hwp
+                </Font20>
+                <Font20>
+                  <img
+                    src={fileimg}
+                    style={{ marginLeft: 15, marginRight: 12 }}
+                  ></img>
+                  계약서 및 기능명세서.hwp
+                </Font20>
+                <Font20>
+                  <img
+                    src={fileimg}
+                    style={{ marginLeft: 15, marginRight: 12 }}
+                  ></img>
+                  계약서 및 기능명세서.hwp
+                </Font20>
+                <Font20>
+                  <img
+                    src={fileimg}
+                    style={{ marginLeft: 15, marginRight: 12 }}
+                  ></img>
+                  계약서 및 기능명세서.hwp
+                </Font20>
+              </div>
+            </InfoDetail> */}
             <Content4 user={user} />
           </InnerContainer>
         </Container1>
@@ -368,7 +460,6 @@ const Layer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-
   right: 0;
   bottom: 0;
   z-index: 10000;
@@ -458,7 +549,6 @@ const Box1 = styled.div`
 `;
 
 const Head = styled.div`
-word-break : break-all;
   div {
     display: inline-flex;
     flex-direction: row;
