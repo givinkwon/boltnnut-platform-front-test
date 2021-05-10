@@ -77,5 +77,10 @@
     "webpack-dev-server": "^3.11.0"
   },
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "browserslist": [
+    "last 2 versions",
+    "not dead",
+    "IE 11"
+  ]
 }

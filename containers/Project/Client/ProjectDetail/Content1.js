@@ -68,7 +68,6 @@ class Content1 extends React.Component {
     await Auth.checkLogin();
 
     if (Auth.logged_in_partner) {
-      
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         console.log(toJS(Answer.answers));
         this.setState({ partnerList: Answer.answers });
@@ -83,7 +82,6 @@ class Content1 extends React.Component {
           const PartnerDetailList = this.state.partnerDetailList;
           PartnerAPI.detail(answer.partner)
             .then((res) => {
-
               // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
               PartnerDetailList.push({
                 logo: res.data.logo,
@@ -100,7 +98,6 @@ class Content1 extends React.Component {
     }
 
     if (Auth.logged_in_client) {
-
       Project.getPage(Auth.logged_in_client.id);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         console.log(toJS(Answer.answers));
@@ -156,12 +153,18 @@ class Content1 extends React.Component {
       Project.currentPage > 0 &&
       Project.projectDataList.map((item, idx) => {
         if (idx === 0) {
-          request_state = item.request_set[0].request_state ? item.request_set[0].request_state : "";
+          request_state = item.request_set[0].request_state
+            ? item.request_set[0].request_state
+            : "";
           name = item.request_set[0].name ? item.request_set[0].name : "미지정";
           date = item.request_set[0].createdAt
             ? item.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
             : "미지정";
-          period = item.request_set[0].deadline && item.request_set[0].deadline=="2020-11-11T11:11:00+09:00" ? "미지정" : item.request_set[0].deadline;
+          period =
+            item.request_set[0].deadline &&
+            item.request_set[0].deadline == "2020-11-11T11:11:00+09:00"
+              ? "미지정"
+              : item.request_set[0].deadline;
           estimate = item.request_set[0].price
             ? item.request_set[0].price
             : "미지정";
@@ -250,7 +253,10 @@ class Content1 extends React.Component {
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>희망 납기</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
-                    {period}
+                    {projectDetailData &&
+                      projectDetailData.request_set[0].deadline
+                        .slice(2, 10)
+                        .replace(/-/gi, ".")}
                   </Font18>
                 </div>
               </Box2>
@@ -320,9 +326,7 @@ class Content1 extends React.Component {
                               this.state.partnerDetailList[idx].name}
                           </Font18>
                         </PartnerInfo>
-                        <Font16>
-                          " 프로젝트 보고 연락드립니다. "
-                        </Font16>
+                        <Font16>" 프로젝트 보고 연락드립니다. "</Font16>
                         <IconBox>
                           <Icon>
                             <img src={toolBarImg}></img>
@@ -343,7 +347,7 @@ class Content1 extends React.Component {
                 </>
               )}
             </AppliedPartner>
-         
+
             <Content4 user={user} />
           </InnerContainer>
         </Container1>
@@ -447,7 +451,7 @@ const Box1 = styled.div`
 `;
 
 const Head = styled.div`
-word-break : break-all;
+  word-break: break-all;
   div {
     display: inline-flex;
     flex-direction: row;
