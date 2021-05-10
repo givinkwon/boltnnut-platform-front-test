@@ -331,9 +331,8 @@ class MobileContent2 extends React.Component {
                                 href={decodeURI(item.file)}
                                 download
                               ></DownloadFile> */}
-                                  <Font14 style = {{color: "#767676", alignItems: "center"}}
+                                  <Font14 style={{ color: "#767676", cursor: "pointer" }}
                                     onClick={() => this.downloadFile(item.file)}
-                                    style={{ cursor: "pointer" }}
                                   >
                                     {decodeURI(item.file.split("/").pop())}
                                   </Font14>
