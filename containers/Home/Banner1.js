@@ -26,19 +26,20 @@ class Banner1Container extends React.Component {
               </ImageContainer>
             </Image>
             <div>
-              <Head>볼트앤너트 AI 자동 견적</Head>
+              <Head>실시간 제조 무료 상담</Head>
               <Main>
                 <span>
-                  바로 나오는 <br />
-                  AI 자동 견적
+                  어떤 질문이든 <br />
+                  가능합니다.
+                  
                 </span>
               </Main>
               <Content>
                 {/* {ProjectCount}건의 데이터에 기반한 자동견적 알고리즘이
                 <br />
                 평균 2일의 견적 시간을 한 번에 해결해 드립니다. */}
-                볼트앤너트 AI 자동 견적 알고리즘이 <br />
-                제작품에 대한 견적 범위를 바로 안내해드립니다.
+                500개의 전문업체와 경력 30년 이상의 <br />
+                제조 엔지니어가 실시간으로 응답합니다.
               </Content>
             </div>
           </Fade>

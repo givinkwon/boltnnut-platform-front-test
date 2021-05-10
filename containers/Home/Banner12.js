@@ -8,9 +8,9 @@ import Fade from "react-reveal/Fade";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
 
-const image1 = "/static/images/Home/Banner12/Banner12_img1.png";
+const image1 = "/static/images/Home/Banner12/Banner12_img1_2.png";
 const image2 = "/static/images/Home/Banner12/Banner12_img2.png";
-const image3 = "/static/images/Home/Banner12/Banner12_img3.png";
+const image3 = "/static/images/Home/Banner12/Banner12_img3_2.png";
 const Ellipse = "/static/images/Home/Banner12/Ellipse.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 
@@ -20,8 +20,8 @@ class Banner12Container extends React.Component {
       <Background backgroundColor="#f6f6f6">
         <Fade bottom>
           <MainTitle>
-            <Font56>볼트앤너트 제조상담을 위한</Font56>
-            <Font48>3단계 프로세스</Font48>
+            <Font56>가장 빠르고 편하게 제조업체를 찾고 소통하세요</Font56>
+            {/* <Font48>3단계 프로세스</Font48> */}
           </MainTitle>
 
           <div
@@ -91,24 +91,24 @@ class Banner12Container extends React.Component {
             <Fade bottom>
               <ContainerBox>
                 <Contents>
-                  <Header>1. 문의 사항 입력하기</Header>
+                  <Header>1. 원하는 제품을 만들었던 <br/>업체 검색이 한 번에</Header>
                   <Body>
-                    문의하고자 하는 정보를 적어주세요. <br />
-                    민감 정보는 비공개로 내가 소통하고 <br />
-                    검증한 업체에게만 공개할 수 있습니다. <br />
-                    *도면이 있다면 자동 견적을 받아 볼 수 있습니다. <br />
+                    내가 원하는 제품을 만들었던 제조업체를 <br />
+                    볼트앤너트를 통해 바로 검색하세요. <br />
+                    지역별, 업력별 필터를 통해 원하는 조건의 <br />
+                    전문업체 검색이 가능합니다. <br />
                   </Body>
                   <Buttonv1
                     onClick={() => Router.push("/request")}
                     style={{ width: "304px", height: "64px" }}
                     fontSize="23"
                   >
-                    바로 무료 상담 받기
+                    바로 업체 찾아보기
                   </Buttonv1>
                 </Contents>
                 <ImgBox
-                  width={369}
-                  height={481}
+                  width={800}
+                  height={420}
                   style={{ position: "relative" }}
                 >
                   <div style={{ position: "absolute" }}></div>
@@ -181,10 +181,12 @@ class Banner12Container extends React.Component {
                   <img src={image2} />
                 </ImgBox>
                 <Contents>
-                  <Header>2. 제조사의 상담 확인하기</Header>
+                  <Header>2. 안전 거래 보장 <br/>프리미엄 파트너</Header>
                   <Body>
-                    4000여 개의 전문 제조사들이 정보 확인 후 <br />
-                    상세한 상담과 제안을 진행할 수 있습니다. <br />
+                    평균 업력 30년 이상의 업체 중 업체 실사가 완료된 <br />
+                    프리미엄 파트너와 계약을 맺어보세요. <br />
+                    볼트앤너트는 프리미엄 파트너와 계약시 <br />
+                    에스크로 서비스와 안전거래를 보장합니다.
                   </Body>
                   <Buttonv1
                     onClick={() => Router.push("/request")}
@@ -254,16 +256,15 @@ class Banner12Container extends React.Component {
               </div>
               <ContainerBox>
                 <Contents>
-                  <Header>3. 제조사와 소통하기</Header>
+                  <Header>3. 해외 공장 생산<br/>견적 바로 알아보기</Header>
                   <Body>
-                    제조사의 회사 정보와 상담 내용을 확인하고 <br />
-                    적합한 제조사와 소통해보세요. <br />
-                    채팅과 통화 등 다양한 형태로 소통할 수 있습니다. <br />
-                    *원하는 제조사만 민감 정보를 볼 수 있게 <br />
-                    공개 할 수 있습니다. <br />
+                    볼트앤너트는 중국,인도네시아를 비롯 <br />
+                    세계 각지 파트너 공장과 제휴를 맺고 있습니다. <br />
+                    해외 생산 견적이 필요하신 경우 <br />
+                    별도 문의가 가능합니다.<br />
                   </Body>
                 </Contents>
-                <ImgBox width={588} height={370}>
+                <ImgBox width={800} height={360}>
                   <img src={image3} />
                 </ImgBox>
               </ContainerBox>

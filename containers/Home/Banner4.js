@@ -50,7 +50,7 @@ const Header = styled(Title.FontSize20)`
 `
 const Middle = styled(Title.FontSize56)`
   color: #282c36;
-  font-weight: 500;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.36;

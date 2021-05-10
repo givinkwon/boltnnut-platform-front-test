@@ -8,8 +8,8 @@ import Slider from 'react-slick';
 import SliderMain from './SliderContent';
 import Fade from 'react-reveal/Fade';
 const pic = 'static/images/Home/Banner7/pic.png';
-const pic2 = 'static/images/Home/Banner7/pic2.png';
-const pic3 = 'static/images/Home/Banner7/pic3.png';
+const pic2 = 'static/images/Home/Banner7/pic2.jpg';
+const pic3 = 'static/images/Home/Banner7/pic3.jpg';
 
 
 class Banner7Container extends React.Component {
@@ -52,8 +52,6 @@ class Banner7Container extends React.Component {
   render() {
     const { current, show } = this.state;
     const left = 'static/images/Home/Banner7/prev.png';
-    const leftNone = 'static/images/Home/Banner7/prevNone.png';
-    const rightNone = 'static/images/Home/Banner7/nextNone.png';
     const right = 'static/images/Home/Banner7/next.png';
     let progress = String(this.state.progress) + "%";
     let progress2 = "0%";
@@ -105,7 +103,7 @@ class Banner7Container extends React.Component {
               <div>
                 {
                   current == 0 ? (
-                    <img src={leftNone} onClick = {this.sliderPrev} style={{visibility: this.state.show}}/>
+                    <img src={left} onClick = {this.sliderPrev} style={{opacity: 0.3, visibility: this.state.show}}/>
                   ) : (
                     <img src={left} onClick = {this.sliderPrev} style={{visibility: this.state.show}}/>
                   )
@@ -121,7 +119,7 @@ class Banner7Container extends React.Component {
               <div>
                 {
                   current == 2 ? (
-                    <img src={rightNone} onClick = {this.sliderNext} style={{visibility: this.state.show}}/>
+                    <img src={right} onClick = {this.sliderNext} style={{opacity: 0.3, visibility: this.state.show}}/>
                   ) : (
                     <img src={right} onClick = {this.sliderNext} style={{visibility: this.state.show}}/>
                   )
