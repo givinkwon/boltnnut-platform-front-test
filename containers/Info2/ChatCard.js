@@ -265,6 +265,7 @@ class ChatCardContainer extends React.Component {
                   <img
                     src={close_img}
                     onClick={() => {
+                      console.log(this.props.Project.chatModalActive);
                       this.props.Project.chatModalActive = false;
                       this.props.socketClose();
                     }}
@@ -627,6 +628,8 @@ const ProfileImg = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
   }
 `;
 
