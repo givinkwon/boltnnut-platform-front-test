@@ -528,7 +528,7 @@ const Container1 = styled.div`
   background-color: var(--white);
 `;
 const InnerContainer = styled.div`
-  // width: 932px;
+  width: 100%;
   // padding: 54px 0 52px 0;
 `;
 const Top = styled.div`
