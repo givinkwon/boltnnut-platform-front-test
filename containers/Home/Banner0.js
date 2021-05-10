@@ -33,7 +33,7 @@ const CountFunc = ({ index, projCount = 0, partnerCount = 0 }) => {
   return <p {...countItem[index]} style={{ display: "inline" }} />;
 };
 
-@inject("Proposal", "Partner")
+@inject("Proposal", "Partner","Auth")
 @observer
 class Banner0Container extends React.Component {
   state = {
@@ -59,6 +59,7 @@ class Banner0Container extends React.Component {
   render() {
     const ProjectCount = this.props.Proposal.projects_count;
     const PartnerCount = this.props.Partner.partner_count;
+    const { Auth } = this.props;
     return (
       <Background src={background}>
         <Layer />
@@ -91,22 +92,31 @@ class Banner0Container extends React.Component {
                 <Font24>도면 & BOM 검토 등 생산 문의 상담</Font24>
                 <Font24 style={{ marginBottom: 0 }}>전문 업체 수배</Font24>
               </Explanation>
-              <Buttonv1 onClick={() => Router.push("/request")}>
-                무료 상담 및 견적 받기
-              </Buttonv1>
 
-              <div
-                style={{
-                  color: "#ffffff",
-                  lineHeight: 1.5,
-                  fontSize: 18,
-                  opacity: 0.8,
-                  marginTop: 6,
-                }}
-              >
-                <img src={lock} style={{ marginRight: 8 }}></img>
-                모든 업로드는 안전하고 기밀입니다.
-              </div>
+              {Auth.logged_in_user && Auth.logged_in_user.type === 1 ? (
+               <>
+               </>
+              ) : (
+                <>
+                <Buttonv1 onClick={() => Router.push("/request")}>
+                  무료 상담 및 견적 받기
+                </Buttonv1>
+  
+                <div
+                  style={{
+                    color: "#ffffff",
+                    lineHeight: 1.5,
+                    fontSize: 18,
+                    opacity: 0.8,
+                    marginTop: 6,
+                  }}
+                >
+                  <img src={lock} style={{ marginRight: 8 }}></img>
+                  모든 업로드는 안전하고 기밀입니다.
+                </div>
+                </>
+              )
+            }
             </div>
             {/* <Info>
               <InfoCell>

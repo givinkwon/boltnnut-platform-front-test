@@ -25,6 +25,7 @@ class ContentSub extends React.Component {
   exitProject = () => {
     this.props.Project.exitProject(this.props.Project.projectDetailData.id),
       console.log(this.props.Project.projectDetailData.id);
+    alert("상담 모집이 종료되었습니다.")
   };
 
   activeHandler = (active) => {
@@ -56,9 +57,7 @@ class ContentSub extends React.Component {
               onClick={async () => {
                 console.log("click!");
                 this.changeProject();
-                await Router.push(`/request`);
-
-                //this.props.ManufactureProcess.checkFileUpload = true;
+                console.log(this.props.ManufactureProcess.changeProject)
               }}
             >
               <Font18
@@ -95,9 +94,7 @@ class ContentSub extends React.Component {
               onClick={async () => {
                 console.log(this.props.Project.newIndex);
                 this.props.Project.newIndex = 2;
-                // await Router.push(`/request`);
 
-                //this.props.ManufactureProcess.checkFileUpload = true;
               }}
             >
               <Font18
@@ -107,56 +104,8 @@ class ContentSub extends React.Component {
                 프로젝트 답변하기
               </Font18>
             </Box3>
-            {/* {user == "partner" ? ( */}
-              {/* <Box3
-                style = {{backgroundColor: "#c6c7cc", color: "#ffffff"}}
-            >
-              <Font18
-                style={{ fontWeight: "bold" }}
-              >
-                비공개 자료 요청
-              </Font18>
-            </Box3> */}
-            {/* ):(
-
-            <Box3
-              active={this.state.activeTwo}
-              onMouseOver={() => this.activeHandler("activeTwo")}
-              onMouseOut={() => this.activeHandler("activeTwo")}
-              onClick={async () => {
-                console.log("click!");
-              }}
-            >
-              <Font18
-                style={{ fontWeight: "bold" }}
-                active={this.state.activeTwo}
-              >
-                비공개 자료 요청
-              </Font18>
-            </Box3>
-
-
-            )} */}
-
-
-            
           </>
         )}
-
-        {/* <PartnerContainer>
-          <img src={profile} style={{ width: 42, height: 35 }}></img>
-          <img src={partnerbadge} style={{ marginLeft: 22 }}></img>
-        </PartnerContainer>
-        <ApplicationStatus>
-          <div>
-            <Font16>프로젝트 지원</Font16>
-            <Font16>관심 프로젝트</Font16>
-          </div>
-          <div>
-            <Font16 style={{ color: "#0933b3" }}>2</Font16>
-            <Font16 style={{ color: "#0933b3" }}>4</Font16>
-          </div>
-        </ApplicationStatus> */}
       </ContainerSub>
     );
   }

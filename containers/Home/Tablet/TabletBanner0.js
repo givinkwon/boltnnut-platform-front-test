@@ -30,7 +30,7 @@ const CountFunc = ({ index, projCount = 0, partnerCount = 0 }) => {
   return <p {...countItem[index]} style={{ display: "inline" }} />;
 };
 
-@inject("Proposal", "Partner")
+@inject("Proposal", "Partner","Auth")
 @observer
 class TabletBanner0Container extends React.Component {
   componentDidMount() {
@@ -42,6 +42,7 @@ class TabletBanner0Container extends React.Component {
   render() {
     const ProjectCount = this.props.Proposal.projects_count;
     const PartnerCount = this.props.Partner.partner_count;
+    const { Auth } = this.props;
 
     return (
       <Background
@@ -82,34 +83,41 @@ class TabletBanner0Container extends React.Component {
             <Font20>도면 & BOM 검토 등 생산 문의 상담</Font20>
             <Font20 style={{ marginBottom: 0 }}>전문 업체 수배</Font20>
           </Explanation>
-          <Buttonv1
-            style={{
-              marginLeft: "auto",
-              marginRight: "auto",
-              fontWeight: 700,
-            }}
-            onClick={() => Router.push("/request")}
-          >
-            지금 무료 견적 받기
-          </Buttonv1>
-
-          <div
-            style={{
-              color: "#ffffff",
-              lineHeight: 1.5,
-              fontSize: 18,
-              opacity: 0.8,
-              marginTop: 6,
-            }}
-          >
-            <img
-              src={lock}
-              style={{ marginRight: 8, width: "12px", height: "12px" }}
-            ></img>
-            <span style={{ fontSize: "13px", opacity: "0.8" }}>
-              모든 업로드는 안전하고 기밀입니다.
-            </span>
-          </div>
+          {Auth.logged_in_user && Auth.logged_in_user.type === 1 ? (
+            <>
+            </>
+           ) : (
+            <>
+            <Buttonv1
+              style={{
+                marginLeft: "auto",
+                marginRight: "auto",
+                fontWeight: 700,
+              }}
+              onClick={() => Router.push("/request")}
+            >
+              무료 상담 및 견적 받기
+            </Buttonv1>
+  
+            <div
+              style={{
+                color: "#ffffff",
+                lineHeight: 1.5,
+                fontSize: 18,
+                opacity: 0.8,
+                marginTop: 6,
+              }}
+            >
+              <img
+                src={lock}
+                style={{ marginRight: 8, width: "12px", height: "12px" }}
+              ></img>
+              <span style={{ fontSize: "13px", opacity: "0.8" }}>
+                모든 업로드는 안전하고 기밀입니다.
+              </span>
+            </div>
+            </>
+          )}
         </Fade>
       </Background>
     );

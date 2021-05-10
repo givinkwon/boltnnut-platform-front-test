@@ -13,7 +13,7 @@ import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
 import Fade from "react-reveal/Fade";
 import UseScrollCount from "containers/Home/UseScrollCount";
-
+import { toJS } from "mobx"
 import { inject, observer } from "mobx-react";
 
 //Image
@@ -31,7 +31,7 @@ const CountFunc = ({ index, projCount = 0, partnerCount = 0 }) => {
   return <p {...countItem[index]} style={{ display: "inline" }} />;
 };
 
-@inject("Proposal", "Partner")
+@inject("Proposal", "Partner","Auth")
 @observer
 class MobileBanner0Container extends React.Component {
   componentDidMount() {
@@ -43,6 +43,7 @@ class MobileBanner0Container extends React.Component {
   render() {
     const ProjectCount = this.props.Proposal.projects_count;
     const PartnerCount = this.props.Partner.partner_count;
+    const { Auth } = this.props;
 
     return (
       <Background
@@ -96,34 +97,44 @@ class MobileBanner0Container extends React.Component {
               <CountFunc index={2} /> <span>개</span>
             </Content1> */}
           </div>
-          <Buttonv1
-            style={{
-              marginLeft: "auto",
-              marginRight: "auto",
-              fontWeight: 700,
-              width: "202px",
-              height: "49px",
-            }}
-            onClick={() => Router.push("/request")}
-          >
-            <p style={{ paddingBottom: 0.2 }}>무료 상담 및 견적 받기</p>
-          </Buttonv1>
-          <div
-            style={{
-              color: "#767676",
-              lineHeight: 1.5,
-              fontWeight: 500,
-              fontSize: 14,
-              opacity: 0.8,
-              marginTop: 6,
-            }}
-          >
-            <img
-              src={lock}
-              style={{ marginRight: 8, width: 10, height: 11, opacity: 0.5 }}
-            ></img>
-            모든 업로드는 안전하고 기밀입니다.
-          </div>
+          {Auth.logged_in_user && Auth.logged_in_user.type === 1 ? (
+           <>
+           </>
+          ) : (
+            <>
+            <Buttonv1
+              style={{
+                marginLeft: "auto",
+                marginRight: "auto",
+                fontWeight: 700,
+                width: "202px",
+                height: "49px",
+              }}
+              onClick={() => Router.push("/request")}
+            >
+              <p style={{ paddingBottom: 0.2 }}>무료 상담 및 견적 받기</p>
+            </Buttonv1>
+            <div
+              style={{
+                color: "#767676",
+                lineHeight: 1.5,
+                fontWeight: 500,
+                fontSize: 14,
+                opacity: 0.8,
+                marginTop: 6,
+              }}
+            >
+              <img
+                src={lock}
+                style={{ marginRight: 8, width: 10, height: 11, opacity: 0.5 }}
+              ></img>
+              모든 업로드는 안전하고 기밀입니다.
+            </div>
+              </>
+            
+          )
+          }
+        
         </Fade>
       </Background>
     );

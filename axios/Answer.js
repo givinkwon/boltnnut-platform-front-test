@@ -2,6 +2,36 @@ import axios from "axios";
 import { ROOT_URL } from "./index";
 import * as StringUtils from "utils/string";
 
+// 5월 8일 새로 작성
+export function CreateAnswer(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/answer/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getAnswer(req) {
+  console.log(`${ROOT_URL}/answer/${req.extraUrl}`);
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/answer/${req.extraUrl}`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
 // 충돌 예방을 위해 우선적으로 여기에 모두 작성
 export function getClientRequest(req) {
   return axios({
@@ -29,16 +59,6 @@ export function getNextClientRequestList(req) {
     // url: req.nextUrl[4] === 's'
     // 	? req.nextUrl
     // 	: StringUtils.insert(req.nextUrl, 's', 4),
-    params: req.params ? req.params : null,
-    headers: req.headers ? req.headers : null,
-  });
-}
-
-export function getAnswer(req) {
-  console.log(`${ROOT_URL}/answer/${req.extraUrl}`);
-  return axios({
-    method: "GET",
-    url: `${ROOT_URL}/answer/${req.extraUrl}`,
     params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
   });
@@ -103,6 +123,9 @@ export function activeFirst(req) {
 	})
 }
 */
+
+
+
 
 export function changeActiveAnswer(req) {
   return axios({

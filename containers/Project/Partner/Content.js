@@ -11,6 +11,7 @@ import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
 import RadioBox from "../RadioBox";
+import { toJS } from "mobx";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";

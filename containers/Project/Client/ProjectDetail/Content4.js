@@ -349,7 +349,7 @@ class Content4 extends React.Component {
                                   onClick={() => this.downloadFile(item.file)}
                                   style={{ cursor: "pointer" }}
                                 >
-                                  {decodeURI(item.stl_file.split("/").pop())}
+                                  {decodeURI(item.file.split("/").pop())}
                                 </span>
                               </div>
                             </div>
@@ -395,6 +395,7 @@ const RequestContainer = styled.div`
 `;
 const RequestSubContainer = styled.div`
   width: 100%;
+  word-break: break-all;
 `;
 
 const RequestBox = styled.div`

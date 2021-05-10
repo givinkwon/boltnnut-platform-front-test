@@ -239,7 +239,7 @@ class Nav extends React.Component {
 
                     active={url.indexOf("project") > -1}
                   >
-                    프로젝트 찾기
+                    프로젝트 관리
                   </ButtonContainer>
 
                 ) : (

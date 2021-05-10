@@ -35,10 +35,8 @@ class ProjectContentContainer extends React.Component {
   pushToDetail = async (id) => {
     const { Project } = this.props;
     console.log(id);
-
-    await Project.getProjectDetail(id);
-    console.log("pushToDetail()");
     Project.selectedProjectId = id;
+    await Project.getProjectDetail(id);
     Project.newIndex = 1;
 
     // await Router.push(`/project/${id}`);
@@ -57,56 +55,41 @@ class ProjectContentContainer extends React.Component {
     console.log(Project.newIndex);
     Project.newIndex = 0;
     this.props.Project.currentPage = 1;
-    // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
-    // const color = document.getElementById("MyFooter").getAttribute('style');
-    // console.log(color);
-    // Project.init(918)
-
-    //console.log(Auth)
 
     await Auth.checkLogin();
-    if (Auth.logged_in_client) {
-      console.log(Auth.logged_in_client.id);
-      Project.getPage(Auth.logged_in_client.id);
+    if(Auth.logged_in_client){
+      Project.getPage(Auth.logged_in_client.id)  
     }
-    console.log(Auth.logged_in_client);
+    console.log(Auth.logged_in_client)    
   }
 
-  // afterChangeHandler = (current) => {
-  //   if(current === 0){
-  //     this.setState({next: true, prev: false})
-  //   } else {
-  //       this.setState({next: true, prev: true})
-  //   }
-  // }
-
   movePage = (e) => {
-    const { Project, Auth } = this.props;
-    const newPage = e.target.innerText * 1;
+    const { Project, Auth } = this.props 
+    const newPage = e.target.innerText*1;    
+    
+    Project.currentPage = newPage
+    Project.getPage(Auth.logged_in_client.id, newPage)
+  }
 
-    Project.currentPage = newPage;
-    Project.getPage(Auth.logged_in_client.id, newPage);
-  };
+  pageNext = () => {  
+    const { Project, Auth } = this.props  
 
-  pageNext = () => {
-    const { Project, Auth } = this.props;
-
-    if (Project.currentPage < Project.project_page) {
-      const nextPage = Project.currentPage + 1;
-      Project.currentPage = nextPage;
+    if (Project.currentPage  < Project.project_page) {
+      const nextPage = Project.currentPage+1  
+      Project.currentPage = nextPage
       Project.getPage(Auth.logged_in_client.id, Project.currentPage);
-    }
-  };
-
+    }        
+  }
+  
   pagePrev = () => {
-    const { Project, Auth } = this.props;
-
-    if (Project.currentPage > 1) {
-      const newPage = Project.currentPage - 1;
-      Project.currentPage = newPage;
-      Project.getPage(Auth.logged_in_client.id, Project.currentPage);
+    const { Project, Auth } = this.props        
+  
+    if (Project.currentPage  > 1) {
+      const newPage = Project.currentPage  - 1
+      Project.currentPage = newPage          
+      Project.getPage(Auth.logged_in_client.id, Project.currentPage)
     }
-  };
+  }
 
   render() {
     const { Project } = this.props;
@@ -119,9 +102,7 @@ class ProjectContentContainer extends React.Component {
           style={{ backgroundColor: "#f9f9f9", paddingTop: "49px" }}
           id="MyBackground"
         >
-          {/* <Background> */}
-          {/* { Project.projectData.length > 0 && Project.projectData.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
-          {Project.project_existence &&
+         {Project.project_existence &&
             Project.projectDataList &&
             Project.currentPage > 0 &&
             Project.projectDataList.map((item, idx) => {

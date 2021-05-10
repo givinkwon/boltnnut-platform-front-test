@@ -28,20 +28,24 @@ import DisbursementContainer from './Disbursement';
 import MarketingModal from './MarketingModal';
 import PaymentPageContainer from './PaymentPage';
 import NoneDrawingConsultingContainer from './NoneDrawingConsulting';
+import MobileNoneDrawingConsultingContainer from './Mobile/MobileNoneDrawingConsulting';
 import RequestCompleteContainer from './RequestComplete';
+import MobileRequestCompleteContainer from './Mobile/MobileRequestComplete';
 
-@inject('DetailQuestion', 'Partner', 'Request', 'Auth')
+@inject('DetailQuestion', 'Partner','ManufactureProcess', 'Request', 'Auth')
 @observer
 class RequestContainer extends React.Component {
 	componentDidMount = () => {
+		const { Request } = this.props;
 		this.props.Auth.bgColor = '#f6f6f6';
+		Request.newIndex = 0;
+		this.props.ManufactureProcess.reset()
 	};
 	render() {
 		const { Request } = this.props;
-
 		return (
 			<>
-				{this.props.width >= 767.99 ? (
+				{this.props.width >= 1279.98 ? (
 					<div style={{ overflow: 'visible' }}>
 
 						<BannerContainer />
@@ -57,7 +61,9 @@ class RequestContainer extends React.Component {
 					</div>
 				) : (
 					<>
-						<MobileRequestContainer />
+						{Request.newIndex == 0 && <MobileRequestContainer />}
+						{Request.newIndex == 1 && <MobileRequestCompleteContainer />}
+						{Request.newIndex == 2 && <MobileNoneDrawingConsultingContainer />}
 					</>
 				)}
 			</>

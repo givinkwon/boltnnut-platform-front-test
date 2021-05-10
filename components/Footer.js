@@ -252,7 +252,7 @@ class FooterComponent extends React.Component {
                       <span>회사명</span> (주)볼트앤너트
                     </Font12>
                     <Font12>
-                      <span>대표자</span> 윤기열, 신지섭
+                      <span>대표자</span> 윤기열 
                       <br />
                     </Font12>
                     <Font12>

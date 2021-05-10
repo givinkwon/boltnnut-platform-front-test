@@ -23,7 +23,7 @@ class MobileBanner5Container extends React.Component {
               marginTop: 100,
             }}
           >
-            <Header>무료 도면 수정 서비스</Header>
+            <Header>민감 선택 정보 공개 서비스</Header>
             <Middle>
               원하는 업체만 <br /> 정보 공개 및 소통
               {/* <span class="bold"> 100% 보증</span> */}

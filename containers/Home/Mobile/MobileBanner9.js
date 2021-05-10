@@ -17,7 +17,7 @@ class MobileBanner9Container extends React.Component {
             <div>
               <Header>
                 메일로 회사소개서 보내기, <br />
-                박함회 영업하기는 이제 그만
+                박람회 영업하기는 이제 그만
               </Header>
               <Body>
                 프로젝트 상담을 통해 <br />
@@ -34,7 +34,7 @@ class MobileBanner9Container extends React.Component {
                 }}
                 onClick={() => Router.push("/request")}
               >
-                <p style={{ paddingBottom: 1 }}>지금 무료 견적 받기</p>
+                <p style={{ paddingBottom: 1 }}>파트너 가입하기</p>
               </Buttonv1>
             </div>
           </Fade>

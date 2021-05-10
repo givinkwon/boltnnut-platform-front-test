@@ -39,12 +39,7 @@ class RadioBoxContainer extends React.Component {
           Project.project_count = null;
     // this.count = 0;
           Project.currentPage = 1;     
-          // console.log(Project.filter_price)    
-          // if(Project.filter_price === "전체"){
-          //   Project.getProjectByPrice()
-          // }else{     
-          //   Project.getProjectByPrice()
-          // }
+          console.log(Project.filter)
           Project.getProjectByPrice(Project.search_text)
         }
       };

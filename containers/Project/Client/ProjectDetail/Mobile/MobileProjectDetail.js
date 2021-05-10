@@ -12,9 +12,7 @@ import MoileContent2 from "./MobileContent2";
 @observer
 class MobileProjectDetailContainer extends React.Component {
   componentWillUnmount() {
-    console.log("bbbbbbbbbbbbbb");
     const { Project } = this.props;
-    Project.newIndex = 0;
   }
   render() {
     const { user } = this.props;

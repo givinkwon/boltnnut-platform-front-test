@@ -35,6 +35,7 @@ class Partner {
   @observable search_develop = [];
   @observable search_region = [];
 
+  @observable partnerdata = "";
   @observable select_big = null;
   @observable select_mid = null;
   @observable loading = 0;

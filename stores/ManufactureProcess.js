@@ -64,6 +64,10 @@ class ManufactureProcess {
   @observable detailProcessDataAry = [];
   @observable checkPaymentButton = false;
   @observable changeProject = false;
+  @observable projectname = "";
+
+
+
   @action countQuantity = (data) => {
     data.map((item, idx) => {
       console.log(item);
@@ -171,6 +175,11 @@ class ManufactureProcess {
     this.MaxPrice = 0;
     this.totalMinPrice = 0;
     this.totalMaxPrice = 0;
+    this.purposeContent = 0;
+    this.projectname = "";
+    this.requestComment = "";
+    this.requestComment2 = "";
+    this.checkFileUpload = false;
   };
   @action setDefaultValue = (name) => {
     // this.categoryDefaultValue = this.ManufactureProcessList[2];

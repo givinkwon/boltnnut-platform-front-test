@@ -13,11 +13,7 @@ import Content4 from "./Content4";
 @inject("Project")
 @observer
 class ProjectDetailContainer extends React.Component {
-  componentWillUnmount() {
-    console.log("bbbbbbbbbbbbbb");
-    const { Project } = this.props;
-    // Project.newIndex = 0;
-  }
+
   render() {
     const { user } = this.props;
 
