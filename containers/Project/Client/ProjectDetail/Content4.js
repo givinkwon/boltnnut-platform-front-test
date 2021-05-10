@@ -15,7 +15,7 @@ import ManufactureProcess from "../../../../stores/ManufactureProcess";
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
 import { createNoSubstitutionTemplateLiteral } from "typescript";
 
-const file_img = "static/images/file2.png";
+const file_img = "/static/images/project/fileimg.svg";
 const download_img = "static/images/download.png";
 
 @inject("Project", "Auth", "ManufactureProcess")
@@ -159,7 +159,7 @@ class Content4 extends React.Component {
                       if (item.share_inform) {
                         return (
                           <div>
-                            <div>
+                            <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                               <img src={file_img} />
                               {/* <DownloadFile
                               file={item.file}
@@ -338,7 +338,7 @@ class Content4 extends React.Component {
                         if (!item.share_inform) {
                           return (
                             <div>
-                              <div>
+                              <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                                 <img src={file_img} />
                                 {/* <DownloadFile
                               file={item.file}

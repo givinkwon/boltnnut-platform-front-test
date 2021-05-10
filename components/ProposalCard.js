@@ -376,13 +376,13 @@ const FooterWrapper = styled.div`
     margin-bottom: 14px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-bottom: 34px;
+    margin-bottom: 32px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-bottom: 34px;
+    margin-bottom: 32px;
   }
   @media (min-width: 1300px) {
-    margin-bottom: 34px;
+    margin-bottom: 32px;
   }
 `;
 const CategoryBox = styled.div`

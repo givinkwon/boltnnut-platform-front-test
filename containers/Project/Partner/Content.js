@@ -121,7 +121,7 @@ class ProjectContentContainer extends React.Component {
                   Project.currentPage > 0 &&
                   Project.projectDataList.map((item, idx) => {
                     return (
-                      <Background style={{ marginBottom: "5px" }}>
+                      <Background style={{ marginBottom: "34px" }}>
                         <div
                           style={{ cursor: "pointer", width: "100%" }}
                           onClick={() => this.pushToDetail(item.id)}

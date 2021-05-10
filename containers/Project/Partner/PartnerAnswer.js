@@ -9,14 +9,14 @@ import {toJS} from "mobx";
 import DownloadFile from "components/DownloadFile";
 import Answer from "../../../stores/Answer";
 const infoImg = "static/images/info.svg";
-const file_img = "static/images/file2.png";
+const file_img = "/static/images/project/fileimg.svg";
 @inject("Project", "Answer","Auth")
 @observer
 class PartnerAnswer extends React.Component {
   state = {
     value: null,
     partnerDetailList: [],
-    minRows: 1,
+    minRows: 8,
     maxRows: 100,
   };
 
@@ -134,25 +134,23 @@ class PartnerAnswer extends React.Component {
                       예상견적
                     </FontSize18>
                     <FontSize18 style={{ color: "#414550", marginLeft: 20 }}>
-                    {projectDetailData &&
-                    projectDetailData.request_set[0].price.toLocaleString(
-                      "ko-KR"
-                    ) != 0
-                      ? projectDetailData.request_set[0].price.toLocaleString(
-                          "ko-KR"
-                        ) + " 원"
-                      : "미정"}
+                      {projectDetailData && 
+                    projectDetailData.request_set[0].price ?  
+                    projectDetailData.request_set[0].price.toLocaleString("ko-KR")+"원" : "미정"}
                     </FontSize18>
                     <FontSize18 style={{ color: "#86888c", marginLeft: 90 }}>
                       납기 기간
                     </FontSize18>
                     <FontSize18 style={{ color: "#414550", marginLeft: 20 }}>
-                      {period}
+                    {projectDetailData &&
+                      projectDetailData.request_set[0].deadline
+                        .slice(2, 10)
+                        .replace(/-/gi, ".")}
                     </FontSize18>
                   </InlineDiv>
                 </ProjectInfoBox>
                 <FontSize26>프로젝트 설명 및 요청사항</FontSize26>
-                <RequestSubContainer>
+                <RequestSubContainer style = {{marginTop: 30}}>
                   <Font20>공개 내용</Font20>
                   <RequestBox>
                     <RequestContent>
@@ -161,16 +159,16 @@ class PartnerAnswer extends React.Component {
                           projectDetailData.request_set[0].order_request_open}
                         {/* {Project.projectDetailData.request_set[0].order_request_open} */}
                       </pre>
-                    </RequestContent>
-                    <File>
+                    
+                    <File style = {{marginTop : 52}}>
                       {projectDetailData &&
                         projectDetailData.request_set[0].requestfile_set.map(
                           (item, idx) => {
                             if (item.share_inform) {
                               return (
                                 <div>
-                                  <div>
-                                    <img src={file_img} />
+                                  <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                                    <img src={file_img} style = {{height: 26, width: 26, marginRight: 5}}/>
                                     {/* <DownloadFile
                               file={item.file}
                               href={decodeURI(item.file)}
@@ -191,6 +189,7 @@ class PartnerAnswer extends React.Component {
                           }
                         )}
                     </File>
+                    </RequestContent>
                   </RequestBox>
                 </RequestSubContainer>
                 {/* 프로젝트 답변하기 */}
@@ -358,7 +357,7 @@ const RequestBox = styled.div`
 
 const RequestContent = styled.div`
   //border: 1px solid red;
-  margin-bottom: 52px;
+  margin-bottom: 70px;
   padding: 26px 24px 26px 24px;
 `;
 
