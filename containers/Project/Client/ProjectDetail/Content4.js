@@ -76,10 +76,10 @@ class Content4 extends React.Component {
 
     //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
 
-    // console.log(idx);
-    // console.log(process_idx);
-    // console.log(material_idx);
-    // console.log(detail_idx);
+    // //console.log(idx);
+    // //console.log(process_idx);
+    // //console.log(material_idx);
+    // //console.log(detail_idx);
 
     let item_detail_idx = 0;
     if (process_idx === "1") {
@@ -139,7 +139,7 @@ class Content4 extends React.Component {
         {/* <Containerv1 style={{ display: "flex", flexDirection: "column" }}> */}
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
-          <RequestSubContainer style = {{marginBottom: 70}}>
+          <RequestSubContainer style={{ marginBottom: 70 }}>
             <Font20>공개 내용</Font20>
             <RequestBox>
               <RequestContent>
@@ -153,7 +153,9 @@ class Content4 extends React.Component {
                 {projectDetailData &&
                   projectDetailData.request_set[0].requestfile_set.map(
                     (item, idx) => {
-                      {console.log(toJS(item))}
+                      {
+                        console.log(toJS(item));
+                      }
                       if (item.share_inform) {
                         return (
                           <div>
@@ -182,21 +184,14 @@ class Content4 extends React.Component {
           <Font20>비공개내용</Font20>
           {user === "partner" ? (
             <BlackBox>
-              <span>
-                '문의 답변을 해주셔야만 열람 할 수 있습니다.'
-              </span>
+              <span>'문의 답변을 해주셔야만 열람 할 수 있습니다.'</span>
               <RequestSubContainer style={{ filter: "blur(5px)" }}>
-              <DrawingCard></DrawingCard>
+                <DrawingCard></DrawingCard>
                 <RequestBox>
                   {" "}
-                  <RequestContent>
-                    
-                  </RequestContent>
-                  <File>
-                    
-                  </File>
+                  <RequestContent></RequestContent>
+                  <File></File>
                 </RequestBox>
-                
               </RequestSubContainer>
             </BlackBox>
           ) : (

@@ -85,8 +85,8 @@ class ChatCardContainer extends React.Component {
     this.setState({ text: "" });
 
     // 빈메세지 제거
-    if(this.state.text.length > 0){
-    this.props.onSendMessage(this.state.text);
+    if (this.state.text.length > 0) {
+      this.props.onSendMessage(this.state.text);
     }
   }
 
@@ -293,7 +293,10 @@ class ChatCardContainer extends React.Component {
               <Profile>
                 <img
                   src={close_img}
-                  onClick={() => (this.props.Project.chatModalActive = false)}
+                  onClick={() => {
+                    this.props.Project.chatModalActive = false;
+                    this.props.socketClose();
+                  }}
                 />
                 <ProfileImg>
                   <img src={logo_img} />
