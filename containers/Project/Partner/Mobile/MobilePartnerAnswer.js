@@ -9,7 +9,7 @@ import {toJS} from "mobx";
 import DownloadFile from "components/DownloadFile";
 import Answer from "stores/Answer";
 const infoImg = "static/images/info.svg";
-const file_img = "static/images/file2.png";
+const file_img = "/static/images/project/fileimg.svg";
 @inject("Project", "Answer","Auth")
 @observer
 class PartnerAnswer extends React.Component {
@@ -134,20 +134,18 @@ class PartnerAnswer extends React.Component {
                       예상견적
                     </FontSize14>
                     <FontSize14 style={{ color: "#414550", marginLeft: 20 }}>
-                    {projectDetailData &&
-                    projectDetailData.request_set[0].price.toLocaleString(
-                      "ko-KR"
-                    ) != 0
-                      ? projectDetailData.request_set[0].price.toLocaleString(
-                          "ko-KR"
-                        ) + " 원"
-                      : "미정"}
+                      {projectDetailData && 
+                    projectDetailData.request_set[0].price ?  
+                    projectDetailData.request_set[0].price.toLocaleString("ko-KR")+"원" : "미정"}
                     </FontSize14>
                     <FontSize14 style={{ color: "#86888c", marginLeft: 90 }}>
                       납기 기간
                     </FontSize14>
                     <FontSize14 style={{ color: "#414550", marginLeft: 20 }}>
-                      {period}
+                    {projectDetailData &&
+                      projectDetailData.request_set[0].deadline
+                        .slice(2, 10)
+                        .replace(/-/gi, ".")}
                     </FontSize14>
                   </InlineDiv>
                 </ProjectInfoBox>
@@ -161,7 +159,7 @@ class PartnerAnswer extends React.Component {
                           projectDetailData.request_set[0].order_request_open}
                         {/* {Project.projectDetailData.request_set[0].order_request_open} */}
                       </pre>
-                    </RequestContent>
+                    
                     <File>
                       {projectDetailData &&
                         projectDetailData.request_set[0].requestfile_set.map(
@@ -169,7 +167,7 @@ class PartnerAnswer extends React.Component {
                             if (item.share_inform) {
                               return (
                                 <div>
-                                  <div>
+                                  <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                                     <img src={file_img} />
                                     {/* <DownloadFile
                               file={item.file}
@@ -191,6 +189,7 @@ class PartnerAnswer extends React.Component {
                           }
                         )}
                     </File>
+                    </RequestContent>
                   </RequestBox>
                 </RequestSubContainer>
                 {/* 프로젝트 답변하기 */}
@@ -346,7 +345,7 @@ const File = styled.div`
   > div {
     > div {
       > span {
-        font-size: 18px;
+        font-size: 15px;
         font-weight: normal;
         line-height: 40px;
         letter-spacing: -0.45px;
