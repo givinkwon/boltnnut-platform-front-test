@@ -224,6 +224,7 @@ class ChatTestContainer extends React.Component {
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
     // 메세지 및 시간 초기화
     this.setState({ messages: [], currentTime: temp });
+    console.log("메세지 및 시간 초기화")
     this.props.Project.chatMessages = [];
     //창 크기
     window.addEventListener('resize', this.updateDimensions);
@@ -301,6 +302,8 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.onmessage = (e) => {
       // console.log("Aaaasdasd");
       const data = JSON.parse(e.data);
+      console.log("data")
+      console.log(data)
 
       const messages = this.props.Project.chatMessages;
 
@@ -329,6 +332,7 @@ class ChatTestContainer extends React.Component {
           time: data["time"],
           bRead: false,
         });
+
       }
 
       if (data.bReceive) {

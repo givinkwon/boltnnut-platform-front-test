@@ -170,7 +170,7 @@ class ChatCardContainer extends React.Component {
                 <br />
               </>
             )}
-            {time.slice(0,10) + " " + time.slice(11,16)}
+            {time &&time.slice(0,10) + " " + time.slice(11,16)}
           </Message_Info>
         </MessageContent>
       </Messages_li>
