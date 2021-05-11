@@ -94,7 +94,7 @@ class MobileManufacturerContentContainer extends React.Component {
     return (
       <>
         <Background id="MyBackground">
-          <Container>
+          <Container style={{ display: "block" }}>
             {console.log(width)}
             {/* <MobileSearchBar /> */}
             <Body>
@@ -114,16 +114,13 @@ class MobileManufacturerContentContainer extends React.Component {
                     }}
                   >
                     <Font15>
-                      <span style={{ fontWeight: "bold" }}>
-                        {Partner.partner_count}개
-                      </span>
-                      의 제조사가 있습니다.
+                      <span>{Partner.partner_count}개</span>의 제조사
                     </Font15>
                     {/* <span>
               <Font14>모든 제조의뢰</Font14>
               <img src={pass4}/>
             </span> */}
-                    <div style={{ width: "30%" }}>
+                    <div style={{ width: "100px" }}>
                       <input
                         style={{ display: "none" }}
                         value={
@@ -263,9 +260,9 @@ class MobileManufacturerContentContainer extends React.Component {
 const customStyles = {
   dropdownIndicator: () => ({
     backgroundColor: "#fff",
-    color: "#c1b1bf",
-    width: 44,
-    height: 44,
+    color: "#999999",
+    width: 20,
+    height: 20,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -394,7 +391,7 @@ const region_data = [
 // ]
 
 const PageBar = styled.div`
-  width: 351px;
+  width: 80%;
   margin-top: 109px;
   margin-bottom: 157px;
   margin-left: auto;
@@ -484,7 +481,7 @@ const Header = styled.div`
   display: flex;
   //justify-content: center;
   align-items: center;
-  margin-bottom: 28px;
+  // margin-bottom: 28px;
   position: relative;
   > span {
     position: absolute;

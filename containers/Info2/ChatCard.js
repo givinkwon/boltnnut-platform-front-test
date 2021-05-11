@@ -90,6 +90,7 @@ class ChatCardContainer extends React.Component {
 
     // 빈메세지 제거
     if (this.state.text.length > 0) {
+      //console.log(this.state.text);
       this.props.onSendMessage(this.state.text);
     }
   }
@@ -116,6 +117,7 @@ class ChatCardContainer extends React.Component {
 
   renderMessage(message) {
     // this.checkRead(this.props.messages, message);
+    //console.log(toJS(message));
 
     const { member, text, time, bRead } = message;
     const { currentUserType } = this.props;

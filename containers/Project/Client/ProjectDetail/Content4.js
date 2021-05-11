@@ -160,7 +160,10 @@ class Content4 extends React.Component {
                         return (
                           <div>
                             <div>
-                              <img src={file_img} />
+                              <img
+                                src={file_img}
+                                style={{ marginRight: "14px" }}
+                              />
                               {/* <DownloadFile
                               file={item.file}
                               href={decodeURI(item.file)}
@@ -414,6 +417,9 @@ const File = styled.div`
   //border: 1px solid blue;
   > div {
     > div {
+      > img {
+        margin-right: 14px;
+      }
       > span {
         font-size: 18px;
         font-weight: normal;

@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { toJS } from "mobx";
+import { inject, observer } from "mobx-react";
 
 const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
+const file_img2 = "static/images/manufacturer/file.png";
 
+@inject("Partner")
+@observer
 class ProposalCard extends React.Component {
   state = {
     width: null,
@@ -70,8 +74,15 @@ class ProposalCard extends React.Component {
     //   checkTotal,
     //   customer,
     // } = this.props;
-    const { data, width } = this.props;
+    const { data, width, Partner, categoryData, idx } = this.props;
     console.log(width);
+    console.log(toJS(categoryData));
+    console.log(toJS(idx));
+    let category_data;
+    // category_data =
+    //   categoryData &&
+    //   categoryData.splice(categoryData.length / 2, categoryData.length / 2);
+    console.log(toJS(category_data));
     // console.log(toJS(data));
 
     return (
@@ -118,16 +129,31 @@ class ProposalCard extends React.Component {
             </Header>
             <Main>
               <Name>{data.name}</Name>
+              <Phone>
+                {data.real_phone ? (
+                  <span>☎ {data.real_phone}</span>
+                ) : (
+                  <span>전화번호 없음</span>
+                )}
+              </Phone>
               <InfoOne>{data.info_company}</InfoOne>
               <InfoTwo>
-                <span>디자인</span>
+                {/* {Partner.category_ary.map((item, idx) => {
+                  console.log(item);
+                })} */}
+                {/* {console.log(category_data)} */}
+                {category_data &&
+                  category_data.map((item, idx) => {
+                    return <span>{item}</span>;
+                  })}
+                {/* <span>디자인</span>
                 <span>기구설계</span>
                 <span>금형제작</span>
-                <span>양산</span>
+                <span>양산</span> */}
               </InfoTwo>
             </Main>
             <AdditionBox>
-              <div>
+              {/* <div>
                 <img
                   src={file_img}
                   active={this.state.introduction}
@@ -186,7 +212,11 @@ class ProposalCard extends React.Component {
                   </span>
                 </div>
               </div>
-              <div></div>
+              <div></div> */}
+              <div>
+                <img src={file_img2} />
+                <span>회사 소개서 보기</span>
+              </div>
             </AdditionBox>
           </Card>
         ) : (
@@ -226,7 +256,8 @@ class ProposalCard extends React.Component {
         </FooterWrapper> */}
             <Main>
               <Name>{data.name}</Name>
-              <InfoOne>{data.info_company}</InfoOne>
+              {/* <InfoOne>{data.info_company}</InfoOne> */}
+              <InfoOne>develop 들어가야함</InfoOne>
               <Information>
                 <div>
                   <img src={call_img} />
@@ -332,8 +363,8 @@ const Card = styled.div`
 
     padding-left: 14px;
     padding-right: 14px;
-    padding-top: 7px;
-    padding-bottom: 14px;
+    padding-top: 14px;
+
     margin-top: 14px;
     box-sizing: border-box;
   }
@@ -392,11 +423,31 @@ const Name = styled.div`
   letter-spacing: -0.5px;
   color: #282c36;
   font-weight: bold;
-  margin-bottom: 26px;
+  margin-bottom: 8px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    color: #0933b3;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: -0.4px;
+  }
+`;
+const Phone = styled.div`
+  font-size: 16px;
+  line-height: 40px;
+  letter-spacing: -0.4px;
+  color: #282c36;
+  font-weight: 500;
+  margin-bottom: 16px;
 `;
 const InfoOne = styled.div`
   //height: 100%;
   //height: 50px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    color: #282c36;
+    font-size: 13px;
+    line-height: 34px;
+    letter-spacing: -0.33px;
+  }
 `;
 const InfoTwo = styled.div`
 margin-top: 16px;
@@ -413,9 +464,18 @@ margin-top: 16px;
 const AdditionBox = styled.div`
   //border: 2px solid green;
   > div {
+    display: flex;
+    align-items: center;
+    width: 100%;
     position: absolute;
     top: 80%;
-    left: 87%;
+    left: 82%;
+    > span {
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #555963;
+    }
     > img {
       margin-left: 14px;
     }
@@ -475,6 +535,13 @@ const Information = styled.div`
   > div:nth-of-type(1) {
     > img {
       margin-right: 4px;
+      width: 11px;
+      height: 10px;
+    }
+    > span {
+      font-size: 12px;
+      line-height: 34px;
+      letter-spacing: -0.3px;
     }
   }
   > div:nth-of-type(2) {

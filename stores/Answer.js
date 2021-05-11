@@ -115,32 +115,32 @@ class Answer {
   @observable history_subclass_list = [];
   @observable history_category_list = [];
   @observable history_main_list = [];
-  
-  @observable content1="";
-  
+
+  @observable content1 = "";
+
   // 2021년 5월 8일 새로 작성
   @action CreateAnswer = async (project, partner, request, content1) => {
-      const token = localStorage.getItem("token");
-      const req = {
-        data: {
-          project : project,
-          partner : partner,
-          request : request,
-          content1 : content1
-        },
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      };
+    const token = localStorage.getItem("token");
+    const req = {
+      data: {
+        project: project,
+        partner: partner,
+        request: request,
+        content1: content1,
+      },
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
 
-      await AnswerAPI.CreateAnswer(req)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch(async (e) => {
-          alert("정상적으로 제안서가 생성되지 않았습니다.");
-        });
-    }
+    await AnswerAPI.CreateAnswer(req)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(async (e) => {
+        alert("정상적으로 제안서가 생성되지 않았습니다.");
+      });
+  };
 
   // 제안서를 본 경우
   @action seeAnswer = (answerId, click) => {
