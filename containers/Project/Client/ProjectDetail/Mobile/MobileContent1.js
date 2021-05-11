@@ -214,7 +214,9 @@ render() {
                   <Font14 style = {{color: "#999999"}}></Font14> */}
               </div>
               
-              <Font14 style = {{color: "#c6c7cc"}}>{date}</Font14>
+              <Font14 style = {{color: "#c6c7cc"}}>
+                {projectDetailData && 
+                projectDetailData.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")}</Font14>
             </div>
           </Head>
 
@@ -223,19 +225,26 @@ render() {
             <Font14 style = {{color: "#414550"}}>
               {projectDetailData && console.log(toJS(projectDetailData))}
                     {/* 예상금액 0원일 때 미정으로 변경 */}
-                    {projectDetailData &&
+                    {/* {projectDetailData &&
                     projectDetailData.request_set[0].price.toLocaleString(
                       "ko-KR"
                     ) != 0
                       ? projectDetailData.request_set[0].price.toLocaleString(
                           "ko-KR"
                         ) + " 원"
-                      : "미정"}
+                      : "미정"} */}
+                    {projectDetailData && 
+                    projectDetailData.request_set[0].price ?  
+                    projectDetailData.request_set[0].price.toLocaleString("ko-KR")+"원" : "미정"}
             </Font14>
           </Box1>
           <Box1>
             <Font14 style = {{color: "#999999"}}>희망 납기</Font14>
-            <Font14 style = {{color: "#414550"}}>{period}</Font14>
+            <Font14 style = {{color: "#414550"}}>
+              {projectDetailData &&
+              projectDetailData.request_set[0].deadline
+                .slice(2, 10)
+                .replace(/-/gi, ".")}</Font14>
           </Box1>
           <Box1>
             <Font14 style = {{color: "#999999"}}>지원 제조사 수</Font14>

@@ -20,7 +20,7 @@ const logoImg = "/static/images/project/Logo.png";
 const toolBarImg = "/static/images/project/ToolBar.svg";
 const callImg = "/static/images/project/Call.svg";
 const messagesImg = "/static/images/project/Messages.svg";
-let partnerdata = [];
+
 @inject("Project", "Auth", "Answer", "Partner")
 @observer
 class Content1 extends React.Component {
@@ -58,63 +58,62 @@ class Content1 extends React.Component {
   };
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
-    //init
-    Project.chatModalActive = false;
 
+    console.log(Project.selectedProjectId);
+    console.log("<Web> did mount");
+
+    // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
+    // const color = document.getElementById("MyFooter").getAttribute('style');
+    // console.log(color);
+    // Project.init(918)
+
+    //console.log(Auth)
     this.getToday(
       Project.projectDetailData &&
         Project.projectDetailData.request_set[0].deadline
     );
     await Auth.checkLogin();
 
-    if (Auth.logged_in_partner) {
-      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
-        console.log(toJS(Answer.answers));
-        this.setState({ partnerList: Answer.answers });
+    // if (Auth.logged_in_partner) {
+    //   Project.getPage(1069);
+    //   console.log(Project.selectedProjectId);
+    //   Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+    //     console.log(toJS(Answer.answers));
+    //     this.setState({ partnerList: Answer.answers });
 
-        console.log("====================================================");
-        console.log("해당 프로젝트의 정보입니다.");
-        console.log("프로젝트 번호: " + Project.selectedProjectId);
-        console.log("지원한 파트너 정보들");
-        console.log(toJS(Answer.answers));
-        console.log("====================================================");
-        Answer.answers.forEach((answer) => {
-          const PartnerDetailList = this.state.partnerDetailList;
-          PartnerAPI.detail(answer.partner)
-            .then((res) => {
-              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
-              PartnerDetailList.push({
-                logo: res.data.logo,
-                name: res.data.name,
-              });
-              this.setState({ partnerDetailList: PartnerDetailList });
-            })
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-        });
-      });
-    }
+    //     Answer.answers.forEach((answer) => {
+    //       const PartnerDetailList = this.state.partnerDetailList;
+    //       PartnerAPI.detail(answer.partner)
+    //         .then((res) => {
+    //           // console.log(res);
+    //           // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+    //           PartnerDetailList.push({
+    //             logo: res.data.logo,
+    //             name: res.data.name,
+    //           });
+    //           this.setState({ partnerDetailList: PartnerDetailList });
+    //         })
+    //         .catch((e) => {
+    //           console.log(e);
+    //           console.log(e.response);
+    //         });
+    //     });
+    //   });
+    // }
 
     if (Auth.logged_in_client) {
+      // console.log(Auth.logged_in_client);
       Project.getPage(Auth.logged_in_client.id);
+      console.log(Project.selectedProjectId);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         console.log(toJS(Answer.answers));
         this.setState({ partnerList: Answer.answers });
 
-        console.log("====================================================");
-        console.log("해당 프로젝트의 정보입니다.");
-        console.log("프로젝트 번호: " + Project.selectedProjectId);
-        console.log("지원한 파트너 정보들");
-        console.log(toJS(Answer.answers));
-        console.log("====================================================");
         Answer.answers.forEach((answer) => {
           const PartnerDetailList = this.state.partnerDetailList;
           PartnerAPI.detail(answer.partner)
             .then((res) => {
-              partnerdata = res.data;
-              console.log(res.data);
+              // console.log(res);
               // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
               PartnerDetailList.push({
                 logo: res.data.logo,
@@ -148,23 +147,20 @@ class Content1 extends React.Component {
     let maincategory = "";
     let categoryname = "";
     let maincategoryname = "";
-    let request_state = "";
+
     Project.projectDataList &&
       Project.currentPage > 0 &&
       Project.projectDataList.map((item, idx) => {
+        console.log("전체 프로젝트 데이터 리스트");
+        console.log(toJS(Project.projectDataList));
         if (idx === 0) {
-          request_state = item.request_set[0].request_state
-            ? item.request_set[0].request_state
-            : "";
           name = item.request_set[0].name ? item.request_set[0].name : "미지정";
           date = item.request_set[0].createdAt
             ? item.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
             : "미지정";
-          period =
-            item.request_set[0].deadline &&
-            item.request_set[0].deadline == "2020-11-11T11:11:00+09:00"
-              ? "미지정"
-              : item.request_set[0].deadline;
+          period = item.request_set[0].period
+            ? item.request_set[0].period + " 달"
+            : "미지정";
           estimate = item.request_set[0].price
             ? item.request_set[0].price
             : "미지정";
@@ -172,13 +168,15 @@ class Content1 extends React.Component {
           maincategory = Project.maincategory;
           categoryname = Project.categoryname;
           maincategoryname = Project.maincategoryname;
-          // console.log(item);
+          console.log("아이템");
+          console.log(toJS(item));
         }
       });
 
     return (
       <>
         <Container1>
+          {console.log("projectDetailData")}
           {console.log(toJS(projectDetailData))}
           {Project.chatModalActive && (
             // <Layer onClick={this.modalHandler}>
@@ -200,14 +198,20 @@ class Content1 extends React.Component {
                     letterSpacing: -0.18,
                   }}
                 >
-                  {request_state}
+                  {projectDetailData &&
+                    projectDetailData.request_set[0].request_state}
                 </Font18>
               </Box1>
               <div style={{ display: "inline-flex", flexDirection: "row" }}>
                 <Font16 style={{ color: "#999999", marginRight: 17 }}>
                   등록 일자
                 </Font16>{" "}
-                <Font16 style={{ color: "#999999" }}>{date}</Font16>
+                <Font16 style={{ color: "#999999" }}>
+                  {projectDetailData &&
+                    projectDetailData.request_set[0].createdAt
+                      .substr(0, 10)
+                      .replaceAll("-", ".")}
+                </Font16>
               </div>
             </Top>
             <Head>
@@ -216,7 +220,13 @@ class Content1 extends React.Component {
               >
                 {projectDetailData && projectDetailData.request_set[0].name}
               </Font26>
-
+              {/* <div>
+              <Font17 style={{ color: "#86888c" }}>
+                {maincategory}
+                {maincategoryname}
+              </Font17>
+            </div> */}
+              {/* <div></div> */}
               <div>
                 <Font17 style={{ color: "#86888c" }}>
                   {category}
@@ -232,15 +242,15 @@ class Content1 extends React.Component {
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
-                    {projectDetailData && console.log(toJS(projectDetailData))}
                     {/* 예상금액 0원일 때 미정으로 변경 */}
-                    {projectDetailData &&
-                    projectDetailData.request_set[0].price.toLocaleString(
-                      "ko-KR"
-                    ) != 0
+                    {/* {projectDetailData && projectDetailData.request_set[0].price.toLocaleString("ko-KR")!=0 ?
+                      (projectDetailData.request_set[0].price.toLocaleString("ko-KR") + " 원") : ("미정")
+                    } */}
+
+                    {projectDetailData && projectDetailData.request_set[0].price
                       ? projectDetailData.request_set[0].price.toLocaleString(
                           "ko-KR"
-                        ) + " 원"
+                        ) + "원"
                       : "미정"}
                   </Font18>
                 </div>
@@ -326,7 +336,10 @@ class Content1 extends React.Component {
                               this.state.partnerDetailList[idx].name}
                           </Font18>
                         </PartnerInfo>
-                        <Font16>" 프로젝트 보고 연락드립니다. "</Font16>
+                        <Font16>
+                          " 프로젝트 보고 연락드립니다 . 비공개 자료
+                          공개해주실수 있나요 "
+                        </Font16>
                         <IconBox>
                           <Icon>
                             <img src={toolBarImg}></img>
@@ -347,7 +360,6 @@ class Content1 extends React.Component {
                 </>
               )}
             </AppliedPartner>
-
             <Content4 user={user} />
           </InnerContainer>
         </Container1>
@@ -361,7 +373,6 @@ const Layer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-
   right: 0;
   bottom: 0;
   z-index: 10000;
@@ -451,7 +462,10 @@ const Box1 = styled.div`
 `;
 
 const Head = styled.div`
+<<<<<<< HEAD
   word-break: break-all;
+=======
+>>>>>>> 390d0240556bf1425ccb7a1c8fe599399a8c83f2
   div {
     display: inline-flex;
     flex-direction: row;
