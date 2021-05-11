@@ -36,19 +36,17 @@ class ChatCardContainer extends React.Component {
   };
   async componentDidMount() {
     //창 크기
-    window.addEventListener('resize', this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth});
-   
+    window.addEventListener("resize", this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
-  };
+    window.removeEventListener("resize", this.updateDimensions);
+  }
 
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
-
 
   onChangeHandler = (event) => {
     const textareaLineHeight = 34;
@@ -92,6 +90,7 @@ class ChatCardContainer extends React.Component {
 
     // 빈메세지 제거
     if (this.state.text.length > 0) {
+      //console.log(this.state.text);
       this.props.onSendMessage(this.state.text);
     }
   }
@@ -118,6 +117,7 @@ class ChatCardContainer extends React.Component {
 
   renderMessage(message) {
     // this.checkRead(this.props.messages, message);
+    //console.log(toJS(message));
 
     const { member, text, time, bRead } = message;
     const { currentUserType } = this.props;
@@ -152,17 +152,17 @@ class ChatCardContainer extends React.Component {
           )}
           {/* {!messageFromMe && <Message_User>상대</Message_User>} */}
           {text_message.text && text_message.text.indexOf("https://") > -1 ? (
-              <Message_text fromMe={messageFromMe}>
-                {console.log("파일")}
-                {console.log(text_message.text.split("/").pop())}
-                <a href={temp} download>
-                  {decodeURI(text_message.text.split("/").pop())}
-                </a>
-                {/* <img src={temp} /> */}
-              </Message_text>
-            ) : (
-              <Message_text fromMe={messageFromMe}>{text}</Message_text>
-            )}
+            <Message_text fromMe={messageFromMe}>
+              {console.log("파일")}
+              {console.log(text_message.text.split("/").pop())}
+              <a href={temp} download>
+                {decodeURI(text_message.text.split("/").pop())}
+              </a>
+              {/* <img src={temp} /> */}
+            </Message_text>
+          ) : (
+            <Message_text fromMe={messageFromMe}>{text}</Message_text>
+          )}
           <Message_Info>
             {bRead && (
               <>
@@ -170,7 +170,7 @@ class ChatCardContainer extends React.Component {
                 <br />
               </>
             )}
-            {time.slice(0,10) + " " + time.slice(11,16)}
+            {time && time.slice(0, 10) + " " + time.slice(11, 16)}
           </Message_Info>
         </MessageContent>
       </Messages_li>
@@ -187,14 +187,17 @@ class ChatCardContainer extends React.Component {
           <ChattingRoom>
             <Chat>
               <Header>
-                <Font24>{width > 779.98 ? (Partner.partnerdata && Partner.partnerdata.name) : ("")}</Font24>
+                <Font24>
+                  {width > 779.98
+                    ? Partner.partnerdata && Partner.partnerdata.name
+                    : ""}
+                </Font24>
                 <img src={prevent_img} />
                 <img src={star_img} />
               </Header>
               <MessageList height={this.state.height}>
                 <div style={{ padding: "0 10px 0 10px", height: "80%" }}>
                   {messages.map((m) => this.renderMessage(m))}
-                  
                 </div>
               </MessageList>
               <TypingBox>
@@ -259,39 +262,50 @@ class ChatCardContainer extends React.Component {
               </TypingBox>
             </Chat>
             {width > 779.98 ? (
-            <Info>
-              <Profile>
-                <img
-                  src={close_img}
-                  onClick={() => {
-                    this.props.Project.chatModalActive = false;
-                    this.props.socketClose();
-                  }}
-                />
-                <ProfileImg>
-                  <img src={Partner.partnerdata && Partner.partnerdata.logo} />
-                </ProfileImg>
-                <Font20>{Partner.partnerdata && Partner.partnerdata.name}</Font20>
-                <Font18>{Partner.partnerdata && Partner.partnerdata.user.phone}</Font18>
-                <a href={Partner.partnerdata && Partner.partnerdata.file} download>
-                  <Button style={ {marginBottom: "20px"} }>
-                    회사 소개서 보러가기
-                    <img src={pass2_img} />
+              <Info>
+                <Profile>
+                  <img
+                    src={close_img}
+                    onClick={() => {
+                      console.log(this.props.Project.chatModalActive);
+                      this.props.Project.chatModalActive = false;
+                      this.props.socketClose();
+                    }}
+                  />
+                  <ProfileImg>
+                    <img
+                      src={Partner.partnerdata && Partner.partnerdata.logo}
+                    />
+                  </ProfileImg>
+                  <Font20>
+                    {Partner.partnerdata && Partner.partnerdata.name}
+                  </Font20>
+                  <Font18>
+                    {Partner.partnerdata && Partner.partnerdata.user.phone}
+                  </Font18>
+                  <a
+                    href={Partner.partnerdata && Partner.partnerdata.file}
+                    download
+                  >
+                    <Button style={{ marginBottom: "20px" }}>
+                      회사 소개서 보러가기
+                      <img src={pass2_img} />
+                    </Button>
+                  </a>
+                  <Button onClick={this.props.shareButtonClick}>
+                    비공개 정보 공개하기
                   </Button>
-                </a>
-                <Button onClick={this.props.shareButtonClick}>
-                  비공개 정보 공개하기
-                </Button>
-              </Profile>
-              <PartnerList>
-                <Font20 style={{ alignSelf: "flex-start" }}>파트너 목록</Font20>
-                <PartnerContainer>
-                  
-                </PartnerContainer>
-              </PartnerList>
-            </Info>
-            ) : ("")
-            }
+                </Profile>
+                <PartnerList>
+                  <Font20 style={{ alignSelf: "flex-start" }}>
+                    파트너 목록
+                  </Font20>
+                  <PartnerContainer></PartnerContainer>
+                </PartnerList>
+              </Info>
+            ) : (
+              ""
+            )}
           </ChattingRoom>
         </Card>
       </Container>
@@ -438,7 +452,6 @@ const TypingBox = styled.div`
   //position: relative;
 `;
 const Card = styled.div`
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -617,6 +630,8 @@ const ProfileImg = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
   }
 `;
 

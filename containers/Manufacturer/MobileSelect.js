@@ -20,10 +20,10 @@ const customStyles = {
     backgroundColor: "#fff",
     borderRadius: 0,
     padding: 16,
-    fontSize: 14,
+    fontSize: 10,
   }),
   control: () => ({
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: "normal",
     lineHeight: 34,
     letterSpacing: "-0.45px",

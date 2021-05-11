@@ -47,6 +47,13 @@ class ManufacturerContentContainer extends React.Component {
     // }
   }
 
+  componentDidUpdate() {
+    // console.log("didupdate");
+    // console.log(toJS(this.props.Partner.check_loading_category));
+    // if (this.props.Partner.check_loading_category) {
+    //   this.setState({ g: 3 });
+    // }
+  }
   movePage = (e) => {
     const { Partner, Auth } = this.props;
     e.preventDefault();
@@ -121,10 +128,25 @@ class ManufacturerContentContainer extends React.Component {
                   Partner.partner_list.map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
-                        {console.log(this.props.width)}
+                        {/* {Partner.category_ary[idx] &&
+                          console.log(
+                            toJS(
+                              Partner.category_ary[idx].splice(
+                                0,
+                                //Partner.category_ary[idx].length
+                                Object.keys(Partner.category_ary[idx]).length
+                              )
+                            )
+                          )} */}
+                        {/* Partner.check_loading_category &&  */}
+                        {console.log(toJS(Partner.category_ary[idx]))}
+                        {/* {Partner.check_loading_category &&
+                          console.log(toJS(Partner.category_ary[idx]))} */}
                         <ProposalCard
                           data={item}
                           width={this.props.width}
+                          categoryData={Partner.category_ary[idx]}
+                          idx={idx}
                           // middleCategory={Project.middle_category_name[idx]}
                           // mainCategory={Project.main_category_name[idx]}
                           // newData={Project.data_dt[idx]}
