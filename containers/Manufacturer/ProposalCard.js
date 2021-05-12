@@ -71,6 +71,9 @@ class ProposalCard extends React.Component {
     const { data } = this.props;
 
     if(this.props.Auth && this.props.Auth.logged_in_user ){
+      if(!data.file){
+        alert('준비중입니다.')
+      }
       const url = data.file
       const link = document.createElement('a');
       link.href = url;
@@ -290,7 +293,7 @@ class ProposalCard extends React.Component {
                   )}
                 </div>
                 <div>
-                  <Link target="_blank" href={data && data.file} download> 
+                  <Link target="_blank" onClick={() => this.filedownload()} download> 
                     <span>회사 소개서 보기</span>
                   </Link>
                 </div>
