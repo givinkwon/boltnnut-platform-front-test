@@ -9,7 +9,7 @@ import Container from "components/Containerv1";
 
 import { PRIMARY2 } from "static/style";
 
-@inject("Auth", "Project", "Request")
+@inject("Auth", "Project", "Request", "Partner")
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -29,16 +29,17 @@ class SearchBarConatiner extends React.Component {
   };
 
   searchText = (e) => {
-    const { Project } = this.props;
+    const { Partner } = this.props;
     // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
-    Project.search_text = e.target.value;
+    Partner.search_text = e.target.value;
   };
   search = () => {
-    const { Project } = this.props;
+    const { Partner } = this.props;
 
-    Project.currentPage = 1;
-    Project.getProjectByPrice(Project.search_text);
+    Partner.currentPage = 1;
+    Partner.category_dic = {};
+    Partner.getPartner();
   };
   closeModal = () => {
     this.setState({
@@ -47,15 +48,16 @@ class SearchBarConatiner extends React.Component {
     });
   };
   handleKeyDown = (e) => {
-    const { Project } = this.props;
+    const { Partner } = this.props;
     if (e.key === "Enter") {
-      Project.currentPage = 1;
-      Project.getProjectByPrice(Project.search_text);
+      Partner.currentPage = 1;
+      Partner.category_dic = {};
+      Partner.getPartner();
     }
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-    console.log(this.props.Project.input_category);
+    //console.log(this.props.Project.input_category);
   }
   render() {
     const { Project, Request } = this.props;
@@ -114,8 +116,9 @@ export default SearchBarConatiner;
 
 const categoryArray = [
   { label: "전체", value: "전체" },
-  { label: "제목", value: "제목" },
-  { label: "내용", value: "내용" },
+  { label: "만든 제품", value: "만든 제품" },
+  // { label: "제목", value: "제목" },
+  // { label: "내용", value: "내용" },
 ];
 
 const SearchBar = styled.div`

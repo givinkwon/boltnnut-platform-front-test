@@ -2,6 +2,7 @@ import { observable, action, toJS, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Category";
 import * as PartnerAPI from "axios/Partner";
+import { isConstructorDeclaration } from "typescript";
 
 class Partner {
   constructor() {
@@ -42,7 +43,13 @@ class Partner {
 
   // 필터 & 라디오박스 관련 변수
   @observable filter_region = 0;
+  @observable filter_category = 0;
+
   @observable radiobox_checked_idx = 0;
+  @observable radiobox_category_checked_idx = 0;
+
+  @observable filter_category_ary = [{ id: 0, category: "전체" }];
+  @observable develop_next = 0;
 
   @observable filter_checked_idx = 0;
 
@@ -52,11 +59,16 @@ class Partner {
   @observable category_ary = [];
   @observable category_name_ary = [];
   @observable temp_category_name_ary = [];
+  @observable category_dic = {};
   @observable check_loading_category = false;
   @observable check_click_filter = false;
 
   @action setProcessFilter = (val) => {
     this.input_process_filter = val;
+    console.log(toJS(this.input_process_filter));
+    this.filter_category = val.id;
+
+    this.getPartner();
   };
 
   @action setCategory = (val) => {
@@ -666,11 +678,71 @@ class Partner {
     console.log(toJS(this.category_ary[idx]));
   };
 
-  @action test = async (req, sub_data) => {
+  @action setCategoryDic = async (req, sub_data, id) => {
     await PartnerAPI.getPartnerCategory(req)
       .then((res) => {
         console.log(`${sub_data} : ${toJS(res.data.category)}`);
         //this.category_ary[idx].push(res.data.category);
+        console.log(toJS(typeof this.category_name_ary));
+        //this.category_dic[id] = [1, 2, 3];
+        console.log(`${id} +  ${toJS(this.category_dic.hasOwnProperty(id))}`);
+
+        if (!this.category_dic.hasOwnProperty(id)) {
+          this.category_dic[id] = [];
+        }
+        this.category_dic[id] = [...this.category_dic[id], res.data.category];
+        console.log(toJS(this.category_dic));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action getCategory = () => {
+    //this.filter_category_ary = [];
+
+    const req = {
+      // nextUrl: this.develop_next,
+    };
+
+    PartnerAPI.getCategory(req)
+      .then(async (res) => {
+        this.filter_category_ary = this.filter_category_ary.concat(
+          res.data.results
+        );
+        this.develop_next = res.data.next;
+
+        console.log(toJS(res.data.results));
+        console.log(toJS(this.filter_category_ary));
+        console.log(this.develop_next);
+        while (this.develop_next) {
+          const req = {
+            nextUrl: this.develop_next,
+          };
+          console.log("========================");
+          await PartnerAPI.getNextDevelopPage(req)
+            .then((res) => {
+              console.log(res);
+              this.filter_category_ary = this.filter_category_ary.concat(
+                res.data.results
+              );
+
+              this.develop_next = res.data.next;
+              console.log(this.develop_next);
+              //this.project_page = parseInt(this.project_count/5) + 1
+              // if (callback) {
+              //   callback();
+              // }
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+        console.log(toJS(res.data.results.category));
+        console.log(toJS(typeof this.filter_category_ary));
+        console.log(toJS(this.filter_category_ary));
       })
       .catch((e) => {
         console.log(e);
@@ -686,21 +758,46 @@ class Partner {
     const token = localStorage.getItem("token");
     let req = {};
     if (!this.filter_region) {
-      req = {
-        params: {
-          // search: search_text,
-          page: page,
-        },
-      };
+      if (!this.filter_category) {
+        req = {
+          params: {
+            search: this.search_text,
+            page: page,
+          },
+        };
+      } else {
+        req = {
+          params: {
+            //city: this.filter_region === 0 ? "" : this.filter_region,
+
+            category_middle__id: this.filter_category,
+            search: this.search_text,
+            page: page,
+          },
+        };
+      }
     } else {
-      req = {
-        params: {
-          //city: this.filter_region === 0 ? "" : this.filter_region,
-          city: this.filter_region,
-          // search: search_text,
-          page: page,
-        },
-      };
+      if (!this.filter_category) {
+        req = {
+          params: {
+            //city: this.filter_region === 0 ? "" : this.filter_region,
+            city: this.filter_region,
+
+            search: this.search_text,
+            page: page,
+          },
+        };
+      } else {
+        req = {
+          params: {
+            //city: this.filter_region === 0 ? "" : this.filter_region,
+            city: this.filter_region,
+            category_middle__id: this.filter_category,
+            search: this.search_text,
+            page: page,
+          },
+        };
+      }
     }
 
     await PartnerAPI.getPartners(req)
@@ -752,11 +849,13 @@ class Partner {
           data.map((sub_data, index) => {
             console.log(toJS(sub_data));
 
+            console.log(id);
             const req = {
               id: sub_data,
             };
 
-            this.test(req, sub_data);
+            console.log(index);
+            this.setCategoryDic(req, sub_data, id);
           });
         });
         // }
@@ -851,6 +950,7 @@ class Partner {
           city: this.filter_region,
           // search: search_text,
           page: page,
+
           // ordering: "-id",
         },
         // headers: {
@@ -859,7 +959,7 @@ class Partner {
       };
     }
 
-    PartnerAPI.getPartner(req)
+    PartnerAPI.getPartners(req)
       .then((res) => {
         this.partner_list = [];
         this.category_ary = [];

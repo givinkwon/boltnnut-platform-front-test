@@ -37,16 +37,17 @@ class MobileSearchBarConatiner extends React.Component {
   };
 
   searchText = (e) => {
-    const { Project } = this.props;
+    const { Partner } = this.props;
     // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
-    Project.search_text = e.target.value;
+    Partner.search_text = e.target.value;
   };
   search = () => {
-    const { Project } = this.props;
+    const { Partner } = this.props;
 
-    Project.currentPage = 1;
-    Project.getProjectByPrice(Project.search_text);
+    Partner.currentPage = 1;
+    Partner.category_dic = {};
+    Partner.getPartner();
   };
   closeModal = () => {
     this.setState({
@@ -55,10 +56,11 @@ class MobileSearchBarConatiner extends React.Component {
     });
   };
   handleKeyDown = (e) => {
-    const { Project } = this.props;
+    const { Partner } = this.props;
     if (e.key === "Enter") {
-      Project.currentPage = 1;
-      Project.getProjectByPrice(Project.search_text);
+      Partner.currentPage = 1;
+      Partner.category_dic = {};
+      Partner.getPartner();
     }
   };
   async componentDidMount() {
@@ -74,6 +76,13 @@ class MobileSearchBarConatiner extends React.Component {
     if (Partner.filter_checked_idx !== idx) {
       this.setState({ index: idx });
       Partner.filter_checked_idx = idx;
+
+      Partner.filter_region = idx;
+      Partner.partner_next = null;
+      Partner.partner_count = null;
+      // this.count = 0;
+      Partner.currentPage = 1;
+      Partner.getPartner();
     }
   };
   activeHandler = (idx) => {
@@ -176,19 +185,19 @@ class MobileSearchBarConatiner extends React.Component {
           style={{ flex: "0 auto" }}
           active={this.state.filter_active}
         >
-          {filterArray.map((item, idx) => {
+          {region_data.map((item, idx) => {
             return (
               <>
                 <FilterContent
                   onClick={() => {
-                    this.onClickHandler(item.value);
+                    this.onClickHandler(item.id);
                   }}
-                  active={this.activeHandler(item.value)}
+                  active={this.activeHandler(item.id)}
                 >
-                  <div active={this.activeHandler(item.value)}>
-                    <div active={this.activeHandler(item.value)}></div>
+                  <div active={this.activeHandler(item.id)}>
+                    <div active={this.activeHandler(item.id)}></div>
                   </div>
-                  <span>{item.label}</span>
+                  <span>{item.name}</span>
                 </FilterContent>
               </>
             );
@@ -210,8 +219,55 @@ const filterArray = [
 ];
 const categoryArray = [
   { label: "전체", value: "전체" },
-  { label: "제목", value: "제목" },
-  { label: "내용", value: "내용" },
+  // { label: "제목", value: "제목" },
+  // { label: "내용", value: "내용" },
+];
+const region_data = [
+  {
+    id: 0,
+    name: "전체",
+    checked: "false",
+  },
+  {
+    id: 1,
+    name: "인천 남동|시화|반월공단",
+    checked: "false",
+  },
+  {
+    id: 2,
+    name: "인천 서구",
+    checked: "false",
+  },
+  {
+    id: 3,
+    name: "경기도 화성",
+    checked: "false",
+  },
+  {
+    id: 4,
+    name: "경기도 부천",
+    checked: "false",
+  },
+  {
+    id: 5,
+    name: "경기도 파주|양주|고양",
+    checked: "false",
+  },
+  {
+    id: 6,
+    name: "서울 문래동",
+    checked: "false",
+  },
+  {
+    id: 7,
+    name: "서울 성수동",
+    checked: "false",
+  },
+  {
+    id: 8,
+    name: "서울 을지로",
+    checked: "false",
+  },
 ];
 
 const SearchBar = styled.div`
@@ -348,7 +404,7 @@ const Filter = styled.div`
 const FilterContainer = styled.div`
   display: ${(props) => (props.active ? "flex" : "none")};
   flex-wrap: wrap;
-  padding: 0 31px;
+  padding: 0 24px;
   box-sizing: border-box;
   margin-top: 14px;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
@@ -356,7 +412,7 @@ const FilterContainer = styled.div`
 const FilterContent = styled.div`
   display: flex;
   align-items: center;
-  width: 33%;
+  width: 50%;
   text-align: center;
   margin-bottom: 14px;
   > div {
