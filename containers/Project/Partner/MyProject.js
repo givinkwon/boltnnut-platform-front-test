@@ -1,13 +1,14 @@
 import React from "react";
-import styled, {css} from "styled-components";
-import * as Content from 'components/Content';
-import * as Title from 'components/Title';
+import styled, { css } from "styled-components";
+import * as Content from "components/Content";
+import * as Title from "components/Title";
 import * as PartnerAPI from "axios/Partner";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import Partner from "../../../stores/Partner";
 import Container from "components/Containerv1";
 import Background from "components/Background";
+import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Info2/ChatTest";
 import Router from "next/router";
 import * as ProjectAPI from "axios/Project";
@@ -23,13 +24,12 @@ class MyProject extends React.Component {
   state = {
     Answerlist: [],
     selectedRoom: null,
-    Partnerprojectlist:[]
-
+    Partnerprojectlist: [],
   };
   modalHandler = (id) => {
     this.setState({ selectedRoom: id });
     const { Project } = this.props;
-  
+
     Project.chatModalActive = !Project.chatModalActive;
     // this.setState({ modalActive: !this.state.modalActive });
   };
@@ -45,121 +45,126 @@ class MyProject extends React.Component {
   };
 
   async getProject(data) {
-    const {Project} = this.props;
+    const { Project } = this.props;
     // const {Partnerprojectlist} = this.state;
     const partnerprojectlist = this.state.Partnerprojectlist;
 
     await Project.getProjectDetail(data.project);
 
-    if(Project.projectDetailData){
+    if (Project.projectDetailData) {
       partnerprojectlist.push({
         name: Project.projectDetailData.request_set[0].name,
-      })
-      this.setState({Partnerprojectlist:partnerprojectlist})
+      });
+      this.setState({ Partnerprojectlist: partnerprojectlist });
     }
-  };
-
+  }
 
   async componentDidMount() {
     const { Auth, Project, Partner } = this.props;
     await Auth.checkLogin();
     if (Auth.logged_in_partner) {
+      Partner.answer_set = Auth.logged_in_partner.answer_set;
 
-      Partner.answer_set = Auth.logged_in_partner.answer_set
-
-      this.setState({Answerlist:Auth.logged_in_partner.answer_set})
+      this.setState({ Answerlist: Auth.logged_in_partner.answer_set });
       // Partner.answer_set.project
 
       this.state.Answerlist.map((data) => {
-        this.getProject(data)
-      })
+        this.getProject(data);
+      });
     }
-  };
+  }
 
-
-
-
-  render(){
-    const {Project, Partner, Auth} = this.props;
-    return(
+  render() {
+    const { Project, Partner, Auth } = this.props;
+    return (
       <Background>
-        <Container style = {{flexDirection: "column"}}>
+        <Container style={{ flexDirection: "column" }}>
           {Project.chatModalActive && (
-              // <Layer onClick={this.modalHandler}>
-              <Layer>
-                {/* <Postcode /> */}
-                <ChatTestContainer
-                  roomName={this.state.selectedRoom}
-                ></ChatTestContainer>
-              </Layer>
-            )}
-      
-      <>
-       {Partner.answer_set &&Partner.answer_set.map((data, idx) => {
-        return (
-          <BoxContainer>
-          <Font22>
-            {this.state.Partnerprojectlist[idx] && this.state.Partnerprojectlist[idx].name}
-          </Font22>
-          <PartnerBox >
-            <BoxLeft>
-            <PartnerInfo>
-              <img
-                // src={
-                //   this.state.partnerDetailList[idx] &&
-                //   this.state.partnerDetailList[idx].logo
-                // }
-                src={
-                  "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-                }
-                width={65}
-                height={51}
-              ></img>
-              <Font20 style={{ marginLeft: 10 }}>
-                {Auth.logged_in_partner.name}
-              </Font20>
-            </PartnerInfo>
-            
-            <Font18 style = {{marginLeft: 80}}>
-              " 프로젝트 보고 연락드립니다 . 비공개 자료 공개해주실수
-              있나요 "
-            </Font18>
-          </BoxLeft>
-              
-            
-            <IconBox>
-              {/* <Icon>
-                <img src={toolBarImg}></img>
-              </Icon>
-              <Icon>
-                <img src={cal lImg}></img>
-              </Icon> */}
-              <GoToProject onClick={() => Router.push("/project")}
-              >
+            // <Layer onClick={this.modalHandler}>
+            <Layer>
+              {/* <Postcode /> */}
+              <ChatTestContainer
+                roomName={this.state.selectedRoom}
+              ></ChatTestContainer>
+            </Layer>
+          )}
 
-                <Font16 onClick={() => this.pushToDetail(data.id)}>프로젝트 보기</Font16>
+          <>
+            {Partner.answer_set &&
+              Partner.answer_set.map((data, idx) => {
+                return (
+                  <>
+                    {this.state.Partnerprojectlist[idx] && (
+                      <ChatItemContainer
+                        logo={this.state.Partnerprojectlist[idx].logo}
+                        name={this.state.Partnerprojectlist[idx].name}
+                        id={data.id}
+                        content={data.content1}
+                        modalHandler={this.modalHandler}
+                      />
+                    )}
+                  </>
+                  //     <BoxContainer>
+                  //       <Font22>
+                  //         {this.state.Partnerprojectlist[idx] &&
+                  //           this.state.Partnerprojectlist[idx].name}
+                  //       </Font22>
+                  //       <PartnerBox>
+                  //         <BoxLeft>
+                  //           <PartnerInfo>
+                  //             <img
+                  //               // src={
+                  //               //   this.state.partnerDetailList[idx] &&
+                  //               //   this.state.partnerDetailList[idx].logo
+                  //               // }
+                  //               src={
+                  //                 "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
+                  //               }
+                  //               width={65}
+                  //               height={51}
+                  //             ></img>
+                  //             <Font20 style={{ marginLeft: 10 }}>
+                  //               {Auth.logged_in_partner.name}
+                  //             </Font20>
+                  //           </PartnerInfo>
 
-              </GoToProject>
-              <Icon onClick={() => this.modalHandler(data.id)}>
-                <img src={messagesImg} style = {{marginLeft: 30}}></img>
-              </Icon>
-                <ChatNotice>
-                  <Font14>N</Font14>
-                </ChatNotice>
-              
-            </IconBox>
-            
-            
+                  //           <Font18 style={{ marginLeft: 80 }}>
+                  //             " 프로젝트 보고 연락드립니다 . 비공개 자료
+                  //             공개해주실수 있나요 "
+                  //           </Font18>
+                  //         </BoxLeft>
 
-          </PartnerBox>
-          </BoxContainer>
-        );
-      })}
-      </>
-      </Container></Background>
-      
-  );
-}
+                  //         <IconBox>
+                  //           {/* <Icon>
+                  //   <img src={toolBarImg}></img>
+                  // </Icon>
+                  // <Icon>
+                  //   <img src={cal lImg}></img>
+                  // </Icon> */}
+                  //           <GoToProject onClick={() => Router.push("/project")}>
+                  //             <Font16 onClick={() => this.pushToDetail(data.id)}>
+                  //               프로젝트 보기
+                  //             </Font16>
+                  //           </GoToProject>
+                  //           <Icon onClick={() => this.modalHandler(data.id)}>
+                  //             <img
+                  //               src={messagesImg}
+                  //               style={{ marginLeft: 30 }}
+                  //             ></img>
+                  //           </Icon>
+                  //           <ChatNotice>
+                  //             <Font14>N</Font14>
+                  //           </ChatNotice>
+                  //         </IconBox>
+                  //       </PartnerBox>
+                  //     </BoxContainer>
+                );
+              })}
+          </>
+        </Container>
+      </Background>
+    );
+  }
 }
 
 export default MyProject;
@@ -175,10 +180,9 @@ const Layer = styled.div`
 `;
 
 const BoxContainer = styled.div`
-margin-top: 52px;
-margin-bottom: 98px;
-`
-
+  margin-top: 52px;
+  margin-bottom: 98px;
+`;
 
 const PartnerInfo = styled.div`
   display: flex;
@@ -202,8 +206,7 @@ const BoxLeft = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-
-`
+`;
 const IconBox = styled.div`
   width: 110px;
   display: flex;
@@ -231,11 +234,9 @@ const ChatNotice = styled.div`
   background-color: #ff3400;
 `;
 
-
 const GoToProject = styled.div`
   cursor: pointer;
-
-`
+`;
 
 const Font14 = styled(Content.FontSize14)`
   font-weight: 500;
@@ -252,32 +253,31 @@ const Font16 = styled(Content.FontSize16)`
   color: #282c36;
   line-height: 1.5;
   border-bottom: 1px solid;
-  white-space:nowrap;
+  white-space: nowrap;
 `;
 
 const Font18 = styled(Content.FontSize18)`
-font-weight: normal;
-font-stretch: normal;
-font-style: normal;
-line-height: 2.22;
-letter-spacing: -0.45px;
-color: #86888c;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.22;
+  letter-spacing: -0.45px;
+  color: #86888c;
 `;
 
 const Font20 = styled(Title.FontSize20)`
-font-weight: normal;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: 2;
   letter-spacing: -0.5px;
   color: #282c36;
-
-`
+`;
 const Font22 = styled(Content.FontSize22)`
-font-weight: bold;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 2.36;
   letter-spacing: -0.55px;
   color: #282c36;
-`
+`;

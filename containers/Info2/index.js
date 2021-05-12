@@ -30,7 +30,7 @@ class InfoContainer extends React.Component {
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
     await Auth.checkLogin();
-    console.log(toJS(Auth.logged_in_partner));
+    // console.log(toJS(Auth.logged_in_partner));
     Answer.loadAnswerListByPartnerId(Auth.logged_in_partner.id).then(() => {
       console.log(toJS(Answer.answers));
       this.setState({ partnerList: Answer.answers });
