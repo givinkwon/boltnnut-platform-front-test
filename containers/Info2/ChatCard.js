@@ -429,7 +429,8 @@ const MessageList = styled.ul`
   //border: 3px solid blue;
   //height: 60%;
   //height: 580px;
-  height: ${(props) => (props.height ? props.height : "0")}px;
+  // height: ${(props) => (props.height ? props.height : "0")}px;
+  height: 60vh;
   border: 1px solid #c6c7cc;
   border-left: none;
   border-right: none;
@@ -455,10 +456,11 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  // height: 100%;
+  // bottom: 10%;
   width: 80vw;
   // width: 1200px;
-  margin-top: 160px;
+  // margin-top: 160px;
 `;
 
 const Container = styled.div`
