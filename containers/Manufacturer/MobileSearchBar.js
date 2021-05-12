@@ -13,6 +13,8 @@ import Container from "components/Containerv1";
 import { PRIMARY2 } from "static/style";
 
 const filter_img = "static/images/manufacturer/filter.png";
+const search_img = "static/images/manufacturer/search.png";
+
 @inject("Auth", "Project", "Request", "Partner")
 @observer
 class MobileSearchBarConatiner extends React.Component {
@@ -156,10 +158,7 @@ class MobileSearchBarConatiner extends React.Component {
                 borderRadius={0}
                 onClick={this.search}
               >
-                <img
-                  style={{ width: 18, height: 18 }}
-                  src="/static/images/search_cobalt-blue.png"
-                />
+                <img style={{ width: 18, height: 18 }} src={search_img} />
               </SearchButton>
             </div>
           </SearchBar>
@@ -231,9 +230,9 @@ const SearchBar = styled.div`
     //border: 1px solid green;
     flex-grow:5;
     input {
-        width: 100%;
+        width: 95%;
         height: 36px;
-        padding: 0 14px;
+        //padding: 0 14px;
     
         //border: 1px solid #c6c7cc;
         border: none;
@@ -345,12 +344,14 @@ const FilterContainer = styled.div`
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
 `;
 const FilterContent = styled.div`
-  width: 30%;
+  display: flex;
+  align-items: center;
+  width: 33%;
   text-align: center;
   margin-bottom: 14px;
   > div {
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
     border: ${(props) =>
       props.active ? "1px solid #0933b3" : "1px solid #999999"};
     border-radius: 12px;
@@ -360,8 +361,8 @@ const FilterContent = styled.div`
     align-items: center;
     > div {
       display: ${(props) => (props.active ? "block" : "none")};
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       //border: 1px solid #0933b3;
       border-radius: 6px;
       background-color: #0933b3;
