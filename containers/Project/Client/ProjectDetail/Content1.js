@@ -318,135 +318,56 @@ class Content1 extends React.Component {
               ):(
                 /* 클라이언트일 때 */ 
                 <>
-                {/* map으로 뿌리기 */}
-                {this.state.partnerList.map((data, idx) => {
-                  // Partner.getPartnerDetail(data.partner);
-                  return (
-                    <PartnerBox onClick={() => this.modalHandler(data.id)}>
-                      <PartnerInfo>
-                        <img
-                          // src={
-                          //   this.state.partnerDetailList[idx] &&
-                          //   this.state.partnerDetailList[idx].logo
-                          // }
-                          src={
-                            "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-                          }
-                          width={36}
-                          height={36}
-                        ></img>
-                        <Font18 style={{ marginLeft: 10 }}>
-                          {this.state.partnerDetailList[idx] &&
-                            this.state.partnerDetailList[idx].name}
-                        </Font18>
-                      </PartnerInfo>
-                      <Font16>
-                        " 프로젝트 보고 연락드립니다 . 비공개 자료 공개해주실수
-                        있나요 "
-                      </Font16>
-                      <IconBox>
-                        <Icon>
-                          <img src={toolBarImg}></img>
-                        </Icon>
-                        <Icon>
-                          <img src={callImg}></img>
-                        </Icon>
-                        <Icon>
-                          <img src={messagesImg}></img>
-                          <ChatNotice>
-                            <Font14>N</Font14>
-                          </ChatNotice>
-                        </Icon>
-                      </IconBox>
-                    </PartnerBox>
-                  );
-                })}
+                  {/* map으로 뿌리기 */}
+                  {this.state.partnerList.map((data, idx) => {
+                    // Partner.getPartnerDetail(data.partner);
+                    return (
+                      
+                      <PartnerBox onClick={() => this.modalHandler(data.id)}>
+                      
+                        {console.log("데이타")}
+                        {console.log(toJS(data))}
+                        <PartnerInfo>
+                          <img
+                            // src={
+                            //   this.state.partnerDetailList[idx] &&
+                            //   this.state.partnerDetailList[idx].logo
+                            // }
+                            src={
+                              "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
+                            }
+                            width={36}
+                            height={36}
+                          ></img>
+                          <Font18 style={{ marginLeft: 10 }}>
+                            {this.state.partnerDetailList[idx] &&
+                              this.state.partnerDetailList[idx].name}
+                          </Font18>
+                        </PartnerInfo>
+                        <Font16>
+                          " 프로젝트 보고 연락드립니다 . 비공개 자료 공개해주실수
+                          있나요 "
+                        </Font16>
+                        <IconBox>
+                          <Icon>
+                            <img src={toolBarImg}></img>
+                          </Icon>
+                          <Icon>
+                            <img src={callImg}></img>
+                          </Icon>
+                          <Icon>
+                            <img src={messagesImg}></img>
+                            <ChatNotice>
+                              <Font14>N</Font14>
+                            </ChatNotice>
+                          </Icon>
+                        </IconBox>
+                      </PartnerBox>
+                    );
+                  })}
                 </>
               )}
             </AppliedPartner>
-            {/* =================================================== */}
-            {/* <Info>
-              <div style={{ width: 125 }}>
-                <Font20>모집 마감일</Font20>
-                <Font20>진행 분류</Font20>
-                <Font20>관련 기술</Font20>
-              </div>
-              <div>
-                <div>
-                  <Font20 style={{ color: "#282c36" }}>2021년 3월 24일</Font20>
-                  <Font16 style={{ color: "#0933b3", marginLeft: 28 }}>
-                    10일 남음
-                  </Font16>
-                </div>
-                <Font20 style={{ color: "#282c36" }}>뜨악</Font20>
-                <Font20 style={{ color: "#282c36" }}>CNC</Font20>
-              </div>
-            </Info> */}
-            {/* <InfoDetail> */}
-            {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
-                프로젝트 내용 상세 설명
-              </Font20> */}
-            {/* <Font18
-                style={{
-                  letterSpacing: -0.45,
-                  fontWeight: "normal",
-                  marginBottom: 40,
-                  lineHeight: 1.67,
-                }}
-              >
-                저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이 없는데
-                이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기 자체에 파일로만
-                업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게
-                할까요 동해물과 백도산이 마르고 닳도록저희 의뢰하 기 자체에
-                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
-                어떻게 할까요 저희 의뢰하기 자체에 파일로만 업 로드 되어있고
-                상세 설명이 없는데 이부분은 꼭 필요한데 어떻게 할까요 동해물과
-                백도산이 마르고 닳도록 희 의뢰하기 자체에 파 일로만 업로드
-                되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게 할까요
-                저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이 없는데
-                이부분은 꼭 필요한데 어떻게 할까요 동해물과 백도산이 마르고
-                닳도록저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이
-                없는데 이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기 자체에
-                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
-                어떻게 할까요 동해물과 백도산이 마르고 닳도록 희 의뢰하기 자체에
-                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
-                어떻게 할까요 저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세
-                설명이 없
-              </Font18> */}
-            {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
-                프로젝트 관련 파일
-              </Font20>
-              <div>
-                <Font20>
-                  <img
-                    src={fileimg}
-                    style={{ marginLeft: 15, marginRight: 12 }}
-                  ></img>
-                  계약서 및 기능명세서.hwp
-                </Font20>
-                <Font20>
-                  <img
-                    src={fileimg}
-                    style={{ marginLeft: 15, marginRight: 12 }}
-                  ></img>
-                  계약서 및 기능명세서.hwp
-                </Font20>
-                <Font20>
-                  <img
-                    src={fileimg}
-                    style={{ marginLeft: 15, marginRight: 12 }}
-                  ></img>
-                  계약서 및 기능명세서.hwp
-                </Font20>
-                <Font20>
-                  <img
-                    src={fileimg}
-                    style={{ marginLeft: 15, marginRight: 12 }}
-                  ></img>
-                  계약서 및 기능명세서.hwp
-                </Font20>
-              </div>
-            </InfoDetail> */}
             <Content4 user={user} />
           </InnerContainer>
         </Container1>

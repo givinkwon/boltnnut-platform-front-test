@@ -11,6 +11,7 @@ import Containerv1 from "components/Containerv1";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
+import ChatTestContainer from "containers/Info2/ChatTest";
 const close_ic = "/static/icon/close.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
@@ -24,7 +25,11 @@ class Nav extends React.Component {
     url: "/",
     is_profile: false,
     is_open: false,
+    selectedRoom: null,
+    partnerList: [],
+    
   };
+
 
   alreadyLoggedin = ["login", "signup"];
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
@@ -36,7 +41,7 @@ class Nav extends React.Component {
     window.location.href = "/";
   };
   async componentDidMount() {
-    const { Auth } = this.props;
+    const { Auth, } = this.props;
     const token = await localStorage.getItem("token");
     const { route, pathname } = Router.router;
     const splitedRoute = route.split("/");
@@ -112,14 +117,17 @@ class Nav extends React.Component {
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     Auth.checkLogin();
     console.log(toJS(Auth.logged_in_user))
+
+    
   }
   render() {
-    const { Auth, Partner } = this.props;
+    const { Auth } = this.props;
     const { url, is_open, is_profile, token } = this.state;
 
     return (
       <>
         <NavBox>
+          
           <Containerv1
             style={{ display: "inline", justifyContent: "space-between" }}
           >
@@ -165,6 +173,7 @@ class Nav extends React.Component {
                         onClick={() => Router.push("/project")}
                         active={url.indexOf("project") > -1}
                       >
+                        {console.log(url)}
                         <p class="line"> 프로젝트 찾기 </p>
                       </NavLink>
                       <NavLink
@@ -216,6 +225,7 @@ class Nav extends React.Component {
                         </div>
                         <div>
                           <div>
+                            {console.log(this.state.partnerList[0])}
                             <Font16>
                             채팅하기
                             </Font16>
@@ -286,6 +296,16 @@ class Nav extends React.Component {
   }
 }
 export default Nav;
+
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  background: #00000080;
+`;
 const ProfileMenu = styled.div`
   position: absolute;
   background-color: #fff;
