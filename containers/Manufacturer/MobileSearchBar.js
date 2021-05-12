@@ -91,14 +91,16 @@ class MobileSearchBarConatiner extends React.Component {
   filterActiveHandler = () => {
     if (this.state.filter_active) {
       this.setState({ filter_active: false });
+      this.props.Partner.check_click_filter = false;
     } else {
       this.setState({ filter_active: true });
+      this.props.Partner.check_click_filter = true;
     }
   };
   render() {
     const { Partner } = this.props;
     return (
-      <Form>
+      <Form active={this.state.filter_active}>
         <Box
           active={this.state.list === true}
           onClick={() =>
@@ -152,8 +154,8 @@ class MobileSearchBarConatiner extends React.Component {
             <div>
               {" "}
               <SearchButton
-                width={80}
-                style={{ height: "36px", width: "40px" }}
+                width={50}
+                style={{ height: "36px", width: "20px", margin: "0 auto" }}
                 borderColor={PRIMARY2}
                 borderRadius={0}
                 onClick={this.search}
@@ -223,7 +225,8 @@ const SearchBar = styled.div`
   >div:nth-of-type(1){
     //border: 1px solid blue;
     flex-grow:1;
-    width:35%;
+    //width:calc(40% - 20px);
+    width: 70px;
   }
 
   >div:nth-of-type(2){
@@ -283,6 +286,13 @@ const Form = styled.div`
   // display: flex;
   // justify-content: flex-start;
   //height: 43px;
+  box-shadow: ${(props) =>
+    props.active ? "0 4px 2px -2px rgba(0, 0, 0, 0.2)" : ""};
+  position: ${(props) => (props.active ? "fixed" : "static")};
+  top: ${(props) => (props.active ? "53px" : "")};
+  z-index: 1;
+  background-color: #ffffff;
+  padding-top: ${(props) => (props.active ? "12px" : "")};
 `;
 
 const SearchButton = styled(ButtonComponent)`

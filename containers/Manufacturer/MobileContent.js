@@ -97,7 +97,7 @@ class MobileManufacturerContentContainer extends React.Component {
           <Container style={{ display: "block" }}>
             {console.log(width)}
             {/* <MobileSearchBar /> */}
-            <Body>
+            <Body active={this.props.Partner.check_click_filter}>
               {/* <FilterSearch>dsfsdfds</FilterSearch> */}
               {/* <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
@@ -457,7 +457,7 @@ const Body = styled.div`
   justify-content: center;
   //border-top: 1px solid #e1e2e4;
   //border-bottom: 1px solid #e1e2e4;
-  margin-top: 40px;
+  margin-top: ${(props) => (props.active ? "120px" : "40px")};
 `;
 const Main = styled.div`
   width: 100%;

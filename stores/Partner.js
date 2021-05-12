@@ -53,6 +53,7 @@ class Partner {
   @observable category_name_ary = [];
   @observable temp_category_name_ary = [];
   @observable check_loading_category = false;
+  @observable check_click_filter = false;
 
   @action setProcessFilter = (val) => {
     this.input_process_filter = val;
