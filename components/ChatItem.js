@@ -27,7 +27,6 @@ class ChatItemContainer extends React.Component {
             </Font18>
           </PartnerInfo>
           <Font16>
-            {/* " 프로젝트 보고 연락드립니다 . 비공개 자료 공개해주실수 있나요 " */}
             {this.props.content}
           </Font16>
           <IconBox>
@@ -97,7 +96,6 @@ const PartnerInfo = styled.div`
 `;
 const PartnerBox = styled.div`
   margin-bottom: 12px;
-  width: 100%;
   height: 56px;
   border-radius: 3px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);

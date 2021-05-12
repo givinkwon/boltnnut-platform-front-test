@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { toJS } from "mobx";
+import Router from "next/router";
 import { inject, observer } from "mobx-react";
-
+import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
 const file_img2 = "static/images/manufacturer/file.png";
 
-@inject("Partner")
+@inject("Partner","Auth")
 @observer
 class ProposalCard extends React.Component {
   state = {
@@ -65,6 +66,22 @@ class ProposalCard extends React.Component {
         }
     }
   };
+
+  filedownload = () => {
+    const { data } = this.props;
+
+    if(this.props.Auth.logged_in_user ){
+      const url = data.file
+      const link = document.createElement('a');
+      link.href = url;
+      link.click();
+    }
+    else {
+      alert('로그인이 필요합니다.')
+      Router.push("/login");
+    }
+
+  }
   render() {
     // const {
     //   data,
@@ -133,7 +150,7 @@ class ProposalCard extends React.Component {
                 {data.real_phone ? (
                   <span>☎ {data.real_phone}</span>
                 ) : (
-                  <span>전화번호 없음</span>
+                  <span>{data.user.phone ? (data.user.phone) : ("전화번호 없음")}</span>
                 )}
               </Phone>
               <InfoOne>{data.info_company}</InfoOne>
@@ -219,7 +236,9 @@ class ProposalCard extends React.Component {
               <div></div> */}
               <div>
                 <img src={file_img2} />
-                <span>회사 소개서 보기</span>
+                <Link target="_blank" onClick={() => this.filedownload()} download> 
+                    <span>회사 소개서 보기</span>
+                </Link>
               </div>
             </AdditionBox>
           </Card>
@@ -272,73 +291,14 @@ class ProposalCard extends React.Component {
                   )}
                 </div>
                 <div>
-                  <span>회사 소개서 보기</span>
+                  <link target="_blank" href={data.file} download> 
+                    <span>회사 소개서 보기</span>
+                  </link>
                 </div>
               </Information>
             </Main>
 
-            {/* <AdditionBox>
-              <div>
-                <img
-                  src={file_img}
-                  active={this.state.introduction}
-                  onMouseOver={() => {
-                    this.activeHandler("file");
-                  }}
-                  onMouseOut={() => {
-                    this.activeHandler("file");
-                  }}
-                />
-                <img
-                  src={call_img}
-                  active={this.state.call}
-                  onMouseOver={() => {
-                    this.activeHandler("call");
-                  }}
-                  onMouseOut={() => {
-                    this.activeHandler("call");
-                  }}
-                />
-                <img
-                  src={message_img}
-                  active={this.state.message}
-                  onMouseOver={() => {
-                    this.activeHandler("message");
-                  }}
-                  onMouseOut={() => {
-                    this.activeHandler("message");
-                  }}
-                />
-                <div>
-                  <span
-                    style={{
-                      display: `${this.state.introduction ? "block" : "none"}`,
-                    }}
-                  >
-                    <span>회사 소개서 보기</span>
-                  </span>
-                  <span
-                    style={{
-                      display: `${this.state.call ? "block" : "none"}`,
-                    }}
-                  >
-                    {data.real_phone ? (
-                      <span>{data.real_phone}</span>
-                    ) : (
-                      <span>전화번호 없음</span>
-                    )}
-                  </span>
-                  <span
-                    style={{
-                      display: `${this.state.message ? "block" : "none"}`,
-                    }}
-                  >
-                    <span>톡톡톡</span>
-                  </span>
-                </div>
-              </div>
-              <div></div>
-            </AdditionBox> */}
+     
           </Card>
         )}
       </>
@@ -556,4 +516,11 @@ const Information = styled.div`
       font-weight: bold;
     }
   }
+`;
+
+const Link = styled.a`
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  color: ${PRIMARY};
 `;
