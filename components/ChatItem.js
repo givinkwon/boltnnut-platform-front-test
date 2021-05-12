@@ -27,7 +27,8 @@ class ChatItemContainer extends React.Component {
             </Font18>
           </PartnerInfo>
           <Font16>
-            " 프로젝트 보고 연락드립니다 . 비공개 자료 공개해주실수 있나요 "
+            {/* " 프로젝트 보고 연락드립니다 . 비공개 자료 공개해주실수 있나요 " */}
+            {this.props.content}
           </Font16>
           <IconBox>
             <Icon>

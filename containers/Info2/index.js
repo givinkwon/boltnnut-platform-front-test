@@ -23,6 +23,10 @@ import * as PartnerAPI from "axios/Partner";
 @inject("Project", "Auth", "Answer", "Partner")
 @observer
 class InfoContainer extends React.Component {
+  state = {
+    partnerList: [],
+    partnerDetailList: [],
+  };
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
     await Auth.checkLogin();
@@ -50,15 +54,32 @@ class InfoContainer extends React.Component {
       });
     });
   }
+
   render() {
     return (
       <>
-        <BannerContainer />
+        {/* <BannerContainer />
         <Background>
-          <Containerv1>
-            <ChatItemContainer></ChatItemContainer>
+          <Containerv1 style={{ flexDirection: "column" }}>
+            {this.state.partnerList.map((data, idx) => {
+              // Partner.getPartnerDetail(data.partner);
+              // console.log(toJS(data));
+              return (
+                <>
+                  {this.state.partnerDetailList[idx] && (
+                    <ChatItemContainer
+                      logo={this.state.partnerDetailList[idx].logo}
+                      name={this.state.partnerDetailList[idx].name}
+                      id={data.id}
+                      content={data.content1}
+                      modalHandler={this.modalHandler}
+                    />
+                  )}
+                </>
+              );
+            })}
           </Containerv1>
-        </Background>
+        </Background> */}
 
         {/* <PaymentPageContainer /> */}
         {/* <ChatIndexContainer /> */}

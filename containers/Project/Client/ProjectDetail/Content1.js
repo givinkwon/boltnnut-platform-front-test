@@ -74,32 +74,32 @@ class Content1 extends React.Component {
     );
     await Auth.checkLogin();
 
-    // if (Auth.logged_in_partner) {
-    //   Project.getPage(1069);
-    //   console.log(Project.selectedProjectId);
-    //   Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
-    //     console.log(toJS(Answer.answers));
-    //     this.setState({ partnerList: Answer.answers });
+    if (Auth.logged_in_partner) {
+      // Project.getPage(1069);
+      // console.log(Project.selectedProjectId);
+      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+        console.log(toJS(Answer.answers));
+        this.setState({ partnerList: Answer.answers });
 
-    //     Answer.answers.forEach((answer) => {
-    //       const PartnerDetailList = this.state.partnerDetailList;
-    //       PartnerAPI.detail(answer.partner)
-    //         .then((res) => {
-    //           // console.log(res);
-    //           // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
-    //           PartnerDetailList.push({
-    //             logo: res.data.logo,
-    //             name: res.data.name,
-    //           });
-    //           this.setState({ partnerDetailList: PartnerDetailList });
-    //         })
-    //         .catch((e) => {
-    //           console.log(e);
-    //           console.log(e.response);
-    //         });
-    //     });
-    //   });
-    // }
+        Answer.answers.forEach((answer) => {
+          const PartnerDetailList = this.state.partnerDetailList;
+          PartnerAPI.detail(answer.partner)
+            .then((res) => {
+              // console.log(res);
+              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+              PartnerDetailList.push({
+                logo: res.data.logo,
+                name: res.data.name,
+              });
+              this.setState({ partnerDetailList: PartnerDetailList });
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        });
+      });
+    }
 
     if (Auth.logged_in_client) {
       // console.log(Auth.logged_in_client);
@@ -300,160 +300,23 @@ class Content1 extends React.Component {
                   </p>
                 )}
               </Font20>
-              {user === "partner" ? (
-                /* 파트너일 때 */
-
-                <BlackBox>
-                  <span>'해당 프로젝트 담당자만 확인할 수 있습니다.'</span>
-                  <div style={{ filter: "blur(5px)" }}>
-                    <PartnerBox />
-                    <PartnerBox />
-                    <PartnerBox />
-                  </div>
-                </BlackBox>
-              ) : (
-                /* 클라이언트일 때 */
-                <>
-                  {/* map으로 뿌리기 */}
-                  {this.state.partnerList.map((data, idx) => {
-                    // Partner.getPartnerDetail(data.partner);
-                    return (
-                      <>
-                        {this.state.partnerDetailList[idx] && (
-                          <ChatItemContainer
-                            logo={this.state.partnerDetailList[idx].logo}
-                            name={this.state.partnerDetailList[idx].name}
-                            id={data.id}
-                            content={"test"}
-                            modalHandler={this.modalHandler}
-                          />
-                        )}
-                      </>
-                      // <PartnerBox onClick={() => this.modalHandler(data.id)}>
-                      //   <PartnerInfo>
-                      //     <img
-                      //       // src={
-                      //       //   this.state.partnerDetailList[idx] &&
-                      //       //   this.state.partnerDetailList[idx].logo
-                      //       // }
-                      //       src={
-                      //         "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-                      //       }
-                      //       width={36}
-                      //       height={36}
-                      //     ></img>
-                      //     <Font18 style={{ marginLeft: 10 }}>
-                      //       {this.state.partnerDetailList[idx] &&
-                      //         this.state.partnerDetailList[idx].name}
-                      //     </Font18>
-                      //   </PartnerInfo>
-                      //   <Font16>
-                      //     " 프로젝트 보고 연락드립니다 . 비공개 자료
-                      //     공개해주실수 있나요 "
-                      //   </Font16>
-                      //   <IconBox>
-                      //     <Icon>
-                      //       <img src={toolBarImg}></img>
-                      //     </Icon>
-                      //     <Icon>
-                      //       <img src={callImg}></img>
-                      //     </Icon>
-                      //     <Icon>
-                      //       <img src={messagesImg}></img>
-                      //       <ChatNotice>
-                      //         <Font14>N</Font14>
-                      //       </ChatNotice>
-                      //     </Icon>
-                      //   </IconBox>
-                      // </PartnerBox>
-                    );
-                  })}
-                </>
-              )}
+              {this.state.partnerList.map((data, idx) => {
+                // Partner.getPartnerDetail(data.partner);
+                return (
+                  <>
+                    {this.state.partnerDetailList[idx] && (
+                      <ChatItemContainer
+                        logo={this.state.partnerDetailList[idx].logo}
+                        name={this.state.partnerDetailList[idx].name}
+                        id={data.id}
+                        content={"test"}
+                        modalHandler={this.modalHandler}
+                      />
+                    )}
+                  </>
+                );
+              })}
             </AppliedPartner>
-            {/* =================================================== */}
-            {/* <Info>
-              <div style={{ width: 125 }}>
-                <Font20>모집 마감일</Font20>
-                <Font20>진행 분류</Font20>
-                <Font20>관련 기술</Font20>
-              </div>
-              <div>
-                <div>
-                  <Font20 style={{ color: "#282c36" }}>2021년 3월 24일</Font20>
-                  <Font16 style={{ color: "#0933b3", marginLeft: 28 }}>
-                    10일 남음
-                  </Font16>
-                </div>
-                <Font20 style={{ color: "#282c36" }}>뜨악</Font20>
-                <Font20 style={{ color: "#282c36" }}>CNC</Font20>
-              </div>
-            </Info> */}
-            {/* <InfoDetail> */}
-            {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
-                프로젝트 내용 상세 설명
-              </Font20> */}
-            {/* <Font18
-                style={{
-                  letterSpacing: -0.45,
-                  fontWeight: "normal",
-                  marginBottom: 40,
-                  lineHeight: 1.67,
-                }}
-              >
-                저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이 없는데
-                이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기 자체에 파일로만
-                업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게
-                할까요 동해물과 백도산이 마르고 닳도록저희 의뢰하 기 자체에
-                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
-                어떻게 할까요 저희 의뢰하기 자체에 파일로만 업 로드 되어있고
-                상세 설명이 없는데 이부분은 꼭 필요한데 어떻게 할까요 동해물과
-                백도산이 마르고 닳도록 희 의뢰하기 자체에 파 일로만 업로드
-                되어있고 상세 설명이 없는데 이부분은 꼭 필요한데 어떻게 할까요
-                저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이 없는데
-                이부분은 꼭 필요한데 어떻게 할까요 동해물과 백도산이 마르고
-                닳도록저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세 설명이
-                없는데 이부분은 꼭 필요한데 어떻게 할까요 저희 의뢰하기 자체에
-                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
-                어떻게 할까요 동해물과 백도산이 마르고 닳도록 희 의뢰하기 자체에
-                파일로만 업로드 되어있고 상세 설명이 없는데 이부분은 꼭 필요한데
-                어떻게 할까요 저희 의뢰하기 자체에 파일로만 업로드 되어있고 상세
-                설명이 없
-              </Font18> */}
-            {/* <Font20 style={{ color: "#282c36", fontWeight: "bold" }}>
-                프로젝트 관련 파일
-              </Font20>
-              <div>
-                <Font20>
-                  <img
-                    src={fileimg}
-                    style={{ marginLeft: 15, marginRight: 12 }}
-                  ></img>
-                  계약서 및 기능명세서.hwp
-                </Font20>
-                <Font20>
-                  <img
-                    src={fileimg}
-                    style={{ marginLeft: 15, marginRight: 12 }}
-                  ></img>
-                  계약서 및 기능명세서.hwp
-                </Font20>
-                <Font20>
-                  <img
-                    src={fileimg}
-                    style={{ marginLeft: 15, marginRight: 12 }}
-                  ></img>
-                  계약서 및 기능명세서.hwp
-                </Font20>
-                <Font20>
-                  <img
-                    src={fileimg}
-                    style={{ marginLeft: 15, marginRight: 12 }}
-                  ></img>
-                  계약서 및 기능명세서.hwp
-                </Font20>
-              </div>
-            </InfoDetail> */}
             <Content4 user={user} />
           </InnerContainer>
         </Container1>
@@ -556,6 +419,10 @@ const Box1 = styled.div`
 `;
 
 const Head = styled.div`
+<<<<<<< HEAD
+  word-break: break-all;
+=======
+>>>>>>> 390d0240556bf1425ccb7a1c8fe599399a8c83f2
   div {
     display: inline-flex;
     flex-direction: row;

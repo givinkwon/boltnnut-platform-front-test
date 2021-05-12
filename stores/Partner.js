@@ -51,6 +51,8 @@ class Partner {
 
   @observable category_ary = [];
   @observable category_name_ary = [];
+  @observable temp_category_name_ary = [];
+  @observable check_loading_category = false;
 
   @action setProcessFilter = (val) => {
     this.input_process_filter = val;
@@ -603,11 +605,83 @@ class Partner {
     return this.clients[idx];
   };
 
+  @action getPartnerCategory = async (request, i, idx, id = 0) => {
+    console.log(request);
+    await PartnerAPI.getPartnerCategory(request)
+      .then((res) => {
+        console.log(toJS(res.data.category));
+        this.category_ary[idx].push(res.data.category);
+
+        if (idx === this.partner_list.length - 1) {
+          console.log("finish");
+          this.check_loading_category = true;
+        }
+
+        // console.log(toJS(this.category_ary[idx].length));
+        // console.log(id);
+        // console.log(toJS(this.category_ary[idx]));
+
+        // if (this.category_ary[idx].length > id) {
+        //   console.log("조건조건조건조건조건조건조건조건조건조건조건조건");
+        //   this.temp_category_name_ary.push(res.data.category);
+        //   console.log(toJS(this.category_ary[idx].length));
+        //   console.log(id);
+        //   console.log(toJS(this.temp_category_name_ary));
+        //   if (this.category_ary[idx].length - 1 === id) {
+        //     this.category_name_ary.push(this.temp_category_name_ary);
+        //     this.temp_category_name_ary = [];
+        //     console.log(toJS(this.category_name_ary));
+        //   }
+
+        //this.category_ary[idx].push(res.data.category);
+
+        // if (idx === this.partner_list.length - 1) {
+        //   console.log("finish");
+        //   this.check_loading_category = true;
+        // }
+        // }
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    // console.log((i + 1) * 2);
+    // console.log(toJS(this.category_ary[idx].length));
+    // if ((i + 1) * 2 === this.category_ary[idx].length) {
+    //   console.log(toJS(this.category_ary[idx]));
+    //   console.log(toJS(Object.keys(this.category_ary[idx]).length));
+
+    //   console.log(
+    //     toJS(
+    //       this.category_ary[idx].splice(
+    //         Object.keys(this.category_ary[idx]).length,
+    //         Object.keys(this.category_ary[idx]).length
+
+    //         //Partner.category_ary[idx].length
+    //       )
+    //     )
+    //   );
+    //}
+    console.log(toJS(this.category_ary[idx]));
+  };
+
+  @action test = async (req, sub_data) => {
+    await PartnerAPI.getPartnerCategory(req)
+      .then((res) => {
+        console.log(`${sub_data} : ${toJS(res.data.category)}`);
+        //this.category_ary[idx].push(res.data.category);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
   @action getPartner = async (page = 1) => {
     this.partner_list = [];
     this.category_ary = [];
     //this.data_dt = [];
-    console.log(this.filter_region);
+    //console.log(this.filter_region);
     const token = localStorage.getItem("token");
     let req = {};
     if (!this.filter_region) {
@@ -615,11 +689,7 @@ class Partner {
         params: {
           // search: search_text,
           page: page,
-          // ordering: "-id",
         },
-        // headers: {
-        //   Authorization: `Token ${token}`,
-        // },
       };
     } else {
       req = {
@@ -628,24 +698,18 @@ class Partner {
           city: this.filter_region,
           // search: search_text,
           page: page,
-          // ordering: "-id",
         },
-        // headers: {
-        //   Authorization: `Token ${token}`,
-        // },
       };
     }
 
-    await PartnerAPI.getPartner(req)
+    await PartnerAPI.getPartners(req)
       .then((res) => {
         this.partner_list = [];
         this.category_ary = [];
-        let index = {};
-        let key_index = "category ";
-        let count = 0;
+        this.category_name_ary = [];
+        this.temp_category_name_ary;
 
         this.partner_list = res.data.results;
-
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
         //this.category_ary = res.data.results.category_middle;
@@ -653,25 +717,49 @@ class Partner {
 
         this.partner_list.map((item, idx) => {
           this.category_ary.push(item.category_middle);
-          console.log(toJS(item));
+          //console.log(toJS(item));
+          console.log(toJS(this.category_ary));
 
-          console.log(toJS(this.category_ary[idx]));
-          for (let i = 0; i < this.category_ary[idx].length; i++) {
-            const request = {
-              id: this.category_ary[idx][i],
-            };
-            PartnerAPI.getPartnerCategory(request)
-              .then((res) => {
-                //this.category_name_ary.push({ index[key_index + idx] : res.data.category});
-                this.category_name_ary.push(res.data.category);
-                console.log(res.data.category);
-              })
-              .catch((e) => {
-                console.log(e);
-                console.log(e.response);
-              });
-          }
+          this.category_ary[idx].map((data, id) => {
+            console.log(toJS(data));
+
+            // const request = {
+            //   id: data,
+            // };
+
+            // if(this.partner_list.length-1 === idx){
+
+            // }
+            // this.category_ary.map((data, id) => {
+            //   console.log(toJS(data));
+            // });
+            //   console.log(toJS(this.category_name_ary));
+
+            //   console.log(toJS(this.category_ary[idx]));
+            for (let i = 0; i < this.category_ary[idx].length; i++) {
+              const request = {
+                id: this.category_ary[idx][i],
+              };
+              // this.getPartnerCategory(request, i, idx);
+            }
+          });
         });
+
+        // //async function temp() {
+        this.category_ary.map((data, id) => {
+          console.log(toJS(data));
+          data.map((sub_data, index) => {
+            console.log(toJS(sub_data));
+
+            const req = {
+              id: sub_data,
+            };
+
+            this.test(req, sub_data);
+          });
+        });
+        // }
+        // temp();
 
         // for(let i=0; i<this.category_ary.length; i++){
         //   req = {
@@ -680,18 +768,62 @@ class Partner {
         //    };
         // }
 
-        // Partner.getPartnerCategory()
+        // // 2)
+        // PartnerAPI.getPartnerCategory(request)
+        //   .then((res) => {
+        //     console.log(toJS(res.data.category));
+        //     // this.category_ary[idx].push(res.data.category);
+
+        //     // if (idx === this.partner_list.length - 1) {
+        //     //   console.log("finish");
+        //     //   this.check_loading_category = true;
+        //     // }
+
+        //     console.log(toJS(this.category_ary[idx].length));
+        //     console.log(id);
+        //     console.log(toJS(this.category_ary[idx]));
+
+        //     if (this.category_ary[idx].length > id) {
+        //       console.log(
+        //         "조건조건조건조건조건조건조건조건조건조건조건조건"
+        //       );
+        //       this.temp_category_name_ary.push(res.data.category);
+        //       console.log(toJS(this.category_ary[idx].length));
+        //       console.log(id);
+        //       console.log(toJS(this.temp_category_name_ary));
+        //       if (this.category_ary[idx].length - 1 === id) {
+        //         this.category_name_ary.push(this.temp_category_name_ary);
+        //         this.temp_category_name_ary = [];
+        //         console.log(toJS(this.category_name_ary));
+        //       }
+
+        //       //this.category_ary[idx].push(res.data.category);
+
+        //       // if (idx === this.partner_list.length - 1) {
+        //       //   console.log("finish");
+        //       //   this.check_loading_category = true;
+        //       // }
+        //     }
+        //   })
+        //   .catch((e) => {
+        //     console.log(e);
+        //     console.log(e.response);
+        //   });
+
+        //            this.getPartnerCategory(request, 0, idx, id);
 
         //this.getCategory();
+        //});
+
+        // console.log(toJS(this.partner_list));
+
+        //console.log(toJS(this.category_ary));
+        //console.log(toJS(this.category_name_ary));
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-    // console.log(toJS(this.partner_list));
-
-    console.log(toJS(this.category_ary));
-    console.log(toJS(this.category_name_ary));
   };
 
   @action getPartnerByRegion = async (page = 1) => {

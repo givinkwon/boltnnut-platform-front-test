@@ -10,13 +10,13 @@ import Partner from "./Partner";
 import Proposal from "./Proposal";
 import Offered from "./Offered";
 import Profile from "./Profile";
-import Notice from './Notice';
-import Magazine from './Magazine';
-import DetailQuestion from './DetailQuestion';
-import ManufactureProcess from './ManufactureProcess';
-import Schedule from './Schedule';
-import Project from './Project';
-
+import Notice from "./Notice";
+import Magazine from "./Magazine";
+import DetailQuestion from "./DetailQuestion";
+import ManufactureProcess from "./ManufactureProcess";
+import Schedule from "./Schedule";
+import Project from "./Project";
+import Chat from "./Chat";
 
 export default {
   Counter,
@@ -36,5 +36,6 @@ export default {
   DetailQuestion,
   ManufactureProcess,
   Schedule,
-  Project
+  Project,
+  Chat,
 };

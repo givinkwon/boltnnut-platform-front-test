@@ -90,6 +90,7 @@ class ChatCardContainer extends React.Component {
 
     // 빈메세지 제거
     if (this.state.text.length > 0) {
+      //console.log(this.state.text);
       this.props.onSendMessage(this.state.text);
     }
   }
@@ -116,6 +117,7 @@ class ChatCardContainer extends React.Component {
 
   renderMessage(message) {
     // this.checkRead(this.props.messages, message);
+    //console.log(toJS(message));
 
     const { member, text, time, bRead } = message;
     const { currentUserType } = this.props;
@@ -168,7 +170,7 @@ class ChatCardContainer extends React.Component {
                 <br />
               </>
             )}
-            {time.slice(0, 10) + " " + time.slice(11, 16)}
+            {time && time.slice(0, 10) + " " + time.slice(11, 16)}
           </Message_Info>
         </MessageContent>
       </Messages_li>
@@ -265,12 +267,15 @@ class ChatCardContainer extends React.Component {
                   <img
                     src={close_img}
                     onClick={() => {
+                      // console.log(this.props.Project.chatModalActive);
                       this.props.Project.chatModalActive = false;
                       this.props.socketClose();
                     }}
                   />
                   <ProfileImg>
-                    {/* <img src={Partner.partnerdata && Partner.partnerdata.logo} /> */}
+                    <img
+                      src={Partner.partnerdata && Partner.partnerdata.logo}
+                    />
                   </ProfileImg>
                   <Font20>
                     {Partner.partnerdata && Partner.partnerdata.name}
@@ -452,6 +457,7 @@ const Card = styled.div`
   justify-content: space-between;
   height: 100%;
   width: 80vw;
+  // width: 1200px;
   margin-top: 160px;
 `;
 
@@ -625,6 +631,8 @@ const ProfileImg = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
   }
 `;
 
