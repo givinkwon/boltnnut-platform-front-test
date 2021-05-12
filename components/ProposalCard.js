@@ -36,7 +36,7 @@ class ProposalCard extends React.Component {
     let estimate = "";
     let status = "";
     let content = "";
-    console.log(data.request_set[0]);
+    // console.log(data.request_set[0]);
     if (data.request_set[0]) {
       name = data.request_set[0].name && data.request_set[0].name;
       date =
@@ -72,15 +72,17 @@ class ProposalCard extends React.Component {
               </StepTag>
             )}
             <HeaderWrapper>
-              {console.log(name)}
+              {/* {console.log(name)} */}
               <Title>{name}</Title>
-              <Content style = {{color: "#86888c", width: "20%"}}>{date}</Content>
+              <Content style={{ color: "#86888c", width: "20%" }}>
+                {date}
+              </Content>
             </HeaderWrapper>
             <CategoryWrapper>
               <SubTitle>
                 <span>공개내용</span>
               </SubTitle>
-              <Content> {content}     </Content>
+              <Content> {content} </Content>
               <CategoryBox>
                 <span>{mainCategory}</span>
               </CategoryBox>
@@ -95,7 +97,7 @@ class ProposalCard extends React.Component {
           </Card>
         ) : (
           //    )
-          
+
           <Card
             style={{
               backgroundColor:
@@ -114,7 +116,9 @@ class ProposalCard extends React.Component {
             </StepTag>
             <HeaderWrapper>
               <Title>{name}</Title>
-              <Content style = {{color: "#86888c", width:"20%"}}>{date}</Content>
+              <Content style={{ color: "#86888c", width: "20%" }}>
+                {date}
+              </Content>
             </HeaderWrapper>
             <CategoryWrapper>
               <SubTitle>
@@ -129,8 +133,10 @@ class ProposalCard extends React.Component {
               </CategoryBox>
             </CategoryWrapper>
             <FooterWrapper>
-                <SubTitle><span>희망납기</span></SubTitle>
-                <Content>{period}</Content>
+              <SubTitle>
+                <span>희망납기</span>
+              </SubTitle>
+              <Content>{period}</Content>
               {/* <div style={{ display: "inline-flex" }}>
                 <Content>{date}</Content>
               </div> */}
@@ -140,7 +146,6 @@ class ProposalCard extends React.Component {
               </PriceTagBox> */}
             </FooterWrapper>
           </Card>
-          
         )}
       </>
     );
@@ -276,7 +281,7 @@ const Card = styled.div`
     padding-right: 14px;
     padding-top: 7px;
     // padding-bottom: 14px;
-    
+
     box-sizing: border-box;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -293,7 +298,6 @@ const Card = styled.div`
     padding: 62px 49px 32px 32px;
     padding-bottom: 0;
     box-sizing: border-box;
-
   }
   @media (min-width: 1300px) {
     height: 100%;
@@ -316,8 +320,8 @@ const Title = styled.span`
   white-space: nowrap;
   margin-right: 20px;
   width: 80%;
-  overflow : hidden;
-  text-overflow : ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 15px;
     height: 22px;
@@ -407,7 +411,6 @@ const CategoryBox = styled.div`
   }
 `;
 const Content = styled.span`
-
   // height: 24px;
   display: inline-block;
   align-items: center;
@@ -420,10 +423,9 @@ const Content = styled.span`
   text-align: left;
   white-space: nowrap;
   width: 100%;
-  overflow : hidden;
-  text-overflow : ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-  
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 12px;
     color: #767676;

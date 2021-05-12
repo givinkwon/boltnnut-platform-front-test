@@ -122,6 +122,9 @@ class ProjectContentContainer extends React.Component {
                 {Project.projectDataList &&
                   Project.currentPage > 0 &&
                   Project.projectDataList.map((item, idx) => {
+                    {
+                      console.log(toJS(item));
+                    }
                     return (
                       <Background style={{ marginBottom: "34px" }}>
                         <div
@@ -263,7 +266,7 @@ const request_data = [
     name: "업체수배",
     checked: "false",
   },
-]
+];
 
 const PageBar = styled.div`
   width: 351px;

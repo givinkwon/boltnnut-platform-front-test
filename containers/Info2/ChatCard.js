@@ -267,7 +267,7 @@ class ChatCardContainer extends React.Component {
                   <img
                     src={close_img}
                     onClick={() => {
-                      console.log(this.props.Project.chatModalActive);
+                      // console.log(this.props.Project.chatModalActive);
                       this.props.Project.chatModalActive = false;
                       this.props.socketClose();
                     }}
@@ -457,6 +457,7 @@ const Card = styled.div`
   justify-content: space-between;
   height: 100%;
   width: 80vw;
+  // width: 1200px;
   margin-top: 160px;
 `;
 
