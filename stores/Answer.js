@@ -115,32 +115,32 @@ class Answer {
   @observable history_subclass_list = [];
   @observable history_category_list = [];
   @observable history_main_list = [];
-  
-  @observable content1="";
-  
+
+  @observable content1 = "";
+
   // 2021년 5월 8일 새로 작성
   @action CreateAnswer = async (project, partner, request, content1) => {
-      const token = localStorage.getItem("token");
-      const req = {
-        data: {
-          project : project,
-          partner : partner,
-          request : request,
-          content1 : content1
-        },
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      };
+    const token = localStorage.getItem("token");
+    const req = {
+      data: {
+        project: project,
+        partner: partner,
+        request: request,
+        content1: content1,
+      },
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
 
-      await AnswerAPI.CreateAnswer(req)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch(async (e) => {
-          alert("정상적으로 제안서가 생성되지 않았습니다.");
-        });
-    }
+    await AnswerAPI.CreateAnswer(req)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(async (e) => {
+        alert("정상적으로 제안서가 생성되지 않았습니다.");
+      });
+  };
 
   // 제안서를 본 경우
   @action seeAnswer = (answerId, click) => {
@@ -538,6 +538,39 @@ class Answer {
         }
       });
   };
+
+  @action loadAnswerListByPartnerId = async (partnerId, callback = null) => {
+    console.log(`loadAnswerListByPartnerId(${partnerId})`);
+
+    const token = localStorage.getItem("token");
+    const req = {
+      extraUrl: `?partner=${partnerId}`,
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
+    await AnswerAPI.getAnswer(req)
+      .then((res) => {
+        this.answers_count = res.data.count;
+        this.answers_next = res.data.next;
+        this.answers_prev = res.data.previous;
+        this.answers = res.data.results;
+        if (callback) {
+          callback();
+        }
+
+        console.log("제안서 목록 카운트 : " + this.answers.length);
+      })
+      .catch((e) => {
+        try {
+          alert(e.response.data.message);
+        } catch {
+          console.log(e);
+          console.log(e.response);
+        }
+      });
+  };
+
   // 기존의 this.answers를 덮어씀
   // 추가로 미팅하기 버튼을 클릭했을 경우
   @action loadNextAnswerPage = () => {

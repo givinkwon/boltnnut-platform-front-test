@@ -2,6 +2,7 @@ import { observable, action, toJS, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Category";
 import * as PartnerAPI from "axios/Partner";
+import { isConstructorDeclaration } from "typescript";
 
 class Partner {
   constructor() {
@@ -42,7 +43,13 @@ class Partner {
 
   // 필터 & 라디오박스 관련 변수
   @observable filter_region = 0;
+  @observable filter_category = 0;
+
   @observable radiobox_checked_idx = 0;
+  @observable radiobox_category_checked_idx = 0;
+
+  @observable filter_category_ary = [{ id: 0, category: "전체" }];
+  @observable develop_next = 0;
 
   @observable filter_checked_idx = 0;
 
@@ -51,13 +58,26 @@ class Partner {
 
   @observable category_ary = [];
   @observable category_name_ary = [];
+  @observable temp_category_name_ary = [];
+  @observable category_dic = {};
+  @observable check_loading_category = false;
+  @observable check_click_filter = false;
+
+  // 파트너의 답변
+  @observable answer_set = [];
 
   @action setProcessFilter = (val) => {
     this.input_process_filter = val;
+    console.log(toJS(this.input_process_filter));
+    this.filter_category = val.id;
+
+    this.getPartner();
   };
 
   @action setCategory = (val) => {
     this.input_category = val;
+    console.log(toJS(this.input_category));
+    console.log(val);
   };
 
   @action setLoading = () => {
@@ -116,7 +136,7 @@ class Partner {
   };
 
   @action getPartnerDetail = async (id) => {
-    PartnerAPI.detail(id)
+    await PartnerAPI.detail(id)
       .then((res) => {
         console.log(res);
         // return res.data;
@@ -603,49 +623,196 @@ class Partner {
     return this.clients[idx];
   };
 
+  @action getPartnerCategory = async (request, i, idx, id = 0) => {
+    console.log(request);
+    await PartnerAPI.getPartnerCategory(request)
+      .then((res) => {
+        console.log(toJS(res.data.category));
+        this.category_ary[idx].push(res.data.category);
+
+        if (idx === this.partner_list.length - 1) {
+          console.log("finish");
+          this.check_loading_category = true;
+        }
+
+        // console.log(toJS(this.category_ary[idx].length));
+        // console.log(id);
+        // console.log(toJS(this.category_ary[idx]));
+
+        // if (this.category_ary[idx].length > id) {
+        //   console.log("조건조건조건조건조건조건조건조건조건조건조건조건");
+        //   this.temp_category_name_ary.push(res.data.category);
+        //   console.log(toJS(this.category_ary[idx].length));
+        //   console.log(id);
+        //   console.log(toJS(this.temp_category_name_ary));
+        //   if (this.category_ary[idx].length - 1 === id) {
+        //     this.category_name_ary.push(this.temp_category_name_ary);
+        //     this.temp_category_name_ary = [];
+        //     console.log(toJS(this.category_name_ary));
+        //   }
+
+        //this.category_ary[idx].push(res.data.category);
+
+        // if (idx === this.partner_list.length - 1) {
+        //   console.log("finish");
+        //   this.check_loading_category = true;
+        // }
+        // }
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    // console.log((i + 1) * 2);
+    // console.log(toJS(this.category_ary[idx].length));
+    // if ((i + 1) * 2 === this.category_ary[idx].length) {
+    //   console.log(toJS(this.category_ary[idx]));
+    //   console.log(toJS(Object.keys(this.category_ary[idx]).length));
+
+    //   console.log(
+    //     toJS(
+    //       this.category_ary[idx].splice(
+    //         Object.keys(this.category_ary[idx]).length,
+    //         Object.keys(this.category_ary[idx]).length
+
+    //         //Partner.category_ary[idx].length
+    //       )
+    //     )
+    //   );
+    //}
+    console.log(toJS(this.category_ary[idx]));
+  };
+
+  @action setCategoryDic = async (req, sub_data, id) => {
+    await PartnerAPI.getPartnerCategory(req)
+      .then((res) => {
+        console.log(`${sub_data} : ${toJS(res.data.category)}`);
+        //this.category_ary[idx].push(res.data.category);
+        console.log(toJS(typeof this.category_name_ary));
+        //this.category_dic[id] = [1, 2, 3];
+        console.log(`${id} +  ${toJS(this.category_dic.hasOwnProperty(id))}`);
+
+        if (!this.category_dic.hasOwnProperty(id)) {
+          this.category_dic[id] = [];
+        }
+        this.category_dic[id] = [...this.category_dic[id], res.data.category];
+        console.log(toJS(this.category_dic));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action getCategory = () => {
+    //this.filter_category_ary = [];
+
+    const req = {
+      // nextUrl: this.develop_next,
+    };
+
+    PartnerAPI.getCategory(req)
+      .then(async (res) => {
+        this.filter_category_ary = this.filter_category_ary.concat(
+          res.data.results
+        );
+        this.develop_next = res.data.next;
+
+        console.log(toJS(res.data.results));
+        console.log(toJS(this.filter_category_ary));
+        console.log(this.develop_next);
+        while (this.develop_next) {
+          const req = {
+            nextUrl: this.develop_next,
+          };
+          console.log("========================");
+          await PartnerAPI.getNextDevelopPage(req)
+            .then((res) => {
+              console.log(res);
+              this.filter_category_ary = this.filter_category_ary.concat(
+                res.data.results
+              );
+
+              this.develop_next = res.data.next;
+              console.log(this.develop_next);
+              //this.project_page = parseInt(this.project_count/5) + 1
+              // if (callback) {
+              //   callback();
+              // }
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+        console.log(toJS(res.data.results.category));
+        console.log(toJS(typeof this.filter_category_ary));
+        console.log(toJS(this.filter_category_ary));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
   @action getPartner = async (page = 1) => {
     this.partner_list = [];
     this.category_ary = [];
     //this.data_dt = [];
-    console.log(this.filter_region);
+    //console.log(this.filter_region);
     const token = localStorage.getItem("token");
     let req = {};
     if (!this.filter_region) {
-      req = {
-        params: {
-          // search: search_text,
-          page: page,
-          // ordering: "-id",
-        },
-        // headers: {
-        //   Authorization: `Token ${token}`,
-        // },
-      };
+      if (!this.filter_category) {
+        req = {
+          params: {
+            search: this.search_text,
+            page: page,
+          },
+        };
+      } else {
+        req = {
+          params: {
+            //city: this.filter_region === 0 ? "" : this.filter_region,
+
+            category_middle__id: this.filter_category,
+            search: this.search_text,
+            page: page,
+          },
+        };
+      }
     } else {
-      req = {
-        params: {
-          //city: this.filter_region === 0 ? "" : this.filter_region,
-          city: this.filter_region,
-          // search: search_text,
-          page: page,
-          // ordering: "-id",
-        },
-        // headers: {
-        //   Authorization: `Token ${token}`,
-        // },
-      };
+      if (!this.filter_category) {
+        req = {
+          params: {
+            //city: this.filter_region === 0 ? "" : this.filter_region,
+            city: this.filter_region,
+
+            search: this.search_text,
+            page: page,
+          },
+        };
+      } else {
+        req = {
+          params: {
+            //city: this.filter_region === 0 ? "" : this.filter_region,
+            city: this.filter_region,
+            category_middle__id: this.filter_category,
+            search: this.search_text,
+            page: page,
+          },
+        };
+      }
     }
 
-    await PartnerAPI.getPartner(req)
+    await PartnerAPI.getPartners(req)
       .then((res) => {
         this.partner_list = [];
         this.category_ary = [];
-        let index = {};
-        let key_index = "category ";
-        let count = 0;
+        this.category_name_ary = [];
+        this.temp_category_name_ary;
 
         this.partner_list = res.data.results;
-
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
         //this.category_ary = res.data.results.category_middle;
@@ -653,25 +820,51 @@ class Partner {
 
         this.partner_list.map((item, idx) => {
           this.category_ary.push(item.category_middle);
-          console.log(toJS(item));
+          //console.log(toJS(item));
+          console.log(toJS(this.category_ary));
 
-          console.log(toJS(this.category_ary[idx]));
-          for (let i = 0; i < this.category_ary[idx].length; i++) {
-            const request = {
-              id: this.category_ary[idx][i],
-            };
-            PartnerAPI.getPartnerCategory(request)
-              .then((res) => {
-                //this.category_name_ary.push({ index[key_index + idx] : res.data.category});
-                this.category_name_ary.push(res.data.category);
-                console.log(res.data.category);
-              })
-              .catch((e) => {
-                console.log(e);
-                console.log(e.response);
-              });
-          }
+          this.category_ary[idx].map((data, id) => {
+            console.log(toJS(data));
+
+            // const request = {
+            //   id: data,
+            // };
+
+            // if(this.partner_list.length-1 === idx){
+
+            // }
+            // this.category_ary.map((data, id) => {
+            //   console.log(toJS(data));
+            // });
+            //   console.log(toJS(this.category_name_ary));
+
+            //   console.log(toJS(this.category_ary[idx]));
+            for (let i = 0; i < this.category_ary[idx].length; i++) {
+              const request = {
+                id: this.category_ary[idx][i],
+              };
+              // this.getPartnerCategory(request, i, idx);
+            }
+          });
         });
+
+        // //async function temp() {
+        this.category_ary.map((data, id) => {
+          console.log(toJS(data));
+          data.map((sub_data, index) => {
+            console.log(toJS(sub_data));
+
+            console.log(id);
+            const req = {
+              id: sub_data,
+            };
+
+            console.log(index);
+            this.setCategoryDic(req, sub_data, id);
+          });
+        });
+        // }
+        // temp();
 
         // for(let i=0; i<this.category_ary.length; i++){
         //   req = {
@@ -680,18 +873,62 @@ class Partner {
         //    };
         // }
 
-        // Partner.getPartnerCategory()
+        // // 2)
+        // PartnerAPI.getPartnerCategory(request)
+        //   .then((res) => {
+        //     console.log(toJS(res.data.category));
+        //     // this.category_ary[idx].push(res.data.category);
+
+        //     // if (idx === this.partner_list.length - 1) {
+        //     //   console.log("finish");
+        //     //   this.check_loading_category = true;
+        //     // }
+
+        //     console.log(toJS(this.category_ary[idx].length));
+        //     console.log(id);
+        //     console.log(toJS(this.category_ary[idx]));
+
+        //     if (this.category_ary[idx].length > id) {
+        //       console.log(
+        //         "조건조건조건조건조건조건조건조건조건조건조건조건"
+        //       );
+        //       this.temp_category_name_ary.push(res.data.category);
+        //       console.log(toJS(this.category_ary[idx].length));
+        //       console.log(id);
+        //       console.log(toJS(this.temp_category_name_ary));
+        //       if (this.category_ary[idx].length - 1 === id) {
+        //         this.category_name_ary.push(this.temp_category_name_ary);
+        //         this.temp_category_name_ary = [];
+        //         console.log(toJS(this.category_name_ary));
+        //       }
+
+        //       //this.category_ary[idx].push(res.data.category);
+
+        //       // if (idx === this.partner_list.length - 1) {
+        //       //   console.log("finish");
+        //       //   this.check_loading_category = true;
+        //       // }
+        //     }
+        //   })
+        //   .catch((e) => {
+        //     console.log(e);
+        //     console.log(e.response);
+        //   });
+
+        //            this.getPartnerCategory(request, 0, idx, id);
 
         //this.getCategory();
+        //});
+
+        // console.log(toJS(this.partner_list));
+
+        //console.log(toJS(this.category_ary));
+        //console.log(toJS(this.category_name_ary));
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-    // console.log(toJS(this.partner_list));
-
-    console.log(toJS(this.category_ary));
-    console.log(toJS(this.category_name_ary));
   };
 
   @action getPartnerByRegion = async (page = 1) => {
@@ -718,6 +955,7 @@ class Partner {
           city: this.filter_region,
           // search: search_text,
           page: page,
+
           // ordering: "-id",
         },
         // headers: {
@@ -726,7 +964,7 @@ class Partner {
       };
     }
 
-    PartnerAPI.getPartner(req)
+    PartnerAPI.getPartners(req)
       .then((res) => {
         this.partner_list = [];
         this.category_ary = [];

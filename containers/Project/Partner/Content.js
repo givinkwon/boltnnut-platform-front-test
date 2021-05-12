@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import Router from "next/router";
 import Slider from "react-slick";
 import { inject, observer } from "mobx-react";
-
+import SearchBar from "../SearchBar";
 import * as Title from "components/Title";
 import * as Content from "components/Content";
 
@@ -95,7 +95,9 @@ class ProjectContentContainer extends React.Component {
     return (
       <>
         <Background id="MyBackground">
-          <Container>
+          <Container style = {{flexDirection: "column"}}>
+            <SearchBar />
+            <>
             <Body>
               <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
@@ -120,12 +122,17 @@ class ProjectContentContainer extends React.Component {
                 {Project.projectDataList &&
                   Project.currentPage > 0 &&
                   Project.projectDataList.map((item, idx) => {
+                    {
+                      console.log(toJS(item));
+                    }
                     return (
                       <Background style={{ marginBottom: "34px" }}>
                         <div
                           style={{ cursor: "pointer", width: "100%" }}
                           onClick={() => this.pushToDetail(item.id)}
                         >
+                          {console.log(toJS(item))}
+                          {console.log("아이템")}
                           <ProposalCard
                             data={item}
                             middleCategory={Project.middle_category_name[idx]}
@@ -141,6 +148,7 @@ class ProjectContentContainer extends React.Component {
                   })}
               </Main>
             </Body>
+            </>
           </Container>
         </Background>
         <PageBar>
@@ -258,7 +266,7 @@ const request_data = [
     name: "업체수배",
     checked: "false",
   },
-]
+];
 
 const PageBar = styled.div`
   width: 351px;

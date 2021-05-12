@@ -51,7 +51,7 @@ class TabletBanner0Container extends React.Component {
       >
         <Fade bottom>
           <Header color={WHITE} fontWeight={"500"}>
-            엔지니어와 연구원을 위한 제조 상담 플랫폼
+            엔지니어와 연구원을 위한 전문 업체 수배 플랫폼
           </Header>
           {/* <div>
             <Title1 fontWeight={300} color={"#ffffff"}>

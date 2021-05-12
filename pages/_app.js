@@ -1,3 +1,6 @@
+import "react-app-polyfill/ie11";
+import "react-app-polyfill/stable";
+
 import React from "react";
 import App from "next/app";
 // import { Head } from 'next/document'
@@ -72,13 +75,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class MyApp extends App {
-
   state = {
     ie_user: false,
     modal_shown: false,
     prepare: true,
     location: "",
-  }
+  };
 
   closeModal = () => {
     this.setState({
@@ -86,39 +88,39 @@ class MyApp extends App {
       ie_user: false,
       modal_shown: true,
       prepare: false,
-    })
-  }
+    });
+  };
   componentDidMount() {
-    const { Home } = this.props
+    const { Home } = this.props;
     const userAgent = window.navigator.userAgent;
 
     // 네이버 애널리틱스
     this.setState({
-      location:window.location,
-    })
+      location: window.location,
+    });
     if (!window.wcs_add) window.wcs_add = {};
     window.wcs_add["wa"] = "a888b15a2864e";
     if (window.wcs) {
       window.wcs_do();
     }
 
-    if(userAgent.indexOf("MSIE ") !== -1 || userAgent.indexOf(".NET") !== -1
-      || userAgent.indexOf("Edge") !== -1)
-        {
-            this.setState({
-                ...this.state,
-                ie_user: true
-            })
+    if (
+      userAgent.indexOf("MSIE ") !== -1 ||
+      userAgent.indexOf(".NET") !== -1 ||
+      userAgent.indexOf("Edge") !== -1
+    ) {
+      this.setState({
+        ...this.state,
+        ie_user: true,
+      });
+    }
 
-        }
-
-    if(window.location.pathname !== '/')
-        {
-            this.setState({
-                ...this.state,
-                prepare: false
-            })
-        }
+    if (window.location.pathname !== "/") {
+      this.setState({
+        ...this.state,
+        prepare: false,
+      });
+    }
 
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentNode)
@@ -136,6 +138,7 @@ class MyApp extends App {
     const { Component, pageProps, Home } = this.props;
     return (
       <ScrollToTop>
+        {console.log(this.state.modal_shown)}
         <GlobalStyle />
         <CheckBrowserModal
           open={!this.state.modal_shown && this.state.ie_user}

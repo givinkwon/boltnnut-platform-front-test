@@ -35,17 +35,25 @@ class MobileManufacturerContentContainer extends React.Component {
   async componentDidMount() {
     const { Partner } = this.props;
 
+    console.log(typeof processArray);
+
     // Project.search_text = "";
     Partner.currentPage = 1;
 
     console.log("did mount");
 
     Partner.getPartner();
-
+    Partner.getCategory();
     // await Auth.checkLogin();
     // if(Auth.logged_in_partner){
     //   Project.getProjectByPrice()
     // }
+  }
+
+  componentWillUnmount() {
+    const { Partner } = this.props;
+    Partner.category_dic = {};
+    console.log(toJS(this.props.Partner.category_dic));
   }
 
   movePage = (e) => {
@@ -94,10 +102,10 @@ class MobileManufacturerContentContainer extends React.Component {
     return (
       <>
         <Background id="MyBackground">
-          <Container>
+          <Container style={{ display: "block" }}>
             {console.log(width)}
             {/* <MobileSearchBar /> */}
-            <Body>
+            <Body active={this.props.Partner.check_click_filter}>
               {/* <FilterSearch>dsfsdfds</FilterSearch> */}
               {/* <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
@@ -114,16 +122,13 @@ class MobileManufacturerContentContainer extends React.Component {
                     }}
                   >
                     <Font15>
-                      <span style={{ fontWeight: "bold" }}>
-                        {Partner.partner_count}개
-                      </span>
-                      의 제조사가 있습니다.
+                      <span>{Partner.partner_count}개</span>의 제조사
                     </Font15>
                     {/* <span>
               <Font14>모든 제조의뢰</Font14>
               <img src={pass4}/>
             </span> */}
-                    <div style={{ width: "30%" }}>
+                    <div style={{ width: "100px" }}>
                       <input
                         style={{ display: "none" }}
                         value={
@@ -133,11 +138,16 @@ class MobileManufacturerContentContainer extends React.Component {
                         }
                         class="Input"
                       />
+                      {console.log(toJS(Partner.filter_category_ary))}
                       <Select
-                        placeholder="상담미진행"
+                        placeholder="전체"
                         styles={customStyles}
-                        options={processArray}
-                        getOptionLabel={(option) => option.label}
+                        options={Partner.filter_category_ary}
+                        //options={processArray}
+                        getOptionLabel={(option) => option.category}
+                        // getOptionLabel={(option) => {
+                        //   option.label;
+                        // }}
                         value={Partner.input_process_filter}
                         onChange={Partner.setProcessFilter}
                       />
@@ -263,9 +273,9 @@ class MobileManufacturerContentContainer extends React.Component {
 const customStyles = {
   dropdownIndicator: () => ({
     backgroundColor: "#fff",
-    color: "#c1b1bf",
-    width: 44,
-    height: 44,
+    color: "#999999",
+    width: 20,
+    height: 20,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -279,10 +289,10 @@ const customStyles = {
     backgroundColor: "#fff",
     borderRadius: 0,
     // padding: 16,
-    fontSize: 14,
+    fontSize: 12,
   }),
   control: () => ({
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "normal",
     lineHeight: 34,
     letterSpacing: "-0.45px",
@@ -300,6 +310,11 @@ const customStyles = {
 };
 
 const processArray = [
+  { label: "상담미진행", value: "상담미진행" },
+  { label: "상담진행", value: "상담진행" },
+];
+
+const tempArray = [
   { label: "상담미진행", value: "상담미진행" },
   { label: "상담진행", value: "상담진행" },
 ];
@@ -394,7 +409,7 @@ const region_data = [
 // ]
 
 const PageBar = styled.div`
-  width: 351px;
+  width: 80%;
   margin-top: 109px;
   margin-bottom: 157px;
   margin-left: auto;
@@ -460,7 +475,7 @@ const Body = styled.div`
   justify-content: center;
   //border-top: 1px solid #e1e2e4;
   //border-bottom: 1px solid #e1e2e4;
-  margin-top: 40px;
+  margin-top: ${(props) => (props.active ? "210px" : "40px")};
 `;
 const Main = styled.div`
   width: 100%;
@@ -484,7 +499,7 @@ const Header = styled.div`
   display: flex;
   //justify-content: center;
   align-items: center;
-  margin-bottom: 28px;
+  // margin-bottom: 28px;
   position: relative;
   > span {
     position: absolute;

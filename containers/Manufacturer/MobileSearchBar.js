@@ -13,6 +13,8 @@ import Container from "components/Containerv1";
 import { PRIMARY2 } from "static/style";
 
 const filter_img = "static/images/manufacturer/filter.png";
+const search_img = "static/images/manufacturer/search.png";
+
 @inject("Auth", "Project", "Request", "Partner")
 @observer
 class MobileSearchBarConatiner extends React.Component {
@@ -35,16 +37,17 @@ class MobileSearchBarConatiner extends React.Component {
   };
 
   searchText = (e) => {
-    const { Project } = this.props;
+    const { Partner } = this.props;
     // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
-    Project.search_text = e.target.value;
+    Partner.search_text = e.target.value;
   };
   search = () => {
-    const { Project } = this.props;
+    const { Partner } = this.props;
 
-    Project.currentPage = 1;
-    Project.getProjectByPrice(Project.search_text);
+    Partner.currentPage = 1;
+    Partner.category_dic = {};
+    Partner.getPartner();
   };
   closeModal = () => {
     this.setState({
@@ -53,10 +56,11 @@ class MobileSearchBarConatiner extends React.Component {
     });
   };
   handleKeyDown = (e) => {
-    const { Project } = this.props;
+    const { Partner } = this.props;
     if (e.key === "Enter") {
-      Project.currentPage = 1;
-      Project.getProjectByPrice(Project.search_text);
+      Partner.currentPage = 1;
+      Partner.category_dic = {};
+      Partner.getPartner();
     }
   };
   async componentDidMount() {
@@ -72,6 +76,13 @@ class MobileSearchBarConatiner extends React.Component {
     if (Partner.filter_checked_idx !== idx) {
       this.setState({ index: idx });
       Partner.filter_checked_idx = idx;
+
+      Partner.filter_region = idx;
+      Partner.partner_next = null;
+      Partner.partner_count = null;
+      // this.count = 0;
+      Partner.currentPage = 1;
+      Partner.getPartner();
     }
   };
   activeHandler = (idx) => {
@@ -89,14 +100,16 @@ class MobileSearchBarConatiner extends React.Component {
   filterActiveHandler = () => {
     if (this.state.filter_active) {
       this.setState({ filter_active: false });
+      this.props.Partner.check_click_filter = false;
     } else {
       this.setState({ filter_active: true });
+      this.props.Partner.check_click_filter = true;
     }
   };
   render() {
     const { Partner } = this.props;
     return (
-      <Form>
+      <Form active={this.state.filter_active}>
         <Box
           active={this.state.list === true}
           onClick={() =>
@@ -150,16 +163,13 @@ class MobileSearchBarConatiner extends React.Component {
             <div>
               {" "}
               <SearchButton
-                width={80}
-                style={{ height: "36px", width: "40px" }}
+                width={50}
+                style={{ height: "36px", width: "20px", margin: "0 auto" }}
                 borderColor={PRIMARY2}
                 borderRadius={0}
                 onClick={this.search}
               >
-                <img
-                  style={{ width: 18, height: 18 }}
-                  src="/static/images/search_cobalt-blue.png"
-                />
+                <img style={{ width: 18, height: 18 }} src={search_img} />
               </SearchButton>
             </div>
           </SearchBar>
@@ -175,19 +185,19 @@ class MobileSearchBarConatiner extends React.Component {
           style={{ flex: "0 auto" }}
           active={this.state.filter_active}
         >
-          {filterArray.map((item, idx) => {
+          {region_data.map((item, idx) => {
             return (
               <>
                 <FilterContent
                   onClick={() => {
-                    this.onClickHandler(item.value);
+                    this.onClickHandler(item.id);
                   }}
-                  active={this.activeHandler(item.value)}
+                  active={this.activeHandler(item.id)}
                 >
-                  <div active={this.activeHandler(item.value)}>
-                    <div active={this.activeHandler(item.value)}></div>
+                  <div active={this.activeHandler(item.id)}>
+                    <div active={this.activeHandler(item.id)}></div>
                   </div>
-                  <span>{item.label}</span>
+                  <span>{item.name}</span>
                 </FilterContent>
               </>
             );
@@ -209,8 +219,56 @@ const filterArray = [
 ];
 const categoryArray = [
   { label: "전체", value: "전체" },
-  { label: "제목", value: "제목" },
-  { label: "내용", value: "내용" },
+  { label: "만든 제품", value: "만든 제품" },
+  // { label: "제목", value: "제목" },
+  // { label: "내용", value: "내용" },
+];
+const region_data = [
+  {
+    id: 0,
+    name: "전체",
+    checked: "false",
+  },
+  {
+    id: 1,
+    name: "인천 남동|시화|반월공단",
+    checked: "false",
+  },
+  {
+    id: 2,
+    name: "인천 서구",
+    checked: "false",
+  },
+  {
+    id: 3,
+    name: "경기도 화성",
+    checked: "false",
+  },
+  {
+    id: 4,
+    name: "경기도 부천",
+    checked: "false",
+  },
+  {
+    id: 5,
+    name: "경기도 파주|양주|고양",
+    checked: "false",
+  },
+  {
+    id: 6,
+    name: "서울 문래동",
+    checked: "false",
+  },
+  {
+    id: 7,
+    name: "서울 성수동",
+    checked: "false",
+  },
+  {
+    id: 8,
+    name: "서울 을지로",
+    checked: "false",
+  },
 ];
 
 const SearchBar = styled.div`
@@ -224,16 +282,17 @@ const SearchBar = styled.div`
   >div:nth-of-type(1){
     //border: 1px solid blue;
     flex-grow:1;
-    width:35%;
+    //width:calc(40% - 20px);
+    width: 70px;
   }
 
   >div:nth-of-type(2){
     //border: 1px solid green;
     flex-grow:5;
     input {
-        width: 100%;
+        width: 95%;
         height: 36px;
-        padding: 0 14px;
+        //padding: 0 14px;
     
         //border: 1px solid #c6c7cc;
         border: none;
@@ -284,6 +343,13 @@ const Form = styled.div`
   // display: flex;
   // justify-content: flex-start;
   //height: 43px;
+  box-shadow: ${(props) =>
+    props.active ? "0 4px 2px -2px rgba(0, 0, 0, 0.2)" : ""};
+  position: ${(props) => (props.active ? "fixed" : "static")};
+  top: ${(props) => (props.active ? "53px" : "")};
+  z-index: 1;
+  background-color: #ffffff;
+  padding-top: ${(props) => (props.active ? "12px" : "")};
 `;
 
 const SearchButton = styled(ButtonComponent)`
@@ -339,18 +405,20 @@ const Filter = styled.div`
 const FilterContainer = styled.div`
   display: ${(props) => (props.active ? "flex" : "none")};
   flex-wrap: wrap;
-  padding: 0 31px;
+  padding: 0 24px;
   box-sizing: border-box;
   margin-top: 14px;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
 `;
 const FilterContent = styled.div`
-  width: 30%;
+  display: flex;
+  align-items: center;
+  width: 50%;
   text-align: center;
   margin-bottom: 14px;
   > div {
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
     border: ${(props) =>
       props.active ? "1px solid #0933b3" : "1px solid #999999"};
     border-radius: 12px;
@@ -360,8 +428,8 @@ const FilterContent = styled.div`
     align-items: center;
     > div {
       display: ${(props) => (props.active ? "block" : "none")};
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       //border: 1px solid #0933b3;
       border-radius: 6px;
       background-color: #0933b3;

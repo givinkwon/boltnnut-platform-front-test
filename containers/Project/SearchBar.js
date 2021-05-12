@@ -37,6 +37,7 @@ class SearchBarConatiner extends React.Component {
     // this.props.Partner.search_text = e.target.value;
     this.setState({search : e.target.value})
     Project.search_text = e.target.value
+    console.log(e.target)
   };
   search = () => {
     const { Project } = this.props
@@ -71,10 +72,10 @@ class SearchBarConatiner extends React.Component {
         </Box>
           <SearchBar>        
               <input
-                placeholder="원하는 분야의 제조업체를 검색하세요"
+                placeholder=""
                 // value={Partner.search_text}
                 onFocus={(e) => e.target.placeholder = ''}
-                onBlur={(e) => e.target.placeholder = '원하는 분야의 제조업체를 검색하세요'}
+                onBlur={(e) => e.target.placeholder = ''}
                 onChange={this.searchText}                
                 class="Input"
                 onKeyDown={this.handleKeyDown}
@@ -153,7 +154,7 @@ const SearchBar = styled.div`
   }
 `;
 const Form = styled.div`
-  margin-top: 90px;
+  margin-top: 60px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -176,7 +177,7 @@ const SearchButton = styled(ButtonComponent)`
 
 
 const Select = styled(SelectComponent)`
-  width: 220px;
+  width: 180px;
   height: 44px;
   box-sizing: border-box;
 
@@ -199,8 +200,7 @@ const Select = styled(SelectComponent)`
 `
 
 const Box = styled.div`
-width: 220px;
-
+cursor: pointer;
   ${ props => props.active && css`
   svg{
     @keyframes select{

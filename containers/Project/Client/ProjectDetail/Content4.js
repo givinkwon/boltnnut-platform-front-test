@@ -159,8 +159,11 @@ class Content4 extends React.Component {
                       if (item.share_inform) {
                         return (
                           <div>
-                            <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                              <img src={file_img} />
+                            <div>
+                              <img
+                                src={file_img}
+                                style={{ marginRight: "14px" }}
+                              />
                               {/* <DownloadFile
                               file={item.file}
                               href={decodeURI(item.file)}
@@ -338,7 +341,13 @@ class Content4 extends React.Component {
                         if (!item.share_inform) {
                           return (
                             <div>
-                              <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                }}
+                              >
                                 <img src={file_img} />
                                 {/* <DownloadFile
                               file={item.file}
@@ -414,6 +423,9 @@ const File = styled.div`
   //border: 1px solid blue;
   > div {
     > div {
+      > img {
+        margin-right: 14px;
+      }
       > span {
         font-size: 18px;
         font-weight: normal;

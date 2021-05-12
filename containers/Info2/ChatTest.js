@@ -7,9 +7,8 @@ import * as ChatAPI from "axios/Chat";
 import * as PartnerAPI from "axios/Partner";
 import * as RequestAPI from "axios/Request";
 
-
 import { toJS } from "mobx";
-@inject("Auth", "Project", "Partner")
+@inject("Auth", "Project", "Partner", "Chat")
 @observer
 class ChatTestContainer extends React.Component {
   constructor(props) {
@@ -22,13 +21,13 @@ class ChatTestContainer extends React.Component {
     };
   }
 
-    componentWillUnmount() {
-      window.removeEventListener('resize', this.updateDimensions);
-    };
-  
-    updateDimensions = () => {
-      this.setState({ ...this.state, width: window.innerWidth });
-    };
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
 
   onChangeFile = async (e) => {
     // let fileNameAvailable = ["stl", "stp"];
@@ -139,7 +138,7 @@ class ChatTestContainer extends React.Component {
               type: this.userType,
               message: file_url,
               chatType: res.data.chat_type,
-              time: this.state.currentTime,
+              time: this.props.Chat.current_time,
               bReceive: false,
               file: file_url,
             })
@@ -215,20 +214,31 @@ class ChatTestContainer extends React.Component {
     }
   };
 
+  async componentDidUpdate() {
+    let temp = new Date();
+
+    temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
+
+    this.props.Chat.current_time = temp;
+  }
   async componentDidMount() {
     // RoomNumber 체크하기
-    const {Partner} = this.props;
+    const { Partner } = this.props;
     const roomNum = this.props.roomName;
+    this.props.Chat.current_time = null;
     let temp = new Date();
     let timezone = temp.getTimezoneOffset();
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
+    console.log(temp);
     // 메세지 및 시간 초기화
     this.setState({ messages: [], currentTime: temp });
+    this.props.Chat.current_time = temp;
     this.props.Project.chatMessages = [];
     //창 크기
-    window.addEventListener('resize', this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth});
-    
+    window.addEventListener("resize", this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+
+    console.log(this.state.currentTime);
     ChatAPI.loadChat(roomNum).then((res) => {
       const reverseChat = res.data.results.reverse();
       ChatAPI.loadChatCount(roomNum).then((m_res) => {
@@ -236,16 +246,15 @@ class ChatTestContainer extends React.Component {
         // answer data 가져오기
         const req = {
           extraUrl: m_res.data.partner + `/`,
-          params: {
-          },
+          params: {},
         };
-        PartnerAPI.getPartner(req)
-        .then((res) => {
+        PartnerAPI.getPartner(req).then((res) => {
           Partner.partnerdata = res.data;
-        })
+        });
 
         reverseChat.forEach((message) => {
           const Messages = this.props.Project.chatMessages;
+          console.log(this.props.Project.chatMessages);
           let readState = true;
           if (message.user_type === 0) {
             console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
@@ -287,7 +296,7 @@ class ChatTestContainer extends React.Component {
         JSON.stringify({
           message: "접속완료",
           type: this.userType,
-          time: this.state.currentTime,
+          time: this.props.Chat.current_time,
           bReceive: true,
           file: this.state.currentFile,
           chatType: 0,
@@ -301,6 +310,8 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.onmessage = (e) => {
       // console.log("Aaaasdasd");
       const data = JSON.parse(e.data);
+      console.log("data")
+      console.log(data)
 
       const messages = this.props.Project.chatMessages;
 
@@ -314,7 +325,7 @@ class ChatTestContainer extends React.Component {
             JSON.stringify({
               message: "수신완료",
               type: this.userType,
-              time: this.state.currentTime,
+              time: this.props.Chat.current_time,
               bReceive: true,
               file: this.state.currentFile,
               chatType: 0,
@@ -329,6 +340,7 @@ class ChatTestContainer extends React.Component {
           time: data["time"],
           bRead: false,
         });
+
       }
 
       if (data.bReceive) {
@@ -382,12 +394,14 @@ class ChatTestContainer extends React.Component {
   onSendMessage = (myMessage) => {
     console.log(myMessage);
     console.log(this.userType);
+    console.log(this.state.currentTime); // null
+    console.log(this.props.Chat.current_time);
 
     this.chatSocket.send(
       JSON.stringify({
         message: myMessage,
         type: this.userType,
-        time: this.state.currentTime,
+        time: this.props.Chat.current_time,
         bReceive: false,
         file: this.state.currentFile,
         chatType: 0,
@@ -406,6 +420,7 @@ class ChatTestContainer extends React.Component {
           }}
           style={{ display: "none" }}
         />
+        {console.log(toJS(this.props.Project.chatMessages))}
         <ChatCardContainer
           messages={this.props.Project.chatMessages}
           onSendMessage={this.onSendMessage}

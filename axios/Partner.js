@@ -261,6 +261,32 @@ export function getRandomPartner(req) {
   });
 }
 
+export function getPartners(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partner/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getCategory(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/develop/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getNextDevelopPage(req) {
+  return axios({
+    method: "GET",
+    url: req.nextUrl,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
 
 export function getPartnerCategory(req) {
   return axios({
