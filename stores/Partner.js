@@ -54,6 +54,9 @@ class Partner {
   @observable temp_category_name_ary = [];
   @observable check_loading_category = false;
 
+  // 파트너의 답변
+  @observable answer_set = [];
+
   @action setProcessFilter = (val) => {
     this.input_process_filter = val;
   };
@@ -118,7 +121,7 @@ class Partner {
   };
 
   @action getPartnerDetail = async (id) => {
-    PartnerAPI.detail(id)
+    await PartnerAPI.detail(id)
       .then((res) => {
         console.log(res);
         // return res.data;

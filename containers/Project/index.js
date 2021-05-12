@@ -1,7 +1,7 @@
 import React from "react";
 import ClientContentContainer from "./Client/Content";
 import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobileProject";
-import PartnerContentContainer from "./Partner/Content";
+import ProjectSearch from "./Partner/Content";
 import PartnerMobileContentContainer from "./Partner/Mobile/MobileProject";
 import BannerContainer from "./Banner";
 import NavContainer from "./Nav.js";
@@ -50,7 +50,7 @@ class ProjectContainer extends React.Component {
                 <>
                 
                 <ProjectDivider/>
-              {Project.myIndex == 0 && <PartnerContentContainer length={this.props.length}/>}
+              {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
               {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />}
               </>
               )}
@@ -77,7 +77,7 @@ class ProjectContainer extends React.Component {
               {Project.newIndex == 0 && (
                 <>
                   <ProjectDivider/>
-                    {Project.myIndex == 0 && <PartnerContentContainer length={this.props.length}/>}
+                    {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
                     {Project.myIndex == 1 && <PartnerMyProject/>}   
                 </>
               )}
