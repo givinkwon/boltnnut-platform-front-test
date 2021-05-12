@@ -142,8 +142,12 @@ class ProposalCard extends React.Component {
                   console.log(item);
                 })} */}
                 {/* {console.log(category_data)} */}
-                {category_data &&
+                {/* {category_data &&
                   category_data.map((item, idx) => {
+                    return <span>{item}</span>;
+                  })} */}
+                {categoryData &&
+                  categoryData.map((item, idx) => {
                     return <span>{item}</span>;
                   })}
                 {/* <span>디자인</span>
@@ -256,8 +260,8 @@ class ProposalCard extends React.Component {
         </FooterWrapper> */}
             <Main>
               <Name>{data.name}</Name>
-              {/* <InfoOne>{data.info_company}</InfoOne> */}
-              <InfoOne>develop 들어가야함</InfoOne>
+              <InfoOne>{data.info_company}</InfoOne>
+              {/* <InfoOne>develop 들어가야함</InfoOne> */}
               <Information>
                 <div>
                   <img src={call_img} />
@@ -445,7 +449,7 @@ const InfoOne = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
     color: #282c36;
     font-size: 13px;
-    line-height: 34px;
+    line-height: 18px;
     letter-spacing: -0.33px;
   }
 `;
@@ -458,6 +462,7 @@ margin-top: 16px;
     padding 5px 12px;
     box-sizing: border-box;
     margin-right: 21px;
+    display: inline-block;
   }
 `;
 
