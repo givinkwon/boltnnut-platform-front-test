@@ -1,7 +1,7 @@
 import React from "react";
 import ClientContentContainer from "./Client/Content";
 import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobileProject";
-import PartnerContentContainer from "./Partner/Content";
+import ProjectSearch from "./Partner/Content";
 import PartnerMobileContentContainer from "./Partner/Mobile/MobileProject";
 import BannerContainer from "./Banner";
 import NavContainer from "./Nav.js";
@@ -12,8 +12,6 @@ import styled, {css} from "styled-components";
 import RequestComplete from "./RequestComplete";
 import PartnerAnswer from "./Partner/PartnerAnswer";
 import MobilePartnerAnswer from "./Partner/Mobile/MobilePartnerAnswer";
-import Container from "components/Containerv1";
-import Background from "components/Background";
 import AnswerCompleteContainer from "./Partner/AnswerComplete"; 
 import MobileAnswerCompleteContainer from "./Partner/Mobile/MobileAnswerComplete"; 
 import AnswerComplete from "./Partner/AnswerComplete";
@@ -21,20 +19,17 @@ import * as Content from 'components/Content';
 import * as PartnerAPI from "axios/Partner";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import MyProject from "./Partner/MyProject";
+import PartnerMyProject from "./Partner/MyProject";
+// import ClientMyProject from "./Client/MyProject";
+import ProjectDivider from "./ProjectDivider";
 
 @inject("Project", "Auth", "Partner")
 @observer
 class ProjectContainer extends React.Component {
-
-  checkOn = (idx) =>{
-    const { Project } = this.props;
-    Project.myIndex = idx;
-  };
-
   async componentDidMount() {
     const { Auth, Project, Partner } = this.props;
     Project.newIndex = 0;
+    Project.myIndex = 0;
     await Auth.checkLogin();
 
   };
@@ -51,7 +46,14 @@ class ProjectContainer extends React.Component {
               <BannerContainer />
 
               {console.log(Project.newIndex)}
-              {Project.newIndex == 0 && <ClientContentContainer length={this.props.length} />}
+              {Project.newIndex == 0 && (
+                <>
+                
+                <ProjectDivider/>
+              {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+              {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />}
+              </>
+              )}
               {Project.newIndex == 1 && (
                 <ProjectDetailContainer user="client" />
               )}
@@ -74,32 +76,9 @@ class ProjectContainer extends React.Component {
                 
               {Project.newIndex == 0 && (
                 <>
-                  <Background>
-                    <Container style = {{display: "flex", flexDirection: "column"}}>
-                      <ProjectDivider>
-                        <DividingSelect active = {Project.myIndex === 0} onClick = {() => this.checkOn(0)}>
-                          <Font22 active = {Project.myIndex === 0}>전체 프로젝트</Font22>
-                        </DividingSelect>
-                        <DividingSelect  active = {Project.myIndex === 1} onClick = {() => this.checkOn(1)} >
-                          <Font22 active = {Project.myIndex === 1}>내 프로젝트</Font22>
-                        </DividingSelect>
-                    </ProjectDivider>
-                    </Container>
-                  </Background>
-                      {Project.myIndex == 0 && (
-                        <>
-                        
-                        <PartnerContentContainer length={this.props.length} />
-                        </>
-                      )}
-                      {Project.myIndex == 1 &&(
-                        <>
-                          {console.log("MyProject")}
-                          <MyProject/>
-                        </>
-
-                      )}
-                      
+                  <ProjectDivider/>
+                    {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+                    {Project.myIndex == 1 && <PartnerMyProject/>}   
                 </>
               )}
               {Project.newIndex == 1 && (
@@ -138,12 +117,12 @@ export default ProjectContainer;
 
 
 
-const ProjectDivider = styled.div`
-width: 100%;
-  display: flex;
-  flex-direction: row;
-  border-bottom: 1px solid #c6c7cc;
-`
+// const ProjectDivider = styled.div`
+// width: 100%;
+//   display: flex;
+//   flex-direction: row;
+//   border-bottom: 1px solid #c6c7cc;
+// `
 const DividingSelect = styled.div`
   margin-top: 42px;
   display: flex;

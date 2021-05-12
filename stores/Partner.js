@@ -63,6 +63,9 @@ class Partner {
   @observable check_loading_category = false;
   @observable check_click_filter = false;
 
+  // 파트너의 답변
+  @observable answer_set = [];
+
   @action setProcessFilter = (val) => {
     this.input_process_filter = val;
     console.log(toJS(this.input_process_filter));
@@ -133,7 +136,7 @@ class Partner {
   };
 
   @action getPartnerDetail = async (id) => {
-    PartnerAPI.detail(id)
+    await PartnerAPI.detail(id)
       .then((res) => {
         console.log(res);
         // return res.data;

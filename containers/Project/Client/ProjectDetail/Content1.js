@@ -131,7 +131,7 @@ class Content1 extends React.Component {
   }
 
   render() {
-    const { Project, Partner, user } = this.props;
+    const { Project, Partner, user, Auth } = this.props;
     // if (this.state.partnerDetailList[0]) {
     //   console.log(this.state.partnerDetailList[0].name);
 
@@ -311,6 +311,7 @@ class Content1 extends React.Component {
                         id={data.id}
                         content={"test"}
                         modalHandler={this.modalHandler}
+                        user = {Auth}
                       />
                     )}
                   </>

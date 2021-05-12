@@ -2,7 +2,6 @@ import React from "react";
 import styled, { css } from "styled-components";
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-import * as PartnerAPI from "axios/Partner";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import Partner from "../../../stores/Partner";
@@ -10,13 +9,8 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Info2/ChatTest";
-import Router from "next/router";
-import * as ProjectAPI from "axios/Project";
-import Answer from "../../../stores/Answer";
-import Project from "../../../stores/Project";
-const toolBarImg = "/static/images/project/ToolBar.svg";
-const callImg = "/static/images/project/Call.svg";
-const messagesImg = "/static/images/project/Messages.svg";
+
+
 
 @inject("Project", "Auth", "Partner")
 @observer
@@ -46,14 +40,15 @@ class MyProject extends React.Component {
 
   async getProject(data) {
     const { Project } = this.props;
-    // const {Partnerprojectlist} = this.state;
     const partnerprojectlist = this.state.Partnerprojectlist;
 
     await Project.getProjectDetail(data.project);
 
     if (Project.projectDetailData) {
       partnerprojectlist.push({
-        name: Project.projectDetailData.request_set[0].name,
+        name: Project.projectDetailData.request_set[0].name,            // 프로젝트 이름
+        project:Project.projectDetailData.id,
+        content: data.content1,
       });
       this.setState({ Partnerprojectlist: partnerprojectlist });
     }
@@ -61,17 +56,22 @@ class MyProject extends React.Component {
 
   async componentDidMount() {
     const { Auth, Project, Partner } = this.props;
+    const partnerdetail = this.state.PartnerDetail;
     await Auth.checkLogin();
     if (Auth.logged_in_partner) {
       Partner.answer_set = Auth.logged_in_partner.answer_set;
+      Partner.getPartnerDetail(Auth.logged_in_partner.id)
+      // if(Partner.detail){
+      //   Partner.answer_set = Partner.detail.answer_set
+      // }
+      console.log(toJS(Partner.detail))
 
-      this.setState({ Answerlist: Auth.logged_in_partner.answer_set });
-      // Partner.answer_set.project
-
-      this.state.Answerlist.map((data) => {
+      Partner.answer_set.map((data) => {
         this.getProject(data);
       });
     }
+
+
   }
 
   render() {
@@ -94,70 +94,25 @@ class MyProject extends React.Component {
               Partner.answer_set.map((data, idx) => {
                 return (
                   <>
-                    {this.state.Partnerprojectlist[idx] && (
+                  <BoxContainer>
+                    <Font22>
+                      {this.state.Partnerprojectlist[idx] &&
+                      this.state.Partnerprojectlist[idx].name}
+                    </Font22>
+                    
+                    {this.state.Partnerprojectlist[idx] &&Partner.detail&& (
                       <ChatItemContainer
-                        logo={this.state.Partnerprojectlist[idx].logo}
-                        name={this.state.Partnerprojectlist[idx].name}
-                        id={data.id}
+                        logo={Partner.detail.logo}
+                        name={Partner.detail.name}
+                        id={data.project}
                         content={data.content1}
                         modalHandler={this.modalHandler}
+                        user = {Auth}
+                        pushToDetail = {this.pushToDetail}
                       />
                     )}
+                    </BoxContainer>
                   </>
-                  //     <BoxContainer>
-                  //       <Font22>
-                  //         {this.state.Partnerprojectlist[idx] &&
-                  //           this.state.Partnerprojectlist[idx].name}
-                  //       </Font22>
-                  //       <PartnerBox>
-                  //         <BoxLeft>
-                  //           <PartnerInfo>
-                  //             <img
-                  //               // src={
-                  //               //   this.state.partnerDetailList[idx] &&
-                  //               //   this.state.partnerDetailList[idx].logo
-                  //               // }
-                  //               src={
-                  //                 "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-                  //               }
-                  //               width={65}
-                  //               height={51}
-                  //             ></img>
-                  //             <Font20 style={{ marginLeft: 10 }}>
-                  //               {Auth.logged_in_partner.name}
-                  //             </Font20>
-                  //           </PartnerInfo>
-
-                  //           <Font18 style={{ marginLeft: 80 }}>
-                  //             " 프로젝트 보고 연락드립니다 . 비공개 자료
-                  //             공개해주실수 있나요 "
-                  //           </Font18>
-                  //         </BoxLeft>
-
-                  //         <IconBox>
-                  //           {/* <Icon>
-                  //   <img src={toolBarImg}></img>
-                  // </Icon>
-                  // <Icon>
-                  //   <img src={cal lImg}></img>
-                  // </Icon> */}
-                  //           <GoToProject onClick={() => Router.push("/project")}>
-                  //             <Font16 onClick={() => this.pushToDetail(data.id)}>
-                  //               프로젝트 보기
-                  //             </Font16>
-                  //           </GoToProject>
-                  //           <Icon onClick={() => this.modalHandler(data.id)}>
-                  //             <img
-                  //               src={messagesImg}
-                  //               style={{ marginLeft: 30 }}
-                  //             ></img>
-                  //           </Icon>
-                  //           <ChatNotice>
-                  //             <Font14>N</Font14>
-                  //           </ChatNotice>
-                  //         </IconBox>
-                  //       </PartnerBox>
-                  //     </BoxContainer>
                 );
               })}
           </>

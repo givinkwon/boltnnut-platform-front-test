@@ -177,7 +177,7 @@ const SearchButton = styled(ButtonComponent)`
 
 
 const Select = styled(SelectComponent)`
-  width: 220px;
+  width: 180px;
   height: 44px;
   box-sizing: border-box;
 
@@ -200,7 +200,6 @@ const Select = styled(SelectComponent)`
 `
 
 const Box = styled.div`
-width: 220px;
 cursor: pointer;
   ${ props => props.active && css`
   svg{
