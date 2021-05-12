@@ -85,7 +85,7 @@ class Banner0Container extends React.Component {
                 fontWeight={"bold"}
                 style={{ lineHeight: 1.49, fontSize: "52px" }}
               >
-                엔지니어와 연구원을 위한 제조 상담 플랫폼
+                엔지니어와 연구원을 위한 전문 업체 수배 플랫폼
               </Title.FontSize56>
               <Explanation>
                 <Font24>자동 견적 & 비교 견적</Font24>

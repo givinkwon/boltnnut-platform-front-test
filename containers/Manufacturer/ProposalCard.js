@@ -70,7 +70,7 @@ class ProposalCard extends React.Component {
   filedownload = () => {
     const { data } = this.props;
 
-    if(this.props.Auth.logged_in_user ){
+    if(this.props.Auth && this.props.Auth.logged_in_user ){
       const url = data.file
       const link = document.createElement('a');
       link.href = url;
@@ -291,9 +291,9 @@ class ProposalCard extends React.Component {
                   )}
                 </div>
                 <div>
-                  <link target="_blank" href={data.file} download> 
+                  <Link target="_blank" href={data && data.file} download> 
                     <span>회사 소개서 보기</span>
-                  </link>
+                  </Link>
                 </div>
               </Information>
             </Main>
@@ -404,6 +404,7 @@ const Phone = styled.div`
   margin-bottom: 16px;
 `;
 const InfoOne = styled.div`
+  word-break: break-all;
   //height: 100%;
   //height: 50px;
   @media (min-width: 0px) and (max-width: 767.98px) {
