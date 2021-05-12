@@ -40,6 +40,7 @@ class ManufacturerContentContainer extends React.Component {
     console.log("did mount");
 
     Partner.getPartner();
+    Partner.getCategory();
 
     // await Auth.checkLogin();
     // if(Auth.logged_in_partner){
@@ -61,6 +62,7 @@ class ManufacturerContentContainer extends React.Component {
     const newPage = e.target.innerText * 1;
     Partner.currentPage = newPage;
     // Project.getProjectByPrice(Project.search_text, newPage)
+    Partner.category_dic = {};
     Partner.getPartner(newPage);
   };
 
@@ -75,6 +77,7 @@ class ManufacturerContentContainer extends React.Component {
       Partner.currentPage = nextPage;
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
       console.log(nextPage);
+      Partner.category_dic = {};
       Partner.getPartner(nextPage);
     }
   };
@@ -86,6 +89,7 @@ class ManufacturerContentContainer extends React.Component {
       // Project.category_reset()
       const newPage = Partner.currentPage - 1;
       Partner.currentPage = newPage;
+      Partner.category_dic = {};
       Partner.getPartner(newPage);
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
     }
@@ -105,7 +109,11 @@ class ManufacturerContentContainer extends React.Component {
             <Body>
               <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
-                <RadioBox data={region_data} />
+                <RadioBox filter="region" data={region_data} />
+                <RadioBox
+                  filter="develop"
+                  data={this.props.Partner.filter_category_ary}
+                />
               </Filter>
 
               {/* <Background> */}
@@ -145,7 +153,8 @@ class ManufacturerContentContainer extends React.Component {
                         <ProposalCard
                           data={item}
                           width={this.props.width}
-                          categoryData={Partner.category_ary[idx]}
+                          //categoryData={Partner.category_ary[idx]}
+                          categoryData={Partner.category_dic[idx]}
                           idx={idx}
                           // middleCategory={Project.middle_category_name[idx]}
                           // mainCategory={Project.main_category_name[idx]}

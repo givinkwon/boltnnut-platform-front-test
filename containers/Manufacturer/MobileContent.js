@@ -35,17 +35,25 @@ class MobileManufacturerContentContainer extends React.Component {
   async componentDidMount() {
     const { Partner } = this.props;
 
+    console.log(typeof processArray);
+
     // Project.search_text = "";
     Partner.currentPage = 1;
 
     console.log("did mount");
 
     Partner.getPartner();
-
+    Partner.getCategory();
     // await Auth.checkLogin();
     // if(Auth.logged_in_partner){
     //   Project.getProjectByPrice()
     // }
+  }
+
+  componentWillUnmount() {
+    const { Partner } = this.props;
+    Partner.category_dic = {};
+    console.log(toJS(this.props.Partner.category_dic));
   }
 
   movePage = (e) => {
@@ -97,7 +105,7 @@ class MobileManufacturerContentContainer extends React.Component {
           <Container style={{ display: "block" }}>
             {console.log(width)}
             {/* <MobileSearchBar /> */}
-            <Body>
+            <Body active={this.props.Partner.check_click_filter}>
               {/* <FilterSearch>dsfsdfds</FilterSearch> */}
               {/* <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
@@ -130,11 +138,16 @@ class MobileManufacturerContentContainer extends React.Component {
                         }
                         class="Input"
                       />
+                      {console.log(toJS(Partner.filter_category_ary))}
                       <Select
-                        placeholder="상담미진행"
+                        placeholder="전체"
                         styles={customStyles}
-                        options={processArray}
-                        getOptionLabel={(option) => option.label}
+                        options={Partner.filter_category_ary}
+                        //options={processArray}
+                        getOptionLabel={(option) => option.category}
+                        // getOptionLabel={(option) => {
+                        //   option.label;
+                        // }}
                         value={Partner.input_process_filter}
                         onChange={Partner.setProcessFilter}
                       />
@@ -276,10 +289,10 @@ const customStyles = {
     backgroundColor: "#fff",
     borderRadius: 0,
     // padding: 16,
-    fontSize: 14,
+    fontSize: 12,
   }),
   control: () => ({
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "normal",
     lineHeight: 34,
     letterSpacing: "-0.45px",
@@ -297,6 +310,11 @@ const customStyles = {
 };
 
 const processArray = [
+  { label: "상담미진행", value: "상담미진행" },
+  { label: "상담진행", value: "상담진행" },
+];
+
+const tempArray = [
   { label: "상담미진행", value: "상담미진행" },
   { label: "상담진행", value: "상담진행" },
 ];
@@ -457,7 +475,7 @@ const Body = styled.div`
   justify-content: center;
   //border-top: 1px solid #e1e2e4;
   //border-bottom: 1px solid #e1e2e4;
-  margin-top: 40px;
+  margin-top: ${(props) => (props.active ? "210px" : "40px")};
 `;
 const Main = styled.div`
   width: 100%;

@@ -24,37 +24,70 @@ class RadioBoxContainer extends React.Component {
 
   componentDidMount() {}
 
-  test = (item, idx) => {
+  onClickFilterHandler = (item, idx, filter) => {
     const { Partner } = this.props;
     console.log(idx);
-    if (Partner.radiobox_checked_idx !== idx) {
-      this.setState({ index: idx });
-      Partner.radiobox_checked_idx = idx;
-      Partner.filter_region = item.id;
-      Partner.partner_next = null;
-      Partner.partner_count = null;
-      // this.count = 0;
-      Partner.currentPage = 1;
-      // console.log(Partner.filter_region)
-      // if(Partner.filter_region === "전체"){
-      //   Partner.getPartnerByPrice()
-      // }else{
-      //   Partner.getPartnerByPrice()
-      // }
-      //Partner.getPartnerByRegion(Partner.search_text);
-      console.log(Partner.radiobox_checked_idx);
-      Partner.getPartner();
+
+    if (filter === "region") {
+      if (Partner.radiobox_checked_idx !== idx) {
+        this.setState({ index: idx });
+        Partner.radiobox_checked_idx = idx;
+        Partner.filter_region = item.id;
+        Partner.partner_next = null;
+        Partner.partner_count = null;
+        // this.count = 0;
+        Partner.currentPage = 1;
+        // console.log(Partner.filter_region)
+        // if(Partner.filter_region === "전체"){
+        //   Partner.getPartnerByPrice()
+        // }else{
+        //   Partner.getPartnerByPrice()
+        // }
+        //Partner.getPartnerByRegion(Partner.search_text);
+        console.log(Partner.radiobox_checked_idx);
+        Partner.category_dic = {};
+        Partner.getPartner();
+      }
+    } else {
+      if (Partner.radiobox_category_checked_idx !== idx) {
+        this.setState({ index: idx });
+        Partner.radiobox_category_checked_idx = idx;
+        Partner.filter_category = item.id;
+        Partner.partner_next = null;
+        Partner.partner_count = null;
+        // this.count = 0;
+        Partner.currentPage = 1;
+        // console.log(Partner.filter_region)
+        // if(Partner.filter_region === "전체"){
+        //   Partner.getPartnerByPrice()
+        // }else{
+        //   Partner.getPartnerByPrice()
+        // }
+        //Partner.getPartnerByRegion(Partner.search_text);
+        console.log(Partner.radiobox_category_checked_idx);
+        Partner.category_dic = {};
+        Partner.getPartner();
+      }
     }
   };
 
-  activeHandler = (idx) => {
+  activeHandler = (idx, filter) => {
     // console.log(`this.state.index : ${this.state.index}`)
     // console.log(`idx : ${idx}`)
-    if (idx === Partner.radiobox_checked_idx) {
-      // console.log("equal")
-      return true;
+    if (filter === "region") {
+      if (idx === Partner.radiobox_checked_idx) {
+        // console.log("equal")
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      if (idx === Partner.radiobox_category_checked_idx) {
+        // console.log("equal")
+        return true;
+      } else {
+        return false;
+      }
     }
   };
 
@@ -62,13 +95,13 @@ class RadioBoxContainer extends React.Component {
     this.props.onChange(e.target.checked);
   };
   render() {
-    const { checked, data } = this.props;
+    const { checked, data, filter } = this.props;
     const { placeholder, label, disabled, ...props } = this.props;
 
     return (
       <FormControl component="fieldset">
         {/* <FormLabel component="legend" style={{marginTop: '28px'}}>금액</FormLabel> */}
-        <Font16>지역</Font16>
+        {filter === "region" ? <Font16>지역</Font16> : <Font16>분야</Font16>}
         {/* <RadioGroup aria-label="number" name="number1">
           <FormControlLabel value="one" control={<Checkbox />} label="정제의뢰" />
           <FormControlLabel value="two" control={<Checkbox />} label="정제의뢰" />
@@ -78,15 +111,19 @@ class RadioBoxContainer extends React.Component {
           return (
             <Item
               onClick={() => {
-                this.test(item, item.id);
+                this.onClickFilterHandler(item, item.id, filter);
                 console.log(item);
               }}
-              active={this.activeHandler(item.id)}
+              active={this.activeHandler(item.id, filter)}
             >
-              <div active={this.activeHandler(item.id)}>
-                <img src={pass3} active={this.activeHandler(item.id)} />
+              <div active={this.activeHandler(item.id, filter)}>
+                <img src={pass3} active={this.activeHandler(item.id, filter)} />
               </div>
-              <span>{item.name}</span>
+              {filter === "region" ? (
+                <span>{item.name}</span>
+              ) : (
+                <span>{item.category}</span>
+              )}
             </Item>
           );
         })}
