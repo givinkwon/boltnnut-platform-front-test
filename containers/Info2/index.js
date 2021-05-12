@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Router from "next/router";
 import ChatIndexContainer from "./ChatIndex";
-
+import BannerContainer from "./Banner";
 const Map = "/static/images/Info/InfoMap.svg";
 const Line = "/static/images/Info/Line.svg";
 const Line2 = "/static/images/Info/Line2.svg";
@@ -14,14 +14,76 @@ const Banner3Img = "/static/images/Info/Banner3Img.png";
 import PaymentPageContainer from "../Request/PaymentPage";
 import PaymentCompleteContainer from "../Request/PaymentComplete";
 import ChatCardContainer from "./ChatCard";
+import ChatItemContainer from "components/ChatItem";
+import Containerv1 from "components/Containerv1";
+import Background from "components/Background";
+import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
+import * as PartnerAPI from "axios/Partner";
+@inject("Project", "Auth", "Answer", "Partner")
+@observer
 class InfoContainer extends React.Component {
+  state = {
+    partnerList: [],
+    partnerDetailList: [],
+  };
+  async componentDidMount() {
+    const { Project, Auth, Answer } = this.props;
+    await Auth.checkLogin();
+    // console.log(toJS(Auth.logged_in_partner));
+    Answer.loadAnswerListByPartnerId(Auth.logged_in_partner.id).then(() => {
+      console.log(toJS(Answer.answers));
+      this.setState({ partnerList: Answer.answers });
+
+      Answer.answers.forEach((answer) => {
+        const PartnerDetailList = this.state.partnerDetailList;
+        PartnerAPI.detail(answer.partner)
+          .then((res) => {
+            // console.log(res);
+            // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+            PartnerDetailList.push({
+              logo: res.data.logo,
+              name: res.data.name,
+            });
+            this.setState({ partnerDetailList: PartnerDetailList });
+          })
+          .catch((e) => {
+            console.log(e);
+            console.log(e.response);
+          });
+      });
+    });
+  }
+
   render() {
     return (
       <>
-        {/* <PaymentPageContainer /> */}
-        <ChatIndexContainer />
-        {/* <ChatCardContainer /> */}
+        {/* <BannerContainer />
+        <Background>
+          <Containerv1 style={{ flexDirection: "column" }}>
+            {this.state.partnerList.map((data, idx) => {
+              // Partner.getPartnerDetail(data.partner);
+              // console.log(toJS(data));
+              return (
+                <>
+                  {this.state.partnerDetailList[idx] && (
+                    <ChatItemContainer
+                      logo={this.state.partnerDetailList[idx].logo}
+                      name={this.state.partnerDetailList[idx].name}
+                      id={data.id}
+                      content={data.content1}
+                      modalHandler={this.modalHandler}
+                    />
+                  )}
+                </>
+              );
+            })}
+          </Containerv1>
+        </Background> */}
 
+        {/* <PaymentPageContainer /> */}
+        {/* <ChatIndexContainer /> */}
+        {/* <ChatCardContainer /> */}
         {/* <PaymentCompleteContainer /> */}
       </>
       // <Background>
@@ -83,13 +145,13 @@ class InfoContainer extends React.Component {
 
 export default InfoContainer;
 
-const Background = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-`;
+// const Background = styled.div`
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   background-color: white;
+// `;
 const Header = styled.div`
   width: 100%;
   height: 83px;

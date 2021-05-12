@@ -73,6 +73,8 @@ class Partner {
 
   @action setCategory = (val) => {
     this.input_category = val;
+    console.log(toJS(this.input_category));
+    console.log(val);
   };
 
   @action setLoading = () => {

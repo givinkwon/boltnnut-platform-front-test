@@ -538,6 +538,39 @@ class Answer {
         }
       });
   };
+
+  @action loadAnswerListByPartnerId = async (partnerId, callback = null) => {
+    console.log(`loadAnswerListByPartnerId(${partnerId})`);
+
+    const token = localStorage.getItem("token");
+    const req = {
+      extraUrl: `?partner=${partnerId}`,
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
+    await AnswerAPI.getAnswer(req)
+      .then((res) => {
+        this.answers_count = res.data.count;
+        this.answers_next = res.data.next;
+        this.answers_prev = res.data.previous;
+        this.answers = res.data.results;
+        if (callback) {
+          callback();
+        }
+
+        console.log("제안서 목록 카운트 : " + this.answers.length);
+      })
+      .catch((e) => {
+        try {
+          alert(e.response.data.message);
+        } catch {
+          console.log(e);
+          console.log(e.response);
+        }
+      });
+  };
+
   // 기존의 this.answers를 덮어씀
   // 추가로 미팅하기 버튼을 클릭했을 경우
   @action loadNextAnswerPage = () => {

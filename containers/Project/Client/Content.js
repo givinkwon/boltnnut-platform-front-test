@@ -57,39 +57,39 @@ class ProjectContentContainer extends React.Component {
     this.props.Project.currentPage = 1;
 
     await Auth.checkLogin();
-    if(Auth.logged_in_client){
-      Project.getPage(Auth.logged_in_client.id)  
+    if (Auth.logged_in_client) {
+      Project.getPage(Auth.logged_in_client.id);
     }
-    console.log(Auth.logged_in_client)    
+    console.log(Auth.logged_in_client);
   }
 
   movePage = (e) => {
-    const { Project, Auth } = this.props 
-    const newPage = e.target.innerText*1;    
-    
-    Project.currentPage = newPage
-    Project.getPage(Auth.logged_in_client.id, newPage)
-  }
+    const { Project, Auth } = this.props;
+    const newPage = e.target.innerText * 1;
 
-  pageNext = () => {  
-    const { Project, Auth } = this.props  
+    Project.currentPage = newPage;
+    Project.getPage(Auth.logged_in_client.id, newPage);
+  };
 
-    if (Project.currentPage  < Project.project_page) {
-      const nextPage = Project.currentPage+1  
-      Project.currentPage = nextPage
+  pageNext = () => {
+    const { Project, Auth } = this.props;
+
+    if (Project.currentPage < Project.project_page) {
+      const nextPage = Project.currentPage + 1;
+      Project.currentPage = nextPage;
       Project.getPage(Auth.logged_in_client.id, Project.currentPage);
-    }        
-  }
-  
-  pagePrev = () => {
-    const { Project, Auth } = this.props        
-  
-    if (Project.currentPage  > 1) {
-      const newPage = Project.currentPage  - 1
-      Project.currentPage = newPage          
-      Project.getPage(Auth.logged_in_client.id, Project.currentPage)
     }
-  }
+  };
+
+  pagePrev = () => {
+    const { Project, Auth } = this.props;
+
+    if (Project.currentPage > 1) {
+      const newPage = Project.currentPage - 1;
+      Project.currentPage = newPage;
+      Project.getPage(Auth.logged_in_client.id, Project.currentPage);
+    }
+  };
 
   render() {
     const { Project } = this.props;
@@ -102,7 +102,7 @@ class ProjectContentContainer extends React.Component {
           style={{ backgroundColor: "#f9f9f9", paddingTop: "49px" }}
           id="MyBackground"
         >
-         {Project.project_existence &&
+          {Project.project_existence &&
             Project.projectDataList &&
             Project.currentPage > 0 &&
             Project.projectDataList.map((item, idx) => {
