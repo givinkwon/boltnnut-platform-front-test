@@ -441,7 +441,7 @@ const Container1 = styled.div`
   background-color: var(--white);
 `;
 const InnerContainer = styled.div`
-  // width: 932px;
+  width: 100%;
   // padding: 54px 0 52px 0;
 `;
 const Top = styled.div`
@@ -462,10 +462,7 @@ const Box1 = styled.div`
 `;
 
 const Head = styled.div`
-<<<<<<< HEAD
   word-break: break-all;
-=======
->>>>>>> 390d0240556bf1425ccb7a1c8fe599399a8c83f2
   div {
     display: inline-flex;
     flex-direction: row;

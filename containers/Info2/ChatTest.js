@@ -310,6 +310,8 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.onmessage = (e) => {
       // console.log("Aaaasdasd");
       const data = JSON.parse(e.data);
+      console.log("data")
+      console.log(data)
 
       const messages = this.props.Project.chatMessages;
 
@@ -338,6 +340,7 @@ class ChatTestContainer extends React.Component {
           time: data["time"],
           bRead: false,
         });
+
       }
 
       if (data.bReceive) {

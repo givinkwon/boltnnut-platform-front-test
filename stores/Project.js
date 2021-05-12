@@ -32,6 +32,7 @@ class Project {
   @observable main_category_idx = [0, 0, 0, 0, 0];
   @observable main_category_name = ["", "", "", "", ""];
   @observable newIndex = 0;
+  @observable myIndex = 0;
   // * 삭제 예정 * 옛날 데이터 관련 변수
   @observable data_dt = [];
   // 검색 관련 변수
@@ -114,6 +115,7 @@ class Project {
 
       });
   };
+
   /* 파트너 - 전체 + 가격 별 + search별 다 포함시켰음 */
   @action getProjectByPrice = (search_text, page = 1) => {
     this.projectDataList = [];
@@ -145,13 +147,13 @@ class Project {
         console.log(e.response);
       });
   };
-  @action getProjectDetail = (id) => {
+  @action getProjectDetail = async(id) => {
     console.log(id);
     const req = {
       id: id,
     };
-
-    ProjectAPI.getProjectDetail(req)
+    console.log(req)
+    await ProjectAPI.getProjectDetail(req)
       .then((res) => {
         this.projectDetailData = res.data;
         console.log(res.data);
@@ -162,6 +164,7 @@ class Project {
         console.log(e.response);
       });
   };
+
 
   @action setProjectDetailData = (data) => {
     // this.projectDetailData = data;
