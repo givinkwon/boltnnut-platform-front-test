@@ -219,9 +219,9 @@ class Nav extends React.Component {
                     {is_profile && (
                       <ProfileMenu>
                         <div>
-                          <Font17>
+                          {/* <Font17>
                             안녕하세요, 기빈님
-                          </Font17>
+                          </Font17> */}
                         </div>
                         <div>
                           <div>
@@ -330,11 +330,11 @@ const ProfileMenu = styled.div`
     //   }
     // }
   // }
-  >div:nth-of-type(1){
-    padding: 17px 20px;
-    display: flex;
-    align-items: center;
-  }
+  // >div:nth-of-type(1){
+  //   padding: 17px 20px;
+  //   display: flex;
+  //   align-items: center;
+  // }
   >div:nth-of-type(2){
     cursor: pointer;
     padding: 17px 0;

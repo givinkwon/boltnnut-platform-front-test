@@ -101,7 +101,6 @@ class ProposalCard extends React.Component {
     //   categoryData.splice(categoryData.length / 2, categoryData.length / 2);
     console.log(toJS(category_data));
     // console.log(toJS(data));
-
     return (
       <>
         {width > 767.98 ? (
@@ -287,7 +286,7 @@ class ProposalCard extends React.Component {
                   {data.real_phone ? (
                     <span>{data.real_phone}</span>
                   ) : (
-                    <span>전화번호 없음</span>
+                    <span>{data.user.phone ? (data.user.phone) : ("전화번호 없음")}</span>
                   )}
                 </div>
                 <div>

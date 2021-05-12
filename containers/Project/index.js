@@ -29,7 +29,7 @@ class ProjectContainer extends React.Component {
   async componentDidMount() {
     const { Auth, Project, Partner } = this.props;
     Project.newIndex = 0;
-    Project.myIndex = 0;
+    Project.myIndex = 1;
     await Auth.checkLogin();
 
   };
@@ -49,8 +49,8 @@ class ProjectContainer extends React.Component {
               {Project.newIndex == 0 && (
                 <>
                 
-                <ProjectDivider/>
-              {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+                {/* <ProjectDivider/>
+              {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>} */}
               {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />}
               </>
               )}
@@ -76,8 +76,8 @@ class ProjectContainer extends React.Component {
                 
               {Project.newIndex == 0 && (
                 <>
-                  <ProjectDivider/>
-                    {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+                  {/* <ProjectDivider/>
+                    {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>} */}
                     {Project.myIndex == 1 && <PartnerMyProject/>}   
                 </>
               )}
