@@ -325,6 +325,7 @@ class Content1 extends React.Component {
                             name={this.state.partnerDetailList[idx].name}
                             id={data.id}
                             content={"test"}
+                            modalHandler={this.modalHandler}
                           />
                         )}
                       </>

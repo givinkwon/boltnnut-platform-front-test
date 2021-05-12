@@ -9,7 +9,7 @@ class ChatItemContainer extends React.Component {
   render() {
     return (
       <>
-        <PartnerBox onClick={() => this.modalHandler(data.id)}>
+        <PartnerBox onClick={() => this.props.modalHandler(this.props.id)}>
           <PartnerInfo>
             <img
               // src={
