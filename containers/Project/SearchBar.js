@@ -37,6 +37,7 @@ class SearchBarConatiner extends React.Component {
     // this.props.Partner.search_text = e.target.value;
     this.setState({search : e.target.value})
     Project.search_text = e.target.value
+    console.log(e.target)
   };
   search = () => {
     const { Project } = this.props
@@ -153,7 +154,7 @@ const SearchBar = styled.div`
   }
 `;
 const Form = styled.div`
-  margin-top: 90px;
+  margin-top: 60px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -200,7 +201,7 @@ const Select = styled(SelectComponent)`
 
 const Box = styled.div`
 width: 220px;
-
+cursor: pointer;
   ${ props => props.active && css`
   svg{
     @keyframes select{

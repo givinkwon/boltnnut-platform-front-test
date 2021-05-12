@@ -1,14 +1,17 @@
 import React, { Fragment } from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
 import { withRouter } from "next/router";
 import Router from "next/router";
 // components
 import * as Text from "./Text";
+import * as Content from "./Content";
 import Containerv1 from "components/Containerv1";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
+import ChatTestContainer from "containers/Info2/ChatTest";
 const close_ic = "/static/icon/close.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
@@ -22,7 +25,11 @@ class Nav extends React.Component {
     url: "/",
     is_profile: false,
     is_open: false,
+    selectedRoom: null,
+    partnerList: [],
+    
   };
+
 
   alreadyLoggedin = ["login", "signup"];
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
@@ -34,7 +41,7 @@ class Nav extends React.Component {
     window.location.href = "/";
   };
   async componentDidMount() {
-    const { Auth } = this.props;
+    const { Auth, } = this.props;
     const token = await localStorage.getItem("token");
     const { route, pathname } = Router.router;
     const splitedRoute = route.split("/");
@@ -109,14 +116,18 @@ class Nav extends React.Component {
     });
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     Auth.checkLogin();
+    console.log(toJS(Auth.logged_in_user))
+
+    
   }
   render() {
-    const { Auth, Partner } = this.props;
+    const { Auth } = this.props;
     const { url, is_open, is_profile, token } = this.state;
 
     return (
       <>
         <NavBox>
+          
           <Containerv1
             style={{ display: "inline", justifyContent: "space-between" }}
           >
@@ -162,6 +173,7 @@ class Nav extends React.Component {
                         onClick={() => Router.push("/project")}
                         active={url.indexOf("project") > -1}
                       >
+                        {console.log(url)}
                         <p class="line"> 프로젝트 찾기 </p>
                       </NavLink>
                       <NavLink
@@ -206,15 +218,29 @@ class Nav extends React.Component {
                     />
                     {is_profile && (
                       <ProfileMenu>
-                        <div onClick={() => Router.push("/account?tab=1")}>
-                          <Text.FontSize16 fontWeight={500}>
-                            계정설정
-                          </Text.FontSize16>
+                        <div>
+                          <Font17>
+                            안녕하세요, 기빈님
+                          </Font17>
                         </div>
-                        <div onClick={this.logout}>
-                          <Text.FontSize16 fontWeight={500}>
+                        <div>
+                          <div>
+                            {console.log(this.state.partnerList[0])}
+                            <Font16>
+                            채팅하기
+                            </Font16>
+                          </div>
+
+                          <div onClick={() => Router.push("/account?tab=1")}>
+                            <Font16>
+                              계정설정
+                            </Font16>
+                          </div>
+                        </div>
+                        <div style = {{backgroundColor: "#f3f3f3"}} onClick={this.logout}>
+                          <Font16>
                             로그아웃
-                          </Text.FontSize16>
+                          </Font16>
                         </div>
                       </ProfileMenu>
                     )}
@@ -269,28 +295,73 @@ class Nav extends React.Component {
     );
   }
 }
+export default Nav;
 
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  background: #00000080;
+`;
 const ProfileMenu = styled.div`
   position: absolute;
   background-color: #fff;
   border-radius: 4px;
   overflow: hidden;
   margin-top: 50px;
-  > div {
-    padding: 15px 20px;
+  width: 14em;
+  // > div {
+  //   padding: 15px 20px;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   cursor: pointer;
+  //   > p {
+  //     color: #414550;
+  //     font-weight: 500;
+  //   }
+    // :hover {
+    //   background-color: #f3f3f3;
+    //   > p {
+    //     color: ${PRIMARY};
+    //   }
+    // }
+  // }
+  >div:nth-of-type(1){
+    padding: 17px 20px;
     display: flex;
-    justify-content: center;
     align-items: center;
+  }
+  >div:nth-of-type(2){
     cursor: pointer;
-    > p {
-      color: rgb(0, 0, 0, 0.8);
+    padding: 17px 0;
+    display: flex;
+    flex-direction: column;
+    >div{
+      padding: 6px 20px;
+      :hover {
+          background-color: #f3f3f3;
+          > p {
+            color: ${PRIMARY};
+          }
+        }
     }
-    :hover {
-      background-color: #f3f3f3;
-      > p {
-        color: ${PRIMARY};
-      }
-    }
+  }
+
+  >div:nth-of-type(3){
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  p {
+    color: #414550;
+    font-weight: 500;
   }
 `;
 const Container = styled.div`
@@ -473,4 +544,23 @@ const ButtonContainer = styled(Buttonv1)`
   }
 `;
 
-export default Nav;
+const Font16 = styled(Content.FontSize16)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: -0.16px;
+  text-align: left;
+  color: #414550;
+`
+
+
+const Font17 = styled(Content.FontSize17)`
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.76;
+  letter-spacing: -0.17px;
+  text-align: left;
+  
+
+`
