@@ -11,7 +11,7 @@ import { Toolbar } from "material-ui";
 import { toJS } from "mobx";
 import ChatTestContainer from "containers/Info2/ChatTest";
 import * as PartnerAPI from "axios/Partner";
-
+import ChatItemContainer from "components/ChatItem";
 const money = "/static/images/project/money.svg";
 const calendar = "/static/images/project/period.svg";
 const applicant = "/static/images/project/applicant.svg";
@@ -74,32 +74,32 @@ class Content1 extends React.Component {
     );
     await Auth.checkLogin();
 
-    // if (Auth.logged_in_partner) {
-    //   Project.getPage(1069);
-    //   console.log(Project.selectedProjectId);
-    //   Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
-    //     console.log(toJS(Answer.answers));
-    //     this.setState({ partnerList: Answer.answers });
+    if (Auth.logged_in_partner) {
+      // Project.getPage(1069);
+      // console.log(Project.selectedProjectId);
+      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+        console.log(toJS(Answer.answers));
+        this.setState({ partnerList: Answer.answers });
 
-    //     Answer.answers.forEach((answer) => {
-    //       const PartnerDetailList = this.state.partnerDetailList;
-    //       PartnerAPI.detail(answer.partner)
-    //         .then((res) => {
-    //           // console.log(res);
-    //           // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
-    //           PartnerDetailList.push({
-    //             logo: res.data.logo,
-    //             name: res.data.name,
-    //           });
-    //           this.setState({ partnerDetailList: PartnerDetailList });
-    //         })
-    //         .catch((e) => {
-    //           console.log(e);
-    //           console.log(e.response);
-    //         });
-    //     });
-    //   });
-    // }
+        Answer.answers.forEach((answer) => {
+          const PartnerDetailList = this.state.partnerDetailList;
+          PartnerAPI.detail(answer.partner)
+            .then((res) => {
+              // console.log(res);
+              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
+              PartnerDetailList.push({
+                logo: res.data.logo,
+                name: res.data.name,
+              });
+              this.setState({ partnerDetailList: PartnerDetailList });
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        });
+      });
+    }
 
     if (Auth.logged_in_client) {
       // console.log(Auth.logged_in_client);
@@ -300,65 +300,22 @@ class Content1 extends React.Component {
                   </p>
                 )}
               </Font20>
-              {user === "partner" ? (
-                /* 파트너일 때 */
-
-                <BlackBox>
-                  <span>'해당 프로젝트 담당자만 확인할 수 있습니다.'</span>
-                  <div style={{ filter: "blur(5px)" }}>
-                    <PartnerBox />
-                    <PartnerBox />
-                    <PartnerBox />
-                  </div>
-                </BlackBox>
-              ) : (
-                /* 클라이언트일 때 */
-                <>
-                  {/* map으로 뿌리기 */}
-                  {this.state.partnerList.map((data, idx) => {
-                    // Partner.getPartnerDetail(data.partner);
-                    return (
-                      <PartnerBox onClick={() => this.modalHandler(data.id)}>
-                        <PartnerInfo>
-                          <img
-                            // src={
-                            //   this.state.partnerDetailList[idx] &&
-                            //   this.state.partnerDetailList[idx].logo
-                            // }
-                            src={
-                              "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-                            }
-                            width={36}
-                            height={36}
-                          ></img>
-                          <Font18 style={{ marginLeft: 10 }}>
-                            {this.state.partnerDetailList[idx] &&
-                              this.state.partnerDetailList[idx].name}
-                          </Font18>
-                        </PartnerInfo>
-                        <Font16>
-                          " 프로젝트 보고 연락드립니다 . 비공개 자료
-                          공개해주실수 있나요 "
-                        </Font16>
-                        <IconBox>
-                          <Icon>
-                            <img src={toolBarImg}></img>
-                          </Icon>
-                          <Icon>
-                            <img src={callImg}></img>
-                          </Icon>
-                          <Icon>
-                            <img src={messagesImg}></img>
-                            <ChatNotice>
-                              <Font14>N</Font14>
-                            </ChatNotice>
-                          </Icon>
-                        </IconBox>
-                      </PartnerBox>
-                    );
-                  })}
-                </>
-              )}
+              {this.state.partnerList.map((data, idx) => {
+                // Partner.getPartnerDetail(data.partner);
+                return (
+                  <>
+                    {this.state.partnerDetailList[idx] && (
+                      <ChatItemContainer
+                        logo={this.state.partnerDetailList[idx].logo}
+                        name={this.state.partnerDetailList[idx].name}
+                        id={data.id}
+                        content={"test"}
+                        modalHandler={this.modalHandler}
+                      />
+                    )}
+                  </>
+                );
+              })}
             </AppliedPartner>
             <Content4 user={user} />
           </InnerContainer>
