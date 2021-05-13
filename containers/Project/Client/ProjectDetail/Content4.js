@@ -132,7 +132,7 @@ class Content4 extends React.Component {
     //   );
   }
   render() {
-    const { Project, ManufactureProcess, user } = this.props;
+    const { Project, ManufactureProcess, user, Auth } = this.props;
     const { projectDetailData } = Project;
     return (
       <Background>
@@ -184,7 +184,10 @@ class Content4 extends React.Component {
               </File>
             </RequestBox>
           </RequestSubContainer>
+
+          {/*비공개내용 :  파트너, 해당 프로젝트를 만든 클라이언트, 해당 프로젝트를 만들지 않은 클라이언트 구분*/}
           <Font20>비공개내용</Font20>
+          {/* 파트너일 경우 */}
           {user === "partner" ? (
             <BlackBox>
               <span>'문의 답변을 해주셔야만 열람 할 수 있습니다.'</span>
@@ -197,9 +200,10 @@ class Content4 extends React.Component {
                 </RequestBox>
               </RequestSubContainer>
             </BlackBox>
-          ) : (
+          ) 
+          : projectDetailData.request_set[0].client == Auth.logged_in_client.id ? (
+            <>{/*해당 프로젝트의 클라이언트일 경우*/}
             <RequestSubContainer>
-              {/* <Font20>비공개내용</Font20> */}
               {projectDetailData &&
                 projectDetailData.request_set[0].estimate_set.map(
                   (item, idx) => {
@@ -369,7 +373,27 @@ class Content4 extends React.Component {
                 </File>
               </RequestBox>
             </RequestSubContainer>
-          )}
+            </>
+          )
+        :
+        (
+          <>
+          {/*해당 프로젝트의 클라이언트가 아닐 경우*/}
+          <BlackBox>
+              <span>'해당 프로젝트 담당자만 확인할 수 있습니다.'</span>
+              <RequestSubContainer style={{ filter: "blur(5px)" }}>
+                <DrawingCard></DrawingCard>
+                <RequestBox>
+                  {" "}
+                  <RequestContent></RequestContent>
+                  <File></File>
+                </RequestBox>
+              </RequestSubContainer>
+            </BlackBox>
+          </>
+        )
+        
+        }
         </RequestContainer>
         {/* </Containerv1> */}
       </Background>

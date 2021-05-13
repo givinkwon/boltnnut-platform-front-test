@@ -49,9 +49,9 @@ class ProjectContentContainer extends React.Component {
     console.log("did mount");
 
     await Auth.checkLogin();
-    if (Auth.logged_in_partner) {
+    // if (Auth.logged_in_partner) {
       Project.getProjectByPrice();
-    }
+    // }
   }
 
   movePage = (e) => {

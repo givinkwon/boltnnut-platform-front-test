@@ -49,9 +49,9 @@ class ProjectContainer extends React.Component {
               {Project.newIndex == 0 && (
                 <>
                 
-                {/* <ProjectDivider/>
-              {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>} */}
-              {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />}
+                <ProjectDivider/>
+                {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+                {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />}
               </>
               )}
               {Project.newIndex == 1 && (
@@ -76,8 +76,8 @@ class ProjectContainer extends React.Component {
                 
               {Project.newIndex == 0 && (
                 <>
-                  {/* <ProjectDivider/>
-                    {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>} */}
+                  <ProjectDivider/>
+                    {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
                     {Project.myIndex == 1 && <PartnerMyProject/>}   
                 </>
               )}

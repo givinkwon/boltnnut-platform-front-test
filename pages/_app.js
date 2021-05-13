@@ -109,6 +109,7 @@ class MyApp extends App {
       userAgent.indexOf(".NET") !== -1 ||
       userAgent.indexOf("Edge") !== -1
     ) {
+      console.log("AAS@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       this.setState({
         ...this.state,
         ie_user: true,

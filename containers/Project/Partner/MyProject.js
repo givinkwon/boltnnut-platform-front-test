@@ -61,9 +61,6 @@ class MyProject extends React.Component {
     if (Auth.logged_in_partner) {
       Partner.answer_set = Auth.logged_in_partner.answer_set;
       Partner.getPartnerDetail(Auth.logged_in_partner.id)
-      // if(Partner.detail){
-      //   Partner.answer_set = Partner.detail.answer_set
-      // }
       console.log(toJS(Partner.detail))
 
       Partner.answer_set.map((data) => {
@@ -76,6 +73,7 @@ class MyProject extends React.Component {
 
   render() {
     const { Project, Partner, Auth } = this.props;
+    const { Partnerprojectlist } = this.state;
     return (
       <Background>
         <Container style={{ flexDirection: "column" }}>
@@ -90,22 +88,20 @@ class MyProject extends React.Component {
           )}
 
           <>
-            {Partner.answer_set &&
-              Partner.answer_set.map((data, idx) => {
+            {Partnerprojectlist &&
+              Partnerprojectlist.map((data, idx) => {
                 return (
                   <>
                   <BoxContainer>
                     <Font22>
-                      {this.state.Partnerprojectlist[idx] &&
-                      this.state.Partnerprojectlist[idx].name}
+                      {data.name}
                     </Font22>
-                    
                     {this.state.Partnerprojectlist[idx] &&Partner.detail&& (
                       <ChatItemContainer
                         logo={Partner.detail.logo}
                         name={Partner.detail.name}
                         id={data.project}
-                        content={data.content1}
+                        content={data.content}
                         modalHandler={this.modalHandler}
                         user = {Auth}
                         pushToDetail = {this.pushToDetail}

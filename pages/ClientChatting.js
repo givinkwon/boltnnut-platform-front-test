@@ -1,0 +1,166 @@
+import React from "react";
+import styled, { css } from "styled-components";
+import * as Content from "components/Content";
+import * as Title from "components/Title";
+import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
+import Partner from "../stores/Partner";
+import Container from "components/Containerv1";
+import Background from "components/Background";
+import ChatItemContainer from "components/ChatItem";
+import ChatTestContainer from "containers/Info2/ChatTest";
+import * as PartnerAPI from "axios/Partner";
+
+@inject("Project", "Auth", "Answer")
+@observer
+class ClientChatting extends React.Component{
+
+state = {
+  selectedRoom: null,
+  answerDetailList: [],
+  partnerList:[]
+}
+
+async getProject(data){
+  const { Project } = this.props;
+  console.log(toJS(data))
+  await Project.getAllProject(data)
+  console.log(toJS(Project.projectDataList))
+  Project.projectDataList.map((data, idx) =>{
+    console.log(data.answer_set)
+    data.answer_set.map((answer, idx) => {
+      console.log(toJS(answer))
+      PartnerAPI.detail(answer.partner)
+        .then((res) => {
+          console.log(toJS(res))
+          Project.answerDetailList.push({
+            // project: res.
+            logo: res.data.logo,
+            name: res.data.name,
+            id: answer.id,
+            content: answer.content1,
+            project: data.id,
+          });
+          
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+})})};
+
+modalHandler = (id) => {
+  this.setState({ selectedRoom: id });
+  const { Project } = this.props;
+
+  Project.chatModalActive = !Project.chatModalActive;
+  // this.setState({ modalActive: !this.state.modalActive });
+};
+
+async componentDidMount() {
+  const { Auth, Project, Answer } = this.props;
+  const AnswerDetailList = this.state.answerDetailList;
+  console.log("<Web> did mount");
+  await Auth.checkLogin();
+
+  // Project.newIndex = 0;
+  if (Auth.logged_in_client) {
+    this.getProject(Auth.logged_in_client.id)
+  }
+
+  
+  // this.setState({ answerDetailList: AnswerDetailList });
+  }
+
+  render(){
+    const { Project, Auth } = this.props;
+
+    return(
+
+<Background>
+  <Container style = {{display: "flex", flexDirection: "column"}}>
+    {console.log(toJS(Project.projectDataList))}
+    {console.log(toJS(Project.answerDetailList))}
+    {Project.chatModalActive && 
+      <Layer onClick={this.modalHandler}>
+        <ChatTestContainer
+          roomName={this.state.selectedRoom}
+        ></ChatTestContainer>
+      </Layer>
+    }
+    
+    {Project.projectDataList && Project.projectDataList.map((item, idx) => 
+      {
+      return(
+        <ProjectContainer>  
+        <Font24>
+        {item.request_set[0].name}
+
+
+        <span>{item.answer_set.length}</span>
+        </Font24>
+        {Project.answerDetailList && Project.answerDetailList.map((data, idx) =>
+        {
+          return(
+          <>
+
+        {data.project ==item.id && (
+          <>
+          <ChatItemContainer
+            logo={data.logo}
+            name={data.name}
+            id={data.id}
+            content={data.content}
+            modalHandler={this.modalHandler}
+            user = {Auth}
+            />
+            </>
+        )}
+        </>
+        )}
+        )}
+        </ProjectContainer>  
+      )
+  })}
+
+  </Container>
+</Background>
+    );
+  }
+
+
+}
+
+export default ClientChatting;
+
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  background: #00000080;
+`;
+
+const ProjectContainer = styled.div`
+  margin: 80px 0 20px 0;
+
+`
+
+
+const Font24 = styled(Content.FontSize24)`
+font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.17 !important;
+  letter-spacing: -0.6px !important;
+  text-align: left;
+  color: #282c36;
+  span{
+    color: #0933b3;
+    margin-left: 8px;
+  }
+  border-bottom: solid 1px #c6c7cc;
+  margin-bottom: 14px;
+  `
