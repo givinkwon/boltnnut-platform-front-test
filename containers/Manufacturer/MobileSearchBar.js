@@ -8,6 +8,8 @@ import ButtonComponent from "components/Buttonv2";
 import Background from "components/Background";
 import Container from "components/Containerv1";
 
+import { toJS } from "mobx";
+
 // import RadioButton from "./RadioButton";
 
 import { PRIMARY2 } from "static/style";
@@ -185,9 +187,10 @@ class MobileSearchBarConatiner extends React.Component {
           style={{ flex: "0 auto" }}
           active={this.state.filter_active}
         >
-          {region_data.map((item, idx) => {
+          {Partner.filter_city_ary.map((item, idx) => {
             return (
               <>
+                {console.log(toJS(item))}
                 <FilterContent
                   onClick={() => {
                     this.onClickHandler(item.id);
@@ -197,7 +200,7 @@ class MobileSearchBarConatiner extends React.Component {
                   <div active={this.activeHandler(item.id)}>
                     <div active={this.activeHandler(item.id)}></div>
                   </div>
-                  <span>{item.name}</span>
+                  <span>{item.city}</span>
                 </FilterContent>
               </>
             );
@@ -293,6 +296,7 @@ const SearchBar = styled.div`
         width: 95%;
         height: 36px;
         //padding: 0 14px;
+        padding-left: 10px;
     
         //border: 1px solid #c6c7cc;
         border: none;
@@ -308,16 +312,70 @@ const SearchBar = styled.div`
 >div:nth-of-type(3){
     //border: 1px solid black;
     flex-grow:1;
-}
-  
-  
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
+    
+}
+
+
+@media (min-width: 0px) and (max-width: 380px) {
+  //margin-top: 30px;    
+  input {
+    font-size: 12px;
+    width: 100%;
+  }
+
+  >div:nth-of-type(1){
+    width: 70px;
+  }
+
+  >div:nth-of-type(2){
+    //border: 1px solid green;
+    flex-grow:5;
+    input {
+      
+        padding-left: 15px;
+    
+    }
+      
+}
+
+}
+
+
+@media (min-width: 380px) and (max-width: 480px) {
+  //margin-top: 30px;    
+  input {
+    font-size: 12px;
+    width: 100%;
+  }
+
+  >div:nth-of-type(1){
+    width: 70px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 580px) {
+  //margin-top: 30px;    
+  input {
+    font-size: 12px;
+    width: 100%;
+  }
+
+  >div:nth-of-type(1){
+    width: 60px;
+  }
+}
+
+  @media (min-width: 580px) and (max-width: 767.98px) {
     //margin-top: 30px;    
     input {
       font-size: 12px;
       width: 100%;
     }
+    >div:nth-of-type(1){
+      width: 50px;
+    }
+
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 30px;

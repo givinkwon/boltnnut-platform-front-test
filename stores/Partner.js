@@ -35,6 +35,7 @@ class Partner {
   @observable search_category = [];
   @observable search_develop = [];
   @observable search_region = [];
+  @observable search_class = "전체";
 
   @observable partnerdata = "";
   @observable select_big = null;
@@ -50,6 +51,9 @@ class Partner {
 
   @observable filter_category_ary = [{ id: 0, category: "전체" }];
   @observable develop_next = 0;
+
+  @observable filter_city_ary = [{ id: 0, city: "전체" }];
+  @observable city_next = 0;
 
   @observable filter_checked_idx = 0;
 
@@ -75,9 +79,21 @@ class Partner {
   };
 
   @action setCategory = (val) => {
+    console.log(val);
     this.input_category = val;
     console.log(toJS(this.input_category));
-    console.log(val);
+
+    if (val.value === "전체") {
+      console.log("전체");
+      this.search_class = "전체";
+    } else if (val.value === "만든 제품") {
+      console.log("만든 제품");
+      this.search_class = "만든 제품";
+    } else {
+      this.search_class = "";
+    }
+    //this.getPartner();
+    console.log(toJS(this.search_class));
   };
 
   @action setLoading = () => {
@@ -624,14 +640,14 @@ class Partner {
   };
 
   @action getPartnerCategory = async (request, i, idx, id = 0) => {
-    console.log(request);
+    // console.log(request);
     await PartnerAPI.getPartnerCategory(request)
       .then((res) => {
-        console.log(toJS(res.data.category));
+        // console.log(toJS(res.data.category));
         this.category_ary[idx].push(res.data.category);
 
         if (idx === this.partner_list.length - 1) {
-          console.log("finish");
+          // console.log("finish");
           this.check_loading_category = true;
         }
 
@@ -680,23 +696,23 @@ class Partner {
     //     )
     //   );
     //}
-    console.log(toJS(this.category_ary[idx]));
+    // console.log(toJS(this.category_ary[idx]));
   };
 
   @action setCategoryDic = async (req, sub_data, id) => {
     await PartnerAPI.getPartnerCategory(req)
       .then((res) => {
-        console.log(`${sub_data} : ${toJS(res.data.category)}`);
+        // console.log(`${sub_data} : ${toJS(res.data.category)}`);
         //this.category_ary[idx].push(res.data.category);
-        console.log(toJS(typeof this.category_name_ary));
+        // console.log(toJS(typeof this.category_name_ary));
         //this.category_dic[id] = [1, 2, 3];
-        console.log(`${id} +  ${toJS(this.category_dic.hasOwnProperty(id))}`);
+        // console.log(`${id} +  ${toJS(this.category_dic.hasOwnProperty(id))}`);
 
         if (!this.category_dic.hasOwnProperty(id)) {
           this.category_dic[id] = [];
         }
         this.category_dic[id] = [...this.category_dic[id], res.data.category];
-        console.log(toJS(this.category_dic));
+        // console.log(toJS(this.category_dic));
       })
       .catch((e) => {
         console.log(e);
@@ -718,23 +734,23 @@ class Partner {
         );
         this.develop_next = res.data.next;
 
-        console.log(toJS(res.data.results));
-        console.log(toJS(this.filter_category_ary));
-        console.log(this.develop_next);
+        // console.log(toJS(res.data.results));
+        // console.log(toJS(this.filter_category_ary));
+        // console.log(this.develop_next);
         while (this.develop_next) {
           const req = {
             nextUrl: this.develop_next,
           };
-          console.log("========================");
+          //console.log("========================");
           await PartnerAPI.getNextDevelopPage(req)
             .then((res) => {
-              console.log(res);
+              //console.log(res);
               this.filter_category_ary = this.filter_category_ary.concat(
                 res.data.results
               );
 
               this.develop_next = res.data.next;
-              console.log(this.develop_next);
+              //console.log(this.develop_next);
               //this.project_page = parseInt(this.project_count/5) + 1
               // if (callback) {
               //   callback();
@@ -745,9 +761,62 @@ class Partner {
               console.log(e.response);
             });
         }
-        console.log(toJS(res.data.results.category));
-        console.log(toJS(typeof this.filter_category_ary));
-        console.log(toJS(this.filter_category_ary));
+        // console.log(toJS(res.data.results.category));
+        // console.log(toJS(typeof this.filter_category_ary));
+        // console.log(toJS(this.filter_category_ary));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action getCity = () => {
+    //this.filter_category_ary = [];
+
+    const req = {
+      // nextUrl: this.develop_next,
+    };
+
+    PartnerAPI.getCity(req)
+      .then(async (res) => {
+        this.filter_city_ary = this.filter_city_ary.concat(res.data.results);
+        this.city_next = res.data.next;
+
+        // console.log(toJS(res.data.results));
+        // console.log(toJS(this.filter_city_ary));
+        // console.log(this.city_next);
+        while (this.city_next) {
+          const req = {
+            nextUrl: this.city_next,
+          };
+          await PartnerAPI.getNextCityPage(req)
+            .then((res) => {
+              // console.log(res);
+              this.filter_city_ary = this.filter_city_ary.concat(
+                res.data.results
+              );
+
+              this.city_next = res.data.next;
+              //console.log(this.city_next);
+              //this.project_page = parseInt(this.project_count/5) + 1
+              // if (callback) {
+              //   callback();
+              // }
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+        // console.log(toJS(res.data.results));
+        // console.log(toJS(typeof this.filter_city_ary));
+        // console.log(toJS(this.filter_city_ary));
+        this.filter_city_ary = this.filter_city_ary.filter(
+          (item) => item.id === 0 || item.id < 9
+        );
+
+        // console.log(toJS(this.filter_city_ary));
       })
       .catch((e) => {
         console.log(e);
@@ -761,49 +830,83 @@ class Partner {
     //this.data_dt = [];
     //console.log(this.filter_region);
     const token = localStorage.getItem("token");
-    let req = {};
-    if (!this.filter_region) {
-      if (!this.filter_category) {
-        req = {
-          params: {
-            search: this.search_text,
-            page: page,
-          },
-        };
-      } else {
-        req = {
-          params: {
-            //city: this.filter_region === 0 ? "" : this.filter_region,
+    let req = { params: { page: page } };
+    let temp = { params: { page: page } };
+    if (this.filter_region) {
+      temp.params.city = this.filter_region;
+      req.params.city = this.filter_region;
+    }
 
-            category_middle__id: this.filter_category,
-            search: this.search_text,
-            page: page,
-          },
-        };
-      }
-    } else {
-      if (!this.filter_category) {
-        req = {
-          params: {
-            //city: this.filter_region === 0 ? "" : this.filter_region,
-            city: this.filter_region,
-
-            search: this.search_text,
-            page: page,
-          },
-        };
+    if (this.filter_category) {
+      //temp["category_middle__id"] = this.filter_category;
+      temp.params.category_middle__id = this.filter_category;
+      req.params.category_middle__id = this.filter_category;
+    }
+    if (this.search_class === "전체") {
+      if (this.search_text === "") {
+        delete req.params.search;
       } else {
-        req = {
-          params: {
-            //city: this.filter_region === 0 ? "" : this.filter_region,
-            city: this.filter_region,
-            category_middle__id: this.filter_category,
-            search: this.search_text,
-            page: page,
-          },
-        };
+        req.params.search = this.search_text;
       }
     }
+
+    if (this.search_class === "만든 제품") {
+      if (this.search_text === "") {
+        delete req.params.history;
+      } else {
+        req.params.history = this.search_text;
+      }
+    }
+    console.log(toJS(this.search_class));
+    // if (this.search_text !== "") {
+    //   req.params.search = ParseInt(this.search_text);
+    // }
+
+    //console.log(temp);
+    console.log(req);
+    // if (!this.filter_region) {
+    //   if (!this.filter_category) {
+    //     req = {
+    //       params: {
+    //         search: this.search_text,
+    //         page: page,
+    //       },
+    //     };
+    //   } else {
+    //     req = {
+    //       params: {
+    //         //city: this.filter_region === 0 ? "" : this.filter_region,
+
+    //         category_middle__id: this.filter_category,
+    //         search: this.search_text,
+    //         page: page,
+    //       },
+    //     };
+    //   }
+    // } else {
+    //   if (!this.filter_category) {
+    //     req = {
+    //       params: {
+    //         //city: this.filter_region === 0 ? "" : this.filter_region,
+    //         city: this.filter_region,
+
+    //         search: this.search_text,
+    //         page: page,
+    //       },
+    //     };
+    //   } else {
+    //     req = {
+    //       params: {
+    //         //city: this.filter_region === 0 ? "" : this.filter_region,
+    //         city: this.filter_region,
+    //         category_middle__id: this.filter_category,
+    //         search: this.search_text,
+    //         // history
+    //         page: page,
+    //       },
+    //     };
+    //   }
+    // }
 
     await PartnerAPI.getPartners(req)
       .then((res) => {
@@ -821,10 +924,10 @@ class Partner {
         this.partner_list.map((item, idx) => {
           this.category_ary.push(item.category_middle);
           //console.log(toJS(item));
-          console.log(toJS(this.category_ary));
+          //console.log(toJS(this.category_ary));
 
           this.category_ary[idx].map((data, id) => {
-            console.log(toJS(data));
+            //console.log(toJS(data));
 
             // const request = {
             //   id: data,
@@ -850,16 +953,16 @@ class Partner {
 
         // //async function temp() {
         this.category_ary.map((data, id) => {
-          console.log(toJS(data));
+          //console.log(toJS(data));
           data.map((sub_data, index) => {
-            console.log(toJS(sub_data));
+            // console.log(toJS(sub_data));
 
-            console.log(id);
+            // console.log(id);
             const req = {
               id: sub_data,
             };
 
-            console.log(index);
+            //console.log(index);
             this.setCategoryDic(req, sub_data, id);
           });
         });
@@ -931,60 +1034,60 @@ class Partner {
       });
   };
 
-  @action getPartnerByRegion = async (page = 1) => {
-    this.partner_list = [];
-    //this.data_dt = [];
-    console.log(this.filter_region);
-    const token = localStorage.getItem("token");
-    let req = {};
-    if (!this.filter_region) {
-      req = {
-        params: {
-          // search: search_text,
-          page: page,
-          // ordering: "-id",
-        },
-        // headers: {
-        //   Authorization: `Token ${token}`,
-        // },
-      };
-    } else {
-      req = {
-        params: {
-          //city: this.filter_region === 0 ? "" : this.filter_region,
-          city: this.filter_region,
-          // search: search_text,
-          page: page,
+  // @action getPartnerByRegion = async (page = 1) => {
+  //   this.partner_list = [];
+  //   //this.data_dt = [];
+  //   console.log(this.filter_region);
+  //   const token = localStorage.getItem("token");
+  //   let req = {};
+  //   if (!this.filter_region) {
+  //     req = {
+  //       params: {
+  //         // search: search_text,
+  //         page: page,
+  //         // ordering: "-id",
+  //       },
+  //       // headers: {
+  //       //   Authorization: `Token ${token}`,
+  //       // },
+  //     };
+  //   } else {
+  //     req = {
+  //       params: {
+  //         //city: this.filter_region === 0 ? "" : this.filter_region,
+  //         city: this.filter_region,
+  //         // search: search_text,
+  //         page: page,
 
-          // ordering: "-id",
-        },
-        // headers: {
-        //   Authorization: `Token ${token}`,
-        // },
-      };
-    }
+  //         // ordering: "-id",
+  //       },
+  //       // headers: {
+  //       //   Authorization: `Token ${token}`,
+  //       // },
+  //     };
+  //   }
 
-    PartnerAPI.getPartners(req)
-      .then((res) => {
-        this.partner_list = [];
-        this.category_ary = [];
+  //   PartnerAPI.getPartners(req)
+  //     .then((res) => {
+  //       this.partner_list = [];
+  //       this.category_ary = [];
 
-        this.partner_list = res.data.results;
-        // this.category_ary = res.data.results.category_middle;
+  //       this.partner_list = res.data.results;
+  //       // this.category_ary = res.data.results.category_middle;
 
-        // console.log(toJS(category_ary));
-        this.partner_next = res.data.next;
-        this.partner_count = res.data.count;
-        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-        console.log(toJS(this.partner_list));
+  //       // console.log(toJS(category_ary));
+  //       this.partner_next = res.data.next;
+  //       this.partner_count = res.data.count;
+  //       this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+  //       console.log(toJS(this.partner_list));
 
-        //this.getCategory();
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
+  //       //this.getCategory();
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //       console.log(e.response);
+  //     });
+  // };
   // @action getPartnerCategory = async (page = 1) => {
   //   req = {
   //     params: {
