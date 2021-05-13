@@ -107,6 +107,7 @@ class Content1 extends React.Component {
       console.log(Project.selectedProjectId);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         console.log(toJS(Answer.answers));
+        console.log(Answer.answers);
         this.setState({ partnerList: Answer.answers });
 
         Answer.answers.forEach((answer) => {
@@ -311,7 +312,7 @@ class Content1 extends React.Component {
                         id={data.id}
                         content={"test"}
                         modalHandler={this.modalHandler}
-                        user = {Auth}
+                        user={Auth}
                       />
                     )}
                   </>

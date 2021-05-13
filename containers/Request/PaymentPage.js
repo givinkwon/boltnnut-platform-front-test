@@ -75,7 +75,7 @@ class PaymentPageContainer extends React.Component {
       <Background>
         <PaymentPageDiv>
           {Payment.modalActive && (
-            <Layer onClick={this.modalHandler}>{/* <Postcode /> */}</Layer>
+            <Layer onClick={this.modalHandler}>{<Postcode />}</Layer>
           )}
 
           <PaymentPageLeft>

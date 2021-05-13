@@ -6,7 +6,7 @@ import * as PartnerAPI from "axios/Partner";
 
 class Profile {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable data = null;
 

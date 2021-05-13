@@ -1,8 +1,8 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 
 class Chat {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
 
   @observable current_time = null;

@@ -1,11 +1,11 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 import * as DetailQuestionAPI from "axios/DetailQuestion";
 import Router from "next/router";
 import Proposal from "./Proposal";
 
 class DetailQuestion {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable title_list = [];
   @observable select = [];

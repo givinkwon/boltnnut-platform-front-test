@@ -1,11 +1,11 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 import Router from "next/router";
 
 import * as PaymentAPI from "axios/Payment";
 
 class Payment {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable modalActive = false;
   @observable current_coin = 0;

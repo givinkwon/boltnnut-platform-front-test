@@ -1,10 +1,10 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 
 import * as NoticeAPI from "axios/Notice";
 
 class Notice {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable current = null;
 
