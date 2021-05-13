@@ -1,11 +1,11 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 
 import * as CategoryAPI from "axios/Category";
 import * as RequestAPI from "axios/Request";
 
 class Home {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable category_list = [];
   @observable develop_list = [];

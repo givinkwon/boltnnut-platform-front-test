@@ -1,4 +1,4 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 
 import * as ProjectAPI from "axios/Project";
 import * as AccountAPI from "axios/Account";
@@ -6,7 +6,7 @@ import { toJS } from "mobx";
 
 class Project {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable project_existence = true;
 
@@ -111,8 +111,6 @@ class Project {
       .catch((e) => {
         console.log(e);
         console.log(e.response);
-
-
       });
   };
 
@@ -147,12 +145,12 @@ class Project {
         console.log(e.response);
       });
   };
-  @action getProjectDetail = async(id) => {
+  @action getProjectDetail = async (id) => {
     console.log(id);
     const req = {
       id: id,
     };
-    console.log(req)
+    console.log(req);
     await ProjectAPI.getProjectDetail(req)
       .then((res) => {
         this.projectDetailData = res.data;
@@ -165,7 +163,6 @@ class Project {
       });
   };
 
-
   @action setProjectDetailData = (data) => {
     // this.projectDetailData = data;
     // Router.push(`/project/${data.id}`);
@@ -174,9 +171,9 @@ class Project {
   @action exitProject = (id) => {
     const req = {
       id: id,
-      data : {
-        status: "모집종료" 
-      }
+      data: {
+        status: "모집종료",
+      },
     };
     ProjectAPI.exitProject(req)
       .then((res) => {

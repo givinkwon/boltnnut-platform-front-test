@@ -1,11 +1,11 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 import * as PostAPI from "axios/post";
 
 import Loading from "./Loading";
 
 class Post {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable data = [];
 

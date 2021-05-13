@@ -1,4 +1,4 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 import Router from "next/router";
 import * as ProposalAPI from "axios/Proposal";
 import * as PartnerAPI from "axios/Partner";
@@ -6,7 +6,7 @@ import * as SelectAPI from "../axios/Select";
 
 class Proposal {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable order = 0;
 

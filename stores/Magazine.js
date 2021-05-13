@@ -1,4 +1,4 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 
 import * as MagazineAPI from "axios/Magazine";
 import * as CategoryAPI from "axios/Category";
@@ -6,7 +6,7 @@ import Router from "next/router";
 
 class Magazine {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable current = null;
   @observable magazine_list = [];
@@ -76,46 +76,45 @@ class Magazine {
   };
 
   @action getMagazine = (category) => {
-
     const req = {
       params: {
         category: category,
-      }  
+      },
     };
 
     MagazineAPI.getMagazine(req)
-    .then(async (res) => {
-      this.magazine_list = res.data.results;
-      this.magazine_next = res.data.next;
+      .then(async (res) => {
+        this.magazine_list = res.data.results;
+        this.magazine_next = res.data.next;
 
-      while (this.magazine_next) {
-        const req = {
-          nextUrl: this.magazine_next,
-        };
+        while (this.magazine_next) {
+          const req = {
+            nextUrl: this.magazine_next,
+          };
 
-        await MagazineAPI.getNextPage(req)
-          .then((res) => {
-            this.magazine_list = this.magazine_list.concat(res.data.results);
-            this.magazine_next = res.data.next;
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-      }
-      console.log(`magazine length: ${this.magazine_list.length}`);
-      this.magazine_length = this.magazine_list.length;
-      this.full_page = parseInt(this.magazine_list.length / 12) + 1;
-      this.mobile_full_page = parseInt(this.magazine_list.length / 6) + 1;
-    })
-    .catch((e) => {
-      console.log(e);
-      console.log(e.response);
-    })
-    .catch((e) => {
-      console.log(e);
-      console.log(e.response);
-    });
+          await MagazineAPI.getNextPage(req)
+            .then((res) => {
+              this.magazine_list = this.magazine_list.concat(res.data.results);
+              this.magazine_next = res.data.next;
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+        console.log(`magazine length: ${this.magazine_list.length}`);
+        this.magazine_length = this.magazine_list.length;
+        this.full_page = parseInt(this.magazine_list.length / 12) + 1;
+        this.mobile_full_page = parseInt(this.magazine_list.length / 6) + 1;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 
   @action getMagazineDetail = (id) => {
@@ -139,7 +138,6 @@ class Magazine {
   };
 
   @action getMagazineCategory = () => {
-
     MagazineAPI.getMagazineCategory()
       .then((res) => {
         this.categoryAry = res.data.results;

@@ -6,7 +6,7 @@ import Account from "../pages/account";
 
 class Auth {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable bgColor = "#ffffff";
   @observable logged_in_user = null;

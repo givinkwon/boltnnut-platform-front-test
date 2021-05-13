@@ -1,4 +1,4 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 import Router from "next/router";
 import * as AnswerAPI from "axios/Answer";
 import * as CategoryAPI from "axios/Category";
@@ -68,7 +68,7 @@ import { PRIMARY } from "../static/style";
 
 class Answer {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable develop_big_categories = [];
   @observable develop_big_categories_next = null;

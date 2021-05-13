@@ -4,9 +4,9 @@ import "react-app-polyfill/stable";
 import React from "react";
 import App from "next/app";
 // import { Head } from 'next/document'
+
 import { Provider } from "mobx-react";
 import { createGlobalStyle } from "styled-components";
-
 import IE from "components/IE";
 import ScrollToTop from "components/ScrollToTop";
 import stores from "stores";
@@ -14,6 +14,11 @@ import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
 import PrepareModal from "../containers/Home/PrepareModal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+// import { configure } from "mobx";
+// configure({
+//   useProxies: "never",
+// });
 
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
@@ -75,6 +80,11 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class MyApp extends App {
+  // constructor(props) {
+  //   super(props);
+  //   console.log("A");
+  // }
+
   state = {
     ie_user: false,
     modal_shown: false,
@@ -91,6 +101,7 @@ class MyApp extends App {
     });
   };
   componentDidMount() {
+    console.log("RR");
     const { Home } = this.props;
     const userAgent = window.navigator.userAgent;
 
@@ -103,6 +114,7 @@ class MyApp extends App {
     if (window.wcs) {
       window.wcs_do();
     }
+    console.log(userAgent.toLowerCase());
 
     if (
       userAgent.indexOf("MSIE ") !== -1 ||
