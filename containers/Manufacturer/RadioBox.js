@@ -46,6 +46,8 @@ class RadioBoxContainer extends React.Component {
         //Partner.getPartnerByRegion(Partner.search_text);
         console.log(Partner.radiobox_checked_idx);
         Partner.category_dic = {};
+        Partner.search_text = "";
+        //Partner.setCategory();
         Partner.getPartner();
       }
     } else {
@@ -120,7 +122,7 @@ class RadioBoxContainer extends React.Component {
                 <img src={pass3} active={this.activeHandler(item.id, filter)} />
               </div>
               {filter === "region" ? (
-                <span>{item.name}</span>
+                <span>{item.city}</span>
               ) : (
                 <span>{item.category}</span>
               )}

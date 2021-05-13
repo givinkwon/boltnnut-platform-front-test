@@ -30,13 +30,16 @@ class SearchBarConatiner extends React.Component {
 
   searchText = (e) => {
     const { Partner } = this.props;
+    //console.log("click");
     // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
     Partner.search_text = e.target.value;
+
+    //Partner.getPartner();
   };
   search = () => {
     const { Partner } = this.props;
-
+    console.log("click");
     Partner.currentPage = 1;
     Partner.category_dic = {};
     Partner.getPartner();
@@ -50,6 +53,7 @@ class SearchBarConatiner extends React.Component {
   handleKeyDown = (e) => {
     const { Partner } = this.props;
     if (e.key === "Enter") {
+      console.log("Enter");
       Partner.currentPage = 1;
       Partner.category_dic = {};
       Partner.getPartner();
@@ -60,7 +64,7 @@ class SearchBarConatiner extends React.Component {
     //console.log(this.props.Project.input_category);
   }
   render() {
-    const { Project, Request } = this.props;
+    const { Partner, Request } = this.props;
     return (
       <Form>
         <Box
@@ -70,17 +74,17 @@ class SearchBarConatiner extends React.Component {
           }
           onBlur={() => this.selectOut()}
         >
-          <input
+          {/* <input
             style={{ display: "none" }}
             value={Request.select_big ? Request.select_big.maincategory : ""}
             class="Input"
-          />
+          /> */}
           <Select
             placeholder="전체"
             options={categoryArray}
             getOptionLabel={(option) => option.label}
-            value={Project.input_category}
-            onChange={Project.setCategory}
+            value={Partner.input_category}
+            onChange={Partner.setCategory}
           />
         </Box>
         <SearchBar>

@@ -8,6 +8,8 @@ import ButtonComponent from "components/Buttonv2";
 import Background from "components/Background";
 import Container from "components/Containerv1";
 
+import { toJS } from "mobx";
+
 // import RadioButton from "./RadioButton";
 
 import { PRIMARY2 } from "static/style";
@@ -185,9 +187,10 @@ class MobileSearchBarConatiner extends React.Component {
           style={{ flex: "0 auto" }}
           active={this.state.filter_active}
         >
-          {region_data.map((item, idx) => {
+          {Partner.filter_city_ary.map((item, idx) => {
             return (
               <>
+                {console.log(toJS(item))}
                 <FilterContent
                   onClick={() => {
                     this.onClickHandler(item.id);
@@ -197,7 +200,7 @@ class MobileSearchBarConatiner extends React.Component {
                   <div active={this.activeHandler(item.id)}>
                     <div active={this.activeHandler(item.id)}></div>
                   </div>
-                  <span>{item.name}</span>
+                  <span>{item.city}</span>
                 </FilterContent>
               </>
             );
