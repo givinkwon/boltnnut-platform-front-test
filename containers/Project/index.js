@@ -20,6 +20,8 @@ import * as PartnerAPI from "axios/Partner";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import PartnerMyProject from "./Partner/MyProject";
+import ClientChatting from "./Client/ClientChatting";
+
 // import ClientMyProject from "./Client/MyProject";
 import ProjectDivider from "./ProjectDivider";
 
@@ -37,16 +39,16 @@ class ProjectContainer extends React.Component {
 
   render() {
     const { Auth, Project } = this.props;
-    console.log(Project.newIndex);
+    console.log(Project.chattingIndex);
     return (
       <>
         {Auth.logged_in_client &&
           (this.props.width && this.props.width > 1279.98 ? (
             <div style={{ overflow: "visible" }}>
               <BannerContainer />
-
-              {console.log(Project.newIndex)}
-              {Project.newIndex == 0 && (
+              {console.log(Project.chattingIndex)}
+              {Project.chattingIndex == 1 && <ClientChatting/>}
+              {/* {Project.newIndex == 0 && (
                 <>
                 
                 <ProjectDivider/>
@@ -57,6 +59,9 @@ class ProjectContainer extends React.Component {
               {Project.newIndex == 1 && (
                 <ProjectDetailContainer user="client" />
               )}
+               */}
+
+
             </div>
           ) : (
             <div>
@@ -86,6 +91,8 @@ class ProjectContainer extends React.Component {
               )}
               {Project.newIndex == 2 && <PartnerAnswer />}
               {Project.newIndex == 3 && <AnswerCompleteContainer />}
+
+              
             </div>
           ) : (
             <div>

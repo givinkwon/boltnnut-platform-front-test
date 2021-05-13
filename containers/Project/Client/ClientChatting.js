@@ -4,7 +4,6 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import Partner from "../stores/Partner";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
@@ -54,16 +53,14 @@ modalHandler = (id) => {
   const { Project } = this.props;
 
   Project.chatModalActive = !Project.chatModalActive;
-  // this.setState({ modalActive: !this.state.modalActive });
 };
 
 async componentDidMount() {
-  const { Auth, Project, Answer } = this.props;
-  const AnswerDetailList = this.state.answerDetailList;
-  console.log("<Web> did mount");
+  const { Auth, Project} = this.props;
+  console.log("ClientChatting <Web> did mount");
   await Auth.checkLogin();
 
-  // Project.newIndex = 0;
+  Project.chattingIndex = 1;
   if (Auth.logged_in_client) {
     this.getProject(Auth.logged_in_client.id)
   }

@@ -6,7 +6,7 @@ import { isConstructorDeclaration } from "typescript";
 
 class Partner {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable detail = null;
   @observable requests = [];
