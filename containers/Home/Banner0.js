@@ -33,7 +33,7 @@ const CountFunc = ({ index, projCount = 0, partnerCount = 0 }) => {
   return <p {...countItem[index]} style={{ display: "inline" }} />;
 };
 
-@inject("Proposal", "Partner","Auth")
+@inject("Proposal", "Partner", "Auth")
 @observer
 class Banner0Container extends React.Component {
   state = {
@@ -94,29 +94,27 @@ class Banner0Container extends React.Component {
               </Explanation>
 
               {Auth.logged_in_user && Auth.logged_in_user.type === 1 ? (
-               <>
-               </>
+                <></>
               ) : (
                 <>
-                <Buttonv1 onClick={() => Router.push("/request")}>
-                  무료 상담 및 견적 받기
-                </Buttonv1>
-  
-                <div
-                  style={{
-                    color: "#ffffff",
-                    lineHeight: 1.5,
-                    fontSize: 18,
-                    opacity: 0.8,
-                    marginTop: 6,
-                  }}
-                >
-                  <img src={lock} style={{ marginRight: 8 }}></img>
-                  모든 업로드는 안전하고 기밀입니다.
-                </div>
+                  <Buttonv1 onClick={() => Router.push("/request")}>
+                    무료 상담 및 견적 받기
+                  </Buttonv1>
+
+                  <div
+                    style={{
+                      color: "#ffffff",
+                      lineHeight: 1.5,
+                      fontSize: 18,
+                      opacity: 0.8,
+                      marginTop: 6,
+                    }}
+                  >
+                    <img src={lock} style={{ marginRight: 8 }}></img>
+                    모든 업로드는 안전하고 기밀입니다.
+                  </div>
                 </>
-              )
-            }
+              )}
             </div>
             {/* <Info>
               <InfoCell>
