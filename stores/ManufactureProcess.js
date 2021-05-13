@@ -1,4 +1,4 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 import Proposal from "./Proposal";
 import { toJS } from "mobx";
 
@@ -13,7 +13,7 @@ class ManufactureProcess {
   */
 
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable title_list = [];
   @observable SelectChecked = "";
@@ -42,7 +42,7 @@ class ManufactureProcess {
   // 금액 관련 변수
   @observable dataPrice = [];
   @observable orderMinPrice = 0;
-  @observable orderMaxPrice = 0;  
+  @observable orderMaxPrice = 0;
   @observable totalorderPrice = 0;
   @observable calendar_checked = false;
   @observable date_conference = false;
@@ -65,8 +65,6 @@ class ManufactureProcess {
   @observable checkPaymentButton = false;
   @observable changeProject = false;
   @observable projectname = "";
-
-
 
   @action countQuantity = (data) => {
     data.map((item, idx) => {
@@ -206,7 +204,7 @@ class ManufactureProcess {
         );
         this.ejaculationPrice =
           Math.round(this.EstimateDataForDrawing.MinPrice / 10) * 10;
-          
+
         this.MaxPrice = this.EstimateDataForDrawing.maxPrice;
         this.MinPrice = this.EstimateDataForDrawing.minPrice;
         this.totalMaxPrice = this.EstimateDataForDrawing.totalMaxPrice;

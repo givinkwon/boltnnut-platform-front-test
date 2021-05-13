@@ -1,17 +1,17 @@
 import DaumPostcode from "react-daum-postcode";
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import { MobXProviderContext } from "mobx-react";
+// import { MobXProviderContext } from "mobx-react";
 
-function useStores() {
-  return React.useContext(MobXProviderContext);
-}
+// function useStores() {
+//   return React.useContext(MobXProviderContext);
+// }
 
 function Postcode() {
   const [isAddress, setIsAddress] = useState("");
   const [isZoneCode, setIsZoneCode] = useState();
 
-  const { Payment } = useStores();
+  // const { Payment } = useStores();
   const handleComplete = (data) => {
     let fullAddress = data.address;
     let extraAddress = "";
@@ -28,10 +28,10 @@ function Postcode() {
     }
     setIsZoneCode(data.zonecode);
     setIsAddress(fullAddress);
-    Payment.address = fullAddress;
-    Payment.zipCode = data.zonecode;
+    // Payment.address = fullAddress;
+    // Payment.zipCode = data.zonecode;
     console.log(isAddress);
-    Payment.modalActive = false;
+    // Payment.modalActive = false;
 
     // setIsPostOpen(false);
   };
