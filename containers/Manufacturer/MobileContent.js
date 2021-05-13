@@ -44,6 +44,7 @@ class MobileManufacturerContentContainer extends React.Component {
 
     Partner.getPartner();
     Partner.getCategory();
+    Partner.getCity();
     // await Auth.checkLogin();
     // if(Auth.logged_in_partner){
     //   Project.getProjectByPrice()

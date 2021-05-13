@@ -288,6 +288,24 @@ export function getNextDevelopPage(req) {
   });
 }
 
+export function getCity(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/city/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getNextCityPage(req) {
+  return axios({
+    method: "GET",
+    url: req.nextUrl,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
 export function getPartnerCategory(req) {
   return axios({
     method: "GET",

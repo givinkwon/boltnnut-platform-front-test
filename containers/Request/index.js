@@ -54,6 +54,7 @@ class RequestContainer extends React.Component {
                 {Request.newIndex == 0 && <FileUploadContainer />}
                 {Request.newIndex == 1 && <RequestCompleteContainer />}
                 {Request.newIndex == 2 && <NoneDrawingConsultingContainer />}
+                {/* <PaymentPageContainer /> */}
               </Containerv1>
             </Background>
           </div>

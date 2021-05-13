@@ -55,6 +55,7 @@ async componentDidMount() {
   console.log("ClientChatting <Web> did mount");
   await Auth.checkLogin();
 
+  Project.chattingIndex = 1;
   if (Auth.logged_in_client) {
     this.getProject(Auth.logged_in_client.id)
   }

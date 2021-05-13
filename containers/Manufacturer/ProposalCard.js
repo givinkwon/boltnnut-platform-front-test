@@ -9,7 +9,7 @@ const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
 const file_img2 = "static/images/manufacturer/file.png";
 
-@inject("Partner","Auth")
+@inject("Partner", "Auth")
 @observer
 class ProposalCard extends React.Component {
   state = {
@@ -22,7 +22,7 @@ class ProposalCard extends React.Component {
 
   componentDidMount() {
     const { width } = this.props;
-    console.log(width);
+    // console.log(width);
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   }
@@ -70,21 +70,19 @@ class ProposalCard extends React.Component {
   filedownload = () => {
     const { data } = this.props;
 
-    if(this.props.Auth && this.props.Auth.logged_in_user ){
-      if(!data.file){
-        alert('준비중입니다.')
+    if (this.props.Auth && this.props.Auth.logged_in_user) {
+      if (!data.file) {
+        alert("준비중입니다.");
       }
-      const url = data.file
-      const link = document.createElement('a');
+      const url = data.file;
+      const link = document.createElement("a");
       link.href = url;
       link.click();
-    }
-    else {
-      alert('로그인이 필요합니다.')
+    } else {
+      alert("로그인이 필요합니다.");
       Router.push("/login");
     }
-
-  }
+  };
   render() {
     // const {
     //   data,
@@ -95,14 +93,14 @@ class ProposalCard extends React.Component {
     //   customer,
     // } = this.props;
     const { data, width, Partner, categoryData, idx } = this.props;
-    console.log(width);
-    console.log(toJS(categoryData));
-    console.log(toJS(idx));
+    // console.log(width);
+    // console.log(toJS(categoryData));
+    // console.log(toJS(idx));
     let category_data;
     // category_data =
     //   categoryData &&
     //   categoryData.splice(categoryData.length / 2, categoryData.length / 2);
-    console.log(toJS(category_data));
+    // console.log(toJS(category_data));
     // console.log(toJS(data));
     return (
       <>
@@ -152,7 +150,9 @@ class ProposalCard extends React.Component {
                 {data.real_phone ? (
                   <span>☎ {data.real_phone}</span>
                 ) : (
-                  <span>{data.user.phone ? (data.user.phone) : ("전화번호 없음")}</span>
+                  <span>
+                    {data.user.phone ? data.user.phone : "전화번호 없음"}
+                  </span>
                 )}
               </Phone>
               <InfoOne>{data.info_company}</InfoOne>
@@ -174,9 +174,8 @@ class ProposalCard extends React.Component {
                 <span>금형제작</span>
                 <span>양산</span> */}
               </InfoTwo>
-            </Main>
-            <AdditionBox>
-              {/* <div>
+              <AdditionBox>
+                {/* <div>
                 <img
                   src={file_img}
                   active={this.state.introduction}
@@ -236,13 +235,18 @@ class ProposalCard extends React.Component {
                 </div>
               </div>
               <div></div> */}
-              <div>
-                <img src={file_img2} />
-                <Link target="_blank" onClick={() => this.filedownload()} download> 
+                <div>
+                  <img src={file_img2} />
+                  <Link
+                    target="_blank"
+                    onClick={() => this.filedownload()}
+                    download
+                  >
                     <span>회사 소개서 보기</span>
-                </Link>
-              </div>
-            </AdditionBox>
+                  </Link>
+                </div>
+              </AdditionBox>
+            </Main>
           </Card>
         ) : (
           <Card
@@ -289,18 +293,22 @@ class ProposalCard extends React.Component {
                   {data.real_phone ? (
                     <span>{data.real_phone}</span>
                   ) : (
-                    <span>{data.user.phone ? (data.user.phone) : ("전화번호 없음")}</span>
+                    <span>
+                      {data.user.phone ? data.user.phone : "전화번호 없음"}
+                    </span>
                   )}
                 </div>
                 <div>
-                  <Link target="_blank" onClick={() => this.filedownload()} download> 
+                  <Link
+                    target="_blank"
+                    onClick={() => this.filedownload()}
+                    download
+                  >
                     <span>회사 소개서 보기</span>
                   </Link>
                 </div>
               </Information>
             </Main>
-
-     
           </Card>
         )}
       </>
@@ -380,7 +388,7 @@ const Main = styled.div`
     width: 60%;
   }
   @media (min-width: 1300px) {
-    width: 60%;
+    width: 80%;
   }
 `;
 const Name = styled.div`
@@ -407,8 +415,11 @@ const Phone = styled.div`
 `;
 const InfoOne = styled.div`
   word-break: break-all;
+  white-space: break-spaces;
   //height: 100%;
   //height: 50px;
+  line-height: 1.2;
+  letter-spacing: 0.56px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     color: #282c36;
     font-size: 13px;
@@ -492,6 +503,14 @@ const AdditionBox = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+  }
+  @media (min-width: 1300px) {
+    position: relative;
+    > div {
+      top: 0;
+      bottom: 0;
+      left: 80%;
+    }
   }
 `;
 
