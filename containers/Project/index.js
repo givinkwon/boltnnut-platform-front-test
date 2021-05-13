@@ -48,18 +48,17 @@ class ProjectContainer extends React.Component {
               <BannerContainer />
               {console.log(Project.chattingIndex)}
               {Project.chattingIndex == 1 && <ClientChatting/>}
-              {/* {Project.newIndex == 0 && (
+              {Project.chattingIndex == 0 && Project.newIndex == 0 && (
                 <>
-                
                 <ProjectDivider/>
                 {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
                 {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />}
               </>
               )}
-              {Project.newIndex == 1 && (
+              {Project.chattingIndex == 0 && Project.newIndex == 1 && (
                 <ProjectDetailContainer user="client" />
               )}
-               */}
+              
 
 
             </div>

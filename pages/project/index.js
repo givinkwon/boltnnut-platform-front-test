@@ -28,6 +28,7 @@ class Project extends React.Component {
   async componentDidMount() {
     const { Project, Auth, Home, Answer, Loading } = this.props;
 
+    console.log(`333333 : ${toJS(Project.chattingIndex)}`)
     console.log(Auth);
     console.log(toJS(Auth.logged_in_user));
     //창 크기

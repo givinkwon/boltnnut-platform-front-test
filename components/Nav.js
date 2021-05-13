@@ -41,11 +41,13 @@ class Nav extends React.Component {
   };
   
   pushtoChatting=()=>{
+
     console.log("asdf");
     const { Project} = this.props;
-    Project.chattingIndex = 0;
+    Project.chattingIndex = 1;
+    Project.newIndex = 5;
     console.log(Project.chattingIndex)
-    window.location.href = "/project";
+    Router.push('/project');
     
   }
 

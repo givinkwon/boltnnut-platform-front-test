@@ -35,7 +35,6 @@ class MyProject extends React.Component {
     Project.newIndex = 1;
     Project.selectedProjectId = id;
     // await Router.push(`/project/${id}`);
-    Project.setProjectDetailData(id);
   };
 
   async getProject(data) {

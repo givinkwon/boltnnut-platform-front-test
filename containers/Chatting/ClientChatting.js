@@ -22,16 +22,11 @@ state = {
 
 async getProject(data){
   const { Project } = this.props;
-  console.log(toJS(data))
   await Project.getAllProject(data)
-  console.log(toJS(Project.projectDataList))
   Project.projectDataList.map((data, idx) =>{
-    console.log(data.answer_set)
     data.answer_set.map((answer, idx) => {
-      console.log(toJS(answer))
       PartnerAPI.detail(answer.partner)
         .then((res) => {
-          console.log(toJS(res))
           Project.answerDetailList.push({
             // project: res.
             logo: res.data.logo,
@@ -60,7 +55,6 @@ async componentDidMount() {
   console.log("ClientChatting <Web> did mount");
   await Auth.checkLogin();
 
-  Project.chattingIndex = 1;
   if (Auth.logged_in_client) {
     this.getProject(Auth.logged_in_client.id)
   }
@@ -76,8 +70,6 @@ async componentDidMount() {
 
 <Background>
   <Container style = {{display: "flex", flexDirection: "column"}}>
-    {console.log(toJS(Project.projectDataList))}
-    {console.log(toJS(Project.answerDetailList))}
     {Project.chatModalActive && 
       <Layer onClick={this.modalHandler}>
         <ChatTestContainer
