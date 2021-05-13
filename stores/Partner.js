@@ -640,14 +640,14 @@ class Partner {
   };
 
   @action getPartnerCategory = async (request, i, idx, id = 0) => {
-    console.log(request);
+    // console.log(request);
     await PartnerAPI.getPartnerCategory(request)
       .then((res) => {
-        console.log(toJS(res.data.category));
+        // console.log(toJS(res.data.category));
         this.category_ary[idx].push(res.data.category);
 
         if (idx === this.partner_list.length - 1) {
-          console.log("finish");
+          // console.log("finish");
           this.check_loading_category = true;
         }
 
@@ -696,23 +696,23 @@ class Partner {
     //     )
     //   );
     //}
-    console.log(toJS(this.category_ary[idx]));
+    // console.log(toJS(this.category_ary[idx]));
   };
 
   @action setCategoryDic = async (req, sub_data, id) => {
     await PartnerAPI.getPartnerCategory(req)
       .then((res) => {
-        console.log(`${sub_data} : ${toJS(res.data.category)}`);
+        // console.log(`${sub_data} : ${toJS(res.data.category)}`);
         //this.category_ary[idx].push(res.data.category);
-        console.log(toJS(typeof this.category_name_ary));
+        // console.log(toJS(typeof this.category_name_ary));
         //this.category_dic[id] = [1, 2, 3];
-        console.log(`${id} +  ${toJS(this.category_dic.hasOwnProperty(id))}`);
+        // console.log(`${id} +  ${toJS(this.category_dic.hasOwnProperty(id))}`);
 
         if (!this.category_dic.hasOwnProperty(id)) {
           this.category_dic[id] = [];
         }
         this.category_dic[id] = [...this.category_dic[id], res.data.category];
-        console.log(toJS(this.category_dic));
+        // console.log(toJS(this.category_dic));
       })
       .catch((e) => {
         console.log(e);
@@ -792,7 +792,7 @@ class Partner {
           };
           await PartnerAPI.getNextCityPage(req)
             .then((res) => {
-              console.log(res);
+              // console.log(res);
               this.filter_city_ary = this.filter_city_ary.concat(
                 res.data.results
               );
@@ -816,7 +816,7 @@ class Partner {
           (item) => item.id === 0 || item.id < 9
         );
 
-        console.log(toJS(this.filter_city_ary));
+        // console.log(toJS(this.filter_city_ary));
       })
       .catch((e) => {
         console.log(e);
@@ -836,17 +836,26 @@ class Partner {
       temp.params.city = this.filter_region;
       req.params.city = this.filter_region;
     }
+
     if (this.filter_category) {
       //temp["category_middle__id"] = this.filter_category;
       temp.params.category_middle__id = this.filter_category;
       req.params.category_middle__id = this.filter_category;
     }
     if (this.search_class === "전체") {
-      req.params.search = this.search_text;
+      if (this.search_text === "") {
+        delete req.params.search;
+      } else {
+        req.params.search = this.search_text;
+      }
     }
 
     if (this.search_class === "만든 제품") {
-      req.params.history = this.search_text;
+      if (this.search_text === "") {
+        delete req.params.history;
+      } else {
+        req.params.history = this.search_text;
+      }
     }
     console.log(toJS(this.search_class));
     // if (this.search_text !== "") {
