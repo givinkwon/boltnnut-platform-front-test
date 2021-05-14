@@ -33,6 +33,7 @@ class Project {
   @observable main_category_name = ["", "", "", "", ""];
   @observable newIndex = 0;
   @observable myIndex = 0;
+  @observable chattingIndex = 0;
   // * 삭제 예정 * 옛날 데이터 관련 변수
   @observable data_dt = [];
   // 검색 관련 변수
@@ -41,6 +42,10 @@ class Project {
   //채팅 관련 변수
   @observable chatModalActive = false;
   @observable chatMessages = [];
+
+  // 제안서 별 채팅방 연결 관련 변수
+  @observable answerDetailList = [];
+
   @action setCategory = (val) => {
     this.input_category = val;
   };
@@ -85,7 +90,7 @@ class Project {
   @action getPage = (clientId, page = 1) => {
     this.projectDataList = [];
 
-    console.log(clientId);
+    console.log(toJS(clientId));
     if (!clientId) {
       return;
     }
@@ -113,6 +118,34 @@ class Project {
         console.log(e.response);
       });
   };
+
+  /* 해당 클라이언트의 모든 프로젝트 가져오기 */
+  @action getAllProject = async (clientId) =>{
+    this.projectDataList = [];
+    console.log(toJS(clientId));
+    if (!clientId) {
+      return;
+    }
+    const token = localStorage.getItem("token");
+    const req = {
+      params: {
+        request__client: clientId,
+      },
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
+    await ProjectAPI.getProjects(req)
+      .then((res) => {
+        this.projectDataList = res.data.results;
+        console.log(res.data.results);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
 
   /* 파트너 - 전체 + 가격 별 + search별 다 포함시켰음 */
   @action getProjectByPrice = (search_text, page = 1) => {

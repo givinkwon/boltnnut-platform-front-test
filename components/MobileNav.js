@@ -125,59 +125,36 @@ class MobileNav extends React.Component {
         {is_open && (
           <Modal>
             <ProfileMenu width={this.props.width} onClick={() => this.setState({is_open: false})}>
-              {this.props.Auth.logged_in_user && this.props.Auth.logged_in_user.type === 1 ? 
-              (
-                <>
-                {/* 파트너인 경우 */}
-                    <ModalHeader>
-                      <div style={{marginBottom: 50, width: '100%'}}>
-                        <Logo onClick={() => {if (is_open == true) {Router.push('/')}}} src={logo_ic} style={{float:'left'}}/>
-                        <img src={ close_ic } style={{float: 'right'}}/>
-                      </div>
-                      <div style={{height:14}}>엔지니어와 연구원을 위한 제조 상담 플랫폼</div>
-                    
-                    <FreeButton onClick={() => Router.push("/project")}>
-                      <span style={{marginTop: 1}}>프로젝트 찾아보기</span>
-                    </FreeButton>
-                  </ModalHeader>
-                  <ModalContent>
-                    <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
-                    <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
-                  </ModalContent>
-                </>
-
-              ) 
-              
+              <ModalHeader>
+                <div style={{marginBottom: 50, width: '100%'}}>
+                  <Logo onClick={() => {if (is_open == true) {Router.push('/')}}} src={logo_ic} style={{float:'left'}}/>
+                  <img src={ close_ic } style={{float: 'right'}}/>
+                </div>
+                <div style={{height:14}}>엔지니어와 연구원을 위한 제조 상담 플랫폼</div>
+              {Auth.logged_in_partner? 
+              <FreeButton onClick={() => Router.push("/project")}>
+                <span style={{marginTop: 1}}>프로젝트 찾아보기</span>
+              </FreeButton>
               :
-              
-              (
-                <>
-                  <ModalHeader>
-                    <div style={{marginBottom: 50, width: '100%'}}>
-                      <Logo onClick={() => {if (is_open == true) {Router.push('/')}}} src={logo_ic} style={{float:'left'}}/>
-                      <img src={ close_ic } style={{float: 'right'}}/>
-                    </div>
-                    <div style={{height:14}}>엔지니어와 연구원을 위한 제조 상담 플랫폼</div>
-                                    
-                  <FreeButton onClick={() => Router.push("/request")}>
-                    <span style={{marginTop: 1}}>무료 상담 및 견적 받기</span>
-                  </FreeButton>
-                </ModalHeader>
-                <ModalContent>
-                  <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
-                  <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
-                </ModalContent>
-              </>
-              
-              )
-
+              <FreeButton onClick={() => Router.push("/request")}>
+                <span style={{marginTop: 1}}>무료 상담 및 견적 받기</span>
+              </FreeButton>
               }
+            </ModalHeader>
+          <>
+            <ModalContent>
+              <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
+              <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
+              <p onClick={() => Router.push("/manufacturer")}>제조사 찾기</p>
+              {Auth.logged_in_user && <p onClick={() => Router.push("/chatting")}>채팅하기</p>}
+            </ModalContent>
+          </>
               <ModalContent2>
                 <p onClick={() => Router.push("/faq")}>자주찾는 질문</p>
                 <p onClick={() => Router.push("/term/policy")}>이용약관</p>
                 <p onClick={() => Router.push("/term/personal")}>개인정보 처리 방침</p>
               </ModalContent2>
-              {this.props.Auth.logged_in_user ? (
+              {Auth.logged_in_user ? (
                   <Footer>
                     <div onClick={this.logout}> 로그아웃 </div>
                   </Footer>

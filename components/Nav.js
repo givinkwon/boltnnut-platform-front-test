@@ -17,7 +17,7 @@ const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
 const profile = "/static/images/profile.png";
 
-@inject("Auth", "Partner")
+@inject("Auth", "Partner", "Project")
 @observer
 class Nav extends React.Component {
   state = {
@@ -30,7 +30,6 @@ class Nav extends React.Component {
     
   };
 
-
   alreadyLoggedin = ["login", "signup"];
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
   logout = () => {
@@ -40,6 +39,7 @@ class Nav extends React.Component {
     }
     window.location.href = "/";
   };
+
   async componentDidMount() {
     const { Auth, } = this.props;
     const token = await localStorage.getItem("token");
@@ -224,8 +224,7 @@ class Nav extends React.Component {
                           </Font17> */}
                         </div>
                         <div>
-                          <div>
-                            {console.log(this.state.partnerList[0])}
+                          <div onClick = {()=>Router.push('/chatting') }>
                             <Font16>
                             채팅하기
                             </Font16>

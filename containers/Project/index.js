@@ -4,7 +4,6 @@ import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobilePr
 import ProjectSearch from "./Partner/Content";
 import PartnerMobileContentContainer from "./Partner/Mobile/MobileProject";
 import BannerContainer from "./Banner";
-import NavContainer from "./Nav.js";
 
 import ProjectDetailContainer from "./Client/ProjectDetail/ProjectDetail";
 import MobileProjectDetailContainer from "./Client/ProjectDetail/Mobile/MobileProjectDetail";
@@ -14,20 +13,19 @@ import PartnerAnswer from "./Partner/PartnerAnswer";
 import MobilePartnerAnswer from "./Partner/Mobile/MobilePartnerAnswer";
 import AnswerCompleteContainer from "./Partner/AnswerComplete";
 import MobileAnswerCompleteContainer from "./Partner/Mobile/MobileAnswerComplete";
-import AnswerComplete from "./Partner/AnswerComplete";
 import * as Content from "components/Content";
-import * as PartnerAPI from "axios/Partner";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import PartnerMyProject from "./Partner/MyProject";
-// import ClientMyProject from "./Client/MyProject";
 import ProjectDivider from "./ProjectDivider";
+import NoProject from "./NoProject";
+import SearchBarConatiner from "./SearchBar";
 
 @inject("Project", "Auth", "Partner")
 @observer
 class ProjectContainer extends React.Component {
   async componentDidMount() {
-    const { Auth, Project, Partner } = this.props;
+    const { Auth, Project } = this.props;
     Project.newIndex = 0;
     Project.myIndex = 1;
     await Auth.checkLogin();
@@ -35,32 +33,36 @@ class ProjectContainer extends React.Component {
 
   render() {
     const { Auth, Project } = this.props;
-    console.log(Project.newIndex);
+
     return (
       <>
         {Auth.logged_in_client &&
           (this.props.width && this.props.width > 1279.98 ? (
             <div style={{ overflow: "visible" }}>
               <BannerContainer />
-
-              {console.log(Project.newIndex)}
               {Project.newIndex == 0 && (
+                // <NoProject/>
                 <>
-                  {/* <ProjectDivider/>
-              {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>} */}
-                  {Project.myIndex == 1 && (
-                    <ClientContentContainer length={this.props.length} />
-                  )}
-                </>
+                <ProjectDivider/>
+                {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+                {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />}
+              </>
               )}
               {Project.newIndex == 1 && (
                 <ProjectDetailContainer user="client" />
               )}
+              
+
             </div>
           ) : (
             <div>
               {Project.newIndex == 0 && (
-                <ClientMobileContentContainer width={this.props.width} />
+                <>
+                {/* <ProjectDivider/>
+                {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+                {Project.myIndex == 1 && <ClientMobileContentContainer width={this.props.width} />} */}
+                <ClientMobileContentContainer width = {this.props.width} />
+                </>
               )}
 
               {Project.newIndex == 1 && (
@@ -75,9 +77,9 @@ class ProjectContainer extends React.Component {
 
               {Project.newIndex == 0 && (
                 <>
-                  {/* <ProjectDivider/>
-                    {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>} */}
-                  {Project.myIndex == 1 && <PartnerMyProject />}
+                  <ProjectDivider/>
+                    {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+                    {Project.myIndex == 1 && <PartnerMyProject/>}   
                 </>
               )}
               {Project.newIndex == 1 && (
@@ -85,11 +87,16 @@ class ProjectContainer extends React.Component {
               )}
               {Project.newIndex == 2 && <PartnerAnswer />}
               {Project.newIndex == 3 && <AnswerCompleteContainer />}
+
             </div>
           ) : (
             <div>
               {Project.newIndex == 0 && (
+                <>
+                {/* <ProjectDivider/> */}
+                <SearchBarConatiner/>
                 <PartnerMobileContentContainer width={this.props.width} />
+                </>
               )}
               {Project.newIndex == 1 && (
                 <MobileProjectDetailContainer user="partner" />

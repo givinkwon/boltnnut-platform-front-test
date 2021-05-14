@@ -3,9 +3,9 @@ import styled, { css } from "styled-components";
 import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
-import InputComponent from "components/Input2";
+import InputComponent from "../AddFile2";
 import { inject, observer } from "mobx-react";
-import Calendar from "../Calendar2";
+import Calendar from "./MobileCalendar2";
 import AddFile from "AddFile";
 import AddFile2 from "AddFile2";
 
@@ -391,9 +391,10 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
       <Background>
         <Containerv1 style={{ flexDirection: "column" }}>
           <PurposeBox>
-            <InlineDiv>
-              <FontSize24>문의 목적 </FontSize24>
-            </InlineDiv>
+            <TitleLabel>
+              <span>문의 목적</span>
+
+            </TitleLabel>
 
             <SelectBox style={{ width: "555px", marginTop: "16px" }}>
               <InlineDiv style={{ alignItems: "flex-end" }}>
@@ -416,9 +417,9 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
             </SelectBox>
           </PurposeBox>
           <ProjectTitleBox>
-            <InlineDiv>
-              <FontSize24>프로젝트 제목</FontSize24>
-            </InlineDiv>
+            <TitleLabel>
+              <span>프로젝트 제목</span>
+            </TitleLabel>
 
             <InlineDiv style={{ marginTop: "16px" }}>
               <InputComponent
@@ -441,9 +442,9 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
           <DeliveryBox
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
-          <InlineDiv>
-             <FontSize24 style={{ marginTop: "30px" }}>희망 납기일</FontSize24>
-          </InlineDiv>
+          <TitleLabel>
+              <span>희망 납기일</span>
+            </TitleLabel>
 
           <DeliveryDate
               checkDateConference={ManufactureProcess.date_conference}
@@ -499,15 +500,13 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
           <RequestBox
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >          
-          <InlineDiv> 
-            <FontSize24>프로젝트 설명 및 요청사항</FontSize24>
-          </InlineDiv>          
+          <TitleLabel>
+              <span>프로젝트 설명 및 요청사항</span>
+            </TitleLabel>       
           <Request>
-            <div>
-              <FontSize20 style={{ lineHeight: "1", fontWeight: "500" }}>
-                공개 내용
-              </FontSize20>
-            </div>
+              <div>
+                <span>공개 내용</span>
+              </div>
 
             <textarea
               placeholder={`${openPlaceHolderText}`}
@@ -527,12 +526,9 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
           </Request>
 
           <Request>
-            <div>
-              <FontSize20 style={{ lineHeight: "1", fontWeight: "500" }}>
-                비공개 내용
-              </FontSize20>
-            </div>
-
+          <div>
+                <span>비공개 내용 </span>
+              </div>
             <textarea
               placeholder={`${privatePlaceholderText}`}
               onFocus={(e) => (e.target.placeholder = "")}
@@ -553,86 +549,95 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
           <ReferenceBox
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
-          <InlineDiv style={{ marginBottom: "15px" }}>
-            <FontSize24>참고 파일</FontSize24>
-            <div style={{ display: "flex", alignItems: "flex-end" }}>
-              <FontSize18 style={{ color: "#86888c", marginLeft: "12px" }}>
-              이미지 혹은 PDF 자료만 업로드 가능합니다.
-              </FontSize18>
-            </div>
-          </InlineDiv>
+          <TitleLabel>
+              <span>참고파일</span>
+              <p>이미지 혹은 PDF 자료만 업로드 가능합니다.</p>
+            </TitleLabel>
 
-          <Reference>
-            <InlineDiv
-              style={{
-                marginBottom: "12px",
-                backgroundColor: "#f6f6f6",
-                border: "none",
-              }}
+            <Reference
+              checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
             >
-              <div style={{ display: "flex", alignItems: "flex-end" }}>
-                <FontSize20 style={{ fontWeight: "500", lineHeight: "1" }}>
-                  공개 자료
-                </FontSize20>
-              </div>
-              <div style={{ display: "flex", alignItems: "flex-end" }}>
-                <FontSize18
-                  style={{
-                    color: "#86888c",
-                    marginLeft: "12px",
-                    lineHeight: "1",
+            <div>
+              <span>공개 자료</span>
+            </div>
+            <span style={{ display: "inline-block", width: "100%" }}>
+                <InputComponent mobile={true} file={true} isOpen={true} />
+                <div></div>
+            </span>
+
+            <div>
+              <span>비공개 자료</span>
+            </div>
+
+            <span style={{ display: "inline-block", width: "100%" }}>
+                <InputComponent mobile={true} file={true} isOpen={false} />
+                <div></div>
+              </span>
+            </Reference>
+          </ReferenceBox>
+          <Button checkFileUpload={ManufactureProcess.checkFileUpload}>
+          <div>
+              {ManufactureProcess.changeProject ? (
+                <span
+                  onClick={() => {
+                    this.requestSubmit(
+                      0,
+                      this.props.Project.projectDetailData.request_set[0].id
+                    );
                   }}
                 >
-                  모두에게 공개될 수 있는 자료를 첨부해주세요.
-                </FontSize18>
-              </div>
-            </InlineDiv>
+                  프로젝트 수정 완료
+                </span>
+              ) : (
+                <span
+                  onClick={() => {
+                    let check_count = 0;
+                    fileList.map((item, idx) => {
+                      item.fileName;
+                      let fileNameAvailable = ["txt"];
+                      const extension = item.fileName.split(".");
 
-            <span style={{ display: "inline-block", width: "100%" }}>
-              <AddFile2
-                file={true}
-                isOpen={true}
-                ///onChange={this.handleChange}
-              />
-              <div></div>
-            </span>
+                      //console.log(fileNameAvailable)
+                      if (
+                        item.quantity.value === 0 ||
+                        item.quantity.value === ""
+                      ) {
+                        console.log("수량을 입력해주세요");
+                        check_count++;
+                      }
 
-            <InlineDiv
-              style={{
-                marginBottom: "12px",
-                backgroundColor: "#f6f6f6",
-                border: "none",
-                marginTop: "25px",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "flex-end" }}>
-                <FontSize20 style={{ fontWeight: "500", lineHeight: "1" }}>
-                  비공개 자료
-                </FontSize20>
-              </div>
-            </InlineDiv>
+                      if (
+                        fileNameAvailable.includes(
+                          extension[extension.length - 1]
+                        )
+                      ) {
+                        this.props.ManufactureProcess.privateFileArray.push({
+                          file: item,
+                        });
+                      }
+                    });
 
-            <span style={{ display: "inline-block", width: "100%" }}>
-              <AddFile2
-                file={true}
-                isOpen={false}
-                //onChange={this.handleChange}
-              />
-              <div></div>
-            </span>
-          </Reference>
-          </ReferenceBox>
-          <CompleteBtnBox>
-            <CompleteBtn
-              onClick={() => {
-                this.requestSubmit();
-              }}
-            >
-              <FontSize20 style={{ color: "#ffffff" }}>
-                상담 및 가격 요청하기
-              </FontSize20>
-            </CompleteBtn>
-          </CompleteBtnBox>
+                    if (check_count) {
+                      alert("수량을 입력해주세요");
+                    } else {
+                      ManufactureProcess.checkPaymentButton = true;
+                    }
+
+                    // console.log(
+                    //   toJS(this.props.ManufactureProcess.privateFileArray)
+                    // );
+                    // ManufactureProcess.fileArray.map((item, idx) => {
+                    //   console.log(item.file);
+                    // });
+
+                    this.requestSubmit(1);
+                  }}
+                  >
+                  상담 및 가격 요청하기
+                </span>
+              )}
+            </div>
+            </Button>
         </Containerv1>
       </Background>
     );
@@ -726,13 +731,13 @@ const PurposeSelectCircle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 140px;
-  height: 44px;
+  width: 107px;
+  height: 37px;
   border-radius: 30px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: ${(props) => (props.active ? "#0933b3" : "#ffffff")};
   cursor: pointer;
-  margin-right: 30px;
+  margin-right: 13px;
 `;
 
 const CheckCircleImg = styled.img`
@@ -886,66 +891,77 @@ const DeliveryDate = styled.div`
 `;
 
 const Request = styled.div`
+  //width: 1200px;
   // display: ${(props) => (props.checkFileUpload ? "static" : "none")};
   background-color: #f6f6f6;
   border: 1px solid #ffffff;
   border-radius: 5px;
-  padding: 26px 24px 22px 24px;
+  padding: 0 12px 13px 12px;
   box-sizing: border-box;
   margin-bottom: 40px;
-  margin-top: 16px;
+  //margin-top: 16px;
   position: relative;
 
-  > div:nth-of-type(1) {
+  > div {
+    margin-top: 12px;
+    margin-bottom: 4px;
     > span:nth-of-type(1) {
-      height: 27px;
-      font-size: 18px;
+      //height: 27px;
+      font-size: 14px;
       line-height: 40px;
-      letter-spacing: -0.45px;
+      letter-spacing: -0.35px;
       color: #282c36;
-      font-weight: bold;
+      font-weight: normal;
       margin-bottom: 16px;
       margin-right: 7px;
     }
 
-    > span:last-child {
-      width: 20px;
-      height: 20px;
-      border: 1px solid #000000;
-      border-radius: 10px;
-      display: inline-block;
-      text-align: center;
-      font-size: 16px;
-      letter-spacing: -0.4px;
-      color: #414550;
-      font-weight: bold;
-      box-sizing: border-box;
-    }
+    // > span:last-child {
+    //   width: 20px;
+    //   height: 20px;
+    //   border: 1px solid #000000;
+    //   border-radius: 10px;
+    //   display: inline-block;
+    //   text-align: center;
+    //   font-size: 16px;
+    //   letter-spacing: -0.4px;
+    //   color: #414550;
+    //   font-weight: bold;
+    //   box-sizing: border-box;
+    // }
   }
   // > div:nth-of-type(2) {
-  //    width: 600px;
-  //    height: 180px;
-  //    border: 3px solid green;
-  //    position: absolute;
-  //    top: 13%;
-  //    left: 70px;
-  //    background-color: #ffffff;
-  // }
+  //   display: ${(props) => (props.active ? "block" : "none")};
+  //   width: 600px;
+  //   height: 180px;
+  //   // border: 3px solid green;
+  //   position: absolute;
+  //   top: 44%;
+  //   left: 17%;
+  //   background-color: #ffffff;
+  //   z-index: 1;
+  //   padding: 20px 10px 20px 30px;
+  //   box-sizing: border-box;
+  //   > p {
+  //     color: #767676;
+  //     line-height: 34px;
+  //     letter-spacing: -0.45px;
+  //     font-size: 18px;
+  //   }
+
   > textarea {
     resize: none;
     border: 1px solid #ffffff;
     width: 100%;
     padding: 14px 16px;
-    margin-top: 12px;
     box-sizing: border-box;
     font-size: 15px;
     line-height: 34px;
-    letter-spzcing: -0.45px;
+    letter-spzcing: -0.38px;
     color: #282c36;
     border-radius: 5px;
     overflow: auto;
     height: auto;
-
     font-family: inherit;
     :focus {
       outline: none;
@@ -1026,4 +1042,56 @@ const ReferenceBox = styled.div`
   margin-left : 5%;
   margin-right : 5%;
   margin-bottom: 40px;
+`;
+
+const TitleLabel = styled.div`
+  //display: ${(props) => (props.checkFileUpload ? "block" : "none")};
+  margin-bottom: 5px;
+  > span {
+    font-size: 16px;
+    line-height: 40px;
+    letter-spacing: -0.6px;
+    color: #282c36;
+    font-weight: bold;
+    margin-right: 12px;
+  }
+  > p {
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 40px;
+    letter-spacing: -0.35px;
+    color: #86888c;
+  }
+`;
+
+const Button = styled.div`
+  // margin-top: 83px;
+  margin-bottom: 120px;
+  display: ${(props) => (props.checkFileUpload ? "none" : "flex")};
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+    line-height: 52px;
+    letter-spacing: -0.4px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    border: 1px solid #ffffff;
+    background-color: #0933b3;
+    color: #ffffff;
+
+    > span {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 `;

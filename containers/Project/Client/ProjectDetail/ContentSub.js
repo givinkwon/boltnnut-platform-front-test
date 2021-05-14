@@ -45,9 +45,10 @@ class ContentSub extends React.Component {
   };
 
   render() {
+    const { Auth, Project } = this.props;
     return (
       <ContainerSub>
-        {this.props.user === "client" ? (
+        {this.props.user === "client" && Project.projectDetailData.request_set[0].client == Auth.logged_in_client.id  ? (
           <>
             <Box3
               style={{ marginBottom: 20 }}
@@ -84,7 +85,7 @@ class ContentSub extends React.Component {
               </Font18>
             </Box3>
           </>
-        ) : (
+        ) : this.props.user === "partner" &&(
           <>
             <Box3
               style={{ marginBottom: 20 }}
