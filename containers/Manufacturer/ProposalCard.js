@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { toJS } from "mobx";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
+import Modal from "./Modal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
+import ReviewContainer from "./ReviewContainer";
+import CheckBrowserModal from "containers/Home/CheckBrowserModal";
+//import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
+
 const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
@@ -18,6 +23,25 @@ class ProposalCard extends React.Component {
     call: false,
     message: false,
     active: false,
+    modalOpen: false,
+    activeReview: false,
+  };
+
+  openModal = (user_phone) => {
+    console.log("open click");
+    this.setState({ modalOpen: true });
+    this.props.Partner.modalActive = true;
+    if (!user_phone) {
+      this.props.Partner.modalUserPhone = "전화번호 없음";
+    } else {
+      this.props.Partner.modalUserPhone = user_phone;
+      //this.props.Partner.modalUserPhone.splice(7, 0, "-")
+    }
+  };
+  closeModal = () => {
+    console.log("close click");
+    this.setState({ modalOpen: false });
+    this.props.Partner.modalActive = false;
   };
 
   componentDidMount() {
@@ -83,6 +107,21 @@ class ProposalCard extends React.Component {
       Router.push("/login");
     }
   };
+
+  onClickReviewHandler = (idx) => {
+    const { Partner } = this.props;
+    if (this.state.activeReview) {
+      console.log(`review false : ${idx}`);
+      this.setState({ activeReview: false });
+      Partner.ReviewActive = false;
+      Partner.ReviewActiveIndex = -1;
+    } else {
+      console.log(`review true : ${idx}`);
+      this.setState({ activeReview: true });
+      Partner.ReviewActive = true;
+      Partner.ReviewActiveIndex = idx;
+    }
+  };
   render() {
     // const {
     //   data,
@@ -93,6 +132,9 @@ class ProposalCard extends React.Component {
     //   customer,
     // } = this.props;
     const { data, width, Partner, categoryData, idx } = this.props;
+    // console.log(data);
+    // console.log(categoryData);
+    //console.log(idx);
     // console.log(width);
     // console.log(toJS(categoryData));
     // console.log(toJS(idx));
@@ -105,16 +147,17 @@ class ProposalCard extends React.Component {
     return (
       <>
         {width > 767.98 ? (
-          <Card
-            active={this.state.active}
-            onMouseOver={() => {
-              this.activeHandler("active");
-            }}
-            onMouseOut={() => {
-              this.activeHandler("active");
-            }}
-          >
-            {/* <HeaderWrapper>
+          <>
+            <Card
+              active={this.state.active}
+              onMouseOver={() => {
+                this.activeHandler("active");
+              }}
+              onMouseOut={() => {
+                this.activeHandler("active");
+              }}
+            >
+              {/* <HeaderWrapper>
             <Title>sdfdsf</Title>
             <Content>sdfdsf</Content>
           </HeaderWrapper>
@@ -139,43 +182,116 @@ class ProposalCard extends React.Component {
               <span class="tag2">dsfdsf</span>
             </PriceTagBox>
           </FooterWrapper> */}
-            <Header>
-              <Logo>
-                <img src={data.logo} />
-              </Logo>
-            </Header>
-            <Main>
-              <Name>{data.name}</Name>
-              <Phone>
-                {data.real_phone ? (
-                  <span>☎ {data.real_phone}</span>
-                ) : (
-                  <span>
-                    {data.user.phone ? data.user.phone : "전화번호 없음"}
-                  </span>
-                )}
-              </Phone>
-              <InfoOne>{data.info_company}</InfoOne>
-              <InfoTwo>
-                {/* {Partner.category_ary.map((item, idx) => {
+              <Header>
+                <Logo>
+                  <img src={data.logo} />
+                </Logo>
+              </Header>
+              <Main>
+                {/* <Review onClick={() => this.onClickReviewHandler(idx)}>
+                  리뷰 보기
+                </Review> */}
+                <Name>{data.name}</Name>
+                <Phone>
+                  <div
+                    style={{ cursor: "pointer" }}
+
+                    // onClick={() => {
+                    //   window
+                    //     .open
+                    //     //"https://blog.naver.com/boltnnut_korea"
+                    //     //"./Popup.js"
+                    //     // "windowPop",
+                    //     // "width=400, height=600, left=400, top=400, resizable = yes"
+                    //     ();
+                    // }}
+                  >
+                    <img
+                      src={call_img}
+                      // active={this.state.call}
+                      // onMouseOver={() => {
+                      //   this.activeHandler("call");
+                      // }}
+                      // onMouseOut={() => {
+                      //   this.activeHandler("call");
+                      // }}
+                      onClick={() => {
+                        console.log(data.name);
+                        console.log(data.user.phone);
+                        this.openModal(data.user.phone);
+                      }}
+                    />
+
+                    {/* <span
+                    style={{
+                      display: `${this.state.call ? "block" : "none"}`,
+                    }}
+                  >
+                    {data.real_phone ? (
+                      <span>☎ {data.real_phone}</span>
+                    ) : (
+                      <span>
+                        {data.user.phone ? data.user.phone : "전화번호 없음"}
+                      </span>
+                    )}
+                  </span> */}
+                    {/* {this.props.Partner.modalActive && ( */}
+
+                    {Partner.modalActive && (
+                      // <Layer onClick={this.modalHandler}>
+                      <Layer>
+                        {/* <Postcode /> */}
+                        <span>
+                          <Modal
+                            width={width}
+                            open={this.props.Partner.modalActive}
+                            close={this.closeModal}
+                            header="전화번호"
+                            // title={data.real_phone}
+                            children={this.props.Partner.modalUserPhone}
+                            //children={data.name}
+                          >
+                            {/* <p>
+                            {data.user.phone
+                              ? data.user.phone
+                              : "전화번호 없음"}
+                          </p> */}
+                            {/* <p>{idx}</p> */}
+                            {/* <p>{data.name}</p> */}
+                          </Modal>
+                          {/* <CheckBrowserModal
+                          open={this.props.Partner.modalActive}
+                          handleClose={this.closeModal}
+                        /> */}
+                        </span>
+                      </Layer>
+                    )}
+
+                    {/* )} */}
+                  </div>
+                </Phone>
+                <InfoOne>{data.info_company}</InfoOne>
+                <InfoTwo>
+                  {/* {Partner.category_ary.map((item, idx) => {
                   console.log(item);
                 })} */}
-                {/* {console.log(category_data)} */}
-                {/* {category_data &&
+                  {/* {console.log(category_data)} */}
+                  {/* {category_data &&
                   category_data.map((item, idx) => {
                     return <span>{item}</span>;
                   })} */}
-                {categoryData &&
-                  categoryData.map((item, idx) => {
-                    return <span>{item}</span>;
-                  })}
-                {/* <span>디자인</span>
+                  {categoryData &&
+                    categoryData.map((item, idx) => {
+                      console.log(item);
+                      return <span>{item}</span>;
+                    })}
+                  {/* <span>디자인</span>
                 <span>기구설계</span>
                 <span>금형제작</span>
                 <span>양산</span> */}
-              </InfoTwo>
-              <AdditionBox>
-                {/* <div>
+                </InfoTwo>
+                <AdditionBox>
+                  {/* <div>
                 <img
                   src={file_img}
                   active={this.state.introduction}
@@ -235,19 +351,32 @@ class ProposalCard extends React.Component {
                 </div>
               </div>
               <div></div> */}
-                <div>
-                  <img src={file_img2} />
-                  <Link
-                    target="_blank"
-                    onClick={() => this.filedownload()}
-                    download
-                  >
-                    <span>회사 소개서 보기</span>
-                  </Link>
-                </div>
-              </AdditionBox>
-            </Main>
-          </Card>
+                  <div>
+                    <img src={file_img2} />
+                    <Link
+                      target="_blank"
+                      onClick={() => this.filedownload()}
+                      download
+                    >
+                      <span>회사 소개서 보기</span>
+                    </Link>
+                  </div>
+                </AdditionBox>
+              </Main>
+            </Card>
+            {this.props.Partner.ReviewActive &&
+              this.props.Partner.ReviewActiveIndex === idx && (
+                <>
+                  <ReviewContainer
+                    data={data}
+                    width={width}
+                    Partner={Partner}
+                    categoryData={categoryData}
+                    idx={idx}
+                  />
+                </>
+              )}
+          </>
         ) : (
           <Card
             active={this.state.active}
@@ -289,14 +418,84 @@ class ProposalCard extends React.Component {
               {/* <InfoOne>develop 들어가야함</InfoOne> */}
               <Information>
                 <div>
-                  <img src={call_img} />
-                  {data.real_phone ? (
-                    <span>{data.real_phone}</span>
-                  ) : (
-                    <span>
-                      {data.user.phone ? data.user.phone : "전화번호 없음"}
-                    </span>
-                  )}
+                  <Phone>
+                    <div
+                      style={{ cursor: "pointer" }}
+
+                      // onClick={() => {
+                      //   window
+                      //     .open
+                      //     //"https://blog.naver.com/boltnnut_korea"
+                      //     //"./Popup.js"
+                      //     // "windowPop",
+                      //     // "width=400, height=600, left=400, top=400, resizable = yes"
+                      //     ();
+                      // }}
+                    >
+                      <img
+                        src={call_img}
+                        // active={this.state.call}
+                        // onMouseOver={() => {
+                        //   this.activeHandler("call");
+                        // }}
+                        // onMouseOut={() => {
+                        //   this.activeHandler("call");
+                        // }}
+                        onClick={() => {
+                          console.log(data.name);
+                          console.log(data.user.phone);
+                          this.openModal(data.user.phone);
+                        }}
+                      />
+
+                      {/* <span
+                    style={{
+                      display: `${this.state.call ? "block" : "none"}`,
+                    }}
+                  >
+                    {data.real_phone ? (
+                      <span>☎ {data.real_phone}</span>
+                    ) : (
+                      <span>
+                        {data.user.phone ? data.user.phone : "전화번호 없음"}
+                      </span>
+                    )}
+                  </span> */}
+                      {/* {this.props.Partner.modalActive && ( */}
+
+                      {Partner.modalActive && (
+                        // <Layer onClick={this.modalHandler}>
+                        <Layer>
+                          {/* <Postcode /> */}
+                          <span>
+                            <Modal
+                              width={width}
+                              open={this.props.Partner.modalActive}
+                              close={this.closeModal}
+                              header="전화번호"
+                              // title={data.real_phone}
+                              children={this.props.Partner.modalUserPhone}
+                              //children={data.name}
+                            >
+                              {/* <p>
+                            {data.user.phone
+                              ? data.user.phone
+                              : "전화번호 없음"}
+                          </p> */}
+                              {/* <p>{idx}</p> */}
+                              {/* <p>{data.name}</p> */}
+                            </Modal>
+                            {/* <CheckBrowserModal
+                          open={this.props.Partner.modalActive}
+                          handleClose={this.closeModal}
+                        /> */}
+                          </span>
+                        </Layer>
+                      )}
+
+                      {/* )} */}
+                    </div>
+                  </Phone>
                 </div>
                 <div>
                   <Link
@@ -404,6 +603,12 @@ const Name = styled.div`
     line-height: 16px;
     letter-spacing: -0.4px;
   }
+`;
+const Review = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
 `;
 const Phone = styled.div`
   font-size: 16px;
@@ -545,4 +750,22 @@ const Link = styled.a`
   text-decoration: none;
   cursor: pointer;
   color: ${PRIMARY};
+`;
+
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  // opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.05);
+
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 `;
