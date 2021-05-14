@@ -4,19 +4,37 @@ import { inject, observer } from "mobx-react";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 
-@inject("Project")
+@inject("Auth", "Project")
 @observer
 class ProjectDivider extends React.Component{
+  state = {
+    width: null,
+
+  }
+
+  componentDidMount() {
+    //창 크기
+    window.addEventListener("resize", this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+  updateDimensions = () => {
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
+
   checkOn = (idx) =>{
     const { Project } = this.props;
     Project.myIndex = idx;
   };
 
   render(){
-    const {Project} = this.props;
+    const { Project } = this.props;
     return(
       <Background>
         <Container>
+        {/* {width > 1299.98 ? */}
         <ProjectDiv>
           <DividingSelect active = {Project.myIndex === 0} onClick = {() => this.checkOn(0)}>
             <Font22 active = {Project.myIndex === 0}>전체 프로젝트</Font22>
@@ -25,6 +43,19 @@ class ProjectDivider extends React.Component{
             <Font22 active = {Project.myIndex === 1}>내 프로젝트</Font22>
           </DividingSelect>
         </ProjectDiv>
+        {/* :
+        <>
+        <ProjectDiv>
+          <DividingSelect active = {Project.myIndex === 0} onClick = {() => this.checkOn(0)}>
+            <Font22 active = {Project.myIndex === 0}>전체 프로젝트</Font22>
+          </DividingSelect>
+          <DividingSelect  active = {Project.myIndex === 1} onClick = {() => this.checkOn(1)} >
+            <Font22 active = {Project.myIndex === 1}>내 프로젝트</Font22>
+          </DividingSelect>
+        </ProjectDiv> */}
+        
+        {/* </> */}
+  {/* } */}
 
         </Container>
       </Background>
@@ -42,16 +73,16 @@ width: 100%;
   border-bottom: 1px solid #c6c7cc;
 `
 const DividingSelect = styled.div`
-  margin-top: 42px;
-  display: flex;
-  // height: 85px;
-  cursor: pointer;
-  width: 144px;
-  justify-content: center;
+display: flex;
+justify-content: center;
+margin-top: 42px;
+// height: 85px;
+cursor: pointer;
+width: 144px;
+${props => props.active && css` 
+  border-bottom: 3px solid #0933b3;
+`}
 
-  ${props => props.active && css` 
-    border-bottom: 3px solid #0933b3;
-  `}
 `
 
 

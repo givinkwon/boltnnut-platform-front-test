@@ -39,17 +39,6 @@ class Nav extends React.Component {
     }
     window.location.href = "/";
   };
-  
-  pushtoChatting=()=>{
-
-    console.log("asdf");
-    const { Project} = this.props;
-    Project.chattingIndex = 1;
-    Project.newIndex = 5;
-    console.log(Project.chattingIndex)
-    Router.push('/project');
-    
-  }
 
   async componentDidMount() {
     const { Auth, } = this.props;
@@ -235,7 +224,7 @@ class Nav extends React.Component {
                           </Font17> */}
                         </div>
                         <div>
-                          <div onClick = {this.pushtoChatting }>
+                          <div onClick = {()=>Router.push('/chatting') }>
                             <Font16>
                             채팅하기
                             </Font16>

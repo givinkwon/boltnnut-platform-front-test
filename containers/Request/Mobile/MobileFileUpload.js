@@ -3083,7 +3083,7 @@ const Reference = styled.div`
 const Button = styled.div`
   // margin-top: 83px;
   margin-bottom: 120px;
-  display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
+  display: ${(props) => (props.checkFileUpload ? "flex'" : "none")};
   justify-content: center;
   align-items: center;
 

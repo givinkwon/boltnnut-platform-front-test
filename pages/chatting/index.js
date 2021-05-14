@@ -2,19 +2,13 @@ import React from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
-
 import Router from "next/router";
-
 import Nav from "components/Nav";
 import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
-import Spinner from "components/Spinner";
-
 import { toJS } from "mobx";
 
-//import ProjectContainer from 'containers/Project/index'
-
-import ProjectContainer from "../../containers/Project/index";
+import ChattingContainer from "../../containers/Chatting/index";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
@@ -27,7 +21,7 @@ class Chatting extends React.Component{
   };
 
   async componentDidMount() {
-    const { Project, Auth, Home, Answer, Loading } = this.props;
+    const { Auth, Home, Loading } = this.props;
 
     console.log(Auth);
     console.log(toJS(Auth.logged_in_user));
@@ -42,20 +36,7 @@ class Chatting extends React.Component{
 
     // 중복
     await Auth.checkLogin();
-
-    if (Auth.logged_in_user) {
-      if (Auth.logged_in_partner) {
-        await Project.getProjectByPrice();
-        console.log("프로젝트 목록 로딩 끝");
-      }
-      if (Auth.logged_in_client) {
-        console.log("프로젝트 목록 로딩 시작");
-        console.log(Auth.logged_in_client);
-        Project.getPage(Auth.logged_in_client.id, () => {
-          console.log("프로젝트 목록 로딩 끝");
-        });
-      }
-    } else {
+    if (!Auth.logged_in_user){
       alert("로그인이 필요합니다");
       Router.push("/login");
     }
@@ -68,8 +49,9 @@ class Chatting extends React.Component{
   };
 
   render(){
-    const { Project, Loading, Auth } = this.props;
+    const { Loading } = this.props;
     const { width } = this.state;
+    const gray = "#f6f6f6";
 
     return (
       <div>
@@ -85,16 +67,18 @@ class Chatting extends React.Component{
             <div>
               <MobileNav
                 src={back_ic}
-                headText={"프로젝트 관리"}
+                headText={"채팅하기"}
                 width={width}
               />
               <div style={{ height: "65px" }}></div>
             </div>
           )}
         </>
-        <ProjectContainer width={width} length={Project.project_length} />
+        <ChattingContainer width={width} />
         <Footer color={gray} />
       </div>
     );
   }
 }
+
+export default Chatting

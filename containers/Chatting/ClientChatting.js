@@ -68,57 +68,52 @@ async componentDidMount() {
     const { Project, Auth } = this.props;
 
     return(
-
-<Background>
-  <Container style = {{display: "flex", flexDirection: "column"}}>
-    {Project.chatModalActive && 
-      <Layer onClick={this.modalHandler}>
-        <ChatTestContainer
-          roomName={this.state.selectedRoom}
-        ></ChatTestContainer>
-      </Layer>
-    }
-    
-    {Project.projectDataList && Project.projectDataList.map((item, idx) => 
-      {
-      return(
-        <ProjectContainer>  
-        <Font24>
-        {item.request_set[0].name}
+      <Background>
+        <Container style = {{display: "flex", flexDirection: "column"}}>
+          {Project.chatModalActive && 
+            <Layer onClick={this.modalHandler}>
+              <ChatTestContainer
+                roomName={this.state.selectedRoom}
+              ></ChatTestContainer>
+            </Layer>
+          }
+          {Project.projectDataList && Project.projectDataList.map((item, idx) => 
+            {
+            return(
+              <ProjectContainer>  
+              <Font24>
+              {item.request_set[0].name}
 
 
-        <span>{item.answer_set.length}</span>
-        </Font24>
-        {Project.answerDetailList && Project.answerDetailList.map((data, idx) =>
-        {
-          return(
-          <>
+              <span>{item.answer_set.length}</span>
+              </Font24>
+              {Project.answerDetailList && Project.answerDetailList.map((data, idx) =>
+              {
+                return(
+                <>
 
-        {data.project ==item.id && (
-          <>
-          <ChatItemContainer
-            logo={data.logo}
-            name={data.name}
-            id={data.id}
-            content={data.content}
-            modalHandler={this.modalHandler}
-            user = {Auth}
-            />
-            </>
-        )}
-        </>
-        )}
-        )}
-        </ProjectContainer>  
-      )
-  })}
-
-  </Container>
-</Background>
+              {data.project ==item.id && (
+                <>
+                <ChatItemContainer
+                  logo={data.logo}
+                  name={data.name}
+                  id={data.id}
+                  content={data.content}
+                  modalHandler={this.modalHandler}
+                  user = {Auth}
+                  />
+                  </>
+              )}
+              </>
+              )}
+              )}
+              </ProjectContainer>  
+            )
+          })}
+        </Container>
+      </Background>
     );
   }
-
-
 }
 
 export default ClientChatting;
