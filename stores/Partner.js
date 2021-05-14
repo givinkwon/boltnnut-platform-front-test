@@ -3,6 +3,7 @@ import { observable, action, toJS, makeObservable } from "mobx";
 import * as CategoryAPI from "axios/Category";
 import * as PartnerAPI from "axios/Partner";
 import { isConstructorDeclaration } from "typescript";
+import NoneDrawingConsultingContainer from "../containers/Request/NoneDrawingConsulting";
 
 class Partner {
   constructor() {
@@ -66,6 +67,11 @@ class Partner {
   @observable category_dic = {};
   @observable check_loading_category = false;
   @observable check_click_filter = false;
+
+  @observable modalActive = false;
+  @observable ReviewActive = false;
+  @observable ReviewActiveIndex = -1;
+  @observable modalUserPhone = "";
 
   // 파트너의 답변
   @observable answer_set = [];
@@ -702,6 +708,7 @@ class Partner {
   @action setCategoryDic = async (req, sub_data, id) => {
     await PartnerAPI.getPartnerCategory(req)
       .then((res) => {
+        console.log(toJS(res));
         // console.log(`${sub_data} : ${toJS(res.data.category)}`);
         //this.category_ary[idx].push(res.data.category);
         // console.log(toJS(typeof this.category_name_ary));
@@ -718,6 +725,7 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    console.log(`${id} : ${toJS(this.category_dic[id])}`);
   };
 
   @action getCategory = () => {

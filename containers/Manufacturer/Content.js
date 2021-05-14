@@ -77,6 +77,7 @@ class ManufacturerContentContainer extends React.Component {
     const newPage = e.target.innerText * 1;
     Partner.currentPage = newPage;
     // Project.getProjectByPrice(Project.search_text, newPage)
+    console.log(toJS(this.category_dic));
     Partner.category_dic = {};
     Partner.getPartner(newPage);
   };
@@ -92,6 +93,7 @@ class ManufacturerContentContainer extends React.Component {
       Partner.currentPage = nextPage;
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
       // console.log(nextPage);
+      console.log(toJS(this.category_dic));
       Partner.category_dic = {};
       Partner.getPartner(nextPage);
     }
@@ -104,6 +106,7 @@ class ManufacturerContentContainer extends React.Component {
       // Project.category_reset()
       const newPage = Partner.currentPage - 1;
       Partner.currentPage = newPage;
+      console.log(toJS(this.category_dic));
       Partner.category_dic = {};
       Partner.getPartner(newPage);
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
@@ -118,6 +121,7 @@ class ManufacturerContentContainer extends React.Component {
 
     return (
       <>
+        {console.log("rendering")}
         <Background id="MyBackground">
           <Container>
             {/* <SearchBar /> */}
@@ -168,6 +172,7 @@ class ManufacturerContentContainer extends React.Component {
                         {/* {console.log(toJS(Partner.category_ary[idx]))} */}
                         {/* {Partner.check_loading_category &&
                           console.log(toJS(Partner.category_ary[idx]))} */}
+                        {console.log(toJS(Partner.category_dic[idx]))}
                         <ProposalCard
                           data={item}
                           width={this.props.width}
