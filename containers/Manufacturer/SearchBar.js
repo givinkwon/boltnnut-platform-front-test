@@ -147,7 +147,7 @@ const SearchBar = styled.div`
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 30px;
+    // margin-top: 30px;
     flex-direction: column;
     input {
       font-size: 12px;
@@ -155,13 +155,13 @@ const SearchBar = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 30px;
+    // margin-top: 30px;
     input {
       font-size: 16px;
     }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-top: 40px;
+    // margin-top: 40px;
     input {
       font-size: 17px;
     }

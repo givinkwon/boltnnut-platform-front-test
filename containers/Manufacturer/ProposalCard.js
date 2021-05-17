@@ -5,7 +5,7 @@ import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import Modal from "./Modal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
-import ReviewContainer from "./ReviewContainer";
+import ReviewContainer from "./Review/ReviewContainer";
 import CheckBrowserModal from "containers/Home/CheckBrowserModal";
 //import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
 
@@ -188,9 +188,9 @@ class ProposalCard extends React.Component {
                 </Logo>
               </Header>
               <Main>
-                {/* <Review onClick={() => this.onClickReviewHandler(idx)}>
+                <Review onClick={() => this.onClickReviewHandler(idx)}>
                   리뷰 보기
-                </Review> */}
+                </Review>
                 <Name>{data.name}</Name>
                 <Phone>
                   <div
@@ -552,6 +552,8 @@ const Card = styled.div`
     margin-bottom: 34px;
     padding: 33px 0px 30px 34px;
     box-sizing: border-box;
+    // align-self: self-start;
+    // width: 68%;
   }
   @media (min-width: 1300px) {
     //height: 195px;

@@ -70,8 +70,18 @@ class Partner {
 
   @observable modalActive = false;
   @observable ReviewActive = false;
+  @observable reviewModalActive = false;
   @observable ReviewActiveIndex = -1;
   @observable modalUserPhone = "";
+
+  // 파트너 리뷰
+  @observable star_ary = [
+    { id: 1, checked: false },
+    { id: 2, checked: false },
+    { id: 3, checked: false },
+    { id: 4, checked: false },
+    { id: 5, checked: false },
+  ];
 
   // 파트너의 답변
   @observable answer_set = [];
