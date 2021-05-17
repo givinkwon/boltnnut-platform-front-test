@@ -49,9 +49,9 @@ class ProjectContentContainer extends React.Component {
     console.log("did mount");
 
     await Auth.checkLogin();
-    if (Auth.logged_in_partner) {
+    // if (Auth.logged_in_partner) {
       Project.getProjectByPrice();
-    }
+    // }
   }
 
   movePage = (e) => {
@@ -100,7 +100,7 @@ class ProjectContentContainer extends React.Component {
             <>
             <Body>
               <Filter style={{ paddingTop: "32px" }}>
-                <Font20>필터</Font20>
+                <span>필터</span>
                 <RadioBox data={request_data} />
               </Filter>
 
@@ -306,14 +306,50 @@ const Body = styled.div`
   margin-top: 40px;
 `;
 const Main = styled.div`
-  width: 984px;
+  @media (min-width: 768px) and (max-width: 1299.98px){
+    width: 560px;
+    padding-left: 20px; 
+  }
+  @media (min-width: 1300px){
+    width: 987px;
+    padding-left: 33px; 
+  }
 `;
 const Filter = styled.div`
-  width: 220px;
-  border-right: 1px solid #e1e2e4;
-  margin-right: 33px;
-  padding-right: 9px;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  @media(min-width: 768px) and (max-width: 1298px){
+    width: 140px;
+    border-right: 1px solid #e1e2e4;
+    // margin-right: 33px;
+    // padding-right: 9px;
+    box-sizing: border-box;
+    >span{
+      font-size: 18px;
+      font-weight: 500 !important;
+      font-stretch: normal !important;
+      font-style: normal !important;
+      line-height: 40px !important;
+      letter-spacing: -0.5px !important;
+      color: #282c36;
+    }
+  }
+  @media(min-width: 1300px){
+    width: 180px;
+    border-right: 1px solid #e1e2e4;
+    // margin-right: 33px;
+    // padding-right: 9px;
+    box-sizing: border-box;
+    >span{
+      font-size: 20px;
+      font-weight: 500 !important;
+      font-stretch: normal !important;
+      font-style: normal !important;
+      line-height: 40px !important;
+      letter-spacing: -0.5px !important;
+      color: #282c36;
+    }
+  }
 `;
 
 const Header = styled.div`

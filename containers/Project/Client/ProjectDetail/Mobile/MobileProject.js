@@ -104,9 +104,6 @@ class MobileProjectContentContainer extends React.Component {
       return(
         <>          
         <div>
-        <Header style={{marginBottom: '0px'}}>
-            <Font16>전체 프로젝트</Font16>
-        </Header>
           {Project.projectDataList && Project.projectDataList.map((item, idx) => {
             //   {data.map((item, idx) => {
             return(            

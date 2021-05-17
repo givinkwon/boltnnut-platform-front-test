@@ -1,9 +1,9 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 import * as PostAPI from "axios/post";
 
 class Loading {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable is_open = false;
 

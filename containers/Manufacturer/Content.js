@@ -40,12 +40,27 @@ class ManufacturerContentContainer extends React.Component {
     console.log("did mount");
 
     Partner.getPartner();
-    Partner.getCategory();
+
+    //console.log(toJS(Partner.filter_category_ary.length));
+    if (Partner.filter_category_ary.length === 1) {
+      Partner.getCategory();
+    }
+    if (Partner.filter_city_ary.length === 1) {
+      Partner.getCity();
+    }
 
     // await Auth.checkLogin();
     // if(Auth.logged_in_partner){
     //   Project.getProjectByPrice()
     // }
+  }
+
+  componentWillUnmount() {
+    const { Partner } = this.props;
+    console.log("WillUnMount");
+    Partner.category_dic = {};
+    Partner.filter_category_ary = [{ id: 0, category: "전체" }];
+    Partner.filter_city_ary = [{ id: 0, city: "전체" }];
   }
 
   componentDidUpdate() {
@@ -62,6 +77,7 @@ class ManufacturerContentContainer extends React.Component {
     const newPage = e.target.innerText * 1;
     Partner.currentPage = newPage;
     // Project.getProjectByPrice(Project.search_text, newPage)
+    console.log(toJS(this.category_dic));
     Partner.category_dic = {};
     Partner.getPartner(newPage);
   };
@@ -69,14 +85,15 @@ class ManufacturerContentContainer extends React.Component {
   pageNext = (e) => {
     const { Partner } = this.props;
     e.preventDefault();
-    console.log(toJS(Partner.currentPage));
-    console.log(toJS(Partner.partner_page));
+    // console.log(toJS(Partner.currentPage));
+    // console.log(toJS(Partner.partner_page));
     if (Partner.currentPage < Partner.partner_page) {
       // Project.category_reset()
       const nextPage = Partner.currentPage + 1;
       Partner.currentPage = nextPage;
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
-      console.log(nextPage);
+      // console.log(nextPage);
+      console.log(toJS(this.category_dic));
       Partner.category_dic = {};
       Partner.getPartner(nextPage);
     }
@@ -89,6 +106,7 @@ class ManufacturerContentContainer extends React.Component {
       // Project.category_reset()
       const newPage = Partner.currentPage - 1;
       Partner.currentPage = newPage;
+      console.log(toJS(this.category_dic));
       Partner.category_dic = {};
       Partner.getPartner(newPage);
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
@@ -103,13 +121,17 @@ class ManufacturerContentContainer extends React.Component {
 
     return (
       <>
+        {console.log("rendering")}
         <Background id="MyBackground">
           <Container>
             {/* <SearchBar /> */}
             <Body>
               <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
-                <RadioBox filter="region" data={region_data} />
+                <RadioBox
+                  filter="region"
+                  data={this.props.Partner.filter_city_ary}
+                />
                 <RadioBox
                   filter="develop"
                   data={this.props.Partner.filter_category_ary}
@@ -147,9 +169,10 @@ class ManufacturerContentContainer extends React.Component {
                             )
                           )} */}
                         {/* Partner.check_loading_category &&  */}
-                        {console.log(toJS(Partner.category_ary[idx]))}
+                        {/* {console.log(toJS(Partner.category_ary[idx]))} */}
                         {/* {Partner.check_loading_category &&
                           console.log(toJS(Partner.category_ary[idx]))} */}
+                        {console.log(toJS(Partner.category_dic[idx]))}
                         <ProposalCard
                           data={item}
                           width={this.props.width}

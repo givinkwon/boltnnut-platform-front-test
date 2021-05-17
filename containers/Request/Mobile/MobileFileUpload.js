@@ -1516,17 +1516,19 @@ class FileUploadContainer extends Component {
                     <ItemBox id="itemBox">
                       <MainBox>
                         <StlBox>
-                          <div>{data.fileName}</div>
-                          <div
+                        <div style = {{marginBottom: 30}}>{data.fileName}</div>
+                          {/* <div
                             style={{
+                              display: "flex",
                               width: "110px",
                               height: "110px",
                               border: "1px solid black",
                               textAlign: "center",
+                              alignItems: "center",
                             }}
-                          >
-                            DWG
-                          </div>
+                          > */}
+                            
+                          {/* </div> */}
                         </StlBox>
                         <ColumnBox>
                           <ManufactureBox>
@@ -3083,7 +3085,7 @@ const Reference = styled.div`
 const Button = styled.div`
   // margin-top: 83px;
   margin-bottom: 120px;
-  display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
+  display: ${(props) => (props.checkFileUpload ? "flex'" : "none")};
   justify-content: center;
   align-items: center;
 

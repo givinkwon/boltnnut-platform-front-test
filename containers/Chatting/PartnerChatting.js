@@ -4,7 +4,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import Partner from "../../../stores/Partner";
+
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
@@ -32,9 +32,9 @@ class MyProject extends React.Component {
     const { Project } = this.props;
 
     await Project.getProjectDetail(id);
-    Project.newIndex = 1;
     Project.selectedProjectId = id;
     // await Router.push(`/project/${id}`);
+    Project.setProjectDetailData(id);
   };
 
   async getProject(data) {
@@ -66,10 +66,7 @@ class MyProject extends React.Component {
         this.getProject(data);
       });
     }
-
-
   }
-
   render() {
     const { Project, Partner, Auth } = this.props;
     const { Partnerprojectlist } = this.state;

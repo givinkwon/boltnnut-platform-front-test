@@ -9,7 +9,7 @@ import moment from "moment";
 
 class Request {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   @observable select_reqs = [];
 

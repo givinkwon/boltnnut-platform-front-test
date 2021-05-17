@@ -1,17 +1,17 @@
 import DaumPostcode from "react-daum-postcode";
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import { MobXProviderContext } from "mobx-react";
+// import { MobXProviderContext } from "mobx-react";
+import { observer, inject } from "mobx-react";
+import { observable } from "mobx";
+import React from "react";
+import Payment from "stores/Payment";
 
-function useStores() {
-  return React.useContext(MobXProviderContext);
-}
-
-function Postcode() {
+const Postcode = (observer) => {
   const [isAddress, setIsAddress] = useState("");
   const [isZoneCode, setIsZoneCode] = useState();
 
-  const { Payment } = useStores();
+  // const { Payment } = useStores();
   const handleComplete = (data) => {
     let fullAddress = data.address;
     let extraAddress = "";
@@ -28,18 +28,23 @@ function Postcode() {
     }
     setIsZoneCode(data.zonecode);
     setIsAddress(fullAddress);
+    // console.log(Payment.modalActive);
+    Payment.modalActive = false;
+    // console.log(store.modalActive);
     Payment.address = fullAddress;
     Payment.zipCode = data.zonecode;
-    console.log(isAddress);
-    Payment.modalActive = false;
+    // console.log(isAddress);
 
+    // console.log(modalActive);
+    // Payment.modalActive = false;
+    // modalActive = false;
     // setIsPostOpen(false);
   };
 
   return (
     <DaumPostcode style={postCodeStyle} autoclose onComplete={handleComplete} />
   );
-}
+};
 
 const postCodeStyle = {
   display: "block",
@@ -53,3 +58,4 @@ const postCodeStyle = {
   // zIndex: "100",
 };
 export default Postcode;
+// export default inject("Payment")(observer(Postcode));

@@ -73,61 +73,29 @@ class Content1 extends React.Component {
         Project.projectDetailData.request_set[0].deadline
     );
     await Auth.checkLogin();
+    // if(Auth.logged_in_client){
+    //   Project.getPage(Auth.logged_in_client.id);
+    // }
+    Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+      console.log(toJS(Answer.answers));
+      this.setState({ partnerList: Answer.answers });
 
-    if (Auth.logged_in_partner) {
-      // Project.getPage(1069);
-      // console.log(Project.selectedProjectId);
-      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
-        console.log(toJS(Answer.answers));
-        this.setState({ partnerList: Answer.answers });
-
-        Answer.answers.forEach((answer) => {
-          const PartnerDetailList = this.state.partnerDetailList;
-          PartnerAPI.detail(answer.partner)
-            .then((res) => {
-              // console.log(res);
-              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
-              PartnerDetailList.push({
-                logo: res.data.logo,
-                name: res.data.name,
-              });
-              this.setState({ partnerDetailList: PartnerDetailList });
-            })
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
+      Answer.answers.forEach((answer) => {
+        const PartnerDetailList = this.state.partnerDetailList;
+        PartnerAPI.detail(answer.partner)
+          .then((res) => {
+            PartnerDetailList.push({
+              logo: res.data.logo,
+              name: res.data.name,
             });
-        });
+            this.setState({ partnerDetailList: PartnerDetailList });
+          })
+          .catch((e) => {
+            console.log(e);
+            console.log(e.response);
+          });
       });
-    }
-
-    if (Auth.logged_in_client) {
-      // console.log(Auth.logged_in_client);
-      Project.getPage(Auth.logged_in_client.id);
-      console.log(Project.selectedProjectId);
-      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
-        console.log(toJS(Answer.answers));
-        this.setState({ partnerList: Answer.answers });
-
-        Answer.answers.forEach((answer) => {
-          const PartnerDetailList = this.state.partnerDetailList;
-          PartnerAPI.detail(answer.partner)
-            .then((res) => {
-              // console.log(res);
-              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
-              PartnerDetailList.push({
-                logo: res.data.logo,
-                name: res.data.name,
-              });
-              this.setState({ partnerDetailList: PartnerDetailList });
-            })
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-        });
-      });
-    }
+    });
   }
 
   render() {
@@ -294,12 +262,15 @@ class Content1 extends React.Component {
                 }}
               >
                 지원한 파트너
-                {user == "client" && (
+                {user == "client" && projectDetailData.request_set[0].client == Auth.logged_in_client.id && (
                   <p style={{ color: "#0933b3", marginLeft: 6 }}>
                     {this.state.partnerList.length}
                   </p>
                 )}
               </Font20>
+              {/* 프로젝트의 해당 클라이언트인 경우와 아닌 경우   */ }
+              {user == "client" && projectDetailData.request_set[0].client == Auth.logged_in_client.id ?
+                <>
               {this.state.partnerList.map((data, idx) => {
                 // Partner.getPartnerDetail(data.partner);
                 return (
@@ -311,12 +282,27 @@ class Content1 extends React.Component {
                         id={data.id}
                         content={"test"}
                         modalHandler={this.modalHandler}
-                        user = {Auth}
+                        user={Auth}
                       />
                     )}
                   </>
                 );
               })}
+              </>
+              :
+              <>
+              <BlackBox>
+                <span>'해당 프로젝트 담당자만 확인할 수 있습니다.'</span>
+                <div style={{ filter: "blur(5px)" }}>
+                <PartnerBox>
+                  <img src={"https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"} width={36} height={36}/>
+                </PartnerBox>
+                <PartnerBox><img src={"https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"} width={36} height={36}/></PartnerBox>
+                <PartnerBox><img src={"https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"} width={36} height={36}/></PartnerBox>
+                </div>
+              </BlackBox>
+            </>
+            }
             </AppliedPartner>
             <Content4 user={user} />
           </InnerContainer>

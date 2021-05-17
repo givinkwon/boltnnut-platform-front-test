@@ -1,4 +1,4 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action } from "mobx";
 import Router from "next/router";
 import * as OfferedAPI from "axios/Offered";
 import * as SelectAPI from "../axios/Select";
@@ -7,7 +7,7 @@ import * as AnswerAPI from "../axios/Answer";
 
 class Offered {
   constructor() {
-    makeObservable(this);
+    //makeObservable(this);
   }
   orderEnum = [
     { id: 0, name: "미팅 대기중" },

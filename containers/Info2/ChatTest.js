@@ -172,22 +172,43 @@ class ChatTestContainer extends React.Component {
   userType = null;
 
   // 메세지 읽음 표시 함수
-  checkRead = (fullMessage, currentMessage) => {
+  checkRead = (fullMessage, currentMessage, flag = 1) => {
     console.log("CHECKREAD!!!!!!!");
 
-    fullMessage.forEach((element) => {
-      // console.log("FULLMESSAGES");
-      if (
-        currentMessage.type != element.member &&
-        element.time <= currentMessage.time
-      ) {
-        element.bRead = true;
-        console.log("READ complete");
-      }
-      // else {
-      //   // console.log("읽지않음");
-      // }
-    });
+    if (flag === 1) {
+      fullMessage.forEach((element) => {
+        // console.log("FULLMESSAGES");
+
+        console.log(toJS(currentMessage.time));
+        console.log(toJS(element.time));
+
+        if (
+          currentMessage.type != element.member &&
+          element.time.slice(0, 19) <= currentMessage.time.slice(0, 19)
+        ) {
+          element.bRead = true;
+          console.log("READ complete");
+        }
+        // else {
+        //   // console.log("읽지않음");
+        // }
+      });
+    }
+    // else{
+    //   fullMessage.forEach((element) => {
+    //     // console.log("FULLMESSAGES");
+    //     if (
+    //       currentMessage.type != element.member &&
+    //       element.time <= currentMessage.time
+    //     ) {
+    //       element.bRead = true;
+    //       console.log("READ complete");
+    //     }
+    //     // else {
+    //     //   // console.log("읽지않음");
+    //     // }
+    //   });
+    // }
 
     // 메세지를 보낸 경우에 체크하여 카카오톡 보내기
     if (
@@ -220,8 +241,10 @@ class ChatTestContainer extends React.Component {
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
 
     this.props.Chat.current_time = temp;
+    console.log(toJS(this.props.Chat.current_time));
   }
   async componentDidMount() {
+    console.log("componentDidMount");
     // RoomNumber 체크하기
     const { Partner } = this.props;
     const roomNum = this.props.roomName;
@@ -233,6 +256,7 @@ class ChatTestContainer extends React.Component {
     // 메세지 및 시간 초기화
     this.setState({ messages: [], currentTime: temp });
     this.props.Chat.current_time = temp;
+    console.log(toJS(this.props.Chat.current_time));
     this.props.Project.chatMessages = [];
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
@@ -241,6 +265,7 @@ class ChatTestContainer extends React.Component {
     console.log(this.state.currentTime);
     ChatAPI.loadChat(roomNum).then((res) => {
       const reverseChat = res.data.results.reverse();
+      console.log(reverseChat);
       ChatAPI.loadChatCount(roomNum).then((m_res) => {
         console.log(m_res);
         // answer data 가져오기
@@ -253,18 +278,26 @@ class ChatTestContainer extends React.Component {
         });
 
         reverseChat.forEach((message) => {
+          console.log(toJS(message));
           const Messages = this.props.Project.chatMessages;
-          console.log(this.props.Project.chatMessages);
+          console.log(toJS(this.props.Project.chatMessages));
           let readState = true;
           if (message.user_type === 0) {
             console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
             // console.log(message.createdAt); // 이건 파이썬에서 그냥 표준 시간형식으로 저장돼서 둘 중 하나 바꿔줘야함 비교할때
             //여기서 바꿔줘야함
-            if (m_res.data.check_time_partner < message.createdAt) {
+
+            if (
+              m_res.data.check_time_partner.slice(0, 19) <
+              message.createdAt.slice(0, 19)
+            ) {
               readState = false;
             }
           } else {
-            if (m_res.data.check_time_client < message.createdAt) {
+            if (
+              m_res.data.check_time_client.slice(0, 19) <
+              message.createdAt.slice(0, 19)
+            ) {
               readState = false;
             }
           }
@@ -310,8 +343,8 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.onmessage = (e) => {
       // console.log("Aaaasdasd");
       const data = JSON.parse(e.data);
-      console.log("data")
-      console.log(data)
+      console.log("data");
+      console.log(data);
 
       const messages = this.props.Project.chatMessages;
 
@@ -334,13 +367,23 @@ class ChatTestContainer extends React.Component {
         }
         console.log(toJS(messages));
 
-        messages.push({
-          member: data["type"],
-          text: data["message"],
-          time: data["time"],
-          bRead: false,
-        });
-
+        if (
+          !(
+            data.time === messages[messages.length - 1].time &&
+            data.type === messages[messages.length - 1].member
+          )
+        ) {
+          messages.push({
+            member: data["type"],
+            text: data["message"],
+            time: data["time"],
+            bRead: false,
+          });
+        } else {
+          console.log(data);
+          console.log(messages[messages.length - 1]);
+          console.log("중복 발생!");
+        }
       }
 
       if (data.bReceive) {
@@ -353,6 +396,7 @@ class ChatTestContainer extends React.Component {
       console.log(data.message);
       if (data.message != "접속완료" && data.message != "수신완료") {
         if (data.type === this.userType) {
+          console.log("채팅 저장");
           const req = {
             text_content: data.message,
             user_type: data.type,

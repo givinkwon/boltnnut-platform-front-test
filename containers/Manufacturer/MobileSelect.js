@@ -24,6 +24,7 @@ const customStyles = {
   }),
   control: () => ({
     fontSize: 10,
+    width: 84,
     fontWeight: "normal",
     lineHeight: 34,
     letterSpacing: "-0.45px",
