@@ -16,7 +16,6 @@ const checkcircle =
   "/static/images/request/NoneDrawingConsulting/checkcircle.svg";
 const pass3 = "static/images/pass3.png";
 
-
 @inject("ManufactureProcess", "Request", "Schedule", "Auth")
 @observer
 class NoneDrawingConsultingContainer extends React.Component {
@@ -41,16 +40,15 @@ class NoneDrawingConsultingContainer extends React.Component {
     privateValue: "",
     publicRows: 7,
     privateRows: 7,
-    purposeAry : [
+    purposeAry: [
       { id: 1, name: "상담요청", checked: false },
       { id: 2, name: "견적문의", checked: false },
       { id: 3, name: "업체수배", checked: false },
-    ]
+    ],
   };
   componentDidMount = () => {
-    this.props.ManufactureProcess.reset()
-    
-  }
+    this.props.ManufactureProcess.reset();
+  };
 
   unitCheckboxHandler = (idx) => {
     this.setState({ selectedIdx: idx });
@@ -66,7 +64,7 @@ class NoneDrawingConsultingContainer extends React.Component {
 
   purposeHandler = (item) => {
     const { ManufactureProcess } = this.props;
-    const { purposeAry } = this.state
+    const { purposeAry } = this.state;
     console.log(ManufactureProcess.purposeContent);
     if (item.checked) {
       item.checked = false;
@@ -76,7 +74,9 @@ class NoneDrawingConsultingContainer extends React.Component {
     } else {
       item.checked = true;
       if (ManufactureProcess.purposeContent) {
-        this.state.purposeAry[ManufactureProcess.purposeContent - 1].checked = false;
+        this.state.purposeAry[
+          ManufactureProcess.purposeContent - 1
+        ].checked = false;
       }
       ManufactureProcess.purposeContent = item.id;
     }
@@ -218,7 +218,7 @@ class NoneDrawingConsultingContainer extends React.Component {
     let processData = "";
     let detailProcessData = "";
     let quantityData = "";
-    
+
     let str = "";
     var result = Object.keys(purpose).map((key) => [key, purpose[key]]);
 
@@ -243,7 +243,7 @@ class NoneDrawingConsultingContainer extends React.Component {
       alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
       return false;
     }
-    if (ManufactureProcess.requestComment.length == 0 ) {
+    if (ManufactureProcess.requestComment.length == 0) {
       alert("공개내용을 작성해주세요");
       return false;
     }
@@ -265,8 +265,12 @@ class NoneDrawingConsultingContainer extends React.Component {
 
     let request_state = "";
     if (ManufactureProcess.purposeContent) {
-      console.log(this.state.purposeAry[ManufactureProcess.purposeContent - 1].name);
-      request_state = this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
+      console.log(
+        this.state.purposeAry[ManufactureProcess.purposeContent - 1].name
+      );
+      request_state = this.state.purposeAry[
+        ManufactureProcess.purposeContent - 1
+      ].name;
     }
 
     console.log(result);
@@ -351,6 +355,7 @@ class NoneDrawingConsultingContainer extends React.Component {
       .then((res) => {
         console.log("create: ", res);
         this.props.Request.newIndex = 1;
+        dataLayer.push({ event: "request_noneDrawing" });
       })
       .catch((e) => {
         console.log(e);
@@ -703,7 +708,6 @@ class NoneDrawingConsultingContainer extends React.Component {
 }
 
 export default NoneDrawingConsultingContainer;
-
 
 // global
 const InlineDiv = styled.div`

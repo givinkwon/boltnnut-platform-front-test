@@ -318,10 +318,21 @@ class ChatTestContainer extends React.Component {
       });
     });
     // this.setState({ messages: [] });
+
+    //채팅 소켓 열릴 때
     this.chatSocket.onopen = async () => {
+      alert("Open");
       await this.props.Auth.checkLogin();
+      console.log("log1 _ 차윤성개병신");
       if (this.props.Auth.logged_in_user) {
         this.userType = this.props.Auth.logged_in_user.type;
+        console.log(this.userType);
+        if (this.userType === 0) {
+          console.log("차윤성병신");
+          dataLayer.push({ event: "ClientChat" });
+        } else {
+          dataLayer.push({ event: "PartnerChat" });
+        }
         console.log("로그인된 유저는 " + this.userType);
       }
       console.log("onOpen() 호출");
@@ -435,6 +446,7 @@ class ChatTestContainer extends React.Component {
     };
   }
 
+  //redis에서 뿌려줄 때
   onSendMessage = (myMessage) => {
     console.log(myMessage);
     console.log(this.userType);
