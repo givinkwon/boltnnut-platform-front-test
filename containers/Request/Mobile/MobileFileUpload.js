@@ -1516,17 +1516,19 @@ class FileUploadContainer extends Component {
                     <ItemBox id="itemBox">
                       <MainBox>
                         <StlBox>
-                          <div>{data.fileName}</div>
-                          <div
+                        <div style = {{marginBottom: 30}}>{data.fileName}</div>
+                          {/* <div
                             style={{
+                              display: "flex",
                               width: "110px",
                               height: "110px",
                               border: "1px solid black",
                               textAlign: "center",
+                              alignItems: "center",
                             }}
-                          >
-                            DWG
-                          </div>
+                          > */}
+                            
+                          {/* </div> */}
                         </StlBox>
                         <ColumnBox>
                           <ManufactureBox>

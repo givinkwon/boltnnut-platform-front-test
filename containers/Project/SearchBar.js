@@ -7,7 +7,7 @@ import ButtonComponent from "components/Buttonv2";
 
 import Background from 'components/Background';
 import Container from 'components/Containerv1';
-
+import {toJS} from "mobx";
 
 import { PRIMARY2 } from "static/style";
 
@@ -23,7 +23,43 @@ class SearchBarConatiner extends React.Component {
     modal_open: false,
     list: false,
     width: null,
+    filter_active: false,
   };
+
+  filterActiveHandler = () => {
+
+    if (this.state.filter_active) {
+      this.setState({ filter_active: false });
+    } else {
+      this.setState({ filter_active: true });
+    }
+  };
+
+  activeHandler = (idx) => {
+    const { Project } = this.props;
+    if(idx=== Project.radiobox_checked_idx) {
+      // console.log("equal")
+       return true; 
+    } else { 
+      return false; 
+    }
+  };
+  onClickHandler = (item, idx) => {
+    const { Project } = this.props       
+    console.log(idx);
+    if(Project.radiobox_checked_idx !== idx){        
+      this.setState({index : idx})    
+      Project.radiobox_checked_idx = idx
+      Project.filter = item.name     
+      Project.project_next = null;
+      Project.project_count = null;
+// this.count = 0;
+      Project.currentPage = 1;     
+      console.log(Project.filter)
+      Project.getProjectByPrice(Project.search_text)
+    }
+  };
+
 
   selectClick = () => {
     const{list} = this.state;
@@ -122,7 +158,7 @@ class SearchBarConatiner extends React.Component {
 
     return (
       <>
-      {width > 1299.98 ? 
+      {width > 768 ? 
       <Form>
         <Box active={this.state.list===true} onClick ={()=>this.state.list ? this.selectOut():this.selectClick()}  onBlur = {()=>this.selectOut()}>
         <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>       
@@ -152,7 +188,7 @@ class SearchBarConatiner extends React.Component {
           </SearchButton>
       </Form>
       :
-      <Form>
+      <Form active = {this.state.filter_active}>
         <SearchFilterBox>
           <SearchBar>
             <div>
@@ -181,32 +217,36 @@ class SearchBarConatiner extends React.Component {
             </SearchButton>
             </div>
           </SearchBar>
-          <Filter><img src={filter_img} /></Filter>
+          <Filter onClick={() => {
+              this.filterActiveHandler();
+            }}>
+              <img src={filter_img} />
+          </Filter>
         </SearchFilterBox>
         
-        {/* <FilterContainer
+        <FilterContainer
           style={{ flex: "0 auto" }}
           active={this.state.filter_active}
-        > */}
-          {/* {Partner.filter_city_ary.map((item, idx) => {
+        >
+          {request_data.map((item, idx) => {
             return (
               <>
-                {console.log(toJS(item))}
+              {console.log(toJS(item))}
                 <FilterContent
                   onClick={() => {
-                    this.onClickHandler(item.id);
+                    this.onClickHandler(item, item.id);
                   }}
                   active={this.activeHandler(item.id)}
                 >
                   <div active={this.activeHandler(item.id)}>
                     <div active={this.activeHandler(item.id)}></div>
                   </div>
-                  <span>{item.city}</span>
+                  <span>{item.name}</span>
                 </FilterContent>
               </>
             );
-          })} */}
-        {/* </FilterContainer> */}
+          })}
+        </FilterContainer>
       </Form>
     }
     </>
@@ -215,6 +255,29 @@ class SearchBarConatiner extends React.Component {
 }
 
 export default SearchBarConatiner;
+
+const request_data = [
+  {
+    id: "1",
+    name: "전체",
+    checked: "false",
+  },
+  {
+    id: "2",
+    name: "상담요청",
+    checked: "false",
+  },
+  {
+    id: "3",
+    name: "견적문의",
+    checked: "false",
+  },
+  {
+    id: "4",
+    name: "업체수배",
+    checked: "false",
+  },
+];
 
 const categoryArray = [
   {label: '전체', value: '전체'},
@@ -226,7 +289,31 @@ const SearchBar = styled.div`
 display: flex;
 box-sizing: border-box;
 
-@media (min-width: 1300px) {
+@media (min-width: 768px) and (max-width: 1299.98px){
+  width: 690px;
+  height: 44px;
+  box-sizing: border-box;
+  margin 0 24px;
+  
+  input {
+    font-size: 18px;
+    width: 100%;
+    padding: 0 14px;
+
+    border: 1px solid #c6c7cc;
+    border-radius: 3px;
+    :focus {
+      outline: none;
+    }
+    ::placeholder{
+      color: #c1bfbf;
+    }
+  }
+
+}
+
+
+@media (min-width: 767.98px) {
   width: 690px;
   height: 44px;
   box-sizing: border-box;
@@ -247,18 +334,16 @@ box-sizing: border-box;
     }
   }
 }
-   
-  @media (min-width: 380px) and (max-width: 767.98px) {
-    width: 75%;
+
+
+  @media (min-width: 0px) and (max-width: 767.98px){
+    width: 100%;
     height: 43px;
-    margin 0 24px;
+    margin 0 14px;
     border: 1px solid #c6c7cc;
     border-radius: 3px;
     >div:nth-of-type(1){
-      //border: 1px solid blue;
       flex-grow:1;
-      //width:calc(40% - 20px);
-      width: 70px;
     }
   
     >div:nth-of-type(2){
@@ -284,81 +369,6 @@ box-sizing: border-box;
     >div:nth-of-type(3){
         //border: 1px solid black;
         flex-grow:1;
-
-  }
-
-
-  }
-  @media (min-width: 0px) and (max-width: 380px) {
-    //margin-top: 30px;    
-    input {
-      font-size: 12px;
-      width: 100%;
-    }
-    >div:nth-of-type(1){
-      width: 70px;
-    }
-    >div:nth-of-type(2){
-      //border: 1px solid green;
-      flex-grow:5;
-      input {
-        
-          padding-left: 15px;
-      
-      }
-        
-  }
-  
-@media (min-width: 380px) and (max-width: 480px) {
-  //margin-top: 30px;    
-  input {
-    font-size: 12px;
-    width: 100%;
-  }
-
-  >div:nth-of-type(1){
-    width: 70px;
-  }
-}
-
-@media (min-width: 480px) and (max-width: 580px) {
-  //margin-top: 30px;    
-  input {
-    font-size: 12px;
-    width: 100%;
-  }
-
-  >div:nth-of-type(1){
-    width: 60px;
-  }
-}
-
-  @media (min-width: 580px) and (max-width: 767.98px) {
-    //margin-top: 30px;    
-    input {
-      font-size: 12px;
-      width: 100%;
-    }
-    >div:nth-of-type(1){
-      width: 50px;
-    }
-
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 30px;
-    input {
-      font-size: 16px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-top: 40px;
-    input {
-      font-size: 17px;
-    }
-  }
-  @media (min-width: 1300px) {
-    input {
-      font-size: 18px;
     }
   }
 
@@ -382,6 +392,7 @@ const SearchFilterBox = styled.div`
   //border: 2px solid green;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const SearchButton = styled(ButtonComponent)`
@@ -414,14 +425,22 @@ option{
   background-color: #ffffff;
   position: relative;
 }
-@media (min-width: 768px) {
-  
-width: 180px;
-height: 36px;
-option{
-  color: #c1bfbf;
+@media (min-width: 768px) and (max-width: 1299.98px) {
+  width: 140px;
+  height: 36px;
+  option{
+    color: #c1bfbf;
+  }
 }
+
+@media (min-width: 1300px) {
+  width: 180px;
+  height: 36px;
+  option{
+    color: #c1bfbf;
+  }
 }
+
 `
 
 const Box = styled.div`
