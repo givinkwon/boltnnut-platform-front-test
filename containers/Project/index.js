@@ -29,6 +29,9 @@ class ProjectContainer extends React.Component {
     Project.newIndex = 0;
     Project.myIndex = 1;
     await Auth.checkLogin();
+    if (Auth.logged_in_client) {
+      Project.getPage(Auth.logged_in_client.id);
+    }
   }
 
   render() {
@@ -44,11 +47,10 @@ class ProjectContainer extends React.Component {
           
             <>
             {Project.newIndex == 0 && (
-              // <NoProject/>
               <>
               <ProjectDivider/>
-              {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
-              {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />}
+              {Project.myIndex == 0 ? <ProjectSearch length={this.props.length}/> :  Project.projectDataList[0]? <ClientContentContainer length={this.props.length}/> : <NoProject/>}
+              {/* {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />} */}
             </>
             )}
             {Project.newIndex == 1 && (
@@ -63,8 +65,9 @@ class ProjectContainer extends React.Component {
           {Project.newIndex == 0 && (
             <>
               <ProjectDivider/>
-                {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
-                {Project.myIndex == 1 && <PartnerMyProject/>}   
+                
+                {Project.myIndex == 0 ? <ProjectSearch length={this.props.length}/> :  (Auth.logged_in_partner.answer_set[0] ?  <PartnerMyProject/> : <NoProject/>) }
+                {/* {Project.myIndex == 1 && <PartnerMyProject/>}    */}
             </>
           )}
           {Project.newIndex == 1 && (

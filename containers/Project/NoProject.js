@@ -35,19 +35,19 @@ class NoProject extends React.Component {
               <InlineDiv
                 style={{ alignItems: "center", justifyContent: "center" }}
               >
-                <FontSize22>ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</FontSize22>
+                {/* <FontSize22>ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</FontSize22> */}
               </InlineDiv>
               <InlineDiv
                 style={{ alignItems: "center", justifyContent: "center" }}
               >
-                <FontSize22>BBBBBBBBBBB</FontSize22>
+                {/* <FontSize22>BBBBBBBBBBB</FontSize22> */}
               </InlineDiv>
             </RequestCompleteDesc>
 
             <ButtonBox>
               <HomeBtn onClick={() => Router.push("/")}>홈으로 가기</HomeBtn>
 
-              <MyProjectBtn onClick={() => this.search()}>프로젝트 등록하기</MyProjectBtn>
+              <MyProjectBtn onClick={() => Router.push("/request")}>프로젝트 등록하기</MyProjectBtn>
             </ButtonBox>
             </>
             }
@@ -63,12 +63,12 @@ class NoProject extends React.Component {
               <InlineDiv
                 style={{ alignItems: "center", justifyContent: "center" }}
               >
-                <FontSize22>AAAAAAAAAAAA</FontSize22>
+                {/* <FontSize22>AAAAAAAAAAAA</FontSize22> */}
               </InlineDiv>
               <InlineDiv
                 style={{ alignItems: "center", justifyContent: "center" }}
               >
-                <FontSize22>BBBBBBBBBBB</FontSize22>
+                {/* <FontSize22>BBBBBBBBBBB</FontSize22> */}
               </InlineDiv>
             </RequestCompleteDesc>
 
