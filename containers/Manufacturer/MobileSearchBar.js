@@ -100,6 +100,7 @@ class MobileSearchBarConatiner extends React.Component {
   };
 
   filterActiveHandler = () => {
+
     if (this.state.filter_active) {
       this.setState({ filter_active: false });
       this.props.Partner.check_click_filter = false;

@@ -2,7 +2,7 @@ import React from "react";
 import ClientContentContainer from "./Client/Content";
 import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobileProject";
 import ProjectSearch from "./Partner/Content";
-import PartnerMobileContentContainer from "./Partner/Mobile/MobileProject";
+import MobileProjectSearch from "./Partner/Mobile/MobileProject";
 import BannerContainer from "./Banner";
 
 import ProjectDetailContainer from "./Client/ProjectDetail/ProjectDetail";
@@ -36,75 +36,93 @@ class ProjectContainer extends React.Component {
 
     return (
       <>
+      {this.props.width && this.props.width > 767.98 ? 
+        <>
+        <div style={{ overflow: "visible" }}>
+        <BannerContainer />
         {Auth.logged_in_client &&
-          (this.props.width && this.props.width > 1279.98 ? (
-            <div style={{ overflow: "visible" }}>
-              <BannerContainer />
-              {Project.newIndex == 0 && (
-                // <NoProject/>
-                <>
-                <ProjectDivider/>
-                {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
-                {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />}
-              </>
-              )}
-              {Project.newIndex == 1 && (
-                <ProjectDetailContainer user="client" />
-              )}
-              
+          
+            <>
+            {Project.newIndex == 0 && (
+              // <NoProject/>
+              <>
+              <ProjectDivider/>
+              {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+              {Project.myIndex == 1 && <ClientContentContainer length={this.props.length} />}
+            </>
+            )}
+            {Project.newIndex == 1 && (
+              <ProjectDetailContainer user="client" />
+            )}
+         </>
+        }
 
-            </div>
-          ) : (
-            <div>
-              {Project.newIndex == 0 && (
-                <>
-                {/* <ProjectDivider/>
-                {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
-                {Project.myIndex == 1 && <ClientMobileContentContainer width={this.props.width} />} */}
-                <ClientMobileContentContainer width = {this.props.width} />
-                </>
-              )}
-
-              {Project.newIndex == 1 && (
-                <MobileProjectDetailContainer user="client" />
-              )}
-            </div>
-          ))}
         {Auth.logged_in_partner &&
-          (this.props.width && this.props.width > 1279.98 ? (
-            <div style={{ overflow: "visible" }}>
-              <BannerContainer />
+          
+          <>
+          {Project.newIndex == 0 && (
+            <>
+              <ProjectDivider/>
+                {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+                {Project.myIndex == 1 && <PartnerMyProject/>}   
+            </>
+          )}
+          {Project.newIndex == 1 && (
+            <ProjectDetailContainer user="partner" />
+          )}
+          {Project.newIndex == 2 && <PartnerAnswer />}
+          {Project.newIndex == 3 && <AnswerCompleteContainer />}
+            </>
+        
+        }
+        
+        </div>
+        </>
+      :
 
-              {Project.newIndex == 0 && (
-                <>
-                  <ProjectDivider/>
-                    {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
-                    {Project.myIndex == 1 && <PartnerMyProject/>}   
-                </>
-              )}
-              {Project.newIndex == 1 && (
-                <ProjectDetailContainer user="partner" />
-              )}
-              {Project.newIndex == 2 && <PartnerAnswer />}
-              {Project.newIndex == 3 && <AnswerCompleteContainer />}
+      <>
+      {Auth.logged_in_client && 
+        <div>
+        {Project.newIndex == 0 && (
+          <>
+          <ProjectDivider/>
+          {Project.myIndex == 0 && 
+            <>
+              <SearchBarConatiner/>
+              <MobileProjectSearch width={this.props.width} />
+            </>}
+          {Project.myIndex == 1 && <ClientMobileContentContainer width={this.props.width} />}
+          {/* <ClientMobileContentContainer width = {this.props.width} /> */}
+          </>
+        )}
 
-            </div>
-          ) : (
-            <div>
-              {Project.newIndex == 0 && (
-                <>
-                {/* <ProjectDivider/> */}
-                <SearchBarConatiner/>
-                <PartnerMobileContentContainer width={this.props.width} />
-                </>
-              )}
-              {Project.newIndex == 1 && (
-                <MobileProjectDetailContainer user="partner" />
-              )}
-              {Project.newIndex == 2 && <MobilePartnerAnswer />}
-              {Project.newIndex == 3 && <MobileAnswerCompleteContainer />}
-            </div>
-          ))}
+        {Project.newIndex == 1 && (
+          <MobileProjectDetailContainer user="client" />
+        )}
+      </div>
+        
+      }
+      {Auth.logged_in_partner && 
+        <div>
+          {Project.newIndex == 0 && (
+            <>
+            {/* <ProjectDivider/> */}
+            <SearchBarConatiner/>
+            <MobileProjectSearch width={this.props.width} />
+            </>
+          )}
+          {Project.newIndex == 1 && (
+            <MobileProjectDetailContainer user="partner" />
+          )}
+          {Project.newIndex == 2 && <MobilePartnerAnswer />}
+          {Project.newIndex == 3 && <MobileAnswerCompleteContainer />}
+        </div>
+      
+      }
+    </> 
+    }
+
+        
       </>
     );
   }

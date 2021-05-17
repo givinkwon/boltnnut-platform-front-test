@@ -8,7 +8,7 @@ import Container from 'components/Containerv1';
 import ProposalCard from 'components/ProposalCard';
 import Background from 'components/Background';
 import Project from 'stores/Project';
-
+import { toJS } from "mobx";
 const pass1 = 'static/images/pass1.png'
 const pass2 = 'static/images/pass2.png'
 
@@ -20,103 +20,105 @@ import * as Content from "components/Content";
 @inject('Project','Auth')
 @observer
 class MobileProjectContentContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.pushToDetail = this.pushToDetail.bind(this);
-  }
+
   state = {
     current: 0,
     next: true,
     prev: true,
     count: 0
   }
-  pushToDetail = async (id) => {
-    const { Project } = this.props;
-    console.log(id);
-    Project.selectedProjectId = id;
-    await Project.getProjectDetail(id);
-    Project.newIndex = 1;
-
-    // await Router.push(`/project/${id}`);
-    Project.setProjectDetailData(id);
-  };
-
+  
   handleIntersection = (event) => {
     if(event.isIntersecting) {
       console.log('추가 로딩을 시도합니다')            
     }
   }
   
-  async componentDidMount() {
-    console.log("<Mobile> did mount")
-    const { Project, Auth } = this.props 
-    console.log(Project.current_user_id)
-    
-    await Auth.checkLogin();
-    if(Auth.logged_in_client){
-      Project.getPage(Auth.logged_in_client.id)  
-    }
-    console.log(Auth.logged_in_client)    
-  }
 
-  // afterChangeHandler = (current) => {
-  //   if(current === 0){
-  //     this.setState({next: true, prev: false})
-  //   } else {
-  //       this.setState({next: true, prev: true})
-  //   }
-  // }
- 
+  pushToDetail = async (id) => {
+    const { Project } = this.props;
+    console.log(id, Project.newIndex);
+
+    await Project.getProjectDetail(id);
+    Project.newIndex = 1;
+    Project.selectedProjectId = id;
+    // await Router.push(`/project/${id}`);
+    Project.setProjectDetailData(id);
+  };
+
+  async componentDidMount() {
+    const { Project, Auth } = this.props;
+    Project.newIndex = 0;
+    Project.search_text = "";
+    Project.currentPage = 1;
+
+    console.log("did mount");
+
+    await Auth.checkLogin();
+    Project.getProjectByPrice();
+  }
 
   movePage = (e) => {
-    const { Project, Auth } = this.props 
-    const newPage = e.target.innerText*1;    
-    
-    Project.currentPage = newPage
-    Project.getPage(Auth.logged_in_client.id, newPage)
-  }
+    const { Project, Auth } = this.props;
+    e.preventDefault();
+    // Project.category_reset()
+    const newPage = e.target.innerText * 1;
 
-  pageNext = () => {  
-    const { Project, Auth } = this.props  
+    Project.currentPage = newPage;
+    Project.getProjectByPrice(Project.search_text, newPage);
+  };
 
-    if (Project.currentPage  < Project.project_page) {
-      const nextPage = Project.currentPage+1  
-      Project.currentPage = nextPage
-      Project.getPage(Auth.logged_in_client.id, Project.currentPage);
-    }        
-  }
-  
-  pagePrev = () => {
-    const { Project, Auth } = this.props        
-  
-    if (Project.currentPage  > 1) {
-      const newPage = Project.currentPage  - 1
-      Project.currentPage = newPage          
-      Project.getPage(Auth.logged_in_client.id, Project.currentPage)
+  pageNext = (e) => {
+    const { Project, Auth } = this.props;
+    e.preventDefault();
+    if (Project.currentPage < Project.project_page) {
+      // Project.category_reset()
+      const nextPage = Project.currentPage + 1;
+      Project.currentPage = nextPage;
+      Project.getProjectByPrice(Project.search_text, Project.currentPage);
     }
-  }
+  };
 
+  pagePrev = (e) => {
+    const { Project } = this.props;
+    e.preventDefault();
+    if (Project.currentPage > 1) {
+      // Project.category_reset()
+      const newPage = Project.currentPage - 1;
+      Project.currentPage = newPage;
+      Project.getProjectByPrice(Project.search_text, Project.currentPage);
+    }
+  };
+ 
   render() {
     const { Project } = this.props
     const current_set = (parseInt((Project.currentPage-1) /5)+1)    
-
-    // { Project.projectData.length > 0 && Project.projectData.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             
+    console.log(toJS(Project.projectDataList))
+                           
       return(
         <>          
         <div>
-          {Project.projectDataList && Project.projectDataList.map((item, idx) => {
+          <Background>
+          <Container style = {{display:"flex", flexDirection: "column"}}>
+            <Font15 style = {{marginLeft: 14, marginTop: 27, marginBottom: 20}}>
+            {Project.project_count}개의 프로젝트
+            </Font15>
+          
+          {Project.projectDataList && Project.currentPage > 0 && Project.projectDataList.map((item, idx) => {
             //   {data.map((item, idx) => {
             return(            
-              <Background style={{marginBottom: '3px'}}>
-                <Container>        
-                <div
-                      style={{ cursor: "pointer", width: "100%", marginTop: 14}}
-                      onClick={() => this.pushToDetail(item.id)}
-                    >
-                  <ProposalCard width={this.props.width} data={item} handleIntersection={this.handleIntersection}/> 
-                  </div>
-                </Container>          
-              </Background>
+              <div
+                style={{ cursor: "pointer", width: "100%", marginBottom: 14 }}
+                onClick={() => this.pushToDetail(item.id)}
+              >    
+                <ProposalCard data={item}
+                              middleCategory={Project.middle_category_name[idx]}
+                              mainCategory={Project.main_category_name[idx]}
+                              newData={Project.data_dt[idx]}
+                              checkTotal={Project.filter_price}
+                              handleIntersection={this.handleIntersection}
+                              customer="partner"/> 
+              </div>  
             )        
         })}
 
@@ -129,7 +131,9 @@ class MobileProjectContentContainer extends React.Component {
               <PageCount value = {5*(current_set - 1) + 4} active={Project.currentPage %5 == 0} style={{display:  Project.project_page < 5*(current_set - 1) + 5 ? 'none': 'block' }} onClick = {this.movePage}> {5*(current_set - 1) + 5} </PageCount>
               {/* <PageCount> ... </PageCount> */}
             <img src={pass2} style={{opacity: Project.project_page == Project.currentPage  ? 0.4 : 1 }} onClick = {this.pageNext} />
-        </PageBar>    
+        </PageBar>   
+        </Container> 
+        </Background>
         </div>          
         </>
     )}
@@ -216,7 +220,15 @@ const Header = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+`
+const Font15 = styled(Content.FontSize15)`
 
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.27 !important;
+  letter-spacing: -0.38px !important;
+  color: #282c36;
 `
 
 const Font16 = styled(Content.FontSize16)`
@@ -226,8 +238,6 @@ const Font16 = styled(Content.FontSize16)`
     line-height: 18;
     letter-spacing: -0.4px;
     font-weight: bold;
-
 `
 
 export default MobileProjectContentContainer
-
