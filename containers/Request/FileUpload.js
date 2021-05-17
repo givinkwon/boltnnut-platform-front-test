@@ -104,11 +104,11 @@ class FileUploadContainer extends Component {
     ],
     projectname: "",
   };
-  
+
   componentDidMount = () => {
-    this.props.ManufactureProcess.reset()
-    fileList = []
-  }
+    this.props.ManufactureProcess.reset();
+    fileList = [];
+  };
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
   setNumCount = (data, val) => {
     console.log(val);
@@ -262,7 +262,7 @@ class FileUploadContainer extends Component {
       alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
       return false;
     }
-    if (ManufactureProcess.requestComment.length == 0 ) {
+    if (ManufactureProcess.requestComment.length == 0) {
       alert("공개내용을 작성해주세요");
       return false;
     }
@@ -284,8 +284,9 @@ class FileUploadContainer extends Component {
 
     let request_state = "";
     if (ManufactureProcess.purposeContent) {
-
-      request_state = this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
+      request_state = this.state.purposeAry[
+        ManufactureProcess.purposeContent - 1
+      ].name;
     }
     console.log(request_state);
 
@@ -382,6 +383,7 @@ class FileUploadContainer extends Component {
         .then((res) => {
           console.log("create: ", res);
           this.props.Request.newIndex = 1;
+          dataLayer.push({ event: "request_Drawing" });
         })
         .catch((e) => {
           console.log(e);
@@ -443,7 +445,9 @@ class FileUploadContainer extends Component {
     } else {
       item.checked = true;
       if (ManufactureProcess.purposeContent) {
-        this.state.purposeAry[ManufactureProcess.purposeContent - 1].checked = false;
+        this.state.purposeAry[
+          ManufactureProcess.purposeContent - 1
+        ].checked = false;
       }
       ManufactureProcess.purposeContent = item.id;
     }
@@ -1182,7 +1186,7 @@ class FileUploadContainer extends Component {
 
   render() {
     const { ManufactureProcess } = this.props;
-    const { purposeAry} = this.state;
+    const { purposeAry } = this.state;
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
 		다음 사항이 명확하게 작성되어야 정확한 답변을 받을 가능성이 높습니다.
 		1. 제작품 목적 및 사용 환경
@@ -2219,8 +2223,6 @@ class FileUploadContainer extends Component {
                     // ManufactureProcess.fileArray.map((item, idx) => {
                     //   console.log(item.file);
                     // });
-
-
                   }}
                 >
                   상담 및 가격 요청하기
