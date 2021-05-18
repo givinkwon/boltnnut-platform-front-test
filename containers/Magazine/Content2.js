@@ -14,7 +14,7 @@ import { BLACK1, GRAY, DARKGRAY, PRIMARY, WHITE } from "static/style";
 import { inject, observer } from "mobx-react";
 
 import * as FormatUtils from "utils/format";
-
+import * as RequestAPI from "axios/Request";
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 const dropDown = "static/images/pass5.png";
@@ -32,8 +32,8 @@ class ContentConatiner extends React.Component {
   test = (item, idx) => {};
 
   componentDidMount = () => {
-    this.props.Magazine.getMagazineCategory()
-	};
+    this.props.Magazine.getMagazineCategory();
+  };
 
   activeHandler = (idx) => {
     // console.log(`this.state.index : ${this.state.index}`)
@@ -49,19 +49,26 @@ class ContentConatiner extends React.Component {
 
   onClickHandler = (item, idx) => {
     const { Magazine } = this.props;
-    this.props.Magazine.getMagazine(item.id)
+    this.props.Magazine.getMagazine(item.id);
 
+    if (!Magazine.manufactureClick) {
+      Magazine.manufactureClick = true;
+      dataLayer.push({ event: "Magazine_manufactureClick" });
+    } else if (!Magazine.dictClick) {
+      Magazine.dictClick = true;
+      dataLayer.push({ event: "Magazine_dictionaryClick" });
+    }
+    console.log(item);
     if (item.checked) {
       item.checked = false;
-      this.props.Magazine.init()
-      
+      this.props.Magazine.init();
     } else {
       item.checked = true;
       if (Magazine.category_checked_idx > -1) {
         Magazine.categoryAry[Magazine.category_checked_idx].checked = false;
       }
       // category_checked_idx 설정
-      Magazine.category_checked_idx = idx
+      Magazine.category_checked_idx = idx;
     }
 
     this.setState({ f: 3 });
@@ -205,15 +212,15 @@ class ContentConatiner extends React.Component {
                       this.onClickHandler(item, idx);
                     }}
                   >
-                    <span className={`CategoryName${idx}`}>{item.category}</span>
+                    <span className={`CategoryName${idx}`}>
+                      {item.category}
+                    </span>
                   </div>
                 </CategoryMenu>
               );
             })}
-          
           </CategoryBox>
           <ContentBox>
-           
             <Row>
               {/* <div> */}
               {/* <div style={{width: '280px', height: '140px', border: '3px solid red'}}>A</div> */}
@@ -363,7 +370,6 @@ class ContentConatiner extends React.Component {
     );
   }
 }
-
 
 export default ContentConatiner;
 

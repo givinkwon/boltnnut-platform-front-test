@@ -10,8 +10,6 @@ import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Info2/ChatTest";
 
-
-
 @inject("Project", "Auth", "Partner")
 @observer
 class MyProject extends React.Component {
@@ -45,8 +43,9 @@ class MyProject extends React.Component {
 
     if (Project.projectDetailData) {
       partnerprojectlist.push({
-        name: Project.projectDetailData.request_set[0].name,            // 프로젝트 이름
-        project:Project.projectDetailData.id,
+        name: Project.projectDetailData.request_set[0].name, // 프로젝트 이름
+        project: Project.projectDetailData.id,
+        answerId: data.id,
         content: data.content1,
       });
       this.setState({ Partnerprojectlist: partnerprojectlist });
@@ -59,15 +58,13 @@ class MyProject extends React.Component {
     await Auth.checkLogin();
     if (Auth.logged_in_partner) {
       Partner.answer_set = Auth.logged_in_partner.answer_set;
-      Partner.getPartnerDetail(Auth.logged_in_partner.id)
-      console.log(toJS(Partner.detail))
+      Partner.getPartnerDetail(Auth.logged_in_partner.id);
+      console.log(toJS(Partner.detail));
 
       Partner.answer_set.map((data) => {
         this.getProject(data);
       });
     }
-
-
   }
 
   render() {
@@ -91,21 +88,19 @@ class MyProject extends React.Component {
               Partnerprojectlist.map((data, idx) => {
                 return (
                   <>
-                  <BoxContainer>
-                    <Font22>
-                      {data.name}
-                    </Font22>
-                    {this.state.Partnerprojectlist[idx] &&Partner.detail&& (
-                      <ChatItemContainer
-                        logo={Partner.detail.logo}
-                        name={Partner.detail.name}
-                        id={data.project}
-                        content={data.content}
-                        modalHandler={this.modalHandler}
-                        user = {Auth}
-                        pushToDetail = {this.pushToDetail}
-                      />
-                    )}
+                    <BoxContainer>
+                      <Font22>{data.name}</Font22>
+                      {this.state.Partnerprojectlist[idx] && Partner.detail && (
+                        <ChatItemContainer
+                          logo={Partner.detail.logo}
+                          name={Partner.detail.name}
+                          id={data.answerId}
+                          content={data.content}
+                          modalHandler={this.modalHandler}
+                          user={Auth}
+                          pushToDetail={this.pushToDetail}
+                        />
+                      )}
                     </BoxContainer>
                   </>
                 );
