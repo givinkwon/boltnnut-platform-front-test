@@ -4,6 +4,7 @@ import styled, { keyframes } from "styled-components";
 import StarRatingComponent from "react-star-rating-component";
 import { componentByNodeRegistery } from "mobx-react";
 import { inject, observer } from "mobx-react";
+import * as PartnerAPI from "axios/Partner";
 
 //import Modal from '../../../commons/components/Modals/Modal';
 const star = "/static/icon/star.svg";
@@ -29,11 +30,11 @@ class ReviewModal extends React.Component {
   };
 
   starCheckHandler = async (star_id, bool) => {
-    console.log(`${star_id}번째 클릭 : ${bool}`);
+    // console.log(`${star_id}번째 클릭 : ${bool}`);
     this.state.star_ary.map((data) => {
-      console.log(data.id - 1);
+      //   console.log(data.id - 1);
       if (star_id === data.id - 1) {
-        console.log("TTTTTTTTTTT");
+        // console.log("TTTTTTTTTTT");
       }
     });
     await this.setState({
@@ -46,10 +47,10 @@ class ReviewModal extends React.Component {
           : data
       ),
     });
-    console.log(this.state.star_ary);
+    //console.log(this.state.star_ary);
   };
   starRatingHandler = async (star_id) => {
-    console.log(star_id);
+    //console.log(star_id);
     if (this.state.star_ary[star_id - 1].checked) {
       //this.state.star_ary[star_id - 1].checked = false;
       const bool = false;
@@ -58,62 +59,18 @@ class ReviewModal extends React.Component {
       for (let i = star_id; i < 5; i++) {
         await this.starCheckHandler(i, bool);
       }
-      //   this.setState({
-      //     star_ary: star_ary.map((data) =>
-      //       star_id - 1 === data.id - 1
-      //         ? {
-      //             ...data,
-      //             checked: bool,
-      //           }
-      //         : data
-      //     ),
-      //   });
     } else {
       const bool = true;
-      console.log("false");
       for (let i = 0; i < star_id; i++) {
-        console.log(i);
-        console.log(star_id);
         await this.starCheckHandler(i, bool);
       }
-
-      //   this.setState({
-      //     star_ary: star_ary.map((data) =>
-      //       star_id - 1 === data.id - 1
-      //         ? {
-      //             ...data,
-      //             checked: bool,
-      //           }
-      //         : data
-      //     ),
-      //   });
     }
   };
-
-  //   this.setState({
-  //     information: information.map(
-  //       info => id === info.id
-  //         ? { ...info, ...data } // 새 객체를 만들어서 기존의 값과 전달받은 data 을 덮어씀
-  //         : info // 기존의 값을 그대로 유지
-  //     )
-  //   });
-
-  //   this.setState({
-  //     list : update(
-  //         this.state.list, // list배열의
-  //         {
-  //             [index] : { //index번째 아이템의
-  //                 field1: {$set: "value1"}, //field1 값을 value1으로 하고
-  //                 filed2: {$set: "value2"}  // filed2 값을 value2로 변경하는 코드
-  //             }
-  //         }
-  //     )
-  // });
 
   reviewHandler = (event) => {
     const textareaLineHeight = 34;
     const { minRows, maxRows } = this.state;
-    // const { ManufactureProcess } = this.props;
+    const { Partner } = this.props;
     const previousRows = event.target.rows;
     event.target.rows = minRows; // reset number of rows in textarea
 
@@ -133,25 +90,70 @@ class ReviewModal extends React.Component {
       rows: currentRows < maxRows ? currentRows : maxRows,
     });
 
-    // ManufactureProcess.requestComment = event.target.value;
+    Partner.reviewContent = event.target.value;
+  };
+
+  onSubmit = async () => {
+    const { Partner, Auth } = this.props;
+
+    let score = 0;
+    await this.state.star_ary.map((item, idx) => {
+      if (item.checked) {
+        score += 1;
+      }
+    });
+
+    // console.log(Auth.logged_in_client.id);
+    // console.log("제출 클릭!");
+    // console.log(Partner.reviewPartnerName);
+    // console.log(Partner.reviewContent);
+
+    // console.log(score);
+    var formData = new FormData();
+
+    formData.append("partnername", Partner.reviewPartnerName);
+    formData.append("client", Auth.logged_in_client.id);
+    formData.append("score", score);
+    formData.append("content", Partner.reviewContent);
+
+    // const Token = localStorage.getItem("token");
+
+    const req = {
+      data: formData,
+    };
+
+    // console.log(req);
+
+    PartnerAPI.setReview(req)
+      .then((res) => {
+        console.log("create: ", res);
+        alert("리뷰 작성이 정상적으로 완료되었습니다");
+        Partner.reviewModalActive = false;
+        // window.location.reload(true);
+        history.go(0);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 
   searchText = (e) => {
-    // const { Partner } = this.props;
+    const { Partner } = this.props;
     //console.log("click");
     // this.props.Partner.search_text = e.target.value;
-    this.setState({ search: e.target.value });
-    console.log(e.target.value);
-    // Partner.search_text = e.target.value;
+    //this.setState({ search: e.target.value });
+    // console.log(e.target.value);
+    Partner.reviewPartnerName = e.target.value;
 
     //Partner.getPartner();
   };
 
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-    const { open, close, header, children, width } = this.props;
-    console.log(open);
-    console.log(children);
+    const { open, close, header, children, width, data } = this.props;
+    // console.log(open);
+    // console.log(children);
     return (
       <ModalBox
         modal={open ? "openModal modal" : "modal"}
@@ -164,10 +166,10 @@ class ReviewModal extends React.Component {
               &times;{" "}
             </button>
             <section>
-              <header>{header}</header>
+              <header>{`${data.name} ${header}`}</header>
               <main>
                 <div>
-                  <span>이름</span>
+                  <span>제조사 이름</span>
 
                   <SearchBar>
                     <input
@@ -227,10 +229,8 @@ class ReviewModal extends React.Component {
                   </div>
                 </div>
               </main>
-              <footer>
-                <div className="close" onClick={close}>
-                  작성하기
-                </div>
+              <footer onClick={() => this.onSubmit()}>
+                <div>작성하기</div>
               </footer>
             </section>
           </>
@@ -302,8 +302,10 @@ const ModalBox = styled.div`
         display: flex;
         margin-bottom: 20px;
         > span {
-          width: 10%;
+          width: 18%;
           align-self: center;
+          text-align: right;
+          margin-right: 15px;
         }
 
         > div {
@@ -342,8 +344,9 @@ const ModalBox = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      border-radius: 5px;
       > div {
-        font-size: 20px;
+        font-size: 22px;
       }
     }
   }
@@ -366,33 +369,39 @@ const ModalBox = styled.div`
 
     z-index: 101;
 
-    height: 180px;
+    height: 500px;
     width: 90%;
+    right: 5%;
 
     > section {
       max-width: 100%;
       width: 90%;
-      height: 40%;
+      height: 77%;
 
       > header {
         position: relative;
         padding: 8px;
 
-        font-weight: 700;
+        font-weight: 600;
 
-        font-size: 22px;
+        font-size: 16px;
       }
       > main {
         height: 95%;
-        font-size: 16px;
+        font-size: 13px;
         font-weight: 600;
       }
       > footer {
+        border-radius: 5px;
+        cursor: pointer;
         height: 40px;
+        > div {
+          font-size: 13px;
+        }
       }
     }
     > button {
-      font-size: 14px;
+      font-size: 12px;
       margin: 10px 10px 0 0;
     }
   }
@@ -423,6 +432,13 @@ const SearchBar = styled.div`
     ::placeholder {
       color: #c1bfbf;
     }
+
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      height: 40px;
+      input {
+        width: 90%;
+      }
+    }
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -430,7 +446,7 @@ const SearchBar = styled.div`
     flex-direction: column;
     input {
       font-size: 12px;
-      width: 100%;
+      width: 93%;
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {

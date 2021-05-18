@@ -82,6 +82,17 @@ class Partner {
     { id: 4, checked: false },
     { id: 5, checked: false },
   ];
+  @observable partnerName = "";
+  @observable reviewPartnerName = 0;
+  @observable reviewScore = "";
+  @observable reviewContent = "";
+  @observable review_ary = [];
+  @observable review_next = 0;
+  @observable review_count = 0;
+  @observable review_done = false;
+  @observable loadReviewData = 0;
+  @observable userEmail = 0;
+  @observable review_user_ary = [];
 
   // 파트너의 답변
   @observable answer_set = [];
@@ -718,7 +729,7 @@ class Partner {
   @action setCategoryDic = async (req, sub_data, id) => {
     await PartnerAPI.getPartnerCategory(req)
       .then((res) => {
-        console.log(toJS(res));
+        // console.log(toJS(res));
         // console.log(`${sub_data} : ${toJS(res.data.category)}`);
         //this.category_ary[idx].push(res.data.category);
         // console.log(toJS(typeof this.category_name_ary));
@@ -735,7 +746,7 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    console.log(`${id} : ${toJS(this.category_dic[id])}`);
+    // console.log(`${id} : ${toJS(this.category_dic[id])}`);
   };
 
   @action getCategory = () => {
@@ -875,7 +886,7 @@ class Partner {
         req.params.history = this.search_text;
       }
     }
-    console.log(toJS(this.search_class));
+    // console.log(toJS(this.search_class));
     // if (this.search_text !== "") {
     //   req.params.search = ParseInt(this.search_text);
     // }
@@ -1052,6 +1063,135 @@ class Partner {
       });
   };
 
+  @action getReview = async (page = 1, clientId = "") => {
+    // console.log(clientId);
+    const req = {
+      params: {
+        partnername: this.partnerName,
+        //client: clientId,
+      },
+      // nextUrl: this.develop_next,
+    };
+
+    await PartnerAPI.getReview(req)
+      .then(async (res) => {
+        // console.log(res.data.results);
+        this.review_ary = this.review_ary.concat(res.data.results);
+
+        this.review_next = res.data.next;
+        this.review_count = res.data.count;
+        // console.log(this.review_count);
+
+        if (this.review_ary.length !== 0) {
+          this.loadReviewData = 1;
+          //await this.getClientEmail();
+        } else {
+          this.loadReviewData = -1;
+        }
+
+        while (this.review_next) {
+          const req = {
+            nextUrl: this.review_next,
+            params: {
+              partnername: this.partnerName,
+              // client: clientId,
+            },
+          };
+          await PartnerAPI.getNextReviewPage(req)
+            .then((res) => {
+              // console.log(res.data.results);
+              this.review_ary = this.review_ary.concat(res.data.results);
+
+              this.review_next = res.data.next;
+              //console.log(this.city_next);
+              //this.project_page = parseInt(this.project_count/5) + 1
+              // if (callback) {
+              //   callback();
+              // }
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    // console.log(toJS(this.review_ary));
+
+    // if (this.review_count !== 0 && clientId) {
+    //   this.review_done = true;
+    // } else {
+    //   this.review_done = false;
+    // }
+    // console.log(this.review_done);
+  };
+
+  @action checkReviewWriting = async (page = 1, clientId = "") => {
+    // console.log(clientId);
+    const req = {
+      params: {
+        client: clientId,
+      },
+
+      // nextUrl: this.develop_next,
+    };
+
+    await PartnerAPI.getReview(req)
+      .then(async (res) => {
+        // console.log(res.data.results);
+
+        this.review_count = res.data.count;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    if (this.review_count !== 0 && clientId) {
+      this.review_done = true;
+    } else {
+      this.review_done = false;
+    }
+    // console.log(this.review_done);
+  };
+
+  @action async getClientEmail() {
+    console.log("getClientEmail");
+    console.log(toJS(this.review_ary));
+    let req = {};
+
+    await Promise.all(
+      this.review_ary.map(async (item, idx) => {
+        req = {
+          params: {
+            id: item.client,
+          },
+        };
+        // console.log(req.params.id);
+
+        await PartnerAPI.getClientEmail(req)
+          .then((res) => {
+            console.log("MapMapMap");
+            // console.log(res.data.results);
+            // console.log(res.data.results[0].user);
+            // console.log(res.data.results[0]);
+
+            this.userEmail = res.data.results[0].user.username;
+            this.review_user_ary.push(res.data.results[0].user.username);
+            // console.log(toJS(this.review_user_ary));
+          })
+          .catch((e) => {
+            console.log(e);
+            console.log(e.response);
+          });
+        // console.log(toJS(this.review_user_ary));
+      })
+    );
+    console.log(toJS(this.review_user_ary));
+  }
   // @action getPartnerByRegion = async (page = 1) => {
   //   this.partner_list = [];
   //   //this.data_dt = [];

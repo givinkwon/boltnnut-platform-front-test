@@ -3,6 +3,7 @@ import Select from "react-select";
 import styled, { keyframes } from "styled-components";
 import Modal from "./ReviewModal";
 import { inject, observer } from "mobx-react";
+import ReviewCard from "./ReviewCard";
 
 @inject("Partner", "Auth")
 @observer
@@ -12,6 +13,12 @@ class ReviewContainer extends React.Component {
     modalOpen: false,
   };
 
+  componentDidMount = async () => {
+    const { Partner, Auth } = this.props;
+    await Partner.checkReviewWriting(1, Auth.logged_in_client.id);
+
+    console.log(Partner.review_done);
+  };
   openModal = () => {
     console.log("open click");
     this.setState({ modalOpen: true });
@@ -36,45 +43,54 @@ class ReviewContainer extends React.Component {
 
     return (
       <>
-        <MainContainer>
-          {/* <h1>{data.name}</h1> */}
-          <span
-            onClick={() => {
-              console.log("click");
-              this.openModal();
-            }}
-          >
-            리뷰 보기
-          </span>
-          {Partner.reviewModalActive && (
-            // <Layer onClick={this.modalHandler}>
-            <Layer>
-              {/* <Postcode /> */}
-              <span>
-                <Modal
-                  width={width}
-                  open={this.props.Partner.reviewModalActive}
-                  close={this.closeModal}
-                  header="Review"
-                  // title={data.real_phone}
-                  children={this.props.Partner.modalUserPhone}
-                  //children={data.name}
-                >
-                  {/* <p>
+        <ReviewWriting
+          reviewDone={Partner.review_done}
+          onClick={() => {
+            console.log("click");
+            console.log(data.name);
+            // Partner.partnerName = data.name;
+            // console.log(Partner.partnerName);
+            this.openModal();
+          }}
+        >
+          <span>리뷰 작성</span>
+        </ReviewWriting>
+        {Partner.reviewModalActive && (
+          // <Layer onClick={this.modalHandler}>
+          <Layer>
+            {/* <Postcode /> */}
+            <span>
+              <Modal
+                width={width}
+                open={this.props.Partner.reviewModalActive}
+                close={this.closeModal}
+                header="Review"
+                data={data}
+                // title={data.real_phone}
+                children={this.props.Partner.modalUserPhone}
+                //children={data.name}
+              >
+                {/* <p>
                             {data.user.phone
                               ? data.user.phone
                               : "전화번호 없음"}
                           </p> */}
-                  {/* <p>{idx}</p> */}
-                  {/* <p>{data.name}</p> */}
-                </Modal>
-                {/* <CheckBrowserModal
+                {/* <p>{idx}</p> */}
+                {/* <p>{data.name}</p> */}
+              </Modal>
+              {/* <CheckBrowserModal
                           open={this.props.Partner.modalActive}
                           handleClose={this.closeModal}
                         /> */}
-              </span>
-            </Layer>
-          )}
+            </span>
+          </Layer>
+        )}
+        <MainContainer
+          reviewDone={Partner.review_done}
+          loadReview={Partner.loadReviewData}
+        >
+          {/* <h1>{data.name}</h1> */}
+          {Partner.review_done && <ReviewCard />}
         </MainContainer>
       </>
     );
@@ -85,20 +101,36 @@ export default ReviewContainer;
 
 const MainContainer = styled.div`
   width: 100%;
-  height: 300px;
-  border: 3px solid red;
+  //height: 300px;
+  //border: 3px solid red;
+  background-color: ${(props) => (props.reviewDone ? "#c9c9c9" : "#e6e6e6")};
   margin-bottom: 30px;
+  // display: ${(props) => (props.reviewDone ? "flex" : "none")};
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  //padding: 12px 0;
   // background-image: url("/static/images/banner.jpg");
   // background-position: center;
   // background-size: cover;
+  filter: ${(props) => (props.reviewDone ? "" : "blur(20px)")};
+  // position: relative;
+  min-height: ${(props) => (props.loadReview === 1 ? "" : "200px")};
 
   > span {
-    border: 3px solid blue;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    //border: 3px solid blue;
     font-size: 20px;
     font-weight: bold;
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    min-height: ${(props) => (props.loadReview === 1 ? "" : "100px")};
   }
 `;
 
@@ -117,5 +149,39 @@ const Layer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
+  }
+`;
+
+const ReviewWriting = styled.div`
+  cursor: pointer;
+  // position: absolute;
+  //     top: 0;
+  //     left: 0;
+  //     right: 0;
+  //     bottom: 0;
+  //border: 3px solid blue;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  //top: 72%;
+  bottom: 50px;
+  z-index: 20;
+  display: ${(props) => (props.reviewDone ? "none" : "flex")};
+  width: 30%;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  background-color: #0933b3;
+  border-radius: 5px;
+  > span {
+    color: #ffffff;
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 33%;
+    height: 25px;
+    > span {
+      font-size: 12px;
+    }
   }
 `;
