@@ -9,7 +9,7 @@ import Container from "components/Containerv1";
 
 import { PRIMARY2 } from "static/style";
 
-@inject("Auth", "Project", "Request", "Partner")
+@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -38,8 +38,9 @@ class SearchBarConatiner extends React.Component {
     //Partner.getPartner();
   };
   search = () => {
-    const { Partner } = this.props;
+    const { Partner, ManufactureProcess } = this.props;
     console.log("click");
+    ManufactureProcess.saveSearchText(Partner.search_text);
     Partner.currentPage = 1;
     Partner.category_dic = {};
     Partner.getPartner();
@@ -51,9 +52,11 @@ class SearchBarConatiner extends React.Component {
     });
   };
   handleKeyDown = (e) => {
-    const { Partner } = this.props;
+    const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
       console.log("Enter");
+      console.log(e);
+      ManufactureProcess.saveSearchText(Partner.search_text);
       Partner.currentPage = 1;
       Partner.category_dic = {};
       Partner.getPartner();
