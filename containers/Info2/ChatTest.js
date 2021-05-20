@@ -172,15 +172,21 @@ class ChatTestContainer extends React.Component {
   userType = null;
 
   // 메세지 읽음 표시 함수
-  checkRead = (fullMessage, currentMessage, flag = 1) => {
-    console.log("CHECKREAD!!!!!!!");
+  checkRead = async (fullMessage, currentMessage, flag = 1) => {
+    console.log("================= Enter CheckRead ========================");
+    console.log(toJS(fullMessage));
+    console.log(toJS(currentMessage));
 
-    if (flag === 1) {
+    // let test = await toJS(fullMessage);
+    console.log(fullMessage.length);
+    // if (flag === 1)
+    if (fullMessage.length > 0) {
+      console.log("fullMessage forEach 돕니다");
       fullMessage.forEach((element) => {
-        // console.log("FULLMESSAGES");
+        console.log("FULLMESSAGES");
 
-        console.log(toJS(currentMessage.time));
-        console.log(toJS(element.time));
+        console.log(currentMessage.time);
+        console.log(element.time);
 
         if (
           currentMessage.type != element.member &&
@@ -220,9 +226,10 @@ class ChatTestContainer extends React.Component {
         console.log("우왕");
 
         const req = {
-          phoneNumber: "01041126637",
-          username: "",
-          title: "",
+          phoneNum: "01075731803",
+          requestTitle: "DDDD",
+          name: "오규석", //보내는사람
+          text: "fff",
         };
         console.log("Send KAKAO");
         RequestAPI.sendKakaoTalk(req)
@@ -233,6 +240,8 @@ class ChatTestContainer extends React.Component {
           });
       }
     }
+    console.log("================= Exit CheckRead ========================");
+    console.log(fullMessage);
   };
 
   async componentDidUpdate() {
@@ -241,10 +250,11 @@ class ChatTestContainer extends React.Component {
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
 
     this.props.Chat.current_time = temp;
-    console.log(toJS(this.props.Chat.current_time));
+    // console.log(toJS(this.props.Chat.current_time));
   }
+
   async componentDidMount() {
-    console.log("componentDidMount");
+    // console.log("componentDidMount");
     // RoomNumber 체크하기
     const { Partner } = this.props;
     const roomNum = this.props.roomName;
@@ -278,12 +288,13 @@ class ChatTestContainer extends React.Component {
         });
 
         reverseChat.forEach((message) => {
-          console.log(toJS(message));
+          // console.log(toJS(message));
           const Messages = this.props.Project.chatMessages;
-          console.log(toJS(this.props.Project.chatMessages));
+          console.log(Messages);
+          // console.log(toJS(this.props.Project.chatMessages));
           let readState = true;
           if (message.user_type === 0) {
-            console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
+            // console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
             // console.log(message.createdAt); // 이건 파이썬에서 그냥 표준 시간형식으로 저장돼서 둘 중 하나 바꿔줘야함 비교할때
             //여기서 바꿔줘야함
 
@@ -308,7 +319,7 @@ class ChatTestContainer extends React.Component {
             time: message.createdAt,
             bRead: readState,
           });
-          // console.log(this.props.Project.chatMessages);
+          // console.log(toJS(this.props.Project.chatMessages));
           // if (Messages[0].time < Messages[1].time) {
           //   console.log("asdnklasndlkasndlknaslkdnalksdnladsnkl");
           // }
@@ -319,9 +330,11 @@ class ChatTestContainer extends React.Component {
     });
     // this.setState({ messages: [] });
 
-    //채팅 소켓 열릴 때
+    //============================================= onopen 시작 ============================================================
     this.chatSocket.onopen = async () => {
       // alert("Open");
+      console.log("onopen");
+      console.log(toJS(this.props.Project.chatMessages));
       await this.props.Auth.checkLogin();
       if (this.props.Auth.logged_in_user) {
         this.userType = this.props.Auth.logged_in_user.type;
@@ -347,16 +360,17 @@ class ChatTestContainer extends React.Component {
     };
     // console.log(this.props.Auth.logged_in_user.type);
 
+    //============================================= onopen 끝 ============================================================
     console.log(this.chatSocket);
 
+    //============================================= onmessage 시작 ============================================================
     this.chatSocket.onmessage = (e) => {
-      // console.log("Aaaasdasd");
       const data = JSON.parse(e.data);
-      console.log("data");
+      console.log("===========redis에서 들어온 내용=============");
       console.log(data);
-
+      console.log("===========redis에서 들어온 내용============");
       const messages = this.props.Project.chatMessages;
-
+      console.log(toJS(messages));
       if (!data.bReceive) {
         //console.log(typeof(data.type), typeof(this.userType))
         if (data.type != this.userType) {
@@ -396,6 +410,8 @@ class ChatTestContainer extends React.Component {
       }
 
       if (data.bReceive) {
+        console.log(this.props.Project.chatMessages);
+        console.log(toJS(this.props.Project.chatMessages));
         this.checkRead(this.props.Project.chatMessages, data);
       }
       // this.setState({ messages });
@@ -439,6 +455,8 @@ class ChatTestContainer extends React.Component {
       });
     };
 
+    //============================================= onmessage 끝 ============================================================
+
     this.chatSocket.onclose = (e) => {
       console.error("Chat socket closed unexpectedly");
     };
@@ -474,7 +492,7 @@ class ChatTestContainer extends React.Component {
           }}
           style={{ display: "none" }}
         />
-        {console.log(toJS(this.props.Project.chatMessages))}
+        {/* {console.log(toJS(this.props.Project.chatMessages))} */}
         <ChatCardContainer
           messages={this.props.Project.chatMessages}
           onSendMessage={this.onSendMessage}
