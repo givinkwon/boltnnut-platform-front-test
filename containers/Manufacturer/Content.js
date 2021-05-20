@@ -119,6 +119,20 @@ class ManufacturerContentContainer extends React.Component {
     }
   };
 
+  pushToDetail = async (item) => {
+    const { Partner } = this.props;
+    console.log(item.id);
+    Partner.partner_detail_list = [];
+    //Project.selectedProjectId = id;
+    // Partner.partner_detail_list.push({ item: item });
+    // console.log(toJS(Partner.partner_detail_list));
+    Partner.newIndex = 1;
+    //await Partner.getPartnerDetail(item.id);
+
+    // await Router.push(`/project/${id}`);
+    //Project.setProjectDetailData(id);
+  };
+
   render() {
     const { Project, Partner } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
@@ -180,19 +194,21 @@ class ManufacturerContentContainer extends React.Component {
                           console.log(toJS(Partner.category_ary[idx]))} */}
                         {/* {console.log(toJS(Partner.category_dic[idx]))} */}
                         {/* {console.log(idx)} */}
-                        <ProposalCard
-                          data={item}
-                          width={this.props.width}
-                          //categoryData={Partner.category_ary[idx]}
-                          categoryData={Partner.category_dic[idx]}
-                          idx={idx}
-                          // middleCategory={Project.middle_category_name[idx]}
-                          // mainCategory={Project.main_category_name[idx]}
-                          // newData={Project.data_dt[idx]}
-                          // checkTotal={Project.filter_price}
-                          handleIntersection={this.handleIntersection}
-                          customer="partner"
-                        />
+                        <div onClick={() => this.pushToDetail(item)}>
+                          <ProposalCard
+                            data={item}
+                            width={this.props.width}
+                            //categoryData={Partner.category_ary[idx]}
+                            categoryData={Partner.category_dic[idx]}
+                            idx={idx}
+                            // middleCategory={Project.middle_category_name[idx]}
+                            // mainCategory={Project.main_category_name[idx]}
+                            // newData={Project.data_dt[idx]}
+                            // checkTotal={Project.filter_price}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
                       </Background>
                     );
                   })}

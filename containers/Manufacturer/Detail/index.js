@@ -6,7 +6,7 @@ import Section from "components/Section";
 import BannerConatiner from "../Banner";
 import ContentConatiner from "./Content";
 
-class NoticeDetailConatiner extends React.Component {
+class ManufacturerDetailConatiner extends React.Component {
   render() {
     return (
       <>
@@ -21,4 +21,4 @@ class NoticeDetailConatiner extends React.Component {
   }
 }
 
-export default NoticeDetailConatiner;
+export default ManufacturerDetailConatiner;

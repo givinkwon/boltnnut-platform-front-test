@@ -24,6 +24,7 @@ class Partner {
   @observable city_list = [];
 
   @observable partner_list = [];
+  @observable partner_detail_list = [];
   @observable random_partner_list = [];
   @observable partner_count = 0;
   @observable partner_next = null;
@@ -53,6 +54,7 @@ class Partner {
   @observable filter_category_ary = [{ id: 0, category: "전체" }];
   @observable develop_next = 0;
 
+  @observable city_ary = [];
   @observable filter_city_ary = [{ id: 0, city: "전체" }];
   @observable city_next = 0;
 
@@ -93,6 +95,8 @@ class Partner {
   @observable loadReviewData = 0;
   @observable userEmail = 0;
   @observable review_user_ary = [];
+
+  @observable newIndex = 0;
 
   // 파트너의 답변
   @observable answer_set = [];
@@ -621,12 +625,13 @@ class Partner {
     return this.category_middle_list[idx];
   };
   getCityNameById = (id) => {
+    console.log(id);
     if (id == -1) {
       return;
     }
 
     const idx = this.city_list.findIndex((city) => city.id == id);
-
+    console.log(idx);
     // 못 찾았을 경우
     if (idx === -1) {
       return "";
@@ -634,6 +639,24 @@ class Partner {
 
     return this.city_list[idx].city;
   };
+
+  getCityName = async (id) => {
+    console.log(id);
+    if (id == -1) {
+      return;
+    }
+
+    console.log(this.city_ary);
+    // const idx = this.city_ary.findIndex((city) => city.id == id);
+    // console.log(idx);
+    // // 못 찾았을 경우
+    // if (idx === -1) {
+    //   return "";
+    // }
+
+    // return this.city_ary[idx].city;
+  };
+
   getRegionNameById = (id) => {
     if (id == -1) {
       return;
@@ -810,6 +833,7 @@ class Partner {
     PartnerAPI.getCity(req)
       .then(async (res) => {
         this.filter_city_ary = this.filter_city_ary.concat(res.data.results);
+        this.city_ary = this.city_ary.concat(res.data.results);
         this.city_next = res.data.next;
 
         // console.log(toJS(res.data.results));
@@ -825,6 +849,7 @@ class Partner {
               this.filter_city_ary = this.filter_city_ary.concat(
                 res.data.results
               );
+              this.city_ary = this.city_ary.concat(res.data.results);
 
               this.city_next = res.data.next;
               //console.log(this.city_next);
@@ -845,6 +870,7 @@ class Partner {
           (item) => item.id === 0 || item.id < 9
         );
 
+        // this.city_ary = this.city_ary.filter((item) => item.id < 9);
         // console.log(toJS(this.filter_city_ary));
       })
       .catch((e) => {
