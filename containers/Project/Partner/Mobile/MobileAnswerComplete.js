@@ -25,7 +25,7 @@ class AnswerComplete extends React.Component {
 					<RequestCompleteBox>
 						<RequestCompleteTitle>
 							<FontSize18 style={{ marginBottom: '20px' }}>
-								고객님의 답변이 전달 되었습니다.
+								답변이 정상적으로 등록<span>되었습니다.</span>
 							</FontSize18>
 						</RequestCompleteTitle>
 
@@ -98,7 +98,12 @@ const FontSize18 = styled(Title.FontSize18)`
 	font-weight: normal;
 	line-height: 1.89;
 	letter-spacing: -0.45px;
-	color: #111111;
+
+	color: #0933b3;
+  span{
+    color: #282c36;
+
+  }
 `;
 
 // body

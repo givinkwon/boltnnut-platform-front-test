@@ -102,8 +102,13 @@ class ProjectContentContainer extends React.Component {
           style={{ backgroundColor: "#f9f9f9", paddingTop: "49px" }}
           id="MyBackground"
         >
+
+          {/* {!Project.projectDataList[0] && <NoProject/>} */}
           {Project.project_existence &&
             Project.projectDataList &&
+            Project.projectDataList[0]?
+            <>
+            {
             Project.currentPage > 0 &&
             Project.projectDataList.map((item, idx) => {
               {
@@ -130,8 +135,8 @@ class ProjectContentContainer extends React.Component {
                   </Container>
                 </Background>
               );
-            })}
-          {Project.project_existence && (
+            })
+            }
             <PageBar>
               <img
                 src={pass1}
@@ -223,8 +228,10 @@ class ProjectContentContainer extends React.Component {
                 onClick={this.pageNext}
               />
             </PageBar>
-          )}
-          {/* {!Project.project_existence && <ProjectNoneContainer /> } */}
+        </>
+        :
+        <NoProject/>
+        }
         </Background>
       </>
     );

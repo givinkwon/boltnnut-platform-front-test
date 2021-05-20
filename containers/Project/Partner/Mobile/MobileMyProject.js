@@ -4,7 +4,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import Partner from "../../../stores/Partner";
+import Partner from "stores/Partner";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
@@ -67,7 +67,6 @@ class MyProject extends React.Component {
       });
     }
 
-
   }
 
   render() {
@@ -76,15 +75,6 @@ class MyProject extends React.Component {
     return (
       <Background>
         <Container style={{ flexDirection: "column" }}>
-          {Project.chatModalActive && (
-            // <Layer onClick={this.modalHandler}>
-            <Layer>
-              {/* <Postcode /> */}
-              <ChatTestContainer
-                roomName={this.state.selectedRoom}
-              ></ChatTestContainer>
-            </Layer>
-          )}
 
           <>
             {Partnerprojectlist &&
