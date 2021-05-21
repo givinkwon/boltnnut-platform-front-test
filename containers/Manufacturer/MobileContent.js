@@ -164,6 +164,7 @@ class MobileManufacturerContentContainer extends React.Component {
                         <ProposalCard
                           data={item}
                           width={this.props.width}
+                          idx={idx}
                           // middleCategory={Project.middle_category_name[idx]}
                           // mainCategory={Project.main_category_name[idx]}
                           // newData={Project.data_dt[idx]}

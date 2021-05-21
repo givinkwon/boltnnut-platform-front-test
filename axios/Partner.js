@@ -314,3 +314,38 @@ export function getPartnerCategory(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function setReview(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/partnerreviewtemp/`,
+    data: req.data ? req.data : null,
+  });
+}
+
+export function getReview(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partnerreviewtemp/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getNextReviewPage(req) {
+  return axios({
+    method: "GET",
+    url: req.nextUrl,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getClientEmail(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/client/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}

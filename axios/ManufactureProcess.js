@@ -22,3 +22,11 @@ export function saveSelect(req) {
     data: req,
   });
 }
+
+export function saveSearchText(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/searchtext/`,
+    data: req.data ? req.data : null,
+  });
+}
