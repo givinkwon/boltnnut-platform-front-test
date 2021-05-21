@@ -5,7 +5,7 @@ import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import Modal from "./Modal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
-import ReviewContainer from "./ReviewContainer";
+import ReviewContainer from "./Review/ReviewContainer";
 import CheckBrowserModal from "containers/Home/CheckBrowserModal";
 //import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
 
@@ -108,19 +108,35 @@ class ProposalCard extends React.Component {
     }
   };
 
-  onClickReviewHandler = (idx) => {
+  onClickReviewHandler = (idx, name) => {
     const { Partner } = this.props;
-    if (this.state.activeReview) {
+
+    if (Partner.ReviewActiveIndex === idx) {
       console.log(`review false : ${idx}`);
       this.setState({ activeReview: false });
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
+      Partner.partnerName = "";
     } else {
       console.log(`review true : ${idx}`);
       this.setState({ activeReview: true });
       Partner.ReviewActive = true;
       Partner.ReviewActiveIndex = idx;
+      Partner.partnerName = name;
     }
+    // if (Partner.ReviewActive) {
+    //   console.log(`review false : ${idx}`);
+    //   this.setState({ activeReview: false });
+    //   Partner.ReviewActive = false;
+    //   Partner.ReviewActiveIndex = -1;
+    //   Partner.partnerName = "";
+    // } else {
+    //   console.log(`review true : ${idx}`);
+    //   this.setState({ activeReview: true });
+    //   Partner.ReviewActive = true;
+    //   Partner.ReviewActiveIndex = idx;
+    //   Partner.partnerName = name;
+    // }
   };
   render() {
     // const {
@@ -139,6 +155,7 @@ class ProposalCard extends React.Component {
     // console.log(toJS(categoryData));
     // console.log(toJS(idx));
     let category_data;
+
     // category_data =
     //   categoryData &&
     //   categoryData.splice(categoryData.length / 2, categoryData.length / 2);
@@ -188,7 +205,9 @@ class ProposalCard extends React.Component {
                 </Logo>
               </Header>
               <Main>
-                {/* <Review onClick={() => this.onClickReviewHandler(idx)}>
+                {/* <Review
+                  onClick={() => this.onClickReviewHandler(idx, data.name)}
+                >
                   리뷰 보기
                 </Review> */}
                 <Name>{data.name}</Name>
@@ -282,7 +301,7 @@ class ProposalCard extends React.Component {
                   })} */}
                   {categoryData &&
                     categoryData.map((item, idx) => {
-                      console.log(item);
+                      // console.log(item);
                       return <span>{item}</span>;
                     })}
                   {/* <span>디자인</span>
@@ -364,7 +383,7 @@ class ProposalCard extends React.Component {
                 </AdditionBox>
               </Main>
             </Card>
-            {this.props.Partner.ReviewActive &&
+            {/* {this.props.Partner.ReviewActive &&
               this.props.Partner.ReviewActiveIndex === idx && (
                 <>
                   <ReviewContainer
@@ -375,19 +394,20 @@ class ProposalCard extends React.Component {
                     idx={idx}
                   />
                 </>
-              )}
+              )} */}
           </>
         ) : (
-          <Card
-            active={this.state.active}
-            onMouseOver={() => {
-              this.activeHandler("active");
-            }}
-            onMouseOut={() => {
-              this.activeHandler("active");
-            }}
-          >
-            {/* <HeaderWrapper>
+          <>
+            <Card
+              active={this.state.active}
+              onMouseOver={() => {
+                this.activeHandler("active");
+              }}
+              onMouseOut={() => {
+                this.activeHandler("active");
+              }}
+            >
+              {/* <HeaderWrapper>
           <Title>sdfdsf</Title>
           <Content>sdfdsf</Content>
         </HeaderWrapper>
@@ -412,43 +432,52 @@ class ProposalCard extends React.Component {
             <span class="tag2">dsfdsf</span>
           </PriceTagBox>
         </FooterWrapper> */}
-            <Main>
-              <Name>{data.name}</Name>
-              <InfoOne>{data.info_company}</InfoOne>
-              {/* <InfoOne>develop 들어가야함</InfoOne> */}
-              <Information>
-                <div>
-                  <Phone>
-                    <div
-                      style={{ cursor: "pointer" }}
+              <Main>
+                <Review
+                  onClick={() => {
+                    console.log(idx);
 
-                      // onClick={() => {
-                      //   window
-                      //     .open
-                      //     //"https://blog.naver.com/boltnnut_korea"
-                      //     //"./Popup.js"
-                      //     // "windowPop",
-                      //     // "width=400, height=600, left=400, top=400, resizable = yes"
-                      //     ();
-                      // }}
-                    >
-                      <img
-                        src={call_img}
-                        // active={this.state.call}
-                        // onMouseOver={() => {
-                        //   this.activeHandler("call");
-                        // }}
-                        // onMouseOut={() => {
-                        //   this.activeHandler("call");
-                        // }}
-                        onClick={() => {
-                          console.log(data.name);
-                          console.log(data.user.phone);
-                          this.openModal(data.user.phone);
-                        }}
-                      />
+                    this.onClickReviewHandler(idx, data.name);
+                  }}
+                >
+                  <span>리뷰 보기</span>
+                </Review>
+                <Name>{data.name}</Name>
+                <InfoOne>{data.info_company}</InfoOne>
+                {/* <InfoOne>develop 들어가야함</InfoOne> */}
+                <Information>
+                  <div>
+                    <Phone>
+                      <div
+                        style={{ cursor: "pointer" }}
 
-                      {/* <span
+                        // onClick={() => {
+                        //   window
+                        //     .open
+                        //     //"https://blog.naver.com/boltnnut_korea"
+                        //     //"./Popup.js"
+                        //     // "windowPop",
+                        //     // "width=400, height=600, left=400, top=400, resizable = yes"
+                        //     ();
+                        // }}
+                      >
+                        <img
+                          src={call_img}
+                          // active={this.state.call}
+                          // onMouseOver={() => {
+                          //   this.activeHandler("call");
+                          // }}
+                          // onMouseOut={() => {
+                          //   this.activeHandler("call");
+                          // }}
+                          onClick={() => {
+                            console.log(data.name);
+                            console.log(data.user.phone);
+                            this.openModal(data.user.phone);
+                          }}
+                        />
+
+                        {/* <span
                     style={{
                       display: `${this.state.call ? "block" : "none"}`,
                     }}
@@ -461,54 +490,67 @@ class ProposalCard extends React.Component {
                       </span>
                     )}
                   </span> */}
-                      {/* {this.props.Partner.modalActive && ( */}
+                        {/* {this.props.Partner.modalActive && ( */}
 
-                      {Partner.modalActive && (
-                        // <Layer onClick={this.modalHandler}>
-                        <Layer>
-                          {/* <Postcode /> */}
-                          <span>
-                            <Modal
-                              width={width}
-                              open={this.props.Partner.modalActive}
-                              close={this.closeModal}
-                              header="전화번호"
-                              // title={data.real_phone}
-                              children={this.props.Partner.modalUserPhone}
-                              //children={data.name}
-                            >
-                              {/* <p>
+                        {Partner.modalActive && (
+                          // <Layer onClick={this.modalHandler}>
+                          <Layer>
+                            {/* <Postcode /> */}
+                            <span>
+                              <Modal
+                                width={width}
+                                open={this.props.Partner.modalActive}
+                                close={this.closeModal}
+                                header="전화번호"
+                                // title={data.real_phone}
+                                children={this.props.Partner.modalUserPhone}
+                                //children={data.name}
+                              >
+                                {/* <p>
                             {data.user.phone
                               ? data.user.phone
                               : "전화번호 없음"}
                           </p> */}
-                              {/* <p>{idx}</p> */}
-                              {/* <p>{data.name}</p> */}
-                            </Modal>
-                            {/* <CheckBrowserModal
+                                {/* <p>{idx}</p> */}
+                                {/* <p>{data.name}</p> */}
+                              </Modal>
+                              {/* <CheckBrowserModal
                           open={this.props.Partner.modalActive}
                           handleClose={this.closeModal}
                         /> */}
-                          </span>
-                        </Layer>
-                      )}
+                            </span>
+                          </Layer>
+                        )}
 
-                      {/* )} */}
-                    </div>
-                  </Phone>
-                </div>
-                <div>
-                  <Link
-                    target="_blank"
-                    onClick={() => this.filedownload()}
-                    download
-                  >
-                    <span>회사 소개서 보기</span>
-                  </Link>
-                </div>
-              </Information>
-            </Main>
-          </Card>
+                        {/* )} */}
+                      </div>
+                    </Phone>
+                  </div>
+                  <div>
+                    <Link
+                      target="_blank"
+                      onClick={() => this.filedownload()}
+                      download
+                    >
+                      <span>회사 소개서 보기</span>
+                    </Link>
+                  </div>
+                </Information>
+              </Main>
+            </Card>
+            {this.props.Partner.ReviewActive &&
+              this.props.Partner.ReviewActiveIndex === idx && (
+                <>
+                  <ReviewContainer
+                    data={data}
+                    width={width}
+                    Partner={Partner}
+                    categoryData={categoryData}
+                    idx={idx}
+                  />
+                </>
+              )}
+          </>
         )}
       </>
     );
@@ -552,6 +594,8 @@ const Card = styled.div`
     margin-bottom: 34px;
     padding: 33px 0px 30px 34px;
     box-sizing: border-box;
+    // align-self: self-start;
+    // width: 68%;
   }
   @media (min-width: 1300px) {
     //height: 195px;
@@ -609,6 +653,26 @@ const Review = styled.div`
   top: 15px;
   right: 15px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: #0933b3;
+  color: #ffffff;
+  span {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 80px;
+    height: 20px;
+    > span {
+      font-size: 11px;
+    }
+  }
 `;
 const Phone = styled.div`
   font-size: 16px;

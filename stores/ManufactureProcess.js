@@ -220,5 +220,26 @@ class ManufactureProcess {
         console.log(e.response);
       });
   };
+
+  @action saveSearchText = (text) => {
+    const formData = new FormData();
+
+    formData.append("text", text);
+
+    // const Token = localStorage.getItem("token");
+
+    const req = {
+      data: formData,
+    };
+
+    ManufactureProcessAPI.saveSearchText(req)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 }
 export default new ManufactureProcess();
