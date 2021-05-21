@@ -88,6 +88,16 @@ class DetailConatiner extends React.Component {
               {Partner.getCityName(Partner.partner_detail_list[0].item.city)}
             </Text.FontSize20>
           </W30>
+
+          <W50>
+            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
+              이력서
+            </Text.FontSize20>
+            <a href={Partner.partner_detail_list[0].item.resume}>
+              {Partner.partner_detail_list[0].item.resume.split("/").pop()}
+            </a>
+          </W50>
+
           {/* <W30>
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>
               지역
@@ -178,9 +188,9 @@ class DetailConatiner extends React.Component {
 
           <W100>
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              포트폴리오
+              파일
             </Text.FontSize20>
-            <ImageContainer />
+            <ImageContainer file={Partner.partner_detail_list[0].item.file} />
           </W100>
 
           {/* )} */}
@@ -231,6 +241,34 @@ const Badge = styled.div`
     flex-shrink: 0;
   }
 `;
+
+const W50 = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+  > p:nth-of-type(1) {
+    width: 120px;
+  }
+
+  > p:nth-of-type(2) {
+    margin-left: 20px;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+    > p:nth-of-type(2) {
+      margin-left: auto;
+    }
+  }
+  @media (min-width: 768px) {
+    width: calc((100% - 28px) / 2.5);
+    ${(props) =>
+      props.center &&
+      css`
+        margin-right: 14px;
+        margin-left: 14px;
+      `}
+  }
+`;
+
 const W100 = styled.div`
   width: 100%;
   margin: 10px 0px;
