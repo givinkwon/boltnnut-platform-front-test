@@ -37,9 +37,10 @@ class PortfolioConatiner extends React.Component {
     this.setState({ modalOpen: true, src: src });
   };
   render() {
-    const { Answer } = this.props;
+    const { Answer, file } = this.props;
     // const { current_partner } = Answer
 
+    console.log(file);
     var settings = {
       dots: false,
       infinite: false,
@@ -68,7 +69,10 @@ class PortfolioConatiner extends React.Component {
     return (
       <>
         {/* { current_partner && current_partner.portfolio_set.length > 0 && */}
-        <div id="portfolio">
+        <div
+          id="portfolio"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           {/* <Header>
             <Text.FontSize20 color={WHITE} fontWeight={700}>
               포트폴리오
@@ -81,17 +85,32 @@ class PortfolioConatiner extends React.Component {
                 return <Image key={idx} ratio='65%' src={item.img_portfolio}/>
               })
             } */}
-              <Image
+
+              {file ? (
+                <Image
+                  ratio="65%"
+                  src={file}
+                  onClick={() => {
+                    console.log(this);
+                    console.log(this.slider.props.children.props.src);
+                    const src = this.slider.props.children.props.src;
+                    this.activeHandler(src);
+                  }}
+                />
+              ) : (
+                <h1>파일이 없습니다</h1>
+              )}
+              {/* <Image
                 ratio="65%"
-                src={camera_img}
+                src={file}
                 onClick={() => {
-                  // console.log(this);
-                  // console.log(this.slider.props.children[0].props.src);
-                  const src = this.slider.props.children[0].props.src;
+                  console.log(this);
+                  console.log(this.slider.props.children.props.src);
+                  const src = this.slider.props.children.props.src;
                   this.activeHandler(src);
                 }}
-              />
-              <Image
+              /> */}
+              {/* <Image
                 ratio="65%"
                 src={camera_img}
                 onClick={() => {
@@ -113,7 +132,7 @@ class PortfolioConatiner extends React.Component {
               />
               <Image
                 ratio="65%"
-                src={instargram}
+                src={camera_img}
                 onClick={() => {
                   // console.log(this);
                   // console.log(this.slider.props.children[0].props.src);
@@ -121,6 +140,16 @@ class PortfolioConatiner extends React.Component {
                   this.activeHandler(src);
                 }}
               />
+              <Image
+                ratio="65%"
+                src={instargram}
+                onClick={() => {
+                  // console.log(this);
+                  // console.log(this.slider.props.children[0].props.src);
+                  const src = this.slider.props.children[4].props.src;
+                  this.activeHandler(src);
+                }}
+              /> */}
             </Slider>
             {
               // (current_partner && current_partner.portfolio_set.length > 0)
@@ -132,7 +161,11 @@ class PortfolioConatiner extends React.Component {
               // )
             }
           </Content>
+
           {this.state.modalOpen && (
+            // <Layer>
+            //   {/* <Postcode /> */}
+            //   <span>
             <Modal>
               <button
                 className="close"
@@ -145,7 +178,10 @@ class PortfolioConatiner extends React.Component {
               </button>
               <Image src={this.state.src} modal="modal" />
             </Modal>
+            //   </span>
+            // </Layer>
           )}
+          {this.state.modalOpen && <Layer />}
         </div>
         {/* } */}
       </>
@@ -160,6 +196,7 @@ const Image = styled(RatioImage)`
 
   width: ${(props) => (props.modal === "modal" ? "80%" : "calc(100% - 10px)")};
   height: ${(props) => (props.modal === "modal" ? "80%" : "")};
+  cursor: pointer;
   // :hover {
   //   transform: scale(1.5);
   // }
@@ -177,13 +214,13 @@ const Arrow = styled.div`
     props.left &&
     css`
       background-image: url("/static/icon/slick_left.png");
-      left: -25px;
+      left: -50px;
     `}
   ${(props) =>
     props.right &&
     css`
       background-image: url("/static/icon/slick_right.png");
-      right: -25px;
+      right: -50px;
     `}
 `;
 const Header = styled.div`
@@ -196,6 +233,7 @@ const Header = styled.div`
   padding: 0 15px;
 `;
 const Content = styled.div`
+  width: 1000px;
   position: relative;
   background-color: #f2f2f2;
   padding: 20px;
@@ -214,16 +252,50 @@ const Modal = styled.div`
   top: 80%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #000000;
+  //background-color: #000000;
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  z-index: 101;
   button {
-    float: right;
     // border: 3px solid red;
     position: absolute;
     top: 0;
     right: 0;
+
+    outline: none;
+    cursor: pointer;
+    border: 0;
+
+    font-size: 21px;
+    font-weight: 700;
+    //margin-left: 10px;
+    margin: 10px 10px 0 0;
+    float: right;
+    color: #000000;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+  }
+`;
+
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  // opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
 `;

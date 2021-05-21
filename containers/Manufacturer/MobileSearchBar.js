@@ -17,7 +17,7 @@ import { PRIMARY2 } from "static/style";
 const filter_img = "static/images/manufacturer/filter.png";
 const search_img = "static/images/manufacturer/search.png";
 
-@inject("Auth", "Project", "Request", "Partner")
+@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
 @observer
 class MobileSearchBarConatiner extends React.Component {
   state = {
@@ -45,8 +45,8 @@ class MobileSearchBarConatiner extends React.Component {
     Partner.search_text = e.target.value;
   };
   search = () => {
-    const { Partner } = this.props;
-
+    const { Partner, ManufactureProcess } = this.props;
+    ManufactureProcess.saveSearchText(Partner.search_text);
     Partner.currentPage = 1;
     Partner.category_dic = {};
     Partner.getPartner();
@@ -58,8 +58,9 @@ class MobileSearchBarConatiner extends React.Component {
     });
   };
   handleKeyDown = (e) => {
-    const { Partner } = this.props;
+    const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
+      ManufactureProcess.saveSearchText(Partner.search_text);
       Partner.currentPage = 1;
       Partner.category_dic = {};
       Partner.getPartner();
@@ -100,7 +101,6 @@ class MobileSearchBarConatiner extends React.Component {
   };
 
   filterActiveHandler = () => {
-
     if (this.state.filter_active) {
       this.setState({ filter_active: false });
       this.props.Partner.check_click_filter = false;

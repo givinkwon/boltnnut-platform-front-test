@@ -9,7 +9,7 @@ import ReviewCard from "./ReviewCard";
 @observer
 class ReviewContainer extends React.Component {
   state = {
-    width: null,
+    // width: null,
     modalOpen: false,
   };
 
@@ -43,18 +43,6 @@ class ReviewContainer extends React.Component {
 
     return (
       <>
-        <ReviewWriting
-          reviewDone={Partner.review_done}
-          onClick={() => {
-            console.log("click");
-            // console.log(data.name);
-            // Partner.partnerName = data.name;
-            // console.log(Partner.partnerName);
-            this.openModal();
-          }}
-        >
-          <span>리뷰 작성</span>
-        </ReviewWriting>
         {Partner.reviewModalActive && (
           // <Layer onClick={this.modalHandler}>
           <Layer>
@@ -85,13 +73,27 @@ class ReviewContainer extends React.Component {
             </span>
           </Layer>
         )}
-        <MainContainer
-          reviewDone={Partner.review_done}
-          loadReview={Partner.loadReviewData}
-        >
-          {/* <h1>{data.name}</h1> */}
-          {Partner.review_done && <ReviewCard />}
-        </MainContainer>
+        <div style={{ position: "relative" }}>
+          <ReviewWriting
+            reviewDone={Partner.review_done}
+            onClick={() => {
+              console.log("click");
+              // console.log(data.name);
+              // Partner.partnerName = data.name;
+              // console.log(Partner.partnerName);
+              this.openModal();
+            }}
+          >
+            <span>리뷰 작성</span>
+          </ReviewWriting>
+          <MainContainer
+            reviewDone={Partner.review_done}
+            loadReview={Partner.loadReviewData}
+          >
+            {/* <h1>{data.name}</h1> */}
+            {Partner.review_done && <ReviewCard />}
+          </MainContainer>
+        </div>
       </>
     );
   }
@@ -164,7 +166,10 @@ const ReviewWriting = styled.div`
   font-weight: bold;
   position: absolute;
   //top: 72%;
-  bottom: 50px;
+  //bottom: 50px;
+  //bottom: 0;
+  top: 50%;
+  right: 35%;
   z-index: 20;
   display: ${(props) => (props.reviewDone ? "none" : "flex")};
   width: 30%;

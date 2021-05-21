@@ -433,7 +433,7 @@ class ProposalCard extends React.Component {
           </PriceTagBox>
         </FooterWrapper> */}
               <Main>
-                <Review
+                {/* <Review
                   onClick={() => {
                     console.log(idx);
 
@@ -441,7 +441,7 @@ class ProposalCard extends React.Component {
                   }}
                 >
                   <span>리뷰 보기</span>
-                </Review>
+                </Review> */}
                 <Name>{data.name}</Name>
                 <InfoOne>{data.info_company}</InfoOne>
                 {/* <InfoOne>develop 들어가야함</InfoOne> */}
