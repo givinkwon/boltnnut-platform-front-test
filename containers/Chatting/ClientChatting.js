@@ -101,10 +101,10 @@ async componentDidMount() {
               <span>{item.answer_set.length}</span>
               </Font24>
 
-              <div active = {Project.projectQuickView[idx].check} onClick = {this.activeHandler(idx)} >
+              {/* <div active = {Project.projectQuickView[idx].check} onClick = {this.activeHandler(idx)} >
                 <div>간략히 보기</div>
                 <div>자세히 보기</div>
-              </div>
+              </div> */}
               {Project.answerDetailList && Project.answerDetailList.map((data, idx) =>
               {
                 return(
