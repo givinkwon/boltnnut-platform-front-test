@@ -381,23 +381,6 @@ class MobileContent2 extends React.Component {
                   <PartnerBox />
                 </div>
               </BlackBox>
-              <Box3
-                style={{ marginBottom: 20 }}
-                active={this.state.activeOne}
-                onMouseOver={() => this.activeHandler("activeOne")}
-                onMouseOut={() => this.activeHandler("activeOne")}
-                onClick={async () => {
-                  Project.newIndex = 2;
-                  console.log(Project.newIndex);
-                }}
-              >
-                <Font18
-                  style={{ fontWeight: "bold" }}
-                  active={this.state.activeOne}
-                >
-                  프로젝트 답변하기
-                </Font18>
-              </Box3>
               </>
                 }
                 

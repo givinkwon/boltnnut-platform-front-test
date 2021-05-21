@@ -9,6 +9,9 @@ import ProposalCard from 'components/ProposalCard';
 import Background from 'components/Background';
 import Project from 'stores/Project';
 import { toJS } from "mobx";
+
+import SearchBarConatiner from "../../SearchBar";
+
 const pass1 = 'static/images/pass1.png'
 const pass2 = 'static/images/pass2.png'
 
@@ -98,6 +101,7 @@ class MobileProjectContentContainer extends React.Component {
       return(
         <>          
         <div>
+          <SearchBarConatiner/>
           <Background>
           <Container style = {{display:"flex", flexDirection: "column"}}>
             <Font15 style = {{marginLeft: 14, marginTop: 27, marginBottom: 20}}>

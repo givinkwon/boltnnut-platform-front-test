@@ -18,7 +18,7 @@ class ChattingContainer extends React.Component{
       <div style = {{marginBottom: 200}}>
       <BannerContainer/>
       {Auth.logged_in_client &&
-      (this.props.width && this.props.width > 1279.98 ?(
+      (this.props.width && this.props.width > 767.98 ?(
         <div style={{ overflow: "visible" }}>
         <ClientChatting/>
         </div>
@@ -29,7 +29,7 @@ class ChattingContainer extends React.Component{
       
       }
       {Auth.logged_in_partner && 
-      (this.props.width && this.props.width > 1279.98 ? (<div style={{ overflow: "visible" }}>
+      (this.props.width && this.props.width > 767.98 ? (<div style={{ overflow: "visible" }}>
       <PartnerChatting/>
       </div>)
       :

@@ -3,6 +3,7 @@ import ClientContentContainer from "./Client/Content";
 import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobileProject";
 import ProjectSearch from "./Partner/Content";
 import MobileProjectSearch from "./Partner/Mobile/MobileProject";
+import MobileMyProject from "./Partner/Mobile/MobileMyProject"
 import BannerContainer from "./Banner";
 
 import ProjectDetailContainer from "./Client/ProjectDetail/ProjectDetail";
@@ -24,11 +25,25 @@ import SearchBarConatiner from "./SearchBar";
 @inject("Project", "Auth", "Partner")
 @observer
 class ProjectContainer extends React.Component {
+
+  async getProject(data){
+    const { Project } = this.props;
+    await Project.getAllProject(data)
+  }
   async componentDidMount() {
     const { Auth, Project } = this.props;
+    // if (Auth.logged_in_client) {
+    //   await this.getProject(Auth.logged_in_client.id);
+    // }
+    await Auth.checkLogin();
+    if (Auth.logged_in_client) {
+      Project.getPage(Auth.logged_in_client.id);
+    }
+    
     Project.newIndex = 0;
     Project.myIndex = 1;
-    await Auth.checkLogin();
+    // await Auth.checkLogin();
+    
   }
 
   render() {
@@ -44,7 +59,6 @@ class ProjectContainer extends React.Component {
           
             <>
             {Project.newIndex == 0 && (
-              // <NoProject/>
               <>
               <ProjectDivider/>
               {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
@@ -63,8 +77,8 @@ class ProjectContainer extends React.Component {
           {Project.newIndex == 0 && (
             <>
               <ProjectDivider/>
-                {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
-                {Project.myIndex == 1 && <PartnerMyProject/>}   
+              {Project.myIndex == 0 && <ProjectSearch length={this.props.length}/>}
+              {Project.myIndex == 1 && <PartnerMyProject/>}   
             </>
           )}
           {Project.newIndex == 1 && (
@@ -86,13 +100,8 @@ class ProjectContainer extends React.Component {
         {Project.newIndex == 0 && (
           <>
           <ProjectDivider/>
-          {Project.myIndex == 0 && 
-            <>
-              <SearchBarConatiner/>
-              <MobileProjectSearch width={this.props.width} />
-            </>}
+          {Project.myIndex == 0 && <MobileProjectSearch width={this.props.width} />}
           {Project.myIndex == 1 && <ClientMobileContentContainer width={this.props.width} />}
-          {/* <ClientMobileContentContainer width = {this.props.width} /> */}
           </>
         )}
 
@@ -106,9 +115,12 @@ class ProjectContainer extends React.Component {
         <div>
           {Project.newIndex == 0 && (
             <>
-            {/* <ProjectDivider/> */}
-            <SearchBarConatiner/>
-            <MobileProjectSearch width={this.props.width} />
+            <ProjectDivider/>
+            {Project.myIndex == 0 && <MobileProjectSearch width={this.props.width} />}
+            {Project.myIndex == 1 && <MobileMyProject/>  }
+
+            
+            
             </>
           )}
           {Project.newIndex == 1 && (
