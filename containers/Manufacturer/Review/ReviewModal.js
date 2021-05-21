@@ -166,7 +166,8 @@ class ReviewModal extends React.Component {
               &times;{" "}
             </button>
             <section>
-              <header>{`${data.name} ${header}`}</header>
+              {/* <header>{`${data.name} ${header}`}</header> */}
+              <header>{`${header}`}</header>
               <main>
                 <div>
                   <span>제조사 이름</span>

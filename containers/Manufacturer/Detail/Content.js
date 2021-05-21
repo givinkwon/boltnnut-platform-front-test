@@ -8,13 +8,50 @@ import { inject, observer } from "mobx-react";
 import RatioImage from "components/RatioImage";
 import * as Text from "components/Text";
 
+import ReviewContainer from "../Review/ReviewContainer";
+import ImageContainer from "./Portfolio";
+
+import { toJS } from "mobx";
+
 @inject("Partner")
 @observer
 class DetailConatiner extends React.Component {
-  render() {
+  onClickReviewHandler = () => {
     const { Partner } = this.props;
+
+    // if (Partner.ReviewActiveIndex === idx) {
+    //   console.log(`review false : ${idx}`);
+    //   this.setState({ activeReview: false });
+    //   Partner.ReviewActive = false;
+    //   Partner.ReviewActiveIndex = -1;
+    //   Partner.partnerName = "";
+    // } else {
+    //   console.log(`review true : ${idx}`);
+    //   this.setState({ activeReview: true });
+    //   Partner.ReviewActive = true;
+    //   Partner.ReviewActiveIndex = idx;
+    //   Partner.partnerName = name;
+    // }
+    if (Partner.ReviewActive) {
+      //   console.log(`review false : ${idx}`);
+      this.setState({ activeReview: false });
+      Partner.ReviewActive = false;
+      //   Partner.ReviewActiveIndex = -1;
+      Partner.partnerName = "";
+    } else {
+      //   console.log(`review true : ${idx}`);
+      this.setState({ activeReview: true });
+      Partner.ReviewActive = true;
+      //   Partner.ReviewActiveIndex = idx;
+      Partner.partnerName = Partner.partner_detail_list[0].item.name;
+    }
+  };
+
+  render() {
+    const { Partner, width } = this.props;
     return (
       <div>
+        {console.log(toJS(Partner.detail))}
         <Header>
           <Text.FontSize20 color={WHITE} fontWeight={700}>
             회사정보
@@ -26,47 +63,32 @@ class DetailConatiner extends React.Component {
               회사이름
             </Text.FontSize20>
             <Text.FontSize20 color="#404040" fontWeight={300}>
-              {/* {Partner.detail.name} */}
-              {Partner.partner_detail_list[0].name}
+              {/* {Partner.detail.name && Partner.detail.name} */}
+              {Partner.partner_detail_list[0].item.name}
             </Text.FontSize20>
           </W30>
           <W30 center>
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              종업원 수
+              전화번호
             </Text.FontSize20>
             <Text.FontSize20 color="#404040" fontWeight={300}>
               {/* {Partner.detail.employee} */}
-              sdfdsfdsfsdfdsf
+              {Partner.partner_detail_list[0].item.real_phone
+                ? Partner.partner_detail_list[0].item.real_phone
+                : "전화번호 없음"}
             </Text.FontSize20>
           </W30>
+
           <W30>
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              설립연도
+              지역
             </Text.FontSize20>
             <Text.FontSize20 color="#404040" fontWeight={300}>
-              {/* {Partner.detail.career} */}
-              sdfdsfdsfdsf
+              {/* {console.log(toJS(Partner.partner_detail_list[0].item.city))} */}
+              {Partner.getCityName(Partner.partner_detail_list[0].item.city)}
             </Text.FontSize20>
           </W30>
-          <W30>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              매출액
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040" fontWeight={300}>
-              {/* {Partner.detail.revenue}백만원 */}
-              sdfdsfdsf
-            </Text.FontSize20>
-          </W30>
-          <W30 center>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              시/도
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040" fontWeight={300}>
-              {Partner.getCityName(Partner.partner_detail_list[0].city)}
-              sfdsfdsfdsf
-            </Text.FontSize20>
-          </W30>
-          <W30>
+          {/* <W30>
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>
               지역
             </Text.FontSize20>
@@ -74,47 +96,108 @@ class DetailConatiner extends React.Component {
               {Partner.getRegionNameById(Partner.partner_detail_list[0].city)}
               sdfdsfdsfds
             </Text.FontSize20>
-          </W30>
+          </W30> */}
 
           {/* {Partner.detail.product_possible &&
-            Partner.detail.product_possible.length > 0 && (
-              <W100>
-                <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-                  가능한 제품 분야
-                </Text.FontSize20>
-                <BadgeList>
-                  {Partner.detail.product_possible.map((item, idx) => {
-                    return (
-                      <Badge key={idx}>
-                        <Text.FontSize20 color="#404040" fontWeight={500}>
-                          #{item.subclass}
-                        </Text.FontSize20>
-                      </Badge>
-                    );
-                  })}
-                </BadgeList>
-              </W100>
-            )} */}
+            Partner.detail.product_possible.length > 0 && ( */}
+          <W100>
+            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
+              가능한 제품 분야
+            </Text.FontSize20>
+            <BadgeList>
+              {Partner.category_name_list &&
+                Partner.category_name_list.map((item, idx) => {
+                  return (
+                    <Badge>
+                      <Text.FontSize20
+                        color="#404040"
+                        fontWeight={500}
+                        style={{ whiteSpace: "break-spaces" }}
+                      >
+                        {item}
+                      </Text.FontSize20>
+                    </Badge>
+                  );
+                })}
+            </BadgeList>
+          </W100>
+          {/* )} */}
           {/* {Partner.detail.product_history &&
-            Partner.detail.product_history.length > 0 && (
-              <W100>
-                <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-                  진행한 제품들
+            Partner.detail.product_history.length > 0 && ( */}
+          <W100>
+            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
+              진행한 제품들
+            </Text.FontSize20>
+            <BadgeList>
+              {/* {Partner.detail.product_history.map((item, idx) => {
+                    return ( */}
+              <Badge style={{ width: "100%" }}>
+                <Text.FontSize20
+                  color="#404040"
+                  fontWeight={500}
+                  style={{
+                    width: "100%",
+                    whiteSpace: "break-spaces",
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {/* #{item.subclass} */}
+                  {Partner.partner_detail_list[0].item.history}
                 </Text.FontSize20>
-                <BadgeList>
-                  {Partner.detail.product_history.map((item, idx) => {
-                    return (
-                      <Badge key={idx}>
-                        <Text.FontSize20 color="#404040" fontWeight={500}>
-                          #{item.subclass}
-                        </Text.FontSize20>
-                      </Badge>
-                    );
-                  })}
-                </BadgeList>
-              </W100>
-            )} */}
+              </Badge>
+              {/* ); */}
+              {/* })} */}
+            </BadgeList>
+          </W100>
+
+          <W100>
+            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
+              회사 소개
+            </Text.FontSize20>
+            <BadgeList>
+              {/* {Partner.detail.product_history.map((item, idx) => {
+                    return ( */}
+              <Badge style={{ width: "100%" }}>
+                <Text.FontSize20
+                  color="#404040"
+                  fontWeight={500}
+                  style={{
+                    width: "100%",
+                    whiteSpace: "break-spaces",
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {/* #{item.subclass} */}
+                  {Partner.partner_detail_list[0].item.info_company}
+                </Text.FontSize20>
+              </Badge>
+              {/* ); */}
+              {/* })} */}
+            </BadgeList>
+          </W100>
+
+          <W100>
+            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
+              포트폴리오
+            </Text.FontSize20>
+            <ImageContainer />
+          </W100>
+
+          {/* )} */}
+          <Review onClick={() => this.onClickReviewHandler()}>리뷰 보기</Review>
         </Content>
+
+        {this.props.Partner.ReviewActive && (
+          <>
+            <ReviewContainer
+              // data={data}
+              width={width}
+              Partner={Partner}
+              // categoryData={categoryData}
+              // idx={idx}
+            />
+          </>
+        )}
       </div>
     );
   }
@@ -196,5 +279,31 @@ const W30 = styled.div`
         margin-right: 14px;
         margin-left: 14px;
       `}
+  }
+`;
+const Review = styled.div`
+  //   position: absolute;
+  //   top: 15px;
+  //   right: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: #0933b3;
+  color: #ffffff;
+  span {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 80px;
+    height: 20px;
+    > span {
+      font-size: 11px;
+    }
   }
 `;

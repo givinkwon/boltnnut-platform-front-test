@@ -205,11 +205,11 @@ class ProposalCard extends React.Component {
                 </Logo>
               </Header>
               <Main>
-                <Review
+                {/* <Review
                   onClick={() => this.onClickReviewHandler(idx, data.name)}
                 >
                   리뷰 보기
-                </Review>
+                </Review> */}
                 <Name>{data.name}</Name>
                 <Phone>
                   <div
@@ -383,7 +383,7 @@ class ProposalCard extends React.Component {
                 </AdditionBox>
               </Main>
             </Card>
-            {this.props.Partner.ReviewActive &&
+            {/* {this.props.Partner.ReviewActive &&
               this.props.Partner.ReviewActiveIndex === idx && (
                 <>
                   <ReviewContainer
@@ -394,7 +394,7 @@ class ProposalCard extends React.Component {
                     idx={idx}
                   />
                 </>
-              )}
+              )} */}
           </>
         ) : (
           <>

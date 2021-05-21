@@ -13,7 +13,7 @@ class ManufacturerDetailConatiner extends React.Component {
         <BannerConatiner />
         <Section>
           <Container>
-            <ContentConatiner />
+            <ContentConatiner width={this.props.width} />
           </Container>
         </Section>
       </>

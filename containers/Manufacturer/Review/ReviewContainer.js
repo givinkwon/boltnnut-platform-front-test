@@ -47,7 +47,7 @@ class ReviewContainer extends React.Component {
           reviewDone={Partner.review_done}
           onClick={() => {
             console.log("click");
-            console.log(data.name);
+            // console.log(data.name);
             // Partner.partnerName = data.name;
             // console.log(Partner.partnerName);
             this.openModal();
@@ -65,7 +65,7 @@ class ReviewContainer extends React.Component {
                 open={this.props.Partner.reviewModalActive}
                 close={this.closeModal}
                 header="Review"
-                data={data}
+                // data={data}
                 // title={data.real_phone}
                 children={this.props.Partner.modalUserPhone}
                 //children={data.name}

@@ -159,7 +159,7 @@ const NoCard = styled.div`
   font-weight: bold;
   position: absolute;
   //top: 72%;
-  bottom: 50px;
+  //bottom: 50px;
   z-index: 20;
   display: ${(props) => (props.reviewDone ? "flex" : "none")};
 

@@ -5,6 +5,7 @@ import React from "react";
 
 import BannerConatiner from "./Banner";
 import SearchBar from "./SearchBar";
+import SearchFilterBox from "./SearchFilterBox";
 import MobileSearchBar from "./MobileSearchBar";
 import ContentContainer from "./Content";
 import MobileContentContainer from "./MobileContent";
@@ -35,6 +36,7 @@ class ManufacturerConatiner extends React.Component {
                   <Background>
                     <Container>
                       <SearchBar />
+                      {/* <SearchFilterBox /> */}
                     </Container>
                   </Background>
 

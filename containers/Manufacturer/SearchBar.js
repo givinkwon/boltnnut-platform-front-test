@@ -7,6 +7,8 @@ import ButtonComponent from "components/Buttonv2";
 import Background from "components/Background";
 import Container from "components/Containerv1";
 
+import { toJS } from "mobx";
+
 import { PRIMARY2 } from "static/style";
 
 @inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
@@ -28,19 +30,21 @@ class SearchBarConatiner extends React.Component {
     this.setState({ list: false });
   };
 
-  searchText = (e) => {
+  searchText = async (e) => {
     const { Partner } = this.props;
     //console.log("click");
     // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
-    Partner.search_text = e.target.value;
+    await (Partner.search_text = e.target.value);
 
     //Partner.getPartner();
   };
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
     console.log("click");
-    ManufactureProcess.saveSearchText(Partner.search_text);
+    if (Partner.search_text != null) {
+      ManufactureProcess.saveSearchText(Partner.search_text);
+    }
     Partner.currentPage = 1;
     Partner.category_dic = {};
     Partner.getPartner();
@@ -56,7 +60,10 @@ class SearchBarConatiner extends React.Component {
     if (e.key === "Enter") {
       console.log("Enter");
       console.log(e);
-      ManufactureProcess.saveSearchText(Partner.search_text);
+      console.log(toJS(Partner.search_text));
+      if (Partner.search_text != null) {
+        ManufactureProcess.saveSearchText(Partner.search_text);
+      }
       Partner.currentPage = 1;
       Partner.category_dic = {};
       Partner.getPartner();
@@ -181,6 +188,10 @@ const Form = styled.div`
   display: flex;
   justify-content: flex-start;
   height: 50px;
+  @media (min-width: 1300px) {
+    //margin-top: 0;
+    width: 90%;
+  }
 `;
 
 const SearchButton = styled(ButtonComponent)`
@@ -218,10 +229,17 @@ const Select = styled(SelectComponent)`
     background-color: #ffffff;
     position: relative;
   }
+  @media (min-width: 1300px) {
+    //width: 110px;
+  }
 `;
 
 const Box = styled.div`
   width: 220px;
+
+  @media (min-width: 1300px) {
+    //width: 110px;
+  }
 
   ${(props) =>
     props.active &&

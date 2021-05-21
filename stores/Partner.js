@@ -48,8 +48,16 @@ class Partner {
   @observable filter_region = 0;
   @observable filter_category = 0;
 
+  @observable filter_filter = 0;
+  @observable filter_budget = 0;
+  @observable filter_view = 0;
+
   @observable radiobox_checked_idx = 0;
   @observable radiobox_category_checked_idx = 0;
+
+  @observable filterbox_checked_idx = 0;
+  @observable filterbox_budget_checked_idx = 0;
+  @observable filterbox_view_checked_idx = 0;
 
   @observable filter_category_ary = [{ id: 0, category: "전체" }];
   @observable develop_next = 0;
@@ -62,9 +70,12 @@ class Partner {
 
   @observable input_process_filter = null;
   @observable input_category = null;
+  @observable input_big_category = null;
+  @observable input_small_category = null;
 
   @observable category_ary = [];
   @observable category_name_ary = [];
+  @observable category_name_list = null;
   @observable temp_category_name_ary = [];
   @observable category_dic = {};
   @observable check_loading_category = false;
@@ -107,6 +118,14 @@ class Partner {
     this.filter_category = val.id;
 
     this.getPartner();
+  };
+
+  @action setBigCategory = (val) => {
+    this.input_big_category = val;
+  };
+
+  @action setSmallCategory = (val) => {
+    this.input_small_category = val;
   };
 
   @action setCategory = (val) => {
@@ -640,21 +659,22 @@ class Partner {
     return this.city_list[idx].city;
   };
 
-  getCityName = async (id) => {
+  getCityName = (id) => {
     console.log(id);
-    if (id == -1) {
-      return;
-    }
-
-    console.log(this.city_ary);
-    // const idx = this.city_ary.findIndex((city) => city.id == id);
-    // console.log(idx);
-    // // 못 찾았을 경우
-    // if (idx === -1) {
-    //   return "";
+    // if (id == -1) {
+    //   return;
     // }
 
-    // return this.city_ary[idx].city;
+    console.log(toJS(this.city_ary));
+    const idx = this.city_ary.findIndex((city) => city.id == id);
+    console.log(idx);
+    // 못 찾았을 경우
+    if (idx === -1) {
+      return "";
+    }
+
+    // return "제주";
+    return this.city_ary[idx].city;
   };
 
   getRegionNameById = (id) => {
