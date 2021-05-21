@@ -24,6 +24,7 @@ class Partner {
   @observable city_list = [];
 
   @observable partner_list = [];
+  @observable partner_detail_list = [];
   @observable random_partner_list = [];
   @observable partner_count = 0;
   @observable partner_next = null;
@@ -47,12 +48,21 @@ class Partner {
   @observable filter_region = 0;
   @observable filter_category = 0;
 
+  @observable filter_filter = 0;
+  @observable filter_budget = 0;
+  @observable filter_view = 0;
+
   @observable radiobox_checked_idx = 0;
   @observable radiobox_category_checked_idx = 0;
+
+  @observable filterbox_checked_idx = 0;
+  @observable filterbox_budget_checked_idx = 0;
+  @observable filterbox_view_checked_idx = 0;
 
   @observable filter_category_ary = [{ id: 0, category: "전체" }];
   @observable develop_next = 0;
 
+  @observable city_ary = [];
   @observable filter_city_ary = [{ id: 0, city: "전체" }];
   @observable city_next = 0;
 
@@ -60,9 +70,12 @@ class Partner {
 
   @observable input_process_filter = null;
   @observable input_category = null;
+  @observable input_big_category = null;
+  @observable input_small_category = null;
 
   @observable category_ary = [];
   @observable category_name_ary = [];
+  @observable category_name_list = null;
   @observable temp_category_name_ary = [];
   @observable category_dic = {};
   @observable check_loading_category = false;
@@ -70,8 +83,31 @@ class Partner {
 
   @observable modalActive = false;
   @observable ReviewActive = false;
+  @observable reviewModalActive = false;
   @observable ReviewActiveIndex = -1;
   @observable modalUserPhone = "";
+
+  // 파트너 리뷰
+  @observable star_ary = [
+    { id: 1, checked: false },
+    { id: 2, checked: false },
+    { id: 3, checked: false },
+    { id: 4, checked: false },
+    { id: 5, checked: false },
+  ];
+  @observable partnerName = "";
+  @observable reviewPartnerName = 0;
+  @observable reviewScore = "";
+  @observable reviewContent = "";
+  @observable review_ary = [];
+  @observable review_next = 0;
+  @observable review_count = 0;
+  @observable review_done = false;
+  @observable loadReviewData = 0;
+  @observable userEmail = 0;
+  @observable review_user_ary = [];
+
+  @observable newIndex = 0;
 
   // 파트너의 답변
   @observable answer_set = [];
@@ -82,6 +118,14 @@ class Partner {
     this.filter_category = val.id;
 
     this.getPartner();
+  };
+
+  @action setBigCategory = (val) => {
+    this.input_big_category = val;
+  };
+
+  @action setSmallCategory = (val) => {
+    this.input_small_category = val;
   };
 
   @action setCategory = (val) => {
@@ -600,12 +644,13 @@ class Partner {
     return this.category_middle_list[idx];
   };
   getCityNameById = (id) => {
+    console.log(id);
     if (id == -1) {
       return;
     }
 
     const idx = this.city_list.findIndex((city) => city.id == id);
-
+    console.log(idx);
     // 못 찾았을 경우
     if (idx === -1) {
       return "";
@@ -613,6 +658,25 @@ class Partner {
 
     return this.city_list[idx].city;
   };
+
+  getCityName = (id) => {
+    console.log(id);
+    // if (id == -1) {
+    //   return;
+    // }
+
+    console.log(toJS(this.city_ary));
+    const idx = this.city_ary.findIndex((city) => city.id == id);
+    console.log(idx);
+    // 못 찾았을 경우
+    if (idx === -1) {
+      return "";
+    }
+
+    // return "제주";
+    return this.city_ary[idx].city;
+  };
+
   getRegionNameById = (id) => {
     if (id == -1) {
       return;
@@ -708,7 +772,7 @@ class Partner {
   @action setCategoryDic = async (req, sub_data, id) => {
     await PartnerAPI.getPartnerCategory(req)
       .then((res) => {
-        console.log(toJS(res));
+        // console.log(toJS(res));
         // console.log(`${sub_data} : ${toJS(res.data.category)}`);
         //this.category_ary[idx].push(res.data.category);
         // console.log(toJS(typeof this.category_name_ary));
@@ -725,7 +789,7 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    console.log(`${id} : ${toJS(this.category_dic[id])}`);
+    // console.log(`${id} : ${toJS(this.category_dic[id])}`);
   };
 
   @action getCategory = () => {
@@ -789,6 +853,7 @@ class Partner {
     PartnerAPI.getCity(req)
       .then(async (res) => {
         this.filter_city_ary = this.filter_city_ary.concat(res.data.results);
+        this.city_ary = this.city_ary.concat(res.data.results);
         this.city_next = res.data.next;
 
         // console.log(toJS(res.data.results));
@@ -804,6 +869,7 @@ class Partner {
               this.filter_city_ary = this.filter_city_ary.concat(
                 res.data.results
               );
+              this.city_ary = this.city_ary.concat(res.data.results);
 
               this.city_next = res.data.next;
               //console.log(this.city_next);
@@ -824,6 +890,7 @@ class Partner {
           (item) => item.id === 0 || item.id < 9
         );
 
+        // this.city_ary = this.city_ary.filter((item) => item.id < 9);
         // console.log(toJS(this.filter_city_ary));
       })
       .catch((e) => {
@@ -865,7 +932,7 @@ class Partner {
         req.params.history = this.search_text;
       }
     }
-    console.log(toJS(this.search_class));
+    // console.log(toJS(this.search_class));
     // if (this.search_text !== "") {
     //   req.params.search = ParseInt(this.search_text);
     // }
@@ -1042,6 +1109,135 @@ class Partner {
       });
   };
 
+  @action getReview = async (page = 1, clientId = "") => {
+    // console.log(clientId);
+    const req = {
+      params: {
+        partnername: this.partnerName,
+        //client: clientId,
+      },
+      // nextUrl: this.develop_next,
+    };
+
+    await PartnerAPI.getReview(req)
+      .then(async (res) => {
+        // console.log(res.data.results);
+        this.review_ary = this.review_ary.concat(res.data.results);
+
+        this.review_next = res.data.next;
+        this.review_count = res.data.count;
+        // console.log(this.review_count);
+
+        if (this.review_ary.length !== 0) {
+          this.loadReviewData = 1;
+          //await this.getClientEmail();
+        } else {
+          this.loadReviewData = -1;
+        }
+
+        while (this.review_next) {
+          const req = {
+            nextUrl: this.review_next,
+            params: {
+              partnername: this.partnerName,
+              // client: clientId,
+            },
+          };
+          await PartnerAPI.getNextReviewPage(req)
+            .then((res) => {
+              // console.log(res.data.results);
+              this.review_ary = this.review_ary.concat(res.data.results);
+
+              this.review_next = res.data.next;
+              //console.log(this.city_next);
+              //this.project_page = parseInt(this.project_count/5) + 1
+              // if (callback) {
+              //   callback();
+              // }
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    // console.log(toJS(this.review_ary));
+
+    // if (this.review_count !== 0 && clientId) {
+    //   this.review_done = true;
+    // } else {
+    //   this.review_done = false;
+    // }
+    // console.log(this.review_done);
+  };
+
+  @action checkReviewWriting = async (page = 1, clientId = "") => {
+    // console.log(clientId);
+    const req = {
+      params: {
+        client: clientId,
+      },
+
+      // nextUrl: this.develop_next,
+    };
+
+    await PartnerAPI.getReview(req)
+      .then(async (res) => {
+        // console.log(res.data.results);
+
+        this.review_count = res.data.count;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    if (this.review_count !== 0 && clientId) {
+      this.review_done = true;
+    } else {
+      this.review_done = false;
+    }
+    // console.log(this.review_done);
+  };
+
+  @action async getClientEmail() {
+    console.log("getClientEmail");
+    console.log(toJS(this.review_ary));
+    let req = {};
+
+    await Promise.all(
+      this.review_ary.map(async (item, idx) => {
+        req = {
+          params: {
+            id: item.client,
+          },
+        };
+        // console.log(req.params.id);
+
+        await PartnerAPI.getClientEmail(req)
+          .then((res) => {
+            console.log("MapMapMap");
+            // console.log(res.data.results);
+            // console.log(res.data.results[0].user);
+            // console.log(res.data.results[0]);
+
+            this.userEmail = res.data.results[0].user.username;
+            this.review_user_ary.push(res.data.results[0].user.username);
+            // console.log(toJS(this.review_user_ary));
+          })
+          .catch((e) => {
+            console.log(e);
+            console.log(e.response);
+          });
+        // console.log(toJS(this.review_user_ary));
+      })
+    );
+    console.log(toJS(this.review_user_ary));
+  }
   // @action getPartnerByRegion = async (page = 1) => {
   //   this.partner_list = [];
   //   //this.data_dt = [];

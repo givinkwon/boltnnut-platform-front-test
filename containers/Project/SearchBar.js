@@ -101,8 +101,7 @@ class SearchBarConatiner extends React.Component {
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-
-        //창 크기
+    //창 크기
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   }

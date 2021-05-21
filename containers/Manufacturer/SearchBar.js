@@ -7,9 +7,11 @@ import ButtonComponent from "components/Buttonv2";
 import Background from "components/Background";
 import Container from "components/Containerv1";
 
+import { toJS } from "mobx";
+
 import { PRIMARY2 } from "static/style";
 
-@inject("Auth", "Project", "Request", "Partner")
+@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -28,18 +30,21 @@ class SearchBarConatiner extends React.Component {
     this.setState({ list: false });
   };
 
-  searchText = (e) => {
+  searchText = async (e) => {
     const { Partner } = this.props;
     //console.log("click");
     // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
-    Partner.search_text = e.target.value;
+    await (Partner.search_text = e.target.value);
 
     //Partner.getPartner();
   };
   search = () => {
-    const { Partner } = this.props;
+    const { Partner, ManufactureProcess } = this.props;
     console.log("click");
+    if (Partner.search_text != null) {
+      ManufactureProcess.saveSearchText(Partner.search_text);
+    }
     Partner.currentPage = 1;
     Partner.category_dic = {};
     Partner.getPartner();
@@ -51,9 +56,14 @@ class SearchBarConatiner extends React.Component {
     });
   };
   handleKeyDown = (e) => {
-    const { Partner } = this.props;
+    const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
       console.log("Enter");
+      console.log(e);
+      console.log(toJS(Partner.search_text));
+      if (Partner.search_text != null) {
+        ManufactureProcess.saveSearchText(Partner.search_text);
+      }
       Partner.currentPage = 1;
       Partner.category_dic = {};
       Partner.getPartner();
@@ -147,7 +157,7 @@ const SearchBar = styled.div`
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 30px;
+    // margin-top: 30px;
     flex-direction: column;
     input {
       font-size: 12px;
@@ -155,13 +165,13 @@ const SearchBar = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-top: 30px;
+    // margin-top: 30px;
     input {
       font-size: 16px;
     }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-top: 40px;
+    // margin-top: 40px;
     input {
       font-size: 17px;
     }
@@ -178,6 +188,10 @@ const Form = styled.div`
   display: flex;
   justify-content: flex-start;
   height: 50px;
+  @media (min-width: 1300px) {
+    //margin-top: 0;
+    width: 90%;
+  }
 `;
 
 const SearchButton = styled(ButtonComponent)`
@@ -215,10 +229,17 @@ const Select = styled(SelectComponent)`
     background-color: #ffffff;
     position: relative;
   }
+  @media (min-width: 1300px) {
+    //width: 110px;
+  }
 `;
 
 const Box = styled.div`
   width: 220px;
+
+  @media (min-width: 1300px) {
+    //width: 110px;
+  }
 
   ${(props) =>
     props.active &&

@@ -9,7 +9,7 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Info2/ChatTest";
-
+import NoProject from "../NoProject";
 
 
 @inject("Project", "Auth", "Partner")
@@ -76,7 +76,8 @@ class MyProject extends React.Component {
     return (
       <Background>
         <Container style={{ flexDirection: "column" }}>
-          {Project.chatModalActive && (
+          {Auth.logged_in_partner.answer_set[0] ?  <>
+            {Project.chatModalActive && (
             // <Layer onClick={this.modalHandler}>
             <Layer>
               {/* <Postcode /> */}
@@ -86,11 +87,9 @@ class MyProject extends React.Component {
             </Layer>
           )}
 
-          <>
             {Partnerprojectlist &&
               Partnerprojectlist.map((data, idx) => {
                 return (
-                  <>
                   <BoxContainer>
                     <Font22>
                       {data.name}
@@ -107,10 +106,13 @@ class MyProject extends React.Component {
                       />
                     )}
                     </BoxContainer>
-                  </>
+
                 );
               })}
-          </>
+        
+          </> 
+          : 
+          <NoProject/>}
         </Container>
       </Background>
     );

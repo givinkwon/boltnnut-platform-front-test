@@ -41,18 +41,19 @@ class BannerConatiner extends React.Component {
 					)}
 					{Auth.logged_in_partner && (
 						<Item>
-							<span style={{ display: 'flex', alignItems: 'baseline' }}>
-								<Text.FontSize48
-									color={WHITE}
-									fontWeight={700}
-									style={{ marginRight: '24px', marginBottom: '16px' }}
-								>
-									프로젝트 찾기
-								</Text.FontSize48>
-							</span>
-							<Text.FontSize24 color={WHITE} fontWeight={400}>
-								문의한 프로젝트에 대한 상담을 통해 신규 거래처를 찾아보세요.
-							</Text.FontSize24>
+							<div
+								style={{
+									display: 'inline-flex',
+									alignItems: 'flex-end',
+									height: '59px',
+									marginBottom: '15px',
+								}}
+							>
+              <FontSize40>프로젝트 관리</FontSize40>
+							</div>
+              <FontSize22>
+								문의한 프로젝트에 대한 상담 내용을 확인하세요.
+							</FontSize22>
 						</Item>
 					)}
 				</Container>

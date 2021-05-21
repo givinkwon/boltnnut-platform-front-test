@@ -592,36 +592,36 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
                 <span
                   onClick={() => {
                     let check_count = 0;
-                    fileList.map((item, idx) => {
-                      item.fileName;
-                      let fileNameAvailable = ["txt"];
-                      const extension = item.fileName.split(".");
+                    // fileList.map((item, idx) => {
+                    //   item.fileName;
+                    //   let fileNameAvailable = ["txt"];
+                    //   const extension = item.fileName.split(".");
 
-                      //console.log(fileNameAvailable)
-                      if (
-                        item.quantity.value === 0 ||
-                        item.quantity.value === ""
-                      ) {
-                        console.log("수량을 입력해주세요");
-                        check_count++;
-                      }
+                    //   //console.log(fileNameAvailable)
+                    //   if (
+                    //     item.quantity.value === 0 ||
+                    //     item.quantity.value === ""
+                    //   ) {
+                    //     console.log("수량을 입력해주세요");
+                    //     check_count++;
+                    //   }
 
-                      if (
-                        fileNameAvailable.includes(
-                          extension[extension.length - 1]
-                        )
-                      ) {
-                        this.props.ManufactureProcess.privateFileArray.push({
-                          file: item,
-                        });
-                      }
-                    });
+                    //   if (
+                    //     fileNameAvailable.includes(
+                    //       extension[extension.length - 1]
+                    //     )
+                    //   ) {
+                    //     this.props.ManufactureProcess.privateFileArray.push({
+                    //       file: item,
+                    //     });
+                    //   }
+                    // });
 
-                    if (check_count) {
-                      alert("수량을 입력해주세요");
-                    } else {
-                      ManufactureProcess.checkPaymentButton = true;
-                    }
+                    // if (check_count) {
+                    //   alert("수량을 입력해주세요");
+                    // } else {
+                    //   ManufactureProcess.checkPaymentButton = true;
+                    // }
 
                     // console.log(
                     //   toJS(this.props.ManufactureProcess.privateFileArray)

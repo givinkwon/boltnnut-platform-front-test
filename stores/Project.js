@@ -46,6 +46,9 @@ class Project {
   // 제안서 별 채팅방 연결 관련 변수
   @observable answerDetailList = [];
 
+  // 채팅하기 페이지 간략히 보기 및 자세히 보기 관련 변수
+  @observable projectQuickView = [];
+
   @action setCategory = (val) => {
     this.input_category = val;
   };
