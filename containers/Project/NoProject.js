@@ -9,22 +9,6 @@ import {inject, observer} from "mobx-react"
 @inject("Auth", "Project")
 @observer
 class NoProject extends React.Component {
-  state = {
-    width: 0,
-  }
-  async componentDidMount() {
-    await this.props.Auth.checkLogin();
-    //창 크기
-    window.addEventListener("resize", this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
-  }
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
-  }
-  updateDimensions = () => {
-    this.setState({ ...this.state, width: window.innerWidth });
-  };
-
   search = () => {
 		const { Project } = this.props;
 		Project.newIndex = 0;
@@ -37,7 +21,6 @@ class NoProject extends React.Component {
       <Background>
         <Containerv1>
           <RequestCompleteBox>
-            {this.state.width > 768 ?  <>
               {Auth.logged_in_client &&     
               <>
               <RequestCompleteTitle>
@@ -50,12 +33,16 @@ class NoProject extends React.Component {
                 <InlineDiv
                   style={{ alignItems: "center", justifyContent: "center" }}
                 >
-                  {/* <FontSize22>ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</FontSize22> */}
+                  <FontSize22>
+                  현재 등록중인 프로젝트가 없습니다. 프로젝트 등록을 하시면 상담을 통해 
+                  </FontSize22>
                 </InlineDiv>
                 <InlineDiv
                   style={{ alignItems: "center", justifyContent: "center" }}
                 >
-                  {/* <FontSize22>BBBBBBBBBBB</FontSize22> */}
+                  <FontSize22>
+                  기획 단계부터 실무자 분들과 소통할 수 있습니다.
+                  </FontSize22>
                 </InlineDiv>
               </RequestCompleteDesc>
 
@@ -78,12 +65,16 @@ class NoProject extends React.Component {
                 <InlineDiv
                   style={{ alignItems: "center", justifyContent: "center" }}
                 >
-                  {/* <FontSize22>AAAAAAAAAAAA</FontSize22> */}
+                  <FontSize22>
+                  현재 제안서를 넣은 프로젝트가 없습니다. 프로젝트에 제안서를 넣으시면 클라이언트와
+                  </FontSize22>
                 </InlineDiv>
                 <InlineDiv
                   style={{ alignItems: "center", justifyContent: "center" }}
                 >
-                  {/* <FontSize22>BBBBBBBBBBB</FontSize22> */}
+                  <FontSize22>
+                  1:1 채팅 및 비공개 자료를 요청하실 수 있습니다.
+                  </FontSize22>
                 </InlineDiv>
               </RequestCompleteDesc>
 
@@ -94,18 +85,6 @@ class NoProject extends React.Component {
               </ButtonBox>
               </>
             }
-            
-            
-            </> :
-            <>
-              
-            
-            
-            </>}
-
-
-
-
           </RequestCompleteBox>
         </Containerv1>
       </Background>
@@ -162,7 +141,7 @@ const RequestCompleteBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 1200px;
+  width: 100%;
   height: 496px;
   margin-top: 60px;
   margin-bottom: 200px;
@@ -175,7 +154,7 @@ const RequestCompleteTitle = styled.div`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 996px;
+  width: 83%;
   border-bottom: solid 1px #c6c7cc;
 `;
 

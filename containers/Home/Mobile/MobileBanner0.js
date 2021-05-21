@@ -52,7 +52,7 @@ class MobileBanner0Container extends React.Component {
         style={{
           paddingBottom: 74,
           paddingTop: 54,
-          marginTop: 100,
+          marginTop: 54,
           justifyContent: "center",
         }}
       >

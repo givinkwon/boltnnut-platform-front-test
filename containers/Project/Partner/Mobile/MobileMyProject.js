@@ -9,8 +9,8 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Info2/ChatTest";
-
-
+import ProposalCard from "components/ProposalCard";
+import MobileNoProject from "../../MobileNoProject";
 
 @inject("Project", "Auth", "Partner")
 @observer
@@ -44,10 +44,15 @@ class MyProject extends React.Component {
     await Project.getProjectDetail(data.project);
 
     if (Project.projectDetailData) {
+      const request_set = []
+      console.log(Project.projectDetailData)
+      request_set.push( Project.projectDetailData.request_set[0])
       partnerprojectlist.push({
-        name: Project.projectDetailData.request_set[0].name,            // 프로젝트 이름
-        project:Project.projectDetailData.id,
-        content: data.content1,
+        // request_set: Project.projectDetailData.request_set[0],
+        // name: Project.projectDetailData.request_set[0].name,            // 프로젝트 이름
+        // project:Project.projectDetailData.id,
+        // content: data.content1,
+        request_set: request_set,
       });
       this.setState({ Partnerprojectlist: partnerprojectlist });
     }
@@ -60,8 +65,6 @@ class MyProject extends React.Component {
     if (Auth.logged_in_partner) {
       Partner.answer_set = Auth.logged_in_partner.answer_set;
       Partner.getPartnerDetail(Auth.logged_in_partner.id)
-      console.log(toJS(Partner.detail))
-
       Partner.answer_set.map((data) => {
         this.getProject(data);
       });
@@ -75,32 +78,32 @@ class MyProject extends React.Component {
     return (
       <Background>
         <Container style={{ flexDirection: "column" }}>
-
-          <>
-            {Partnerprojectlist &&
-              Partnerprojectlist.map((data, idx) => {
+          {Auth.logged_in_partner.answer_set[0]  ?
+              Partnerprojectlist.map((item, idx) => {
                 return (
-                  <>
-                  <BoxContainer>
-                    <Font22>
-                      {data.name}
-                    </Font22>
-                    {this.state.Partnerprojectlist[idx] &&Partner.detail&& (
-                      <ChatItemContainer
-                        logo={Partner.detail.logo}
-                        name={Partner.detail.name}
-                        id={data.project}
-                        content={data.content}
-                        modalHandler={this.modalHandler}
-                        user = {Auth}
-                        pushToDetail = {this.pushToDetail}
-                      />
-                    )}
-                    </BoxContainer>
-                  </>
+                  <Background
+                    style={{ marginTop: 34, backgroundColor: "#f9f9f9" }}
+                  >
+                    <Container>
+                      <div
+                        style={{ cursor: "pointer", width: "100%" }}
+                        onClick={() => this.pushToDetail(item.id)}
+                      >
+                        <ProposalCard
+                          data={item}
+                          middleCategory={Project.middle_category_name[idx]}
+                          mainCategory={Project.main_category_name[idx]}
+                          newData={Project.data_dt[idx]}
+                          handleIntersection={this.handleIntersection}
+                          // onClick={() => this.pushToDetail(item.id)}
+                        />
+                      </div>
+                    </Container>
+                  </Background>
                 );
-              })}
-          </>
+              })
+              :
+              <MobileNoProject/>}
         </Container>
       </Background>
     );
