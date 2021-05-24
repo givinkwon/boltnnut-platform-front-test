@@ -6,6 +6,7 @@ import { WHITE } from 'static/style';
 import Background from 'components/Background';
 import Container from 'components/Containerv1';
 import * as Title from '../../components/Title';
+import * as Content from 'components/Content';
 const BackImg = 'static/images/answer/MaskGroup/MaskGroup77.png';
 
 import { inject, observer } from 'mobx-react';
@@ -22,7 +23,7 @@ class BannerConatiner extends React.Component {
 				style={{ height: 208, opacity: 0.9 }}
 			>
 				<Container>
-					{/* {Auth.logged_in_client && ( */}
+					{Auth.logged_in_client && (
 						<Item>
 							<div
 								style={{
@@ -35,26 +36,29 @@ class BannerConatiner extends React.Component {
 								<FontSize40>채팅하기</FontSize40>
 							</div>
 							<FontSize22>
-								워딩필요 워딩필요 워딩필요 워딩필요 워딩필요 워딩필요 워딩필요 워딩필요 
+								상담중인 제조사와 채팅으로 소통해보세요
 							</FontSize22>
 						</Item>
-					{/* )} */}
-					{/* {Auth.logged_in_partner && (
+					)}
+					{Auth.logged_in_partner && (
 						<Item>
-							<span style={{ display: 'flex', alignItems: 'baseline' }}>
-								<Text.FontSize48
-									color={WHITE}
-									fontWeight={700}
-									style={{ marginRight: '24px', marginBottom: '16px' }}
-								>
+							<div
+								style={{
+									display: 'inline-flex',
+									alignItems: 'flex-end',
+									height: '59px',
+									marginBottom: '15px',
+								}}
+              >
+								<FontSize40>
 									채팅하기
-								</Text.FontSize48>
-							</span>
-							<Text.FontSize24 color={WHITE} fontWeight={400}>
-                워딩필요 워딩필요 워딩필요 워딩필요 워딩필요 워딩필요 워딩필요 워딩필요 
-							</Text.FontSize24>
+								</FontSize40>
+							</div>
+							<FontSize22>
+                답변한 프로젝트의 클라이언트와 채팅으로 소통해보세요
+							</FontSize22>
 						</Item>
-					)} */}
+					)}
 				</Container>
 			</Background>
 		);
@@ -140,17 +144,20 @@ const Banner = styled.div`
 	}
 `;
 
-const FontSize40 = styled.p`
+const FontSize40 = styled(Title.FontSize40)`
 	font-family: NotoSansCJKkr;
 	font-size: 40px;
 	font-weight: 500;
-	line-height: 1.5 !important;
+  font-stretch: normal;
+  font-style: normal;
+
+	line-height: 1.95 !important;
 	letter-spacing: -1px !important;
 	color: #ffffff;
 `;
 
 
-const FontSize22 = styled.p`
+const FontSize22 = styled(Content.FontSize22)`
 	font-family: NotoSansCJKkr;
 	font-size: 22px;
 	font-weight: normal;

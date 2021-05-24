@@ -8,45 +8,45 @@ import { inject, observer } from "mobx-react";
 import {toJS} from "mobx";
 import Router from 'next/router';
 
-const success = '/static/images/request/PaymentComplete/success.png';
 
 
-@inject("Project")
+@inject("Auth")
 @observer
-class AnswerComplete extends React.Component {
-
-	search = () => {
+class MobileRequestComplete extends React.Component {
+  search = () => {
 		const { Project } = this.props;
 		Project.newIndex = 0;
+    Project.myIndex = 0;
 	}
 
 	render() {
-
+    const { Auth } = this.props;
 		return (
-			<Background>
+			<Background style = {{marginTop: 54}}>
 				<Containerv1 style = {{display: "flex", flexDirection: "column"}}>
-          <RequestCompleteTitle>
-              <SuccessImg src={success} style={{ marginBottom: '18px' , marginTop: '30px'}} />
-							<FontSize18>
-								<span>고객님의 답변이 전달되었습니다.</span>
-							</FontSize18>
-						</RequestCompleteTitle>
-					<RequestCompleteBox>
-						
-
+          {Auth.logged_in_client &&
+          <>
+            <RequestCompleteTitle>
+                {/* <SuccessImg src={success} style={{ marginBottom: '18px' , marginTop: '30px'}} /> */}
+                <FontSize18>
+                  프로젝트를 등록해주세요
+                </FontSize18>
+              </RequestCompleteTitle>
+            <RequestCompleteBox>
+					
 						<RequestCompleteDesc>
 							<InlineDiv
 								style={{ alignItems: 'center', justifyContent: 'center' }}
 							>
 								<FontSize14>
-									해당 상담을 의뢰주신 클라이언트님이
+                  현재 등록중인 프로젝트가 없습니다.
 								</FontSize14>
 							</InlineDiv>
               <InlineDiv
 								style={{ alignItems: 'center', justifyContent: 'center' }}
 							>
 								<FontSize14>
-                  고객님의 답변 내용을 확인하고 답변을 주실 예정입니다.
+                  프로젝트 등록을 하시면 상담을 통해 
 								</FontSize14>
 							</InlineDiv>
 
@@ -55,22 +55,68 @@ class AnswerComplete extends React.Component {
 								style={{ alignItems: 'center', justifyContent: 'center' }}
 							>
 								<FontSize14>
-									메세지가 도착하면 카카오톡으로 알려드립니다.
+                  기획 단계부터 실무자 분들과 소통할 수 있습니다.
 								</FontSize14>
 							</InlineDiv>
 						</RequestCompleteDesc>
 					</RequestCompleteBox>
           <ButtonBox>
 							<HomeBtn onClick={() => Router.push('/')}>홈으로 가기</HomeBtn>
-							<MyProjectBtn onClick={() => this.search() }>프로젝트 찾기</MyProjectBtn>
+							<MyProjectBtn onClick={() => Router.push('/request') }>프로젝트 등록하기</MyProjectBtn>
 						</ButtonBox>
+            </>
+          }
+          {Auth.logged_in_partner && 
+          <>
+            <RequestCompleteTitle>
+                {/* <SuccessImg src={success} style={{ marginBottom: '18px' , marginTop: '30px'}} /> */}
+                <FontSize18>
+                  프로젝트에 제안서를 넣어주세요
+                </FontSize18>
+              </RequestCompleteTitle>
+            <RequestCompleteBox>
+					
+						<RequestCompleteDesc>
+							<InlineDiv
+								style={{ alignItems: 'center', justifyContent: 'center' }}
+							>
+								<FontSize14>
+                  현재 제안서를 넣은 프로젝트가 없습니다.
+								</FontSize14>
+							</InlineDiv>
+              <InlineDiv
+								style={{ alignItems: 'center', justifyContent: 'center' }}
+							>
+								<FontSize14>
+                  프로젝트에 제안서를 넣으시면 클라이언트와
+								</FontSize14>
+							</InlineDiv>
+
+
+							<InlineDiv
+								style={{ alignItems: 'center', justifyContent: 'center' }}
+							>
+								<FontSize14>
+                  1:1 채팅 및 비공개 자료를 요청하실 수 있습니다.
+								</FontSize14>
+							</InlineDiv>
+						</RequestCompleteDesc>
+					</RequestCompleteBox>
+          <ButtonBox>
+							<HomeBtn onClick={() => Router.push('/')}>홈으로 가기</HomeBtn>
+							<MyProjectBtn onClick={() => this.searc() }>프로젝트 답변하기</MyProjectBtn>
+						</ButtonBox>
+
+          </>
+          
+          }
 				</Containerv1>
 			</Background>
 		);
 	}
 }
 
-export default AnswerComplete;
+export default MobileRequestComplete;
 
 // global
 const InlineDiv = styled.div`

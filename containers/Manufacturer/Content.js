@@ -79,6 +79,8 @@ class ManufacturerContentContainer extends React.Component {
     // Project.getProjectByPrice(Project.search_text, newPage)
     console.log(toJS(this.category_dic));
     Partner.category_dic = {};
+    Partner.ReviewActive = false;
+    Partner.ReviewActiveIndex = -1;
     Partner.getPartner(newPage);
   };
 
@@ -95,6 +97,8 @@ class ManufacturerContentContainer extends React.Component {
       // console.log(nextPage);
       console.log(toJS(this.category_dic));
       Partner.category_dic = {};
+      Partner.ReviewActive = false;
+      Partner.ReviewActiveIndex = -1;
       Partner.getPartner(nextPage);
     }
   };
@@ -108,9 +112,30 @@ class ManufacturerContentContainer extends React.Component {
       Partner.currentPage = newPage;
       console.log(toJS(this.category_dic));
       Partner.category_dic = {};
+      Partner.ReviewActive = false;
+      Partner.ReviewActiveIndex = -1;
       Partner.getPartner(newPage);
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
     }
+  };
+
+  pushToDetail = async (item, idx) => {
+    const { Partner } = this.props;
+    Partner.category_name_list = null;
+    console.log(item.id);
+    Partner.partner_detail_list = [];
+    //Project.selectedProjectId = id;
+    Partner.partner_detail_list.push({ item: item });
+    console.log(toJS(Partner.partner_detail_list));
+    Partner.newIndex = 1;
+    Partner.category_name_list = Partner.category_dic[idx];
+    console.log(idx);
+    //console.log(toJS(Partner.category_dic[idx]));
+    console.log(toJS(Partner.category_name_list));
+    await Partner.getPartnerDetail(item.id);
+
+    // await Router.push(`/project/${id}`);
+    //Project.setProjectDetailData(id);
   };
 
   render() {
@@ -172,7 +197,9 @@ class ManufacturerContentContainer extends React.Component {
                         {/* {console.log(toJS(Partner.category_ary[idx]))} */}
                         {/* {Partner.check_loading_category &&
                           console.log(toJS(Partner.category_ary[idx]))} */}
-                        {console.log(toJS(Partner.category_dic[idx]))}
+                        {/* {console.log(toJS(Partner.category_dic[idx]))} */}
+                        {/* {console.log(idx)} */}
+                        {/* <div onClick={() => this.pushToDetail(item, idx)}> */}
                         <ProposalCard
                           data={item}
                           width={this.props.width}
@@ -186,6 +213,7 @@ class ManufacturerContentContainer extends React.Component {
                           handleIntersection={this.handleIntersection}
                           customer="partner"
                         />
+                        {/* </div> */}
                       </Background>
                     );
                   })}

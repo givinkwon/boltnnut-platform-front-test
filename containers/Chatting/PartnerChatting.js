@@ -10,7 +10,7 @@ import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Info2/ChatTest";
 
-
+import NoProject from "containers/Project/NoProject";
 
 @inject("Project", "Auth", "Partner")
 @observer
@@ -85,6 +85,7 @@ class MyProject extends React.Component {
 
           <>
             {Partnerprojectlist &&
+              Partnerprojectlist[0] ?
               Partnerprojectlist.map((data, idx) => {
                 return (
                   <>
@@ -106,7 +107,10 @@ class MyProject extends React.Component {
                     </BoxContainer>
                   </>
                 );
-              })}
+              })
+            :
+            <NoProject/>
+            }
           </>
         </Container>
       </Background>

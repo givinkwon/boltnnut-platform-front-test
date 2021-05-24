@@ -115,7 +115,7 @@ class Project extends React.Component {
                 headText={"프로젝트 관리"}
                 width={width}
               />
-              <div style={{ height: "65px" }}></div>
+              <div style={{ height: "54px" }}></div>
             </div>
           )}
         </>

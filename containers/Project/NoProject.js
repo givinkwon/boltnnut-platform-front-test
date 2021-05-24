@@ -9,7 +9,6 @@ import {inject, observer} from "mobx-react"
 @inject("Auth", "Project")
 @observer
 class NoProject extends React.Component {
-
   search = () => {
 		const { Project } = this.props;
 		Project.newIndex = 0;
@@ -22,66 +21,70 @@ class NoProject extends React.Component {
       <Background>
         <Containerv1>
           <RequestCompleteBox>
+              {Auth.logged_in_client &&     
+              <>
+              <RequestCompleteTitle>
+                <FontSize26 style={{ marginBottom: "20px" }}>
+                  프로젝트를 등록해주세요
+                </FontSize26>
+              </RequestCompleteTitle>
 
-            {Auth.logged_in_client &&     
-            <>
-            <RequestCompleteTitle>
-              <FontSize26 style={{ marginBottom: "20px" }}>
-                프로젝트를 등록해주세요
-              </FontSize26>
-            </RequestCompleteTitle>
+              <RequestCompleteDesc>
+                <InlineDiv
+                  style={{ alignItems: "center", justifyContent: "center" }}
+                >
+                  <FontSize22>
+                  현재 등록중인 프로젝트가 없습니다. 프로젝트 등록을 하시면 상담을 통해 
+                  </FontSize22>
+                </InlineDiv>
+                <InlineDiv
+                  style={{ alignItems: "center", justifyContent: "center" }}
+                >
+                  <FontSize22>
+                  기획 단계부터 실무자 분들과 소통할 수 있습니다.
+                  </FontSize22>
+                </InlineDiv>
+              </RequestCompleteDesc>
 
-            <RequestCompleteDesc>
-              <InlineDiv
-                style={{ alignItems: "center", justifyContent: "center" }}
-              >
-                <FontSize22>ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</FontSize22>
-              </InlineDiv>
-              <InlineDiv
-                style={{ alignItems: "center", justifyContent: "center" }}
-              >
-                <FontSize22>BBBBBBBBBBB</FontSize22>
-              </InlineDiv>
-            </RequestCompleteDesc>
+              <ButtonBox>
+                <HomeBtn onClick={() => Router.push("/")}>홈으로 가기</HomeBtn>
 
-            <ButtonBox>
-              <HomeBtn onClick={() => Router.push("/")}>홈으로 가기</HomeBtn>
+                <MyProjectBtn onClick={() => Router.push("/request")}>프로젝트 등록하기</MyProjectBtn>
+              </ButtonBox>
+              </>
+              }
+              {Auth.logged_in_partner &&     
+              <>
+              <RequestCompleteTitle>
+                <FontSize26 style={{ marginBottom: "20px" }}>
+                  프로젝트에 제안서를 넣어주세요
+                </FontSize26>
+              </RequestCompleteTitle>
 
-              <MyProjectBtn onClick={() => this.search()}>프로젝트 등록하기</MyProjectBtn>
-            </ButtonBox>
-            </>
+              <RequestCompleteDesc>
+                <InlineDiv
+                  style={{ alignItems: "center", justifyContent: "center" }}
+                >
+                  <FontSize22>
+                  현재 제안서를 넣은 프로젝트가 없습니다. 프로젝트에 제안서를 넣으시면 클라이언트와
+                  </FontSize22>
+                </InlineDiv>
+                <InlineDiv
+                  style={{ alignItems: "center", justifyContent: "center" }}
+                >
+                  <FontSize22>
+                  1:1 채팅 및 비공개 자료를 요청하실 수 있습니다.
+                  </FontSize22>
+                </InlineDiv>
+              </RequestCompleteDesc>
+
+              <ButtonBox>
+                <HomeBtn onClick={() => Router.push("/")}>홈으로 가기</HomeBtn>
+
+                <MyProjectBtn onClick={() => this.search()}>프로젝트 답변하기</MyProjectBtn>
+              </ButtonBox>
+              </>
             }
-            {Auth.logged_in_partner &&     
-            <>
-            <RequestCompleteTitle>
-              <FontSize26 style={{ marginBottom: "20px" }}>
-                프로젝트에 제안서를 넣어주세요
-              </FontSize26>
-            </RequestCompleteTitle>
-
-            <RequestCompleteDesc>
-              <InlineDiv
-                style={{ alignItems: "center", justifyContent: "center" }}
-              >
-                <FontSize22>AAAAAAAAAAAA</FontSize22>
-              </InlineDiv>
-              <InlineDiv
-                style={{ alignItems: "center", justifyContent: "center" }}
-              >
-                <FontSize22>BBBBBBBBBBB</FontSize22>
-              </InlineDiv>
-            </RequestCompleteDesc>
-
-            <ButtonBox>
-              <HomeBtn onClick={() => Router.push("/")}>홈으로 가기</HomeBtn>
-
-              <MyProjectBtn onClick={() => this.search()}>프로젝트 답변하기</MyProjectBtn>
-            </ButtonBox>
-            </>
-            }
-
-
-
           </RequestCompleteBox>
         </Containerv1>
       </Background>
@@ -138,7 +141,7 @@ const RequestCompleteBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 1200px;
+  width: 100%;
   height: 496px;
   margin-top: 60px;
   margin-bottom: 200px;
@@ -151,7 +154,7 @@ const RequestCompleteTitle = styled.div`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 996px;
+  width: 83%;
   border-bottom: solid 1px #c6c7cc;
 `;
 

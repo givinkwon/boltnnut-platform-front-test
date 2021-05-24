@@ -9,6 +9,7 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Info2/ChatTest";
+import NoProject from "../NoProject";
 
 @inject("Project", "Auth", "Partner")
 @observer
@@ -73,28 +74,28 @@ class MyProject extends React.Component {
     return (
       <Background>
         <Container style={{ flexDirection: "column" }}>
-          {Project.chatModalActive && (
-            // <Layer onClick={this.modalHandler}>
-            <Layer>
-              {/* <Postcode /> */}
-              <ChatTestContainer
-                roomName={this.state.selectedRoom}
-              ></ChatTestContainer>
-            </Layer>
-          )}
+          {Auth.logged_in_partner.answer_set[0] ? (
+            <>
+              {Project.chatModalActive && (
+                // <Layer onClick={this.modalHandler}>
+                <Layer>
+                  {/* <Postcode /> */}
+                  <ChatTestContainer
+                    roomName={this.state.selectedRoom}
+                  ></ChatTestContainer>
+                </Layer>
+              )}
 
-          <>
-            {Partnerprojectlist &&
-              Partnerprojectlist.map((data, idx) => {
-                return (
-                  <>
+              {Partnerprojectlist &&
+                Partnerprojectlist.map((data, idx) => {
+                  return (
                     <BoxContainer>
                       <Font22>{data.name}</Font22>
                       {this.state.Partnerprojectlist[idx] && Partner.detail && (
                         <ChatItemContainer
                           logo={Partner.detail.logo}
                           name={Partner.detail.name}
-                          id={data.answerId}
+                          id={data.project}
                           content={data.content}
                           modalHandler={this.modalHandler}
                           user={Auth}
@@ -102,10 +103,12 @@ class MyProject extends React.Component {
                         />
                       )}
                     </BoxContainer>
-                  </>
-                );
-              })}
-          </>
+                  );
+                })}
+            </>
+          ) : (
+            <NoProject />
+          )}
         </Container>
       </Background>
     );
