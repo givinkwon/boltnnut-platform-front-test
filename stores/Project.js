@@ -46,6 +46,9 @@ class Project {
   // 제안서 별 채팅방 연결 관련 변수
   @observable answerDetailList = [];
 
+  // 채팅하기 페이지 간략히 보기 및 자세히 보기 관련 변수
+  @observable projectQuickView = [];
+
   @action setCategory = (val) => {
     this.input_category = val;
   };
@@ -120,7 +123,7 @@ class Project {
   };
 
   /* 해당 클라이언트의 모든 프로젝트 가져오기 */
-  @action getAllProject = async (clientId) =>{
+  @action getAllProject = async (clientId) => {
     this.projectDataList = [];
     console.log(toJS(clientId));
     if (!clientId) {
@@ -145,7 +148,6 @@ class Project {
         console.log(e.response);
       });
   };
-
 
   /* 파트너 - 전체 + 가격 별 + search별 다 포함시켰음 */
   @action getProjectByPrice = (search_text, page = 1) => {
@@ -187,8 +189,8 @@ class Project {
     await ProjectAPI.getProjectDetail(req)
       .then((res) => {
         this.projectDetailData = res.data;
-        console.log(res.data);
-        console.log(toJS(this.projectDetailData));
+        // console.log(res.data);
+        // console.log(toJS(this.projectDetailData));
       })
       .catch((e) => {
         console.log(e);

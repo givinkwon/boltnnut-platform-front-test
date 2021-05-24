@@ -8,6 +8,7 @@ import Container from 'components/Containerv1';
 import ProposalCard from 'components/ProposalCard';
 import Background from 'components/Background';
 import Project from 'stores/Project';
+import MobileNoProject from '../../../MobileNoProject'
 
 const pass1 = 'static/images/pass1.png'
 const pass2 = 'static/images/pass2.png'
@@ -104,7 +105,12 @@ class MobileProjectContentContainer extends React.Component {
       return(
         <>          
         <div>
-          {Project.projectDataList && Project.projectDataList.map((item, idx) => {
+          {Project.projectDataList && 
+          
+          Project.projectDataList[0] ? 
+          
+          <>
+          {Project.projectDataList.map((item, idx) => {
             //   {data.map((item, idx) => {
             return(            
               <Background style={{marginBottom: '3px'}}>
@@ -118,8 +124,7 @@ class MobileProjectContentContainer extends React.Component {
                 </Container>          
               </Background>
             )        
-        })}
-
+          })}
         <PageBar>
             <img src={pass1} style={{opacity: current_set == 1 && Project.currentPage <= 1  ? 0.4 : 1 }} onClick = {this.pagePrev}/>
               <PageCount onClick = {this.movePage} value = {5*(current_set - 1)} active={Project.currentPage %5 == 1} style={{display:  Project.project_page < 5*(current_set - 1) + 1 ? 'none': 'block' }}> {5*(current_set - 1) + 1} </PageCount>
@@ -130,6 +135,11 @@ class MobileProjectContentContainer extends React.Component {
               {/* <PageCount> ... </PageCount> */}
             <img src={pass2} style={{opacity: Project.project_page == Project.currentPage  ? 0.4 : 1 }} onClick = {this.pageNext} />
         </PageBar>    
+        </>
+        :
+        <MobileNoProject/>
+          }
+
         </div>          
         </>
     )}

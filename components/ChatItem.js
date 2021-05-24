@@ -50,7 +50,7 @@ class ChatItemContainer extends React.Component {
         </PartnerBox>
       }
       {this.props.user.logged_in_partner &&
-                        
+        
         <PartnerBox>
           <BoxLeft>
             <PartnerInfo>

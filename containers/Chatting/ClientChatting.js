@@ -10,6 +10,8 @@ import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Info2/ChatTest";
 import * as PartnerAPI from "axios/Partner";
 
+import NoProject from "containers/Project/NoProject";
+
 @inject("Project", "Auth", "Answer")
 @observer
 class ClientChatting extends React.Component{
@@ -17,7 +19,7 @@ class ClientChatting extends React.Component{
 state = {
   selectedRoom: null,
   answerDetailList: [],
-  partnerList:[]
+  partnerList:[],
 }
 
 async getProject(data){
@@ -35,7 +37,10 @@ async getProject(data){
             content: answer.content1,
             project: data.id,
           });
-          
+          Project.projectQuickView.push({
+            // idx: idx,
+            check: null,
+          })
         })
         .catch((e) => {
           console.log(e);
@@ -59,9 +64,17 @@ async componentDidMount() {
   if (Auth.logged_in_client) {
     this.getProject(Auth.logged_in_client.id)
   }
-
   
   // this.setState({ answerDetailList: AnswerDetailList });
+  }
+  activeHandler = (idx) => {
+    const { Project } = this.props;
+    if(Project.projectQuickView[idx].check){
+      Project.projectQuickView[idx].check = false
+    }
+    else{
+      Project.projectQuickView[idx].check = true
+    }
   }
 
   render(){
@@ -77,16 +90,21 @@ async componentDidMount() {
               ></ChatTestContainer>
             </Layer>
           }
-          {Project.projectDataList && Project.projectDataList.map((item, idx) => 
+          {Project.projectDataList && Project.projectDataList[0] 
+          ?
+          Project.projectDataList.map((item, idx) => 
             {
             return(
               <ProjectContainer>  
               <Font24>
               {item.request_set[0].name}
-
-
               <span>{item.answer_set.length}</span>
               </Font24>
+
+              {/* <div active = {Project.projectQuickView[idx].check} onClick = {this.activeHandler(idx)} >
+                <div>간략히 보기</div>
+                <div>자세히 보기</div>
+              </div> */}
               {Project.answerDetailList && Project.answerDetailList.map((data, idx) =>
               {
                 return(
@@ -109,7 +127,10 @@ async componentDidMount() {
               )}
               </ProjectContainer>  
             )
-          })}
+          })
+        :
+        <NoProject/>
+        }
         </Container>
       </Background>
     );
