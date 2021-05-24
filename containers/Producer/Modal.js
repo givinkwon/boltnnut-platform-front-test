@@ -1,9 +1,11 @@
 import React from "react";
 import Select from "react-select";
 import styled, { keyframes } from "styled-components";
-
+import { inject, observer } from "mobx-react";
 //import Modal from '../../../commons/components/Modals/Modal';
 
+@inject("Partner", "Auth")
+@observer
 class Modal extends React.Component {
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
@@ -25,7 +27,13 @@ class Modal extends React.Component {
               <header>전화번호</header>
               <main>{children}</main>
               <footer>
-                <div className="close" onClick={close}>
+                <div
+                  className="close"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    close();
+                  }}
+                >
                   닫기
                 </div>
               </footer>

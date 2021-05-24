@@ -11,9 +11,10 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import ProposalCard from "./ProposalCard";
 
+import Select from "./MobileSelect";
 import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
-import SearchBar from "./SearchBar";
+import MobileSearchBar from "./MobileSearchBar";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -24,7 +25,7 @@ const right = "static/icon/right-arrow.png";
 
 @inject("Project", "Auth", "Partner")
 @observer
-class ManufacturerContentContainer extends React.Component {
+class MobileManufacturerContentContainer extends React.Component {
   handleIntersection = (event) => {
     if (event.isIntersecting) {
       console.log("추가 로딩을 시도합니다");
@@ -34,21 +35,16 @@ class ManufacturerContentContainer extends React.Component {
   async componentDidMount() {
     const { Partner } = this.props;
 
+    console.log(typeof processArray);
+
     // Project.search_text = "";
     Partner.currentPage = 1;
 
     console.log("did mount");
 
     Partner.getPartner();
-
-    //console.log(toJS(Partner.filter_category_ary.length));
-    if (Partner.filter_category_ary.length === 1) {
-      Partner.getCategory();
-    }
-    if (Partner.filter_city_ary.length === 1) {
-      Partner.getCity();
-    }
-
+    Partner.getCategory();
+    Partner.getCity();
     // await Auth.checkLogin();
     // if(Auth.logged_in_partner){
     //   Project.getProjectByPrice()
@@ -57,19 +53,10 @@ class ManufacturerContentContainer extends React.Component {
 
   componentWillUnmount() {
     const { Partner } = this.props;
-    console.log("WillUnMount");
     Partner.category_dic = {};
-    Partner.filter_category_ary = [{ id: 0, category: "전체" }];
-    Partner.filter_city_ary = [{ id: 0, city: "전체" }];
+    console.log(toJS(this.props.Partner.category_dic));
   }
 
-  componentDidUpdate() {
-    // console.log("didupdate");
-    // console.log(toJS(this.props.Partner.check_loading_category));
-    // if (this.props.Partner.check_loading_category) {
-    //   this.setState({ g: 3 });
-    // }
-  }
   movePage = (e) => {
     const { Partner, Auth } = this.props;
     e.preventDefault();
@@ -77,28 +64,20 @@ class ManufacturerContentContainer extends React.Component {
     const newPage = e.target.innerText * 1;
     Partner.currentPage = newPage;
     // Project.getProjectByPrice(Project.search_text, newPage)
-    console.log(toJS(this.category_dic));
-    Partner.category_dic = {};
-    Partner.ReviewActive = false;
-    Partner.ReviewActiveIndex = -1;
     Partner.getPartner(newPage);
   };
 
   pageNext = (e) => {
     const { Partner } = this.props;
     e.preventDefault();
-    // console.log(toJS(Partner.currentPage));
-    // console.log(toJS(Partner.partner_page));
+    console.log(toJS(Partner.currentPage));
+    console.log(toJS(Partner.partner_page));
     if (Partner.currentPage < Partner.partner_page) {
       // Project.category_reset()
       const nextPage = Partner.currentPage + 1;
       Partner.currentPage = nextPage;
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
-      // console.log(nextPage);
-      console.log(toJS(this.category_dic));
-      Partner.category_dic = {};
-      Partner.ReviewActive = false;
-      Partner.ReviewActiveIndex = -1;
+      console.log(nextPage);
       Partner.getPartner(nextPage);
     }
   };
@@ -110,110 +89,89 @@ class ManufacturerContentContainer extends React.Component {
       // Project.category_reset()
       const newPage = Partner.currentPage - 1;
       Partner.currentPage = newPage;
-      console.log(toJS(this.category_dic));
-      Partner.category_dic = {};
-      Partner.ReviewActive = false;
-      Partner.ReviewActiveIndex = -1;
       Partner.getPartner(newPage);
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
     }
   };
 
-  pushToDetail = async (item, idx) => {
-    const { Partner } = this.props;
-    Partner.category_name_list = null;
-    console.log(item.id);
-    Partner.partner_detail_list = [];
-    //Project.selectedProjectId = id;
-    Partner.partner_detail_list.push({ item: item });
-    console.log(toJS(Partner.partner_detail_list));
-    // Partner.newIndex = 1;
-    Partner.category_name_list = Partner.category_dic[idx];
-    console.log(idx);
-    //console.log(toJS(Partner.category_dic[idx]));
-    console.log(toJS(Partner.category_name_list));
-    await Partner.getPartnerDetail(item.id);
-
-    // await Router.push(`/project/${id}`);
-    //Project.setProjectDetailData(id);
-  };
-
   render() {
-    const { Project, Partner } = this.props;
+    const { Project, Partner, width } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
 
     return (
       <>
-        {console.log("rendering")}
         <Background id="MyBackground">
-          <Container>
-            {/* <SearchBar /> */}
-            <Body>
-              <Filter style={{ paddingTop: "32px" }}>
+          <Container style={{ display: "block" }}>
+            {console.log(width)}
+            {/* <MobileSearchBar /> */}
+            <Body active={this.props.Partner.check_click_filter}>
+              {/* <FilterSearch>dsfsdfds</FilterSearch> */}
+              {/* <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
-                <RadioBox
-                  filter="region"
-                  data={this.props.Partner.filter_city_ary}
-                />
-                <RadioBox
-                  filter="develop"
-                  data={this.props.Partner.filter_category_ary}
-                />
-              </Filter>
+                <RadioBox data={region_data} />
+              </Filter> */}
 
               {/* <Background> */}
               {/* { Project.projectDataList.length > 0 && Project.projectDataList.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
               <Main>
-                <Header style={{ paddingTop: "32px" }}>
-                  <Font20 style={{ marginLeft: "-9px" }}>
-                    <span style={{ fontWeight: "bold" }}>
-                      {Partner.partner_count}개
-                    </span>
-                    의 제조사가 있습니다.
-                  </Font20>
-                  {/* <span>
+                <div>
+                  <Header
+                    style={{
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Font15>
+                      <span>{Partner.partner_count}개</span>의 제조사
+                    </Font15>
+                    {/* <span>
               <Font14>모든 제조의뢰</Font14>
               <img src={pass4}/>
             </span> */}
-                </Header>
+                    <div style={{ width: "100px" }}>
+                      <input
+                        style={{ display: "none" }}
+                        value={
+                          Request.select_big
+                            ? Request.select_big.maincategory
+                            : ""
+                        }
+                        class="Input"
+                      />
+                      {console.log(toJS(Partner.filter_category_ary))}
+                      <Select
+                        placeholder="전체"
+                        styles={customStyles}
+                        options={Partner.filter_category_ary}
+                        //options={processArray}
+                        getOptionLabel={(option) => option.category}
+                        // getOptionLabel={(option) => {
+                        //   option.label;
+                        // }}
+                        value={Partner.input_process_filter}
+                        onChange={Partner.setProcessFilter}
+                      />
+                    </div>
+                  </Header>
+                </div>
                 {Partner.partner_list &&
                   // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
-                        {/* {Partner.category_ary[idx] &&
-                          console.log(
-                            toJS(
-                              Partner.category_ary[idx].splice(
-                                0,
-                                //Partner.category_ary[idx].length
-                                Object.keys(Partner.category_ary[idx]).length
-                              )
-                            )
-                          )} */}
-                        {/* Partner.check_loading_category &&  */}
-                        {/* {console.log(toJS(Partner.category_ary[idx]))} */}
-                        {/* {Partner.check_loading_category &&
-                          console.log(toJS(Partner.category_ary[idx]))} */}
-                        {/* {console.log(toJS(Partner.category_dic[idx]))} */}
-                        {/* {console.log(idx)} */}
-                        <div onClick={() => this.pushToDetail(item, idx)}>
-                          <ProposalCard
-                            data={item}
-                            width={this.props.width}
-                            //categoryData={Partner.category_ary[idx]}
-                            categoryData={Partner.category_dic[idx]}
-                            idx={idx}
-                            // middleCategory={Project.middle_category_name[idx]}
-                            // mainCategory={Project.main_category_name[idx]}
-                            // newData={Project.data_dt[idx]}
-                            // checkTotal={Project.filter_price}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
+                        {console.log(this.props.width)}
+                        <ProposalCard
+                          data={item}
+                          width={this.props.width}
+                          idx={idx}
+                          // middleCategory={Project.middle_category_name[idx]}
+                          // mainCategory={Project.main_category_name[idx]}
+                          // newData={Project.data_dt[idx]}
+                          // checkTotal={Project.filter_price}
+                          handleIntersection={this.handleIntersection}
+                          customer="partner"
+                        />
                       </Background>
                     );
                   })}
@@ -314,6 +272,54 @@ class ManufacturerContentContainer extends React.Component {
     );
   }
 }
+const customStyles = {
+  dropdownIndicator: () => ({
+    backgroundColor: "#fff",
+    color: "#999999",
+    width: 20,
+    height: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }),
+  indicatorSeparator: () => ({
+    display: "none",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? "#000000" : "#555555",
+    backgroundColor: "#fff",
+    borderRadius: 0,
+    // padding: 16,
+    fontSize: 12,
+  }),
+  control: () => ({
+    fontSize: 12,
+    fontWeight: "normal",
+    lineHeight: 34,
+    letterSpacing: "-0.45px",
+    // border: "1px solid #c7c7c7",
+    // borderRadius: "3px",
+    color: "#c1bfbf",
+    display: "flex",
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+
+    return { ...provided, opacity, transition };
+  },
+};
+
+const processArray = [
+  { label: "상담미진행", value: "상담미진행" },
+  { label: "상담진행", value: "상담진행" },
+];
+
+const tempArray = [
+  { label: "상담미진행", value: "상담미진행" },
+  { label: "상담진행", value: "상담진행" },
+];
 
 const region_data = [
   {
@@ -405,7 +411,7 @@ const region_data = [
 // ]
 
 const PageBar = styled.div`
-  width: 351px;
+  width: 80%;
   margin-top: 109px;
   margin-bottom: 157px;
   margin-left: auto;
@@ -413,12 +419,31 @@ const PageBar = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-between;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > img {
+      width: 10px;
+      height: 19px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    > img {
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    > img {
+    }
+  }
+  @media (min-width: 1300px) {
+    > img {
+    }
+  }
 `;
 
 const PageCount = styled.span`
   width: 14px;
   height: 30px;
-  font-size: 25px;
+
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -433,17 +458,36 @@ const PageCount = styled.span`
       font-weight: 700;
       color: #0933b3;
     `}
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 16px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 19px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    font-size: 22px;
+  }
+  @media (min-width: 1300px) {
+    font-size: 25px;
+  }
 `;
 const Body = styled.div`
   display: flex;
   justify-content: center;
-  border-top: 1px solid #e1e2e4;
-  border-bottom: 1px solid #e1e2e4;
-  margin-top: 40px;
+  //border-top: 1px solid #e1e2e4;
+  //border-bottom: 1px solid #e1e2e4;
+  margin-top: ${(props) => (props.active ? "210px" : "40px")};
 `;
 const Main = styled.div`
-  width: 984px;
+  width: 100%;
 `;
+
+const FilterSearch = styled.div`
+  height: 134px;
+  border: 1px solid red;
+`;
+
 const Filter = styled.div`
   width: 220px;
   border-right: 1px solid #e1e2e4;
@@ -453,10 +497,11 @@ const Filter = styled.div`
 `;
 
 const Header = styled.div`
-  width: 993px;
+  width: 100%;
   display: flex;
+  //justify-content: center;
   align-items: center;
-  margin-bottom: 28px;
+  // margin-bottom: 28px;
   position: relative;
   > span {
     position: absolute;
@@ -469,9 +514,21 @@ const Header = styled.div`
       margin-left: 10px;
     }
   }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    paddingtop: 32px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    paddingtop: 32px;
+  }
+  @media (min-width: 1300px) {
+    paddingtop: 32px;
+  }
 `;
 
-const Font20 = styled(Title.FontSize20)`
+const Font15 = styled(Title.FontSize15)`
   font-weight: 500 !important;
   font-stretch: normal !important;
   font-style: normal !important;
@@ -489,4 +546,4 @@ const Font14 = styled(Content.FontSize14)`
   color: #0933b3;
 `;
 
-export default ManufacturerContentContainer;
+export default MobileManufacturerContentContainer;

@@ -6,6 +6,7 @@ import { inject, observer } from "mobx-react";
 import Modal from "./Modal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import ReviewContainer from "./Review/ReviewContainer";
+import Portfolio from "./Portfolio";
 import CheckBrowserModal from "containers/Home/CheckBrowserModal";
 //import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
 
@@ -49,6 +50,10 @@ class ProposalCard extends React.Component {
     // console.log(width);
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+
+    console.log(this.props.dropDown);
+    console.log(this.props.dropDownIdx);
+    console.log(this.props.idx);
   }
 
   componentWillUnmount() {
@@ -147,7 +152,7 @@ class ProposalCard extends React.Component {
     //   checkTotal,
     //   customer,
     // } = this.props;
-    const { data, width, Partner, categoryData, idx } = this.props;
+    const { data, width, Partner, categoryData, idx, dropDown } = this.props;
     // console.log(data);
     // console.log(categoryData);
     //console.log(idx);
@@ -199,70 +204,68 @@ class ProposalCard extends React.Component {
               <span class="tag2">dsfdsf</span>
             </PriceTagBox>
           </FooterWrapper> */}
-              <Header>
-                <Logo>
-                  <img src={data.logo} />
-                </Logo>
-              </Header>
-              <Main>
-                {/* <Review
+              <BasicInfo>
+                <Header>
+                  <Logo>
+                    <img src={data.logo} />
+                  </Logo>
+                </Header>
+                <Main>
+                  {/* <Review
                   onClick={() => this.onClickReviewHandler(idx, data.name)}
                 >
                   리뷰 보기
                 </Review> */}
-                <Name>{data.name}</Name>
-                <Phone>
-                  <div style={{ cursor: "pointer" }}>
-                    <img
-                      src={call_img}
-                      onClick={() => {
-                        console.log(data.name);
-                        console.log(data.user.phone);
-                        this.openModal(data.user.phone);
-                      }}
-                    />
+                  <Name>{data.name}</Name>
+                  <Phone>
+                    <div style={{ cursor: "pointer" }}>
+                      {/* <img
+                        src={call_img}
+                        onClick={(e) => {
+                          console.log(data.name);
+                          console.log(data.user.phone);
 
-                    {Partner.modalActive && (
-                      // <Layer onClick={this.modalHandler}>
-                      <Layer>
-                        {/* <Postcode /> */}
-                        <span>
-                          <Modal
-                            width={width}
-                            open={this.props.Partner.modalActive}
-                            close={this.closeModal}
-                            header="전화번호"
-                            // title={data.real_phone}
-                            children={this.props.Partner.modalUserPhone}
-                            //children={data.name}
-                          ></Modal>
-                        </span>
-                      </Layer>
-                    )}
+                          this.openModal(data.user.phone);
+                          e.stopPropagation();
+                        }}
+                      /> */}
 
-                    {/* )} */}
-                  </div>
-                </Phone>
-                <InfoOne>{data.info_company}</InfoOne>
-                <InfoTwo>
-                  {/* {Partner.category_ary.map((item, idx) => {
+                      {Partner.modalActive && (
+                        <Layer>
+                          <span>
+                            <Modal
+                              width={width}
+                              open={this.props.Partner.modalActive}
+                              close={this.closeModal}
+                              header="전화번호"
+                              children={this.props.Partner.modalUserPhone}
+                            ></Modal>
+                          </span>
+                        </Layer>
+                      )}
+                    </div>
+                  </Phone>
+                  <InfoOne>{data.info_company}</InfoOne>
+                  <InfoTwo>
+                    {/* {Partner.category_ary.map((item, idx) => {
                   console.log(item);
                 })} */}
-                  {/* {console.log(category_data)} */}
-                  {/* {category_data &&
+                    {/* {console.log(category_data)} */}
+                    {/* {category_data &&
                   category_data.map((item, idx) => {
                     return <span>{item}</span>;
                   })} */}
-                  {categoryData &&
-                    categoryData.map((item, idx) => {
-                      // console.log(item);
-                      return <span>{item}</span>;
-                    })}
-                  {/* <span>디자인</span>
+                    {categoryData &&
+                      categoryData.map((item, idx) => {
+                        // console.log(item);
+                        return <span>{item}</span>;
+                      })}
+                    {/* <span>디자인</span>
                 <span>기구설계</span>
                 <span>금형제작</span>
                 <span>양산</span> */}
-                </InfoTwo>
+                  </InfoTwo>
+                </Main>
                 <AdditionBox>
                   {/* <div>
                 <img
@@ -326,31 +329,32 @@ class ProposalCard extends React.Component {
               <div></div> */}
                   <div
                     style={{ cursor: "pointer" }}
-                    onClick={() => {
+                    onClick={(e) => {
                       console.log(data.name);
                       console.log(data.user.phone);
+                      e.stopPropagation();
                       this.openModal(data.user.phone);
                     }}
                   >
                     <span>전화번호</span>
 
-                    {Partner.modalActive && (
-                      // <Layer onClick={this.modalHandler}>
+                    {/* {Partner.modalActive && (
+                      
                       <Layer>
-                        {/* <Postcode /> */}
+            
                         <span>
                           <Modal
                             width={width}
                             open={this.props.Partner.modalActive}
                             close={this.closeModal}
                             header="전화번호"
-                            // title={data.real_phone}
+                  
                             children={this.props.Partner.modalUserPhone}
-                            //children={data.name}
+                            
                           ></Modal>
                         </span>
                       </Layer>
-                    )}
+                    )} */}
 
                     {/* )} */}
                   </div>
@@ -366,7 +370,40 @@ class ProposalCard extends React.Component {
                     </Link>
                   </div>
                 </AdditionBox>
-              </Main>
+              </BasicInfo>
+              {this.props.dropDown &&
+                this.props.dropDownIdx === this.props.idx && (
+                  <DetailInfo onClick={(e) => e.stopPropagation()}>
+                    {/* <h1>DetailInfo 입니다</h1> */}
+                    <Portfolio
+                      style={{ paddingRight: "34px", boxSizing: "border-box" }}
+                    />
+                    <DetailInfoContent>
+                      <div>
+                        <label>
+                          <span>전문분야</span>
+                        </label>
+                        <content>dsfdsfdsfs1</content>
+                      </div>
+                      <div>
+                        <label>
+                          <span>주요실적</span>
+                        </label>
+                        <content>
+                          {Partner.partner_detail_list[0].item.deal}
+                        </content>
+                      </div>
+                      <div>
+                        <label>
+                          <span>진행한 제품군</span>
+                        </label>
+                        <content>
+                          {Partner.partner_detail_list[0].item.history}
+                        </content>
+                      </div>
+                    </DetailInfoContent>
+                  </DetailInfo>
+                )}
             </Card>
             {/* {this.props.Partner.ReviewActive &&
               this.props.Partner.ReviewActiveIndex === idx && (
@@ -545,6 +582,7 @@ class ProposalCard extends React.Component {
 export default ProposalCard;
 
 const Card = styled.div`
+  cursor: pointer;
   width: 100%;
   //width: 987px;
   position: relative;
@@ -557,6 +595,7 @@ const Card = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 
   display: flex;
+  flex-direction: column;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     // height: 108px;
@@ -585,11 +624,58 @@ const Card = styled.div`
   @media (min-width: 1300px) {
     //height: 195px;
     margin-bottom: 34px;
+    // padding: 33px 0px 30px 34px;
+    // box-sizing: border-box;
+    overflow: hidden;
+  }
+`;
+
+const BasicInfo = styled.div`
+  width: 100%;
+  display: flex;
+
+  @media (min-width: 1300px) {
     padding: 33px 0px 30px 34px;
     box-sizing: border-box;
   }
 `;
 
+const DetailInfo = styled.div`
+  width: 100%;
+  // border: 3px solid red;
+  margin-top: 82px;
+`;
+
+const DetailInfoContent = styled.div`
+  background-color: #f6f6f6;
+  padding: 41px 69px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  div {
+    display: flex;
+    margin-bottom: 40px;
+    width: 100%;
+    label {
+      width: 25%;
+      span {
+        font-size: 18px;
+        line-height: 27px;
+        letter-spacing: -0.45px;
+        color: #191919;
+        font-weight: bold;
+      }
+    }
+    content {
+      width: 90%;
+      font-size: 18px;
+      line-height: 27px;
+      letter-spacing: -0.45px;
+      word-break: keep-all;
+    }
+  }
+`;
 const Header = styled.div`
   //border: 2px solid red;
   //width: 14%;
@@ -616,7 +702,8 @@ const Main = styled.div`
     width: 60%;
   }
   @media (min-width: 1300px) {
-    width: 80%;
+    // width: 80%;
+    width: 100%;
   }
 `;
 const Name = styled.div`
@@ -683,7 +770,7 @@ const InfoOne = styled.div`
     letter-spacing: -0.33px;
   }
   @media (min-width: 1300px) {
-    width: 80%;
+    width: 98%;
   }
 `;
 const InfoTwo = styled.div`
@@ -698,7 +785,7 @@ margin-top: 16px;
     display: inline-block;
   }
   @media (min-width: 1300px) {
-    width: 80%
+    width: 98%
   }
 `;
 
@@ -761,18 +848,20 @@ const AdditionBox = styled.div`
       }
     }
   }
-  > div:nth-child {
-    border: 2px solid orange;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+  // > div:nth-child {
+  //   border: 2px solid orange;
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  // }
   @media (min-width: 1300px) {
-    position: absolute;
-    bottom: 1%;
-    right: 1%;
+    // position: absolute;
+    // bottom: 1%;
+    // right: 1%;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    padding-right: 24px;
     > div:nth-of-type(1) {
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
       border-radius: 3px;

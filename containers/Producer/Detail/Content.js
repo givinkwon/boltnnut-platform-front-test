@@ -9,7 +9,7 @@ import RatioImage from "components/RatioImage";
 import * as Text from "components/Text";
 
 import ReviewContainer from "../Review/ReviewContainer";
-import ImageContainer from "./Portfolio";
+import ImageContainer from "../Portfolio";
 
 import { toJS } from "mobx";
 

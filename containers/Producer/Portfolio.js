@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import RatioImage from "components/RatioImage";
 import * as Text from "components/Text";
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from "static/style";
+import { toJS } from "mobx";
 
 const rowline = "/static/images/components/Footer/rowline.svg";
 const facebook_mob = "/static/images/components/Footer/facebook.svg";
@@ -40,6 +41,7 @@ class PortfolioConatiner extends React.Component {
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
 
+    console.log(toJS(Partner.portFolioList));
     // await Partner.getPortfolio();
   };
   render() {
@@ -92,12 +94,27 @@ class PortfolioConatiner extends React.Component {
               })
             } */}
 
-              {/* Partner.portFolioList && Partner.portFolioList.map((item, idx) => {
-              return <Image key={idx} ratio="5"
-            }) */}
-              <Image
+              {Partner.portFolioList &&
+                Partner.portFolioList.map((item, idx) => {
+                  console.log(toJS(item.img_portfolio));
+                  return (
+                    <Image
+                      key={idx}
+                      ratio="65%"
+                      src={item.img_portfolio}
+                      onClick={() => {
+                        console.log(this);
+                        console.log(idx);
+                        console.log(this.slider.props.children[idx].props.src);
+                        const src = this.slider.props.children[idx].props.src;
+                        this.activeHandler(src);
+                      }}
+                    />
+                  );
+                })}
+              {/* <Image
                 ratio="65%"
-                src={file}
+                src={camera_img}
                 onClick={() => {
                   console.log(this);
                   console.log(this.slider.props.children[0].props.src);
@@ -145,15 +162,17 @@ class PortfolioConatiner extends React.Component {
                   const src = this.slider.props.children[4].props.src;
                   this.activeHandler(src);
                 }}
-              />
+              /> */}
             </Slider>
             {
               // (current_partner && current_partner.portfolio_set.length > 0)
               //   && (
+              // Partner.portFolioList && Partner.portFolioList.length > 0 && (
               <>
                 <Arrow left onClick={this.sliderPrev} />
                 <Arrow right onClick={this.sliderNext} />
               </>
+              // )
               // )
             }
           </Content>
@@ -229,9 +248,9 @@ const Header = styled.div`
   padding: 0 15px;
 `;
 const Content = styled.div`
-  width: 1000px;
+  width: 85%;
   position: relative;
-  background-color: #f2f2f2;
+  //background-color: #f2f2f2;
   padding: 20px;
 
   flex-wrap: wrap;
@@ -245,7 +264,7 @@ const Modal = styled.div`
   height: 600px;
   position: absolute;
   //bottom: 0;
-  top: 80%;
+  top: 35%;
   left: 50%;
   transform: translateX(-50%);
   //background-color: #000000;
