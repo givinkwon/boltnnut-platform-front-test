@@ -86,7 +86,7 @@ export function setRequestFile(req) {
 export function sendKakaoTalk(req) {
   return axios({
     method: "POST",
-    url: `${ROOT_URL}/kakaotalk/chat/`,
+    url: `${ROOT_URL}/answer/chat/`,
     data: req,
     // headers: req.headers ? req.headers : null,
   });

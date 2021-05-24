@@ -32,6 +32,10 @@ class Magazine {
 
   @observable search_text = "";
 
+  //GA 트리거 한번만 작동하게 해주는 변수
+  @observable dictClick = false;
+  @observable manufactureClick = false;
+
   @action init = (search_text) => {
     this.magazine_list = [];
     const req = {
