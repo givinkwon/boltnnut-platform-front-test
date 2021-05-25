@@ -12,6 +12,7 @@ import Spinner from "components/Spinner";
 import HomeConatiner from "containers/Home";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { toJS } from "mobx";
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
