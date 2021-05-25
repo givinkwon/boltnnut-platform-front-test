@@ -33,6 +33,9 @@ class SearchFilterConatiner extends React.Component {
           <div>
             <span>제조사 찾기 의뢰하기 </span>
           </div>
+          <div>
+            <span>업체 찾기가 힘든 경우 클릭!</span>
+          </div>
         </Search>
 
         <Category>
@@ -44,6 +47,13 @@ class SearchFilterConatiner extends React.Component {
               getOptionLabel={(option) => option.label}
               // value={Partner.input_category}
               onChange={Partner.setBigCategory}
+              theme={(theme) => ({
+                ...theme,
+                colors: {
+                  ...theme.colors,
+                  neutral50: "#1A1A1A", // Placeholder color
+                },
+              })}
             />
           </div>
           <div>
@@ -157,6 +167,7 @@ const Search = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 24px;
+  position: relative;
   > span {
     font-size: 20px;
     line-height: 40px;
@@ -165,7 +176,7 @@ const Search = styled.div`
     font-weight: 500;
     width: 7%;
   }
-  > div:last-child {
+  >div:nth-of-type(2){
     box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
     padding: 8px 16px 9px 16px;
     box-sizing: border-box;
@@ -175,6 +186,21 @@ const Search = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  > div:last-child {
+    
+   
+      position: absolute;
+      bottom: -25px;
+      right: 7px;
+      >span{
+        font-size: 14px;
+        line-height: 30px;
+        letter-spacing: -0.14px;
+        color: #86888c;
+        font-weight: normal;
+      }
+    }
   }
 `;
 const Category = styled.div`
@@ -269,11 +295,23 @@ const SearchBarddd = styled.div`
     // margin-top: 40px;
     input {
       font-size: 17px;
+      :focus {
+        outline: none;
+      }
+      ::placeholder{
+        color: #c1bfbf;
+      }
     }
   }
   @media (min-width: 1300px) {
     input {
       font-size: 18px;
+      :focus {
+        outline: none;
+      }
+      ::placeholder{
+        color: #c1bfbf;
+      }
     }
   }
 `;

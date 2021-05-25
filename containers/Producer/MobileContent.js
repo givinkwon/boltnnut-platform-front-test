@@ -26,6 +26,11 @@ const right = "static/icon/right-arrow.png";
 @inject("Project", "Auth", "Partner")
 @observer
 class MobileManufacturerContentContainer extends React.Component {
+  state = {
+    dropDownActive: false,
+    dropDownIdx: -1,
+  };
+
   handleIntersection = (event) => {
     if (event.isIntersecting) {
       console.log("추가 로딩을 시도합니다");
@@ -92,6 +97,47 @@ class MobileManufacturerContentContainer extends React.Component {
       Partner.getPartner(newPage);
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
     }
+  };
+
+  pushToDetail = async (item, idx) => {
+    const { Partner } = this.props;
+    Partner.category_name_list = null;
+    // console.log(item.id);
+    Partner.partner_detail_list = [];
+    //Project.selectedProjectId = id;
+    Partner.partner_detail_list.push({ item: item });
+    // console.log(toJS(Partner.partner_detail_list));
+    // Partner.newIndex = 1;
+    Partner.category_name_list = Partner.category_dic[idx];
+    console.log(idx);
+    //console.log(toJS(Partner.category_dic[idx]));
+    // console.log(toJS(Partner.category_name_list));
+    // await Partner.getPartnerDetail(item.id);
+
+    // await Router.push(`/project/${id}`);
+    //Project.setProjectDetailData(id);
+    console.log("click");
+    if (this.state.dropDownIdx === -1) {
+      Partner.portFolioList = [];
+      Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
+      this.setState({ dropDownActive: true, dropDownIdx: idx });
+    } else {
+      if (this.state.dropDownIdx === idx) {
+        this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      } else {
+        Partner.portFolioList = [];
+        Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
+        this.setState({ dropDownActive: true, dropDownIdx: idx });
+      }
+    }
+
+    // console.log(this.state.idx)
+    // console.log(t)
+    // if (this.state.dropDownActive) {
+    //   this.setState({ dropDownActive: false });
+    // } else {
+    //   this.setState({ dropDownActive: true });
+    // }
   };
 
   render() {
@@ -161,17 +207,26 @@ class MobileManufacturerContentContainer extends React.Component {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         {console.log(this.props.width)}
-                        <ProposalCard
-                          data={item}
-                          width={this.props.width}
-                          idx={idx}
-                          // middleCategory={Project.middle_category_name[idx]}
-                          // mainCategory={Project.main_category_name[idx]}
-                          // newData={Project.data_dt[idx]}
-                          // checkTotal={Project.filter_price}
-                          handleIntersection={this.handleIntersection}
-                          customer="partner"
-                        />
+
+                        <div
+                          onClick={() => this.pushToDetail(item, idx)}
+                          // style={{ width: "100%" }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProposalCard
+                            data={item}
+                            width={this.props.width}
+                            idx={idx}
+                            // middleCategory={Project.middle_category_name[idx]}
+                            // mainCategory={Project.main_category_name[idx]}
+                            // newData={Project.data_dt[idx]}
+                            // checkTotal={Project.filter_price}
+                            dropDown={this.state.dropDownActive}
+                            dropDownIdx={this.state.dropDownIdx}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
                       </Background>
                     );
                   })}

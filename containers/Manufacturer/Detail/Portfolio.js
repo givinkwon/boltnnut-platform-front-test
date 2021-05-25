@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import RatioImage from "components/RatioImage";
 import * as Text from "components/Text";
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from "static/style";
+import { toJS } from "mobx";
 
 const rowline = "/static/images/components/Footer/rowline.svg";
 const facebook_mob = "/static/images/components/Footer/facebook.svg";
@@ -15,6 +16,9 @@ const post_mob = "/static/images/components/Footer/post.svg";
 const facebook = "/static/images/components/Footer/facebook_big.svg";
 const instargram = "/static/images/components/Footer/instargram_big.svg";
 const camera_img = "/static/images/camera_img.png";
+const banner1_img = "/static/images/Home/Banner1/Banner1_img.png";
+const banner_dot_img = "/static/images/Home/Banner12/Banner12_img1.png";
+const banner9_img = "/static/images/Home/Banner9/Banner9_img1.png";
 
 @inject("Answer", "Partner", "Auth")
 @observer
@@ -34,16 +38,22 @@ class PortfolioConatiner extends React.Component {
 
   activeHandler = (src) => {
     console.log(src);
+
     this.setState({ modalOpen: true, src: src });
   };
 
   componentDidMount = async () => {
-    const { Partner, Auth } = this.props;
+    const { Partner, Auth, width } = this.props;
 
+    console.log(width);
+    console.log(toJS(Partner.portFolioList));
     // await Partner.getPortfolio();
+
+    const img = document.getElementById("image");
+    console.log(img);
   };
   render() {
-    const { Answer, file, Partner } = this.props;
+    const { Answer, file, Partner, width } = this.props;
     // const { current_partner } = Answer
 
     console.log(file);
@@ -70,6 +80,14 @@ class PortfolioConatiner extends React.Component {
             dots: true,
           },
         },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            dots: false,
+          },
+        },
       ],
     };
     return (
@@ -92,14 +110,32 @@ class PortfolioConatiner extends React.Component {
               })
             } */}
 
-              {/* Partner.portFolioList && Partner.portFolioList.map((item, idx) => {
-              return <Image key={idx} ratio="5"
-            }) */}
+              {/* {Partner.portFolioList &&
+                Partner.portFolioList.map((item, idx) => {
+                  console.log(toJS(item.img_portfolio));
+                  return (
+                    <Image
+                      key={idx}
+                      ratio="65%"
+                             size="contain"
+                repeat="no-repeat"
+                      src={item.img_portfolio}
+                      onClick={() => {                      
+                        const src = this.slider.props.children[idx].props.src;
+                        this.activeHandler(src);
+                      }}
+                    />
+                  );
+                })} */}
               <Image
+                id="image"
                 ratio="65%"
-                src={file}
+                src={banner1_img}
+                size="contain"
+                repeat="no-repeat"
                 onClick={() => {
                   console.log(this);
+                  console.log(this.naturalWidth);
                   console.log(this.slider.props.children[0].props.src);
                   const src = this.slider.props.children[0].props.src;
                   this.activeHandler(src);
@@ -108,7 +144,9 @@ class PortfolioConatiner extends React.Component {
 
               <Image
                 ratio="65%"
-                src={camera_img}
+                src={banner_dot_img}
+                size="contain"
+                repeat="no-repeat"
                 onClick={() => {
                   // console.log(this);
                   // console.log(this.slider.props.children[0].props.src);
@@ -118,7 +156,9 @@ class PortfolioConatiner extends React.Component {
               />
               <Image
                 ratio="65%"
-                src={camera_img}
+                src={banner9_img}
+                size="contain"
+                repeat="no-repeat"
                 onClick={() => {
                   // console.log(this);
                   // console.log(this.slider.props.children[0].props.src);
@@ -139,6 +179,8 @@ class PortfolioConatiner extends React.Component {
               <Image
                 ratio="65%"
                 src={instargram}
+                size="contain"
+                repeat="no-repeat"
                 onClick={() => {
                   // console.log(this);
                   // console.log(this.slider.props.children[0].props.src);
@@ -150,10 +192,12 @@ class PortfolioConatiner extends React.Component {
             {
               // (current_partner && current_partner.portfolio_set.length > 0)
               //   && (
+              // Partner.portFolioList && Partner.portFolioList.length > 0 && (
               <>
                 <Arrow left onClick={this.sliderPrev} />
                 <Arrow right onClick={this.sliderNext} />
               </>
+              // )
               // )
             }
           </Content>
@@ -162,7 +206,7 @@ class PortfolioConatiner extends React.Component {
             // <Layer>
             //   {/* <Postcode /> */}
             //   <span>
-            <Modal>
+            <Modal width={width}>
               <button
                 className="close"
                 onClick={() => {
@@ -172,7 +216,13 @@ class PortfolioConatiner extends React.Component {
                 {" "}
                 &times;{" "}
               </button>
-              <Image src={this.state.src} modal="modal" />
+              <Image
+                src={this.state.src}
+                modal="modal"
+                size="contain"
+                repeat="no-repeat"
+                style={{ backgroundRepeat: "no-repeat" }}
+              />
             </Modal>
             //   </span>
             // </Layer>
@@ -190,8 +240,8 @@ export default PortfolioConatiner;
 const Image = styled(RatioImage)`
   margin-right: 10px;
 
-  width: ${(props) => (props.modal === "modal" ? "80%" : "calc(100% - 10px)")};
-  height: ${(props) => (props.modal === "modal" ? "80%" : "")};
+  width: ${(props) => (props.modal === "modal" ? "90%" : "calc(100% - 10px)")};
+  height: ${(props) => (props.modal === "modal" ? "90%" : "")};
   cursor: pointer;
   // :hover {
   //   transform: scale(1.5);
@@ -218,6 +268,65 @@ const Arrow = styled.div`
       background-image: url("/static/icon/slick_right.png");
       right: -50px;
     `}
+
+    @media (max-width: 479.98px) {
+    width: 30px;
+    height: 30px;
+    display: block;
+    top: calc(50% - 10px);
+
+    ${(props) =>
+      props.left &&
+      css`
+        background-image: url("/static/icon/slick_left.png");
+        left: -13px;
+      `}
+    ${(props) =>
+      props.right &&
+      css`
+        background-image: url("/static/icon/slick_right.png");
+        right: -13px;
+      `}
+  }
+  @media (min-width: 480px) and (max-width: 629.98px) {
+    width: 35px;
+    height: 35px;
+    display: block;
+    top: calc(50% - 20px);
+
+    ${(props) =>
+      props.left &&
+      css`
+        background-image: url("/static/icon/slick_left.png");
+        left: -20px;
+      `}
+    ${(props) =>
+      props.right &&
+      css`
+        background-image: url("/static/icon/slick_right.png");
+        right: -20px;
+      `}
+  }
+
+  @media (min-width: 630px) and (max-width: 1300px) {
+    width: 40px;
+    height: 40px;
+    display: block;
+    top: calc(50% - 20px);
+
+    ${(props) =>
+      props.left &&
+      css`
+        background-image: url("/static/icon/slick_left.png");
+        left: -30px;
+      `}
+    ${(props) =>
+      props.right &&
+      css`
+        background-image: url("/static/icon/slick_right.png");
+        right: -30px;
+      `}
+  }
 `;
 const Header = styled.div`
   height: 55px;
@@ -229,23 +338,26 @@ const Header = styled.div`
   padding: 0 15px;
 `;
 const Content = styled.div`
-  width: 1000px;
+  width: 85%;
   position: relative;
-  background-color: #f2f2f2;
+  //background-color: #f2f2f2;
   padding: 20px;
 
   flex-wrap: wrap;
   > p {
     line-height: 1.3;
   }
+
+  @media (max-width: 767.98px) {
+    width: 80%;
+    padding: 0 20px;
+  }
 `;
 
 const Modal = styled.div`
-  width: 600px;
-  height: 600px;
   position: absolute;
   //bottom: 0;
-  top: 80%;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
   //background-color: #000000;
@@ -275,6 +387,31 @@ const Modal = styled.div`
     color: #000000;
     border-radius: 50%;
     background-color: #f1f1f1;
+  }
+
+  @media (max-width: 479.98px) {
+    width: ${(props) => (props.width ? props.width - 20 : 0)}px;
+    // width: 200px;
+    height: 200px;
+    top: 25%;
+  }
+
+  @media (min-width: 480px) and (max-width: 767.98px) {
+    width: ${(props) => (props.width ? props.width - 100 : 0)}px;
+    height: 300px;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 400px;
+    height: 400px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 550px;
+    height: 550px;
+  }
+  @media (min-width: 1300px) {
+    width: 700px;
+    height: 700px;
   }
 `;
 

@@ -80,8 +80,8 @@ class Home extends React.Component {
           </>
           <>
             {width && (
-              // <HomeConatiner width={width} reqList={Home.request_list} />
-              <Home2Conatiner width={width} reqList={Home.request_list} />
+              <HomeConatiner width={width} reqList={Home.request_list} />
+              // <Home2Conatiner width={width} reqList={Home.request_list} />
             )}
           </>
           <>{width && <Footer />}</>

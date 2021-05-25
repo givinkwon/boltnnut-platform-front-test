@@ -14,6 +14,13 @@ const customStyles = {
   indicatorSeparator: () => ({
     display: "none",
   }),
+  // placeholder: () => ({
+  //   color: "#c1bfbf",
+  // }),
+  placeholder: (base) => ({
+    ...base,
+    color: "#c1bfbf",
+  }),
   option: (provided, state) => ({
     ...provided,
     color: state.isSelected ? "#000000" : "#555555",

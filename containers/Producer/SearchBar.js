@@ -177,6 +177,7 @@ const SearchBar = styled.div`
     }
   }
   @media (min-width: 1300px) {
+    width: 660px;
     input {
       font-size: 18px;
     }
@@ -209,7 +210,7 @@ const SearchButton = styled(ButtonComponent)`
 `;
 
 const Select = styled(SelectComponent)`
-  width: 110px;
+  width: 220px;
   height: 44px;
   box-sizing: border-box;
 
@@ -230,15 +231,15 @@ const Select = styled(SelectComponent)`
     position: relative;
   }
   @media (min-width: 1300px) {
-    //width: 110px;
+    width: 125px;
   }
 `;
 
 const Box = styled.div`
-  width: 110px;
+  width: 220px;
 
   @media (min-width: 1300px) {
-    //width: 110px;
+    width: 125px;
   }
 
   ${(props) =>

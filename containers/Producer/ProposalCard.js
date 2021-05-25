@@ -358,8 +358,10 @@ class ProposalCard extends React.Component {
 
                     {/* )} */}
                   </div>
-                  <div>{/* <span>비슷한 번호 찾기</span> */}</div>
                   <div>
+                    <span>비슷한 번호 찾기</span>
+                  </div>
+                  {/* <div>
                     <img src={file_img2} />
                     <Link
                       target="_blank"
@@ -368,7 +370,7 @@ class ProposalCard extends React.Component {
                     >
                       <span>회사 소개서 보기</span>
                     </Link>
-                  </div>
+                  </div> */}
                 </AdditionBox>
               </BasicInfo>
               {this.props.dropDown &&
@@ -376,6 +378,7 @@ class ProposalCard extends React.Component {
                   <DetailInfo onClick={(e) => e.stopPropagation()}>
                     {/* <h1>DetailInfo 입니다</h1> */}
                     <Portfolio
+                      width={width}
                       style={{ paddingRight: "34px", boxSizing: "border-box" }}
                     />
                     <DetailInfoContent>
@@ -559,6 +562,40 @@ class ProposalCard extends React.Component {
                   </div>
                 </Information>
               </Main>
+              {this.props.dropDown &&
+                this.props.dropDownIdx === this.props.idx && (
+                  <DetailInfo onClick={(e) => e.stopPropagation()}>
+                    {/* <h1>DetailInfo 입니다</h1> */}
+                    <Portfolio
+                      width={width}
+                      style={{ paddingRight: "34px", boxSizing: "border-box" }}
+                    />
+                    <DetailInfoContent>
+                      <div>
+                        <label>
+                          <span>전문분야</span>
+                        </label>
+                        <content>dsfdsfdsfs1</content>
+                      </div>
+                      <div>
+                        <label>
+                          <span>주요실적</span>
+                        </label>
+                        <content>
+                          {Partner.partner_detail_list[0].item.deal}
+                        </content>
+                      </div>
+                      <div>
+                        <label>
+                          <span>진행한 제품군</span>
+                        </label>
+                        <content>
+                          {Partner.partner_detail_list[0].item.history}
+                        </content>
+                      </div>
+                    </DetailInfoContent>
+                  </DetailInfo>
+                )}
             </Card>
             {this.props.Partner.ReviewActive &&
               this.props.Partner.ReviewActiveIndex === idx && (
@@ -596,13 +633,10 @@ const Card = styled.div`
 
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     // height: 108px;
-
-    padding-left: 14px;
-    padding-right: 14px;
-    padding-top: 14px;
 
     margin-top: 14px;
     box-sizing: border-box;
@@ -610,13 +644,13 @@ const Card = styled.div`
   @media (min-width: 768px) and (max-width: 991.98px) {
     height: 100%;
     margin-bottom: 34px;
-    padding: 33px 0px 30px 34px;
+    // padding: 33px 0px 30px 34px;
     box-sizing: border-box;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     height: 100%;
     margin-bottom: 34px;
-    padding: 33px 0px 30px 34px;
+    // padding: 33px 0px 30px 34px;
     box-sizing: border-box;
     // align-self: self-start;
     // width: 68%;
@@ -626,13 +660,23 @@ const Card = styled.div`
     margin-bottom: 34px;
     // padding: 33px 0px 30px 34px;
     // box-sizing: border-box;
-    overflow: hidden;
+    //overflow: hidden;
   }
 `;
 
 const BasicInfo = styled.div`
   width: 100%;
   display: flex;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 14px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 33px 0px 30px 34px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    padding: 33px 0px 30px 34px;
+  }
 
   @media (min-width: 1300px) {
     padding: 33px 0px 30px 34px;
@@ -644,6 +688,9 @@ const DetailInfo = styled.div`
   width: 100%;
   // border: 3px solid red;
   margin-top: 82px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-top: 0px;
+  }
 `;
 
 const DetailInfoContent = styled.div`
@@ -675,6 +722,55 @@ const DetailInfoContent = styled.div`
       word-break: keep-all;
     }
   }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 14px 14px;
+    margin-top: 40px;
+
+    div {
+      margin-bottom: 25px;
+      width: 100%;
+      label {
+        width: 25%;
+        span {
+          font-size: 15px;
+          line-height: 27px;
+          letter-spacing: -0.45px;
+          color: #191919;
+          font-weight: bold;
+          word-break: keep-all;
+        }
+      }
+      content {
+        width: 90%;
+        font-size: 13px;
+        line-height: 27px;
+        letter-spacing: -0.45px;
+        word-break: keep-all;
+      }
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    height: 100%;
+    // margin-bottom: 34px;
+    // padding: 33px 0px 30px 34px;
+    box-sizing: border-box;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    height: 100%;
+    // margin-bottom: 34px;
+    // padding: 33px 0px 30px 34px;
+    box-sizing: border-box;
+    // align-self: self-start;
+    // width: 68%;
+  }
+  @media (min-width: 1300px) {
+    //height: 195px;
+    // margin-bottom: 34px;
+    // padding: 33px 0px 30px 34px;
+    // box-sizing: border-box;
+    //overflow: hidden;
+  }
 `;
 const Header = styled.div`
   //border: 2px solid red;
@@ -694,12 +790,16 @@ const Main = styled.div`
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 100%;
+    padding: 14px;
+    box-sizing: border-box;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 60%;
+    // padding: 33px 0px 30px 34px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 60%;
+    // padding: 33px 0px 30px 34px;
   }
   @media (min-width: 1300px) {
     // width: 80%;
@@ -848,29 +948,18 @@ const AdditionBox = styled.div`
       }
     }
   }
-  // > div:nth-child {
-  //   border: 2px solid orange;
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  // }
-  @media (min-width: 1300px) {
-    // position: absolute;
-    // bottom: 1%;
-    // right: 1%;
+  @media (min-width: 992px) {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding-right: 24px;
-    > div:nth-of-type(1) {
+    > div {
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
       border-radius: 3px;
       display: flex;
       justify-content: center;
       align-items: center;
       margin-bottom: 10px;
-      // padding: 0 22px;
-      // box-sizing: border-box;
       width: 153px;
       > span {
         font-size: 16px;
@@ -881,6 +970,12 @@ const AdditionBox = styled.div`
       }
     }
 
+    > div:nth-of-type(2) {
+      > span {
+        color: #0933b3;
+      }
+    }
+
     > div:nth-of-type(3) {
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
       border-radius: 3px;
@@ -888,8 +983,6 @@ const AdditionBox = styled.div`
       justify-content: center;
       align-items: center;
       margin-bottom: 10px;
-      // padding: 0 22px;
-      // box-sizing: border-box;
       width: 153px;
       span {
         font-size: 16px;

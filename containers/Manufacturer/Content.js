@@ -127,7 +127,7 @@ class ManufacturerContentContainer extends React.Component {
     //Project.selectedProjectId = id;
     Partner.partner_detail_list.push({ item: item });
     console.log(toJS(Partner.partner_detail_list));
-    // Partner.newIndex = 1;
+    Partner.newIndex = 1;
     Partner.category_name_list = Partner.category_dic[idx];
     console.log(idx);
     //console.log(toJS(Partner.category_dic[idx]));
@@ -199,7 +199,10 @@ class ManufacturerContentContainer extends React.Component {
                           console.log(toJS(Partner.category_ary[idx]))} */}
                         {/* {console.log(toJS(Partner.category_dic[idx]))} */}
                         {/* {console.log(idx)} */}
-                        <div onClick={() => this.pushToDetail(item, idx)}>
+                        <div
+                          style={{ width: "100%" }}
+                          onClick={() => this.pushToDetail(item, idx)}
+                        >
                           <ProposalCard
                             data={item}
                             width={this.props.width}

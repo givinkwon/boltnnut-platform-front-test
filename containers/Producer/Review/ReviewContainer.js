@@ -15,6 +15,13 @@ class ReviewContainer extends React.Component {
 
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
+    Auth.checkLogin();
+    if (!Auth.logged_in_user) {
+      alert("로그인이 필요한 서비스입니다.");
+      Router.push("/login");
+      return;
+    }
+
     await Partner.checkReviewWriting(1, Auth.logged_in_client.id);
 
     console.log(Partner.review_done);

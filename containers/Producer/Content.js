@@ -479,7 +479,18 @@ const Body = styled.div`
 `;
 const Main = styled.div`
   //width: 984px;
-  width: 1200px;
+
+  @media (min-width: 992px) and (max-width: 1149.98px) {
+    width: 800px;
+  }
+
+  @media (min-width: 1150px) and (max-width: 1299.98px) {
+    width: 900px;
+  }
+
+  @media (min-width: 1300px) {
+    width: 1200px;
+  }
 `;
 const Filter = styled.div`
   width: 220px;

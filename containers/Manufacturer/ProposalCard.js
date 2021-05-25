@@ -213,14 +213,14 @@ class ProposalCard extends React.Component {
                 <Name>{data.name}</Name>
                 <Phone>
                   <div style={{ cursor: "pointer" }}>
-                    <img
+                    {/* <img
                       src={call_img}
                       onClick={() => {
                         console.log(data.name);
                         console.log(data.user.phone);
                         this.openModal(data.user.phone);
                       }}
-                    />
+                    /> */}
 
                     {Partner.modalActive && (
                       // <Layer onClick={this.modalHandler}>
@@ -334,23 +334,23 @@ class ProposalCard extends React.Component {
                   >
                     <span>전화번호</span>
 
-                    {Partner.modalActive && (
-                      // <Layer onClick={this.modalHandler}>
+                    {/* {Partner.modalActive && (
+               
                       <Layer>
-                        {/* <Postcode /> */}
+                   
                         <span>
                           <Modal
                             width={width}
                             open={this.props.Partner.modalActive}
                             close={this.closeModal}
                             header="전화번호"
-                            // title={data.real_phone}
+                        
                             children={this.props.Partner.modalUserPhone}
-                            //children={data.name}
+                       
                           ></Modal>
                         </span>
                       </Layer>
-                    )}
+                    )} */}
 
                     {/* )} */}
                   </div>

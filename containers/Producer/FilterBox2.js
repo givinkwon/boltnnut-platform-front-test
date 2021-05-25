@@ -134,11 +134,11 @@ const Item = styled.div`
     cursor: pointer;
     > div {
       position: absolute;
-      top: 15%;
-      left: 15%;
-      width: 10px;
-      height: 10px;
-      border-radius: 10px;
+      top: 1px;
+      left: 1px;
+      width: 11px;
+      height: 11px;
+      border-radius: 6px;
       display: ${(props) => (props.active ? "" : "none")};
       background-color: #0933b3;
     }
