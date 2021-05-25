@@ -163,6 +163,16 @@ class ChatTestContainer extends React.Component {
   };
 
   socketClose = () => {
+    // this.chatSocket.send(
+    //   JSON.stringify({
+    //     message: "채팅방을 나갔습니다",
+    //     type: this.userType,
+    //     time: this.props.Chat.current_time,
+    //     bReceive: true,
+    //     file: this.state.currentFile,
+    //     chatType: 0,
+    //   })
+    // );
     this.chatSocket.close();
   };
 
@@ -219,29 +229,76 @@ class ChatTestContainer extends React.Component {
     // }
 
     // 메세지를 보낸 경우에 체크하여 카카오톡 보내기
+
+    // if (
+    //   fullMessage.length > 0 &&
+    //   currentMessage.message != "접속완료" &&
+    //   !currentMessage.bReceive &&
+    //   toJS(fullMessage)[fullMessage.length - 1].bRead == false &&
+    //   toJS(fullMessage)[fullMessage.length - 2].bRead == true
+    // ) {
+    //   {
+    //     console.log("우왕");
+
+    //     const req = {
+    //       phoneNum: "01075731803",
+    //       requestTitle: "DDDD",
+    //       name: "오규석", //보내는사람
+    //       text: "fff",
+    //     };
+    //     console.log("Send KAKAO");
+    //     RequestAPI.sendKakaoTalk(req)
+    //       .then((res) => console.log(res))
+    //       .catch((e) => {
+    //         console.log(e);
+    //         console.log(e.response);
+    //       });
+    //   }
+    // }
+
     if (
       fullMessage.length > 0 &&
+      currentMessage.message != "접속완료" &&
       toJS(fullMessage)[fullMessage.length - 1].bRead == false &&
       toJS(fullMessage)[fullMessage.length - 2].bRead == true
     ) {
-      {
-        console.log("우왕");
+      //접속되어있는지 판단하기 위해 조건이 참이 됐을 때의 마지막 메시지 인덱스를 저장
+      const checkIdx = fullMessage.length - 1;
 
-        const req = {
-          phoneNum: "01075731803",
-          requestTitle: "DDDD",
-          name: "오규석", //보내는사람
-          text: "fff",
-        };
-        console.log("Send KAKAO");
-        RequestAPI.sendKakaoTalk(req)
-          .then((res) => console.log(res))
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-      }
+      setTimeout(() => {
+        //5초 뒤에도 그 인덱스가 false면 보냄
+        if (!fullMessage[checkIdx].bRead) {
+          //파트너에게 보내기
+          if (this.userType === 0) {
+            const req = {
+              phoneNum: this.props.Partner.partnerdata.user.phone,
+              requestTitle: "DDDD",
+              name: "클라이언트 님", //클라이언트 이름
+              text: fullMessage[checkIdx].text,
+            };
+          } //클라이언트에게 보내기
+          else {
+            const req = {
+              phoneNum: "01075731803",
+              requestTitle: "DDDD",
+              name: this.props.Partner.partnerdata.name, //파트너 이름
+              text: fullMessage[checkIdx].text,
+            };
+          }
+
+          console.log("Send KAKAO");
+          RequestAPI.sendKakaoTalk(req)
+            .then((res) => console.log(res))
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+      }, 5000);
     }
+
+    console.log(toJS(fullMessage));
+
     console.log("================= Exit CheckRead ========================");
     console.log(fullMessage);
   };
@@ -256,7 +313,7 @@ class ChatTestContainer extends React.Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
+    // console.log("componentDidMount");
     // RoomNumber 체크하기
     const { Partner } = this.props;
     const roomNum = this.props.roomName;
@@ -287,6 +344,7 @@ class ChatTestContainer extends React.Component {
         };
         PartnerAPI.getPartner(req).then((res) => {
           Partner.partnerdata = res.data;
+          console.log(res.data);
         });
 
         reverseChat.forEach(async (message) => {
@@ -467,6 +525,7 @@ class ChatTestContainer extends React.Component {
 
     this.chatSocket.onclose = (e) => {
       console.error("Chat socket closed unexpectedly");
+      console.log("Chat Socket Closed!!!!!!!!!!!!!!!!!!!!");
     };
   }
 
@@ -475,7 +534,36 @@ class ChatTestContainer extends React.Component {
     console.log(myMessage);
     console.log(this.userType);
     console.log(this.state.currentTime); // null
-    console.log(this.props.Chat.current_time);
+    // console.log(this.props.Chat.current_time);
+
+    // console.log(toJS(this.props.Project.chatMessages));
+    // const fullMessage = this.props.Project.chatMessages;
+
+    // setTimeout(() => {
+    //   console.log("카톡 보낼지 체크");
+    //   if (
+    //     fullMessage.length > 0 &&
+    //     toJS(fullMessage)[fullMessage.length - 1].bRead == false &&
+    //     toJS(fullMessage)[fullMessage.length - 2].bRead == true
+    //   ) {
+    //     {
+    //       console.log(toJS(fullMessage));
+    //       const req = {
+    //         phoneNum: "01075731803",
+    //         requestTitle: "DDDD",
+    //         name: "오규석", //보내는사람
+    //         text: fullMessage[fullMessage.length - 1].text,
+    //       };
+    //       console.log("Send KAKAO");
+    //       RequestAPI.sendKakaoTalk(req)
+    //         .then((res) => console.log(res))
+    //         .catch((e) => {
+    //           console.log(e);
+    //           console.log(e.response);
+    //         });
+    //     }
+    //   }
+    // }, 5000);
 
     this.chatSocket.send(
       JSON.stringify({
