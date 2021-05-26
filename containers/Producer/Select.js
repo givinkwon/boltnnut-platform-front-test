@@ -1,0 +1,74 @@
+import React from "react";
+import Select from "react-select";
+
+const customStyles = {
+  dropdownIndicator: () => ({
+    backgroundColor: "#fff",
+    color: "#c1b1bf",
+    width: 44,
+    height: 44,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }),
+  indicatorSeparator: () => ({
+    display: "none",
+  }),
+  // placeholder: () => ({
+  //   color: "#c1bfbf",
+  // }),
+  placeholder: (base) => ({
+    ...base,
+    color: "#c1bfbf",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? "#000000" : "#555555",
+    backgroundColor: "#fff",
+    borderRadius: 0,
+    padding: 16,
+    fontSize: 16,
+  }),
+  control: () => ({
+    fontSize: 18,
+    fontWeight: "normal",
+    lineHeight: 34,
+    letterSpacing: "-0.45px",
+    border: "1px solid #c7c7c7",
+    borderRadius: "3px",
+    color: "#c1bfbf",
+    display: "flex",
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+
+    return { ...provided, opacity, transition };
+  },
+};
+
+class SelectComp extends React.Component {
+  handleChange = (selectedOption) => {
+    this.props.onChange(selectedOption);
+  };
+  render() {
+    const { options, placeholder, styles, getOptionLabel, value } = this.props;
+    return (
+      <Select
+        id={this.props.id}
+        className={this.props.className}
+        styles={styles ? styles : customStyles}
+        value={value}
+        onChange={this.handleChange}
+        getOptionLabel={(option) =>
+          getOptionLabel ? getOptionLabel(option) : option.label
+        }
+        options={options}
+        isSearchable={false}
+        placeholder={placeholder}
+      />
+    );
+  }
+}
+
+export default SelectComp;

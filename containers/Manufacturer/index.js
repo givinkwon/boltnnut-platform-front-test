@@ -49,9 +49,15 @@ class ManufacturerConatiner extends React.Component {
             </div>
           ) : (
             <>
-              {console.log(this.props.width)}
-              <MobileSearchBar />
-              <MobileContentContainer width={this.props.width} />
+              {Partner.newIndex == 0 && (
+                <>
+                  <MobileSearchBar />
+                  <MobileContentContainer width={this.props.width} />
+                </>
+              )}
+              {Partner.newIndex == 1 && (
+                <DetailContainer width={this.props.width} />
+              )}
             </>
           ))}
       </>
