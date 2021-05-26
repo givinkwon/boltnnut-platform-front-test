@@ -112,6 +112,7 @@ class Partner {
   // 파트너의 답변
   @observable answer_set = [];
 
+  @observable clientInfo = [];
   @action setProcessFilter = (val) => {
     this.input_process_filter = val;
     console.log(toJS(this.input_process_filter));
@@ -199,6 +200,15 @@ class Partner {
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
+  };
+
+  @action getClientInfo = async (id) => {
+    const req = {
+      params: null,
+    };
+    await PartnerAPI.getClient(id, req).then((res) => {
+      this.clientInfo = res.data;
+    });
   };
 
   @action getPartnerDetail = async (id) => {

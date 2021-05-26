@@ -44,9 +44,9 @@ class MyProject extends React.Component {
     await Project.getProjectDetail(data.project);
 
     if (Project.projectDetailData) {
-      const request_set = []
-      console.log(Project.projectDetailData)
-      request_set.push( Project.projectDetailData.request_set[0])
+      const request_set = [];
+      // console.log(Project.projectDetailData)
+      request_set.push(Project.projectDetailData.request_set[0]);
       partnerprojectlist.push({
         // request_set: Project.projectDetailData.request_set[0],
         // name: Project.projectDetailData.request_set[0].name,            // 프로젝트 이름
@@ -64,12 +64,11 @@ class MyProject extends React.Component {
     await Auth.checkLogin();
     if (Auth.logged_in_partner) {
       Partner.answer_set = Auth.logged_in_partner.answer_set;
-      Partner.getPartnerDetail(Auth.logged_in_partner.id)
+      Partner.getPartnerDetail(Auth.logged_in_partner.id);
       Partner.answer_set.map((data) => {
         this.getProject(data);
       });
     }
-
   }
 
   render() {
@@ -78,32 +77,33 @@ class MyProject extends React.Component {
     return (
       <Background>
         <Container style={{ flexDirection: "column" }}>
-          {Auth.logged_in_partner.answer_set[0]  ?
-              Partnerprojectlist.map((item, idx) => {
-                return (
-                  <Background
-                    style={{ marginTop: 34, backgroundColor: "#f9f9f9" }}
-                  >
-                    <Container>
-                      <div
-                        style={{ cursor: "pointer", width: "100%" }}
-                        onClick={() => this.pushToDetail(item.id)}
-                      >
-                        <ProposalCard
-                          data={item}
-                          middleCategory={Project.middle_category_name[idx]}
-                          mainCategory={Project.main_category_name[idx]}
-                          newData={Project.data_dt[idx]}
-                          handleIntersection={this.handleIntersection}
-                          // onClick={() => this.pushToDetail(item.id)}
-                        />
-                      </div>
-                    </Container>
-                  </Background>
-                );
-              })
-              :
-              <MobileNoProject/>}
+          {Auth.logged_in_partner.answer_set[0] ? (
+            Partnerprojectlist.map((item, idx) => {
+              return (
+                <Background
+                  style={{ marginTop: 34, backgroundColor: "#f9f9f9" }}
+                >
+                  <Container>
+                    <div
+                      style={{ cursor: "pointer", width: "100%" }}
+                      onClick={() => this.pushToDetail(item.id)}
+                    >
+                      <ProposalCard
+                        data={item}
+                        middleCategory={Project.middle_category_name[idx]}
+                        mainCategory={Project.main_category_name[idx]}
+                        newData={Project.data_dt[idx]}
+                        handleIntersection={this.handleIntersection}
+                        // onClick={() => this.pushToDetail(item.id)}
+                      />
+                    </div>
+                  </Container>
+                </Background>
+              );
+            })
+          ) : (
+            <MobileNoProject />
+          )}
         </Container>
       </Background>
     );

@@ -269,8 +269,9 @@ class ChatTestContainer extends React.Component {
         //5초 뒤에도 그 인덱스가 false면 보냄
         if (!fullMessage[checkIdx].bRead) {
           //파트너에게 보내기
+          let req;
           if (this.userType === 0) {
-            const req = {
+            req = {
               phoneNum: this.props.Partner.partnerdata.user.phone,
               requestTitle: "DDDD",
               name: "클라이언트 님", //클라이언트 이름
@@ -278,7 +279,7 @@ class ChatTestContainer extends React.Component {
             };
           } //클라이언트에게 보내기
           else {
-            const req = {
+            req = {
               phoneNum: "01075731803",
               requestTitle: "DDDD",
               name: this.props.Partner.partnerdata.name, //파트너 이름
@@ -313,7 +314,6 @@ class ChatTestContainer extends React.Component {
   }
 
   componentDidMount() {
-    // console.log("componentDidMount");
     // RoomNumber 체크하기
     const { Partner } = this.props;
     const roomNum = this.props.roomName;
@@ -345,6 +345,15 @@ class ChatTestContainer extends React.Component {
         PartnerAPI.getPartner(req).then((res) => {
           Partner.partnerdata = res.data;
           console.log(res.data);
+          //콘솔 그룹
+          const Color = "skyBlue";
+          console.group("%c 채팅창 정보", `color:${Color}; font-size:30px`);
+          console.log(
+            `%c클라이언트 휴대폰번호 = ${this.props.clientPhone}\n파트너 휴대폰번호 = ${this.props.Partner.partnerdata.user.phone}\n프로젝트 이름 = ${this.props.requestTitle}\n`,
+            `color: ${Color}; font-size: 20px;`
+          );
+          console.groupEnd("그룹 종료");
+          //콘솔 그룹
         });
 
         reverseChat.forEach(async (message) => {

@@ -102,136 +102,133 @@ class ProjectContentContainer extends React.Component {
           style={{ backgroundColor: "#f9f9f9", paddingTop: "49px" }}
           id="MyBackground"
         >
-
           {/* {!Project.projectDataList[0] && <NoProject/>} */}
           {Project.project_existence &&
-            Project.projectDataList &&
-            Project.projectDataList[0]?
+          Project.projectDataList &&
+          Project.projectDataList[0] ? (
             <>
-            {
-            Project.currentPage > 0 &&
-            Project.projectDataList.map((item, idx) => {
-              {
-                console.log(toJS(item));
-              }
-              return (
-                <Background
-                  style={{ marginTop: 34, backgroundColor: "#f9f9f9" }}
-                >
-                  <Container>
-                    <div
-                      style={{ cursor: "pointer", width: "100%" }}
-                      onClick={() => this.pushToDetail(item.id)}
+              {Project.currentPage > 0 &&
+                Project.projectDataList.map((item, idx) => {
+                  {
+                    console.log(toJS(item));
+                  }
+                  return (
+                    <Background
+                      style={{ marginTop: 34, backgroundColor: "#f9f9f9" }}
                     >
-                      <ProposalCard
-                        data={item}
-                        middleCategory={Project.middle_category_name[idx]}
-                        mainCategory={Project.main_category_name[idx]}
-                        newData={Project.data_dt[idx]}
-                        handleIntersection={this.handleIntersection}
-                        // onClick={() => this.pushToDetail(item.id)}
-                      />
-                    </div>
-                  </Container>
-                </Background>
-              );
-            })
-            }
-            <PageBar>
-              <img
-                src={pass1}
-                style={{
-                  opacity:
-                    current_set == 1 && Project.currentPage <= 1 ? 0.4 : 1,
-                  cursor: "pointer",
-                }}
-                onClick={this.pagePrev}
-              />
-              <PageCount
-                onClick={this.movePage}
-                value={5 * (current_set - 1)}
-                active={Project.currentPage % 5 == 1}
-                style={{
-                  display:
-                    Project.project_page < 5 * (current_set - 1) + 1
-                      ? "none"
-                      : "block",
-                }}
-              >
-                {" "}
-                {5 * (current_set - 1) + 1}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (current_set - 1) + 1}
-                active={Project.currentPage % 5 == 2}
-                style={{
-                  display:
-                    Project.project_page < 5 * (current_set - 1) + 2
-                      ? "none"
-                      : "block",
-                }}
-                onClick={this.movePage}
-              >
-                {" "}
-                {5 * (current_set - 1) + 2}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (current_set - 1) + 2}
-                active={Project.currentPage % 5 == 3}
-                style={{
-                  display:
-                    Project.project_page < 5 * (current_set - 1) + 3
-                      ? "none"
-                      : "block",
-                }}
-                onClick={this.movePage}
-              >
-                {" "}
-                {5 * (current_set - 1) + 3}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (current_set - 1) + 3}
-                active={Project.currentPage % 5 == 4}
-                style={{
-                  display:
-                    Project.project_page < 5 * (current_set - 1) + 4
-                      ? "none"
-                      : "block",
-                }}
-                onClick={this.movePage}
-              >
-                {" "}
-                {5 * (current_set - 1) + 4}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (current_set - 1) + 4}
-                active={Project.currentPage % 5 == 0}
-                style={{
-                  display:
-                    Project.project_page < 5 * (current_set - 1) + 5
-                      ? "none"
-                      : "block",
-                }}
-                onClick={this.movePage}
-              >
-                {" "}
-                {5 * (current_set - 1) + 5}{" "}
-              </PageCount>
-              {/* <PageCount> ... </PageCount> */}
-              <img
-                src={pass2}
-                style={{
-                  opacity:
-                    Project.project_page == Project.currentPage ? 0.4 : 1,
-                  cursor: "pointer",
-                }}
-                onClick={this.pageNext}
-              />
-            </PageBar>
-        </>
-        :
-        <NoProject/>
-        }
+                      <Container>
+                        <div
+                          style={{ cursor: "pointer", width: "100%" }}
+                          onClick={() => this.pushToDetail(item.id)}
+                        >
+                          <ProposalCard
+                            data={item}
+                            middleCategory={Project.middle_category_name[idx]}
+                            mainCategory={Project.main_category_name[idx]}
+                            newData={Project.data_dt[idx]}
+                            handleIntersection={this.handleIntersection}
+                            // onClick={() => this.pushToDetail(item.id)}
+                          />
+                        </div>
+                      </Container>
+                    </Background>
+                  );
+                })}
+              <PageBar>
+                <img
+                  src={pass1}
+                  style={{
+                    opacity:
+                      current_set == 1 && Project.currentPage <= 1 ? 0.4 : 1,
+                    cursor: "pointer",
+                  }}
+                  onClick={this.pagePrev}
+                />
+                <PageCount
+                  onClick={this.movePage}
+                  value={5 * (current_set - 1)}
+                  active={Project.currentPage % 5 == 1}
+                  style={{
+                    display:
+                      Project.project_page < 5 * (current_set - 1) + 1
+                        ? "none"
+                        : "block",
+                  }}
+                >
+                  {" "}
+                  {5 * (current_set - 1) + 1}{" "}
+                </PageCount>
+                <PageCount
+                  value={5 * (current_set - 1) + 1}
+                  active={Project.currentPage % 5 == 2}
+                  style={{
+                    display:
+                      Project.project_page < 5 * (current_set - 1) + 2
+                        ? "none"
+                        : "block",
+                  }}
+                  onClick={this.movePage}
+                >
+                  {" "}
+                  {5 * (current_set - 1) + 2}{" "}
+                </PageCount>
+                <PageCount
+                  value={5 * (current_set - 1) + 2}
+                  active={Project.currentPage % 5 == 3}
+                  style={{
+                    display:
+                      Project.project_page < 5 * (current_set - 1) + 3
+                        ? "none"
+                        : "block",
+                  }}
+                  onClick={this.movePage}
+                >
+                  {" "}
+                  {5 * (current_set - 1) + 3}{" "}
+                </PageCount>
+                <PageCount
+                  value={5 * (current_set - 1) + 3}
+                  active={Project.currentPage % 5 == 4}
+                  style={{
+                    display:
+                      Project.project_page < 5 * (current_set - 1) + 4
+                        ? "none"
+                        : "block",
+                  }}
+                  onClick={this.movePage}
+                >
+                  {" "}
+                  {5 * (current_set - 1) + 4}{" "}
+                </PageCount>
+                <PageCount
+                  value={5 * (current_set - 1) + 4}
+                  active={Project.currentPage % 5 == 0}
+                  style={{
+                    display:
+                      Project.project_page < 5 * (current_set - 1) + 5
+                        ? "none"
+                        : "block",
+                  }}
+                  onClick={this.movePage}
+                >
+                  {" "}
+                  {5 * (current_set - 1) + 5}{" "}
+                </PageCount>
+                {/* <PageCount> ... </PageCount> */}
+                <img
+                  src={pass2}
+                  style={{
+                    opacity:
+                      Project.project_page == Project.currentPage ? 0.4 : 1,
+                    cursor: "pointer",
+                  }}
+                  onClick={this.pageNext}
+                />
+              </PageBar>
+            </>
+          ) : (
+            <NoProject />
+          )}
         </Background>
       </>
     );
