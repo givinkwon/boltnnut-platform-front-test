@@ -120,8 +120,16 @@ class Answer {
   @observable content1 = "";
 
   // 2021년 5월 8일 새로 작성
-  @action CreateAnswer = async (project, partner, request, content1) => {
+  @action CreateAnswer = async (
+    projectInfo,
+    partnerName,
+    project,
+    partner,
+    request,
+    content1
+  ) => {
     const token = localStorage.getItem("token");
+    let clientPhone = null;
     const req = {
       data: {
         project: project,
@@ -134,19 +142,32 @@ class Answer {
       },
     };
 
+    const t = {
+      params: null,
+    };
+    // console.log(projectInfo.request_set[0].name);
+
+    await PartnerAPI.getClient(projectInfo.request_set[0].client, t)
+      .then((res) => {
+        clientPhone = res.data.user.phone;
+      })
+      .catch((e) => console.log(e));
+
+    // console.log(clientPhone);
+    // console.log(partnerName);
     await AnswerAPI.CreateAnswer(req)
 
       .then((res) => {
         console.log(res.data);
-        // const req = {
-        //   phoneNum: "01075731803",
-        //   requestTitle: "DDDD",
-        //   name: "오규석", //보내는사람
-        //   text: content1,
-        // };
-        // RequestAPI.sendKakaoTalk(req)
-        //   .then((res) => console.log(res))
-        //   .catch((e) => console.log(e));
+        const req = {
+          phoneNum: clientPhone,
+          requestTitle: projectInfo.request_set[0].name,
+          name: partnerName, //보내는사람
+          text: content1,
+        };
+        RequestAPI.sendKakaoTalk(req)
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
 
         //sendKaKaoTalk 끝
       })

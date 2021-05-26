@@ -190,7 +190,6 @@ class Project {
       .then((res) => {
         this.projectDetailData = res.data;
         // console.log(res.data);
-        // console.log(toJS(this.projectDetailData));
       })
       .catch((e) => {
         console.log(e);

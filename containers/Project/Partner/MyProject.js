@@ -18,11 +18,16 @@ class MyProject extends React.Component {
     Answerlist: [],
     selectedRoom: null,
     Partnerprojectlist: [],
+    clientPhone: null,
+    projectName: null,
   };
-  modalHandler = (id) => {
-    this.setState({ selectedRoom: id });
+  modalHandler = async (id, idx) => {
+    this.setState({
+      selectedRoom: id,
+      projectName: this.state.Partnerprojectlist[idx].name,
+      clientPhone: this.state.Partnerprojectlist[idx].clientPhone,
+    });
     const { Project } = this.props;
-
     Project.chatModalActive = !Project.chatModalActive;
     // this.setState({ modalActive: !this.state.modalActive });
   };
@@ -41,12 +46,19 @@ class MyProject extends React.Component {
     const partnerprojectlist = this.state.Partnerprojectlist;
 
     await Project.getProjectDetail(data.project);
+    // console.log(toJS(Project.projectDetailData));
+    // console.log(Project.projectDetailData.request_set[0].client);
+    await this.props.Partner.getClientInfo(
+      Project.projectDetailData.request_set[0].client
+    );
 
+    // console.log(this.props.Partner.clientInfo.user.phone);
     if (Project.projectDetailData) {
       partnerprojectlist.push({
         name: Project.projectDetailData.request_set[0] ? Project.projectDetailData.request_set[0].name : "미지정",            // 프로젝트 이름
         project:Project.projectDetailData.id,
         content: data.content1,
+        clientPhone: this.props.Partner.clientInfo.user.phone,
       });
       this.setState({ Partnerprojectlist: partnerprojectlist });
     }
@@ -81,6 +93,8 @@ class MyProject extends React.Component {
                   {/* <Postcode /> */}
                   <ChatTestContainer
                     roomName={this.state.selectedRoom}
+                    requestTitle={this.state.projectName}
+                    clientPhone={this.state.clientPhone}
                   ></ChatTestContainer>
                 </Layer>
               )}
@@ -94,9 +108,11 @@ class MyProject extends React.Component {
                         <ChatItemContainer
                           logo={Partner.detail.logo}
                           name={Partner.detail.name}
-                          id={data.project}
+                          id={data.answerId}
                           content={data.content}
-                          modalHandler={this.modalHandler}
+                          modalHandler={() => {
+                            this.modalHandler(data.answerId, idx);
+                          }}
                           user={Auth}
                           pushToDetail={this.pushToDetail}
                         />
