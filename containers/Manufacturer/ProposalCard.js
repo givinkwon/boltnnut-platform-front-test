@@ -29,7 +29,7 @@ class ProposalCard extends React.Component {
 
   openModal = (user_phone) => {
     console.log("open click");
-    this.setState({ modalOpen: true });
+    // this.setState({ modalOpen: true });
     this.props.Partner.modalActive = true;
     if (!user_phone) {
       this.props.Partner.modalUserPhone = "전화번호 없음";
@@ -212,49 +212,15 @@ class ProposalCard extends React.Component {
                 </Review> */}
                 <Name>{data.name}</Name>
                 <Phone>
-                  <div
-                    style={{ cursor: "pointer" }}
-
-                    // onClick={() => {
-                    //   window
-                    //     .open
-                    //     //"https://blog.naver.com/boltnnut_korea"
-                    //     //"./Popup.js"
-                    //     // "windowPop",
-                    //     // "width=400, height=600, left=400, top=400, resizable = yes"
-                    //     ();
-                    // }}
-                  >
-                    <img
+                  <div style={{ cursor: "pointer" }}>
+                    {/* <img
                       src={call_img}
-                      // active={this.state.call}
-                      // onMouseOver={() => {
-                      //   this.activeHandler("call");
-                      // }}
-                      // onMouseOut={() => {
-                      //   this.activeHandler("call");
-                      // }}
                       onClick={() => {
                         console.log(data.name);
                         console.log(data.user.phone);
                         this.openModal(data.user.phone);
                       }}
-                    />
-
-                    {/* <span
-                    style={{
-                      display: `${this.state.call ? "block" : "none"}`,
-                    }}
-                  >
-                    {data.real_phone ? (
-                      <span>☎ {data.real_phone}</span>
-                    ) : (
-                      <span>
-                        {data.user.phone ? data.user.phone : "전화번호 없음"}
-                      </span>
-                    )}
-                  </span> */}
-                    {/* {this.props.Partner.modalActive && ( */}
+                    /> */}
 
                     {Partner.modalActive && (
                       // <Layer onClick={this.modalHandler}>
@@ -269,19 +235,7 @@ class ProposalCard extends React.Component {
                             // title={data.real_phone}
                             children={this.props.Partner.modalUserPhone}
                             //children={data.name}
-                          >
-                            {/* <p>
-                            {data.user.phone
-                              ? data.user.phone
-                              : "전화번호 없음"}
-                          </p> */}
-                            {/* <p>{idx}</p> */}
-                            {/* <p>{data.name}</p> */}
-                          </Modal>
-                          {/* <CheckBrowserModal
-                          open={this.props.Partner.modalActive}
-                          handleClose={this.closeModal}
-                        /> */}
+                          ></Modal>
                         </span>
                       </Layer>
                     )}
@@ -370,6 +324,37 @@ class ProposalCard extends React.Component {
                 </div>
               </div>
               <div></div> */}
+                  <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      console.log(data.name);
+                      console.log(data.user.phone);
+                      this.openModal(data.user.phone);
+                    }}
+                  >
+                    <span>전화번호</span>
+
+                    {/* {Partner.modalActive && (
+               
+                      <Layer>
+                   
+                        <span>
+                          <Modal
+                            width={width}
+                            open={this.props.Partner.modalActive}
+                            close={this.closeModal}
+                            header="전화번호"
+                        
+                            children={this.props.Partner.modalUserPhone}
+                       
+                          ></Modal>
+                        </span>
+                      </Layer>
+                    )} */}
+
+                    {/* )} */}
+                  </div>
+                  <div>{/* <span>비슷한 번호 찾기</span> */}</div>
                   <div>
                     <img src={file_img2} />
                     <Link
@@ -681,6 +666,8 @@ const Phone = styled.div`
   color: #282c36;
   font-weight: 500;
   margin-bottom: 16px;
+  > div {
+  }
 `;
 const InfoOne = styled.div`
   word-break: break-all;
@@ -695,6 +682,9 @@ const InfoOne = styled.div`
     line-height: 18px;
     letter-spacing: -0.33px;
   }
+  @media (min-width: 1300px) {
+    width: 80%;
+  }
 `;
 const InfoTwo = styled.div`
 margin-top: 16px;
@@ -707,17 +697,21 @@ margin-top: 16px;
     margin-right: 21px;
     display: inline-block;
   }
+  @media (min-width: 1300px) {
+    width: 80%
+  }
 `;
 
 const AdditionBox = styled.div`
   //border: 2px solid green;
-  > div {
+
+  > div:nth-of-type(3) {
     display: flex;
     align-items: center;
     width: 100%;
-    position: absolute;
-    top: 80%;
-    left: 82%;
+    // position: absolute;
+    // top: 80%;
+    // left: 82%;
     > span {
       font-size: 18px;
       line-height: 40px;
@@ -725,7 +719,7 @@ const AdditionBox = styled.div`
       color: #555963;
     }
     > img {
-      margin-left: 14px;
+      //margin-left: 14px;
     }
     > div {
       position: absolute;
@@ -767,18 +761,139 @@ const AdditionBox = styled.div`
       }
     }
   }
-  > div:nth-child {
-    border: 2px solid orange;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 1%;
+    right: 1%;
+    display: flex;
+    flex-direction: column;
+    > div:nth-of-type(1) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      > span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+
+    > div:nth-of-type(3) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
   }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    display: flex;
+    flex-direction: column;
+    > div:nth-of-type(1) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      > span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+
+    > div:nth-of-type(3) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+  }
+
   @media (min-width: 1300px) {
-    position: relative;
-    > div {
-      top: 0;
-      bottom: 0;
-      left: 80%;
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    display: flex;
+    flex-direction: column;
+    > div:nth-of-type(1) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      > span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+
+    > div:nth-of-type(3) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
     }
   }
 `;
