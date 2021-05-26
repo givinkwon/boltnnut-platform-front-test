@@ -761,12 +761,97 @@ const AdditionBox = styled.div`
       }
     }
   }
-  > div:nth-child {
-    border: 2px solid orange;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 1%;
+    right: 1%;
+    display: flex;
+    flex-direction: column;
+    > div:nth-of-type(1) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      > span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+
+    > div:nth-of-type(3) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
   }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    display: flex;
+    flex-direction: column;
+    > div:nth-of-type(1) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      > span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+
+    > div:nth-of-type(3) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+  }
+
   @media (min-width: 1300px) {
     position: absolute;
     bottom: 1%;

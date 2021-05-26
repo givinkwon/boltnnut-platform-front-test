@@ -169,8 +169,13 @@ class ReviewModal extends React.Component {
       >
         {open ? (
           <>
-            <button className="close" onClick={close}>
-              {" "}
+            <button
+              className="close"
+              onClick={(e) => {
+                e.stopPropagation();
+                close();
+              }}
+            >
               &times;{" "}
             </button>
             <section>

@@ -38,8 +38,9 @@ class PortfolioConatiner extends React.Component {
 
   activeHandler = (src) => {
     console.log(src);
-
-    this.setState({ modalOpen: true, src: src });
+    if (this.props.width > 768) {
+      this.setState({ modalOpen: true, src: src });
+    }
   };
 
   componentDidMount = async () => {
@@ -95,7 +96,14 @@ class PortfolioConatiner extends React.Component {
         {/* { current_partner && current_partner.portfolio_set.length > 0 && */}
         <div
           id="portfolio"
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "15px",
+            backgroundColor: "#dddddd",
+            border: "1px solid #dedede",
+            borderRadius: "8px",
+          }}
         >
           {/* <Header>
             <Text.FontSize20 color={WHITE} fontWeight={700}>
@@ -393,25 +401,29 @@ const Modal = styled.div`
     width: ${(props) => (props.width ? props.width - 20 : 0)}px;
     // width: 200px;
     height: 200px;
-    top: 25%;
+    top: 117%;
   }
 
   @media (min-width: 480px) and (max-width: 767.98px) {
     width: ${(props) => (props.width ? props.width - 100 : 0)}px;
     height: 300px;
+    top: 75%;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 400px;
     height: 400px;
+    top: 100%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 550px;
     height: 550px;
+    top: 80%;
   }
   @media (min-width: 1300px) {
     width: 700px;
     height: 700px;
+    top: 70%;
   }
 `;
 

@@ -98,7 +98,7 @@ class DetailConatiner extends React.Component {
 
           <W50>
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              포트폴리오
+              회사 소개서
             </Text.FontSize20>
             <a href={Partner.partner_detail_list[0].item.file}>
               {Partner.partner_detail_list[0].item.file &&
@@ -212,11 +212,17 @@ class DetailConatiner extends React.Component {
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>
               파일
             </Text.FontSize20>
-            <ImageContainer file={Partner.partner_detail_list[0].item.file} />
+            <ImageContainer
+              file={Partner.partner_detail_list[0].item.file}
+              width={width}
+            />
           </W100>
-
+          <Review>
+            <div onClick={() => this.onClickReviewHandler()}>
+              <span>리뷰 보기</span>
+            </div>
+          </Review>
           {/* )} */}
-          <Review onClick={() => this.onClickReviewHandler()}>리뷰 보기</Review>
         </Content>
 
         {this.props.Partner.ReviewActive && (
@@ -251,7 +257,7 @@ const Badge = styled.div`
   display: flex;
   align-items: center;
   padding: 7px;
-  background-color: #f8f8f8;
+  //background-color: #f8f8f8;
   border-radius: 4px;
   > img {
     width: 30px;
@@ -267,6 +273,7 @@ const Badge = styled.div`
 const W50 = styled.div`
   display: flex;
   margin-bottom: 20px;
+
   > p:nth-of-type(1) {
     width: 120px;
   }
@@ -278,6 +285,10 @@ const W50 = styled.div`
     width: 100%;
     > p:nth-of-type(2) {
       margin-left: auto;
+    }
+    > a {
+      font-size: 12px;
+      word-break: break-all;
     }
   }
   @media (min-width: 768px) {
@@ -303,6 +314,7 @@ const Header = styled.div`
   align-items: center;
 
   padding: 0 15px;
+  justify-content: space-between;
 `;
 const Content = styled.div`
   background-color: #f2f2f2;
@@ -349,21 +361,31 @@ const Review = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 30px;
-  border-radius: 5px;
-  background-color: #0933b3;
-  color: #ffffff;
-  span {
-    font-size: 16px;
-    font-weight: 500;
+  margin-top: 30px;
+  width: 100%;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #0933b3;
+    color: #ffffff;
+    span {
+      font-size: 16px;
+      font-weight: 500;
+    }
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 80px;
-    height: 20px;
-    > span {
-      font-size: 11px;
+    // width: 80px;
+    // height: 20px;
+    > div {
+      > span {
+        font-size: 11px;
+      }
     }
   }
 `;

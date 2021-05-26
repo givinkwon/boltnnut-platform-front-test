@@ -359,7 +359,7 @@ class ProposalCard extends React.Component {
                     {/* )} */}
                   </div>
                   <div>
-                    <span>비슷한 번호 찾기</span>
+                    <span>비슷한 업체 찾기</span>
                   </div>
                   {/* <div>
                     <img src={file_img2} />
