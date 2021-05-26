@@ -1,6 +1,7 @@
 import { observable, action } from "mobx";
 import Router from "next/router";
 import * as AnswerAPI from "axios/Answer";
+import * as RequestAPI from "axios/Request";
 import * as CategoryAPI from "axios/Category";
 import * as SelectAPI from "axios/Select";
 import * as PartnerAPI from "axios/Partner";
@@ -134,8 +135,20 @@ class Answer {
     };
 
     await AnswerAPI.CreateAnswer(req)
+
       .then((res) => {
         console.log(res.data);
+        // const req = {
+        //   phoneNum: "01075731803",
+        //   requestTitle: "DDDD",
+        //   name: "오규석", //보내는사람
+        //   text: content1,
+        // };
+        // RequestAPI.sendKakaoTalk(req)
+        //   .then((res) => console.log(res))
+        //   .catch((e) => console.log(e));
+
+        //sendKaKaoTalk 끝
       })
       .catch(async (e) => {
         alert("정상적으로 제안서가 생성되지 않았습니다.");
