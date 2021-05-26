@@ -59,7 +59,7 @@ class ContentSub extends React.Component {
                 console.log("click!");
                 this.changeProject();
                 console.log(this.props.ManufactureProcess.changeProject)
-                Router.push("/request")
+                // Router.push("/request")
               }}
             >
               <Font18
