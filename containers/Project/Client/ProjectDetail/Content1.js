@@ -152,6 +152,9 @@ class Content1 extends React.Component {
               {/* <Postcode /> */}
               <ChatTestContainer
                 roomName={this.state.selectedRoom}
+                requestTitle={
+                  this.props.Project.projectDetailData.request_set[0].name
+                }
               ></ChatTestContainer>
             </Layer>
           )}
@@ -262,47 +265,73 @@ class Content1 extends React.Component {
                 }}
               >
                 지원한 파트너
-                {user == "client" && projectDetailData.request_set[0].client == Auth.logged_in_client.id && (
-                  <p style={{ color: "#0933b3", marginLeft: 6 }}>
-                    {this.state.partnerList.length}
-                  </p>
-                )}
+                {user == "client" &&
+                  projectDetailData.request_set[0].client ==
+                    Auth.logged_in_client.id && (
+                    <p style={{ color: "#0933b3", marginLeft: 6 }}>
+                      {this.state.partnerList.length}
+                    </p>
+                  )}
               </Font20>
-              {/* 프로젝트의 해당 클라이언트인 경우와 아닌 경우   */ }
-              {user == "client" && projectDetailData.request_set[0].client == Auth.logged_in_client.id ?
+              {/* 프로젝트의 해당 클라이언트인 경우와 아닌 경우   */}
+              {user == "client" &&
+              projectDetailData.request_set[0].client ==
+                Auth.logged_in_client.id ? (
                 <>
-              {this.state.partnerList.map((data, idx) => {
-                // Partner.getPartnerDetail(data.partner);
-                return (
-                  <>
-                    {this.state.partnerDetailList[idx] && (
-                      <ChatItemContainer
-                        logo={this.state.partnerDetailList[idx].logo}
-                        name={this.state.partnerDetailList[idx].name}
-                        id={data.id}
-                        content={"test"}
-                        modalHandler={this.modalHandler}
-                        user={Auth}
-                      />
-                    )}
-                  </>
-                );
-              })}
-              </>
-              :
-              <>
-              <BlackBox>
-                <span>'해당 프로젝트 담당자만 확인할 수 있습니다.'</span>
-                <div style={{ filter: "blur(5px)" }}>
-                <PartnerBox>
-                  <img src={"https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"} width={36} height={36}/>
-                </PartnerBox>
-                <PartnerBox><img src={"https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"} width={36} height={36}/></PartnerBox>
-                <PartnerBox><img src={"https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"} width={36} height={36}/></PartnerBox>
-                </div>
-              </BlackBox>
-            </>
-            }
+                  {this.state.partnerList.map((data, idx) => {
+                    // Partner.getPartnerDetail(data.partner);
+                    return (
+                      <>
+                        {this.state.partnerDetailList[idx] && (
+                          <ChatItemContainer
+                            logo={this.state.partnerDetailList[idx].logo}
+                            name={this.state.partnerDetailList[idx].name}
+                            id={data.id}
+                            content={"test"}
+                            modalHandler={this.modalHandler}
+                            user={Auth}
+                          />
+                        )}
+                      </>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  <BlackBox>
+                    <span>'해당 프로젝트 담당자만 확인할 수 있습니다.'</span>
+                    <div style={{ filter: "blur(5px)" }}>
+                      <PartnerBox>
+                        <img
+                          src={
+                            "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
+                          }
+                          width={36}
+                          height={36}
+                        />
+                      </PartnerBox>
+                      <PartnerBox>
+                        <img
+                          src={
+                            "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
+                          }
+                          width={36}
+                          height={36}
+                        />
+                      </PartnerBox>
+                      <PartnerBox>
+                        <img
+                          src={
+                            "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
+                          }
+                          width={36}
+                          height={36}
+                        />
+                      </PartnerBox>
+                    </div>
+                  </BlackBox>
+                </>
+              )}
             </AppliedPartner>
             <Content4 user={user} />
           </InnerContainer>

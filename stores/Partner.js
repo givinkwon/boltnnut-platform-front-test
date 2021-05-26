@@ -86,6 +86,7 @@ class Partner {
   @observable reviewModalActive = false;
   @observable ReviewActiveIndex = -1;
   @observable modalUserPhone = "";
+  // @observable img = "";
 
   // 파트너 리뷰
   @observable star_ary = [
@@ -109,9 +110,12 @@ class Partner {
 
   @observable newIndex = 0;
 
+  @observable portFolioList = [];
+
   // 파트너의 답변
   @observable answer_set = [];
 
+  @observable clientInfo = [];
   @action setProcessFilter = (val) => {
     this.input_process_filter = val;
     console.log(toJS(this.input_process_filter));
@@ -199,6 +203,15 @@ class Partner {
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
+  };
+
+  @action getClientInfo = async (id) => {
+    const req = {
+      params: null,
+    };
+    await PartnerAPI.getClient(id, req).then((res) => {
+      this.clientInfo = res.data;
+    });
   };
 
   @action getPartnerDetail = async (id) => {
@@ -1173,6 +1186,24 @@ class Partner {
     //   this.review_done = false;
     // }
     // console.log(this.review_done);
+  };
+  @action getPortfolio = async (partnerId) => {
+    const req = {
+      params: {
+        partner: partnerId,
+      },
+    };
+    await PartnerAPI.getPortfolioList(req)
+      .then((res) => {
+        console.log(res.data);
+        // res.data.results.img_portfolio
+        this.portFolioList = this.portFolioList.concat(res.data.results);
+        console.log(toJS(this.portFolioList));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 
   @action checkReviewWriting = async (page = 1, clientId = "") => {

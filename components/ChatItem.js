@@ -92,9 +92,6 @@ class ChatItemContainer extends React.Component {
           </IconBox>
         </PartnerBox>
       }
-
-
-
       </>
     );
   }

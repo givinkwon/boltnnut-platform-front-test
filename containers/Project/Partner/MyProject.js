@@ -11,7 +11,6 @@ import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Info2/ChatTest";
 import NoProject from "../NoProject";
 
-
 @inject("Project", "Auth", "Partner")
 @observer
 class MyProject extends React.Component {
@@ -19,11 +18,16 @@ class MyProject extends React.Component {
     Answerlist: [],
     selectedRoom: null,
     Partnerprojectlist: [],
+    clientPhone: null,
+    projectName: null,
   };
-  modalHandler = (id) => {
-    this.setState({ selectedRoom: id });
+  modalHandler = async (id, idx) => {
+    this.setState({
+      selectedRoom: id,
+      projectName: this.state.Partnerprojectlist[idx].name,
+      clientPhone: this.state.Partnerprojectlist[idx].clientPhone,
+    });
     const { Project } = this.props;
-
     Project.chatModalActive = !Project.chatModalActive;
     // this.setState({ modalActive: !this.state.modalActive });
   };
@@ -42,12 +46,19 @@ class MyProject extends React.Component {
     const partnerprojectlist = this.state.Partnerprojectlist;
 
     await Project.getProjectDetail(data.project);
+    // console.log(toJS(Project.projectDetailData));
+    // console.log(Project.projectDetailData.request_set[0].client);
+    await this.props.Partner.getClientInfo(
+      Project.projectDetailData.request_set[0].client
+    );
 
+    // console.log(this.props.Partner.clientInfo.user.phone);
     if (Project.projectDetailData) {
       partnerprojectlist.push({
-        name: Project.projectDetailData.request_set[0].name,            // 프로젝트 이름
+        name: Project.projectDetailData.request_set[0] ? Project.projectDetailData.request_set[0].name : "미지정",            // 프로젝트 이름
         project:Project.projectDetailData.id,
         content: data.content1,
+        clientPhone: this.props.Partner.clientInfo.user.phone,
       });
       this.setState({ Partnerprojectlist: partnerprojectlist });
     }
@@ -59,15 +70,13 @@ class MyProject extends React.Component {
     await Auth.checkLogin();
     if (Auth.logged_in_partner) {
       Partner.answer_set = Auth.logged_in_partner.answer_set;
-      Partner.getPartnerDetail(Auth.logged_in_partner.id)
-      console.log(toJS(Partner.detail))
+      Partner.getPartnerDetail(Auth.logged_in_partner.id);
+      console.log(toJS(Partner.detail));
 
       Partner.answer_set.map((data) => {
         this.getProject(data);
       });
     }
-
-
   }
 
   render() {
@@ -76,43 +85,45 @@ class MyProject extends React.Component {
     return (
       <Background>
         <Container style={{ flexDirection: "column" }}>
-          {Auth.logged_in_partner.answer_set[0] ?  <>
-            {Project.chatModalActive && (
-            // <Layer onClick={this.modalHandler}>
-            <Layer>
-              {/* <Postcode /> */}
-              <ChatTestContainer
-                roomName={this.state.selectedRoom}
-              ></ChatTestContainer>
-            </Layer>
-          )}
+          {Auth.logged_in_partner.answer_set[0] ? (
+            <>
+              {Project.chatModalActive && (
+                // <Layer onClick={this.modalHandler}>
+                <Layer>
+                  {/* <Postcode /> */}
+                  <ChatTestContainer
+                    roomName={this.state.selectedRoom}
+                    requestTitle={this.state.projectName}
+                    clientPhone={this.state.clientPhone}
+                  ></ChatTestContainer>
+                </Layer>
+              )}
 
-            {Partnerprojectlist &&
-              Partnerprojectlist.map((data, idx) => {
-                return (
-                  <BoxContainer>
-                    <Font22>
-                      {data.name}
-                    </Font22>
-                    {this.state.Partnerprojectlist[idx] &&Partner.detail&& (
-                      <ChatItemContainer
-                        logo={Partner.detail.logo}
-                        name={Partner.detail.name}
-                        id={data.project}
-                        content={data.content}
-                        modalHandler={this.modalHandler}
-                        user = {Auth}
-                        pushToDetail = {this.pushToDetail}
-                      />
-                    )}
+              {Partnerprojectlist &&
+                Partnerprojectlist.map((data, idx) => {
+                  return (
+                    <BoxContainer>
+                      <Font22>{data.name}</Font22>
+                      {this.state.Partnerprojectlist[idx] && Partner.detail && (
+                        <ChatItemContainer
+                          logo={Partner.detail.logo}
+                          name={Partner.detail.name}
+                          id={data.answerId}
+                          content={data.content}
+                          modalHandler={() => {
+                            this.modalHandler(data.answerId, idx);
+                          }}
+                          user={Auth}
+                          pushToDetail={this.pushToDetail}
+                        />
+                      )}
                     </BoxContainer>
-
-                );
-              })}
-        
-          </> 
-          : 
-          <NoProject/>}
+                  );
+                })}
+            </>
+          ) : (
+            <NoProject />
+          )}
         </Container>
       </Background>
     );
