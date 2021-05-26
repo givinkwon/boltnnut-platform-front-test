@@ -57,10 +57,10 @@ class MyProject extends React.Component {
     const partnerdetail = this.state.PartnerDetail;
     await Auth.checkLogin();
     if (Auth.logged_in_partner) {
+      console.log(toJS(Auth.logged_in_partner.answer_set))
+      console.log(toJS(Partner.answer_set))
       Partner.answer_set = Auth.logged_in_partner.answer_set;
       Partner.getPartnerDetail(Auth.logged_in_partner.id);
-      console.log(toJS(Partner.detail));
-
       Partner.answer_set.map((data) => {
         this.getProject(data);
       });
@@ -84,7 +84,7 @@ class MyProject extends React.Component {
                   ></ChatTestContainer>
                 </Layer>
               )}
-
+              {console.log(Partnerprojectlist)}
               {Partnerprojectlist &&
                 Partnerprojectlist.map((data, idx) => {
                   return (

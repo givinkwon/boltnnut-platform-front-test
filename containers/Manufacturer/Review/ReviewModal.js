@@ -68,7 +68,15 @@ class ReviewModal extends React.Component {
   };
 
   reviewHandler = (event) => {
-    const textareaLineHeight = 34;
+    let textareaLineHeight = 0;
+    if (this.props.width > 797.98) {
+      textareaLineHeight = 34;
+      this.setState({ maxRows: 5 });
+    } else {
+      textareaLineHeight = 20;
+      this.setState({ maxRows: 10 });
+    }
+    //const textareaLineHeight = 34;
     const { minRows, maxRows } = this.state;
     const { Partner } = this.props;
     const previousRows = event.target.rows;
@@ -161,7 +169,13 @@ class ReviewModal extends React.Component {
       >
         {open ? (
           <>
-            <button className="close" onClick={close}>
+            <button
+              className="close"
+              onClick={(e) => {
+                e.stopPropagation();
+                close();
+              }}
+            >
               {" "}
               &times;{" "}
             </button>
@@ -262,14 +276,14 @@ const ModalBox = styled.div`
   background-color: white;
   height: 500px;
   width: 60%;
-  right: 10%;
+  right: 20%;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 40%);
   border-radius: 10px;
 
   > section {
     max-width: 900px;
     width: 90%;
-    height: 90%;
+    height: 87%;
     margin: 0 auto;
     border-radius: 0.3rem;
     //background-color: blanchedalmond;
@@ -391,6 +405,22 @@ const ModalBox = styled.div`
         height: 95%;
         font-size: 13px;
         font-weight: 600;
+        > div {
+          > div {
+            > textarea {
+              padding: 10px 12px;
+              box-sizing: border-box;
+              font-size: 11px;
+              line-height: 20px;
+              letter-spzcing: -0.45px;
+              color: #282c36;
+              border-radius: 5px;
+              overflow: auto;
+              height: auto;
+              font-family: inherit;
+            }
+          }
+        }
       }
       > footer {
         border-radius: 5px;
@@ -447,7 +477,7 @@ const SearchBar = styled.div`
     flex-direction: column;
     input {
       font-size: 12px;
-      width: 93%;
+      width: 87%;
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
