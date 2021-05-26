@@ -189,8 +189,7 @@ class Project {
     await ProjectAPI.getProjectDetail(req)
       .then((res) => {
         this.projectDetailData = res.data;
-        // console.log(res.data);
-        // console.log(toJS(this.projectDetailData));
+        console.log(res.data);
       })
       .catch((e) => {
         console.log(e);

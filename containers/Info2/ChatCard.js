@@ -153,8 +153,8 @@ class ChatCardContainer extends React.Component {
           {/* {!messageFromMe && <Message_User>상대</Message_User>} */}
           {text_message.text && text_message.text.indexOf("https://") > -1 ? (
             <Message_text fromMe={messageFromMe}>
-              {console.log("파일")}
-              {console.log(text_message.text.split("/").pop())}
+              {/* {console.log("파일")} */}
+              {/* {console.log(text_message.text.split("/").pop())} */}
               <a href={temp} download>
                 {decodeURI(text_message.text.split("/").pop())}
               </a>
