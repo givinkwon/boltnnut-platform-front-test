@@ -127,7 +127,9 @@ class ManufactureProcess {
     console.log(toJS(this.detailProcessDataAry));
   };
   @action init = async () => {
+    console.log("Enter init()")
     await ManufactureProcessAPI.loadTitle().then((res) => {
+      console.log("LoadTitle")
       this.title_list = res.data;
       console.log(this.title_list);
       const arr = [...res.data.data];
@@ -152,6 +154,7 @@ class ManufactureProcess {
     });
     this.setDefaultValue("금형사출");
     this.reset();
+    console.log("Close Init")
   };
   @action setQuantity = (val) => {
     console.log(val);

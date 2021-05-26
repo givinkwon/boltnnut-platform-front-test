@@ -44,7 +44,8 @@ class PartnerAnswer extends React.Component {
     //console.log(Project.projectDataList[0].request_set[0].id);
     //console.log(toJS(Auth.logged_in_partner.id));
     //console.log(Answer.content1);
-    Answer.CreateAnswer(Project.projectDataList[0].id,toJS(Auth.logged_in_partner.id),Project.projectDataList[0].request_set[0].id,Answer.content1); // project, partner, request, content1
+    Answer.CreateAnswer(Project.projectDetailData.id,toJS(Auth.logged_in_partner.id),Project.projectDetailData.request_set[0].id,Answer.content1); // project, partner, request, content1
+    console.log(toJS(Project.projectDetailData))
     Project.newIndex = 3;
   }
   
@@ -72,42 +73,12 @@ class PartnerAnswer extends React.Component {
     });
 
     Answer.content1 = event.target.value;
+    console.log(toJS(Answer.content1))
   }
 
   render() {
     const { Project, ManufactureProcess, user } = this.props;
     const { projectDetailData } = Project;
-    let name = "";
-    let date = "";
-    let period = "";
-    let estimate = "";
-    let applicantnumber = "";
-    let category = Project.category;
-    let maincategory = "";
-    let categoryname = "";
-    let maincategoryname = "";
-
-    Project.projectDataList &&
-    Project.currentPage > 0 &&
-    Project.projectDataList.map((item, idx) => {
-      if (idx === 0) {
-        name = item.request_set[0].name ? item.request_set[0].name : "미지정";
-        date = item.request_set[0].createdAt
-          ? item.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
-          : "미지정";
-        period = item.request_set[0].period
-          ? item.request_set[0].period + " 달"
-          : "미지정";
-        estimate = item.request_set[0].price
-          ? item.request_set[0].price
-          : "미지정";
-        category = Project.category;
-        maincategory = Project.maincategory;
-        categoryname = Project.categoryname;
-        maincategoryname = Project.maincategoryname;
-        console.log(toJS(item));
-      }
-    });
     const openPlaceHolderText = `<프로젝트와 관련된 보유 기술>
     예시) 보유 기술명, 기술 사용 기간, 기술 숙련도
     

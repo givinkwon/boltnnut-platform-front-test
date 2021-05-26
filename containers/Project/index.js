@@ -1,3 +1,4 @@
+
 import React from "react";
 import ClientContentContainer from "./Client/Content";
 import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobileProject";
@@ -162,7 +163,6 @@ const DividingSelect = styled.div`
   cursor: pointer;
   width: 144px;
   justify-content: center;
-
   ${(props) =>
     props.active &&
     css`

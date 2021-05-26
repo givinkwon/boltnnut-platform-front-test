@@ -45,7 +45,7 @@ class MyProject extends React.Component {
 
     if (Project.projectDetailData) {
       partnerprojectlist.push({
-        name: Project.projectDetailData.request_set[0].name,            // 프로젝트 이름
+        name: Project.projectDetailData.request_set[0] ? Project.projectDetailData.request_set[0].name : "미지정",            // 프로젝트 이름
         project:Project.projectDetailData.id,
         content: data.content1,
       });

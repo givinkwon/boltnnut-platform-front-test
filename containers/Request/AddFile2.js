@@ -44,6 +44,7 @@ class InputComponent extends React.Component {
       //   Project.projectDetailData.request_set[0].requestfile_set
       // );
     }
+
     console.log(toJS(ManufactureProcess.openFileArray));
   }
   onChange = (e) => {

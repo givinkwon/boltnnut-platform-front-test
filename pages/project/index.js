@@ -101,6 +101,8 @@ class Project extends React.Component {
     return (
       <div>
         {Loading.is_open}
+        {console.log(toJS(Auth.logged_in_user))}
+        {console.log(toJS(Auth.logged_in_partner))}
         {/* {Loading.is_open && <Spinner/>} */}
         <Head>
           <title>볼트앤너트</title>

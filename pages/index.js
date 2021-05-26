@@ -13,6 +13,7 @@ import HomeConatiner from "containers/Home";
 import Home2Conatiner from "containers/HomeTwo";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { toJS } from "mobx";
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
