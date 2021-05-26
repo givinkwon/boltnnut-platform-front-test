@@ -2272,7 +2272,6 @@ const Select = styled(SelectComponent)`
 
 const Box = styled.div`
   width: 380px;
-
   ${(props) =>
     props.active &&
     css`
@@ -2512,7 +2511,6 @@ const TailBox = styled.div`
           line-height: 40px;
           margin-right: 20px;
         }
-
         > span:nth-of-type(even) {
           font-size: 24px;
           letter-spacing: -0.6px;
@@ -2526,7 +2524,6 @@ const TailBox = styled.div`
         line-height: 40px;
         margin-right: 20px;
       }
-
       > span:nth-of-type(even) {
         font-size: 24px;
         letter-spacing: -0.6px;
@@ -2626,7 +2623,6 @@ const DropZoneContainer = styled.div`
   > div {
     display: flex;
     align-items: center;
-
     > span {
       width: 26px;
       height: 26px;
@@ -2653,19 +2649,16 @@ const DropZoneContainer = styled.div`
       }
     }
   }
-
   p:nth-of-type(1) {
     font-size: 20px;
     line-height: 40px;
     letter-spacing: -0.5px;
     color: #282c36;
     margin-bottom: 4px;
-
     span {
       color: #0933b3;
       font-weight: 600;
     }
-
     :focus {
       outline: none;
     }
@@ -2723,12 +2716,10 @@ const TableHeader = styled.div`
 
 const Price = styled.div`
   flex-direction: column;
-
   width: 100%;
   //height: 197px;
   border-top: 3px solid #414550;
   border-bottom: 2px solid #c6c7cc;
-
   margin-top: 60px;
   margin-bottom: 70px;
   display: ${(props) => (props.checkFileUpload ? "flex" : "none")};
@@ -2827,7 +2818,6 @@ const Button = styled.div`
     border: 1px solid #ffffff;
     background-color: #0933b3;
     color: #ffffff;
-
     > span {
       position: absolute;
       width: 100%;
@@ -2899,7 +2889,6 @@ const ProjectTitle = styled.div`
   box-sizing: border-box;
   //margin-top: 16px;
   margin-bottom: 10px;
-
   > input {
     width: 100%;
     padding: 4px;
@@ -2921,7 +2910,6 @@ const DeliveryBox = styled.div`
   display: ${(props) => (props.checkFileUpload ? "block" : "none")};
   margin-top: 70px;
   margin-bottom: 40px;
-
   // > div:nth-of-type(1) {
   //   height: 27px;
   //   font-size: 18px;
@@ -2940,12 +2928,10 @@ const DeliveryDate = styled.div`
   border-radius: 5px;
   padding: 26px 24px 22px 24px;
   box-sizing: border-box;
-
   > div:nth-of-type(1) {
     display: flex;
     //justify-content: center;
     align-items: center;
-
     > div:nth-of-type(1) {
       width: 66%;
       height: 55px;
@@ -3007,7 +2993,6 @@ const DeliveryDate = styled.div`
         position: relative;
         margin-right: 18px;
         box-sizing: border-box;
-
         > img {
           position: absolute;
           top: 18%;
@@ -3031,7 +3016,6 @@ const Request = styled.div`
   margin-bottom: 40px;
   margin-top: 16px;
   position: relative;
-
   > div {
     margin-top: 24px;
     margin-bottom: 12px;
@@ -3045,7 +3029,6 @@ const Request = styled.div`
       margin-bottom: 16px;
       margin-right: 7px;
     }
-
     // > span:last-child {
     //   width: 20px;
     //   height: 20px;
@@ -3078,7 +3061,6 @@ const Request = styled.div`
   //     letter-spacing: -0.45px;
   //     font-size: 18px;
   //   }
-
   > textarea {
     resize: none;
     border: 1px solid #ffffff;
@@ -3114,7 +3096,6 @@ const PrivateRequest = styled.div`
   margin-bottom: 40px;
   margin-top: 70px;
   position: relative;
-
   > div:nth-of-type(1) {
     > span:nth-of-type(1) {
       height: 27px;

@@ -8,8 +8,8 @@ class Modal extends React.Component {
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
     const { open, close, header, children, width } = this.props;
-    console.log(open);
-    console.log(children);
+    // console.log(open);
+    // console.log(children);
     return (
       <ModalBox
         modal={open ? "openModal modal" : "modal"}

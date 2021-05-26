@@ -86,6 +86,7 @@ class Partner {
   @observable reviewModalActive = false;
   @observable ReviewActiveIndex = -1;
   @observable modalUserPhone = "";
+  // @observable img = "";
 
   // 파트너 리뷰
   @observable star_ary = [
@@ -108,6 +109,8 @@ class Partner {
   @observable review_user_ary = [];
 
   @observable newIndex = 0;
+
+  @observable portFolioList = [];
 
   // 파트너의 답변
   @observable answer_set = [];
@@ -1183,6 +1186,24 @@ class Partner {
     //   this.review_done = false;
     // }
     // console.log(this.review_done);
+  };
+  @action getPortfolio = async (partnerId) => {
+    const req = {
+      params: {
+        partner: partnerId,
+      },
+    };
+    await PartnerAPI.getPortfolioList(req)
+      .then((res) => {
+        console.log(res.data);
+        // res.data.results.img_portfolio
+        this.portFolioList = this.portFolioList.concat(res.data.results);
+        console.log(toJS(this.portFolioList));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 
   @action checkReviewWriting = async (page = 1, clientId = "") => {

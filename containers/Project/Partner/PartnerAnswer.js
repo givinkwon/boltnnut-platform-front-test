@@ -5,12 +5,12 @@ import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
-import {toJS} from "mobx";
+import { toJS } from "mobx";
 import DownloadFile from "components/DownloadFile";
 import Answer from "../../../stores/Answer";
 const infoImg = "static/images/info.svg";
 const file_img = "/static/images/project/fileimg.svg";
-@inject("Project", "Answer","Auth")
+@inject("Project", "Answer", "Auth")
 @observer
 class PartnerAnswer extends React.Component {
   state = {
@@ -32,22 +32,33 @@ class PartnerAnswer extends React.Component {
     a.remove();
     window.URL.revokeObjectURL(url);
   }
-  
-  cancel = () => {
-    const {Project} = this.props;
-    Project.newIndex = 1;
-  }
 
+  cancel = () => {
+    const { Project } = this.props;
+    Project.newIndex = 1;
+  };
+
+  componentDidMount() {
+    // console.log(Project.projectDetailData.request_set[0].name)
+  }
   submit = () => {
-    const {Project, Answer, Auth} = this.props;
+    const { Project, Answer, Auth } = this.props;
     //console.log(Project.projectDataList[0].id);
     //console.log(Project.projectDataList[0].request_set[0].id);
     //console.log(toJS(Auth.logged_in_partner.id));
     //console.log(Answer.content1);
-    Answer.CreateAnswer(Project.projectDataList[0].id,toJS(Auth.logged_in_partner.id),Project.projectDataList[0].request_set[0].id,Answer.content1); // project, partner, request, content1
+    Answer.CreateAnswer(
+      Project.projectDetailData,
+      Auth.logged_in_partner.name,
+      Project.projectDetailData.id,
+      toJS(Auth.logged_in_partner.id),
+      Project.projectDetailData.request_set[0].id,
+      Answer.content1
+    ); // project, partner, request, content1
+    console.log(toJS(Project.projectDetailData));
     Project.newIndex = 3;
-  }
-  
+  };
+
   answercontent = async (event) => {
     const textareaLineHeight = 34;
     const { minRows, maxRows } = this.state;
@@ -72,42 +83,12 @@ class PartnerAnswer extends React.Component {
     });
 
     Answer.content1 = event.target.value;
-  }
+    console.log(toJS(Answer.content1));
+  };
 
   render() {
     const { Project, ManufactureProcess, user } = this.props;
     const { projectDetailData } = Project;
-    let name = "";
-    let date = "";
-    let period = "";
-    let estimate = "";
-    let applicantnumber = "";
-    let category = Project.category;
-    let maincategory = "";
-    let categoryname = "";
-    let maincategoryname = "";
-
-    Project.projectDataList &&
-    Project.currentPage > 0 &&
-    Project.projectDataList.map((item, idx) => {
-      if (idx === 0) {
-        name = item.request_set[0].name ? item.request_set[0].name : "미지정";
-        date = item.request_set[0].createdAt
-          ? item.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")
-          : "미지정";
-        period = item.request_set[0].period
-          ? item.request_set[0].period + " 달"
-          : "미지정";
-        estimate = item.request_set[0].price
-          ? item.request_set[0].price
-          : "미지정";
-        category = Project.category;
-        maincategory = Project.maincategory;
-        categoryname = Project.categoryname;
-        maincategoryname = Project.maincategoryname;
-        console.log(toJS(item));
-      }
-    });
     const openPlaceHolderText = `<프로젝트와 관련된 보유 기술>
     예시) 보유 기술명, 기술 사용 기간, 기술 숙련도
     
@@ -119,10 +100,9 @@ class PartnerAnswer extends React.Component {
     
     <착수 가능일 및 계약 결정 기한>
     예시) n월 n일부터 착수 가능하고, n월 n일까지는 계약 결정을 희망합니다.`;
-    
+
     return (
       <Background>
-
         <Containerv1>
           <Wrap>
             <MainBox>
@@ -134,23 +114,26 @@ class PartnerAnswer extends React.Component {
                       예상견적
                     </FontSize18>
                     <FontSize18 style={{ color: "#414550", marginLeft: 20 }}>
-                      {projectDetailData && 
-                    projectDetailData.request_set[0].price ?  
-                    projectDetailData.request_set[0].price.toLocaleString("ko-KR")+"원" : "미정"}
+                      {projectDetailData &&
+                      projectDetailData.request_set[0].price
+                        ? projectDetailData.request_set[0].price.toLocaleString(
+                            "ko-KR"
+                          ) + "원"
+                        : "미정"}
                     </FontSize18>
                     <FontSize18 style={{ color: "#86888c", marginLeft: 90 }}>
                       납기 기간
                     </FontSize18>
                     <FontSize18 style={{ color: "#414550", marginLeft: 20 }}>
-                    {projectDetailData &&
-                      projectDetailData.request_set[0].deadline
-                        .slice(2, 10)
-                        .replace(/-/gi, ".")}
+                      {projectDetailData &&
+                        projectDetailData.request_set[0].deadline
+                          .slice(2, 10)
+                          .replace(/-/gi, ".")}
                     </FontSize18>
                   </InlineDiv>
                 </ProjectInfoBox>
                 <FontSize26>프로젝트 설명 및 요청사항</FontSize26>
-                <RequestSubContainer style = {{marginTop: 30}}>
+                <RequestSubContainer style={{ marginTop: 30 }}>
                   <Font20>공개 내용</Font20>
                   <RequestBox>
                     <RequestContent>
@@ -159,36 +142,49 @@ class PartnerAnswer extends React.Component {
                           projectDetailData.request_set[0].order_request_open}
                         {/* {Project.projectDetailData.request_set[0].order_request_open} */}
                       </pre>
-                    
-                    <File style = {{marginTop : 52}}>
-                      {projectDetailData &&
-                        projectDetailData.request_set[0].requestfile_set.map(
-                          (item, idx) => {
-                            if (item.share_inform) {
-                              return (
-                                <div>
-                                  <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                                    <img src={file_img} style = {{height: 26, width: 26, marginRight: 5}}/>
-                                    {/* <DownloadFile
+
+                      <File style={{ marginTop: 52 }}>
+                        {projectDetailData &&
+                          projectDetailData.request_set[0].requestfile_set.map(
+                            (item, idx) => {
+                              if (item.share_inform) {
+                                return (
+                                  <div>
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <img
+                                        src={file_img}
+                                        style={{
+                                          height: 26,
+                                          width: 26,
+                                          marginRight: 5,
+                                        }}
+                                      />
+                                      {/* <DownloadFile
                               file={item.file}
                               href={decodeURI(item.file)}
                               download
                             ></DownloadFile> */}
-                                    <span
-                                      onClick={() =>
-                                        this.downloadFile(item.file)
-                                      }
-                                      style={{ cursor: "pointer" }}
-                                    >
-                                      {decodeURI(item.file.split("/").pop())}
-                                    </span>
+                                      <span
+                                        onClick={() =>
+                                          this.downloadFile(item.file)
+                                        }
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        {decodeURI(item.file.split("/").pop())}
+                                      </span>
+                                    </div>
                                   </div>
-                                </div>
-                              );
+                                );
+                              }
                             }
-                          }
-                        )}
-                    </File>
+                          )}
+                      </File>
                     </RequestContent>
                   </RequestBox>
                 </RequestSubContainer>
@@ -225,11 +221,11 @@ class PartnerAnswer extends React.Component {
                   }}
                 >
                   <ButtonBox>
-                    <HomeBtn onClick={() => this.cancel()}>
-                      취소
-                    </HomeBtn>
+                    <HomeBtn onClick={() => this.cancel()}>취소</HomeBtn>
 
-                    <MyProjectBtn onClick={() => this.submit()}>프로젝트 답변 등록</MyProjectBtn>
+                    <MyProjectBtn onClick={() => this.submit()}>
+                      프로젝트 답변 등록
+                    </MyProjectBtn>
                   </ButtonBox>
                 </div>
 
@@ -238,7 +234,11 @@ class PartnerAnswer extends React.Component {
             </MainBox>
             <SubBox>
               <InlineDiv
-                style={{ justifyContent: "space-around", width: "133px", marginLeft: 0}}
+                style={{
+                  justifyContent: "space-around",
+                  width: "133px",
+                  marginLeft: 0,
+                }}
               >
                 <img src={infoImg} />
                 <FontSize18

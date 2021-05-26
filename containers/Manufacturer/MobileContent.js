@@ -94,6 +94,25 @@ class MobileManufacturerContentContainer extends React.Component {
     }
   };
 
+  pushToDetail = async (item, idx) => {
+    const { Partner } = this.props;
+    Partner.category_name_list = null;
+    console.log(item.id);
+    Partner.partner_detail_list = [];
+    //Project.selectedProjectId = id;
+    Partner.partner_detail_list.push({ item: item });
+    console.log(toJS(Partner.partner_detail_list));
+    Partner.newIndex = 1;
+    Partner.category_name_list = Partner.category_dic[idx];
+    console.log(idx);
+    //console.log(toJS(Partner.category_dic[idx]));
+    console.log(toJS(Partner.category_name_list));
+    await Partner.getPartnerDetail(item.id);
+
+    // await Router.push(`/project/${id}`);
+    //Project.setProjectDetailData(id);
+  };
+
   render() {
     const { Project, Partner, width } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
@@ -161,17 +180,23 @@ class MobileManufacturerContentContainer extends React.Component {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         {console.log(this.props.width)}
-                        <ProposalCard
-                          data={item}
-                          width={this.props.width}
-                          idx={idx}
-                          // middleCategory={Project.middle_category_name[idx]}
-                          // mainCategory={Project.main_category_name[idx]}
-                          // newData={Project.data_dt[idx]}
-                          // checkTotal={Project.filter_price}
-                          handleIntersection={this.handleIntersection}
-                          customer="partner"
-                        />
+
+                        <div
+                          style={{ width: "100%" }}
+                          onClick={() => this.pushToDetail(item, idx)}
+                        >
+                          <ProposalCard
+                            data={item}
+                            width={this.props.width}
+                            idx={idx}
+                            // middleCategory={Project.middle_category_name[idx]}
+                            // mainCategory={Project.main_category_name[idx]}
+                            // newData={Project.data_dt[idx]}
+                            // checkTotal={Project.filter_price}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
                       </Background>
                     );
                   })}

@@ -519,7 +519,7 @@ class NoneDrawingConsultingContainer extends React.Component {
                   <FontSize24>이미지 형상</FontSize24>
                </ImageShape> */}
 
-          <FontSize24 style={{ marginTop: "30px" }}>납기 일</FontSize24>
+          <FontSize24 style={{ marginTop: "30px" }}>희망 납기일</FontSize24>
           <DeliveryDate
             checkDateConference={ManufactureProcess.date_conference}
             checkDateUndefined={ManufactureProcess.date_undefined}
