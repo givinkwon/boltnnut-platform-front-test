@@ -27,6 +27,7 @@ class MyProject extends React.Component {
       projectName: this.state.Partnerprojectlist[idx].name,
       clientPhone: this.state.Partnerprojectlist[idx].clientPhone,
     });
+    // alert(id);
     const { Project } = this.props;
     Project.chatModalActive = !Project.chatModalActive;
     // this.setState({ modalActive: !this.state.modalActive });
@@ -46,25 +47,26 @@ class MyProject extends React.Component {
     const partnerprojectlist = this.state.Partnerprojectlist;
 
     await Project.getProjectDetail(data.project);
-    console.log('adsfsdafad')
+    console.log("adsfsdafad");
     console.log(toJS(Project.projectDetailData));
-    
+
     // console.log(this.props.Partner.clientInfo.user.phone);
     console.log(toJS(Project.projectDetailData));
-    
+    await this.props.Partner.getClientInfo(
+      Project.projectDetailData.request_set[0].client
+    );
     if (Project.projectDetailData) {
       partnerprojectlist.push({
-        name: Project.projectDetailData.request_set[0] ? Project.projectDetailData.request_set[0].name : "미지정",            // 프로젝트 이름
-        project:Project.projectDetailData.id,
+        name: Project.projectDetailData.request_set[0]
+          ? Project.projectDetailData.request_set[0].name
+          : "미지정", // 프로젝트 이름
+        project: Project.projectDetailData.id,
         content: data.content1,
         clientPhone: this.props.Partner.clientInfo.user.phone,
       });
       this.setState({ Partnerprojectlist: partnerprojectlist });
-      console.log(partnerprojectlist)
+      // console.log(partnerprojectlist);
     }
-    await this.props.Partner.getClientInfo(
-      Project.projectDetailData.request_set[0].client
-    );
   }
 
   async componentDidMount() {
@@ -72,8 +74,8 @@ class MyProject extends React.Component {
     const partnerdetail = this.state.PartnerDetail;
     await Auth.checkLogin();
     if (Auth.logged_in_partner) {
-      console.log(toJS(Auth.logged_in_partner.answer_set))
-      console.log(toJS(Partner.answer_set))
+      console.log(toJS(Auth.logged_in_partner.answer_set));
+      console.log(toJS(Partner.answer_set));
       Partner.answer_set = Auth.logged_in_partner.answer_set;
       Partner.getPartnerDetail(Auth.logged_in_partner.id);
       Partner.answer_set.map((data) => {
@@ -101,7 +103,7 @@ class MyProject extends React.Component {
                   ></ChatTestContainer>
                 </Layer>
               )}
-              {console.log(toJS(Partner.answer_set))}
+              {/* {console.log(toJS(Partner.answer_set))} */}
               {Partnerprojectlist &&
                 Partnerprojectlist.map((data, idx) => {
                   return (
