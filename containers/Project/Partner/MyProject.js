@@ -34,7 +34,7 @@ class MyProject extends React.Component {
 
   pushToDetail = async (id) => {
     const { Project } = this.props;
-
+    console.log(id);
     await Project.getProjectDetail(id);
     Project.newIndex = 1;
     Project.selectedProjectId = id;
@@ -48,19 +48,24 @@ class MyProject extends React.Component {
     await Project.getProjectDetail(data.project);
     // console.log(toJS(Project.projectDetailData));
     // console.log(Project.projectDetailData.request_set[0].client);
+    console.log(toJS(Project.projectDetailData));
     await this.props.Partner.getClientInfo(
       Project.projectDetailData.request_set[0].client
     );
 
+    console.log(toJS(Project.projectDetailData));
     // console.log(this.props.Partner.clientInfo.user.phone);
     if (Project.projectDetailData) {
       partnerprojectlist.push({
-        name: Project.projectDetailData.request_set[0] ? Project.projectDetailData.request_set[0].name : "미지정",            // 프로젝트 이름
-        project:Project.projectDetailData.id,
+        name: Project.projectDetailData.request_set[0]
+          ? Project.projectDetailData.request_set[0].name
+          : "미지정", // 프로젝트 이름
+        project: Project.projectDetailData.id,
         content: data.content1,
         clientPhone: this.props.Partner.clientInfo.user.phone,
       });
       this.setState({ Partnerprojectlist: partnerprojectlist });
+      console.log(this.state.Partnerprojectlist);
     }
   }
 
