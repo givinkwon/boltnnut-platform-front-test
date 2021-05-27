@@ -76,7 +76,7 @@ class ChatItemContainer extends React.Component {
           </BoxLeft>
           <IconBox style = {{marginRight:21}}>
             <GoToProject onClick={() => Router.push("/project")}>
-              <Font16 onClick={() => this.props.pushToDetail(this.props.id)} style = {{borderBottom: "1px solid", whiteSpace: "nowrap"}}>
+              <Font16 onClick={() => this.props.pushToDetail(this.props.project)} style = {{borderBottom: "1px solid", whiteSpace: "nowrap"}}>
                 프로젝트 보기
               </Font16>
             </GoToProject>

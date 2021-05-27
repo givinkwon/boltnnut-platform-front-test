@@ -56,7 +56,7 @@ class Banner9Container extends React.Component {
 export default Banner9Container;
 
 const Font24 = styled(Content.FontSize24)`
-  color: #ffffff;
+  color: #282c36;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -78,7 +78,7 @@ const Font32 = styled(Content.FontSize32)`
 `;
 
 const Layer = styled.div`
-  background-color: rgba(0, 0, 0, 0.67);
+  background-color: rgba(255, 255, 255, 0.67);
   width: 100%;
   height: 100%;
   display: inline-flex;
