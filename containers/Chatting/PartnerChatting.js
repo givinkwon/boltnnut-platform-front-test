@@ -95,7 +95,8 @@ class MyProject extends React.Component {
                         <ChatItemContainer
                           logo={Partner.detail.logo}
                           name={Partner.detail.name}
-                          id={data.project}
+                          id={data.answerId}
+                          project={data.project}
                           content={data.content}
                           modalHandler={this.modalHandler}
                           user={Auth}

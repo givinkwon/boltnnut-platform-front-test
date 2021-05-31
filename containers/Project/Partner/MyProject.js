@@ -46,15 +46,12 @@ class MyProject extends React.Component {
     const partnerprojectlist = this.state.Partnerprojectlist;
 
     await Project.getProjectDetail(data.project);
-    // console.log(toJS(Project.projectDetailData));
-    // console.log(Project.projectDetailData.request_set[0].client);
+    console.log("adsfsdafad");
     console.log(toJS(Project.projectDetailData));
-    await this.props.Partner.getClientInfo(
-      Project.projectDetailData.request_set[0].client
-    );
 
-    console.log(toJS(Project.projectDetailData));
     // console.log(this.props.Partner.clientInfo.user.phone);
+    console.log(toJS(Project.projectDetailData));
+
     if (Project.projectDetailData) {
       partnerprojectlist.push({
         name: Project.projectDetailData.request_set[0]
@@ -65,8 +62,11 @@ class MyProject extends React.Component {
         clientPhone: this.props.Partner.clientInfo.user.phone,
       });
       this.setState({ Partnerprojectlist: partnerprojectlist });
-      console.log(this.state.Partnerprojectlist);
+      console.log(partnerprojectlist);
     }
+    await this.props.Partner.getClientInfo(
+      Project.projectDetailData.request_set[0].client
+    );
   }
 
   async componentDidMount() {
@@ -74,10 +74,10 @@ class MyProject extends React.Component {
     const partnerdetail = this.state.PartnerDetail;
     await Auth.checkLogin();
     if (Auth.logged_in_partner) {
+      console.log(toJS(Auth.logged_in_partner.answer_set));
+      console.log(toJS(Partner.answer_set));
       Partner.answer_set = Auth.logged_in_partner.answer_set;
       Partner.getPartnerDetail(Auth.logged_in_partner.id);
-      console.log(toJS(Partner.detail));
-
       Partner.answer_set.map((data) => {
         this.getProject(data);
       });
@@ -103,7 +103,7 @@ class MyProject extends React.Component {
                   ></ChatTestContainer>
                 </Layer>
               )}
-
+              {console.log(toJS(Partner.answer_set))}
               {Partnerprojectlist &&
                 Partnerprojectlist.map((data, idx) => {
                   return (
@@ -114,6 +114,7 @@ class MyProject extends React.Component {
                           logo={Partner.detail.logo}
                           name={Partner.detail.name}
                           id={data.answerId}
+                          project={data.project}
                           content={data.content}
                           modalHandler={() => {
                             this.modalHandler(data.answerId, idx);
