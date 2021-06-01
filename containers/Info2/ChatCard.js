@@ -10,7 +10,7 @@ import * as ChatAPI from "axios/Chat";
 const star_img = "static/images/main/star_gray.png";
 const prevent_img = "static/images/info.png";
 const search_img = "static/images/crown.png";
-const logo_img = "static/images/crown.png";
+const logo_img = "static/images/defaultLogo.png";
 const close_img = "static/images/badge_close.png";
 const clip_img = "static/images/clip.png";
 const camera_img = "static/images/camera.png";
@@ -192,8 +192,8 @@ class ChatCardContainer extends React.Component {
                     ? Partner.partnerdata && Partner.partnerdata.name
                     : ""}
                 </Font24>
-                <img src={prevent_img} />
-                <img src={star_img} />
+                {/* <img src={prevent_img} />
+                <img src={star_img} /> */}
               </Header>
               <MessageList height={this.state.height}>
                 <div style={{ padding: "0 10px 0 10px", height: "80%" }}>
@@ -245,8 +245,8 @@ class ChatCardContainer extends React.Component {
                       //realInput.innerHTML = "";
                     }}
                   ></img>
-                  <img src={camera_img} />
-                  <img src={emoticon_img} />
+                  {/* <img src={camera_img} />
+                  <img src={emoticon_img} /> */}
                   <SendButton
                     onClick={(e) => {
                       // e.preventDefault();
@@ -292,9 +292,11 @@ class ChatCardContainer extends React.Component {
                       <img src={pass2_img} />
                     </Button>
                   </a>
-                  <Button onClick={this.props.shareButtonClick}>
-                    비공개 정보 공개하기
-                  </Button>
+                  {this.props.currentUserType === 0 && (
+                    <Button onClick={this.props.shareButtonClick}>
+                      비공개 정보 공개하기
+                    </Button>
+                  )}
                 </Profile>
                 <PartnerList>
                   <Font20 style={{ alignSelf: "flex-start" }}>
@@ -546,7 +548,8 @@ const SubmitForm = styled.form`
   }
   > img:nth-of-type(1) {
     //left: 75%;
-    right: 140px;
+    /* right: 140px; */
+    right: 80px;
   }
   > img:nth-of-type(2) {
     //left: 80%;

@@ -6,8 +6,10 @@ import ChatCardContainer from "./ChatCard";
 import * as ChatAPI from "axios/Chat";
 import * as PartnerAPI from "axios/Partner";
 import * as RequestAPI from "axios/Request";
-
+import { ROOT_URL } from "axios/index";
 import { toJS } from "mobx";
+
+// console.log(Root);
 @inject("Auth", "Project", "Partner", "Chat")
 @observer
 class ChatTestContainer extends React.Component {
@@ -177,8 +179,16 @@ class ChatTestContainer extends React.Component {
   };
 
   chatSocket = new WebSocket(
-    "wss://test.boltnnut.com/ws/chat/" + `${this.props.roomName}` + "/"
+    `wss://test2.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
   );
+
+  // chatSocket = new WebSocket(
+  //   `wss://` +
+  //     `${ROOT_URL.split("://")[0]}` +
+  //     `.boltnnut.com/ws/chat/` +
+  //     `${this.props.roomName}` +
+  //     "/"
+  // );
   userType = null;
 
   // 메세지 읽음 표시 함수
