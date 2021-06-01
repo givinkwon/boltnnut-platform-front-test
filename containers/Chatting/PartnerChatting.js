@@ -11,7 +11,7 @@ import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Info2/ChatTest";
 
 import NoProject from "containers/Project/NoProject";
-
+import Router from "next/router";
 @inject("Project", "Auth", "Partner")
 @observer
 class MyProject extends React.Component {
@@ -19,15 +19,21 @@ class MyProject extends React.Component {
     Answerlist: [],
     selectedRoom: null,
     Partnerprojectlist: [],
+    clientPhone: null,
+    projectName: null,
   };
-  modalHandler = (id) => {
-    this.setState({ selectedRoom: id });
+  modalHandler = async (id, idx) => {
+    this.setState({
+      selectedRoom: id,
+      projectName: this.state.Partnerprojectlist[idx].name,
+      // clientPhone: this.state.Partnerprojectlist[idx].clientPhone,
+      projectId: this.state.Partnerprojectlist[idx].project,
+    });
+    // alert(id);
     const { Project } = this.props;
-
     Project.chatModalActive = !Project.chatModalActive;
     // this.setState({ modalActive: !this.state.modalActive });
   };
-
   pushToDetail = async (id) => {
     const { Project } = this.props;
 
@@ -40,8 +46,18 @@ class MyProject extends React.Component {
   async getProject(data) {
     const { Project } = this.props;
     const partnerprojectlist = this.state.Partnerprojectlist;
-
+    console.log("getProject")
     await Project.getProjectDetail(data.project);
+
+    // await Project.getProjectDetail(data.project);
+    console.log("adsfsdafad");
+    console.log(toJS(Project.projectDetailData));
+
+    // console.log(this.props.Partner.clientInfo.user.phone);
+    console.log(toJS(Project.projectDetailData));
+    // await this.props.Partner.getClientInfo(
+    //   Project.projectDetailData.request_set[0].client
+    // );
 
     if (Project.projectDetailData) {
       partnerprojectlist.push({
@@ -50,20 +66,27 @@ class MyProject extends React.Component {
           : "미지정", // 프로젝트 이름
         project: Project.projectDetailData.id,
         content: data.content1,
+        // clientPhone: this.props.Partner.clientInfo.user.phone,
+        answerId: data.id,
       });
+      console.log(partnerprojectlist);
       this.setState({ Partnerprojectlist: partnerprojectlist });
     }
+    // await this.props.Partner.getClientInfo(
+    //   Project.projectDetailData.request_set[0].client
+    // );
   }
+
 
   async componentDidMount() {
     const { Auth, Project, Partner } = this.props;
     const partnerdetail = this.state.PartnerDetail;
     await Auth.checkLogin();
     if (Auth.logged_in_partner) {
+      console.log(toJS(Auth.logged_in_partner.answer_set));
+      console.log(toJS(Partner.answer_set));
       Partner.answer_set = Auth.logged_in_partner.answer_set;
       Partner.getPartnerDetail(Auth.logged_in_partner.id);
-      console.log(toJS(Partner.detail));
-
       Partner.answer_set.map((data) => {
         this.getProject(data);
       });
@@ -98,7 +121,9 @@ class MyProject extends React.Component {
                           id={data.answerId}
                           project={data.project}
                           content={data.content}
-                          modalHandler={this.modalHandler}
+                          modalHandler={() => {
+                            this.modalHandler(data.answerId, idx);
+                          }}
                           user={Auth}
                           pushToDetail={this.pushToDetail}
                         />
