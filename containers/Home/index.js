@@ -79,13 +79,9 @@ class HomeConatiner extends React.Component {
             <CustomContainer>
               <MobileBanner0Container />
               {/* <MobileBanner10Container /> */}
-
               <MobileBanner2Container />
-
               <MobileBanner5Container />
-
               <MobileBanner1Container />
-
               <MobileBanner3Container />
               {/* <MobileBanner4Container /> */}
 
