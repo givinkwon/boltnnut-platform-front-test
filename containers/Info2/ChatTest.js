@@ -313,10 +313,20 @@ class ChatTestContainer extends React.Component {
     // console.log(toJS(this.props.Chat.current_time));
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // RoomNumber 체크하기
-    const { Partner } = this.props;
+    const { Partner, Project } = this.props;
     const roomNum = this.props.roomName;
+
+    // this.props.Project.chatMessages.push({
+    //   member: 1,
+    //   text: "ss",
+    //   time: "f",
+    //   bRead: false,
+    // });
+
+    // const clientPhone = Partner.clientInfo.user.phone;
+    const clientPhone = "";
     this.props.Chat.current_time = null;
     let temp = new Date();
     let timezone = temp.getTimezoneOffset();
@@ -349,7 +359,7 @@ class ChatTestContainer extends React.Component {
           const Color = "skyBlue";
           console.group("%c 채팅창 정보", `color:${Color}; font-size:30px`);
           console.log(
-            `%c클라이언트 휴대폰번호 = ${this.props.clientPhone}\n파트너 휴대폰번호 = ${this.props.Partner.partnerdata.user.phone}\n프로젝트 이름 = ${this.props.requestTitle}\n`,
+            `%c클라이언트 휴대폰번호 = ${clientPhone}\n파트너 휴대폰번호 = ${this.props.Partner.partnerdata.user.phone}\n프로젝트 이름 = ${this.props.requestTitle}\n`,
             `color: ${Color}; font-size: 20px;`
           );
           console.groupEnd("그룹 종료");
@@ -402,8 +412,13 @@ class ChatTestContainer extends React.Component {
     // this.setState({ messages: [] });
 
     //============================================= onopen 시작 ============================================================
-    this.chatSocket.onopen = () => {
+    this.chatSocket.onopen = async () => {
       // alert("Open");
+      await this.props.Project.getProjectDetail(this.props.projectId);
+
+      await this.props.Partner.getClientInfo(
+        Project.projectDetailData.request_set[0].client
+      );
       console.log("onopen");
       console.log(toJS(this.props.Project.chatMessages));
       // await this.props.Auth.checkLogin();
