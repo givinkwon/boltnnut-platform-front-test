@@ -287,7 +287,7 @@ class Content1 extends React.Component {
                             logo={this.state.partnerDetailList[idx].logo}
                             name={this.state.partnerDetailList[idx].name}
                             id={data.id}
-                            content={"test"}
+                            content={data.content1}
                             modalHandler={this.modalHandler}
                             user={Auth}
                           />

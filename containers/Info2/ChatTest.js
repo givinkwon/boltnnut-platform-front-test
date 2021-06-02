@@ -283,7 +283,8 @@ class ChatTestContainer extends React.Component {
           if (this.userType === 0) {
             req = {
               phoneNum: this.props.Partner.partnerdata.user.phone,
-              requestTitle: "DDDD",
+              requestTitle: this.props.Project.projectDetailData.request_set[0]
+                .name,
               name: "클라이언트 님", //클라이언트 이름
               text: fullMessage[checkIdx].text,
             };
@@ -291,7 +292,8 @@ class ChatTestContainer extends React.Component {
           else {
             req = {
               phoneNum: "01075731803",
-              requestTitle: "DDDD",
+              requestTitle: this.props.Project.projectDetailData.request_set[0]
+                .name,
               name: this.props.Partner.partnerdata.name, //파트너 이름
               text: fullMessage[checkIdx].text,
             };
