@@ -32,7 +32,7 @@ class Home extends React.Component {
     setTimeout(() => {
       this.props.Loading.setOpen(false);
     }, 1000);
-
+   
     await this.props.Auth.checkLogin();
   }
   componentWillUnmount() {
