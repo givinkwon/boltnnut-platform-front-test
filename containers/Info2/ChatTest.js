@@ -183,7 +183,7 @@ class ChatTestContainer extends React.Component {
   // );
 
   chatSocket = new WebSocket(
-    `wss://test2.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
+    `wss://api.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
   );
   userType = null;
 
