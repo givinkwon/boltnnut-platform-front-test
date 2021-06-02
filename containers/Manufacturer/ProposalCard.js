@@ -38,6 +38,7 @@ class ProposalCard extends React.Component {
       //this.props.Partner.modalUserPhone.splice(7, 0, "-")
     }
   };
+
   closeModal = () => {
     console.log("close click");
     this.setState({ modalOpen: false });
@@ -167,6 +168,9 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
+              onClick={() => {
+                // alert("G");
+              }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}

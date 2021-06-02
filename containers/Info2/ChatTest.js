@@ -178,17 +178,13 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.close();
   };
 
+  // chatSocket = new WebSocket(
+  //   `wss://api.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
+  // );
+
   chatSocket = new WebSocket(
     `wss://test2.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
   );
-
-  // chatSocket = new WebSocket(
-  //   `wss://` +
-  //     `${ROOT_URL.split("://")[0]}` +
-  //     `.boltnnut.com/ws/chat/` +
-  //     `${this.props.roomName}` +
-  //     "/"
-  // );
   userType = null;
 
   // 메세지 읽음 표시 함수
