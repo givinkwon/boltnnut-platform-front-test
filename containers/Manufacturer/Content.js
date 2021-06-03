@@ -181,6 +181,7 @@ class ManufacturerContentContainer extends React.Component {
                 {Partner.partner_list &&
                   // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
+                    console.log(item);
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         <ProposalCard

@@ -87,7 +87,7 @@ class Partner {
   @observable ReviewActiveIndex = -1;
   @observable modalUserPhone = "";
   // @observable img = "";
-
+  @observable selectedIntroductionFile = null;
   // 파트너 리뷰
   @observable star_ary = [
     { id: 1, checked: false },
