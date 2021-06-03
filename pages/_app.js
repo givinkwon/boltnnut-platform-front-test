@@ -121,7 +121,9 @@ class MyApp extends App {
       userAgent.indexOf(".NET") !== -1 ||
       userAgent.indexOf("Edge") !== -1
     ) {
-      console.log("AAS@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+      console.log(
+        "AAS@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+      );
       // alert("크롬 브라우저를 이용해주세요")
       this.setState({
         ...this.state,

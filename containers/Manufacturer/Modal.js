@@ -11,37 +11,59 @@ class Modal extends React.Component {
     // console.log(open);
     // console.log(children);
     return (
-      <ModalBox
-        modal={open ? "openModal modal" : "modal"}
-        style={{ display: open ? "block" : "none" }}
+      <Layer
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
       >
-        {open ? (
-          <>
-            <button className="close" onClick={close}>
-              {" "}
-              &times;{" "}
-            </button>
-            <section>
-              <header>전화번호</header>
-              <main>{children}</main>
-              <footer>
-                <div className="close" onClick={close}>
-                  닫기
-                </div>
-              </footer>
-            </section>
-          </>
-        ) : null}
-      </ModalBox>
+        <ModalBox
+          modal={open ? "openModal modal" : "modal"}
+          style={{ display: open ? "block" : "none" }}
+        >
+          {open ? (
+            <>
+              <button className="close" onClick={close}>
+                {" "}
+                &times;{" "}
+              </button>
+              <section>
+                <header>전화번호</header>
+                <main>{children}</main>
+                <footer>
+                  <div className="close" onClick={close}>
+                    닫기
+                  </div>
+                </footer>
+              </section>
+            </>
+          ) : null}
+        </ModalBox>
+      </Layer>
     );
   }
 }
 
 export default Modal;
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
 
+  right: 0;
+  bottom: 0;
+  /* width: 100%; */
+
+  z-index: 10000;
+  background-color: rgba(255, 255, 255, 0.01);
+`;
 const ModalBox = styled.div`
   // display: none;
   position: fixed;
+  top: 40%;
+  left: 20%;
+  /* transform: "translate(-20%,-50%)", */
+  /* right: 0;
+  bottom: 0; */
   //top: 40%;
   //right: 14%;
   // bottom: 0;
@@ -52,7 +74,6 @@ const ModalBox = styled.div`
   width: 60%;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 40%);
   border-radius: 10px;
-
   > section {
     max-width: 900px;
     width: 90%;
@@ -74,7 +95,7 @@ const ModalBox = styled.div`
     }
     > main {
       background-color: white;
-      font-color: white;
+      /* font-color: white; */
       text-align: center;
       display: flex;
       justify-content: center;
