@@ -2219,7 +2219,7 @@ class FileUploadContainer extends Component {
                       if (ManufactureProcess.projectSubmitLoading) {
                         this.requestSubmit(1);
                       } else {
-                        alert("요청 의뢰 생성 중입니다. 잠시만 기다려주세요.");
+                        alert("요청 중입니다. 잠시만 기다려주세요.");
                       }
                     }
 

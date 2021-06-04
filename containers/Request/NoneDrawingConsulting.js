@@ -208,6 +208,7 @@ class NoneDrawingConsultingContainer extends React.Component {
     } = this.state;
     const { ManufactureProcess, Schedule } = this.props;
     const { purposeAry } = this.state;
+    ManufactureProcess.nonDrawingProjectSubmitLoading = false;
     // return alert(`
     // 	프로젝트이름: ${projectname}
     // 	가로: ${row}
@@ -354,6 +355,7 @@ class NoneDrawingConsultingContainer extends React.Component {
     RequestAPI.create(req)
       .then((res) => {
         console.log("create: ", res);
+        ManufactureProcess.nonDrawingProjectSubmitLoading = true;
         this.props.Request.newIndex = 1;
         dataLayer.push({ event: "request_noneDrawing" });
       })
@@ -693,7 +695,11 @@ class NoneDrawingConsultingContainer extends React.Component {
           <CompleteBtnBox>
             <CompleteBtn
               onClick={() => {
-                this.requestSubmit();
+                if (ManufactureProcess.nonDrawingProjectSubmitLoading) {
+                  this.requestSubmit();
+                } else {
+                  alert("요청 중입니다. 잠시만 기다려주세요.");
+                }
               }}
             >
               <FontSize20 style={{ color: "#ffffff" }}>

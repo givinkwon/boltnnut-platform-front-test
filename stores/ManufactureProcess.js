@@ -67,6 +67,7 @@ class ManufactureProcess {
   @observable projectname = "";
 
   @observable projectSubmitLoading = true;
+  @observable nonDrawingProjectSubmitLoading = true;
 
   @action countQuantity = (data) => {
     data.map((item, idx) => {
