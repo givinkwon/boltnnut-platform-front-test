@@ -25,8 +25,10 @@ class MyProject extends React.Component {
     this.setState({
       selectedRoom: id,
       projectName: this.state.Partnerprojectlist[idx].name,
-      clientPhone: this.state.Partnerprojectlist[idx].clientPhone,
+      // clientPhone: this.state.Partnerprojectlist[idx].clientPhone,
+      projectId: this.state.Partnerprojectlist[idx].project,
     });
+    // alert(id);
     const { Project } = this.props;
     Project.chatModalActive = !Project.chatModalActive;
     // this.setState({ modalActive: !this.state.modalActive });
@@ -44,13 +46,17 @@ class MyProject extends React.Component {
   async getProject(data) {
     const { Project } = this.props;
     const partnerprojectlist = this.state.Partnerprojectlist;
-
     await Project.getProjectDetail(data.project);
+
+    // await Project.getProjectDetail(data.project);
     console.log("adsfsdafad");
     console.log(toJS(Project.projectDetailData));
 
     // console.log(this.props.Partner.clientInfo.user.phone);
     console.log(toJS(Project.projectDetailData));
+    // await this.props.Partner.getClientInfo(
+    //   Project.projectDetailData.request_set[0].client
+    // );
 
     if (Project.projectDetailData) {
       partnerprojectlist.push({
@@ -59,14 +65,15 @@ class MyProject extends React.Component {
           : "미지정", // 프로젝트 이름
         project: Project.projectDetailData.id,
         content: data.content1,
-        clientPhone: this.props.Partner.clientInfo.user.phone,
+        // clientPhone: this.props.Partner.clientInfo.user.phone,
+        answerId: data.id,
       });
-      this.setState({ Partnerprojectlist: partnerprojectlist });
       console.log(partnerprojectlist);
+      this.setState({ Partnerprojectlist: partnerprojectlist });
     }
-    await this.props.Partner.getClientInfo(
-      Project.projectDetailData.request_set[0].client
-    );
+    // await this.props.Partner.getClientInfo(
+    //   Project.projectDetailData.request_set[0].client
+    // );
   }
 
   async componentDidMount() {
@@ -99,11 +106,12 @@ class MyProject extends React.Component {
                   <ChatTestContainer
                     roomName={this.state.selectedRoom}
                     requestTitle={this.state.projectName}
-                    clientPhone={this.state.clientPhone}
+                    projectId={this.state.projectId}
+                    // clientPhone={this.state.clientPhone}
                   ></ChatTestContainer>
                 </Layer>
               )}
-              {console.log(toJS(Partner.answer_set))}
+              {/* {console.log(toJS(Partner.answer_set))} */}
               {Partnerprojectlist &&
                 Partnerprojectlist.map((data, idx) => {
                   return (

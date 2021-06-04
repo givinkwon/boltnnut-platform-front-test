@@ -1,7 +1,8 @@
-export const ROOT_URL = `https://api.boltnnut.com`;
-// export const ROOT_URL = `https://test.boltnnut.com`;
-// export const ROOT_URL = `https://test2.boltnnut.com`;
+// export const ROOT_URL = `https://api.boltnnut.com`;
 // export const ROOT_URL = `http://52.78.91.230:8080`;
+// export const ROOT_URL = `http://52.79.230.30:8080`;
+
+export const ROOT_URL = `https://test2.boltnnut.com`;
 // export const ROOT_URL = `http://52.79.230.30:8080`;
 // export const ROOT_URL = `http://52.78.91.230:8080`;
 // export const ROOT_URL = `http://52.78.182.54:8080`;

@@ -26,7 +26,7 @@ class InputComponent extends React.Component {
 
   async componentDidMount() {
     const { ManufactureProcess, Project } = this.props;
-    console.log("AddFile2AddFile2AddFile2AddFile2AddFile2AddFile2");
+    console.log(toJS(ManufactureProcess.openFileArray));
     if (ManufactureProcess.changeProject) {
       this.setState({ checkFileUpload: true });
 
@@ -66,16 +66,7 @@ class InputComponent extends React.Component {
     reader.readAsDataURL(e.currentTarget.files[0]);
     reader.addEventListener("load", () => {
       this.setState({ src: reader.result });
-      //console.log(reader);
-      //console.log(reader.result);
     });
-
-    // var reader = new FileReader();
-    // reader.readAsText(e.currentTarget.files[0]);
-    // reader.onload = function (event) {
-    //   // The file's text will be printed here
-    //   console.log(event.target.result);
-    // };
 
     if (e && e.currentTarget.files[0]) {
       console.log(e.currentTarget.files[0]);

@@ -183,6 +183,10 @@ class ManufactureProcess {
     this.requestComment = "";
     this.requestComment2 = "";
     this.checkFileUpload = false;
+    this.openFileArray = [];
+    this.privateFileArray = [];
+    this.date_conference = false;
+    this.date_undefined = false;
   };
   @action setDefaultValue = (name) => {
     // this.categoryDefaultValue = this.ManufactureProcessList[2];

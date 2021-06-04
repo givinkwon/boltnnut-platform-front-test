@@ -181,42 +181,22 @@ class ManufacturerContentContainer extends React.Component {
                 {Partner.partner_list &&
                   // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
+                    console.log(item);
                     return (
                       <Background style={{ marginBottom: "5px" }}>
-                        {/* {Partner.category_ary[idx] &&
-                          console.log(
-                            toJS(
-                              Partner.category_ary[idx].splice(
-                                0,
-                                //Partner.category_ary[idx].length
-                                Object.keys(Partner.category_ary[idx]).length
-                              )
-                            )
-                          )} */}
-                        {/* Partner.check_loading_category &&  */}
-                        {/* {console.log(toJS(Partner.category_ary[idx]))} */}
-                        {/* {Partner.check_loading_category &&
-                          console.log(toJS(Partner.category_ary[idx]))} */}
-                        {/* {console.log(toJS(Partner.category_dic[idx]))} */}
-                        {/* {console.log(idx)} */}
-                        <div
-                          style={{ width: "100%" }}
-                          onClick={() => this.pushToDetail(item, idx)}
-                        >
-                          <ProposalCard
-                            data={item}
-                            width={this.props.width}
-                            //categoryData={Partner.category_ary[idx]}
-                            categoryData={Partner.category_dic[idx]}
-                            idx={idx}
-                            // middleCategory={Project.middle_category_name[idx]}
-                            // mainCategory={Project.main_category_name[idx]}
-                            // newData={Project.data_dt[idx]}
-                            // checkTotal={Project.filter_price}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
+                        <ProposalCard
+                          data={item}
+                          width={this.props.width}
+                          //categoryData={Partner.category_ary[idx]}
+                          categoryData={Partner.category_dic[idx]}
+                          idx={idx}
+                          // middleCategory={Project.middle_category_name[idx]}
+                          // mainCategory={Project.main_category_name[idx]}
+                          // newData={Project.data_dt[idx]}
+                          // checkTotal={Project.filter_price}
+                          handleIntersection={this.handleIntersection}
+                          customer="partner"
+                        />
                       </Background>
                     );
                   })}

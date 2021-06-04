@@ -156,7 +156,6 @@ class Answer {
     // console.log(clientPhone);
     // console.log(partnerName);
     await AnswerAPI.CreateAnswer(req)
-
       .then((res) => {
         console.log(res.data);
         const req = {

@@ -6,8 +6,10 @@ import ChatCardContainer from "./ChatCard";
 import * as ChatAPI from "axios/Chat";
 import * as PartnerAPI from "axios/Partner";
 import * as RequestAPI from "axios/Request";
-
+import { ROOT_URL } from "axios/index";
 import { toJS } from "mobx";
+
+// console.log(Root);
 @inject("Auth", "Project", "Partner", "Chat")
 @observer
 class ChatTestContainer extends React.Component {
@@ -176,8 +178,12 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.close();
   };
 
+  // chatSocket = new WebSocket(
+  //   `wss://api.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
+  // );
+
   chatSocket = new WebSocket(
-    "wss://test.boltnnut.com/ws/chat/" + `${this.props.roomName}` + "/"
+    `wss://api.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
   );
   userType = null;
 
@@ -273,7 +279,8 @@ class ChatTestContainer extends React.Component {
           if (this.userType === 0) {
             req = {
               phoneNum: this.props.Partner.partnerdata.user.phone,
-              requestTitle: "DDDD",
+              requestTitle: this.props.Project.projectDetailData.request_set[0]
+                .name,
               name: "클라이언트 님", //클라이언트 이름
               text: fullMessage[checkIdx].text,
             };
@@ -281,7 +288,8 @@ class ChatTestContainer extends React.Component {
           else {
             req = {
               phoneNum: "01075731803",
-              requestTitle: "DDDD",
+              requestTitle: this.props.Project.projectDetailData.request_set[0]
+                .name,
               name: this.props.Partner.partnerdata.name, //파트너 이름
               text: fullMessage[checkIdx].text,
             };
@@ -313,10 +321,20 @@ class ChatTestContainer extends React.Component {
     // console.log(toJS(this.props.Chat.current_time));
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // RoomNumber 체크하기
-    const { Partner } = this.props;
+    const { Partner, Project } = this.props;
     const roomNum = this.props.roomName;
+
+    // this.props.Project.chatMessages.push({
+    //   member: 1,
+    //   text: "ss",
+    //   time: "f",
+    //   bRead: false,
+    // });
+
+    // const clientPhone = Partner.clientInfo.user.phone;
+    const clientPhone = "";
     this.props.Chat.current_time = null;
     let temp = new Date();
     let timezone = temp.getTimezoneOffset();
@@ -349,7 +367,7 @@ class ChatTestContainer extends React.Component {
           const Color = "skyBlue";
           console.group("%c 채팅창 정보", `color:${Color}; font-size:30px`);
           console.log(
-            `%c클라이언트 휴대폰번호 = ${this.props.clientPhone}\n파트너 휴대폰번호 = ${this.props.Partner.partnerdata.user.phone}\n프로젝트 이름 = ${this.props.requestTitle}\n`,
+            `%c클라이언트 휴대폰번호 = ${clientPhone}\n파트너 휴대폰번호 = ${this.props.Partner.partnerdata.user.phone}\n프로젝트 이름 = ${this.props.requestTitle}\n`,
             `color: ${Color}; font-size: 20px;`
           );
           console.groupEnd("그룹 종료");
@@ -402,8 +420,13 @@ class ChatTestContainer extends React.Component {
     // this.setState({ messages: [] });
 
     //============================================= onopen 시작 ============================================================
-    this.chatSocket.onopen = () => {
+    this.chatSocket.onopen = async () => {
       // alert("Open");
+      await this.props.Project.getProjectDetail(this.props.projectId);
+
+      await this.props.Partner.getClientInfo(
+        Project.projectDetailData.request_set[0].client
+      );
       console.log("onopen");
       console.log(toJS(this.props.Project.chatMessages));
       // await this.props.Auth.checkLogin();
