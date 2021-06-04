@@ -129,9 +129,14 @@ class ProposalCard extends React.Component {
     const fileType = this.props.data.file
       .split(".")
       [this.props.data.file.split(".").length - 1].toLowerCase();
+    console.log(this.props.data);
+    console.log(fileType);
+    console.log(availableFileType);
     if (availableFileType.indexOf(fileType) > -1) {
+      console.log("뷰어 페이지 router push");
       Router.push("/manufacturer/detail");
     } else {
+      console.log("file download");
       this.filedownload();
     }
   };
