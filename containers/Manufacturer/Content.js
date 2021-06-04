@@ -199,24 +199,24 @@ class ManufacturerContentContainer extends React.Component {
                           console.log(toJS(Partner.category_ary[idx]))} */}
                         {/* {console.log(toJS(Partner.category_dic[idx]))} */}
                         {/* {console.log(idx)} */}
-                        {/* <div
+                        <div
                           style={{ width: "100%" }}
                           onClick={() => this.pushToDetail(item, idx)}
-                        > */}
-                        <ProposalCard
-                          data={item}
-                          width={this.props.width}
-                          //categoryData={Partner.category_ary[idx]}
-                          categoryData={Partner.category_dic[idx]}
-                          idx={idx}
-                          // middleCategory={Project.middle_category_name[idx]}
-                          // mainCategory={Project.main_category_name[idx]}
-                          // newData={Project.data_dt[idx]}
-                          // checkTotal={Project.filter_price}
-                          handleIntersection={this.handleIntersection}
-                          customer="partner"
-                        />
-                        {/* </div> */}
+                        >
+                          <ProposalCard
+                            data={item}
+                            width={this.props.width}
+                            //categoryData={Partner.category_ary[idx]}
+                            categoryData={Partner.category_dic[idx]}
+                            idx={idx}
+                            // middleCategory={Project.middle_category_name[idx]}
+                            // mainCategory={Project.main_category_name[idx]}
+                            // newData={Project.data_dt[idx]}
+                            // checkTotal={Project.filter_price}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
                       </Background>
                     );
                   })}

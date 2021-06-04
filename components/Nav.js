@@ -27,7 +27,6 @@ class Nav extends React.Component {
     is_open: false,
     selectedRoom: null,
     partnerList: [],
-    
   };
 
   alreadyLoggedin = ["login", "signup"];
@@ -41,7 +40,7 @@ class Nav extends React.Component {
   };
 
   async componentDidMount() {
-    const { Auth, } = this.props;
+    const { Auth } = this.props;
     const token = await localStorage.getItem("token");
     const { route, pathname } = Router.router;
     const splitedRoute = route.split("/");
@@ -116,9 +115,7 @@ class Nav extends React.Component {
     });
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     Auth.checkLogin();
-    console.log(toJS(Auth.logged_in_user))
-
-    
+    console.log(toJS(Auth.logged_in_user));
   }
   render() {
     const { Auth } = this.props;
@@ -127,7 +124,6 @@ class Nav extends React.Component {
     return (
       <>
         <NavBox>
-          
           <Containerv1
             style={{ display: "inline", justifyContent: "space-between" }}
           >
@@ -168,7 +164,6 @@ class Nav extends React.Component {
                   ) : (
                     /* partner로 로그인 */
                     <Fragment>
-          
                       <NavLink
                         onClick={() => Router.push("/project")}
                         active={url.indexOf("project") > -1}
@@ -182,13 +177,11 @@ class Nav extends React.Component {
                       >
                         제조 인사이트
                       </NavLink>
-                     
                     </Fragment>
                   )
                 ) : (
                   /* 로그인 안되어있는 경우 */
                   <Fragment>
-
                     <NavLink
                       onClick={() => Router.push("/project")}
                       active={url.indexOf("project") > -1}
@@ -196,11 +189,11 @@ class Nav extends React.Component {
                       <p class="line"> 프로젝트 찾기 </p>
                     </NavLink>
                     <NavLink
-                        onClick={() => Router.push("/manufacturer")}
-                        active={url.indexOf("manufacturer") > -1}
-                      >
-                        <p class="line"> 제조사 찾기 </p>
-                      </NavLink>
+                      onClick={() => Router.push("/manufacturer")}
+                      active={url.indexOf("manufacturer") > -1}
+                    >
+                      <p class="line"> 제조사 찾기 </p>
+                    </NavLink>
                     <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
@@ -224,22 +217,19 @@ class Nav extends React.Component {
                           </Font17> */}
                         </div>
                         <div>
-                          <div onClick = {()=>Router.push('/chatting') }>
-                            <Font16>
-                            채팅하기
-                            </Font16>
+                          <div onClick={() => Router.push("/chatting")}>
+                            <Font16>채팅하기</Font16>
                           </div>
 
                           <div onClick={() => Router.push("/account?tab=1")}>
-                            <Font16>
-                              계정설정
-                            </Font16>
+                            <Font16>계정설정</Font16>
                           </div>
                         </div>
-                        <div style = {{backgroundColor: "#f3f3f3"}} onClick={this.logout}>
-                          <Font16>
-                            로그아웃
-                          </Font16>
+                        <div
+                          style={{ backgroundColor: "#f3f3f3" }}
+                          onClick={this.logout}
+                        >
+                          <Font16>로그아웃</Font16>
                         </div>
                       </ProfileMenu>
                     )}
@@ -255,29 +245,25 @@ class Nav extends React.Component {
                   </NavLink>
                 )}
 
-                {this.props.Auth.logged_in_user && this.props.Auth.logged_in_user.type === 1 ? 
-                (
-                    /* partner로 로그인 */
-                    <ButtonContainer
+                {this.props.Auth.logged_in_user &&
+                this.props.Auth.logged_in_user.type === 1 ? (
+                  /* partner로 로그인 */
+                  <ButtonContainer
                     first
                     onClick={() => Router.push("/project")}
-
                     active={url.indexOf("project") > -1}
                   >
                     프로젝트 관리
                   </ButtonContainer>
-
                 ) : (
-                <ButtonContainer
-                  first
-                  onClick={() => Router.push("/request")}
-
-                  active={url.indexOf("request") > -1}
-                >
-                  상담 받기
-                </ButtonContainer>
-                )
-              }
+                  <ButtonContainer
+                    first
+                    onClick={() => Router.push("/request")}
+                    active={url.indexOf("request") > -1}
+                  >
+                    상담 받기
+                  </ButtonContainer>
+                )}
               </Menu>
               <Icon
                 src={hamburger_ic}
@@ -322,35 +308,35 @@ const ProfileMenu = styled.div`
   //     color: #414550;
   //     font-weight: 500;
   //   }
-    // :hover {
-    //   background-color: #f3f3f3;
-    //   > p {
-    //     color: ${PRIMARY};
-    //   }
-    // }
+  // :hover {
+  //   background-color: #f3f3f3;
+  //   > p {
+  //     color: ${PRIMARY};
+  //   }
+  // }
   // }
   // >div:nth-of-type(1){
   //   padding: 17px 20px;
   //   display: flex;
   //   align-items: center;
   // }
-  >div:nth-of-type(2){
+  > div:nth-of-type(2) {
     cursor: pointer;
     padding: 17px 0;
     display: flex;
     flex-direction: column;
-    >div{
+    > div {
       padding: 6px 20px;
       :hover {
-          background-color: #f3f3f3;
-          > p {
-            color: ${PRIMARY};
-          }
+        background-color: #f3f3f3;
+        > p {
+          color: ${PRIMARY};
         }
+      }
     }
   }
 
-  >div:nth-of-type(3){
+  > div:nth-of-type(3) {
     cursor: pointer;
     padding: 6px;
     display: flex;
@@ -551,8 +537,7 @@ const Font16 = styled(Content.FontSize16)`
   letter-spacing: -0.16px;
   text-align: left;
   color: #414550;
-`
-
+`;
 
 const Font17 = styled(Content.FontSize17)`
   font-stretch: normal;
@@ -560,6 +545,4 @@ const Font17 = styled(Content.FontSize17)`
   line-height: 1.76;
   letter-spacing: -0.17px;
   text-align: left;
-  
-
-`
+`;
