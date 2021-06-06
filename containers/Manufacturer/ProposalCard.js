@@ -124,6 +124,12 @@ class ProposalCard extends React.Component {
     }
   };
   cardClick = () => {
+    const { data } = this.props;
+    
+    if (this.props.Auth && this.props.Auth.logged_in_user) {
+      if (!data.file) {
+        alert("준비중입니다.");
+      }
     this.props.Partner.selectedIntroductionFile = this.props.data.file;
     // Router.push("/manufacturer/detail");
     const fileType = this.props.data.file
@@ -138,6 +144,10 @@ class ProposalCard extends React.Component {
     } else {
       console.log("file download");
       this.filedownload();
+    }
+    } else {
+    alert("로그인이 필요합니다.");
+    Router.push("/login");
     }
   };
 
