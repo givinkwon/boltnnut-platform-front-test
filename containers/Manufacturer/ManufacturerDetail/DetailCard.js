@@ -45,6 +45,7 @@ class DetailCardContainer extends React.Component {
               <div style={{ textAlign: "left" }}>등록일자 ~~~</div>
             </TopInlineBox> */}
 
+          {window &&
             <IntroductionBox>
               <Font24>회사소개서</Font24>
               <FileViewer
@@ -53,6 +54,7 @@ class DetailCardContainer extends React.Component {
                 onError={onError}
               />
             </IntroductionBox>
+          }
           </InnerBox>
         </Card>
       </>
