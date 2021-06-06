@@ -3,7 +3,9 @@ import styled, { css } from "styled-components";
 import dynamic from 'next/dynamic';
 
 // @ts-ignore
-import FileViewer from 'react-file-viewer';
+const FileViewer = dynamic(() => import('react-file-viewer'), {
+  ssr: false,
+});
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 const waterMarkImg = "/static/images/logo_marine@2x.png";
