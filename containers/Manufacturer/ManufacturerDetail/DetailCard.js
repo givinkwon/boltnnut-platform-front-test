@@ -1,8 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-const FileViewer  =  dynamic ( ( )  =>  import ( 'react-file-viewer' ) ,  { 
-  ssr : false , 
-} ) ;
+import FileViewer from "react-file-viewer";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 const waterMarkImg = "/static/images/logo_marine@2x.png";
@@ -47,7 +45,6 @@ class DetailCardContainer extends React.Component {
               <div style={{ textAlign: "left" }}>등록일자 ~~~</div>
             </TopInlineBox> */}
 
-          {window &&
             <IntroductionBox>
               <Font24>회사소개서</Font24>
               <FileViewer
@@ -56,7 +53,6 @@ class DetailCardContainer extends React.Component {
                 onError={onError}
               />
             </IntroductionBox>
-          }
           </InnerBox>
         </Card>
       </>
