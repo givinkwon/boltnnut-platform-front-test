@@ -13,7 +13,7 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
 import DetailContainer from "./Detail/index";
-
+ 
 @inject("Auth", "Partner")
 @observer
 class ManufacturerConatiner extends React.Component {
