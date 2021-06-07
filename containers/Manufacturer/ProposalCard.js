@@ -146,6 +146,10 @@ class ProposalCard extends React.Component {
       console.log("file download");
       this.filedownload();
     }
+    } else {
+    alert("로그인이 필요합니다.");
+    Router.push("/login");
+    }
   };
 
   onClickReviewHandler = (idx, name) => {
@@ -188,19 +192,9 @@ class ProposalCard extends React.Component {
     //   customer,
     // } = this.props;
     const { data, width, Partner, categoryData, idx } = this.props;
-    // console.log(data);
-    // console.log(categoryData);
-    //console.log(idx);
-    // console.log(width);
-    // console.log(toJS(categoryData));
-    // console.log(toJS(idx));
+
     let category_data;
 
-    // category_data =
-    //   categoryData &&
-    //   categoryData.splice(categoryData.length / 2, categoryData.length / 2);
-    // console.log(toJS(category_data));
-    // console.log(toJS(data));
     return (
       <>
         {width > 767.98 ? (
@@ -217,31 +211,6 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
-              {/* <HeaderWrapper>
-            <Title>sdfdsf</Title>
-            <Content>sdfdsf</Content>
-          </HeaderWrapper>
-          <CategoryWrapper>
-            <SubTitle>
-              <span>카테고리</span>
-            </SubTitle>
-            <CategoryBox>
-              <span>sdfdsf</span>
-            </CategoryBox>
-            <CategoryBox>
-              <span>dsfdsf</span>
-            </CategoryBox>
-          </CategoryWrapper>
-          <FooterWrapper>
-            <div style={{ display: "inline-flex" }}>
-              <SubTitle>희망개발기간</SubTitle>
-              <Content>sdfdsf</Content>
-            </div>
-            <PriceTagBox>
-              <span class="tag1"> 견적 </span>
-              <span class="tag2">dsfdsf</span>
-            </PriceTagBox>
-          </FooterWrapper> */}
               <Header>
                 <Logo>
                   <img src={data.logo} />
@@ -429,6 +398,9 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
+              onClick={() => {
+                this.cardClick();
+              }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -558,7 +530,7 @@ class ProposalCard extends React.Component {
                   <div>
                     <Link
                       target="_blank"
-                      onClick={() => this.filedownload()}
+                      onClick={() => this.cardClick()}
                       download
                     >
                       <span>회사 소개서 보기</span>

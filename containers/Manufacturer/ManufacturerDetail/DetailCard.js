@@ -1,6 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import FileViewer from "react-file-viewer";
+import dynamic from 'next/dynamic';
+
+// @ts-ignore
+const FileViewer = dynamic(() => import('react-file-viewer'), {
+  ssr: false,
+});
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 const waterMarkImg = "/static/images/logo_marine@2x.png";
@@ -72,7 +77,7 @@ const Font24 = styled(Title.FontSize24)`
   color: #282c36;
 `;
 const IntroductionBox = styled.div`
-  width: 100%;
+  width: auto;
   text-align: center;
 `;
 const TopInlineBox = styled.div`
@@ -91,6 +96,6 @@ const Card = styled.div`
 `;
 
 const InnerBox = styled.div`
-  width: 90%;
+  width: 100%;
   padding: 54px 0 54px 0;
 `;
