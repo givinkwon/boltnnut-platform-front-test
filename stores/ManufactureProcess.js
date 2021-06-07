@@ -163,7 +163,8 @@ class ManufactureProcess {
   @action setBigCategory = (e) => {
     this.selectedBigCategory = e;
     // this.midCategorySet = e.detail;
-    console.log(this.selectedBigCategory);
+    console.log(toJS(e))
+    console.log(toJS(this.selectedBigCategory));
     this.selectedMidCategory = e.detail[0];
   };
   @action setMidCategory = (e) => {

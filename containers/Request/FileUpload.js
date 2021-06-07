@@ -1297,6 +1297,7 @@ class FileUploadContainer extends Component {
                           </StlBox>
                           <ColumnBox>
                             <ManufactureBox>
+                              {console.log(toJS(data))}
                               <Select // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
                                 defaultValue={
                                   ManufactureProcess.categoryDefaultValue.big
