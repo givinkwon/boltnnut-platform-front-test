@@ -77,7 +77,7 @@ const Font24 = styled(Title.FontSize24)`
   color: #282c36;
 `;
 const IntroductionBox = styled.div`
-  width: 100%;
+  width: auto;
   text-align: center;
 `;
 const TopInlineBox = styled.div`
@@ -96,6 +96,6 @@ const Card = styled.div`
 `;
 
 const InnerBox = styled.div`
-  width: 90%;
+  width: 100%;
   padding: 54px 0 54px 0;
 `;

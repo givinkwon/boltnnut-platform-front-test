@@ -157,7 +157,7 @@ class MobileNav extends React.Component {
                 <ModalContent>
                   <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
                   <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
-                  <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
+                  <p onClick={() => Router.push("/manufacturer")}>제조사 찾기</p>
                   {Auth.logged_in_user && (
                     <p onClick={() => Router.push("/chatting")}>채팅하기</p>
                   )}
