@@ -37,7 +37,7 @@ class TabletBanner12Container extends React.Component {
                 position: "absolute",
                 right: "-7px",
                 top: "39%",
-                backgroundColor: "#ffffff",
+                backgroundColor: "#f6f6f6",
                 zIndex: "1",
               }}
             />
@@ -47,7 +47,7 @@ class TabletBanner12Container extends React.Component {
                 position: "absolute",
                 left: "220px",
                 top: "39%",
-                backgroundColor: "#ffffff",
+                backgroundColor: "#f6f6f6",
                 zIndex: "1",
               }}
             />
@@ -83,7 +83,7 @@ class TabletBanner12Container extends React.Component {
 
         <Containerv1
           style={{
-            paddingBottom: 250,
+            paddingBottom: 200,
             justifyContent: "space-between",
           }}
         >
@@ -128,7 +128,7 @@ class TabletBanner12Container extends React.Component {
                     position: "absolute",
                     right: "19%",
                     top: "64%",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
@@ -138,7 +138,7 @@ class TabletBanner12Container extends React.Component {
                     position: "absolute",
                     left: "19%",
                     top: "64%",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
@@ -208,7 +208,7 @@ class TabletBanner12Container extends React.Component {
                     position: "absolute",
                     right: "22%",
                     top: "64%",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
@@ -218,7 +218,7 @@ class TabletBanner12Container extends React.Component {
                     position: "absolute",
                     left: "18%",
                     top: "64%",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
