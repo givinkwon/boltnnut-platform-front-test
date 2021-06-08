@@ -134,6 +134,11 @@ class Content4 extends React.Component {
   render() {
     const { Project, ManufactureProcess, user, Auth } = this.props;
     const { projectDetailData } = Project;
+    // console.log(toJS(projectDetailData.request_set[0].client));
+
+    // console.log(toJS(projectDetailData.request_set[0]));
+    // console.log(toJS(Auth.logged_in_client.id));
+
     return (
       <Background>
         {/* <Containerv1 style={{ display: "flex", flexDirection: "column" }}> */}
@@ -267,11 +272,11 @@ class Content4 extends React.Component {
                               header="도면"
                               title="dd"
                             >
-                              <p>
+                              {/* <p>
                                 dddddddddddddddddddddddddddddddddddddddddddddddd
                                 dddddddddddddddddddd dddd dddddddd dddd dddd
                                 dddd dddd dddddddd dddddddd
-                              </p>
+                              </p> */}
                             </Modal>
                           </Header>
                           <Body>

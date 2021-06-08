@@ -106,7 +106,7 @@ class Banner0Container extends React.Component {
               ) : (
                 <>
                   <Buttonv1 onClick={() => Router.push("/request")}>
-                    바로 업체 찾아보기
+                    바로 견적받고 업체 비교
                   </Buttonv1>
 
                   <div
@@ -119,7 +119,7 @@ class Banner0Container extends React.Component {
                     }}
                   >
                     <img src={lock} style={{ marginRight: 8 }}></img>
-                    모든 업로드는 안전하고 기밀입니다.
+                    민감 정보는 비공개로 작성 후 선택 공개하세요
                   </div>
                 </>
               )}

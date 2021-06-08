@@ -216,7 +216,9 @@ class Answer {
         })
         .catch(async (e) => {
           alert("존재하지 않는 페이지입니다");
-          await Router.push("/");
+
+          // await Router.push("/");
+          await Router.push("/project");
           await Router.reload();
         });
     }
@@ -241,7 +243,8 @@ class Answer {
         })
         .catch(async (e) => {
           alert("존재하지 않는 페이지입니다");
-          await Router.push("/");
+          // await Router.push("/");
+          await Router.push("/project");
           await Router.reload();
         });
     }
@@ -1149,7 +1152,8 @@ class Answer {
     }
 
     if (!answer) {
-      await Router.push("/");
+      // await Router.push("/");
+      await Router.push("/project");
       await Router.reload();
     }
     await this.loadPartnerInfo(answer.partner, callback);

@@ -112,7 +112,7 @@ class MobileBanner0Container extends React.Component {
               }}
               onClick={() => Router.push("/request")}
             >
-              <p style={{ paddingBottom: 0.2 }}>바로 업체 찾아보기</p>
+              <p style={{ paddingBottom: 0.2 }}>바로 견적받고 업체 비교</p>
             </Buttonv1>
             <div
               style={{
@@ -128,7 +128,7 @@ class MobileBanner0Container extends React.Component {
                 src={lock}
                 style={{ marginRight: 8, width: 10, height: 11, opacity: 0.5 }}
               ></img>
-              모든 업로드는 안전하고 기밀입니다.
+              민감 정보는 비공개로 작성 후 선택 공개하세요
             </div>
               </>
             

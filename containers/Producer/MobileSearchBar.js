@@ -8,6 +8,7 @@ import ButtonComponent from "components/Buttonv2";
 import Background from "components/Background";
 import Container from "components/Containerv1";
 
+import SearchFilterContainer from "./SearchFilterBox";
 import { toJS } from "mobx";
 
 // import RadioButton from "./RadioButton";
@@ -26,6 +27,19 @@ class MobileSearchBarConatiner extends React.Component {
     list: false,
     radioValue: true,
     filter_active: false,
+  };
+
+  openModal = () => {
+    const { Partner } = this.props;
+    console.log("requestmodal open click");
+    // this.setState({ modalOpen: true });
+    Partner.requestModalActive = true;
+  };
+  closeModal = () => {
+    const { Partner } = this.props;
+    console.log("requestmodal close click");
+
+    Partner.requestModalActive = false;
   };
 
   selectClick = () => {
@@ -48,7 +62,7 @@ class MobileSearchBarConatiner extends React.Component {
     const { Partner, ManufactureProcess } = this.props;
     ManufactureProcess.saveSearchText(Partner.search_text);
     Partner.currentPage = 1;
-    Partner.category_dic = {};
+    Partner.resetDevCategory();
     Partner.getPartner();
   };
   closeModal = () => {
@@ -62,7 +76,7 @@ class MobileSearchBarConatiner extends React.Component {
     if (e.key === "Enter") {
       ManufactureProcess.saveSearchText(Partner.search_text);
       Partner.currentPage = 1;
-      Partner.category_dic = {};
+      Partner.resetDevCategory();
       Partner.getPartner();
     }
   };
@@ -101,18 +115,18 @@ class MobileSearchBarConatiner extends React.Component {
   };
 
   filterActiveHandler = () => {
-    if (this.state.filter_active) {
-      this.setState({ filter_active: false });
+    if (this.props.Partner.check_click_filter) {
+      // this.setState({ filter_active: false });
       this.props.Partner.check_click_filter = false;
     } else {
-      this.setState({ filter_active: true });
+      // this.setState({ filter_active: true });
       this.props.Partner.check_click_filter = true;
     }
   };
   render() {
     const { Partner } = this.props;
     return (
-      <Form active={this.state.filter_active}>
+      <Form active={this.props.Partner.check_click_filter}>
         <Box
           active={this.state.list === true}
           onClick={() =>
@@ -176,19 +190,32 @@ class MobileSearchBarConatiner extends React.Component {
               </SearchButton>
             </div>
           </SearchBar>
+
+          {/* <Request>
+            <div onClick={() => this.openModal()}>
+              <span>제조사 찾기 의뢰하기 </span>
+            </div>
+            <div>
+              <span>업체 찾기가 힘든 경우 클릭!</span>
+            </div>
+          </Request> */}
+
           <Filter
             onClick={() => {
               this.filterActiveHandler();
             }}
           >
-            <img src={filter_img} />
+            <div>
+              <img src={filter_img} />
+            </div>
           </Filter>
         </SearchFilterBox>
         <FilterContainer
           style={{ flex: "0 auto" }}
-          active={this.state.filter_active}
+          active={this.props.Partner.check_click_filter}
         >
-          {Partner.filter_city_ary.map((item, idx) => {
+          <SearchFilterContainer width={this.props.width} />
+          {/* {Partner.filter_city_ary.map((item, idx) => {
             return (
               <>
                 {console.log(toJS(item))}
@@ -205,7 +232,7 @@ class MobileSearchBarConatiner extends React.Component {
                 </FilterContent>
               </>
             );
-          })}
+          })} */}
         </FilterContainer>
       </Form>
     );
@@ -454,10 +481,20 @@ const SearchFilterBox = styled.div`
 `;
 const Filter = styled.div`
   //border: 2px solid red;
+  cursor: pointer;
+  > div {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  > img {
-    width: 36px;
-    height: 36px;
+    > img {
+      // width: 36px;
+      // height: 36px;
+    }
   }
 `;
 
@@ -466,8 +503,9 @@ const FilterContainer = styled.div`
   flex-wrap: wrap;
   padding: 0 24px;
   box-sizing: border-box;
-  margin-top: 14px;
+  // margin-top: 14px;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+  height: 100vh;
 `;
 const FilterContent = styled.div`
   display: flex;
@@ -536,4 +574,30 @@ const Box = styled.div`
         animation: selectOut 0.4s;
       }
     `}
+`;
+const Request = styled.div`
+  > div:nth-of-type(1) {
+    box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
+    padding: 4px 8px 5px 8px;
+    box-sizing: border-box;
+    width: 122px;
+    height: 34px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  > div:last-child {
+    position: absolute;
+    bottom: -25px;
+    right: 7px;
+    > span {
+      font-size: 14px;
+      line-height: 30px;
+      letter-spacing: -0.14px;
+      color: #86888c;
+      font-weight: normal;
+    }
+  }
 `;

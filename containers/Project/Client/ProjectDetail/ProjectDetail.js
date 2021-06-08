@@ -13,7 +13,6 @@ import Content4 from "./Content4";
 @inject("Project")
 @observer
 class ProjectDetailContainer extends React.Component {
-
   render() {
     const { user } = this.props;
 

@@ -9,13 +9,14 @@ import * as Text from "./Text";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
+import Home from "../pages";
 
 const close_ic = "/static/images/components/MobileNav/close_ic.svg";
 // const hamburger_ic = "/static/icon/hamburger.png";
 const hamburger_ic = "/static/images/components/MobileNav/hamburger.svg";
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 //...
-@inject("Auth", "Partner")
+@inject("Auth", "Partner", "Home")
 @observer
 class MobileNav extends React.Component {
   state = {
@@ -32,10 +33,20 @@ class MobileNav extends React.Component {
     if (localStorage.getItem("expiry")) {
       localStorage.removeItem("expiry");
     }
-    window.location.href = "/";
+    if (this.props.Auth.home_index === 4) {
+      window.location.href = "/4";
+    } else if (this.props.Auth.home_index === 3) {
+      window.location.href = "/3";
+    } else if (this.props.Auth.home_index === 2) {
+      window.location.href = "/2";
+    } else if (this.props.Auth.home_index === 1) {
+      window.location.href = "/1";
+    } else {
+      window.location.href = "/";
+    }
   };
   async componentDidMount() {
-    const { Auth } = this.props;
+    const { Auth, Home } = this.props;
     const token = await localStorage.getItem("token");
     const { route, pathname } = Router.router;
     const splitedRoute = route.split("/");
@@ -46,7 +57,17 @@ class MobileNav extends React.Component {
       this.alreadyLoggedin.forEach((url) => {
         if (url === splitedRoute[1]) {
           alert("이미 로그인한 사용자입니다");
-          Router.push("/");
+          if (Auth.home_index === 4) {
+            Router.push("/4");
+          } else if (Auth.home_index === 3) {
+            Router.push("/3");
+          } else if (Auth.home_index === 2) {
+            Router.push("/2");
+          } else if (Auth.home_index === 1) {
+            Router.push("/1");
+          } else {
+            Router.push("/");
+          }
         }
         // /offered 에서 tab 1을 거치지 않고 tab 2로 들어온 사용자 리다이렉트
         else if ("offered" === splitedRoute[1]) {
@@ -116,7 +137,7 @@ class MobileNav extends React.Component {
   };
 
   render() {
-    const { Auth, Partner, width } = this.props;
+    const { Auth, Partner, width, Home } = this.props;
     const { url, is_open, is_profile, token } = this.state;
     console.log(this.props);
     return (
@@ -132,7 +153,17 @@ class MobileNav extends React.Component {
                   <Logo
                     onClick={() => {
                       if (is_open == true) {
-                        Router.push("/");
+                        if (Auth.home_index === 4) {
+                          Router.push("/4");
+                        } else if (Auth.home_index === 3) {
+                          Router.push("/3");
+                        } else if (Auth.home_index === 2) {
+                          Router.push("/2");
+                        } else if (Auth.home_index === 1) {
+                          Router.push("/1");
+                        } else {
+                          Router.push("/");
+                        }
                       }
                     }}
                     src={logo_ic}
@@ -140,24 +171,62 @@ class MobileNav extends React.Component {
                   />
                   <img src={close_ic} style={{ float: "right" }} />
                 </div>
-                <div style={{ height: 14 }}>
-                  엔지니어와 연구원을 위한 제조 상담 플랫폼
-                </div>
                 {Auth.logged_in_partner ? (
                   <FreeButton onClick={() => Router.push("/project")}>
                     <span style={{ marginTop: 1 }}>프로젝트 찾아보기</span>
                   </FreeButton>
-                ) : (
+                ) : 
+                (
+                  Auth.home_index === 1 ? (
                   <FreeButton onClick={() => Router.push("/request")}>
-                    <span style={{ marginTop: 1 }}>무료 상담 및 견적 받기</span>
+                    <span style={{ marginTop: 1 }}>바로 견적 받고 업체 비교</span>
                   </FreeButton>
-                )}
+                  
+                  )
+                  
+                  :
+                  
+                  (
+                    Auth.home_index === 2 ? (
+                    <FreeButton onClick={() => Router.push("/manufacturer")}>
+                      <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
+                    </FreeButton>    
+                    ) 
+                    
+                    :
+                    
+                    (
+                      Auth.home_index === 3 ? (
+                        <FreeButton onClick={() => Router.push("/request")}>
+                          <span style={{ marginTop: 1 }}>무료 상담 및 견적 받기</span>
+                        </FreeButton>  
+                      )
+                    
+                      :
+                    
+                      (
+                        <FreeButton onClick={() => Router.push("/producer")}>
+                          <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
+                        </FreeButton>  
+                      )
+                    )
+                  )
+                )
+                
+                }
               </ModalHeader>
               <>
                 <ModalContent>
                   <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
                   <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
-                  <p onClick={() => Router.push("/manufacturer")}>제조사 찾기</p>
+                  {Auth.home_index === 4 ? (
+                    <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
+                  ) : (
+                    <p onClick={() => Router.push("/manufacturer")}>
+                      제조사 찾기
+                    </p>
+                  )}
+
                   {Auth.logged_in_user && (
                     <p onClick={() => Router.push("/chatting")}>채팅하기</p>
                   )}
@@ -213,8 +282,24 @@ class MobileNav extends React.Component {
               // ) : (
               //   <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
               // )}
-              <Logo src={this.props.src} onClick={() => Router.push("/")} />
+
+              Auth.home_index === 4 ? (
+                <Logo src={this.props.src} onClick={() => Router.push("/4")} />
+              ) : Auth.home_index === 3 ? (
+                <Logo src={this.props.src} onClick={() => Router.push("/3")} />
+              ) : Auth.home_index === 2 ? (
+                <Logo src={this.props.src} onClick={() => Router.push("/2")} />
+              ) : Auth.home_index === 1 ? (
+                <Logo src={this.props.src} onClick={() => Router.push("/1")} />
+              ) : (
+                <Logo src={this.props.src} onClick={() => Router.push("/")} />
+              )
             ) : (
+              // Auth.home_index === 3 && (<Logo src={this.props.src} onClick={() => Router.push("/3")} />)
+              // Auth.home_index === 2 && (<Logo src={this.props.src} onClick={() => Router.push("/2")} />)
+              // Auth.home_index === 1 && (<Logo src={this.props.src} onClick={() => Router.push("/1")} />)
+              // Auth.home_index === 0 && (<Logo src={this.props.src} onClick={() => Router.push("/")} />)
+
               <Logo src={this.props.src} onClick={() => Router.back()} />
             )}
 
