@@ -86,8 +86,8 @@ class Home4 extends React.Component {
               </>
             ))}
         </> */}
-        <Home4Container width={width} />
-        <Footer />
+        {width && <Home4Container width={width} />}
+        {width && <Footer />}
       </div>
     );
   }

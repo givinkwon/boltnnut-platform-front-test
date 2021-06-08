@@ -86,8 +86,8 @@ class Home1 extends React.Component {
               </>
             ))}
         </> */}
-        <Home1Container width={width} />
-        <Footer />
+         {width && <Home1Container width={width} /> }
+         {width && <Footer /> }
       </div>
     );
   }
