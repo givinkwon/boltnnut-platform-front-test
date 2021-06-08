@@ -123,7 +123,7 @@ class Banner0Container extends React.Component {
                     }}
                   >
                     <img src={lock} style={{ marginRight: 8 }}></img>
-                    모든 업로드는 안전하고 기밀입니다.
+                    민감 정보는 비공개로 작성 후 선택 공개하세요
                   </div>
                 </>
               )}
