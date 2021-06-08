@@ -349,3 +349,11 @@ export function getClientEmail(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function setReqProducerInfo(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/requestinfo/info/`,
+    data: req.data ? req.data : null,
+  });
+}

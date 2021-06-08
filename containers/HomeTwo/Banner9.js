@@ -8,16 +8,23 @@ import Buttonv1 from "components/Buttonv1";
 import Fade from "react-reveal/Fade";
 import Router from "next/router";
 
+const passImg = "/static/images/pass7.png";
 const image1 = "/static/images/Home/Banner9/Banner9_img1.png";
 
 class Banner9Container extends React.Component {
   render() {
     return (
-      <Background src={image1} style={{ backgroundPosition: "0% 60%" }}>
+      <Background
+        src={image1}
+        style={{
+          backgroundPosition: "0% 60%",
+          opacity: "0.9",
+        }}
+      >
         <Layer>
           <Containerv1
             style={{
-              paddingBottom: 80,
+              paddingBottom: 54,
               paddingTop: 60,
               justifyContent: "center",
             }}
@@ -25,25 +32,36 @@ class Banner9Container extends React.Component {
             <Fade bottom>
               <div>
                 <Font32>
-                  메일로 회사소개서 보내기, 박람회 영업하기는 이제 그만
+                  제조 발주를 위한 빠른 업체 검색 <br />
+                  볼트앤너트에서 가능합니다.
                 </Font32>
-                <Font24>
+                {/* <Font24>
                   프로젝트 상담을 통해 기획 단계부터 실무자 분들과 소통해보세요.{" "}
                   <br />
                   전문 상담을 통해 자사의 전문성을 제안하고 신규 거래처를
                   탐색해보세요.
-                </Font24>
-                <Buttonv1
+                </Font24> */}
+
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <Button onClick={() => Router.push("/producer")}>
+                    <span>지금 업체 찾기</span>
+                    <span>
+                      <img src={passImg} />
+                    </span>
+                  </Button>
+                </div>
+
+                {/* <Buttonv1
                   style={{
-                    height: 76,
-                    width: 308,
+                    height: 70,
+                    width: 316,
                     margin: "0 auto",
-                    marginTop: 55,
+                    marginTop: 34,
                   }}
-                  onClick={() => Router.push("/login")}
+                  onClick={() => Router.push("/producer")}
                 >
-                  <Font24>파트너 가입하기</Font24>
-                </Buttonv1>
+                  <Font24>지금 업체 찾기</Font24>
+                </Buttonv1> */}
               </div>
             </Fade>
           </Containerv1>
@@ -56,7 +74,7 @@ class Banner9Container extends React.Component {
 export default Banner9Container;
 
 const Font24 = styled(Content.FontSize24)`
-  color: #282c36;
+  color: #ffffff;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -67,20 +85,48 @@ const Font24 = styled(Content.FontSize24)`
 `;
 
 const Font32 = styled(Content.FontSize32)`
-  color: #ffffff;
+  color: #282c36;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67 !important;
   letter-spacing: -0.6px !important;
   text-align: center;
-  margin: 35px auto 55px auto;
+  //margin: 35px auto 55px auto;
 `;
 
 const Layer = styled.div`
-  background-color: rgba(255, 255, 255, 0.67);
+  background-color: rgba(255, 255, 255, 0.8);
   width: 100%;
   height: 100%;
   display: inline-flex;
   justify-content: center;
+`;
+
+const Button = styled.div`
+  cursor: pointer;
+  margin-top: 34px;
+  border: 2px solid #0933b3;
+  border-radius: 4px;
+  width: 316px;
+  height: 70px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > span:nth-of-type(1) {
+    margin-right: 15px;
+    font-size: 26px;
+    line-height: 52px;
+    letter-spacing: -0.65px;
+    color: #0933b3;
+    font-weight: 500;
+  }
+  > span:nth-of-type(2) {
+    padding-top: 6px;
+    > img {
+      width: 11px;
+      height: 21px;
+    }
+  }
 `;

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "../../components/Containerv1";
+import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
 import Fade from "react-reveal/Fade";
@@ -10,36 +10,47 @@ const image1 = "/static/images/banner_dot.png";
 const passImg = "/static/images/pass7.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 
-class Banner13Container extends React.Component {
+class MobileBanner13Container extends React.Component {
   render() {
+    const { width } = this.props;
     return (
-      <Container width={this.props.width}>
-        {/* <Fade bottom> */}
-        <Box>
-          <div>
-            {/* <Header>민감 정보 선택 공개 서비스</Header> */}
-            <Middle>
-              <p>제조업체를 온라인에서 바로 만나다</p>
-            </Middle>
-            <Body>
-              <span>"저희 사무실 근처에 이런 제품 만드는 공장이 없나요?"</span>
-              <span>
-                국내 5000개 이상의 제조업체 네트워크를 통해 <br />
-                제조 업체수배를 온라인에서 쉽고 편하게 진행하세요.
-              </span>
-              <div onClick={() => Router.push("/producer")}>
-                <span>지금 업체 찾기</span>
+      <Background backgroundColor="#ffffff">
+        <Containerv1
+          style={{
+            // paddingBottom: 306,
+            // paddingTop: 308,
+            width: `${width - 80}px`,
+            justifyContent: "space-between",
+          }}
+        >
+          {/* <Fade bottom> */}
+          <Box>
+            <div>
+              {/* <Header>민감 정보 선택 공개 서비스</Header> */}
+              <Middle>
+                <p>제조업체를 온라인에서 바로 만나다</p>
+              </Middle>
+              <Body>
                 <span>
-                  <img src={passImg} />
+                  "저희 사무실 근처에 이런 제품 만드는 공장이 없나요?"
                 </span>
-              </div>
-            </Body>
-          </div>
-          {/* <img
+                <span>
+                  국내 5000개 이상의 제조업체 네트워크를 통해 <br />
+                  제조 업체수배를 온라인에서 쉽고 편하게 진행하세요.
+                </span>
+                <div onClick={() => Router.push("/producer")}>
+                  <span>지금 업체 찾기</span>
+                  <span>
+                    <img src={passImg} style={{ width: "7px" }} />
+                  </span>
+                </div>
+              </Body>
+            </div>
+            {/* <img
               src={image1}
               //   style={{ transform: "translate(-20%, -60%) scale(0.7)" }}
             /> */}
-          {/* <Header>민감 정보 선택 공개 서비스</Header>
+            {/* <Header>민감 정보 선택 공개 서비스</Header>
               <Middle>
                 <p>
                   원하는 업체만 <br />
@@ -51,8 +62,8 @@ class Banner13Container extends React.Component {
                 <br />
                 검증한 업체에게만 공개할 수 있습니다.
               </Body> */}
-        </Box>
-        {/* <div>
+          </Box>
+          {/* <div>
             <Header>민감 정보 선택 공개 서비스</Header>
             <Middle>
               <p>
@@ -66,43 +77,23 @@ class Banner13Container extends React.Component {
               검증한 업체에게만 공개할 수 있습니다.
             </Body>
           </div> */}
-        {/* </Fade> */}
-      </Container>
+          {/* </Fade> */}
+        </Containerv1>
+      </Background>
     );
   }
 }
 
-export default Banner13Container;
+export default MobileBanner13Container;
 
-const Container = styled.div`
-  // padding-left: 100px;
-  // padding-right: 30px;
+const Box = styled.div`
   // background-image: url("/static/images/banner_dot.png");
   // background-position: center;
-  // background-size: cover;
-
-  // padding-left: 450px;
-  padding-left: ${(props) =>
-    props.width
-      ? 30 *
-        (props.width / 1300) *
-        (props.width / 1300) *
-        (props.width / 1300) *
-        (props.width / 900)
-      : ""}px;
-  padding-right: 30px;
-  background-image: url(/static/images/banner_dot.png);
-  background-position: 50%;
-  background-position-y: top;
-  background-size: 1400px 600px;
-  background-repeat: no-repeat;
-  width: 100%;
-`;
-const Box = styled.div`
+  background-size: cover;
   display: flex;
   width: 100%;
-  padding-top: 100px;
-  padding-bottom: 85px;
+  padding-top: 90px;
+  padding-bottom: 50px;
 `;
 const Header = styled(Title.FontSize20)`
   color: #0933b3;
@@ -112,20 +103,21 @@ const Header = styled(Title.FontSize20)`
   line-height: 1.45;
   letter-spacing: normal;
 `;
-const Middle = styled(Title.FontSize48)`
+const Middle = styled(Title.FontSize26)`
+  font-size: 22px !important;
   color: #282c36;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.36;
   letter-spacing: -1.4px;
-  margin-bottom: 72px;
+  margin-bottom: 6px;
 
   > p {
     font-weight: bold;
   }
 `;
-const Body = styled(Title.FontSize24)`
+const Body = styled(Title.FontSize16)`
   // white-space:nowrap;
   font-weight: 500;
   font-stretch: normal;
@@ -137,37 +129,28 @@ const Body = styled(Title.FontSize24)`
   > span:nth-of-type(1) {
     margin-bottom: 25px;
     display: block;
-    color: #282c36;
   }
   > span:nth-of-type(2) {
-    font-size: 20px;
+    font-size: 14px;
     // margin-bottom: 60px;
   }
   > div {
     cursor: pointer;
-    margin-top: 60px;
+    margin-top: 36px;
     border: 2px solid #0933b3;
     border-radius: 4px;
-    width: 316px;
-    height: 70px;
+    // width: 216px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
     > span:nth-of-type(1) {
       margin-right: 15px;
-      font-size: 26px;
+      font-size: 18px;
       line-height: 52px;
       letter-spacing: -0.65px;
       color: #0933b3;
       font-weight: 500;
-    }
-    > span:nth-of-type(2) {
-      padding-top: 6px;
-      > img {
-        width: 14px;
-        height: 24px;
-      }
     }
   }
 `;

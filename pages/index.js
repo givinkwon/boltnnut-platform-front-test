@@ -22,6 +22,7 @@ const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 class Home extends React.Component {
   state = {
     width: null,
+    home_index: 1,
   };
   async componentDidMount() {
     this.props.Loading.setOpen(true);
@@ -32,7 +33,7 @@ class Home extends React.Component {
     setTimeout(() => {
       this.props.Loading.setOpen(false);
     }, 1000);
-   
+
     await this.props.Auth.checkLogin();
   }
   componentWillUnmount() {
@@ -43,7 +44,7 @@ class Home extends React.Component {
   };
   render() {
     const { Loading, Home } = this.props;
-    const { width } = this.state;
+    const { width, home_index } = this.state;
     return (
       <>
         <Head>
@@ -80,10 +81,18 @@ class Home extends React.Component {
             {width && width < 768 && <MobileNav src={logo_ic} width={width} />}
           </>
           <>
-            {width && (
-              <HomeConatiner width={width} reqList={Home.request_list} />
-              // <Home2Conatiner width={width} reqList={Home.request_list} />
-            )}
+            {
+              width && (
+                // (home_index == 0 ? (
+                //   <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
+                // ) : (
+                //   <Home2Conatiner width={width} reqList={Home.request_list} /> // k-장인 메인 페이지
+                // ))
+
+                <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
+                // <Home2Conatiner width={width} reqList={Home.request_list} />
+              ) // k-장인 메인 페이지
+            }
           </>
           <>{width && <Footer />}</>
         </div>

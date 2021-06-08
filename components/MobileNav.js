@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import { withRouter } from "next/router";
+import { withRouter } from 'next/router'
 import Router from "next/router";
 import * as Title from "components/Title";
 // components
@@ -29,7 +29,7 @@ class MobileNav extends React.Component {
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
   logout = () => {
     localStorage.removeItem("token");
-    if (localStorage.getItem("expiry")) {
+    if(localStorage.getItem("expiry")) {
       localStorage.removeItem("expiry");
     }
     window.location.href = "/";
@@ -39,7 +39,7 @@ class MobileNav extends React.Component {
     const token = await localStorage.getItem("token");
     const { route, pathname } = Router.router;
     const splitedRoute = route.split("/");
-    const requestId = window.location.pathname.split("/").pop();
+    const requestId = window.location.pathname.split('/').pop()
 
     // 사용자 접근 제어
     if (token) {
@@ -80,7 +80,8 @@ class MobileNav extends React.Component {
           }
         }
       });
-    } else {
+    } else
+     {
       // 로그인 하지 않고 /partner/[id]로 들어오는 사용자 리다이렉트
       //if(splitedRoute[1] === 'partner' && splitedRoute.length >= 3) {
       //  alert("로그인이 필요합니다");
@@ -88,13 +89,13 @@ class MobileNav extends React.Component {
       //}
       this.needPermission.forEach((url) => {
         if (url === splitedRoute[1]) {
-          if (requestId != 923) {
-            alert("로그인이 필요합니다");
-            Router.push("/login");
+          if(requestId != 923){
+          alert("로그인이 필요합니다");
+          Router.push("/login");
           }
         }
       });
-    }
+     }
 
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     await Auth.checkLogin();
@@ -109,117 +110,84 @@ class MobileNav extends React.Component {
   menuClick = () => {
     const { is_open } = this.state;
     if (is_open === true) {
-      this.setState({ ...this.state, is_open: false });
+      this.setState({...this.state, is_open : false});
     } else {
-      this.setState({ ...this.state, is_open: true });
+      this.setState({...this.state, is_open: true});
     }
-  };
+  }
 
-  render() {
-    const { Auth, Partner, width } = this.props;
+  render () {
+    const { Auth, Partner,width } = this.props;
     const { url, is_open, is_profile, token } = this.state;
     console.log(this.props);
     return (
       <NavBox>
         {is_open && (
           <Modal>
-            <ProfileMenu
-              width={this.props.width}
-              onClick={() => this.setState({ is_open: false })}
-            >
+            <ProfileMenu width={this.props.width} onClick={() => this.setState({is_open: false})}>
               <ModalHeader>
-                <div style={{ marginBottom: 50, width: "100%" }}>
-                  <Logo
-                    onClick={() => {
-                      if (is_open == true) {
-                        Router.push("/");
-                      }
-                    }}
-                    src={logo_ic}
-                    style={{ float: "left" }}
-                  />
-                  <img src={close_ic} style={{ float: "right" }} />
+                <div style={{marginBottom: 50, width: '100%'}}>
+                  <Logo onClick={() => {if (is_open == true) {Router.push('/')}}} src={logo_ic} style={{float:'left'}}/>
+                  <img src={ close_ic } style={{float: 'right'}}/>
                 </div>
-                <div style={{ height: 14 }}>
-                  엔지니어와 연구원을 위한 제조 상담 플랫폼
-                </div>
-                {Auth.logged_in_partner ? (
-                  <FreeButton onClick={() => Router.push("/project")}>
-                    <span style={{ marginTop: 1 }}>프로젝트 찾아보기</span>
-                  </FreeButton>
-                ) : (
-                  <FreeButton onClick={() => Router.push("/request")}>
-                    <span style={{ marginTop: 1 }}>무료 상담 및 견적 받기</span>
-                  </FreeButton>
-                )}
-              </ModalHeader>
-              <>
-                <ModalContent>
-                  <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
-                  <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
-                  <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
-                  {Auth.logged_in_user && (
-                    <p onClick={() => Router.push("/chatting")}>채팅하기</p>
-                  )}
-                </ModalContent>
-              </>
+                <div style={{height:14}}>엔지니어와 연구원을 위한 제조 상담 플랫폼</div>
+              {Auth.logged_in_partner? 
+              <FreeButton onClick={() => Router.push("/project")}>
+                <span style={{marginTop: 1}}>프로젝트 찾아보기</span>
+              </FreeButton>
+              :
+              <FreeButton onClick={() => Router.push("/request")}>
+                <span style={{marginTop: 1}}>무료 상담 및 견적 받기</span>
+              </FreeButton>
+              }
+            </ModalHeader>
+          <>
+            <ModalContent>
+              <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
+              <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
+              <p onClick={() => Router.push("/manufacturer")}>제조사 찾기</p>
+              {Auth.logged_in_user && <p onClick={() => Router.push("/chatting")}>채팅하기</p>}
+            </ModalContent>
+          </>
               <ModalContent2>
                 <p onClick={() => Router.push("/faq")}>자주찾는 질문</p>
                 <p onClick={() => Router.push("/term/policy")}>이용약관</p>
-                <p onClick={() => Router.push("/term/personal")}>
-                  개인정보 처리 방침
-                </p>
+                <p onClick={() => Router.push("/term/personal")}>개인정보 처리 방침</p>
               </ModalContent2>
               {Auth.logged_in_user ? (
-                <Footer>
-                  <div onClick={this.logout}> 로그아웃 </div>
-                </Footer>
-              ) : (
-                <Footer>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRight: "solid 1px #e1e2e4",
-                      height: 32,
-                    }}
-                    onClick={() => Router.push("/login")}
-                  >
-                    로그인
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      height: 32,
-                    }}
-                    onClick={() => Router.push("/signup")}
-                  >
-                    회원가입
-                  </div>
-                </Footer>
-              )}
+                  <Footer>
+                    <div onClick={this.logout}> 로그아웃 </div>
+                  </Footer>
+                ) :
+                (
+                  <Footer>
+                    <div style={{display: 'flex', alignItems:'center', justifyContent:'center', borderRight: "solid 1px #e1e2e4", height:32}} onClick={() => Router.push("/login")}>로그인</div>
+                    <div style={{display: 'flex', alignItems:'center', justifyContent:'center', height:32}} onClick={() => Router.push("/signup")}>회원가입</div>
+                  </Footer>
+                )
+              }
             </ProfileMenu>
           </Modal>
-        )}
+          )}
         <Container>
           <NavWrap2>
             {/* {typeof window !== 'undefined' && window.location.pathname != '/' && window.location.pathname !='/login' ? ( */}
-            {this.props.src ===
-            "/static/images/components/MobileNav/MobileLogo.svg" ? (
-              //   <Logo src={this.props.src} onClick={() => Router.back()} />
-              // ) : (
-              //   <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
-              // )}
-              <Logo src={this.props.src} onClick={() => Router.push("/")} />
+            {this.props.src=== '/static/images/components/MobileNav/MobileLogo.svg'? (
+
+            //   <Logo src={this.props.src} onClick={() => Router.back()} />
+            // ) : (
+            //   <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
+            // )}
+            <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
             ) : (
               <Logo src={this.props.src} onClick={() => Router.back()} />
             )}
 
             <HeadText>{this.props.headText}</HeadText>
-            <Icon src={hamburger_ic} onClick={this.menuClick} />
+              <Icon
+                src={hamburger_ic}
+                onClick={this.menuClick}
+              />
           </NavWrap2>
         </Container>
       </NavBox>
@@ -234,8 +202,8 @@ const Modal = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-`;
+  background-color: rgba(0,0,0,0.4);
+`
 const ProfileMenu = styled.div`
   width: 70%;
   padding: 22px 22px;
@@ -245,12 +213,11 @@ const ProfileMenu = styled.div`
   z-index: 10000;
   top: 0;
   right: 0;
-  // transform: translate3d(${(props) =>
-    props.width ? props.width - 156 : 10}px, calc(55%), 0);
+  // transform: translate3d(${props => props.width ? props.width - 156 : 10}px, calc(55%), 0);
   display: flex;
   flex-direction: column;
   }
-`;
+`
 const ModalHeader = styled.div`
   width: 100%;
   height: 160px;
@@ -271,7 +238,7 @@ const ModalHeader = styled.div`
     text-align: center;
     white-space: nowrap;
   }
-`;
+`
 const ModalContent = styled.div`
   width: 100%;
   height: 158px;
@@ -291,12 +258,13 @@ const ModalContent = styled.div`
     text-align: left;
     color: #111111;
     cursor: pointer;
+
   }
-`;
+`
 const HeadText = styled.div`
   z-index: 9998;
   width: 100%;
-  height: 29px;
+  height:29px;
   position: absolute;
 
   color: #0a2165;
@@ -310,8 +278,8 @@ const HeadText = styled.div`
   font-style: normal;
   letter-spacing: -0.5px;
   left: 0;
-  margin-top: 2px;
-`;
+  margin-top:2px;
+`
 const Footer = styled.div`
   position: fixed;
   bottom: 0;
@@ -335,7 +303,7 @@ const Footer = styled.div`
     color: #111111;
     cursor: pointer;
   }
-`;
+`
 const FreeButton = styled(Buttonv1)`
   margin-top: 8px;
   cursor: pointer;
@@ -354,7 +322,8 @@ const FreeButton = styled(Buttonv1)`
     text-align: center;
     color: #ffffff;
   }
-`;
+
+`
 const ModalContent2 = styled.div`
   width: 100%;
   display: flex;
@@ -372,12 +341,13 @@ const ModalContent2 = styled.div`
     color: #282c36;
     margin-bottom: 22px;
     cursor: pointer;
+
   }
-`;
+`
 const Container = styled.div`
   margin-right: auto;
   margin-left: auto;
-`;
+`
 const NavBox = styled.div`
   position: fixed;
   height: 54px;
@@ -405,7 +375,7 @@ const Icon = styled.img`
   width: 40px;
   height: 40px;
   display: none;
-  background-color: "#f3f3f3";
+  background-color: '#f3f3f3';
   z-index: 9999;
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: block;

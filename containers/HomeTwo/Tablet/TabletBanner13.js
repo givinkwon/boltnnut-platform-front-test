@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "../../components/Containerv1";
+import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
 import Fade from "react-reveal/Fade";
@@ -10,11 +10,11 @@ const image1 = "/static/images/banner_dot.png";
 const passImg = "/static/images/pass7.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 
-class Banner13Container extends React.Component {
+class TabletBanner13Container extends React.Component {
   render() {
+    const { width } = this.props;
     return (
       <Container width={this.props.width}>
-        {/* <Fade bottom> */}
         <Box>
           <div>
             {/* <Header>민감 정보 선택 공개 서비스</Header> */}
@@ -72,7 +72,7 @@ class Banner13Container extends React.Component {
   }
 }
 
-export default Banner13Container;
+export default TabletBanner13Container;
 
 const Container = styled.div`
   // padding-left: 100px;
@@ -84,25 +84,26 @@ const Container = styled.div`
   // padding-left: 450px;
   padding-left: ${(props) =>
     props.width
-      ? 30 *
-        (props.width / 1300) *
-        (props.width / 1300) *
-        (props.width / 1300) *
-        (props.width / 900)
+      ? 17 *
+        (props.width / 700) *
+        (props.width / 700) *
+        (props.width / 700) *
+        (props.width / 500)
       : ""}px;
   padding-right: 30px;
   background-image: url(/static/images/banner_dot.png);
-  background-position: 50%;
+  background-position: 74%;
   background-position-y: top;
-  background-size: 1400px 600px;
+  background-size: 1070px 400px;
   background-repeat: no-repeat;
   width: 100%;
 `;
+
 const Box = styled.div`
   display: flex;
   width: 100%;
-  padding-top: 100px;
-  padding-bottom: 85px;
+  padding-top: 80px;
+  padding-bottom: 50px;
 `;
 const Header = styled(Title.FontSize20)`
   color: #0933b3;
@@ -112,20 +113,21 @@ const Header = styled(Title.FontSize20)`
   line-height: 1.45;
   letter-spacing: normal;
 `;
-const Middle = styled(Title.FontSize48)`
+const Middle = styled(Title.FontSize26)`
+  font-size: 24px !important;
   color: #282c36;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.36;
   letter-spacing: -1.4px;
-  margin-bottom: 72px;
+  margin-bottom: 44px;
 
   > p {
     font-weight: bold;
   }
 `;
-const Body = styled(Title.FontSize24)`
+const Body = styled(Title.FontSize18)`
   // white-space:nowrap;
   font-weight: 500;
   font-stretch: normal;
@@ -137,36 +139,34 @@ const Body = styled(Title.FontSize24)`
   > span:nth-of-type(1) {
     margin-bottom: 25px;
     display: block;
-    color: #282c36;
   }
   > span:nth-of-type(2) {
-    font-size: 20px;
+    font-size: 14px;
     // margin-bottom: 60px;
   }
   > div {
     cursor: pointer;
-    margin-top: 60px;
+    margin-top: 30px;
     border: 2px solid #0933b3;
     border-radius: 4px;
-    width: 316px;
-    height: 70px;
+    width: 215px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
     > span:nth-of-type(1) {
       margin-right: 15px;
-      font-size: 26px;
+      font-size: 16px;
       line-height: 52px;
       letter-spacing: -0.65px;
       color: #0933b3;
       font-weight: 500;
     }
     > span:nth-of-type(2) {
-      padding-top: 6px;
+      padding-top: 8px;
       > img {
-        width: 14px;
-        height: 24px;
+        width: 9px;
+        height: 18px;
       }
     }
   }

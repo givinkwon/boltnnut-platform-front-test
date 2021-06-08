@@ -42,9 +42,11 @@ class ManufacturerContentContainer extends React.Component {
     // Project.search_text = "";
     Partner.currentPage = 1;
 
-    console.log("did mount");
+    // console.log("did mount");
 
-    Partner.getPartner();
+    console.log("content mount");
+    await Partner.getPartner();
+    // console.log(toJS(Partner.category_dic));
 
     //console.log(toJS(Partner.filter_category_ary.length));
     if (Partner.filter_category_ary.length === 1) {
@@ -54,6 +56,13 @@ class ManufacturerContentContainer extends React.Component {
       Partner.getCity();
     }
 
+    // console.log(typeof Partner.category_dic);
+
+    // console.log(Object.keys(Partner.category_dic).length);
+    // if (Object.keys(Partner.category_dic).length === 0) {
+    //   this.setState({ g: 3 });
+    //   console.log(toJS(Partner.category_dic));
+    // }
     // await Auth.checkLogin();
     // if(Auth.logged_in_partner){
     //   Project.getProjectByPrice()
@@ -62,17 +71,21 @@ class ManufacturerContentContainer extends React.Component {
 
   componentWillUnmount() {
     const { Partner } = this.props;
-    console.log("WillUnMount");
-    Partner.category_dic = {};
+    // console.log("WillUnMount");
+    console.log("content unmount");
+    Partner.requestModalActive = false;
+    Partner.requestDoneModalActive = false;
+    Partner.resetDevCategory();
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
     Partner.filter_city_ary = [{ id: 0, city: "전체" }];
   }
 
   componentDidUpdate() {
-    // console.log("didupdate");
-    // console.log(toJS(this.props.Partner.check_loading_category));
-    // if (this.props.Partner.check_loading_category) {
+    const { Partner } = this.props;
+
+    // if (Object.keys(Partner.category_dic).length != 0) {
     //   this.setState({ g: 3 });
+    //   console.log(toJS(Partner.category_dic));
     // }
   }
   movePage = (e) => {
@@ -82,8 +95,9 @@ class ManufacturerContentContainer extends React.Component {
     const newPage = e.target.innerText * 1;
     Partner.currentPage = newPage;
     // Project.getProjectByPrice(Project.search_text, newPage)
-    console.log(toJS(this.category_dic));
-    Partner.category_dic = {};
+    // console.log(toJS(this.category_dic));
+    Partner.resetDevCategory();
+    Partner.check_loading_develop = false;
     Partner.ReviewActive = false;
     Partner.ReviewActiveIndex = -1;
     this.setState({ dropDownActive: false, dropDownIdx: -1 });
@@ -101,8 +115,10 @@ class ManufacturerContentContainer extends React.Component {
       Partner.currentPage = nextPage;
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
       // console.log(nextPage);
-      console.log(toJS(this.category_dic));
-      Partner.category_dic = {};
+      Partner.check_loading_develop = false;
+      // console.log(toJS(this.category_dic));
+      // Partner.category_dic = {};
+      Partner.resetDevCategory();
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
@@ -117,8 +133,9 @@ class ManufacturerContentContainer extends React.Component {
       // Project.category_reset()
       const newPage = Partner.currentPage - 1;
       Partner.currentPage = newPage;
-      console.log(toJS(this.category_dic));
-      Partner.category_dic = {};
+      // console.log(toJS(this.category_dic));
+      Partner.resetDevCategory();
+      Partner.check_loading_develop = false;
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
@@ -129,43 +146,45 @@ class ManufacturerContentContainer extends React.Component {
 
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
-    Partner.category_name_list = null;
-    // console.log(item.id);
-    Partner.partner_detail_list = [];
-    //Project.selectedProjectId = id;
-    Partner.partner_detail_list.push({ item: item });
-    // console.log(toJS(Partner.partner_detail_list));
-    // Partner.newIndex = 1;
-    Partner.category_name_list = Partner.category_dic[idx];
-    console.log(idx);
-    //console.log(toJS(Partner.category_dic[idx]));
-    // console.log(toJS(Partner.category_name_list));
-    // await Partner.getPartnerDetail(item.id);
 
-    // await Router.push(`/project/${id}`);
-    //Project.setProjectDetailData(id);
-    console.log("click");
-    if (this.state.dropDownIdx === -1) {
-      Partner.portFolioList = [];
-      Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
-      this.setState({ dropDownActive: true, dropDownIdx: idx });
-    } else {
-      if (this.state.dropDownIdx === idx) {
-        this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      } else {
+    if (!Partner.requestModalActive) {
+      console.log("Detail click");
+      Partner.category_name_list = null;
+      // console.log(item.id);
+      Partner.partner_detail_list = [];
+      //Project.selectedProjectId = id;
+      Partner.partner_detail_list.push({ item: item });
+      // console.log(toJS(Partner.partner_detail_list));
+      // Partner.newIndex = 1;
+      Partner.category_name_list = Partner.category_dic[idx];
+      // console.log(idx);
+      //console.log(toJS(Partner.category_dic[idx]));
+      // console.log(toJS(Partner.category_name_list));
+      // await Partner.getPartnerDetail(item.id);
+
+      // await Router.push(`/project/${id}`);
+      //Project.setProjectDetailData(id);
+      // console.log("click");
+      if (this.state.dropDownIdx === -1) {
+        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Partner.portFolioList = [];
-        Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
+        await Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
+        // console.log(Partner.partner_detail_list[0].item.city);
+
+        // console.log(Partner.city_name);
         this.setState({ dropDownActive: true, dropDownIdx: idx });
+      } else {
+        if (this.state.dropDownIdx === idx) {
+          this.setState({ dropDownActive: false, dropDownIdx: -1 });
+        } else {
+          await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+          Partner.portFolioList = [];
+          await Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
+          this.setState({ dropDownActive: true, dropDownIdx: idx });
+        }
       }
     }
-
-    // console.log(this.state.idx)
-    // console.log(t)
-    // if (this.state.dropDownActive) {
-    //   this.setState({ dropDownActive: false });
-    // } else {
-    //   this.setState({ dropDownActive: true });
-    // }
+    // console.log(toJS(Partner.portFolioList));
   };
 
   render() {
@@ -176,7 +195,7 @@ class ManufacturerContentContainer extends React.Component {
 
     return (
       <>
-        {console.log("rendering")}
+        {/* {console.log("rendering")} */}
         <Background id="MyBackground">
           <Container>
             {/* <SearchBar /> */}
@@ -234,11 +253,12 @@ class ManufacturerContentContainer extends React.Component {
                           // style={{ width: "100%" }}
                           style={{ width: "100%" }}
                         >
+                          {/* {console.log(toJS(Partner.category_dic))} */}
                           <ProposalCard
                             data={item}
                             width={this.props.width}
                             //categoryData={Partner.category_ary[idx]}
-                            categoryData={Partner.category_dic[idx]}
+                            categoryData={toJS(Partner.category_dic[idx])}
                             idx={idx}
                             // middleCategory={Project.middle_category_name[idx]}
                             // mainCategory={Project.main_category_name[idx]}
@@ -475,10 +495,14 @@ const Body = styled.div`
   justify-content: center;
   border-top: 1px solid #e1e2e4;
   border-bottom: 1px solid #e1e2e4;
-  margin-top: 40px;
+  // margin-top: 40px;
 `;
 const Main = styled.div`
   //width: 984px;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 700px;
+  }
 
   @media (min-width: 992px) and (max-width: 1149.98px) {
     width: 800px;

@@ -17,7 +17,7 @@ const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 class Banner12Container extends React.Component {
   render() {
     return (
-      <Background backgroundColor="#f6f6f6">
+      <Background backgroundColor="#f6f6f6" style={{ padding: "100px 0" }}>
         <Fade bottom>
           <MainTitle>
             <Font56>온라인 업체 수배를 위한</Font56>
@@ -37,7 +37,7 @@ class Banner12Container extends React.Component {
                 position: "absolute",
                 right: "-7px",
                 top: "39%",
-                backgroundColor: "#ffffff",
+                backgroundColor: "#f6f6f6",
                 zIndex: "1",
               }}
             />
@@ -47,7 +47,7 @@ class Banner12Container extends React.Component {
                 position: "absolute",
                 left: "304px",
                 top: "39%",
-                backgroundColor: "#ffffff",
+                backgroundColor: "#f6f6f6",
                 zIndex: "1",
               }}
             />
@@ -102,7 +102,7 @@ class Banner12Container extends React.Component {
                     전문업체 검색이 가능합니다. <br />
                   </Body>
                   <Buttonv1
-                    onClick={() => Router.push("/request")}
+                    onClick={() => Router.push("/producer")}
                     style={{ width: "304px", height: "64px" }}
                     fontSize="23"
                   >
@@ -110,8 +110,9 @@ class Banner12Container extends React.Component {
                   </Buttonv1>
                 </Contents>
                 <ImgBox
-                  // width={724}
-                  // height={381}
+                  width={591}
+                  height={341}
+                  index="1"
                   style={{ position: "relative", paddingTop: "11px" }}
                 >
                   <div style={{ position: "absolute" }}></div>
@@ -119,11 +120,11 @@ class Banner12Container extends React.Component {
                   <div
                     style={{
                       width: "1px",
-                      height: "118px",
+                      height: "51px",
                       backgroundColor: "#a4aab4",
                       position: "absolute",
                       bottom: 0,
-                      left: "311px",
+                      left: "302px",
                     }}
                   />
                 </ImgBox>
@@ -141,7 +142,7 @@ class Banner12Container extends React.Component {
                     position: "absolute",
                     right: "280px",
                     top: "64%",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
@@ -151,7 +152,7 @@ class Banner12Container extends React.Component {
                     position: "absolute",
                     left: "16%",
                     top: "64%",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
@@ -190,6 +191,7 @@ class Banner12Container extends React.Component {
                   style={{ marginRight: "304px" }}
                   width={387}
                   height={512}
+                  index="2"
                 >
                   <img src={image2} />
                 </ImgBox>
@@ -227,7 +229,7 @@ class Banner12Container extends React.Component {
                     position: "absolute",
                     right: "264px",
                     top: "64%",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
@@ -237,7 +239,7 @@ class Banner12Container extends React.Component {
                     position: "absolute",
                     left: "16%",
                     top: "64%",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
@@ -283,7 +285,7 @@ class Banner12Container extends React.Component {
                     별도 문의가 가능합니다. <br />
                   </Body>
                 </Contents>
-                <ImgBox width={588} height={370}>
+                <ImgBox width={588} height={370} index="3">
                   <img src={image3} />
                 </ImgBox>
               </ContainerBox>
@@ -298,7 +300,7 @@ class Banner12Container extends React.Component {
 export default Banner12Container;
 
 const MainTitle = styled.div`
-  margin-top: 64px;
+  // margin-top: 64px;
   margin-bottom: 29px;
   display: flex;
   flex-direction: column;
@@ -341,7 +343,7 @@ const Body = styled(Title.FontSize24)`
   font-style: normal;
   line-height: 40px;
   letter-spacing: -0.6px;
-  margin-bottom: 70px;
+  // margin-bottom: 70px;
 `;
 
 const ImgBox = styled.div`
@@ -353,4 +355,9 @@ const ImgBox = styled.div`
   // padding: 14px 10px 20px 14px;
   // background-color: #ffffff;
   // box-sizing: border-box;
+  > img {
+    width: ${(props) => (props.width ? props.width : "")}px;
+    height: ${(props) => (props.height ? props.height : "")}px;
+    // height: 341px;
+  }
 `;
