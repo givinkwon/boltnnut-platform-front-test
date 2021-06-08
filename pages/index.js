@@ -11,6 +11,9 @@ import Spinner from "components/Spinner";
 // test
 import HomeConatiner from "containers/Home";
 import Home2Conatiner from "containers/HomeTwo";
+
+import HomeConatiner1 from "containers/Home1";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
@@ -81,7 +84,7 @@ class Home extends React.Component {
           </>
           <>
             {width && (
-              <HomeConatiner width={width} reqList={Home.request_list} />
+              <HomeConatiner1 width={width} reqList={Home.request_list} />
               // <Home2Conatiner width={width} reqList={Home.request_list} />
             )}
           </>
