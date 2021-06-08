@@ -1,9 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 // @ts-ignore
-const FileViewer = dynamic(() => import('react-file-viewer'), {
+const FileViewer = dynamic(() => import("react-file-viewer"), {
   ssr: false,
 });
 import { inject, observer } from "mobx-react";
@@ -20,10 +20,12 @@ const onError = (e) => {
 @observer
 class DetailCardContainer extends React.Component {
   render() {
+    const { width } = this.props;
     console.log(this.props.Partner.selectedIntroductionFile);
     return (
       <>
         <Card
+          width={width}
           onContextMenu={(e) => {
             e.preventDefault();
           }}
@@ -50,9 +52,9 @@ class DetailCardContainer extends React.Component {
               <div style={{ textAlign: "left" }}>등록일자 ~~~</div>
             </TopInlineBox> */}
 
-            <IntroductionBox>
+            <IntroductionBox width={width}>
               <Font24>회사소개서</Font24>
-              <FileViewer
+              <FileViewerContainer
                 fileType={this.props.Partner.selectedIntroductionFileType}
                 filePath={this.props.Partner.selectedIntroductionFile}
                 onError={onError}
@@ -79,6 +81,12 @@ const Font24 = styled(Title.FontSize24)`
 const IntroductionBox = styled.div`
   width: auto;
   text-align: center;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    canvas {
+      width: ${(props) => (props.width ? props.width - 100 : "")}px;
+    }
+  }
 `;
 const TopInlineBox = styled.div`
   width: 100%;
@@ -93,9 +101,19 @@ const Card = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
+
+  > div {
+    > div {
+      > img {
+        width: 100%;
+      }
+    }
+  }
 `;
 
 const InnerBox = styled.div`
   width: 100%;
   padding: 54px 0 54px 0;
 `;
+
+const FileViewerContainer = styled(FileViewer)``;

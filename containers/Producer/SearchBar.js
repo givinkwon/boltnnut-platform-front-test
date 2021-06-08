@@ -46,7 +46,7 @@ class SearchBarConatiner extends React.Component {
       ManufactureProcess.saveSearchText(Partner.search_text);
     }
     Partner.currentPage = 1;
-    Partner.category_dic = {};
+    Partner.resetDevCategory();
     Partner.getPartner();
   };
   closeModal = () => {
@@ -55,7 +55,7 @@ class SearchBarConatiner extends React.Component {
       modal_open: false,
     });
   };
-  handleKeyDown = (e) => {
+  handleKeyDown = async (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
       console.log("Enter");
@@ -64,8 +64,9 @@ class SearchBarConatiner extends React.Component {
       if (Partner.search_text != null) {
         ManufactureProcess.saveSearchText(Partner.search_text);
       }
+
       Partner.currentPage = 1;
-      Partner.category_dic = {};
+      await Partner.resetDevCategory();
       Partner.getPartner();
     }
   };
@@ -153,6 +154,7 @@ const SearchBar = styled.div`
     }
     ::placeholder{
       color: #c1bfbf;
+      
     }
   }
 
@@ -166,18 +168,27 @@ const SearchBar = styled.div`
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     // margin-top: 30px;
+    width: 400px;
     input {
       font-size: 16px;
+
+      ::placeholder{
+        font-size:13px;
+      }
     }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     // margin-top: 40px;
+    width: 500px;
     input {
       font-size: 17px;
+      ::placeholder{
+        font-size:15px;
+      }
     }
   }
   @media (min-width: 1300px) {
-    width: 660px;
+    width: 600px;
     input {
       font-size: 18px;
     }
@@ -189,9 +200,16 @@ const Form = styled.div`
   display: flex;
   justify-content: flex-start;
   height: 50px;
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 54%;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 67%;
+  }
+
   @media (min-width: 1300px) {
     //margin-top: 0;
-    width: 90%;
+    width: 75%;
   }
 `;
 
@@ -230,6 +248,19 @@ const Select = styled(SelectComponent)`
     background-color: #ffffff;
     position: relative;
   }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 120px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 140px;
+    > input {
+      ::placeholder {
+        font-size: 15px;
+      }
+    }
+  }
+
   @media (min-width: 1300px) {
     width: 125px;
   }
@@ -237,6 +268,13 @@ const Select = styled(SelectComponent)`
 
 const Box = styled.div`
   width: 220px;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 120px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 140px;
+  }
 
   @media (min-width: 1300px) {
     width: 125px;

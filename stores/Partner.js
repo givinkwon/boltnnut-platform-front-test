@@ -18,6 +18,9 @@ class Partner {
 
   // "/mainCategory"
   @observable category_list = [];
+  @observable category_main_list = [];
+  @observable category_middle_total_ary = [];
+  @observable category_middle_ary = [];
   @observable category_middle_list = [];
   @observable request_middle_list = [];
   @observable develop_list = [];
@@ -42,11 +45,13 @@ class Partner {
   @observable partnerdata = "";
   @observable select_big = null;
   @observable select_mid = null;
+  @observable select_city = null;
   @observable loading = 0;
 
   // 필터 & 라디오박스 관련 변수
   @observable filter_region = 0;
   @observable filter_category = 0;
+  @observable filter_detail_category = 0;
 
   @observable filter_filter = 0;
   @observable filter_budget = 0;
@@ -65,6 +70,7 @@ class Partner {
   @observable city_ary = [];
   @observable filter_city_ary = [{ id: 0, city: "전체" }];
   @observable city_next = 0;
+  @observable city_name = "";
 
   @observable filter_checked_idx = 0;
 
@@ -73,19 +79,41 @@ class Partner {
   @observable input_big_category = null;
   @observable input_small_category = null;
 
+  @observable input_max_budget = null;
+  @observable input_min_budget = null;
+
   @observable category_ary = [];
   @observable category_name_ary = [];
   @observable category_name_list = null;
   @observable temp_category_name_ary = [];
-  @observable category_dic = {};
+  @observable category_dic = {
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    7: [],
+    8: [],
+    9: [],
+  };
   @observable check_loading_category = false;
   @observable check_click_filter = false;
+  @observable check_loading_develop = false;
 
   @observable modalActive = false;
+  @observable requestModalActive = false;
+  @observable requestDoneModalActive = false;
   @observable ReviewActive = false;
   @observable reviewModalActive = false;
   @observable ReviewActiveIndex = -1;
   @observable modalUserPhone = "";
+  @observable filterFile = false;
+
+  @observable filterLoading = true;
+
+  @observable filterList = [];
   // @observable img = "";
   @observable selectedIntroductionFile = null;
   @observable selectedIntroductionFileType = null;
@@ -97,6 +125,27 @@ class Partner {
     { id: 4, checked: false },
     { id: 5, checked: false },
   ];
+
+  @observable filterArray = [
+    // { id: 1, name: "전체", checked: false },
+    { id: 1, name: "샘플제작", checked: false },
+    { id: 2, name: "OEM", checked: false },
+    { id: 3, name: "ODM", checked: false },
+    { id: 4, name: "금형/사출", checked: false },
+    { id: 5, name: "대량가공", checked: false },
+    { id: 6, name: "기타", checked: false },
+  ];
+
+  @observable detailFilterArray = [
+    // { id: 1, name: "전체", checked: false },
+    { id: 1, name: "샘플제작", checked: false },
+    { id: 2, name: "OEM", checked: false },
+    { id: 3, name: "ODM", checked: false },
+    { id: 4, name: "금형/사출", checked: false },
+    { id: 5, name: "대량가공", checked: false },
+    { id: 6, name: "기타", checked: false },
+  ];
+
   @observable partnerName = "";
   @observable reviewPartnerName = 0;
   @observable reviewScore = "";
@@ -110,13 +159,55 @@ class Partner {
   @observable review_user_ary = [];
 
   @observable newIndex = 0;
+  @observable mobileRequestIndex = 0;
 
   @observable portFolioList = [];
+
+  @observable minDirectInput = false;
+  @observable maxDirectInput = false;
+  @observable detailMinDirectInput = false;
+  @observable detailMaxDirectInput = false;
+
+  @observable fileArray = [];
+  @observable detailRequestTitle = null;
+  @observable detailRequestEmail = null;
+  @observable detailRequestPhone = null;
+  @observable detail_select_city = null;
+  @observable input_detail_min_budget = null;
+  @observable input_detail_max_budget = null;
+  @observable input_detail_big_category = null;
+  @observable input_detail_small_category = null;
+  @observable input_detail_direct_min_budget = null;
+  @observable input_detail_direct_max_budget = null;
+
+  @observable filter_categorys = "";
+  @observable filter_ary = [];
+  @observable filter_begin_idx = "";
+  @observable filter_end_idx = "";
+
+  @observable filter_begin_id = "";
+  @observable filter_end_id = "";
 
   // 파트너의 답변
   @observable answer_set = [];
 
   @observable clientInfo = [];
+
+  @action resetDevCategory = () => {
+    this.category_dic = {
+      0: [],
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: [],
+      7: [],
+      8: [],
+      9: [],
+    };
+  };
+
   @action setProcessFilter = (val) => {
     this.input_process_filter = val;
     console.log(toJS(this.input_process_filter));
@@ -125,12 +216,99 @@ class Partner {
     this.getPartner();
   };
 
+  // 수정필요!
   @action setBigCategory = (val) => {
     this.input_big_category = val;
   };
 
+  @action setMainCategory = async (val) => {
+    this.input_big_category = val;
+
+    console.log(val);
+    this.request_middle_list = this.input_big_category.category_set;
+    // this.selectedMidCategory = obj.category_set[0];
+    this.category_middle_ary = await this.category_middle_total_ary.filter(
+      (item) => item.maincategory === val.id
+    );
+
+    console.log(toJS(this.category_middle_ary));
+    console.log(toJS(this.category_middle_total_ary));
+    console.log(
+      toJS(
+        this.category_middle_total_ary.filter(
+          (item) => item.maincategory === val.id
+        )
+      )
+    );
+    this.input_small_category = this.category_middle_ary[0];
+    console.log(this.input_small_category);
+  };
+
   @action setSmallCategory = (val) => {
     this.input_small_category = val;
+  };
+
+  @action setDetailBigCategory = async (val) => {
+    this.input_detail_big_category = val;
+
+    this.request_middle_list = this.input_detail_big_category.category_set;
+    // this.selectedMidCategory = obj.category_set[0];
+    this.category_middle_ary = await this.category_middle_total_ary.filter(
+      (item) => item.maincategory === val.id
+    );
+
+    this.input_detail_small_category = this.category_middle_ary[0];
+  };
+
+  @action setDetailSmallCategory = (val) => {
+    this.input_detail_small_category = val;
+  };
+
+  @action setMinBudget = (val) => {
+    this.input_min_budget = val;
+    console.log(val);
+    if (val.label === "직접 입력") {
+      console.log("true");
+      this.minDirectInput = true;
+    } else {
+      console.log("false");
+      this.minDirectInput = false;
+    }
+  };
+
+  @action setMaxBudget = (val) => {
+    this.input_max_budget = val;
+    if (val.label === "직접 입력") {
+      console.log("true");
+      this.maxDirectInput = true;
+    } else {
+      console.log("false");
+      this.maxDirectInput = false;
+    }
+  };
+
+  @action setDetailMinBudget = (val) => {
+    this.input_detail_min_budget = val;
+    console.log(val);
+    if (val.label === "직접 입력") {
+      console.log("true");
+      this.detailMinDirectInput = true;
+    } else {
+      console.log("false");
+      this.detailMinDirectInput = false;
+    }
+  };
+
+  @action setDetailMaxBudget = (val) => {
+    this.input_detail_max_budget = val;
+    console.log(val);
+    if (val.label === "직접 입력") {
+      console.log("true");
+      this.detailMaxDirectInput = true;
+    } else {
+      console.log("false");
+      this.detailMaxDirectInput = false;
+    }
   };
 
   @action setCategory = (val) => {
@@ -155,14 +333,20 @@ class Partner {
     this.loading = 1;
   };
 
-  @action init = () => {
+  @action init = async () => {
     CategoryAPI.getMainCategory()
-      .then((res) => {
+      .then(async (res) => {
+        this.category_main_list = res.data.results;
         this.big_category_all = res.data.results;
         console.log(res.data.results.splice(0, 4));
         this.category_list = res.data.results;
         this.category_list.forEach((mainCategory) => {
           this.category_middle_list = this.category_middle_list.concat(
+            mainCategory.category_set
+          );
+        });
+        await this.category_main_list.map((mainCategory) => {
+          this.category_middle_total_ary = this.category_middle_total_ary.concat(
             mainCategory.category_set
           );
         });
@@ -236,6 +420,28 @@ class Partner {
   };
   @action setMidCategory = (obj) => {
     this.select_mid = obj;
+  };
+
+  @action setCityCategory = (val) => {
+    console.log(val);
+    this.select_city = val;
+    this.filter_region = val.id;
+
+    console.log(toJS(this.filter_region));
+    this.partner_next = null;
+    this.partner_count = null;
+
+    this.currentPage = 1;
+
+    // this.category_dic = {};
+    this.resetDevCategory();
+
+    this.getPartner();
+  };
+
+  @action setDetailCityCategory = (val) => {
+    this.detail_select_city = val;
+    console.log(this.detail_select_city);
   };
 
   @action setParentList = (state, data, type) => {
@@ -807,7 +1013,7 @@ class Partner {
   };
 
   @action getCategory = () => {
-    //this.filter_category_ary = [];
+    this.filter_category_ary = [];
 
     const req = {
       // nextUrl: this.develop_next,
@@ -900,9 +1106,9 @@ class Partner {
         // console.log(toJS(res.data.results));
         // console.log(toJS(typeof this.filter_city_ary));
         // console.log(toJS(this.filter_city_ary));
-        this.filter_city_ary = this.filter_city_ary.filter(
-          (item) => item.id === 0 || item.id < 9
-        );
+        // this.filter_city_ary = this.filter_city_ary.filter(
+        //   (item) => item.id === 0 || item.id < 9
+        // );
 
         // this.city_ary = this.city_ary.filter((item) => item.id < 9);
         // console.log(toJS(this.filter_city_ary));
@@ -913,9 +1119,29 @@ class Partner {
       });
   };
 
+  // @action getCityName = (id) => {
+  //   const req = {
+  //     id: id,
+  //   };
+
+  //   PartnerAPI.getCityName(req)
+  //     .then(async (res) => {
+  //       console.log(res);
+  //       this.city_name = res.data.city;
+  //       console.log(this.city_name);
+  //       // return res.data.city
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //       console.log(e.response);
+  //     });
+  // };
+
   @action getPartner = async (page = 1) => {
     this.partner_list = [];
     this.category_ary = [];
+    this.resetDevCategory();
+    // console.log(toJS(this.category_dic));
     //this.data_dt = [];
     //console.log(this.filter_region);
     const token = localStorage.getItem("token");
@@ -998,7 +1224,7 @@ class Partner {
     // }
 
     await PartnerAPI.getPartners(req)
-      .then((res) => {
+      .then(async (res) => {
         this.partner_list = [];
         this.category_ary = [];
         this.category_name_ary = [];
@@ -1041,9 +1267,9 @@ class Partner {
         });
 
         // //async function temp() {
-        this.category_ary.map((data, id) => {
+        await this.category_ary.map(async (data, id) => {
           //console.log(toJS(data));
-          data.map((sub_data, index) => {
+          await data.map(async (sub_data, index) => {
             // console.log(toJS(sub_data));
 
             // console.log(id);
@@ -1052,7 +1278,7 @@ class Partner {
             };
 
             //console.log(index);
-            this.setCategoryDic(req, sub_data, id);
+            await this.setCategoryDic(req, sub_data, id);
           });
         });
         // }
@@ -1121,6 +1347,9 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    this.check_loading_develop = true;
+    console.log(this.check_loading_develop);
+    this.filterLoading = true;
   };
 
   @action getReview = async (page = 1, clientId = "") => {

@@ -13,13 +13,17 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
 import DetailContainer from "./Detail/index";
+import MobileRequest from "./MobileRequest";
+import MobileRequestDone from "./MobileRequestDone";
 
 @inject("Auth", "Partner")
 @observer
 class ManufacturerConatiner extends React.Component {
   async componentDidMount() {
     const { Auth, Partner } = this.props;
+    Partner.init();
     Partner.newIndex = 0;
+    Partner.mobileRequestIndex = 0;
     await Auth.checkLogin();
   }
 
@@ -36,9 +40,9 @@ class ManufacturerConatiner extends React.Component {
                   <Background>
                     <Container>
                       {/* <SearchBar /> */}
-                      <SearchFilterBox />
-                    </Container>
-                  </Background>
+                      <SearchFilterBox width={this.props.width} />
+                      </Container>
+                    </Background>
 
                   <ContentContainer width={this.props.width} />
                 </>
@@ -49,9 +53,19 @@ class ManufacturerConatiner extends React.Component {
             </div>
           ) : (
             <>
-              {console.log(this.props.width)}
-              <MobileSearchBar />
-              <MobileContentContainer width={this.props.width} />
+              {Partner.mobileRequestIndex == 0 && (
+                <>
+                  <MobileSearchBar width={this.props.width} />
+                  {/* <SearchFilterBox width={this.props.width} /> */}
+                  <MobileContentContainer width={this.props.width} />
+                </>
+              )}
+              {Partner.mobileRequestIndex == 1 && (
+                <MobileRequest width={this.props.width} />
+              )}
+              {Partner.mobileRequestIndex == 2 && (
+                <MobileRequestDone width={this.props.width} />
+              )}
             </>
           ))}
       </>
