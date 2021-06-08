@@ -123,18 +123,19 @@ class ProposalCard extends React.Component {
       Router.push("/login");
     }
   };
-  cardClick = () => {
-    const { data } = this.props;
-    
-    if (this.props.Auth && this.props.Auth.logged_in_user) {
-      if (!data.file) {
-        alert("준비중입니다.");
-      }
+  cardClick = (e) => {
+    e.stopPropagation();
+    if (!this.props.data.file) {
+      alert("해당 회사의 소개서가 존재하지 않습니다!");
+      return;
+    }
     this.props.Partner.selectedIntroductionFile = this.props.data.file;
+
     // Router.push("/manufacturer/detail");
     const fileType = this.props.data.file
       .split(".")
       [this.props.data.file.split(".").length - 1].toLowerCase();
+    this.props.Partner.selectedIntroductionFileType = fileType;
     console.log(this.props.data);
     console.log(fileType);
     console.log(availableFileType);
@@ -200,8 +201,8 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
-              onClick={() => {
-                this.cardClick();
+              onClick={(e) => {
+                this.cardClick(e);
               }}
               onMouseOver={() => {
                 this.activeHandler("active");
@@ -371,7 +372,7 @@ class ProposalCard extends React.Component {
                     <img src={file_img2} />
                     <Link
                       target="_blank"
-                      onClick={() => this.cardClick()}
+                      onClick={(e) => this.cardClick(e)}
                       download
                     >
                       <span>회사 소개서 보기</span>

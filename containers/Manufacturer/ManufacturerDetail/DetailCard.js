@@ -53,7 +53,7 @@ class DetailCardContainer extends React.Component {
             <IntroductionBox>
               <Font24>회사소개서</Font24>
               <FileViewer
-                fileType={"pdf"}
+                fileType={this.props.Partner.selectedIntroductionFileType}
                 filePath={this.props.Partner.selectedIntroductionFile}
                 onError={onError}
               />
