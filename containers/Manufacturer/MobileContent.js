@@ -181,22 +181,22 @@ class MobileManufacturerContentContainer extends React.Component {
                       <Background style={{ marginBottom: "5px" }}>
                         {console.log(this.props.width)}
 
-                        <div
+                        {/* <div
                           style={{ width: "100%" }}
                           onClick={() => this.pushToDetail(item, idx)}
-                        >
-                          <ProposalCard
-                            data={item}
-                            width={this.props.width}
-                            idx={idx}
-                            // middleCategory={Project.middle_category_name[idx]}
-                            // mainCategory={Project.main_category_name[idx]}
-                            // newData={Project.data_dt[idx]}
-                            // checkTotal={Project.filter_price}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
+                        > */}
+                        <ProposalCard
+                          data={item}
+                          width={this.props.width}
+                          idx={idx}
+                          // middleCategory={Project.middle_category_name[idx]}
+                          // mainCategory={Project.main_category_name[idx]}
+                          // newData={Project.data_dt[idx]}
+                          // checkTotal={Project.filter_price}
+                          handleIntersection={this.handleIntersection}
+                          customer="partner"
+                        />
+                        {/* </div> */}
                       </Background>
                     );
                   })}

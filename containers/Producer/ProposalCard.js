@@ -173,6 +173,10 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
+              <StepTag>
+                <span> 활동가능 </span>
+                <div style={{ borderTop: "9.1px solid #414550" }}></div>
+              </StepTag>
               <BasicInfo>
                 <Header>
                   <Logo>
@@ -315,7 +319,7 @@ class ProposalCard extends React.Component {
                       this.openRequestModal();
                     }}
                   >
-                    <span>비슷한 업체 찾기</span>
+                    <span>견적 & 발주 문의</span>
                   </div>
                   {/* <div>
                     <img src={file_img2} />
@@ -506,7 +510,7 @@ class ProposalCard extends React.Component {
                         }}
                       >
                         <div>
-                          <span>비슷한 업체 찾기</span>
+                          <span>견적 & 발주 문의</span>
                         </div>
                       </button>
                     </ButtonBox>
@@ -547,7 +551,7 @@ const Card = styled.div`
 
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  // overflow: hidden;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 14px;
@@ -945,6 +949,118 @@ const ButtonBox = styled.div`
         line-height: 5px;
         color: #282c36;
       }
+    }
+  }
+`;
+
+const StepTag = styled.div`
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > span {
+      width: 61px;
+      height: 19px;
+      color: #0933b3;
+      font-size: 13px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 34px;
+      letter-spacing: -0.33px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100px;
+    height: 36px;
+    position: absolute;
+    background-color: #0933b3;
+    top: 0;
+    left: -9px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    border-radius: 3px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > div {
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      left: 1px;
+      bottom: -8px;
+      border-left: 9px solid transparent;
+      border-top: 9px solid #0a2165;
+    }
+    > span {
+      font-size: 16px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.88;
+      letter-spacing: -0.16px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100px;
+    height: 36px;
+    position: absolute;
+    background-color: #0933b3;
+    top: 0;
+    left: -9px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    border-radius: 3px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > div {
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      left: 1px;
+      bottom: -8px;
+      border-left: 9px solid transparent;
+      border-top: 9px solid #0a2165;
+    }
+    > span {
+      font-size: 16px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.88;
+      letter-spacing: -0.16px;
+    }
+  }
+  @media (min-width: 1300px) {
+    width: 100px;
+    height: 36px;
+    position: absolute;
+    background-color: #0933b3;
+    top: 0;
+    left: -9px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    border-radius: 3px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > div {
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      left: 1px;
+      bottom: -8px;
+      border-left: 9px solid transparent;
+      border-top: 9px solid #0a2165;
+    }
+    > span {
+      font-size: 16px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.88;
+      letter-spacing: -0.16px;
     }
   }
 `;

@@ -102,6 +102,10 @@ const SliderContainer = styled(Slider)`
       .slick-slide {
         display: flex;
         justify-content: center;
+        > img {
+          width: 121px;
+          height: 121px;
+        }
       }
     }
   }

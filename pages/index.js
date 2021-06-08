@@ -10,7 +10,7 @@ import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 // test
 import HomeConatiner from "containers/Home";
-import Home2Conatiner from "containers/HomeTwo";
+import Home2Conatiner from "containers/Home4";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
@@ -26,6 +26,8 @@ class Home extends React.Component {
   };
   async componentDidMount() {
     this.props.Loading.setOpen(true);
+
+    this.props.Auth.home_index = 0;
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
     this.props.Auth.bgColor = "#ffffff";
@@ -81,18 +83,16 @@ class Home extends React.Component {
             {width && width < 768 && <MobileNav src={logo_ic} width={width} />}
           </>
           <>
-            {
-              width && (
-                // (home_index == 0 ? (
-                //   <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
-                // ) : (
-                //   <Home2Conatiner width={width} reqList={Home.request_list} /> // k-장인 메인 페이지
-                // ))
+            {width && (
+              // (home_index == 0 ? (
+              //   <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
+              // ) : (
+              //   <Home2Conatiner width={width} reqList={Home.request_list} /> // k-장인 메인 페이지
+              // ))
 
-                <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
-                // <Home2Conatiner width={width} reqList={Home.request_list} />
-              ) // k-장인 메인 페이지
-            }
+              <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
+              // <Home2Conatiner width={width} reqList={Home.request_list} /> // k-장인 메인 페이지
+            )}
           </>
           <>{width && <Footer />}</>
         </div>

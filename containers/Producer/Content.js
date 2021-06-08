@@ -220,7 +220,7 @@ class ManufacturerContentContainer extends React.Component {
                     <span style={{ fontWeight: "bold" }}>
                       {Partner.partner_count}개
                     </span>
-                    의 제조사가 있습니다.
+                    의 파트너가 있습니다.
                   </Font20>
                   {/* <span>
               <Font14>모든 제조의뢰</Font14>

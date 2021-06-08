@@ -1,28 +1,28 @@
-import React, {Component} from 'react'
-import styled from "styled-components"
-import { inject, observer } from 'mobx-react'
-import Dialog from "@material-ui/core/Dialog"
-import DialogContent from "@material-ui/core/DialogContent"
+import React, { Component } from "react";
+import styled from "styled-components";
+import { inject, observer } from "mobx-react";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
 
-import * as Text from "components/Text"
-import RatioImage from "components/RatioImage"
+import * as Text from "components/Text";
+import RatioImage from "components/RatioImage";
 
-import * as FormatUtils from 'utils/format'
+import * as FormatUtils from "utils/format";
 
-@inject('Auth')
+@inject("Auth", "Home")
 @observer
 class CheckDeactivateModal extends Component {
   handleClick = async (acceptance) => {
-    const {Auth, handleClose} = this.props
+    const { Auth, handleClose } = this.props;
 
-    await handleClose()
-    if(acceptance) {
-      Auth.deactivateUser();
+    await handleClose();
+    if (acceptance) {
+      Auth.deactivateUser(Home.home_index);
     }
-  }
+  };
 
   render() {
-    const {open, handleClose} = this.props
+    const { open, handleClose } = this.props;
 
     return (
       <StyledDialog
@@ -36,80 +36,88 @@ class CheckDeactivateModal extends Component {
           </Text.FontSize28>
         </DialogBody>
         <DialogFooter>
-          <Text.FontSize32 color="#404040" fontWeight={600} onClick={() => this.handleClick(true)}>
+          <Text.FontSize32
+            color="#404040"
+            fontWeight={600}
+            onClick={() => this.handleClick(true)}
+          >
             예
           </Text.FontSize32>
-          <Text.FontSize32 color="#404040" fontWeight={600} onClick={() => this.handleClick(false)}>
+          <Text.FontSize32
+            color="#404040"
+            fontWeight={600}
+            onClick={() => this.handleClick(false)}
+          >
             아니오
           </Text.FontSize32>
         </DialogFooter>
       </StyledDialog>
-    )
+    );
   }
 }
 
-export default CheckDeactivateModal
+export default CheckDeactivateModal;
 
 const StyledDialog = styled(Dialog)`
-	@media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.98px) {
     > div {
-    	:nth-of-type(3) {
-    		> div {
-    			max-width: 500px;
-    		}
-    	}
+      :nth-of-type(3) {
+        > div {
+          max-width: 500px;
+        }
+      }
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-  	> div {
-    	:nth-of-type(3) {
-    		> div {
-    			width: 720px;
-    			max-width: 720px;
-    		}
-    	}
+    > div {
+      :nth-of-type(3) {
+        > div {
+          width: 720px;
+          max-width: 720px;
+        }
+      }
     }
   }
   @media (min-width: 992px) {
     > div {
-    	:nth-of-type(3) {
-    		> div {
-    			width: 964px;
-    			max-width: 964px;
-    		}
-    	}
+      :nth-of-type(3) {
+        > div {
+          width: 964px;
+          max-width: 964px;
+        }
+      }
     }
   }
-`
+`;
 const DialogBody = styled(DialogContent)`
-	position: relative;
-	background-color: #f5f5f5;
-	padding: 30px 210px !important;
-	> p {
-		word-break: keep-all;
-		text-align: center;
-		line-height: 1.25em;
-	}
-	@media (min-width: 0px) and (max-width: 767.98px) {
+  position: relative;
+  background-color: #f5f5f5;
+  padding: 30px 210px !important;
+  > p {
+    word-break: keep-all;
+    text-align: center;
+    line-height: 1.25em;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 30px 30px !important;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-  	padding: 30px 170px !important;
+    padding: 30px 170px !important;
   }
-`
+`;
 /* ToDo: 중복 */
 const PhoneIcon = styled(RatioImage)`
-	width: 17px;
-	height: 17px;
-	margin-top: -4px;
-	margin-right: 8px;
-`
+  width: 17px;
+  height: 17px;
+  margin-top: -4px;
+  margin-right: 8px;
+`;
 const PhoneInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 7px;
-`
+`;
 
 const DialogFooter = styled(DialogContent)`
   display: flex;
@@ -131,4 +139,4 @@ const DialogFooter = styled(DialogContent)`
       padding: 15px 0 !important;
     }
   }
-`
+`;

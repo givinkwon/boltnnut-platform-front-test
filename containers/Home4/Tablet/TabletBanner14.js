@@ -25,7 +25,7 @@ class TabletBanner14Container extends React.Component {
       dots: true,
       infinite: true,
       speed: 500,
-      slidesToShow: 4,
+      slidesToShow: 6,
       slidesToScroll: 1,
       draggable: true,
       autoplay: true,
@@ -45,28 +45,28 @@ class TabletBanner14Container extends React.Component {
           {...SlideSettings}
           style={{ display: "flex", justifyContent: "center" }}
         >
-          <Item style={{ width: 141, display: "flex" }}>
+          <Item style={{ width: 121, display: "flex" }}>
             <img src={logo_img1} />
           </Item>
-          <Item style={{ width: 141, display: "flex" }}>
+          <Item style={{ width: 121, display: "flex" }}>
             <img src={logo_img2} />
           </Item>
-          <Item style={{ width: 141, display: "flex" }}>
+          <Item style={{ width: 121, display: "flex" }}>
             <img src={logo_img3} />
           </Item>
-          <Item style={{ width: 141, display: "flex" }}>
+          <Item style={{ width: 121, display: "flex" }}>
             <img src={logo_img4} />
           </Item>
-          <Item style={{ width: 141, display: "flex" }}>
+          <Item style={{ width: 121, display: "flex" }}>
             <img src={logo_img5} />
           </Item>
-          <Item style={{ width: 141, display: "flex" }}>
+          <Item style={{ width: 121, display: "flex" }}>
             <img src={logo_img6} />
           </Item>
-          <Item style={{ width: 141, display: "flex" }}>
+          <Item style={{ width: 121, display: "flex" }}>
             <img src={logo_img7} />
           </Item>
-          <Item style={{ width: 141, display: "flex" }}>
+          <Item style={{ width: 121, display: "flex" }}>
             <img src={logo_img8} />
           </Item>
         </SliderContainer>
@@ -104,6 +104,9 @@ const SliderContainer = styled(Slider)`
       .slick-slide {
         display: flex;
         justify-content: center;
+        > img {
+          width: 121px;
+        }
       }
     }
   }

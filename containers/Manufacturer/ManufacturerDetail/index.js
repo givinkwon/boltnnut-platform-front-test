@@ -11,14 +11,14 @@ class ManufacturerDetailConatiner extends React.Component {
             <>
               <Background>
                 <Containerv1>
-                  <DetailCardContainer />
+                  <DetailCardContainer width={this.props.width} />
                 </Containerv1>
               </Background>
             </>
           ) : (
             <Background>
               <Containerv1>
-                <DetailCardContainer />
+                <DetailCardContainer width={this.props.width} />
               </Containerv1>
             </Background>
           ))}

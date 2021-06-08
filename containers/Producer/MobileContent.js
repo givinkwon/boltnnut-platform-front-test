@@ -246,7 +246,7 @@ class MobileManufacturerContentContainer extends React.Component {
                     }}
                   >
                     <Font15>
-                      <span>{Partner.partner_count}개</span>의 제조사
+                      <span>{Partner.partner_count}개</span>의 파트너
                     </Font15>
                     {/* <span>
               <Font14>모든 제조의뢰</Font14>
@@ -291,7 +291,7 @@ class MobileManufacturerContentContainer extends React.Component {
                           Partner.mobileRequestIndex = 1;
                         }}
                       >
-                        <span>제조사 찾기 의뢰하기 </span>
+                        <span>업체수배&견적 무료의뢰 </span>
                       </div>
                       {/* <div>
                         <span>업체 찾기가 힘든 경우 클릭!</span>
@@ -694,13 +694,17 @@ const Header = styled.div`
         padding: 8px 16px 9px 16px;
         box-sizing: border-box;
         font-size: 12px;
-        width: 142px;
+        width: 100%;
         height: 30px;
         margin-bottom: 5px;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        >span{
+          color: #0a2165;
+          font-weight: 500;
+        }
       }
       >div:nth-of-type(2) {
         

@@ -55,6 +55,44 @@ const customStyles = {
   },
 };
 
+const tabletCustomStyles = {
+  container: (base, state) => {
+    return {
+      ...base,
+      zIndex: state.isFocused ? "98" : "auto", //Only when current state focused
+      width: 160,
+    };
+  },
+  dropdownIndicator: () => ({
+    color: "#555555",
+    width: 30,
+    height: 30,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? "#000000" : "#555555",
+    backgroundColor: "#fff",
+    borderRadius: 0,
+    padding: 14,
+    fontSize: 14,
+  }),
+  control: () => ({
+    fontSize: 14,
+    border: "1px solid #e6e6e6",
+    backgroundColor: "#fff",
+    display: "flex",
+    borderRadius: 6,
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+    return { ...provided, opacity, transition };
+  },
+};
+
 const mobileCustomStyles = {
   container: (base, state) => {
     return {
@@ -146,7 +184,7 @@ class SearchFilterConatiner extends React.Component {
                   this.openModal();
                 }}
               >
-                <span>제조사 찾기 의뢰하기 </span>
+                <span>업체수배&견적 무료의뢰 </span>
               </div>
               <div>
                 <span>업체 찾기가 힘든 경우 클릭!</span>
@@ -656,20 +694,27 @@ const Search = styled.div`
     box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
     padding: 8px 16px 9px 16px;
     box-sizing: border-box;
-    width: 195px;
-    height: 44px;
+    width: 248px;
+    height: 42px;
     margin-bottom: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    >span{
+      color: #0a2165;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 28px;
+      letter-spacing: -0.45px;
+    }
   }
   > div:last-child {
     
    
       position: absolute;
       bottom: -25px;
-      right: 7px;
+      right: 34px;
       >span{
         font-size: 14px;
         line-height: 30px;
@@ -689,10 +734,17 @@ const Search = styled.div`
       width:40px;
     }
     >div:nth-of-type(2){
+      width: 170px;
       margin-left:30px;
+
+      >span{      
+        font-size: 14px;        
+        line-height: 28px;
+        letter-spacing: -0.45px;
+      }
     }
     > div:last-child {             
-      right:202px;
+      right:168px;
       >span{
       
       }
@@ -706,12 +758,20 @@ const Search = styled.div`
 
     > div:last-child {             
       // right: 119px;
+      right: 17px;
       >span{
       
       }
     }
     >div:nth-of-type(2){
       margin-left:30px;
+      width:190px;
+
+      >span{        
+        font-size: 16px;        
+        line-height: 28px;
+        letter-spacing: -0.45px;
+      }
     }
   }
   @media (min-width: 1300px) {

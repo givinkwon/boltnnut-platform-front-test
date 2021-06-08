@@ -116,6 +116,7 @@ class Partner {
   @observable filterList = [];
   // @observable img = "";
   @observable selectedIntroductionFile = null;
+  @observable selectedIntroductionFileType = null;
   // 파트너 리뷰
   @observable star_ary = [
     { id: 1, checked: false },

@@ -20,6 +20,7 @@ import { toJS } from "mobx";
 //import Modal from '../../../commons/components/Modals/Modal';
 // import DetailContainerBox from "./DetailSearchFilterBox";
 const pass3 = "static/images/pass3.png";
+const request_modal_img = "static/images/producer/request_modal_img.png";
 
 const customStyles = {
   container: (base, state) => {
@@ -206,6 +207,7 @@ class RequestModal extends React.Component {
     let minValue = 0;
     let maxValue = 0;
 
+    let emailval = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     // console.log(Partner.filter_city_ary);
     // console.log(toJS(Partner.filter_category_ary));
     // console.log(toJS(Partner.filterArray));
@@ -279,6 +281,11 @@ class RequestModal extends React.Component {
       alert("이메일을 다시 입력해주세요.");
       return;
     }
+
+    if (!emailval.test(Partner.detailRequestEmail)) {
+      return alert("올바른 이메일 주소를 입력해주세요");
+    }
+
     if (!Partner.detailRequestPhone) {
       alert("전화번호를 다시 입력해주세요.");
       return;
@@ -489,8 +496,17 @@ class RequestModal extends React.Component {
                   {" "}
                   &times;{" "}
                 </button>
+                <aside>
+                  <img src={request_modal_img} />
+                </aside>
                 <section>
-                  <header>제품에 딱 맞는 제품제조업체 쉽게 찾기</header>
+                  <header>
+                    <span>원하는 업체를 찾기 어려우신가요?</span>
+                    <span>
+                      볼트앤너트 업체 수배 전문가가 숨어있는 공장까지 대신
+                      찾아드립니다.
+                    </span>
+                  </header>
                   {/* <main>{children}</main> */}
                   <main>
                     {/* <DetailContainerBox /> */}
@@ -751,7 +767,7 @@ class RequestModal extends React.Component {
                         // this.onRequestSubmit();
                       }}
                     >
-                      <span>제조사 찾기 의뢰</span>
+                      <span>업체 수배 & 견적 의뢰</span>
                     </div>
                   </footer>
                 </section>
@@ -766,6 +782,9 @@ class RequestModal extends React.Component {
               {" "}
               &times;{" "}
             </button> */}
+              {/* <aside>
+                <img src={request_modal_img} />
+              </aside> */}
               <section>
                 {/* <header>제품에 딱 맞는 제품제조업체 쉽게 찾기</header> */}
                 {/* <main>{children}</main> */}
@@ -1021,7 +1040,7 @@ class RequestModal extends React.Component {
                       // this.onRequestSubmit();
                     }}
                   >
-                    <span>의뢰하기</span>
+                    <span>업체 수배 & 견적 의뢰</span>
                   </div>
                 </footer>
               </section>
@@ -1453,6 +1472,11 @@ const Layer = styled.div`
 
 const MobileContainer = styled.div`
   margin-bottom: 64px;
+  > aside {
+    position: absolute;
+    top: 90px;
+    right: 60px;
+  }
   > section {
     padding: 0 10px;
     max-width: 100%;
@@ -1533,7 +1557,11 @@ const ModalBox = styled.div`
   border-radius: 10px;
   padding-bottom: 48px;
   box-sizing: border-box;
-
+  > aside {
+    position: absolute;
+    top: 190px;
+    right: 160px;
+  }
   > section {
     // max-width: 900px;
     width: 100%;
@@ -1549,13 +1577,30 @@ const ModalBox = styled.div`
       padding-top: 72px;
       //padding-top: 0;
       //background-color: #f1f1f1;
-      font-weight: 700;
+      // font-weight: 700;
       // margin-bottom: 30px;
       text-align: center;
       //   border-bottom: 3px solid #f1f1f1;
-      font-size: 30px;
+      // font-size: 30px;
       z-index: -1;
       margin-bottom: 60px;
+      > span {
+        color: #282c36;
+        display: block;
+      }
+      > span:nth-of-type(1) {
+        font-size: 24px;
+        line-height: 40px;
+        letter-spacing: -0.6px;
+
+        font-weight: bold;
+      }
+      > span:nth-of-type(2) {
+        font-size: 18px;
+        line-height: 34px;
+        letter-spacing: -0.45px;
+        font-weight: normal;
+      }
     }
     > main {
       background-color: white;
