@@ -27,11 +27,11 @@ class MobileBanner2Container extends React.Component {
               />
             </ImgContainer>
             <Body>
-              제조사별 견적 도출 데이터를 학습한 AI 시스템이
-              <br />
-              제작 가능 전문 업체와 견적을 바로 안내드립니다.
-              <br />
-              지금 바로 확인하세요.
+            남동공단부터 창원까지
+                <br />
+                선별된 5000여 개 제조사 정보를
+                <br />
+                지금 바로 확인하세요.
             </Body>
           </Fade>
         </ContentContainer>

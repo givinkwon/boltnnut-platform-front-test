@@ -30,9 +30,9 @@ class TabletBanner11Container extends React.Component {
                 </p>
               </Middle>
               <Body>
-                제조사별 견적 도출 데이터를 학습한 AI 시스템이
+              민감한 연구개발 정보는 내가 소통하고
                 <br />
-                제작 가능 전문 업체와 견적을 바로 안내드립니다.
+                검증한 업체에게만 공개할 수 있습니다.
               </Body>
             </div>
             <div>

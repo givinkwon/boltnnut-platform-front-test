@@ -525,11 +525,13 @@ class ProposalCard extends React.Component {
                 this.props.dropDownIdx === this.props.idx && (
                   <DetailInfo onClick={(e) => e.stopPropagation()}>
                     {/* <h1>DetailInfo 입니다</h1> */}
-                    <Portfolio
-                      width={width}
-                      style={{ paddingRight: "34px", boxSizing: "border-box" }}
-                      file={Partner.partner_detail_list[0].item.file}
-                    />
+                    <NoPortfolio>
+                  <div onClick={(e) => {
+                      this.cardClick(e);
+                    }}>
+                    <span>회사소개서 보기</span>
+                  </div>
+                </NoPortfolio>
                     <DetailInfoContent>
                       <div>
                         <label>
