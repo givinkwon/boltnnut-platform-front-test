@@ -64,7 +64,7 @@ class NoProject extends React.Component {
                     </HomeBtn>
                   )}
                   {Auth.home_index === 1 && (
-                    <HomeBtn onClick={() => Router.push("/1")}>
+                    <HomeBtn onClick={() => Router.push("/5")}>
                       홈으로 가기
                     </HomeBtn>
                   )}
@@ -123,7 +123,7 @@ class NoProject extends React.Component {
                     </HomeBtn>
                   )}
                   {Auth.home_index === 1 && (
-                    <HomeBtn onClick={() => Router.push("/1")}>
+                    <HomeBtn onClick={() => Router.push("/5")}>
                       홈으로 가기
                     </HomeBtn>
                   )}
