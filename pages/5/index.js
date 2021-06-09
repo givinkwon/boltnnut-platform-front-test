@@ -23,11 +23,10 @@ class Index extends React.Component {
     //창 크기
     // conflict..?
     this.props.Auth.home_index = 1;
-
+    this.props.Auth.bgColor = "#f6f6f6";
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-    let tar = document.getElementById("__next");
-    tar.parentNode.innerHTML = tar.children[0].innerHTML;
+    console.log(this.state.width);
   }
 
   componentWillUnmount() {
@@ -67,13 +66,14 @@ class Index extends React.Component {
           {/* Title */}
           <title>볼트앤너트</title>
         </Head>
+
         <>
-          {width && width > 767.98 ? (
-            <Nav />
-          ) : (
-            <MobileNav src={logo_ic} width={width} />
+          {width && width > 767.98 && <Nav index={Home.home_index} />}
+          {width && width < 768 && (
+            <MobileNav src={logo_ic} width={width} index={Home.home_index} />
           )}
         </>
+
         {/* <>
           {width &&
             (width > 767.98 ? (
@@ -88,8 +88,13 @@ class Index extends React.Component {
               </>
             ))}
         </> */}
+<<<<<<< HEAD:pages/5/index.js
         {width && <Home1Container width={width} />}
         {width && <Footer />}
+=======
+        {width && <Home1Container width={width} /> }
+        {width && <Footer /> }
+>>>>>>> 3f56e6364431d6d97f30c3182c4596c1e6ce3d74:pages/1/index.js
       </div>
     );
   }
