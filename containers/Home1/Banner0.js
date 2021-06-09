@@ -88,17 +88,22 @@ class Banner0Container extends React.Component {
                 전문 업체만 고르세요. 견적은 1초만에 드릴게요.
               </Title.FontSize56>
 
-              <Title.FontSize56 
+              <Title.FontSize56
                 color={WHITE}
                 shadow={"0 3px 6px rgba(0,0,0,0.61);"}
                 fontWeight={"bold"}
-                style={{ lineHeight: 1.49, fontSize: "52px" }}>
+                style={{ lineHeight: 1.49, fontSize: "52px" }}
+              >
                 전문 업체 수배 플랫폼, 볼트앤너트
               </Title.FontSize56>
               <Explanation>
-                <Font24>견적 고민 이제 그만! 제조사별 견적 AI 시스템으로</Font24>
+                <Font24>
+                  견적 고민 이제 그만! 제조사별 견적 AI 시스템으로
+                </Font24>
                 <Font24>합리적인 견적 받고, 5000여개 제조사 정보로</Font24>
-                <Font24 style={{ marginBottom: 0 }}>전문 업체만 골라보세요.</Font24>
+                <Font24 style={{ marginBottom: 0 }}>
+                  전문 업체만 골라보세요.
+                </Font24>
               </Explanation>
 
               {Auth.logged_in_user && Auth.logged_in_user.type === 1 ? (

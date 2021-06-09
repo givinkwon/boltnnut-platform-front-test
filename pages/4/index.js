@@ -13,7 +13,7 @@ const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
 @inject("Auth", "Home")
 @observer
-class Home4 extends React.Component {
+class Index extends React.Component {
   state = {
     width: 0,
     home_index: 4,
@@ -93,4 +93,4 @@ class Home4 extends React.Component {
   }
 }
 
-export default Home4;
+export default Index;
