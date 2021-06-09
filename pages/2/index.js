@@ -60,8 +60,8 @@ class Index extends React.Component {
             property="og:description"
             content="제품군별 제조 전문가 큐레이션 플랫폼 볼트앤너트. 믿음직한 제품 개발업체를 만나는 가장 쉬운 방법! 시제품부터 생활용품까지 모두 OK!"
           />
-          <meta property="og:url" content="https://www.boltnnut.com/4" />
-          {/* Title */}
+          <meta property="og:url" content="https://www.boltnnut.com/2" />
+
           <title>볼트앤너트</title>
         </Head>
 
@@ -86,8 +86,8 @@ class Index extends React.Component {
               </>
             ))}
         </> */}
-        {width && <Home2Container width={width} /> }
-        {width && <Footer /> }
+        {width && <Home2Container width={width} />}
+        {width && <Footer />}
       </div>
     );
   }

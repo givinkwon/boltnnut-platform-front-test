@@ -69,7 +69,7 @@ class Nav extends React.Component {
           } else if (this.props.Auth.home_index === 2) {
             Router.push("/2");
           } else if (this.props.Auth.home_index === 1) {
-            Router.push("/1");
+            Router.push("/5");
           } else {
             Router.push("/");
           }
@@ -159,7 +159,7 @@ class Nav extends React.Component {
                 <Logo src={logo_ic} onClick={() => Router.push("/2")} />
               )}
               {Auth.home_index === 1 && (
-                <Logo src={logo_ic} onClick={() => Router.push("/1")} />
+                <Logo src={logo_ic} onClick={() => Router.push("/5")} />
               )}
               {Auth.home_index === 0 && (
                 <Logo src={logo_ic} onClick={() => Router.push("/")} />
@@ -309,8 +309,7 @@ class Nav extends React.Component {
                   >
                     프로젝트 관리
                   </ButtonContainer>
-                ) : (
-                  Auth.home_index === 4  ? (
+                ) : Auth.home_index === 4 ? (
                   <ButtonContainer
                     first
                     onClick={() => Router.push("/producer")}
@@ -318,10 +317,7 @@ class Nav extends React.Component {
                   >
                     업체 찾기
                   </ButtonContainer>
-                  )
-                  :
-                  (
-                  Auth.home_index === 2 ? (
+                ) : Auth.home_index === 2 ? (
                   <ButtonContainer
                     first
                     onClick={() => Router.push("/manufacturer")}
@@ -329,10 +325,7 @@ class Nav extends React.Component {
                   >
                     업체 찾기
                   </ButtonContainer>
-                  )
-                  :
-                  (
-                  Auth.home_index === 1 ? (
+                ) : Auth.home_index === 1 ? (
                   <ButtonContainer
                     first
                     onClick={() => Router.push("/request")}
@@ -340,19 +333,14 @@ class Nav extends React.Component {
                   >
                     견적 받기
                   </ButtonContainer>
-                  )
-                  :
-                  (
-                    <ButtonContainer
+                ) : (
+                  <ButtonContainer
                     first
                     onClick={() => Router.push("/request")}
                     active={url.indexOf("request") > -1}
                   >
                     상담 받기
                   </ButtonContainer>
-                  )
-                  )
-                  )
                 )}
               </Menu>
               <Icon
