@@ -53,7 +53,7 @@ class MobileNav extends React.Component {
           } else if (Auth.home_index === 2) {
             Router.push("/2");
           } else if (Auth.home_index === 1) {
-            Router.push("/1");
+            Router.push("/5");
           } else {
             Router.push("/");
           }
@@ -149,7 +149,7 @@ class MobileNav extends React.Component {
                         } else if (Auth.home_index === 2) {
                           Router.push("/2");
                         } else if (Auth.home_index === 1) {
-                          Router.push("/1");
+                          Router.push("/5");
                         } else {
                           Router.push("/");
                         }
