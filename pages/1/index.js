@@ -84,8 +84,8 @@ class Index extends React.Component {
               </>
             ))}
         </> */}
-        <Home1Container width={width} />
-        <Footer />
+         {width && <Home1Container width={width} /> }
+         {width && <Footer /> }
       </div>
     );
   }

@@ -95,7 +95,7 @@ class TabletBanner0Container extends React.Component {
                   marginRight: "auto",
                   fontWeight: 700,
                 }}
-                onClick={() => Router.push("/request")}
+                onClick={() => Router.push("/manufacturer")}
               >
                 전문 업체 찾아보기
               </Buttonv1>
@@ -114,7 +114,7 @@ class TabletBanner0Container extends React.Component {
                   style={{ marginRight: 8, width: "12px", height: "12px" }}
                 ></img>
                 <span style={{ fontSize: "13px", opacity: "0.8" }}>
-                  모든 업로드는 안전하고 기밀입니다.
+                민감 정보는 비공개로 작성 후 선택 공개하세요
                 </span>
               </div>
             </>

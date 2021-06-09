@@ -29,11 +29,11 @@ class Banner4Container extends React.Component {
                 <span>5000개의 전국 제조사 정보 제공</span>
               </Middle>
               <Body>
-                남동공단부터 창원까지,
-                <br />
-                선별된 5000여 개 제조사 정보를
-                <br />
-                지금 바로 확인하세요.
+                
+                <span>남동공단부터 창원까지</span>
+
+                <span>선별된 5000여 개 제조사 정보를</span>
+                <span> 지금 바로 확인하세요.</span>
               </Body>
             </div>
           </Fade>
@@ -72,13 +72,14 @@ const Middle = styled(Title.FontSize56)`
   }
 `;
 const Body = styled(Title.FontSize24)`
-  white-space: nowrap;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67;
   letter-spacing: -0.6px;
-  text-align: left;
+  //color: #cedafe;
   color: #282c36;
-  font-size: 17px !important;
+  > span {
+    display: block;
+  }
 `;

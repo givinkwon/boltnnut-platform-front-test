@@ -175,11 +175,45 @@ class MobileNav extends React.Component {
                   <FreeButton onClick={() => Router.push("/project")}>
                     <span style={{ marginTop: 1 }}>프로젝트 찾아보기</span>
                   </FreeButton>
-                ) : (
+                ) : 
+                (
+                  Auth.home_index === 1 ? (
                   <FreeButton onClick={() => Router.push("/request")}>
-                    <span style={{ marginTop: 1 }}>무료 상담 및 견적 받기</span>
+                    <span style={{ marginTop: 1 }}>바로 견적 받고 업체 비교</span>
                   </FreeButton>
-                )}
+                  
+                  )
+                  
+                  :
+                  
+                  (
+                    Auth.home_index === 2 ? (
+                    <FreeButton onClick={() => Router.push("/manufacturer")}>
+                      <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
+                    </FreeButton>    
+                    ) 
+                    
+                    :
+                    
+                    (
+                      Auth.home_index === 3 ? (
+                        <FreeButton onClick={() => Router.push("/request")}>
+                          <span style={{ marginTop: 1 }}>무료 상담 및 견적 받기</span>
+                        </FreeButton>  
+                      )
+                    
+                      :
+                    
+                      (
+                        <FreeButton onClick={() => Router.push("/producer")}>
+                          <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
+                        </FreeButton>  
+                      )
+                    )
+                  )
+                )
+                
+                }
               </ModalHeader>
               <>
                 <ModalContent>

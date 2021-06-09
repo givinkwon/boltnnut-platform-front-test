@@ -26,7 +26,7 @@ class Banner4Container extends React.Component {
             </div>
 
             <div>
-              <Header>제조사 정보 제공 서비스</Header>
+              <Header>제조사 정보 제공 서비스</Header>
               <Middle>
                 <span>포트폴리오부터 계약 후기까지!<br />
                 5000개의 전국 제조사 정보 제공</span>
@@ -34,9 +34,9 @@ class Banner4Container extends React.Component {
                 <span>5000개의 전국 제조사 정보 제공</span> */}
               </Middle>
               <Body>
-                제조사별 견적 도출 데이터를 학습한 AI 시스템이
+                남동공단부터 창원까지
                 <br />
-                제작 가능 전문 업체와견적을 바로 안내드립니다.
+                선별된 5000여 개 제조사 정보를
                 <br />
                 지금 바로 확인하세요.
               </Body>
