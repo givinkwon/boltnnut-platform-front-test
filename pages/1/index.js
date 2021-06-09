@@ -13,7 +13,7 @@ const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
 @inject("Auth", "Home")
 @observer
-class Home1 extends React.Component {
+class Index extends React.Component {
   state = {
     width: 0,
     home_index: 3,
@@ -23,10 +23,9 @@ class Home1 extends React.Component {
     //창 크기
     // conflict..?
     this.props.Auth.home_index = 1;
-    this.props.Auth.bgColor = "#f6f6f6";
+
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-    console.log(this.state.width);
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -60,18 +59,17 @@ class Home1 extends React.Component {
             property="og:description"
             content="제품군별 제조 전문가 큐레이션 플랫폼 볼트앤너트. 믿음직한 제품 개발업체를 만나는 가장 쉬운 방법! 시제품부터 생활용품까지 모두 OK!"
           />
-          <meta property="og:url" content="https://www.boltnnut.com/4" />
+          <meta property="og:url" content="https://www.boltnnut.com/1" />
           {/* Title */}
           <title>볼트앤너트</title>
         </Head>
-
         <>
-          {width && width > 767.98 && <Nav index={Home.home_index} />}
-          {width && width < 768 && (
-            <MobileNav src={logo_ic} width={width} index={Home.home_index} />
+          {width && width > 767.98 ? (
+            <Nav />
+          ) : (
+            <MobileNav src={logo_ic} width={width} />
           )}
         </>
-
         {/* <>
           {width &&
             (width > 767.98 ? (
@@ -93,4 +91,4 @@ class Home1 extends React.Component {
   }
 }
 
-export default Home1;
+export default Index;
