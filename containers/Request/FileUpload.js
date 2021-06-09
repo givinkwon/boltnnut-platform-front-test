@@ -242,6 +242,7 @@ class FileUploadContainer extends Component {
     const { projectname, purposeAry } = this.state;
     const { ManufactureProcess, Schedule } = this.props;
 
+    ManufactureProcess.projectSubmitLoading = false;
     console.log(toJS(ManufactureProcess.totalorderPrice));
     let deadline_state = "";
     let processData = "";
@@ -382,6 +383,7 @@ class FileUploadContainer extends Component {
       RequestAPI.create(req)
         .then((res) => {
           console.log("create: ", res);
+          ManufactureProcess.projectSubmitLoading = true;
           this.props.Request.newIndex = 1;
           dataLayer.push({ event: "request_Drawing" });
         })
@@ -2215,7 +2217,11 @@ class FileUploadContainer extends Component {
                       alert("수량을 입력해주세요");
                     } else {
                       ManufactureProcess.checkPaymentButton = true;
-                      this.requestSubmit(1);
+                      if (ManufactureProcess.projectSubmitLoading) {
+                        this.requestSubmit(1);
+                      } else {
+                        alert("요청 중입니다. 잠시만 기다려주세요.");
+                      }
                     }
 
                     // console.log(

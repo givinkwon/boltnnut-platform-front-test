@@ -6,8 +6,10 @@ import ChatCardContainer from "./ChatCard";
 import * as ChatAPI from "axios/Chat";
 import * as PartnerAPI from "axios/Partner";
 import * as RequestAPI from "axios/Request";
-
+import { ROOT_URL } from "axios/index";
 import { toJS } from "mobx";
+
+// console.log(Root);
 @inject("Auth", "Project", "Partner", "Chat")
 @observer
 class ChatTestContainer extends React.Component {
@@ -176,8 +178,12 @@ class ChatTestContainer extends React.Component {
     this.chatSocket.close();
   };
 
+  // chatSocket = new WebSocket(
+  //   `wss://api.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
+  // );
+
   chatSocket = new WebSocket(
-    "wss://test.boltnnut.com/ws/chat/" + `${this.props.roomName}` + "/"
+    `wss://api.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
   );
   userType = null;
 
@@ -273,7 +279,8 @@ class ChatTestContainer extends React.Component {
           if (this.userType === 0) {
             req = {
               phoneNum: this.props.Partner.partnerdata.user.phone,
-              requestTitle: "DDDD",
+              requestTitle: this.props.Project.projectDetailData.request_set[0]
+                .name,
               name: "클라이언트 님", //클라이언트 이름
               text: fullMessage[checkIdx].text,
             };
@@ -281,7 +288,8 @@ class ChatTestContainer extends React.Component {
           else {
             req = {
               phoneNum: "01075731803",
-              requestTitle: "DDDD",
+              requestTitle: this.props.Project.projectDetailData.request_set[0]
+                .name,
               name: this.props.Partner.partnerdata.name, //파트너 이름
               text: fullMessage[checkIdx].text,
             };

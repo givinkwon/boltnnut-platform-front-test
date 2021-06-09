@@ -37,7 +37,7 @@ class Banner12Container extends React.Component {
                 position: "absolute",
                 right: "-7px",
                 top: "39%",
-                backgroundColor: "#ffffff",
+                backgroundColor: "#f6f6f6",
                 zIndex: "1",
               }}
             />
@@ -47,7 +47,7 @@ class Banner12Container extends React.Component {
                 position: "absolute",
                 left: "407px",
                 top: "39%",
-                backgroundColor: "#ffffff",
+                backgroundColor: "#f6f6f6",
                 zIndex: "1",
               }}
             />
@@ -83,7 +83,7 @@ class Banner12Container extends React.Component {
 
         <Containerv1
           style={{
-            paddingBottom: 250,
+            paddingBottom: 200,
             justifyContent: "space-between",
           }}
         >
@@ -127,8 +127,8 @@ class Banner12Container extends React.Component {
                   style={{
                     position: "absolute",
                     right: "15%",
-                    top: "64%",
-                    backgroundColor: "#ffffff",
+                    top: "63%",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
@@ -137,8 +137,8 @@ class Banner12Container extends React.Component {
                   style={{
                     position: "absolute",
                     left: "16%",
-                    top: "64%",
-                    backgroundColor: "#ffffff",
+                    top: "63%",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
@@ -207,8 +207,8 @@ class Banner12Container extends React.Component {
                   style={{
                     position: "absolute",
                     right: "15%",
-                    top: "64%",
-                    backgroundColor: "#ffffff",
+                    top: "63%",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />
@@ -217,8 +217,8 @@ class Banner12Container extends React.Component {
                   style={{
                     position: "absolute",
                     left: "16%",
-                    top: "64%",
-                    backgroundColor: "#ffffff",
+                    top: "63%",
+                    backgroundColor: "#f6f6f6",
                     zIndex: "1",
                   }}
                 />

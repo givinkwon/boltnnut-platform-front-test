@@ -13,7 +13,19 @@ const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
 const file_img2 = "static/images/manufacturer/file.png";
-
+var availableFileType = [
+  "png",
+  "jpeg",
+  "gif",
+  "bmp",
+  "pdf",
+  "csv",
+  "xslx",
+  "docx",
+  "mp4",
+  "webm",
+  "mp3",
+];
 @inject("Partner", "Auth")
 @observer
 class ProposalCard extends React.Component {
@@ -38,9 +50,13 @@ class ProposalCard extends React.Component {
       //this.props.Partner.modalUserPhone.splice(7, 0, "-")
     }
   };
-  closeModal = () => {
+
+  closeModal = (e) => {
+    e.stopPropagation();
+
     console.log("close click");
     this.setState({ modalOpen: false });
+
     this.props.Partner.modalActive = false;
   };
 
@@ -107,6 +123,23 @@ class ProposalCard extends React.Component {
       Router.push("/login");
     }
   };
+  cardClick = () => {
+    this.props.Partner.selectedIntroductionFile = this.props.data.file;
+    // Router.push("/manufacturer/detail");
+    const fileType = this.props.data.file
+      .split(".")
+      [this.props.data.file.split(".").length - 1].toLowerCase();
+    console.log(this.props.data);
+    console.log(fileType);
+    console.log(availableFileType);
+    if (availableFileType.indexOf(fileType) > -1) {
+      console.log("뷰어 페이지 router push");
+      Router.push("/manufacturer/detail");
+    } else {
+      console.log("file download");
+      this.filedownload();
+    }
+  };
 
   onClickReviewHandler = (idx, name) => {
     const { Partner } = this.props;
@@ -167,6 +200,9 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
+              onClick={() => {
+                this.cardClick();
+              }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -325,8 +361,9 @@ class ProposalCard extends React.Component {
               </div>
               <div></div> */}
                   <div
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
+                    style={{ cursor: "pointer", zIndex: 10 }}
+                    onClick={(event) => {
+                      event.stopPropagation();
                       console.log(data.name);
                       console.log(data.user.phone);
                       this.openModal(data.user.phone);
@@ -359,7 +396,7 @@ class ProposalCard extends React.Component {
                     <img src={file_img2} />
                     <Link
                       target="_blank"
-                      onClick={() => this.filedownload()}
+                      onClick={() => this.cardClick()}
                       download
                     >
                       <span>회사 소개서 보기</span>

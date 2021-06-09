@@ -66,6 +66,9 @@ class ManufactureProcess {
   @observable changeProject = false;
   @observable projectname = "";
 
+  @observable projectSubmitLoading = true;
+  @observable nonDrawingProjectSubmitLoading = true;
+
   @action countQuantity = (data) => {
     data.map((item, idx) => {
       console.log(item);
@@ -127,9 +130,9 @@ class ManufactureProcess {
     console.log(toJS(this.detailProcessDataAry));
   };
   @action init = async () => {
-    console.log("Enter init()")
+    console.log("Enter init()");
     await ManufactureProcessAPI.loadTitle().then((res) => {
-      console.log("LoadTitle")
+      console.log("LoadTitle");
       this.title_list = res.data;
       console.log(this.title_list);
       const arr = [...res.data.data];
@@ -154,7 +157,7 @@ class ManufactureProcess {
     });
     this.setDefaultValue("금형사출");
     this.reset();
-    console.log("Close Init")
+    console.log("Close Init");
   };
   @action setQuantity = (val) => {
     console.log(val);
@@ -182,6 +185,10 @@ class ManufactureProcess {
     this.requestComment = "";
     this.requestComment2 = "";
     this.checkFileUpload = false;
+    this.openFileArray = [];
+    this.privateFileArray = [];
+    this.date_conference = false;
+    this.date_undefined = false;
   };
   @action setDefaultValue = (name) => {
     // this.categoryDefaultValue = this.ManufactureProcessList[2];

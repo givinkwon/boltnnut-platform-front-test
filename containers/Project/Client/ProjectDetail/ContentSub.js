@@ -10,13 +10,41 @@ import { toJS } from "mobx";
 const profile = "/static/images/project/user.svg";
 const partnerbadge = "/static/images/project/partnerbadge.svg";
 
-@inject("Request", "ManufactureProcess", "Auth", "Schedule", "Project")
+@inject(
+  "Request",
+  "ManufactureProcess",
+  "Auth",
+  "Schedule",
+  "Project",
+  "Answer"
+)
 @observer
 class ContentSub extends React.Component {
   state = {
     activeOne: false,
     activeTwo: false,
+    isAnswered: false,
   };
+  async componentDidMount() {
+    const { Project, Auth, Answer } = this.props;
+    await Auth.checkLogin();
+    if (this.props.user === "partner") {
+      Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
+        console.log(toJS(Answer.answers));
+        console.log(Auth.logged_in_partner);
+
+        Answer.answers.forEach((answer) => {
+          console.log(answer.partner);
+          console.log(Auth.logged_in_partner.id);
+          if (Auth.logged_in_partner.id === answer.partner) {
+            console.log("RRR");
+            this.setState({ isAnswered: true });
+          }
+        });
+      });
+    }
+  }
+
   changeProject = () => {
     this.props.ManufactureProcess.changeProject = true;
     this.props.ManufactureProcess.checkFileUpload = true;
@@ -25,7 +53,7 @@ class ContentSub extends React.Component {
   exitProject = () => {
     this.props.Project.exitProject(this.props.Project.projectDetailData.id),
       console.log(this.props.Project.projectDetailData.id);
-    alert("상담 모집이 종료되었습니다.")
+    alert("상담 모집이 종료되었습니다.");
   };
 
   activeHandler = (active) => {
@@ -48,7 +76,9 @@ class ContentSub extends React.Component {
     const { Auth, Project } = this.props;
     return (
       <ContainerSub>
-        {this.props.user === "client" && Project.projectDetailData.request_set[0].client == Auth.logged_in_client.id  ? (
+        {this.props.user === "client" &&
+        Project.projectDetailData.request_set[0].client ==
+          Auth.logged_in_client.id ? (
           <>
             <Box3
               style={{ marginBottom: 20 }}
@@ -58,7 +88,7 @@ class ContentSub extends React.Component {
               onClick={async () => {
                 console.log("click!");
                 this.changeProject();
-                console.log(this.props.ManufactureProcess.changeProject)
+                console.log(this.props.ManufactureProcess.changeProject);
                 // Router.push("/request")
               }}
             >
@@ -76,7 +106,6 @@ class ContentSub extends React.Component {
               onClick={async () => {
                 console.log("click!");
                 this.exitProject();
-                
               }}
             >
               <Font18
@@ -87,27 +116,30 @@ class ContentSub extends React.Component {
               </Font18>
             </Box3>
           </>
-        ) : this.props.user === "partner" &&(
-          <>
-            <Box3
-              style={{ marginBottom: 20 }}
-              active={this.state.activeOne}
-              onMouseOver={() => this.activeHandler("activeOne")}
-              onMouseOut={() => this.activeHandler("activeOne")}
-              onClick={async () => {
-                console.log(this.props.Project.newIndex);
-                this.props.Project.newIndex = 2;
-
-              }}
-            >
-              <Font18
-                style={{ fontWeight: "bold" }}
-                active={this.state.activeOne}
-              >
-                프로젝트 답변하기
-              </Font18>
-            </Box3>
-          </>
+        ) : (
+          this.props.user === "partner" && (
+            <>
+              {!this.state.isAnswered && (
+                <Box3
+                  style={{ marginBottom: 20 }}
+                  active={this.state.activeOne}
+                  onMouseOver={() => this.activeHandler("activeOne")}
+                  onMouseOut={() => this.activeHandler("activeOne")}
+                  onClick={async () => {
+                    console.log(this.props.Project.newIndex);
+                    this.props.Project.newIndex = 2;
+                  }}
+                >
+                  <Font18
+                    style={{ fontWeight: "bold" }}
+                    active={this.state.activeOne}
+                  >
+                    프로젝트 답변하기
+                  </Font18>
+                </Box3>
+              )}
+            </>
+          )
         )}
       </ContainerSub>
     );

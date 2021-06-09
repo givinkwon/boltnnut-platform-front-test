@@ -181,28 +181,9 @@ class ManufacturerContentContainer extends React.Component {
                 {Partner.partner_list &&
                   // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
+                    console.log(item);
                     return (
                       <Background style={{ marginBottom: "5px" }}>
-                        {/* {Partner.category_ary[idx] &&
-                          console.log(
-                            toJS(
-                              Partner.category_ary[idx].splice(
-                                0,
-                                //Partner.category_ary[idx].length
-                                Object.keys(Partner.category_ary[idx]).length
-                              )
-                            )
-                          )} */}
-                        {/* Partner.check_loading_category &&  */}
-                        {/* {console.log(toJS(Partner.category_ary[idx]))} */}
-                        {/* {Partner.check_loading_category &&
-                          console.log(toJS(Partner.category_ary[idx]))} */}
-                        {/* {console.log(toJS(Partner.category_dic[idx]))} */}
-                        {/* {console.log(idx)} */}
-                        {/* <div
-                          style={{ width: "100%" }}
-                          onClick={() => this.pushToDetail(item, idx)}
-                        > */}
                         <ProposalCard
                           data={item}
                           width={this.props.width}
@@ -216,7 +197,6 @@ class ManufacturerContentContainer extends React.Component {
                           handleIntersection={this.handleIntersection}
                           customer="partner"
                         />
-                        {/* </div> */}
                       </Background>
                     );
                   })}
