@@ -60,6 +60,26 @@ class ProposalCard extends React.Component {
     this.props.Partner.modalActive = false;
   };
 
+  checkLogin = async () => {
+    const { Auth } = this.props;
+    await Auth.checkLogin();
+
+    if (Auth && Auth.logged_in_user) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  clickLog = (partner) => {
+    const { Auth, Partner } = this.props;
+
+    let formData = new FormData();
+    formData.append("client", Auth.logged_in_client.id);
+    formData.append("search", Partner.search_text);
+    formData.append("partner", partner.id);
+
+    Partner.setclickLog(formData);
+  };
   componentDidMount() {
     const { width } = this.props;
     // console.log(width);
@@ -138,35 +158,40 @@ class ProposalCard extends React.Component {
       Router.push("/login");
     }
   };
-  cardClick = (e) => {
+  cardClick = async (e) => {
     e.stopPropagation();
-    console.log(this.props.data);
-    if (!this.props.data.file) {
-      alert("해당 회사의 소개서가 존재하지 않습니다!");
-      return;
-    }
-    this.props.Partner.selectedIntroductionFile = this.props.data.file;
+    const { data, Partner } = this.props;
 
-    // Router.push("/manufacturer/detail");
-    const fileType = this.props.data.file
-      .split(".")
-      [this.props.data.file.split(".").length - 1].toLowerCase();
-    this.props.Partner.selectedIntroductionFileType = fileType;
-    console.log(this.props.data);
-    console.log(fileType);
-    console.log(availableFileType);
-    console.log(availableFileType.indexOf(fileType));
-    if (availableFileType.indexOf(fileType) > -1) {
-      console.log("뷰어 페이지 router push");
-      Router.push("/manufacturer/detail");
+    if (this.props.Auth && this.props.Auth.logged_in_user) {
+      if (!this.props.data.file) {
+        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        return;
+      }
+      this.props.Partner.selectedIntroductionFile = this.props.data.file;
+
+      // Router.push("/manufacturer/detail");
+      const fileType = this.props.data.file
+        .split(".")
+        [this.props.data.file.split(".").length - 1].toLowerCase();
+      this.props.Partner.selectedIntroductionFileType = fileType;
+      console.log(this.props.data);
+      console.log(fileType);
+      console.log(availableFileType);
+      console.log(availableFileType.indexOf(fileType));
+      if (availableFileType.indexOf(fileType) > -1) {
+        console.log("뷰어 페이지 router push");
+        Partner.partner_detail_list = [];
+        await Partner.partner_detail_list.push({ item: data });
+        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+        Router.push("/manufacturer/detail");
+      } else {
+        console.log("file download");
+        this.filedownload(this.props.data.file);
+      }
     } else {
-      console.log("file download");
-      this.filedownload(this.props.data.file);
+      alert("로그인이 필요합니다.");
+      Router.push("/login");
     }
-    // } else {
-    // alert("로그인이 필요합니다.");
-    // Router.push("/login");
-    // }
   };
 
   onClickReviewHandler = (idx, name) => {
@@ -355,11 +380,16 @@ class ProposalCard extends React.Component {
               <div></div> */}
                   <div
                     style={{ cursor: "pointer", zIndex: 10 }}
-                    onClick={(event) => {
+                    onClick={async (event) => {
                       event.stopPropagation();
-                      // console.log(data.name);
-                      // console.log(data.user.phone);
-                      this.openModal(data.user.phone);
+
+                      if (await this.checkLogin()) {
+                        this.clickLog(data);
+                        this.openModal(data.user.phone);
+                      } else {
+                        alert("로그인이 필요합니다");
+                        Router.push("/login");
+                      }
                     }}
                   >
                     <span>전화번호</span>
@@ -468,11 +498,15 @@ class ProposalCard extends React.Component {
                     <Phone>
                       <div
                         style={{ cursor: "pointer", zIndex: 10 }}
-                        onClick={(e) => {
+                        onClick={async (e) => {
                           e.stopPropagation();
-                          console.log(data.name);
-                          console.log(data.user.phone);
-                          this.openModal(data.user.phone);
+                          if (await this.checkLogin()) {
+                            this.clickLog(data);
+                            this.openModal(data.user.phone);
+                          } else {
+                            alert("로그인이 필요합니다");
+                            Router.push("/login");
+                          }
                         }}
 
                         // onClick={() => {

@@ -13,7 +13,6 @@ import Portfolio from "./Portfolio";
 import CheckBrowserModal from "containers/Home/CheckBrowserModal";
 //import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
 
-
 const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
@@ -72,6 +71,27 @@ class ProposalCard extends React.Component {
     console.log("close click");
     this.setState({ modalOpen: false });
     this.props.Partner.modalActive = false;
+  };
+
+  checkLogin = async () => {
+    const { Auth } = this.props;
+    await Auth.checkLogin();
+
+    if (Auth && Auth.logged_in_user) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  clickLog = (partner) => {
+    const { Auth, Partner } = this.props;
+
+    let formData = new FormData();
+    formData.append("client", Auth.logged_in_client.id);
+    formData.append("search", Partner.search_text);
+    formData.append("partner", partner.id);
+
+    Partner.setclickLog(formData);
   };
 
   componentDidMount() {
@@ -154,33 +174,33 @@ class ProposalCard extends React.Component {
   };
   cardClick = (e) => {
     e.stopPropagation();
-    console.log(this.props.data);
-    if (!this.props.data.file) {
-      alert("해당 회사의 소개서가 존재하지 않습니다!");
-      return;
-    }
-    this.props.Partner.selectedIntroductionFile = this.props.data.file;
+    if (this.props.Auth && this.props.Auth.logged_in_user) {
+      if (!this.props.data.file) {
+        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        return;
+      }
+      this.props.Partner.selectedIntroductionFile = this.props.data.file;
 
-    // Router.push("/manufacturer/detail");
-    const fileType = this.props.data.file
-      .split(".")
-      [this.props.data.file.split(".").length - 1].toLowerCase();
-    this.props.Partner.selectedIntroductionFileType = fileType;
-    console.log(this.props.data);
-    console.log(fileType);
-    console.log(availableFileType);
-    console.log(availableFileType.indexOf(fileType));
-    if (availableFileType.indexOf(fileType) > -1) {
-      console.log("뷰어 페이지 router push");
-      Router.push("/producer/detail");
+      // Router.push("/manufacturer/detail");
+      const fileType = this.props.data.file
+        .split(".")
+        [this.props.data.file.split(".").length - 1].toLowerCase();
+      this.props.Partner.selectedIntroductionFileType = fileType;
+      console.log(this.props.data);
+      console.log(fileType);
+      console.log(availableFileType);
+      console.log(availableFileType.indexOf(fileType));
+      if (availableFileType.indexOf(fileType) > -1) {
+        console.log("뷰어 페이지 router push");
+        Router.push("/producer/detail");
+      } else {
+        console.log("file download");
+        this.filedownload(this.props.data.file);
+      }
     } else {
-      console.log("file download");
-      this.filedownload(this.props.data.file);
+      alert("로그인이 필요합니다.");
+      Router.push("/login");
     }
-    // } else {
-    // alert("로그인이 필요합니다.");
-    // Router.push("/login");
-    // }
   };
 
   onClickReviewHandler = (idx, name) => {
@@ -361,11 +381,15 @@ class ProposalCard extends React.Component {
               <div></div> */}
                   <div
                     style={{ cursor: "pointer" }}
-                    onClick={(e) => {
-                      console.log(data.name);
-                      console.log(data.user.phone);
+                    onClick={async (e) => {
                       e.stopPropagation();
-                      this.openModal(data.user.phone);
+                      if (await this.checkLogin()) {
+                        this.clickLog(data);
+                        this.openModal(data.user.phone);
+                      } else {
+                        alert("로그인이 필요합니다");
+                        Router.push("/login");
+                      }
                     }}
                   >
                     <span>전화번호</span>
@@ -396,12 +420,14 @@ class ProposalCard extends React.Component {
                   <DetailInfo onClick={(e) => e.stopPropagation()}>
                     {/* <h1>DetailInfo 입니다</h1> */}
                     <NoPortfolio>
-                  <div onClick={(e) => {
-                      this.cardClick(e);
-                    }}>
-                    <span>회사소개서 보기</span>
-                  </div>
-                </NoPortfolio>
+                      <div
+                        onClick={(e) => {
+                          this.cardClick(e);
+                        }}
+                      >
+                        <span>회사소개서 보기</span>
+                      </div>
+                    </NoPortfolio>
                     {/* <Portfolio
                       width={width}
                       style={{ paddingRight: "34px", boxSizing: "border-box" }}
@@ -526,12 +552,14 @@ class ProposalCard extends React.Component {
                   <DetailInfo onClick={(e) => e.stopPropagation()}>
                     {/* <h1>DetailInfo 입니다</h1> */}
                     <NoPortfolio>
-                  <div onClick={(e) => {
-                      this.cardClick(e);
-                    }}>
-                    <span>회사소개서 보기</span>
-                  </div>
-                </NoPortfolio>
+                      <div
+                        onClick={(e) => {
+                          this.cardClick(e);
+                        }}
+                      >
+                        <span>회사소개서 보기</span>
+                      </div>
+                    </NoPortfolio>
                     <DetailInfoContent>
                       <div>
                         <label>
@@ -559,11 +587,15 @@ class ProposalCard extends React.Component {
                     <ButtonBox>
                       <button
                         style={{ cursor: "pointer" }}
-                        onClick={(e) => {
-                          console.log(data.name);
-                          console.log(data.user.phone);
+                        onClick={async (e) => {
                           e.stopPropagation();
-                          this.openModal(data.user.phone);
+                          if (await this.checkLogin()) {
+                            this.clickLog(data);
+                            this.openModal(data.user.phone);
+                          } else {
+                            alert("로그인이 필요합니다");
+                            Router.push("/login");
+                          }
                         }}
                       >
                         <div>
@@ -647,14 +679,14 @@ const BasicInfo = styled.div`
     padding: 14px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    padding: 33px 0px 30px 34px;
+    padding: 40px 0px 30px 34px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    padding: 33px 0px 30px 34px;
+    padding: 40px 0px 30px 34px;
   }
 
   @media (min-width: 1300px) {
-    padding: 33px 0px 30px 34px;
+    padding: 40px 0px 30px 34px;
     box-sizing: border-box;
   }
 `;
@@ -672,6 +704,7 @@ const DetailInfoContent = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
 
   div {
     display: flex;

@@ -1119,23 +1119,23 @@ class Partner {
       });
   };
 
-  // @action getCityName = (id) => {
-  //   const req = {
-  //     id: id,
-  //   };
+  @action getCityName = (id) => {
+    const req = {
+      id: id,
+    };
 
-  //   PartnerAPI.getCityName(req)
-  //     .then(async (res) => {
-  //       console.log(res);
-  //       this.city_name = res.data.city;
-  //       console.log(this.city_name);
-  //       // return res.data.city
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //       console.log(e.response);
-  //     });
-  // };
+    PartnerAPI.getCityName(req)
+      .then(async (res) => {
+        console.log(res);
+        this.city_name = res.data.city;
+        console.log(this.city_name);
+        // return res.data.city
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 
   @action getPartner = async (page = 1) => {
     this.partner_list = [];
@@ -1581,6 +1581,20 @@ class Partner {
   //       console.log(e.response);
   //     });
   // };
+
+  @action setclickLog = async (formData) => {
+    const req = {
+      data: formData,
+    };
+    await PartnerAPI.setclickLog(req)
+      .then((res) => {
+        console.log("create: ", res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 }
 
 export default new Partner();

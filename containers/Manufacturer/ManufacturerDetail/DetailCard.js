@@ -20,8 +20,9 @@ const onError = (e) => {
 @observer
 class DetailCardContainer extends React.Component {
   render() {
-    const { width } = this.props;
+    const { width, Partner } = this.props;
     console.log(this.props.Partner.selectedIntroductionFile);
+    console.log(Partner.partner_detail_list);
     return (
       <>
         <Card
@@ -30,6 +31,15 @@ class DetailCardContainer extends React.Component {
             e.preventDefault();
           }}
         >
+          <HeaderBox>
+            <tag>
+              <span>활동 가능</span>
+            </tag>
+            <name>{Partner.partner_detail_list[0].item.name}</name>
+            <content>
+              <span>{Partner.partner_detail_list[0].item.info_company}</span>
+            </content>
+          </HeaderBox>
           <div
             onCentextMenu={(e) => {
               e.preventDefault();
@@ -61,6 +71,27 @@ class DetailCardContainer extends React.Component {
               />
             </IntroductionBox>
           </InnerBox>
+
+          <DetailInfoBox>
+            <div>
+              <label>
+                <span>지역</span>
+              </label>
+              <content>{Partner.city_name}</content>
+            </div>
+            <div>
+              <label>
+                <span>주요실적</span>
+              </label>
+              <content>{Partner.partner_detail_list[0].item.deal}</content>
+            </div>
+            <div>
+              <label>
+                <span>진행한 제품군</span>
+              </label>
+              <content>{Partner.partner_detail_list[0].item.history}</content>
+            </div>
+          </DetailInfoBox>
         </Card>
       </>
     );
@@ -77,6 +108,18 @@ const Font24 = styled(Title.FontSize24)`
   letter-spacing: -0.6px;
   text-align: left;
   color: #282c36;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 16px !important;
+    line-height: 40px;
+    letter-spacing: -0.4px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
 `;
 const IntroductionBox = styled.div`
   width: auto;
@@ -100,20 +143,154 @@ const Card = styled.div`
   border-radius: 10px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  padding: 54px 32px;
+  box-sizing: border-box;
 
-  > div {
+  > div:nth-of-type(2) {
     > div {
       > img {
         width: 100%;
       }
     }
   }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 21px 14px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
 `;
 
+const HeaderBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 174px;
+  tag {
+    width: 118px;
+    height: 40px;
+    border-radius: 3px;
+    background-color: #0933b3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 34px;
+    span {
+      color: #ffffff;
+      font-size: 18px;
+      line-height: 30px;
+      letter-spacing: -0.18px;
+      font-weight: 500;
+    }
+  }
+  name {
+    font-size: 26px;
+    line-height: 52px;
+    letter-spacinig: -0.65px;
+    color: #282c36;
+    font-weight: bold;
+    margin-bottom: 34px;
+  }
+  content {
+    span {
+      font-size: 18px;
+      line-height: 34px;
+      letter-spacing: -0.45px;
+      color: #414550;
+      font-weight: normal;
+      white-space: pre-wrap;
+      word-break: keep-all;
+    }
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-bottom: 32px;
+    tag {
+      width: 68px;
+      height: 26px;
+      margin-bottom: 14px;
+      span {
+        font-size: 12px;
+        letter-spacing: -0.12px;
+      }
+    }
+    name {
+      font-size: 16px;
+      line-height: 15px;
+      letter-spacinig: -0.4px;
+      margin-bottom: 24px;
+    }
+    content {
+      border: 1px solid #c6c7cc;
+      border-radius: 5px;
+      padding: 24px 16px;
+      box-sizing: border-box;
+      span {
+        font-size: 14px;
+        line-height: 26px;
+        letter-spacing: -0.35px;
+      }
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
+`;
 const InnerBox = styled.div`
   width: 100%;
   padding: 54px 0 54px 0;
+`;
+
+const DetailInfoBox = styled.div`
+  background-color: #f6f6f6;
+  padding: 41px 69px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  div {
+    display: flex;
+    margin-bottom: 40px;
+    width: 100%;
+    label {
+      width: 25%;
+      span {
+        font-size: 18px;
+        line-height: 27px;
+        letter-spacing: -0.45px;
+        color: #191919;
+        font-weight: bold;
+      }
+    }
+    content {
+      width: 90%;
+      font-size: 18px;
+      line-height: 27px;
+      letter-spacing: -0.45px;
+      word-break: keep-all;
+    }
+  }
+  div:last-child {
+    margin-bottom: 0px;
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 16px 8px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
 `;
 
 const FileViewerContainer = styled(FileViewer)``;
