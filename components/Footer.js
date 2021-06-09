@@ -148,7 +148,7 @@ class FooterComponent extends React.Component {
                     </div>
                   </div>
                 </CompanyInfoWrapper>
-                <CompanyInfoWrapper style={{ paddingTop: 16 }}>
+                {/* <CompanyInfoWrapper style={{ paddingTop: 16 }}>
                   <span class="title">NOTICE</span>
                   <Select
                     styles={customStyles}
@@ -164,7 +164,7 @@ class FooterComponent extends React.Component {
                         : this.props.Magazine.magazine_list[0]
                     }
                   />
-                </CompanyInfoWrapper>
+                </CompanyInfoWrapper> */}
                 <CompanyInfoWrapper style={{ paddingTop: 14 }}>
                   <FaqTable>
                     <span class="cell" onClick={() => Router.push("/faq")}>
@@ -252,7 +252,7 @@ class FooterComponent extends React.Component {
                       <span>회사명</span> (주)볼트앤너트
                     </Font12>
                     <Font12>
-                      <span>대표자</span> 윤기열 
+                      <span>대표자</span> 윤기열
                       <br />
                     </Font12>
                     <Font12>
