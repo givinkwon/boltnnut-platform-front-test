@@ -343,7 +343,8 @@ class Profile {
       .then((res) => {
         if (res.data.data.User.type == 0) {
           alert("잘못된 접근입니다.");
-          Router.push("/");
+          // Router.push("/");
+          Router.push("/account");
         } else if (res.data.data.User.type == 1) {
           console.log("파트너 정보 리로딩");
           console.log(res.data.data.Partner[0]);
@@ -394,7 +395,8 @@ class Profile {
           console.log(e.response);
         }
         localStorage.removeItem("token");
-        Router.push("/");
+        // Router.push("/");
+        Router.push("/account");
       });
   };
 

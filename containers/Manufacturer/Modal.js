@@ -126,7 +126,7 @@ const ModalBox = styled.div`
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
     position: fixed;
-
+    left: 5%;
     z-index: 101;
 
     height: 180px;

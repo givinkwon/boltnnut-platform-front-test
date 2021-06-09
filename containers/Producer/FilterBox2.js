@@ -22,11 +22,19 @@ class FilterBox2Container extends React.Component {
     checked: false,
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    const { data } = this.props;
+    // console.log(data);
+  }
+  componentWillUnmount() {
+    const { data } = this.props;
+
+    Partner.filterbox_view_checked_idx = 0;
+  }
 
   onClickFilterHandler = (item, idx, filter) => {
     const { Partner } = this.props;
-    console.log(idx);
+    // console.log(idx);
 
     if (Partner.filterbox_view_checked_idx !== idx) {
       this.setState({ index: idx });
@@ -45,10 +53,10 @@ class FilterBox2Container extends React.Component {
       // }
       //Partner.getPartnerByRegion(Partner.search_text);
       // console.log(Partner.radiobox_checked_idx);
-      Partner.category_dic = {};
-      //Partner.search_text = "";
-      //Partner.setCategory();
-      Partner.getPartner();
+      Partner.resetDevCategory();
+      if (!Partner.requestModalActive) {
+        Partner.getPartner();
+      }
     }
   };
 
@@ -70,13 +78,25 @@ class FilterBox2Container extends React.Component {
   render() {
     const { checked, data, filter } = this.props;
     const { placeholder, label, disabled, ...props } = this.props;
+    // console.log(this.props.width);
+
+    // const filterWidth = this.props.width > 797.98 ? 185 : 180;
+    let filterWidth = 0;
+    if (this.props.width > 767.98) {
+      filterWidth = 155;
+    } else {
+      filterWidth = 125;
+    }
+
+    // console.log(filterWidth);
 
     return (
       <FormControl
         component="fieldset"
         style={{
           flexDirection: "row",
-          width: "23%",
+          // width: "175px",
+          width: filterWidth + "px",
           marginRight: "19px",
           border: "1px solid #c6c7cc",
           borderRadius: "3px",
@@ -95,7 +115,7 @@ class FilterBox2Container extends React.Component {
             <Item
               onClick={() => {
                 this.onClickFilterHandler(item, item.id, filter);
-                console.log(item);
+                // console.log(item);
               }}
               active={this.activeHandler(item.id, filter)}
             >
@@ -120,7 +140,7 @@ const Item = styled.div`
   //margin-bottom: 20px;
   padding-left: 4px;
   align-items: center;
-  margin-right: 5px;
+  margin-right: 6px;
   > div {
     width: 14px;
     height: 14px;
@@ -134,11 +154,11 @@ const Item = styled.div`
     cursor: pointer;
     > div {
       position: absolute;
-      top: 1px;
-      left: 1px;
-      width: 11px;
-      height: 11px;
-      border-radius: 6px;
+      top: 2px;
+      left: 2px;
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
       display: ${(props) => (props.active ? "" : "none")};
       background-color: #0933b3;
     }
@@ -158,6 +178,27 @@ const Item = styled.div`
     cursor: pointer;
     color: ${(props) => (props.active ? "#0933b3" : "#999999")};
   }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > span {
+      font-size: 12px;
+    }
+    > div {
+      width: 9px;
+      height: 9px;
+      border-radius: 9px;
+      > div {
+        width: 5px;
+        height: 5px;
+        border-radius: 3px;
+      }
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
+  @media (min-width: 1300px) {
+  }
 `;
 
 const Font16 = styled(Content.FontSize16)`
@@ -170,3 +211,5 @@ const Font16 = styled(Content.FontSize16)`
   margin-top: 28px;
   margin-bottom: 29px;
 `;
+
+const FormItemControl = styled(FormControl)``;

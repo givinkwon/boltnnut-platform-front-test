@@ -10,12 +10,23 @@ class ManufacturerDetailConatiner extends React.Component {
   render() {
     return (
       <>
-        <BannerConatiner />
-        <Section>
-          <Container>
-            <ContentConatiner width={this.props.width} />
-          </Container>
-        </Section>
+        {this.props.width &&
+          (this.props.width > 767.99 ? (
+            <>
+              <BannerConatiner />
+              <Section>
+                <Container>
+                  <ContentConatiner width={this.props.width} />
+                </Container>
+              </Section>
+            </>
+          ) : (
+            <Section>
+              <Container>
+                <ContentConatiner width={this.props.width} />
+              </Container>
+            </Section>
+          ))}
       </>
     );
   }

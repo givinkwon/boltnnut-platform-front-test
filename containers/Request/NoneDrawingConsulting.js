@@ -234,27 +234,33 @@ class NoneDrawingConsultingContainer extends React.Component {
     // error 처리
     if (ManufactureProcess.purposeContent == 0) {
       alert("문의 목적을 선택해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (projectname.length == 0) {
       alert("프로젝트 제목을 입력해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (projectname.length > 200) {
       alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (ManufactureProcess.requestComment.length == 0) {
       alert("공개내용을 작성해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
 
     if (ManufactureProcess.requestComment.length > 4500) {
       alert("공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (ManufactureProcess.requestComment2.length > 4500) {
       alert("비공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
 
@@ -360,6 +366,7 @@ class NoneDrawingConsultingContainer extends React.Component {
         dataLayer.push({ event: "request_noneDrawing" });
       })
       .catch((e) => {
+        ManufactureProcess.projectSubmitLoading = true;
         console.log(e);
         console.log(e.response);
       });

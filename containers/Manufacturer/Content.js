@@ -146,7 +146,7 @@ class ManufacturerContentContainer extends React.Component {
 
     return (
       <>
-        {console.log("rendering")}
+        {/* {console.log("rendering")} */}
         <Background id="MyBackground">
           <Container>
             {/* <SearchBar /> */}
@@ -181,7 +181,7 @@ class ManufacturerContentContainer extends React.Component {
                 {Partner.partner_list &&
                   // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
-                    console.log(item);
+                    console.log(item.file);
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         <ProposalCard

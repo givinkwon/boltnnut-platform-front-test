@@ -287,7 +287,7 @@ class ChatTestContainer extends React.Component {
           } //클라이언트에게 보내기
           else {
             req = {
-              phoneNum: "01075731803",
+              phoneNum: this.props.Partner.clientInfo.user.phone,
               requestTitle: this.props.Project.projectDetailData.request_set[0]
                 .name,
               name: this.props.Partner.partnerdata.name, //파트너 이름
@@ -333,8 +333,9 @@ class ChatTestContainer extends React.Component {
     //   bRead: false,
     // });
 
+    // console.log(Partner.ClientInfo)
     // const clientPhone = Partner.clientInfo.user.phone;
-    const clientPhone = "";
+    let clientPhone = "";
     this.props.Chat.current_time = null;
     let temp = new Date();
     let timezone = temp.getTimezoneOffset();
@@ -365,6 +366,7 @@ class ChatTestContainer extends React.Component {
           console.log(res.data);
           //콘솔 그룹
           const Color = "skyBlue";
+          clientPhone = Partner.clientInfo.user.phone;
           console.group("%c 채팅창 정보", `color:${Color}; font-size:30px`);
           console.log(
             `%c클라이언트 휴대폰번호 = ${clientPhone}\n파트너 휴대폰번호 = ${this.props.Partner.partnerdata.user.phone}\n프로젝트 이름 = ${this.props.requestTitle}\n`,

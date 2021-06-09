@@ -37,7 +37,7 @@ class PortfolioConatiner extends React.Component {
   };
 
   activeHandler = (src) => {
-    console.log(src);
+    // console.log(src);
 
     this.setState({ modalOpen: true, src: src });
   };
@@ -45,18 +45,19 @@ class PortfolioConatiner extends React.Component {
   componentDidMount = async () => {
     const { Partner, Auth, width } = this.props;
 
-    console.log(width);
-    console.log(toJS(Partner.portFolioList));
+    // console.log(width);
+    // console.log(toJS(Partner.portFolioList));
     // await Partner.getPortfolio();
 
     const img = document.getElementById("image");
-    console.log(img);
+    // console.log(img);
   };
   render() {
     const { Answer, file, Partner, width } = this.props;
     // const { current_partner } = Answer
+    // console.log(file);
 
-    console.log(file);
+    // console.log(file);
     var settings = {
       dots: false,
       infinite: false,
@@ -103,30 +104,46 @@ class PortfolioConatiner extends React.Component {
             </Text.FontSize20>
           </Header> */}
           <Content>
-            <Slider {...settings} ref={(slider) => (this.slider = slider)}>
-              {/* {
+            {Partner.portFolioList.length != 0 ? (
+              <Slider {...settings} ref={(slider) => (this.slider = slider)}>
+                {/* {
               current_partner && current_partner.portfolio_set.map((item, idx) => {
                 return <Image key={idx} ratio='65%' src={item.img_portfolio}/>
               })
             } */}
 
-              {/* {Partner.portFolioList &&
-                Partner.portFolioList.map((item, idx) => {
-                  console.log(toJS(item.img_portfolio));
+                {Partner.portFolioList.map((item, idx) => {
                   return (
                     <Image
                       key={idx}
                       ratio="65%"
-                             size="contain"
-                repeat="no-repeat"
+                      size="contain"
+                      repeat="no-repeat"
                       src={item.img_portfolio}
-                      onClick={() => {                      
+                      onClick={() => {
                         const src = this.slider.props.children[idx].props.src;
                         this.activeHandler(src);
                       }}
                     />
                   );
-                })} */}
+                })}
+
+                {/* {!Partner.portFolioList && <h1>준비중입니다</h1>} */}
+                {/* {file ? (
+                <Image
+                  ratio="65%"
+                  src={file}
+                  onClick={() => {
+                    console.log(this);
+                    console.log(this.slider.props.children.props.src);
+                    const src = this.slider.props.children.props.src;
+                    this.activeHandler(src);
+                  }}
+                />
+              ) : (
+                <h1>파일이 없습니다</h1>
+              )} */}
+                {/* 
               <Image
                 id="image"
                 ratio="65%"
@@ -187,17 +204,28 @@ class PortfolioConatiner extends React.Component {
                   const src = this.slider.props.children[4].props.src;
                   this.activeHandler(src);
                 }}
-              />
-            </Slider>
+              /> */}
+              </Slider>
+            ) : (
+              <>
+                {/* {console.log(Partner.portFolioList)} */}
+                <NoPortfolio>
+                  <div>
+                    <span>포트폴리오가 준비되지 않았습니다.</span>
+                  </div>
+                </NoPortfolio>
+              </>
+            )}
+
             {
               // (current_partner && current_partner.portfolio_set.length > 0)
               //   && (
-              // Partner.portFolioList && Partner.portFolioList.length > 0 && (
-              <>
-                <Arrow left onClick={this.sliderPrev} />
-                <Arrow right onClick={this.sliderNext} />
-              </>
-              // )
+              Partner.portFolioList && Partner.portFolioList.length > 0 && (
+                <>
+                  <Arrow left onClick={this.sliderPrev} />
+                  <Arrow right onClick={this.sliderNext} />
+                </>
+              )
               // )
             }
           </Content>
@@ -351,6 +379,7 @@ const Content = styled.div`
   @media (max-width: 767.98px) {
     width: 80%;
     padding: 0 20px;
+    margin-top: 20px;
   }
 `;
 
@@ -430,5 +459,50 @@ const Layer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
+  }
+`;
+
+const NoPortfolio = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // border: 2px solid #0933b3;
+    // border-radius: 3px;
+    height: 50px;
+    width: 50%;
+    box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.5);
+    > span {
+      font-size: 28px;
+      line-height: 24px;
+      color: #0933b3;
+      font-weight: bold;
+    }
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > div {
+      height: 30px;
+      width: 60%;
+      > span {
+        font-size: 10px;
+      }
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    > div {
+      > span {
+        font-size: 18px;
+      }
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    > div {
+      > span {
+        font-size: 18px;
+      }
+    }
   }
 `;

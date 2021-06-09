@@ -4,16 +4,16 @@ import Background from "../../components/Background";
 import Containerv1 from "../../components/Containerv1";
 import * as Title from "../../components/Title";
 import Router from "next/router";
-import {inject, observer} from "mobx-react"
+import { inject, observer } from "mobx-react";
 
 @inject("Auth", "Project")
 @observer
 class NoProject extends React.Component {
   search = () => {
-		const { Project } = this.props;
-		Project.newIndex = 0;
+    const { Project } = this.props;
+    Project.newIndex = 0;
     Project.myIndex = 0;
-	}
+  };
 
   render() {
     const { Auth } = this.props;
@@ -21,70 +21,123 @@ class NoProject extends React.Component {
       <Background>
         <Containerv1>
           <RequestCompleteBox>
-              {Auth.logged_in_client &&     
+            {Auth.logged_in_client && (
               <>
-              <RequestCompleteTitle>
-                <FontSize26 style={{ marginBottom: "20px" }}>
-                  프로젝트를 등록해주세요
-                </FontSize26>
-              </RequestCompleteTitle>
+                <RequestCompleteTitle>
+                  <FontSize26 style={{ marginBottom: "20px" }}>
+                    프로젝트를 등록해주세요
+                  </FontSize26>
+                </RequestCompleteTitle>
 
-              <RequestCompleteDesc>
-                <InlineDiv
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
-                  <FontSize22>
-                  현재 등록중인 프로젝트가 없습니다. 프로젝트 등록을 하시면 상담을 통해 
-                  </FontSize22>
-                </InlineDiv>
-                <InlineDiv
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
-                  <FontSize22>
-                  기획 단계부터 실무자 분들과 소통할 수 있습니다.
-                  </FontSize22>
-                </InlineDiv>
-              </RequestCompleteDesc>
+                <RequestCompleteDesc>
+                  <InlineDiv
+                    style={{ alignItems: "center", justifyContent: "center" }}
+                  >
+                    <FontSize22>
+                      현재 등록중인 프로젝트가 없습니다. 프로젝트 등록을 하시면
+                      상담을 통해
+                    </FontSize22>
+                  </InlineDiv>
+                  <InlineDiv
+                    style={{ alignItems: "center", justifyContent: "center" }}
+                  >
+                    <FontSize22>
+                      기획 단계부터 실무자 분들과 소통할 수 있습니다.
+                    </FontSize22>
+                  </InlineDiv>
+                </RequestCompleteDesc>
 
-              <ButtonBox>
-                <HomeBtn onClick={() => Router.push("/")}>홈으로 가기</HomeBtn>
+                <ButtonBox>
+                  {Auth.home_index === 4 && (
+                    <HomeBtn onClick={() => Router.push("/4")}>
+                      홈으로 가기
+                    </HomeBtn>
+                  )}
+                  {Auth.home_index === 3 && (
+                    <HomeBtn onClick={() => Router.push("/3")}>
+                      홈으로 가기
+                    </HomeBtn>
+                  )}
+                  {Auth.home_index === 2 && (
+                    <HomeBtn onClick={() => Router.push("/2")}>
+                      홈으로 가기
+                    </HomeBtn>
+                  )}
+                  {Auth.home_index === 1 && (
+                    <HomeBtn onClick={() => Router.push("/1")}>
+                      홈으로 가기
+                    </HomeBtn>
+                  )}
+                  {Auth.home_index === 0 && (
+                    <HomeBtn onClick={() => Router.push("/")}>
+                      홈으로 가기
+                    </HomeBtn>
+                  )}
 
-                <MyProjectBtn onClick={() => Router.push("/request")}>프로젝트 등록하기</MyProjectBtn>
-              </ButtonBox>
+                  <MyProjectBtn onClick={() => Router.push("/request")}>
+                    프로젝트 등록하기
+                  </MyProjectBtn>
+                </ButtonBox>
               </>
-              }
-              {Auth.logged_in_partner &&     
+            )}
+            {Auth.logged_in_partner && (
               <>
-              <RequestCompleteTitle>
-                <FontSize26 style={{ marginBottom: "20px" }}>
-                  프로젝트에 제안서를 넣어주세요
-                </FontSize26>
-              </RequestCompleteTitle>
+                <RequestCompleteTitle>
+                  <FontSize26 style={{ marginBottom: "20px" }}>
+                    프로젝트에 제안서를 넣어주세요
+                  </FontSize26>
+                </RequestCompleteTitle>
 
-              <RequestCompleteDesc>
-                <InlineDiv
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
-                  <FontSize22>
-                  현재 제안서를 넣은 프로젝트가 없습니다. 프로젝트에 제안서를 넣으시면 클라이언트와
-                  </FontSize22>
-                </InlineDiv>
-                <InlineDiv
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
-                  <FontSize22>
-                  1:1 채팅 및 비공개 자료를 요청하실 수 있습니다.
-                  </FontSize22>
-                </InlineDiv>
-              </RequestCompleteDesc>
+                <RequestCompleteDesc>
+                  <InlineDiv
+                    style={{ alignItems: "center", justifyContent: "center" }}
+                  >
+                    <FontSize22>
+                      현재 제안서를 넣은 프로젝트가 없습니다. 프로젝트에
+                      제안서를 넣으시면 클라이언트와
+                    </FontSize22>
+                  </InlineDiv>
+                  <InlineDiv
+                    style={{ alignItems: "center", justifyContent: "center" }}
+                  >
+                    <FontSize22>
+                      1:1 채팅 및 비공개 자료를 요청하실 수 있습니다.
+                    </FontSize22>
+                  </InlineDiv>
+                </RequestCompleteDesc>
 
-              <ButtonBox>
-                <HomeBtn onClick={() => Router.push("/")}>홈으로 가기</HomeBtn>
-
-                <MyProjectBtn onClick={() => this.search()}>프로젝트 답변하기</MyProjectBtn>
-              </ButtonBox>
+                <ButtonBox>
+                  {Auth.home_index === 4 && (
+                    <HomeBtn onClick={() => Router.push("/4")}>
+                      홈으로 가기
+                    </HomeBtn>
+                  )}
+                  {Auth.home_index === 3 && (
+                    <HomeBtn onClick={() => Router.push("/3")}>
+                      홈으로 가기
+                    </HomeBtn>
+                  )}
+                  {Auth.home_index === 2 && (
+                    <HomeBtn onClick={() => Router.push("/2")}>
+                      홈으로 가기
+                    </HomeBtn>
+                  )}
+                  {Auth.home_index === 1 && (
+                    <HomeBtn onClick={() => Router.push("/1")}>
+                      홈으로 가기
+                    </HomeBtn>
+                  )}
+                  {Auth.home_index === 0 && (
+                    <HomeBtn onClick={() => Router.push("/")}>
+                      홈으로 가기
+                    </HomeBtn>
+                  )}
+                  <MyProjectBtn onClick={() => this.search()}>
+                    프로젝트 답변하기
+                  </MyProjectBtn>
+                </ButtonBox>
               </>
-            }
+            )}
           </RequestCompleteBox>
         </Containerv1>
       </Background>

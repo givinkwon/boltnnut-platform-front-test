@@ -13,6 +13,7 @@ class Home {
   @observable magazine_next = null;
   @observable is_ie = false;
   @observable request_list = [];
+  @observable home_idx = 0;
 
   @action init = () => {
     CategoryAPI.getMainCategory()
