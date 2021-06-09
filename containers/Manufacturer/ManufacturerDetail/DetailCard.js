@@ -238,15 +238,75 @@ const HeaderBox = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+
+    margin-bottom:96px;
+    tag {
+      width: 88px;
+      height: 32px;
+      margin-bottom: 20px;
+      span {
+        font-size: 14px;
+        letter-spacing: -0.12px;
+      }
+    }
+    name {
+      font-size: 20px;
+      line-height: 15px;
+      letter-spacinig: -0.4px;
+      margin-bottom: 20px;
+    }
+    content {
+      span {
+        font-size: 16px;
+        line-height: 26px;
+        letter-spacing: -0.35px;
+      }
+    }
+  }
+
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-bottom: 144px;
+    tag {
+      width: 104px;
+      height: 36px;
+      margin-bottom: 28px;
+      span {
+        font-size: 16px;
+        letter-spacing: -0.12px;
+      }
+    }
+    name {
+      font-size: 23px;
+      line-height: 15px;
+      letter-spacinig: -0.4px;
+      margin-bottom: 24px;
+    }
+    content {
+      span {
+        font-size: 17px;
+        line-height: 26px;
+        letter-spacing: -0.35px;
+      }
+    }
   }
-  @media (min-width: 1300px) {
-  }
+
 `;
 const InnerBox = styled.div`
   width: 100%;
   padding: 54px 0 54px 0;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 14px 0;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 29px 0;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    padding: 44px 0;
+  }
+  @media (min-width: 1300px) {
+  }
 `;
 
 const DetailInfoBox = styled.div`
@@ -284,10 +344,59 @@ const DetailInfoBox = styled.div`
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 16px 8px;
+
+    div {
+      display: block;
+      margin-bottom: 40px;
+      label {
+        width: 100%;
+        display: block;
+        span {
+          font-size: 14px;
+          line-height: 20px;
+          letter-spacing: -0.45px;
+        }
+      }
+      content {
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: -0.45px;
+      }
+    }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 24px 16px;
+    div {
+      margin-bottom: 40px;
+      label {
+        span {
+          font-size: 16px;
+          line-height: 27px;
+          letter-spacing: -0.45px;
+        }
+      }
+      content {
+        font-size: 14px;
+        line-height: 27px;
+      }
+    }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    padding: 31px 31px;
+    div {
+      margin-bottom: 40px;
+      label {
+        span {
+          font-size: 17px;
+          line-height: 27px;
+          letter-spacing: -0.45px;
+        }
+      }
+      content {
+        font-size: 16px;
+        line-height: 27px;
+      }
+    }
   }
   @media (min-width: 1300px) {
   }

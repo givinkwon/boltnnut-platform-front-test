@@ -172,8 +172,9 @@ class ProposalCard extends React.Component {
       Router.push("/login");
     }
   };
-  cardClick = (e) => {
+  cardClick = async (e) => {
     e.stopPropagation();
+    const { Partner } = this.props;
     if (this.props.Auth && this.props.Auth.logged_in_user) {
       if (!this.props.data.file) {
         alert("해당 회사의 소개서가 존재하지 않습니다!");
@@ -192,6 +193,9 @@ class ProposalCard extends React.Component {
       console.log(availableFileType.indexOf(fileType));
       if (availableFileType.indexOf(fileType) > -1) {
         console.log("뷰어 페이지 router push");
+        // Partner.partner_detail_list = [];
+        // // await Partner.partner_detail_list.push({ item: data });
+        // await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
       } else {
         console.log("file download");
