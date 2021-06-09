@@ -43,7 +43,7 @@ class Nav extends React.Component {
     } else if (this.props.Auth.home_index === 2) {
       window.location.href = "/2";
     } else if (this.props.Auth.home_index === 1) {
-      window.location.href = "/1";
+      window.location.href = "/5";
     } else {
       window.location.href = "/";
     }
