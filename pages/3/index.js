@@ -13,7 +13,7 @@ const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
 @inject("Auth", "Home")
 @observer
-class Home3 extends React.Component {
+class Index extends React.Component {
   state = {
     width: 0,
     home_index: 3,
@@ -60,7 +60,7 @@ class Home3 extends React.Component {
             property="og:description"
             content="제품군별 제조 전문가 큐레이션 플랫폼 볼트앤너트. 믿음직한 제품 개발업체를 만나는 가장 쉬운 방법! 시제품부터 생활용품까지 모두 OK!"
           />
-          <meta property="og:url" content="https://www.boltnnut.com/4" />
+          <meta property="og:url" content="https://www.boltnnut.com/3" />
           {/* Title */}
           <title>볼트앤너트</title>
         </Head>
@@ -93,4 +93,4 @@ class Home3 extends React.Component {
   }
 }
 
-export default Home3;
+export default Index;

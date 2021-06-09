@@ -296,7 +296,7 @@ class Auth {
         } else if (this.home_index === 2) {
           Router.push("/2");
         } else if (this.home_index === 1) {
-          Router.push("/1");
+          Router.push("/5");
         } else {
           Router.push("/");
         }
@@ -370,7 +370,7 @@ class Auth {
         } else if (this.home_index === 2) {
           Router.push("/2");
         } else if (this.home_index === 1) {
-          Router.push("/1");
+          Router.push("/5");
         } else {
           Router.push("/");
         }
@@ -476,7 +476,7 @@ class Auth {
           } else if (this.home_index === 2) {
             Router.push("/2");
           } else if (this.home_index === 1) {
-            Router.push("/1");
+            Router.push("/5");
           } else {
             Router.push("/");
           }

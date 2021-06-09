@@ -13,7 +13,7 @@ const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
 @inject("Auth", "Home")
 @observer
-class Home1 extends React.Component {
+class Index extends React.Component {
   state = {
     width: 0,
     home_index: 3,
@@ -28,9 +28,11 @@ class Home1 extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
     console.log(this.state.width);
   }
+
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
   }
+
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
@@ -60,7 +62,7 @@ class Home1 extends React.Component {
             property="og:description"
             content="제품군별 제조 전문가 큐레이션 플랫폼 볼트앤너트. 믿음직한 제품 개발업체를 만나는 가장 쉬운 방법! 시제품부터 생활용품까지 모두 OK!"
           />
-          <meta property="og:url" content="https://www.boltnnut.com/4" />
+          <meta property="og:url" content="https://www.boltnnut.com/5" />
           {/* Title */}
           <title>볼트앤너트</title>
         </Head>
@@ -86,11 +88,16 @@ class Home1 extends React.Component {
               </>
             ))}
         </> */}
-         {width && <Home1Container width={width} /> }
-         {width && <Footer /> }
+<<<<<<< HEAD:pages/5/index.js
+        {width && <Home1Container width={width} />}
+        {width && <Footer />}
+=======
+        {width && <Home1Container width={width} /> }
+        {width && <Footer /> }
+>>>>>>> 3f56e6364431d6d97f30c3182c4596c1e6ce3d74:pages/1/index.js
       </div>
     );
   }
 }
 
-export default Home1;
+export default Index;

@@ -30,7 +30,7 @@ class Home extends React.Component {
     this.props.Auth.home_index = 0;
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
-    this.props.Auth.bgColor = "#ffffff";
+    // this.props.Auth.bgColor = "#ffffff";
     this.setState({ ...this.state, width: window.innerWidth });
     setTimeout(() => {
       this.props.Loading.setOpen(false);

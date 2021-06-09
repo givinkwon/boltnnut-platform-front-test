@@ -64,7 +64,7 @@ class MobileNav extends React.Component {
           } else if (Auth.home_index === 2) {
             Router.push("/2");
           } else if (Auth.home_index === 1) {
-            Router.push("/1");
+            Router.push("/5");
           } else {
             Router.push("/");
           }
@@ -160,7 +160,7 @@ class MobileNav extends React.Component {
                         } else if (Auth.home_index === 2) {
                           Router.push("/2");
                         } else if (Auth.home_index === 1) {
-                          Router.push("/1");
+                          Router.push("/5");
                         } else {
                           Router.push("/");
                         }
@@ -175,45 +175,25 @@ class MobileNav extends React.Component {
                   <FreeButton onClick={() => Router.push("/project")}>
                     <span style={{ marginTop: 1 }}>프로젝트 찾아보기</span>
                   </FreeButton>
-                ) : 
-                (
-                  Auth.home_index === 1 ? (
+                ) : Auth.home_index === 1 ? (
                   <FreeButton onClick={() => Router.push("/request")}>
-                    <span style={{ marginTop: 1 }}>바로 견적 받고 업체 비교</span>
+                    <span style={{ marginTop: 1 }}>
+                      바로 견적 받고 업체 비교
+                    </span>
                   </FreeButton>
-                  
-                  )
-                  
-                  :
-                  
-                  (
-                    Auth.home_index === 2 ? (
-                    <FreeButton onClick={() => Router.push("/manufacturer")}>
-                      <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
-                    </FreeButton>    
-                    ) 
-                    
-                    :
-                    
-                    (
-                      Auth.home_index === 3 ? (
-                        <FreeButton onClick={() => Router.push("/request")}>
-                          <span style={{ marginTop: 1 }}>무료 상담 및 견적 받기</span>
-                        </FreeButton>  
-                      )
-                    
-                      :
-                    
-                      (
-                        <FreeButton onClick={() => Router.push("/producer")}>
-                          <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
-                        </FreeButton>  
-                      )
-                    )
-                  )
-                )
-                
-                }
+                ) : Auth.home_index === 2 ? (
+                  <FreeButton onClick={() => Router.push("/manufacturer")}>
+                    <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
+                  </FreeButton>
+                ) : Auth.home_index === 3 ? (
+                  <FreeButton onClick={() => Router.push("/request")}>
+                    <span style={{ marginTop: 1 }}>무료 상담 및 견적 받기</span>
+                  </FreeButton>
+                ) : (
+                  <FreeButton onClick={() => Router.push("/producer")}>
+                    <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
+                  </FreeButton>
+                )}
               </ModalHeader>
               <>
                 <ModalContent>
@@ -290,14 +270,14 @@ class MobileNav extends React.Component {
               ) : Auth.home_index === 2 ? (
                 <Logo src={this.props.src} onClick={() => Router.push("/2")} />
               ) : Auth.home_index === 1 ? (
-                <Logo src={this.props.src} onClick={() => Router.push("/1")} />
+                <Logo src={this.props.src} onClick={() => Router.push("/5")} />
               ) : (
                 <Logo src={this.props.src} onClick={() => Router.push("/")} />
               )
             ) : (
               // Auth.home_index === 3 && (<Logo src={this.props.src} onClick={() => Router.push("/3")} />)
               // Auth.home_index === 2 && (<Logo src={this.props.src} onClick={() => Router.push("/2")} />)
-              // Auth.home_index === 1 && (<Logo src={this.props.src} onClick={() => Router.push("/1")} />)
+              // Auth.home_index === 1 && (<Logo src={this.props.src} onClick={() => Router.push("/5")} />)
               // Auth.home_index === 0 && (<Logo src={this.props.src} onClick={() => Router.push("/")} />)
 
               <Logo src={this.props.src} onClick={() => Router.back()} />
