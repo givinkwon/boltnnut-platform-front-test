@@ -74,6 +74,15 @@ class Home extends React.Component {
           {/* Title */}
           <title>볼트앤너트</title>
         </Head>
+        {/*-- Global site tag (gtag.js) - Google Analytics --*/}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-162026812-1');
+        </script>
 
         <div>
           {Loading.is_open}
