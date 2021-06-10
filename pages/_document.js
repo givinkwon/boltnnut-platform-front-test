@@ -1,7 +1,11 @@
 import Document, { Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet as StyledComponentSheets } from "styled-components";
 import { ServerStyleSheets as MaterialUiServerStyleSheets } from "@material-ui/styles";
+//import TagManager from 'react-gtm-module'
 
+//const tagManagerArgs = {
+//    gtmId: 'GTM-PWFPPZ5'
+//}
 
 export default class MyDocument extends Document {
   static getInitialProps = async (ctx) => {
@@ -32,16 +36,16 @@ export default class MyDocument extends Document {
       styledComponentSheet.seal();
     }
   };
-  // setGoogleTags() {
-  //  return {
-  //    __html: `
-  //      window.dataLayer = window.dataLayer || [];
-  //      function gtag(){dataLayer.push(arguments);}
-  //      gtag('js', new Date());
-  //      gtag('config', 'UA-162026812-1');
-  //    `
-  //  };
-  // }
+  setGoogleTags() {
+   return {
+     __html: `
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+       gtag('config', 'UA-162026812-1');
+     `
+   };
+  }
   setChannelTalk() {
     return {
       __html: `
@@ -168,9 +172,9 @@ export default class MyDocument extends Document {
           <Main />
           <script dangerouslySetInnerHTML={this.setChannelTalk()} />
           <NextScript />
-          {/* GA Settings
+          {/* GA Settings*/}
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
-          <script dangerouslySetInnerHTML={this.setGoogleTags()} /> */}
+          <script dangerouslySetInnerHTML={this.setGoogleTags()} />
           {/* Google Tag Manager */}
           <script
             dangerouslySetInnerHTML={{
