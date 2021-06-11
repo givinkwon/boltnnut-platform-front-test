@@ -1,32 +1,31 @@
 import React from "react";
 import Select from "react-select";
 import styled, { keyframes } from "styled-components";
-import StarRatingComponent from "react-star-rating-component";
-import { componentByNodeRegistery } from "mobx-react";
+
 import { inject, observer } from "mobx-react";
-import PartnerCard from "./PartnerCard";
 import { toJS } from "mobx";
-import * as PartnerAPI from "axios/Partner";
 
-//import Modal from '../../../commons/components/Modals/Modal';
-
-//const star = "/static/icon/info/star.png";
-
-@inject("Partner", "Auth")
+@inject("ManufactureProcess", "Auth")
 @observer
-class SearchPartnerModal extends React.Component {
+class LoadingModal extends React.Component {
   state = {};
 
   closeModal = () => {
-    const { Partner } = this.props;
-    Partner.searchPartnerModalActive = false;
+    const { ManufactureProcess } = this.props;
+    ManufactureProcess.loadingEstimate = false;
   };
 
   render() {
-    // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-    const { open, close, header, children, width, data, Partner } = this.props;
-    // console.log(open);
-    // console.log(children);
+    const {
+      open,
+      close,
+      header,
+      children,
+      width,
+      data,
+      ManufactureProcess,
+    } = this.props;
+
     return (
       <ModalBox
         modal={open ? "openModal modal" : "modal"}
@@ -39,11 +38,11 @@ class SearchPartnerModal extends React.Component {
               &times;{" "}
             </button>
             <section>
-              <header>전화번호</header>
-              <main>{children}</main>
+              <header>Loading...</header>
+              <main>견적을 산출하는데까지 최대 1분 정도 걸립니다.</main>
               <footer>
                 <div className="close" onClick={close}>
-                  닫기
+                  <span>닫기</span>
                 </div>
               </footer>
             </section>
@@ -100,14 +99,28 @@ const ModalBox = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 50%;
+      height: 55%;
       font-size: 20px;
       font-weight: 600;
     }
     > footer {
-      background-color: #0933b3;
-      color: white;
-      text-align: center;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      > div {
+        background-color: #0933b3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 32px;
+        width: 100%;
+        cursor: pointer;
+        > span {
+          color: white;
+        }
+      }
     }
   }
   > button {
