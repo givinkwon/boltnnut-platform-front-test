@@ -2,8 +2,14 @@ import React from "react";
 import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
 import DetailCardContainer from "./DetailCard";
+import ReviewContainer from "../Review/ReviewPage";
+import { inject, observer } from "mobx-react";
+
+@inject("Auth", "Partner")
+@observer
 class ManufacturerDetailConatiner extends React.Component {
   render() {
+    const { Auth, Partner } = this.props;
     return (
       <>
         {this.props.width &&
@@ -11,7 +17,13 @@ class ManufacturerDetailConatiner extends React.Component {
             <>
               <Background>
                 <Containerv1>
-                  <DetailCardContainer width={this.props.width} />
+                  {Partner.reviewActiveIndex == 0 && (
+                    <DetailCardContainer width={this.props.width} />
+                  )}
+
+                  {Partner.reviewActiveIndex == 1 && (
+                    <ReviewContainer width={this.props.width} />
+                  )}
                 </Containerv1>
               </Background>
             </>

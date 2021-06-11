@@ -2,6 +2,8 @@ import React from "react";
 import styled, { css } from "styled-components";
 import dynamic from "next/dynamic";
 
+import Modal from "../Review/ReviewWritingModal";
+
 // @ts-ignore
 const FileViewer = dynamic(() => import("react-file-viewer"), {
   ssr: false,
@@ -19,6 +21,18 @@ const onError = (e) => {
 @inject("Partner")
 @observer
 class DetailCardContainer extends React.Component {
+  openModal = () => {
+    const { Partner } = this.props;
+    // console.log("requestmodal open click");
+    // this.setState({ modalOpen: true });
+    Partner.reviewWritingModalActive = true;
+  };
+  closeModal = () => {
+    const { Partner } = this.props;
+    // console.log("requestmodal close click");
+
+    Partner.reviewWritingModalActive = false;
+  };
   render() {
     const { width, Partner } = this.props;
     console.log(this.props.Partner.selectedIntroductionFile);
@@ -35,10 +49,15 @@ class DetailCardContainer extends React.Component {
             <tag>
               <span>활동 가능</span>
             </tag>
-            <name>{Partner.partner_detail_list[0].item.name}</name>
-            <content>
-              <span>{Partner.partner_detail_list[0].item.info_company}</span>
-            </content>
+            {Partner.partner_detail_list && (
+              <name>{Partner.partner_detail_list[0].item.name}</name>
+            )}
+
+            {Partner.partner_detail_list && (
+              <content>
+                <span>{Partner.partner_detail_list[0].item.info_company}</span>
+              </content>
+            )}
           </HeaderBox>
           <div
             onCentextMenu={(e) => {
@@ -83,15 +102,34 @@ class DetailCardContainer extends React.Component {
               <label>
                 <span>주요실적</span>
               </label>
-              <content>{Partner.partner_detail_list[0].item.deal}</content>
+              {Partner.partner_detail_list && (
+                <content>{Partner.partner_detail_list[0].item.deal}</content>
+              )}
             </div>
             <div>
               <label>
                 <span>진행한 제품군</span>
               </label>
-              <content>{Partner.partner_detail_list[0].item.history}</content>
+              {Partner.partner_detail_list && (
+                <content>{Partner.partner_detail_list[0].item.history}</content>
+              )}
             </div>
           </DetailInfoBox>
+          <ReviewBox>
+            <div>리뷰 작성</div>
+
+            {Partner.reviewWritingModalActive && (
+              <Layer>
+                <span>
+                  <Modal
+                    width={width}
+                    open={Partner.reviewWritingModalActive}
+                    close={this.closeModal}
+                  ></Modal>
+                </span>
+              </Layer>
+            )}
+          </ReviewBox>
         </Card>
       </>
     );
@@ -403,3 +441,26 @@ const DetailInfoBox = styled.div`
 `;
 
 const FileViewerContainer = styled(FileViewer)``;
+
+const ReviewBox = styled.div`
+  position: relative;
+  height: 500px;
+`;
+
+const Layer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  // opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+`;

@@ -108,6 +108,9 @@ class Partner {
   @observable ReviewActive = false;
   @observable reviewModalActive = false;
   @observable ReviewActiveIndex = -1;
+  @observable reviewWritingModalActive = true;
+  @observable reviewActiveIndex = 1;
+
   @observable modalUserPhone = "";
   @observable filterFile = false;
 
@@ -193,6 +196,12 @@ class Partner {
 
   @observable clientInfo = [];
 
+  // 파트너 리뷰 페이지
+  @observable searchProjectModalActive = false;
+  @observable projectName = "";
+  @observable searchPartnerModalActive = false;
+  
+
   @action resetDevCategory = () => {
     this.category_dic = {
       0: [],
@@ -231,21 +240,26 @@ class Partner {
       (item) => item.maincategory === val.id
     );
 
-    console.log(toJS(this.category_middle_ary));
-    console.log(toJS(this.category_middle_total_ary));
-    console.log(
-      toJS(
-        this.category_middle_total_ary.filter(
-          (item) => item.maincategory === val.id
-        )
-      )
-    );
+    // console.log(toJS(this.category_middle_ary));
+    // console.log(toJS(this.category_middle_total_ary));
+    // console.log(
+    //   toJS(
+    //     this.category_middle_total_ary.filter(
+    //       (item) => item.maincategory === val.id
+    //     )
+    //   )
+    // );
+
     this.input_small_category = this.category_middle_ary[0];
-    console.log(this.input_small_category);
+
+    // this.input_detail_big_category = val;
+    // this.input_detail_small_category = this.category_middle_ary[0];
+    // console.log(this.input_small_category);
   };
 
   @action setSmallCategory = (val) => {
     this.input_small_category = val;
+    // this.input_detail_small_category = val;
   };
 
   @action setDetailBigCategory = async (val) => {
