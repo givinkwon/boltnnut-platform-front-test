@@ -15,6 +15,7 @@ class ManufactureProcess {
   constructor() {
     //makeObservable(this);
   }
+  @observable loadingEstimate = false;
   @observable title_list = [];
   @observable SelectChecked = "";
   @observable SelectedItem = null;

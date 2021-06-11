@@ -24,7 +24,13 @@ class FilterBoxContainer extends React.Component {
     checked: false,
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log("didmount");
+  }
+
+  componentWillUnmount() {
+    console.log("unmount");
+  }
 
   onClickFilterHandler = async (item, idx, filter) => {
     const { Partner } = this.props;
