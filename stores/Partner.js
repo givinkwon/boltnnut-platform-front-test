@@ -109,7 +109,6 @@ class Partner {
   @observable reviewModalActive = false;
   @observable ReviewActiveIndex = -1;
   @observable reviewWritingModalActive = true;
-  @observable reviewActiveIndex = 1;
 
   @observable modalUserPhone = "";
   @observable filterFile = false;
@@ -197,11 +196,45 @@ class Partner {
   @observable clientInfo = [];
 
   // 파트너 리뷰 페이지
+  @observable reviewActiveIndex = 1;
   @observable searchProjectModalActive = false;
   @observable projectName = "";
-  @observable searchPartnerModalActive = false;
-  
+  @observable partnersName = "";
+  @observable reviewPartnerName = "";
+  @observable reviewPartnerId = "";
+  @observable partnersList = [];
 
+  @observable searchPartnerModalActive = false;
+  @observable reviewKindnessAry = [
+    { score: 1, content: "불친절해요", checked: false },
+    { score: 2, content: "보통이에요", checked: false },
+    { score: 3, content: "친절해요", checked: true },
+  ];
+
+  @observable reviewKindnessIndex = 3;
+
+  @observable reviewCommunicationAry = [
+    { score: 1, content: "불편했어요", checked: false },
+    { score: 2, content: "보통이에요", checked: false },
+    { score: 3, content: "원활했어요", checked: true },
+  ];
+
+  @observable reviewCommunicationIndex = 3;
+
+  @observable reviewProfessionAry = [
+    { score: 1, content: "서툴러요", checked: false },
+    { score: 2, content: "보통이에요", checked: false },
+    { score: 3, content: "전문적이에요", checked: true },
+  ];
+  @observable reviewProfessionIndex = 3;
+  @observable ratingPoint = 0;
+  @observable reviewSearchStep = 1;
+
+  @action resetReviewAry = () => {
+    this.reviewKindnessIndex = 3;
+    this.reviewCommunicationIndex = 3;
+    this.reviewProfessionIndex = 3;
+  };
   @action resetDevCategory = () => {
     this.category_dic = {
       0: [],
@@ -1603,6 +1636,24 @@ class Partner {
     await PartnerAPI.setclickLog(req)
       .then((res) => {
         console.log("create: ", res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action getPartnerName = async (name) => {
+    this.partnersList = [];
+    const req = {
+      params: {
+        name: name,
+      },
+    };
+    await PartnerAPI.getPartnerName(req)
+      .then(async (res) => {
+        console.log("create: ", res);
+        this.partnersList = await this.partnersList.concat(res.data.data);
       })
       .catch((e) => {
         console.log(e);

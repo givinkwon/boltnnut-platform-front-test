@@ -244,6 +244,7 @@ const ModalBox = styled.div`
         justify-content: center;
         align-items: center;
         border-radius: 5px;
+        cursor: pointer;
 
         > span {
           font-size: 20px;
@@ -324,6 +325,7 @@ const ModalBox = styled.div`
         height: 40px;
         > div {
           font-size: 13px;
+          cursor: pointer;
         }
       }
     }

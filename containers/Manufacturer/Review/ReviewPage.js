@@ -2,13 +2,15 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
+import { toJS } from "mobx";
 
 import SearchProjectModal from "../Modal/SearchProjectModal";
 import SearchPartnerModal from "../Modal/SearchPartnerModal";
 import QuestionContainer from "../Modal/QuestionBox";
 
 const checkImg = "/static/images/pass8.png";
-const star = "/static/icon/star.svg";
+const star = "/static/icon/star_blue.svg";
+const editImg = "/static/icon/edit.svg";
 
 @inject("Partner")
 @observer
@@ -18,19 +20,24 @@ class ReviewPage extends React.Component {
     rows: 1,
     value: "",
     minRows: 1,
-    maxRows: 5,
+    maxRows: 15,
     star_ary: [
-      { id: 1, checked: false },
-      { id: 2, checked: false },
-      { id: 3, checked: false },
-      { id: 4, checked: false },
-      { id: 5, checked: false },
+      { id: 1, checked: false, content: "매우 나빠요" },
+      { id: 2, checked: false, content: "나빠요" },
+      { id: 3, checked: false, content: "보통이에요" },
+      { id: 4, checked: false, content: "좋아요" },
+      { id: 5, checked: false, content: "매우 좋아요" },
     ],
   };
 
   componentWillUnmount = () => {
+    console.log("22222222222222222222222222");
+  };
+
+  componentDidMount = () => {
+    console.log("11111111111111111111111111");
     const { Partner } = this.props;
-    // Partner.reviewActiveIndex = 0;
+    Partner.ratingPoint = 0;
   };
 
   starCheckHandler = async (star_id, bool) => {
@@ -54,6 +61,7 @@ class ReviewPage extends React.Component {
     //console.log(this.state.star_ary);
   };
   starRatingHandler = async (star_id) => {
+    const { Partner } = this.props;
     //console.log(star_id);
     if (this.state.star_ary[star_id - 1].checked) {
       //this.state.star_ary[star_id - 1].checked = false;
@@ -69,6 +77,8 @@ class ReviewPage extends React.Component {
         await this.starCheckHandler(i, bool);
       }
     }
+    Partner.ratingPoint = star_id;
+    console.log(toJS(Partner.ratingPoint));
   };
 
   openModal = () => {
@@ -85,6 +95,55 @@ class ReviewPage extends React.Component {
 
     Partner.searchProjectModalActive = false;
   };
+  checkIndex = (id, idx) => {
+    const { Partner } = this.props;
+    console.log(typeof id);
+    switch (id) {
+      case "1":
+        Partner.reviewKindnessIndex = idx;
+        break;
+      case "2":
+        Partner.reviewCommunicationIndex = idx;
+        break;
+      case "3":
+        Partner.reviewProfessionIndex = idx;
+        break;
+    }
+  };
+
+  reviewHandler = (event) => {
+    let textareaLineHeight = 0;
+    if (this.props.width > 797.98) {
+      textareaLineHeight = 34;
+      this.setState({ maxRows: 5 });
+    } else {
+      textareaLineHeight = 20;
+      this.setState({ maxRows: 10 });
+    }
+    //const textareaLineHeight = 34;
+    const { minRows, maxRows } = this.state;
+    const { Partner } = this.props;
+    const previousRows = event.target.rows;
+    event.target.rows = minRows; // reset number of rows in textarea
+
+    const currentRows = ~~(event.target.scrollHeight / textareaLineHeight);
+
+    if (currentRows === previousRows) {
+      event.target.rows = currentRows;
+    }
+
+    if (currentRows >= maxRows) {
+      event.target.rows = maxRows;
+      event.target.scrollTop = event.target.scrollHeight;
+    }
+
+    this.setState({
+      value: event.target.value,
+      rows: currentRows < maxRows ? currentRows : maxRows,
+    });
+
+    Partner.reviewContent = event.target.value;
+  };
 
   render() {
     const { Partner, width } = this.props;
@@ -100,25 +159,39 @@ class ReviewPage extends React.Component {
           <Search>
             <div>
               <span>프로젝트명</span>
-              <div
-                onClick={() => {
-                  console.log("onClick!");
-                  this.openModal();
-                }}
-              >
-                <span>입력하기</span>
-              </div>
+              {Partner.reviewSearchStep == 1 ? (
+                <div
+                  onClick={() => {
+                    console.log("onClick!");
+                    this.openModal();
+                  }}
+                >
+                  <span>입력하기</span>
+                </div>
+              ) : (
+                <edit>
+                  <span>{Partner.projectName}</span>
+                  <img src={editImg} />
+                </edit>
+              )}
             </div>
 
             <div>
               <span>파트너</span>
-              <div
-                onClick={() => {
-                  this.openModal();
-                }}
-              >
-                <span>검색</span>
-              </div>
+              {Partner.reviewSearchStep == 1 ? (
+                <div
+                  onClick={() => {
+                    this.openModal();
+                  }}
+                >
+                  <span>검색</span>
+                </div>
+              ) : (
+                <edit>
+                  <span>{Partner.reviewPartnerName}</span>
+                  <img src={editImg} />
+                </edit>
+              )}
             </div>
           </Search>
           <StarBox>
@@ -135,15 +208,69 @@ class ReviewPage extends React.Component {
                 );
               })}
             </starcontainer>
-            <span>선택해주세요.</span>
+            {Partner.ratingPoint == 0 ? (
+              <span>선택해주세요.</span>
+            ) : (
+              <span
+                style={{
+                  fontSize: "16px",
+                  color: "#0933b3",
+                  fontWeight: "500",
+                }}
+              >
+                {this.state.star_ary[Partner.ratingPoint - 1].content}
+              </span>
+            )}
           </StarBox>
           <QuestionBox>
-            <QuestionContainer />
-            <QuestionContainer />
-            <QuestionContainer />
+            <QuestionContainer
+              id="1"
+              Array={Partner.reviewKindnessAry}
+              header="파트너는 친절했나요?"
+              checkIndex={Partner.reviewKindnessIndex}
+              checkIndexFunc={this.checkIndex}
+            />
+            <QuestionContainer
+              id="2"
+              Array={Partner.reviewCommunicationAry}
+              header="소통이 원활했나요?"
+              checkIndex={Partner.reviewCommunicationIndex}
+              checkIndexFunc={this.checkIndex}
+            />
+            <QuestionContainer
+              id="3"
+              Array={Partner.reviewProfessionAry}
+              header="전문성이 도움이 되었나요?"
+              checkIndex={Partner.reviewProfessionIndex}
+              checkIndexFunc={this.checkIndex}
+            />
           </QuestionBox>
-          <Section></Section>
-          <Footer></Footer>
+          <Section>
+            <span>만족도 5점을 주셨네요, 어떤점이 좋았나요?</span>
+            <div>
+              <textarea
+                placeholder="리뷰를 작성해주세요"
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) => {
+                  e.target.placeholder = "리뷰를 작성해주세요";
+                }}
+                rows={this.state.rows}
+                value={this.state.value}
+                //className={"textarea"}
+                placeholderStyle={{ fontWeight: "400" }}
+                onChange={this.reviewHandler}
+              />
+            </div>
+          </Section>
+          <Footer>
+            <div>
+              <span>취소</span>
+            </div>
+
+            <div>
+              <span>작성하기</span>
+            </div>
+          </Footer>
 
           {Partner.searchProjectModalActive && (
             <Layer>
@@ -232,6 +359,16 @@ const Search = styled.div`
       color: #282c36;
       font-weight: bold;
     }
+    > edit {
+      > span {
+        font-size: 18px;
+        line-height: 34px;
+        letter-spacing: 0.45px;
+        color: #414550;
+        font-weight: normal;
+        margin-right: 10px;
+      }
+    }
     > div {
       border: 1px solid #c6c7cc;
       border-radius: 3px;
@@ -240,6 +377,7 @@ const Search = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
       > span {
         font-size: 18px;
         line-height: 34px;
@@ -293,9 +431,84 @@ const StarBox = styled.div`
     font-weight: normal;
   }
 `;
-const QuestionBox = styled.div``;
-const Section = styled.div``;
-const Footer = styled.div``;
+const QuestionBox = styled.div`
+  width: 80%;
+`;
+const Section = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  padding: 29px 0 168px 0;
+  box-sizing: border-box;
+
+  > span {
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: -0.6px;
+    color: #282c36;
+    font-weight: bold;
+    margin-bottom: 22px;
+  }
+
+  > div {
+    width: 100%;
+    border: 1px solid #c6c7cc;
+    border-radius: 5px;
+    background-color: #f6f6f6;
+    padding: 22px 23px 27px 24px;
+    box-sizing: border-box;
+    > textarea {
+      resize: none;
+      width: 100%;
+      font-size: 18px;
+      line-height: 34px;
+      letter-spzcing: -0.45px;
+      color: #414550;
+      font-weight: normal;
+      overflow: auto;
+      height: auto;
+      font-family: inherit;
+      background-color: #f6f6f6;
+      border: none;
+      :focus {
+        outline: none;
+      }
+      :placeholder {
+        font-weight: normal;
+      }
+      white-space: pre-line;
+    }
+  }
+`;
+const Footer = styled.div`
+  display: flex;
+  justify-content: center;
+
+  div {
+    border-radius: 3px;
+    width: 242px;
+    height: 61px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    span {
+      font-size: 20px;
+      line-height: 52px;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      font-weight: bold;
+    }
+  }
+  > div:nth-of-type(1) {
+    background-color: #c6c7cc;
+    margin-right: 35px;
+  }
+  > div:nth-of-type(2) {
+    background-color: #0933b3;
+  }
+`;
 
 const Layer = styled.div`
   position: fixed;
@@ -317,7 +530,10 @@ const Layer = styled.div`
 const StarImg = styled.div`
   margin-right: 5px;
   > img {
-    filter: ${(props) => (props.starActive ? "sepia(63%) saturate(10)" : "")};
+    filter: ${(props) =>
+      props.starActive
+        ? "sepia(63%) saturate(10)"
+        : "invert(0.5) opacity(0.5)"};
     cursor: pointer;
   }
 `;

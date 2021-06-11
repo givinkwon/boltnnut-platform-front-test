@@ -5,6 +5,7 @@ import StarRatingComponent from "react-star-rating-component";
 import { componentByNodeRegistery } from "mobx-react";
 import { inject, observer } from "mobx-react";
 import PartnerCard from "./PartnerCard";
+import { toJS } from "mobx";
 import * as PartnerAPI from "axios/Partner";
 
 //import Modal from '../../../commons/components/Modals/Modal';
@@ -23,11 +24,11 @@ class SearchPartnerModal extends React.Component {
     minRows: 1,
     maxRows: 5,
     star_ary: [
-      { id: 1, checked: false },
-      { id: 2, checked: false },
-      { id: 3, checked: false },
-      { id: 4, checked: false },
-      { id: 5, checked: false },
+      { id: 1, checked: false, content: "매우 나빠요" },
+      { id: 2, checked: false, content: "나빠요" },
+      { id: 3, checked: false, content: "보통이에요" },
+      { id: 4, checked: false, content: "좋아요" },
+      { id: 5, checked: false, content: "매우 좋아요" },
     ],
   };
 
@@ -81,16 +82,16 @@ class SearchPartnerModal extends React.Component {
   //       });
   //   };
 
-  //   searchText = (e) => {
-  //     const { Partner } = this.props;
-  //     //console.log("click");
-  //     // this.props.Partner.search_text = e.target.value;
-  //     //this.setState({ search: e.target.value });
-  //     // console.log(e.target.value);
-  //     Partner.reviewPartnerName = e.target.value;
-
-  //     //Partner.getPartner();
-  //   };
+  searchText = async (e) => {
+    const { Partner } = this.props;
+    // Partner.reviewPartnerName = e.target.value;
+    console.log(toJS(Partner.partnersName));
+    if (Partner.partnersName != "") {
+      await Partner.getPartnerName(Partner.partnersName);
+    }
+    console.log(toJS(Partner.partnersList));
+    //Partner.getPartner();
+  };
 
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
@@ -124,28 +125,52 @@ class SearchPartnerModal extends React.Component {
                     placeholder="원하는 분야의 제조업체를 검색하세요"
                     onBlur={(e) => {
                       // console.log(e.target.value);
-                      Partner.projectName = e.target.value;
+                      Partner.partnersName = e.target.value;
                       // if (e.target.value === "") {
                       //   Partner.maxDirectInput = false;
                       // }
                       e.target.placeholder =
-                        "진행했던 프로젝트를 입력해주세요.";
+                        "원하는 분야의 제조업체를 검색하세요";
                     }}
                     onFocus={(e) => {
                       e.target.placeholder = "";
                     }}
                   />
-                  <img src={searchImg} />
+                  <img
+                    src={searchImg}
+                    onClick={() => {
+                      this.searchText();
+                    }}
+                  />
                 </div>
               </main>
               <content>
-                {/* <PartnerCard width={width} /> */}
-                <NoPartner>
+                <div>
+                  {Partner.partnersList &&
+                    Partner.partnersList.map((item, idx) => {
+                      return (
+                        <PartnerCard
+                          width={width}
+                          id={idx}
+                          name={item.name}
+                          logo={item.logo}
+                          history={item.history}
+                          onClick={() => {
+                            Partner.reviewPartnerName = item.name;
+                            Partner.reviewPartnerId = item.id;
+                            Partner.reviewSearchStep = 2;
+                            Partner.searchPartnerModalActive = false;
+                          }}
+                        />
+                      );
+                    })}
+                  {/* <NoPartner>
                   <span>검색하신 결과가 없습니다.</span>
                   <div>
                     <span>직접 입력하기</span>
                   </div>
-                </NoPartner>
+                </NoPartner> */}
+                </div>
               </content>
 
               <footer>
@@ -179,17 +204,18 @@ const ModalBox = styled.div`
   // display: none;
   position: absolute;
 
-  top: 22%;
+  top: 6%;
 
   z-index: 101;
   background-color: white;
-  height: 511px;
+  // height: 511px;
   width: 83%;
   right: 8%;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 40%);
   border-radius: 10px;
   padding: 52px 0 60px 98px;
   box-sizing: border-box;
+  height: 700px;
 
   > section {
     max-width: 900px;
@@ -247,6 +273,7 @@ const ModalBox = styled.div`
           height: 26px;
           position: absolute;
           right: 40px;
+          cursor: pointer;
         }
       }
     }
@@ -255,11 +282,16 @@ const ModalBox = styled.div`
       //   border-top: 1px solid #e1e2e4;
       width: 100%;
       height: 100px;
+      > div {
+        overflow-y: auto;
+        height: 300px;
+      }
     }
     > footer {
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 150px;
 
       > div {
         background-color: #a4aab4;
@@ -271,6 +303,7 @@ const ModalBox = styled.div`
         justify-content: center;
         align-items: center;
         border-radius: 5px;
+        cursor: pointer;
 
         > span {
           font-size: 20px;
@@ -344,6 +377,7 @@ const ModalBox = styled.div`
         height: 40px;
         > div {
           font-size: 13px;
+          cursor: pointer;
         }
       }
     }
@@ -380,6 +414,7 @@ const NoPartner = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 
     > span {
       font-size: 16px;

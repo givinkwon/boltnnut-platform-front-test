@@ -115,7 +115,7 @@ class DetailCardContainer extends React.Component {
               )}
             </div>
           </DetailInfoBox>
-          <ReviewBox>
+          {/* <ReviewBox>
             <div>리뷰 작성</div>
 
             {Partner.reviewWritingModalActive && (
@@ -129,7 +129,7 @@ class DetailCardContainer extends React.Component {
                 </span>
               </Layer>
             )}
-          </ReviewBox>
+          </ReviewBox> */}
         </Card>
       </>
     );

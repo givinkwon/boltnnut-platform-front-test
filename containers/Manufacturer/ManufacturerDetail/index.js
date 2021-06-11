@@ -8,6 +8,10 @@ import { inject, observer } from "mobx-react";
 @inject("Auth", "Partner")
 @observer
 class ManufacturerDetailConatiner extends React.Component {
+  componentDidMount() {
+    console.log("MOUNT!!!!");
+    console.log(this.props.width);
+  }
   render() {
     const { Auth, Partner } = this.props;
     return (
@@ -17,13 +21,13 @@ class ManufacturerDetailConatiner extends React.Component {
             <>
               <Background>
                 <Containerv1>
-                  {Partner.reviewActiveIndex == 0 && (
-                    <DetailCardContainer width={this.props.width} />
-                  )}
+                  {/* {Partner.reviewActiveIndex == 0 && ( */}
+                  <DetailCardContainer width={this.props.width} />
+                  {/* )} */}
 
-                  {Partner.reviewActiveIndex == 1 && (
+                  {/* {Partner.reviewActiveIndex == 1 && (
                     <ReviewContainer width={this.props.width} />
-                  )}
+                  )} */}
                 </Containerv1>
               </Background>
             </>

@@ -17,26 +17,47 @@ class PartnerCard extends React.Component {
   // }
   state = {
     width: null,
+    activeCard: false,
   };
 
   componentDidMount = async () => {};
   componentWillUnmount = () => {};
+  activeHandler = (key) => {
+    console.log(this.props.id + 1);
+    if (key == "in") {
+      this.setState({ activeCard: true });
+    } else {
+      this.setState({ activeCard: false });
+    }
+  };
 
   render() {
-    const { data, width, Partner, categoryData, idx } = this.props;
+    const { width, Partner, id, name, logo, history } = this.props;
 
     return (
       <>
-        <Card>
+        <Card
+          onMouseOver={() => {
+            console.log("onMouseOver");
+            this.activeHandler("in");
+          }}
+          onMouseLeave={() => {
+            console.log("onMouseLeave");
+            this.activeHandler("out");
+          }}
+          active={this.state.activeCard}
+        >
           <Number>
-            <span>1</span>
+            <span>{id + 1}</span>
           </Number>
           <Logo>
-            <div></div>
+            <div>
+              <img src={logo} />
+            </div>
           </Logo>
           <Content>
-            <name>(주) 동성실리콘</name>
-            <product>실리콘 고무 생산업체</product>
+            <name>{name}</name>
+            <product>{history}</product>
           </Content>
         </Card>
       </>
@@ -52,6 +73,8 @@ const Card = styled.div`
   width: 100%;
   border-bottom: 1px solid #e1e2e4;
   align-items: center;
+  background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
+  cursor: pointer;
 `;
 const Number = styled.div`
   flex-grow: 1;
@@ -63,6 +86,10 @@ const Logo = styled.div`
     height: 69px;
     background-color: #c9c9c9;
     border-radius: 3px;
+    > img {
+      width: 65px;
+      height: 69px;
+    }
   }
 `;
 const Content = styled.div`
