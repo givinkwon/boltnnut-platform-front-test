@@ -33,10 +33,10 @@ class LoadingModal extends React.Component {
       >
         {open ? (
           <>
-            <button className="close" onClick={close}>
+            {/* <button className="close" onClick={close}>
               {" "}
               &times;{" "}
-            </button>
+            </button> */}
             <section>
               <header>Loading...</header>
               <main>견적을 산출하는데까지 최대 1분 정도 걸립니다.</main>
@@ -101,7 +101,7 @@ const ModalBox = styled.div`
       align-items: center;
       height: 55%;
       font-size: 20px;
-      font-weight: 600;
+      font-weight: 500;
     }
     > footer {
       height: 50px;
@@ -142,7 +142,7 @@ const ModalBox = styled.div`
     left: 5%;
     z-index: 101;
 
-    height: 180px;
+    height: 145px;
     width: 90%;
 
     > section {
@@ -160,11 +160,17 @@ const ModalBox = styled.div`
       }
       > main {
         height: 95%;
-        font-size: 16px;
-        font-weight: 600;
+        font-size: 14px;
+        font-weight: 500;
       }
       > footer {
-        height: 40px;
+        height: 62px;
+        > div {
+          height: 24px;
+          > span {
+            font-size: 13px;
+          }
+        }
       }
     }
     > button {

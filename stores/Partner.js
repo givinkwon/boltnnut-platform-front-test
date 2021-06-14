@@ -107,7 +107,7 @@ class Partner {
   @observable requestDoneModalActive = false;
   @observable ReviewActive = false;
   @observable reviewModalActive = false;
-  @observable ReviewActiveIndex = -1;
+  @observable ReviewActiveIndex = 1;
   @observable reviewWritingModalActive = true;
 
   @observable modalUserPhone = "";
