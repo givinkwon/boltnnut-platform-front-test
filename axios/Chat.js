@@ -55,3 +55,12 @@ export function patchShareInform(req) {
     data: req.params ? req.params : null,
   });
 }
+
+export function sendJandi(req) {
+  return axios({
+    method: "POST",
+    url: `https://wh.jandi.com/connect-api/webhook/18069463/bf7dce120b1a85f9478b8460db6d07ad`,
+    data: req.params,
+    headers: req.headers ? req.headers : null,
+  });
+}

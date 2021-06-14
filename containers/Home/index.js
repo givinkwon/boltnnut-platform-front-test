@@ -116,16 +116,21 @@ class HomeConatiner extends React.Component {
         ) : (
           <>
             <div style={{ overflow: "hidden" }}>
+              {/* <div
+                style={{ width: 300, height: 300, background: "green" }}
+                onClick={() => {
+                  authorize();
+                }}
+              >
+
+              </div> */}
               <Banner0Container />
               {/* <Banner10Container/> */}
-
               <Banner2Container />
               <Banner11Container />
               <Banner1Conatiner />
               <Banner3Container />
-
               <Banner12Container />
-
               {/* <Banner4Container />
               <Banner6Container />
               <Banner7Container /> */}

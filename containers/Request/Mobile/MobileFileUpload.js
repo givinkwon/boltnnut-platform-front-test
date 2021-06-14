@@ -19,6 +19,7 @@ import Containerv1 from "../../../components/Containerv1";
 import Calendar from "./MobileCalendar2";
 import { toJS } from "mobx";
 import Router from "next/router";
+import Modal from "../LoadingModal";
 
 const fileImg = "/static/images/file.png";
 
@@ -101,11 +102,18 @@ class FileUploadContainer extends Component {
     ],
     projectname: "",
   };
-  
+
+  closeModal = () => {
+    const { ManufactureProcess } = this.props;
+    ManufactureProcess.loadingEstimate = false;
+  };
+
   componentDidMount = () => {
-    this.props.ManufactureProcess.reset()
-    fileList = []
-  }
+    const { ManufactureProcess } = this.props;
+    this.props.ManufactureProcess.reset();
+    fileList = [];
+    ManufactureProcess.loadingEstimate = false;
+  };
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
   setNumCount = (data, val) => {
     console.log(val);
@@ -259,7 +267,7 @@ class FileUploadContainer extends Component {
       alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
       return false;
     }
-    if (ManufactureProcess.requestComment.length == 0 ) {
+    if (ManufactureProcess.requestComment.length == 0) {
       alert("공개내용을 작성해주세요");
       return false;
     }
@@ -281,8 +289,9 @@ class FileUploadContainer extends Component {
 
     let request_state = "";
     if (ManufactureProcess.purposeContent) {
-
-      request_state = this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
+      request_state = this.state.purposeAry[
+        ManufactureProcess.purposeContent - 1
+      ].name;
     }
     console.log(request_state);
 
@@ -440,7 +449,9 @@ class FileUploadContainer extends Component {
     } else {
       item.checked = true;
       if (ManufactureProcess.purposeContent) {
-        this.state.purposeAry[ManufactureProcess.purposeContent - 1].checked = false;
+        this.state.purposeAry[
+          ManufactureProcess.purposeContent - 1
+        ].checked = false;
       }
       ManufactureProcess.purposeContent = item.id;
     }
@@ -914,6 +925,7 @@ class FileUploadContainer extends Component {
           ManufactureProcessFormData.append("request", 2467);
           console.log(ManufactureProcessFormData);
           this.setState({ loading: true });
+          ManufactureProcess.loadingEstimate = true;
 
           //this.props.ManufactureProcess.saveSelect(ManufactureProcessFormData)
           ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
@@ -1178,7 +1190,7 @@ class FileUploadContainer extends Component {
   };
   render() {
     const { ManufactureProcess } = this.props;
-    const { purposeAry} = this.state;
+    const { purposeAry } = this.state;
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
 
 		다음 사항이 명확하게 작성되어야 정확한 답변을 받을 가능성이 높습니다.
@@ -1265,48 +1277,48 @@ class FileUploadContainer extends Component {
                         <ManufactureBox>
                           <Label>생산공정</Label>
                           <Select // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
-                                defaultValue={
-                                  ManufactureProcess.categoryDefaultValue.big
-                                }
-                                styles={customStyles}
-                                value={data.selectBig}
-                                options={data.optionBig}
-                                getOptionLabel={(option) => option.name}
-                                onChange={(e) => {
-                                  ManufactureProcess.setBigCategory(e);
-                                  this.loadFileResopnse(idx);
+                            defaultValue={
+                              ManufactureProcess.categoryDefaultValue.big
+                            }
+                            styles={customStyles}
+                            value={data.selectBig}
+                            options={data.optionBig}
+                            getOptionLabel={(option) => option.name}
+                            onChange={(e) => {
+                              ManufactureProcess.setBigCategory(e);
+                              this.loadFileResopnse(idx);
 
-                                  data.selectBig = e;
-                                  data.optionMid = e.detail;
+                              data.selectBig = e;
+                              data.optionMid = e.detail;
 
-                                  if (data.selectBig.name === "금형사출") {
-                                    data.quantity = { label: "0", value: "0" };
-                                  } else {
-                                    data.quantity = { label: "1", value: "1" };
-                                  }
-                                  this.countPrice();
-                                }}
-                              />
+                              if (data.selectBig.name === "금형사출") {
+                                data.quantity = { label: "0", value: "0" };
+                              } else {
+                                data.quantity = { label: "1", value: "1" };
+                              }
+                              this.countPrice();
+                            }}
+                          />
                         </ManufactureBox>
                       </ColumnBox>
                       <MaterialBox>
                         <Label>재료</Label>
                         <Select
-                              defaultValue={
-                                ManufactureProcess.categoryDefaultValue.mid
-                              }
-                              value={data.selectedMid}
-                              styles={customStyles}
-                              options={data.optionMid}
-                              getOptionLabel={(option) => option.name}
-                              onChange={(e) => {
-                                ManufactureProcess.setMidCategory(e);
-                                //this.countQuantity(data.quantity.value, value.value)
-                                this.countQuantity(0, 0);
-                                this.loadFileResopnse(idx);
-                                this.countPrice();
-                              }}
-                            />
+                          defaultValue={
+                            ManufactureProcess.categoryDefaultValue.mid
+                          }
+                          value={data.selectedMid}
+                          styles={customStyles}
+                          options={data.optionMid}
+                          getOptionLabel={(option) => option.name}
+                          onChange={(e) => {
+                            ManufactureProcess.setMidCategory(e);
+                            //this.countQuantity(data.quantity.value, value.value)
+                            this.countQuantity(0, 0);
+                            this.loadFileResopnse(idx);
+                            this.countPrice();
+                          }}
+                        />
                       </MaterialBox>
                       <WCLabel checkQuantity={data.quantity.value}>
                         <Label>마감</Label>
@@ -1318,93 +1330,93 @@ class FileUploadContainer extends Component {
                       </WCBox>
 
                       <QuantityBox quantity={data.quantity.value}>
-                            {data.quantity.label != "직접 입력" &&
-                              data.selectBig.name !== "금형사출" && (
-                                <Select
-                                  id="select"
-                                  quantity={data.quantity.label}
-                                  width="118px"
-                                  styles={customStyles}
-                                  style={{ overflow: "visible" }}
-                                  options={quantityAry}
-                                  getOptionLabel={(option) => option.label}
-                                  value={data.quantity}
-                                  onChange={(value) => {
-                                    console.log(data.selectBig.name);
+                        {data.quantity.label != "직접 입력" &&
+                          data.selectBig.name !== "금형사출" && (
+                            <Select
+                              id="select"
+                              quantity={data.quantity.label}
+                              width="118px"
+                              styles={customStyles}
+                              style={{ overflow: "visible" }}
+                              options={quantityAry}
+                              getOptionLabel={(option) => option.label}
+                              value={data.quantity}
+                              onChange={(value) => {
+                                console.log(data.selectBig.name);
+                                if (data.checked) {
+                                  this.countQuantity(
+                                    data.quantity.value,
+                                    value.value
+                                  );
+                                }
+                                this.onQuantityChange(data, value);
+                                this.countPrice();
+                              }}
+                            />
+                          )}
+
+                        {(data.quantity.label == "직접 입력" ||
+                          data.selectBig.name === "금형사출") && (
+                          <DirectInputBox
+                            quantity={data.quantity.label}
+                            id="directInputBox"
+                          >
+                            <input
+                              className={`directInput directInput${idx}`}
+                              placeholder="직접 입력하세요"
+                              onKeyPress={(e) => {
+                                if (e.key === "Enter") {
+                                  this.checkQuantityData(e, data, idx);
+                                  if (e.target.value >= 100) {
                                     if (data.checked) {
                                       this.countQuantity(
-                                        data.quantity.value,
-                                        value.value
+                                        parseInt(data.prevQuantity),
+                                        parseInt(e.target.value)
                                       );
                                     }
-                                    this.onQuantityChange(data, value);
-                                    this.countPrice();
-                                  }}
-                                />
-                              )}
+                                    data.prevQuantity = e.target.value;
+                                  }
+                                }
+                              }}
+                              // value = {data.quantity}
+                              onBlur={(e) => {
+                                console.log(e.target.value);
+                                console.log(data.prevQuantity);
+                                if (e.target.value >= 100) {
+                                  if (data.checked) {
+                                    this.countQuantity(
+                                      parseInt(data.prevQuantity),
+                                      parseInt(e.target.value)
+                                    );
+                                  }
+                                  data.prevQuantity = e.target.value;
+                                }
+                                this.checkQuantityData(e, data, idx);
+                              }}
+                              onChange={(e) => {
+                                console.log("onChange!!");
+                                console.log(this.value);
+                                const re = /^[0-9\b]+$/;
 
-                            {(data.quantity.label == "직접 입력" ||
-                              data.selectBig.name === "금형사출") && (
-                              <DirectInputBox
-                                quantity={data.quantity.label}
-                                id="directInputBox"
-                              >
-                                <input
-                                  className={`directInput directInput${idx}`}
-                                  placeholder="직접 입력하세요"
-                                  onKeyPress={(e) => {
-                                    if (e.key === "Enter") {
-                                      this.checkQuantityData(e, data, idx);
-                                      if (e.target.value >= 100) {
-                                        if (data.checked) {
-                                          this.countQuantity(
-                                            parseInt(data.prevQuantity),
-                                            parseInt(e.target.value)
-                                          );
-                                        }
-                                        data.prevQuantity = e.target.value;
-                                      }
-                                    }
-                                  }}
-                                  // value = {data.quantity}
-                                  onBlur={(e) => {
-                                    console.log(e.target.value);
-                                    console.log(data.prevQuantity);
-                                    if (e.target.value >= 100) {
-                                      if (data.checked) {
-                                        this.countQuantity(
-                                          parseInt(data.prevQuantity),
-                                          parseInt(e.target.value)
-                                        );
-                                      }
-                                      data.prevQuantity = e.target.value;
-                                    }
-                                    this.checkQuantityData(e, data, idx);
-                                  }}
-                                  onChange={(e) => {
-                                    console.log("onChange!!");
-                                    console.log(this.value);
-                                    const re = /^[0-9\b]+$/;
-
-                                    if (
-                                      e.target.value === "" ||
-                                      re.test(e.target.value)
-                                    ) {
-                                      this.setNumCount(data, e.target.value);
-                                    } else {
-                                      data.quantity = {
-                                        label: "직접 입력",
-                                        val: 0,
-                                      };
-                                      e.target.value = "";
-                                      this.setNumCount(data, e.target.value);
-                                      alert("숫자를 입력하세요");
-                                    }
-                                  }}
-                                />
-                              </DirectInputBox>
-                            )}
-                          </QuantityBox>
+                                if (
+                                  e.target.value === "" ||
+                                  re.test(e.target.value)
+                                ) {
+                                  this.setNumCount(data, e.target.value);
+                                } else {
+                                  data.quantity = {
+                                    label: "직접 입력",
+                                    val: 0,
+                                  };
+                                  e.target.value = "";
+                                  this.setNumCount(data, e.target.value);
+                                  alert("숫자를 입력하세요");
+                                }
+                              }}
+                            />
+                          </DirectInputBox>
+                        )}
+                      </QuantityBox>
                     </MainBox>
 
                     <div style={{ textAlign: "right" }}>
@@ -1413,53 +1425,52 @@ class FileUploadContainer extends Component {
                         checkSelectBig={data.selectBig.name}
                         style={{ display: "inline-block" }}
                       >
-                         <div>
-                              <span>
-                                {data.priceLoading === true ? (
-                                  <CircularProgress
-                                    style={{ width: "22px", height: "22px" }}
-                                    className="spinner"
-                                  />
-                                ) : data.selectBig.name === "금형사출" ? (
-                                  <>
-                                    <div>
-                                      <span>금형비 </span>
-                                      <span>
-                                        {data.totalMoldPrice.toLocaleString(
-                                          "ko-KR"
-                                        ) + " 원"}
-                                      </span>
-                                      <span> + </span>
-                                      <span>사출비 </span>
-                                      <span>
-                                        {data.totalPrice.toLocaleString(
-                                          "ko-KR"
-                                        ) + " 원"}
-                                      </span>
-                                    </div>
+                        <div>
+                          <span>
+                            {data.priceLoading === true ? (
+                              <CircularProgress
+                                style={{ width: "22px", height: "22px" }}
+                                className="spinner"
+                              />
+                            ) : data.selectBig.name === "금형사출" ? (
+                              <>
+                                <div>
+                                  <span>금형비 </span>
+                                  <span>
+                                    {data.totalMoldPrice.toLocaleString(
+                                      "ko-KR"
+                                    ) + " 원"}
+                                  </span>
+                                  <span> + </span>
+                                  <span>사출비 </span>
+                                  <span>
+                                    {data.totalPrice.toLocaleString("ko-KR") +
+                                      " 원"}
+                                  </span>
+                                </div>
 
-                                    <div>
-                                      <span>가격 </span>
-                                      <span>
-                                        {(
-                                          data.totalMoldPrice + data.totalPrice
-                                        ).toLocaleString("ko-KR") + " 원"}
-                                      </span>
-                                    </div>
-                                  </>
-                                ) : (
-                                  <>
-                                  <div>
-                                    <span>가격 </span>
-                                    <span>
-                                      {(data.totalPrice).toLocaleString("ko-KR") +
-                                        " 원"}
-                                    </span>
-                                  </div>
-                                  </>
-                                )}
-                              </span>
-                            </div>
+                                <div>
+                                  <span>가격 </span>
+                                  <span>
+                                    {(
+                                      data.totalMoldPrice + data.totalPrice
+                                    ).toLocaleString("ko-KR") + " 원"}
+                                  </span>
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <div>
+                                  <span>가격 </span>
+                                  <span>
+                                    {data.totalPrice.toLocaleString("ko-KR") +
+                                      " 원"}
+                                  </span>
+                                </div>
+                              </>
+                            )}
+                          </span>
+                        </div>
                       </TailBox>
                     </div>
                     <FileAddBox
@@ -1516,7 +1527,9 @@ class FileUploadContainer extends Component {
                     <ItemBox id="itemBox">
                       <MainBox>
                         <StlBox>
-                        <div style = {{marginBottom: 30}}>{data.fileName}</div>
+                          <div style={{ marginBottom: 30 }}>
+                            {data.fileName}
+                          </div>
                           {/* <div
                             style={{
                               display: "flex",
@@ -1527,70 +1540,64 @@ class FileUploadContainer extends Component {
                               alignItems: "center",
                             }}
                           > */}
-                            
+
                           {/* </div> */}
                         </StlBox>
                         <ColumnBox>
                           <ManufactureBox>
                             <Label>생산공정</Label>
                             <Select // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
-                                  defaultValue={
-                                    ManufactureProcess.categoryDefaultValue.big
+                              defaultValue={
+                                ManufactureProcess.categoryDefaultValue.big
+                              }
+                              styles={customStyles}
+                              value={data.selectBig}
+                              options={data.optionBig}
+                              getOptionLabel={(option) => option.name}
+                              onChange={(e) => {
+                                ManufactureProcess.setBigCategory(e);
+                                //this.loadFileResopnse(idx);
+
+                                data.selectBig = e;
+                                data.optionMid = e.detail;
+
+                                if (data.selectBig.name === "금형사출") {
+                                  if (data.checked) {
+                                    this.countQuantity(data.quantity.value, 0);
                                   }
-                                  styles={customStyles}
-                                  value={data.selectBig}
-                                  options={data.optionBig}
-                                  getOptionLabel={(option) => option.name}
-                                  onChange={(e) => {
-                                    ManufactureProcess.setBigCategory(e);
-                                    //this.loadFileResopnse(idx);
-
-                                    data.selectBig = e;
-                                    data.optionMid = e.detail;
-
-                                    if (data.selectBig.name === "금형사출") {
-                                      if (data.checked) {
-                                        this.countQuantity(
-                                          data.quantity.value,
-                                          0
-                                        );
-                                      }
-                                      data.quantity = { label: "0", value: 0 };
-                                    } else {
-                                      if (data.checked) {
-                                        this.countQuantity(
-                                          data.quantity.value,
-                                          1
-                                        );
-                                      }
-                                      data.quantity = { label: "1", value: 1 };
-                                    }
-                                    //this.countPrice()
-                                    this.setState({ g: 3 });
-                                  }}
-                                />
-                              </ManufactureBox>
+                                  data.quantity = { label: "0", value: 0 };
+                                } else {
+                                  if (data.checked) {
+                                    this.countQuantity(data.quantity.value, 1);
+                                  }
+                                  data.quantity = { label: "1", value: 1 };
+                                }
+                                //this.countPrice()
+                                this.setState({ g: 3 });
+                              }}
+                            />
+                          </ManufactureBox>
                         </ColumnBox>
                         <MaterialBox>
                           <Label>재료</Label>
                           <Select
-                                defaultValue={
-                                  ManufactureProcess.categoryDefaultValue.mid
-                                }
-                                value={data.selectedMid}
-                                styles={customStyles}
-                                options={data.optionMid}
-                                getOptionLabel={(option) => option.name}
-                                onChange={(e) => {
-                                  ManufactureProcess.setMidCategory(e);
-                                  //this.countQuantity(data.quantity.value, value.value)
-                                  this.countQuantity(0, 0);
-                                  this.loadFileResopnse(idx);
-                                  this.countPrice();
-                                  this.setState({ g: 3 });
-                                }}
-                              />
-                            </MaterialBox>
+                            defaultValue={
+                              ManufactureProcess.categoryDefaultValue.mid
+                            }
+                            value={data.selectedMid}
+                            styles={customStyles}
+                            options={data.optionMid}
+                            getOptionLabel={(option) => option.name}
+                            onChange={(e) => {
+                              ManufactureProcess.setMidCategory(e);
+                              //this.countQuantity(data.quantity.value, value.value)
+                              this.countQuantity(0, 0);
+                              this.loadFileResopnse(idx);
+                              this.countPrice();
+                              this.setState({ g: 3 });
+                            }}
+                          />
+                        </MaterialBox>
                         <WCLabel>
                           <Label>마감</Label>
                           <Label>색상</Label>
@@ -1601,108 +1608,106 @@ class FileUploadContainer extends Component {
                         </WCBox>
 
                         <QuantityBox quantity={data.quantity.value}>
-                              {data.quantity.label != "직접 입력" &&
-                                data.selectBig.name !== "금형사출" && (
-                                  <Select
-                                    id="select"
-                                    quantity={data.quantity.label}
-                                    width="118px"
-                                    styles={customStyles}
-                                    style={{ overflow: "visible" }}
-                                    options={quantityAry}
-                                    getOptionLabel={(option) => option.label}
-                                    value={data.quantity}
-                                    onChange={(value) => {
-                                      console.log(data.selectBig.name);
+                          {data.quantity.label != "직접 입력" &&
+                            data.selectBig.name !== "금형사출" && (
+                              <Select
+                                id="select"
+                                quantity={data.quantity.label}
+                                width="118px"
+                                styles={customStyles}
+                                style={{ overflow: "visible" }}
+                                options={quantityAry}
+                                getOptionLabel={(option) => option.label}
+                                value={data.quantity}
+                                onChange={(value) => {
+                                  console.log(data.selectBig.name);
+                                  if (data.checked) {
+                                    this.countQuantity(
+                                      data.quantity.value,
+                                      value.value
+                                    );
+                                  }
+                                  this.onQuantityChange(data, value);
+                                  //this.countPrice()
+                                }}
+                              />
+                            )}
+
+                          {(data.quantity.label == "직접 입력" ||
+                            data.selectBig.name === "금형사출") && (
+                            <DirectInputBox
+                              quantity={data.quantity.label}
+                              id="directInputBox"
+                            >
+                              <input
+                                className={`directInput directInput${idx}`}
+                                placeholder="직접 입력하세요"
+                                onKeyPress={(e) => {
+                                  if (e.key === "Enter") {
+                                    this.checkQuantityData(e, data, idx);
+                                    if (e.target.value >= 100) {
                                       if (data.checked) {
                                         this.countQuantity(
-                                          data.quantity.value,
-                                          value.value
+                                          parseInt(data.prevQuantity),
+                                          parseInt(e.target.value)
                                         );
                                       }
-                                      this.onQuantityChange(data, value);
-                                      //this.countPrice()
-                                    }}
-                                  />
-                                )}
+                                      data.prevQuantity = e.target.value;
+                                    }
+                                  }
+                                }}
+                                // value = {data.quantity}
+                                onBlur={(e) => {
+                                  console.log(e.target.value);
+                                  console.log(data.prevQuantity);
+                                  if (e.target.value >= 100) {
+                                    if (data.checked) {
+                                      this.countQuantity(
+                                        parseInt(data.prevQuantity),
+                                        parseInt(e.target.value)
+                                      );
+                                    }
+                                    data.prevQuantity = e.target.value;
+                                  }
+                                  //this.checkQuantityData(e, data, idx)
+                                  if (data.selectBig.name === "금형사출") {
+                                    if (
+                                      e.target.value > 0 &&
+                                      e.target.value < 100
+                                    ) {
+                                      alert("최소 주문 수량은 100개입니다!");
+                                      data.quantity = {
+                                        label: "직접 입력",
+                                        val: 0,
+                                      };
+                                      e.target.value = "";
+                                    }
+                                  }
+                                }}
+                                onChange={(e) => {
+                                  console.log("onChange!!");
+                                  console.log(this.value);
+                                  const re = /^[0-9\b]+$/;
 
-                              {(data.quantity.label == "직접 입력" ||
-                                data.selectBig.name === "금형사출") && (
-                                <DirectInputBox
-                                  quantity={data.quantity.label}
-                                  id="directInputBox"
-                                >
-                                  <input
-                                    className={`directInput directInput${idx}`}
-                                    placeholder="직접 입력하세요"
-                                    onKeyPress={(e) => {
-                                      if (e.key === "Enter") {
-                                        this.checkQuantityData(e, data, idx);
-                                        if (e.target.value >= 100) {
-                                          if (data.checked) {
-                                            this.countQuantity(
-                                              parseInt(data.prevQuantity),
-                                              parseInt(e.target.value)
-                                            );
-                                          }
-                                          data.prevQuantity = e.target.value;
-                                        }
-                                      }
-                                    }}
-                                    // value = {data.quantity}
-                                    onBlur={(e) => {
-                                      console.log(e.target.value);
-                                      console.log(data.prevQuantity);
-                                      if (e.target.value >= 100) {
-                                        if (data.checked) {
-                                          this.countQuantity(
-                                            parseInt(data.prevQuantity),
-                                            parseInt(e.target.value)
-                                          );
-                                        }
-                                        data.prevQuantity = e.target.value;
-                                      }
-                                      //this.checkQuantityData(e, data, idx)
-                                      if (data.selectBig.name === "금형사출") {
-                                        if (
-                                          e.target.value > 0 &&
-                                          e.target.value < 100
-                                        ) {
-                                          alert(
-                                            "최소 주문 수량은 100개입니다!"
-                                          );
-                                          data.quantity = {
-                                            label: "직접 입력",
-                                            val: 0,
-                                          };
-                                          e.target.value = "";
-                                        }
-                                      }
-                                    }}
-                                    onChange={(e) => {
-                                      console.log("onChange!!");
-                                      console.log(this.value);
-                                      const re = /^[0-9\b]+$/;
-
-                                      if (
-                                        e.target.value === "" ||
-                                        re.test(e.target.value)
-                                      ) {
-                                        this.setNumCount(data, e.target.value);
-                                      } else {
-                                        data.quantity = {
-                                          label: "직접 입력",
-                                          val: 0,
-                                        };
-                                        e.target.value = "";
-                                        this.setNumCount(data, e.target.value);
-                                        alert("숫자를 입력하세요");
-                                      }
-                                    }}
-                                  />
-                                </DirectInputBox>
-                              )}
-                            </QuantityBox>
+                                  if (
+                                    e.target.value === "" ||
+                                    re.test(e.target.value)
+                                  ) {
+                                    this.setNumCount(data, e.target.value);
+                                  } else {
+                                    data.quantity = {
+                                      label: "직접 입력",
+                                      val: 0,
+                                    };
+                                    e.target.value = "";
+                                    this.setNumCount(data, e.target.value);
+                                    alert("숫자를 입력하세요");
+                                  }
+                                }}
+                              />
+                            </DirectInputBox>
+                          )}
+                        </QuantityBox>
                       </MainBox>
 
                       <div style={{ textAlign: "right" }}>
@@ -1794,16 +1799,16 @@ class FileUploadContainer extends Component {
           </PriceLabel>
 
           <PriceData>
-                  <span>
-                    {ManufactureProcess.orderMinPrice.toLocaleString("ko-KR")}
-                  </span>
-                  <span>~</span>
-                  <span>
-                    {/* {console.log(ManufactureProcess.orderPrice)} */}
-                    {ManufactureProcess.orderMaxPrice.toLocaleString("ko-KR")}
-                    <span> 원</span>
-                  </span>
-                </PriceData>
+            <span>
+              {ManufactureProcess.orderMinPrice.toLocaleString("ko-KR")}
+            </span>
+            <span>~</span>
+            <span>
+              {/* {console.log(ManufactureProcess.orderPrice)} */}
+              {ManufactureProcess.orderMaxPrice.toLocaleString("ko-KR")}
+              <span> 원</span>
+            </span>
+          </PriceData>
         </Price>
 
         <Containerv1 style={{ flexDirection: "column" }}>
@@ -1812,19 +1817,18 @@ class FileUploadContainer extends Component {
           >
             <TitleLabel>
               <span>문의 목적</span>
-
             </TitleLabel>
 
             <SelectBox>
               {this.state.purposeAry.map((item, idx) => {
-                  return (
-                    <PurposeSelectCircle
-                      active={item.checked}
-                      onClick={() => {
-                        this.purposeHandler(item);
-                        console.log(idx);
-                      }}
-                    >
+                return (
+                  <PurposeSelectCircle
+                    active={item.checked}
+                    onClick={() => {
+                      this.purposeHandler(item);
+                      console.log(idx);
+                    }}
+                  >
                     <PurposeFont18 active={item.checked}>
                       {item.name}
                     </PurposeFont18>
@@ -1872,20 +1876,20 @@ class FileUploadContainer extends Component {
                   <Calendar mobile={true} />
                 </div>
                 <div>
-                <div
-                  onClick={() => {
-                    console.log("click1");
-                    if (ManufactureProcess.date_conference) {
-                      ManufactureProcess.date_conference = false;
-                    } else {
-                      ManufactureProcess.date_conference = true;
-                      if (ManufactureProcess.date_undefined) {
-                        ManufactureProcess.date_undefined = false;
+                  <div
+                    onClick={() => {
+                      console.log("click1");
+                      if (ManufactureProcess.date_conference) {
+                        ManufactureProcess.date_conference = false;
+                      } else {
+                        ManufactureProcess.date_conference = true;
+                        if (ManufactureProcess.date_undefined) {
+                          ManufactureProcess.date_undefined = false;
+                        }
                       }
-                    }
-                    console.log(ManufactureProcess.date_conference);
-                  }}
-                >
+                      console.log(ManufactureProcess.date_conference);
+                    }}
+                  >
                     <div>
                       <img src={pass3} />
                     </div>
@@ -1992,7 +1996,7 @@ class FileUploadContainer extends Component {
             </Reference>
           </ReferenceBox>
           <Button checkFileUpload={ManufactureProcess.checkFileUpload}>
-          <div>
+            <div>
               {ManufactureProcess.changeProject ? (
                 <span
                   onClick={() => {
@@ -2048,12 +2052,23 @@ class FileUploadContainer extends Component {
 
                     this.requestSubmit(1);
                   }}
-                  >
+                >
                   상담 및 가격 요청하기
                 </span>
               )}
             </div>
           </Button>
+          {ManufactureProcess.loadingEstimate && (
+            <Layer>
+              <span>
+                <Modal
+                  width={this.props.width}
+                  open={ManufactureProcess.loadingEstimate}
+                  close={this.closeModal}
+                />
+              </span>
+            </Layer>
+          )}
         </Containerv1>
       </>
     );
@@ -2277,7 +2292,7 @@ const DeleteBox = styled.div`
 `;
 
 const InputBox = styled.div`
-  margin-top : ${(props) => (props.checkFileUpload ? "" : "50px")};
+  margin-top: ${(props) => (props.checkFileUpload ? "" : "50px")};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3123,4 +3138,22 @@ const Font15 = styled(Content.FontSize15)`
   color: #0933b3;
   text-align: right;
   font-weight: normal;
+`;
+
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  // opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 `;
