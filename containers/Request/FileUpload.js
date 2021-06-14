@@ -939,6 +939,7 @@ class FileUploadContainer extends Component {
           ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
             .then((res) => {
               loadingCounter++;
+              console.log(toJS(res))
               this.setState({
                 fileList: fileList.push({
                   submitFile: res.data.data,
