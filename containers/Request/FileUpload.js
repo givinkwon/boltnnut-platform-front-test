@@ -19,6 +19,7 @@ import Calendar from "./Calendar2";
 import Magazine from "../../stores/Magazine";
 import { toJS } from "mobx";
 import Router from "next/router";
+import Modal from "LoadingModal";
 
 import * as RequestAPI from "axios/Request";
 
@@ -105,7 +106,14 @@ class FileUploadContainer extends Component {
     projectname: "",
   };
 
+  closeModal = () => {
+    const { ManufactureProcess } = this.props;
+    ManufactureProcess.loadingEstimate = false;
+  };
+
   componentDidMount = () => {
+    const { ManufactureProcess } = this.props;
+    ManufactureProcess.loadingEstimate = false;
     this.props.ManufactureProcess.reset();
     fileList = [];
   };
@@ -253,27 +261,33 @@ class FileUploadContainer extends Component {
     // error 처리
     if (ManufactureProcess.purposeContent == 0) {
       alert("문의 목적을 선택해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (projectname.length == 0) {
       alert("프로젝트 제목을 입력해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (projectname.length > 200) {
       alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (ManufactureProcess.requestComment.length == 0) {
       alert("공개내용을 작성해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
 
     if (ManufactureProcess.requestComment.length > 4500) {
       alert("공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (ManufactureProcess.requestComment2.length > 4500) {
       alert("비공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
 
@@ -358,6 +372,10 @@ class FileUploadContainer extends Component {
       // formData.append('', fileList[i].selectedMid.id)
     }
 
+    for (var i = 0; i < fileList.length; i++) {
+      formData.append(`file_close`, fileList[i].originFile);
+    }
+
     console.log(processData);
     console.log(detailProcessData);
     console.log(quantityData);
@@ -388,6 +406,7 @@ class FileUploadContainer extends Component {
           dataLayer.push({ event: "request_Drawing" });
         })
         .catch((e) => {
+          ManufactureProcess.checkPaymentButton = false;
           console.log(e);
           console.log(e.response);
           // console.log(e.response.data);
@@ -923,6 +942,7 @@ class FileUploadContainer extends Component {
           ManufactureProcessFormData.append("request", 2467);
           console.log(ManufactureProcessFormData);
           this.setState({ loading: true });
+          ManufactureProcess.loadingEstimate = true;
 
           //this.props.ManufactureProcess.saveSelect(ManufactureProcessFormData)
           ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
@@ -984,7 +1004,6 @@ class FileUploadContainer extends Component {
               if (loadingCounter === stl_count) {
                 this.setState({ loading: false });
               }
-
               this.countPrice();
             })
             .catch((e) => {
@@ -2237,6 +2256,18 @@ class FileUploadContainer extends Component {
             </div>
           </Button>
         </Container>
+
+        {ManufactureProcess.loadingEstimate && (
+          <Layer>
+            <span>
+              <Modal
+                width={this.props.width}
+                open={ManufactureProcess.loadingEstimate}
+                close={this.closeModal}
+              />
+            </span>
+          </Layer>
+        )}
       </>
     );
   }
@@ -3208,4 +3239,22 @@ const Font20 = styled(Title.FontSize20)`
   color: #0933b3;
   text-align: right;
   font-weight: normal;
+`;
+
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  // opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 `;

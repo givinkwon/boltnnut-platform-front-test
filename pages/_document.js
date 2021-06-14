@@ -37,16 +37,7 @@ export default class MyDocument extends Document {
       styledComponentSheet.seal();
     }
   };
-  //setGoogleTags() {
-  //  return {
-  //    __html: `
-  //      window.dataLayer = window.dataLayer || [];
-  //      function gtag(){dataLayer.push(arguments);}
-  //      gtag('js', new Date());
-  //      gtag('config', 'UA-162026812-1');
-  //    `
-  //  };
-  //}
+
   setAnalyticsApi() {
     return {
       __html: `
@@ -76,11 +67,11 @@ export default class MyDocument extends Document {
           console.log(3)
           gapi.auth.authorize(authData, function (response) {
             console.log(4)
-           console.log(response);
+            console.log(response);
               var authButton = document.getElementById('auth-button');
               console.log(response);
               if (response.error) {
-                   
+                    
                   authButton.hidden = false;
               }
               else {
@@ -93,25 +84,25 @@ export default class MyDocument extends Document {
       function queryAccounts() {
           // Load the Google Analytics client library.
           gapi.client.load('analytics', 'v3').then(function () {
-     
+      
               // Get a list of all Google Analytics accounts for this user
               gapi.client.analytics.management.accounts.list().then(handleAccounts);
           });
       }
-     
+      
       function handleAccounts(response) {
           // Handles the response from the accounts list method.
           if (response.result.items && response.result.items.length) {
               // Get the first Google Analytics account.
               var firstAccountId = response.result.items[0].id;
-     
+      
               // Query for properties.
               queryProperties(firstAccountId);
           } else {
               console.log('No accounts found for this user.');
           }
       }
-     
+      
       function queryProperties(accountId) {
           // Get a list of all the properties for the account.
           gapi.client.analytics.management.webproperties.list(
@@ -122,24 +113,24 @@ export default class MyDocument extends Document {
                 console.log(err);
             });
       }
-     
+      
       function handleProperties(response) {
           // Handles the response from the webproperties list method.
           if (response.result.items && response.result.items.length) {
-     
+      
               // Get the first Google Analytics account
               var firstAccountId = response.result.items[0].accountId;
-     
+      
               // Get the first property ID
               var firstPropertyId = response.result.items[0].id;
-     
+      
               // Query for Views (Profiles).
               queryProfiles(firstAccountId, firstPropertyId);
           } else {
               console.log('No properties found for this user.');
           }
       }
-     
+      
       function queryProfiles(accountId, propertyId) {
           // Get a list of all Views (Profiles) for the first property
           // of the first Account.
@@ -153,7 +144,7 @@ export default class MyDocument extends Document {
               console.log(err);
           });
       }
-     
+      
       function handleProfiles(response) {
           // Handles the response from the profiles list method.
           if (response.result.items && response.result.items.length) {
@@ -161,12 +152,12 @@ export default class MyDocument extends Document {
               var firstProfileId = response.result.items[0].id;
               // Query the Core Reporting API.
               queryCoreReportingApi(firstProfileId);
-     
+      
           } else {
               console.log('No views (profiles) found for this user.');
           }
       }
-     
+      
       function queryCoreReportingApi(profileId) {
           // Query the Core Reporting API for the number sessions for
           // the past seven days.
@@ -195,6 +186,16 @@ export default class MyDocument extends Document {
       // a();
       // alert("F");
       `,
+    };
+  }
+  setGoogleTags() {
+    return {
+      __html: `
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+       gtag('config', 'UA-162026812-1', {'send_page_view' : false } );
+     `,
     };
   }
   setChannelTalk() {
@@ -323,9 +324,12 @@ export default class MyDocument extends Document {
           <Main />
           <script dangerouslySetInnerHTML={this.setChannelTalk()} />
           <NextScript />
-          {/* GA Settings
-          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
-          <script dangerouslySetInnerHTML={this.setGoogleTags()} /> */}
+          {/* GA Settings*/}
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"
+          ></script>
+          <script dangerouslySetInnerHTML={this.setGoogleTags()} />
           {/* Google Tag Manager */}
           <script
             dangerouslySetInnerHTML={{

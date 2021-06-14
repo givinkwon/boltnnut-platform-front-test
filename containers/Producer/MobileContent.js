@@ -15,6 +15,7 @@ import Select from "./MobileSelect";
 import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
 import MobileSearchBar from "./MobileSearchBar";
+import Modal from "./RequestModal";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -22,6 +23,7 @@ const pass4 = "static/images/pass4.png";
 
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
+const filter_img = "static/images/manufacturer/filter.png";
 
 @inject("Project", "Auth", "Partner")
 @observer
@@ -29,11 +31,34 @@ class MobileManufacturerContentContainer extends React.Component {
   state = {
     dropDownActive: false,
     dropDownIdx: -1,
+    filter_active: false,
   };
 
   handleIntersection = (event) => {
     if (event.isIntersecting) {
       console.log("추가 로딩을 시도합니다");
+    }
+  };
+
+  activeHandler = (idx) => {
+    const { Partner } = this.props;
+
+    if (idx === Partner.filter_checked_idx) {
+      console.log("ture");
+      return true;
+    } else {
+      console.log("false");
+      return false;
+    }
+  };
+
+  filterActiveHandler = () => {
+    if (this.state.filter_active) {
+      this.setState({ filter_active: false });
+      this.props.Partner.check_click_filter = false;
+    } else {
+      this.setState({ filter_active: true });
+      this.props.Partner.check_click_filter = true;
     }
   };
 
@@ -45,21 +70,30 @@ class MobileManufacturerContentContainer extends React.Component {
     // Project.search_text = "";
     Partner.currentPage = 1;
 
-    console.log("did mount");
-
+    Partner.resetDevCategory();
     Partner.getPartner();
-    Partner.getCategory();
-    Partner.getCity();
-    // await Auth.checkLogin();
-    // if(Auth.logged_in_partner){
-    //   Project.getProjectByPrice()
-    // }
+    // Partner.getCategory();
+    // Partner.getCity();
+
+    if (Partner.filter_category_ary.length === 1) {
+      Partner.getCategory();
+    }
+    if (Partner.filter_city_ary.length === 1) {
+      await Partner.getCity();
+    }
+
+    console.log(toJS(Partner.filter_city_ary));
   }
 
   componentWillUnmount() {
     const { Partner } = this.props;
-    Partner.category_dic = {};
-    console.log(toJS(this.props.Partner.category_dic));
+
+    Partner.requestModalActive = false;
+    Partner.requestDoneModalActive = false;
+    Partner.resetDevCategory();
+    Partner.filter_category_ary = [{ id: 0, category: "전체" }];
+    // Partner.filter_city_ary = [{ id: 0, city: "전체" }];
+    // console.log(toJS(this.props.Partner.category_dic));
   }
 
   movePage = (e) => {
@@ -69,20 +103,22 @@ class MobileManufacturerContentContainer extends React.Component {
     const newPage = e.target.innerText * 1;
     Partner.currentPage = newPage;
     // Project.getProjectByPrice(Project.search_text, newPage)
+    Partner.resetDevCategory();
     Partner.getPartner(newPage);
   };
 
   pageNext = (e) => {
     const { Partner } = this.props;
     e.preventDefault();
-    console.log(toJS(Partner.currentPage));
-    console.log(toJS(Partner.partner_page));
+    // console.log(toJS(Partner.currentPage));
+    // console.log(toJS(Partner.partner_page));
     if (Partner.currentPage < Partner.partner_page) {
       // Project.category_reset()
       const nextPage = Partner.currentPage + 1;
       Partner.currentPage = nextPage;
+      Partner.resetDevCategory();
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
-      console.log(nextPage);
+      // console.log(nextPage);
       Partner.getPartner(nextPage);
     }
   };
@@ -93,7 +129,9 @@ class MobileManufacturerContentContainer extends React.Component {
     if (Partner.currentPage > 1) {
       // Project.category_reset()
       const newPage = Partner.currentPage - 1;
+
       Partner.currentPage = newPage;
+      Partner.resetDevCategory();
       Partner.getPartner(newPage);
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
     }
@@ -109,15 +147,16 @@ class MobileManufacturerContentContainer extends React.Component {
     // console.log(toJS(Partner.partner_detail_list));
     // Partner.newIndex = 1;
     Partner.category_name_list = Partner.category_dic[idx];
-    console.log(idx);
+    // console.log(idx);
     //console.log(toJS(Partner.category_dic[idx]));
     // console.log(toJS(Partner.category_name_list));
     // await Partner.getPartnerDetail(item.id);
 
     // await Router.push(`/project/${id}`);
     //Project.setProjectDetailData(id);
-    console.log("click");
+    // console.log("click");
     if (this.state.dropDownIdx === -1) {
+      await Partner.getCityName(Partner.partner_detail_list[0].item.city);
       Partner.portFolioList = [];
       Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
       this.setState({ dropDownActive: true, dropDownIdx: idx });
@@ -125,6 +164,7 @@ class MobileManufacturerContentContainer extends React.Component {
       if (this.state.dropDownIdx === idx) {
         this.setState({ dropDownActive: false, dropDownIdx: -1 });
       } else {
+        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Partner.portFolioList = [];
         Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
         this.setState({ dropDownActive: true, dropDownIdx: idx });
@@ -140,6 +180,19 @@ class MobileManufacturerContentContainer extends React.Component {
     // }
   };
 
+  openModal = () => {
+    const { Partner } = this.props;
+    console.log("requestmodal open click");
+    // this.setState({ modalOpen: true });
+    Partner.requestModalActive = true;
+  };
+  closeModal = () => {
+    const { Partner } = this.props;
+    console.log("requestmodal close click");
+
+    Partner.requestModalActive = false;
+  };
+
   render() {
     const { Project, Partner, width } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
@@ -150,7 +203,7 @@ class MobileManufacturerContentContainer extends React.Component {
       <>
         <Background id="MyBackground">
           <Container style={{ display: "block" }}>
-            {console.log(width)}
+            {/* {console.log(width)} */}
             {/* <MobileSearchBar /> */}
             <Body active={this.props.Partner.check_click_filter}>
               {/* <FilterSearch>dsfsdfds</FilterSearch> */}
@@ -163,19 +216,52 @@ class MobileManufacturerContentContainer extends React.Component {
               {/* { Project.projectDataList.length > 0 && Project.projectDataList.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
               <Main>
                 <div>
+                  {/* <FilterContainer
+                    style={{ flex: "0 auto" }}
+                    active={this.state.filter_active}
+                  >
+                    {Partner.filter_city_ary.map((item, idx) => {
+                      return (
+                        <>
+                          {console.log(toJS(item))}
+                          <FilterContent
+                            onClick={() => {
+                              this.onClickHandler(item.id);
+                            }}
+                            active={this.activeHandler(item.id)}
+                          >
+                            <div active={this.activeHandler(item.id)}>
+                              <div active={this.activeHandler(item.id)}></div>
+                            </div>
+                            <span>{item.city}</span>
+                          </FilterContent>
+                        </>
+                      );
+                    })}
+                  </FilterContainer> */}
+
                   <Header
                     style={{
                       justifyContent: "space-between",
                     }}
                   >
                     <Font15>
-                      <span>{Partner.partner_count}개</span>의 제조사
+                      <span>{Partner.partner_count}개</span>의 파트너
                     </Font15>
                     {/* <span>
               <Font14>모든 제조의뢰</Font14>
               <img src={pass4}/>
             </span> */}
-                    <div style={{ width: "100px" }}>
+
+                    {/* <Filter
+                      onClick={() => {
+                        this.filterActiveHandler();
+                      }}
+                    >
+                      <img src={filter_img} />
+                    </Filter> */}
+
+                    {/* <div style={{ width: "100px" }}>
                       <input
                         style={{ display: "none" }}
                         value={
@@ -198,6 +284,18 @@ class MobileManufacturerContentContainer extends React.Component {
                         value={Partner.input_process_filter}
                         onChange={Partner.setProcessFilter}
                       />
+                    </div> */}
+                    <div>
+                      <div
+                        onClick={() => {
+                          Partner.mobileRequestIndex = 1;
+                        }}
+                      >
+                        <span>업체수배&견적 무료의뢰 </span>
+                      </div>
+                      {/* <div>
+                        <span>업체 찾기가 힘든 경우 클릭!</span>
+                      </div> */}
                     </div>
                   </Header>
                 </div>
@@ -206,7 +304,7 @@ class MobileManufacturerContentContainer extends React.Component {
                   Partner.partner_list.map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
-                        {console.log(this.props.width)}
+                        {/* {console.log(this.props.width)} */}
 
                         <div
                           onClick={() => this.pushToDetail(item, idx)}
@@ -221,6 +319,7 @@ class MobileManufacturerContentContainer extends React.Component {
                             // mainCategory={Project.main_category_name[idx]}
                             // newData={Project.data_dt[idx]}
                             // checkTotal={Project.filter_price}
+                            categoryData={toJS(Partner.category_dic[idx])}
                             dropDown={this.state.dropDownActive}
                             dropDownIdx={this.state.dropDownIdx}
                             handleIntersection={this.handleIntersection}
@@ -234,6 +333,19 @@ class MobileManufacturerContentContainer extends React.Component {
             </Body>
           </Container>
         </Background>
+        {Partner.requestModalActive && (
+          // <Layer onClick={this.modalHandler}>
+          <Layer>
+            {/* <Postcode /> */}
+            <span>
+              <Modal
+                width={width}
+                open={Partner.requestModalActive}
+                close={this.closeModal}
+              ></Modal>
+            </span>
+          </Layer>
+        )}
         <PageBar>
           <img
             src={pass1}
@@ -532,10 +644,14 @@ const Body = styled.div`
   justify-content: center;
   //border-top: 1px solid #e1e2e4;
   //border-bottom: 1px solid #e1e2e4;
-  margin-top: ${(props) => (props.active ? "210px" : "40px")};
+  // margin-top: ${(props) => (props.active ? "0px" : "40px")};
+  margin-top: ${(props) => (props.active ? "285px" : "40px")};
 `;
 const Main = styled.div`
   width: 100%;
+  > div:nth-of-type(1) {
+    // margin-bottom: 25px;
+  }
 `;
 
 const FilterSearch = styled.div`
@@ -543,13 +659,13 @@ const FilterSearch = styled.div`
   border: 1px solid red;
 `;
 
-const Filter = styled.div`
-  width: 220px;
-  border-right: 1px solid #e1e2e4;
-  margin-right: 33px;
-  padding-right: 9px;
-  box-sizing: border-box;
-`;
+// const Filter = styled.div`
+//   width: 220px;
+//   border-right: 1px solid #e1e2e4;
+//   margin-right: 33px;
+//   padding-right: 9px;
+//   box-sizing: border-box;
+// `;
 
 const Header = styled.div`
   width: 100%;
@@ -558,6 +674,7 @@ const Header = styled.div`
   align-items: center;
   // margin-bottom: 28px;
   position: relative;
+  justify-content: space-between;
   > span {
     position: absolute;
     left: 88%;
@@ -571,6 +688,41 @@ const Header = styled.div`
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
+    >div:last-child{
+      >div:nth-of-type(1){
+        box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
+        padding: 8px 16px 9px 16px;
+        box-sizing: border-box;
+        font-size: 12px;
+        width: 100%;
+        height: 30px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        >span{
+          color: #0a2165;
+          font-weight: 500;
+        }
+      }
+      >div:nth-of-type(2) {
+        
+       
+          position: absolute;
+          bottom: -25px;
+          right: 7px;
+          >span{
+            font-size: 11px;
+            line-height: 30px;
+            letter-spacing: -0.14px;
+            color: #86888c;
+            font-weight: normal;
+          }
+        }
+      }
+    }
+    
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     paddingtop: 32px;
@@ -590,6 +742,9 @@ const Font15 = styled(Title.FontSize15)`
   line-height: 40px !important;
   letter-spacing: -0.5px !important;
   color: #282c36;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    // margin-right: 66%;
+  }
 `;
 
 const Font14 = styled(Content.FontSize14)`
@@ -599,6 +754,78 @@ const Font14 = styled(Content.FontSize14)`
   line-height: 30px !important;
   letter-spacing: -0.14px !important;
   color: #0933b3;
+`;
+
+const Filter = styled.div`
+  //border: 2px solid red;
+  margin-top: 2px;
+  > img {
+    width: 36px;
+    height: 36px;
+  }
+`;
+
+const FilterContainer = styled.div`
+  display: ${(props) => (props.active ? "flex" : "none")};
+  flex-wrap: wrap;
+  padding: 0 24px;
+  box-sizing: border-box;
+  margin-top: 14px;
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+`;
+const FilterContent = styled.div`
+  display: flex;
+  align-items: center;
+  width: 50%;
+  text-align: center;
+  margin-bottom: 14px;
+  > div {
+    width: 13px;
+    height: 13px;
+    border: ${(props) =>
+      props.active ? "1px solid #0933b3" : "1px solid #999999"};
+    border-radius: 12px;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    > div {
+      display: ${(props) => (props.active ? "block" : "none")};
+      width: 7px;
+      height: 7px;
+      //border: 1px solid #0933b3;
+      border-radius: 6px;
+      background-color: #0933b3;
+      // position: absolute;
+      // top: 50%;
+      // left: 50%;
+    }
+  }
+  > span {
+    margin-left: 11px;
+    font-size: 14px;
+    line-height: 15px;
+    letter-spacing: -0.35px;
+    color: #999999;
+  }
+`;
+
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  // opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 `;
 
 export default MobileManufacturerContentContainer;

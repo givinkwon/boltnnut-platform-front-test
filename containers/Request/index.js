@@ -52,7 +52,9 @@ class RequestContainer extends React.Component {
             <Background backgroundColor={"#ffffff"}>
               <Containerv1>
                 {console.log(Request.newIndex)}
-                {Request.newIndex == 0 && <FileUploadContainer />}
+                {Request.newIndex == 0 && (
+                  <FileUploadContainer width={this.props.width} />
+                )}
                 {Request.newIndex == 1 && <RequestCompleteContainer />}
                 {Request.newIndex == 2 && <NoneDrawingConsultingContainer />}
                 {/* <PaymentPageContainer /> */}

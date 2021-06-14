@@ -349,3 +349,37 @@ export function getClientEmail(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function setReqProducerInfo(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/requestinfo/info/`,
+    data: req.data ? req.data : null,
+  });
+}
+
+export function setclickLog(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/clicklog/`,
+    data: req.data ? req.data : null,
+  });
+}
+
+export function getCityName(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/city/${req.id}`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getPartnerName(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partner/find-partner-name/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}

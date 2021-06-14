@@ -25,88 +25,130 @@ class TabConatiner extends React.Component {
   getClient = () => {
     console.log("getUser");
     console.log(localStorage.getItem("token"));
-    if(localStorage.getItem("token") != null){
-    const req = {
-      headers: {
-        Authorization: `Token ${localStorage.getItem("token")}`,
-      },
-    };
-    return AccountAPI.reloadUserInfo(req)
-      .then((res) => {
-        const user = res.data.data.User;
-        if (user.type === 1) {
-          alert("파트너 계정으로 의뢰할 수 없습니다.");
-          Router.push("/");
-        } else if (user.type === 0) {
-          console.log("res.data.data.Client[0]: ", res.data.data.Client[0]);
-          return res.data.data.Client[0];
-        }
-      })
-      .catch((e) => {
-        try {
-          console.log(e);
-          console.log(e.response);
-          alert(e.response.data.message);
-        } catch {
-          console.log(e);
-          console.log(e.response);
-        }
-        localStorage.removeItem("token");
-        Router.push("/");
-        return null;
-      });
-      }
-    if(localStorage.getItem("token") == null){
-    const req = {
-      headers: {
-        Authorization: `Token b2b0395a326f98188b79dcabdc7578d2fdcbc349`,
-      },
-    };
-    console.log(AccountAPI.reloadUserInfo(req))
-    return AccountAPI.reloadUserInfo(req)
-      .then((res) => {
-        console.log(1)
-        const user = res.data.data.User;
-        if (user.type === 1) {
-          alert("파트너 계정으로 의뢰할 수 없습니다.");
-          Router.push("/");
-        } else if (user.type === 0) {
-          console.log("res.data.data.Client[0]: ", res.data.data.Client[0]);
-          return res.data.data.Client[0];
-        }
-      })
-      .catch((e) => {
-        try {
-          console.log(e);
-          console.log(e.response);
-          alert(e.response.data.message);
-        } catch {
-          console.log(e);
-          console.log(e.response);
-        }
-        localStorage.removeItem("token");
-        Router.push("/");
-        return null;
-      });
-      }
+    if (localStorage.getItem("token") != null) {
+      const req = {
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      };
+      return AccountAPI.reloadUserInfo(req)
+        .then((res) => {
+          const user = res.data.data.User;
+          if (user.type === 1) {
+            alert("파트너 계정으로 의뢰할 수 없습니다.");
+            if (this.props.Auth.home_index === 4) {
+              Router.push("/4");
+            } else if (this.props.Auth.home_index === 3) {
+              Router.push("/3");
+            } else if (this.props.Auth.home_index === 2) {
+              Router.push("/2");
+            } else if (this.props.Auth.home_index === 1) {
+              Router.push("/5");
+            } else {
+              Router.push("/");
+            }
+          } else if (user.type === 0) {
+            console.log("res.data.data.Client[0]: ", res.data.data.Client[0]);
+            return res.data.data.Client[0];
+          }
+        })
+        .catch((e) => {
+          try {
+            console.log(e);
+            console.log(e.response);
+            alert(e.response.data.message);
+          } catch {
+            console.log(e);
+            console.log(e.response);
+          }
+          localStorage.removeItem("token");
+          if (this.props.Auth.home_index === 4) {
+            Router.push("/4");
+          } else if (this.props.Auth.home_index === 3) {
+            Router.push("/3");
+          } else if (this.props.Auth.home_index === 2) {
+            Router.push("/2");
+          } else if (this.props.Auth.home_index === 1) {
+            Router.push("/5");
+          } else {
+            Router.push("/");
+          }
+          return null;
+        });
+    }
+    if (localStorage.getItem("token") == null) {
+      const req = {
+        headers: {
+          Authorization: `Token b2b0395a326f98188b79dcabdc7578d2fdcbc349`,
+        },
+      };
+      console.log(AccountAPI.reloadUserInfo(req));
+      return AccountAPI.reloadUserInfo(req)
+        .then((res) => {
+          console.log(1);
+          const user = res.data.data.User;
+          if (user.type === 1) {
+            alert("파트너 계정으로 의뢰할 수 없습니다.");
+            if (this.props.Auth.home_index === 4) {
+              Router.push("/4");
+            } else if (this.props.Auth.home_index === 3) {
+              Router.push("/3");
+            } else if (this.props.Auth.home_index === 2) {
+              Router.push("/2");
+            } else if (this.props.Auth.home_index === 1) {
+              Router.push("/5");
+            } else {
+              Router.push("/");
+            }
+          } else if (user.type === 0) {
+            console.log("res.data.data.Client[0]: ", res.data.data.Client[0]);
+            return res.data.data.Client[0];
+          }
+        })
+        .catch((e) => {
+          try {
+            console.log(e);
+            console.log(e.response);
+            alert(e.response.data.message);
+          } catch {
+            console.log(e);
+            console.log(e.response);
+          }
+          localStorage.removeItem("token");
+          if (this.props.Auth.home_index === 4) {
+            Router.push("/4");
+          } else if (this.props.Auth.home_index === 3) {
+            Router.push("/3");
+          } else if (this.props.Auth.home_index === 2) {
+            Router.push("/2");
+          } else if (this.props.Auth.home_index === 1) {
+            Router.push("/5");
+          } else {
+            Router.push("/");
+          }
+          return null;
+        });
+    }
   };
   createRequest = async () => {
-    if(this.state.pending) { return }
+    if (this.state.pending) {
+      return;
+    }
     this.setState({
       ...this.state,
       pending: true,
-    })
+    });
 
-    const {Request} = this.props
+    const { Request } = this.props;
     const client = await this.getClient();
 
-    if(localStorage.getItem("token") != null){
-        Request.client_id = client.id
+    if (localStorage.getItem("token") != null) {
+      Request.client_id = client.id;
     }
-    if(localStorage.getItem("token") == null){
-        Request.client_id = 18
+    if (localStorage.getItem("token") == null) {
+      Request.client_id = 18;
     }
-    Request.select_reqs = []
+    Request.select_reqs = [];
 
     this.props.Request.setFindCategory(this.state.check_list);
     /*
@@ -151,10 +193,10 @@ class TabConatiner extends React.Component {
   render() {
     const { Request } = this.props;
     const { check_list } = this.state;
-    console.log(this.props.Request.category_id)
+    console.log(this.props.Request.category_id);
 
     return (
-      <Container style={{marginBottom: 60}}>
+      <Container style={{ marginBottom: 60 }}>
         <Board>
           <Text.FontSize28 color={DARKGRAY} fontWeight={500}>
             제조분야 선택
@@ -174,96 +216,122 @@ class TabConatiner extends React.Component {
             </div>*/}
           </TitleBox>
           <Content>
-
-
             {check_list &&
               check_list.map((category, idx) => {
-
                 return (
                   <>
-                  {Request.type == "develop" ?
-                  (
-                  <>
-                  {category.maincategory == "설계" &&
-                  <W100 key={idx}>
-
-                    <TextBox active={Request.category_id === category.id}>
-                      <Text.FontSize24
-                        color={
-                          Request.category_id === category.id ? WHITE : DARKGRAY
-                        }
-                        fontWeight={Request.category_id === category.id ? 500 : 300}
-                      >
-                        {category.maincategory}
-                      </Text.FontSize24>
-                    </TextBox>
-                    <CheckList>
-                      {category.develop_set.map((item, idx) => {
-                        return (
-                          <>
-                          {item.id == 4 || item.id == 11 || item.id == 13 ? '' :
-                          <CustomCheckBoxComponent
-                            key={idx}
-                            checked={
-                              Request.category_middle_set.indexOf(item.id) > -1
-                            }
-                            onClick={() =>
-                              Request.setCategoryMiddleSet(item.id, category.id)
-                            }
-                          >
-                            {item.category}
-                          </CustomCheckBoxComponent>
-                          }
-                          </>
-                        );
-                      })}
-                    </CheckList>
-                  </W100>
-                  }
-                  </>
-                  )
-                  :
-                  (
-                  <>
-                  {(category.maincategory == "목업" || category.maincategory == "양산") &&
-                  <W100 key={idx}>
-
-                    <TextBox active={Request.category_id === category.id}>
-                      <Text.FontSize24
-                        color={
-                          Request.category_id === category.id ? WHITE : DARKGRAY
-                        }
-                        fontWeight={Request.category_id === category.id ? 500 : 300}
-                      >
-                        {category.maincategory}
-                      </Text.FontSize24>
-                    </TextBox>
-                    <CheckList>
-                      {category.develop_set.map((item, idx) => {
-                        return (
-                          <>
-                          {item.id == 4 || item.id == 11 || item.id == 13 ? '' :
-                          <CustomCheckBoxComponent
-                            key={idx}
-                            checked={
-                              Request.category_middle_set.indexOf(item.id) > -1
-                            }
-                            onClick={() =>
-                              Request.setCategoryMiddleSet(item.id, category.id)
-                            }
-                          >
-                            {item.category}
-                          </CustomCheckBoxComponent>
-                          }
-                          </>
-                        );
-                      })}
-                    </CheckList>
-                  </W100>
-                  }
-                  </>
-                  )
-                  }
+                    {Request.type == "develop" ? (
+                      <>
+                        {category.maincategory == "설계" && (
+                          <W100 key={idx}>
+                            <TextBox
+                              active={Request.category_id === category.id}
+                            >
+                              <Text.FontSize24
+                                color={
+                                  Request.category_id === category.id
+                                    ? WHITE
+                                    : DARKGRAY
+                                }
+                                fontWeight={
+                                  Request.category_id === category.id
+                                    ? 500
+                                    : 300
+                                }
+                              >
+                                {category.maincategory}
+                              </Text.FontSize24>
+                            </TextBox>
+                            <CheckList>
+                              {category.develop_set.map((item, idx) => {
+                                return (
+                                  <>
+                                    {item.id == 4 ||
+                                    item.id == 11 ||
+                                    item.id == 13 ? (
+                                      ""
+                                    ) : (
+                                      <CustomCheckBoxComponent
+                                        key={idx}
+                                        checked={
+                                          Request.category_middle_set.indexOf(
+                                            item.id
+                                          ) > -1
+                                        }
+                                        onClick={() =>
+                                          Request.setCategoryMiddleSet(
+                                            item.id,
+                                            category.id
+                                          )
+                                        }
+                                      >
+                                        {item.category}
+                                      </CustomCheckBoxComponent>
+                                    )}
+                                  </>
+                                );
+                              })}
+                            </CheckList>
+                          </W100>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {(category.maincategory == "목업" ||
+                          category.maincategory == "양산") && (
+                          <W100 key={idx}>
+                            <TextBox
+                              active={Request.category_id === category.id}
+                            >
+                              <Text.FontSize24
+                                color={
+                                  Request.category_id === category.id
+                                    ? WHITE
+                                    : DARKGRAY
+                                }
+                                fontWeight={
+                                  Request.category_id === category.id
+                                    ? 500
+                                    : 300
+                                }
+                              >
+                                {category.maincategory}
+                              </Text.FontSize24>
+                            </TextBox>
+                            <CheckList>
+                              {category.develop_set.map((item, idx) => {
+                                return (
+                                  <>
+                                    {item.id == 4 ||
+                                    item.id == 11 ||
+                                    item.id == 13 ? (
+                                      ""
+                                    ) : (
+                                      <CustomCheckBoxComponent
+                                        key={idx}
+                                        checked={
+                                          Request.category_middle_set.indexOf(
+                                            item.id
+                                          ) > -1
+                                        }
+                                        onClick={() =>
+                                          Request.setCategoryMiddleSet(
+                                            item.id,
+                                            category.id
+                                          )
+                                        }
+                                      >
+                                        {item.category}
+                                      </CustomCheckBoxComponent>
+                                    )}
+                                  </>
+                                );
+                              })}
+                            </CheckList>
+                          </W100>
+                        )}
+                      </>
+                    )}
                   </>
                 );
               })}
@@ -278,8 +346,10 @@ class TabConatiner extends React.Component {
               <ButtonComponent
                 onClick={this.createRequest}
                 style={{
-                  marginLeft: "auto", marginTop: 32, marginBottom: 26,
-                  transition: '0.1s',
+                  marginLeft: "auto",
+                  marginTop: 32,
+                  marginBottom: 26,
+                  transition: "0.1s",
                   backgroundColor: this.state.button_hover ? WHITE : PRIMARY,
                 }}
                 backgroundColor={PRIMARY}
@@ -289,16 +359,20 @@ class TabConatiner extends React.Component {
                   this.setState({
                     ...this.state,
                     button_hover: true,
-                  })
+                  });
                 }}
                 onMouseLeave={() => {
                   this.setState({
                     ...this.state,
                     button_hover: false,
-                  })
+                  });
                 }}
               >
-                <Text.FontSize28 id="request_category_select" color={this.state.button_hover ? PRIMARY : WHITE} fontWeight={500}>
+                <Text.FontSize28
+                  id="request_category_select"
+                  color={this.state.button_hover ? PRIMARY : WHITE}
+                  fontWeight={500}
+                >
                   다음
                 </Text.FontSize28>
               </ButtonComponent>
@@ -318,11 +392,11 @@ const Board = styled.div`
   flex-direction: column;
   box-shadow: 0px 5px 10px 0px #0004;
   background-color: #fff;
-  
+
   > p:nth-of-type(1) {
     margin-top: 10px;
   }
-  
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     padding: 15px;
   }
@@ -340,7 +414,7 @@ const TitleBox = styled.div`
   display: flex;
   margin-top: 10px;
   margin-bottom: 30px;
-  
+
   p {
     line-height: 1.25em;
   }

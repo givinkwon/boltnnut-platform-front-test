@@ -10,7 +10,7 @@ import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 // test
 import HomeConatiner from "containers/Home";
-import Home2Conatiner from "containers/HomeTwo";
+import Home2Conatiner from "containers/Home4";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
@@ -22,17 +22,20 @@ const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 class Home extends React.Component {
   state = {
     width: null,
+    home_index: 1,
   };
   async componentDidMount() {
     this.props.Loading.setOpen(true);
+
+    this.props.Auth.home_index = 0;
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
-    this.props.Auth.bgColor = "#ffffff";
+    // this.props.Auth.bgColor = "#ffffff";
     this.setState({ ...this.state, width: window.innerWidth });
     setTimeout(() => {
       this.props.Loading.setOpen(false);
     }, 1000);
-   
+
     await this.props.Auth.checkLogin();
   }
   componentWillUnmount() {
@@ -43,7 +46,7 @@ class Home extends React.Component {
   };
   render() {
     const { Loading, Home } = this.props;
-    const { width } = this.state;
+    const { width, home_index } = this.state;
     return (
       <>
         <Head>
@@ -81,8 +84,14 @@ class Home extends React.Component {
           </>
           <>
             {width && (
-              <HomeConatiner width={width} reqList={Home.request_list} />
-              // <Home2Conatiner width={width} reqList={Home.request_list} />
+              // (home_index == 0 ? (
+              //   <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
+              // ) : (
+              //   <Home2Conatiner width={width} reqList={Home.request_list} /> // k-장인 메인 페이지
+              // ))
+
+              <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
+              // <Home2Conatiner width={width} reqList={Home.request_list} /> // k-장인 메인 페이지
             )}
           </>
           <>{width && <Footer />}</>

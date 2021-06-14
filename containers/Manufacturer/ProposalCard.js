@@ -60,6 +60,26 @@ class ProposalCard extends React.Component {
     this.props.Partner.modalActive = false;
   };
 
+  checkLogin = async () => {
+    const { Auth } = this.props;
+    await Auth.checkLogin();
+
+    if (Auth && Auth.logged_in_user) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  clickLog = (partner) => {
+    const { Auth, Partner } = this.props;
+
+    let formData = new FormData();
+    formData.append("client", Auth.logged_in_client.id);
+    formData.append("search", Partner.search_text);
+    formData.append("partner", partner.id);
+
+    Partner.setclickLog(formData);
+  };
   componentDidMount() {
     const { width } = this.props;
     // console.log(width);
@@ -107,7 +127,7 @@ class ProposalCard extends React.Component {
     }
   };
 
-  filedownload = () => {
+  filedownload = (urls) => {
     const { data } = this.props;
 
     if (this.props.Auth && this.props.Auth.logged_in_user) {
@@ -118,33 +138,59 @@ class ProposalCard extends React.Component {
       const link = document.createElement("a");
       link.href = url;
       link.click();
+
+      // const blob = new Blob([this.content], { type: "text/plain" });
+      // const url = window.URL.createObjectURL(blob);
+      // const a = document.createElement("a");
+      // a.href = `${urls}`;
+      // a.download = `${urls}`;
+      // a.click();
+      // a.remove();
+      // window.URL.revokeObjectURL(url);
+
+      // const link = document.createElement("a");
+      // link.href = `${urls}`;
+      // document.body.appendChild(link);
+      // link.click();
+      // document.body.removeChild(link);
     } else {
       alert("로그인이 필요합니다.");
       Router.push("/login");
     }
   };
-  cardClick = (e) => {
+  cardClick = async (e) => {
     e.stopPropagation();
-    if (!this.props.data.file) {
-      alert("해당 회사의 소개서가 존재하지 않습니다!");
-      return;
-    }
-    this.props.Partner.selectedIntroductionFile = this.props.data.file;
+    const { data, Partner } = this.props;
 
-    // Router.push("/manufacturer/detail");
-    const fileType = this.props.data.file
-      .split(".")
-      [this.props.data.file.split(".").length - 1].toLowerCase();
-    this.props.Partner.selectedIntroductionFileType = fileType;
-    console.log(this.props.data);
-    console.log(fileType);
-    console.log(availableFileType);
-    if (availableFileType.indexOf(fileType) > -1) {
-      console.log("뷰어 페이지 router push");
-      Router.push("/manufacturer/detail");
+    if (this.props.Auth && this.props.Auth.logged_in_user) {
+      if (!this.props.data.file) {
+        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        return;
+      }
+      this.props.Partner.selectedIntroductionFile = this.props.data.file;
+
+      // Router.push("/manufacturer/detail");
+      const fileType = this.props.data.file
+        .split(".")
+        [this.props.data.file.split(".").length - 1].toLowerCase();
+      this.props.Partner.selectedIntroductionFileType = fileType;
+      console.log(this.props.data);
+      console.log(fileType);
+      console.log(availableFileType);
+      console.log(availableFileType.indexOf(fileType));
+      if (availableFileType.indexOf(fileType) > -1) {
+        console.log("뷰어 페이지 router push");
+        Partner.partner_detail_list = [];
+        await Partner.partner_detail_list.push({ item: data });
+        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+        Router.push("/manufacturer/detail");
+      } else {
+        console.log("file download");
+        this.filedownload(this.props.data.file);
+      }
     } else {
-      console.log("file download");
-      this.filedownload();
+      alert("로그인이 필요합니다.");
+      Router.push("/login");
     }
   };
 
@@ -188,19 +234,9 @@ class ProposalCard extends React.Component {
     //   customer,
     // } = this.props;
     const { data, width, Partner, categoryData, idx } = this.props;
-    // console.log(data);
-    // console.log(categoryData);
-    //console.log(idx);
-    // console.log(width);
-    // console.log(toJS(categoryData));
-    // console.log(toJS(idx));
+
     let category_data;
 
-    // category_data =
-    //   categoryData &&
-    //   categoryData.splice(categoryData.length / 2, categoryData.length / 2);
-    // console.log(toJS(category_data));
-    // console.log(toJS(data));
     return (
       <>
         {width > 767.98 ? (
@@ -217,31 +253,6 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
-              {/* <HeaderWrapper>
-            <Title>sdfdsf</Title>
-            <Content>sdfdsf</Content>
-          </HeaderWrapper>
-          <CategoryWrapper>
-            <SubTitle>
-              <span>카테고리</span>
-            </SubTitle>
-            <CategoryBox>
-              <span>sdfdsf</span>
-            </CategoryBox>
-            <CategoryBox>
-              <span>dsfdsf</span>
-            </CategoryBox>
-          </CategoryWrapper>
-          <FooterWrapper>
-            <div style={{ display: "inline-flex" }}>
-              <SubTitle>희망개발기간</SubTitle>
-              <Content>sdfdsf</Content>
-            </div>
-            <PriceTagBox>
-              <span class="tag1"> 견적 </span>
-              <span class="tag2">dsfdsf</span>
-            </PriceTagBox>
-          </FooterWrapper> */}
               <Header>
                 <Logo>
                   <img src={data.logo} />
@@ -369,11 +380,16 @@ class ProposalCard extends React.Component {
               <div></div> */}
                   <div
                     style={{ cursor: "pointer", zIndex: 10 }}
-                    onClick={(event) => {
+                    onClick={async (event) => {
                       event.stopPropagation();
-                      console.log(data.name);
-                      console.log(data.user.phone);
-                      this.openModal(data.user.phone);
+
+                      if (await this.checkLogin()) {
+                        this.clickLog(data);
+                        this.openModal(data.user.phone);
+                      } else {
+                        alert("로그인이 필요합니다");
+                        Router.push("/login");
+                      }
                     }}
                   >
                     <span>전화번호</span>
@@ -429,6 +445,9 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
+              onClick={(e) => {
+                this.cardClick(e);
+              }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -478,7 +497,17 @@ class ProposalCard extends React.Component {
                   <div>
                     <Phone>
                       <div
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: "pointer", zIndex: 10 }}
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          if (await this.checkLogin()) {
+                            this.clickLog(data);
+                            this.openModal(data.user.phone);
+                          } else {
+                            alert("로그인이 필요합니다");
+                            Router.push("/login");
+                          }
+                        }}
 
                         // onClick={() => {
                         //   window
@@ -499,11 +528,6 @@ class ProposalCard extends React.Component {
                           // onMouseOut={() => {
                           //   this.activeHandler("call");
                           // }}
-                          onClick={() => {
-                            console.log(data.name);
-                            console.log(data.user.phone);
-                            this.openModal(data.user.phone);
-                          }}
                         />
 
                         {/* <span
@@ -558,7 +582,7 @@ class ProposalCard extends React.Component {
                   <div>
                     <Link
                       target="_blank"
-                      onClick={() => this.filedownload()}
+                      onClick={(e) => this.cardClick(e)}
                       download
                     >
                       <span>회사 소개서 보기</span>
@@ -709,7 +733,7 @@ const Phone = styled.div`
   letter-spacing: -0.4px;
   color: #282c36;
   font-weight: 500;
-  margin-bottom: 16px;
+  // margin-bottom: 16px;
   > div {
   }
 `;

@@ -97,14 +97,6 @@ class ReviewModal extends React.Component {
     const { Partner, Auth } = this.props;
 
     let score = 0;
-
-    Auth.checkLogin();
-    if (!Auth.logged_in_user) {
-      alert("로그인이 필요한 서비스입니다.");
-      Router.push("/login");
-      return;
-    }
-
     await this.state.star_ary.map((item, idx) => {
       if (item.checked) {
         score += 1;
@@ -169,13 +161,8 @@ class ReviewModal extends React.Component {
       >
         {open ? (
           <>
-            <button
-              className="close"
-              onClick={(e) => {
-                e.stopPropagation();
-                close();
-              }}
-            >
+            <button className="close" onClick={close}>
+              {" "}
               &times;{" "}
             </button>
             <section>
