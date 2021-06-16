@@ -24,6 +24,12 @@ const onError = (e) => {
 @inject("Partner")
 @observer
 class DetailCardContainer extends React.Component {
+  state = {
+    avg_consult_score: 0,
+    avg_kindness_score: 0,
+    avg_communication_score: 0,
+    avg_profession_score: 0,
+  };
   openModal = () => {
     const { Partner } = this.props;
     // console.log("requestmodal open click");
@@ -37,12 +43,40 @@ class DetailCardContainer extends React.Component {
     Partner.reviewWritingModalActive = false;
   };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const { Partner } = this.props;
     // console.log("csfdffsdfd");
     if (Partner.partner_detail_list.length == 0) {
       Router.push("/manufacturer");
     }
+
+    // let total_consult_score = 0;
+    // let total_kindness_score = 0;
+    // let total_communication_score = 0;
+    // let total_profession_score = 0;
+
+    // await Partner.partnerReviewList[0].data.map((item, idx) => {
+    //   total_consult_score += item.consult_score;
+    //   total_kindness_score += item.kindness_score;
+    //   total_communication_score += item.communication_score;
+    //   total_profession_score += item.profession_score;
+    // });
+    // this.setState({
+    //   avg_consult_score:
+    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    //   avg_kindness_score:
+    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    //   avg_communication_score:
+    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    //   avg_profession_score:
+    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    // });
+    // console.log(total_consult_score);
+    // console.log(Partner.partnerReviewList[0].data.length);
+
+    // console.log(5 / 2);
+    // console.log(this.state.avg_consult_score);
+    // console.log(Math.floor(this.state.avg_consult_score));
   };
 
   componentWillUnmount = () => {
@@ -139,10 +173,14 @@ class DetailCardContainer extends React.Component {
               <header>
                 <mainscore>
                   <div>
-                    <ReviewStarRating width={31} margin={4} />
+                    <ReviewStarRating
+                      width={31}
+                      margin={4}
+                      score={Math.floor(this.state.avg_consult_score)}
+                    />
                   </div>
                   <div>
-                    <span>4.8</span>
+                    <span>{this.state.avg_consult_score}</span>
                     <span>전체 누적 평점</span>
                   </div>
                 </mainscore>
@@ -150,21 +188,21 @@ class DetailCardContainer extends React.Component {
                   <div>
                     <span>친절도</span>
                     <div>
-                      <ReviewStarRating width={15} margin={1} />
+                      <ReviewStarRating width={15} margin={1} score={3} />
                     </div>
                   </div>
 
                   <div>
                     <span>연락 빈도</span>
                     <div>
-                      <ReviewStarRating width={15} margin={1} />
+                      <ReviewStarRating width={15} margin={1} score={2} />
                     </div>
                   </div>
 
                   <div>
                     <span>전문성</span>
                     <div>
-                      <ReviewStarRating width={15} margin={1} />
+                      <ReviewStarRating width={15} margin={1} score={5} />
                     </div>
                   </div>
                 </subscore>
