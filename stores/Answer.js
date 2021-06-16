@@ -153,11 +153,9 @@ class Answer {
       })
       .catch((e) => console.log(e));
 
-    // console.log(clientPhone);
-    // console.log(partnerName);
     await AnswerAPI.CreateAnswer(req)
       .then((res) => {
-        console.log(res.data);
+        console.log(`1 : ${res.data}`);
         const req = {
           phoneNum: clientPhone,
           requestTitle: projectInfo.request_set[0].name,
@@ -172,6 +170,7 @@ class Answer {
       })
       .catch(async (e) => {
         alert("정상적으로 제안서가 생성되지 않았습니다.");
+        // console.log(e);
       });
   };
 

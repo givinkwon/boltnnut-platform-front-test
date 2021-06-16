@@ -19,7 +19,7 @@ class DetailConatiner extends React.Component {
   componentDidMount = () => {
     // getPortfolio
     const { Partner } = this.props;
-    console.log(toJS(Partner.partner_detail_list[0].item.id));
+    // console.log(toJS(Partner.partner_detail_list[0].item.id));
 
     Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
   };
@@ -58,7 +58,7 @@ class DetailConatiner extends React.Component {
     const { Partner, width } = this.props;
     return (
       <div>
-        {console.log(toJS(Partner.detail))}
+        {/* {console.log(toJS(Partner.detail))} */}
         <Header>
           <Text.FontSize20 color={WHITE} fontWeight={700}>
             회사정보

@@ -1,6 +1,6 @@
 import React from "react";
 import Select from "react-select";
-import styled, { keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 import StarRatingComponent from "react-star-rating-component";
 import { componentByNodeRegistery } from "mobx-react";
 import { inject, observer } from "mobx-react";
@@ -11,6 +11,10 @@ import * as PartnerAPI from "axios/Partner";
 //import Modal from '../../../commons/components/Modals/Modal';
 const star = "/static/icon/star.svg";
 const searchImg = "/static/images/search_cobalt-blue.png";
+
+const pass1 = "/static/images/pass1.png";
+const pass2 = "/static/images/pass2.png";
+
 //const star = "/static/icon/info/star.png";
 
 @inject("Partner", "Auth")
@@ -35,6 +39,11 @@ class SearchPartnerModal extends React.Component {
   closeModal = () => {
     const { Partner } = this.props;
     Partner.searchPartnerModalActive = false;
+  };
+
+  componentDidMount = () => {
+    const { Partner } = this.props;
+    Partner.partnerExist = true;
   };
 
   //   onSubmit = async () => {
@@ -85,12 +94,60 @@ class SearchPartnerModal extends React.Component {
   searchText = async (e) => {
     const { Partner } = this.props;
     // Partner.reviewPartnerName = e.target.value;
-    console.log(toJS(Partner.partnersName));
+    // console.log(toJS(Partner.partnersName));
     if (Partner.partnersName != "") {
       await Partner.getPartnerName(Partner.partnersName);
+      Partner.reviewCurrentPage = 1;
     }
-    console.log(toJS(Partner.partnersList));
-    //Partner.getPartner();
+    // console.log(toJS(Partner.partnersList));
+  };
+
+  handleKeyDown = async (e) => {
+    const { Partner } = this.props;
+    if (e.key === "Enter") {
+      // console.log("Enter");
+      // console.log(e);
+      // console.log(toJS(Partner.partnersName));
+      //     if (Partner.partnersName != null) {
+      //       ManufactureProcess.saveSearchText(Partner.search_text);
+      //     }
+
+      Partner.reviewCurrentPage = 1;
+      Partner.getPartnerName(Partner.partnersName);
+    }
+  };
+
+  movePage = (e) => {
+    const { Partner, Auth } = this.props;
+    const newPage = e.target.innerText * 1;
+
+    Partner.reviewCurrentPage = newPage;
+    Partner.getPartnerName(Partner.partnersName, newPage);
+  };
+
+  pageNext = () => {
+    const { Partner, Auth } = this.props;
+
+    if (Partner.reviewCurrentPage < Partner.partnerPage) {
+      const nextPage = Partner.reviewCurrentPage + 1;
+      Partner.reviewCurrentPage = nextPage;
+      console.log(toJS(Partner.reviewCurrentPage));
+      Partner.getPartnerName(Partner.partnersName, Partner.reviewCurrentPage);
+    }
+  };
+
+  pagePrev = () => {
+    const { Partner, Auth } = this.props;
+
+    if (Partner.reviewCurrentPage > 1) {
+      const newPage = Partner.reviewCurrentPage - 1;
+      Partner.reviewCurrentPage = newPage;
+      Partner.getPartnerName(Partner.partnersName, Partner.reviewCurrentPage);
+    }
+  };
+
+  test = (e) => {
+    console.log(e);
   };
 
   render() {
@@ -98,6 +155,8 @@ class SearchPartnerModal extends React.Component {
     const { open, close, header, children, width, data, Partner } = this.props;
     // console.log(open);
     // console.log(children);
+    const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
+    // const current_set = 5;
     return (
       <ModalBox
         modal={open ? "openModal modal" : "modal"}
@@ -124,7 +183,8 @@ class SearchPartnerModal extends React.Component {
                   <input
                     placeholder="원하는 분야의 제조업체를 검색하세요"
                     onBlur={(e) => {
-                      // console.log(e.target.value);
+                      console.log(e.target.value);
+                      console.log("onBlur");
                       Partner.partnersName = e.target.value;
                       // if (e.target.value === "") {
                       //   Partner.maxDirectInput = false;
@@ -134,6 +194,28 @@ class SearchPartnerModal extends React.Component {
                     }}
                     onFocus={(e) => {
                       e.target.placeholder = "";
+                      this.test(e);
+                      console.log(e.target.value);
+                      console.log("onFocus");
+                    }}
+                    onKeyDown={this.handleKeyDown}
+                    onChange={async (e) => {
+                      Partner.partnersName = e.target.value;
+                      console.log(toJS(Partner.partnersName));
+
+                      console.log(Partner.partnersName == "");
+                      if (Partner.partnersName != "") {
+                        console.log("111");
+                        Partner.partnersList = [];
+                        console.log("222");
+                        await Partner.getPartnerName(Partner.partnersName);
+                        Partner.reviewCurrentPage = 1;
+                      } else {
+                        console.log("아뉨");
+                        Partner.partnerExist = true;
+                        Partner.partnersList = [];
+                        this.setState({ g: 3 });
+                      }
                     }}
                   />
                   <img
@@ -147,29 +229,147 @@ class SearchPartnerModal extends React.Component {
               <content>
                 <div>
                   {Partner.partnersList &&
+                    Partner.partnerExist &&
                     Partner.partnersList.map((item, idx) => {
                       return (
-                        <PartnerCard
-                          width={width}
-                          id={idx}
-                          name={item.name}
-                          logo={item.logo}
-                          history={item.history}
+                        <div
                           onClick={() => {
+                            console.log("onClick111111");
                             Partner.reviewPartnerName = item.name;
                             Partner.reviewPartnerId = item.id;
                             Partner.reviewSearchStep = 2;
                             Partner.searchPartnerModalActive = false;
+                            Partner.partnersList = [];
+                            Partner.newPartner = 0;
                           }}
-                        />
+                        >
+                          <PartnerCard
+                            width={width}
+                            id={idx}
+                            name={item.name}
+                            logo={item.logo}
+                            history={item.history}
+                          />
+                        </div>
                       );
                     })}
-                  {/* <NoPartner>
-                  <span>검색하신 결과가 없습니다.</span>
-                  <div>
-                    <span>직접 입력하기</span>
-                  </div>
-                </NoPartner> */}
+                  {console.log(toJS(Partner.partnersList))}
+                  {Partner.partnersList.length != 0 && (
+                    <PageBar>
+                      <img
+                        src={pass1}
+                        style={{
+                          opacity:
+                            current_set == 1 && Partner.reviewCurrentPage <= 1
+                              ? 0.4
+                              : 1,
+                          cursor: "pointer",
+                        }}
+                        onClick={this.pagePrev}
+                      />
+                      <PageCount
+                        onClick={this.movePage}
+                        value={5 * (current_set - 1)}
+                        active={Partner.reviewCurrentPage % 5 == 1}
+                        style={{
+                          display:
+                            Partner.partnerPage < 5 * (current_set - 1) + 1
+                              ? "none"
+                              : "block",
+                        }}
+                      >
+                        {" "}
+                        {5 * (current_set - 1) + 1}{" "}
+                      </PageCount>
+                      <PageCount
+                        value={5 * (current_set - 1) + 1}
+                        active={Partner.reviewCurrentPage % 5 == 2}
+                        style={{
+                          display:
+                            Partner.partnerPage < 5 * (current_set - 1) + 2
+                              ? "none"
+                              : "block",
+                        }}
+                        onClick={this.movePage}
+                      >
+                        {" "}
+                        {5 * (current_set - 1) + 2}{" "}
+                      </PageCount>
+                      <PageCount
+                        value={5 * (current_set - 1) + 2}
+                        active={Partner.reviewCurrentPage % 5 == 3}
+                        style={{
+                          display:
+                            Partner.partnerPage < 5 * (current_set - 1) + 3
+                              ? "none"
+                              : "block",
+                        }}
+                        onClick={this.movePage}
+                      >
+                        {" "}
+                        {5 * (current_set - 1) + 3}{" "}
+                      </PageCount>
+                      <PageCount
+                        value={5 * (current_set - 1) + 3}
+                        active={Partner.reviewCurrentPage % 5 == 4}
+                        style={{
+                          display:
+                            Partner.partnerPage < 5 * (current_set - 1) + 4
+                              ? "none"
+                              : "block",
+                        }}
+                        onClick={this.movePage}
+                      >
+                        {" "}
+                        {5 * (current_set - 1) + 4}{" "}
+                      </PageCount>
+                      <PageCount
+                        value={5 * (current_set - 1) + 4}
+                        active={Partner.reviewCurrentPage % 5 == 0}
+                        style={{
+                          display:
+                            Partner.partnerPage < 5 * (current_set - 1) + 5
+                              ? "none"
+                              : "block",
+                        }}
+                        onClick={this.movePage}
+                      >
+                        {" "}
+                        {5 * (current_set - 1) + 5}{" "}
+                      </PageCount>
+                      {/* <PageCount> ... </PageCount> */}
+                      <img
+                        src={pass2}
+                        style={{
+                          opacity:
+                            Partner.partnerPage == Partner.reviewCurrentPage
+                              ? 0.4
+                              : 1,
+                          cursor: "pointer",
+                        }}
+                        onClick={this.pageNext}
+                      />
+                    </PageBar>
+                  )}
+
+                  {!Partner.partnerExist && (
+                    <NoPartner>
+                      <span>검색하신 결과가 없습니다.</span>
+                      <div
+                        onClick={() => {
+                          Partner.reviewPartnerName = Partner.partnersName;
+
+                          Partner.reviewPartnerId = 7949;
+                          Partner.reviewSearchStep = 2;
+                          Partner.searchPartnerModalActive = false;
+                          Partner.partnersList = [];
+                          Partner.newPartner = 1;
+                        }}
+                      >
+                        <span>직접 입력하기</span>
+                      </div>
+                    </NoPartner>
+                  )}
                 </div>
               </content>
 
@@ -215,7 +415,7 @@ const ModalBox = styled.div`
   border-radius: 10px;
   padding: 52px 0 60px 98px;
   box-sizing: border-box;
-  height: 700px;
+  height: 90vh;
 
   > section {
     max-width: 900px;
@@ -284,14 +484,14 @@ const ModalBox = styled.div`
       height: 100px;
       > div {
         overflow-y: auto;
-        height: 300px;
+        height: 50vh;
       }
     }
     > footer {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 150px;
+      margin-top: 100px;
 
       > div {
         background-color: #a4aab4;
@@ -424,4 +624,35 @@ const NoPartner = styled.div`
       font-weight: bold;
     }
   }
+`;
+
+const PageBar = styled.div`
+  width: 351px;
+  margin-top: 109px;
+  // margin-bottom: 157px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PageCount = styled.span`
+  width: 14px;
+  height: 30px;
+  font-size: 25px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: 0.63px;
+  text-align: left;
+  color: #999999;
+  cursor: pointer;
+  ${(props) =>
+    props.active &&
+    css`
+      font-weight: 700;
+      color: #0933b3;
+    `}
 `;

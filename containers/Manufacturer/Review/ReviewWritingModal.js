@@ -102,7 +102,7 @@ class ReviewWritingModal extends React.Component {
       >
         {open ? (
           <>
-            <button
+            {/* <button
               className="close"
               onClick={(e) => {
                 e.stopPropagation();
@@ -111,20 +111,26 @@ class ReviewWritingModal extends React.Component {
             >
               {" "}
               &times;{" "}
-            </button>
+            </button> */}
             <section>
               {/* <header>{`${data.name} ${header}`}</header> */}
               {/* <header>{`${header}`}</header> */}
-              <header>리뷰를 보고 싶으시다면!</header>
+              <header>
+                <span>
+                  볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ?{" "}
+                  <br />첫 평가를 작성해주세요
+                </span>
+                <span></span>
+              </header>
               <main>
                 <div>
-                  <p>볼트앤너트와 함께한 업체가 아니더라도</p>
-                  <p>리뷰 작성이 가능합니다.</p>
+                  <p>* 볼트앤너트에 등록된 업체가 아니더라도</p>
+                  <p>업체 평가 작성이 가능합니다.</p>
                 </div>
               </main>
               <footer>
                 <div onClick={this.moveReviewPage}>
-                  <span>첫 리뷰 작성하기</span>
+                  <span>첫 평가 작성하기</span>
                 </div>
               </footer>
             </section>
@@ -178,7 +184,7 @@ const ModalBox = styled.div`
       text-align: center;
 
       font-size: 20px;
-      line-height: 77px;
+      line-height: 44px;
       letter-spacing: -0.5px;
       color: #282c36;
     }

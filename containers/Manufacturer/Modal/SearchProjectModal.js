@@ -31,8 +31,13 @@ class SearchProjectModal extends React.Component {
 
   moveReviewPage = () => {
     const { Partner } = this.props;
-    Partner.searchProjectModalActive = false;
-    Partner.searchPartnerModalActive = true;
+
+    if (Partner.reviewSearchStep == 2) {
+      Partner.searchProjectModalActive = false;
+    } else {
+      Partner.searchProjectModalActive = false;
+      Partner.searchPartnerModalActive = true;
+    }
   };
 
   closeModal = () => {
@@ -125,14 +130,21 @@ class SearchProjectModal extends React.Component {
                 <div>
                   <input
                     placeholder="진행했던 프로젝트를 입력해주세요."
+                    defaultValue={
+                      Partner.projectName ? Partner.projectName : ""
+                    }
                     onBlur={(e) => {
                       // console.log(e.target.value);
                       Partner.projectName = e.target.value;
                       // if (e.target.value === "") {
                       //   Partner.maxDirectInput = false;
                       // }
-                      e.target.placeholder =
-                        "진행했던 프로젝트를 입력해주세요.";
+                      if (Partner.reviewSearchStep == 2) {
+                        e.target.value = Partner.projectName;
+                      } else {
+                        e.target.placeholder =
+                          "진행했던 프로젝트를 입력해주세요.";
+                      }
                     }}
                     onFocus={(e) => {
                       e.target.placeholder = "";
