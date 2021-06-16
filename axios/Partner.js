@@ -374,3 +374,12 @@ export function getCityName(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function getPartnerName(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partner/find-partner-name/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}

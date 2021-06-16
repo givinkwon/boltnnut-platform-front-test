@@ -16,7 +16,7 @@ const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 @observer
 class Index extends React.Component {
   state = {
-    width: 0,
+    width: null,
     home_index: 3,
   };
   async componentDidMount() {

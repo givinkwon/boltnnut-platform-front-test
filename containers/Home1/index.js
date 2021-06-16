@@ -52,7 +52,7 @@ import TabletBanner12Container from "./Tablet/TabletBanner12";
 
 @inject("Home")
 @observer
-class HomeConatiner1 extends React.Component {
+class HomeConatiner extends React.Component {
   state = {
     next: true,
     prev: false,
@@ -140,7 +140,7 @@ class HomeConatiner1 extends React.Component {
   }
 }
 
-export default HomeConatiner1;
+export default HomeConatiner;
 
 const CustomContainer = styled.div`
   background-color: #ffffff;
