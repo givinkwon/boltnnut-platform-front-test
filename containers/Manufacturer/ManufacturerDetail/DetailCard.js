@@ -1,8 +1,10 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import dynamic from "next/dynamic";
-
+import Router from "next/router";
 import Modal from "../Review/ReviewWritingModal";
+import ReviewCard from "../Review/ReviewCard";
+import ReviewStarRating from "../Review/ReviewStarRating";
 
 // @ts-ignore
 const FileViewer = dynamic(() => import("react-file-viewer"), {
@@ -33,6 +35,19 @@ class DetailCardContainer extends React.Component {
 
     Partner.reviewWritingModalActive = false;
   };
+
+  componentDidMount = () => {
+    const { Partner } = this.props;
+    console.log("csfdffsdfd");
+    if (Partner.partner_detail_list.length == 0) {
+      Router.push("/manufacturer");
+    }
+  };
+
+  componentWillUnmount = () => {
+    console.log("bbbbbbsbsbsb");
+    // Router.push("/manufacturer/detail");
+  };
   render() {
     const { width, Partner } = this.props;
     console.log(this.props.Partner.selectedIntroductionFile);
@@ -49,11 +64,11 @@ class DetailCardContainer extends React.Component {
             <tag>
               <span>활동 가능</span>
             </tag>
-            {Partner.partner_detail_list && (
+            {Partner.partner_detail_list.length != 0 && (
               <name>{Partner.partner_detail_list[0].item.name}</name>
             )}
 
-            {Partner.partner_detail_list && (
+            {Partner.partner_detail_list.length != 0 && (
               <content>
                 <span>{Partner.partner_detail_list[0].item.info_company}</span>
               </content>
@@ -102,7 +117,7 @@ class DetailCardContainer extends React.Component {
               <label>
                 <span>주요실적</span>
               </label>
-              {Partner.partner_detail_list && (
+              {Partner.partner_detail_list.length != 0 && (
                 <content>{Partner.partner_detail_list[0].item.deal}</content>
               )}
             </div>
@@ -110,15 +125,60 @@ class DetailCardContainer extends React.Component {
               <label>
                 <span>진행한 제품군</span>
               </label>
-              {Partner.partner_detail_list && (
+              {Partner.partner_detail_list.length != 0 && (
                 <content>{Partner.partner_detail_list[0].item.history}</content>
               )}
             </div>
           </DetailInfoBox>
-          {/* <ReviewBox>
-            <div>리뷰 작성</div>
+          <ReviewBox>
+            <label>평가 후기</label>
 
-            {Partner.reviewWritingModalActive && (
+            <SummaryBox>
+              <label>클라이언트 평균 만족도</label>
+              <header>
+                <mainscore>
+                  <div>
+                    <ReviewStarRating width={31} margin={4} />
+                  </div>
+                  <div>
+                    <span>4.8</span>
+                    <span>전체 누적 평점</span>
+                  </div>
+                </mainscore>
+                <subscore>
+                  <div>
+                    <span>친절도</span>
+                    <div>
+                      <ReviewStarRating width={15} margin={1} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <span>연락 빈도</span>
+                    <div>
+                      <ReviewStarRating width={15} margin={1} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <span>전문성</span>
+                    <div>
+                      <ReviewStarRating width={15} margin={1} />
+                    </div>
+                  </div>
+                </subscore>
+              </header>
+            </SummaryBox>
+            <content>
+              {Partner.partnerReviewList &&
+                Partner.partnerReviewList.map((item, idx) => {
+                  return <ReviewCard data={item.data[0]} />;
+                })}
+              <ReviewCard />
+              <ReviewCard />
+            </content>
+
+            {/* {Partner.reviewWritingModalActive && (
               <Layer>
                 <span>
                   <Modal
@@ -128,8 +188,8 @@ class DetailCardContainer extends React.Component {
                   ></Modal>
                 </span>
               </Layer>
-            )}
-          </ReviewBox> */}
+            )} */}
+          </ReviewBox>
         </Card>
       </>
     );
@@ -444,7 +504,15 @@ const FileViewerContainer = styled(FileViewer)``;
 
 const ReviewBox = styled.div`
   position: relative;
-  height: 500px;
+  // height: 500px;
+  margin-top: 109px;
+  > label {
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: -0.6px;
+    color: #282c36;
+    font-weight: bold;
+  }
 `;
 
 const Layer = styled.div`
@@ -453,7 +521,7 @@ const Layer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 100;
+  z-index: 99;
   // opacity: 0.1;
   background-color: rgba(0, 0, 0, 0.5);
 
@@ -462,5 +530,60 @@ const Layer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
+  }
+`;
+
+const SummaryBox = styled.div`
+  margin-top: 50px;
+  margin-bottom: 34px;
+  > label {
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: -0.6px;
+    color: #282c36;
+    font-weight: 500;
+    margin-bottom: 24px;
+    display: block;
+  }
+  > header {
+    display: flex;
+    justify-content: space-between;
+    > mainscore {
+      display: flex;
+      > div:nth-of-type(1) {
+        padding-top: 9px;
+        box-sizing: border-box;
+      }
+      > div:nth-of-type(2) {
+        display: flex;
+        flex-direction: column;
+        > span:nth-of-type(1) {
+          align-self: center;
+          font-size: 48px;
+          line-height: 40px;
+          letter-spacing: -1.2px;
+          color: #282c36;
+          font-weight: bold;
+          margin-bottom: 12px;
+        }
+        > span:nth-of-type(2) {
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: -0.4px;
+          color: #191919;
+          font-weight: normal;
+        }
+      }
+    }
+    > subscore {
+      display: flex;
+      flex-direction: column;
+      width: 165px;
+      > div {
+        margin-bottom: 9px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
   }
 `;

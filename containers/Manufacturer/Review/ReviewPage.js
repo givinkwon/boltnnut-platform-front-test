@@ -9,10 +9,10 @@ import SearchPartnerModal from "../Modal/SearchPartnerModal";
 import QuestionContainer from "../Modal/QuestionBox";
 
 const checkImg = "/static/images/pass8.png";
-const star = "/static/icon/star_blue.svg";
+const star = "/static/icon/star_blue3.svg";
 const editImg = "/static/icon/edit.svg";
 
-@inject("Partner")
+@inject("Auth", "Partner")
 @observer
 class ReviewPage extends React.Component {
   state = {
@@ -20,13 +20,38 @@ class ReviewPage extends React.Component {
     rows: 1,
     value: "",
     minRows: 1,
-    maxRows: 15,
+    maxRows: 45,
     star_ary: [
-      { id: 1, checked: false, content: "매우 나빠요" },
-      { id: 2, checked: false, content: "나빠요" },
-      { id: 3, checked: false, content: "보통이에요" },
-      { id: 4, checked: false, content: "좋아요" },
-      { id: 5, checked: false, content: "매우 좋아요" },
+      {
+        id: 1,
+        checked: false,
+        content: "매우 나빠요",
+        content2: "만족도 1점을 주셨네요, 어떤점이 안 좋았나요?",
+      },
+      {
+        id: 2,
+        checked: false,
+        content: "나빠요",
+        content2: "만족도 2점을 주셨네요, 어떤점이 안 좋았나요?",
+      },
+      {
+        id: 3,
+        checked: false,
+        content: "보통이에요",
+        content2: "만족도 3점을 주셨네요, 어떤점이 좋았나요?",
+      },
+      {
+        id: 4,
+        checked: false,
+        content: "좋아요",
+        content2: "만족도 4점을 주셨네요, 어떤점이 좋았나요?",
+      },
+      {
+        id: 5,
+        checked: false,
+        content: "매우 좋아요",
+        content2: "만족도 5점을 주셨네요, 어떤점이 좋았나요?",
+      },
     ],
   };
 
@@ -38,6 +63,7 @@ class ReviewPage extends React.Component {
     console.log("11111111111111111111111111");
     const { Partner } = this.props;
     Partner.ratingPoint = 0;
+    window.scrollTo(0, 0);
   };
 
   starCheckHandler = async (star_id, bool) => {
@@ -78,7 +104,7 @@ class ReviewPage extends React.Component {
       }
     }
     Partner.ratingPoint = star_id;
-    console.log(toJS(Partner.ratingPoint));
+    // console.log(toJS(Partner.ratingPoint));
   };
 
   openModal = () => {
@@ -97,7 +123,7 @@ class ReviewPage extends React.Component {
   };
   checkIndex = (id, idx) => {
     const { Partner } = this.props;
-    console.log(typeof id);
+    // console.log(typeof id);
     switch (id) {
       case "1":
         Partner.reviewKindnessIndex = idx;
@@ -115,7 +141,7 @@ class ReviewPage extends React.Component {
     let textareaLineHeight = 0;
     if (this.props.width > 797.98) {
       textareaLineHeight = 34;
-      this.setState({ maxRows: 5 });
+      this.setState({ maxRows: 15 });
     } else {
       textareaLineHeight = 20;
       this.setState({ maxRows: 10 });
@@ -145,6 +171,73 @@ class ReviewPage extends React.Component {
     Partner.reviewContent = event.target.value;
   };
 
+  onCancelReview = () => {
+    const { Auth, Partner } = this.props;
+    Partner.resetReviewData();
+    Partner.reviewActiveIndex = 0;
+  };
+  onSubmitReview = () => {
+    var formData = new FormData();
+
+    const { Auth, Partner } = this.props;
+
+    // console.log(toJS(Auth.logged_in_client.id));
+    // console.log(toJS(Partner.reviewPartnerId));
+    // console.log(toJS(Partner.projectName));
+
+    // console.log(toJS(Partner.ratingPoint));
+    // console.log(toJS(Partner.reviewKindnessIndex));
+    // console.log(toJS(Partner.reviewCommunicationIndex));
+    // console.log(toJS(Partner.reviewProfessionIndex));
+
+    // console.log(toJS(Partner.reviewContent));
+
+    // console.log(toJS(Partner.newPartner));
+    // console.log(toJS(Partner.reviewPartnerName));
+
+    const now = new Date();
+    console.log(now.toLocaleString());
+
+    formData.append("client", Auth.logged_in_client.id);
+    formData.append("partner", Partner.reviewPartnerId);
+    formData.append("projectname", Partner.projectName);
+    formData.append("date", now.toLocaleString());
+
+    formData.append("consult_score", Partner.ratingPoint);
+
+    switch (Partner.ratingPoint) {
+      case 5:
+        formData.append("kindness_score", Partner.reviewKindnessIndex + 2);
+        formData.append(
+          "communication_score",
+          Partner.reviewCommunicationIndex + 2
+        );
+        formData.append("profession_score", Partner.reviewProfessionIndex + 2);
+        break;
+      case 4:
+        formData.append("kindness_score", Partner.reviewKindnessIndex + 1);
+        formData.append(
+          "communication_score",
+          Partner.reviewCommunicationIndex + 1
+        );
+        formData.append("profession_score", Partner.reviewProfessionIndex + 1);
+        break;
+      default:
+        formData.append("kindness_score", Partner.reviewKindnessIndex);
+        formData.append(
+          "communication_score",
+          Partner.reviewCommunicationIndex
+        );
+        formData.append("profession_score", Partner.reviewProfessionIndex);
+    }
+
+    formData.append("content", Partner.reviewContent);
+
+    formData.append("new_partner", Partner.newPartner);
+    formData.append("partner_name", Partner.reviewPartnerName);
+
+    Partner.setPartnerReview(formData);
+  };
   render() {
     const { Partner, width } = this.props;
     return (
@@ -154,7 +247,7 @@ class ReviewPage extends React.Component {
             <div>
               <img src={checkImg} />
             </div>
-            <span>후기 작성</span>
+            <span>평가 작성</span>
           </Header>
           <Search>
             <div>
@@ -169,7 +262,11 @@ class ReviewPage extends React.Component {
                   <span>입력하기</span>
                 </div>
               ) : (
-                <edit>
+                <edit
+                  onClick={() => {
+                    this.openModal();
+                  }}
+                >
                   <span>{Partner.projectName}</span>
                   <img src={editImg} />
                 </edit>
@@ -187,7 +284,12 @@ class ReviewPage extends React.Component {
                   <span>검색</span>
                 </div>
               ) : (
-                <edit>
+                <edit
+                  onClick={() => {
+                    //this.openModal();
+                    Partner.searchPartnerModalActive = true;
+                  }}
+                >
                   <span>{Partner.reviewPartnerName}</span>
                   <img src={editImg} />
                 </edit>
@@ -208,6 +310,7 @@ class ReviewPage extends React.Component {
                 );
               })}
             </starcontainer>
+
             {Partner.ratingPoint == 0 ? (
               <span>선택해주세요.</span>
             ) : (
@@ -246,7 +349,15 @@ class ReviewPage extends React.Component {
             />
           </QuestionBox>
           <Section>
-            <span>만족도 5점을 주셨네요, 어떤점이 좋았나요?</span>
+            {Partner.ratingPoint ? (
+              //<span>만족도 5점을 주셨네요, 어떤점이 좋았나요?</span>
+              <span>
+                {console.log(toJS(Partner.ratingPoint))}
+                {this.state.star_ary[Partner.ratingPoint - 1].content2}
+              </span>
+            ) : (
+              ""
+            )}
             <div>
               <textarea
                 placeholder="리뷰를 작성해주세요"
@@ -255,7 +366,8 @@ class ReviewPage extends React.Component {
                   e.target.placeholder = "리뷰를 작성해주세요";
                 }}
                 rows={this.state.rows}
-                value={this.state.value}
+                value={Partner.reviewContent}
+                defaultValue={Partner.reviewContent}
                 //className={"textarea"}
                 placeholderStyle={{ fontWeight: "400" }}
                 onChange={this.reviewHandler}
@@ -263,11 +375,19 @@ class ReviewPage extends React.Component {
             </div>
           </Section>
           <Footer>
-            <div>
+            <div
+              onClick={() => {
+                this.onCancelReview();
+              }}
+            >
               <span>취소</span>
             </div>
 
-            <div>
+            <div
+              onClick={() => {
+                this.onSubmitReview();
+              }}
+            >
               <span>작성하기</span>
             </div>
           </Footer>
@@ -306,14 +426,14 @@ export default ReviewPage;
 const Card = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   width: 100%;
-  height: 2100px;
+  // height: 2100px;
   margin-top: 70px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 132px;
-  paddinig-bottom: 116px;
+  padding-bottom: 116px;
   box-sizing: border-box;
 `;
 const Header = styled.div`
@@ -360,6 +480,7 @@ const Search = styled.div`
       font-weight: bold;
     }
     > edit {
+      cursor: pointer;
       > span {
         font-size: 18px;
         line-height: 34px;
@@ -532,7 +653,7 @@ const StarImg = styled.div`
   > img {
     filter: ${(props) =>
       props.starActive
-        ? "sepia(63%) saturate(10)"
+        ? "sepia(80%) saturate(10)"
         : "invert(0.5) opacity(0.5)"};
     cursor: pointer;
   }

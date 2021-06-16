@@ -4,13 +4,13 @@ import styled, { keyframes } from "styled-components";
 
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import ReviewStarRating from "../Review/ReviewStarRating";
+import { isElementAccessExpression } from "typescript";
 
-const star = "/static/icon/star_blue3.svg";
+const star = "/static/icon/star.svg";
 
 @inject("Partner", "Auth")
 @observer
-class ReviewCard extends React.Component {
+class PastReviewCard extends React.Component {
   // constructor (props) {
   //     super(props);
   //     this.hideLoader = this.hideLoader.bind(this);
@@ -21,76 +21,79 @@ class ReviewCard extends React.Component {
 
   componentDidMount = async () => {
     console.log("componentDidMount");
+    const { Partner, Auth } = this.props;
+    await Partner.getReview();
 
-    const { Partner, data } = this.props;
-    console.log(data);
-    if (data) {
-      await Partner.getClientInfo(data.client_id);
-      console.log(Partner.clientInfo.user);
-      // Partner.clientInfo.name
-      // Partner.clientInfo.user.username
+    console.log(toJS(Partner.review_ary));
+    await Partner.getClientEmail();
+    if (Partner.review_user_ary) {
+      this.setState({ g: 3 });
     }
-
-    // const { Partner, Auth } = this.props;
-    // await Partner.getReview();
-
-    // console.log(toJS(Partner.review_ary));
-    // await Partner.getClientEmail();
-    // if (Partner.review_user_ary) {
-    //   this.setState({ g: 3 });
-    // }
   };
   componentWillUnmount = () => {
     const { Partner } = this.props;
-    Partner.clientInfo = [];
-    // Partner.review_ary = [];
-    // Partner.loadReviewData = 0;
-    // Partner.review_user_ary = [];
+    Partner.review_ary = [];
+    Partner.loadReviewData = 0;
+    Partner.review_user_ary = [];
   };
 
   render() {
     const { data, width, Partner, categoryData, idx } = this.props;
-    console.log(data);
 
     return (
       <>
-        <Card>
-          {Partner.clientInfo.user ? (
-            <name>{Partner.clientInfo.user.username}</name>
-          ) : (
-            <name>***</name>
-          )}
+        {/* {console.log("renderrenderrenderrenderrenderrenderrenderrenderrender")} */}
+        {/* {console.log(Partner.review_ary.length)}
+        {!Partner.review_ary.length && (
+          
+        )} */}
 
-          <score>
-            <span>
-              <ReviewStarRating width={15} margin={1} />
-            </span>
-            {/* <span>{`   ${item.score}`}</span> */}
-          </score>
-          <history>믹서기</history>
-          <content>
-            아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아
-          </content>
+        {Partner.loadReviewData === 1 &&
+          Partner.review_ary.map((item, idx) => (
+            <Card>
+              <score>
+                <span>
+                  {item.score
+                    ? stars.map((data, id) => {
+                        if (id < item.score) {
+                          return (
+                            <img
+                              src={star}
+                              style={{ filter: "sepia(63%) saturate(10)" }}
+                            />
+                          );
+                        } else {
+                          return <img src={star} />;
+                        }
+                      })
+                    : "None"}
+                </span>
+                <span>{`   ${item.score}`}</span>
+              </score>
+              {/* <name>{item.client}</name> */}
+              {/* <name>{Partner.userEmail}</name> */}
 
-          {/* {Partner.review_user_ary && (
+              {/* console.log를 찍어야 값이 출력 (??) */}
+              {/* {console.log(toJS(Partner.review_user_ary))} */}
+              {Partner.review_user_ary && (
                 <name>{Partner.review_user_ary[idx]}</name>
-              )} */}
+              )}
 
-          {/* <content>{item.content}</content> */}
-        </Card>
-
-        {/* {Partner.loadReviewData === -1 && (
+              <content>{item.content}</content>
+            </Card>
+          ))}
+        {Partner.loadReviewData === -1 && (
           <NoCard reviewDone={Partner.review_done}>
             <span>등록된 리뷰가 없습니다</span>
           </NoCard>
           // <h1></h1>
-        )} */}
+        )}
       </>
     );
   }
 }
 
-export default ReviewCard;
+export default PastReviewCard;
 
 const stars = [1, 2, 3, 4, 5];
 const Card = styled.div`
@@ -106,7 +109,7 @@ const Card = styled.div`
   justify-content: center;
 
   //align-items: center;
-  padding: 46px 23px 32px 26px;
+  padding: 15px 0 15px 10px;
   box-sizing: border-box;
   > score {
     margin-bottom: 5px;
@@ -118,27 +121,13 @@ const Card = styled.div`
     }
   }
   > name {
-    font-size: 18px;
-    color: #191919;
-    line-height: 27px;
-    letter-spacing: -0.45px;
-    font-weight: bold;
-  }
-  > history {
-    font-size: 18px;
-    line-height: 27px;
-    letter-spacing: -0.45px;
-    color: #a4aab4;
-    font-weight: normal;
-    margin-bottom: 22px;
+    font-size: 14px;
+    color: rgb(202, 202, 202);
+    margin-bottom: 15px;
   }
   > content {
     white-space: break-spaces;
-    font-size: 18px;
-    line-height: 27px;
-    letter-spacing: -0.45px;
-    color: #282c36;
-    font-weight: normal;
+    font-size: 16px;
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
