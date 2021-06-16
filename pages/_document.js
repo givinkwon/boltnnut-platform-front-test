@@ -38,6 +38,83 @@ export default class MyDocument extends Document {
     }
   };
 
+  setReportV4() {
+    return {
+      __html: `
+      var VIEW_ID = '214568260';
+
+      // Query the API and print the results to the page.
+      function getUserActivity(m_userId) {
+        gapi.client.request({
+          path: '/v4/userActivity:search',
+          // path: '/v4/user',
+          root: 'https://analyticsreporting.googleapis.com/',
+          method: 'POST',
+          body: {
+            // "type": "USER_ID_TYPE_UNSPECIFIED",
+            "viewId": "214568260",
+            "user": {
+              "type":"CLIENT_ID",
+              // "userId": "463218669.1623114407",
+              "userId": m_userId,
+            },
+            "dateRange": {
+              "startDate": "2021-06-07",
+              "endDate": "2021-06-14",
+            },
+          }
+        }).then(setUserActivity, console.log(''));
+      }
+    
+      function batchGet() {
+        gapi.client.request({
+          path: '/v4/reports:batchGet',
+          root: 'https://analyticsreporting.googleapis.com/',
+          method: 'POST',
+          body: {
+            "reportRequests": [
+              {
+                "viewId": "214568260",
+                "dateRanges": [
+                  {
+                    "startDate": "2021-06-07",
+                    "endDate": "2021-06-16"
+                  }
+                ],
+                "metrics": [
+                  {
+                    "expression": "ga:users"
+                  }
+                ],
+                "dimensions": [
+                  {
+                    "name": "ga:dimension2"
+                  }
+                ]
+              }
+            ]
+            },
+        }).then(displayResults, console.log(''));
+      }
+
+      function displayResults(response) {
+        // var formattedJson = JSON.stringify(response.result, null, 2);
+        var formattedJson = response.result;
+        // console.log(formattedJson.reports)
+        console.log(formattedJson.reports[0].data.rows[0].dimensions[0]);
+        getUserActivity(formattedJson.reports[0].data.rows[0].dimensions[0]);
+        // document.getElementById('query-output').value = formattedJson;
+      }
+
+      function setUserActivity(response) {
+        // var formattedJson = JSON.stringify(response.result, null, 2);
+        var formattedJson = response.result;
+        console.log(formattedJson)
+      }
+
+     `,
+    };
+  }
   setAnalyticsApi() {
     return {
       __html: `
@@ -46,9 +123,9 @@ export default class MyDocument extends Document {
       var CLIENT_ID ='392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com'; // <-- 발급받은 Client ID 입력 
       // Set authorized scope.
       var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
-      
+      // https://www.googleapis.com/analytics/v3/data/ga?ids=ga%3A214568260&start-date=30daysAgo&end-date=yesterday&metrics=ga%3Ausers
       console.log(2)
-      function authorize(test) {
+      function authorize() {
           // Handles the authorization flow.
           //  should be false when invoked from the button click.
           // var useImmdiate = event ? false : true;
@@ -59,38 +136,38 @@ export default class MyDocument extends Document {
               immediate: false
           };
 
-        //   var authData = {
-        //     client_id: test,
-        //     scope: SCOPES,
-        //     immediate: false
-        // };
           console.log(3)
           gapi.auth.authorize(authData, function (response) {
             console.log(4)
             console.log(response);
-              var authButton = document.getElementById('auth-button');
+              // var authButton = document.getElementById('auth-button');
               console.log(response);
               if (response.error) {
                     
-                  authButton.hidden = false;
+                  // authButton.hidden = false;
               }
               else {
-                  authButton.hidden = true;
+                  // authButton.hidden = true;
                   queryAccounts();
+                  console.log(6);
               }
           });
       }
-      console.log(5)
+      
       function queryAccounts() {
+        console.log('queryAccounts() called');
           // Load the Google Analytics client library.
           gapi.client.load('analytics', 'v3').then(function () {
       
               // Get a list of all Google Analytics accounts for this user
               gapi.client.analytics.management.accounts.list().then(handleAccounts);
+              console.log(7);
           });
+          
       }
       
       function handleAccounts(response) {
+        console.log(response);
           // Handles the response from the accounts list method.
           if (response.result.items && response.result.items.length) {
               // Get the first Google Analytics account.
@@ -98,6 +175,7 @@ export default class MyDocument extends Document {
       
               // Query for properties.
               queryProperties(firstAccountId);
+              console.log(8);
           } else {
               console.log('No accounts found for this user.');
           }
@@ -164,16 +242,18 @@ export default class MyDocument extends Document {
           gapi.client.analytics.data.ga.get({
               'ids': 'ga:' + profileId,
               // ## 조회 시작일자
-              'start-date': '2020-03-03',
+              'start-date': '2021-06-08',
               // ## 조회 마지막일자
-              'end-date': '2021-06-11',
+              'end-date': '2021-06-16',
               // ##  -- 사용자, 신규 방문자, 세션, 이탈률, 평균세션시간(초), 페이지뷰 수, 세션당 페이지수, 사용자당 세션 수 
-              'metrics': 'ga:users,ga:newUsers,ga:sessions,ga:bounceRate,ga:avgSessionDuration,ga:pageviews,ga:pageviewsPerSession,ga:sessionsPerUser',
+              'metrics': 'ga:users',
               // ##  -- 소스 , 매체
-              'dimensions': 'ga:source,ga:medium'
+              'dimensions': 'ga:dimension2',
           })
           .then(function (response) {
+              console.log("!@@@@");
               var formattedJson = JSON.stringify(response.result, null, 2);
+              console.log(formattedJson);
               document.getElementById('query-output').value = formattedJson;
           })
           .then(null, function (err) {
@@ -191,10 +271,17 @@ export default class MyDocument extends Document {
   setGoogleTags() {
     return {
       __html: `
+      
        window.dataLayer = window.dataLayer || [];
-       function gtag(){dataLayer.push(arguments);}
+       
+       function gtag(){dataLayer.push(arguments);
+
+      }
        gtag('js', new Date());
-       gtag('config', 'UA-162026812-1', {'send_page_view' : false } );
+       gtag('config', 'UA-162026812-1', {
+          //'send_page_view' : false,
+          'custom_map': {'dimension2': 'clientId' }
+       } );
      `,
     };
   }
@@ -273,6 +360,15 @@ export default class MyDocument extends Document {
             <meta name="NaverBot" content="index, follow" />
             <meta name="Yeti" content="All" />
             <meta name="Yeti" content="index, follow" />
+
+            <meta
+              name="google-signin-client_id"
+              content="392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com"
+            ></meta>
+            <meta
+              name="google-signin-scope"
+              content="https://www.googleapis.com/auth/analytics.readonly"
+            ></meta>
             {/* 대표 URL */}
             <link rel="canonical" href="https://www.boltnnut.com/" />
             {/* Naver webmaster */}
@@ -364,15 +460,21 @@ export default class MyDocument extends Document {
             type="text/javascript"
             src="https://apis.google.com/js/client.js?onload=authorize"
           ></script>
-          <script dangerouslySetInnerHTML={this.setAnalyticsApi()} />
+          <script
+            type="text/javascript"
+            src="https://apis.google.com/js/client:platform.js"
+          ></script>
+          {/* <script dangerouslySetInnerHTML={this.setAnalyticsApi()} /> */}
+          <script dangerouslySetInnerHTML={this.setReportV4()} />
           {/* ㅌㅌㅌ */}
           {/* <script src="https://apis.google.com/js/client.js?onload=authorize"></script> */}
 
           {/* <button id="auth-button" onclick="authorize()">
             Authorize
-          </button>
-          <textarea cols="80" rows="20" id="query-output"></textarea> */}
+          </button> */}
+          {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
           {/* ㅌㅌㅌ */}
+          {/* <p class="g-signin2" data-onsuccess="batchGet"></p> */}
         </body>
       </html>
     );
