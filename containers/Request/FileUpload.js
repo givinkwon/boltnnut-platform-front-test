@@ -942,7 +942,6 @@ class FileUploadContainer extends Component {
           ManufactureProcessFormData.append("request", 2467);
           console.log(ManufactureProcessFormData);
           this.setState({ loading: true });
-          ManufactureProcess.loadingEstimate = true;
 
           //this.props.ManufactureProcess.saveSelect(ManufactureProcessFormData)
           ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
@@ -1330,6 +1329,11 @@ class FileUploadContainer extends Component {
                                 getOptionLabel={(option) => option.name}
                                 onChange={(e) => {
                                   ManufactureProcess.setBigCategory(e);
+                                  if (e.name == "절삭가공") {
+                                    ManufactureProcess.loadingEstimate = true;
+                                  }
+                                  console.log(e);
+                                  console.log(e.detail);
                                   this.loadFileResopnse(idx);
 
                                   data.selectBig = e;

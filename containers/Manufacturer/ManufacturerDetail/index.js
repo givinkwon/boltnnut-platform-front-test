@@ -9,7 +9,7 @@ import { inject, observer } from "mobx-react";
 @observer
 class ManufacturerDetailConatiner extends React.Component {
   componentDidMount() {
-    console.log("MOUNT!!!!");
+    // console.log("MOUNT!!!!");
     console.log(this.props.width);
   }
   render() {

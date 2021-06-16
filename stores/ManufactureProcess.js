@@ -70,6 +70,8 @@ class ManufactureProcess {
   @observable projectSubmitLoading = true;
   @observable nonDrawingProjectSubmitLoading = true;
 
+  @observable loadingSaveSearchText = true;
+
   @action countQuantity = (data) => {
     data.map((item, idx) => {
       console.log(item);
