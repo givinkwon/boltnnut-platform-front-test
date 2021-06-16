@@ -46,8 +46,10 @@ class MobileSearchBarConatiner extends React.Component {
   };
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
-    if (Partner.search_text != "") {
+    if (ManufactureProcess.loadingSaveSearchText) {
       ManufactureProcess.saveSearchText(Partner.search_text);
+      ManufactureProcess.loadingSaveSearchText = false;
+      setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 5000);
     }
     Partner.currentPage = 1;
     Partner.category_dic = {};
@@ -62,8 +64,13 @@ class MobileSearchBarConatiner extends React.Component {
   handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
-      if (Partner.search_text != "") {
+      if (ManufactureProcess.loadingSaveSearchText) {
         ManufactureProcess.saveSearchText(Partner.search_text);
+        ManufactureProcess.loadingSaveSearchText = false;
+        setTimeout(
+          () => (ManufactureProcess.loadingSaveSearchText = true),
+          5000
+        );
       }
       Partner.currentPage = 1;
       Partner.category_dic = {};
@@ -72,14 +79,14 @@ class MobileSearchBarConatiner extends React.Component {
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-    console.log(this.props.Project.input_category);
+    // console.log(this.props.Project.input_category);
   }
 
   onClickHandler = (idx) => {
-    console.log("click");
+    // console.log("click");
     const { Partner } = this.props;
-    console.log(idx);
-    console.log(Partner.filter_checked_idx);
+    // console.log(idx);
+    // console.log(Partner.filter_checked_idx);
     if (Partner.filter_checked_idx !== idx) {
       this.setState({ index: idx });
       Partner.filter_checked_idx = idx;
@@ -96,10 +103,10 @@ class MobileSearchBarConatiner extends React.Component {
     const { Partner } = this.props;
 
     if (idx === Partner.filter_checked_idx) {
-      console.log("ture");
+      // console.log("ture");
       return true;
     } else {
-      console.log("false");
+      // console.log("false");
       return false;
     }
   };
@@ -195,7 +202,7 @@ class MobileSearchBarConatiner extends React.Component {
           {Partner.filter_city_ary.map((item, idx) => {
             return (
               <>
-                {console.log(toJS(item))}
+                {/* {console.log(toJS(item))} */}
                 <FilterContent
                   onClick={() => {
                     this.onClickHandler(item.id);
