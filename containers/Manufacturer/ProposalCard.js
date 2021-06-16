@@ -182,6 +182,8 @@ class ProposalCard extends React.Component {
         console.log("뷰어 페이지 router push");
         Partner.partner_detail_list = [];
         await Partner.partner_detail_list.push({ item: data });
+
+        Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id);
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/manufacturer/detail");
       } else {
