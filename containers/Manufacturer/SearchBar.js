@@ -42,7 +42,8 @@ class SearchBarConatiner extends React.Component {
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
     console.log("click");
-    if (Partner.search_text != null) {
+    if (Partner.search_text != "") {
+      console.log("not null");
       ManufactureProcess.saveSearchText(Partner.search_text);
     }
     Partner.currentPage = 1;
@@ -61,7 +62,7 @@ class SearchBarConatiner extends React.Component {
       console.log("Enter");
       console.log(e);
       console.log(toJS(Partner.search_text));
-      if (Partner.search_text != null) {
+      if (Partner.search_text != "") {
         ManufactureProcess.saveSearchText(Partner.search_text);
       }
       Partner.currentPage = 1;
