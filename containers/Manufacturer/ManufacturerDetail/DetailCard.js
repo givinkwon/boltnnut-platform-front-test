@@ -39,20 +39,20 @@ class DetailCardContainer extends React.Component {
 
   componentDidMount = () => {
     const { Partner } = this.props;
-    console.log("csfdffsdfd");
+    // console.log("csfdffsdfd");
     if (Partner.partner_detail_list.length == 0) {
       Router.push("/manufacturer");
     }
   };
 
   componentWillUnmount = () => {
-    console.log("bbbbbbsbsbsb");
+    // console.log("bbbbbbsbsbsb");
     // Router.push("/manufacturer/detail");
   };
   render() {
     const { width, Partner } = this.props;
-    console.log(this.props.Partner.selectedIntroductionFile);
-    console.log(Partner.partner_detail_list);
+    // console.log(this.props.Partner.selectedIntroductionFile);
+    // console.log(Partner.partner_detail_list);
     return (
       <>
         <Card
@@ -131,7 +131,7 @@ class DetailCardContainer extends React.Component {
               )}
             </div>
           </DetailInfoBox>
-          <ReviewBox>
+          {/* <ReviewBox>
             <label>평가 후기</label>
 
             <SummaryBox>
@@ -175,14 +175,17 @@ class DetailCardContainer extends React.Component {
                 console.log(toJS(Partner.partnerReviewList[0].data))}
               {Partner.partnerReviewList &&
                 Partner.partnerReviewList[0].data.map((item, idx) => {
-                  return <ReviewCard data={item} idx={idx} />;
+                  return (
+                    <ReviewCard
+                      data={item}
+                      idx={idx}
+                      totalCount={Partner.partnerReviewList[0].data.length}
+                    />
+                  );
                 })}
+            </content> */}
 
-              {/* <ReviewCard /> */}
-              {/* <ReviewCard /> */}
-            </content>
-
-            {/* {Partner.reviewWritingModalActive && (
+          {/* {Partner.reviewWritingModalActive && (
               <Layer>
                 <span>
                   <Modal
@@ -193,7 +196,7 @@ class DetailCardContainer extends React.Component {
                 </span>
               </Layer>
             )} */}
-          </ReviewBox>
+          {/* </ReviewBox> */}
         </Card>
       </>
     );

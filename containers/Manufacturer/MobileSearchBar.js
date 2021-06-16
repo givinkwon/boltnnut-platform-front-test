@@ -49,10 +49,10 @@ class MobileSearchBarConatiner extends React.Component {
     if (ManufactureProcess.loadingSaveSearchText) {
       ManufactureProcess.saveSearchText(Partner.search_text);
       ManufactureProcess.loadingSaveSearchText = false;
-      setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 5000);
+      setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
     }
     Partner.currentPage = 1;
-    Partner.category_dic = {};
+    Partner.resetDevCategory();
     Partner.getPartner();
   };
   closeModal = () => {
@@ -69,11 +69,11 @@ class MobileSearchBarConatiner extends React.Component {
         ManufactureProcess.loadingSaveSearchText = false;
         setTimeout(
           () => (ManufactureProcess.loadingSaveSearchText = true),
-          5000
+          2000
         );
       }
       Partner.currentPage = 1;
-      Partner.category_dic = {};
+      Partner.resetDevCategory();
       Partner.getPartner();
     }
   };

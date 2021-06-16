@@ -22,8 +22,9 @@ class ReviewCard extends React.Component {
   componentDidMount = async () => {
     console.log("componentDidMount");
 
-    const { Partner, data } = this.props;
+    const { Partner, data, totalCount } = this.props;
     console.log(data);
+    console.log(totalCount);
     if (data) {
       console.log(`client id : ${data.client_id}`);
       // await Partner.getClientInfo(data.client_id);
@@ -53,7 +54,7 @@ class ReviewCard extends React.Component {
   };
 
   render() {
-    const { data, width, Partner, categoryData, idx } = this.props;
+    const { data, width, Partner, categoryData, idx, totalCount } = this.props;
     console.log(data);
     console.log(toJS(Partner.partnerReviewList));
     return (

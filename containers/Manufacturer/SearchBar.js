@@ -39,7 +39,7 @@ class SearchBarConatiner extends React.Component {
 
     //Partner.getPartner();
   };
-  search = () => {
+  search = async () => {
     const { Partner, ManufactureProcess } = this.props;
     // console.log("click");
     if (Partner.search_text != "") {
@@ -48,13 +48,14 @@ class SearchBarConatiner extends React.Component {
         ManufactureProcess.loadingSaveSearchText = false;
         setTimeout(
           () => (ManufactureProcess.loadingSaveSearchText = true),
-          5000
+          2000
         );
       }
     }
     Partner.currentPage = 1;
-    Partner.category_dic = {};
-    Partner.getPartner();
+    await Partner.resetDevCategory();
+    console.log(toJS(Partner.category_dic));
+    await Partner.getPartner();
   };
   closeModal = () => {
     this.setState({
@@ -73,11 +74,11 @@ class SearchBarConatiner extends React.Component {
         ManufactureProcess.loadingSaveSearchText = false;
         setTimeout(
           () => (ManufactureProcess.loadingSaveSearchText = true),
-          5000
+          2000
         );
       }
       Partner.currentPage = 1;
-      Partner.category_dic = {};
+      Partner.resetDevCategory();
       Partner.getPartner();
     }
   };
