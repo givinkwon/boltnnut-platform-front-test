@@ -69,7 +69,8 @@ export default PartnerCard;
 
 const Card = styled.div`
   display: flex;
-  height: 113px;
+  // height: 113px;
+  min-height: 113px;
   width: 100%;
   border-bottom: 1px solid #e1e2e4;
   align-items: center;
@@ -84,7 +85,7 @@ const Logo = styled.div`
   > div {
     width: 65px;
     height: 69px;
-    background-color: #c9c9c9;
+    // background-color: #c9c9c9;
     border-radius: 3px;
     > img {
       width: 65px;
@@ -93,7 +94,8 @@ const Logo = styled.div`
   }
 `;
 const Content = styled.div`
-  flex-grow: 22;
+  // flex-grow: 22;
+  width: 85%;
   display: flex;
   flex-direction: column;
   > name {

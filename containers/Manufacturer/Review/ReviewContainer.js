@@ -3,7 +3,7 @@ import Select from "react-select";
 import styled, { keyframes } from "styled-components";
 import Modal from "./ReviewModal";
 import { inject, observer } from "mobx-react";
-import ReviewCard from "./ReviewCard";
+import ReviewCard from "./PastReviewCard";
 import Router from "next/router";
 
 @inject("Partner", "Auth")

@@ -39,15 +39,23 @@ class SearchBarConatiner extends React.Component {
 
     //Partner.getPartner();
   };
-  search = () => {
+  search = async () => {
     const { Partner, ManufactureProcess } = this.props;
-    console.log("click");
-    if (Partner.search_text != null) {
-      ManufactureProcess.saveSearchText(Partner.search_text);
+    // console.log("click");
+    if (Partner.search_text != "") {
+      if (ManufactureProcess.loadingSaveSearchText) {
+        ManufactureProcess.saveSearchText(Partner.search_text);
+        ManufactureProcess.loadingSaveSearchText = false;
+        setTimeout(
+          () => (ManufactureProcess.loadingSaveSearchText = true),
+          2000
+        );
+      }
     }
     Partner.currentPage = 1;
-    Partner.category_dic = {};
-    Partner.getPartner();
+    await Partner.resetDevCategory();
+    console.log(toJS(Partner.category_dic));
+    await Partner.getPartner();
   };
   closeModal = () => {
     this.setState({
@@ -58,14 +66,19 @@ class SearchBarConatiner extends React.Component {
   handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
-      console.log("Enter");
-      console.log(e);
-      console.log(toJS(Partner.search_text));
-      if (Partner.search_text != null) {
+      // console.log("Enter");
+      // console.log(e);
+      // console.log(toJS(Partner.search_text));
+      if (ManufactureProcess.loadingSaveSearchText) {
         ManufactureProcess.saveSearchText(Partner.search_text);
+        ManufactureProcess.loadingSaveSearchText = false;
+        setTimeout(
+          () => (ManufactureProcess.loadingSaveSearchText = true),
+          2000
+        );
       }
       Partner.currentPage = 1;
-      Partner.category_dic = {};
+      Partner.resetDevCategory();
       Partner.getPartner();
     }
   };

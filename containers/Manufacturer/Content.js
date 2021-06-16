@@ -58,7 +58,7 @@ class ManufacturerContentContainer extends React.Component {
   componentWillUnmount() {
     const { Partner } = this.props;
     console.log("WillUnMount");
-    Partner.category_dic = {};
+    Partner.resetDevCategory();
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
     Partner.filter_city_ary = [{ id: 0, city: "전체" }];
   }
@@ -78,7 +78,7 @@ class ManufacturerContentContainer extends React.Component {
     Partner.currentPage = newPage;
     // Project.getProjectByPrice(Project.search_text, newPage)
     console.log(toJS(this.category_dic));
-    Partner.category_dic = {};
+    Partner.resetDevCategory();
     Partner.ReviewActive = false;
     Partner.ReviewActiveIndex = -1;
     Partner.getPartner(newPage);
@@ -96,7 +96,7 @@ class ManufacturerContentContainer extends React.Component {
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
       // console.log(nextPage);
       console.log(toJS(this.category_dic));
-      Partner.category_dic = {};
+      Partner.resetDevCategory();
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       Partner.getPartner(nextPage);
@@ -111,7 +111,7 @@ class ManufacturerContentContainer extends React.Component {
       const newPage = Partner.currentPage - 1;
       Partner.currentPage = newPage;
       console.log(toJS(this.category_dic));
-      Partner.category_dic = {};
+      Partner.resetDevCategory();
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       Partner.getPartner(newPage);
@@ -184,6 +184,7 @@ class ManufacturerContentContainer extends React.Component {
                     // console.log(item.file);
                     return (
                       <Background style={{ marginBottom: "5px" }}>
+                        {/* {console.log(toJS(Partner.category_dic))} */}
                         <ProposalCard
                           data={item}
                           width={this.props.width}
