@@ -196,12 +196,12 @@ class ReviewPage extends React.Component {
     // console.log(toJS(Partner.reviewPartnerName));
 
     const now = new Date();
-    console.log(now.toLocaleString());
+    console.log(now.toLocaleDateString().replace(/(\s*)/g, ""));
 
     formData.append("client", Auth.logged_in_client.id);
     formData.append("partner", Partner.reviewPartnerId);
     formData.append("projectname", Partner.projectName);
-    formData.append("date", now.toLocaleString());
+    formData.append("date", now.toLocaleDateString().replace(/(\s*)/g, ""));
 
     formData.append("consult_score", Partner.ratingPoint);
 

@@ -5,6 +5,7 @@ import Router from "next/router";
 import Modal from "../Review/ReviewWritingModal";
 import ReviewCard from "../Review/ReviewCard";
 import ReviewStarRating from "../Review/ReviewStarRating";
+import { toJS } from "mobx";
 
 // @ts-ignore
 const FileViewer = dynamic(() => import("react-file-viewer"), {
@@ -171,11 +172,14 @@ class DetailCardContainer extends React.Component {
             </SummaryBox>
             <content>
               {Partner.partnerReviewList &&
-                Partner.partnerReviewList.map((item, idx) => {
-                  return <ReviewCard data={item.data[0]} />;
+                console.log(toJS(Partner.partnerReviewList[0].data))}
+              {Partner.partnerReviewList &&
+                Partner.partnerReviewList[0].data.map((item, idx) => {
+                  return <ReviewCard data={item} idx={idx} />;
                 })}
-              <ReviewCard />
-              <ReviewCard />
+
+              {/* <ReviewCard /> */}
+              {/* <ReviewCard /> */}
             </content>
 
             {/* {Partner.reviewWritingModalActive && (

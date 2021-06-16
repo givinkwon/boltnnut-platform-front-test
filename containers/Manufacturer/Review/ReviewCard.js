@@ -25,8 +25,11 @@ class ReviewCard extends React.Component {
     const { Partner, data } = this.props;
     console.log(data);
     if (data) {
-      await Partner.getClientInfo(data.client_id);
-      console.log(Partner.clientInfo.user);
+      console.log(`client id : ${data.client_id}`);
+      // await Partner.getClientInfo(data.client_id);
+      await Partner.getClientNameById(data.client_id);
+
+      console.log(Partner.clientInfoList);
       // Partner.clientInfo.name
       // Partner.clientInfo.user.username
     }
@@ -43,6 +46,7 @@ class ReviewCard extends React.Component {
   componentWillUnmount = () => {
     const { Partner } = this.props;
     Partner.clientInfo = [];
+    Partner.clientInfoList = [];
     // Partner.review_ary = [];
     // Partner.loadReviewData = 0;
     // Partner.review_user_ary = [];
@@ -51,12 +55,18 @@ class ReviewCard extends React.Component {
   render() {
     const { data, width, Partner, categoryData, idx } = this.props;
     console.log(data);
-
+    console.log(toJS(Partner.partnerReviewList));
     return (
       <>
         <Card>
-          {Partner.clientInfo.user ? (
+          {/* {Partner.clientInfo.user ? (
             <name>{Partner.clientInfo.user.username}</name>
+          ) : (
+            <name>***</name>
+          )} */}
+
+          {Partner.clientInfoList[idx] ? (
+            <name>{Partner.clientInfoList[idx].user.username}</name>
           ) : (
             <name>***</name>
           )}
@@ -65,12 +75,11 @@ class ReviewCard extends React.Component {
             <span>
               <ReviewStarRating width={15} margin={1} />
             </span>
+            <date>{data.date}</date>
             {/* <span>{`   ${item.score}`}</span> */}
           </score>
           <history>믹서기</history>
-          <content>
-            아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아
-          </content>
+          <content>{data.content}</content>
 
           {/* {Partner.review_user_ary && (
                 <name>{Partner.review_user_ary[idx]}</name>
@@ -112,9 +121,17 @@ const Card = styled.div`
     margin-bottom: 5px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     font-weight: 600;
     > span:nth-of-type(1) {
       margin-right: 7px;
+    }
+    > date {
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #a4aab4;
+      font-weight: 500;
     }
   }
   > name {

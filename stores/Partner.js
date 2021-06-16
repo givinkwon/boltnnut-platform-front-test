@@ -238,6 +238,8 @@ class Partner {
   @observable partnerPage = 0;
   @observable reviewCurrentPage = 1;
 
+  @observable clientInfoList = [];
+
   @action resetReviewAry = () => {
     this.reviewKindnessIndex = 3;
     this.reviewCommunicationIndex = 3;
@@ -1746,6 +1748,17 @@ class Partner {
   //   console.log(e.response);
   // });
   // }
+
+  @action getClientNameById = async (id) => {
+    console.log(id);
+    const req = {
+      params: null,
+    };
+    await PartnerAPI.getClient(id, req).then(async (res) => {
+      this.clientInfoList = await this.clientInfoList.concat(res.data);
+      console.log(this.clientInfoList);
+    });
+  };
 }
 
 export default new Partner();
