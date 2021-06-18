@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 // export const ROOT_URL = `https://api.boltnnut.com`;
 export const ROOT_URL = `http://52.78.182.54:8081`;
-=======
-export const ROOT_URL = `https://api.boltnnut.com`;
-// export const ROOT_URL = `http://52.78.182.54:8081`;
-// export const ROOT_URL = `http://52.78.182.54:8080`;
-
-// export const ROOT_URL = `http://52.78.91.230:8080`;
->>>>>>> bb5ec8c1463736aafe1b3de162f42ab4ceb428d5
 // export const ROOT_URL = `http://52.79.230.30:8080`;
 // export const ROOT_URL = `https://api.k-jangin.com`;
 
