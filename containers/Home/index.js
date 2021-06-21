@@ -50,6 +50,8 @@ import Banner12Container from "./Banner12";
 import MobileBanner12Container from "./Mobile/MobileBanner12";
 import TabletBanner12Container from "./Tablet/TabletBanner12";
 
+import axios from "axios";
+
 @inject("Home")
 @observer
 class HomeConatiner extends React.Component {
@@ -71,6 +73,26 @@ class HomeConatiner extends React.Component {
   };
   render() {
     const { width, reqList } = this.props;
+
+    function test() {
+      console.log("R");
+      return axios({
+        method: "POST",
+        url: `https://analyticsreporting.googleapis.com/v4/userActivity:search`,
+        data: {
+          viewId: "0214568260",
+          user: {
+            type:
+              "392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com",
+            userId: "463218669.1623114407",
+          },
+          dateRange: {
+            startDate: "2021-06-07",
+            endDate: "2021-06-14",
+          },
+        },
+      });
+    }
 
     return (
       <>
@@ -116,16 +138,23 @@ class HomeConatiner extends React.Component {
         ) : (
           <>
             <div style={{ overflow: "hidden" }}>
+              {/* <div
+                style={{ width: 300, height: 300, background: "green" }}
+                onClick={() => {
+                  // authorize();
+                  test()
+                    .then((res) => console.log(res))
+                    .catch((e) => console.log(e));
+                }}
+              ></div> */}
+              {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
               <Banner0Container />
               {/* <Banner10Container/> */}
-
               <Banner2Container />
               <Banner11Container />
               <Banner1Conatiner />
               <Banner3Container />
-
               <Banner12Container />
-
               {/* <Banner4Container />
               <Banner6Container />
               <Banner7Container /> */}

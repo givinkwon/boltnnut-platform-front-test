@@ -109,10 +109,12 @@ class RequestModal extends React.Component {
 
   componentDidMount = () => {
     const { Partner } = this.props;
-    console.log("Model mount");
+    // console.log("Model mount");
 
-    console.log(Partner.partner_count);
-    console.log(toJS(Partner.category_dic));
+    // console.log(Partner.partner_count);
+    // console.log(toJS(Partner.category_dic));
+    console.log(toJS(Partner.input_big_category));
+    console.log(toJS(Partner.input_detail_big_category));
 
     Partner.filterList = [];
     Partner.filter_category = 0;
@@ -120,9 +122,9 @@ class RequestModal extends React.Component {
   componentWillUnmount = async () => {
     console.log("Modal unmount");
     const { Partner } = this.props;
-    await Partner.filterArray.map((data, idx) => {
-      data.checked = false;
-    });
+    // await Partner.filterArray.map((data, idx) => {
+    //   data.checked = false;
+    // });
 
     Partner.input_detail_big_category = null;
     Partner.input_detail_small_category = null;

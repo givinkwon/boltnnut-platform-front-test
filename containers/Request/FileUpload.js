@@ -19,6 +19,7 @@ import Calendar from "./Calendar2";
 import Magazine from "../../stores/Magazine";
 import { toJS } from "mobx";
 import Router from "next/router";
+import Modal from "LoadingModal";
 
 import * as RequestAPI from "axios/Request";
 
@@ -105,7 +106,14 @@ class FileUploadContainer extends Component {
     projectname: "",
   };
 
+  closeModal = () => {
+    const { ManufactureProcess } = this.props;
+    ManufactureProcess.loadingEstimate = false;
+  };
+
   componentDidMount = () => {
+    const { ManufactureProcess } = this.props;
+    ManufactureProcess.loadingEstimate = false;
     this.props.ManufactureProcess.reset();
     fileList = [];
   };
@@ -995,7 +1003,6 @@ class FileUploadContainer extends Component {
               if (loadingCounter === stl_count) {
                 this.setState({ loading: false });
               }
-
               this.countPrice();
             })
             .catch((e) => {
@@ -1320,6 +1327,11 @@ class FileUploadContainer extends Component {
                                 getOptionLabel={(option) => option.name}
                                 onChange={(e) => {
                                   ManufactureProcess.setBigCategory(e);
+                                  if (e.name == "절삭가공") {
+                                    ManufactureProcess.loadingEstimate = true;
+                                  }
+                                  console.log(e);
+                                  console.log(e.detail);
                                   this.loadFileResopnse(idx);
 
                                   data.selectBig = e;
@@ -2248,6 +2260,18 @@ class FileUploadContainer extends Component {
             </div>
           </Button>
         </Container>
+
+        {ManufactureProcess.loadingEstimate && (
+          <Layer>
+            <span>
+              <Modal
+                width={this.props.width}
+                open={ManufactureProcess.loadingEstimate}
+                close={this.closeModal}
+              />
+            </span>
+          </Layer>
+        )}
       </>
     );
   }
@@ -3219,4 +3243,22 @@ const Font20 = styled(Title.FontSize20)`
   color: #0933b3;
   text-align: right;
   font-weight: normal;
+`;
+
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  // opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 `;

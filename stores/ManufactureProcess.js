@@ -15,6 +15,7 @@ class ManufactureProcess {
   constructor() {
     //makeObservable(this);
   }
+  @observable loadingEstimate = false;
   @observable title_list = [];
   @observable SelectChecked = "";
   @observable SelectedItem = null;
@@ -68,6 +69,8 @@ class ManufactureProcess {
 
   @observable projectSubmitLoading = true;
   @observable nonDrawingProjectSubmitLoading = true;
+
+  @observable loadingSaveSearchText = true;
 
   @action countQuantity = (data) => {
     data.map((item, idx) => {

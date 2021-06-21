@@ -374,3 +374,29 @@ export function getCityName(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function getPartnerName(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partner/find-partner-name/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function setPartnerReview(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/partner-review/`,
+    data: req.data ? req.data : null,
+  });
+}
+
+export function getReviewByPartner(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partner-review/partner_filter/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}

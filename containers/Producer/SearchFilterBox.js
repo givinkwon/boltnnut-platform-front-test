@@ -178,9 +178,9 @@ class SearchFilterConatiner extends React.Component {
               <SearchBar />
               <div
                 onClick={() => {
-                  Partner.filterArray.map((data, idx) => {
-                    data.checked = false;
-                  });
+                  // Partner.filterArray.map((data, idx) => {
+                  //   data.checked = false;
+                  // });
                   this.openModal();
                 }}
               >

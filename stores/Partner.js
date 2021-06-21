@@ -107,7 +107,9 @@ class Partner {
   @observable requestDoneModalActive = false;
   @observable ReviewActive = false;
   @observable reviewModalActive = false;
-  @observable ReviewActiveIndex = -1;
+  @observable ReviewActiveIndex = 1;
+  @observable reviewWritingModalActive = true;
+
   @observable modalUserPhone = "";
   @observable filterFile = false;
 
@@ -147,7 +149,7 @@ class Partner {
   ];
 
   @observable partnerName = "";
-  @observable reviewPartnerName = 0;
+  // @observable reviewPartnerName = 0;
   @observable reviewScore = "";
   @observable reviewContent = "";
   @observable review_ary = [];
@@ -193,6 +195,56 @@ class Partner {
 
   @observable clientInfo = [];
 
+  // 파트너 리뷰 페이지
+  @observable reviewActiveIndex = 0;
+  @observable searchProjectModalActive = false;
+  @observable projectName = "";
+  @observable partnersName = "";
+  @observable reviewPartnerName = "";
+  @observable reviewPartnerId = "";
+  @observable partnersList = [];
+  @observable partnerExist = true;
+  @observable newPartner = 0; // 가입되어 있는 제조사 : 0, 가입되어 있지 않은 제조사 : 1
+  @observable partnerReviewList = [];
+
+  @observable searchPartnerModalActive = false;
+  @observable reviewKindnessAry = [
+    { score: 1, content: "불친절해요", checked: false },
+    { score: 2, content: "보통이에요", checked: false },
+    { score: 3, content: "친절해요", checked: true },
+  ];
+
+  @observable reviewKindnessIndex = 3;
+
+  @observable reviewCommunicationAry = [
+    { score: 1, content: "불편했어요", checked: false },
+    { score: 2, content: "보통이에요", checked: false },
+    { score: 3, content: "원활했어요", checked: true },
+  ];
+
+  @observable reviewCommunicationIndex = 3;
+
+  @observable reviewProfessionAry = [
+    { score: 1, content: "서툴러요", checked: false },
+    { score: 2, content: "보통이에요", checked: false },
+    { score: 3, content: "전문적이에요", checked: true },
+  ];
+  @observable reviewProfessionIndex = 3;
+  @observable ratingPoint = 0;
+  @observable reviewSearchStep = 1;
+
+  @observable partnerReviewNext = null;
+  @observable partnerReviewCount = 0;
+  @observable partnerPage = 0;
+  @observable reviewCurrentPage = 1;
+
+  @observable clientInfoList = [];
+
+  @action resetReviewAry = () => {
+    this.reviewKindnessIndex = 3;
+    this.reviewCommunicationIndex = 3;
+    this.reviewProfessionIndex = 3;
+  };
   @action resetDevCategory = () => {
     this.category_dic = {
       0: [],
@@ -206,6 +258,23 @@ class Partner {
       8: [],
       9: [],
     };
+  };
+
+  @action resetReviewData = () => {
+    this.reviewPartnerId = "";
+    this.projectName = "";
+
+    this.ratingPoint = 0;
+
+    this.reviewKindnessIndex = 3;
+    this.reviewCommunicationIndex = 3;
+    this.reviewProfessionIndex = 3;
+
+    this.reviewContent = "";
+    this.newPartner = 0;
+    this.reviewPartnerName = "";
+
+    this.reviewSearchStep = 1;
   };
 
   @action setProcessFilter = (val) => {
@@ -231,21 +300,26 @@ class Partner {
       (item) => item.maincategory === val.id
     );
 
-    console.log(toJS(this.category_middle_ary));
-    console.log(toJS(this.category_middle_total_ary));
-    console.log(
-      toJS(
-        this.category_middle_total_ary.filter(
-          (item) => item.maincategory === val.id
-        )
-      )
-    );
+    // console.log(toJS(this.category_middle_ary));
+    // console.log(toJS(this.category_middle_total_ary));
+    // console.log(
+    //   toJS(
+    //     this.category_middle_total_ary.filter(
+    //       (item) => item.maincategory === val.id
+    //     )
+    //   )
+    // );
+
     this.input_small_category = this.category_middle_ary[0];
-    console.log(this.input_small_category);
+
+    // this.input_detail_big_category = val;
+    // this.input_detail_small_category = this.category_middle_ary[0];
+    // console.log(this.input_small_category);
   };
 
   @action setSmallCategory = (val) => {
     this.input_small_category = val;
+    // this.input_detail_small_category = val;
   };
 
   @action setDetailBigCategory = async (val) => {
@@ -1594,6 +1668,96 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+  };
+
+  @action getPartnerName = async (name, page = 1) => {
+    console.log("333");
+    this.partnersList = [];
+    const req = {
+      params: {
+        request_name: name,
+        page: page,
+      },
+    };
+    await PartnerAPI.getPartnerName(req)
+      .then(async (res) => {
+        this.partnersList = [];
+        console.log("create: ", res);
+        this.partnerExist = true;
+        this.partnersList = await this.partnersList.concat(res.data.current);
+        this.partnerReviewNext = res.data.next;
+        this.partnerReviewCount = res.data.count;
+        this.partnerPage = parseInt((this.partnerReviewCount - 1) / 10) + 1;
+      })
+      .catch((e) => {
+        this.partnersList = [];
+        this.partnerReviewNext = null;
+        this.partnerReviewCount = 0;
+        this.partnerPage = 0;
+        this.partnerExist = false;
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action setPartnerReview = async (formData) => {
+    const req = {
+      data: formData,
+    };
+
+    PartnerAPI.setPartnerReview(req)
+      .then((res) => {
+        console.log("create!!", res);
+        this.resetReviewData();
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action getReviewByPartner = async (id) => {
+    console.log(id);
+    this.partnerReviewList = [];
+    const req = {
+      params: {
+        partner_id: id,
+      },
+    };
+
+    await PartnerAPI.getReviewByPartner(req)
+      .then(async (res) => {
+        this.partnerReviewList = await this.partnerReviewList.concat(res.data);
+        console.log(this.partnerReviewList);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  // @action getClientById = (id) => {
+  //   const
+  //   PartnerAPI.getClient(request.client, req)
+  // .then((res) => {
+  //   this.clients.push(res.data);
+  //   console.log(res.data);
+  // })
+  // .catch((e) => {
+  //   console.log(e);
+  //   console.log(e.response);
+  // });
+  // }
+
+  @action getClientNameById = async (id) => {
+    console.log(id);
+    const req = {
+      params: null,
+    };
+    await PartnerAPI.getClient(id, req).then(async (res) => {
+      this.clientInfoList = await this.clientInfoList.concat(res.data);
+      console.log(this.clientInfoList);
+    });
   };
 }
 

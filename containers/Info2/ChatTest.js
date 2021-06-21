@@ -302,6 +302,25 @@ class ChatTestContainer extends React.Component {
               console.log(e);
               console.log(e.response);
             });
+
+          const jandiReq = {
+            // headers
+            headers: {
+              Accept: "application/vnd.tosslab.jandi-v2+json",
+              "Content-Type": "application/json",
+            },
+            // params
+            params: {
+              body: `[볼트앤너트] ${req.name}(으)로부터 <${this.props.Project.projectDetailData.request_set[0].name}>에 대한 채팅이 도착하였습니다.\n채팅 내용: '${req.text}'`,
+            },
+          };
+
+          ChatAPI.sendJandi(jandiReq)
+            .then((res) => console.log(res))
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
         }
       }, 5000);
     }
@@ -366,6 +385,7 @@ class ChatTestContainer extends React.Component {
           console.log(res.data);
           //콘솔 그룹
           const Color = "skyBlue";
+
           clientPhone = Partner.clientInfo.user.phone;
           console.group("%c 채팅창 정보", `color:${Color}; font-size:30px`);
           console.log(
