@@ -28,8 +28,11 @@ class Index extends React.Component {
     this.props.Auth.bgColor = "#f6f6f6";
 
     console.log(window.location.href);
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
     const req = {
-      data: window.location.href,
+      data: formData,
     };
 
     AccountAPI.setUserIP(req)
