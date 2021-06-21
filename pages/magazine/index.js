@@ -7,6 +7,8 @@ import Footer from "components/Footer";
 
 import MagazineConatiner from "containers/Magazine";
 import { inject, observer } from "mobx-react";
+import * as AccountAPI from "axios/Account";
+
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
 @inject("Magazine", "Auth")
@@ -23,7 +25,24 @@ class Index extends React.Component {
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
     console.log(this.state.width);
-  }
+    // page ip 기록
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href)
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+}
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
   }

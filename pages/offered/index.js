@@ -8,6 +8,7 @@ import Nav from "components/Nav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 import Router from "next/router";
+import * as AccountAPI from "axios/Account";
 
 @inject("Loading", "Offered", "Answer", "Auth")
 @observer
@@ -36,6 +37,23 @@ class Offered extends React.Component {
         console.log("파트너가 제안한 목록 로딩 끝");
       });
     }
+    // page ip 기록
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href)
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   }
   render() {
     const { Answer, Loading } = this.props;

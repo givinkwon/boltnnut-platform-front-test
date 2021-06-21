@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 
+import * as AccountAPI from "axios/Account";
 
 class App extends Component {
     constructor(props) {
@@ -23,6 +24,23 @@ class App extends Component {
             var roomName = document.querySelector('#room-name-input').value;
             window.location.pathname = '/chat/' + roomName + '/';
         };
+        // page ip 기록
+        const formData = new FormData();
+
+        formData.append("url", window.location.href);
+        console.log(window.location.href)
+        const req = {
+        data: formData,
+        };
+    
+        AccountAPI.setUserPageIP(req)
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((e) => {
+            console.log(e);
+            console.log(e.response);
+        });
         }
 
     render() {

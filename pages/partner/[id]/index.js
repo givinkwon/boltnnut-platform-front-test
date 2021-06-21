@@ -8,6 +8,7 @@ import * as PartnerAPI from 'axios/Partner'
 // components
 import Nav from 'components/Nav'
 import Footer from 'components/Footer'
+import * as AccountAPI from "axios/Account";
 
 import PartnerDetailConatiner from 'containers/Partner/Detail'
 
@@ -31,6 +32,24 @@ class PartnerDetail extends React.Component {
       console.log(e)
       console.log(e.reponse)
     })
+    // page ip 기록
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href)
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    
   }
   render() {
     const { id } = this.props.router.query

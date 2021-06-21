@@ -8,6 +8,7 @@ import Footer from "components/Footer";
 import { inject, observer } from "mobx-react";
 
 import ProjectDetailContainer from "../../../containers/Project/Client/ProjectDetail/ProjectDetail";
+import * as AccountAPI from "axios/Account";
 
 @inject("Project")
 @observer
@@ -20,6 +21,24 @@ class Index extends React.Component {
     const { Project, query } = this.props;
     console.log(query);
     Project.getProjectDetail(query.id);
+    // page ip 기록
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href)
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
   }
 
   render() {

@@ -7,6 +7,7 @@ import Footer from 'components/Footer'
 
 import MagazineDetailConatiner from 'containers/Magazine/Detail'
 import {inject, observer} from "mobx-react";
+import * as AccountAPI from "axios/Account";
 
 @inject('Magazine')
 @observer
@@ -18,6 +19,23 @@ class Index extends React.Component {
   componentDidMount() {
     const {Magazine, query} = this.props;
     Magazine.getMagazineDetail(query.id);
+    // page ip 기록
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href)
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   }
 
   render(){

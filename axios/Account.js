@@ -92,3 +92,11 @@ export function setUserIP(req) {
     data: req.data,
   });
 }
+
+export function setUserPageIP(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/pageaccesslog/`,
+    data: req.data,
+  });
+}
