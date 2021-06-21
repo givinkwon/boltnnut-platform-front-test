@@ -15,6 +15,8 @@ import PrepareModal from "../containers/Home/PrepareModal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import * as AccountAPI from "axios/Account";
+
 // import { configure } from "mobx";
 // configure({
 //   useProxies: "never",

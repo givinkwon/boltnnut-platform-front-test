@@ -15,7 +15,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
 
-import * as AccountAPI from "axios/Account";
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 

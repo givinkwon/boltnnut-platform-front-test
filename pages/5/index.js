@@ -11,7 +11,6 @@ import { inject, observer } from "mobx-react";
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
-import * as AccountAPI from "axios/Account";
 
 @inject("Auth", "Home")
 @observer
