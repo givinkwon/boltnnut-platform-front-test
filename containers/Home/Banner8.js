@@ -3,9 +3,9 @@ import styled from "styled-components";
 import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
-import Slider from "react-slick"
-import UseScrollCount from "./UseScrollCount"
-import Fade from "react-reveal/Fade"
+import Slider from "react-slick";
+import UseScrollCount from "./UseScrollCount";
+import Fade from "react-reveal/Fade";
 
 //Page 1
 const image1 = "/static/images/logo/logo_1.png";
@@ -96,348 +96,353 @@ const image82 = "/static/images/logo/logo_82.png";
 const image83 = "/static/images/logo/logo_83.png";
 const image84 = "/static/images/logo/logo_84.png";
 
-const item1="/static/images/Home/Banner8/Banner8_img1.png";
+const item1 = "/static/images/Home/Banner8/Banner8_img1.png";
 
-const CountFunc = ({index}) =>
-{
-    const countItem = {
-        0: UseScrollCount(878*3,0,0,0,3)
-    };
+const CountFunc = ({ index }) => {
+  const countItem = {
+    0: UseScrollCount(878 * 3, 0, 0, 0, 3),
+  };
 
-    return (
-      <p {...countItem[index]}/>
-    );
+  return <p {...countItem[index]} />;
 };
 
 class Banner8Container extends React.Component {
-    render() {
-        const SlideSettings = {
-            dots: true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 7,
-            slidesToScroll: 7,
-            draggable:true,
-            autoplay: true,
-            autoplaySpeed: 3000,
-        };
-        return (
-          <Background>
-              <Containerv1 style={{paddingBottom: 141, paddingTop: 140, justifyContent: 'space-between',flexDirection:'column'}}>
-                  <Fade bottom>
-                      <Header>
-                          이미 <CountFunc index={0}/><p>명</p>이 넘는 클라이언트분들이<br/>
-                          볼트앤너트를 이용하셨습니다.
-                      </Header>
-                      <ItemBox>
-                          <Slider {...SlideSettings}>
-                              {/* Page1 */}
-                              <Col>
-                                  <Item>
-                                      <img src={image1}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image2}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image3}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image4}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image5}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image6}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image7}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image8}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image9}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image10}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image11}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image12}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image13}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image14}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image15}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image16}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image17}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image18}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image19}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image20}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image21}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image22}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image23}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image24}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image25}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image26}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image27}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image28}/>
-                                  </Item>
-                              </Col>
+  render() {
+    const SlideSettings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 7,
+      slidesToScroll: 7,
+      draggable: true,
+      autoplay: true,
+      autoplaySpeed: 3000,
+    };
+    return (
+      <Background>
+        <Containerv1
+          style={{
+            paddingBottom: 141,
+            paddingTop: 140,
+            justifyContent: "space-between",
+            flexDirection: "column",
+          }}
+        >
+          <Fade bottom>
+            <Header>
+              이미 <CountFunc index={0} />
+              <p>명</p>이 넘는 클라이언트분들이
+              <br />
+              볼트앤너트를 이용하셨습니다.
+            </Header>
+            <ItemBox>
+              <Slider {...SlideSettings}>
+                {/* Page1 */}
+                <Col>
+                  <Item>
+                    <img src={image1} />
+                  </Item>
+                  <Item>
+                    <img src={image2} />
+                  </Item>
+                  <Item>
+                    <img src={image3} />
+                  </Item>
+                  <Item>
+                    <img src={image4} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image5} />
+                  </Item>
+                  <Item>
+                    <img src={image6} />
+                  </Item>
+                  <Item>
+                    <img src={image7} />
+                  </Item>
+                  <Item>
+                    <img src={image8} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image9} />
+                  </Item>
+                  <Item>
+                    <img src={image10} />
+                  </Item>
+                  <Item>
+                    <img src={image11} />
+                  </Item>
+                  <Item>
+                    <img src={image12} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image13} />
+                  </Item>
+                  <Item>
+                    <img src={image14} />
+                  </Item>
+                  <Item>
+                    <img src={image15} />
+                  </Item>
+                  <Item>
+                    <img src={image16} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image17} />
+                  </Item>
+                  <Item>
+                    <img src={image18} />
+                  </Item>
+                  <Item>
+                    <img src={image19} />
+                  </Item>
+                  <Item>
+                    <img src={image20} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image21} />
+                  </Item>
+                  <Item>
+                    <img src={image22} />
+                  </Item>
+                  <Item>
+                    <img src={image23} />
+                  </Item>
+                  <Item>
+                    <img src={image24} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image25} />
+                  </Item>
+                  <Item>
+                    <img src={image26} />
+                  </Item>
+                  <Item>
+                    <img src={image27} />
+                  </Item>
+                  <Item>
+                    <img src={image28} />
+                  </Item>
+                </Col>
 
-                              {/* Page2 */}
-                              <Col>
-                                  <Item>
-                                      <img src={image29}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image30}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image31}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image32}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image33}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image34}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image35}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image36}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image37}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image38}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image39}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image40}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image41}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image42}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image43}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image44}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image45}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image46}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image47}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image48}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image49}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image50}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image51}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image52}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image53}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image54}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image55}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image56}/>
-                                  </Item>
-                              </Col>
+                {/* Page2 */}
+                <Col>
+                  <Item>
+                    <img src={image29} />
+                  </Item>
+                  <Item>
+                    <img src={image30} />
+                  </Item>
+                  <Item>
+                    <img src={image31} />
+                  </Item>
+                  <Item>
+                    <img src={image32} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image33} />
+                  </Item>
+                  <Item>
+                    <img src={image34} />
+                  </Item>
+                  <Item>
+                    <img src={image35} />
+                  </Item>
+                  <Item>
+                    <img src={image36} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image37} />
+                  </Item>
+                  <Item>
+                    <img src={image38} />
+                  </Item>
+                  <Item>
+                    <img src={image39} />
+                  </Item>
+                  <Item>
+                    <img src={image40} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image41} />
+                  </Item>
+                  <Item>
+                    <img src={image42} />
+                  </Item>
+                  <Item>
+                    <img src={image43} />
+                  </Item>
+                  <Item>
+                    <img src={image44} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image45} />
+                  </Item>
+                  <Item>
+                    <img src={image46} />
+                  </Item>
+                  <Item>
+                    <img src={image47} />
+                  </Item>
+                  <Item>
+                    <img src={image48} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image49} />
+                  </Item>
+                  <Item>
+                    <img src={image50} />
+                  </Item>
+                  <Item>
+                    <img src={image51} />
+                  </Item>
+                  <Item>
+                    <img src={image52} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image53} />
+                  </Item>
+                  <Item>
+                    <img src={image54} />
+                  </Item>
+                  <Item>
+                    <img src={image55} />
+                  </Item>
+                  <Item>
+                    <img src={image56} />
+                  </Item>
+                </Col>
 
-                              {/* Page3 */}
-                              <Col>
-                                  <Item>
-                                      <img src={image57}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image58}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image59}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image60}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image61}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image62}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image63}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image64}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image65}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image66}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image67}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image68}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image69}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image70}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image71}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image72}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image73}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image74}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image75}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image76}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image77}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image78}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image79}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image80}/>
-                                  </Item>
-                              </Col>
-                              <Col>
-                                  <Item>
-                                      <img src={image81}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image82}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image83}/>
-                                  </Item>
-                                  <Item>
-                                      <img src={image84}/>
-                                  </Item>
-                              </Col>
-                          </Slider>
-                      </ItemBox>
-                  </Fade>
-
-              </Containerv1>
-          </Background>
-        );
-    }
+                {/* Page3 */}
+                <Col>
+                  <Item>
+                    <img src={image57} />
+                  </Item>
+                  <Item>
+                    <img src={image58} />
+                  </Item>
+                  <Item>
+                    <img src={image59} />
+                  </Item>
+                  <Item>
+                    <img src={image60} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image61} />
+                  </Item>
+                  <Item>
+                    <img src={image62} />
+                  </Item>
+                  <Item>
+                    <img src={image63} />
+                  </Item>
+                  <Item>
+                    <img src={image64} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image65} />
+                  </Item>
+                  <Item>
+                    <img src={image66} />
+                  </Item>
+                  <Item>
+                    <img src={image67} />
+                  </Item>
+                  <Item>
+                    <img src={image68} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image69} />
+                  </Item>
+                  <Item>
+                    <img src={image70} />
+                  </Item>
+                  <Item>
+                    <img src={image71} />
+                  </Item>
+                  <Item>
+                    <img src={image72} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image73} />
+                  </Item>
+                  <Item>
+                    <img src={image74} />
+                  </Item>
+                  <Item>
+                    <img src={image75} />
+                  </Item>
+                  <Item>
+                    <img src={image76} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image77} />
+                  </Item>
+                  <Item>
+                    <img src={image78} />
+                  </Item>
+                  <Item>
+                    <img src={image79} />
+                  </Item>
+                  <Item>
+                    <img src={image80} />
+                  </Item>
+                </Col>
+                <Col>
+                  <Item>
+                    <img src={image81} />
+                  </Item>
+                  <Item>
+                    <img src={image82} />
+                  </Item>
+                  <Item>
+                    <img src={image83} />
+                  </Item>
+                  <Item>
+                    <img src={image84} />
+                  </Item>
+                </Col>
+              </Slider>
+            </ItemBox>
+          </Fade>
+        </Containerv1>
+      </Background>
+    );
+  }
 }
 
 export default Banner8Container;
@@ -449,24 +454,24 @@ const Header = styled(Title.FontSize32)`
   font-style: normal;
   line-height: 1.38;
   letter-spacing: -0.8px;
-  text-align:center;
-  margin:0 auto;
-  >p {
-    display:inline;
-    font-weight:bold;
+  text-align: center;
+  margin: 0 auto;
+  > p {
+    display: inline;
+    font-weight: bold;
   }
-`
+`;
 
 const ItemBox = styled.div`
-  padding-top:80px;
-  justify-content:center;
+  padding-top: 80px;
+  justify-content: center;
   // display: flex;
 
   // flex-wrap: wrap;
-  >Slider{
-    display:inline-flex;
+  > Slider {
+    display: inline-flex;
   }
-`
+`;
 
 const Item = styled.div`
   // display: flex;
@@ -475,25 +480,25 @@ const Item = styled.div`
   // width: calc(14% - 40px);
   padding: 20px 0;
   margin: 0 20px;
-  
-  >img{
-    width:100%;
+
+  > img {
+    width: 100%;
     // display: inline-block;
     // position: relative;
     border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
   }
-`
+`;
 
-const ImgBox=styled.div`
-    :focus {
-        outline: none;
-    }
-`
-
-const Col=styled.div`
+const ImgBox = styled.div`
   :focus {
     outline: none;
   }
-`
+`;
+
+const Col = styled.div`
+  :focus {
+    outline: none;
+  }
+`;

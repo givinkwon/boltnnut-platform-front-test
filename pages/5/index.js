@@ -11,6 +11,8 @@ import { inject, observer } from "mobx-react";
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
+import * as AccountAPI from "axios/Account";
+
 @inject("Auth", "Home")
 @observer
 class Index extends React.Component {
@@ -24,6 +26,21 @@ class Index extends React.Component {
     // conflict..?
     this.props.Auth.home_index = 1;
     this.props.Auth.bgColor = "#f6f6f6";
+
+    console.log(window.location.href);
+    const req = {
+      data: window.location.href,
+    };
+
+    AccountAPI.setUserIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
     console.log(this.state.width);
