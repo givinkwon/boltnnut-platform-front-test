@@ -8,9 +8,9 @@ const star = "/static/icon/star_blue3.svg";
 
 class ReviewStarRating extends React.Component {
   render() {
-    const { width, margin } = this.props;
+    const { width, margin, score } = this.props;
     return stars.map((data, id) => {
-      if (id < 4) {
+      if (id < score) {
         return (
           <img
             src={star}

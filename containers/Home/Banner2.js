@@ -22,16 +22,17 @@ class Banner4Container extends React.Component {
             <div style={{ marginRight: "126px" }}>
               <img src={image1} style={{ height: "100%" }} />
             </div>
-            <div>
-              <Header>무료 생산 상담</Header>
+            <div style={{ width: "100%" }}>
+              <Header>제조사 정보 제공 서비스</Header>
               <Middle>
-                <span>내가 설계한 부품장비</span>
-                <span>생산에 문제가 없을까?</span>
+                <span>포트폴리오부터 계약 후기까지!</span>
+                <span>5000개의 전국 제조사 정보 제공</span>
               </Middle>
               <Body>
-                생산에 대한 모든 문의사항을 4000여 개
-                <br />
-                전문 제조사들이 바로 상담해드립니다.
+                <span>남동공단부터 창원까지</span>
+
+                <span>선별된 5000여 개 제조사 정보를</span>
+                <span> 지금 바로 확인하세요.</span>
               </Body>
             </div>
           </Fade>
@@ -51,8 +52,10 @@ const Header = styled(Title.FontSize20)`
   line-height: 1.45;
   letter-spacing: normal;
   margin-bottom: 16px;
+  font-size: 17px !important;
 `;
 const Middle = styled(Title.FontSize56)`
+  font-size: 32px !important;
   color: #282c36;
   font-weight: 500;
   font-stretch: normal;
@@ -63,17 +66,19 @@ const Middle = styled(Title.FontSize56)`
   width: 105%;
 
   > span {
-    display: inline;
+    display: block;
     font-weight: bold;
   }
 `;
 const Body = styled(Title.FontSize24)`
-  white-space: nowrap;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67;
   letter-spacing: -0.6px;
-  text-align: left;
+  //color: #cedafe;
   color: #282c36;
+  > span {
+    display: block;
+  }
 `;

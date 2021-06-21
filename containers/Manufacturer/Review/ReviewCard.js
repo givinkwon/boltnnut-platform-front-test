@@ -22,14 +22,15 @@ class ReviewCard extends React.Component {
   componentDidMount = async () => {
     console.log("componentDidMount");
 
-    const { Partner, data, totalCount } = this.props;
+    const { Partner, data, totalCount, idx } = this.props;
     console.log(data);
     console.log(totalCount);
     if (data) {
-      console.log(`client id : ${data.client_id}`);
+      console.log(`client id : ${data.client_id}, idx : ${idx}`);
       // await Partner.getClientInfo(data.client_id);
-      await Partner.getClientNameById(data.client_id);
+      await Partner.getClientNameById(data.client_id, idx);
 
+      // console.log(Partner.clientInfo);
       console.log(Partner.clientInfoList);
       // Partner.clientInfo.name
       // Partner.clientInfo.user.username
@@ -55,8 +56,9 @@ class ReviewCard extends React.Component {
 
   render() {
     const { data, width, Partner, categoryData, idx, totalCount } = this.props;
-    console.log(data);
-    console.log(toJS(Partner.partnerReviewList));
+    // console.log(data);
+    // console.log(toJS(Partner.partnerReviewList));
+    console.log(toJS(Partner.clientInfoList));
     return (
       <>
         <Card>
@@ -72,14 +74,24 @@ class ReviewCard extends React.Component {
             <name>***</name>
           )}
 
+          {/* {Partner.clientInfoList[data.client_id] ? (
+            <name>{Partner.clientInfoList[data.client_id].user.username}</name>
+          ) : (
+            <name>***</name>
+          )} */}
+
           <score>
             <span>
-              <ReviewStarRating width={15} margin={1} />
+              <ReviewStarRating
+                width={15}
+                margin={1}
+                score={data.consult_score}
+              />
             </span>
             <date>{data.date}</date>
             {/* <span>{`   ${item.score}`}</span> */}
           </score>
-          <history>믹서기</history>
+          <history>{data.projectname}</history>
           <content>{data.content}</content>
 
           {/* {Partner.review_user_ary && (
