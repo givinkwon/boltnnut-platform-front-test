@@ -1434,7 +1434,7 @@ class FileUploadContainer extends Component {
       let check_stl = false;
       let stl_count = 0;
       acceptedFiles.map((data, idx) => {
-        let fileNameAvailable = ["stl", "stp"];
+        let fileNameAvailable = ["stl", "stp", "step"];
         const extension = data.name.split(".");
 
         //console.log(fileNameAvailable)

@@ -25,6 +25,9 @@ var availableFileType = [
   "mp4",
   "webm",
   "mp3",
+  "pptx",
+  "doc",
+  "html",
 ];
 @inject("Partner", "Auth")
 @observer
@@ -174,6 +177,7 @@ class ProposalCard extends React.Component {
         .split(".")
         [this.props.data.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
+      console.log(this.props.Partner.selectedIntroductionFileType);
       console.log(this.props.data);
       console.log(fileType);
       console.log(availableFileType);

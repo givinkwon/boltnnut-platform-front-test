@@ -6,6 +6,24 @@ import Modal from "../Review/ReviewWritingModal";
 import ReviewCard from "../Review/ReviewCard";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+
+const availableFileType1 = [
+  "png",
+  "jpeg",
+  "gif",
+  "bmp",
+  "pdf",
+  "csv",
+  "xslx",
+  "mp4",
+  "webm",
+  "mp3",
+];
+
+const availableFileType2 = ["ppt", "pptx"];
+
+const availableFileType3 = ["doc", "docx", "txt", "html"];
 
 // @ts-ignore
 const FileViewer = dynamic(() => import("react-file-viewer"), {
@@ -46,8 +64,17 @@ class DetailCardContainer extends React.Component {
   componentDidMount = async () => {
     const { Partner } = this.props;
     // console.log("csfdffsdfd");
+    console.log("mountmount");
     if (Partner.partner_detail_list.length == 0) {
       Router.push("/manufacturer");
+    }
+
+    if (this.props.Partner.selectedIntroductionFileType === "pptx") {
+      var frameHTML =
+        '<iframe src="https://docs.google.com/gview?url=' +
+        this.props.Partner.selectedIntroductionFile +
+        '&embedded=true" class="viewer" frameborder="0"></iframe>';
+      document.getElementById("viewer-wrap").innerHTML = frameHTML;
     }
 
     // let total_consult_score = 0;
@@ -87,6 +114,16 @@ class DetailCardContainer extends React.Component {
     const { width, Partner } = this.props;
     // console.log(this.props.Partner.selectedIntroductionFile);
     // console.log(Partner.partner_detail_list);
+
+    const docs = [
+      {
+        uri:
+          "https://boltnnutplatform-test.s3.amazonaws.com/media/partner/2021/6/21/0fe2d8bf12da4838b4cb35625153a1f3_partner.docx",
+      },
+      // { uri: this.props.Partner.selectedIntroductionFile },
+      // { uri: require("./example-files/pdf.pdf") } // local
+    ];
+
     return (
       <>
         <Card
@@ -133,11 +170,36 @@ class DetailCardContainer extends React.Component {
 
             <IntroductionBox width={width}>
               <Font24>회사소개서</Font24>
-              <FileViewerContainer
-                fileType={this.props.Partner.selectedIntroductionFileType}
-                filePath={this.props.Partner.selectedIntroductionFile}
-                onError={onError}
-              />
+
+              {availableFileType1.indexOf(
+                this.props.Partner.selectedIntroductionFileType
+              ) > -1 && (
+                <FileViewerContainer
+                  fileType={this.props.Partner.selectedIntroductionFileType}
+                  filePath={this.props.Partner.selectedIntroductionFile}
+                  onError={onError}
+                />
+              )}
+
+              {availableFileType2.indexOf(
+                this.props.Partner.selectedIntroductionFileType
+              ) > -1 && <PPTViewer id="viewer-wrap" />}
+
+              {availableFileType3.indexOf(
+                this.props.Partner.selectedIntroductionFileType
+              ) > -1 && (
+                <DOCViewer
+                  documents={docs}
+                  pluginRenderers={DocViewerRenderers}
+                />
+              )}
+
+              {/* <iframe
+                src="https://docs.google.com/gview?url=https://boltnnutplatform-test.s3.amazonaws.com/media/partner/2021/6/21/19c90c2bda1e42c08079c1e6f90a6ba1_partner.pptx"
+                embedded="true"
+                class="viewer"
+                frameborder="0"
+              /> */}
             </IntroductionBox>
           </InnerBox>
 
@@ -578,6 +640,14 @@ const Layer = styled.div`
   }
 `;
 
+const PPTViewer = styled.div`
+  height: 1000px;
+  > iframe {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 const SummaryBox = styled.div`
   margin-top: 50px;
   margin-bottom: 34px;
@@ -629,6 +699,16 @@ const SummaryBox = styled.div`
         display: flex;
         justify-content: space-between;
       }
+    }
+  }
+`;
+
+const DOCViewer = styled(DocViewer)`
+  > div:nth-of-type(2) {
+    // border: 3px solid red;
+
+    > div:nth-of-type(1) {
+      height: 1000px;
     }
   }
 `;
