@@ -21,9 +21,9 @@ const availableFileType1 = [
   "mp3",
 ];
 
-const availableFileType2 = ["ppt", "pptx"];
+// const availableFileType2 = ["ppt", "pptx"];
 
-const availableFileType3 = ["doc", "docx", "txt", "html"];
+const availableFileType3 = ["doc", "docx", "txt", "html", "ppt", "pptx"];
 
 // @ts-ignore
 const FileViewer = dynamic(() => import("react-file-viewer"), {
@@ -69,13 +69,14 @@ class DetailCardContainer extends React.Component {
       Router.push("/manufacturer");
     }
 
-    if (this.props.Partner.selectedIntroductionFileType === "pptx") {
-      var frameHTML =
-        '<iframe src="https://docs.google.com/gview?url=' +
-        this.props.Partner.selectedIntroductionFile +
-        '&embedded=true" class="viewer" frameborder="0"></iframe>';
-      document.getElementById("viewer-wrap").innerHTML = frameHTML;
-    }
+    console.log(this.props.Partner.selectedIntroductionFileType);
+    // if (this.props.Partner.selectedIntroductionFileType === "pptx") {
+    //   var frameHTML =
+    //     '<iframe src="https://docs.google.com/gview?url=' +
+    //     this.props.Partner.selectedIntroductionFile +
+    //     '&embedded=true" class="viewer" frameborder="0"></iframe>';
+    //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
+    // }
 
     // let total_consult_score = 0;
     // let total_kindness_score = 0;
@@ -114,13 +115,14 @@ class DetailCardContainer extends React.Component {
     const { width, Partner } = this.props;
     // console.log(this.props.Partner.selectedIntroductionFile);
     // console.log(Partner.partner_detail_list);
+    console.log(width);
 
     const docs = [
-      {
-        uri:
-          "https://boltnnutplatform-test.s3.amazonaws.com/media/partner/2021/6/21/0fe2d8bf12da4838b4cb35625153a1f3_partner.docx",
-      },
-      // { uri: this.props.Partner.selectedIntroductionFile },
+      // {
+      //   uri:
+      //     "https://boltnnutplatform-test.s3.amazonaws.com/media/partner/2021/6/21/0fe2d8bf12da4838b4cb35625153a1f3_partner.docx",
+      // },
+      { uri: this.props.Partner.selectedIntroductionFile },
       // { uri: require("./example-files/pdf.pdf") } // local
     ];
 
@@ -181,9 +183,9 @@ class DetailCardContainer extends React.Component {
                 />
               )}
 
-              {availableFileType2.indexOf(
+              {/* {availableFileType2.indexOf(
                 this.props.Partner.selectedIntroductionFileType
-              ) > -1 && <PPTViewer id="viewer-wrap" />}
+              ) > -1 && <PPTViewer id="viewer-wrap" />} */}
 
               {availableFileType3.indexOf(
                 this.props.Partner.selectedIntroductionFileType
@@ -191,6 +193,8 @@ class DetailCardContainer extends React.Component {
                 <DOCViewer
                   documents={docs}
                   pluginRenderers={DocViewerRenderers}
+                  height={width}
+                  type={this.props.Partner.selectedIntroductionFileType}
                 />
               )}
 
@@ -708,7 +712,28 @@ const DOCViewer = styled(DocViewer)`
     // border: 3px solid red;
 
     > div:nth-of-type(1) {
-      height: 1000px;
+      // height: 1000px;
+      height: ${(props) =>
+        (props.type === "pptx" || props.type === "ppt") &&
+        props.height / 2 - props.height / 5}px;
+        height: ${(props) =>
+          (props.type === "docx" || props.type === "doc") && 1200}px;
+    }
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > div:nth-of-type(2) {
+      > div:nth-of-type(1) {
+        height: ${(props) =>
+          props.type === "pptx" || props.type === "ppt"
+            ? props.height
+              ? props.height / 3 + props.height / 3
+              : 0
+            : 300}px;
+
+
+      }
+      }
     }
   }
 `;
