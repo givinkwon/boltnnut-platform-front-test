@@ -61,7 +61,7 @@ class MobileBanner0Container extends React.Component {
         </BackgroundImage>
         <Fade bottom>
           <Header color={WHITE} fontWeight={"bold"}>
-            <span>대만민국 제조사 정보 여기 다 있다.</span>
+            <span>대한민국 제조사 정보 여기 다 있다.</span>
             <span>전문 업체 수배 플랫폼 볼트앤너트</span>
           </Header>
           <div>
