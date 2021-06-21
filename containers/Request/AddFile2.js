@@ -56,6 +56,8 @@ class InputComponent extends React.Component {
   };
 
   openOnChangeFile = (e) => {
+    console.log(e);
+    console.log(typeof e);
     const { Request, ManufactureProcess } = this.props;
     var file = document.getElementById("inputFile");
 

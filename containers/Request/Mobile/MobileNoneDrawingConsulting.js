@@ -16,7 +16,6 @@ const checkcircle =
   "/static/images/request/NoneDrawingConsulting/checkcircle.svg";
 const pass3 = "static/images/pass3.png";
 
-
 @inject("ManufactureProcess", "Request", "Schedule", "Auth")
 @observer
 class MobileNoneDrawingConsultingContainer extends React.Component {
@@ -41,16 +40,15 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
     privateValue: "",
     publicRows: 7,
     privateRows: 7,
-    purposeAry : [
+    purposeAry: [
       { id: 1, name: "상담요청", checked: false },
       { id: 2, name: "견적문의", checked: false },
       { id: 3, name: "업체수배", checked: false },
-    ]
+    ],
   };
   componentDidMount = () => {
-    this.props.ManufactureProcess.reset()
-    
-  }
+    this.props.ManufactureProcess.reset();
+  };
 
   unitCheckboxHandler = (idx) => {
     this.setState({ selectedIdx: idx });
@@ -66,7 +64,7 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
 
   purposeHandler = (item) => {
     const { ManufactureProcess } = this.props;
-    const { purposeAry } = this.state
+    const { purposeAry } = this.state;
     console.log(ManufactureProcess.purposeContent);
     if (item.checked) {
       item.checked = false;
@@ -76,7 +74,9 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
     } else {
       item.checked = true;
       if (ManufactureProcess.purposeContent) {
-        this.state.purposeAry[ManufactureProcess.purposeContent - 1].checked = false;
+        this.state.purposeAry[
+          ManufactureProcess.purposeContent - 1
+        ].checked = false;
       }
       ManufactureProcess.purposeContent = item.id;
     }
@@ -218,7 +218,7 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
     let processData = "";
     let detailProcessData = "";
     let quantityData = "";
-    
+
     let str = "";
     var result = Object.keys(purpose).map((key) => [key, purpose[key]]);
 
@@ -243,7 +243,7 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
       alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
       return false;
     }
-    if (ManufactureProcess.requestComment.length == 0 ) {
+    if (ManufactureProcess.requestComment.length == 0) {
       alert("공개내용을 작성해주세요");
       return false;
     }
@@ -265,8 +265,12 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
 
     let request_state = "";
     if (ManufactureProcess.purposeContent) {
-      console.log(this.state.purposeAry[ManufactureProcess.purposeContent - 1].name);
-      request_state = this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
+      console.log(
+        this.state.purposeAry[ManufactureProcess.purposeContent - 1].name
+      );
+      request_state = this.state.purposeAry[
+        ManufactureProcess.purposeContent - 1
+      ].name;
     }
 
     console.log(result);
@@ -350,6 +354,7 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
     RequestAPI.create(req)
       .then((res) => {
         console.log("create: ", res);
+        dataLayer.push({ event: "request_noneDrawing" });
         this.props.Request.newIndex = 1;
       })
       .catch((e) => {
@@ -393,7 +398,6 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
           <PurposeBox>
             <TitleLabel>
               <span>문의 목적</span>
-
             </TitleLabel>
 
             <SelectBox style={{ width: "555px", marginTop: "16px" }}>
@@ -442,11 +446,11 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
           <DeliveryBox
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
-          <TitleLabel>
+            <TitleLabel>
               <span>희망 납기일</span>
             </TitleLabel>
 
-          <DeliveryDate
+            <DeliveryDate
               checkDateConference={ManufactureProcess.date_conference}
               checkDateUndefined={ManufactureProcess.date_undefined}
               checkCalendar={ManufactureProcess.calendar_checked}
@@ -457,24 +461,24 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
                   <Calendar mobile={true} />
                 </div>
                 <div>
-                <div
-                  onClick={() => {
-                    console.log("click1");
-                    if (ManufactureProcess.date_conference) {
-                      ManufactureProcess.date_conference = false;
-                    } else {
-                      ManufactureProcess.date_conference = true;
-                      if (ManufactureProcess.date_undefined) {
-                        ManufactureProcess.date_undefined = false;
+                  <div
+                    onClick={() => {
+                      console.log("click1");
+                      if (ManufactureProcess.date_conference) {
+                        ManufactureProcess.date_conference = false;
+                      } else {
+                        ManufactureProcess.date_conference = true;
+                        if (ManufactureProcess.date_undefined) {
+                          ManufactureProcess.date_undefined = false;
+                        }
                       }
-                    }
-                    console.log(ManufactureProcess.date_conference);
-                  }}
-                >
+                      console.log(ManufactureProcess.date_conference);
+                    }}
+                  >
                     <div>
                       <img src={pass3} />
                     </div>
-                    <span >납기일 협의 가능</span>
+                    <span>납기일 협의 가능</span>
                   </div>
                   <div
                     onClick={() => {
@@ -495,61 +499,61 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
                 </div>
               </div>
             </DeliveryDate>
-            </DeliveryBox> 
+          </DeliveryBox>
 
           <RequestBox
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
-          >          
-          <TitleLabel>
+          >
+            <TitleLabel>
               <span>프로젝트 설명 및 요청사항</span>
-            </TitleLabel>       
-          <Request>
+            </TitleLabel>
+            <Request>
               <div>
                 <span>공개 내용</span>
               </div>
 
-            <textarea
-              placeholder={`${openPlaceHolderText}`}
-              onFocus={(e) => (e.target.placeholder = "")}
-              onBlur={(e) => {
-                e.target.placeholder = `${openPlaceHolderText}`;
-                if (this.state.publicValue === "") {
-                  this.setState({ publicRows: 7 });
-                }
-              }}
-              rows={this.state.publicRows}
-              value={this.state.publicValue}
-              className={"textarea"}
-              placeholderStyle={{ fontWeight: "400" }}
-              onChange={this.publicRequestHandler}
-            />
-          </Request>
+              <textarea
+                placeholder={`${openPlaceHolderText}`}
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) => {
+                  e.target.placeholder = `${openPlaceHolderText}`;
+                  if (this.state.publicValue === "") {
+                    this.setState({ publicRows: 7 });
+                  }
+                }}
+                rows={this.state.publicRows}
+                value={this.state.publicValue}
+                className={"textarea"}
+                placeholderStyle={{ fontWeight: "400" }}
+                onChange={this.publicRequestHandler}
+              />
+            </Request>
 
-          <Request>
-          <div>
+            <Request>
+              <div>
                 <span>비공개 내용 </span>
               </div>
-            <textarea
-              placeholder={`${privatePlaceholderText}`}
-              onFocus={(e) => (e.target.placeholder = "")}
-              onBlur={(e) => {
-                e.target.placeholder = `${privatePlaceholderText}`;
-                if (this.state.privateValue == "") {
-                  this.setState({ privateRows: 7 });
-                }
-              }}
-              rows={this.state.privateRows}
-              value={this.state.privateValue}
-              className={"textarea"}
-              placeholderStyle={{ fontWeight: "400" }}
-              onChange={this.privateRequestHandler}
-            />
-          </Request>
+              <textarea
+                placeholder={`${privatePlaceholderText}`}
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) => {
+                  e.target.placeholder = `${privatePlaceholderText}`;
+                  if (this.state.privateValue == "") {
+                    this.setState({ privateRows: 7 });
+                  }
+                }}
+                rows={this.state.privateRows}
+                value={this.state.privateValue}
+                className={"textarea"}
+                placeholderStyle={{ fontWeight: "400" }}
+                onChange={this.privateRequestHandler}
+              />
+            </Request>
           </RequestBox>
           <ReferenceBox
             checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
           >
-          <TitleLabel>
+            <TitleLabel>
               <span>참고파일</span>
               <p>이미지 혹은 PDF 자료만 업로드 가능합니다.</p>
             </TitleLabel>
@@ -557,26 +561,26 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
             <Reference
               checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
             >
-            <div>
-              <span>공개 자료</span>
-            </div>
-            <span style={{ display: "inline-block", width: "100%" }}>
+              <div>
+                <span>공개 자료</span>
+              </div>
+              <span style={{ display: "inline-block", width: "100%" }}>
                 <InputComponent mobile={true} file={true} isOpen={true} />
                 <div></div>
-            </span>
+              </span>
 
-            <div>
-              <span>비공개 자료</span>
-            </div>
+              <div>
+                <span>비공개 자료</span>
+              </div>
 
-            <span style={{ display: "inline-block", width: "100%" }}>
+              <span style={{ display: "inline-block", width: "100%" }}>
                 <InputComponent mobile={true} file={true} isOpen={false} />
                 <div></div>
               </span>
             </Reference>
           </ReferenceBox>
           <Button checkFileUpload={ManufactureProcess.checkFileUpload}>
-          <div>
+            <div>
               {ManufactureProcess.changeProject ? (
                 <span
                   onClick={() => {
@@ -632,12 +636,12 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
 
                     this.requestSubmit(1);
                   }}
-                  >
+                >
                   상담 및 가격 요청하기
                 </span>
               )}
             </div>
-            </Button>
+          </Button>
         </Containerv1>
       </Background>
     );
@@ -645,7 +649,6 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
 }
 
 export default MobileNoneDrawingConsultingContainer;
-
 
 // global
 const InlineDiv = styled.div`
@@ -692,9 +695,9 @@ const FontSize16 = styled(Title.FontSize16)`
 const ProjectTitleBox = styled.div`
   display: flex;
   flex-direction: column;
-  width : 90%;
-  margin-left : 5%;
-  margin-right : 5%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
 `;
 
 const ProductInfoBox = styled.div`
@@ -749,9 +752,9 @@ const PurposeBox = styled.div`
   flex-direction: column;
   margin-top: 60px;
   margin-bottom: 70px;
-  width : 90%;
-  margin-left : 5%;
-  margin-right : 5%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
 `;
 
 const ImageShape = styled.div`
@@ -1014,9 +1017,9 @@ const PurposeFont18 = styled.div`
   color: ${(props) => (props.active ? "#ffffff" : "#414550")};
 `;
 const DeliveryBox = styled.div`
-  width : 90%;
-  margin-left : 5%;
-  margin-right : 5%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
   margin-top: 40px;
   margin-bottom: 40px;
 
@@ -1032,15 +1035,15 @@ const DeliveryBox = styled.div`
 `;
 
 const RequestBox = styled.div`
-  width : 90%;
-  margin-left : 5%;
-  margin-right : 5%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
 `;
 
 const ReferenceBox = styled.div`
-  width : 90%;
-  margin-left : 5%;
-  margin-right : 5%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
   margin-bottom: 40px;
 `;
 

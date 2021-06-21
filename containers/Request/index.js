@@ -39,7 +39,10 @@ class RequestContainer extends React.Component {
     const { Request } = this.props;
     this.props.Auth.bgColor = "#f6f6f6";
     Request.newIndex = 0;
-    this.props.ManufactureProcess.reset();
+    if (!this.props.ManufactureProcess.changeProject) {
+      console.log("ABCVDSDSDSFDFDF");
+      this.props.ManufactureProcess.reset();
+    }
   };
   render() {
     const { Request } = this.props;
@@ -51,7 +54,7 @@ class RequestContainer extends React.Component {
 
             <Background backgroundColor={"#ffffff"}>
               <Containerv1>
-                {console.log(Request.newIndex)}
+                {console.log(`newIndex : ${Request.newIndex}`)}
                 {Request.newIndex == 0 && (
                   <FileUploadContainer width={this.props.width} />
                 )}

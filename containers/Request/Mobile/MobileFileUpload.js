@@ -387,6 +387,7 @@ class FileUploadContainer extends Component {
       RequestAPI.create(req)
         .then((res) => {
           console.log("create: ", res);
+          dataLayer.push({ event: "request_Drawing" });
           this.props.Request.newIndex = 1;
         })
         .catch((e) => {
