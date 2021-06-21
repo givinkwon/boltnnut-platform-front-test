@@ -148,6 +148,7 @@ class MyApp extends App {
     const formData = new FormData();
 
     formData.append("url", window.location.href);
+    console.log(window.location.href)
     const req = {
       data: formData,
     };
