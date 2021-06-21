@@ -38,23 +38,7 @@ class Home extends React.Component {
     //   "/" +
     //   window.location.pathname;
     // console.log(newURL);
-    console.log(window.location.href);
-
-    const formData = new FormData();
-
-    formData.append("url", window.location.href);
-    const req = {
-      data: formData,
-    };
-
-    AccountAPI.setUserIP(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
+  
 
     window.addEventListener("resize", this.updateDimensions);
     // this.props.Auth.bgColor = "#ffffff";

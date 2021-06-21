@@ -141,6 +141,24 @@ class MyApp extends App {
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentNode)
       jssStyles.parentNode.removeChild(jssStyles);
+
+    
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
   }
   // 네이버애널리틱스
   componentDidUpdate() {

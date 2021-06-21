@@ -27,23 +27,6 @@ class Index extends React.Component {
     this.props.Auth.home_index = 2;
     this.props.Auth.bgColor = "#f6f6f6";
 
-    console.log(window.location.href);
-
-    const formData = new FormData();
-
-    formData.append("url", window.location.href);
-    const req = {
-      data: formData,
-    };
-
-    AccountAPI.setUserIP(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
 
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
