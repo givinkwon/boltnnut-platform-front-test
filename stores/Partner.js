@@ -238,6 +238,7 @@ class Partner {
   @observable partnerPage = 0;
   @observable reviewCurrentPage = 1;
 
+  // @observable clientInfoList = {};
   @observable clientInfoList = [];
 
   @action resetReviewAry = () => {
@@ -1749,13 +1750,15 @@ class Partner {
   // });
   // }
 
-  @action getClientNameById = async (id) => {
-    console.log(id);
+  @action getClientNameById = async (id, idx) => {
     const req = {
       params: null,
     };
     await PartnerAPI.getClient(id, req).then(async (res) => {
+      console.log(`${idx} : ${id} ============= ${res.data}`);
       this.clientInfoList = await this.clientInfoList.concat(res.data);
+
+      // this.clientInfoList[id] = res.data;
       console.log(this.clientInfoList);
     });
   };

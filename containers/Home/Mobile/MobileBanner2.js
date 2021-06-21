@@ -13,12 +13,10 @@ class MobileBanner2Container extends React.Component {
       <Background backgroundColor={"#ffffff"}>
         <ContentContainer>
           <Fade bottom>
-            <Header>무료 생산 상담</Header>
+            <Header>제조사 정보 제공 서비스</Header>
             <Middle>
-              내가 설계한 부품장비
-              <br />
-              {/* <span>무료 도면 수정 </span> */}
-              생산에 문제가 없을까?
+              <span>포트폴리오부터 계약 후기까지!</span>
+              <span>5000개의 전국 제조사 정보 제공</span>
             </Middle>
             <ImgContainer>
               <img
@@ -27,9 +25,11 @@ class MobileBanner2Container extends React.Component {
               />
             </ImgContainer>
             <Body>
-              생산에 대한 모든 문의사항은 4000여 개
+              남동공단부터 창원까지,
               <br />
-              전문 제조사들이 바로 상담해드립니다.
+              선별된 5000여 개 제조사 정보를
+              <br />
+              지금 바로 확인하세요.
             </Body>
           </Fade>
         </ContentContainer>
@@ -55,6 +55,7 @@ const Header = styled(Title.FontSize20)`
   margin: 100px 0px 3px 0px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
+    text-align: center;
   }
 `;
 const Middle = styled(Title.FontSize56)`
@@ -66,7 +67,7 @@ const Middle = styled(Title.FontSize56)`
   line-height: 1.45;
   letter-spacing: -0.55px;
   > span {
-    display: inline;
+    display: block;
     font-weight: bold;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
