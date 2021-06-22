@@ -183,7 +183,7 @@ class Nav extends React.Component {
                       >
                         <p class="line"> 프로젝트 관리 </p>
                       </NavLink>
-                      {Auth.home_index === 4 ? (
+                      {Auth.home_index === 4 || Auth.home_index === 0 ? (
                         <NavLink
                           onClick={() => Router.push("/producer")}
                           active={url.indexOf("producer") > -1}
@@ -233,7 +233,7 @@ class Nav extends React.Component {
                     >
                       <p class="line"> 프로젝트 찾기 </p>
                     </NavLink>
-                    {Auth.home_index === 4 ? (
+                    {Auth.home_index === 4 || Auth.home_index === 0 ? (
                       <NavLink
                         onClick={() => Router.push("/producer")}
                         active={url.indexOf("producer") > -1}
@@ -309,7 +309,7 @@ class Nav extends React.Component {
                   >
                     프로젝트 관리
                   </ButtonContainer>
-                ) : Auth.home_index === 4 ? (
+                ) : Auth.home_index === 4 || Auth.home_index === 0 ? (
                   <ButtonContainer
                     first
                     onClick={() => Router.push("/producer")}

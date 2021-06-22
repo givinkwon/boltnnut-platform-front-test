@@ -211,7 +211,7 @@ class MobileSearchBarConatiner extends React.Component {
             </div>
           </Request> */}
 
-          <Filter
+          {/* <Filter
             onClick={() => {
               this.filterActiveHandler();
             }}
@@ -219,7 +219,7 @@ class MobileSearchBarConatiner extends React.Component {
             <div>
               <img src={filter_img} />
             </div>
-          </Filter>
+          </Filter> */}
         </SearchFilterBox>
         <FilterContainer
           style={{ flex: "0 auto" }}

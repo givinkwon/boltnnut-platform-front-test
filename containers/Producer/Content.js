@@ -266,8 +266,8 @@ class ManufacturerContentContainer extends React.Component {
                             // mainCategory={Project.main_category_name[idx]}
                             // newData={Project.data_dt[idx]}
                             // checkTotal={Project.filter_price}
-                            dropDown={this.state.dropDownActive}
-                            dropDownIdx={this.state.dropDownIdx}
+                            // dropDown={this.state.dropDownActive}
+                            // dropDownIdx={this.state.dropDownIdx}
                             handleIntersection={this.handleIntersection}
                             customer="partner"
                           />
