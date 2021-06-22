@@ -13,7 +13,7 @@ import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
 import Fade from "react-reveal/Fade";
 import UseScrollCount from "containers/Home/UseScrollCount";
-import { toJS } from "mobx"
+import { toJS } from "mobx";
 import { inject, observer } from "mobx-react";
 
 //Image
@@ -31,7 +31,7 @@ const CountFunc = ({ index, projCount = 0, partnerCount = 0 }) => {
   return <p {...countItem[index]} style={{ display: "inline" }} />;
 };
 
-@inject("Proposal", "Partner","Auth")
+@inject("Proposal", "Partner", "Auth")
 @observer
 class MobileBanner0Container extends React.Component {
   componentDidMount() {
@@ -61,17 +61,15 @@ class MobileBanner0Container extends React.Component {
         </BackgroundImage>
         <Fade bottom>
           <Header color={WHITE} fontWeight={"bold"}>
-            엔지니어와 연구원을 위한
-            <br />
-            전문 업체 수배 플랫폼
+            <span>대한민국 제조사 정보 여기 다 있다.</span>
+            <span>전문 업체 수배 플랫폼 볼트앤너트</span>
           </Header>
           <div>
             <Explanation>
-              <Font16>자동 견적 & 비교 견적</Font16>
-              <Font16 style={{ margin: "14px 0" }}>
-                도면 & BOM 검토 등 생산 문의 상담
-              </Font16>
-              <Font16>전문 업체 수배</Font16>
+              <Font16>남동공단부터 창원까지</Font16>
+              <Font16>선별된 5000여 개 제조사 정보를</Font16>
+              <Font16>지금 바로 확인하세요.</Font16>
+              <Font16>생산 분야 | 포트폴리오 | 계약 후기</Font16>
             </Explanation>
 
             {/* <Title1 fontWeight={300} color={'#ffffff'}>
@@ -98,43 +96,46 @@ class MobileBanner0Container extends React.Component {
             </Content1> */}
           </div>
           {Auth.logged_in_user && Auth.logged_in_user.type === 1 ? (
-           <>
-           </>
+            <></>
           ) : (
             <>
-            <Buttonv1
-              style={{
-                marginLeft: "auto",
-                marginRight: "auto",
-                fontWeight: 700,
-                width: "202px",
-                height: "49px",
-              }}
-              onClick={() => Router.push("/request")}
-            >
-              <p style={{ paddingBottom: 0.2 }}>무료 상담 및 견적 받기</p>
-            </Buttonv1>
-            <div
-              style={{
-                color: "#767676",
-                lineHeight: 1.5,
-                fontWeight: 500,
-                fontSize: 14,
-                opacity: 0.8,
-                marginTop: 6,
-              }}
-            >
-              <img
-                src={lock}
-                style={{ marginRight: 8, width: 10, height: 11, opacity: 0.5 }}
-              ></img>
-              모든 업로드는 안전하고 기밀입니다.
-            </div>
-              </>
-            
-          )
-          }
-        
+              <Buttonv1
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  fontWeight: 700,
+                  width: "202px",
+                  height: "49px",
+                }}
+                onClick={() => Router.push("/manufacturer")}
+              >
+                <p style={{ paddingBottom: 0.2, fontSize: "16px" }}>
+                  전문 업체 찾아보기
+                </p>
+              </Buttonv1>
+              <div
+                style={{
+                  color: "#767676",
+                  lineHeight: 1.5,
+                  fontWeight: 500,
+                  fontSize: 14,
+                  opacity: 0.8,
+                  marginTop: 6,
+                }}
+              >
+                <img
+                  src={lock}
+                  style={{
+                    marginRight: 8,
+                    width: 10,
+                    height: 11,
+                    opacity: 0.5,
+                  }}
+                ></img>
+                민감 정보는 비공개로 작성 후 선택 공개하세요
+              </div>
+            </>
+          )}
         </Fade>
       </Background>
     );
@@ -147,7 +148,11 @@ const Header = styled(Title.FontSize23)`
   text-align: center;
   margin-bottom: 24px;
   height: 70px;
-`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 24px;
+`;
 const Title1 = styled(Content.FontSize16)`
   text-align: center;
   letter-spacing: -0.4px;
@@ -195,6 +200,6 @@ const Explanation = styled.div`
 const Font16 = styled(Content.FontSize16)`
   font-weight: normal;
   text-align: center;
-  //margin-bottom: 10px;
+  margin-bottom: 10px;
   color: #ffffff;
 `;

@@ -20,10 +20,12 @@ const pass2_img = "static/images/pass2.png";
 @inject("Project", "Partner")
 @observer
 class ChatCardContainer extends React.Component {
+  ChatAreaRef = React.createRef();
   chatSocket = new WebSocket("wss://test.boltnnut.com/ws/chat/" + `1234` + "/");
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
+    this.handleScrollChange = this.handleScrollChange.bind(this);
   }
 
   state = {
@@ -34,14 +36,46 @@ class ChatCardContainer extends React.Component {
     maxRows: 20,
     height: 576,
   };
+
+  handleScrollChange() {
+    // console.log(this.ChatAreaRef);
+    // const isPassedTop = window.pageYOffset > this.ChatAreaRef.current.offsetTop;
+    // if (isPassedTop !== this.props.Home.test) {
+    //   this.setState({ isPassedTop: isPassedTop });
+    //   this.props.Home.test = isPassedTop;
+    // }
+    console.log(this.ChatAreaRef);
+    const prevScrollHeight = this.ChatAreaRef.current.scrollHeight;
+    // console.log(this.ChatAreaRef.current.scrollHeight);
+    if (this.ChatAreaRef.current) {
+      console.log(`scrollTop = ${this.ChatAreaRef.current.scrollTop}`);
+      console.log(`scrollHeight = ${this.ChatAreaRef.current.scrollHeight}`);
+      console.log(`offsetHeight = ${this.ChatAreaRef.current.offsetHeight}`);
+      console.log(`offsetTop = ${this.ChatAreaRef.current.offsetTop}`);
+      console.log(`clientHeight = ${this.ChatAreaRef.current.clientHeight}`);
+      if (this.ChatAreaRef.current.scrollTop <= 0) {
+        // this.props.loadPrevMessages();
+        // console.log(this.ChatAreaRef);
+        // this.ChatAreaRef.current.scrollTop = prevScrollHeight;
+      }
+    }
+
+    // console.log(this.ChatAreaRef.current.scrollTop);
+    // console.log(this.ChatAreaRef.current.pageYOffset);
+    // console.log(window.pageYOffset);
+  }
+
   async componentDidMount() {
+    console.log("시작" + this.ChatAreaRef.current.scrollHeight);
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+    document.addEventListener("scroll", this.handleScrollChange, true);
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
+    document.removeEventListener("scroll", this.handleScrollChange);
   }
 
   updateDimensions = () => {
@@ -95,8 +129,8 @@ class ChatCardContainer extends React.Component {
     }
   }
 
-  executeScroll = () =>
-    this.myRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  // executeScroll = () =>
+  //   this.myRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
   checkRead = (fullMessage, currentMessage) => {
     // console.log(fullMessage);
@@ -134,7 +168,7 @@ class ChatCardContainer extends React.Component {
     // const messageFromMe = true; //임시
     const scrollTo = (ref) => {
       if (ref) {
-        ref.scrollIntoView({ behavior: "smooth", block: "start" });
+        // ref.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     };
     return (
@@ -195,7 +229,7 @@ class ChatCardContainer extends React.Component {
                 {/* <img src={prevent_img} />
                 <img src={star_img} /> */}
               </Header>
-              <MessageList height={this.state.height}>
+              <MessageList height={this.state.height} ref={this.ChatAreaRef}>
                 <div style={{ padding: "0 10px 0 10px", height: "80%" }}>
                   {messages.map((m) => this.renderMessage(m))}
                 </div>

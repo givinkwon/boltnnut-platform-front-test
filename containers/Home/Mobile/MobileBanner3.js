@@ -27,10 +27,10 @@ class MobileBanner3Container extends React.Component {
       >
         <Fade bottom>
           <div>
-            <Header>무료 비교 견적 서비스</Header>
+            <Header>제조사 필터링 서비스</Header>
             <Middle>
-              전문 제조사들에게 <br />
-              다양한 비교 견적
+              <span>원하는 생산품을 만들었던</span>
+              <span>업체 검색이 한 번에</span>
             </Middle>
             <div>
               <img
@@ -39,9 +39,10 @@ class MobileBanner3Container extends React.Component {
               />
             </div>
             <Body>
-              원하는 품질과 납기를 만족하는 제조사들을 선별해
-              <br />
-              다양한 비교견적을 쉽고 편리하게 받을 수 있습니다.
+              <span>내가 원하는 생산품을 만들었던 제조업체를</span>
+              <span>볼트앤너트를 통해 바로 검색하세요.</span>
+              <span>지역별, 입력별 필터를 통해 원하는 조건의</span>
+              <span>전문업체 검색이 가능합니다.</span>
             </Body>
           </div>
         </Fade>
@@ -77,9 +78,9 @@ const Middle = styled(Content.FontSize22)`
   @media (min-width: 0px) and (max-width: 767.98px) {
     line-height: 1.45;
   }
-  > p {
+  > span {
     font-weight: bold;
-    display: inline;
+    display: block;
   }
 `;
 
@@ -94,4 +95,7 @@ const Body = styled(Content.FontSize15)`
   color: #414550;
   margin-top: 18px;
   text-align: center;
+  > span {
+    display: block;
+  }
 `;

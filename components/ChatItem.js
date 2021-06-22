@@ -2,96 +2,103 @@ import React from "react";
 import styled, { css } from "styled-components";
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-import {toJS} from "mobx";
+import { toJS } from "mobx";
 import Router from "next/router";
 const toolBarImg = "/static/images/project/ToolBar.svg";
 const callImg = "/static/images/project/Call.svg";
 const messagesImg = "/static/images/project/Messages.svg";
 
 class ChatItemContainer extends React.Component {
+  state = {
+    content: this.props.content,
+  };
+  componentDidMount() {
+    // console.log(this.props.content);
+    if (this.state.content.length > 44) {
+      this.setState({ content: this.state.content.slice(0, 45) + " ···" });
+    }
+  }
   render() {
-    return ( 
+    return (
       <>
-      {this.props.user.logged_in_client && 
-        <PartnerBox onClick={() => this.props.modalHandler(this.props.id)}>
-          <PartnerInfo>
-            <img
-              // src={
-              //   this.props.logo &&
-              //   this.props.logo
-              // }
-              src={
-                "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-              }
-              width={36}
-              height={36}
-            ></img>
-            <Font18 style={{ marginLeft: 10 }}>
-              {this.props.name && this.props.name}
-            </Font18>
-          </PartnerInfo>
-          <Font16>
-            {this.props.content}
-          </Font16>
-          <IconBox>
-            <Icon>
-              <img src={toolBarImg}></img>
-            </Icon>
-            <Icon>
-              <img src={callImg}></img>
-            </Icon>
-            <Icon>
-              <img src={messagesImg}></img>
-              <ChatNotice>
-                <Font14>N</Font14>
-              </ChatNotice>
-            </Icon>
-          </IconBox>
-        </PartnerBox>
-      }
-      {this.props.user.logged_in_partner &&
-        
-        <PartnerBox>
-          <BoxLeft>
+        {this.props.user.logged_in_client && (
+          <PartnerBox onClick={() => this.props.modalHandler(this.props.id)}>
             <PartnerInfo>
               <img
                 // src={
-              //   this.props.logo &&
-              //   this.props.logo
-              // }
+                //   this.props.logo &&
+                //   this.props.logo
+                // }
                 src={
                   "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
                 }
-                width={65}
-                height={51}
+                width={36}
+                height={36}
               ></img>
-              <Font20 style={{ marginLeft: 10 }}>
+              <Font18 style={{ marginLeft: 10 }}>
                 {this.props.name && this.props.name}
-              </Font20>
+              </Font18>
             </PartnerInfo>
+            <Font16>{this.state.content}</Font16>
+            <IconBox>
+              <Icon>
+                <img src={toolBarImg}></img>
+              </Icon>
+              <Icon>
+                <img src={callImg}></img>
+              </Icon>
+              <Icon>
+                <img src={messagesImg}></img>
+                <ChatNotice>
+                  <Font14>N</Font14>
+                </ChatNotice>
+              </Icon>
+            </IconBox>
+          </PartnerBox>
+        )}
+        {this.props.user.logged_in_partner && (
+          <PartnerBox>
+            <BoxLeft>
+              <PartnerInfo>
+                <img
+                  // src={
+                  //   this.props.logo &&
+                  //   this.props.logo
+                  // }
+                  src={
+                    "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
+                  }
+                  width={65}
+                  height={51}
+                ></img>
+                <Font20 style={{ marginLeft: 10 }}>
+                  {this.props.name && this.props.name}
+                </Font20>
+              </PartnerInfo>
 
-            <Font18 style={{ marginLeft: 80 }}>
-              {this.props.content}
-            </Font18>
-          </BoxLeft>
-          <IconBox style = {{marginRight:21}}>
-            <GoToProject onClick={() => Router.push("/project")}>
-              <Font16 onClick={() => this.props.pushToDetail(this.props.project)} style = {{borderBottom: "1px solid", whiteSpace: "nowrap"}}>
-                프로젝트 보기
-              </Font16>
-            </GoToProject>
-            <Icon style = {{cursor: "pointer"}} onClick={() => this.props.modalHandler(this.props.id)}>
-              <img
-                src={messagesImg}
-                style={{ marginLeft: 30 }}
-              ></img>
-            </Icon>
-            <ChatNotice>
-              <Font14>N</Font14>
-            </ChatNotice>
-          </IconBox>
-        </PartnerBox>
-      }
+              <Font18 style={{ marginLeft: 80 }}>{this.state.content}</Font18>
+            </BoxLeft>
+            <IconBox style={{ marginRight: 21 }}>
+              <GoToProject onClick={() => Router.push("/project")}>
+                <Font16
+                  onClick={() => this.props.pushToDetail(this.props.project)}
+                  style={{ borderBottom: "1px solid", whiteSpace: "nowrap" }}
+                >
+                  프로젝트 보기
+                </Font16>
+              </GoToProject>
+              <Icon
+                style={{ cursor: "pointer" }}
+                onClick={() => this.props.modalHandler(this.props.id)}
+              >
+                <img src={messagesImg} style={{ marginLeft: 30 }}></img>
+              </Icon>
+              <ChatNotice>
+                <Font14>N</Font14>
+              </ChatNotice>
+            </IconBox>
+          </PartnerBox>
+        )}
       </>
     );
   }
@@ -186,7 +193,7 @@ const Font18 = styled(Content.FontSize18)`
   line-height: 1.5;
   // justify-content: center;
   letter-spacing: -0.45px !important;
-  display:inline-box;
+  display: inline-box;
   overflow: hidden;
   text-overflow: ellipsis;
 `;

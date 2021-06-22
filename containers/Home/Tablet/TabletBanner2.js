@@ -21,14 +21,13 @@ class TabletBanner2Container extends React.Component {
         >
           <Fade bottom>
             <div style={{ marginRight: "-50px" }}>
-              <img src={image1} style={{ height: "80%", width: "80%" }} />
+              <img src={image1} style={{ height: "93%", width: "80%" }} />
             </div>
             <div>
-              <Header>무료 생산 상담</Header>
+              <Header>제조사 정보 제공 서비스</Header>
               <Middle>
-                <p>
-                  내가 설계한 부품장비 <br /> 생산에 문제가 없을까?
-                </p>
+                <span>포트폴리오부터 계약 후기까지!</span>
+                <span>5000개의 전국 제조사 정보 제공</span>
               </Middle>
               {/* <ImgContainer>
               <img
@@ -38,9 +37,11 @@ class TabletBanner2Container extends React.Component {
             </ImgContainer> */}
 
               <Body>
-                생산에 대한 모든 문의사항을 4000여 개
+                남동공단부터 창원까지,
                 <br />
-                전문 제조사들이 바로 상담해드립니다.
+                선별된 5000여 개 제조사 정보를
+                <br />
+                지금 바로 확인하세요.
               </Body>
             </div>
           </Fade>
@@ -77,8 +78,9 @@ const Middle = styled(Title.FontSize56)`
   line-height: 1.45;
   letter-spacing: -0.55px;
   margin-bottom: 55px;
-  > p {
-    display: inline;
+  font-size: 26px !important;
+  > span {
+    display: block;
     font-weight: bold;
   }
   @media (min-width: 767.99px) and (max-width: 1279.98px) {

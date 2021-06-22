@@ -340,7 +340,84 @@ class ChatTestContainer extends React.Component {
     this.props.Chat.current_time = temp;
     // console.log(toJS(this.props.Chat.current_time));
   }
+  count = 1;
+  loadPrevMessages = () => {
+    const loadChatReq = {
+      extraUrl: `${this.props.roomName}`,
+      params: {
+        page: 2,
+        order: [["id", "DESC"]], //DESC
+      },
+    };
 
+    ChatAPI.loadChat(loadChatReq)
+      .then((res) => {
+        const reverseChat = res.data.results.reverse();
+        // console.log(reverseChat);
+        ChatAPI.loadChatCount(this.props.roomName).then((m_res) => {
+          // console.log(m_res);
+          // answer data 가져오기
+          const req = {
+            extraUrl: m_res.data.partner + `/`,
+            params: {},
+          };
+          var Temp = [];
+          const Messages = this.props.Project.chatMessages;
+          Messages.unshift({
+            member: 0,
+            text: `==========================${this.count}======================================`,
+            time: null,
+            bRead: true,
+          });
+          this.count += 1;
+          reverseChat.forEach(async (message) => {
+            // console.log(toJS(message));
+
+            // console.log(Messages);
+            // console.log(toJS(this.props.Project.chatMessages));
+            let readState = true;
+            if (message.user_type === 0) {
+              // console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
+              // console.log(message.createdAt); // 이건 파이썬에서 그냥 표준 시간형식으로 저장돼서 둘 중 하나 바꿔줘야함 비교할때
+              //여기서 바꿔줘야함
+
+              if (
+                m_res.data.check_time_partner.slice(0, 19) <
+                message.createdAt.slice(0, 19)
+              ) {
+                readState = false;
+              }
+            } else {
+              if (
+                m_res.data.check_time_client.slice(0, 19) <
+                message.createdAt.slice(0, 19)
+              ) {
+                readState = false;
+              }
+            }
+
+            Messages.unshift({
+              member: message.user_type,
+              text: message.text_content,
+              time: message.createdAt,
+              bRead: readState,
+            });
+
+            // await this.test(message);
+            // console.log(toJS(this.props.Project.chatMessages));
+            // if (Messages[0].time < Messages[1].time) {
+            //   console.log("asdnklasndlkasndlknaslkdnalksdnladsnkl");
+            // }
+
+            this.setState({ f: 3 });
+          });
+          // this.props.Project.chatMessages.unshift(Temp);
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   async componentDidMount() {
     // RoomNumber 체크하기
     const { Partner, Project } = this.props;
@@ -371,7 +448,16 @@ class ChatTestContainer extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
 
     console.log(this.state.currentTime);
-    ChatAPI.loadChat(roomNum).then((res) => {
+
+    const loadChatReq = {
+      extraUrl: `${this.props.roomName}`,
+      params: {
+        page: 1,
+        order: [["id", "DESC"]], //DESC
+      },
+    };
+
+    ChatAPI.loadChat(loadChatReq).then((res) => {
       const reverseChat = res.data.results.reverse();
       console.log(reverseChat);
       ChatAPI.loadChatCount(roomNum).then((m_res) => {
@@ -390,7 +476,7 @@ class ChatTestContainer extends React.Component {
           clientPhone = Partner.clientInfo.user.phone;
           console.group("%c 채팅창 정보", `color:${Color}; font-size:30px`);
           console.log(
-            `%c클라이언트 휴대폰번호 = ${clientPhone}\n파트너 휴대폰번호 = ${this.props.Partner.partnerdata.user.phone}\n프로젝트 이름 = ${this.props.requestTitle}\n`,
+            `%c채팅 번호(Answer id) = ${roomNum}\n클라이언트 휴대폰번호 = ${clientPhone}\n파트너 휴대폰번호 = ${this.props.Partner.partnerdata.user.phone}\n프로젝트 이름 = ${this.props.requestTitle}\n`,
             `color: ${Color}; font-size: 20px;`
           );
           console.groupEnd("그룹 종료");
@@ -650,6 +736,7 @@ class ChatTestContainer extends React.Component {
           currentUserType={this.userType}
           shareButtonClick={this.shareButtonClick}
           socketClose={this.socketClose}
+          loadPrevMessages={this.loadPrevMessages}
         />
       </>
     );

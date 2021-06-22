@@ -488,7 +488,7 @@ export default class MyDocument extends Document {
           </button> */}
           {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
           {/* ㅌㅌㅌ */}
-          <p class="g-signin2" data-onsuccess="batchGet"></p>
+          {/* <p class="g-signin2" data-onsuccess="batchGet"></p> */}
         </body>
       </html>
     );
