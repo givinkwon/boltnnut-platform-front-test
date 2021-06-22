@@ -295,7 +295,6 @@ class ChatTestContainer extends React.Component {
             };
           }
 
-          console.log("Send KAKAO");
           RequestAPI.sendKakaoTalk(req)
             .then((res) => console.log(res))
             .catch((e) => {
@@ -321,6 +320,8 @@ class ChatTestContainer extends React.Component {
               console.log(e);
               console.log(e.response);
             });
+
+          console.log("Send Kakao and Jandi");
         }
       }, 5000);
     }
@@ -456,9 +457,9 @@ class ChatTestContainer extends React.Component {
         this.userType = this.props.Auth.logged_in_user.type;
         console.log(this.userType);
         if (this.userType === 0) {
-          dataLayer.push({ event: "ClientChat" });
+          MyDataLayerPush({ event: "ClientChat" });
         } else {
-          dataLayer.push({ event: "PartnerChat" });
+          MyDataLayerPush({ event: "PartnerChat" });
         }
         console.log("로그인된 유저는 " + this.userType);
       }
