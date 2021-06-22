@@ -227,9 +227,11 @@ class ManufacturerContentContainer extends React.Component {
               <img src={pass4}/>
             </span> */}
                 </Header>
+
                 {Partner.partner_list &&
                   // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
+                    // console.log(toJS(Partner.partner_list));
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         {/* {Partner.category_ary[idx] &&

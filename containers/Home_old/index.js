@@ -50,13 +50,6 @@ import Banner12Container from "./Banner12";
 import MobileBanner12Container from "./Mobile/MobileBanner12";
 import TabletBanner12Container from "./Tablet/TabletBanner12";
 
-import Banner13Container from "./Banner13";
-import TabletBanner13Container from "./Tablet/TabletBanner13";
-import MobileBanner13Container from "./Mobile/MobileBanner13";
-import Banner14Container from "./Banner14";
-import TabletBanner14Container from "./Tablet/TabletBanner14";
-import MobileBanner14Container from "./Mobile/MobileBanner14";
-
 import axios from "axios";
 
 @inject("Home")
@@ -106,54 +99,41 @@ class HomeConatiner extends React.Component {
         {width < 767.98 ? (
           <>
             <CustomContainer>
-              {/* <MobileBanner0Container /> */}
+              <MobileBanner0Container />
               {/* <MobileBanner10Container /> */}
-              {/* <MobileBanner2Container /> */}
-              {/* <MobileBanner3Container /> */}
-              {/* <MobileBanner5Container /> */}
-              {/* <MobileBanner1Container /> */}
+              <MobileBanner2Container />
+              <MobileBanner3Container />
+              <MobileBanner5Container />
+              <MobileBanner1Container />
 
               {/* <MobileBanner4Container /> */}
 
               {/* <MobileBanner6Container />
               <MobileBanner7Container /> */}
               {/* <MobileBanner10Container /> */}
-              {/* <MobileBanner12Container width={width} /> */}
-              {/* <MobileBanner8Container /> */}
-              {/* <MobileBanner9Container /> */}
-              <MobileBanner13Container width={width} />
-              <MobileBanner14Container width={width} />
-              {/* <MobileBanner8Container /> */}
               <MobileBanner12Container width={width} />
-              <MobileBanner6Container />
+              <MobileBanner8Container />
               <MobileBanner9Container />
             </CustomContainer>
           </>
         ) : 767.99 < width && width < 1279.98 ? (
           <>
             <CustomContainer>
-              {/* <TabletBanner0Container /> */}
+              <TabletBanner0Container />
               {/* <TabletBanner10Container /> */}
 
-              {/* <TabletBanner2Container />
+              <TabletBanner2Container />
               <TabletBanner3Container />
 
               <TabletBanner11Container />
               <TabletBanner1Container />
 
               <TabletBanner12Container />
-              <TabletBanner4Container />
+              {/* <TabletBanner4Container />
               <TabletBanner5Container />
               <TabletBanner6Container />
-              <TabletBanner7Container />
+              <TabletBanner7Container /> */}
               <TabletBanner8Container />
-              <TabletBanner9Container /> */}
-
-              <TabletBanner13Container width={width} />
-              <TabletBanner14Container width={width} />
-              {/* <TabletBanner8Container /> */}
-              <TabletBanner12Container />
-              <TabletBanner6Container />
               <TabletBanner9Container />
             </CustomContainer>
           </>
@@ -170,23 +150,19 @@ class HomeConatiner extends React.Component {
                 }}
               ></div> */}
               {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
-
-              <Banner13Container width={width} />
-              <Banner14Container />
-
-              {/* <Banner0Container /> */}
+              <Banner0Container />
               {/* <Banner10Container/> */}
-              {/* <Banner2Container /> */}
-              {/* <Banner3Container /> */}
+              <Banner2Container />
+              <Banner3Container />
 
-              {/* <Banner11Container /> */}
-              {/* <Banner1Conatiner /> */}
+              <Banner11Container />
+              <Banner1Conatiner />
 
               <Banner12Container />
-              {/* <Banner4Container /> */}
+              {/* <Banner4Container />
               <Banner6Container />
-              {/* <Banner7Container /> */}
-              {/* <Banner8Container /> */}
+              <Banner7Container /> */}
+              <Banner8Container />
               <Banner9Container />
             </div>
           </>

@@ -1305,9 +1305,10 @@ class Partner {
         this.category_name_ary = [];
         this.temp_category_name_ary;
 
-        this.partner_list = res.data.results;
+        this.partner_list = await res.data.results;
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
+        console.log(this.partner_list);
         //this.category_ary = res.data.results.category_middle;
         this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
 
