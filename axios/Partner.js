@@ -400,3 +400,12 @@ export function getReviewByPartner(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function getPPTInfo(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partner/pptx-find-text/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
