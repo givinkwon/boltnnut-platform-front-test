@@ -183,21 +183,14 @@ class Nav extends React.Component {
                       >
                         <p class="line"> 프로젝트 관리 </p>
                       </NavLink>
-                      {Auth.home_index === 4 ? (
-                        <NavLink
-                          onClick={() => Router.push("/producer")}
-                          active={url.indexOf("producer") > -1}
-                        >
-                          <p class="line"> 제조사 찾기 </p>
-                        </NavLink>
-                      ) : (
-                        <NavLink
-                          onClick={() => Router.push("/manufacturer")}
-                          active={url.indexOf("manufacturer") > -1}
-                        >
-                          <p class="line"> 제조사 찾기 </p>
-                        </NavLink>
-                      )}
+
+                      <NavLink
+                        onClick={() => Router.push("/producer")}
+                        active={url.indexOf("producer") > -1}
+                      >
+                        <p class="line"> 제조사 찾기 </p>
+                      </NavLink>
+
 
                       <NavLink
                         onClick={() => Router.push("/magazine")}
@@ -233,21 +226,14 @@ class Nav extends React.Component {
                     >
                       <p class="line"> 프로젝트 찾기 </p>
                     </NavLink>
-                    {Auth.home_index === 4 ? (
-                      <NavLink
-                        onClick={() => Router.push("/producer")}
-                        active={url.indexOf("producer") > -1}
-                      >
-                        <p class="line"> 제조사 찾기 </p>
-                      </NavLink>
-                    ) : (
-                      <NavLink
-                        onClick={() => Router.push("/manufacturer")}
-                        active={url.indexOf("manufacturer") > -1}
-                      >
-                        <p class="line"> 제조사 찾기 </p>
-                      </NavLink>
-                    )}
+
+                    <NavLink
+                      onClick={() => Router.push("/producer")}
+                      active={url.indexOf("producer") > -1}
+                    >
+                      <p class="line"> 제조사 찾기 </p>
+                    </NavLink>
+
                     <NavLink
                       onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
@@ -320,8 +306,8 @@ class Nav extends React.Component {
                 ) : Auth.home_index === 2 ? (
                   <ButtonContainer
                     first
-                    onClick={() => Router.push("/manufacturer")}
-                    active={url.indexOf("manufacturer") > -1}
+                    onClick={() => Router.push("/producer")}
+                    active={url.indexOf("producer") > -1}
                   >
                     업체 찾기
                   </ButtonContainer>

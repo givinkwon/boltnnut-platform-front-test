@@ -182,7 +182,7 @@ class MobileNav extends React.Component {
                     </span>
                   </FreeButton>
                 ) : Auth.home_index === 2 ? (
-                  <FreeButton onClick={() => Router.push("/manufacturer")}>
+                  <FreeButton onClick={() => Router.push("/producer")}>
                     <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
                   </FreeButton>
                 ) : Auth.home_index === 3 ? (
@@ -199,14 +199,8 @@ class MobileNav extends React.Component {
                 <ModalContent>
                   <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
                   <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
-                  {Auth.home_index === 4 || Auth.home_index === 0 ? (
-                    <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
-                  ) : (
-                    <p onClick={() => Router.push("/manufacturer")}>
-                      제조사 찾기
-                    </p>
-                  )}
 
+                  <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
                   {Auth.logged_in_user && (
                     <p onClick={() => Router.push("/chatting")}>채팅하기</p>
                   )}
