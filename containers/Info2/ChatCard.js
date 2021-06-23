@@ -35,6 +35,7 @@ class ChatCardContainer extends React.Component {
     minRows: 1,
     maxRows: 20,
     height: 576,
+    chatPageCount: 1,
   };
 
   handleScrollChange() {
@@ -44,19 +45,23 @@ class ChatCardContainer extends React.Component {
     //   this.setState({ isPassedTop: isPassedTop });
     //   this.props.Home.test = isPassedTop;
     // }
-    console.log(this.ChatAreaRef);
-    const prevScrollHeight = this.ChatAreaRef.current.scrollHeight;
+    // console.log(this.ChatAreaRef);
+    // const prevScrollHeight = this.ChatAreaRef.current.scrollHeight;
     // console.log(this.ChatAreaRef.current.scrollHeight);
     if (this.ChatAreaRef.current) {
-      console.log(`scrollTop = ${this.ChatAreaRef.current.scrollTop}`);
-      console.log(`scrollHeight = ${this.ChatAreaRef.current.scrollHeight}`);
-      console.log(`offsetHeight = ${this.ChatAreaRef.current.offsetHeight}`);
-      console.log(`offsetTop = ${this.ChatAreaRef.current.offsetTop}`);
-      console.log(`clientHeight = ${this.ChatAreaRef.current.clientHeight}`);
-      if (this.ChatAreaRef.current.scrollTop <= 0) {
-        // this.props.loadPrevMessages();
-        // console.log(this.ChatAreaRef);
-        // this.ChatAreaRef.current.scrollTop = prevScrollHeight;
+      // console.log(`scrollTop = ${this.ChatAreaRef.current.scrollTop}`);
+      // console.log(`scrollHeight = ${this.ChatAreaRef.current.scrollHeight}`);
+      // console.log(`offsetHeight = ${this.ChatAreaRef.current.offsetHeight}`);
+      // console.log(`offsetTop = ${this.ChatAreaRef.current.offsetTop}`);
+      // console.log(`clientHeight = ${this.ChatAreaRef.current.clientHeight}`);
+      // console.log(`prevScrollHeight = ${prevScrollHeight}`);
+      if (
+        this.ChatAreaRef.current.scrollTop <= 0 &&
+        this.props.chatPageLimit - 1 > this.state.chatPageCount
+      ) {
+        // this.setState({ chatPageCount: this.state.chatPageCount + 1 });
+        // this.props.loadPrevMessages(this.state.chatPageCount);
+        // this.ChatAreaRef.current.scrollTop = 910;
       }
     }
 
@@ -168,7 +173,7 @@ class ChatCardContainer extends React.Component {
     // const messageFromMe = true; //임시
     const scrollTo = (ref) => {
       if (ref) {
-        // ref.scrollIntoView({ behavior: "smooth", block: "start" });
+        ref.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     };
     return (

@@ -20,6 +20,7 @@ class ChatTestContainer extends React.Component {
       messages: [],
       currentTime: null,
       currentFile: null,
+      chatPageLimit: null,
     };
   }
 
@@ -205,14 +206,16 @@ class ChatTestContainer extends React.Component {
 
         console.log(currentMessage.time);
         console.log(element.time);
-
-        if (
-          currentMessage.type != element.member &&
-          element.time.slice(0, 19) <= currentMessage.time.slice(0, 19)
-        ) {
-          element.bRead = true;
-          console.log("READ complete");
+        if (element.time && currentMessage.time) {
+          if (
+            currentMessage.type != element.member &&
+            element.time.slice(0, 19) <= currentMessage.time.slice(0, 19)
+          ) {
+            element.bRead = true;
+            console.log("READ complete");
+          }
         }
+
         // else {
         //   // console.log("읽지않음");
         // }
@@ -340,19 +343,20 @@ class ChatTestContainer extends React.Component {
     this.props.Chat.current_time = temp;
     // console.log(toJS(this.props.Chat.current_time));
   }
-  count = 1;
-  loadPrevMessages = () => {
+
+  loadPrevMessages = async (count) => {
     const loadChatReq = {
       extraUrl: `${this.props.roomName}`,
       params: {
-        page: 2,
-        order: [["id", "DESC"]], //DESC
+        page: count,
+        // order: [["id", "ASC"]], //DESC
       },
     };
 
     ChatAPI.loadChat(loadChatReq)
       .then((res) => {
-        const reverseChat = res.data.results.reverse();
+        // const reverseChat = res.data.results.reverse();
+        const reverseChat = res.data.results;
         // console.log(reverseChat);
         ChatAPI.loadChatCount(this.props.roomName).then((m_res) => {
           // console.log(m_res);
@@ -363,13 +367,12 @@ class ChatTestContainer extends React.Component {
           };
           var Temp = [];
           const Messages = this.props.Project.chatMessages;
-          Messages.unshift({
-            member: 0,
-            text: `==========================${this.count}======================================`,
-            time: null,
-            bRead: true,
-          });
-          this.count += 1;
+          // Messages.unshift({
+          //   member: 0,
+          //   text: `===============================${count}======================================`,
+          //   time: null,
+          //   bRead: true,
+          // });
           reverseChat.forEach(async (message) => {
             // console.log(toJS(message));
 
@@ -396,7 +399,7 @@ class ChatTestContainer extends React.Component {
               }
             }
 
-            Messages.unshift({
+            await Messages.unshift({
               member: message.user_type,
               text: message.text_content,
               time: message.createdAt,
@@ -459,9 +462,19 @@ class ChatTestContainer extends React.Component {
 
     ChatAPI.loadChat(loadChatReq).then((res) => {
       const reverseChat = res.data.results.reverse();
-      console.log(reverseChat);
+      // console.log(reverseChat);
+      if (res.data.count % 10 === 0) {
+        this.setState({ chatPageLimit: res.data.count / 10 });
+      } else {
+        this.setState({ chatPageLimit: Math.floor(res.data.count / 10) + 1 });
+      }
+      // alert(this.state.chatPageLimit);
+      for (let i = 2; i <= this.state.chatPageLimit; i++) {
+        this.loadPrevMessages(i);
+      }
+
       ChatAPI.loadChatCount(roomNum).then((m_res) => {
-        console.log(m_res);
+        // console.log(m_res);
         // answer data 가져오기
         const req = {
           extraUrl: m_res.data.partner + `/`,
@@ -737,6 +750,7 @@ class ChatTestContainer extends React.Component {
           shareButtonClick={this.shareButtonClick}
           socketClose={this.socketClose}
           loadPrevMessages={this.loadPrevMessages}
+          chatPageLimit={this.state.chatPageLimit}
         />
       </>
     );
