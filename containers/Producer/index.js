@@ -41,9 +41,8 @@ class ManufacturerConatiner extends React.Component {
                     <Container>
                       {/* <SearchBar /> */}
                       <SearchFilterBox width={this.props.width} />
-                      </Container>
-                    </Background>
-
+                    </Container>
+                  </Background>
                   <ContentContainer width={this.props.width} />
                 </>
               )}

@@ -9,9 +9,6 @@ import MobileSelectComponent from "MobileSelect";
 import FilterBox from "./FilterBox";
 import FilterBox2 from "./FilterBox2";
 import FileComponent from "./AddFile";
-import Background from "components/Background";
-import Container from "components/Containerv1";
-import Modal from "./RequestDoneModal";
 
 import * as PartnerAPI from "axios/Partner";
 
@@ -513,23 +510,10 @@ class RequestModal extends React.Component {
                   <main>
                     {/* <DetailContainerBox /> */}
                     <ContainerV2>
-                      <Category>
+                      {/* <Category>
                         <span>분야</span>
                         <div style={{ marginRight: "24px" }}>
-                          {/* <Select
-                        placeholder="대 카테고리"
-                        options={bigCategoryArray}
-                        getOptionLabel={(option) => option.label}
-                        // value={Partner.input_category}
-                        onChange={Partner.setDetailBigCategory}
-                        theme={(theme) => ({
-                          ...theme,
-                          colors: {
-                            ...theme.colors,
-                            neutral50: "#1A1A1A", // Placeholder color
-                          },
-                        })}
-                      /> */}
+                          
 
                           <Select
                             placeholder="대 카테고리"
@@ -548,14 +532,7 @@ class RequestModal extends React.Component {
                           />
                         </div>
                         <div>
-                          {/* <Select
-                        placeholder="소 카테고리"
-                        options={smallCategoryArray}
-                        getOptionLabel={(option) => option.label}
-                        // value={Partner.input_category}
-                        onChange={Partner.setDetailSmallCategory}
-                      /> */}
-
+                          
                           <Select
                             placeholder="소 카테고리"
                             options={Partner.category_middle_ary}
@@ -571,8 +548,8 @@ class RequestModal extends React.Component {
                             }
                           />
                         </div>
-                      </Category>
-                      <Location>
+                      </Category> */}
+                      {/* <Location>
                         <span>위치</span>
                         <Select
                           placeholder="전체지역"
@@ -581,7 +558,7 @@ class RequestModal extends React.Component {
                           // value={Partner.input_category}
                           onChange={Partner.setDetailCityCategory}
                         />
-                      </Location>
+                      </Location> */}
 
                       <Budget>
                         <span>예산</span>
@@ -687,19 +664,34 @@ class RequestModal extends React.Component {
             </InputBox> */}
                         </InputContainer>
                       </Budget>
-                      <Filter>
+                      {/* <Filter>
                         <span>필터</span>
                         <FilterBox
                           filter="filter"
                           purpose="request"
                           data={Partner.filterArray}
                         />
-                      </Filter>
+                      </Filter> */}
                       <Title>
                         <span>제목</span>
                         <div>
                           <input
                             placeholder="프로젝트 제목을 입력해 주세요. ex) 반려동물 샤워기"
+                            onBlur={(e) => {
+                              Partner.detailRequestTitle = e.target.value;
+                              console.log(toJS(Partner.detailRequestTitle));
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                      </Title>
+                      <Title>
+                        <span>내용</span>
+                        <div>
+                          <input
+                            placeholder="프로젝트 내용을 입력해 주세요."
                             onBlur={(e) => {
                               Partner.detailRequestTitle = e.target.value;
                               console.log(toJS(Partner.detailRequestTitle));
@@ -793,7 +785,7 @@ class RequestModal extends React.Component {
                 <main>
                   {/* <DetailContainerBox /> */}
                   <ContainerV2>
-                    <Category>
+                    {/* <Category>
                       <span>분야</span>
                       <div>
                         <div>
@@ -815,13 +807,7 @@ class RequestModal extends React.Component {
                           />
                         </div>
                         <div>
-                          {/* <Select
-                    placeholder="소 카테고리"
-                    options={smallCategoryArray}
-                    getOptionLabel={(option) => option.label}
-                    // value={Partner.input_category}
-                    onChange={Partner.setDetailSmallCategory}
-                  /> */}
+                         
 
                           <MobileSelect
                             placeholder="소 카테고리"
@@ -840,9 +826,9 @@ class RequestModal extends React.Component {
                           />
                         </div>
                       </div>
-                    </Category>
+                    </Category> */}
                     {console.log(toJS(this.props.Partner.filter_city_ary))}
-                    <Location>
+                    {/* <Location>
                       <span>위치</span>
                       <MobileSelect
                         placeholder="전체지역"
@@ -852,7 +838,7 @@ class RequestModal extends React.Component {
                         styles={mobileCustomStyles}
                         onChange={Partner.setDetailCityCategory}
                       />
-                    </Location>
+                    </Location> */}
 
                     <Budget>
                       <span>예산</span>
@@ -958,19 +944,34 @@ class RequestModal extends React.Component {
         </InputBox> */}
                       </InputContainer>
                     </Budget>
-                    <Filter>
+                    {/* <Filter>
                       <span>필터</span>
                       <FilterBox
                         filter="mobileFilter"
                         purpose="request"
                         data={Partner.filterArray}
                       />
-                    </Filter>
+                    </Filter> */}
                     <Title>
                       <span>제목</span>
                       <div>
                         <input
                           placeholder="프로젝트 제목을 입력해 주세요. ex) 반려동물 샤워기"
+                          onBlur={(e) => {
+                            Partner.detailRequestTitle = e.target.value;
+                            console.log(toJS(Partner.detailRequestTitle));
+                          }}
+                          onFocus={(e) => {
+                            e.target.placeholder = "";
+                          }}
+                        />
+                      </div>
+                    </Title>
+                    <Title>
+                      <span>내용</span>
+                      <div>
+                        <input
+                          placeholder="프로젝트 내용을 입력해 주세요."
                           onBlur={(e) => {
                             Partner.detailRequestTitle = e.target.value;
                             console.log(toJS(Partner.detailRequestTitle));
