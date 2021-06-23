@@ -42,32 +42,18 @@ class MobileBanner14Container extends React.Component {
           <span>이용 클라이언트</span>
         </Box>
 
-        <SliderContainer {...SlideSettings}>
-          <Item style={{ width: 81, display: "flex" }}>
-            <img src={logo_img1} />
-          </Item>
-          <Item style={{ width: 81, display: "flex" }}>
-            <img src={logo_img2} />
-          </Item>
-          <Item style={{ width: 81, display: "flex" }}>
-            <img src={logo_img3} />
-          </Item>
-          <Item style={{ width: 81, display: "flex" }}>
-            <img src={logo_img4} />
-          </Item>
-          <Item style={{ width: 81, display: "flex" }}>
-            <img src={logo_img5} />
-          </Item>
-          <Item style={{ width: 81, display: "flex" }}>
-            <img src={logo_img6} />
-          </Item>
-          <Item style={{ width: 81, display: "flex" }}>
-            <img src={logo_img7} />
-          </Item>
-          <Item style={{ width: 81, display: "flex" }}>
-            <img src={logo_img8} />
-          </Item>
-        </SliderContainer>
+        <Item style={{ display: "flex" }}>
+          <img src={logo_img1} />
+          <img src={logo_img2} />
+          <img src={logo_img3} />
+          <img src={logo_img4} />
+        </Item>
+        <Item style={{ display: "flex" }}>
+          <img src={logo_img5} />
+          <img src={logo_img6} />
+          <img src={logo_img7} />
+          <img src={logo_img8} />
+        </Item>
       </>
     );
   }

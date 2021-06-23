@@ -6,7 +6,7 @@ import * as Title from "components/Title";
 import Fade from "react-reveal/Fade";
 import Router from "next/router";
 
-const image1 = "/static/images/banner_dot.png";
+const image1 = "/static/images/banner_dot_mobile.png";
 const passImg = "/static/images/pass7.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 
@@ -30,17 +30,22 @@ class MobileBanner13Container extends React.Component {
               <Middle>
                 <p>대한민국 제조사 정보 여기 다 있다.</p>
               </Middle>
+              <Img>
+                <img src={image1} />
+              </Img>
               <Body>
                 <div>
                   <span>포트폴리오, 계약 후기 상세 조회 가능!</span>
                   <span>남동공단, 창원 등 전국 5000여 개 제조사 정보</span>
                   <span>바로 조회하세요</span>
                 </div>
-                <div onClick={() => Router.push("/producer")}>
-                  <span>업체 정보 조회</span>
-                  <span>
-                    <img src={passImg} style={{ width: "7px" }} />
-                  </span>
+                <div>
+                  <div onClick={() => Router.push("/producer")}>
+                    <span>업체 정보 조회</span>
+                    <span>
+                      <img src={passImg} style={{ width: "7px" }} />
+                    </span>
+                  </div>
                 </div>
               </Body>
             </div>
@@ -115,6 +120,12 @@ const Middle = styled(Title.FontSize26)`
     font-weight: bold;
   }
 `;
+const Img = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 44px;
+  margin-bottom: 62px;
+`;
 const Body = styled(Title.FontSize16)`
   // white-space:nowrap;
   font-weight: 500;
@@ -142,22 +153,29 @@ const Body = styled(Title.FontSize16)`
     // }
   }
   > div:nth-of-type(2) {
-    cursor: pointer;
-    margin-top: 36px;
-    border: 2px solid #0933b3;
-    border-radius: 4px;
-    // width: 216px;
-    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    > span:nth-of-type(1) {
-      margin-right: 15px;
-      font-size: 18px;
-      line-height: 52px;
-      letter-spacing: -0.65px;
-      color: #0933b3;
-      font-weight: 500;
+    > div {
+      cursor: pointer;
+      margin-top: 62px;
+      border: 2px solid #0933b3;
+      border-radius: 4px;
+      // width: 216px;
+      width: 189px;
+      height: 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      > span:nth-of-type(1) {
+        margin-right: 15px;
+        font-size: 18px;
+        line-height: 52px;
+        letter-spacing: -0.65px;
+        color: #0933b3;
+        font-weight: 500;
+      }
     }
   }
 `;

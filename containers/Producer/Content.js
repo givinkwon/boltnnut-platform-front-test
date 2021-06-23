@@ -495,7 +495,7 @@ const PageCount = styled.span`
 const Body = styled.div`
   display: flex;
   justify-content: center;
-  border-top: 1px solid #e1e2e4;
+  // border-top: 1px solid #e1e2e4;
   border-bottom: 1px solid #e1e2e4;
   // margin-top: 40px;
 `;
