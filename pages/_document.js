@@ -329,6 +329,27 @@ export default class MyDocument extends Document {
       `,
     };
   }
+
+  setBeusable(){
+    return{
+      __html:`
+      (function() {
+        var w = window;
+        var d = document;
+        var a =  "//rum.beusable.net/script/b210623e173415u761/7c70969d52";
+        w.__beusablerumclient__ = {
+            load : function(src){
+                var b = d.createElement("script");
+                b.src = src; b.async=true; b.type = "text/javascript";
+                d.getElementsByTagName("head")[0].appendChild(b);
+            }
+        };
+        w.__beusablerumclient__.load(a);
+    })
+    `
+    };
+  }
+
   // async componentDidMount() {
   //   TagManager.initialize(tagManagerArgs)
   // }
@@ -344,6 +365,11 @@ export default class MyDocument extends Document {
               async
               src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
             ></script>
+            
+            {/* Beusable */}
+            <script type="text/javascript">
+            
+            </script>
             <meta
               http-equiv="Content-Type"
               content="text/html; charset=utf-8"
@@ -475,6 +501,9 @@ export default class MyDocument extends Document {
           {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
           {/* ㅌㅌㅌ */}
           {/* <p class="g-signin2" data-onsuccess="batchGet"></p> */}
+
+
+
         </body>
       </html>
     );
