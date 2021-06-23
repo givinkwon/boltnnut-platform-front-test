@@ -29,18 +29,19 @@ class TabletBanner3Container extends React.Component {
         >
           <Fade bottom>
             <div>
-              <Header>무료 비교 견적 서비스</Header>
+              <Header>제조사 필터링 서비스</Header>
               <Middle style={{ fontSize: "32px" }}>
-                전문 제조사들에게 <br />
-                다양한 비교 견적
+                <span>원하는 생산품을 만들었던</span>
+                <span>업체 검색이 한 번에</span>
               </Middle>
 
               <Body>
                 {/* {ProjectCount}개 프로젝트 데이터를 학습한 AI 매칭 알고리즘이<br/>
                 내 의뢰의 전문가를 큐레이션해드립니다. */}
-                원하는 품질과 납기를 만족하는 제조사들을 <br />
-                선별해 다양한 비교견적을 쉽고 편리하게 <br />
-                받을 수 있습니다.
+                <span>내가 원하는 생산품을 만들었던 제조업체를</span>
+                <span>볼트앤너트를 통해 바로 검색하세요.</span>
+                <span>지역별, 입력별 필터를 통해 원하는 조건의</span>
+                <span>전문업체 검색이 가능합니다.</span>
               </Body>
             </div>
             <div>
@@ -81,6 +82,9 @@ const Middle = styled(Content.FontSize24)`
   letter-spacing: -1.4px;
   margin-bottom: 62px;
   font-size: 32px; !important;
+  >span{
+    display: block;
+  }
 `;
 
 const Body = styled(Content.FontSize17)`
@@ -92,4 +96,7 @@ const Body = styled(Content.FontSize17)`
   text-align: left;
   //color: #cedafe;
   color: #282c36;
+  > span {
+    display: block;
+  }
 `;

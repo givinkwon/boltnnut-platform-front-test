@@ -21,13 +21,13 @@ class ManufacturerDetailConatiner extends React.Component {
             <>
               <Background>
                 <Containerv1>
-                  {/* {Partner.reviewActiveIndex == 0 && ( */}
-                  <DetailCardContainer width={this.props.width} />
-                  {/* )} */}
+                  {Partner.reviewActiveIndex == 0 && (
+                    <DetailCardContainer width={this.props.width} />
+                  )}
 
-                  {/* {Partner.reviewActiveIndex == 1 && (
+                  {Partner.reviewActiveIndex == 1 && (
                     <ReviewContainer width={this.props.width} />
-                  )} */}
+                  )}
                 </Containerv1>
               </Background>
             </>

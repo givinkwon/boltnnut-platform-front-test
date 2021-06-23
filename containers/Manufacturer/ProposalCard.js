@@ -25,6 +25,9 @@ var availableFileType = [
   "mp4",
   "webm",
   "mp3",
+  "pptx",
+  "doc",
+  "html",
 ];
 @inject("Partner", "Auth")
 @observer
@@ -174,6 +177,7 @@ class ProposalCard extends React.Component {
         .split(".")
         [this.props.data.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
+      console.log(this.props.Partner.selectedIntroductionFileType);
       console.log(this.props.data);
       console.log(fileType);
       console.log(availableFileType);
@@ -656,6 +660,7 @@ const Card = styled.div`
     //height: 195px;
     margin-bottom: 34px;
     padding: 33px 0px 30px 34px;
+    padding: ${(props) => props.active ? "34px 1px 31px 35px" : "33px 0px 30px 34px"};
     box-sizing: border-box;
   }
 `;
