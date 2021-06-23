@@ -413,7 +413,6 @@ const ProfileMenu = styled.div`
       }
     }
   }
-
   > div:nth-of-type(3) {
     cursor: pointer;
     padding: 6px;
@@ -421,7 +420,6 @@ const ProfileMenu = styled.div`
     align-items: center;
     justify-content: center;
   }
-
   p {
     color: #414550;
     font-weight: 500;
@@ -478,17 +476,14 @@ const Menu = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: none;
     flex-direction: column;
-
     width: 100%;
     max-width: 380px;
     height: 100vh;
     background-color: ${DARKGRAY};
     position: absolute;
-
     top: 0;
     right: -100%;
     transition: 0.8s;
-
     z-index: 900;
     ${(props) =>
       props.is_open &&
@@ -580,7 +575,6 @@ const ButtonContainer = styled(Buttonv1)`
   font-weight: bold !important;
   line-height: 0.69 !important;
   letter-spacing: -0.4px !important;
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 110px;
     height: 41px;

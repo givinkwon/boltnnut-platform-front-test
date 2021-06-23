@@ -708,6 +708,13 @@ const SummaryBox = styled.div`
 `;
 
 const DOCViewer = styled(DocViewer)`
+
+> div:nth-of-type(1){
+  display: none;
+  z-index: 0;
+}
+
+
   > div:nth-of-type(2) {
     // border: 3px solid red;
 

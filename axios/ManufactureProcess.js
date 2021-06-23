@@ -26,7 +26,7 @@ export function saveSelect(req) {
 export function saveSearchText(req) {
   return axios({
     method: "POST",
-    url: `${ROOT_URL}/searchtext/`,
+    url: `${ROOT_URL}/searchtextlog/`,
     data: req.data ? req.data : null,
   });
 }

@@ -15,6 +15,8 @@ import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
 import SearchBar from "./SearchBar";
 
+import * as PartnerAPI from "axios/Partner";
+
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
 const pass4 = "static/images/pass4.png";
@@ -38,7 +40,7 @@ class ManufacturerContentContainer extends React.Component {
     Partner.currentPage = 1;
 
     console.log("did mount");
-
+    // PartnerAPI.getPPTInfo()
     Partner.getPartner();
 
     //console.log(toJS(Partner.filter_category_ary.length));
