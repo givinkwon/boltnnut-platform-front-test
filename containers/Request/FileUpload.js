@@ -635,6 +635,7 @@ class FileUploadContainer extends Component {
       });
 
       await ManufactureProcess.init();
+
       console.log(toJS(Project.projectDetailData.request_set[0].estimate_set));
 
       this.setState({

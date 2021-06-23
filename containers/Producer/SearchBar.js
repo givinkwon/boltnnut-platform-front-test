@@ -42,10 +42,15 @@ class SearchBarConatiner extends React.Component {
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
     console.log("click");
-    if (ManufactureProcess.loadingSaveSearchText) {
-      ManufactureProcess.saveSearchText(Partner.search_text);
-      ManufactureProcess.loadingSaveSearchText = false;
-      setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
+    if (Partner.search_text != "") {
+      if (ManufactureProcess.loadingSaveSearchText) {
+        ManufactureProcess.saveSearchText(Partner.search_text);
+        ManufactureProcess.loadingSaveSearchText = false;
+        setTimeout(
+          () => (ManufactureProcess.loadingSaveSearchText = true),
+          2000
+        );
+      }
     }
     Partner.currentPage = 1;
     Partner.resetDevCategory();
@@ -63,13 +68,15 @@ class SearchBarConatiner extends React.Component {
       console.log("Enter");
       console.log(e);
       console.log(toJS(Partner.search_text));
-      if (ManufactureProcess.loadingSaveSearchText) {
-        ManufactureProcess.saveSearchText(Partner.search_text);
-        ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(
-          () => (ManufactureProcess.loadingSaveSearchText = true),
-          2000
-        );
+      if (Partner.search_text != "") {
+        if (ManufactureProcess.loadingSaveSearchText) {
+          ManufactureProcess.saveSearchText(Partner.search_text);
+          ManufactureProcess.loadingSaveSearchText = false;
+          setTimeout(
+            () => (ManufactureProcess.loadingSaveSearchText = true),
+            2000
+          );
+        }
       }
 
       Partner.currentPage = 1;
