@@ -227,9 +227,11 @@ class ManufacturerContentContainer extends React.Component {
               <img src={pass4}/>
             </span> */}
                 </Header>
+
                 {Partner.partner_list &&
                   // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
+                    // console.log(toJS(Partner.partner_list));
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         {/* {Partner.category_ary[idx] &&
@@ -264,8 +266,8 @@ class ManufacturerContentContainer extends React.Component {
                             // mainCategory={Project.main_category_name[idx]}
                             // newData={Project.data_dt[idx]}
                             // checkTotal={Project.filter_price}
-                            dropDown={this.state.dropDownActive}
-                            dropDownIdx={this.state.dropDownIdx}
+                            // dropDown={this.state.dropDownActive}
+                            // dropDownIdx={this.state.dropDownIdx}
                             handleIntersection={this.handleIntersection}
                             customer="partner"
                           />
@@ -493,7 +495,7 @@ const PageCount = styled.span`
 const Body = styled.div`
   display: flex;
   justify-content: center;
-  border-top: 1px solid #e1e2e4;
+  // border-top: 1px solid #e1e2e4;
   border-bottom: 1px solid #e1e2e4;
   // margin-top: 40px;
 `;

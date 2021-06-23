@@ -660,7 +660,6 @@ const Card = styled.div`
     //height: 195px;
     margin-bottom: 34px;
     padding: 33px 0px 30px 34px;
-    padding: ${(props) => props.active ? "34px 1px 31px 35px" : "33px 0px 30px 34px"};
     box-sizing: border-box;
   }
 `;

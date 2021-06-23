@@ -29,6 +29,9 @@ var availableFileType = [
   "mp4",
   "webm",
   "mp3",
+  "pptx",
+  "doc",
+  "html",
 ];
 @inject("Partner", "Auth")
 @observer
@@ -174,7 +177,7 @@ class ProposalCard extends React.Component {
   };
   cardClick = async (e) => {
     e.stopPropagation();
-    const { Partner } = this.props;
+    const { data, Partner } = this.props;
     if (this.props.Auth && this.props.Auth.logged_in_user) {
       if (!this.props.data.file) {
         alert("해당 회사의 소개서가 존재하지 않습니다!");
@@ -196,6 +199,13 @@ class ProposalCard extends React.Component {
         // Partner.partner_detail_list = [];
         // // await Partner.partner_detail_list.push({ item: data });
         // await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+
+        Partner.partner_detail_list = [];
+        await Partner.partner_detail_list.push({ item: data });
+
+        Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id);
+        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+
         Router.push("/producer/detail");
       } else {
         console.log("file download");
@@ -248,6 +258,9 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
+              onClick={(e) => {
+                this.cardClick(e);
+              }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -419,10 +432,10 @@ class ProposalCard extends React.Component {
                   </div> */}
                 </AdditionBox>
               </BasicInfo>
-              {this.props.dropDown &&
+              {/* {this.props.dropDown &&
                 this.props.dropDownIdx === this.props.idx && (
                   <DetailInfo onClick={(e) => e.stopPropagation()}>
-                    {/* <h1>DetailInfo 입니다</h1> */}
+                    
                     <NoPortfolio>
                       <div
                         onClick={(e) => {
@@ -432,10 +445,7 @@ class ProposalCard extends React.Component {
                         <span>회사소개서 보기</span>
                       </div>
                     </NoPortfolio>
-                    {/* <Portfolio
-                      width={width}
-                      style={{ paddingRight: "34px", boxSizing: "border-box" }}
-                    /> */}
+                    
                     <DetailInfoContent>
                       <div>
                         <label>
@@ -461,7 +471,7 @@ class ProposalCard extends React.Component {
                       </div>
                     </DetailInfoContent>
                   </DetailInfo>
-                )}
+                )} */}
             </Card>
 
             {Partner.requestModalActive && (
@@ -509,6 +519,9 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
+              onClick={(e) => {
+                this.cardClick(e);
+              }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -551,10 +564,10 @@ class ProposalCard extends React.Component {
                   </div>
                 </Phone>
               </Main>
-              {this.props.dropDown &&
+              {/* {this.props.dropDown &&
                 this.props.dropDownIdx === this.props.idx && (
                   <DetailInfo onClick={(e) => e.stopPropagation()}>
-                    {/* <h1>DetailInfo 입니다</h1> */}
+                    
                     <NoPortfolio>
                       <div
                         onClick={(e) => {
@@ -618,7 +631,7 @@ class ProposalCard extends React.Component {
                       </button>
                     </ButtonBox>
                   </DetailInfo>
-                )}
+                )} */}
             </Card>
             {this.props.Partner.ReviewActive &&
               this.props.Partner.ReviewActiveIndex === idx && (
