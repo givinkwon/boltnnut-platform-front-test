@@ -49,11 +49,11 @@ class MyProject extends React.Component {
     await Project.getProjectDetail(data.project);
 
     // await Project.getProjectDetail(data.project);
-    console.log("adsfsdafad");
-    console.log(toJS(Project.projectDetailData));
+    // console.log("adsfsdafad");
+    // console.log(toJS(Project.projectDetailData));
 
     // console.log(this.props.Partner.clientInfo.user.phone);
-    console.log(toJS(Project.projectDetailData));
+    // console.log(toJS(Project.projectDetailData));
     // await this.props.Partner.getClientInfo(
     //   Project.projectDetailData.request_set[0].client
     // );
@@ -68,7 +68,7 @@ class MyProject extends React.Component {
         // clientPhone: this.props.Partner.clientInfo.user.phone,
         answerId: data.id,
       });
-      console.log(partnerprojectlist);
+      // console.log(partnerprojectlist);
       this.setState({ Partnerprojectlist: partnerprojectlist });
     }
     // await this.props.Partner.getClientInfo(

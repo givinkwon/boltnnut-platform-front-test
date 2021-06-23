@@ -91,52 +91,54 @@ class SearchBarConatiner extends React.Component {
   render() {
     const { Partner, Request } = this.props;
     return (
-      <Form>
-        <Box
-          active={this.state.list === true}
-          onClick={() =>
-            this.state.list ? this.selectOut() : this.selectClick()
-          }
-          onBlur={() => this.selectOut()}
-        >
-          {/* <input
+      <>
+        <Form>
+          <Box
+            active={this.state.list === true}
+            onClick={() =>
+              this.state.list ? this.selectOut() : this.selectClick()
+            }
+            onBlur={() => this.selectOut()}
+          >
+            {/* <input
             style={{ display: "none" }}
             value={Request.select_big ? Request.select_big.maincategory : ""}
             class="Input"
           /> */}
-          <Select
-            placeholder="전체"
-            options={categoryArray}
-            getOptionLabel={(option) => option.label}
-            value={Partner.input_category}
-            onChange={Partner.setCategory}
-          />
-        </Box>
-        <SearchBar>
-          <input
-            placeholder="원하는 분야의 제조업체를 검색하세요"
-            // value={Partner.search_text}
-            onFocus={(e) => (e.target.placeholder = "")}
-            onBlur={(e) =>
-              (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
-            }
-            onChange={this.searchText}
-            class="Input"
-            onKeyDown={this.handleKeyDown}
-          />
-        </SearchBar>
-        <SearchButton
-          width={80}
-          borderColor={PRIMARY2}
-          borderRadius={0}
-          onClick={this.search}
-        >
-          <img
-            style={{ width: 18, height: 18 }}
-            src="/static/images/search_cobalt-blue.png"
-          />
-        </SearchButton>
-      </Form>
+            <Select
+              placeholder="전체"
+              options={categoryArray}
+              getOptionLabel={(option) => option.label}
+              value={Partner.input_category}
+              onChange={Partner.setCategory}
+            />
+          </Box>
+          <SearchBar>
+            <input
+              placeholder="원하는 분야의 제조업체를 검색하세요"
+              // value={Partner.search_text}
+              onFocus={(e) => (e.target.placeholder = "")}
+              onBlur={(e) =>
+                (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
+              }
+              onChange={this.searchText}
+              class="Input"
+              onKeyDown={this.handleKeyDown}
+            />
+          </SearchBar>
+          <SearchButton
+            width={80}
+            borderColor={PRIMARY2}
+            borderRadius={0}
+            onClick={this.search}
+          >
+            <img
+              style={{ width: 18, height: 18 }}
+              src="/static/images/search_cobalt-blue.png"
+            />
+          </SearchButton>
+        </Form>
+      </>
     );
   }
 }

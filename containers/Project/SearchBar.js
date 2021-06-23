@@ -1,13 +1,13 @@
 import React from "react";
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import SelectComponent from 'Select';
+import SelectComponent from "Select";
 
 import ButtonComponent from "components/Buttonv2";
 
-import Background from 'components/Background';
-import Container from 'components/Containerv1';
-import {toJS} from "mobx";
+import Background from "components/Background";
+import Container from "components/Containerv1";
+import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
 
@@ -16,7 +16,6 @@ const search_img = "static/images/manufacturer/search.png";
 
 @inject("Auth", "Project")
 @observer
-
 class SearchBarConatiner extends React.Component {
   state = {
     search: "",
@@ -27,7 +26,6 @@ class SearchBarConatiner extends React.Component {
   };
 
   filterActiveHandler = () => {
-
     if (this.state.filter_active) {
       this.setState({ filter_active: false });
     } else {
@@ -37,54 +35,51 @@ class SearchBarConatiner extends React.Component {
 
   activeHandler = (idx) => {
     const { Project } = this.props;
-    if(idx=== Project.radiobox_checked_idx) {
+    if (idx === Project.radiobox_checked_idx) {
       // console.log("equal")
-       return true; 
-    } else { 
-      return false; 
+      return true;
+    } else {
+      return false;
     }
   };
   onClickHandler = (item, idx) => {
-    const { Project } = this.props       
+    const { Project } = this.props;
     console.log(idx);
-    if(Project.radiobox_checked_idx !== idx){        
-      this.setState({index : idx})    
-      Project.radiobox_checked_idx = idx
-      Project.filter = item.name     
+    if (Project.radiobox_checked_idx !== idx) {
+      this.setState({ index: idx });
+      Project.radiobox_checked_idx = idx;
+      Project.filter = item.name;
       Project.project_next = null;
       Project.project_count = null;
-// this.count = 0;
-      Project.currentPage = 1;     
-      console.log(Project.filter)
-      Project.getProjectByPrice(Project.search_text)
+      // this.count = 0;
+      Project.currentPage = 1;
+      console.log(Project.filter);
+      Project.getProjectByPrice(Project.search_text);
     }
   };
 
-
   selectClick = () => {
-    const{list} = this.state;
+    const { list } = this.state;
     this.setState({ list: true });
+  };
 
-  }
-
-  selectOut= () =>{
-    const{list} = this.state;
+  selectOut = () => {
+    const { list } = this.state;
     this.setState({ list: false });
-  }
-
+  };
 
   searchText = (e) => {
-    const { Project } = this.props
+    const { Project } = this.props;
     // this.props.Partner.search_text = e.target.value;
-    this.setState({search : e.target.value})
-    Project.search_text = e.target.value
-    console.log(e.target)
+    this.setState({ search: e.target.value });
+    Project.search_text = e.target.value;
+    console.log(e.target);
   };
   search = () => {
-    const { Project } = this.props
- 
-    Project.currentPage = 1
-    Project.getProjectByPrice(Project.search_text)
+    const { Project } = this.props;
+
+    Project.currentPage = 1;
+    Project.getProjectByPrice(Project.search_text);
   };
   closeModal = () => {
     this.setState({
@@ -93,10 +88,10 @@ class SearchBarConatiner extends React.Component {
     });
   };
   handleKeyDown = (e) => {
-    const { Project } = this.props
-    if (e.key === "Enter") {      
-      Project.currentPage = 1
-      Project.getProjectByPrice(Project.search_text)
+    const { Project } = this.props;
+    if (e.key === "Enter") {
+      Project.currentPage = 1;
+      Project.getProjectByPrice(Project.search_text);
     }
   };
   async componentDidMount() {
@@ -111,7 +106,7 @@ class SearchBarConatiner extends React.Component {
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
-  render() {    
+  render() {
     const { Project } = this.props;
     const { width } = this.state;
     const customStyles = {
@@ -149,106 +144,129 @@ class SearchBarConatiner extends React.Component {
       singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;
         const transition = "opacity 300ms";
-    
+
         return { ...provided, opacity, transition };
       },
     };
-    
 
     return (
       <>
-      {width > 768 ? 
-      <Form>
-        <Box active={this.state.list===true} onClick ={()=>this.state.list ? this.selectOut():this.selectClick()}  onBlur = {()=>this.selectOut()}>
-        <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>       
-          <Select placeholder='전체' options={categoryArray}  getOptionLabel={(option) => option.label} value={Project.input_category} onChange={Project.setCategory}/>    
-        </Box>
-          <SearchBar>        
+        {width > 768 ? (
+          <Form>
+            <Box
+              active={this.state.list === true}
+              onClick={() =>
+                this.state.list ? this.selectOut() : this.selectClick()
+              }
+              onBlur={() => this.selectOut()}
+            >
+              <input
+                style={{ display: "none" }}
+                value={
+                  Request.select_big ? Request.select_big.maincategory : ""
+                }
+                class="Input"
+              />
+              <Select
+                placeholder="전체"
+                options={categoryArray}
+                getOptionLabel={(option) => option.label}
+                value={Project.input_category}
+                onChange={Project.setCategory}
+              />
+            </Box>
+            <SearchBar>
               <input
                 placeholder=""
                 // value={Partner.search_text}
-                onFocus={(e) => e.target.placeholder = ''}
-                onBlur={(e) => e.target.placeholder = ''}
-                onChange={this.searchText}                
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) => (e.target.placeholder = "")}
+                onChange={this.searchText}
                 class="Input"
                 onKeyDown={this.handleKeyDown}
-              />            
-          </SearchBar>
-          <SearchButton              
-                width={80}
-                borderColor={PRIMARY2}
-                borderRadius={0}
-                onClick={this.search}                
-              >
-                <img
-                  style={{ width: 18, height: 18}}
-                  src="/static/images/search_cobalt-blue.png"
-                />
-          </SearchButton>
-      </Form>
-      :
-      <Form active = {this.state.filter_active}>
-        <SearchFilterBox>
-          <SearchBar>
-            <div>
-            <input style = {{display: 'none'}} class="Input"/>       
-            <Select styles = {customStyles} placeholder='전체' options={categoryArray}  getOptionLabel={(option) => option.label} value={Project.input_category} onChange={Project.setCategory}/>
-            </div>
-            <div>
-            <input
-              onChange={this.searchText}                
-              class="Input"
-              onKeyDown={this.handleKeyDown}
-            />     
-            </div>       
-            <div>
-            <SearchButton              
-                  width={50}
-                  style={{ height: "36px", width: "20px", margin: "0 auto" }}
-                  borderColor={PRIMARY2}
-                  borderRadius={0}
-                  onClick={this.search}                
-                >
-                  <img
-                    style={{ width: 18, height: 18}}
-                    src= {search_img}
-                  />
+              />
+            </SearchBar>
+            <SearchButton
+              width={80}
+              borderColor={PRIMARY2}
+              borderRadius={0}
+              onClick={this.search}
+            >
+              <img
+                style={{ width: 18, height: 18 }}
+                src="/static/images/search_cobalt-blue.png"
+              />
             </SearchButton>
-            </div>
-          </SearchBar>
-          <Filter onClick={() => {
-              this.filterActiveHandler();
-            }}>
-              <img src={filter_img} />
-          </Filter>
-        </SearchFilterBox>
-        
-        <FilterContainer
-          style={{ flex: "0 auto" }}
-          active={this.state.filter_active}
-        >
-          {request_data.map((item, idx) => {
-            return (
-              <>
-              {console.log(toJS(item))}
-                <FilterContent
-                  onClick={() => {
-                    this.onClickHandler(item, item.id);
-                  }}
-                  active={this.activeHandler(item.id)}
-                >
-                  <div active={this.activeHandler(item.id)}>
-                    <div active={this.activeHandler(item.id)}></div>
-                  </div>
-                  <span>{item.name}</span>
-                </FilterContent>
-              </>
-            );
-          })}
-        </FilterContainer>
-      </Form>
-    }
-    </>
+          </Form>
+        ) : (
+          <Form active={this.state.filter_active}>
+            <SearchFilterBox>
+              <SearchBar>
+                <div>
+                  <input style={{ display: "none" }} class="Input" />
+                  <Select
+                    styles={customStyles}
+                    placeholder="전체"
+                    options={categoryArray}
+                    getOptionLabel={(option) => option.label}
+                    value={Project.input_category}
+                    onChange={Project.setCategory}
+                  />
+                </div>
+                <div>
+                  <input
+                    onChange={this.searchText}
+                    class="Input"
+                    onKeyDown={this.handleKeyDown}
+                  />
+                </div>
+                <div>
+                  <SearchButton
+                    width={50}
+                    style={{ height: "36px", width: "20px", margin: "0 auto" }}
+                    borderColor={PRIMARY2}
+                    borderRadius={0}
+                    onClick={this.search}
+                  >
+                    <img style={{ width: 18, height: 18 }} src={search_img} />
+                  </SearchButton>
+                </div>
+              </SearchBar>
+              <Filter
+                onClick={() => {
+                  this.filterActiveHandler();
+                }}
+              >
+                <img src={filter_img} />
+              </Filter>
+            </SearchFilterBox>
+
+            <FilterContainer
+              style={{ flex: "0 auto" }}
+              active={this.state.filter_active}
+            >
+              {request_data.map((item, idx) => {
+                return (
+                  <>
+                    {/* {console.log(toJS(item))} */}
+                    <FilterContent
+                      onClick={() => {
+                        this.onClickHandler(item, item.id);
+                      }}
+                      active={this.activeHandler(item.id)}
+                    >
+                      <div active={this.activeHandler(item.id)}>
+                        <div active={this.activeHandler(item.id)}></div>
+                      </div>
+                      <span>{item.name}</span>
+                    </FilterContent>
+                  </>
+                );
+              })}
+            </FilterContainer>
+          </Form>
+        )}
+      </>
     );
   }
 }
@@ -279,9 +297,9 @@ const request_data = [
 ];
 
 const categoryArray = [
-  {label: '전체', value: '전체'},
-  {label: '제목', value: '제목'},
-  {label: '내용', value: '내용'},  
+  { label: "전체", value: "전체" },
+  { label: "제목", value: "제목" },
+  { label: "내용", value: "내용" },
 ];
 
 const SearchBar = styled.div`
@@ -406,68 +424,71 @@ const SearchButton = styled(ButtonComponent)`
       display: none;
     }
   }
-`
+`;
 
 const Select = styled(SelectComponent)`
-box-sizing: border-box;
-option{
-  color: #c1bfbf;
-}
-
-@media (min-width: 0px) and (max-width: 767.98px) {
-  margin: 0;
-  padding: 0;
-  margin-right: 8px;
-  width: 100%;
-  height: 36px;
-  object-fit: contain;
-  background-color: #ffffff;
-  position: relative;
-}
-@media (min-width: 768px) and (max-width: 1299.98px) {
-  width: 140px;
-  height: 36px;
-  option{
+  box-sizing: border-box;
+  option {
     color: #c1bfbf;
   }
-}
 
-@media (min-width: 1300px) {
-  width: 180px;
-  height: 36px;
-  option{
-    color: #c1bfbf;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin: 0;
+    padding: 0;
+    margin-right: 8px;
+    width: 100%;
+    height: 36px;
+    object-fit: contain;
+    background-color: #ffffff;
+    position: relative;
   }
-}
+  @media (min-width: 768px) and (max-width: 1299.98px) {
+    width: 140px;
+    height: 36px;
+    option {
+      color: #c1bfbf;
+    }
+  }
 
-`
+  @media (min-width: 1300px) {
+    width: 180px;
+    height: 36px;
+    option {
+      color: #c1bfbf;
+    }
+  }
+`;
 
 const Box = styled.div`
-cursor: pointer;
-  ${ props => props.active && css`
-  svg{
-    @keyframes select{
-      0% {
-        transform: skewY(-180deg);
-      }
-    }
+  cursor: pointer;
+  ${(props) =>
+    props.active &&
+    css`
+      svg {
+        @keyframes select {
+          0% {
+            transform: skewY(-180deg);
+          }
+        }
 
-    animation: select 0.4s ease-out;
-    transform: rotate(-180deg);
-  }
-  `}
-
-  ${props => !props.active && css`
-  svg{
-    @keyframes selectOut{
-      0% {
+        animation: select 0.4s ease-out;
         transform: rotate(-180deg);
       }
-    }
-    animation: selectOut 0.4s ;
-  }
-`}
-`
+    `}
+
+  ${(props) =>
+    !props.active &&
+    css`
+      svg {
+        @keyframes selectOut {
+          0% {
+            transform: rotate(-180deg);
+          }
+        }
+        animation: selectOut 0.4s;
+      }
+    `}
+`;
 const Filter = styled.div`
   //border: 2px solid red;
 

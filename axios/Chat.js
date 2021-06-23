@@ -19,10 +19,13 @@ export function saveFile(req) {
     // headers: req.headers ? req.headers : null,
   });
 }
-export function loadChat(id) {
+export function loadChat(req) {
+  // console.log(`${ROOT_URL}/chatlog/?answer=${req.extraUrl}`);
   return axios({
     method: "GET",
-    url: `${ROOT_URL}/chatlog/?answer=${id}&ordering=-id`,
+    // url: `${ROOT_URL}/chatlog/?answer=${req.params.id}&ordering=-id`,
+    url: `${ROOT_URL}/chatlog/?answer=${req.extraUrl}`,
+    params: req.params ? req.params : null,
     // order: [["id", "DESC"]], //DESC
   });
 }
