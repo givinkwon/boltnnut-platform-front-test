@@ -101,7 +101,7 @@ export default class MyDocument extends Document {
         // var formattedJson = JSON.stringify(response.result, null, 2);
         var formattedJson = response.result;
         // console.log(formattedJson.reports)
-        console.log(formattedJson.reports[0].data.rows[0].dimensions[0]);
+        console.log(formattedJson.reports[0].data.rows[0].dimensions);
         getUserActivity(formattedJson.reports[0].data.rows[0].dimensions[0]);
         // document.getElementById('query-output').value = formattedJson;
       }
@@ -271,16 +271,22 @@ export default class MyDocument extends Document {
   setGoogleTags() {
     return {
       __html: `
+      window.dataLayer = window.dataLayer || [];
       
-       window.dataLayer = window.dataLayer || [];
-       
-       function gtag(){dataLayer.push(arguments);
-
+      function gtag(){dataLayer.push(arguments);
       }
-       gtag('js', new Date());
-       gtag('config', 'UA-162026812-1', {
+      gtag('js', new Date());
+      gtag('config', 'UA-162026812-1', {
           'custom_map': {'dimension2': 'clientId' }
-       } );
+      } );
+
+      function MyDataLayerPush(object){
+        if(window.location.hostname!='localhost')
+        {
+          dataLayer.push({event:object.event});
+        }
+      }
+      
      `,
     };
   }
@@ -409,7 +415,15 @@ export default class MyDocument extends Document {
           {/* Google Tag Manager */}
           <script
             dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PWFPPZ5');`,
+              __html: `
+              (function(w,d,s,l,i){
+                w[l]=w[l]||[];w[l].push({
+                  'gtm.start':new Date().getTime(),event:'gtm.js'
+                });
+
+                var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                
+              })(window,document,'script','dataLayer','GTM-PWFPPZ5');`,
             }}
             async
           ></script>

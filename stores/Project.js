@@ -181,19 +181,19 @@ class Project {
       });
   };
   @action getProjectDetail = async (id) => {
-    console.log(id);
+    // console.log(id);
     const req = {
       id: id,
     };
-    console.log(req);
+    // console.log(req);
     await ProjectAPI.getProjectDetail(req)
       .then((res) => {
         this.projectDetailData = res.data;
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((e) => {
-        console.log(e);
-        console.log(e.response);
+        // console.log(e);
+        // console.log(e.response);
       });
   };
 

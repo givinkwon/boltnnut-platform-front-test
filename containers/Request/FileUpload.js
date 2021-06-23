@@ -437,6 +437,7 @@ class FileUploadContainer extends Component {
           console.log("create: ", res);
           ManufactureProcess.projectSubmitLoading = true;
           this.props.Request.newIndex = 1;
+          MyDataLayerPush({ event: "request_Drawing" });
           ManufactureProcess.reset();
           // dataLayer.push({ event: "request_Drawing" });
         })
