@@ -271,6 +271,7 @@ export default class MyDocument extends Document {
   setGoogleTags() {
     return {
       __html: `
+      
       window.dataLayer = window.dataLayer || [];
       
       function gtag(){dataLayer.push(arguments);
@@ -339,20 +340,20 @@ export default class MyDocument extends Document {
   setBeusable() {
     return {
       __html: `
-      (function() {
-        var w = window;
-        var d = document;
-        var a =  "//rum.beusable.net/script/b210623e173415u761/7c70969d52";
-        w.__beusablerumclient__ = {
+        (function() {
+          var w = window;
+          var d = document;
+          var a =  "//rum.beusable.net/script/b210623e173415u761/7c70969d52";
+          w.__beusablerumclient__ = {
             load : function(src){
-                var b = d.createElement("script");
-                b.src = src; b.async=true; b.type = "text/javascript";
-                d.getElementsByTagName("head")[0].appendChild(b);
+              var b = d.createElement("script");
+              b.src = src; b.async=true; b.type = "text/javascript";
+              d.getElementsByTagName("head")[0].appendChild(b);
             }
-        };
-        w.__beusablerumclient__.load(a);
-    })
-    `,
+          };
+          w.__beusablerumclient__.load(a);
+      })();
+      `,
     };
   }
 
@@ -463,6 +464,7 @@ export default class MyDocument extends Document {
           </noscript>
           <Main />
           <script dangerouslySetInnerHTML={this.setChannelTalk()} />
+          <script dangerouslySetInnerHTML={this.setBeusable()} />
           <NextScript />
           {/* GA Settings*/}
           <script
