@@ -107,7 +107,7 @@ class SearchBarConatiner extends React.Component {
     return (
       <>
         <Form>
-          <Box
+          {/* <Box
             active={this.state.list === true}
             onClick={() =>
               this.state.list ? this.selectOut() : this.selectClick()
@@ -119,14 +119,14 @@ class SearchBarConatiner extends React.Component {
             value={Request.select_big ? Request.select_big.maincategory : ""}
             class="Input"
           /> */}
-            <Select
+            {/* <Select
               placeholder="전체"
               options={categoryArray}
               getOptionLabel={(option) => option.label}
               value={Partner.input_category}
               onChange={Partner.setCategory}
             />
-          </Box>
+          </Box> */}
           <SearchBar>
             <input
               placeholder="원하는 분야의 제조업체를 검색하세요"
@@ -161,7 +161,7 @@ export default SearchBarConatiner;
 
 const categoryArray = [
   { label: "전체", value: "전체" },
-  { label: "만든 제품", value: "만든 제품" },
+  // { label: "만든 제품", value: "만든 제품" },
   // { label: "제목", value: "제목" },
   // { label: "내용", value: "내용" },
 ];

@@ -130,12 +130,12 @@ class Partner {
 
   @observable filterArray = [
     // { id: 1, name: "전체", checked: false },
-    { id: 1, name: "샘플제작", checked: false },
-    { id: 2, name: "OEM", checked: false },
-    { id: 3, name: "ODM", checked: false },
-    { id: 4, name: "금형/사출", checked: false },
+    { id: 1, name: "신제품개발", checked: false },
+    { id: 2, name: "OEM 구매", checked: false },
+    { id: 3, name: "금형/양산", checked: false },
+    { id: 4, name: "단품가공", checked: false },
     { id: 5, name: "대량가공", checked: false },
-    { id: 6, name: "기타", checked: false },
+    // { id: 6, name: "기타", checked: false },
   ];
 
   @observable detailFilterArray = [
@@ -145,7 +145,7 @@ class Partner {
     { id: 3, name: "ODM", checked: false },
     { id: 4, name: "금형/사출", checked: false },
     { id: 5, name: "대량가공", checked: false },
-    { id: 6, name: "기타", checked: false },
+    // { id: 6, name: "기타", checked: false },
   ];
 
   @observable partnerName = "";

@@ -570,6 +570,76 @@ class RequestModal extends React.Component {
                         />
                       </Location> */}
 
+                      
+                      {/* <Filter>
+                        <span>필터</span>
+                        <FilterBox
+                          filter="filter"
+                          purpose="request"
+                          data={Partner.filterArray}
+                        />
+                      </Filter> */}
+                       <Email>
+                        <span>이메일</span>
+                        <div>
+                          <input
+                            placeholder="이메일을 입력해주세요."
+                            onBlur={(e) => {
+                              Partner.detailRequestEmail = e.target.value;
+                              console.log(toJS(Partner.detailRequestEmail));
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                        
+                      </Email>
+                      <Phone>
+                        <span>전화번호</span>
+                        <div>
+                          <input
+                            placeholder="전화번호를 입력해주세요."
+                            onBlur={(e) => {
+                              Partner.detailRequestPhone = e.target.value;
+                              console.log(toJS(Partner.detailRequestPhone));
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                      </Phone>
+                      <Title>
+                        <span>제목</span>
+                        <div>
+                          <input
+                            placeholder="프로젝트 제목을 입력해 주세요. ex) 반도체 장비 부품 가공 업체 수배"
+                            onBlur={(e) => {
+                              Partner.detailRequestTitle = e.target.value;
+                              console.log(toJS(Partner.detailRequestTitle));
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                      </Title>
+                      <Title>
+                        <span>내용</span>
+                        <div>
+                          <input
+                            placeholder="프로젝트 내용을 입력해 주세요."
+                            onBlur={(e) => {
+                              Partner.detailRequestTitle = e.target.value;
+                              console.log(toJS(Partner.detailRequestTitle));
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                      </Title>
                       <Budget>
                         <span>예산</span>
                         <FilterBox2 data={viewArray} width={this.props.width} />
@@ -674,74 +744,7 @@ class RequestModal extends React.Component {
             </InputBox> */}
                         </InputContainer>
                       </Budget>
-                      {/* <Filter>
-                        <span>필터</span>
-                        <FilterBox
-                          filter="filter"
-                          purpose="request"
-                          data={Partner.filterArray}
-                        />
-                      </Filter> */}
-                      <Title>
-                        <span>제목</span>
-                        <div>
-                          <input
-                            placeholder="프로젝트 제목을 입력해 주세요. ex) 반려동물 샤워기"
-                            onBlur={(e) => {
-                              Partner.detailRequestTitle = e.target.value;
-                              console.log(toJS(Partner.detailRequestTitle));
-                            }}
-                            onFocus={(e) => {
-                              e.target.placeholder = "";
-                            }}
-                          />
-                        </div>
-                      </Title>
-                      <Title>
-                        <span>내용</span>
-                        <div>
-                          <input
-                            placeholder="프로젝트 내용을 입력해 주세요."
-                            onBlur={(e) => {
-                              Partner.detailRequestTitle = e.target.value;
-                              console.log(toJS(Partner.detailRequestTitle));
-                            }}
-                            onFocus={(e) => {
-                              e.target.placeholder = "";
-                            }}
-                          />
-                        </div>
-                      </Title>
-                      <Email>
-                        <span>이메일</span>
-                        <div>
-                          <input
-                            placeholder="이메일을 입력해주세요."
-                            onBlur={(e) => {
-                              Partner.detailRequestEmail = e.target.value;
-                              console.log(toJS(Partner.detailRequestEmail));
-                            }}
-                            onFocus={(e) => {
-                              e.target.placeholder = "";
-                            }}
-                          />
-                        </div>
-                      </Email>
-                      <Phone>
-                        <span>전화번호</span>
-                        <div>
-                          <input
-                            placeholder="전화번호를 입력해주세요."
-                            onBlur={(e) => {
-                              Partner.detailRequestPhone = e.target.value;
-                              console.log(toJS(Partner.detailRequestPhone));
-                            }}
-                            onFocus={(e) => {
-                              e.target.placeholder = "";
-                            }}
-                          />
-                        </div>
-                      </Phone>
+                     
                       <File active={Partner.filterFile}>
                         <span>참고파일</span>
                         <FileComponent file={true} />
@@ -966,7 +969,7 @@ class RequestModal extends React.Component {
                       <span>제목</span>
                       <div>
                         <input
-                          placeholder="프로젝트 제목을 입력해 주세요. ex) 반려동물 샤워기"
+                          placeholder="프로젝트 제목을 입력해 주세요. ex) 반도체 장비 부품 가공 업체 수배"
                           onBlur={(e) => {
                             Partner.detailRequestTitle = e.target.value;
                             console.log(toJS(Partner.detailRequestTitle));
