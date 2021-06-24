@@ -6,12 +6,30 @@ import Footer from 'components/Footer'
 
 import NoticeConatiner from 'containers/Notice'
 import {inject, observer} from "mobx-react";
+import * as AccountAPI from "axios/Account";
 
 @inject('Notice')
 @observer
 class Index extends React.Component {
   componentDidMount() {
     this.props.Notice.init()
+    // page ip 기록
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href)
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   }
 
   render(){

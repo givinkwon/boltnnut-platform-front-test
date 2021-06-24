@@ -9,6 +9,7 @@ import Footer from 'components/Footer'
 import Spinner from 'components/Spinner'
 
 import PartnerConatiner from 'containers/Partner'
+import * as AccountAPI from "axios/Account";
 
 @inject('Counter', 'Post', 'Loading')
 @observer
@@ -24,6 +25,24 @@ class Partner extends React.Component {
      //창 크기
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+    // page ip 기록
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href)
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
