@@ -40,6 +40,7 @@ class Banner0Container extends React.Component {
     projectCount: 0,
   };
   componentDidMount() {
+    console.log(window.location.hostname);
     const { Proposal, Partner } = this.props;
     // Proposal.loadProjects();
     // this.setState({projectCount:this.props.Proposal.projects_count})

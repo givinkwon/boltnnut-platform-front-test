@@ -437,6 +437,7 @@ class FileUploadContainer extends Component {
           console.log("create: ", res);
           ManufactureProcess.projectSubmitLoading = true;
           this.props.Request.newIndex = 1;
+          MyDataLayerPush({ event: "request_Drawing" });
           ManufactureProcess.reset();
           // dataLayer.push({ event: "request_Drawing" });
         })
@@ -634,6 +635,7 @@ class FileUploadContainer extends Component {
       });
 
       await ManufactureProcess.init();
+
       console.log(toJS(Project.projectDetailData.request_set[0].estimate_set));
 
       this.setState({
@@ -1301,6 +1303,7 @@ class FileUploadContainer extends Component {
               // console.log("11");
 
               loadingCounter++;
+              console.log(toJS(res))
               this.setState({
                 fileList: fileList.push({
                   submitFile: res.data.data,
@@ -1993,6 +1996,7 @@ class FileUploadContainer extends Component {
                           <StlBox>{data.fileName}</StlBox>
                           <ColumnBox>
                             <ManufactureBox>
+                              {console.log(toJS(data))}
                               <Select // defaultValue={ManufactureProcess.ManufactureProcessList[2]}
                                 defaultValue={
                                   ManufactureProcess.categoryDefaultValue.big

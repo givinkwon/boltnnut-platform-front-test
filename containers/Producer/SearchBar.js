@@ -42,27 +42,8 @@ class SearchBarConatiner extends React.Component {
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
     console.log("click");
-    if (ManufactureProcess.loadingSaveSearchText) {
-      ManufactureProcess.saveSearchText(Partner.search_text);
-      ManufactureProcess.loadingSaveSearchText = false;
-      setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
-    }
-    Partner.currentPage = 1;
-    Partner.resetDevCategory();
-    Partner.getPartner();
-  };
-  closeModal = () => {
-    this.setState({
-      ...this.state,
-      modal_open: false,
-    });
-  };
-  handleKeyDown = async (e) => {
-    const { Partner, ManufactureProcess } = this.props;
-    if (e.key === "Enter") {
-      console.log("Enter");
-      console.log(e);
-      console.log(toJS(Partner.search_text));
+    // alert("EXECUTE");
+    if (Partner.search_text != "") {
       if (ManufactureProcess.loadingSaveSearchText) {
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
@@ -71,65 +52,107 @@ class SearchBarConatiner extends React.Component {
           2000
         );
       }
+    }
+    Partner.currentPage = 1;
+    // Partner.resetDevCategory();
+    Partner.getPartner();
+    if (Partner.search_text) {
+      Partner.isSearched = true;
+    } else {
+      Partner.isSearched = false;
+    }
+  };
+  closeModal = () => {
+    this.setState({
+      ...this.state,
+      modal_open: false,
+    });
+  };
+  handleKeyDown = (e) => {
+    const { Partner, ManufactureProcess } = this.props;
+    if (e.key === "Enter") {
+      // console.log("Enter");
+      // console.log(e);
+      // alert("enter");
+      this.search();
+      // console.log(toJS(Partner.search_text));
+      // if (Partner.search_text != "") {
+      //   if (ManufactureProcess.loadingSaveSearchText) {
+      //     ManufactureProcess.saveSearchText(Partner.search_text);
+      //     ManufactureProcess.loadingSaveSearchText = false;
+      //     setTimeout(
+      //       () => (ManufactureProcess.loadingSaveSearchText = true),
+      //       2000
+      //     );
+      //   }
+      // }
 
-      Partner.currentPage = 1;
-      await Partner.resetDevCategory();
-      Partner.getPartner();
+      // Partner.currentPage = 1;
+      // // Partner.resetDevCategory();
+      // Partner.getPartner();
+      // if (Partner.search_text) {
+      //   Partner.isSearched = true;
+      // } else {
+      //   Partner.isSearched = false;
+      // }
     }
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
+    // this.search();
     //console.log(this.props.Project.input_category);
   }
   render() {
     const { Partner, Request } = this.props;
     return (
-      <Form>
-        <Box
-          active={this.state.list === true}
-          onClick={() =>
-            this.state.list ? this.selectOut() : this.selectClick()
-          }
-          onBlur={() => this.selectOut()}
-        >
-          {/* <input
+      <>
+        <Form>
+          <Box
+            active={this.state.list === true}
+            onClick={() =>
+              this.state.list ? this.selectOut() : this.selectClick()
+            }
+            onBlur={() => this.selectOut()}
+          >
+            {/* <input
             style={{ display: "none" }}
             value={Request.select_big ? Request.select_big.maincategory : ""}
             class="Input"
           /> */}
-          <Select
-            placeholder="전체"
-            options={categoryArray}
-            getOptionLabel={(option) => option.label}
-            value={Partner.input_category}
-            onChange={Partner.setCategory}
-          />
-        </Box>
-        <SearchBar>
-          <input
-            placeholder="원하는 분야의 제조업체를 검색하세요"
-            // value={Partner.search_text}
-            onFocus={(e) => (e.target.placeholder = "")}
-            onBlur={(e) =>
-              (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
-            }
-            onChange={this.searchText}
-            class="Input"
-            onKeyDown={this.handleKeyDown}
-          />
-        </SearchBar>
-        <SearchButton
-          width={80}
-          borderColor={PRIMARY2}
-          borderRadius={0}
-          onClick={this.search}
-        >
-          <img
-            style={{ width: 18, height: 18 }}
-            src="/static/images/search_cobalt-blue.png"
-          />
-        </SearchButton>
-      </Form>
+            <Select
+              placeholder="전체"
+              options={categoryArray}
+              getOptionLabel={(option) => option.label}
+              value={Partner.input_category}
+              onChange={Partner.setCategory}
+            />
+          </Box>
+          <SearchBar>
+            <input
+              placeholder="원하는 분야의 제조업체를 검색하세요"
+              // value={Partner.search_text}
+              onFocus={(e) => (e.target.placeholder = "")}
+              onBlur={(e) =>
+                (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
+              }
+              onChange={this.searchText}
+              class="Input"
+              onKeyPress={this.handleKeyDown}
+            />
+          </SearchBar>
+          <SearchButton
+            width={80}
+            borderColor={PRIMARY2}
+            borderRadius={0}
+            onClick={this.search}
+          >
+            <img
+              style={{ width: 18, height: 18 }}
+              src="/static/images/search_cobalt-blue.png"
+            />
+          </SearchButton>
+        </Form>
+      </>
     );
   }
 }

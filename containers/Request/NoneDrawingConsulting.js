@@ -363,7 +363,7 @@ class NoneDrawingConsultingContainer extends React.Component {
         console.log("create: ", res);
         ManufactureProcess.nonDrawingProjectSubmitLoading = true;
         this.props.Request.newIndex = 1;
-        dataLayer.push({ event: "request_noneDrawing" });
+        MyDataLayerPush({ event: "request_noneDrawing" });
       })
       .catch((e) => {
         ManufactureProcess.projectSubmitLoading = true;

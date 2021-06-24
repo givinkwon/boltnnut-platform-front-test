@@ -259,6 +259,7 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
+
               <Header>
                 <Logo>
                   <img src={data.logo} />
@@ -433,6 +434,7 @@ class ProposalCard extends React.Component {
                   </div>
                 </AdditionBox>
               </Main>
+              
             </Card>
             {/* {this.props.Partner.ReviewActive &&
               this.props.Partner.ReviewActiveIndex === idx && (
@@ -624,9 +626,8 @@ const Card = styled.div`
   position: relative;
   object-fit: contain;
   border-radius: 10px;
-  //box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   border: ${(props) =>
-    props.active ? "2px solid #0933b3" : "1px solid #c6c7cc"};
+    props.active ? "2px solid #0933b3" : "2px solid transparent"}; // #c6c7cc"
   background-color: #ffffff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 

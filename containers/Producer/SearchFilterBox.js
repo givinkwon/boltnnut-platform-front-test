@@ -191,7 +191,7 @@ class SearchFilterConatiner extends React.Component {
               </div>
             </Search>
 
-            <Category>
+            {/* <Category>
               <span>분야</span>
               <div>
                 <Select
@@ -251,7 +251,7 @@ class SearchFilterConatiner extends React.Component {
             <Budget>
               <span>예산</span>
               <FilterBox2 data={viewArray} width={width} />
-              {/* <FilterBox filter="budget" data={budgetArray} /> */}
+        
               <InputContainer>
                 {!Partner.minDirectInput && (
                   <Select
@@ -284,9 +284,7 @@ class SearchFilterConatiner extends React.Component {
                   </DirectInputBox>
                 )}
 
-                {/* <DirectInputBox>
-              <input placeholder="직접 입력하세요" />
-            </DirectInputBox> */}
+      
 
                 <span>원 ~ </span>
                 {!Partner.maxDirectInput && (
@@ -321,29 +319,7 @@ class SearchFilterConatiner extends React.Component {
                 )}
                 <span>원</span>
 
-                {/* <InputBox>
-              <input
-                placeholder="0"
-                // value={Partner.search_text}
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "0")}
-                // onChange={this.searchText}
-                class="Input"
-                // onKeyDown={this.handleKeyDown}
-              />
-            </InputBox>
-            <span>원 ~</span>
-            <InputBox>
-              <input
-                placeholder="0"
-                // value={Partner.search_text}
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "0")}
-                // onChange={this.searchText}
-                class="Input"
-                // onKeyDown={this.handleKeyDown}
-              />
-            </InputBox> */}
+
               </InputContainer>
             </Budget>
             <Filter>
@@ -354,7 +330,7 @@ class SearchFilterConatiner extends React.Component {
                 purpose="filter"
                 data={Partner.filterArray}
               />
-            </Filter>
+            </Filter> */}
 
             {Partner.requestModalActive && (
               // <Layer onClick={this.modalHandler}>

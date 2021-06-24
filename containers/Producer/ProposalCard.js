@@ -4,12 +4,8 @@ import { toJS } from "mobx";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import Modal from "./Modal";
-import RequestModal from "./RequestModal";
-import RequestDoneModal from "./RequestDoneModal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import ReviewContainer from "./Review/ReviewContainer";
-import Portfolio from "./Portfolio";
-
 import CheckBrowserModal from "containers/Home/CheckBrowserModal";
 //import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
 
@@ -29,6 +25,9 @@ var availableFileType = [
   "mp4",
   "webm",
   "mp3",
+  "pptx",
+  "doc",
+  "html",
 ];
 @inject("Partner", "Auth")
 @observer
@@ -43,19 +42,6 @@ class ProposalCard extends React.Component {
     activeReview: false,
   };
 
-  openRequestModal = () => {
-    const { Partner } = this.props;
-    console.log("requestmodal open click");
-    // this.setState({ modalOpen: true });
-    Partner.requestModalActive = true;
-  };
-  closeRequestModal = () => {
-    const { Partner } = this.props;
-    console.log("requestmodal close click");
-
-    Partner.requestModalActive = false;
-  };
-
   openModal = (user_phone) => {
     console.log("open click");
     // this.setState({ modalOpen: true });
@@ -67,9 +53,13 @@ class ProposalCard extends React.Component {
       //this.props.Partner.modalUserPhone.splice(7, 0, "-")
     }
   };
-  closeModal = () => {
+
+  closeModal = (e) => {
+    e.stopPropagation();
+
     console.log("close click");
     this.setState({ modalOpen: false });
+
     this.props.Partner.modalActive = false;
   };
 
@@ -93,7 +83,6 @@ class ProposalCard extends React.Component {
 
     Partner.setclickLog(formData);
   };
-
   componentDidMount() {
     const { width } = this.props;
     // console.log(width);
@@ -174,7 +163,8 @@ class ProposalCard extends React.Component {
   };
   cardClick = async (e) => {
     e.stopPropagation();
-    const { Partner } = this.props;
+    const { data, Partner } = this.props;
+
     if (this.props.Auth && this.props.Auth.logged_in_user) {
       if (!this.props.data.file) {
         alert("해당 회사의 소개서가 존재하지 않습니다!");
@@ -187,16 +177,19 @@ class ProposalCard extends React.Component {
         .split(".")
         [this.props.data.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
+      console.log(this.props.Partner.selectedIntroductionFileType);
       console.log(this.props.data);
       console.log(fileType);
       console.log(availableFileType);
       console.log(availableFileType.indexOf(fileType));
       if (availableFileType.indexOf(fileType) > -1) {
         console.log("뷰어 페이지 router push");
-        // Partner.partner_detail_list = [];
-        // // await Partner.partner_detail_list.push({ item: data });
-        // await Partner.getCityName(Partner.partner_detail_list[0].item.city);
-        Router.push("/producer/detail");
+        Partner.partner_detail_list = [];
+        await Partner.partner_detail_list.push({ item: data });
+
+        Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id);
+        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+        Router.push("/manufacturer/detail");
       } else {
         console.log("file download");
         this.filedownload(this.props.data.file);
@@ -238,9 +231,17 @@ class ProposalCard extends React.Component {
     // }
   };
   render() {
-    const { data, width, Partner, categoryData, idx, dropDown } = this.props;
-    // console.log(data);
-    // console.log(categoryData);
+    // const {
+    //   data,
+    //   middleCategory,
+    //   mainCategory,
+    //   newData,
+    //   checkTotal,
+    //   customer,
+    // } = this.props;
+    const { data, width, Partner, categoryData, idx } = this.props;
+
+    let category_data;
 
     return (
       <>
@@ -248,6 +249,9 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
+              onClick={(e) => {
+                this.cardClick(e);
+              }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -255,73 +259,70 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
-              <StepTag>
-                <span> 활동가능 </span>
-                <div style={{ borderTop: "9.1px solid #414550" }}></div>
-              </StepTag>
-              <BasicInfo>
-                <Header>
-                  <Logo>
-                    <img src={data.logo} />
-                  </Logo>
-                </Header>
-                <Main>
-                  {/* <Review
+              <Header>
+                <Logo>
+                  <img src={data.logo} />
+                </Logo>
+              </Header>
+              <Main>
+                {/* <Review
                   onClick={() => this.onClickReviewHandler(idx, data.name)}
                 >
                   리뷰 보기
                 </Review> */}
-                  <Name>{data.name}</Name>
-                  <Phone>
-                    <div style={{ cursor: "pointer" }}>
-                      {/* <img
-                        src={call_img}
-                        onClick={(e) => {
-                          console.log(data.name);
-                          console.log(data.user.phone);
+                <Name>{data.name}</Name>
+                <Phone>
+                  <div style={{ cursor: "pointer" }}>
+                    {/* <img
+                      src={call_img}
+                      onClick={() => {
+                        console.log(data.name);
+                        console.log(data.user.phone);
+                        this.openModal(data.user.phone);
+                      }}
+                    /> */}
 
-                          this.openModal(data.user.phone);
-                          e.stopPropagation();
-                        }}
-                      /> */}
+                    {Partner.modalActive && (
+                      // <Layer onClick={this.modalHandler}>
+                      <Layer>
+                        {/* <Postcode /> */}
+                        <span>
+                          <Modal
+                            width={width}
+                            open={this.props.Partner.modalActive}
+                            close={this.closeModal}
+                            header="전화번호"
+                            // title={data.real_phone}
+                            children={this.props.Partner.modalUserPhone}
+                            //children={data.name}
+                          ></Modal>
+                        </span>
+                      </Layer>
+                    )}
 
-                      {Partner.modalActive && (
-                        <Layer>
-                          <span>
-                            <Modal
-                              width={width}
-                              open={this.props.Partner.modalActive}
-                              close={this.closeModal}
-                              header="전화번호"
-                              children={this.props.Partner.modalUserPhone}
-                            ></Modal>
-                          </span>
-                        </Layer>
-                      )}
-                    </div>
-                  </Phone>
-                  <InfoOne>{data.info_company}</InfoOne>
-                  <InfoTwo>
-                    {/* {Partner.category_ary.map((item, idx) => {
+                    {/* )} */}
+                  </div>
+                </Phone>
+                <InfoOne>{data.info_company}</InfoOne>
+                <InfoTwo>
+                  {/* {Partner.category_ary.map((item, idx) => {
                   console.log(item);
                 })} */}
-                    {/* {console.log(category_data)} */}
-                    {/* {category_data &&
+                  {/* {console.log(category_data)} */}
+                  {/* {category_data &&
                   category_data.map((item, idx) => {
                     return <span>{item}</span>;
                   })} */}
-                    {/* {console.log(toJS(Partner.check_loading_develop))} */}
-                    {categoryData &&
-                      categoryData.map((item, idx) => {
-                        // console.log(item);
-                        return <span>{item}</span>;
-                      })}
-                    {/* <span>디자인</span>
+                  {categoryData &&
+                    categoryData.map((item, idx) => {
+                      // console.log(item);
+                      return <span>{item}</span>;
+                    })}
+                  {/* <span>디자인</span>
                 <span>기구설계</span>
                 <span>금형제작</span>
                 <span>양산</span> */}
-                  </InfoTwo>
-                </Main>
+                </InfoTwo>
                 <AdditionBox>
                   {/* <div>
                 <img
@@ -384,9 +385,10 @@ class ProposalCard extends React.Component {
               </div>
               <div></div> */}
                   <div
-                    style={{ cursor: "pointer" }}
-                    onClick={async (e) => {
-                      e.stopPropagation();
+                    style={{ cursor: "pointer", zIndex: 10 }}
+                    onClick={async (event) => {
+                      event.stopPropagation();
+
                       if (await this.checkLogin()) {
                         this.clickLog(data);
                         this.openModal(data.user.phone);
@@ -397,101 +399,41 @@ class ProposalCard extends React.Component {
                     }}
                   >
                     <span>전화번호</span>
+
+                    {/* {Partner.modalActive && (
+               
+                      <Layer>
+                   
+                        <span>
+                          <Modal
+                            width={width}
+                            open={this.props.Partner.modalActive}
+                            close={this.closeModal}
+                            header="전화번호"
+                        
+                            children={this.props.Partner.modalUserPhone}
+                       
+                          ></Modal>
+                        </span>
+                      </Layer>
+                    )} */}
+
+                    {/* )} */}
                   </div>
-                  <div
-                    onClick={(e) => {
-                      console.log("click");
-                      e.stopPropagation();
-                      this.openRequestModal();
-                    }}
-                  >
-                    <span>견적 & 발주 문의</span>
-                  </div>
-                  {/* <div>
+                  <div>{/* <span>비슷한 번호 찾기</span> */}</div>
+                  <div>
                     <img src={file_img2} />
                     <Link
                       target="_blank"
-                      onClick={() => this.filedownload()}
+                      onClick={(e) => this.cardClick(e)}
                       download
                     >
                       <span>회사 소개서 보기</span>
                     </Link>
-                  </div> */}
+                  </div>
                 </AdditionBox>
-              </BasicInfo>
-              {this.props.dropDown &&
-                this.props.dropDownIdx === this.props.idx && (
-                  <DetailInfo onClick={(e) => e.stopPropagation()}>
-                    {/* <h1>DetailInfo 입니다</h1> */}
-                    <NoPortfolio>
-                      <div
-                        onClick={(e) => {
-                          this.cardClick(e);
-                        }}
-                      >
-                        <span>회사소개서 보기</span>
-                      </div>
-                    </NoPortfolio>
-                    {/* <Portfolio
-                      width={width}
-                      style={{ paddingRight: "34px", boxSizing: "border-box" }}
-                    /> */}
-                    <DetailInfoContent>
-                      <div>
-                        <label>
-                          <span>지역</span>
-                        </label>
-                        <content>{Partner.city_name}</content>
-                      </div>
-                      <div>
-                        <label>
-                          <span>주요실적</span>
-                        </label>
-                        <content>
-                          {Partner.partner_detail_list[0].item.deal}
-                        </content>
-                      </div>
-                      <div>
-                        <label>
-                          <span>진행한 제품군</span>
-                        </label>
-                        <content>
-                          {Partner.partner_detail_list[0].item.history}
-                        </content>
-                      </div>
-                    </DetailInfoContent>
-                  </DetailInfo>
-                )}
+              </Main>
             </Card>
-
-            {Partner.requestModalActive && (
-              // <Layer onClick={this.modalHandler}>
-              <Layer>
-                {/* <Postcode /> */}
-                <span>
-                  <RequestModal
-                    width={width}
-                    open={Partner.requestModalActive}
-                    close={this.closeRequestModal}
-                  />
-                </span>
-              </Layer>
-            )}
-
-            {Partner.requestDoneModalActive && (
-              // <Layer onClick={this.modalHandler}>
-              <Layer>
-                {/* <Postcode /> */}
-                <span>
-                  <RequestDoneModal
-                    width={width}
-                    open={Partner.requestDoneModalActive}
-                    close={this.closeRequestModal}
-                  />
-                </span>
-              </Layer>
-            )}
-
             {/* {this.props.Partner.ReviewActive &&
               this.props.Partner.ReviewActiveIndex === idx && (
                 <>
@@ -509,6 +451,9 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
+              onClick={(e) => {
+                this.cardClick(e);
+              }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -516,81 +461,49 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
+              {/* <HeaderWrapper>
+          <Title>sdfdsf</Title>
+          <Content>sdfdsf</Content>
+        </HeaderWrapper>
+        <CategoryWrapper>
+          <SubTitle>
+            <span>카테고리</span>
+          </SubTitle>
+          <CategoryBox>
+            <span>sdfdsf</span>
+          </CategoryBox>
+          <CategoryBox>
+            <span>dsfdsf</span>
+          </CategoryBox>
+        </CategoryWrapper>
+        <FooterWrapper>
+          <div style={{ display: "inline-flex" }}>
+            <SubTitle>희망개발기간</SubTitle>
+            <Content>sdfdsf</Content>
+          </div>
+          <PriceTagBox>
+            <span class="tag1"> 견적 </span>
+            <span class="tag2">dsfdsf</span>
+          </PriceTagBox>
+        </FooterWrapper> */}
               <Main>
+                {/* <Review
+                  onClick={() => {
+                    console.log(idx);
+
+                    this.onClickReviewHandler(idx, data.name);
+                  }}
+                >
+                  <span>리뷰 보기</span>
+                </Review> */}
                 <Name>{data.name}</Name>
                 <InfoOne>{data.info_company}</InfoOne>
-                <InfoTwo>
-                  {categoryData &&
-                    categoryData.map((item, idx) => {
-                      // console.log(item);
-                      return <span>{item}</span>;
-                    })}
-                </InfoTwo>
-
-                <Phone>
-                  <div style={{ cursor: "pointer" }}>
-                    {Partner.modalActive && (
-                      // <Layer onClick={this.modalHandler}>
-                      <Layer>
-                        {/* <Postcode /> */}
-                        <span>
-                          <Modal
-                            width={width}
-                            open={this.props.Partner.modalActive}
-                            close={this.closeModal}
-                            header="전화번호"
-                            // title={data.real_phone}
-                            children={this.props.Partner.modalUserPhone}
-                            //children={data.name}
-                          ></Modal>
-                        </span>
-                      </Layer>
-                    )}
-
-                    {/* )} */}
-                  </div>
-                </Phone>
-              </Main>
-              {this.props.dropDown &&
-                this.props.dropDownIdx === this.props.idx && (
-                  <DetailInfo onClick={(e) => e.stopPropagation()}>
-                    {/* <h1>DetailInfo 입니다</h1> */}
-                    <NoPortfolio>
+                {/* <InfoOne>develop 들어가야함</InfoOne> */}
+                <Information>
+                  <div>
+                    <Phone>
                       <div
-                        onClick={(e) => {
-                          this.cardClick(e);
-                        }}
-                      >
-                        <span>회사소개서 보기</span>
-                      </div>
-                    </NoPortfolio>
-                    <DetailInfoContent>
-                      <div>
-                        <label>
-                          <span>지역</span>
-                        </label>
-                        <content>{Partner.city_name}</content>
-                      </div>
-                      <div>
-                        <label>
-                          <span>주요실적</span>
-                        </label>
-                        <content>
-                          {Partner.partner_detail_list[0].item.deal}
-                        </content>
-                      </div>
-                      <div>
-                        <label>
-                          <span>진행한 제품군</span>
-                        </label>
-                        <content>
-                          {Partner.partner_detail_list[0].item.history}
-                        </content>
-                      </div>
-                    </DetailInfoContent>
-                    <ButtonBox>
-                      <button
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: "pointer", zIndex: 10 }}
                         onClick={async (e) => {
                           e.stopPropagation();
                           if (await this.checkLogin()) {
@@ -601,24 +514,88 @@ class ProposalCard extends React.Component {
                             Router.push("/login");
                           }
                         }}
-                      >
-                        <div>
-                          <span>전화번호</span>
-                        </div>
-                      </button>
 
-                      <button
-                        onClick={() => {
-                          Partner.mobileRequestIndex = 1;
-                        }}
+                        // onClick={() => {
+                        //   window
+                        //     .open
+                        //     //"https://blog.naver.com/boltnnut_korea"
+                        //     //"./Popup.js"
+                        //     // "windowPop",
+                        //     // "width=400, height=600, left=400, top=400, resizable = yes"
+                        //     ();
+                        // }}
                       >
-                        <div>
-                          <span>견적 & 발주 문의</span>
-                        </div>
-                      </button>
-                    </ButtonBox>
-                  </DetailInfo>
-                )}
+                        <img
+                          src={call_img}
+                          // active={this.state.call}
+                          // onMouseOver={() => {
+                          //   this.activeHandler("call");
+                          // }}
+                          // onMouseOut={() => {
+                          //   this.activeHandler("call");
+                          // }}
+                        />
+
+                        {/* <span
+                    style={{
+                      display: `${this.state.call ? "block" : "none"}`,
+                    }}
+                  >
+                    {data.real_phone ? (
+                      <span>☎ {data.real_phone}</span>
+                    ) : (
+                      <span>
+                        {data.user.phone ? data.user.phone : "전화번호 없음"}
+                      </span>
+                    )}
+                  </span> */}
+                        {/* {this.props.Partner.modalActive && ( */}
+
+                        {Partner.modalActive && (
+                          // <Layer onClick={this.modalHandler}>
+                          <Layer>
+                            {/* <Postcode /> */}
+                            <span>
+                              <Modal
+                                width={width}
+                                open={this.props.Partner.modalActive}
+                                close={this.closeModal}
+                                header="전화번호"
+                                // title={data.real_phone}
+                                children={this.props.Partner.modalUserPhone}
+                                //children={data.name}
+                              >
+                                {/* <p>
+                            {data.user.phone
+                              ? data.user.phone
+                              : "전화번호 없음"}
+                          </p> */}
+                                {/* <p>{idx}</p> */}
+                                {/* <p>{data.name}</p> */}
+                              </Modal>
+                              {/* <CheckBrowserModal
+                          open={this.props.Partner.modalActive}
+                          handleClose={this.closeModal}
+                        /> */}
+                            </span>
+                          </Layer>
+                        )}
+
+                        {/* )} */}
+                      </div>
+                    </Phone>
+                  </div>
+                  <div>
+                    <Link
+                      target="_blank"
+                      onClick={(e) => this.cardClick(e)}
+                      download
+                    >
+                      <span>회사 소개서 보기</span>
+                    </Link>
+                  </div>
+                </Information>
+              </Main>
             </Card>
             {this.props.Partner.ReviewActive &&
               this.props.Partner.ReviewActiveIndex === idx && (
@@ -642,136 +619,54 @@ class ProposalCard extends React.Component {
 export default ProposalCard;
 
 const Card = styled.div`
-  cursor: pointer;
   width: 100%;
+  //width: 987px;
   position: relative;
   object-fit: contain;
   border-radius: 10px;
   border: ${(props) =>
-    props.active ? "2px solid #0933b3" : "1px solid #c6c7cc"};
+    props.active ? "2px solid #0933b3" : "2px solid transparent"}; // #c6c7cc"
   background-color: #ffffff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 
   display: flex;
-  flex-direction: column;
-  // overflow: hidden;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
+    // height: 108px;
+
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 14px;
+
     margin-top: 14px;
     box-sizing: border-box;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     height: 100%;
     margin-bottom: 34px;
+    padding: 33px 0px 30px 34px;
     box-sizing: border-box;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     height: 100%;
     margin-bottom: 34px;
+    padding: 33px 0px 30px 34px;
     box-sizing: border-box;
+    // align-self: self-start;
+    // width: 68%;
   }
   @media (min-width: 1300px) {
+    //height: 195px;
     margin-bottom: 34px;
-  }
-`;
-
-const BasicInfo = styled.div`
-  width: 100%;
-  display: flex;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 14px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    padding: 40px 0px 30px 34px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    padding: 40px 0px 30px 34px;
-  }
-
-  @media (min-width: 1300px) {
-    padding: 40px 0px 30px 34px;
+    padding: 33px 0px 30px 34px;
     box-sizing: border-box;
   }
 `;
 
-const DetailInfo = styled.div`
-  width: 100%;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-top: 0px;
-  }
-`;
-
-const DetailInfoContent = styled.div`
-  background-color: #f6f6f6;
-  padding: 41px 69px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px;
-
-  div {
-    display: flex;
-    margin-bottom: 40px;
-    width: 100%;
-    label {
-      width: 25%;
-      span {
-        font-size: 18px;
-        line-height: 27px;
-        letter-spacing: -0.45px;
-        color: #191919;
-        font-weight: bold;
-      }
-    }
-    content {
-      width: 90%;
-      font-size: 18px;
-      line-height: 27px;
-      letter-spacing: -0.45px;
-      word-break: keep-all;
-    }
-  }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    padding: 14px 14px;
-    margin-top: 40px;
-
-    div {
-      margin-bottom: 25px;
-      width: 100%;
-      label {
-        width: 25%;
-        span {
-          font-size: 10px;
-          line-height: 27px;
-          letter-spacing: -0.45px;
-          color: #191919;
-          font-weight: bold;
-          word-break: keep-all;
-        }
-      }
-      content {
-        width: 90%;
-        font-size: 10px;
-        line-height: 27px;
-        letter-spacing: -0.45px;
-        word-break: keep-all;
-      }
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 100%;
-    box-sizing: border-box;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    height: 100%;
-    box-sizing: border-box;
-  }
-  @media (min-width: 1300px) {
-  }
-`;
 const Header = styled.div`
+  //border: 2px solid red;
+  //width: 14%;
+  //flex-grow: 1;
   margin-right: 34px;
 `;
 const Logo = styled.div`
@@ -781,23 +676,20 @@ const Logo = styled.div`
   }
 `;
 const Main = styled.div`
+  //border: 2px solid blue;
+  //flex-grow: 5;
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 100%;
-    padding: 14px;
-    box-sizing: border-box;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 50%;
-    padding-right: 10px;
-    box-sizing: border-box;
+    width: 60%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 55%;
-    padding-right: 10px;
-    box-sizing: border-box;
+    width: 60%;
   }
   @media (min-width: 1300px) {
-    width: 100%;
+    width: 80%;
   }
 `;
 const Name = styled.div`
@@ -853,6 +745,8 @@ const Phone = styled.div`
 const InfoOne = styled.div`
   word-break: break-all;
   white-space: break-spaces;
+  //height: 100%;
+  //height: 50px;
   line-height: 1.2;
   letter-spacing: 0.56px;
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -862,7 +756,7 @@ const InfoOne = styled.div`
     letter-spacing: -0.33px;
   }
   @media (min-width: 1300px) {
-    width: 98%;
+    width: 80%;
   }
 `;
 const InfoTwo = styled.div`
@@ -877,47 +771,57 @@ margin-top: 16px;
     display: inline-block;
   }
   @media (min-width: 1300px) {
-    width: 98%
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    >span{
-      height: 20px;
-      font-size: 10px;
-      margin-bottom: 5px;
-      margin-right: 5px;
-    }
+    width: 80%
   }
 `;
 
 const AdditionBox = styled.div`
+  //border: 2px solid green;
+
   > div:nth-of-type(3) {
     display: flex;
     align-items: center;
     width: 100%;
+    // position: absolute;
+    // top: 80%;
+    // left: 82%;
     > span {
       font-size: 18px;
       line-height: 40px;
       letter-spacing: -0.45px;
       color: #555963;
     }
+    > img {
+      //margin-left: 14px;
+    }
     > div {
       position: absolute;
       width: 130%;
 
       span {
+        // border: 2px solid orange;
+
         height: 34px;
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
         background-color: #ffffff;
         border: 1px solid #ffffff;
         border-radius: 5px;
         position: absolute;
+
         top: 0;
+        // left: 40%;
         width: 100%;
         color: #0933b3;
         font-weight: bold;
         display: flex;
         justify-content: center;
         align-items: center;
+        > span {
+          // position: absolute;
+          // top: 50%;
+          // left: 50%;
+          // transform: translate(-50%, -50%);
+        }
       }
       > span:nth-of-type(1) {
         left: -30%;
@@ -930,32 +834,29 @@ const AdditionBox = styled.div`
       }
     }
   }
-  @media (min-width: 768px) {
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding-right: 24px;
-    > div {
+    > div:nth-of-type(1) {
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
       border-radius: 3px;
       display: flex;
       justify-content: center;
       align-items: center;
       margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
       width: 153px;
-      height: 38px;
       > span {
         font-size: 16px;
         line-height: 30px;
         letter-spacing: -0.16px;
         color: #282c36;
         font-weight: 500;
-      }
-    }
-
-    > div:nth-of-type(2) {
-      > span {
-        color: #0933b3;
       }
     }
 
@@ -966,6 +867,98 @@ const AdditionBox = styled.div`
       justify-content: center;
       align-items: center;
       margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    display: flex;
+    flex-direction: column;
+    > div:nth-of-type(1) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      > span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+
+    > div:nth-of-type(3) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+  }
+
+  @media (min-width: 1300px) {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    display: flex;
+    flex-direction: column;
+    > div:nth-of-type(1) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
+      width: 153px;
+      > span {
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: -0.16px;
+        color: #282c36;
+        font-weight: 500;
+      }
+    }
+
+    > div:nth-of-type(3) {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      // padding: 0 22px;
+      // box-sizing: border-box;
       width: 153px;
       span {
         font-size: 16px;
@@ -1026,190 +1019,5 @@ const Layer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
-  }
-`;
-
-const ButtonBox = styled.div`
-  height: 56px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  > button {
-    outline: none;
-    cursor: pointer;
-    border: 0;
-
-    margin: 0 5px;
-    background-color: #ffffff;
-
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-    border-radius: 2px;
-    width: 155px;
-    height: 28px;
-
-    > div {
-      > span {
-        width: 12px;
-        line-height: 5px;
-        color: #282c36;
-      }
-    }
-  }
-`;
-
-const StepTag = styled.div`
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    > span {
-      width: 61px;
-      height: 19px;
-      color: #0933b3;
-      font-size: 13px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 34px;
-      letter-spacing: -0.33px;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 100px;
-    height: 36px;
-    position: absolute;
-    background-color: #0933b3;
-    top: 0;
-    left: -9px;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-    border-radius: 3px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    > div {
-      position: absolute;
-      width: 0px;
-      height: 0px;
-      left: 1px;
-      bottom: -8px;
-      border-left: 9px solid transparent;
-      border-top: 9px solid #0a2165;
-    }
-    > span {
-      font-size: 16px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.88;
-      letter-spacing: -0.16px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 100px;
-    height: 36px;
-    position: absolute;
-    background-color: #0933b3;
-    top: 0;
-    left: -9px;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-    border-radius: 3px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    > div {
-      position: absolute;
-      width: 0px;
-      height: 0px;
-      left: 1px;
-      bottom: -8px;
-      border-left: 9px solid transparent;
-      border-top: 9px solid #0a2165;
-    }
-    > span {
-      font-size: 16px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.88;
-      letter-spacing: -0.16px;
-    }
-  }
-  @media (min-width: 1300px) {
-    width: 100px;
-    height: 36px;
-    position: absolute;
-    background-color: #0933b3;
-    top: 0;
-    left: -9px;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-    border-radius: 3px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    > div {
-      position: absolute;
-      width: 0px;
-      height: 0px;
-      left: 1px;
-      bottom: -8px;
-      border-left: 9px solid transparent;
-      border-top: 9px solid #0a2165;
-    }
-    > span {
-      font-size: 16px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.88;
-      letter-spacing: -0.16px;
-    }
-  }
-`;
-
-const NoPortfolio = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // border: 2px solid #0933b3;
-    // border-radius: 3px;
-    height: 50px;
-    width: 50%;
-    box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.5);
-    > span {
-      font-size: 28px;
-      line-height: 24px;
-      color: #0933b3;
-      font-weight: bold;
-    }
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    > div {
-      height: 30px;
-      width: 60%;
-      > span {
-        font-size: 10px;
-      }
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    > div {
-      > span {
-        font-size: 18px;
-      }
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    > div {
-      > span {
-        font-size: 18px;
-      }
-    }
   }
 `;

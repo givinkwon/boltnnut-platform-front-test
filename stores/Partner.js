@@ -240,7 +240,10 @@ class Partner {
 
   // @observable clientInfoList = {};
   @observable clientInfoList = [];
-
+  @observable isSearched = false;
+  @observable originPartnerList = [];
+  @observable subButtonActive = false;
+  @observable exceptionCategory = "";
   @action resetReviewAry = () => {
     this.reviewKindnessIndex = 3;
     this.reviewCommunicationIndex = 3;
@@ -1212,9 +1215,100 @@ class Partner {
       });
   };
 
+  //기성품이 없는 신제품의 개발 버튼 클릭했을 때 호출
+  @action getOtherPartner = async (page = 1) => {
+    this.partner_list = [];
+    this.category_ary = [];
+    this.resetDevCategory();
+
+    const token = localStorage.getItem("token");
+    // alert(this.exceptionCategory);
+    let req = {
+      params: { page: page, category_exclude: "12,14" },
+    };
+    let temp = { params: { page: page } };
+    if (this.filter_region) {
+      temp.params.city = this.filter_region;
+      req.params.city = this.filter_region;
+    }
+
+    if (this.filter_category) {
+      //temp["category_middle__id"] = this.filter_category;
+      temp.params.category_middle__id = this.filter_category;
+      req.params.category_middle__id = this.filter_category;
+    }
+
+    delete req.params.search;
+    delete req.params.history;
+
+    await PartnerAPI.getPartners(req)
+      .then(async (res) => {
+        this.partner_list = [];
+        this.category_ary = [];
+        this.category_name_ary = [];
+        this.temp_category_name_ary;
+
+        this.partner_list = await res.data.results;
+
+        this.partner_next = res.data.next;
+        this.partner_count = res.data.count;
+        console.log(toJS(this.partner_list));
+        //this.category_ary = res.data.results.category_middle;
+        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+        this.partner_list.map((item, idx) => {
+          this.category_ary.push(item.category_middle);
+          //console.log(toJS(item));
+          console.log(toJS(this.category_ary));
+          this.category_ary[idx].map((data, id) => {
+            //console.log(toJS(data));
+
+            // const request = {
+            //   id: data,
+            // };
+
+            // if(this.partner_list.length-1 === idx){
+
+            // }
+            // this.category_ary.map((data, id) => {
+            //   console.log(toJS(data));
+            // });
+            //   console.log(toJS(this.category_name_ary));
+
+            //   console.log(toJS(this.category_ary[idx]));
+            for (let i = 0; i < this.category_ary[idx].length; i++) {
+              const request = {
+                id: this.category_ary[idx][i],
+              };
+              // this.getPartnerCategory(request, i, idx);
+            }
+          });
+        });
+
+        await this.category_ary.map(async (data, id) => {
+          console.log(toJS(data));
+          console.log(id);
+          await data.map(async (sub_data, index) => {
+            const req = {
+              id: sub_data,
+            };
+
+            await this.setCategoryDic(req, sub_data, id);
+          });
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    this.check_loading_develop = true;
+    console.log(this.check_loading_develop);
+    this.filterLoading = true;
+  };
+
   @action getPartner = async (page = 1) => {
     this.partner_list = [];
     this.category_ary = [];
+    console.log(toJS(this.category_ary));
     this.resetDevCategory();
     // console.log(toJS(this.category_dic));
     //this.data_dt = [];
@@ -1254,49 +1348,6 @@ class Partner {
 
     //console.log(temp);
     console.log(req);
-    // if (!this.filter_region) {
-    //   if (!this.filter_category) {
-    //     req = {
-    //       params: {
-    //         search: this.search_text,
-    //         page: page,
-    //       },
-    //     };
-    //   } else {
-    //     req = {
-    //       params: {
-    //         //city: this.filter_region === 0 ? "" : this.filter_region,
-
-    //         category_middle__id: this.filter_category,
-    //         search: this.search_text,
-    //         page: page,
-    //       },
-    //     };
-    //   }
-    // } else {
-    //   if (!this.filter_category) {
-    //     req = {
-    //       params: {
-    //         //city: this.filter_region === 0 ? "" : this.filter_region,
-    //         city: this.filter_region,
-
-    //         search: this.search_text,
-    //         page: page,
-    //       },
-    //     };
-    //   } else {
-    //     req = {
-    //       params: {
-    //         //city: this.filter_region === 0 ? "" : this.filter_region,
-    //         city: this.filter_region,
-    //         category_middle__id: this.filter_category,
-    //         search: this.search_text,
-    //         // history
-    //         page: page,
-    //       },
-    //     };
-    //   }
-    // }
 
     await PartnerAPI.getPartners(req)
       .then(async (res) => {
@@ -1305,17 +1356,17 @@ class Partner {
         this.category_name_ary = [];
         this.temp_category_name_ary;
 
-        this.partner_list = res.data.results;
+        this.partner_list = await res.data.results;
+        this.originPartnerList = this.partner_list;
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
+        console.log(toJS(this.partner_list));
         //this.category_ary = res.data.results.category_middle;
         this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-
         this.partner_list.map((item, idx) => {
           this.category_ary.push(item.category_middle);
           //console.log(toJS(item));
-          //console.log(toJS(this.category_ary));
-
+          console.log(toJS(this.category_ary));
           this.category_ary[idx].map((data, id) => {
             //console.log(toJS(data));
 
@@ -1342,16 +1393,20 @@ class Partner {
         });
 
         // //async function temp() {
+        let count = 0;
         await this.category_ary.map(async (data, id) => {
-          //console.log(toJS(data));
+          console.log(toJS(data));
+          console.log(id);
           await data.map(async (sub_data, index) => {
             // console.log(toJS(sub_data));
-
+            // console.log(count++);
             // console.log(id);
             const req = {
               id: sub_data,
             };
-
+            if (this.isSearched) {
+              this.exceptionCategory += sub_data + ",";
+            }
             //console.log(index);
             await this.setCategoryDic(req, sub_data, id);
           });

@@ -275,6 +275,7 @@ export default class MyDocument extends Document {
       gtag('config', 'UA-162026812-1', {
           'custom_map': {'dimension2': 'clientId' }
       } );
+
       function MyDataLayerPush(object){
         if(window.location.hostname!='localhost')
         {
@@ -331,9 +332,10 @@ export default class MyDocument extends Document {
     };
   }
 
-  setBeusable(){
-    return{
-      __html:`
+  setBeusable() {
+    return {
+      __html: `
+
         (function() {
           var w = window;
           var d = document;
@@ -366,11 +368,10 @@ export default class MyDocument extends Document {
               async
               src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
             ></script>
-            
+
             {/* Beusable */}
-            <script type="text/javascript">
-            
-            </script>
+            <script type="text/javascript"></script>
+
             <meta
               http-equiv="Content-Type"
               content="text/html; charset=utf-8"
@@ -441,6 +442,7 @@ export default class MyDocument extends Document {
                 w[l]=w[l]||[];w[l].push({
                   'gtm.start':new Date().getTime(),event:'gtm.js'
                 });
+
                 var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                 
               })(window,document,'script','dataLayer','GTM-PWFPPZ5');`,

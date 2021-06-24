@@ -13,7 +13,7 @@ import * as FormatUtils from "utils/format";
 @observer
 class CheckDeactivateModal extends Component {
   handleClick = async (acceptance) => {
-    const { Auth, handleClose } = this.props;
+    const { Auth, handleClose, Home } = this.props;
 
     await handleClose();
     if (acceptance) {
