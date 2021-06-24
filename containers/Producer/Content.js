@@ -108,7 +108,9 @@ class ManufacturerContentContainer extends React.Component {
     Partner.ReviewActive = false;
     Partner.ReviewActiveIndex = -1;
     this.setState({ dropDownActive: false, dropDownIdx: -1 });
-    Partner.getPartner(newPage);
+    Partner.subButtonActive
+      ? Partner.getOtherPartner(newPage)
+      : Partner.getPartner(newPage);
   };
 
   pageNext = (e) => {
@@ -208,9 +210,18 @@ class ManufacturerContentContainer extends React.Component {
             {/* <SearchBar /> */}
 
             <Body>
-              {Partner.partner_list.length > 0 && (
+              {Partner.partner_list.length > 0 && Partner.isSearched && (
                 <SubButtonBox>
-                  <SubButton>
+                  <SubButton
+                    onClick={() => {
+                      !Partner.subButtonActive
+                        ? Partner.getOtherPartner()
+                        : (Partner.partner_list = Partner.originPartnerList);
+
+                      Partner.subButtonActive = !Partner.subButtonActive;
+                    }}
+                    active={Partner.subButtonActive}
+                  >
                     <Font20 style={{ textAlign: "center" }}>
                       기성품이 없는 신제품의 개발이 필요하신가요?
                       <br />
@@ -452,7 +463,7 @@ const SubButton = styled.div`
   align-items: center;
   width: 100%;
   height: 100px;
-  border: 2px solid black;
+  border: ${(props) => (props.active ? " 2px solid blue" : " 2px solid black")};
   margin-bottom: 20px;
 
   :hover {

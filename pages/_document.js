@@ -336,9 +336,9 @@ export default class MyDocument extends Document {
     };
   }
 
-  setBeusable(){
-    return{
-      __html:`
+  setBeusable() {
+    return {
+      __html: `
       (function() {
         var w = window;
         var d = document;
@@ -352,7 +352,7 @@ export default class MyDocument extends Document {
         };
         w.__beusablerumclient__.load(a);
     })
-    `
+    `,
     };
   }
 
@@ -371,11 +371,9 @@ export default class MyDocument extends Document {
               async
               src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
             ></script>
-            
+
             {/* Beusable */}
-            <script type="text/javascript">
-            
-            </script>
+            <script type="text/javascript"></script>
             <meta
               http-equiv="Content-Type"
               content="text/html; charset=utf-8"
@@ -515,9 +513,6 @@ export default class MyDocument extends Document {
           {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
           {/* ㅌㅌㅌ */}
           {/* <p class="g-signin2" data-onsuccess="batchGet"></p> */}
-
-
-
         </body>
       </html>
     );
