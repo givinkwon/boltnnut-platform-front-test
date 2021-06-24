@@ -42,6 +42,7 @@ class SearchBarConatiner extends React.Component {
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
     console.log("click");
+    // alert("EXECUTE");
     if (Partner.search_text != "") {
       if (ManufactureProcess.loadingSaveSearchText) {
         ManufactureProcess.saveSearchText(Partner.search_text);
@@ -53,8 +54,13 @@ class SearchBarConatiner extends React.Component {
       }
     }
     Partner.currentPage = 1;
-    Partner.resetDevCategory();
+    // Partner.resetDevCategory();
     Partner.getPartner();
+    if (Partner.search_text) {
+      Partner.isSearched = true;
+    } else {
+      Partner.isSearched = false;
+    }
   };
   closeModal = () => {
     this.setState({
@@ -62,30 +68,38 @@ class SearchBarConatiner extends React.Component {
       modal_open: false,
     });
   };
-  handleKeyDown = async (e) => {
+  handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
-      console.log("Enter");
-      console.log(e);
-      console.log(toJS(Partner.search_text));
-      if (Partner.search_text != "") {
-        if (ManufactureProcess.loadingSaveSearchText) {
-          ManufactureProcess.saveSearchText(Partner.search_text);
-          ManufactureProcess.loadingSaveSearchText = false;
-          setTimeout(
-            () => (ManufactureProcess.loadingSaveSearchText = true),
-            2000
-          );
-        }
-      }
+      // console.log("Enter");
+      // console.log(e);
+      // alert("enter");
+      this.search();
+      // console.log(toJS(Partner.search_text));
+      // if (Partner.search_text != "") {
+      //   if (ManufactureProcess.loadingSaveSearchText) {
+      //     ManufactureProcess.saveSearchText(Partner.search_text);
+      //     ManufactureProcess.loadingSaveSearchText = false;
+      //     setTimeout(
+      //       () => (ManufactureProcess.loadingSaveSearchText = true),
+      //       2000
+      //     );
+      //   }
+      // }
 
-      Partner.currentPage = 1;
-      await Partner.resetDevCategory();
-      Partner.getPartner();
+      // Partner.currentPage = 1;
+      // // Partner.resetDevCategory();
+      // Partner.getPartner();
+      // if (Partner.search_text) {
+      //   Partner.isSearched = true;
+      // } else {
+      //   Partner.isSearched = false;
+      // }
     }
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
+    // this.search();
     //console.log(this.props.Project.input_category);
   }
   render() {
@@ -123,7 +137,7 @@ class SearchBarConatiner extends React.Component {
               }
               onChange={this.searchText}
               class="Input"
-              onKeyDown={this.handleKeyDown}
+              onKeyPress={this.handleKeyDown}
             />
           </SearchBar>
           <SearchButton

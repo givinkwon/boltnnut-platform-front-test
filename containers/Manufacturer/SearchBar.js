@@ -57,6 +57,7 @@ class SearchBarConatiner extends React.Component {
     console.log(toJS(Partner.category_dic));
     await Partner.getPartner();
   };
+
   closeModal = () => {
     this.setState({
       ...this.state,
