@@ -545,11 +545,11 @@ class FileUploadContainer extends Component {
         id: this.state.requestId,
       };
 
-      for (var pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
+      // for (var pair of formData.entries()) {
+      //   console.log(pair[0] + ", " + pair[1]);
+      // }
 
-      RequestAPI.modifyProject(req)
+      await RequestAPI.modifyProject(req)
         .then((res) => {
           console.log(`modify Project : ${res}`);
           this.props.Request.newIndex = 3;

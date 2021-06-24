@@ -139,10 +139,11 @@ class SearchBarConatiner extends React.Component {
             onClick={this.search}
             active={this.state.search_animation === true}
             onMouseOver={() => {
-              console.log("O");
+              this.onMouseOver();
             }}
             onMouseOut={() => {
-              console.log("x");
+              this.onMouseOut();
+              //console.log("x");
             }}
           >
             <img
