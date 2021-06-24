@@ -14,9 +14,13 @@ class ChatItemContainer extends React.Component {
   };
   componentDidMount() {
     // console.log(this.props.content);
-    if (this.state.content.length > 44) {
-      this.setState({ content: this.state.content.slice(0, 45) + " ···" });
+    if(this.state.content)
+    {
+      if (this.state.content.length > 44) {
+        this.setState({ content: this.state.content.slice(0, 45) + " ···" });
+      }
     }
+    
   }
   render() {
     return (
