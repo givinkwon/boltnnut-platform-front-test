@@ -18,6 +18,7 @@ class SearchBarConatiner extends React.Component {
     search: "",
     modal_open: false,
     list: false,
+    search_animation: false,
   };
 
   selectClick = () => {
@@ -42,8 +43,12 @@ class SearchBarConatiner extends React.Component {
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
     console.log("click");
+    this.setState({ search_animation: true });
+    setTimeout(() => this.setState({ search_animation: false }), 2000);
+
     if (Partner.search_text != "") {
       if (ManufactureProcess.loadingSaveSearchText) {
+        console.log(Partner.search_text);
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
         setTimeout(
@@ -52,6 +57,7 @@ class SearchBarConatiner extends React.Component {
         );
       }
     }
+    console.log(this.state.search_animation);
     Partner.currentPage = 1;
     Partner.resetDevCategory();
     Partner.getPartner();
@@ -131,6 +137,13 @@ class SearchBarConatiner extends React.Component {
             borderColor={PRIMARY2}
             borderRadius={0}
             onClick={this.search}
+            active={this.state.search_animation === true}
+            onMouseOver={() => {
+              console.log("O");
+            }}
+            onMouseOut={() => {
+              console.log("x");
+            }}
           >
             <img
               style={{ width: 18, height: 18 }}
@@ -241,6 +254,25 @@ const SearchButton = styled(ButtonComponent)`
       display: none;
     }
   }
+
+  ${(props) =>
+    props.active &&
+    css`
+      @keyframes moveInBottom {
+        0% {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateY(0px);
+        }
+      }
+
+      animation: moveInBottom 0.6s backwards;
+      // transform: rotate(-180deg);
+    `}// animation: ${(props) => props.acive && "moveInBottom 5s ease-out"};
 `;
 
 const Select = styled(SelectComponent)`

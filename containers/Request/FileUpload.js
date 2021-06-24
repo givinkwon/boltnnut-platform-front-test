@@ -453,6 +453,7 @@ class FileUploadContainer extends Component {
       const detailProcessAry = detailProcessData.split(",");
       ManufactureProcess.getProcessList(processAry, detailProcessAry);
     } else {
+      console.log(fileList);
       // if (ManufactureProcess.openFileArray.length === 0) {
       //   RequestFormData.append(`file`, "");
       // }
@@ -501,6 +502,37 @@ class FileUploadContainer extends Component {
         });
       }
 
+      const modifyFormData = new FormData();
+
+      for (var i = 0; i < fileList.length; i++) {
+        console.log(fileList[i].originFile);
+        console.log(toJS(fileList[i].selectBig.id));
+        console.log(toJS(fileList[i].selectedMid.id));
+        console.log(this.state.requestId);
+        console.log(fileList[i].quantity.value);
+
+        modifyFormData.append("blueprint", fileList[i].originFile);
+        modifyFormData.append("process", fileList[i].selectBig.id);
+        modifyFormData.append("detailprocess", fileList[i].selectedMid.id);
+        modifyFormData.append("requestid", this.state.requestId);
+        modifyFormData.append("number", fileList[i].quantity.value);
+
+        const req = {
+          headers: {
+            Authorization: `Token ${Token}`,
+          },
+          data: modifyFormData,
+        };
+
+        await RequestAPI.modifyEstimate(req)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+
       const reqFormData = new FormData();
 
       // reqFormData.append()
@@ -519,7 +551,8 @@ class FileUploadContainer extends Component {
 
       RequestAPI.modifyProject(req)
         .then((res) => {
-          console.log(`modify : ${res}`);
+          console.log(`modify Project : ${res}`);
+          this.props.Request.newIndex = 3;
         })
         .catch((e) => {
           console.log(e);
@@ -996,6 +1029,8 @@ class FileUploadContainer extends Component {
   componentWillUnmount = () => {
     const { ManufactureProcess } = this.props;
     ManufactureProcess.dataPrice = [];
+    ManufactureProcess.openFileArray = [];
+    ManufactureProcess.privateFileArray = [];
     window.removeEventListener("scroll", this.loadScroll);
   };
 
@@ -1086,7 +1121,7 @@ class FileUploadContainer extends Component {
     );
 
     //기본정보입력에서 받은 의뢰서로 바꾸기
-    ManufactureProcessFormData.append("request", 2467);
+    ManufactureProcessFormData.append("request", "");
     // this.setState({fileList:fileList})
     console.log(ManufactureProcessFormData);
     ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
@@ -1293,7 +1328,7 @@ class FileUploadContainer extends Component {
             ManufactureProcess.categoryDefaultValue.mid.id
           );
           //기본정보입력에서 받은 의뢰서로 바꾸기
-          ManufactureProcessFormData.append("request", 2467);
+          ManufactureProcessFormData.append("request", "");
           // console.log(ManufactureProcessFormData);
           this.setState({ loading: true });
 
@@ -1303,7 +1338,7 @@ class FileUploadContainer extends Component {
               // console.log("11");
 
               loadingCounter++;
-              console.log(toJS(res))
+              console.log(toJS(res));
               this.setState({
                 fileList: fileList.push({
                   submitFile: res.data.data,
@@ -1940,8 +1975,11 @@ class FileUploadContainer extends Component {
                               {
                                 console.log("qqqqqqqqqqqqqqqqqqqq");
                               }
-                              this.setState({ checkFileUpload: false });
-                              this.props.ManufactureProcess.checkFileUpload = false;
+
+                              if (!ManufactureProcess.changeProject) {
+                                this.setState({ checkFileUpload: false });
+                                this.props.ManufactureProcess.checkFileUpload = false;
+                              }
 
                               if (
                                 !this.props.ManufactureProcess.checkFileUpload
@@ -2220,8 +2258,10 @@ class FileUploadContainer extends Component {
                               //this.countQuantity(0, parseInt(data.quantity.value), 1)
                               if (fileList.length === 0) {
                                 console.log("wwwwwwwwwwwwwwwwww");
-                                this.setState({ checkFileUpload: false });
-                                this.props.ManufactureProcess.checkFileUpload = false;
+                                if (!ManufactureProcess.changeProject) {
+                                  this.setState({ checkFileUpload: false });
+                                  this.props.ManufactureProcess.checkFileUpload = false;
+                                }
 
                                 if (
                                   !this.props.ManufactureProcess.checkFileUpload
@@ -2253,8 +2293,10 @@ class FileUploadContainer extends Component {
                   this.deleteHandler();
                   if (fileList.length === 0) {
                     console.log("eeeeeeeeeeeeeeeee");
-                    this.setState({ checkFileUpload: false });
-                    this.props.ManufactureProcess.checkFileUpload = false;
+                    if (!ManufactureProcess.changeProject) {
+                      this.setState({ checkFileUpload: false });
+                      this.props.ManufactureProcess.checkFileUpload = false;
+                    }
                   }
 
                   if (!this.props.ManufactureProcess.checkFileUpload) {
@@ -2276,7 +2318,9 @@ class FileUploadContainer extends Component {
                   fileList.splice(0, fileList.length);
                   //this.setState({f:3})
                   console.log("yyyyyyyyyyyyyyyyyyy");
-                  this.props.ManufactureProcess.checkFileUpload = false;
+                  if (!ManufactureProcess.changeProject) {
+                    this.props.ManufactureProcess.checkFileUpload = false;
+                  }
                   const card = document.getElementById("card");
                   if (card) {
                     card.style.display = "flex";

@@ -510,11 +510,9 @@ class RequestModal extends React.Component {
                   <main>
                     {/* <DetailContainerBox /> */}
                     <ContainerV2>
-                      {/* <Category>
+                      <Category>
                         <span>분야</span>
                         <div style={{ marginRight: "24px" }}>
-                          
-
                           <Select
                             placeholder="대 카테고리"
                             // options={bigCategoryArray}
@@ -532,7 +530,6 @@ class RequestModal extends React.Component {
                           />
                         </div>
                         <div>
-                          
                           <Select
                             placeholder="소 카테고리"
                             options={Partner.category_middle_ary}
@@ -548,8 +545,8 @@ class RequestModal extends React.Component {
                             }
                           />
                         </div>
-                      </Category> */}
-                      {/* <Location>
+                      </Category>
+                      <Location>
                         <span>위치</span>
                         <Select
                           placeholder="전체지역"
@@ -558,7 +555,7 @@ class RequestModal extends React.Component {
                           // value={Partner.input_category}
                           onChange={Partner.setDetailCityCategory}
                         />
-                      </Location> */}
+                      </Location>
 
                       <Budget>
                         <span>예산</span>

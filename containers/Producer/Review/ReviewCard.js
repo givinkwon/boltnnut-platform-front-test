@@ -4,9 +4,9 @@ import styled, { keyframes } from "styled-components";
 
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import { isElementAccessExpression } from "typescript";
+import ReviewStarRating from "../Review/ReviewStarRating";
 
-const star = "/static/icon/star.svg";
+const star = "/static/icon/star_blue3.svg";
 
 @inject("Partner", "Auth")
 @observer
@@ -21,73 +21,92 @@ class ReviewCard extends React.Component {
 
   componentDidMount = async () => {
     console.log("componentDidMount");
-    const { Partner, Auth } = this.props;
-    await Partner.getReview();
 
-    console.log(toJS(Partner.review_ary));
-    await Partner.getClientEmail();
-    if (Partner.review_user_ary) {
-      this.setState({ g: 3 });
+    const { Partner, data, totalCount, idx } = this.props;
+    console.log(data);
+    console.log(totalCount);
+    if (data) {
+      console.log(`client id : ${data.client_id}, idx : ${idx}`);
+      // await Partner.getClientInfo(data.client_id);
+      await Partner.getClientNameById(data.client_id, idx);
+
+      // console.log(Partner.clientInfo);
+      console.log(Partner.clientInfoList);
+      // Partner.clientInfo.name
+      // Partner.clientInfo.user.username
     }
+
+    // const { Partner, Auth } = this.props;
+    // await Partner.getReview();
+
+    // console.log(toJS(Partner.review_ary));
+    // await Partner.getClientEmail();
+    // if (Partner.review_user_ary) {
+    //   this.setState({ g: 3 });
+    // }
   };
   componentWillUnmount = () => {
     const { Partner } = this.props;
-    Partner.review_ary = [];
-    Partner.loadReviewData = 0;
-    Partner.review_user_ary = [];
+    Partner.clientInfo = [];
+    Partner.clientInfoList = [];
+    // Partner.review_ary = [];
+    // Partner.loadReviewData = 0;
+    // Partner.review_user_ary = [];
   };
 
   render() {
-    const { data, width, Partner, categoryData, idx } = this.props;
-
+    const { data, width, Partner, categoryData, idx, totalCount } = this.props;
+    // console.log(data);
+    // console.log(toJS(Partner.partnerReviewList));
+    console.log(toJS(Partner.clientInfoList));
     return (
       <>
-        {/* {console.log("renderrenderrenderrenderrenderrenderrenderrenderrender")} */}
-        {/* {console.log(Partner.review_ary.length)}
-        {!Partner.review_ary.length && (
-          
-        )} */}
+        <Card>
+          {/* {Partner.clientInfo.user ? (
+            <name>{Partner.clientInfo.user.username}</name>
+          ) : (
+            <name>***</name>
+          )} */}
 
-        {Partner.loadReviewData === 1 &&
-          Partner.review_ary.map((item, idx) => (
-            <Card>
-              <score>
-                <span>
-                  {item.score
-                    ? stars.map((data, id) => {
-                        if (id < item.score) {
-                          return (
-                            <img
-                              src={star}
-                              style={{ filter: "sepia(63%) saturate(10)" }}
-                            />
-                          );
-                        } else {
-                          return <img src={star} />;
-                        }
-                      })
-                    : "None"}
-                </span>
-                <span>{`   ${item.score}`}</span>
-              </score>
-              {/* <name>{item.client}</name> */}
-              {/* <name>{Partner.userEmail}</name> */}
+          {Partner.clientInfoList[idx] ? (
+            <name>{Partner.clientInfoList[idx].user.username}</name>
+          ) : (
+            <name>***</name>
+          )}
 
-              {/* console.log를 찍어야 값이 출력 (??) */}
-              {/* {console.log(toJS(Partner.review_user_ary))} */}
-              {Partner.review_user_ary && (
+          {/* {Partner.clientInfoList[data.client_id] ? (
+            <name>{Partner.clientInfoList[data.client_id].user.username}</name>
+          ) : (
+            <name>***</name>
+          )} */}
+
+          <score>
+            <span>
+              <ReviewStarRating
+                width={15}
+                margin={1}
+                score={data.consult_score}
+              />
+            </span>
+            <date>{data.date}</date>
+            {/* <span>{`   ${item.score}`}</span> */}
+          </score>
+          <history>{data.projectname}</history>
+          <content>{data.content}</content>
+
+          {/* {Partner.review_user_ary && (
                 <name>{Partner.review_user_ary[idx]}</name>
-              )}
+              )} */}
 
-              <content>{item.content}</content>
-            </Card>
-          ))}
-        {Partner.loadReviewData === -1 && (
+          {/* <content>{item.content}</content> */}
+        </Card>
+
+        {/* {Partner.loadReviewData === -1 && (
           <NoCard reviewDone={Partner.review_done}>
             <span>등록된 리뷰가 없습니다</span>
           </NoCard>
           // <h1></h1>
-        )}
+        )} */}
       </>
     );
   }
@@ -109,25 +128,47 @@ const Card = styled.div`
   justify-content: center;
 
   //align-items: center;
-  padding: 15px 0 15px 10px;
+  padding: 46px 23px 32px 26px;
   box-sizing: border-box;
   > score {
     margin-bottom: 5px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     font-weight: 600;
     > span:nth-of-type(1) {
       margin-right: 7px;
     }
+    > date {
+      font-size: 18px;
+      line-height: 40px;
+      letter-spacing: -0.45px;
+      color: #a4aab4;
+      font-weight: 500;
+    }
   }
   > name {
-    font-size: 14px;
-    color: rgb(202, 202, 202);
-    margin-bottom: 15px;
+    font-size: 18px;
+    color: #191919;
+    line-height: 27px;
+    letter-spacing: -0.45px;
+    font-weight: bold;
+  }
+  > history {
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.45px;
+    color: #a4aab4;
+    font-weight: normal;
+    margin-bottom: 22px;
   }
   > content {
     white-space: break-spaces;
-    font-size: 16px;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.45px;
+    color: #282c36;
+    font-weight: normal;
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {

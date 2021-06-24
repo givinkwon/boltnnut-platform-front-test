@@ -1130,7 +1130,7 @@ class Partner {
         }
         // console.log(toJS(res.data.results.category));
         // console.log(toJS(typeof this.filter_category_ary));
-        // console.log(toJS(this.filter_category_ary));
+        console.log(toJS(toJS(this.filter_category_ary)));
       })
       .catch((e) => {
         console.log(e);
