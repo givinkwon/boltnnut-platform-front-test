@@ -43,6 +43,15 @@ export function put(req) {
   });
 }
 
+export function modifyEstimate(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/estimate/`,
+    headers: req.headers ? req.headers : null,
+    data: req.data,
+  });
+}
+
 export function selectSave(req) {
   return axios({
     method: "POST",

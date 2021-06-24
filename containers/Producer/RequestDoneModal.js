@@ -25,7 +25,7 @@ class RequestDoneModal extends React.Component {
   };
 
   onClickHandler = () => {
-    const { Partner } = this.props;
+    const { Partner, Auth } = this.props;
     console.log("onCLick!!");
     Partner.requestDoneModalActive = false;
     Partner.mobileRequestIndex = 0;

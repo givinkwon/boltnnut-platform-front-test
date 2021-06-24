@@ -223,14 +223,14 @@ class RequestModal extends React.Component {
 
     // console.log(toJS(Partner.input_detail_small_category.category));
 
-    if (
-      Partner.input_detail_big_category == null ||
-      Partner.input_detail_small_category == null
-    ) {
-      alert("카테고리를 다시 선택해주세요.");
-      // Router.push("/login");
-      return;
-    }
+    // if (
+    //   Partner.input_detail_big_category == null ||
+    //   Partner.input_detail_small_category == null
+    // ) {
+    //   alert("카테고리를 다시 선택해주세요.");
+    //   // Router.push("/login");
+    //   return;
+    // }
 
     if (Partner.detailMinDirectInput) {
       // console.log(toJS(Partner.input_detail_direct_min_budget));
@@ -254,10 +254,10 @@ class RequestModal extends React.Component {
     console.log(minValue);
     console.log(maxValue);
     console.log(toJS(Partner.detail_select_city));
-    if (!Partner.detail_select_city) {
-      alert("위치 다시 선택해주세요.");
-      return;
-    }
+    // if (!Partner.detail_select_city) {
+    //   alert("위치 다시 선택해주세요.");
+    //   return;
+    // }
 
     if (!Partner.filterbox_view_checked_idx) {
       alert("예산 공개 여부를 다시 선택해주세요.");
@@ -270,7 +270,7 @@ class RequestModal extends React.Component {
       return;
     }
 
-    console.log(toJS(Partner.detail_select_city.city));
+    // console.log(toJS(Partner.detail_select_city.city));
 
     if (!Partner.detailRequestTitle) {
       alert("제목을 다시 입력해주세요.");
@@ -334,25 +334,25 @@ class RequestModal extends React.Component {
     console.log(requestFilter.length);
     console.log(toJS(Partner.filterList));
 
-    if (!Partner.filterList) {
-      alert("필터를 다시 선택해주세요.");
-      return;
-    }
+    // if (!Partner.filterList) {
+    //   alert("필터를 다시 선택해주세요.");
+    //   return;
+    // }
 
-    if (checkFilter) {
-      requestFilter = requestFilter.substring(0, requestFilter.length - 2);
-    } else {
-      await requestFilter.map((data, id) => {
-        requestFilterEtc = requestFilterEtc + data.id + ", ";
-      });
-      requestFilterEtc = requestFilterEtc.substring(
-        0,
-        requestFilterEtc.length - 2
-      );
-    }
+    // if (checkFilter) {
+    //   requestFilter = requestFilter.substring(0, requestFilter.length - 2);
+    // } else {
+    //   await requestFilter.map((data, id) => {
+    //     requestFilterEtc = requestFilterEtc + data.id + ", ";
+    //   });
+    //   requestFilterEtc = requestFilterEtc.substring(
+    //     0,
+    //     requestFilterEtc.length - 2
+    //   );
+    // }
 
-    console.log(requestFilter);
-    console.log(requestFilterEtc);
+    // console.log(requestFilter);
+    // console.log(requestFilterEtc);
 
     console.log(toJS(Partner.detailRequestTitle));
     console.log(toJS(Partner.detailRequestEmail));
@@ -366,28 +366,39 @@ class RequestModal extends React.Component {
 
     formData.append("client", Auth.logged_in_client.id);
     console.log(toJS(Auth.logged_in_client.id));
-    formData.append(
-      "category_big",
-      Partner.input_detail_big_category.maincategory
-    );
-    formData.append(
-      "category_small",
-      Partner.input_detail_small_category.category
-    );
+    // formData.append(
+    //   "category_big",
+    //   Partner.input_detail_big_category.maincategory
+    // );
 
-    console.log(
-      toJS(
-        Partner.filter_city_ary.filter(
-          (item) => item.city === Partner.detail_select_city.city
-        )[0].id
-      )
-    );
+    formData.append("category_big", "");
+
+    // formData.append(
+    //   "category_small",
+    //   Partner.input_detail_small_category.category
+    // );
+
+    formData.append("category_small", "");
+
+    // console.log(
+    //   toJS(
+    //     Partner.filter_city_ary.filter(
+    //       (item) => item.city === Partner.detail_select_city.city
+    //     )[0].id
+    //   )
+    // );
+
+    // await formData.append(
+    //   "city",
+    //   Partner.filter_city_ary.filter(
+    //     (item) => item.city === Partner.detail_select_city.city
+    //   )[0].id
+    // );
 
     await formData.append(
       "city",
-      Partner.filter_city_ary.filter(
-        (item) => item.city === Partner.detail_select_city.city
-      )[0].id
+
+      ""
     );
 
     let price = "";
@@ -402,12 +413,14 @@ class RequestModal extends React.Component {
     //   formData.append("category_middle", requestFilterEtc);
     // }
 
-    formData.append("category_middle", Partner.filterList.join());
+    // formData.append("category_middle", Partner.filterList.join());
+    formData.append("category_middle", "");
     formData.append("title", Partner.detailRequestTitle);
     formData.append("email", Partner.detailRequestEmail);
     formData.append("phone", Partner.detailRequestPhone);
 
     for (let i = 0; i < Partner.fileArray.length; i++) {
+      console.log(Partner.fileArray[i]);
       formData.append(`file`, Partner.fileArray[i]);
     }
 
@@ -513,8 +526,6 @@ class RequestModal extends React.Component {
                       {/* <Category>
                         <span>분야</span>
                         <div style={{ marginRight: "24px" }}>
-                          
-
                           <Select
                             placeholder="대 카테고리"
                             // options={bigCategoryArray}
@@ -532,7 +543,6 @@ class RequestModal extends React.Component {
                           />
                         </div>
                         <div>
-                          
                           <Select
                             placeholder="소 카테고리"
                             options={Partner.category_middle_ary}
@@ -548,8 +558,8 @@ class RequestModal extends React.Component {
                             }
                           />
                         </div>
-                      </Category> */}
-                      {/* <Location>
+                      </Category>
+                      <Location>
                         <span>위치</span>
                         <Select
                           placeholder="전체지역"
