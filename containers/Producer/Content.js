@@ -131,7 +131,9 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      Partner.getPartner(nextPage);
+      Partner.subButtonActive
+        ? Partner.getOtherPartner(newPage)
+        : Partner.getPartner(newPage);
     }
   };
 
@@ -148,7 +150,9 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      Partner.getPartner(newPage);
+      Partner.subButtonActive
+        ? Partner.getOtherPartner(newPage)
+        : Partner.getPartner(newPage);
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
     }
   };
@@ -210,13 +214,11 @@ class ManufacturerContentContainer extends React.Component {
             {/* <SearchBar /> */}
 
             <Body>
-              {Partner.partner_list.length > 0 && Partner.isSearched && (
+              {/* {Partner.partner_list.length > 0 && Partner.isSearched && (
                 <SubButtonBox>
                   <SubButton
                     onClick={() => {
-                      !Partner.subButtonActive
-                        ? Partner.getOtherPartner()
-                        : (Partner.partner_list = Partner.originPartnerList);
+                      Partner.getOtherPartner();
 
                       Partner.subButtonActive = !Partner.subButtonActive;
                     }}
@@ -228,7 +230,11 @@ class ManufacturerContentContainer extends React.Component {
                       예, 신제품 개발 전문 업체로 추천해주세요
                     </Font20>
                   </SubButton>
-                  <SubButton>
+                  <SubButton
+                    onClick={() => {
+                      Router.push("/request");
+                    }}
+                  >
                     <Font20 style={{ textAlign: "center" }}>
                       도면이 있으신가요?
                       <br />
@@ -236,7 +242,7 @@ class ManufacturerContentContainer extends React.Component {
                     </Font20>
                   </SubButton>
                 </SubButtonBox>
-              )}
+              )} */}
 
               {/* <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>

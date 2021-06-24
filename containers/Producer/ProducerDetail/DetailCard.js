@@ -78,34 +78,34 @@ class DetailCardContainer extends React.Component {
     //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
     // }
 
-    let total_consult_score = 0;
-    let total_kindness_score = 0;
-    let total_communication_score = 0;
-    let total_profession_score = 0;
-    console.log(Partner.partnerReviewList);
+    // let total_consult_score = 0;
+    // let total_kindness_score = 0;
+    // let total_communication_score = 0;
+    // let total_profession_score = 0;
+    // console.log(Partner.partnerReviewList);
 
-    await Partner.partnerReviewList[0].data.map((item, idx) => {
-      total_consult_score += item.consult_score;
-      total_kindness_score += item.kindness_score;
-      total_communication_score += item.communication_score;
-      total_profession_score += item.profession_score;
-    });
-    this.setState({
-      avg_consult_score:
-        total_consult_score / Partner.partnerReviewList[0].data.length,
-      avg_kindness_score:
-        total_consult_score / Partner.partnerReviewList[0].data.length,
-      avg_communication_score:
-        total_consult_score / Partner.partnerReviewList[0].data.length,
-      avg_profession_score:
-        total_consult_score / Partner.partnerReviewList[0].data.length,
-    });
-    console.log(total_consult_score);
-    console.log(Partner.partnerReviewList[0].data.length);
+    // await Partner.partnerReviewList[0].data.map((item, idx) => {
+    //   total_consult_score += item.consult_score;
+    //   total_kindness_score += item.kindness_score;
+    //   total_communication_score += item.communication_score;
+    //   total_profession_score += item.profession_score;
+    // });
+    // this.setState({
+    //   avg_consult_score:
+    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    //   avg_kindness_score:
+    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    //   avg_communication_score:
+    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    //   avg_profession_score:
+    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    // });
+    // console.log(total_consult_score);
+    // console.log(Partner.partnerReviewList[0].data.length);
 
-    console.log(5 / 2);
-    console.log(this.state.avg_consult_score);
-    console.log(Math.floor(this.state.avg_consult_score));
+    // console.log(5 / 2);
+    // console.log(this.state.avg_consult_score);
+    // console.log(Math.floor(this.state.avg_consult_score));
   };
 
   render() {
@@ -191,7 +191,6 @@ class DetailCardContainer extends React.Component {
               )}
             </IntroductionBox>
           </InnerBox>
-
           <DetailInfoBox>
             <div>
               <label>
@@ -216,7 +215,7 @@ class DetailCardContainer extends React.Component {
               )}
             </div>
           </DetailInfoBox>
-          <ReviewBox>
+          {/* <ReviewBox>
             <label>평가 후기</label>
 
             <SummaryBox>
@@ -272,9 +271,8 @@ class DetailCardContainer extends React.Component {
                     />
                   );
                 })}
-            </content>
-
-            {/* {Partner.reviewWritingModalActive && (
+            </content> */}
+          {/* {Partner.reviewWritingModalActive && (
               <Layer>
                 <span>
                   <Modal
@@ -285,7 +283,7 @@ class DetailCardContainer extends React.Component {
                 </span>
               </Layer>
             )} */}
-          </ReviewBox>
+          {/* </ReviewBox> */}
         </Card>
       </>
     );

@@ -18,7 +18,6 @@ class SearchBarConatiner extends React.Component {
     search: "",
     modal_open: false,
     list: false,
-    search_animation: false,
   };
 
   selectClick = () => {
@@ -43,12 +42,9 @@ class SearchBarConatiner extends React.Component {
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
     console.log("click");
-    this.setState({ search_animation: true });
-    setTimeout(() => this.setState({ search_animation: false }), 2000);
-
+    // alert("EXECUTE");
     if (Partner.search_text != "") {
       if (ManufactureProcess.loadingSaveSearchText) {
-        console.log(Partner.search_text);
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
         setTimeout(
@@ -57,10 +53,14 @@ class SearchBarConatiner extends React.Component {
         );
       }
     }
-    console.log(this.state.search_animation);
     Partner.currentPage = 1;
-    Partner.resetDevCategory();
+    // Partner.resetDevCategory();
     Partner.getPartner();
+    if (Partner.search_text) {
+      Partner.isSearched = true;
+    } else {
+      Partner.isSearched = false;
+    }
   };
   closeModal = () => {
     this.setState({
@@ -68,30 +68,38 @@ class SearchBarConatiner extends React.Component {
       modal_open: false,
     });
   };
-  handleKeyDown = async (e) => {
+  handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
-      console.log("Enter");
-      console.log(e);
-      console.log(toJS(Partner.search_text));
-      if (Partner.search_text != "") {
-        if (ManufactureProcess.loadingSaveSearchText) {
-          ManufactureProcess.saveSearchText(Partner.search_text);
-          ManufactureProcess.loadingSaveSearchText = false;
-          setTimeout(
-            () => (ManufactureProcess.loadingSaveSearchText = true),
-            2000
-          );
-        }
-      }
+      // console.log("Enter");
+      // console.log(e);
+      // alert("enter");
+      this.search();
+      // console.log(toJS(Partner.search_text));
+      // if (Partner.search_text != "") {
+      //   if (ManufactureProcess.loadingSaveSearchText) {
+      //     ManufactureProcess.saveSearchText(Partner.search_text);
+      //     ManufactureProcess.loadingSaveSearchText = false;
+      //     setTimeout(
+      //       () => (ManufactureProcess.loadingSaveSearchText = true),
+      //       2000
+      //     );
+      //   }
+      // }
 
-      Partner.currentPage = 1;
-      await Partner.resetDevCategory();
-      Partner.getPartner();
+      // Partner.currentPage = 1;
+      // // Partner.resetDevCategory();
+      // Partner.getPartner();
+      // if (Partner.search_text) {
+      //   Partner.isSearched = true;
+      // } else {
+      //   Partner.isSearched = false;
+      // }
     }
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
+    // this.search();
     //console.log(this.props.Project.input_category);
   }
   render() {
@@ -129,7 +137,7 @@ class SearchBarConatiner extends React.Component {
               }
               onChange={this.searchText}
               class="Input"
-              onKeyDown={this.handleKeyDown}
+              onKeyPress={this.handleKeyDown}
             />
           </SearchBar>
           <SearchButton
@@ -137,14 +145,6 @@ class SearchBarConatiner extends React.Component {
             borderColor={PRIMARY2}
             borderRadius={0}
             onClick={this.search}
-            active={this.state.search_animation === true}
-            onMouseOver={() => {
-              this.onMouseOver();
-            }}
-            onMouseOut={() => {
-              this.onMouseOut();
-              //console.log("x");
-            }}
           >
             <img
               style={{ width: 18, height: 18 }}
@@ -176,7 +176,6 @@ const SearchBar = styled.div`
   input {
     width: 100%;
     padding: 0 14px;
-
     border: 1px solid #c6c7cc;
     border-radius: 3px;
     :focus {
@@ -187,7 +186,6 @@ const SearchBar = styled.div`
       
     }
   }
-
   @media (min-width: 0px) and (max-width: 767.98px) {
     // margin-top: 30px;
     flex-direction: column;
@@ -201,7 +199,6 @@ const SearchBar = styled.div`
     width: 400px;
     input {
       font-size: 16px;
-
       ::placeholder{
         font-size:13px;
       }
@@ -236,7 +233,6 @@ const Form = styled.div`
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 67%;
   }
-
   @media (min-width: 1300px) {
     //margin-top: 0;
     width: 75%;
@@ -255,36 +251,15 @@ const SearchButton = styled(ButtonComponent)`
       display: none;
     }
   }
-
-  ${(props) =>
-    props.active &&
-    css`
-      @keyframes moveInBottom {
-        0% {
-          opacity: 0;
-          transform: translateY(5px);
-        }
-
-        100% {
-          opacity: 1;
-          transform: translateY(0px);
-        }
-      }
-
-      animation: moveInBottom 0.6s backwards;
-      // transform: rotate(-180deg);
-    `}// animation: ${(props) => props.acive && "moveInBottom 5s ease-out"};
 `;
 
 const Select = styled(SelectComponent)`
   width: 220px;
   height: 44px;
   box-sizing: border-box;
-
   option {
     color: #c1bfbf;
   }
-
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 0;
     padding: 0;
@@ -297,7 +272,6 @@ const Select = styled(SelectComponent)`
     background-color: #ffffff;
     position: relative;
   }
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 120px;
   }
@@ -309,7 +283,6 @@ const Select = styled(SelectComponent)`
       }
     }
   }
-
   @media (min-width: 1300px) {
     width: 125px;
   }
@@ -317,18 +290,15 @@ const Select = styled(SelectComponent)`
 
 const Box = styled.div`
   width: 220px;
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 120px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 140px;
   }
-
   @media (min-width: 1300px) {
     width: 125px;
   }
-
   ${(props) =>
     props.active &&
     css`
@@ -338,12 +308,10 @@ const Box = styled.div`
             transform: skewY(-180deg);
           }
         }
-
         animation: select 0.4s ease-out;
         transform: rotate(-180deg);
       }
     `}
-
   ${(props) =>
     !props.active &&
     css`

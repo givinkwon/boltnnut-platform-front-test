@@ -92,7 +92,7 @@ class ContentSub extends React.Component {
               onMouseOut={() => this.activeHandler("activeOne")}
               onClick={async () => {
                 console.log("click!");
-                this.changeProject();
+                // this.changeProject();
                 console.log(this.props.ManufactureProcess.changeProject);
                 // Router.push("/request")
               }}
