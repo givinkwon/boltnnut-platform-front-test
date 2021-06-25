@@ -101,6 +101,8 @@ class FileUploadContainer extends Component {
       { id: 3, name: "업체수배", checked: false },
     ],
     projectname: "",
+    requestFileId: 0, // 도면 수정할 때 참고파일을 업로드하고 수정 버튼 눌렀을 때 기존 requestfile과 연결하기 위함
+    requestId: 0, // 도면 수정할 때 도면파일을 업로드하고 수정 버튼 눌렀을 때 기존 request_set과 연결하기 위함
   };
 
   closeModal = () => {
@@ -108,12 +110,12 @@ class FileUploadContainer extends Component {
     ManufactureProcess.loadingEstimate = false;
   };
 
-  componentDidMount = () => {
-    const { ManufactureProcess } = this.props;
-    this.props.ManufactureProcess.reset();
-    fileList = [];
-    ManufactureProcess.loadingEstimate = false;
-  };
+  // componentDidMount = () => {
+  //   const { ManufactureProcess } = this.props;
+  //   this.props.ManufactureProcess.reset();
+  //   fileList = [];
+  //   ManufactureProcess.loadingEstimate = false;
+  // };
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
   setNumCount = (data, val) => {
     console.log(val);
@@ -242,11 +244,41 @@ class FileUploadContainer extends Component {
     }
   }
 
+  /* 
+    프로젝트 수정 할 때 클라이언트가 참고 파일를 업로드하거나 삭제하는 등의 변경 작업을 마치고 수정하기 버튼을 누르면
+    해당 참고파일이 기존 request id로 생성되면서 연결
+  */
+  modifyRequestFile = async (file, share_flag) => {
+    let reqFileFormData = new FormData();
+    await reqFileFormData.append("request", this.state.requestId);
+    await reqFileFormData.append("file", file);
+    await reqFileFormData.append("share_inform", share_flag);
+
+    const req = {
+      data: reqFileFormData,
+    };
+
+    // for (var pair of reqFileFormData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
+
+    await RequestAPI.setRequestFile(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+        console.log(e.response.data);
+      });
+  };
+
   changeSubmit = () => {};
   requestSubmit = async (flag, id) => {
     const { projectname, purposeAry } = this.state;
-    const { ManufactureProcess, Schedule } = this.props;
+    const { ManufactureProcess, Schedule, Request } = this.props;
 
+    ManufactureProcess.projectSubmitLoading = false;
     console.log(toJS(ManufactureProcess.totalorderPrice));
     let deadline_state = "";
     let processData = "";
@@ -389,6 +421,7 @@ class FileUploadContainer extends Component {
           console.log("create: ", res);
           dataLayer.push({ event: "request_Drawing" });
           this.props.Request.newIndex = 1;
+          ManufactureProcess.reset();
         })
         .catch((e) => {
           console.log(e);
@@ -415,25 +448,97 @@ class FileUploadContainer extends Component {
 
       //RequestFormData.append("file", )
 
-      const request = {};
-      RequestAPI.setRequestFile;
+      await this.props.Project.projectDetailData.request_set[0].estimate_set.map(
+        async (item, idx) => {
+          console.log(item);
+
+          const req = {
+            id: item.id,
+          };
+
+          await RequestAPI.delEstimate(req)
+            .then((res) => {
+              console.log(toJS(res));
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+      );
+
+      for (let i = 0; i < this.props.Request.request_file_set.length; i++) {
+        await this.props.Request.deleteRequestFile(
+          this.props.Request.request_file_set[i]
+        );
+      }
+
+      if (ManufactureProcess.openFileArray.length !== 0) {
+        await ManufactureProcess.openFileArray.map(async (item, idx) => {
+          this.modifyRequestFile(item, true);
+        });
+      }
+      if (ManufactureProcess.privateFileArray.length !== 0) {
+        await ManufactureProcess.privateFileArray.map(async (item, idx) => {
+          this.modifyRequestFile(item, false);
+        });
+      }
+
+      const modifyFormData = new FormData();
+
+      for (var i = 0; i < fileList.length; i++) {
+        console.log(fileList[i].originFile);
+        console.log(toJS(fileList[i].selectBig.id));
+        console.log(toJS(fileList[i].selectedMid.id));
+        console.log(this.state.requestId);
+        console.log(fileList[i].quantity.value);
+
+        modifyFormData.append("blueprint", fileList[i].originFile);
+        modifyFormData.append("process", fileList[i].selectBig.id);
+        modifyFormData.append("detailprocess", fileList[i].selectedMid.id);
+        modifyFormData.append("requestid", this.state.requestId);
+        modifyFormData.append("number", fileList[i].quantity.value);
+
+        const req = {
+          headers: {
+            Authorization: `Token ${Token}`,
+          },
+          data: modifyFormData,
+        };
+
+        await RequestAPI.modifyEstimate(req)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+
+      const reqFormData = new FormData();
+
+      // reqFormData.append()
 
       const req = {
-        // headers: {
-        //   Authorization: `Token ${Token}`,
-        // },
-        id: id,
+        headers: {
+          Authorization: `Token ${Token}`,
+        },
         data: formData,
+        id: this.state.requestId,
       };
 
-      RequestAPI.put(req)
+      // for (var pair of formData.entries()) {
+      //   console.log(pair[0] + ", " + pair[1]);
+      // }
+
+      await RequestAPI.modifyProject(req)
         .then((res) => {
-          console.log("change: ", res);
+          console.log(`modify Project : ${res}`);
+          this.props.Request.newIndex = 3;
         })
         .catch((e) => {
           console.log(e);
           console.log(e.response);
-          console.log(e.response.data);
         });
     }
   };
@@ -517,17 +622,23 @@ class FileUploadContainer extends Component {
     const { purposeAry } = this.state;
     //console.log("didMount")
     // console.log(ManufactureProcess.changeProject);
-    console.log(toJS(this.props.Project.projectDetailData.id));
+    console.log(toJS(Project.projectDetailData));
+    ManufactureProcess.loadingEstimate = false;
+
+    await this.props.ManufactureProcess.reset();
+    fileList = [];
+
     console.log(ManufactureProcess.checkFileUpload);
     console.log(toJS(ManufactureProcess.purposeContent));
 
     if (ManufactureProcess.changeProject) {
+      this.props.ManufactureProcess.checkFileUpload = true;
       await this.state.purposeAry.map((item, idx) => {
         item.checked = false;
       });
 
       await ManufactureProcess.init();
-      console.log(toJS(Project.projectDetailData.request_set[0].estimate_set));
+      console.log(toJS(this.props.Project.projectDetailData.id));
       this.state.projectname = Project.projectDetailData.request_set[0].name;
       this.state.publicValue =
         Project.projectDetailData.request_set[0].order_request_open;
@@ -1506,8 +1617,10 @@ class FileUploadContainer extends Component {
                           this.setState({ fileList: fileList.splice(idx, 1) });
 
                           if (fileList.length === 0) {
-                            this.setState({ checkFileUpload: false });
-                            this.props.ManufactureProcess.checkFileUpload = false;
+                            if (ManufactureProcess.changeProject) {
+                              this.setState({ checkFileUpload: false });
+                              this.props.ManufactureProcess.checkFileUpload = false;
+                            }
 
                             if (
                               !this.props.ManufactureProcess.checkFileUpload
@@ -1758,8 +1871,10 @@ class FileUploadContainer extends Component {
                             });
 
                             if (fileList.length === 0) {
-                              this.setState({ checkFileUpload: false });
-                              this.props.ManufactureProcess.checkFileUpload = false;
+                              if (ManufactureProcess.changeProject) {
+                                this.setState({ checkFileUpload: false });
+                                this.props.ManufactureProcess.checkFileUpload = false;
+                              }
 
                               if (
                                 !this.props.ManufactureProcess.checkFileUpload

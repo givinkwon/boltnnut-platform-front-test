@@ -66,13 +66,13 @@ class SearchBarConatiner extends React.Component {
     const { Magazine } = this.props;
     return (
       <Form>
-        <Box active={this.state.list===true} onClick ={() => {
+        {/* <Box active={this.state.list===true} onClick ={() => {
           this.state.list ? this.selectOut():this.selectClick()
           console.log(this.state.list)
         }}  onBlur = {()=>this.selectOut()}>
         <input style={{display: 'none'}} class="Input"/>       
           <Select placeholder='전체' options={categoryArray}  getOptionLabel={(option) => option.label}/>    
-        </Box>
+        </Box> */}
           <SearchBar>        
               <input
                 placeholder="원하는 분야의 제조업체를 검색하세요"
@@ -113,7 +113,7 @@ const SearchBar = styled.div`
   display: flex;
   //width: 640px;
   width: 63%;
-  height: 44px;
+  height: 80px;
   box-sizing: border-box;
   margin 0 24px;
   

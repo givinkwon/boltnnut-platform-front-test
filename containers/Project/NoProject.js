@@ -34,45 +34,23 @@ class NoProject extends React.Component {
                     style={{ alignItems: "center", justifyContent: "center" }}
                   >
                     <FontSize22>
-                      현재 등록중인 프로젝트가 없습니다. 프로젝트 등록을 하시면
-                      상담을 통해
+                      현재 등록중인 프로젝트가 없습니다. 
                     </FontSize22>
                   </InlineDiv>
                   <InlineDiv
                     style={{ alignItems: "center", justifyContent: "center" }}
                   >
                     <FontSize22>
-                      기획 단계부터 실무자 분들과 소통할 수 있습니다.
+                    프로젝트 등록을 통해
+                      원하는 업체를 찾아보세요
                     </FontSize22>
                   </InlineDiv>
                 </RequestCompleteDesc>
 
                 <ButtonBox>
-                  {Auth.home_index === 4 && (
-                    <HomeBtn onClick={() => Router.push("/4")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 3 && (
-                    <HomeBtn onClick={() => Router.push("/3")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 2 && (
-                    <HomeBtn onClick={() => Router.push("/2")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 1 && (
-                    <HomeBtn onClick={() => Router.push("/5")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 0 && (
-                    <HomeBtn onClick={() => Router.push("/")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
+                  <HomeBtn onClick={() => Router.push("/")}>
+                    홈으로 가기
+                  </HomeBtn>
 
                   <MyProjectBtn onClick={() => Router.push("/request")}>
                     프로젝트 등록하기
@@ -107,31 +85,10 @@ class NoProject extends React.Component {
                 </RequestCompleteDesc>
 
                 <ButtonBox>
-                  {Auth.home_index === 4 && (
-                    <HomeBtn onClick={() => Router.push("/4")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 3 && (
-                    <HomeBtn onClick={() => Router.push("/3")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 2 && (
-                    <HomeBtn onClick={() => Router.push("/2")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 1 && (
-                    <HomeBtn onClick={() => Router.push("/5")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 0 && (
-                    <HomeBtn onClick={() => Router.push("/")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
+                  <HomeBtn onClick={() => Router.push("/")}>
+                    홈으로 가기
+                  </HomeBtn>
+
                   <MyProjectBtn onClick={() => this.search()}>
                     프로젝트 답변하기
                   </MyProjectBtn>

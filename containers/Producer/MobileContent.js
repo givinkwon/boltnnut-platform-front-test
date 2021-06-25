@@ -245,9 +245,6 @@ class MobileManufacturerContentContainer extends React.Component {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Font15>
-                      <span>{Partner.partner_count}개</span>의 파트너
-                    </Font15>
                     {/* <span>
               <Font14>모든 제조의뢰</Font14>
               <img src={pass4}/>
@@ -288,17 +285,35 @@ class MobileManufacturerContentContainer extends React.Component {
                     <div>
                       <div
                         onClick={() => {
+                          Router.push("/request");
+                        }}
+                      >
+                        <span>바로 AI 견적 받기</span>
+                      </div>
+
+                      <content>
+                        <span>도면이 있는 경우 클릭!</span>
+                      </content>
+                    </div>
+
+                    <div>
+                      <div
+                        onClick={() => {
                           Partner.mobileRequestIndex = 1;
                         }}
                       >
                         <span>업체수배&견적 무료의뢰 </span>
                       </div>
-                      {/* <div>
+
+                      <div>
                         <span>업체 찾기가 힘든 경우 클릭!</span>
-                      </div> */}
+                      </div>
                     </div>
                   </Header>
                 </div>
+                <Font15>
+                  <span>{Partner.partner_count}개</span>의 파트너
+                </Font15>
                 {Partner.partner_list &&
                   // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
@@ -645,7 +660,7 @@ const Body = styled.div`
   //border-top: 1px solid #e1e2e4;
   //border-bottom: 1px solid #e1e2e4;
   // margin-top: ${(props) => (props.active ? "0px" : "40px")};
-  margin-top: ${(props) => (props.active ? "285px" : "40px")};
+  margin-top: ${(props) => (props.active ? "285px" : "20px")};
 `;
 const Main = styled.div`
   width: 100%;
@@ -688,7 +703,9 @@ const Header = styled.div`
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    >div:last-child{
+    margin-bottom:30px;
+    >div{
+      width: 48%;
       >div:nth-of-type(1){
         box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
         padding: 8px 16px 9px 16px;
@@ -711,7 +728,7 @@ const Header = styled.div`
        
           position: absolute;
           bottom: -25px;
-          right: 7px;
+          right: 21px;
           >span{
             font-size: 11px;
             line-height: 30px;
@@ -720,6 +737,19 @@ const Header = styled.div`
             font-weight: normal;
           }
         }
+        >content{
+          position: absolute;
+            bottom: -25px;
+            left: 33px;
+            >span{
+              font-size: 11px;
+              line-height: 30px;
+              letter-spacing: -0.14px;
+              color: #86888c;
+              font-weight: normal;
+            }
+          }
+      
       }
     }
     

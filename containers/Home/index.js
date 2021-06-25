@@ -125,7 +125,7 @@ class HomeConatiner extends React.Component {
               <MobileBanner14Container width={width} />
               {/* <MobileBanner8Container /> */}
               <MobileBanner12Container width={width} />
-              <MobileBanner6Container />
+              <MobileBanner8Container />
               <MobileBanner9Container />
             </CustomContainer>
           </>
@@ -153,7 +153,7 @@ class HomeConatiner extends React.Component {
               <TabletBanner14Container width={width} />
               {/* <TabletBanner8Container /> */}
               <TabletBanner12Container />
-              <TabletBanner6Container />
+              <TabletBanner8Container />
               <TabletBanner9Container />
             </CustomContainer>
           </>
@@ -184,7 +184,7 @@ class HomeConatiner extends React.Component {
 
               <Banner12Container />
               {/* <Banner4Container /> */}
-              <Banner6Container />
+              <Banner8Container />
               {/* <Banner7Container /> */}
               {/* <Banner8Container /> */}
               <Banner9Container />

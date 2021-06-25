@@ -107,7 +107,7 @@ class SearchBarConatiner extends React.Component {
     return (
       <>
         <Form>
-          <Box
+          {/* <Box
             active={this.state.list === true}
             onClick={() =>
               this.state.list ? this.selectOut() : this.selectClick()
@@ -119,14 +119,14 @@ class SearchBarConatiner extends React.Component {
             value={Request.select_big ? Request.select_big.maincategory : ""}
             class="Input"
           /> */}
-            <Select
+          {/* <Select
               placeholder="전체"
               options={categoryArray}
               getOptionLabel={(option) => option.label}
               value={Partner.input_category}
               onChange={Partner.setCategory}
             />
-          </Box>
+          </Box> */}
           <SearchBar>
             <input
               placeholder="원하는 분야의 제조업체를 검색하세요"
@@ -148,7 +148,7 @@ class SearchBarConatiner extends React.Component {
           >
             <img
               style={{ width: 18, height: 18 }}
-              src="/static/images/search_cobalt-blue.png"
+              src="/static/images/search_white.svg"
             />
           </SearchButton>
         </Form>
@@ -161,33 +161,30 @@ export default SearchBarConatiner;
 
 const categoryArray = [
   { label: "전체", value: "전체" },
-  { label: "만든 제품", value: "만든 제품" },
+  // { label: "만든 제품", value: "만든 제품" },
   // { label: "제목", value: "제목" },
   // { label: "내용", value: "내용" },
 ];
 
 const SearchBar = styled.div`
   display: flex;
-  width: 690px;
+  width: 601px;
   height: 44px;
   box-sizing: border-box;
-  margin 0 24px;
-  
+  // margin 0 24px;
+
   input {
     width: 100%;
     padding: 0 14px;
-
     border: 1px solid #c6c7cc;
     border-radius: 3px;
     :focus {
       outline: none;
     }
-    ::placeholder{
+    ::placeholder {
       color: #c1bfbf;
-      
     }
   }
-
   @media (min-width: 0px) and (max-width: 767.98px) {
     // margin-top: 30px;
     flex-direction: column;
@@ -198,27 +195,26 @@ const SearchBar = styled.div`
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     // margin-top: 30px;
-    width: 400px;
+    width: 330px;
     input {
       font-size: 16px;
-
-      ::placeholder{
-        font-size:13px;
+      ::placeholder {
+        font-size: 13px;
       }
     }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     // margin-top: 40px;
-    width: 500px;
+    width: 370px;
     input {
       font-size: 17px;
-      ::placeholder{
-        font-size:15px;
+      ::placeholder {
+        font-size: 15px;
       }
     }
   }
   @media (min-width: 1300px) {
-    width: 600px;
+    width: 501px;
     input {
       font-size: 18px;
     }
@@ -226,25 +222,27 @@ const SearchBar = styled.div`
 `;
 const Form = styled.div`
   //margin-top: 90px;
-  width: 100%;
+  // width: 100%;
   display: flex;
   justify-content: flex-start;
-  height: 50px;
+  height: 44px;
   @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 54%;
+    // width: 54%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 67%;
+    // width: 67%;
   }
-
   @media (min-width: 1300px) {
     //margin-top: 0;
-    width: 75%;
+    // width: 75%;
   }
 `;
 
 const SearchButton = styled(ButtonComponent)`
-  border-radius: 3px;
+  // border-radius: 3px;
+  background-color: #0933b3;
+  margin-left: -5px;
+  box-sizing: border-box;
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 70px;
     border: 1px solid #ffffff80;
@@ -255,17 +253,18 @@ const SearchButton = styled(ButtonComponent)`
       display: none;
     }
   }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    height: 44px;
+  }
 `;
 
 const Select = styled(SelectComponent)`
   width: 220px;
   height: 44px;
   box-sizing: border-box;
-
   option {
     color: #c1bfbf;
   }
-
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 0;
     padding: 0;
@@ -278,7 +277,6 @@ const Select = styled(SelectComponent)`
     background-color: #ffffff;
     position: relative;
   }
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 120px;
   }
@@ -290,7 +288,6 @@ const Select = styled(SelectComponent)`
       }
     }
   }
-
   @media (min-width: 1300px) {
     width: 125px;
   }
@@ -298,18 +295,15 @@ const Select = styled(SelectComponent)`
 
 const Box = styled.div`
   width: 220px;
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 120px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 140px;
   }
-
   @media (min-width: 1300px) {
     width: 125px;
   }
-
   ${(props) =>
     props.active &&
     css`
@@ -319,12 +313,10 @@ const Box = styled.div`
             transform: skewY(-180deg);
           }
         }
-
         animation: select 0.4s ease-out;
         transform: rotate(-180deg);
       }
     `}
-
   ${(props) =>
     !props.active &&
     css`

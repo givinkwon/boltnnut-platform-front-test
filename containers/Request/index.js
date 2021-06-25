@@ -31,6 +31,8 @@ import NoneDrawingConsultingContainer from "./NoneDrawingConsulting";
 import MobileNoneDrawingConsultingContainer from "./Mobile/MobileNoneDrawingConsulting";
 import RequestCompleteContainer from "./RequestComplete";
 import MobileRequestCompleteContainer from "./Mobile/MobileRequestComplete";
+import ModifyCompleteContainer from "./ModifyComplete";
+import MobileModifyCompleteContainer from "./Mobile/MobileModifyComplete";
 
 @inject("DetailQuestion", "Partner", "ManufactureProcess", "Request", "Auth")
 @observer
@@ -60,6 +62,8 @@ class RequestContainer extends React.Component {
                 )}
                 {Request.newIndex == 1 && <RequestCompleteContainer />}
                 {Request.newIndex == 2 && <NoneDrawingConsultingContainer />}
+                {Request.newIndex == 3 && <ModifyCompleteContainer />}
+
                 {/* <PaymentPageContainer /> */}
               </Containerv1>
             </Background>
@@ -69,6 +73,7 @@ class RequestContainer extends React.Component {
             {Request.newIndex == 0 && <MobileRequestContainer />}
             {Request.newIndex == 1 && <MobileRequestCompleteContainer />}
             {Request.newIndex == 2 && <MobileNoneDrawingConsultingContainer />}
+            {Request.newIndex == 3 && <MobileModifyCompleteContainer />}
           </>
         )}
       </>

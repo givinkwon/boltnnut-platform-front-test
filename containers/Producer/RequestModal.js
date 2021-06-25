@@ -223,14 +223,14 @@ class RequestModal extends React.Component {
 
     // console.log(toJS(Partner.input_detail_small_category.category));
 
-    if (
-      Partner.input_detail_big_category == null ||
-      Partner.input_detail_small_category == null
-    ) {
-      alert("카테고리를 다시 선택해주세요.");
-      // Router.push("/login");
-      return;
-    }
+    // if (
+    //   Partner.input_detail_big_category == null ||
+    //   Partner.input_detail_small_category == null
+    // ) {
+    //   alert("카테고리를 다시 선택해주세요.");
+    //   // Router.push("/login");
+    //   return;
+    // }
 
     if (Partner.detailMinDirectInput) {
       // console.log(toJS(Partner.input_detail_direct_min_budget));
@@ -254,10 +254,10 @@ class RequestModal extends React.Component {
     console.log(minValue);
     console.log(maxValue);
     console.log(toJS(Partner.detail_select_city));
-    if (!Partner.detail_select_city) {
-      alert("위치 다시 선택해주세요.");
-      return;
-    }
+    // if (!Partner.detail_select_city) {
+    //   alert("위치 다시 선택해주세요.");
+    //   return;
+    // }
 
     if (!Partner.filterbox_view_checked_idx) {
       alert("예산 공개 여부를 다시 선택해주세요.");
@@ -270,7 +270,7 @@ class RequestModal extends React.Component {
       return;
     }
 
-    console.log(toJS(Partner.detail_select_city.city));
+    // console.log(toJS(Partner.detail_select_city.city));
 
     if (!Partner.detailRequestTitle) {
       alert("제목을 다시 입력해주세요.");
@@ -334,25 +334,25 @@ class RequestModal extends React.Component {
     console.log(requestFilter.length);
     console.log(toJS(Partner.filterList));
 
-    if (!Partner.filterList) {
-      alert("필터를 다시 선택해주세요.");
-      return;
-    }
+    // if (!Partner.filterList) {
+    //   alert("필터를 다시 선택해주세요.");
+    //   return;
+    // }
 
-    if (checkFilter) {
-      requestFilter = requestFilter.substring(0, requestFilter.length - 2);
-    } else {
-      await requestFilter.map((data, id) => {
-        requestFilterEtc = requestFilterEtc + data.id + ", ";
-      });
-      requestFilterEtc = requestFilterEtc.substring(
-        0,
-        requestFilterEtc.length - 2
-      );
-    }
+    // if (checkFilter) {
+    //   requestFilter = requestFilter.substring(0, requestFilter.length - 2);
+    // } else {
+    //   await requestFilter.map((data, id) => {
+    //     requestFilterEtc = requestFilterEtc + data.id + ", ";
+    //   });
+    //   requestFilterEtc = requestFilterEtc.substring(
+    //     0,
+    //     requestFilterEtc.length - 2
+    //   );
+    // }
 
-    console.log(requestFilter);
-    console.log(requestFilterEtc);
+    // console.log(requestFilter);
+    // console.log(requestFilterEtc);
 
     console.log(toJS(Partner.detailRequestTitle));
     console.log(toJS(Partner.detailRequestEmail));
@@ -366,28 +366,39 @@ class RequestModal extends React.Component {
 
     formData.append("client", Auth.logged_in_client.id);
     console.log(toJS(Auth.logged_in_client.id));
-    formData.append(
-      "category_big",
-      Partner.input_detail_big_category.maincategory
-    );
-    formData.append(
-      "category_small",
-      Partner.input_detail_small_category.category
-    );
+    // formData.append(
+    //   "category_big",
+    //   Partner.input_detail_big_category.maincategory
+    // );
 
-    console.log(
-      toJS(
-        Partner.filter_city_ary.filter(
-          (item) => item.city === Partner.detail_select_city.city
-        )[0].id
-      )
-    );
+    formData.append("category_big", "");
+
+    // formData.append(
+    //   "category_small",
+    //   Partner.input_detail_small_category.category
+    // );
+
+    formData.append("category_small", "");
+
+    // console.log(
+    //   toJS(
+    //     Partner.filter_city_ary.filter(
+    //       (item) => item.city === Partner.detail_select_city.city
+    //     )[0].id
+    //   )
+    // );
+
+    // await formData.append(
+    //   "city",
+    //   Partner.filter_city_ary.filter(
+    //     (item) => item.city === Partner.detail_select_city.city
+    //   )[0].id
+    // );
 
     await formData.append(
       "city",
-      Partner.filter_city_ary.filter(
-        (item) => item.city === Partner.detail_select_city.city
-      )[0].id
+
+      ""
     );
 
     let price = "";
@@ -402,12 +413,14 @@ class RequestModal extends React.Component {
     //   formData.append("category_middle", requestFilterEtc);
     // }
 
-    formData.append("category_middle", Partner.filterList.join());
+    // formData.append("category_middle", Partner.filterList.join());
+    formData.append("category_middle", "");
     formData.append("title", Partner.detailRequestTitle);
     formData.append("email", Partner.detailRequestEmail);
     formData.append("phone", Partner.detailRequestPhone);
 
     for (let i = 0; i < Partner.fileArray.length; i++) {
+      console.log(Partner.fileArray[i]);
       formData.append(`file`, Partner.fileArray[i]);
     }
 
@@ -513,8 +526,6 @@ class RequestModal extends React.Component {
                       {/* <Category>
                         <span>분야</span>
                         <div style={{ marginRight: "24px" }}>
-                          
-
                           <Select
                             placeholder="대 카테고리"
                             // options={bigCategoryArray}
@@ -532,7 +543,6 @@ class RequestModal extends React.Component {
                           />
                         </div>
                         <div>
-                          
                           <Select
                             placeholder="소 카테고리"
                             options={Partner.category_middle_ary}
@@ -548,8 +558,8 @@ class RequestModal extends React.Component {
                             }
                           />
                         </div>
-                      </Category> */}
-                      {/* <Location>
+                      </Category>
+                      <Location>
                         <span>위치</span>
                         <Select
                           placeholder="전체지역"
@@ -560,6 +570,76 @@ class RequestModal extends React.Component {
                         />
                       </Location> */}
 
+                      
+                      {/* <Filter>
+                        <span>필터</span>
+                        <FilterBox
+                          filter="filter"
+                          purpose="request"
+                          data={Partner.filterArray}
+                        />
+                      </Filter> */}
+                       <Email>
+                        <span>이메일</span>
+                        <div>
+                          <input
+                            placeholder="이메일을 입력해주세요."
+                            onBlur={(e) => {
+                              Partner.detailRequestEmail = e.target.value;
+                              console.log(toJS(Partner.detailRequestEmail));
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                        
+                      </Email>
+                      <Phone>
+                        <span>전화번호</span>
+                        <div>
+                          <input
+                            placeholder="전화번호를 입력해주세요."
+                            onBlur={(e) => {
+                              Partner.detailRequestPhone = e.target.value;
+                              console.log(toJS(Partner.detailRequestPhone));
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                      </Phone>
+                      <Title>
+                        <span>제목</span>
+                        <div>
+                          <input
+                            placeholder="프로젝트 제목을 입력해 주세요. ex) 반도체 장비 부품 가공 업체 수배"
+                            onBlur={(e) => {
+                              Partner.detailRequestTitle = e.target.value;
+                              console.log(toJS(Partner.detailRequestTitle));
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                      </Title>
+                      <Title>
+                        <span>내용</span>
+                        <div>
+                          <input
+                            placeholder="프로젝트 내용을 입력해 주세요."
+                            onBlur={(e) => {
+                              Partner.detailRequestTitle = e.target.value;
+                              console.log(toJS(Partner.detailRequestTitle));
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                      </Title>
                       <Budget>
                         <span>예산</span>
                         <FilterBox2 data={viewArray} width={this.props.width} />
@@ -664,74 +744,7 @@ class RequestModal extends React.Component {
             </InputBox> */}
                         </InputContainer>
                       </Budget>
-                      {/* <Filter>
-                        <span>필터</span>
-                        <FilterBox
-                          filter="filter"
-                          purpose="request"
-                          data={Partner.filterArray}
-                        />
-                      </Filter> */}
-                      <Title>
-                        <span>제목</span>
-                        <div>
-                          <input
-                            placeholder="프로젝트 제목을 입력해 주세요. ex) 반려동물 샤워기"
-                            onBlur={(e) => {
-                              Partner.detailRequestTitle = e.target.value;
-                              console.log(toJS(Partner.detailRequestTitle));
-                            }}
-                            onFocus={(e) => {
-                              e.target.placeholder = "";
-                            }}
-                          />
-                        </div>
-                      </Title>
-                      <Title>
-                        <span>내용</span>
-                        <div>
-                          <input
-                            placeholder="프로젝트 내용을 입력해 주세요."
-                            onBlur={(e) => {
-                              Partner.detailRequestTitle = e.target.value;
-                              console.log(toJS(Partner.detailRequestTitle));
-                            }}
-                            onFocus={(e) => {
-                              e.target.placeholder = "";
-                            }}
-                          />
-                        </div>
-                      </Title>
-                      <Email>
-                        <span>이메일</span>
-                        <div>
-                          <input
-                            placeholder="이메일을 입력해주세요."
-                            onBlur={(e) => {
-                              Partner.detailRequestEmail = e.target.value;
-                              console.log(toJS(Partner.detailRequestEmail));
-                            }}
-                            onFocus={(e) => {
-                              e.target.placeholder = "";
-                            }}
-                          />
-                        </div>
-                      </Email>
-                      <Phone>
-                        <span>전화번호</span>
-                        <div>
-                          <input
-                            placeholder="전화번호를 입력해주세요."
-                            onBlur={(e) => {
-                              Partner.detailRequestPhone = e.target.value;
-                              console.log(toJS(Partner.detailRequestPhone));
-                            }}
-                            onFocus={(e) => {
-                              e.target.placeholder = "";
-                            }}
-                          />
-                        </div>
-                      </Phone>
+                     
                       <File active={Partner.filterFile}>
                         <span>참고파일</span>
                         <FileComponent file={true} />
@@ -956,7 +969,7 @@ class RequestModal extends React.Component {
                       <span>제목</span>
                       <div>
                         <input
-                          placeholder="프로젝트 제목을 입력해 주세요. ex) 반려동물 샤워기"
+                          placeholder="프로젝트 제목을 입력해 주세요. ex) 반도체 장비 부품 가공 업체 수배"
                           onBlur={(e) => {
                             Partner.detailRequestTitle = e.target.value;
                             console.log(toJS(Partner.detailRequestTitle));
