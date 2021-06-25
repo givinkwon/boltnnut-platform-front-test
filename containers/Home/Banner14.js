@@ -7,14 +7,23 @@ import Fade from "react-reveal/Fade";
 import Router from "next/router";
 import Slider from "react-slick";
 
-const logo_img1 = "/static/images/Home2/Banner14_Logo_img1.png";
-const logo_img2 = "/static/images/Home2/Banner14_Logo_img2.png";
-const logo_img3 = "/static/images/Home2/Banner14_Logo_img3.png";
-const logo_img4 = "/static/images/Home2/Banner14_Logo_img4.png";
-const logo_img5 = "/static/images/Home2/Banner14_Logo_img5.png";
-const logo_img6 = "/static/images/Home2/Banner14_Logo_img6.png";
-const logo_img7 = "/static/images/Home2/Banner14_Logo_img7.png";
-const logo_img8 = "/static/images/Home2/Banner14_Logo_img8.png";
+
+const image1 = "/static/images/logo/logo_1.png";
+const image2 = "/static/images/logo/logo_2.png";
+const image3 = "/static/images/logo/logo_3.png";
+const image4 = "/static/images/logo/logo_4.png";
+const image5 = "/static/images/logo/logo_5.png";
+const image6 = "/static/images/logo/logo_6.png";
+const image7 = "/static/images/logo/logo_7.png";
+const image8 = "/static/images/logo/logo_8.png";
+const image9 = "/static/images/logo/logo_9.png";
+const image10 = "/static/images/logo/logo_10.png";
+const image11 = "/static/images/logo/logo_11.png";
+const image12 = "/static/images/logo/logo_12.png";
+const image13 = "/static/images/logo/logo_13.png";
+const image14 = "/static/images/logo/logo_14.png";
+const image15 = "/static/images/logo/logo_15.jpg";
+const image16 = "/static/images/logo/logo_16.png";
 
 const passImg = "/static/images/pass7.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
@@ -44,29 +53,54 @@ class Banner14Container extends React.Component {
         <LogoBox> */}
         <SliderContainer {...SlideSettings}>
           <Item style={{ width: 141 }}>
-            <img src={logo_img1} />
+            <img src={image1} />
           </Item>
           <Item style={{ width: 141 }}>
-            <img src={logo_img2} />
+            <img src={image2} />
           </Item>
           <Item style={{ width: 141 }}>
-            <img src={logo_img3} />
+            <img src={image3} />
           </Item>
           <Item style={{ width: 141 }}>
-            <img src={logo_img4} />
+            <img src={image4} />
           </Item>
           <Item style={{ width: 141 }}>
-            <img src={logo_img5} />
+            <img src={image5} />
           </Item>
           <Item style={{ width: 141 }}>
-            <img src={logo_img6} />
+            <img src={image6} />
           </Item>
           <Item style={{ width: 141 }}>
-            <img src={logo_img7} />
+            <img src={image7} />
           </Item>
           <Item style={{ width: 141 }}>
-            <img src={logo_img8} />
+            <img src={image8} />
           </Item>
+          <Item style={{ width: 141 }}>
+            <img src={image9} />
+          </Item>
+          <Item style={{ width: 141 }}>
+            <img src={image10} />
+          </Item>
+          <Item style={{ width: 141 }}>
+            <img src={image11} />
+          </Item>
+          <Item style={{ width: 141 }}>
+            <img src={image12} />
+          </Item>
+          <Item style={{ width: 141 }}>
+            <img src={image13} />
+          </Item>
+          <Item style={{ width: 141 }}>
+            <img src={image14} />
+          </Item>
+          <Item style={{ width: 141 }}>
+            <img src={image15} />
+          </Item>
+          <Item style={{ width: 141 }}>
+            <img src={image16} />
+          </Item>
+
         </SliderContainer>
         {/*           
           <img src={logo_img2} />
