@@ -331,6 +331,21 @@ export default class MyDocument extends Document {
       `,
     };
   }
+  setHotjar() {
+    return {
+      __html: `
+
+      (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:2255885,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+      `,
+    };
+  }
 
   setBeusable() {
     return {
@@ -462,6 +477,7 @@ export default class MyDocument extends Document {
           <Main />
           <script dangerouslySetInnerHTML={this.setChannelTalk()} />
           <script dangerouslySetInnerHTML={this.setBeusable()} />
+          <script dangerouslySetInnerHTML={this.setHotjar()} />
           <NextScript />
           {/* GA Settings*/}
           <script
@@ -469,7 +485,7 @@ export default class MyDocument extends Document {
             src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"
           ></script>
           <script dangerouslySetInnerHTML={this.setGoogleTags()} />
-          
+
           {/* Iamport */}
           <script
             type="text/javascript"
@@ -512,9 +528,6 @@ export default class MyDocument extends Document {
           {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
           {/* ㅌㅌㅌ */}
           {/* <p class="g-signin2" data-onsuccess="batchGet"></p> */}
-
-
-
         </body>
       </html>
     );
