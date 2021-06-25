@@ -111,7 +111,7 @@ class Banner12Container extends React.Component {
                     }}
                     fontSize="23"
                   >
-                    지금 무료 견적 받기
+                    지금 찾아보기
                   </Buttonv1>
                 </Contents>
                 <ImgBox
@@ -202,15 +202,20 @@ class Banner12Container extends React.Component {
                 </ImgBox>
                 <Contents>
                   <Header>
-                    2. 안전 거래 보장 <br />
-                    프리미엄 파트너
+                    2. 업체 찾기 서비스로 <br />
+                    나에게 딱 맞는 제조업체 찾기
                   </Header>
                   <Body>
-                    평균 업력 30년 이상의 업체 중 업체 실사가 완료된 <br />
-                    프리미엄 파트너와 계약을 맺어보세요. <br />
-                    볼트앤너트는 프리미엄 파트너와 계약시
+                    검색을 통해 원하는 제조사를 찾지 못하셨나요? <br />
+                    간단한 업체 수배 요청으로 
                     <br />
-                    에스크로 서비스와 안전거래를 보장합니다. <br />
+                    5000 개의 제조사를 만나보세요.<br/>
+                    채팅과 통화 등 다양한 형태로 소통할 수 있습니다.
+                    <br/>
+                    *원하는 제조사만 민감 정보를 
+                    <br/>
+                    볼 수 있게 공개 할 수 있습니다.
+                    
                   </Body>
                   <Buttonv1
                     onClick={() => Router.push("/request")}
@@ -286,13 +291,15 @@ class Banner12Container extends React.Component {
               <ContainerBox>
                 <Contents>
                   <Header>
-                    3. 해외 공장 생산 <br /> 견적 바로 알아보기
+                  3. 안전 거래 보장 <br />
+                    프리미엄 파트너
                   </Header>
                   <Body>
-                    볼트앤너트는 중국, 인도네시아를 비롯 <br />
-                    세계 각지 파트너 공장과 제휴를 맺고 있습니다. <br />
-                    해외 생산 견적이 필요한 경우 <br />
-                    별도 문의가 가능합니다. <br />
+                    평균 업력 30년 이상의 업체 중 업체 실사가 완료된 <br />
+                    프리미엄 파트너와 계약을 맺어보세요. <br />
+                    볼트앤너트는 프리미엄 파트너와 계약시
+                    <br />
+                    에스크로 서비스와 안전거래를 보장합니다. <br />
                   </Body>
                 </Contents>
                 <ImgBox width={588} height={370} index="3">

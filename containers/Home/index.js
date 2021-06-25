@@ -184,7 +184,7 @@ class HomeConatiner extends React.Component {
 
               <Banner12Container />
               {/* <Banner4Container /> */}
-              <Banner6Container />
+              <Banner8Container />
               {/* <Banner7Container /> */}
               {/* <Banner8Container /> */}
               <Banner9Container />
