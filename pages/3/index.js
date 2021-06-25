@@ -24,6 +24,8 @@ class Index extends React.Component {
     // conflict..?
     this.props.Auth.home_index = 3;
     this.props.Auth.bgColor = "#f6f6f6";
+
+
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
     console.log(this.state.width);

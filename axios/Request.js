@@ -25,7 +25,7 @@ export function create(req) {
   });
 }
 
-export function patch(req) {
+export function modifyProject(req) {
   return axios({
     method: "PATCH",
     url: `${ROOT_URL}/requests/${req.id}/`,
@@ -66,6 +66,13 @@ export function deleteRequest(req) {
   });
 }
 
+export function delEstimate(req) {
+  return axios({
+    method: "Delete",
+    url: `${ROOT_URL}/estimate/${req.id}/`,
+  });
+}
+
 export function getRequestFile(req) {
   return axios({
     method: "Get",
@@ -76,10 +83,9 @@ export function getRequestFile(req) {
 
 export function setRequestFile(req) {
   return axios({
-    method: "Post",
+    method: "POST",
     url: `${ROOT_URL}/requestfile/`,
-    data: req,
-    params: req.params ? req.params : null,
+    data: req.data,
   });
 }
 

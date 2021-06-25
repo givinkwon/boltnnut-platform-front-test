@@ -101,7 +101,7 @@ export default class MyDocument extends Document {
         // var formattedJson = JSON.stringify(response.result, null, 2);
         var formattedJson = response.result;
         // console.log(formattedJson.reports)
-        console.log(formattedJson.reports[0].data.rows[0].dimensions[0]);
+        console.log(formattedJson.reports[0].data.rows[0].dimensions);
         getUserActivity(formattedJson.reports[0].data.rows[0].dimensions[0]);
         // document.getElementById('query-output').value = formattedJson;
       }
@@ -272,15 +272,22 @@ export default class MyDocument extends Document {
     return {
       __html: `
       
-       window.dataLayer = window.dataLayer || [];
-       
-       function gtag(){dataLayer.push(arguments);
-
+      window.dataLayer = window.dataLayer || [];
+      
+      function gtag(){dataLayer.push(arguments);
       }
-       gtag('js', new Date());
-       gtag('config', 'UA-162026812-1', {
+      gtag('js', new Date());
+      gtag('config', 'UA-162026812-1', {
           'custom_map': {'dimension2': 'clientId' }
-       } );
+      } );
+
+      function MyDataLayerPush(object){
+        if(window.location.hostname!='localhost')
+        {
+          dataLayer.push({event:object.event});
+        }
+      }
+      
      `,
     };
   }
@@ -329,6 +336,27 @@ export default class MyDocument extends Document {
       `,
     };
   }
+
+  setBeusable() {
+    return {
+      __html: `
+        (function() {
+          var w = window;
+          var d = document;
+          var a =  "//rum.beusable.net/script/b210623e173415u761/7c70969d52";
+          w.__beusablerumclient__ = {
+            load : function(src){
+              var b = d.createElement("script");
+              b.src = src; b.async=true; b.type = "text/javascript";
+              d.getElementsByTagName("head")[0].appendChild(b);
+            }
+          };
+          w.__beusablerumclient__.load(a);
+      })();
+      `,
+    };
+  }
+
   // async componentDidMount() {
   //   TagManager.initialize(tagManagerArgs)
   // }
@@ -344,6 +372,9 @@ export default class MyDocument extends Document {
               async
               src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
             ></script>
+
+            {/* Beusable */}
+            <script type="text/javascript"></script>
             <meta
               http-equiv="Content-Type"
               content="text/html; charset=utf-8"
@@ -409,7 +440,15 @@ export default class MyDocument extends Document {
           {/* Google Tag Manager */}
           <script
             dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PWFPPZ5');`,
+              __html: `
+              (function(w,d,s,l,i){
+                w[l]=w[l]||[];w[l].push({
+                  'gtm.start':new Date().getTime(),event:'gtm.js'
+                });
+
+                var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                
+              })(window,document,'script','dataLayer','GTM-PWFPPZ5');`,
             }}
             async
           ></script>
@@ -425,6 +464,7 @@ export default class MyDocument extends Document {
           </noscript>
           <Main />
           <script dangerouslySetInnerHTML={this.setChannelTalk()} />
+          <script dangerouslySetInnerHTML={this.setBeusable()} />
           <NextScript />
           {/* GA Settings*/}
           <script

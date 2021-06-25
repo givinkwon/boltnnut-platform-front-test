@@ -7,7 +7,7 @@ import Nav from 'components/Nav'
 import MobileNav from 'components/MobileNav'
 import Footer from 'components/Footer'
 import Spinner from 'components/Spinner'
-
+import * as AccountAPI from "axios/Account";
 import LoginConatiner from 'containers/Login'
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 @inject('Counter', 'Post', 'Loading') // *_app.js <Provider>에 넘겨준 store명과 일치해야함. *inject: 컴포넌트에서 store에 접근 가능하게 함. 해당 store에 있는 값을 컴포넌트의 props로 주입시켜줌.
@@ -23,6 +23,23 @@ class Home extends React.Component {
     //창 크기
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth});
+    // page ip 기록
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href)
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   }
 
   componentWillUnmount() {

@@ -169,7 +169,8 @@ class ManufactureProcess {
   @action setBigCategory = (e) => {
     this.selectedBigCategory = e;
     // this.midCategorySet = e.detail;
-    console.log(this.selectedBigCategory);
+    console.log(toJS(e))
+    console.log(toJS(this.selectedBigCategory));
     this.selectedMidCategory = e.detail[0];
   };
   @action setMidCategory = (e) => {
@@ -177,20 +178,23 @@ class ManufactureProcess {
     console.log("setMidCategory()");
   };
   @action reset = async () => {
-    this.SelectChecked = "";
-    this.MinPrice = 0;
-    this.MaxPrice = 0;
-    this.totalMinPrice = 0;
-    this.totalMaxPrice = 0;
-    this.purposeContent = 0;
-    this.projectname = "";
-    this.requestComment = "";
-    this.requestComment2 = "";
-    this.checkFileUpload = false;
-    this.openFileArray = [];
-    this.privateFileArray = [];
-    this.date_conference = false;
-    this.date_undefined = false;
+    console.log("resetreset");
+    if (!this.changeProject) {
+      this.SelectChecked = "";
+      this.MinPrice = 0;
+      this.MaxPrice = 0;
+      this.totalMinPrice = 0;
+      this.totalMaxPrice = 0;
+      this.purposeContent = 0;
+      this.projectname = "";
+      this.requestComment = "";
+      this.requestComment2 = "";
+      this.checkFileUpload = false;
+      this.openFileArray = [];
+      this.privateFileArray = [];
+      this.date_conference = false;
+      this.date_undefined = false;
+    }
   };
   @action setDefaultValue = (name) => {
     // this.categoryDefaultValue = this.ManufactureProcessList[2];

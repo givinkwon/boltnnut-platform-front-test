@@ -11,6 +11,7 @@ import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 
 import { toJS } from "mobx";
+import * as AccountAPI from "axios/Account";
 
 //import ProjectContainer from 'containers/Project/index'
 
@@ -38,6 +39,7 @@ class Project extends React.Component {
     Loading.setOpen(true);
     setTimeout(() => Loading.setOpen(false), 500);
 
+    
     // 중복
     await Auth.checkLogin();
 
@@ -48,6 +50,23 @@ class Project extends React.Component {
     //     console.log('클라이언트 의뢰 목록 로딩 끝')
     //   })
     // }
+    // page ip 기록
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href)
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
 
     console.log(toJS(Auth));
     if (Auth.logged_in_user) {
@@ -101,8 +120,8 @@ class Project extends React.Component {
     return (
       <div>
         {Loading.is_open}
-        {console.log(toJS(Auth.logged_in_user))}
-        {console.log(toJS(Auth.logged_in_partner))}
+        {/* {console.log(toJS(Auth.logged_in_user))}
+        {console.log(toJS(Auth.logged_in_partner))} */}
         {/* {Loading.is_open && <Spinner/>} */}
         <Head>
           <title>볼트앤너트</title>

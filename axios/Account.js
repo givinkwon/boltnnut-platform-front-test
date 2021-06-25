@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { ROOT_URL } from './index';
+import axios from "axios";
+import { ROOT_URL } from "./index";
 
 //  로그인
 export function login(req) {
   return axios({
-    method: 'POST',
+    method: "POST",
     url: `${ROOT_URL}/users/login/`,
     data: req.data,
   });
@@ -13,7 +13,7 @@ export function login(req) {
 // 현재 로그인한 사용자 정보
 export function reloadUserInfo(req) {
   return axios({
-    method: 'POST',
+    method: "POST",
     url: `${ROOT_URL}/users/data/`,
     headers: req.headers ? req.headers : null,
   });
@@ -22,7 +22,7 @@ export function reloadUserInfo(req) {
 // 클라이언트 회원가입
 export function clientSignup(req) {
   return axios({
-    method: 'POST',
+    method: "POST",
     url: `${ROOT_URL}/client/signup/`,
     data: req.data,
   });
@@ -31,7 +31,7 @@ export function clientSignup(req) {
 // 파트너 회원가입
 export function partnerSignup(req) {
   return axios({
-    method: 'POST',
+    method: "POST",
     url: `${ROOT_URL}/partner/signup/`,
     data: req.data,
   });
@@ -40,7 +40,7 @@ export function partnerSignup(req) {
 // 임시 비밀번호 전송
 export function sendPassword(req) {
   return axios({
-    method: 'POST',
+    method: "POST",
     url: `${ROOT_URL}/users/password/phone/`,
     data: req.data,
   });
@@ -49,7 +49,7 @@ export function sendPassword(req) {
 // 이메일 찾기
 export function findId(req) {
   return axios({
-    method: 'POST',
+    method: "POST",
     url: `${ROOT_URL}/users/findemail/`,
     data: req.data,
   });
@@ -58,7 +58,7 @@ export function findId(req) {
 // 비밀번호 변경
 export function changePassword(req) {
   return axios({
-    method: 'PATCH',
+    method: "PATCH",
     url: `${ROOT_URL}/users/password/`,
     data: req.data,
     headers: req.headers ? req.headers : null,
@@ -68,7 +68,7 @@ export function changePassword(req) {
 // 회원탈퇴
 export function deactivateUser(req) {
   return axios({
-    method: 'PATCH',
+    method: "PATCH",
     url: `${ROOT_URL}/users/deactivate/`,
     data: req.data,
     headers: req.headers ? req.headers : null,
@@ -79,8 +79,24 @@ export function deactivateUser(req) {
 
 export function patchClientInfo(req, id) {
   return axios({
-    method: 'PATCH',
+    method: "PATCH",
     url: `${ROOT_URL}/client/${id}/`,
-    data: req
-  })
+    data: req,
+  });
+}
+
+export function setUserIP(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/accesslog/`,
+    data: req.data,
+  });
+}
+
+export function setUserPageIP(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/pageaccesslog/`,
+    data: req.data,
+  });
 }

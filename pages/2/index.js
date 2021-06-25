@@ -6,7 +6,8 @@ import MobileNav from "components/MobileNav";
 
 import Footer from "components/Footer";
 import Home2Container from "containers/Home2";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { inject, observer } from "mobx-react";
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
@@ -18,15 +19,22 @@ class Index extends React.Component {
     width: null,
     home_index: 3,
   };
-  componentDidMount() {
+  async componentDidMount() {
+    this.props.Loading.setOpen(true);
     // this.props.Magazine.init()
     //창 크기
     // conflict..?
     this.props.Auth.home_index = 2;
     this.props.Auth.bgColor = "#f6f6f6";
+
+
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
     console.log(this.state.width);
+    setTimeout(() => {
+      this.props.Loading.setOpen(false);
+    }, 1000);
+     await this.props.Auth.checkLogin();
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -36,9 +44,9 @@ class Index extends React.Component {
   };
   render() {
     const { width } = this.state;
-    const { Home } = this.props;
+    const { Home, Loading } = this.props;
     return (
-      <div>
+      <>
         <Head>
           {/* SEO */}
           <meta
@@ -63,11 +71,11 @@ class Index extends React.Component {
           <meta property="og:url" content="https://www.boltnnut.com/2" />
           <title>볼트앤너트</title>
         </Head>
-
+        <div>{Loading.is_open}
         <>
-          {width && width > 767.98 && <Nav index={Home.home_index} />}
+          {width && width > 767.98 && <Nav  />}
           {width && width < 768 && (
-            <MobileNav src={logo_ic} width={width} index={Home.home_index} />
+            <MobileNav src={logo_ic} width={width} />
           )}
         </>
 
@@ -85,9 +93,10 @@ class Index extends React.Component {
               </>
             ))}
         </> */}
-        {width && <Home2Container width={width} />}
+        {width && <Home2Container width={width} reqList={Home.request_list}/>}
         {width && <Footer />}
-      </div>
+        </div>
+      </>
     );
   }
 }

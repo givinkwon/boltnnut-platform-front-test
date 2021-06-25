@@ -9,6 +9,7 @@ import Footer from "components/Footer";
 import { inject, observer } from "mobx-react";
 
 import ProducerContainer from "../../containers/Producer/index";
+import * as AccountAPI from "axios/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
@@ -35,6 +36,24 @@ class Index extends React.Component {
     // Auth.bgColor = "#ffffff";
     // Loading.setOpen(true);
     // setTimeout(() => Loading.setOpen(false), 500);
+    // page ip 기록
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href)
+    const req = {
+      data: formData,
+    };
+  
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);

@@ -110,7 +110,7 @@ class MobileBanner0Container extends React.Component {
                 onClick={() => Router.push("/manufacturer")}
               >
                 <p style={{ paddingBottom: 0.2, fontSize: "16px" }}>
-                민감 정보는 비공개로 작성 후 선택 공개하세요
+                  민감 정보는 비공개로 작성 후 선택 공개하세요
                 </p>
               </Buttonv1>
               <div

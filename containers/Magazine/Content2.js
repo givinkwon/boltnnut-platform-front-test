@@ -53,10 +53,10 @@ class ContentConatiner extends React.Component {
 
     if (!Magazine.manufactureClick) {
       Magazine.manufactureClick = true;
-      dataLayer.push({ event: "Magazine_manufactureClick" });
+      MyDataLayerPush({ event: "Magazine_manufactureClick" });
     } else if (!Magazine.dictClick) {
       Magazine.dictClick = true;
-      dataLayer.push({ event: "Magazine_dictionaryClick" });
+      MyDataLayerPush({ event: "Magazine_dictionaryClick" });
     }
     console.log(item);
     if (item.checked) {

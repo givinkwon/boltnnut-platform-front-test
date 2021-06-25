@@ -567,7 +567,7 @@ class Auth {
           setTimeout(() => {
             this.loading = false;
             alert("회원가입 성공");
-            dataLayer.push({ event: "SignUpComplete_Client" });
+            MyDataLayerPush({ event: "SignUpComplete_Client" });
             this.reset();
             Router.push("/login");
           }, 800);
@@ -711,7 +711,7 @@ class Auth {
           setTimeout(() => {
             this.loading = false;
             alert("회원가입 성공");
-            dataLayer.push({ event: "SignUpComplete_Partner" });
+            MyDataLayerPush({ event: "SignUpComplete_Partner" });
             this.reset();
             Router.push("/login");
           }, 800);

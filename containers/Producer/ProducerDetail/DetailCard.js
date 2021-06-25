@@ -1,6 +1,27 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import dynamic from "next/dynamic";
+import Router from "next/router";
+// import Modal from "../Review/ReviewWritingModal";
+// import ReviewCard from "../Review/ReviewCard";
+// import ReviewStarRating from "../Review/ReviewStarRating";
+import { toJS } from "mobx";
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+
+const availableFileType1 = [
+  "png",
+  "jpeg",
+  "gif",
+  "bmp",
+  "pdf",
+  "csv",
+  "xslx",
+  "mp4",
+  "webm",
+  "mp3",
+];
+
+const availableFileType3 = ["doc", "docx", "txt", "html", "ppt", "pptx"];
 
 // @ts-ignore
 const FileViewer = dynamic(() => import("react-file-viewer"), {
@@ -19,10 +40,29 @@ const onError = (e) => {
 @inject("Partner")
 @observer
 class DetailCardContainer extends React.Component {
+  componentDidMount = async () => {
+    const { Partner } = this.props;
+    // console.log("csfdffsdfd");
+    console.log("mountmount");
+    if (Partner.partner_detail_list.length == 0) {
+      Router.push("/manufacturer");
+    }
+
+    console.log(this.props.Partner.selectedIntroductionFileType);
+  };
+
   render() {
     const { width, Partner } = this.props;
-    console.log(this.props.Partner.selectedIntroductionFile);
-    console.log(Partner.partner_detail_list);
+
+    const docs = [
+      // {
+      //   uri:
+      //     "https://boltnnutplatform-test.s3.amazonaws.com/media/partner/2021/6/21/0fe2d8bf12da4838b4cb35625153a1f3_partner.docx",
+      // },
+      { uri: this.props.Partner.selectedIntroductionFile },
+      // { uri: require("./example-files/pdf.pdf") } // local
+    ];
+
     return (
       <>
         <Card
@@ -35,10 +75,14 @@ class DetailCardContainer extends React.Component {
             <tag>
               <span>활동 가능</span>
             </tag>
-            <name>{Partner.partner_detail_list[0].item.name}</name>
-            <content>
-              <span>{Partner.partner_detail_list[0].item.info_company}</span>
-            </content>
+            {Partner.partner_detail_list.length != 0 && (
+              <name>{Partner.partner_detail_list[0].item.name}</name>
+            )}
+            {Partner.partner_detail_list.length != 0 && (
+              <content>
+                <span>{Partner.partner_detail_list[0].item.info_company}</span>
+              </content>
+            )}
           </HeaderBox>
           <div
             onCentextMenu={(e) => {
@@ -64,11 +108,30 @@ class DetailCardContainer extends React.Component {
 
             <IntroductionBox width={width}>
               <Font24>회사소개서</Font24>
-              <FileViewerContainer
-                fileType={this.props.Partner.selectedIntroductionFileType}
-                filePath={this.props.Partner.selectedIntroductionFile}
-                onError={onError}
-              />
+              {availableFileType1.indexOf(
+                this.props.Partner.selectedIntroductionFileType
+              ) > -1 && (
+                <FileViewerContainer
+                  fileType={this.props.Partner.selectedIntroductionFileType}
+                  filePath={this.props.Partner.selectedIntroductionFile}
+                  onError={onError}
+                />
+              )}
+
+              {/* {availableFileType2.indexOf(
+                this.props.Partner.selectedIntroductionFileType
+              ) > -1 && <PPTViewer id="viewer-wrap" />} */}
+
+              {availableFileType3.indexOf(
+                this.props.Partner.selectedIntroductionFileType
+              ) > -1 && (
+                <DOCViewer
+                  documents={docs}
+                  pluginRenderers={DocViewerRenderers}
+                  height={width}
+                  type={this.props.Partner.selectedIntroductionFileType}
+                />
+              )}
             </IntroductionBox>
           </InnerBox>
 
@@ -83,13 +146,17 @@ class DetailCardContainer extends React.Component {
               <label>
                 <span>주요실적</span>
               </label>
-              <content>{Partner.partner_detail_list[0].item.deal}</content>
+              {Partner.partner_detail_list.length != 0 && (
+                <content>{Partner.partner_detail_list[0].item.deal}</content>
+              )}
             </div>
             <div>
               <label>
                 <span>진행한 제품군</span>
               </label>
-              <content>{Partner.partner_detail_list[0].item.history}</content>
+              {Partner.partner_detail_list.length != 0 && (
+                <content>{Partner.partner_detail_list[0].item.history}</content>
+              )}
             </div>
           </DetailInfoBox>
         </Card>
@@ -402,3 +469,38 @@ const DetailInfoBox = styled.div`
   }
 `;
 const FileViewerContainer = styled(FileViewer)``;
+
+const DOCViewer = styled(DocViewer)`
+  > div:nth-of-type(1){
+    display: none;
+    z-index: 0;
+  }
+  > div:nth-of-type(2) {
+    // border: 3px solid red;
+
+    > div:nth-of-type(1) {
+      // height: 1000px;
+      height: ${(props) =>
+        (props.type === "pptx" || props.type === "ppt") &&
+        props.height / 2 - props.height / 5}px;
+        height: ${(props) =>
+          (props.type === "docx" || props.type === "doc") && 1200}px;
+    }
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > div:nth-of-type(2) {
+      > div:nth-of-type(1) {
+        height: ${(props) =>
+          props.type === "pptx" || props.type === "ppt"
+            ? props.height
+              ? props.height / 3 + props.height / 3
+              : 0
+            : 300}px;
+
+
+      }
+      }
+    }
+  }
+`;

@@ -7,6 +7,7 @@ import Fade from "react-reveal/Fade";
 import Router from "next/router";
 
 // const image1 = "/static/images/Home/Banner9/Banner9_img1.png"
+const passImg = "/static/images/pass7.png";
 const image1 = "/static/images/Home/Mobile/MobileBanner9/MobileBanner9_bg.png";
 class MobileBanner9Container extends React.Component {
   render() {
@@ -15,27 +16,22 @@ class MobileBanner9Container extends React.Component {
         <Layer>
           <Fade bottom>
             <div>
-              <Header>
+              {/* <Header>
                 메일로 회사소개서 보내기, <br />
                 박람회 영업하기는 이제 그만
-              </Header>
+              </Header> */}
               <Body>
-                프로젝트 상담을 통해 <br />
-                기획 단계부터 실무자 분들과 소통해보세요. <br />
-                전문 상담을 통해 <br />
-                자사의 전문성을 제안하고 신규 거래처를 탐색해보세요.
+                제조 발주를 위한 빠른 업체 검색 <br />
+                볼트앤너트에서 가능합니다.
               </Body>
-              <Buttonv1
-                style={{
-                  margin: "0 auto",
-                  marginTop: 20,
-                  marginBottom: 56,
-                  fontWeight: 700,
-                }}
-                onClick={() => Router.push("/request")}
-              >
-                <p style={{ paddingBottom: 1 }}>파트너 가입하기</p>
-              </Buttonv1>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button onClick={() => Router.push("/producer")}>
+                  <span>지금 업체 찾기</span>
+                  <span>
+                    <img src={passImg} />
+                  </span>
+                </Button>
+              </div>
             </div>
           </Fade>
         </Layer>
@@ -63,18 +59,55 @@ const Header = styled(Title.FontSize18)`
 `;
 
 const Body = styled(Title.FontSize16)`
-  color: #ffffff;
-  font-weight: normal;
-  line-height: 26px;
-  letter-spacing: -0.4px;
+  // color: #ffffff;
+  // font-weight: normal;
+  // line-height: 26px;
+  // letter-spacing: -0.4px;
+  // text-align: center;
+  // margin-bottom: 36px;
+
+  margin-top: 10px;
+  font-size: 12px !important;
+  color: #282c36;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67 !important;
+  letter-spacing: -0.6px !important;
   text-align: center;
-  margin-bottom: 36px;
 `;
 
 const Layer = styled.div`
-  background-color: rgba(0, 0, 0, 0.67);
+  background-color: rgba(255, 255, 255, 0.8);
   width: 100%;
   height: 100%;
-  // display: inline-flex;
-  // justify-content: center;
+  display: inline-flex;
+  justify-content: center;
+`;
+
+const Button = styled.div`
+  cursor: pointer;
+  margin-top: 14px;
+  border: 2px solid #0933b3;
+  border-radius: 4px;
+  width: 160px;
+  height: 30px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > span:nth-of-type(1) {
+    margin-right: 15px;
+    font-size: 11px;
+    line-height: 32px;
+    letter-spacing: -0.65px;
+    color: #0933b3;
+    font-weight: 500;
+  }
+  > span:nth-of-type(2) {
+    > img {
+      width: 6px;
+    }
+  }
 `;

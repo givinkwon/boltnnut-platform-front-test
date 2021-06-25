@@ -40,6 +40,7 @@ class Banner0Container extends React.Component {
     projectCount: 0,
   };
   componentDidMount() {
+    console.log(window.location.hostname);
     const { Proposal, Partner } = this.props;
     // Proposal.loadProjects();
     // this.setState({projectCount:this.props.Proposal.projects_count})
@@ -83,22 +84,32 @@ class Banner0Container extends React.Component {
                 color={WHITE}
                 shadow={"0 3px 6px rgba(0,0,0,0.61);"}
                 fontWeight={"bold"}
-                style={{ lineHeight: 1.49, fontSize: "52px" }}
+                style={{
+                  lineHeight: 1.49,
+                  fontSize: "52px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
               >
-                엔지니어와 연구원을 위한 전문 업체 수배 플랫폼
+                <span>대한민국 제조사 정보 여기 다 있다.</span>
+                <span>전문 업체 수배 플랫폼 볼트앤너트</span>
               </Title.FontSize56>
               <Explanation>
-                <Font24>자동 견적 & 비교 견적</Font24>
-                <Font24>도면 & BOM 검토 등 생산 문의 상담</Font24>
-                <Font24 style={{ marginBottom: 0 }}>전문 업체 수배</Font24>
+                <Font24>남동공단부터 창원까지</Font24>
+                <Font24>선별된 5000여 개 제조사 정보를</Font24>
+                <Font24 style={{ marginBottom: 0 }}>
+                  지금 바로 확인하세요.
+                </Font24>
+                <Font24>생산 분야 | 포트폴리오 | 계약 후기</Font24>
               </Explanation>
 
               {Auth.logged_in_user && Auth.logged_in_user.type === 1 ? (
                 <></>
               ) : (
                 <>
-                  <Buttonv1 onClick={() => Router.push("/request")}>
-                    무료 상담 및 견적 받기
+                  <Buttonv1 onClick={() => Router.push("/manufacturer")}>
+                    전문 업체 찾아보기
                   </Buttonv1>
 
                   <div
@@ -111,7 +122,7 @@ class Banner0Container extends React.Component {
                     }}
                   >
                     <img src={lock} style={{ marginRight: 8 }}></img>
-                    모든 업로드는 안전하고 기밀입니다.
+                    민감 정보는 비공개로 작성 후 선택 공개하세요
                   </div>
                 </>
               )}
@@ -223,7 +234,7 @@ const Explanation = styled.div`
 const Font24 = styled(Content.FontSize24)`
   font-weight: normal;
   text-align: center;
-  margin-bottom: 34px;
+
   color: #ffffff;
 `;
 const Layer = styled.div`

@@ -30,6 +30,13 @@ class ManufacturerContentContainer extends React.Component {
     dropDownIdx: -1,
   };
 
+  openModal = () => {
+    const { Partner } = this.props;
+    // console.log("requestmodal open click");
+    // this.setState({ modalOpen: true });
+    Partner.requestModalActive = true;
+  };
+
   handleIntersection = (event) => {
     if (event.isIntersecting) {
       console.log("추가 로딩을 시도합니다");
@@ -101,7 +108,9 @@ class ManufacturerContentContainer extends React.Component {
     Partner.ReviewActive = false;
     Partner.ReviewActiveIndex = -1;
     this.setState({ dropDownActive: false, dropDownIdx: -1 });
-    Partner.getPartner(newPage);
+    Partner.subButtonActive
+      ? Partner.getOtherPartner(newPage)
+      : Partner.getPartner(newPage);
   };
 
   pageNext = (e) => {
@@ -199,7 +208,36 @@ class ManufacturerContentContainer extends React.Component {
         <Background id="MyBackground">
           <Container>
             {/* <SearchBar /> */}
+
             <Body>
+              {Partner.partner_list.length > 0 && Partner.isSearched && (
+                <SubButtonBox>
+                  <SubButton
+                    onClick={() => {
+                      !Partner.subButtonActive
+                        ? Partner.getOtherPartner()
+                        : (Partner.partner_list = Partner.originPartnerList);
+
+                      Partner.subButtonActive = !Partner.subButtonActive;
+                    }}
+                    active={Partner.subButtonActive}
+                  >
+                    <Font20 style={{ textAlign: "center" }}>
+                      기성품이 없는 신제품의 개발이 필요하신가요?
+                      <br />
+                      예, 신제품 개발 전문 업체로 추천해주세요
+                    </Font20>
+                  </SubButton>
+                  <SubButton>
+                    <Font20 style={{ textAlign: "center" }}>
+                      도면이 있으신가요?
+                      <br />
+                      예, 최저가 가공 및 금형가로 즉시 견적 안내 드립니다.
+                    </Font20>
+                  </SubButton>
+                </SubButtonBox>
+              )}
+
               {/* <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
                 <RadioBox
@@ -227,9 +265,26 @@ class ManufacturerContentContainer extends React.Component {
               <img src={pass4}/>
             </span> */}
                 </Header>
+                {Partner.partner_list.length === 0 && (
+                  <NoResultBox>
+                    <Font20>원하는 업체를 찾기 어려우신가요?</Font20>
+                    <Font14 style={{ color: "black", fontWeight: "300" }}>
+                      볼트앤너트 업체 수배 전문가가 숨어있는 공장까지 대신
+                      찾아드립니다.
+                    </Font14>
+                    <RequestButton
+                      onClick={() => {
+                        this.openModal();
+                      }}
+                    >
+                      <span>업체 수배 & 견적 의뢰</span>
+                    </RequestButton>
+                  </NoResultBox>
+                )}
                 {Partner.partner_list &&
                   // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
+                    // console.log(toJS(Partner.partner_list));
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         {/* {Partner.category_ary[idx] &&
@@ -264,8 +319,8 @@ class ManufacturerContentContainer extends React.Component {
                             // mainCategory={Project.main_category_name[idx]}
                             // newData={Project.data_dt[idx]}
                             // checkTotal={Project.filter_price}
-                            dropDown={this.state.dropDownActive}
-                            dropDownIdx={this.state.dropDownIdx}
+                            // dropDown={this.state.dropDownActive}
+                            // dropDownIdx={this.state.dropDownIdx}
                             handleIntersection={this.handleIntersection}
                             customer="partner"
                           />
@@ -371,6 +426,50 @@ class ManufacturerContentContainer extends React.Component {
   }
 }
 
+const RequestButton = styled.div`
+  margin-top: 50px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #0933b3;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #0933b3;
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  > span {
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: -0.45px;
+  }
+`;
+const NoResultBox = styled.div`
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+const SubButtonBox = styled.div`
+  width: 100%;
+`;
+
+const SubButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  border: ${(props) => (props.active ? " 2px solid blue" : " 2px solid black")};
+  margin-bottom: 20px;
+
+  :hover {
+    background: lightblue;
+  }
+`;
 const region_data = [
   {
     id: 0,
@@ -492,8 +591,10 @@ const PageCount = styled.span`
 `;
 const Body = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  border-top: 1px solid #e1e2e4;
+  align-items: center;
+  // border-top: 1px solid #e1e2e4;
   border-bottom: 1px solid #e1e2e4;
   // margin-top: 40px;
 `;

@@ -114,7 +114,7 @@ class TabletBanner0Container extends React.Component {
                   style={{ marginRight: 8, width: "12px", height: "12px" }}
                 ></img>
                 <span style={{ fontSize: "13px", opacity: "0.8" }}>
-                민감 정보는 비공개로 작성 후 선택 공개하세요
+                  민감 정보는 비공개로 작성 후 선택 공개하세요
                 </span>
               </div>
             </>

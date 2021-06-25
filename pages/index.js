@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
 
+
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
 @inject("Home", "Loading", "Auth")
@@ -29,6 +30,15 @@ class Home extends React.Component {
 
     this.props.Auth.home_index = 0;
     //창 크기
+    // var newURL =
+    //   window.location.protocol +
+    //   "//" +
+    //   window.location.host +
+    //   "/" +
+    //   window.location.pathname;
+    // console.log(newURL);
+  
+
     window.addEventListener("resize", this.updateDimensions);
     // this.props.Auth.bgColor = "#ffffff";
     this.setState({ ...this.state, width: window.innerWidth });
