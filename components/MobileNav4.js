@@ -46,17 +46,8 @@ class MobileNav extends React.Component {
       this.alreadyLoggedin.forEach((url) => {
         if (url === splitedRoute[1]) {
           alert("이미 로그인한 사용자입니다");
-          if (Auth.home_index === 4) {
-            Router.push("/4");
-          } else if (Auth.home_index === 3) {
-            Router.push("/3");
-          } else if (Auth.home_index === 2) {
-            Router.push("/2");
-          } else if (Auth.home_index === 1) {
-            Router.push("/5");
-          } else {
-            Router.push("/");
-          }
+
+          Router.push("/");
         }
         // /offered 에서 tab 1을 거치지 않고 tab 2로 들어온 사용자 리다이렉트
         else if ("offered" === splitedRoute[1]) {
@@ -142,17 +133,7 @@ class MobileNav extends React.Component {
                   <Logo
                     onClick={() => {
                       if (is_open == true) {
-                        if (Auth.home_index === 4) {
-                          Router.push("/4");
-                        } else if (Auth.home_index === 3) {
-                          Router.push("/3");
-                        } else if (Auth.home_index === 2) {
-                          Router.push("/2");
-                        } else if (Auth.home_index === 1) {
-                          Router.push("/5");
-                        } else {
-                          Router.push("/");
-                        }
+                        Router.push("/");
                       }
                     }}
                     src={logo_ic}
@@ -230,7 +211,7 @@ class MobileNav extends React.Component {
               // ) : (
               //   <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
               // )}
-              <Logo src={this.props.src} onClick={() => Router.push("/4")} />
+              <Logo src={this.props.src} onClick={() => Router.push("/")} />
             ) : (
               <Logo src={this.props.src} onClick={() => Router.back()} />
             )}

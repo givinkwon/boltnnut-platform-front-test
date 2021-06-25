@@ -48,31 +48,9 @@ class NoProject extends React.Component {
                 </RequestCompleteDesc>
 
                 <ButtonBox>
-                  {Auth.home_index === 4 && (
-                    <HomeBtn onClick={() => Router.push("/4")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 3 && (
-                    <HomeBtn onClick={() => Router.push("/3")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 2 && (
-                    <HomeBtn onClick={() => Router.push("/2")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 1 && (
-                    <HomeBtn onClick={() => Router.push("/5")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 0 && (
-                    <HomeBtn onClick={() => Router.push("/")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
+                  <HomeBtn onClick={() => Router.push("/")}>
+                    홈으로 가기
+                  </HomeBtn>
 
                   <MyProjectBtn onClick={() => Router.push("/request")}>
                     프로젝트 등록하기
@@ -107,31 +85,10 @@ class NoProject extends React.Component {
                 </RequestCompleteDesc>
 
                 <ButtonBox>
-                  {Auth.home_index === 4 && (
-                    <HomeBtn onClick={() => Router.push("/4")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 3 && (
-                    <HomeBtn onClick={() => Router.push("/3")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 2 && (
-                    <HomeBtn onClick={() => Router.push("/2")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 1 && (
-                    <HomeBtn onClick={() => Router.push("/5")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
-                  {Auth.home_index === 0 && (
-                    <HomeBtn onClick={() => Router.push("/")}>
-                      홈으로 가기
-                    </HomeBtn>
-                  )}
+                  <HomeBtn onClick={() => Router.push("/")}>
+                    홈으로 가기
+                  </HomeBtn>
+
                   <MyProjectBtn onClick={() => this.search()}>
                     프로젝트 답변하기
                   </MyProjectBtn>
