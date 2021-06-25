@@ -11832,7 +11832,7 @@ react-dev-utils@^11.0.3:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
-react-doc-viewer@^0.1.5:
+react-doc-viewer@0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/react-doc-viewer/-/react-doc-viewer-0.1.5.tgz#8be8992104205c6ab30bfe2f73176c9600f2787a"
   integrity sha512-hLhjSlc0Ffe/PUjfgvEhM/SEgZ9ql1ujFYnkOMlJquBLj7iHlSM0cGAENXPbI2VK03+r92nM2Re+vT0Dwfyifg==
