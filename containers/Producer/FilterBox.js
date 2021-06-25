@@ -173,7 +173,7 @@ class FilterBoxContainer extends React.Component {
                 filter={filter}
               >
                 <div>
-                  <span>{item.name}</span>
+                  <span style={{ textAlign: "center" }}>{item.name}</span>
                 </div>
               </Item>
             );
@@ -198,12 +198,12 @@ const Item = styled.div`
   //margin-bottom: 20px;
   padding-left: 4px;
   align-items: center;
-  width: 32%;
+  // width: 32%;
 
   div {
     display: flex;
     align-items: center;
-    margin-right: ${(props) => (props.filter === "filter" ? "70px" : "10px")};
+    //margin-right: ${(props) => (props.filter === "filter" ? "70px" : "10px")};
 
     > div {
       width: 16px;
@@ -227,6 +227,7 @@ const Item = styled.div`
       letter-spacing: -0.16px;
       font-weight: normal;
       cursor: pointer;
+      width: 100px;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -269,6 +270,8 @@ const Item = styled.div`
       }
       > span {
         color: ${(props) => (props.active ? "#0933b3" : "#999999")};
+        font-size: 11px;
+        width: 91px;
       }
     }
   }
@@ -280,6 +283,7 @@ const Item = styled.div`
       }
       > span {
         color: ${(props) => (props.active ? "#0933b3" : "#999999")};
+        font-size: 13px;
       }
     }
   }

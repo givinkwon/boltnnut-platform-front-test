@@ -600,7 +600,7 @@ const Body = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // border-top: 1px solid #e1e2e4;
+  border-top: 1px solid #e1e2e4;
   border-bottom: 1px solid #e1e2e4;
   // margin-top: 40px;
 `;

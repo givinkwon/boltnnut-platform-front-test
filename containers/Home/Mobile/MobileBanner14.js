@@ -62,7 +62,7 @@ class MobileBanner14Container extends React.Component {
           <img src={logo_img7} />
           <img src={logo_img8} />
         </Item>
-        <Item style={{ display: "flex" }}>
+        {/* <Item style={{ display: "flex" }}>
           <img src={logo_img9} />
           <img src={logo_img10} />
           <img src={logo_img11} />
@@ -73,7 +73,7 @@ class MobileBanner14Container extends React.Component {
           <img src={logo_img14} />
           <img src={logo_img15} />
           <img src={logo_img16} />
-        </Item>
+        </Item> */}
       </>
     );
   }

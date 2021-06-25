@@ -154,10 +154,10 @@ export default RadioBoxContainer;
 const Item = styled.div`
   // width: 100%;
   display: flex;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   padding-left: 4px;
   align-items: center;
-  margin-right: 15px;
+  // margin-right: 15px;
   > div {
     width: 16px;
     height: 16px;
@@ -178,9 +178,22 @@ const Item = styled.div`
     text-align: left;
     line-height: 30px;
     letter-spacing: -0.16px;
-    font-weight: 500;
+    font-weight: normal;
     cursor: pointer;
     color: ${(props) => (props.active ? "#0933b3" : "#999999")};
+    width: 100px;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    > span {
+      font-size: 11px;
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    > span {
+      font-size: 13px;
+    }
   }
 `;
 
