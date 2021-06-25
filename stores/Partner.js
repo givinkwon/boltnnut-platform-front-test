@@ -190,6 +190,10 @@ class Partner {
   @observable filter_begin_id = "";
   @observable filter_end_id = "";
 
+  @observable filter_dropdown = false;
+  @observable check_filter_city = false;
+  @observable check_filter_category = false;
+
   // 파트너의 답변
   @observable answer_set = [];
 
@@ -1195,6 +1199,7 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    console.log(this.filter_city_ary);
   };
 
   @action getCityName = (id) => {

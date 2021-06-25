@@ -153,6 +153,44 @@ class SearchFilterConatiner extends React.Component {
     Partner.requestModalActive = false;
   };
 
+  dropdownHandler = (flag) => {
+    const { Partner } = this.props;
+
+    console.log("click");
+    if (flag == "city") {
+      console.log("city");
+      if (Partner.check_filter_city) {
+        Partner.check_filter_city = false;
+        Partner.filter_dropdown = false;
+      } else {
+        Partner.check_filter_city = true;
+        Partner.filter_dropdown = true;
+      }
+
+      if (Partner.check_filter_category) {
+        Partner.check_filter_category = false;
+        // Partner.filter_dropdown = false;
+      }
+    }
+    if (flag == "category") {
+      console.log("category");
+      if (Partner.check_filter_city) {
+        Partner.check_filter_city = false;
+        // Partner.filter_dropdown = false;
+      }
+
+      if (Partner.check_filter_category) {
+        Partner.check_filter_category = false;
+        Partner.filter_dropdown = false;
+      } else {
+        Partner.check_filter_category = true;
+        Partner.filter_dropdown = true;
+      }
+    }
+    // console.log(Partner.check_filter_category);
+    // console.log(Partner.check_filter_city);
+    // console.log(Partner.filter_dropdown);
+  };
   componentDidMount = async () => {
     const { Partner } = this.props;
     // await Partner.init()
@@ -229,39 +267,77 @@ class SearchFilterConatiner extends React.Component {
               </div>
                 </Category>*/}
             <Search>
-            <Filter>
-              <span>위치</span>
-              {/* <span>(중복선택 가능)</span> */}
-              <FilterBox
-                filter="filter"
-                purpose="filter"
-                data={Partner.filterArray}
-              />
-            </Filter>
-
-            <div
+              <div
                 onClick={() => {
                   // Partner.filterArray.map((data, idx) => {
                   //   data.checked = false;
                   // });
-                  Router.push("/request")
+                  Router.push("/request");
                 }}
               >
                 <span> 바로 AI 견적 받기 </span>
               </div>
               <div>
                 <span>도면이 있는 경우 클릭!</span>
-            </div>
+              </div>
             </Search>
-            <Filter>
-              <span>분야</span>
-              {/* <span>(중복선택 가능)</span> */}
+
+            <FilterContainer>
+              <box
+                onClick={() => {
+                  this.dropdownHandler("city");
+                }}
+              >
+                <span>지역 검색</span>
+              </box>
+
+              <box
+                onClick={() => {
+                  this.dropdownHandler("category");
+                }}
+              >
+                <span>분야 검색</span>
+              </box>
+            </FilterContainer>
+
+            {Partner.filter_dropdown && (
+              <FilterContent>
+                {Partner.check_filter_city && (
+                  <FilterBox
+                    filter="filter"
+                    purpose="filter"
+                    data={Partner.filter_city_ary}
+                  />
+                )}
+                {Partner.check_filter_category && (
+                  <FilterBox
+                    filter="filter"
+                    purpose="filter"
+                    data={Partner.filterArray}
+                  />
+                )}
+              </FilterContent>
+            )}
+
+            {/* <Filter>
+              <span>위치</span>
+              <span>(중복선택 가능)</span>
               <FilterBox
                 filter="filter"
                 purpose="filter"
                 data={Partner.filterArray}
               />
-            </Filter>
+            </Filter> */}
+
+            {/* <Filter>
+              <span>분야</span>
+              <span>(중복선택 가능)</span>
+              <FilterBox
+                filter="filter"
+                purpose="filter"
+                data={Partner.filterArray}
+              />
+            </Filter> */}
 
             {Partner.requestModalActive && (
               // <Layer onClick={this.modalHandler}>
@@ -568,6 +644,7 @@ const ContainerV2 = styled.div`
 
   // height: 400px;
   width: 1200px;
+  margin-bottom: 30px;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-top: 16px;
@@ -1218,4 +1295,31 @@ const CloseButton = styled.div`
       font-weight: 500;
     }
   }
+`;
+
+const FilterContainer = styled.div`
+  margin-left: 90px;
+  // border: 3px solid #0933b3;
+  width: 600px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box {
+    width: 50%;
+    height: 100%;
+    border: 3px solid #0933b3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      font-size: 18px;
+      color: #282c36;
+    }
+  }
+`;
+
+const FilterContent = styled.div`
+  width: 600px;
+  margin-left: 90px;
 `;

@@ -390,6 +390,7 @@ const Item = styled.div`
   //margin-bottom: 20px;
   padding-left: 4px;
   align-items: center;
+  width: 32%;
 
   div {
     display: flex;
