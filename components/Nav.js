@@ -152,12 +152,12 @@ class Nav extends React.Component {
                         <p class="line"> 프로젝트 관리 </p>
                       </NavLink>
 
-                      <NavLink
+                      {/* <NavLink
                         onClick={() => Router.push("/producer")}
                         active={url.indexOf("producer") > -1}
                       >
                         <p class="line"> 제조사 찾기 </p>
-                      </NavLink>
+                      </NavLink> */}
 
                       <NavLink
                         onClick={() => Router.push("/magazine")}
@@ -194,12 +194,12 @@ class Nav extends React.Component {
                       <p class="line"> 프로젝트 찾기 </p>
                     </NavLink>
 
-                    <NavLink
+                    {/* <NavLink
                       onClick={() => Router.push("/producer")}
                       active={url.indexOf("producer") > -1}
                     >
                       <p class="line"> 제조사 찾기 </p>
-                    </NavLink>
+                    </NavLink> */}
 
                     <NavLink
                       onClick={() => Router.push("/magazine")}
@@ -262,37 +262,13 @@ class Nav extends React.Component {
                   >
                     프로젝트 관리
                   </ButtonContainer>
-                ) : Auth.home_index === 4 ? (
-                  <ButtonContainer
-                    first
-                    onClick={() => Router.push("/producer")}
-                    active={url.indexOf("producer") > -1}
-                  >
-                    업체 찾기
-                  </ButtonContainer>
-                ) : Auth.home_index === 2 ? (
-                  <ButtonContainer
-                    first
-                    onClick={() => Router.push("/producer")}
-                    active={url.indexOf("producer") > -1}
-                  >
-                    업체 찾기
-                  </ButtonContainer>
-                ) : Auth.home_index === 1 ? (
-                  <ButtonContainer
-                    first
-                    onClick={() => Router.push("/request")}
-                    active={url.indexOf("request") > -1}
-                  >
-                    견적 받기
-                  </ButtonContainer>
                 ) : (
                   <ButtonContainer
                     first
-                    onClick={() => Router.push("/request")}
-                    active={url.indexOf("request") > -1}
+                    onClick={() => Router.push("/producer")}
+                    active={url.indexOf("producer") > -1}
                   >
-                    상담 받기
+                    제조사 찾기
                   </ButtonContainer>
                 )}
               </Menu>
