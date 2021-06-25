@@ -42,6 +42,7 @@ export default class MyDocument extends Document {
     return {
       __html: `
       var VIEW_ID = '214568260';
+
       // Query the API and print the results to the page.
       function getUserActivity(m_userId) {
         gapi.client.request({
@@ -95,6 +96,7 @@ export default class MyDocument extends Document {
             },
         }).then(displayResults, console.log(''));
       }
+
       function displayResults(response) {
         // var formattedJson = JSON.stringify(response.result, null, 2);
         var formattedJson = response.result;
@@ -103,11 +105,13 @@ export default class MyDocument extends Document {
         getUserActivity(formattedJson.reports[0].data.rows[0].dimensions[0]);
         // document.getElementById('query-output').value = formattedJson;
       }
+
       function setUserActivity(response) {
         // var formattedJson = JSON.stringify(response.result, null, 2);
         var formattedJson = response.result;
         console.log(formattedJson)
       }
+
      `,
     };
   }
@@ -131,6 +135,7 @@ export default class MyDocument extends Document {
               scope: SCOPES,
               immediate: false
           };
+
           console.log(3)
           gapi.auth.authorize(authData, function (response) {
             console.log(4)
@@ -331,26 +336,10 @@ export default class MyDocument extends Document {
       `,
     };
   }
-  setHotjar() {
-    return {
-      __html: `
-
-      (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:2255885,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-      `,
-    };
-  }
 
   setBeusable() {
     return {
       __html: `
-
         (function() {
           var w = window;
           var d = document;
@@ -386,7 +375,6 @@ export default class MyDocument extends Document {
 
             {/* Beusable */}
             <script type="text/javascript"></script>
-
             <meta
               http-equiv="Content-Type"
               content="text/html; charset=utf-8"
@@ -477,7 +465,6 @@ export default class MyDocument extends Document {
           <Main />
           <script dangerouslySetInnerHTML={this.setChannelTalk()} />
           <script dangerouslySetInnerHTML={this.setBeusable()} />
-          <script dangerouslySetInnerHTML={this.setHotjar()} />
           <NextScript />
           {/* GA Settings*/}
           <script
