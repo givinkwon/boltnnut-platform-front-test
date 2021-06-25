@@ -51,6 +51,15 @@ class FilterBoxContainer extends React.Component {
         await Partner.resetDevCategory();
         await Partner.getPartner();
       } else {
+        this.props.Partner.filter_category_idx = -1;
+        Partner.filter_category = 0;
+        console.log(toJS(Partner.filter_category));
+
+        Partner.partner_next = null;
+        Partner.partner_count = null;
+        Partner.currentPage = 1;
+        await Partner.resetDevCategory();
+        await Partner.getPartner();
       }
     }
     // console.log(toJS(Partner.filterList));

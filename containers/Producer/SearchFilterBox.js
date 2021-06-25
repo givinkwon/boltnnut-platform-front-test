@@ -213,7 +213,6 @@ class SearchFilterConatiner extends React.Component {
         {width && width > 767.99 ? (
           <ContainerV2>
             <Search>
-              <span>검색</span>
               <SearchBar />
               <div
                 onClick={() => {
@@ -227,6 +226,20 @@ class SearchFilterConatiner extends React.Component {
               </div>
               <div>
                 <span>업체 찾기가 힘든 경우 클릭!</span>
+              </div>
+
+              <div
+                onClick={() => {
+                  // Partner.filterArray.map((data, idx) => {
+                  //   data.checked = false;
+                  // });
+                  Router.push("/request");
+                }}
+              >
+                <span> 바로 AI 견적 받기 </span>
+              </div>
+              <div>
+                <span>도면이 있는 경우 클릭!</span>
               </div>
             </Search>
 
@@ -267,7 +280,7 @@ class SearchFilterConatiner extends React.Component {
                 />
               </div>
                 </Category>*/}
-            <Search>
+            {/* <Search>
               <div
                 onClick={() => {
                   // Partner.filterArray.map((data, idx) => {
@@ -281,7 +294,7 @@ class SearchFilterConatiner extends React.Component {
               <div>
                 <span>도면이 있는 경우 클릭!</span>
               </div>
-            </Search>
+            </Search> */}
 
             <FilterContainer>
               <box
@@ -306,7 +319,9 @@ class SearchFilterConatiner extends React.Component {
                 {Partner.check_filter_city && (
                   <RadioBox
                     filter="region"
-                    data={this.props.Partner.filter_city_ary}
+                    // data={this.props.Partner.filter_city_ary}
+                    data={this.props.Partner.cityArray}
+                    cityArray
                   />
                 )}
                 {Partner.check_filter_category && (
@@ -655,6 +670,9 @@ const Search = styled.div`
     width: 70px;
   }
   >div:nth-of-type(2){
+    margin-right: 10px;
+  }
+  >div:nth-of-type(2), >div:nth-of-type(4){
     box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
     padding: 8px 16px 9px 16px;
     box-sizing: border-box;
@@ -673,12 +691,12 @@ const Search = styled.div`
       letter-spacing: -0.45px;
     }
   }
-  > div:last-child {
+  >div:nth-of-type(3){
     
    
       position: absolute;
       bottom: -25px;
-      right: 34px;
+      right: 240px;
       >span{
         font-size: 14px;
         line-height: 30px;
@@ -688,6 +706,24 @@ const Search = styled.div`
       }
     }
   }
+
+  >div:nth-of-type(5){
+    
+   
+    position: absolute;
+    bottom: -25px;
+    right: 41px;
+    >span{
+      font-size: 14px;
+      line-height: 30px;
+      letter-spacing: -0.14px;
+      color: #86888c;
+      font-weight: normal;
+    }
+  }
+}
+
+
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-bottom: 6px;
@@ -1278,7 +1314,7 @@ const CloseButton = styled.div`
 `;
 
 const FilterContainer = styled.div`
-  margin-left: 90px;
+  margin-left: 25px;
   // border: 3px solid #0933b3;
   width: 600px;
   height: 44px;
@@ -1305,7 +1341,7 @@ const FilterContainer = styled.div`
 
 const FilterContent = styled.div`
   width: 600px;
-  margin-left: 90px;
+  margin-left: 25px;
   border: 3px solid #282c36;
   border-top: none;
   box-sizing: border-box;

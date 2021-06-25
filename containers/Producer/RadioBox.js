@@ -49,6 +49,15 @@ class RadioBoxContainer extends React.Component {
         //Partner.search_text = "";
         //Partner.setCategory();
         Partner.getPartner();
+      } else {
+        Partner.radiobox_checked_idx = -1;
+        Partner.filter_region = 0;
+        Partner.partner_next = null;
+        Partner.partner_count = null;
+        // this.count = 0;
+        Partner.currentPage = 1;
+        Partner.category_dic = {};
+        Partner.getPartner();
       }
     } else {
       if (Partner.radiobox_category_checked_idx !== idx) {
@@ -100,7 +109,7 @@ class RadioBoxContainer extends React.Component {
     const { checked, data, filter } = this.props;
     const { placeholder, label, disabled, ...props } = this.props;
 
-    // console.log(data);
+    console.log(data);
     return (
       <>
         <Container style={{ flexDirection: "row" }}>
@@ -127,7 +136,7 @@ class RadioBoxContainer extends React.Component {
                   />
                 </div>
                 {filter === "region" ? (
-                  <span>{item.city}</span>
+                  <span>{item.name}</span>
                 ) : (
                   <span>{item.category}</span>
                 )}

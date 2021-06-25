@@ -128,6 +128,23 @@ class Partner {
     { id: 5, checked: false },
   ];
 
+  @observable cityArray = [
+    // { id: 1, name: "전체", checked: false },
+    // { id: 0, name: "전체", checked: false },
+    { id: 1, name: "서울특별시(문래|을지|성수)", checked: false },
+    {
+      id: 2,
+      name: "경기도(부천|화성|파주|양주|고양|시화|반월공단)",
+      checked: false,
+    },
+    { id: 3, name: "강원도", checked: false },
+    { id: 6, name: "전라북도", checked: false },
+    { id: 7, name: "전라남도", checked: false },
+    { id: 9, name: "경상남도", checked: false },
+    { id: 15, name: "인천광역시(서구|남동)", checked: false },
+    // { id: 6, name: "기타", checked: false },
+  ];
+
   @observable filterArray = [
     // { id: 1, name: "전체", checked: false },
     // { id: 0, name: "전체", checked: false },
