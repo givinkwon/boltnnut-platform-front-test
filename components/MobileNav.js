@@ -33,17 +33,8 @@ class MobileNav extends React.Component {
     if (localStorage.getItem("expiry")) {
       localStorage.removeItem("expiry");
     }
-    if (this.props.Auth.home_index === 4) {
-      window.location.href = "/4";
-    } else if (this.props.Auth.home_index === 3) {
-      window.location.href = "/3";
-    } else if (this.props.Auth.home_index === 2) {
-      window.location.href = "/2";
-    } else if (this.props.Auth.home_index === 1) {
-      window.location.href = "/5";
-    } else {
-      window.location.href = "/";
-    }
+
+    window.location.href = "/";
   };
   async componentDidMount() {
     const { Auth, Home } = this.props;
@@ -57,17 +48,8 @@ class MobileNav extends React.Component {
       this.alreadyLoggedin.forEach((url) => {
         if (url === splitedRoute[1]) {
           alert("이미 로그인한 사용자입니다");
-          if (Auth.home_index === 4) {
-            Router.push("/4");
-          } else if (Auth.home_index === 3) {
-            Router.push("/3");
-          } else if (Auth.home_index === 2) {
-            Router.push("/2");
-          } else if (Auth.home_index === 1) {
-            Router.push("/5");
-          } else {
-            Router.push("/");
-          }
+
+          Router.push("/");
         }
         // /offered 에서 tab 1을 거치지 않고 tab 2로 들어온 사용자 리다이렉트
         else if ("offered" === splitedRoute[1]) {
@@ -153,17 +135,7 @@ class MobileNav extends React.Component {
                   <Logo
                     onClick={() => {
                       if (is_open == true) {
-                        if (Auth.home_index === 4) {
-                          Router.push("/4");
-                        } else if (Auth.home_index === 3) {
-                          Router.push("/3");
-                        } else if (Auth.home_index === 2) {
-                          Router.push("/2");
-                        } else if (Auth.home_index === 1) {
-                          Router.push("/5");
-                        } else {
-                          Router.push("/");
-                        }
+                        Router.push("/");
                       }
                     }}
                     src={logo_ic}
@@ -257,23 +229,8 @@ class MobileNav extends React.Component {
               //   <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
               // )}
 
-              Auth.home_index === 4 ? (
-                <Logo src={this.props.src} onClick={() => Router.push("/4")} />
-              ) : Auth.home_index === 3 ? (
-                <Logo src={this.props.src} onClick={() => Router.push("/3")} />
-              ) : Auth.home_index === 2 ? (
-                <Logo src={this.props.src} onClick={() => Router.push("/2")} />
-              ) : Auth.home_index === 1 ? (
-                <Logo src={this.props.src} onClick={() => Router.push("/5")} />
-              ) : (
-                <Logo src={this.props.src} onClick={() => Router.push("/")} />
-              )
+              <Logo src={this.props.src} onClick={() => Router.push("/")} />
             ) : (
-              // Auth.home_index === 3 && (<Logo src={this.props.src} onClick={() => Router.push("/3")} />)
-              // Auth.home_index === 2 && (<Logo src={this.props.src} onClick={() => Router.push("/2")} />)
-              // Auth.home_index === 1 && (<Logo src={this.props.src} onClick={() => Router.push("/5")} />)
-              // Auth.home_index === 0 && (<Logo src={this.props.src} onClick={() => Router.push("/")} />)
-
               <Logo src={this.props.src} onClick={() => Router.back()} />
             )}
 
