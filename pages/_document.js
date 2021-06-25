@@ -42,6 +42,7 @@ export default class MyDocument extends Document {
     return {
       __html: `
       var VIEW_ID = '214568260';
+
       // Query the API and print the results to the page.
       function getUserActivity(m_userId) {
         gapi.client.request({
@@ -95,6 +96,7 @@ export default class MyDocument extends Document {
             },
         }).then(displayResults, console.log(''));
       }
+
       function displayResults(response) {
         // var formattedJson = JSON.stringify(response.result, null, 2);
         var formattedJson = response.result;
@@ -103,11 +105,13 @@ export default class MyDocument extends Document {
         getUserActivity(formattedJson.reports[0].data.rows[0].dimensions[0]);
         // document.getElementById('query-output').value = formattedJson;
       }
+
       function setUserActivity(response) {
         // var formattedJson = JSON.stringify(response.result, null, 2);
         var formattedJson = response.result;
         console.log(formattedJson)
       }
+
      `,
     };
   }
@@ -131,6 +135,7 @@ export default class MyDocument extends Document {
               scope: SCOPES,
               immediate: false
           };
+
           console.log(3)
           gapi.auth.authorize(authData, function (response) {
             console.log(4)
@@ -335,7 +340,6 @@ export default class MyDocument extends Document {
   setBeusable() {
     return {
       __html: `
-
         (function() {
           var w = window;
           var d = document;
@@ -371,7 +375,6 @@ export default class MyDocument extends Document {
 
             {/* Beusable */}
             <script type="text/javascript"></script>
-
             <meta
               http-equiv="Content-Type"
               content="text/html; charset=utf-8"
@@ -469,7 +472,7 @@ export default class MyDocument extends Document {
             src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"
           ></script>
           <script dangerouslySetInnerHTML={this.setGoogleTags()} />
-          
+
           {/* Iamport */}
           <script
             type="text/javascript"
@@ -512,9 +515,6 @@ export default class MyDocument extends Document {
           {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
           {/* ㅌㅌㅌ */}
           {/* <p class="g-signin2" data-onsuccess="batchGet"></p> */}
-
-
-
         </body>
       </html>
     );

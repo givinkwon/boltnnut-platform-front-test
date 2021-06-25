@@ -7,6 +7,7 @@ import Modal from "./Modal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import ReviewContainer from "./Review/ReviewContainer";
 import CheckBrowserModal from "containers/Home/CheckBrowserModal";
+import * as AccountAPI from "axios/Account";
 //import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
 
 const message_img = "static/images/manufacturer/message.png";
@@ -82,6 +83,29 @@ class ProposalCard extends React.Component {
     formData.append("partner", partner.id);
 
     Partner.setclickLog(formData);
+
+    formData = new FormData();
+
+    formData.append(
+      "url",
+      window.location.protocol +
+        "//" +
+        window.location.host +
+        "/" +
+        "phoneClick"
+    );
+    const req = {
+      data: formData,
+    };
+
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
   componentDidMount() {
     const { width } = this.props;
