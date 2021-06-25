@@ -39,263 +39,62 @@ class FilterBoxContainer extends React.Component {
     // console.log(idx);
 
     if (filter === "filter" || filter === "mobileFilter") {
-      if (item.checked === false) {
-        console.log(Partner.partner_count);
-        // this.setState({ index: idx });
-
-        await Partner.filterArray.map((piece, id) => {
-          // console.log(piece.name);
-          partFilterAry.push(piece.name);
-        });
-
-        // console.log(Partner.filterArray[idx]);
-        Partner.filterArray[idx].checked = true;
-
-        // console.log(this.props.Partner.filterArray[idx].name);
-
-        if (this.props.Partner.filterArray[idx].name !== "기타") {
-          // if (Partner.filter_category) {
-          //   Partner.filter_category += ",";
-          // }
-
-          Partner.filter_category_ary.filter(
-            (data) => data.category === this.props.Partner.filterArray[idx].name
-          )[0]
-            ? Partner.filterList.push(
-                Partner.filter_category_ary.filter(
-                  (data) =>
-                    data.category === this.props.Partner.filterArray[idx].name
-                )[0].id
-              )
-            : (Partner.filterArray[idx].checked = true);
-
-          // Partner.filter_category_ary.filter(
-          //   (data) => data.category === this.props.Partner.filterArray[idx].name
-          // )[0]
-          //   ? (Partner.filter_category =
-          //       Partner.filter_category +
-          //       Partner.filter_category_ary.filter(
-          //         (data) =>
-          //           data.category === this.props.Partner.filterArray[idx].name
-          //       )[0].id)
-          //   : (Partner.filterArray[idx].checked = true);
-
-          // console.log(
-          //   toJS(
-          //     Partner.filter_category_ary.filter(
-          //       (data) =>
-          //         data.category === this.props.Partner.filterArray[idx].name
-          //     )[0].id
-          //   )
-          // );
-          // console.log(Partner.filter_category);
-        } else {
-          // if (Partner.filter_category) {
-          //   Partner.filter_category += ",";
-          // }
-          // console.log(partFilterAry);
-          // console.log(Partner.filter_category_ary);
-          // console.log(
-          //   partFilterAry.includes(Partner.filter_category_ary[0].category)
-          // );
-
-          Partner.filter_ary = await Partner.filter_category_ary.filter(
-            (data) =>
-              // data.category !== partFilterAry
-              partFilterAry.includes(data.category) === false
-          );
-          // Partner.filter_ary.map((dt, id) => {
-          //   Partner.filter_category = Partner.filter_category + dt.id + ",";
-          //   if (id === 0) {
-          //     // console.log(dt);
-          //     Partner.filter_begin_idx = dt.id;
-          //   }
-          //   if (id === Partner.filter_ary.length - 1) {
-          //     // console.log(dt);
-          //     Partner.filter_end_idx = dt.id;
-          //   }
-          // });
-
-          Partner.filter_ary.map((dt, id) => {
-            Partner.filterList.push(dt.id);
-            if (id === 0) {
-              // console.log(dt);
-              Partner.filter_begin_id = dt.id;
-            }
-            if (id === Partner.filter_ary.length - 1) {
-              // console.log(dt);
-              Partner.filter_end_id = dt.id;
-            }
-          });
-
-          // console.log(Partner.filter_category);
-          // Partner.filter_category = Partner.filter_category.slice(
-          //   0,
-          //   Partner.filter_category.length - 1
-          // );
-
-          // console.log(Partner.filter_category);
-        }
-      } else {
-        // this.setState({ index: idx });
-        Partner.filterArray[idx].checked = false;
-
-        if (this.props.Partner.filterArray[idx].name !== "기타") {
-          // console.log(toJS(Partner.filter_category));
-          // const begin_idx = Partner.filter_category
-          //   .toString()
-          //   .indexOf(
-          //     Partner.filter_category_ary.filter(
-          //       (data) =>
-          //         data.category === this.props.Partner.filterArray[idx].name
-          //     )[0].id
-          //   );
-          console.log(
-            Partner.filterList.indexOf(
-              Partner.filter_category_ary.filter(
-                (data) =>
-                  data.category === this.props.Partner.filterArray[idx].name
-              )[0]
-            )
-          );
-
-          const begin_id = Partner.filterList.indexOf(
-            Partner.filter_category_ary.filter(
-              (data) =>
-                data.category === this.props.Partner.filterArray[idx].name
-            )[0].id
-          );
-
-          // console.log(Partner.filter_category.indexOf(Partner.filter_category_ary.filter(
-          //       (data) => data.category === this.props.Partner.filterArray[idx].name
-          //     )[0].id))
-          Partner.filterList.splice(begin_id, 1);
-
-          // const last_idx = Partner.filter_category
-          //   .toString()
-          //   .indexOf(",", begin_idx);
-
-          // if (last_idx != -1) {
-          //   Partner.filter_category =
-          //     Partner.filter_category.slice(0, begin_idx) +
-          //     Partner.filter_category.slice(last_idx + 1);
-          //   // Partner.filter_category = Partner.filter_category.slice(begin_idx, last_idx+1)
-          // } else {
-          //   if (begin_idx != 0) {
-          //     Partner.filter_category = Partner.filter_category.slice(
-          //       0,
-          //       begin_idx - 1
-          //     );
-          //   }
-          //   Partner.filter_category = Partner.filter_category
-          //     .toString()
-          //     .slice(0, begin_idx);
-          // }
-
-          // console.log(toJS(Partner.filter_category));
-          // console.log(begin_idx);
-          // console.log(last_idx);
-        } else {
-          // const begin_idx = Partner.filter_category
-          //   .toString()
-          //   .indexOf(Partner.filter_begin_idx);
-
-          // const last_idx = Partner.filter_category
-          //   .toString()
-          //   .indexOf(Partner.filter_end_idx);
-
-          const begin_id = Partner.filterList.indexOf(Partner.filter_begin_id);
-          const last_id = Partner.filterList.indexOf(Partner.filter_end_id);
-
-          console.log(begin_id);
-          console.log(last_id);
-          Partner.filterList.splice(begin_id, last_id - begin_id + 1);
-          console.log(toJS(Partner.fileList));
-          // console.log(begin_idx);
-          // console.log(last_idx + 2);
-          // console.log(Partner.filter_category.length);
-
-          // if (last_idx + 2 === Partner.filter_category.length) {
-          //   if (begin_idx === 0) {
-          //     Partner.filter_category =
-          //       Partner.filter_category.slice(0, begin_idx) +
-          //       Partner.filter_category.slice(last_idx + 2);
-          //   } else {
-          //     Partner.filter_category =
-          //       Partner.filter_category.slice(0, begin_idx - 1) +
-          //       Partner.filter_category.slice(last_idx + 2);
-          //   }
-          // } else {
-          //   Partner.filter_category =
-          //     Partner.filter_category.slice(0, begin_idx) +
-          //     Partner.filter_category.slice(last_idx + 3);
-          // }
-
-          // console.log(toJS(Partner.filter_category));
-        }
-
-        // Partner.partner_next = null;
-        // Partner.partner_count = null;
-        // Partner.currentPage = 1;
-        // Partner.resetDevCategory();
-        // if (this.props.purpose == "filter") {
-        //   Partner.getPartner();
-        // }
-      }
-    } else {
-      if (Partner.filterbox_budget_checked_idx !== idx) {
+      if (this.props.Partner.filter_category_idx !== idx) {
         this.setState({ index: idx });
-        Partner.filterbox_budget_checked_idx = idx;
-        Partner.filter_budget = item.id;
+        this.props.Partner.filter_category_idx = idx;
+        Partner.filter_category = item.id;
+        console.log(toJS(Partner.filter_category));
+
         Partner.partner_next = null;
         Partner.partner_count = null;
-        // this.count = 0;
         Partner.currentPage = 1;
-        // console.log(Partner.filter_region)
-        // if(Partner.filter_region === "전체"){
-        //   Partner.getPartnerByPrice()
-        // }else{
-        //   Partner.getPartnerByPrice()
-        // }
-        //Partner.getPartnerByRegion(Partner.search_text);
-        // console.log(Partner.radiobox_category_checked_idx);
-        Partner.resetDevCategory();
-        if (this.props.purpose == "filter") {
-          Partner.getPartner();
-        }
+        await Partner.resetDevCategory();
+        await Partner.getPartner();
+      } else {
       }
     }
+    // console.log(toJS(Partner.filterList));
+    // // onst str1 = arr.join();
+    // const filterString = Partner.filterList.join();
+    // Partner.filter_category = Partner.filterList.join();
+    // console.log(filterString);
+    // console.log(Partner.filter_category);
 
-    console.log(toJS(Partner.filterList));
-    // onst str1 = arr.join();
-    const filterString = Partner.filterList.join();
-    Partner.filter_category = Partner.filterList.join();
-    console.log(filterString);
-    console.log(Partner.filter_category);
-
-    Partner.partner_next = null;
-    Partner.partner_count = null;
-    Partner.currentPage = 1;
-    Partner.resetDevCategory();
-    if (this.props.purpose == "filter") {
-      console.log("11111");
-      Partner.getPartner();
-    }
+    // if (this.props.purpose == "filter") {
+    //   console.log("11111");
+    //   Partner.getPartner();
+    // }
   };
 
   activeHandler = (idx, filter) => {
     // console.log(`this.state.index : ${this.state.index}`)
     // console.log(`idx : ${idx}`)
+    // console.log(toJS(this.props.Partner.filterArray));
     if (this.props.Partner.filterArray[idx]) {
       if (filter === "filter" || filter === "mobileFilter") {
         //if (idx === Partner.filterbox_checked_idx) {
         // console.log(toJS(this.props.Partner.filterArray));
-        if (this.props.Partner.filterArray[idx].checked === true) {
+        // if(this.props.Partner.filter_category_idx === -1){
+        //   this.props.Partner.filter_category_idx = this.props.Partner.filterArray[idx].id
+
+        // }else{
+        //   this.props.Partner.filterArray[this.props.Partner.filter_category_idx-1].checked = false
+        //   this.props.Partner.filter_category_idx = this.props.Partner.filterArray[idx].id
+        // }
+
+        if (idx === this.props.Partner.filter_category_idx) {
           // console.log("equal")
           return true;
         } else {
           return false;
         }
+
+        // if (this.props.Partner.filterArray[idx].checked === true) {
+        //   // console.log("equal")
+        //   return true;
+        // } else {
+        //   return false;
+        // }
       } else {
         if (idx === Partner.filterbox_budget_checked_idx) {
           // console.log("equal")

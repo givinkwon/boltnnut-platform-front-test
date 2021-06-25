@@ -13,6 +13,7 @@ import Container from "components/Containerv1";
 import Modal from "./RequestModal";
 import DoneModal from "./RequestDoneModal";
 import Router from "next/router";
+import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
@@ -303,13 +304,17 @@ class SearchFilterConatiner extends React.Component {
             {Partner.filter_dropdown && (
               <FilterContent>
                 {Partner.check_filter_city && (
-                  <FilterBox
-                    filter="filter"
-                    purpose="filter"
-                    data={Partner.filter_city_ary}
+                  <RadioBox
+                    filter="region"
+                    data={this.props.Partner.filter_city_ary}
                   />
                 )}
                 {Partner.check_filter_category && (
+                  // <RadioBox
+                  //   filter="develop"
+                  //   // data={this.props.Partner.filter_category_ary}
+                  //   data={Partner.filterArray}
+                  // />
                   <FilterBox
                     filter="filter"
                     purpose="filter"
@@ -369,7 +374,7 @@ class SearchFilterConatiner extends React.Component {
           </ContainerV2>
         ) : (
           <ContainerV2>
-            <Category>
+            {/* <Category>
               <span>분야</span>
               <div>
                 <MobileSelect
@@ -407,7 +412,7 @@ class SearchFilterConatiner extends React.Component {
                   }
                 />
               </div>
-            </Category>
+            </Category> */}
             <Location>
               <span>위치</span>
               <MobileSelect
@@ -429,10 +434,10 @@ class SearchFilterConatiner extends React.Component {
               />
             </Location>
 
-            <Budget>
+            {/* <Budget>
               <span>예산</span>
               <FilterBox2 data={viewArray} width={width} />
-              {/* <FilterBox filter="budget" data={budgetArray} /> */}
+    
               <InputContainer>
                 {!Partner.minDirectInput && (
                   <MobileSelect
@@ -466,10 +471,7 @@ class SearchFilterConatiner extends React.Component {
                   </DirectInputBox>
                 )}
 
-                {/* <DirectInputBox>
-              <input placeholder="직접 입력하세요" />
-            </DirectInputBox> */}
-
+      
                 <span>원 ~ </span>
                 {!Partner.maxDirectInput && (
                   <MobileSelect
@@ -504,34 +506,12 @@ class SearchFilterConatiner extends React.Component {
                 )}
                 <span>원</span>
 
-                {/* <InputBox>
-              <input
-                placeholder="0"
-                // value={Partner.search_text}
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "0")}
-                // onChange={this.searchText}
-                class="Input"
-                // onKeyDown={this.handleKeyDown}
-              />
-            </InputBox>
-            <span>원 ~</span>
-            <InputBox>
-              <input
-                placeholder="0"
-                // value={Partner.search_text}
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "0")}
-                // onChange={this.searchText}
-                class="Input"
-                // onKeyDown={this.handleKeyDown}
-              />
-            </InputBox> */}
+    
               </InputContainer>
-            </Budget>
+            </Budget> */}
             <Filter>
               <span>필터</span>
-              <span>(중복선택 가능)</span>
+              {/* <span>(중복선택 가능)</span> */}
               <FilterBox
                 filter="mobileFilter"
                 purpose="filter"
@@ -1305,6 +1285,9 @@ const FilterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  > box:nth-of-type(1) {
+    border-right: none;
+  }
   box {
     width: 50%;
     height: 100%;
@@ -1312,6 +1295,7 @@ const FilterContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
     span {
       font-size: 18px;
       color: #282c36;
@@ -1322,4 +1306,7 @@ const FilterContainer = styled.div`
 const FilterContent = styled.div`
   width: 600px;
   margin-left: 90px;
+  border: 3px solid #282c36;
+  border-top: none;
+  box-sizing: border-box;
 `;

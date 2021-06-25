@@ -100,36 +100,42 @@ class RadioBoxContainer extends React.Component {
     const { checked, data, filter } = this.props;
     const { placeholder, label, disabled, ...props } = this.props;
 
+    // console.log(data);
     return (
-      <FormControl component="fieldset">
-        {/* <FormLabel component="legend" style={{marginTop: '28px'}}>금액</FormLabel> */}
-        {filter === "region" ? <Font16>지역</Font16> : <Font16>분야</Font16>}
-        {/* <RadioGroup aria-label="number" name="number1">
+      <>
+        <Container style={{ flexDirection: "row" }}>
+          {/* <FormLabel component="legend" style={{marginTop: '28px'}}>금액</FormLabel> */}
+          {/* {filter === "region" ? <Font16>지역</Font16> : <Font16>분야</Font16>} */}
+          {/* <RadioGroup aria-label="number" name="number1">
           <FormControlLabel value="one" control={<Checkbox />} label="정제의뢰" />
           <FormControlLabel value="two" control={<Checkbox />} label="정제의뢰" />
           <FormControlLabel value="three" control={<Radio />} label="" />                                
         </RadioGroup> */}
-        {data.map((item) => {
-          return (
-            <Item
-              onClick={() => {
-                this.onClickFilterHandler(item, item.id, filter);
-                console.log(item);
-              }}
-              active={this.activeHandler(item.id, filter)}
-            >
-              <div active={this.activeHandler(item.id, filter)}>
-                <img src={pass3} active={this.activeHandler(item.id, filter)} />
-              </div>
-              {filter === "region" ? (
-                <span>{item.city}</span>
-              ) : (
-                <span>{item.category}</span>
-              )}
-            </Item>
-          );
-        })}
-      </FormControl>
+          {data.map((item) => {
+            return (
+              <Item
+                onClick={() => {
+                  this.onClickFilterHandler(item, item.id, filter);
+                  console.log(item);
+                }}
+                active={this.activeHandler(item.id, filter)}
+              >
+                <div active={this.activeHandler(item.id, filter)}>
+                  <img
+                    src={pass3}
+                    active={this.activeHandler(item.id, filter)}
+                  />
+                </div>
+                {filter === "region" ? (
+                  <span>{item.city}</span>
+                ) : (
+                  <span>{item.category}</span>
+                )}
+              </Item>
+            );
+          })}
+        </Container>
+      </>
     );
   }
 }
@@ -137,12 +143,12 @@ class RadioBoxContainer extends React.Component {
 export default RadioBoxContainer;
 
 const Item = styled.div`
-  width: 100%;
+  // width: 100%;
   display: flex;
   margin-bottom: 20px;
   padding-left: 4px;
   align-items: center;
-
+  margin-right: 15px;
   > div {
     width: 16px;
     height: 16px;
@@ -178,4 +184,9 @@ const Font16 = styled(Content.FontSize16)`
   color: #282c36;
   margin-top: 28px;
   margin-bottom: 29px;
+`;
+
+const Container = styled(FormControl)`
+  flex-wrap: wrap;
+  flex-direction: row;
 `;

@@ -13,8 +13,8 @@ import HomeConatiner from "containers/Home";
 import Home2Conatiner from "containers/Home4";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import * as AccountAPI from "axios/Account";
 import { toJS } from "mobx";
-
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
@@ -37,7 +37,23 @@ class Home extends React.Component {
     //   "/" +
     //   window.location.pathname;
     // console.log(newURL);
-  
+
+    const formData = new FormData();
+
+    formData.append("url", window.location.href);
+    console.log(window.location.href);
+    const req = {
+      data: formData,
+    };
+
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
 
     window.addEventListener("resize", this.updateDimensions);
     // this.props.Auth.bgColor = "#ffffff";

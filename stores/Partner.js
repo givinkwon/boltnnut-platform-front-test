@@ -130,6 +130,7 @@ class Partner {
 
   @observable filterArray = [
     // { id: 1, name: "전체", checked: false },
+    // { id: 0, name: "전체", checked: false },
     { id: 1, name: "신제품개발", checked: false },
     { id: 2, name: "OEM 구매", checked: false },
     { id: 3, name: "금형/양산", checked: false },
@@ -192,7 +193,9 @@ class Partner {
 
   @observable filter_dropdown = false;
   @observable check_filter_city = false;
+  @observable filter_city_idx = -1;
   @observable check_filter_category = false;
+  @observable filter_category_idx = -1;
 
   // 파트너의 답변
   @observable answer_set = [];
@@ -1154,7 +1157,10 @@ class Partner {
 
     PartnerAPI.getCity(req)
       .then(async (res) => {
-        this.filter_city_ary = this.filter_city_ary.concat(res.data.results);
+        this.filter_city_ary = await this.filter_city_ary.concat(
+          res.data.results
+        );
+        console.log(toJS(this.filter_city_ary));
         this.city_ary = this.city_ary.concat(res.data.results);
         this.city_next = res.data.next;
 
@@ -1338,6 +1344,10 @@ class Partner {
   };
 
   @action getPartner = async (page = 1) => {
+    console.log(toJS(this.filter_category));
+    console.log(page);
+    console.log(toJS(this.filter_region));
+
     this.partner_list = [];
     this.category_ary = [];
     console.log(toJS(this.category_ary));
@@ -1348,15 +1358,40 @@ class Partner {
     const token = localStorage.getItem("token");
     let req = { params: { page: page } };
     let temp = { params: { page: page } };
+
     if (this.filter_region) {
+      console.log(this.filter_region);
       temp.params.city = this.filter_region;
       req.params.city = this.filter_region;
     }
 
+    console.log(this.filter_category);
     if (this.filter_category) {
       //temp["category_middle__id"] = this.filter_category;
+      // if(this.filter_category==1){
+      //   req.params.category_middle__id = this.filter_category;
+      // }
+      switch (this.filter_category) {
+        case 1:
+          console.log("1");
+          req.params.category_middle__id = "2";
+          break;
+        case 2:
+          req.params.category_middle__id = "12,14";
+          break;
+        case 3:
+          req.params.category_middle__id = "14";
+          break;
+        case 4:
+          req.params.category_middle__id = "12";
+          break;
+        case 5:
+          req.params.category_middle__id = "12";
+          break;
+      }
+
       temp.params.category_middle__id = this.filter_category;
-      req.params.category_middle__id = this.filter_category;
+      // req.params.category_middle__id = this.filter_category;
     }
     if (this.search_class === "전체") {
       if (this.search_text === "") {
@@ -1398,7 +1433,7 @@ class Partner {
         this.partner_list.map((item, idx) => {
           this.category_ary.push(item.category_middle);
           //console.log(toJS(item));
-          console.log(toJS(this.category_ary));
+          // console.log(toJS(this.category_ary));
           this.category_ary[idx].map((data, id) => {
             //console.log(toJS(data));
 
@@ -1427,8 +1462,8 @@ class Partner {
         // //async function temp() {
         let count = 0;
         await this.category_ary.map(async (data, id) => {
-          console.log(toJS(data));
-          console.log(id);
+          // console.log(toJS(data));
+          // console.log(id);
           await data.map(async (sub_data, index) => {
             // console.log(toJS(sub_data));
             // console.log(count++);

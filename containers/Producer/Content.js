@@ -132,8 +132,8 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
       Partner.subButtonActive
-        ? Partner.getOtherPartner(newPage)
-        : Partner.getPartner(newPage);
+        ? Partner.getOtherPartner(Partner.currentPage)
+        : Partner.getPartner(Partner.currentPage);
     }
   };
 
@@ -151,8 +151,8 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
       Partner.subButtonActive
-        ? Partner.getOtherPartner(newPage)
-        : Partner.getPartner(newPage);
+        ? Partner.getOtherPartner(Partner.currentPage)
+        : Partner.getPartner(Partner.currentPage);
       // Project.getProjectByPrice(Project.search_text, Project.currentPage)
     }
   };
