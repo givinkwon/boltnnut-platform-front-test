@@ -130,12 +130,12 @@ class Partner {
 
   @observable filterArray = [
     // { id: 1, name: "전체", checked: false },
-    { id: 1, name: "샘플제작", checked: false },
-    { id: 2, name: "OEM", checked: false },
-    { id: 3, name: "ODM", checked: false },
-    { id: 4, name: "금형/사출", checked: false },
+    { id: 1, name: "신제품개발", checked: false },
+    { id: 2, name: "OEM 구매", checked: false },
+    { id: 3, name: "금형/양산", checked: false },
+    { id: 4, name: "단품가공", checked: false },
     { id: 5, name: "대량가공", checked: false },
-    { id: 6, name: "기타", checked: false },
+    // { id: 6, name: "기타", checked: false },
   ];
 
   @observable detailFilterArray = [
@@ -145,7 +145,7 @@ class Partner {
     { id: 3, name: "ODM", checked: false },
     { id: 4, name: "금형/사출", checked: false },
     { id: 5, name: "대량가공", checked: false },
-    { id: 6, name: "기타", checked: false },
+    // { id: 6, name: "기타", checked: false },
   ];
 
   @observable partnerName = "";
@@ -1133,7 +1133,7 @@ class Partner {
         }
         // console.log(toJS(res.data.results.category));
         // console.log(toJS(typeof this.filter_category_ary));
-        // console.log(toJS(this.filter_category_ary));
+        console.log(toJS(toJS(this.filter_category_ary)));
       })
       .catch((e) => {
         console.log(e);
@@ -1224,25 +1224,51 @@ class Partner {
     const token = localStorage.getItem("token");
     // alert(this.exceptionCategory);
     let req = {
-      params: { page: page, category_exclude: "12,14" },
+      params: { page: page },
     };
+
     let temp = { params: { page: page } };
     if (this.filter_region) {
       temp.params.city = this.filter_region;
       req.params.city = this.filter_region;
     }
 
-    if (this.filter_category) {
-      //temp["category_middle__id"] = this.filter_category;
-      temp.params.category_middle__id = this.filter_category;
-      req.params.category_middle__id = this.filter_category;
+    if (this.subButtonActive) {
+      delete req.params.category_middle__id;
+    } else {
+      req.params.category_middle__id = 2;
     }
+
+    // if (this.filter_category) {
+    //   //temp["category_middle__id"] = this.filter_category;
+    //   temp.params.category_middle__id = this.filter_category;
+    //   req.params.category_middle__id = this.filter_category;
+    // }
 
     delete req.params.search;
     delete req.params.history;
 
+    if (this.search_class === "전체") {
+      if (this.search_text === "") {
+        delete req.params.search;
+      } else {
+        req.params.search = this.search_text;
+      }
+    }
+
+    if (this.search_class === "만든 제품") {
+      if (this.search_text === "") {
+        delete req.params.history;
+      } else {
+        req.params.history = this.search_text;
+      }
+    }
+
+    console.log(req.params);
+
     await PartnerAPI.getPartners(req)
       .then(async (res) => {
+        console.log(res);
         this.partner_list = [];
         this.category_ary = [];
         this.category_name_ary = [];
@@ -1256,6 +1282,7 @@ class Partner {
         //this.category_ary = res.data.results.category_middle;
         this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
         this.partner_list.map((item, idx) => {
+          console.log(item);
           this.category_ary.push(item.category_middle);
           //console.log(toJS(item));
           console.log(toJS(this.category_ary));

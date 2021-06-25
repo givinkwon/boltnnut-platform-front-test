@@ -177,12 +177,12 @@ class MobileSearchBarConatiner extends React.Component {
             </div>
             <div>
               <input
-                // placeholder="원하는 분야의 제조업체를 검색하세요"
-                // // value={Partner.search_text}
-                // onFocus={(e) => (e.target.placeholder = "")}
-                // onBlur={(e) =>
-                //   (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
-                // }
+                placeholder="원하는 분야의 제조업체를 검색하세요"
+                // value={Partner.search_text}
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) =>
+                  (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
+                }
                 onChange={this.searchText}
                 class="Input"
                 onKeyDown={this.handleKeyDown}
@@ -261,7 +261,7 @@ const filterArray = [
 ];
 const categoryArray = [
   { label: "전체", value: "전체" },
-  { label: "만든 제품", value: "만든 제품" },
+  // { label: "만든 제품", value: "만든 제품" },
   // { label: "제목", value: "제목" },
   // { label: "내용", value: "내용" },
 ];

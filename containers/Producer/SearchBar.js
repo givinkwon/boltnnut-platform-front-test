@@ -107,7 +107,7 @@ class SearchBarConatiner extends React.Component {
     return (
       <>
         <Form>
-          <Box
+          {/* <Box
             active={this.state.list === true}
             onClick={() =>
               this.state.list ? this.selectOut() : this.selectClick()
@@ -119,14 +119,14 @@ class SearchBarConatiner extends React.Component {
             value={Request.select_big ? Request.select_big.maincategory : ""}
             class="Input"
           /> */}
-            <Select
+            {/* <Select
               placeholder="전체"
               options={categoryArray}
               getOptionLabel={(option) => option.label}
               value={Partner.input_category}
               onChange={Partner.setCategory}
             />
-          </Box>
+          </Box> */}
           <SearchBar>
             <input
               placeholder="원하는 분야의 제조업체를 검색하세요"
@@ -161,7 +161,7 @@ export default SearchBarConatiner;
 
 const categoryArray = [
   { label: "전체", value: "전체" },
-  { label: "만든 제품", value: "만든 제품" },
+  // { label: "만든 제품", value: "만든 제품" },
   // { label: "제목", value: "제목" },
   // { label: "내용", value: "내용" },
 ];
@@ -176,7 +176,6 @@ const SearchBar = styled.div`
   input {
     width: 100%;
     padding: 0 14px;
-
     border: 1px solid #c6c7cc;
     border-radius: 3px;
     :focus {
@@ -187,7 +186,6 @@ const SearchBar = styled.div`
       
     }
   }
-
   @media (min-width: 0px) and (max-width: 767.98px) {
     // margin-top: 30px;
     flex-direction: column;
@@ -201,7 +199,6 @@ const SearchBar = styled.div`
     width: 400px;
     input {
       font-size: 16px;
-
       ::placeholder{
         font-size:13px;
       }
@@ -236,7 +233,6 @@ const Form = styled.div`
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 67%;
   }
-
   @media (min-width: 1300px) {
     //margin-top: 0;
     width: 75%;
@@ -261,11 +257,9 @@ const Select = styled(SelectComponent)`
   width: 220px;
   height: 44px;
   box-sizing: border-box;
-
   option {
     color: #c1bfbf;
   }
-
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 0;
     padding: 0;
@@ -278,7 +272,6 @@ const Select = styled(SelectComponent)`
     background-color: #ffffff;
     position: relative;
   }
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 120px;
   }
@@ -290,7 +283,6 @@ const Select = styled(SelectComponent)`
       }
     }
   }
-
   @media (min-width: 1300px) {
     width: 125px;
   }
@@ -298,18 +290,15 @@ const Select = styled(SelectComponent)`
 
 const Box = styled.div`
   width: 220px;
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 120px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 140px;
   }
-
   @media (min-width: 1300px) {
     width: 125px;
   }
-
   ${(props) =>
     props.active &&
     css`
@@ -319,12 +308,10 @@ const Box = styled.div`
             transform: skewY(-180deg);
           }
         }
-
         animation: select 0.4s ease-out;
         transform: rotate(-180deg);
       }
     `}
-
   ${(props) =>
     !props.active &&
     css`

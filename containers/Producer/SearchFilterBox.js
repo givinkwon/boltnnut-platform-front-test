@@ -12,7 +12,7 @@ import Background from "components/Background";
 import Container from "components/Containerv1";
 import Modal from "./RequestModal";
 import DoneModal from "./RequestDoneModal";
-
+import Router from "next/router";
 import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
@@ -227,110 +227,41 @@ class SearchFilterConatiner extends React.Component {
                   }
                 />
               </div>
-            </Category>
-            <Location>
-              <span>위치</span>
-              <Select
-                placeholder="전체지역"
-                options={this.props.Partner.filter_city_ary}
-                getOptionLabel={(option) => option.city}
-                // value={Partner.input_category}
-                onChange={Partner.setCityCategory}
-                // console.log(toJS(Partner.filter_region));
-                // Partner.partner_next = null;
-                // Partner.partner_count = null;
-
-                // Partner.currentPage = 1;
-
-                // Partner.category_dic = {};
-
-                // Partner.getPartner();
-              />
-            </Location>
-
-            <Budget>
-              <span>예산</span>
-              <FilterBox2 data={viewArray} width={width} />
-        
-              <InputContainer>
-                {!Partner.minDirectInput && (
-                  <Select
-                    // id="select"
-                    // width="118px"
-                    styles={customStyles}
-                    placeholder="0"
-                    style={{ overflow: "visible" }}
-                    options={budgetArray}
-                    getOptionLabel={(option) => option.label}
-                    // value={data.quantity}
-                    onChange={Partner.setMinBudget}
-                  />
-                )}
-
-                {Partner.minDirectInput && (
-                  <DirectInputBox>
-                    <input
-                      placeholder="직접 입력하세요"
-                      onBlur={(e) => {
-                        // console.log(e.target.value);
-                        if (e.target.value === "") {
-                          Partner.minDirectInput = false;
-                        }
-                      }}
-                      onFocus={(e) => {
-                        e.target.placeholder = "";
-                      }}
-                    />
-                  </DirectInputBox>
-                )}
-
-      
-
-                <span>원 ~ </span>
-                {!Partner.maxDirectInput && (
-                  <Select
-                    // id="select"
-                    // width="118px"
-                    styles={customStyles}
-                    placeholder="0"
-                    style={{ overflow: "visible" }}
-                    options={budgetArray}
-                    getOptionLabel={(option) => option.label}
-                    // value={data.quantity}
-                    onChange={Partner.setMaxBudget}
-                  />
-                )}
-
-                {Partner.maxDirectInput && (
-                  <DirectInputBox>
-                    <input
-                      placeholder="직접 입력하세요"
-                      onBlur={(e) => {
-                        // console.log(e.target.value);
-                        if (e.target.value === "") {
-                          Partner.maxDirectInput = false;
-                        }
-                      }}
-                      onFocus={(e) => {
-                        e.target.placeholder = "";
-                      }}
-                    />
-                  </DirectInputBox>
-                )}
-                <span>원</span>
-
-
-              </InputContainer>
-            </Budget>
+                </Category>*/}
+            <Search>
             <Filter>
-              <span>필터</span>
-              <span>(중복선택 가능)</span>
+              <span>위치</span>
+              {/* <span>(중복선택 가능)</span> */}
               <FilterBox
                 filter="filter"
                 purpose="filter"
                 data={Partner.filterArray}
               />
-            </Filter> */}
+            </Filter>
+
+            <div
+                onClick={() => {
+                  // Partner.filterArray.map((data, idx) => {
+                  //   data.checked = false;
+                  // });
+                  Router.push("/request")
+                }}
+              >
+                <span> 바로 AI 견적 받기 </span>
+              </div>
+              <div>
+                <span>도면이 있는 경우 클릭!</span>
+            </div>
+            </Search>
+            <Filter>
+              <span>분야</span>
+              {/* <span>(중복선택 가능)</span> */}
+              <FilterBox
+                filter="filter"
+                purpose="filter"
+                data={Partner.filterArray}
+              />
+            </Filter>
 
             {Partner.requestModalActive && (
               // <Layer onClick={this.modalHandler}>

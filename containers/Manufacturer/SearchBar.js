@@ -146,7 +146,7 @@ export default SearchBarConatiner;
 
 const categoryArray = [
   { label: "전체", value: "전체" },
-  { label: "만든 제품", value: "만든 제품" },
+  // { label: "만든 제품", value: "만든 제품" },
   // { label: "제목", value: "제목" },
   // { label: "내용", value: "내용" },
 ];
