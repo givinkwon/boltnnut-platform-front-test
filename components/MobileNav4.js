@@ -32,7 +32,7 @@ class MobileNav extends React.Component {
     if (localStorage.getItem("expiry")) {
       localStorage.removeItem("expiry");
     }
-    window.location.href = "/4";
+    window.location.href = "/";
   };
   async componentDidMount() {
     const { Auth } = this.props;

@@ -36,17 +36,8 @@ class Nav extends React.Component {
     if (localStorage.getItem("expiry")) {
       localStorage.removeItem("expiry");
     }
-    if (this.props.Auth.home_index === 4) {
-      window.location.href = "/4";
-    } else if (this.props.Auth.home_index === 3) {
-      window.location.href = "/3";
-    } else if (this.props.Auth.home_index === 2) {
-      window.location.href = "/2";
-    } else if (this.props.Auth.home_index === 1) {
-      window.location.href = "/5";
-    } else {
-      window.location.href = "/";
-    }
+
+    window.location.href = "/";
   };
 
   async componentDidMount() {
