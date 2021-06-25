@@ -7,14 +7,22 @@ import Fade from "react-reveal/Fade";
 import Router from "next/router";
 import Slider from "react-slick";
 
-const logo_img1 = "/static/images/Home2/Banner14_Logo_img1.png";
-const logo_img2 = "/static/images/Home2/Banner14_Logo_img2.png";
-const logo_img3 = "/static/images/Home2/Banner14_Logo_img3.png";
-const logo_img4 = "/static/images/Home2/Banner14_Logo_img4.png";
-const logo_img5 = "/static/images/Home2/Banner14_Logo_img5.png";
-const logo_img6 = "/static/images/Home2/Banner14_Logo_img6.png";
-const logo_img7 = "/static/images/Home2/Banner14_Logo_img7.png";
-const logo_img8 = "/static/images/Home2/Banner14_Logo_img8.png";
+const logo_img1 = "/static/images/logo/logo_1.png";
+const logo_img2 = "/static/images/logo/logo_2.png";
+const logo_img3 = "/static/images/logo/logo_3.png";
+const logo_img4 = "/static/images/logo/logo_4.png";
+const logo_img5 = "/static/images/logo/logo_5.png";
+const logo_img6 = "/static/images/logo/logo_6.png";
+const logo_img7 = "/static/images/logo/logo_7.png";
+const logo_img8 = "/static/images/logo/logo_8.png";
+const logo_img9 = "/static/images/logo/logo_9.png";
+const logo_img10 = "/static/images/logo/logo_10.png";
+const logo_img11 = "/static/images/logo/logo_11.png";
+const logo_img12 = "/static/images/logo/logo_12.png";
+const logo_img13 = "/static/images/logo/logo_13.png";
+const logo_img14 = "/static/images/logo/logo_14.png";
+const logo_img15 = "/static/images/logo/logo_15.jpg";
+const logo_img16 = "/static/images/logo/logo_16.png";
 
 const passImg = "/static/images/pass7.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
@@ -54,6 +62,18 @@ class MobileBanner14Container extends React.Component {
           <img src={logo_img7} />
           <img src={logo_img8} />
         </Item>
+        <Item style={{ display: "flex" }}>
+          <img src={logo_img9} />
+          <img src={logo_img10} />
+          <img src={logo_img11} />
+          <img src={logo_img12} />
+        </Item>
+        <Item style={{ display: "flex" }}>
+          <img src={logo_img13} />
+          <img src={logo_img14} />
+          <img src={logo_img15} />
+          <img src={logo_img16} />
+        </Item>
       </>
     );
   }
@@ -88,7 +108,7 @@ const SliderContainer = styled(Slider)`
       .slick-slide {
         display: flex;
         justify-content: center;
-        > img {
+        img {
           width: 121px;
           height: 121px;
         }
@@ -139,5 +159,6 @@ const Item = styled.div`
     cursor: pointer;
     // width: 88px;
     // height: 88px;
+    width: 121px;
   }
 `;

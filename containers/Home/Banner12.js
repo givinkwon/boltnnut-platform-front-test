@@ -111,7 +111,7 @@ class Banner12Container extends React.Component {
                     }}
                     fontSize="23"
                   >
-                    지금 찾아보기
+                    지금 업체 찾기
                   </Buttonv1>
                 </Contents>
                 <ImgBox
@@ -207,18 +207,17 @@ class Banner12Container extends React.Component {
                   </Header>
                   <Body>
                     검색을 통해 원하는 제조사를 찾지 못하셨나요? <br />
-                    간단한 업체 수배 요청으로 
+                    간단한 업체 수배 요청으로
                     <br />
-                    5000 개의 제조사를 만나보세요.<br/>
+                    5000 개의 제조사를 만나보세요.
+                    <br />
                     채팅과 통화 등 다양한 형태로 소통할 수 있습니다.
-                    <br/>
-                    *원하는 제조사만 민감 정보를 
-                    <br/>
-                    볼 수 있게 공개 할 수 있습니다.
-                    
+                    <br />
+                    *원하는 제조사만 민감 정보를
+                    <br />볼 수 있게 공개 할 수 있습니다.
                   </Body>
                   <Buttonv1
-                    onClick={() => Router.push("/request")}
+                    onClick={() => Router.push("/producer")}
                     style={{
                       width: "304px",
                       height: "64px",
@@ -226,7 +225,7 @@ class Banner12Container extends React.Component {
                     }}
                     fontSize="23"
                   >
-                    1:1 컨설팅 받기
+                    지금 업체 찾기
                   </Buttonv1>
                 </Contents>
               </ContainerBox>
@@ -291,7 +290,7 @@ class Banner12Container extends React.Component {
               <ContainerBox>
                 <Contents>
                   <Header>
-                  3. 안전 거래 보장 <br />
+                    3. 안전 거래 보장 <br />
                     프리미엄 파트너
                   </Header>
                   <Body>
