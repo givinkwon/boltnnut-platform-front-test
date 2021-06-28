@@ -203,6 +203,7 @@ class SearchFilterConatiner extends React.Component {
   };
   componentDidMount = async () => {
     const { Partner } = this.props;
+    Partner.subButtonActive = false;
     // await Partner.init()
     // console.log(toJS(Partner.category_main_list));
     // console.log(toJS(Partner.category_middle_list));
@@ -237,7 +238,8 @@ class SearchFilterConatiner extends React.Component {
       <>
         {width && width > 767.99 ? (
           <ContainerV2>
-            <Search>
+            {console.log(`Active : ${Partner.subButtonActive}`)}
+            <Search active={Partner.subButtonActive}>
               <SearchBar />
               <FilterButton
                 onClick={() => {
@@ -256,6 +258,10 @@ class SearchFilterConatiner extends React.Component {
                 }}
               >
                 <span>업체수배&견적 무료의뢰 </span>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
               </div>
               <div>
                 <span>업체 찾기가 힘든 경우 클릭!</span>
@@ -270,6 +276,10 @@ class SearchFilterConatiner extends React.Component {
                 }}
               >
                 <span> 바로 AI 견적 받기 </span>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
               </div>
               <div>
                 <span>도면이 있는 경우 클릭!</span>
@@ -746,16 +756,17 @@ const Search = styled.div`
 
   > div:nth-of-type(3),
   > div:nth-of-type(5) {
-    box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
     padding: 8px 16px 9px 16px;
     box-sizing: border-box;
-
+    box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
     height: 44px;
     // margin-bottom: 5px;
-    display: flex;
+    // display: none;
+    display: ${(props) => (props.active ? "flex" : "none")};
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    position: relative;
     > span {
       color: #0a2165;
       font-size: 18px;
@@ -763,6 +774,178 @@ const Search = styled.div`
       line-height: 28px;
       letter-spacing: -0.45px;
     }
+    > div {
+      position: absolute;
+      background-color: #0933b3;
+    }
+
+    ${(props) =>
+      props.active &&
+      css`
+        > div:nth-of-type(1) {
+          @keyframes move_LtoR {
+            0% {
+              opacity: 0;
+              width: 0;
+              height: 3px;
+              top: 0;
+              left: 0;
+            }
+            50% {
+              opacity: 1;
+              width: 100%;
+            }
+            100% {
+              opacity: 0;
+              width: 0;
+              height: 3px;
+              top: 0;
+              left: 0;
+            }
+          }
+
+          animation: move_LtoR 3s ease-in-out;
+        }
+
+        > div:nth-of-type(2) {
+          @keyframes move_TtoB {
+            0% {
+              opacity: 0;
+              width: 3px;
+              height: 0;
+              top: 0;
+              right: 0;
+            }
+            50% {
+              opacity: 1;
+              height: 100%;
+            }
+            100% {
+              opacity: 0;
+              width: 3px;
+              height: 0;
+              top: 0;
+              right: 0;
+            }
+          }
+
+          animation: move_TtoB 3s ease-in-out;
+        }
+
+        > div:nth-of-type(3) {
+          @keyframes move_RtoL {
+            0% {
+              opacity: 0;
+              width: 0;
+              height: 3px;
+              bottom: 0;
+              right: 0;
+            }
+            50% {
+              opacity: 1;
+              width: 100%;
+            }
+            100% {
+              opacity: 0;
+              width: 0;
+              height: 3px;
+              bottom: 0;
+              right: 0;
+            }
+          }
+
+          animation: move_RtoL 3s ease-in-out;
+        }
+
+        > div:nth-of-type(4) {
+          @keyframes move_BtoT {
+            0% {
+              opacity: 0;
+              width: 3px;
+              height: 0;
+              bottom: 0;
+              left: 0;
+            }
+            50% {
+              opacity: 1;
+              height: 100%;
+            }
+            100% {
+              opacity: 0;
+              width: 3px;
+              height: 0;
+              bottom: 0;
+              left: 0;
+            }
+          }
+
+          animation: move_BtoT 3s ease-in-out;
+        }
+
+        @keyframes appear {
+          0% {
+            // transform: skewY(-180deg);
+            // transform: rotate(180deg);
+            opacity: 0;
+            transform: scale(1.3);
+            // border-bottom: none;
+            // border-left: 1px solid #0933b3;
+            // display: flex;
+            // background-color: #ffffff;
+            // background-color: #
+          }
+
+          25% {
+            opacity: 0.5;
+            // border-left: none;
+            // border-top: 1px solid #0933b3;
+            // background-color: rgba(9, 51, 179, 0.1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1);
+            transform: skewY(180deg);
+            // transform: rotate(180deg);
+            // border-top: none;
+            // border-right: 1px solid #0933b3;
+            // background-color: #ffffff;
+            // background: linear-gradient(to bottom right, blue, white);
+            // box-shadow: 0 1px 3px 0 rgba(9, 51, 179, 0.3);
+          }
+          75% {
+            // border-right: none;
+            // border-bottom: 1px solid #0933b3;
+          }
+        }
+        // transition-duration: 1s;
+        // transition: width 2s, height 2s, background-color 2s, transform 2s;
+        // transition: background 0.5s;
+        animation: appear 1.5s ease-in-out;
+        // animation-name: select;
+        // animation-duration: 1.2s;
+        // animation-timing-function: linear;
+        // animation-direction: reverse;
+
+        // transform: rotate(-180deg);
+        // }
+      `}
+    ${(props) =>
+      !props.active &&
+      css`
+        svg {
+          @keyframes selectOut {
+            0% {
+              transform: rotate(-180deg);
+            }
+          }
+          animation: selectOut 0.4s;
+        }
+      `}
+  }
+
+  > div:nth-of-type(4),
+  > div:nth-of-type(6) {
+    display: ${(props) => (props.active ? "static" : "none")};
   }
   > div:nth-of-type(4) {
     position: absolute;

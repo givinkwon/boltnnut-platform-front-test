@@ -541,6 +541,7 @@ class FileUploadContainer extends Component {
       await RequestAPI.modifyProject(req)
         .then((res) => {
           console.log(`modify Project : ${res}`);
+          ManufactureProcess.changeProject = false;
           this.props.Request.newIndex = 3;
         })
         .catch((e) => {
@@ -887,6 +888,7 @@ class FileUploadContainer extends Component {
     ManufactureProcess.dataPrice = [];
     ManufactureProcess.openFileArray = [];
     ManufactureProcess.privateFileArray = [];
+    ManufactureProcess.changeProject = false;
     window.removeEventListener("scroll", this.loadScroll);
   };
 
@@ -2267,10 +2269,46 @@ class FileUploadContainer extends Component {
               {ManufactureProcess.changeProject ? (
                 <span
                   onClick={() => {
-                    this.requestSubmit(
-                      0,
-                      this.props.Project.projectDetailData.request_set[0].id
-                    );
+                    let check_count = 0;
+                    fileList.map((item, idx) => {
+                      item.fileName;
+                      let fileNameAvailable = ["txt"];
+                      const extension = item.fileName.split(".");
+
+                      //console.log(fileNameAvailable)
+                      if (
+                        item.quantity.value === 0 ||
+                        item.quantity.value === ""
+                      ) {
+                        console.log("수량을 입력해주세요");
+                        check_count++;
+                      }
+
+                      if (
+                        fileNameAvailable.includes(
+                          extension[extension.length - 1]
+                        )
+                      ) {
+                        this.props.ManufactureProcess.privateFileArray.push({
+                          file: item,
+                        });
+                      }
+                    });
+
+                    if (check_count) {
+                      alert("수량을 입력해주세요");
+                    } else {
+                      ManufactureProcess.checkPaymentButton = true;
+
+                      if (ManufactureProcess.projectSubmitLoading) {
+                        this.requestSubmit(
+                          0,
+                          this.props.Project.projectDetailData.request_set[0].id
+                        );
+                      } else {
+                        alert("요청 중입니다. 잠시만 기다려주세요.");
+                      }
+                    }
                   }}
                 >
                   프로젝트 수정 완료

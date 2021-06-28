@@ -711,7 +711,7 @@ const Header = styled.div`
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-bottom:30px;
+    // margin-bottom:30px;
     >div{
       width: 48%;
       >div:nth-of-type(1){
@@ -721,7 +721,7 @@ const Header = styled.div`
         font-size: 12px;
         width: 100%;
         height: 30px;
-        margin-bottom: 5px;
+        // margin-bottom: 5px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -869,7 +869,7 @@ const Layer = styled.div`
 const Description = styled.div`
   display: flex;
   justify-content: space-around;
-
+  margin-bottom: 20px;
   > div {
     // position: absolute;
     // bottom: -25px;
@@ -882,6 +882,7 @@ const Description = styled.div`
       font-weight: normal;
     }
   }
+
   div:nth-of-type(1) {
     // margin-right: 10px;
   }
