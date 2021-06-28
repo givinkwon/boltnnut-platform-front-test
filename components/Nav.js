@@ -146,18 +146,18 @@ class Nav extends React.Component {
 
                     <Fragment>
                       <NavLink
+                        onClick={() => Router.push("/producer")}
+                        active={url.indexOf("producer") > -1}
+                      >
+                        <p class="line"> 제조사 찾기 </p>
+                      </NavLink>
+
+                      <NavLink
                         onClick={() => Router.push("/project")}
                         active={url.indexOf("project") > -1}
                       >
                         <p class="line"> 프로젝트 관리 </p>
                       </NavLink>
-
-                      {/* <NavLink
-                        onClick={() => Router.push("/producer")}
-                        active={url.indexOf("producer") > -1}
-                      >
-                        <p class="line"> 제조사 찾기 </p>
-                      </NavLink> */}
 
                       <NavLink
                         onClick={() => Router.push("/magazine")}
@@ -188,18 +188,18 @@ class Nav extends React.Component {
                   /* 로그인 안되어있는 경우 */
                   <Fragment>
                     <NavLink
+                      onClick={() => Router.push("/producer")}
+                      active={url.indexOf("producer") > -1}
+                    >
+                      <p class="line"> 제조사 찾기 </p>
+                    </NavLink>
+
+                    <NavLink
                       onClick={() => Router.push("/project")}
                       active={url.indexOf("project") > -1}
                     >
                       <p class="line"> 프로젝트 찾기 </p>
                     </NavLink>
-
-                    {/* <NavLink
-                      onClick={() => Router.push("/producer")}
-                      active={url.indexOf("producer") > -1}
-                    >
-                      <p class="line"> 제조사 찾기 </p>
-                    </NavLink> */}
 
                     <NavLink
                       onClick={() => Router.push("/magazine")}
@@ -252,9 +252,9 @@ class Nav extends React.Component {
                   </NavLink>
                 )}
 
-                {this.props.Auth.logged_in_user &&
+                {/* {this.props.Auth.logged_in_user &&
                 this.props.Auth.logged_in_user.type === 1 ? (
-                  /* partner로 로그인 */
+                  partner로 로그인 
                   <ButtonContainer
                     first
                     onClick={() => Router.push("/project")}
@@ -263,6 +263,7 @@ class Nav extends React.Component {
                     프로젝트 관리
                   </ButtonContainer>
                 ) : (
+                  <></>
                   <ButtonContainer
                     first
                     onClick={() => Router.push("/producer")}
@@ -270,7 +271,7 @@ class Nav extends React.Component {
                   >
                     제조사 찾기
                   </ButtonContainer>
-                )}
+                )} */}
               </Menu>
               <Icon
                 src={hamburger_ic}

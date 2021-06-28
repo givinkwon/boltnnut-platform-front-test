@@ -228,6 +228,7 @@ class SearchFilterConatiner extends React.Component {
       if (this.state.filter_category_active) {
         this.setState({ filter_category_active: false });
       } else {
+        console.log("e");
         this.setState({ filter_category_active: true });
       }
     }
@@ -900,13 +901,33 @@ const Search = styled.div`
         }
 
         animation: appear 1.5s ease-in-out;
-        animation-delay: 2s;
+        animation-delay: 4s;
       `}
   }
 
   > div:nth-of-type(4),
   > div:nth-of-type(6) {
     display: ${(props) => (props.active ? "static" : "none")};
+
+    ${(props) =>
+      props.active &&
+      css`
+        @keyframes appear_two {
+          0% {
+            opacity: 0;
+            // transform: scale(1.3);
+          }
+
+          100% {
+            opacity: 1;
+            // transform: scale(1);
+            // transform: skewY(180deg);
+          }
+        }
+
+        animation: appear_two 1.5s ease-in-out;
+        animation-delay: 2s;
+      `}
   }
   > div:nth-of-type(4) {
     position: absolute;
@@ -962,7 +983,7 @@ const Search = styled.div`
 
     > div:nth-of-type(4) {
       bottom: -25px;
-      right: 120px;
+      right: 165px;
       > span {
         font-size: 10px;
       }
@@ -970,7 +991,7 @@ const Search = styled.div`
 
     > div:nth-of-type(6) {
       bottom: -25px;
-      right: 6px;
+      right: 49px;
       > span {
         font-size: 10px;
       }
@@ -1004,7 +1025,7 @@ const Search = styled.div`
 
     > div:nth-of-type(4) {
       bottom: -25px;
-      right: 133px;
+      right: 154px;
       > span {
         font-size: 12px;
       }

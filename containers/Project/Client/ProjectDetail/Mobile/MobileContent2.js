@@ -494,7 +494,7 @@ class MobileContent2 extends React.Component {
                 onMouseOut={() => this.activeHandler("activeOne")}
                 onClick={async () => {
                   console.log("click!");
-                  this.changeProject();
+                  // this.changeProject();
                 }}
               >
                 <Font18

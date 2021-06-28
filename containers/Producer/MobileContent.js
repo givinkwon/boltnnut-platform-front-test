@@ -90,6 +90,7 @@ class MobileManufacturerContentContainer extends React.Component {
 
     Partner.requestModalActive = false;
     Partner.requestDoneModalActive = false;
+
     Partner.resetDevCategory();
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
     // Partner.filter_city_ary = [{ id: 0, city: "전체" }];
@@ -244,6 +245,7 @@ class MobileManufacturerContentContainer extends React.Component {
                     style={{
                       justifyContent: "space-between",
                     }}
+                    active={Partner.subButtonActive}
                   >
                     {/* <span>
               <Font14>모든 제조의뢰</Font14>
@@ -310,7 +312,7 @@ class MobileManufacturerContentContainer extends React.Component {
                       </div> */}
                     </div>
                   </Header>
-                  <Description>
+                  <Description active={Partner.subButtonActive}>
                     <div>
                       <span>도면이 있는 경우 클릭!</span>
                     </div>
@@ -714,6 +716,7 @@ const Header = styled.div`
     // margin-bottom:30px;
     >div{
       width: 48%;
+      
       >div:nth-of-type(1){
         box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
         padding: 8px 16px 9px 16px;
@@ -722,7 +725,7 @@ const Header = styled.div`
         width: 100%;
         height: 30px;
         // margin-bottom: 5px;
-        display: flex;
+        display: ${(props) => (props.active ? "flex" : "none")};
         justify-content: center;
         align-items: center;
         cursor: pointer;
@@ -733,7 +736,7 @@ const Header = styled.div`
       }
       >div:nth-of-type(2) {
         
-       
+        display: ${(props) => (props.active ? "static" : "none")};
           position: absolute;
           bottom: -25px;
           right: 21px;
@@ -867,7 +870,7 @@ const Layer = styled.div`
 `;
 
 const Description = styled.div`
-  display: flex;
+  display: ${(props) => (props.active ? "flex" : "none")};
   justify-content: space-around;
   margin-bottom: 20px;
   > div {
