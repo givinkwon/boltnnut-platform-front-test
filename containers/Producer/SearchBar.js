@@ -170,7 +170,7 @@ const categoryArray = [
 
 const SearchBar = styled.div`
   display: flex;
-  width: 601px;
+  // width: 601px;
   height: 44px;
   box-sizing: border-box;
   // margin 0 24px;
@@ -216,8 +216,9 @@ const SearchBar = styled.div`
     }
   }
   @media (min-width: 1300px) {
-    width: ${(props) => (props.active ? "501px" : "100%")};
-    // width: 100%;
+    // width: ${(props) => (props.active ? "501px" : "100%")};
+    transition: 3s;
+    width: 100%;
     input {
       font-size: 18px;
     }
@@ -229,7 +230,36 @@ const Form = styled.div`
   display: flex;
   justify-content: flex-start;
   height: 44px;
-  width: ${(props) => (props.active ? "auto" : "100%")};
+
+  ${(props) =>
+    props.active &&
+    css`
+      @keyframes reduce {
+        0% {
+          width: 100%;
+        }
+
+        100% {
+          width: 47%;
+        }
+      }
+      animation: reduce 3s ease-in-out;
+    `}
+  width: ${(props) => (!props.active ? "100%" : "47%")};
+
+  ${(props) =>
+    !props.active &&
+    css`
+      @keyframes reduce_two {
+        0% {
+          width: 100%;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+      animation: reduce_two 0.1s ease-in-out;
+    `}
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     // width: 54%;

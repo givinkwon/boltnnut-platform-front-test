@@ -805,6 +805,7 @@ const Search = styled.div`
           }
 
           animation: move_LtoR 3s ease-in-out;
+          animation-delay: 2s;
         }
 
         > div:nth-of-type(2) {
@@ -830,6 +831,7 @@ const Search = styled.div`
           }
 
           animation: move_TtoB 3s ease-in-out;
+          animation-delay: 2s;
         }
 
         > div:nth-of-type(3) {
@@ -855,6 +857,7 @@ const Search = styled.div`
           }
 
           animation: move_RtoL 3s ease-in-out;
+          animation-delay: 2s;
         }
 
         > div:nth-of-type(4) {
@@ -880,66 +883,24 @@ const Search = styled.div`
           }
 
           animation: move_BtoT 3s ease-in-out;
+          animation-delay: 2s;
         }
 
         @keyframes appear {
           0% {
-            // transform: skewY(-180deg);
-            // transform: rotate(180deg);
             opacity: 0;
             transform: scale(1.3);
-            // border-bottom: none;
-            // border-left: 1px solid #0933b3;
-            // display: flex;
-            // background-color: #ffffff;
-            // background-color: #
           }
 
-          25% {
-            opacity: 0.5;
-            // border-left: none;
-            // border-top: 1px solid #0933b3;
-            // background-color: rgba(9, 51, 179, 0.1);
-          }
           50% {
             opacity: 1;
             transform: scale(1);
-            transform: skewY(180deg);
-            // transform: rotate(180deg);
-            // border-top: none;
-            // border-right: 1px solid #0933b3;
-            // background-color: #ffffff;
-            // background: linear-gradient(to bottom right, blue, white);
-            // box-shadow: 0 1px 3px 0 rgba(9, 51, 179, 0.3);
-          }
-          75% {
-            // border-right: none;
-            // border-bottom: 1px solid #0933b3;
+            // transform: skewY(180deg);
           }
         }
-        // transition-duration: 1s;
-        // transition: width 2s, height 2s, background-color 2s, transform 2s;
-        // transition: background 0.5s;
-        animation: appear 1.5s ease-in-out;
-        // animation-name: select;
-        // animation-duration: 1.2s;
-        // animation-timing-function: linear;
-        // animation-direction: reverse;
 
-        // transform: rotate(-180deg);
-        // }
-      `}
-    ${(props) =>
-      !props.active &&
-      css`
-        svg {
-          @keyframes selectOut {
-            0% {
-              transform: rotate(-180deg);
-            }
-          }
-          animation: selectOut 0.4s;
-        }
+        animation: appear 1.5s ease-in-out;
+        animation-delay: 2s;
       `}
   }
 

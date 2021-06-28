@@ -332,6 +332,7 @@ class RequestModal extends React.Component {
     });
     console.log(requestFilter);
     console.log(requestFilter.length);
+    console.log(toJS(Partner.detailRequestInfo));
     console.log(toJS(Partner.filterList));
     console.log(toJS(Partner.detailRequestTitle));
     console.log(toJS(Partner.detailRequestEmail));
@@ -339,6 +340,7 @@ class RequestModal extends React.Component {
     console.log(toJS(Partner.fileArray[0]));
 
     var formData = new FormData();
+    console.log(typeof Auth.logged_in_client.id);
     formData.append("client", Auth.logged_in_client.id);
     console.log(toJS(Auth.logged_in_client.id));
     formData.append("category_big", "");
@@ -349,6 +351,7 @@ class RequestModal extends React.Component {
     price = await this.countPrice();
 
     console.log(price);
+    formData.append("content", Partner.detailRequestInfo);
     formData.append("price", price);
     formData.append("category_middle", "");
     formData.append("title", Partner.detailRequestTitle);
