@@ -190,6 +190,7 @@ class Partner {
 
   @observable fileArray = [];
   @observable detailRequestTitle = null;
+  @observable detailRequestInfo = null;
   @observable detailRequestEmail = null;
   @observable detailRequestPhone = null;
   @observable detail_select_city = null;
