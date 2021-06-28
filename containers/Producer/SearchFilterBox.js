@@ -812,6 +812,7 @@ const Search = styled.div`
       padding: 4px 8px 5px 8px;
       span {
         font-size: 11px;
+        // border: 3px solid red;
       }
     }
 
@@ -830,35 +831,38 @@ const Search = styled.div`
         font-size: 10px;
       }
     }
+  }
 
-    @media (min-width: 992px) and (max-width: 1299.98px) {
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    > span {
+      font-size: 18px;
+      width: 50px;
+      border: 3px solid blue;
+    }
+
+    > div:nth-of-type(3) {
+      margin-right: 10px;
+      width: 200px;
+    }
+    > div:nth-of-type(5) {
+      width: 150px;
+    }
+
+    > div:nth-of-type(3),
+    > div:nth-of-type(5) {
+      padding: 6px 12px 7px 12px;
+      // border: 3px solid green;
+      span {
+        // border: 3px solid red;
+        font-size: 13px;
+      }
+    }
+
+    > div:nth-of-type(4) {
+      bottom: -25px;
+      right: 133px;
       > span {
-        font-size: 18px;
-        width: 50px;
-      }
-
-      > div:nth-of-type(3) {
-        margin-right: 10px;
-        width: 200px;
-      }
-      > div:nth-of-type(5) {
-        width: 150px;
-      }
-
-      > div:nth-of-type(3),
-      > div:nth-of-type(5) {
-        padding: 6px 12px 7px 12px;
-        span {
-          font-size: 13px;
-        }
-      }
-
-      > div:nth-of-type(4) {
-        bottom: -25px;
-        right: 133px;
-        > span {
-          font-size: 12px;
-        }
+        font-size: 12px;
       }
     }
 

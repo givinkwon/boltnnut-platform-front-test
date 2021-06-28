@@ -291,9 +291,9 @@ class MobileManufacturerContentContainer extends React.Component {
                         <span>바로 AI 견적 받기</span>
                       </div>
 
-                      <content>
+                      {/* <content>
                         <span>도면이 있는 경우 클릭!</span>
-                      </content>
+                      </content> */}
                     </div>
 
                     <div>
@@ -305,11 +305,19 @@ class MobileManufacturerContentContainer extends React.Component {
                         <span>업체수배&견적 무료의뢰 </span>
                       </div>
 
-                      <div>
+                      {/* <div>
                         <span>업체 찾기가 힘든 경우 클릭!</span>
-                      </div>
+                      </div> */}
                     </div>
                   </Header>
+                  <Description>
+                    <div>
+                      <span>도면이 있는 경우 클릭!</span>
+                    </div>
+                    <div>
+                      <span>업체 찾기가 힘든 경우 클릭!</span>
+                    </div>
+                  </Description>
                 </div>
                 <Font15>
                   <span>{Partner.partner_count}개</span>의 파트너
@@ -855,6 +863,30 @@ const Layer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
+  }
+`;
+
+const Description = styled.div`
+  display: flex;
+  justify-content: space-around;
+
+  > div {
+    // position: absolute;
+    // bottom: -25px;
+    // left: 33px;
+    > span {
+      font-size: 11px;
+      line-height: 30px;
+      letter-spacing: -0.14px;
+      color: #86888c;
+      font-weight: normal;
+    }
+  }
+  div:nth-of-type(1) {
+    // margin-right: 10px;
+  }
+  div:nth-of-type(2) {
+    // margin-left: 10px;
   }
 `;
 
