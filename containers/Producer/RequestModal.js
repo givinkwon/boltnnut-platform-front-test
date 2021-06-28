@@ -11,7 +11,7 @@ import FilterBox2 from "./FilterBox2";
 import FileComponent from "./AddFile";
 
 import * as PartnerAPI from "axios/Partner";
-
+import * as RequestAPI from "axios/Request";
 import { toJS } from "mobx";
 
 //import Modal from '../../../commons/components/Modals/Modal';
@@ -333,87 +333,23 @@ class RequestModal extends React.Component {
     console.log(requestFilter);
     console.log(requestFilter.length);
     console.log(toJS(Partner.filterList));
-
-    // if (!Partner.filterList) {
-    //   alert("필터를 다시 선택해주세요.");
-    //   return;
-    // }
-
-    // if (checkFilter) {
-    //   requestFilter = requestFilter.substring(0, requestFilter.length - 2);
-    // } else {
-    //   await requestFilter.map((data, id) => {
-    //     requestFilterEtc = requestFilterEtc + data.id + ", ";
-    //   });
-    //   requestFilterEtc = requestFilterEtc.substring(
-    //     0,
-    //     requestFilterEtc.length - 2
-    //   );
-    // }
-
-    // console.log(requestFilter);
-    // console.log(requestFilterEtc);
-
     console.log(toJS(Partner.detailRequestTitle));
     console.log(toJS(Partner.detailRequestEmail));
     console.log(toJS(Partner.detailRequestPhone));
     console.log(toJS(Partner.fileArray[0]));
 
     var formData = new FormData();
-    //formData.append("request_state", "업체수배");
-
-    //formData.append("request_state", 1);
-
     formData.append("client", Auth.logged_in_client.id);
     console.log(toJS(Auth.logged_in_client.id));
-    // formData.append(
-    //   "category_big",
-    //   Partner.input_detail_big_category.maincategory
-    // );
-
     formData.append("category_big", "");
-
-    // formData.append(
-    //   "category_small",
-    //   Partner.input_detail_small_category.category
-    // );
-
     formData.append("category_small", "");
-
-    // console.log(
-    //   toJS(
-    //     Partner.filter_city_ary.filter(
-    //       (item) => item.city === Partner.detail_select_city.city
-    //     )[0].id
-    //   )
-    // );
-
-    // await formData.append(
-    //   "city",
-    //   Partner.filter_city_ary.filter(
-    //     (item) => item.city === Partner.detail_select_city.city
-    //   )[0].id
-    // );
-
-    await formData.append(
-      "city",
-
-      ""
-    );
+    await formData.append("city", "");
 
     let price = "";
     price = await this.countPrice();
 
     console.log(price);
     formData.append("price", price);
-
-    // if (checkFilter) {
-    //   formData.append("category_middle", requestFilter);
-    // } else {
-    //   formData.append("category_middle", requestFilterEtc);
-    // }
-
-    // formData.append("category_middle", Partner.filterList.join());
     formData.append("category_middle", "");
     formData.append("title", Partner.detailRequestTitle);
     formData.append("email", Partner.detailRequestEmail);
@@ -425,19 +361,6 @@ class RequestModal extends React.Component {
     }
 
     let open_view = 0;
-    // formData.append("file", );
-    // await viewArray.map((item, idx) => {
-    //   console.log(item);
-    //   if (item.checked) {
-    //     console.log(item.id);
-    //   }
-    //   if (item.checked && item.id === 1) {
-    //     open_view = 1;
-    //   }
-    //   if (item.checked && item.id === 2) {
-    //     open_view = 0;
-    //   }
-    // });
 
     if (Partner.filterbox_view_checked_idx === 1) {
       open_view = 1;
@@ -478,7 +401,63 @@ class RequestModal extends React.Component {
       .catch((e) => {
         console.log(e);
         console.log(e.response);
-        // console.log(e.response.data);
+      });
+
+    formData = new FormData();
+    formData.append("request_state", "업체수배");
+    formData.append("name", Partner.detailRequestTitle);
+    // 선택한 날짜가 없으면, 기본 날짜 추가하기
+    // if (Schedule.clickDay) {
+    //   formData.append("deadline", Schedule.clickDay + " 09:00");
+    // } else {
+    //   formData.append("deadline", "2020-11-11 11:11");
+    // }
+
+    formData.append("deadline", "2020-11-11 11:11");
+    formData.append("deadline_state", "납기일미정");
+    //ManufactureProcess.date_undefined
+    formData.append("order_request_open", Partner.detailRequestInfo);
+    // formData.append("order_request_close", ManufactureProcess.requestComment2);
+    //formData.append("file_open", ManufactureProcess.openFileArray[0]);
+
+    for (let i = 0; i < Partner.fileArray.length; i++) {
+      console.log(Partner.fileArray[i]);
+      formData.append(`file_open`, Partner.fileArray[i]);
+    }
+
+    // for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
+    //   formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
+    // }
+    if (maxValue > 0) {
+      formData.append("price", maxValue);
+    }
+
+    formData.append("blueprint_exist", 0);
+    formData.append("process", 1);
+    formData.append("detailprocess", 1);
+    formData.append("number", 1);
+
+    const Token = localStorage.getItem("token");
+    const RequestReq = {
+      headers: {
+        Authorization: `Token ${Token}`,
+      },
+      data: formData,
+    };
+
+    console.log(RequestReq);
+
+    RequestAPI.create(RequestReq)
+      .then((res) => {
+        console.log("create: ", res);
+        // ManufactureProcess.nonDrawingProjectSubmitLoading = true;
+        // this.props.Request.newIndex = 1;
+        // MyDataLayerPush({ event: "request_noneDrawing" });
+      })
+      .catch((e) => {
+        // ManufactureProcess.projectSubmitLoading = true;
+        console.log(e);
+        console.log(e.response);
       });
   };
 
@@ -570,7 +549,6 @@ class RequestModal extends React.Component {
                         />
                       </Location> */}
 
-                      
                       {/* <Filter>
                         <span>필터</span>
                         <FilterBox
@@ -579,7 +557,7 @@ class RequestModal extends React.Component {
                           data={Partner.filterArray}
                         />
                       </Filter> */}
-                       <Email>
+                      <Email>
                         <span>이메일</span>
                         <div>
                           <input
@@ -593,7 +571,6 @@ class RequestModal extends React.Component {
                             }}
                           />
                         </div>
-                        
                       </Email>
                       <Phone>
                         <span>전화번호</span>
@@ -631,8 +608,8 @@ class RequestModal extends React.Component {
                           <input
                             placeholder="프로젝트 내용을 입력해 주세요."
                             onBlur={(e) => {
-                              Partner.detailRequestTitle = e.target.value;
-                              console.log(toJS(Partner.detailRequestTitle));
+                              Partner.detailRequestInfo = e.target.value;
+                              // console.log(toJS(Partner.detailRequestTitle));
                             }}
                             onFocus={(e) => {
                               e.target.placeholder = "";
@@ -744,7 +721,7 @@ class RequestModal extends React.Component {
             </InputBox> */}
                         </InputContainer>
                       </Budget>
-                     
+
                       <File active={Partner.filterFile}>
                         <span>참고파일</span>
                         <FileComponent file={true} />

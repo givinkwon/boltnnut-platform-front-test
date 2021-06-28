@@ -259,7 +259,6 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
-
               <Header>
                 <Logo>
                   <img src={data.logo} />
@@ -434,7 +433,6 @@ class ProposalCard extends React.Component {
                   </div>
                 </AdditionBox>
               </Main>
-              
             </Card>
             {/* {this.props.Partner.ReviewActive &&
               this.props.Partner.ReviewActiveIndex === idx && (
