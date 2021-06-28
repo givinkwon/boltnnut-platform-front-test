@@ -191,6 +191,9 @@ class Partner {
   @observable fileArray = [];
   @observable detailRequestTitle = null;
   @observable detailRequestInfo = null;
+  @observable detailCompanyName = null;
+  @observable detailRank = null;
+  @observable detailPassword = null;
   @observable detailRequestEmail = null;
   @observable detailRequestPhone = null;
   @observable detail_select_city = null;
@@ -449,9 +452,8 @@ class Partner {
           );
         });
         await this.category_main_list.map((mainCategory) => {
-          this.category_middle_total_ary = this.category_middle_total_ary.concat(
-            mainCategory.category_set
-          );
+          this.category_middle_total_ary =
+            this.category_middle_total_ary.concat(mainCategory.category_set);
         });
       })
       .catch((e) => {

@@ -192,12 +192,12 @@ class RequestModal extends React.Component {
     const { Partner, Auth, width } = this.props;
 
     console.log(width);
-    Auth.checkLogin();
-    if (!Auth.logged_in_user) {
-      alert("로그인이 필요한 서비스입니다.");
-      Router.push("/login");
-      return;
-    }
+    await Auth.checkLogin();
+    // if (!Auth.logged_in_user) {
+    //   alert("로그인이 필요한 서비스입니다.");
+    //   Router.push("/login");
+    //   return;
+    // }
 
     let requestFilter = "";
     let partFilterAry = [];
@@ -206,7 +206,8 @@ class RequestModal extends React.Component {
     let minValue = 0;
     let maxValue = 0;
 
-    let emailval = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    let emailval =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     // console.log(Partner.filter_city_ary);
     // console.log(toJS(Partner.filter_category_ary));
     // console.log(toJS(Partner.filterArray));
@@ -289,6 +290,18 @@ class RequestModal extends React.Component {
       alert("전화번호를 다시 입력해주세요.");
       return;
     }
+    if (!Partner.detailCompanyName) {
+      alert("회사명을 다시 입력해주세요.");
+      return;
+    }
+    if (!Partner.detailPassword) {
+      alert("확인용 비밀번호를 다시 입력해주세요.");
+      return;
+    }
+    if (!Partner.detailRank) {
+      alert("직급을 다시 입력해주세요.");
+      return;
+    }
 
     await Partner.filterArray.map((piece, id) => {
       console.log(piece.name);
@@ -339,8 +352,11 @@ class RequestModal extends React.Component {
     console.log(toJS(Partner.fileArray[0]));
 
     var formData = new FormData();
-    formData.append("client", Auth.logged_in_client.id);
-    console.log(toJS(Auth.logged_in_client.id));
+    if (Auth.logged_in_user) {
+      formData.append("client", Auth.logged_in_client.id);
+    }
+
+    // console.log(toJS(Auth.logged_in_client.id));
     formData.append("category_big", "");
     formData.append("category_small", "");
     await formData.append("city", "");
@@ -354,6 +370,11 @@ class RequestModal extends React.Component {
     formData.append("title", Partner.detailRequestTitle);
     formData.append("email", Partner.detailRequestEmail);
     formData.append("phone", Partner.detailRequestPhone);
+    formData.append("companyName", Partner.detailCompanyName);
+    formData.append("password", Partner.detailPassword);
+    formData.append("rank", Partner.detailRank);
+    // formData.append("isLogin", Auth.logged_in_user);
+    formData.append("isLogin", false);
 
     for (let i = 0; i < Partner.fileArray.length; i++) {
       console.log(Partner.fileArray[i]);
@@ -587,6 +608,48 @@ class RequestModal extends React.Component {
                           />
                         </div>
                       </Phone>
+                      <Title>
+                        <span>회사명</span>
+                        <div>
+                          <input
+                            placeholder="회사명을 입력해주세요."
+                            onBlur={(e) => {
+                              Partner.detailCompanyName = e.target.value;
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                      </Title>
+                      <Title>
+                        <span>비밀번호</span>
+                        <div>
+                          <input
+                            placeholder="확인용 비밀번호를 입력해주세요."
+                            onBlur={(e) => {
+                              Partner.detailPassword = e.target.value;
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                      </Title>
+                      <Title>
+                        <span>직급</span>
+                        <div>
+                          <input
+                            placeholder="직급을 입력해주세요."
+                            onBlur={(e) => {
+                              Partner.detailRank = e.target.value;
+                            }}
+                            onFocus={(e) => {
+                              e.target.placeholder = "";
+                            }}
+                          />
+                        </div>
+                      </Title>
                       <Title>
                         <span>제목</span>
                         <div>
@@ -965,6 +1028,48 @@ class RequestModal extends React.Component {
                           onBlur={(e) => {
                             Partner.detailRequestTitle = e.target.value;
                             console.log(toJS(Partner.detailRequestTitle));
+                          }}
+                          onFocus={(e) => {
+                            e.target.placeholder = "";
+                          }}
+                        />
+                      </div>
+                    </Title>
+                    <Title>
+                      <span>회사명</span>
+                      <div>
+                        <input
+                          placeholder="회사명을 입력해주세요."
+                          onBlur={(e) => {
+                            Partner.detailCompanyName = e.target.value;
+                          }}
+                          onFocus={(e) => {
+                            e.target.placeholder = "";
+                          }}
+                        />
+                      </div>
+                    </Title>
+                    <Title>
+                      <span>비밀번호</span>
+                      <div>
+                        <input
+                          placeholder="확인용 비밀번호를 입력해주세요."
+                          onBlur={(e) => {
+                            Partner.detailPassword = e.target.value;
+                          }}
+                          onFocus={(e) => {
+                            e.target.placeholder = "";
+                          }}
+                        />
+                      </div>
+                    </Title>
+                    <Title>
+                      <span>직급</span>
+                      <div>
+                        <input
+                          placeholder="직급을 입력해주세요."
+                          onBlur={(e) => {
+                            Partner.detailRank = e.target.value;
                           }}
                           onFocus={(e) => {
                             e.target.placeholder = "";
