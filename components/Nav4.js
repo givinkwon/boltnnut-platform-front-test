@@ -36,9 +36,8 @@ class Nav extends React.Component {
     if (localStorage.getItem("expiry")) {
       localStorage.removeItem("expiry");
     }
-    if (Home.home_index === 4) {
-      window.location.href = "/4";
-    }
+
+    window.location.href = "/";
   };
 
   async componentDidMount() {
@@ -53,17 +52,8 @@ class Nav extends React.Component {
       this.alreadyLoggedin.forEach((url) => {
         if (url === splitedRoute[1]) {
           alert("이미 로그인한 사용자입니다");
-          if (Auth.home_index === 4) {
-            Router.push("/4");
-          } else if (Auth.home_index === 3) {
-            Router.push("/3");
-          } else if (Auth.home_index === 2) {
-            Router.push("/2");
-          } else if (Auth.home_index === 1) {
-            Router.push("/5");
-          } else {
-            Router.push("/");
-          }
+
+          Router.push("/");
         }
         // /offered 에서 tab 1을 거치지 않고 tab 2로 들어온 사용자 리다이렉트
         else if ("offered" === splitedRoute[1]) {
@@ -141,9 +131,8 @@ class Nav extends React.Component {
             style={{ display: "inline", justifyContent: "space-between" }}
           >
             <NavWrap>
-              {Home.home_index === 4 && (
-                <Logo src={logo_ic} onClick={() => Router.push("/4")} />
-              )}
+              <Logo src={logo_ic} onClick={() => Router.push("/")} />
+
               <Menu is_open={is_open}>
                 <Close>
                   <Icon

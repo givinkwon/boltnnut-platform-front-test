@@ -30,17 +30,8 @@ class RequestDoneModal extends React.Component {
     Partner.requestDoneModalActive = false;
     Partner.mobileRequestIndex = 0;
     Partner.filter_category = "";
-    if (Auth.home_index === 4) {
-      Router.push("/4");
-    } else if (Auth.home_index === 3) {
-      Router.push("/3");
-    } else if (Auth.home_index === 2) {
-      Router.push("/2");
-    } else if (Auth.home_index === 1) {
-      Router.push("/5");
-    } else {
-      Router.push("/");
-    }
+
+    Router.push("/");
   };
   componentDidMount() {
     const { Partner } = this.props;

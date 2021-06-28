@@ -289,17 +289,8 @@ class Auth {
           console.log(e.response);
         }
         localStorage.removeItem("token");
-        if (this.home_index === 4) {
-          Router.push("/4");
-        } else if (this.home_index === 3) {
-          Router.push("/3");
-        } else if (this.home_index === 2) {
-          Router.push("/2");
-        } else if (this.home_index === 1) {
-          Router.push("/5");
-        } else {
-          Router.push("/");
-        }
+
+        Router.push("/");
       });
   };
 
@@ -363,17 +354,7 @@ class Auth {
         this.logged_in_client = null;
         this.logged_in_partner = null;
 
-        if (this.home_index === 4) {
-          Router.push("/4");
-        } else if (this.home_index === 3) {
-          Router.push("/3");
-        } else if (this.home_index === 2) {
-          Router.push("/2");
-        } else if (this.home_index === 1) {
-          Router.push("/5");
-        } else {
-          Router.push("/");
-        }
+        Router.push("/");
       })
       .catch((e) => {
         alert("비밀번호가 맞지 않습니다");
@@ -469,17 +450,8 @@ class Auth {
 
         setTimeout(() => {
           this.loading = false;
-          if (this.home_index === 4) {
-            Router.push("/4");
-          } else if (this.home_index === 3) {
-            Router.push("/3");
-          } else if (this.home_index === 2) {
-            Router.push("/2");
-          } else if (this.home_index === 1) {
-            Router.push("/5");
-          } else {
-            Router.push("/");
-          }
+
+          Router.push("/");
         }, 800);
       })
       .catch((e) => {

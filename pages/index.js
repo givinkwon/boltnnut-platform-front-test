@@ -15,7 +15,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
 
-
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
 @inject("Home", "Loading", "Auth")
@@ -37,7 +36,6 @@ class Home extends React.Component {
     //   "/" +
     //   window.location.pathname;
     // console.log(newURL);
-  
 
     window.addEventListener("resize", this.updateDimensions);
     // this.props.Auth.bgColor = "#ffffff";

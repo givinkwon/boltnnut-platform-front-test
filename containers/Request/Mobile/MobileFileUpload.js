@@ -622,7 +622,7 @@ class FileUploadContainer extends Component {
     const { purposeAry } = this.state;
     //console.log("didMount")
     // console.log(ManufactureProcess.changeProject);
-
+    console.log(toJS(Project.projectDetailData));
     ManufactureProcess.loadingEstimate = false;
 
     await this.props.ManufactureProcess.reset();
@@ -638,7 +638,7 @@ class FileUploadContainer extends Component {
       });
 
       await ManufactureProcess.init();
-      console.log(toJS(Project.projectDetailData.request_set[0].estimate_set));
+      console.log(toJS(this.props.Project.projectDetailData.id));
       this.state.projectname = Project.projectDetailData.request_set[0].name;
       this.state.publicValue =
         Project.projectDetailData.request_set[0].order_request_open;
