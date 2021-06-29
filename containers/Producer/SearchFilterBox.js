@@ -890,24 +890,25 @@ const Search = styled.div`
           animation: move_BtoT 3s ease-in-out;
           animation-delay: 2s;
         }
+        > span {
+          @keyframes appear {
+            0% {
+              opacity: 0;
+              // transform: scale(1.3);
+            }
 
-        // @keyframes appear {
-        //   0% {
-        //     opacity: 0;
-        //     transform: scale(1.3);
-        //   }
+            100% {
+              opacity: 1;
+              // transform: scale(1);
+              // transform: skewY(180deg);
+              // display: flex;
+            }
+          }
 
-        //   100% {
-        //     opacity: 1;
-        //     transform: scale(1);
-        //     // transform: skewY(180deg);
-        //     display: flex;
-        //   }
-        // }
-
-        // animation: appear 4s ease-in-out;
-        // // animation-delay: 4s;
-        // animation-fill-mode: both;
+          animation: appear 4s ease-in-out;
+          animation-delay: 2s;
+          animation-fill-mode: both;
+        }
       `}
   }
 
@@ -931,8 +932,9 @@ const Search = styled.div`
           }
         }
 
-        animation: appear_two 1.5s ease-in-out;
-        animation-delay: 2s;
+        animation: appear_two 3s ease-in-out;
+        animation-delay: 3s;
+        animation-fill-mode: both;
       `}
   }
   > div:nth-of-type(4) {
