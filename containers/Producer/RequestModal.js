@@ -373,8 +373,11 @@ class RequestModal extends React.Component {
     formData.append("companyName", Partner.detailCompanyName);
     formData.append("password", Partner.detailPassword);
     formData.append("rank", Partner.detailRank);
-    // formData.append("isLogin", Auth.logged_in_user);
-    formData.append("isLogin", false);
+    Auth.logged_in_user
+      ? formData.append("isLogin", "true")
+      : formData.append("isLogin", "false");
+
+    // formData.append("isLogin", false);
 
     for (let i = 0; i < Partner.fileArray.length; i++) {
       console.log(Partner.fileArray[i]);
@@ -397,9 +400,79 @@ class RequestModal extends React.Component {
       data: formData,
     };
 
-    PartnerAPI.setReqProducerInfo(req)
+    await PartnerAPI.setReqProducerInfo(req)
       .then(async (res) => {
         console.log("create: ", res);
+
+        //request부분
+        formData = new FormData();
+        formData.append("request_state", "업체수배");
+        formData.append("name", Partner.detailRequestTitle);
+        // 선택한 날짜가 없으면, 기본 날짜 추가하기
+        // if (Schedule.clickDay) {
+        //   formData.append("deadline", Schedule.clickDay + " 09:00");
+        // } else {
+        //   formData.append("deadline", "2020-11-11 11:11");
+        // }
+
+        formData.append("deadline", "2020-11-11 11:11");
+        formData.append("deadline_state", "납기일미정");
+        //ManufactureProcess.date_undefined
+        formData.append("order_request_open", Partner.detailRequestInfo);
+        // formData.append("order_request_close", ManufactureProcess.requestComment2);
+        //formData.append("file_open", ManufactureProcess.openFileArray[0]);
+
+        for (let i = 0; i < Partner.fileArray.length; i++) {
+          console.log(Partner.fileArray[i]);
+          formData.append(`file_open`, Partner.fileArray[i]);
+        }
+
+        // for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
+        //   formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
+        // }
+        if (maxValue > 0) {
+          formData.append("price", maxValue);
+        }
+
+        formData.append("blueprint_exist", 0);
+        formData.append("process", 1);
+        formData.append("detailprocess", 1);
+        formData.append("number", 1);
+
+        let RequestReq;
+
+        if (Auth.logged_in_user) {
+          const Token = localStorage.getItem("token");
+          RequestReq = {
+            headers: {
+              Authorization: `Token ${Token}`,
+            },
+            data: formData,
+          };
+        } else {
+          RequestReq = {
+            headers: {
+              Authorization: `Token ${res.data.data.token}`,
+            },
+            data: formData,
+          };
+        }
+
+        console.log(RequestReq);
+
+        RequestAPI.create(RequestReq)
+          .then((res) => {
+            console.log("create: ", res);
+            // ManufactureProcess.nonDrawingProjectSubmitLoading = true;
+            // this.props.Request.newIndex = 1;
+            // MyDataLayerPush({ event: "request_noneDrawing" });
+          })
+          .catch((e) => {
+            // ManufactureProcess.projectSubmitLoading = true;
+            console.log(e);
+            console.log(e.response);
+          });
+        //request부분
 
         if (width < 797.98) {
           Partner.mobileRequestIndex = 2;
@@ -420,63 +493,6 @@ class RequestModal extends React.Component {
         await this.openDoneModal();
       })
       .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    formData = new FormData();
-    formData.append("request_state", "업체수배");
-    formData.append("name", Partner.detailRequestTitle);
-    // 선택한 날짜가 없으면, 기본 날짜 추가하기
-    // if (Schedule.clickDay) {
-    //   formData.append("deadline", Schedule.clickDay + " 09:00");
-    // } else {
-    //   formData.append("deadline", "2020-11-11 11:11");
-    // }
-
-    formData.append("deadline", "2020-11-11 11:11");
-    formData.append("deadline_state", "납기일미정");
-    //ManufactureProcess.date_undefined
-    formData.append("order_request_open", Partner.detailRequestInfo);
-    // formData.append("order_request_close", ManufactureProcess.requestComment2);
-    //formData.append("file_open", ManufactureProcess.openFileArray[0]);
-
-    for (let i = 0; i < Partner.fileArray.length; i++) {
-      console.log(Partner.fileArray[i]);
-      formData.append(`file_open`, Partner.fileArray[i]);
-    }
-
-    // for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
-    //   formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
-    // }
-    if (maxValue > 0) {
-      formData.append("price", maxValue);
-    }
-
-    formData.append("blueprint_exist", 0);
-    formData.append("process", 1);
-    formData.append("detailprocess", 1);
-    formData.append("number", 1);
-
-    const Token = localStorage.getItem("token");
-    const RequestReq = {
-      headers: {
-        Authorization: `Token ${Token}`,
-      },
-      data: formData,
-    };
-
-    console.log(RequestReq);
-
-    RequestAPI.create(RequestReq)
-      .then((res) => {
-        console.log("create: ", res);
-        // ManufactureProcess.nonDrawingProjectSubmitLoading = true;
-        // this.props.Request.newIndex = 1;
-        // MyDataLayerPush({ event: "request_noneDrawing" });
-      })
-      .catch((e) => {
-        // ManufactureProcess.projectSubmitLoading = true;
         console.log(e);
         console.log(e.response);
       });
