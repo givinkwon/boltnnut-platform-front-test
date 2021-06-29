@@ -13,7 +13,7 @@ import * as AccountAPI from "axios/Account";
 class Index extends React.Component {
   componentDidMount() {
     this.props.Notice.init()
-    // page ip 기록
+    // page ip 기록 
     const formData = new FormData();
     if (typeof window !== 'undefined') {
     formData.append("url", window.location.href);
