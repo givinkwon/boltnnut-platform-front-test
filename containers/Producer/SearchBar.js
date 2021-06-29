@@ -43,6 +43,11 @@ class SearchBarConatiner extends React.Component {
     const { Partner, ManufactureProcess } = this.props;
     // console.log("click");
     // alert("EXECUTE");
+    Partner.loadingFlag = true;
+    setTimeout(() => {
+      Partner.loadingFlag = false;
+    }, 3000);
+
     if (Partner.search_text != "") {
       // console.log("click2");
       if (ManufactureProcess.loadingSaveSearchText) {

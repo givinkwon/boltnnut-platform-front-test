@@ -29,11 +29,11 @@ class Index extends React.Component {
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
@@ -42,7 +42,7 @@ class Index extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-}
+  }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
   }
