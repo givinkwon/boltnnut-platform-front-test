@@ -194,12 +194,12 @@ class Nav extends React.Component {
                       <p class="line"> 제조사 찾기 </p>
                     </NavLink>
 
-                    <NavLink
+                    {/* <NavLink
                       onClick={() => Router.push("/project")}
                       active={url.indexOf("project") > -1}
                     >
                       <p class="line"> 프로젝트 찾기 </p>
-                    </NavLink>
+                    </NavLink> */}
 
                     <NavLink
                       onClick={() => Router.push("/magazine")}
