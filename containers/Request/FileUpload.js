@@ -552,6 +552,7 @@ class FileUploadContainer extends Component {
       await RequestAPI.modifyProject(req)
         .then((res) => {
           console.log(`modify Project : ${res}`);
+          ManufactureProcess.changeProject = false;
           this.props.Request.newIndex = 3;
         })
         .catch((e) => {
@@ -719,27 +720,7 @@ class FileUploadContainer extends Component {
 
       await Project.projectDetailData.request_set[0].estimate_set.map(
         async (item, idx) => {
-          // let size = 0;
           let loadingCounter = 0;
-          // let myImage = "";
-
-          // var rawFile = new XMLHttpRequest();
-          // rawFile.open("GET", item.stl_file, false);
-          // rawFile.onreadystatechange = function () {
-          //   // if (rawFile.readyState === 4) {
-          //   // if (rawFile.status === 200 || rawFile.status == 0) {
-          //   var allText = rawFile.responseText;
-          //   console.log(allText);
-          //   // }
-          //   // }
-          // };
-
-          // fetch(item.stl_file)
-          //   .then((response) => response.text())
-          //   .then((data) => {
-          //     // Do something with your data
-          //     console.log(data);
-          //   });
 
           const response = await fetch(item.stl_file);
           const data = await response.blob();
@@ -750,97 +731,6 @@ class FileUploadContainer extends Component {
           console.log(filename.toString());
           let file = new File([data], filename);
 
-          // var myUuid = Uuid.fromString('ce547c40-acf9-11e6-80f5-76304dec7eb7');
-          // var myUuidString = myUuid.toString();
-          // console.log(myUuid)
-          // console.log(myUuidString)
-
-          // console.log(UUid)
-
-          // var string = "";
-          // for (var i = 0; i < item.stl_file.length; i += 2) {
-          //   string += String.fromCharCode(
-          //     parseInt(item.stl_file.substr(i, 2), 16)
-          //   );
-          // }
-          // console.log(string);
-
-          // var input = item.stl_file;
-          // // var decimalValue = parseInt(input, 16); // Base 16 or hexadecimal
-          // var character = String.fromCharCode(input);
-          // console.log("Input:", input);
-          // // console.log("Decimal value:", decimalValue);
-          // console.log("Character representation:", character);
-
-          // var bytes2 = hex_string_to_bytes(item.stl_file);
-          // var str2 = utf8_bytes_to_string(bytes2);
-
-          // console.log(str2);
-
-          // var hex = item.stl_file.toString();
-          // var str = "";
-          // for (var n = 0; n < hex.length; n += 2) {
-          //   str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
-          // }
-          // console.log(str);
-
-          console.log(file);
-          // return new File([data], filename!, metadata);
-
-          // await axios.get(item.stl_file).then((res) => console.log(res));
-          // await fetch(item.stl_file)
-          //   .then((res) => res.blob())
-          //   .then((res) => {
-          //     console.log(res);
-
-          //     let objectURL = URL.createObjectURL(res);
-          //     console.log(objectURL);
-          //     myImage = new File([res], objectURL);
-          //     // myImage.name = "1.stl";
-          //     console.log(myImage);
-          //     console.log(myImage.name);
-          //     // myImage.src = objectURL;
-          //     // console.log(myImage);
-
-          //     // size = res.size;
-          //   });
-
-          // let reader = new FileReader();
-          // reader.onload = (r) => {
-          //   console.log(r.target.result);
-          // };
-          // reader.readAsDataURL(item.stl_file);
-
-          // var reader = new FileReader();
-
-          // reader.onloadend = function () {
-          //   console.log(reader.result); //this is an ArrayBuffer
-          // };
-          // console.log(reader.readAsText(item.stl_file));
-          // reader.readAsText(item.stl_file);
-
-          // let file = URL.createObjectURL(item.stl_file);
-          // console.log(file);
-
-          // var request = new XMLHttpRequest();
-          // console.log(request.open("GET", item.stl_file, true));
-          // request.responseType = "blob";
-          // request.onload = function () {
-          //   var reader = new FileReader();
-          //   reader.readAsDataURL(request.response);
-          //   reader.onload = function (e) {
-          //     console.log("DataURL:", e.target.result);
-          //   };
-          // };
-
-          // let file = new File([""], item.stl_file);
-          // file[size] = size;
-          // // file.size = myImage.size;
-          // console.log(file);
-
-          // console.log(item.stl_file);
-          // console.log(ManufactureProcess.categoryDefaultValue.big.id);
-          // console.log(ManufactureProcess.categoryDefaultValue.mid.id);
           const ManufactureProcessFormData = new FormData();
           ManufactureProcessFormData.append("blueprint", file);
           ManufactureProcessFormData.append(
@@ -1031,6 +921,7 @@ class FileUploadContainer extends Component {
     ManufactureProcess.dataPrice = [];
     ManufactureProcess.openFileArray = [];
     ManufactureProcess.privateFileArray = [];
+    ManufactureProcess.changeProject = false;
     window.removeEventListener("scroll", this.loadScroll);
   };
 
@@ -2602,10 +2493,46 @@ class FileUploadContainer extends Component {
               {ManufactureProcess.changeProject ? (
                 <span
                   onClick={() => {
-                    this.requestSubmit(
-                      0,
-                      this.props.Project.projectDetailData.request_set[0].id
-                    );
+                    let check_count = 0;
+                    fileList.map((item, idx) => {
+                      item.fileName;
+                      let fileNameAvailable = ["txt"];
+                      const extension = item.fileName.split(".");
+
+                      //console.log(fileNameAvailable)
+                      if (
+                        item.quantity.value === 0 ||
+                        item.quantity.value === ""
+                      ) {
+                        console.log("수량을 입력해주세요");
+                        check_count++;
+                      }
+
+                      if (
+                        fileNameAvailable.includes(
+                          extension[extension.length - 1]
+                        )
+                      ) {
+                        this.props.ManufactureProcess.privateFileArray.push({
+                          file: item,
+                        });
+                      }
+                    });
+
+                    if (check_count) {
+                      alert("수량을 입력해주세요");
+                    } else {
+                      ManufactureProcess.checkPaymentButton = true;
+
+                      if (ManufactureProcess.projectSubmitLoading) {
+                        this.requestSubmit(
+                          0,
+                          this.props.Project.projectDetailData.request_set[0].id
+                        );
+                      } else {
+                        alert("요청 중입니다. 잠시만 기다려주세요.");
+                      }
+                    }
                   }}
                 >
                   프로젝트 수정 완료

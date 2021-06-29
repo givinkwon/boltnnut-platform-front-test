@@ -41,7 +41,7 @@ class SearchBarConatiner extends React.Component {
   };
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
-    console.log("click");
+    // console.log("click");
     // alert("EXECUTE");
     Partner.loadingFlag = true;
     setTimeout(() => {
@@ -49,7 +49,11 @@ class SearchBarConatiner extends React.Component {
     }, 3000);
 
     if (Partner.search_text != "") {
+      // console.log("click2");
       if (ManufactureProcess.loadingSaveSearchText) {
+        // console.log("click3");
+        Partner.subButtonActive = true;
+        console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
         setTimeout(
@@ -76,13 +80,16 @@ class SearchBarConatiner extends React.Component {
   handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
-      // console.log("Enter");
+      // console.log("Enter1");
       // console.log(e);
       // alert("enter");
       this.search();
       // console.log(toJS(Partner.search_text));
       // if (Partner.search_text != "") {
+      //   console.log("Enter2");
       //   if (ManufactureProcess.loadingSaveSearchText) {
+      //     console.log("Enter3");
+      //     Partner.subButtonActive = true;
       //     ManufactureProcess.saveSearchText(Partner.search_text);
       //     ManufactureProcess.loadingSaveSearchText = false;
       //     setTimeout(
@@ -111,7 +118,7 @@ class SearchBarConatiner extends React.Component {
     const { Partner, Request } = this.props;
     return (
       <>
-        <Form>
+        <Form active={Partner.subButtonActive}>
           {/* <Box
             active={this.state.list === true}
             onClick={() =>
@@ -132,7 +139,7 @@ class SearchBarConatiner extends React.Component {
               onChange={Partner.setCategory}
             />
           </Box> */}
-          <SearchBar>
+          <SearchBar active={Partner.subButtonActive}>
             <input
               placeholder="원하는 분야의 제조업체를 검색하세요"
               // value={Partner.search_text}
@@ -173,7 +180,7 @@ const categoryArray = [
 
 const SearchBar = styled.div`
   display: flex;
-  width: 601px;
+  // width: 601px;
   height: 44px;
   box-sizing: border-box;
   // margin 0 24px;
@@ -200,7 +207,7 @@ const SearchBar = styled.div`
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     // margin-top: 30px;
-    width: 330px;
+    width: ${(props) => (props.active ? "330px" : "100%")};
     input {
       font-size: 16px;
       ::placeholder {
@@ -210,7 +217,7 @@ const SearchBar = styled.div`
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     // margin-top: 40px;
-    width: 370px;
+    width: ${(props) => (props.active ? "410px" : "100%")};
     input {
       font-size: 17px;
       ::placeholder {
@@ -219,7 +226,9 @@ const SearchBar = styled.div`
     }
   }
   @media (min-width: 1300px) {
-    width: 501px;
+    // width: ${(props) => (props.active ? "501px" : "100%")};
+    transition: 3s;
+    width: 100%;
     input {
       font-size: 18px;
     }
@@ -231,11 +240,58 @@ const Form = styled.div`
   display: flex;
   justify-content: flex-start;
   height: 44px;
+
+  ${(props) =>
+    props.active &&
+    css`
+      @keyframes reduce {
+        0% {
+          width: 100%;
+        }
+
+        100% {
+          width: 47%;
+        }
+      }
+      animation: reduce 3s ease-in-out;
+    `}
+  width: ${(props) => (!props.active ? "100%" : "47%")};
+
+  ${(props) =>
+    !props.active &&
+    css`
+      @keyframes reduce_two {
+        0% {
+          width: 100%;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+      animation: reduce_two 0.1s ease-in-out;
+    `}
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     // width: 54%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     // width: 67%;
+
+    ${(props) =>
+      props.active &&
+      css`
+        @keyframes reduce_tablet {
+          0% {
+            width: 58%;
+          }
+
+          100% {
+            width: 47%;
+          }
+        }
+        animation: reduce_tablet 3s ease-in-out;
+      `}
+    width: ${(props) => (!props.active ? "100%" : "47%")};
   }
   @media (min-width: 1300px) {
     //margin-top: 0;
@@ -248,6 +304,7 @@ const SearchButton = styled(ButtonComponent)`
   background-color: #0933b3;
   margin-left: -5px;
   box-sizing: border-box;
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 70px;
     border: 1px solid #ffffff80;

@@ -206,8 +206,7 @@ class RequestModal extends React.Component {
     let minValue = 0;
     let maxValue = 0;
 
-    let emailval =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    let emailval = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     // console.log(Partner.filter_city_ary);
     // console.log(toJS(Partner.filter_category_ary));
     // console.log(toJS(Partner.filterArray));
@@ -345,6 +344,7 @@ class RequestModal extends React.Component {
     });
     console.log(requestFilter);
     console.log(requestFilter.length);
+    console.log(toJS(Partner.detailRequestInfo));
     console.log(toJS(Partner.filterList));
     console.log(toJS(Partner.detailRequestTitle));
     console.log(toJS(Partner.detailRequestEmail));
@@ -365,6 +365,7 @@ class RequestModal extends React.Component {
     price = await this.countPrice();
 
     console.log(price);
+    formData.append("content", Partner.detailRequestInfo);
     formData.append("price", price);
     formData.append("category_middle", "");
     formData.append("title", Partner.detailRequestTitle);

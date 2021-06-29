@@ -67,11 +67,13 @@ class SearchBarConatiner extends React.Component {
   handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
-      // console.log("Enter");
+      console.log("Enter1");
       // console.log(e);
       // console.log(toJS(Partner.search_text));
       if (Partner.search_text != "") {
+        console.log("Enter2");
         if (ManufactureProcess.loadingSaveSearchText) {
+          console.log("Enter3");
           ManufactureProcess.saveSearchText(Partner.search_text);
           ManufactureProcess.loadingSaveSearchText = false;
           setTimeout(

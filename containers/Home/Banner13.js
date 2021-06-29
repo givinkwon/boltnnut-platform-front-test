@@ -14,31 +14,32 @@ const lock = "static/images/Home/lock.svg";
 class Banner13Container extends React.Component {
   render() {
     return (
-      <Container width={this.props.width}>
-        {/* <Fade bottom> */}
-        <Box>
-          <div>
-            {/* <Header>민감 정보 선택 공개 서비스</Header> */}
-            <Middle>
-              <p>대한민국 제조사 정보 여기 다 있다.</p>
-            </Middle>
-            <Body>
-              <div>
-                <span>포트폴리오, 계약 후기 상세 조회 가능!</span>
-                <span>남동공단, 창원 등 전국 5000여 개 제조사 정보</span>
-                <span>바로 조회하세요</span>
-              </div>
-
-              <div>
-                <div onClick={() => Router.push("/producer")}>
-                  <span>업체 정보 조회</span>
-                  <span>
-                    <img src={passImg} />
-                  </span>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Containerv2 width={this.props.width}>
+          {/* <Fade bottom> */}
+          <Box>
+            <div>
+              {/* <Header>민감 정보 선택 공개 서비스</Header> */}
+              <Middle>
+                <p>대한민국 제조사 정보 여기 다 있다.</p>
+              </Middle>
+              <Body>
+                <div>
+                  <span>포트폴리오, 계약 후기 상세 조회 가능!</span>
+                  <span>남동공단, 창원 등 전국 5000여 개 제조사 정보</span>
+                  <span>바로 조회하세요</span>
                 </div>
-              </div>
 
-              {/* <div
+                <div>
+                  <div onClick={() => Router.push("/producer")}>
+                    <span>업체 정보 조회</span>
+                    <span>
+                      <img src={passImg} />
+                    </span>
+                  </div>
+                </div>
+
+                {/* <div
                 style={{
                   color: "#ffffff",
                   lineHeight: 1.5,
@@ -50,13 +51,13 @@ class Banner13Container extends React.Component {
                 <img src={lock} style={{ marginRight: 8 }} />
                 민감 정보는 비공개로 작성 후 선택 공개하세요
               </div> */}
-            </Body>
-          </div>
-          {/* <img
+              </Body>
+            </div>
+            {/* <img
               src={image1}
               //   style={{ transform: "translate(-20%, -60%) scale(0.7)" }}
             /> */}
-          {/* <Header>민감 정보 선택 공개 서비스</Header>
+            {/* <Header>민감 정보 선택 공개 서비스</Header>
               <Middle>
                 <p>
                   원하는 업체만 <br />
@@ -68,8 +69,8 @@ class Banner13Container extends React.Component {
                 <br />
                 검증한 업체에게만 공개할 수 있습니다.
               </Body> */}
-        </Box>
-        {/* <div>
+          </Box>
+          {/* <div>
             <Header>민감 정보 선택 공개 서비스</Header>
             <Middle>
               <p>
@@ -83,14 +84,30 @@ class Banner13Container extends React.Component {
               검증한 업체에게만 공개할 수 있습니다.
             </Body>
           </div> */}
-        {/* </Fade> */}
-      </Container>
+          {/* </Fade> */}
+        </Containerv2>
+      </div>
     );
   }
 }
 
 export default Banner13Container;
 
+const Containerv2 = styled(Containerv1)`
+  // padding-left: 100px;
+  // padding-right: 30px;
+  // background-image: url("/static/images/banner_dot.png");
+  // background-position: center;
+  // background-size: cover;
+
+  // padding-left: 450px;
+  background-image: url(/static/images/banner_dot.png);
+  background-position: 16%;
+  background-position-y: top;
+  background-size: 1400px 600px;
+  background-repeat: no-repeat;
+  width: 100%;
+`;
 const Container = styled.div`
   // padding-left: 100px;
   // padding-right: 30px;
@@ -101,7 +118,7 @@ const Container = styled.div`
   // padding-left: 450px;
   padding-left: ${(props) =>
     props.width
-      ? 30 *
+      ? 45 *
         (props.width / 1300) *
         (props.width / 1300) *
         (props.width / 1300) *
@@ -153,7 +170,7 @@ const Body = styled(Title.FontSize24)`
   color: #555963;
 
   > div:nth-of-type(1) {
-    text-align: center;
+    // text-align: center;
     > span {
       display: block;
       font-size: 32px;
@@ -172,7 +189,7 @@ const Body = styled(Title.FontSize24)`
   // }
   > div:nth-of-type(2) {
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     > div {
       cursor: pointer;
