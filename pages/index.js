@@ -26,7 +26,7 @@ class Home extends React.Component {
   async componentDidMount() {
     this.props.Loading.setOpen(true);
 
-    this.props.Auth.home_index = 0;
+    this.props.Auth.home_index = 0; 
 
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
