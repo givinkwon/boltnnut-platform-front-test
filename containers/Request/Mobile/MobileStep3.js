@@ -15,13 +15,11 @@ import STLViewer from 'stl-viewer'
 //Slider
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
-// import EstimateLogoSlider from './EstimateSheetLogoSlider'
 import EstimateLogoSlider from './MobileEstimateLogoSlider'
 
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-// import ConsultantBoxContainer from './ConsultantBox'
 import MobileStepContainer from '../../../components/MobileStep';
 
 //images
@@ -35,12 +33,6 @@ const Consultant1 = "/static/images/request/Step3/Step3_Consultant1.png";
 const Consultant2 = "/static/images/request/Step3/Step3_Consultant2.png";
 const Consultant3 = "/static/images/request/Step3/Step3_Consultant3.png";
 const styles = {
-  table: {
-    // minWidth: 650
-  },
-  row:{
-    // height:'49px',
-  },
   cell:{
     border:'1px solid #c6c7cc',
     height:'49px'
@@ -69,7 +61,6 @@ class MobileStep3Container extends Component {
   state = {
     percentage: 100,
     showEstimateDrop:true,
-    // showEstimateDetail:'none',
     showEstimateDetail:true,
     showConsultantDrop: true,
     showConsultantDetail: 'none',
@@ -192,9 +183,7 @@ class MobileStep3Container extends Component {
     const rows1 = [
       createData('작성일자', Proposal.estimate_year + '.' + Proposal.estimate_month + '.' + Proposal.estimate_day, ''),
       createData('문서번호', 'C8-' + Proposal.estimate_year + Proposal.estimate_month + Proposal.estimate_day + '-' + estimateData.id, ''),
-      //createData('수신인', estimateData.client, ''),
       createData('발신인', '윤기열 대표 / \n (주)볼트앤너트', '02 - 926 - 9967'),
-      // createData('제조사', '윤기열 대표 / (주) 볼트앤너트', 'TEL : 02 - 926 - 9967')
     ];
 
     const rows2 = [
@@ -284,7 +273,6 @@ class MobileStep3Container extends Component {
                   </TableCell>
                   <TableCell className ={classes.cell} width='144'>
                     <Font13 style={{marginLeft:20,textAlign:'left'}}>{row.content}</Font13>
-                    {/* <Font13 style={{textAlign:'right',marginRight:14}}>{row.note}</Font13> */}
                   </TableCell>
                   <TableCell className ={classes.cell} width='120'>
                     <Font13 style={{marginRight:14,textAlign:'right',color:'#86888c'}}>{row.note}</Font13>
@@ -352,15 +340,7 @@ class MobileStep3Container extends Component {
             요청하신 {estimateData.projectTitle} 제품 개발에<br/>
             최적화된 <span style={{fontSize:16,color:'#0933b3'}}>{rand2}</span> 곳의 제조 파트너사가 매칭되었습니다.
           </ContentHeader>
-
           <EstimateLogoSlider />
-
-          {/* <ThumbText> {percentage}% </ThumbText>
-          <CustomSlider value={percentage}/> */}
-
-
-
-          {/* <ConsultantBoxContainer Info={this.ConsultantInfo[0]}/> */}
           <ConsultantBox>
             <ConsultantHeader>
                 해당 프로젝트의<br/>
@@ -689,9 +669,6 @@ const CustomSlider = withStyles({
     cursor:'default'
   },
   thumb: {
-    // top: -10,
-    // paddingRight: 20,
-    // content: "apapap"
     display:'none'
   },
   track: {

@@ -35,19 +35,9 @@ class RadioBoxContainer extends React.Component {
         Partner.filter_region = item.id;
         Partner.partner_next = null;
         Partner.partner_count = null;
-        // this.count = 0;
         Partner.currentPage = 1;
-        // console.log(Partner.filter_region)
-        // if(Partner.filter_region === "전체"){
-        //   Partner.getPartnerByPrice()
-        // }else{
-        //   Partner.getPartnerByPrice()
-        // }
-        //Partner.getPartnerByRegion(Partner.search_text);
         console.log(Partner.radiobox_checked_idx);
         Partner.category_dic = {};
-        //Partner.search_text = "";
-        //Partner.setCategory();
         Partner.getPartner();
       } else {
         Partner.radiobox_checked_idx = -1;
@@ -66,15 +56,7 @@ class RadioBoxContainer extends React.Component {
         Partner.filter_category = item.id;
         Partner.partner_next = null;
         Partner.partner_count = null;
-        // this.count = 0;
         Partner.currentPage = 1;
-        // console.log(Partner.filter_region)
-        // if(Partner.filter_region === "전체"){
-        //   Partner.getPartnerByPrice()
-        // }else{
-        //   Partner.getPartnerByPrice()
-        // }
-        //Partner.getPartnerByRegion(Partner.search_text);
         console.log(Partner.radiobox_category_checked_idx);
         Partner.category_dic = {};
         Partner.getPartner();
@@ -83,18 +65,14 @@ class RadioBoxContainer extends React.Component {
   };
 
   activeHandler = (idx, filter) => {
-    // console.log(`this.state.index : ${this.state.index}`)
-    // console.log(`idx : ${idx}`)
     if (filter === "region") {
       if (idx === Partner.radiobox_checked_idx) {
-        // console.log("equal")
         return true;
       } else {
         return false;
       }
     } else {
       if (idx === Partner.radiobox_category_checked_idx) {
-        // console.log("equal")
         return true;
       } else {
         return false;

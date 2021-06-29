@@ -34,13 +34,10 @@ class PaymentPageContainer extends React.Component {
     } else if (!this.state.checkbox) {
       return alert("구매진행 동의에 체크를 하셔야 결제가 진행됩니다.");
     }
-    // Payment.phone_number = cellphone;
-    // console.log(cellphone.replace("-", "").replace("-", ""));
     console.log(this.props.ManufactureProcess.quantity);
     Payment.setPhoneNumber(cellphone.replace("-", "").replace("-", ""));
     Payment.product_price = 10;
     Payment.setProjectName("MASDASCNASKLCNASKLCNL");
-    // Payment.count_number = 3;
     Payment.setCountNumber(3);
     Payment.clientOrder("html5_inicis");
   };
@@ -92,7 +89,6 @@ class PaymentPageContainer extends React.Component {
               <InputComponent
                 class="Input"
                 placeholder="옵션을 선택해주세요."
-                // value={Request.input_name}
                 onChange={() => {
                   console.log("r");
                 }}

@@ -33,15 +33,6 @@ class ProfileInfoContainer extends Component {
             {Partner.getCityNameById(partner.city)}
           </Text.FontSize20>
         </ProfileName>
-        {/*<ProfileRating onClick={this.pushToReview}>
-          <Rating rating={partner.avg_score} />
-          <Text.FontSize24 color="#4d4f5c" fontWeight={500} style={{fontFamily: 'Montserrat, sans-serif'}}>
-            {partner.avg_score.toFixed(1)}
-          </Text.FontSize24>
-          <Text.FontSize12 color="#4d4f5c" fontWeight={500}>
-            {`평가 ${partner.review_set.length}개`}
-          </Text.FontSize12>
-        </ProfileRating>*/}
       </ProfileInfo>
     )
   }

@@ -11,8 +11,6 @@ import CheckBoxComponent from 'components/CheckBox'
 import * as Text from 'components/Text'
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
 
-//import ImageCropModal from './ImageCropModal'
-
 const search_ic = 'static/icon/search.png'
 
 @inject('Auth')
@@ -182,21 +180,6 @@ class FileConatiner extends React.Component {
               ref={this.logo}
               type='file'
             />
-
-            {/*<Wrap>
-              <Text.FontSize20 color={DARKGRAY} fontWeight={500}>로고</Text.FontSize20>
-              <InputBox onClick={() => this.logo.current.click()}>
-                <Text.FontSize20 color="#767676" fontWeight={400}>
-                  { this.state.logoValue ? this.state.logoValue : '선택된 파일 없음' }
-                </Text.FontSize20>
-                   {/*src && <ImageCropModal
-                            src={src}
-                            open={modal_open}
-                            handleClose={this.closeModal}/>
-                <FileIcon src="/static/icon/download_file.svg" />
-              </InputBox>
-
-            </Wrap>*/}
           </W100>
           </>
         ) : (

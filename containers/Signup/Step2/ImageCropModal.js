@@ -39,7 +39,6 @@ class ImageCropModal extends Component {
     await closeProposalModal()
   }
 
-  // If you setState the crop in here you should return false.
   onImageLoaded = image => {
     this.imageRef = image;
   };
@@ -49,8 +48,6 @@ class ImageCropModal extends Component {
   };
 
   onCropChange = (crop, percentCrop) => {
-    // You could also use percentCrop:
-    // this.setState({ crop: percentCrop });
     this.setState({ crop });
   };
 
@@ -88,7 +85,6 @@ class ImageCropModal extends Component {
     return new Promise((resolve, reject) => {
       canvas.toBlob(blob => {
         if (!blob) {
-          //reject(new Error('Canvas is empty'));
           console.error("Canvas is empty");
           return;
         }
@@ -103,7 +99,6 @@ class ImageCropModal extends Component {
   render() {
     const {open, handleClose, src} = this.props;
     const {crop, croppedImageUrl} = this.state;
-    //const {requestId} = this.state
     const request = null
     const product = '하이패스'
 

@@ -17,8 +17,6 @@ class MobileBanner13Container extends React.Component {
       <Background backgroundColor="#ffffff">
         <Containerv1
           style={{
-            // paddingBottom: 306,
-            // paddingTop: 308,
             width: `${width - 80}px`,
             justifyContent: "space-between",
           }}
@@ -49,38 +47,7 @@ class MobileBanner13Container extends React.Component {
                 </div>
               </Body>
             </div>
-            {/* <img
-              src={image1}
-              //   style={{ transform: "translate(-20%, -60%) scale(0.7)" }}
-            /> */}
-            {/* <Header>민감 정보 선택 공개 서비스</Header>
-              <Middle>
-                <p>
-                  원하는 업체만 <br />
-                  정보 공개 및 소통
-                </p>
-              </Middle>
-              <Body>
-                민감한 연구개발 정보는 내가 소통하고
-                <br />
-                검증한 업체에게만 공개할 수 있습니다.
-              </Body> */}
           </Box>
-          {/* <div>
-            <Header>민감 정보 선택 공개 서비스</Header>
-            <Middle>
-              <p>
-                원하는 업체만 <br />
-                정보 공개 및 소통
-              </p>
-            </Middle>
-            <Body>
-              민감한 연구개발 정보는 내가 소통하고
-              <br />
-              검증한 업체에게만 공개할 수 있습니다.
-            </Body>
-          </div> */}
-          {/* </Fade> */}
         </Containerv1>
       </Background>
     );
@@ -93,7 +60,7 @@ const Box = styled.div`
   // background-image: url("/static/images/banner_dot.png");
   // background-position: center;
   background-size: cover;
-  display: flex;
+  // display: flex;
   width: 100%;
   padding-top: 90px;
   padding-bottom: 50px;
@@ -107,7 +74,7 @@ const Header = styled(Title.FontSize20)`
   letter-spacing: normal;
 `;
 const Middle = styled(Title.FontSize26)`
-  font-size: 22px !important;
+  font-size: 20px !important;
   color: #282c36;
   font-weight: 500;
   font-stretch: normal;
@@ -115,6 +82,7 @@ const Middle = styled(Title.FontSize26)`
   line-height: 1.36;
   letter-spacing: -1.4px;
   margin-bottom: 6px;
+  text-align: center;
 
   > p {
     font-weight: bold;
@@ -123,8 +91,8 @@ const Middle = styled(Title.FontSize26)`
 const Img = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 44px;
-  margin-bottom: 62px;
+  margin-top: 32px;
+  margin-bottom: 44px;
 `;
 const Body = styled(Title.FontSize16)`
   // white-space:nowrap;
@@ -134,7 +102,7 @@ const Body = styled(Title.FontSize16)`
   line-height: 1.67;
   letter-spacing: -0.6px;
   text-align: left;
-  color: #555963;
+  color: #32353d;
 
   > div:nth-of-type(1) {
     text-align: center;
@@ -170,7 +138,7 @@ const Body = styled(Title.FontSize16)`
       box-sizing: border-box;
       > span:nth-of-type(1) {
         margin-right: 15px;
-        font-size: 18px;
+        font-size: 15px;
         line-height: 52px;
         letter-spacing: -0.65px;
         color: #0933b3;

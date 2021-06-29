@@ -109,7 +109,6 @@ class MobileBanner6Container extends React.Component {
       slidesToShow: 1,
       slidesToScroll: 1,
       arrows: true,
-      // vertical: false
     }
     return (
       <Background style={{flexDirection: 'column', paddingBottom: 100}}>

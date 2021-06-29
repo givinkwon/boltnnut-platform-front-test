@@ -112,49 +112,6 @@ class ProfileContainer extends Component {
               </AnswerInfo>
             </AnswerInfoBox>
           </AnswerWrapper>
-          {/*<RateBox>
-            <div>
-              <div>
-                <ScoreBox>
-                  <Text.FontSize20 color={BLACK1} fontWeight={500}>가격 만족도</Text.FontSize20>
-                  <Rating rating={Profile.data.avg_price_score === 0 ? 0 : Profile.data.avg_price_score.price_score__avg}/>
-                  <Text.FontSize20 color={BLACK1} fontWeight={500}>
-                    {Profile.data.avg_price_score === 0 ? '0.0' : Profile.data.avg_price_score.price_score__avg.toFixed(1)}
-                  </Text.FontSize20>
-                </ScoreBox>
-                <ScoreBox>
-                  <Text.FontSize20 color={BLACK1} fontWeight={500}>의사소통</Text.FontSize20>
-                  <Rating rating={Profile.data.avg_talk_score === 0 ? 0 : Profile.data.avg_talk_score.talk_score__avg}/>
-                  <Text.FontSize20 color={BLACK1} fontWeight={500}>
-                    {Profile.data.avg_talk_score === 0 ? '0.0' : Profile.data.avg_talk_score.talk_score__avg.toFixed(1)}
-                  </Text.FontSize20>
-                </ScoreBox>
-                <ScoreBox last onlyPC>
-                  <Text.FontSize20 color={BLACK1} fontWeight={500}>전문성</Text.FontSize20>
-                  <Rating rating={Profile.data.avg_expert_score === 0 ? 0 : Profile.data.avg_expert_score.expert_score__avg}/>
-                  <Text.FontSize20 color={BLACK1} fontWeight={500}>
-                    {Profile.data.avg_expert_score === 0 ? '0.0' : Profile.data.avg_expert_score.expert_score__avg.toFixed(1)}
-                  </Text.FontSize20>
-                </ScoreBox>
-              </div>
-              <div>
-                <ScoreBox>
-                  <Text.FontSize20 color={BLACK1} fontWeight={500}>일정 만족도</Text.FontSize20>
-                  <Rating rating={Profile.data.avg_time_score === 0 ? 0 : Profile.data.avg_time_score.time_score__avg}/>
-                  <Text.FontSize20 color={BLACK1} fontWeight={500}>
-                    {Profile.data.avg_time_score === 0 ? '0.0' : Profile.data.avg_time_score.time_score__avg.toFixed(1)}
-                  </Text.FontSize20>
-                </ScoreBox>
-                <ScoreBox>
-                  <Text.FontSize20 color={BLACK1} fontWeight={500}>신뢰성</Text.FontSize20>
-                  <Rating rating={Profile.data.avg_result_score === 0 ? 0 : Profile.data.avg_result_score.result_score__avg}/>
-                  <Text.FontSize20 color={BLACK1} fontWeight={500}>
-                    {Profile.data.avg_result_score === 0 ? '0.0' : Profile.data.avg_result_score.result_score__avg.toFixed(1)}
-                  </Text.FontSize20>
-                </ScoreBox>
-              </div>
-            </div>
-          </RateBox>*/}
         </CardBody>
       </Card>
     )

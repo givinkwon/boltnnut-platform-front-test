@@ -53,15 +53,6 @@ class ProfileInfoContainer extends Component {
                     </Text.FontSize24>
                 </Button>
             </ButtonBox>
-        {/*<ProfileRating onClick={this.pushToReview}>
-          <Rating rating={partner.avg_score} />
-          <Text.FontSize20 color="#4d4f5c" fontWeight={500}>
-            {partner.avg_score.toFixed(1)}
-          </Text.FontSize20>
-          <Text.FontSize20 color="#4d4f5c" fontWeight={500}>
-            {`평가 ${partner.review_set.length}개`}
-          </Text.FontSize20>
-        </ProfileRating>*/}
       </ProfileInfo>
     )
   }

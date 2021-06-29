@@ -39,8 +39,6 @@ class Banner14Container extends React.Component {
       draggable: true,
       autoplay: true,
       autoplaySpeed: 2000,
-      // variableWidth: true,
-      // centerPadding: "240px",
     };
 
     return (
@@ -49,8 +47,6 @@ class Banner14Container extends React.Component {
           <Layer />
           <span>이용 클라이언트</span>
         </Box>
-        {/* 
-        <LogoBox> */}
         <SliderContainer {...SlideSettings}>
           <Item style={{ width: 141 }}>
             <img src={image1} />
@@ -102,15 +98,6 @@ class Banner14Container extends React.Component {
           </Item>
 
         </SliderContainer>
-        {/*           
-          <img src={logo_img2} />
-          <img src={logo_img3} />
-          <img src={logo_img4} />
-          <img src={logo_img5} />
-          <img src={logo_img6} />
-          <img src={logo_img7} />
-          <img src={logo_img8} /> */}
-        {/* </LogoBox> */}
       </>
     );
   }

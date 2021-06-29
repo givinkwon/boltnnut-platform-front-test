@@ -6,7 +6,6 @@ export function saveChat(req) {
     method: "POST",
     url: `${ROOT_URL}/chatlog/`,
     data: req,
-    // headers: req.headers ? req.headers : null,
   });
 }
 
@@ -16,17 +15,13 @@ export function saveFile(req) {
     method: "POST",
     url: `${ROOT_URL}/chatlog/`,
     data: req.data,
-    // headers: req.headers ? req.headers : null,
   });
 }
 export function loadChat(req) {
-  // console.log(`${ROOT_URL}/chatlog/?answer=${req.extraUrl}`);
   return axios({
     method: "GET",
-    // url: `${ROOT_URL}/chatlog/?answer=${req.params.id}&ordering=-id`,
     url: `${ROOT_URL}/chatlog/?answer=${req.extraUrl}`,
     params: req.params ? req.params : null,
-    // order: [["id", "DESC"]], //DESC
   });
 }
 
@@ -38,9 +33,6 @@ export function loadChatCount(id) {
 }
 
 export function saveChatCount(req) {
-  // console.log("RRRQWEWEWEEWEWEWEWE");
-  // console.log(req.params);
-  // console.log(`${ROOT_URL}/answer/${req.extraUrl}`);
   return axios({
     method: "PUT",
     url: `${ROOT_URL}/answer/${req.extraUrl}`,
@@ -49,7 +41,6 @@ export function saveChatCount(req) {
 }
 
 export function patchShareInform(req) {
-  // console.log("RRRQWEWEWEEWEWEWEWE");
   console.log(req.params);
   console.log(`${ROOT_URL}/answer/${req.extraUrl}`);
   return axios({

@@ -3,7 +3,6 @@ import "react-app-polyfill/stable";
 
 import React from "react";
 import App from "next/app";
-// import { Head } from 'next/document'
 
 import { Provider } from "mobx-react";
 import { createGlobalStyle } from "styled-components";
@@ -17,18 +16,13 @@ import "slick-carousel/slick/slick-theme.css";
 
 import * as AccountAPI from "axios/Account";
 
-// import { configure } from "mobx";
-// configure({
-//   useProxies: "never",
-// });
-
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-  a, abbr, acronym, address, big, cite, code,
+  abbr, acronym, address, big, cite, code,
   del, dfn, em, img, ins, kbd, q, s, samp,
   small, strike, strong, sub, sup, tt, var,
   b, u, i, center,
@@ -46,6 +40,11 @@ const GlobalStyle = createGlobalStyle`
     font: inherit;
     vertical-align: baseline;
     font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  a{
+    text-decoration:none;
+    color:inherit;
   }
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure, 
@@ -82,10 +81,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class MyApp extends App {
-  // constructor(props) {
-  //   super(props);
-  //   console.log("A");
-  // }
 
   state = {
     ie_user: false,
@@ -126,7 +121,6 @@ class MyApp extends App {
       console.log(
         "AAS@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       );
-      // alert("크롬 브라우저를 이용해주세요")
       this.setState({
         ...this.state,
         ie_user: true,
@@ -144,15 +138,15 @@ class MyApp extends App {
     if (jssStyles && jssStyles.parentNode)
       jssStyles.parentNode.removeChild(jssStyles);
 
-    
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    formData.append("prevUrl", document.referrer);
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserIP(req)
       .then((res) => {
         console.log(res);
@@ -161,7 +155,6 @@ class MyApp extends App {
         console.log(e);
         console.log(e.response);
       });
-
   }
   // 네이버애널리틱스
   componentDidUpdate() {

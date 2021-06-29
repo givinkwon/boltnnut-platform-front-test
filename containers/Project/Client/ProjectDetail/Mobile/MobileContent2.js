@@ -8,6 +8,7 @@ import STLViewer from "stl-viewer";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
+import { toJS } from "mobx";
 const search_img = "/static/images/project/search.png";
 const fileimg = "/static/images/project/fileimg.svg";
 
@@ -44,11 +45,12 @@ class MobileContent2 extends React.Component {
   };
 
   changeProject = () => {
-    const { ManufactureProcess, Request } = this.props;
+    const { ManufactureProcess, Project } = this.props;
 
-    Router.push("/request");
+    console.log(toJS(Project.projectDetailData));
     ManufactureProcess.changeProject = true;
     ManufactureProcess.checkFileUpload = true;
+    Router.push("/request");
   };
 
   downloadFile(urls) {
@@ -68,16 +70,7 @@ class MobileContent2 extends React.Component {
     const { Project, ManufactureProcess } = this.props;
     const { projectDetailData } = Project;
 
-    // console.log(toJS(item));
-    // console.log(toJS(projectDetailData));
-    // console.log(toJS(projectDetailData.request_set[0].estimate_set));
-
-    //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
-
-    // console.log(idx);
     console.log(process_idx);
-    // console.log(material_idx);
-    // console.log(detail_idx);
 
     let item_detail_idx = 0;
     if (process_idx === "1") {
@@ -85,13 +78,7 @@ class MobileContent2 extends React.Component {
     } else {
       item_detail_idx = detail_idx - material_idx;
     }
-
-    // console.log(item_detail_idx);
-    // console.log(this.state.process.length);
-    // console.log(projectDetailData.request_set[0].estimate_set.length);
     if (
-      // projectDetailData.request_set[0].estimate_set.length >
-      // this.state.process.length
       projectDetailData.request_set[0].estimate_set.length > this.count
     ) {
       this.count++;
@@ -101,14 +88,11 @@ class MobileContent2 extends React.Component {
       };
       await ManufactureProcessAPI.loadProcess(req).then((res) => {
         const data = res.data;
-        // console.log(data.name);
-        // console.log(data);
         console.log(data.detailmanufactureprocess_set);
         console.log(item_detail_idx);
         console.log(data.detailmanufactureprocess_set[item_detail_idx - 1]);
 
         this.setState({ process: this.state.process.concat(data.name) });
-        //this.process = this.process.concat(data.name);
         this.setState({
           detailProcess:
             data.detailmanufactureprocess_set[item_detail_idx - 1] &&
@@ -116,22 +100,13 @@ class MobileContent2 extends React.Component {
               data.detailmanufactureprocess_set[item_detail_idx - 1].name
             ),
         });
-        // this.detailProcess = this.detailProcess.concat(
-        //   data.detailmanufactureprocess_set[item_detail_idx - 1].name
-        // );
       });
       console.log(this.state.process);
       console.log(this.state.detailProcess);
-
-      //})
-      //this.setState({ render_process });
     }
   }
 
   componentDidMount() {
-    // const { Project, ManufactureProcess } = this.props;
-    // const { projectDetailData } = Project;
-    // count = projectDetailData.request_set[0].estimate_set.length
     console.log("componentDidMount");
     console.log(this.props.Project.projectDetailData);
   }

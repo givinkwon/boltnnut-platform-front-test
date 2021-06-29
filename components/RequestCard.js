@@ -129,44 +129,6 @@ class RequestCard extends Component {
 								</div>
 							</div>
 						</div>
-
-						{/*<div>
-							<div>
-								<Text.FontSize20 color="#404040" fontWeight={600}>
-									희망예산
-								</Text.FontSize20>
-								<div>
-									<PriceInfo>
-										<Text.FontSize20 color="#404040" fontWeight={300}>
-											{request && FormatUtils.intcomma(request.price)}만원
-										</Text.FontSize20>
-									</PriceInfo>
-								</div>
-							</div>
-
-							<div>
-								<Text.FontSize20 color="#404040" fontWeight={600}>
-									희망기간
-								</Text.FontSize20>
-								<Text.FontSize20 color="#404040" fontWeight={300}>
-									{request && request.day}일
-								</Text.FontSize20>
-							</div>
-						</div>*/}
-						{
-							/*
-							<div>
-								<div>
-									<Text.FontSize20 color="#404040" fontWeight={600}>
-										코인
-									</Text.FontSize20>
-									<Text.FontSize20 color="#404040" fontWeight={300}>
-										{request && request.coin}개
-									</Text.FontSize20>
-								</div>
-							</div>
-							*/
-						}
 					</RequestInfo>
 				</CardBody>
 

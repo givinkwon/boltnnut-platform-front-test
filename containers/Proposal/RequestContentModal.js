@@ -110,17 +110,6 @@ class RequestContentModal extends Component {
             </Text.FontSize20>
           </div> }
 
-
-          {/*
-          <div>
-            <Text.FontSize20 color="#ed7d31" fontWeight={600}>
-              제안에 필요한 코인
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040" fontWeight={300}>
-              {request && FormatUtils.intcomma(request.coin)}개
-            </Text.FontSize20>
-          </div>*/}
-
           { request && request.file &&
           <div>
             <Text.FontSize20 color={PRIMARY} fontWeight={600}>

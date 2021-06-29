@@ -14,7 +14,7 @@ import ProposalCard from "./ProposalCard";
 import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
 import SearchBar from "./SearchBar";
-
+import ButtonSpinnerComponent from "components/ButtonSpinner";
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
 const pass4 = "static/images/pass4.png";
@@ -32,8 +32,6 @@ class ManufacturerContentContainer extends React.Component {
 
   openModal = () => {
     const { Partner } = this.props;
-    // console.log("requestmodal open click");
-    // this.setState({ modalOpen: true });
     Partner.requestModalActive = true;
   };
 
@@ -46,42 +44,25 @@ class ManufacturerContentContainer extends React.Component {
   async componentDidMount() {
     const { Partner } = this.props;
 
-    // Project.search_text = "";
     Partner.currentPage = 1;
-
-    // console.log("did mount");
 
     console.log("content mount");
     await Partner.getPartner();
-    // console.log(toJS(Partner.category_dic));
 
-    //console.log(toJS(Partner.filter_category_ary.length));
     if (Partner.filter_category_ary.length === 1) {
       Partner.getCategory();
     }
     if (Partner.filter_city_ary.length === 1) {
       Partner.getCity();
     }
-
-    // console.log(typeof Partner.category_dic);
-
-    // console.log(Object.keys(Partner.category_dic).length);
-    // if (Object.keys(Partner.category_dic).length === 0) {
-    //   this.setState({ g: 3 });
-    //   console.log(toJS(Partner.category_dic));
-    // }
-    // await Auth.checkLogin();
-    // if(Auth.logged_in_partner){
-    //   Project.getProjectByPrice()
-    // }
   }
 
   componentWillUnmount() {
     const { Partner } = this.props;
-    // console.log("WillUnMount");
     console.log("content unmount");
     Partner.requestModalActive = false;
     Partner.requestDoneModalActive = false;
+    Partner.search_text = "";
     Partner.resetDevCategory();
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
     Partner.filter_city_ary = [{ id: 0, city: "전체" }];
@@ -89,20 +70,12 @@ class ManufacturerContentContainer extends React.Component {
 
   componentDidUpdate() {
     const { Partner } = this.props;
-
-    // if (Object.keys(Partner.category_dic).length != 0) {
-    //   this.setState({ g: 3 });
-    //   console.log(toJS(Partner.category_dic));
-    // }
   }
   movePage = (e) => {
     const { Partner, Auth } = this.props;
     e.preventDefault();
-    // Project.category_reset()
     const newPage = e.target.innerText * 1;
     Partner.currentPage = newPage;
-    // Project.getProjectByPrice(Project.search_text, newPage)
-    // console.log(toJS(this.category_dic));
     Partner.resetDevCategory();
     Partner.check_loading_develop = false;
     Partner.ReviewActive = false;
@@ -116,17 +89,10 @@ class ManufacturerContentContainer extends React.Component {
   pageNext = (e) => {
     const { Partner } = this.props;
     e.preventDefault();
-    // console.log(toJS(Partner.currentPage));
-    // console.log(toJS(Partner.partner_page));
     if (Partner.currentPage < Partner.partner_page) {
-      // Project.category_reset()
       const nextPage = Partner.currentPage + 1;
       Partner.currentPage = nextPage;
-      // Project.getProjectByPrice(Project.search_text, Project.currentPage)
-      // console.log(nextPage);
       Partner.check_loading_develop = false;
-      // console.log(toJS(this.category_dic));
-      // Partner.category_dic = {};
       Partner.resetDevCategory();
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
@@ -141,10 +107,8 @@ class ManufacturerContentContainer extends React.Component {
     const { Partner } = this.props;
     e.preventDefault();
     if (Partner.currentPage > 1) {
-      // Project.category_reset()
       const newPage = Partner.currentPage - 1;
       Partner.currentPage = newPage;
-      // console.log(toJS(this.category_dic));
       Partner.resetDevCategory();
       Partner.check_loading_develop = false;
       Partner.ReviewActive = false;
@@ -153,7 +117,6 @@ class ManufacturerContentContainer extends React.Component {
       Partner.subButtonActive
         ? Partner.getOtherPartner(Partner.currentPage)
         : Partner.getPartner(Partner.currentPage);
-      // Project.getProjectByPrice(Project.search_text, Project.currentPage)
     }
   };
 
@@ -163,28 +126,14 @@ class ManufacturerContentContainer extends React.Component {
     if (!Partner.requestModalActive) {
       console.log("Detail click");
       Partner.category_name_list = null;
-      // console.log(item.id);
       Partner.partner_detail_list = [];
-      //Project.selectedProjectId = id;
       Partner.partner_detail_list.push({ item: item });
-      // console.log(toJS(Partner.partner_detail_list));
-      // Partner.newIndex = 1;
       Partner.category_name_list = Partner.category_dic[idx];
-      // console.log(idx);
-      //console.log(toJS(Partner.category_dic[idx]));
-      // console.log(toJS(Partner.category_name_list));
-      // await Partner.getPartnerDetail(item.id);
 
-      // await Router.push(`/project/${id}`);
-      //Project.setProjectDetailData(id);
-      // console.log("click");
       if (this.state.dropDownIdx === -1) {
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Partner.portFolioList = [];
         await Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
-        // console.log(Partner.partner_detail_list[0].item.city);
-
-        // console.log(Partner.city_name);
         this.setState({ dropDownActive: true, dropDownIdx: idx });
       } else {
         if (this.state.dropDownIdx === idx) {
@@ -197,9 +146,7 @@ class ManufacturerContentContainer extends React.Component {
         }
       }
     }
-    // console.log(toJS(Partner.portFolioList));
   };
-
   render() {
     const { Project, Partner } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
@@ -208,11 +155,8 @@ class ManufacturerContentContainer extends React.Component {
 
     return (
       <>
-        {/* {console.log("rendering")} */}
         <Background id="MyBackground">
           <Container>
-            {/* <SearchBar /> */}
-
             <Body>
               {/* {Partner.partner_list.length > 0 && Partner.isSearched && (
                 <SubButtonBox>
@@ -244,20 +188,6 @@ class ManufacturerContentContainer extends React.Component {
                 </SubButtonBox>
               )} */}
 
-              {/* <Filter style={{ paddingTop: "32px" }}>
-                <Font20>필터</Font20>
-                <RadioBox
-                  filter="region"
-                  data={this.props.Partner.filter_city_ary}
-                />
-                <RadioBox
-                  filter="develop"
-                  data={this.props.Partner.filter_category_ary}
-                />
-              </Filter> */}
-
-              {/* <Background> */}
-              {/* { Project.projectDataList.length > 0 && Project.projectDataList.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
               <Main>
                 <Header style={{ paddingTop: "32px" }}>
                   <Font20 style={{ marginLeft: "-9px" }}>
@@ -266,12 +196,8 @@ class ManufacturerContentContainer extends React.Component {
                     </span>
                     의 파트너가 있습니다.
                   </Font20>
-                  {/* <span>
-              <Font14>모든 제조의뢰</Font14>
-              <img src={pass4}/>
-            </span> */}
                 </Header>
-                {Partner.partner_list.length === 0 && (
+                {/* {Partner.partner_list.length === 0 && (
                   <NoResultBox>
                     <Font20>원하는 업체를 찾기 어려우신가요?</Font20>
                     <Font14 style={{ color: "black", fontWeight: "300" }}>
@@ -286,47 +212,40 @@ class ManufacturerContentContainer extends React.Component {
                       <span>업체 수배 & 견적 의뢰</span>
                     </RequestButton>
                   </NoResultBox>
-                )}
+                )} */}
+                {Partner.partner_list.length === 0 &&
+                  (Partner.loadingFlag ? (
+                    <ButtonSpinnerComponent scale="30%" primary />
+                  ) : (
+                    <NoResultBox>
+                      <Font20>원하는 업체를 찾기 어려우신가요?</Font20>
+                      <Font14 style={{ color: "black", fontWeight: "300" }}>
+                        볼트앤너트 업체 수배 전문가가 숨어있는 공장까지 대신
+                        찾아드립니다.
+                      </Font14>
+                      <RequestButton
+                        onClick={() => {
+                          this.openModal();
+                        }}
+                      >
+                        <span>업체 수배 & 견적 의뢰</span>
+                      </RequestButton>
+                    </NoResultBox>
+                  ))}
+
                 {Partner.partner_list &&
-                  // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
-                    // console.log(toJS(Partner.partner_list));
                     return (
                       <Background style={{ marginBottom: "5px" }}>
-                        {/* {Partner.category_ary[idx] &&
-                          console.log(
-                            toJS(
-                              Partner.category_ary[idx].splice(
-                                0,
-                                //Partner.category_ary[idx].length
-                                Object.keys(Partner.category_ary[idx]).length
-                              )
-                            )
-                          )} */}
-                        {/* Partner.check_loading_category &&  */}
-                        {/* {console.log(toJS(Partner.category_ary[idx]))} */}
-                        {/* {Partner.check_loading_category &&
-                          console.log(toJS(Partner.category_ary[idx]))} */}
-                        {/* {console.log(toJS(Partner.category_dic[idx]))} */}
-                        {/* {console.log(idx)} */}
                         <div
                           onClick={() => this.pushToDetail(item, idx)}
-                          // style={{ width: "100%" }}
                           style={{ width: "100%" }}
                         >
-                          {/* {console.log(toJS(Partner.category_dic))} */}
                           <ProposalCard
                             data={item}
                             width={this.props.width}
-                            //categoryData={Partner.category_ary[idx]}
                             categoryData={toJS(Partner.category_dic[idx])}
                             idx={idx}
-                            // middleCategory={Project.middle_category_name[idx]}
-                            // mainCategory={Project.main_category_name[idx]}
-                            // newData={Project.data_dt[idx]}
-                            // checkTotal={Project.filter_price}
-                            // dropDown={this.state.dropDownActive}
-                            // dropDownIdx={this.state.dropDownIdx}
                             handleIntersection={this.handleIntersection}
                             customer="partner"
                           />
@@ -417,7 +336,6 @@ class ManufacturerContentContainer extends React.Component {
             {" "}
             {5 * (current_set - 1) + 5}{" "}
           </PageCount>
-          {/* <PageCount> ... </PageCount> */}
           <img
             src={pass2}
             style={{
@@ -523,47 +441,6 @@ const region_data = [
     checked: "false",
   },
 ];
-
-// const data = [
-//   {
-//     consultation: '상담 진행',
-//     name: '컴퓨터',
-//     date: '2021.03.02' ,
-//     period: '120일',
-//     estimate: '10,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     date: '2021.03.03' ,
-//     period: '121일',
-//     estimate: '11,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '키보드',
-//     date: '2021.03.04' ,
-//     period: '122일',
-//     estimate: '12,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     name: '마우스',
-//     date: '2021.03.05' ,
-//     period: '123일',
-//     estimate: '13,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '프린터',
-//     date: '2021.03.06' ,
-//     period: '124일',
-//     estimate: '14,000,000원'
-//   },
-// ]
 
 const PageBar = styled.div`
   width: 351px;

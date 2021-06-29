@@ -30,7 +30,6 @@ async getProject(data){
       PartnerAPI.detail(answer.partner)
         .then((res) => {
           Project.answerDetailList.push({
-            // project: res.
             logo: res.data.logo,
             name: res.data.name,
             id: answer.id,
@@ -38,7 +37,6 @@ async getProject(data){
             project: data.id,
           });
           Project.projectQuickView.push({
-            // idx: idx,
             check: null,
           })
         })
@@ -64,8 +62,6 @@ async componentDidMount() {
   if (Auth.logged_in_client) {
     this.getProject(Auth.logged_in_client.id)
   }
-  
-  // this.setState({ answerDetailList: AnswerDetailList });
   }
   activeHandler = (idx) => {
     const { Project } = this.props;
@@ -100,11 +96,6 @@ async componentDidMount() {
               {item.request_set[0].name}
               <span>{item.answer_set.length}</span>
               </Font24>
-
-              {/* <div active = {Project.projectQuickView[idx].check} onClick = {this.activeHandler(idx)} >
-                <div>간략히 보기</div>
-                <div>자세히 보기</div>
-              </div> */}
               {Project.answerDetailList && Project.answerDetailList.map((data, idx) =>
               {
                 return(

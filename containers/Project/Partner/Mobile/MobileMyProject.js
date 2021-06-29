@@ -25,7 +25,6 @@ class MyProject extends React.Component {
     const { Project } = this.props;
 
     Project.chatModalActive = !Project.chatModalActive;
-    // this.setState({ modalActive: !this.state.modalActive });
   };
 
   pushToDetail = async (id) => {
@@ -34,7 +33,6 @@ class MyProject extends React.Component {
     await Project.getProjectDetail(id);
     Project.newIndex = 1;
     Project.selectedProjectId = id;
-    // await Router.push(`/project/${id}`);
   };
 
   async getProject(data) {
@@ -45,13 +43,8 @@ class MyProject extends React.Component {
 
     if (Project.projectDetailData) {
       const request_set = [];
-      // console.log(Project.projectDetailData)
       request_set.push(Project.projectDetailData.request_set[0]);
       partnerprojectlist.push({
-        // request_set: Project.projectDetailData.request_set[0],
-        // name: Project.projectDetailData.request_set[0].name,            // 프로젝트 이름
-        // project:Project.projectDetailData.id,
-        // content: data.content1,
         request_set: request_set,
       });
       this.setState({ Partnerprojectlist: partnerprojectlist });
@@ -94,7 +87,6 @@ class MyProject extends React.Component {
                         mainCategory={Project.main_category_name[idx]}
                         newData={Project.data_dt[idx]}
                         handleIntersection={this.handleIntersection}
-                        // onClick={() => this.pushToDetail(item.id)}
                       />
                     </div>
                   </Container>

@@ -39,22 +39,12 @@ class Content1 extends React.Component {
   };
 
   getToday(date) {
-    //let date = new Date();
     console.log(date);
-    // let year = date.getFullYear();
-    // let month = ("0" + (1 + date.getMonth())).slice(-2);
-    // let day = ("0" + date.getDate()).slice(-2);
-
-    // console.log(year);
-    // console.log(month);
-    // console.log(day);
-    // return year + month + day;
   }
   modalHandler = (id) => {
     this.setState({ selectedRoom: id });
     const { Project } = this.props;
     Project.chatModalActive = !Project.chatModalActive;
-    // this.setState({ modalActive: !this.state.modalActive });
   };
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
@@ -62,20 +52,12 @@ class Content1 extends React.Component {
     console.log(Project.selectedProjectId);
     console.log("<Web> did mount");
 
-    // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
-    // const color = document.getElementById("MyFooter").getAttribute('style');
-    // console.log(color);
-    // Project.init(918)
-
-    //console.log(Auth)
     this.getToday(
       Project.projectDetailData &&
         Project.projectDetailData.request_set[0].deadline
     );
     await Auth.checkLogin();
-    // if(Auth.logged_in_client){
-    //   Project.getPage(Auth.logged_in_client.id);
-    // }
+
     Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
       console.log(toJS(Answer.answers));
       this.setState({ partnerList: Answer.answers });
@@ -100,11 +82,8 @@ class Content1 extends React.Component {
 
   render() {
     const { Project, Partner, user, Auth } = this.props;
-    // if (this.state.partnerDetailList[0]) {
-    //   console.log(this.state.partnerDetailList[0].name);
 
     const { projectDetailData } = Project;
-    // }
 
     let name = "";
     let date = "";
@@ -147,9 +126,7 @@ class Content1 extends React.Component {
           {console.log("projectDetailData")}
           {console.log(toJS(projectDetailData))}
           {Project.chatModalActive && (
-            // <Layer onClick={this.modalHandler}>
             <Layer>
-              {/* <Postcode /> */}
               <ChatTestContainer
                 roomName={this.state.selectedRoom}
                 requestTitle={
@@ -191,13 +168,6 @@ class Content1 extends React.Component {
               >
                 {projectDetailData && projectDetailData.request_set[0].name}
               </Font26>
-              {/* <div>
-              <Font17 style={{ color: "#86888c" }}>
-                {maincategory}
-                {maincategoryname}
-              </Font17>
-            </div> */}
-              {/* <div></div> */}
               <div>
                 <Font17 style={{ color: "#86888c" }}>
                   {category}
@@ -213,10 +183,6 @@ class Content1 extends React.Component {
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
-                    {/* 예상금액 0원일 때 미정으로 변경 */}
-                    {/* {projectDetailData && projectDetailData.request_set[0].price.toLocaleString("ko-KR")!=0 ?
-                      (projectDetailData.request_set[0].price.toLocaleString("ko-KR") + " 원") : ("미정")
-                    } */}
 
                     {projectDetailData && projectDetailData.request_set[0].price
                       ? projectDetailData.request_set[0].price.toLocaleString(
@@ -254,7 +220,6 @@ class Content1 extends React.Component {
                 </div>
               </Box2>
             </Box2Container>
-            {/* =================================================== */}
             {/* 지원한 파트너 */}
             <AppliedPartner>
               <Font20
@@ -279,7 +244,6 @@ class Content1 extends React.Component {
                 Auth.logged_in_client.id ? (
                 <>
                   {this.state.partnerList.map((data, idx) => {
-                    // Partner.getPartnerDetail(data.partner);
                     return (
                       <>
                         {this.state.partnerDetailList[idx] && (

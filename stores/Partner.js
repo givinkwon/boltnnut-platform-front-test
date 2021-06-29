@@ -190,6 +190,10 @@ class Partner {
 
   @observable fileArray = [];
   @observable detailRequestTitle = null;
+  @observable detailRequestInfo = null;
+  @observable detailCompanyName = null;
+  @observable detailRank = null;
+  @observable detailPassword = null;
   @observable detailRequestEmail = null;
   @observable detailRequestPhone = null;
   @observable detail_select_city = null;
@@ -268,6 +272,7 @@ class Partner {
   @observable originPartnerList = [];
   @observable subButtonActive = false;
   @observable exceptionCategory = "";
+  @observable loadingFlag = 1;
   @action resetReviewAry = () => {
     this.reviewKindnessIndex = 3;
     this.reviewCommunicationIndex = 3;
@@ -448,9 +453,8 @@ class Partner {
           );
         });
         await this.category_main_list.map((mainCategory) => {
-          this.category_middle_total_ary = this.category_middle_total_ary.concat(
-            mainCategory.category_set
-          );
+          this.category_middle_total_ary =
+            this.category_middle_total_ary.concat(mainCategory.category_set);
         });
       })
       .catch((e) => {
@@ -1365,6 +1369,7 @@ class Partner {
     console.log(page);
     console.log(toJS(this.filter_region));
 
+    console.log(this.search_text);
     this.partner_list = [];
     this.category_ary = [];
     console.log(toJS(this.category_ary));

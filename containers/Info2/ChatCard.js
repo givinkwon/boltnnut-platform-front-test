@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-//import Button from "components/Buttonv2";
+
 import { toJS } from "mobx";
 import { inject, observer } from "mobx-react";
 import * as ChatAPI from "axios/Chat";
@@ -39,35 +39,13 @@ class ChatCardContainer extends React.Component {
   };
 
   handleScrollChange() {
-    // console.log(this.ChatAreaRef);
-    // const isPassedTop = window.pageYOffset > this.ChatAreaRef.current.offsetTop;
-    // if (isPassedTop !== this.props.Home.test) {
-    //   this.setState({ isPassedTop: isPassedTop });
-    //   this.props.Home.test = isPassedTop;
-    // }
-    // console.log(this.ChatAreaRef);
-    // const prevScrollHeight = this.ChatAreaRef.current.scrollHeight;
-    // console.log(this.ChatAreaRef.current.scrollHeight);
     if (this.ChatAreaRef.current) {
-      // console.log(`scrollTop = ${this.ChatAreaRef.current.scrollTop}`);
-      // console.log(`scrollHeight = ${this.ChatAreaRef.current.scrollHeight}`);
-      // console.log(`offsetHeight = ${this.ChatAreaRef.current.offsetHeight}`);
-      // console.log(`offsetTop = ${this.ChatAreaRef.current.offsetTop}`);
-      // console.log(`clientHeight = ${this.ChatAreaRef.current.clientHeight}`);
-      // console.log(`prevScrollHeight = ${prevScrollHeight}`);
       if (
         this.ChatAreaRef.current.scrollTop <= 0 &&
         this.props.chatPageLimit - 1 > this.state.chatPageCount
       ) {
-        // this.setState({ chatPageCount: this.state.chatPageCount + 1 });
-        // this.props.loadPrevMessages(this.state.chatPageCount);
-        // this.ChatAreaRef.current.scrollTop = 910;
       }
     }
-
-    // console.log(this.ChatAreaRef.current.scrollTop);
-    // console.log(this.ChatAreaRef.current.pageYOffset);
-    // console.log(window.pageYOffset);
   }
 
   async componentDidMount() {
@@ -113,10 +91,7 @@ class ChatCardContainer extends React.Component {
             ? 576 - (currentRows - 1) * 32
             : 576 - (currentRows - 2) * 32
           : 0,
-      //height: this.state.height > 35 ? 580 - (currentRows - 1) * 35 : 0,
     });
-    // console.log(currentRows);
-    // console.log(this.state.height);
   };
 
   onChange(e) {
@@ -129,18 +104,11 @@ class ChatCardContainer extends React.Component {
 
     // 빈메세지 제거
     if (this.state.text.length > 0) {
-      //console.log(this.state.text);
       this.props.onSendMessage(this.state.text);
     }
   }
 
-  // executeScroll = () =>
-  //   this.myRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-
   checkRead = (fullMessage, currentMessage) => {
-    // console.log(fullMessage);
-    // console.log(currentMessage);
-    // console.log(this.props.currentUserType);
 
     fullMessage.forEach((element) => {
       if (
@@ -155,22 +123,12 @@ class ChatCardContainer extends React.Component {
   onChangeFile = async (e) => {};
 
   renderMessage(message) {
-    // this.checkRead(this.props.messages, message);
-    //console.log(toJS(message));
 
     const { member, text, time, bRead } = message;
     const { currentUserType } = this.props;
     const messageFromMe = member === currentUserType;
     const text_message = { text };
     const temp = text;
-
-    // console.log(member);
-    // console.log(currentUserType);
-    //const temp2 = text.split("/").pop();
-
-    //const messageFromMe = true;
-    // setTimeout(this.executeScroll, 100);
-    // const messageFromMe = true; //임시
     const scrollTo = (ref) => {
       if (ref) {
         ref.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -178,26 +136,17 @@ class ChatCardContainer extends React.Component {
     };
     return (
       <Messages_li fromMe={messageFromMe}>
-        {/* <span
-          className="avatar"
-          //   style={{ backgroundColor: member.clientData.color }}
-          style={{ backgroundColor: "red" }}
-        /> */}
         <MessageContent ref={scrollTo} fromMe={messageFromMe}>
           {!messageFromMe && (
             <Message_User>
               <img src={logo_img} />
             </Message_User>
           )}
-          {/* {!messageFromMe && <Message_User>상대</Message_User>} */}
           {text_message.text && text_message.text.indexOf("https://") > -1 ? (
             <Message_text fromMe={messageFromMe}>
-              {/* {console.log("파일")} */}
-              {/* {console.log(text_message.text.split("/").pop())} */}
               <a href={temp} download>
                 {decodeURI(text_message.text.split("/").pop())}
               </a>
-              {/* <img src={temp} /> */}
             </Message_text>
           ) : (
             <Message_text fromMe={messageFromMe}>{text}</Message_text>
@@ -219,7 +168,6 @@ class ChatCardContainer extends React.Component {
   render() {
     const { messages, Partner } = this.props;
     const { width } = this.state;
-    // console.log(this.props.messages);
     return (
       <Container>
         <Card>
@@ -231,8 +179,6 @@ class ChatCardContainer extends React.Component {
                     ? Partner.partnerdata && Partner.partnerdata.name
                     : ""}
                 </Font24>
-                {/* <img src={prevent_img} />
-                <img src={star_img} /> */}
               </Header>
               <MessageList height={this.state.height} ref={this.ChatAreaRef}>
                 <div style={{ padding: "0 10px 0 10px", height: "80%" }}>
@@ -241,14 +187,13 @@ class ChatCardContainer extends React.Component {
               </MessageList>
               <TypingBox>
                 <SubmitForm
-                  // onSubmit={(e) => this.onSubmit(e)}
                   onKeyPress={(e) => {
                     if (e.key === "Enter") {
                       this.onSubmit(e);
                     }
                   }}
                   bottom={this.state.rows}
-                  // onKeyPress={() => console.log("RR")}
+
                 >
                   <textarea
                     placeholder="메세지를 입력하세요."
@@ -264,8 +209,6 @@ class ChatCardContainer extends React.Component {
                     onChange={(e) => this.onChangeHandler(e)}
                     value={this.state.text}
                   />
-                  {/* // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
-                  /> */}
                   <input
                     id="FileInput"
                     style={{ border: "1px solid red", display: "none" }}
@@ -281,14 +224,10 @@ class ChatCardContainer extends React.Component {
                       const realInput = document.querySelector("#FileInput");
                       console.log(realInput);
                       realInput.click();
-                      //realInput.innerHTML = "";
                     }}
                   ></img>
-                  {/* <img src={camera_img} />
-                  <img src={emoticon_img} /> */}
                   <SendButton
                     onClick={(e) => {
-                      // e.preventDefault();
                       console.log("hellp");
                       this.setState({ ...this.state, rows: 1, height: 576 });
                       this.onSubmit(e);
@@ -296,7 +235,6 @@ class ChatCardContainer extends React.Component {
                   >
                     전송
                   </SendButton>
-                  {/* <div onClick={this.executeScroll}>f</div> */}
                 </SubmitForm>
               </TypingBox>
             </Chat>
@@ -306,7 +244,6 @@ class ChatCardContainer extends React.Component {
                   <img
                     src={close_img}
                     onClick={() => {
-                      // console.log(this.props.Project.chatModalActive);
                       this.props.Project.chatModalActive = false;
                       this.props.socketClose();
                     }}

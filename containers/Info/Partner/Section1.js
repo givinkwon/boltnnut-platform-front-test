@@ -43,7 +43,6 @@ class MyCoinConatiner extends React.Component {
                  ->  의뢰서 작성하러가기
               </PrimaryColorLink>
           </ul>
-          {/*<Image src="/static/images/banner.png" style={{ height: 200 }} />*/}
         </Content>
       </div>
     );

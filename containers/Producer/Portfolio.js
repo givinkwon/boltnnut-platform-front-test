@@ -37,7 +37,6 @@ class PortfolioConatiner extends React.Component {
   };
 
   activeHandler = (src) => {
-    // console.log(src);
 
     this.setState({ modalOpen: true, src: src });
   };
@@ -45,19 +44,10 @@ class PortfolioConatiner extends React.Component {
   componentDidMount = async () => {
     const { Partner, Auth, width } = this.props;
 
-    // console.log(width);
-    // console.log(toJS(Partner.portFolioList));
-    // await Partner.getPortfolio();
-
     const img = document.getElementById("image");
-    // console.log(img);
   };
   render() {
     const { Answer, file, Partner, width } = this.props;
-    // const { current_partner } = Answer
-    // console.log(file);
-
-    // console.log(file);
     var settings = {
       dots: false,
       infinite: false,
@@ -93,24 +83,13 @@ class PortfolioConatiner extends React.Component {
     };
     return (
       <>
-        {/* { current_partner && current_partner.portfolio_set.length > 0 && */}
         <div
           id="portfolio"
           style={{ display: "flex", justifyContent: "center" }}
         >
-          {/* <Header>
-            <Text.FontSize20 color={WHITE} fontWeight={700}>
-              포트폴리오
-            </Text.FontSize20>
-          </Header> */}
           <Content>
             {Partner.portFolioList.length != 0 ? (
               <Slider {...settings} ref={(slider) => (this.slider = slider)}>
-                {/* {
-              current_partner && current_partner.portfolio_set.map((item, idx) => {
-                return <Image key={idx} ratio='65%' src={item.img_portfolio}/>
-              })
-            } */}
 
                 {Partner.portFolioList.map((item, idx) => {
                   return (
@@ -127,88 +106,9 @@ class PortfolioConatiner extends React.Component {
                     />
                   );
                 })}
-
-                {/* {!Partner.portFolioList && <h1>준비중입니다</h1>} */}
-                {/* {file ? (
-                <Image
-                  ratio="65%"
-                  src={file}
-                  onClick={() => {
-                    console.log(this);
-                    console.log(this.slider.props.children.props.src);
-                    const src = this.slider.props.children.props.src;
-                    this.activeHandler(src);
-                  }}
-                />
-              ) : (
-                <h1>파일이 없습니다</h1>
-              )} */}
-                {/* 
-              <Image
-                id="image"
-                ratio="65%"
-                src={banner1_img}
-                size="contain"
-                repeat="no-repeat"
-                onClick={() => {
-                  console.log(this);
-                  console.log(this.naturalWidth);
-                  console.log(this.slider.props.children[0].props.src);
-                  const src = this.slider.props.children[0].props.src;
-                  this.activeHandler(src);
-                }}
-              />
-
-              <Image
-                ratio="65%"
-                src={banner_dot_img}
-                size="contain"
-                repeat="no-repeat"
-                onClick={() => {
-                  // console.log(this);
-                  // console.log(this.slider.props.children[0].props.src);
-                  const src = this.slider.props.children[1].props.src;
-                  this.activeHandler(src);
-                }}
-              />
-              <Image
-                ratio="65%"
-                src={banner9_img}
-                size="contain"
-                repeat="no-repeat"
-                onClick={() => {
-                  // console.log(this);
-                  // console.log(this.slider.props.children[0].props.src);
-                  const src = this.slider.props.children[2].props.src;
-                  this.activeHandler(src);
-                }}
-              />
-              <Image
-                ratio="65%"
-                src={camera_img}
-                onClick={() => {
-                  // console.log(this);
-                  // console.log(this.slider.props.children[0].props.src);
-                  const src = this.slider.props.children[3].props.src;
-                  this.activeHandler(src);
-                }}
-              />
-              <Image
-                ratio="65%"
-                src={instargram}
-                size="contain"
-                repeat="no-repeat"
-                onClick={() => {
-                  // console.log(this);
-                  // console.log(this.slider.props.children[0].props.src);
-                  const src = this.slider.props.children[4].props.src;
-                  this.activeHandler(src);
-                }}
-              /> */}
               </Slider>
             ) : (
               <>
-                {/* {console.log(Partner.portFolioList)} */}
                 <NoPortfolio>
                   <div>
                     <span>포트폴리오가 준비되지 않았습니다.</span>
@@ -218,22 +118,16 @@ class PortfolioConatiner extends React.Component {
             )}
 
             {
-              // (current_partner && current_partner.portfolio_set.length > 0)
-              //   && (
               Partner.portFolioList && Partner.portFolioList.length > 0 && (
                 <>
                   <Arrow left onClick={this.sliderPrev} />
                   <Arrow right onClick={this.sliderNext} />
                 </>
               )
-              // )
             }
           </Content>
 
           {this.state.modalOpen && (
-            // <Layer>
-            //   {/* <Postcode /> */}
-            //   <span>
             <Modal width={width}>
               <button
                 className="close"
@@ -252,12 +146,9 @@ class PortfolioConatiner extends React.Component {
                 style={{ backgroundRepeat: "no-repeat" }}
               />
             </Modal>
-            //   </span>
-            // </Layer>
           )}
           {this.state.modalOpen && <Layer />}
         </div>
-        {/* } */}
       </>
     );
   }

@@ -895,26 +895,3 @@ const CustomContainer = styled.div`
   }
 `
 
-// const Container = styled.div`
-//   margin-right: auto;
-//   margin-left: auto;
-//   text-align : center;
-//   align-items: center;
-//   /* @media (min-width: 0px) and (max-width: 767.98px) {
-//     width: calc(100% - 40px);
-//     padding: 0 20px;
-//   }
-
-//   @media (min-width: 768px) and (max-width: 991.98px) {
-//     width: 720px;
-//   }
-
-//   @media (min-width: 992px) and (max-width: 1299.98px) {
-//     width: 930px;
-//   }
-
-//   @media (min-width: 1300px) {
-//     width: 1200px;
-//   } */
-// `
-

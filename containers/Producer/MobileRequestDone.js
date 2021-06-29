@@ -5,7 +5,6 @@ import RequestDoneContainer from "./RequestDoneModal";
 class MobileRequestDone extends React.Component {
   render() {
     return <RequestDoneContainer />;
-    // return <h1>dsfsdfdsfsdf</h1>;
   }
 }
 

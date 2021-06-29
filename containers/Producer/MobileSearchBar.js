@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-// import SelectComponent from "./Select";
 import SelectComponent from "./MobileSelect";
 import ButtonComponent from "components/Buttonv2";
 
@@ -10,8 +9,6 @@ import Container from "components/Containerv1";
 
 import SearchFilterContainer from "./SearchFilterBox";
 import { toJS } from "mobx";
-
-// import RadioButton from "./RadioButton";
 
 import { PRIMARY2 } from "static/style";
 
@@ -32,7 +29,6 @@ class MobileSearchBarConatiner extends React.Component {
   openModal = () => {
     const { Partner } = this.props;
     console.log("requestmodal open click");
-    // this.setState({ modalOpen: true });
     Partner.requestModalActive = true;
   };
   closeModal = () => {
@@ -54,13 +50,13 @@ class MobileSearchBarConatiner extends React.Component {
 
   searchText = (e) => {
     const { Partner } = this.props;
-    // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
     Partner.search_text = e.target.value;
   };
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
     if (ManufactureProcess.loadingSaveSearchText) {
+      Partner.subButtonActive = true;
       ManufactureProcess.saveSearchText(Partner.search_text);
       ManufactureProcess.loadingSaveSearchText = false;
       setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
@@ -79,6 +75,7 @@ class MobileSearchBarConatiner extends React.Component {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
       if (ManufactureProcess.loadingSaveSearchText) {
+        Partner.subButtonActive = true;
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
         setTimeout(
@@ -108,7 +105,6 @@ class MobileSearchBarConatiner extends React.Component {
       Partner.filter_region = idx;
       Partner.partner_next = null;
       Partner.partner_count = null;
-      // this.count = 0;
       Partner.currentPage = 1;
       Partner.getPartner();
     }
@@ -127,10 +123,8 @@ class MobileSearchBarConatiner extends React.Component {
 
   filterActiveHandler = () => {
     if (this.props.Partner.check_click_filter) {
-      // this.setState({ filter_active: false });
       this.props.Partner.check_click_filter = false;
     } else {
-      // this.setState({ filter_active: true });
       this.props.Partner.check_click_filter = true;
     }
   };
@@ -145,26 +139,12 @@ class MobileSearchBarConatiner extends React.Component {
           }
           onBlur={() => this.selectOut()}
         >
-          {/* <input
-            placeholder="원하는 분야의 제조업체를 검색하세요"
-            // value={Partner.search_text}
-            onFocus={(e) => (e.target.placeholder = "")}
-            onBlur={(e) =>
-              (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
-            }
-            onChange={this.searchText}
-            class="Input"
-            onKeyDown={this.handleKeyDown}
-          /> */}
         </Box>
         <SearchFilterBox>
           <SearchBar>
             <div>
               <input
                 style={{ display: "none" }}
-                // value={
-                //   Request.select_big ? Request.select_big.maincategory : ""
-                // }
                 class="Input"
               />
               <Select
@@ -202,14 +182,6 @@ class MobileSearchBarConatiner extends React.Component {
             </div>
           </SearchBar>
 
-          {/* <Request>
-            <div onClick={() => this.openModal()}>
-              <span>제조사 찾기 의뢰하기 </span>
-            </div>
-            <div>
-              <span>업체 찾기가 힘든 경우 클릭!</span>
-            </div>
-          </Request> */}
 
           <Filter
             onClick={() => {
@@ -226,24 +198,6 @@ class MobileSearchBarConatiner extends React.Component {
           active={this.props.Partner.check_click_filter}
         >
           <SearchFilterContainer width={this.props.width} />
-          {/* {Partner.filter_city_ary.map((item, idx) => {
-            return (
-              <>
-                {console.log(toJS(item))}
-                <FilterContent
-                  onClick={() => {
-                    this.onClickHandler(item.id);
-                  }}
-                  active={this.activeHandler(item.id)}
-                >
-                  <div active={this.activeHandler(item.id)}>
-                    <div active={this.activeHandler(item.id)}></div>
-                  </div>
-                  <span>{item.city}</span>
-                </FilterContent>
-              </>
-            );
-          })} */}
         </FilterContainer>
       </Form>
     );
@@ -261,9 +215,7 @@ const filterArray = [
 ];
 const categoryArray = [
   { label: "전체", value: "전체" },
-  // { label: "만든 제품", value: "만든 제품" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
+  { label: "만든 제품", value: "만든 제품" },
 ];
 const region_data = [
   {

@@ -25,7 +25,6 @@ const lock = "static/images/Home/lock.svg";
 const CountFunc = ({ index, projCount = 0, partnerCount = 0 }) => {
   const countItem = {
     0: UseScrollCount(10787400000, 10000000000, 0, 0, 2000000),
-    // 1: UseScrollCount(projCount,0,0,0,15),
     1: UseScrollCount(5116, 0, 0, 0, 15),
     2: UseScrollCount(4933, 0, 0, 0, 20),
   };
@@ -42,8 +41,6 @@ class Banner0Container extends React.Component {
   componentDidMount() {
     console.log(window.location.hostname);
     const { Proposal, Partner } = this.props;
-    // Proposal.loadProjects();
-    // this.setState({projectCount:this.props.Proposal.projects_count})
     ProposalAPI.getMyProject()
       .then((res) => {
         const pc = res.data.count * 3 + 997;
@@ -127,63 +124,6 @@ class Banner0Container extends React.Component {
                 </>
               )}
             </div>
-            {/* <Info>
-              <InfoCell>
-                <Content.FontSize24
-                  fontWeight={"normal"}
-                  style={{ textAlign: "center", marginBottom: 10 }}
-                  color={"#ffffff"}
-                >
-                  총 프로젝트 금액
-                </Content.FontSize24>
-                <Content.FontSize32
-                  eng={true}
-                  fontWeight={"bold"}
-                  color={"#ffffff"}
-                > */}
-            {/* 2,000,000,000 */}
-            {/* <CountFunc index={0} />원
-                </Content.FontSize32>
-              </InfoCell>
-              <InfoCell style={{ margin: "0px 41px" }}>
-                <Content.FontSize24
-                  fontWeight={"normal"}
-                  style={{ textAlign: "center", marginBottom: 10 }}
-                  color={"#ffffff"}
-                >
-                  의뢰 프로젝트
-                </Content.FontSize24>
-                <Content.FontSize32
-                  eng={true}
-                  style={{ textAlign: "center", marginLeft: 30 }}
-                  fontWeight={"bold"}
-                  color={"#ffffff"}
-                > */}
-            {/* 300+ */}
-            {/* <CountFunc index={1} projCount={ProjectCount}/><span style={{fontWeight:500}}>개</span> */}
-            {/* <CountFunc index={1} projCount={this.state.projectCount} />
-                  <span style={{ fontWeight: 500 }}>개</span>
-                </Content.FontSize32>
-              </InfoCell>
-              <InfoCell>
-                <Content.FontSize24
-                  fontWeight={"normal"}
-                  style={{ textAlign: "center", marginBottom: 10 }}
-                  color={"#ffffff"}
-                >
-                  파트너사
-                </Content.FontSize24>
-                <Content.FontSize32
-                  eng={true}
-                  style={{ textAlign: "center", marginLeft: 30 }}
-                  fontWeight={"bold"}
-                  color={"#ffffff"}
-                >
-                  <CountFunc index={2} partnerCount={PartnerCount} />
-                  <span style={{ fontWeight: 500 }}>개</span>
-                </Content.FontSize32>
-              </InfoCell>
-            </Info> */}
           </Fade>
         </Containerv1>
       </Background>

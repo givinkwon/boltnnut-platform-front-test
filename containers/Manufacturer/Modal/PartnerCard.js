@@ -11,10 +11,6 @@ const star = "/static/icon/star.svg";
 @inject("Partner", "Auth")
 @observer
 class PartnerCard extends React.Component {
-  // constructor (props) {
-  //     super(props);
-  //     this.hideLoader = this.hideLoader.bind(this);
-  // }
   state = {
     width: null,
     activeCard: false,
