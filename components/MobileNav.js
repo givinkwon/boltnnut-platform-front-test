@@ -171,8 +171,6 @@ class MobileNav extends React.Component {
               </ModalHeader>
               <>
                 <ModalContent>
-                  {console.log(Auth)}
-                  {console.log(Auth.logged_in_partner)}
                   {Auth.logged_in_partner ? (
                     <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
                   ) : (
