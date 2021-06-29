@@ -332,7 +332,7 @@ const InputBox = styled.div`
   }
 }
 
-  // @media (min-width: 0px) and (max-width: 767.98px) { 
+   @media (min-width: 0px) and (max-width: 767.98px) { 
   //   height: 100%;
   //   height: 34px;
   //   object-fit: contain;
@@ -347,7 +347,20 @@ const InputBox = styled.div`
   //     width: 20px;
   //     height: 18px;
   //   }
-  // }
+  >div{
+    div:nth-of-type(2){
+      width: auto;
+      >span{      
+        >span{          
+          >span{
+            
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+   }
 `;
 const Wrap = styled.div`
   display: flex;
@@ -422,7 +435,7 @@ const FileText = styled(Content.FontSize18)`
   color: #c6c7cc;
   display: inline-flex;
   align-items: center;
-  padding: ${(props) => (props.mobile ? "0 0 0 14px" : "14px 16px")};
+  padding: ${(props) => (props.mobile ? "0 14px 0 14px" : "14px 16px")};
   flex-wrap: wrap;
   background-color: #ffffff;
   box-sizing: border-box;
@@ -447,7 +460,7 @@ const FileText = styled(Content.FontSize18)`
       margin-right: 20px;
     }
   }
-  // @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.98px) {
   //   font-size: 14px !important;
   //   padding-top: 0px;
   //   font-weight: normal;
@@ -457,7 +470,7 @@ const FileText = styled(Content.FontSize18)`
   //   letter-spacing: -0.35px;
   //   text-align: left;
   //   color: #999999;
-  // }
+  }
 `;
 const DeleteFile = styled.img`
   width: 18px;
@@ -473,4 +486,8 @@ const DeleteFile = styled.img`
   margin-right: 29px;
   vertical-align: middle;
   cursor: pointer;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-right: 13px;
+  }
 `;

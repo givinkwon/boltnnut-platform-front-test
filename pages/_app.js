@@ -133,15 +133,15 @@ class MyApp extends App {
     if (jssStyles && jssStyles.parentNode)
       jssStyles.parentNode.removeChild(jssStyles);
 
-    
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    formData.append("prevUrl", document.referrer);
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserIP(req)
       .then((res) => {
         console.log(res);
@@ -150,7 +150,6 @@ class MyApp extends App {
         console.log(e);
         console.log(e.response);
       });
-
   }
   // 네이버애널리틱스
   componentDidUpdate() {

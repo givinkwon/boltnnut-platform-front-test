@@ -96,7 +96,9 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      Partner.getPartner(nextPage);
+      Partner.subButtonActive
+        ? Partner.getOtherPartner(Partner.currentPage)
+        : Partner.getPartner(Partner.currentPage);
     }
   };
 
@@ -111,7 +113,9 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      Partner.getPartner(newPage);
+      Partner.subButtonActive
+        ? Partner.getOtherPartner(Partner.currentPage)
+        : Partner.getPartner(Partner.currentPage);
     }
   };
 
@@ -154,13 +158,11 @@ class ManufacturerContentContainer extends React.Component {
         <Background id="MyBackground">
           <Container>
             <Body>
-              {Partner.partner_list.length > 0 && Partner.isSearched && (
+              {/* {Partner.partner_list.length > 0 && Partner.isSearched && (
                 <SubButtonBox>
                   <SubButton
                     onClick={() => {
-                      !Partner.subButtonActive
-                        ? Partner.getOtherPartner()
-                        : (Partner.partner_list = Partner.originPartnerList);
+                      Partner.getOtherPartner();
 
                       Partner.subButtonActive = !Partner.subButtonActive;
                     }}
@@ -172,7 +174,11 @@ class ManufacturerContentContainer extends React.Component {
                       예, 신제품 개발 전문 업체로 추천해주세요
                     </Font20>
                   </SubButton>
-                  <SubButton>
+                  <SubButton
+                    onClick={() => {
+                      Router.push("/request");
+                    }}
+                  >
                     <Font20 style={{ textAlign: "center" }}>
                       도면이 있으신가요?
                       <br />
@@ -180,7 +186,7 @@ class ManufacturerContentContainer extends React.Component {
                     </Font20>
                   </SubButton>
                 </SubButtonBox>
-              )}
+              )} */}
 
               <Main>
                 <Header style={{ paddingTop: "32px" }}>
@@ -451,7 +457,7 @@ const Body = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // border-top: 1px solid #e1e2e4;
+  border-top: 1px solid #e1e2e4;
   border-bottom: 1px solid #e1e2e4;
   // margin-top: 40px;
 `;

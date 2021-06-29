@@ -20,7 +20,7 @@ class BannerConatiner extends React.Component {
           <Item>
             <Text.FontSize32 color={WHITE}>제조사 찾기</Text.FontSize32>
             <Content.FontSize22 color={WHITE}>
-              제작품 생산에 적합한 제조사들을 확인하세요.
+              내가 원하는 제품과 부품의 제조사들을 확인하세요.
             </Content.FontSize22>
           </Item>
         </Container>

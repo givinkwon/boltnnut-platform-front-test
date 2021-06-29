@@ -347,7 +347,7 @@ export function getClientEmail(req) {
 export function setReqProducerInfo(req) {
   return axios({
     method: "POST",
-    url: `${ROOT_URL}/requestinfo/info/`,
+    url: `${ROOT_URL}/requestinfo/`,
     data: req.data ? req.data : null,
   });
 }

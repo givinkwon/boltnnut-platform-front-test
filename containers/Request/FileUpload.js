@@ -422,6 +422,19 @@ class FileUploadContainer extends Component {
       const detailProcessAry = detailProcessData.split(",");
       ManufactureProcess.getProcessList(processAry, detailProcessAry);
     } else {
+      console.log(fileList);
+      // if (ManufactureProcess.openFileArray.length === 0) {
+      //   RequestFormData.append(`file`, "");
+      // }
+
+      // for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
+      //   RequestFormData.append(`file`, ManufactureProcess.openFileArray[i]);
+      //   RequestFormData.append("request", )
+      //   RequestFormData.append("share_inform", )
+      // }
+
+      //RequestFormData.append("file", )
+
       await this.props.Project.projectDetailData.request_set[0].estimate_set.map(
         async (item, idx) => {
           console.log(item);
@@ -458,6 +471,37 @@ class FileUploadContainer extends Component {
         });
       }
 
+      const modifyFormData = new FormData();
+
+      for (var i = 0; i < fileList.length; i++) {
+        console.log(fileList[i].originFile);
+        console.log(toJS(fileList[i].selectBig.id));
+        console.log(toJS(fileList[i].selectedMid.id));
+        console.log(this.state.requestId);
+        console.log(fileList[i].quantity.value);
+
+        modifyFormData.append("blueprint", fileList[i].originFile);
+        modifyFormData.append("process", fileList[i].selectBig.id);
+        modifyFormData.append("detailprocess", fileList[i].selectedMid.id);
+        modifyFormData.append("requestid", this.state.requestId);
+        modifyFormData.append("number", fileList[i].quantity.value);
+
+        const req = {
+          headers: {
+            Authorization: `Token ${Token}`,
+          },
+          data: modifyFormData,
+        };
+
+        await RequestAPI.modifyEstimate(req)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+
       const reqFormData = new FormData();
       const req = {
         headers: {
@@ -467,13 +511,15 @@ class FileUploadContainer extends Component {
         id: this.state.requestId,
       };
 
-      for (var pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
+      // for (var pair of formData.entries()) {
+      //   console.log(pair[0] + ", " + pair[1]);
+      // }
 
-      RequestAPI.modifyProject(req)
+      await RequestAPI.modifyProject(req)
         .then((res) => {
-          console.log(`modify : ${res}`);
+          console.log(`modify Project : ${res}`);
+          ManufactureProcess.changeProject = false;
+          this.props.Request.newIndex = 3;
         })
         .catch((e) => {
           console.log(e);
@@ -611,14 +657,11 @@ class FileUploadContainer extends Component {
         async (item, idx) => {
           let loadingCounter = 0;
 
-
           const response = await fetch(item.stl_file);
           const data = await response.blob();
           const filename = item.stl_file.split("/").pop(); // url 구조에 맞게 수정할 것
           console.log(filename.toString());
           let file = new File([data], filename);
-
-          console.log(file);
 
           const ManufactureProcessFormData = new FormData();
           ManufactureProcessFormData.append("blueprint", file);
@@ -751,6 +794,9 @@ class FileUploadContainer extends Component {
   componentWillUnmount = () => {
     const { ManufactureProcess } = this.props;
     ManufactureProcess.dataPrice = [];
+    ManufactureProcess.openFileArray = [];
+    ManufactureProcess.privateFileArray = [];
+    ManufactureProcess.changeProject = false;
     window.removeEventListener("scroll", this.loadScroll);
   };
 
@@ -836,7 +882,8 @@ class FileUploadContainer extends Component {
     );
 
     //기본정보입력에서 받은 의뢰서로 바꾸기
-    ManufactureProcessFormData.append("request", 2467);
+    ManufactureProcessFormData.append("request", "");
+    // this.setState({fileList:fileList})
     console.log(ManufactureProcessFormData);
     ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
       .then((res) => {
@@ -1014,14 +1061,15 @@ class FileUploadContainer extends Component {
             ManufactureProcess.categoryDefaultValue.mid.id
           );
           //기본정보입력에서 받은 의뢰서로 바꾸기
-          ManufactureProcessFormData.append("request", 2467);
+          ManufactureProcessFormData.append("request", "");
+          // console.log(ManufactureProcessFormData);
           this.setState({ loading: true });
 
           ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
             .then((res) => {
 
               loadingCounter++;
-              console.log(toJS(res))
+              console.log(toJS(res));
               this.setState({
                 fileList: fileList.push({
                   submitFile: res.data.data,
@@ -1566,8 +1614,11 @@ class FileUploadContainer extends Component {
                               {
                                 console.log("qqqqqqqqqqqqqqqqqqqq");
                               }
-                              this.setState({ checkFileUpload: false });
-                              this.props.ManufactureProcess.checkFileUpload = false;
+
+                              if (!ManufactureProcess.changeProject) {
+                                this.setState({ checkFileUpload: false });
+                                this.props.ManufactureProcess.checkFileUpload = false;
+                              }
 
                               if (
                                 !this.props.ManufactureProcess.checkFileUpload
@@ -1822,8 +1873,10 @@ class FileUploadContainer extends Component {
                               this.deleteValue(idx);
                               if (fileList.length === 0) {
                                 console.log("wwwwwwwwwwwwwwwwww");
-                                this.setState({ checkFileUpload: false });
-                                this.props.ManufactureProcess.checkFileUpload = false;
+                                if (!ManufactureProcess.changeProject) {
+                                  this.setState({ checkFileUpload: false });
+                                  this.props.ManufactureProcess.checkFileUpload = false;
+                                }
 
                                 if (
                                   !this.props.ManufactureProcess.checkFileUpload
@@ -1854,8 +1907,10 @@ class FileUploadContainer extends Component {
                   this.deleteHandler();
                   if (fileList.length === 0) {
                     console.log("eeeeeeeeeeeeeeeee");
-                    this.setState({ checkFileUpload: false });
-                    this.props.ManufactureProcess.checkFileUpload = false;
+                    if (!ManufactureProcess.changeProject) {
+                      this.setState({ checkFileUpload: false });
+                      this.props.ManufactureProcess.checkFileUpload = false;
+                    }
                   }
 
                   if (!this.props.ManufactureProcess.checkFileUpload) {
@@ -1876,7 +1931,9 @@ class FileUploadContainer extends Component {
                   console.log("111");
                   fileList.splice(0, fileList.length);
                   console.log("yyyyyyyyyyyyyyyyyyy");
-                  this.props.ManufactureProcess.checkFileUpload = false;
+                  if (!ManufactureProcess.changeProject) {
+                    this.props.ManufactureProcess.checkFileUpload = false;
+                  }
                   const card = document.getElementById("card");
                   if (card) {
                     card.style.display = "flex";
@@ -2150,10 +2207,46 @@ class FileUploadContainer extends Component {
               {ManufactureProcess.changeProject ? (
                 <span
                   onClick={() => {
-                    this.requestSubmit(
-                      0,
-                      this.props.Project.projectDetailData.request_set[0].id
-                    );
+                    let check_count = 0;
+                    fileList.map((item, idx) => {
+                      item.fileName;
+                      let fileNameAvailable = ["txt"];
+                      const extension = item.fileName.split(".");
+
+                      //console.log(fileNameAvailable)
+                      if (
+                        item.quantity.value === 0 ||
+                        item.quantity.value === ""
+                      ) {
+                        console.log("수량을 입력해주세요");
+                        check_count++;
+                      }
+
+                      if (
+                        fileNameAvailable.includes(
+                          extension[extension.length - 1]
+                        )
+                      ) {
+                        this.props.ManufactureProcess.privateFileArray.push({
+                          file: item,
+                        });
+                      }
+                    });
+
+                    if (check_count) {
+                      alert("수량을 입력해주세요");
+                    } else {
+                      ManufactureProcess.checkPaymentButton = true;
+
+                      if (ManufactureProcess.projectSubmitLoading) {
+                        this.requestSubmit(
+                          0,
+                          this.props.Project.projectDetailData.request_set[0].id
+                        );
+                      } else {
+                        alert("요청 중입니다. 잠시만 기다려주세요.");
+                      }
+                    }
                   }}
                 >
                   프로젝트 수정 완료

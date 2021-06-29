@@ -37,110 +37,36 @@ class FilterBoxContainer extends React.Component {
     let temp = [];
 
     if (filter === "filter" || filter === "mobileFilter") {
-      if (item.checked === false) {
-        console.log(Partner.partner_count);
-
-        await Partner.filterArray.map((piece, id) => {
-          partFilterAry.push(piece.name);
-        });
-
-        Partner.filterArray[idx].checked = true;
-
-        if (this.props.Partner.filterArray[idx].name !== "기타") {
-
-          Partner.filter_category_ary.filter(
-            (data) => data.category === this.props.Partner.filterArray[idx].name
-          )[0]
-            ? Partner.filterList.push(
-                Partner.filter_category_ary.filter(
-                  (data) =>
-                    data.category === this.props.Partner.filterArray[idx].name
-                )[0].id
-              )
-            : (Partner.filterArray[idx].checked = true);
-
-        } else {
-          Partner.filter_ary = await Partner.filter_category_ary.filter(
-            (data) =>
-              partFilterAry.includes(data.category) === false
-          );
-
-          Partner.filter_ary.map((dt, id) => {
-            Partner.filterList.push(dt.id);
-            if (id === 0) {
-              Partner.filter_begin_id = dt.id;
-            }
-            if (id === Partner.filter_ary.length - 1) {
-              Partner.filter_end_id = dt.id;
-            }
-          });
-        }
-      } else {
-        Partner.filterArray[idx].checked = false;
-
-        if (this.props.Partner.filterArray[idx].name !== "기타") {
-          console.log(
-            Partner.filterList.indexOf(
-              Partner.filter_category_ary.filter(
-                (data) =>
-                  data.category === this.props.Partner.filterArray[idx].name
-              )[0]
-            )
-          );
-
-          const begin_id = Partner.filterList.indexOf(
-            Partner.filter_category_ary.filter(
-              (data) =>
-                data.category === this.props.Partner.filterArray[idx].name
-            )[0].id
-          );
-          Partner.filterList.splice(begin_id, 1);
-        } else {
-
-          const begin_id = Partner.filterList.indexOf(Partner.filter_begin_id);
-          const last_id = Partner.filterList.indexOf(Partner.filter_end_id);
-
-          console.log(begin_id);
-          console.log(last_id);
-          Partner.filterList.splice(begin_id, last_id - begin_id + 1);
-          console.log(toJS(Partner.fileList));
-        }
-      }
-    } else {
-      if (Partner.filterbox_budget_checked_idx !== idx) {
+      if (this.props.Partner.filter_category_idx !== idx) {
         this.setState({ index: idx });
-        Partner.filterbox_budget_checked_idx = idx;
-        Partner.filter_budget = item.id;
+        this.props.Partner.filter_category_idx = idx;
+        Partner.filter_category = item.id;
+        console.log(toJS(Partner.filter_category));
+
         Partner.partner_next = null;
         Partner.partner_count = null;
         Partner.currentPage = 1;
-        Partner.resetDevCategory();
-        if (this.props.purpose == "filter") {
-          Partner.getPartner();
-        }
+        await Partner.resetDevCategory();
+        await Partner.getPartner();
+      } else {
+        this.props.Partner.filter_category_idx = -1;
+        Partner.filter_category = 0;
+        console.log(toJS(Partner.filter_category));
+
+        Partner.partner_next = null;
+        Partner.partner_count = null;
+        Partner.currentPage = 1;
+        await Partner.resetDevCategory();
+        await Partner.getPartner();
       }
-    }
-
-    console.log(toJS(Partner.filterList));
-    const filterString = Partner.filterList.join();
-    Partner.filter_category = Partner.filterList.join();
-    console.log(filterString);
-    console.log(Partner.filter_category);
-
-    Partner.partner_next = null;
-    Partner.partner_count = null;
-    Partner.currentPage = 1;
-    Partner.resetDevCategory();
-    if (this.props.purpose == "filter") {
-      console.log("11111");
-      Partner.getPartner();
     }
   };
 
   activeHandler = (idx, filter) => {
     if (this.props.Partner.filterArray[idx]) {
       if (filter === "filter" || filter === "mobileFilter") {
-        if (this.props.Partner.filterArray[idx].checked === true) {
+
+        if (idx === this.props.Partner.filter_category_idx) {
           return true;
         } else {
           return false;
@@ -203,7 +129,7 @@ class FilterBoxContainer extends React.Component {
                 filter={filter}
               >
                 <div>
-                  <span>{item.name}</span>
+                  <span style={{ textAlign: "center" }}>{item.name}</span>
                 </div>
               </Item>
             );
@@ -228,11 +154,12 @@ const Item = styled.div`
   //margin-bottom: 20px;
   padding-left: 4px;
   align-items: center;
+  // width: 32%;
 
   div {
     display: flex;
     align-items: center;
-    margin-right: ${(props) => (props.filter === "filter" ? "70px" : "10px")};
+    //margin-right: ${(props) => (props.filter === "filter" ? "70px" : "10px")};
 
     > div {
       width: 16px;
@@ -256,6 +183,7 @@ const Item = styled.div`
       letter-spacing: -0.16px;
       font-weight: normal;
       cursor: pointer;
+      width: 100px;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -298,6 +226,8 @@ const Item = styled.div`
       }
       > span {
         color: ${(props) => (props.active ? "#0933b3" : "#999999")};
+        font-size: 11px;
+        width: 91px;
       }
     }
   }
@@ -309,6 +239,7 @@ const Item = styled.div`
       }
       > span {
         color: ${(props) => (props.active ? "#0933b3" : "#999999")};
+        font-size: 13px;
       }
     }
   }

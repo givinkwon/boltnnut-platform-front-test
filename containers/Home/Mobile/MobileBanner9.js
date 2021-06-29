@@ -5,9 +5,13 @@ import * as Title from "components/Title";
 import Buttonv1 from "components/Buttonv1";
 import Fade from "react-reveal/Fade";
 import Router from "next/router";
+import { inject, observer } from "mobx-react";
 
 const passImg = "/static/images/pass7.png";
 const image1 = "/static/images/Home/Mobile/MobileBanner9/MobileBanner9_bg.png";
+
+@inject("Auth")
+@observer
 class MobileBanner9Container extends React.Component {
   render() {
     return (
@@ -15,16 +19,27 @@ class MobileBanner9Container extends React.Component {
         <Layer>
           <Fade bottom>
             <div>
+              <Header>
+                메일로 회사소개서 보내기, <br />
+                박람회 영업하기는 이제 그만
+              </Header>
               <Body>
-                제조 발주를 위한 빠른 업체 검색 <br />
-                볼트앤너트에서 가능합니다.
+                프로젝트 상담을 통해 기획 단계부터 실무자 분들과 소통해보세요.{" "}
+                <br />
+                전문 상담을 통해 자사의 전문성을 제안하고 신규 거래처를
+                탐색해보세요.
               </Body>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button onClick={() => Router.push("/producer")}>
-                  <span>지금 업체 찾기</span>
-                  <span>
+                <Button
+                  onClick={() => {
+                    this.props.Auth.setType("expert");
+                    Router.push("/signup");
+                  }}
+                >
+                  <span>파트너 가입하기</span>
+                  {/* <span>
                     <img src={passImg} />
-                  </span>
+                  </span> */}
                 </Button>
               </div>
             </div>
@@ -49,12 +64,12 @@ const Header = styled(Title.FontSize18)`
   line-height: 1.56;
   letter-spacing: -0.45px;
   text-align: center;
-  margin-top: 54px;
+  margin-top: 36px;
   margin-bottom: 18px;
 `;
 
 const Body = styled(Title.FontSize16)`
-  // color: #ffffff;
+  color: #ffffff;
   // font-weight: normal;
   // line-height: 26px;
   // letter-spacing: -0.4px;
@@ -63,17 +78,17 @@ const Body = styled(Title.FontSize16)`
 
   margin-top: 10px;
   font-size: 12px !important;
-  color: #282c36;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.67 !important;
   letter-spacing: -0.6px !important;
   text-align: center;
+  word-break: keep-all;
 `;
 
 const Layer = styled.div`
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   width: 100%;
   height: 100%;
   display: inline-flex;
@@ -84,20 +99,20 @@ const Button = styled.div`
   cursor: pointer;
   margin-top: 14px;
   border: 2px solid #0933b3;
-  border-radius: 4px;
+  border-radius: 46px;
   width: 160px;
   height: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 36px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #0933b3;
   > span:nth-of-type(1) {
-    margin-right: 15px;
     font-size: 11px;
     line-height: 32px;
     letter-spacing: -0.65px;
-    color: #0933b3;
+    color: #ffffff;
     font-weight: 500;
   }
   > span:nth-of-type(2) {

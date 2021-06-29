@@ -36,17 +36,8 @@ class Nav extends React.Component {
     if (localStorage.getItem("expiry")) {
       localStorage.removeItem("expiry");
     }
-    if (this.props.Auth.home_index === 4) {
-      window.location.href = "/4";
-    } else if (this.props.Auth.home_index === 3) {
-      window.location.href = "/3";
-    } else if (this.props.Auth.home_index === 2) {
-      window.location.href = "/2";
-    } else if (this.props.Auth.home_index === 1) {
-      window.location.href = "/5";
-    } else {
-      window.location.href = "/";
-    }
+
+    window.location.href = "/";
   };
 
   async componentDidMount() {
@@ -62,17 +53,7 @@ class Nav extends React.Component {
         if (url === splitedRoute[1]) {
           alert("이미 로그인한 사용자입니다");
 
-          if (this.props.Auth.home_index === 4) {
-            Router.push("/4");
-          } else if (this.props.Auth.home_index === 3) {
-            Router.push("/3");
-          } else if (this.props.Auth.home_index === 2) {
-            Router.push("/2");
-          } else if (this.props.Auth.home_index === 1) {
-            Router.push("/5");
-          } else {
-            Router.push("/");
-          }
+          Router.push("/");
         }
         // /offered 에서 tab 1을 거치지 않고 tab 2로 들어온 사용자 리다이렉트
         else if ("offered" === splitedRoute[1]) {
@@ -141,21 +122,8 @@ class Nav extends React.Component {
             style={{ display: "inline", justifyContent: "space-between" }}
           >
             <NavWrap>
-              {Auth.home_index === 4 && (
-                <Logo src={logo_ic} onClick={() => Router.push("/4")} />
-              )}
-              {Auth.home_index === 3 && (
-                <Logo src={logo_ic} onClick={() => Router.push("/3")} />
-              )}
-              {Auth.home_index === 2 && (
-                <Logo src={logo_ic} onClick={() => Router.push("/2")} />
-              )}
-              {Auth.home_index === 1 && (
-                <Logo src={logo_ic} onClick={() => Router.push("/5")} />
-              )}
-              {Auth.home_index === 0 && (
-                <Logo src={logo_ic} onClick={() => Router.push("/")} />
-              )}
+              <Logo src={logo_ic} onClick={() => Router.push("/")} />
+
               <Menu is_open={is_open}>
                 <Close>
                   <Icon
@@ -170,19 +138,18 @@ class Nav extends React.Component {
 
                     <Fragment>
                       <NavLink
-                        onClick={() => Router.push("/project")}
-                        active={url.indexOf("project") > -1}
-                      >
-                        <p class="line"> 프로젝트 관리 </p>
-                      </NavLink>
-
-                      <NavLink
                         onClick={() => Router.push("/producer")}
                         active={url.indexOf("producer") > -1}
                       >
                         <p class="line"> 제조사 찾기 </p>
                       </NavLink>
 
+                      <NavLink
+                        onClick={() => Router.push("/project")}
+                        active={url.indexOf("project") > -1}
+                      >
+                        <p class="line"> 프로젝트 관리 </p>
+                      </NavLink>
 
                       <NavLink
                         onClick={() => Router.push("/magazine")}
@@ -213,18 +180,18 @@ class Nav extends React.Component {
                   /* 로그인 안되어있는 경우 */
                   <Fragment>
                     <NavLink
-                      onClick={() => Router.push("/project")}
-                      active={url.indexOf("project") > -1}
-                    >
-                      <p class="line"> 프로젝트 찾기 </p>
-                    </NavLink>
-
-                    <NavLink
                       onClick={() => Router.push("/producer")}
                       active={url.indexOf("producer") > -1}
                     >
                       <p class="line"> 제조사 찾기 </p>
                     </NavLink>
+
+                    {/* <NavLink
+                      onClick={() => Router.push("/project")}
+                      active={url.indexOf("project") > -1}
+                    >
+                      <p class="line"> 프로젝트 찾기 </p>
+                    </NavLink> */}
 
                     <NavLink
                       onClick={() => Router.push("/magazine")}
@@ -274,9 +241,9 @@ class Nav extends React.Component {
                   </NavLink>
                 )}
 
-                {this.props.Auth.logged_in_user &&
+                {/* {this.props.Auth.logged_in_user &&
                 this.props.Auth.logged_in_user.type === 1 ? (
-                  /* partner로 로그인 */
+                  partner로 로그인 
                   <ButtonContainer
                     first
                     onClick={() => Router.push("/project")}
@@ -284,39 +251,16 @@ class Nav extends React.Component {
                   >
                     프로젝트 관리
                   </ButtonContainer>
-                ) : Auth.home_index === 4 ? (
-                  <ButtonContainer
-                    first
-                    onClick={() => Router.push("/producer")}
-                    active={url.indexOf("producer") > -1}
-                  >
-                    업체 찾기
-                  </ButtonContainer>
-                ) : Auth.home_index === 2 ? (
-                  <ButtonContainer
-                    first
-                    onClick={() => Router.push("/producer")}
-                    active={url.indexOf("producer") > -1}
-                  >
-                    업체 찾기
-                  </ButtonContainer>
-                ) : Auth.home_index === 1 ? (
-                  <ButtonContainer
-                    first
-                    onClick={() => Router.push("/request")}
-                    active={url.indexOf("request") > -1}
-                  >
-                    견적 받기
-                  </ButtonContainer>
                 ) : (
+                  <></>
                   <ButtonContainer
                     first
-                    onClick={() => Router.push("/request")}
-                    active={url.indexOf("request") > -1}
+                    onClick={() => Router.push("/producer")}
+                    active={url.indexOf("producer") > -1}
                   >
-                    상담 받기
+                    제조사 찾기
                   </ButtonContainer>
-                )}
+                )} */}
               </Menu>
               <Icon
                 src={hamburger_ic}

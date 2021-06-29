@@ -28,11 +28,13 @@ class TabletBanner13Container extends React.Component {
                 <span>바로 조회하세요</span>
               </div>
 
-              <div onClick={() => Router.push("/producer")}>
-                <span>업체 정보 조회</span>
-                <span>
-                  <img src={passImg} />
-                </span>
+              <div>
+                <div onClick={() => Router.push("/producer")}>
+                  <span>업체 정보 조회</span>
+                  <span>
+                    <img src={passImg} />
+                  </span>
+                </div>
               </div>
             </Body>
           </div>
@@ -138,7 +140,7 @@ const Body = styled(Title.FontSize18)`
   text-align: left;
   color: #555963;
   > div:nth-of-type(1) {
-    text-align: center;
+    // text-align: center;
     > span {
       font-size: 18px;
       display: block;
@@ -154,28 +156,33 @@ const Body = styled(Title.FontSize18)`
     // }
   }
   > div:nth-of-type(2) {
-    cursor: pointer;
-    margin-top: 30px;
-    border: 2px solid #0933b3;
-    border-radius: 4px;
-    width: 215px;
-    height: 40px;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
-    > span:nth-of-type(1) {
-      margin-right: 15px;
-      font-size: 16px;
-      line-height: 52px;
-      letter-spacing: -0.65px;
-      color: #0933b3;
-      font-weight: 500;
-    }
-    > span:nth-of-type(2) {
-      padding-top: 8px;
-      > img {
-        width: 9px;
-        height: 18px;
+    > div {
+      cursor: pointer;
+      margin-top: 30px;
+      border: 2px solid #0933b3;
+      border-radius: 4px;
+      width: 215px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      > span:nth-of-type(1) {
+        margin-right: 15px;
+        font-size: 16px;
+        line-height: 52px;
+        letter-spacing: -0.65px;
+        color: #0933b3;
+        font-weight: 500;
+      }
+      > span:nth-of-type(2) {
+        padding-top: 8px;
+        > img {
+          width: 9px;
+          height: 18px;
+        }
       }
     }
   }

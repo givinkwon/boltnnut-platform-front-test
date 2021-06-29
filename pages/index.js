@@ -15,7 +15,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
 
-
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
 @inject("Home", "Loading", "Auth")
@@ -29,7 +28,6 @@ class Home extends React.Component {
     this.props.Loading.setOpen(true);
 
     this.props.Auth.home_index = 0;
-  
 
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });

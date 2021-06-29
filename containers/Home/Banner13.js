@@ -28,11 +28,13 @@ class Banner13Container extends React.Component {
                 <span>바로 조회하세요</span>
               </div>
 
-              <div onClick={() => Router.push("/producer")}>
-                <span>업체 정보 조회</span>
-                <span>
-                  <img src={passImg} />
-                </span>
+              <div>
+                <div onClick={() => Router.push("/producer")}>
+                  <span>업체 정보 조회</span>
+                  <span>
+                    <img src={passImg} />
+                  </span>
+                </div>
               </div>
             </Body>
           </div>
@@ -106,7 +108,7 @@ const Body = styled(Title.FontSize24)`
   color: #555963;
 
   > div:nth-of-type(1) {
-    text-align: center;
+    // text-align: center;
     > span {
       display: block;
       font-size: 32px;
@@ -124,29 +126,34 @@ const Body = styled(Title.FontSize24)`
   //   // margin-bottom: 60px;
   // }
   > div:nth-of-type(2) {
-    cursor: pointer;
-    margin-top: 60px;
-    border: 2px solid #0933b3;
-    border-radius: 4px;
-    width: 316px;
-    height: 70px;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
-    box-sizing: border-box;
-    > span:nth-of-type(1) {
-      margin-right: 15px;
-      font-size: 26px;
-      line-height: 52px;
-      letter-spacing: -0.65px;
-      color: #0933b3;
-      font-weight: 500;
-    }
-    > span:nth-of-type(2) {
-      padding-top: 6px;
-      > img {
-        width: 14px;
-        height: 24px;
+    > div {
+      cursor: pointer;
+      margin-top: 60px;
+      border: 2px solid #0933b3;
+      border-radius: 4px;
+      width: 316px;
+      height: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      > span:nth-of-type(1) {
+        margin-right: 15px;
+        font-size: 26px;
+        line-height: 52px;
+        letter-spacing: -0.65px;
+        color: #0933b3;
+        font-weight: 500;
+      }
+      > span:nth-of-type(2) {
+        padding-top: 6px;
+        > img {
+          width: 14px;
+          height: 24px;
+        }
       }
     }
   }

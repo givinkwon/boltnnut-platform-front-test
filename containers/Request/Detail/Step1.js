@@ -36,17 +36,8 @@ class TabConatiner extends React.Component {
           const user = res.data.data.User;
           if (user.type === 1) {
             alert("파트너 계정으로 의뢰할 수 없습니다.");
-            if (this.props.Auth.home_index === 4) {
-              Router.push("/4");
-            } else if (this.props.Auth.home_index === 3) {
-              Router.push("/3");
-            } else if (this.props.Auth.home_index === 2) {
-              Router.push("/2");
-            } else if (this.props.Auth.home_index === 1) {
-              Router.push("/5");
-            } else {
-              Router.push("/");
-            }
+
+            Router.push("/");
           } else if (user.type === 0) {
             console.log("res.data.data.Client[0]: ", res.data.data.Client[0]);
             return res.data.data.Client[0];
@@ -62,17 +53,9 @@ class TabConatiner extends React.Component {
             console.log(e.response);
           }
           localStorage.removeItem("token");
-          if (this.props.Auth.home_index === 4) {
-            Router.push("/4");
-          } else if (this.props.Auth.home_index === 3) {
-            Router.push("/3");
-          } else if (this.props.Auth.home_index === 2) {
-            Router.push("/2");
-          } else if (this.props.Auth.home_index === 1) {
-            Router.push("/5");
-          } else {
-            Router.push("/");
-          }
+
+          Router.push("/");
+
           return null;
         });
     }
@@ -89,17 +72,8 @@ class TabConatiner extends React.Component {
           const user = res.data.data.User;
           if (user.type === 1) {
             alert("파트너 계정으로 의뢰할 수 없습니다.");
-            if (this.props.Auth.home_index === 4) {
-              Router.push("/4");
-            } else if (this.props.Auth.home_index === 3) {
-              Router.push("/3");
-            } else if (this.props.Auth.home_index === 2) {
-              Router.push("/2");
-            } else if (this.props.Auth.home_index === 1) {
-              Router.push("/5");
-            } else {
-              Router.push("/");
-            }
+
+            Router.push("/");
           } else if (user.type === 0) {
             console.log("res.data.data.Client[0]: ", res.data.data.Client[0]);
             return res.data.data.Client[0];
@@ -115,17 +89,9 @@ class TabConatiner extends React.Component {
             console.log(e.response);
           }
           localStorage.removeItem("token");
-          if (this.props.Auth.home_index === 4) {
-            Router.push("/4");
-          } else if (this.props.Auth.home_index === 3) {
-            Router.push("/3");
-          } else if (this.props.Auth.home_index === 2) {
-            Router.push("/2");
-          } else if (this.props.Auth.home_index === 1) {
-            Router.push("/5");
-          } else {
-            Router.push("/");
-          }
+
+          Router.push("/");
+
           return null;
         });
     }

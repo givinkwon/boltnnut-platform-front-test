@@ -56,6 +56,7 @@ class MobileSearchBarConatiner extends React.Component {
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
     if (ManufactureProcess.loadingSaveSearchText) {
+      Partner.subButtonActive = true;
       ManufactureProcess.saveSearchText(Partner.search_text);
       ManufactureProcess.loadingSaveSearchText = false;
       setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
@@ -74,6 +75,7 @@ class MobileSearchBarConatiner extends React.Component {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
       if (ManufactureProcess.loadingSaveSearchText) {
+        Partner.subButtonActive = true;
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
         setTimeout(
@@ -155,6 +157,12 @@ class MobileSearchBarConatiner extends React.Component {
             </div>
             <div>
               <input
+                placeholder="원하는 분야의 제조업체를 검색하세요"
+                // value={Partner.search_text}
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) =>
+                  (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
+                }
                 onChange={this.searchText}
                 class="Input"
                 onKeyDown={this.handleKeyDown}
@@ -173,6 +181,17 @@ class MobileSearchBarConatiner extends React.Component {
               </SearchButton>
             </div>
           </SearchBar>
+
+
+          <Filter
+            onClick={() => {
+              this.filterActiveHandler();
+            }}
+          >
+            <div>
+              <img src={filter_img} />
+            </div>
+          </Filter>
         </SearchFilterBox>
         <FilterContainer
           style={{ flex: "0 auto" }}

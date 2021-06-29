@@ -7,7 +7,7 @@ import Modal from "./Modal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import ReviewContainer from "./Review/ReviewContainer";
 import CheckBrowserModal from "containers/Home/CheckBrowserModal";
-
+import * as AccountAPI from "axios/Account";
 const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
@@ -79,6 +79,29 @@ class ProposalCard extends React.Component {
     formData.append("partner", partner.id);
 
     Partner.setclickLog(formData);
+
+    formData = new FormData();
+
+    formData.append(
+      "url",
+      window.location.protocol +
+        "//" +
+        window.location.host +
+        "/" +
+        "phoneClick"
+    );
+    const req = {
+      data: formData,
+    };
+
+    AccountAPI.setUserPageIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
   componentDidMount() {
     const { width } = this.props;
@@ -167,9 +190,12 @@ class ProposalCard extends React.Component {
         Partner.partner_detail_list = [];
         await Partner.partner_detail_list.push({ item: data });
 
+        console.log(Partner.partner_detail_list[0].item.id);
+        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
+        console.log(toJS(Partner.partner_detail_list[0]));
         Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id);
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
-        Router.push("/manufacturer/detail");
+        Router.push("/producer/detail");
       } else {
         console.log("file download");
         this.filedownload(this.props.data.file);

@@ -67,7 +67,7 @@ const customStyles = {
   },
 };
 
-@inject("Request", "ManufactureProcess", "Auth", "Schedule")
+@inject("Request", "ManufactureProcess", "Auth", "Schedule", "Project")
 @observer
 class FileUploadContainer extends Component {
   static defaultProps = { title: "도면을 업로드해주세요." };
@@ -100,6 +100,8 @@ class FileUploadContainer extends Component {
       { id: 3, name: "업체수배", checked: false },
     ],
     projectname: "",
+    requestFileId: 0, // 도면 수정할 때 참고파일을 업로드하고 수정 버튼 눌렀을 때 기존 requestfile과 연결하기 위함
+    requestId: 0, // 도면 수정할 때 도면파일을 업로드하고 수정 버튼 눌렀을 때 기존 request_set과 연결하기 위함
   };
 
   closeModal = () => {
@@ -107,12 +109,12 @@ class FileUploadContainer extends Component {
     ManufactureProcess.loadingEstimate = false;
   };
 
-  componentDidMount = () => {
-    const { ManufactureProcess } = this.props;
-    this.props.ManufactureProcess.reset();
-    fileList = [];
-    ManufactureProcess.loadingEstimate = false;
-  };
+  // componentDidMount = () => {
+  //   const { ManufactureProcess } = this.props;
+  //   this.props.ManufactureProcess.reset();
+  //   fileList = [];
+  //   ManufactureProcess.loadingEstimate = false;
+  // };
   // 직접 입력할 경우 텍스트 박스의 값을 저장하는 함수
   setNumCount = (data, val) => {
     console.log(val);
@@ -232,11 +234,41 @@ class FileUploadContainer extends Component {
     }
   }
 
+  /* 
+    프로젝트 수정 할 때 클라이언트가 참고 파일를 업로드하거나 삭제하는 등의 변경 작업을 마치고 수정하기 버튼을 누르면
+    해당 참고파일이 기존 request id로 생성되면서 연결
+  */
+  modifyRequestFile = async (file, share_flag) => {
+    let reqFileFormData = new FormData();
+    await reqFileFormData.append("request", this.state.requestId);
+    await reqFileFormData.append("file", file);
+    await reqFileFormData.append("share_inform", share_flag);
+
+    const req = {
+      data: reqFileFormData,
+    };
+
+    // for (var pair of reqFileFormData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
+
+    await RequestAPI.setRequestFile(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+        console.log(e.response.data);
+      });
+  };
+
   changeSubmit = () => {};
   requestSubmit = async (flag, id) => {
     const { projectname, purposeAry } = this.state;
-    const { ManufactureProcess, Schedule } = this.props;
+    const { ManufactureProcess, Schedule, Request } = this.props;
 
+    ManufactureProcess.projectSubmitLoading = false;
     console.log(toJS(ManufactureProcess.totalorderPrice));
     let deadline_state = "";
     let processData = "";
@@ -247,27 +279,33 @@ class FileUploadContainer extends Component {
     // error 처리
     if (ManufactureProcess.purposeContent == 0) {
       alert("문의 목적을 선택해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (projectname.length == 0) {
       alert("프로젝트 제목을 입력해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (projectname.length > 200) {
       alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (ManufactureProcess.requestComment.length == 0) {
       alert("공개내용을 작성해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
 
     if (ManufactureProcess.requestComment.length > 4500) {
       alert("공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
     if (ManufactureProcess.requestComment2.length > 4500) {
       alert("비공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
       return false;
     }
 
@@ -370,8 +408,10 @@ class FileUploadContainer extends Component {
       RequestAPI.create(req)
         .then((res) => {
           console.log("create: ", res);
+          ManufactureProcess.projectSubmitLoading = true;
           dataLayer.push({ event: "request_Drawing" });
           this.props.Request.newIndex = 1;
+          ManufactureProcess.reset();
         })
         .catch((e) => {
           console.log(e);
@@ -381,23 +421,112 @@ class FileUploadContainer extends Component {
       const detailProcessAry = detailProcessData.split(",");
       ManufactureProcess.getProcessList(processAry, detailProcessAry);
     } else {
-      const RequestFormData = new FormData()
-      const request = {};
-      RequestAPI.setRequestFile;
+      const RequestFormData = new FormData();
+
+      // if (ManufactureProcess.openFileArray.length === 0) {
+      //   RequestFormData.append(`file`, "");
+      // }
+
+      // for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
+      //   RequestFormData.append(`file`, ManufactureProcess.openFileArray[i]);
+      //   RequestFormData.append("request", )
+      //   RequestFormData.append("share_inform", )
+      // }
+
+      //RequestFormData.append("file", )
+
+      await this.props.Project.projectDetailData.request_set[0].estimate_set.map(
+        async (item, idx) => {
+          console.log(item);
+
+          const req = {
+            id: item.id,
+          };
+
+          await RequestAPI.delEstimate(req)
+            .then((res) => {
+              console.log(toJS(res));
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+      );
+
+      for (let i = 0; i < this.props.Request.request_file_set.length; i++) {
+        await this.props.Request.deleteRequestFile(
+          this.props.Request.request_file_set[i]
+        );
+      }
+
+      if (ManufactureProcess.openFileArray.length !== 0) {
+        await ManufactureProcess.openFileArray.map(async (item, idx) => {
+          this.modifyRequestFile(item, true);
+        });
+      }
+      if (ManufactureProcess.privateFileArray.length !== 0) {
+        await ManufactureProcess.privateFileArray.map(async (item, idx) => {
+          this.modifyRequestFile(item, false);
+        });
+      }
+
+      const modifyFormData = new FormData();
+
+      for (var i = 0; i < fileList.length; i++) {
+        console.log(fileList[i].originFile);
+        console.log(toJS(fileList[i].selectBig.id));
+        console.log(toJS(fileList[i].selectedMid.id));
+        console.log(this.state.requestId);
+        console.log(fileList[i].quantity.value);
+
+        modifyFormData.append("blueprint", fileList[i].originFile);
+        modifyFormData.append("process", fileList[i].selectBig.id);
+        modifyFormData.append("detailprocess", fileList[i].selectedMid.id);
+        modifyFormData.append("requestid", this.state.requestId);
+        modifyFormData.append("number", fileList[i].quantity.value);
+
+        const req = {
+          headers: {
+            Authorization: `Token ${Token}`,
+          },
+          data: modifyFormData,
+        };
+
+        await RequestAPI.modifyEstimate(req)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+
+      const reqFormData = new FormData();
+
+      // reqFormData.append()
 
       const req = {
-        id: id,
+        headers: {
+          Authorization: `Token ${Token}`,
+        },
         data: formData,
+        id: this.state.requestId,
       };
 
-      RequestAPI.put(req)
+      // for (var pair of formData.entries()) {
+      //   console.log(pair[0] + ", " + pair[1]);
+      // }
+
+      await RequestAPI.modifyProject(req)
         .then((res) => {
-          console.log("change: ", res);
+          console.log(`modify Project : ${res}`);
+          ManufactureProcess.changeProject = false;
+          this.props.Request.newIndex = 3;
         })
         .catch((e) => {
           console.log(e);
           console.log(e.response);
-          console.log(e.response.data);
         });
     }
   };
@@ -462,18 +591,35 @@ class FileUploadContainer extends Component {
   async componentDidMount() {
     const { ManufactureProcess, Project, Schedule } = this.props;
     const { purposeAry } = this.state;
+    //console.log("didMount")
+    // console.log(ManufactureProcess.changeProject);
+    console.log(toJS(Project.projectDetailData));
+    ManufactureProcess.loadingEstimate = false;
 
-    console.log(toJS(this.props.Project.projectDetailData.id));
+    await this.props.ManufactureProcess.reset();
+    fileList = [];
+
     console.log(ManufactureProcess.checkFileUpload);
     console.log(toJS(ManufactureProcess.purposeContent));
 
     if (ManufactureProcess.changeProject) {
+      this.props.ManufactureProcess.checkFileUpload = true;
       await this.state.purposeAry.map((item, idx) => {
         item.checked = false;
       });
 
       await ManufactureProcess.init();
-      console.log(toJS(Project.projectDetailData.request_set[0].estimate_set));
+      console.log(toJS(this.props.Project.projectDetailData.id));
+      this.setState({
+        requestFileId: Project.projectDetailData.request_set[0]
+          .requestfile_set[0]
+          ? Project.projectDetailData.request_set[0].requestfile_set[0].request
+          : 0,
+        requestId: Project.projectDetailData.request_set[0].id
+          ? Project.projectDetailData.request_set[0].id
+          : 0,
+      });
+
       this.state.projectname = Project.projectDetailData.request_set[0].name;
       this.state.publicValue =
         Project.projectDetailData.request_set[0].order_request_open;
@@ -505,7 +651,145 @@ class FileUploadContainer extends Component {
           ManufactureProcess.purposeContent = idx + 1;
         }
       });
-      
+
+      await Project.projectDetailData.request_set[0].estimate_set.map(
+        async (item, idx) => {
+          let loadingCounter = 0;
+
+          const response = await fetch(item.stl_file);
+          const data = await response.blob();
+          //const ext = url.split(".").pop(); // url 구조에 맞게 수정할 것
+          const filename = item.stl_file.split("/").pop(); // url 구조에 맞게 수정할 것
+          //const metadata = { type: `image/${ext}` };
+          // console.log(decodeURI(filename));
+          console.log(filename.toString());
+          let file = new File([data], filename);
+
+          const ManufactureProcessFormData = new FormData();
+          ManufactureProcessFormData.append("blueprint", file);
+          ManufactureProcessFormData.append(
+            "process",
+            ManufactureProcess.categoryDefaultValue.big.id
+          );
+          ManufactureProcessFormData.append(
+            "detailprocess",
+            ManufactureProcess.categoryDefaultValue.mid.id
+          );
+          //기본정보입력에서 받은 의뢰서로 바꾸기
+          ManufactureProcessFormData.append("request", "");
+          // console.log(ManufactureProcessFormData);
+          this.setState({ loading: true });
+
+          ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
+            .then((res) => {
+              loadingCounter++;
+              console.log(res);
+              this.setState({
+                fileList: fileList.push({
+                  submitFile: res.data.data,
+                  originFile: file,
+                  stl_file: true,
+                  drawFile: res.data.data.stl_file,
+                  fileName: file.name,
+                  price: res.data.data.maxPrice,
+                  //MaxPrice: res.data.data.maxPrice,
+
+                  productionPrice: res.data.data.maxPrice, // 생산가
+                  productionMaxPrice: res.data.data.maxPrice,
+                  productionMinPrice: res.data.data.minPrice,
+
+                  moldminPrice:
+                    Math.round(res.data.data.totalMinPrice / 10000) * 10000, // 금형최소가
+                  moldmaxPrice:
+                    Math.round(res.data.data.totalMaxPrice / 10000) * 10000, // 금형최대가
+
+                  moldPrice:
+                    Math.round(res.data.data.totalMaxPrice / 10000) * 10000, // 금형가
+
+                  x_length: Math.round(res.data.data.x_length),
+                  y_length: Math.round(res.data.data.y_length),
+                  z_length: Math.round(res.data.data.z_length),
+
+                  selectedMid: ManufactureProcess.categoryDefaultValue.mid,
+                  checked: true,
+
+                  quantity: { label: "", value: 0 },
+                  prevQuantity: 0,
+                  currentQuantity: 0,
+
+                  totalPrice: 0,
+                  totalMoldPrice: res.data.data.totalMaxPrice,
+                  totalMoldMinPrice: res.data.data.totalMinPrice,
+                  totalMoldMaxPrice: res.data.data.totalMaxPrice,
+                  totalEjaculationPrice: res.data.data.maxPrice,
+
+                  optionBig: ManufactureProcess.ManufactureProcessList,
+                  selectBig: ManufactureProcess.categoryDefaultValue.big,
+                  optionMid: ManufactureProcess.categoryDefaultValue.big.detail,
+                  selectedMid: ManufactureProcess.categoryDefaultValue.mid,
+                  priceLoading: false,
+                }),
+              });
+
+              // console.log(loadingCounter + "/" + files.length);
+              // if (loadingCounter === files.length) {
+              //   this.setState({ loading: false });
+              // }
+
+              // console.log(loadingCounter + "/" + stl_count);
+              if (loadingCounter) {
+                this.setState({ loading: false });
+              }
+              this.countPrice();
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+              console.log(e.response.data);
+            });
+        }
+      );
+
+      // await Project.projectDetailData.request_set[0].estimate_set.map(
+      //   (item, idx) => {
+      //     this.setState({
+      //       fileList: fileList.push({
+      //         //originFile: file,
+      //         originFile: item.stl_file,
+      //         stl_file: true,
+      //         drawFile: item.stl_file,
+      //         //fileName: file.name,
+      //         fileName: "efweerr.stl",
+      //         price: item.maxPrice,
+      //         //MaxPrice: res.data.data.maxPrice,
+      //         productionPrice: item.maxPrice, // 생산가
+      //         moldPrice: Math.round(item.totalMaxPrice / 10000) * 10000, // 금형가
+      //         ejaculationPrice: Math.round(item.maxPrice / 10) * 10, // 사출가
+      //         x_length: Math.round(item.x_length),
+      //         y_length: Math.round(item.y_length),
+      //         z_length: Math.round(item.z_length),
+      //         //selectedMid: ManufactureProcess.categoryDefaultValue.mid,
+      //         checked: true,
+      //         quantity: { label: "", value: item.number },
+      //         prevQuantity: 0,
+      //         currentQuantity: 0,
+      //         totalPrice: 0,
+      //         totalMoldPrice: item.totalMaxPrice,
+      //         totalEjaculationPrice: item.maxPrice,
+      //         optionBig: ManufactureProcess.ManufactureProcessList,
+      //         //selectBig: ManufactureProcess.categoryDefaultValue.big,
+      //         selectBig: { name: "금형사출", id: item.process, detial: [] },
+
+      //         optionMid: ManufactureProcess.categoryDefaultValue.big.detail,
+      //         selectedMid: { name: "플라스틱", id: item.category },
+      //         priceLoading: true,
+      //       }),
+      //     });
+      //     console.log(this.fileList);
+      //   }
+      // );
+
+      ManufactureProcess.checkFileUpload = true;
       console.log(toJS(this.props.Project.projectDetailData));
       await this.props.Request.getRequestFile(
         this.props.Project.projectDetailData.request_set[0].id
@@ -513,13 +797,43 @@ class FileUploadContainer extends Component {
       console.log(toJS(this.props.Request.request_file_set));
       //request_file_set
 
-      for (let i = 0; i < this.props.Request.request_file_set.length; i++) {
-        await this.props.Request.deleteRequestFile(
-          this.props.Request.request_file_set[i]
-        );
-      }
-      this.setState({ g: 3 });
+      // for (let i = 0; i < this.props.Request.request_file_set.length; i++) {
+      //   await this.props.Request.deleteRequestFile(
+      //     this.props.Request.request_file_set[i]
+      //   );
+      // }
+      // this.setState({ g: 3 });
+
+      await Project.projectDetailData.request_set[0].requestfile_set.map(
+        async (item, idx) => {
+          const response = await fetch(item.file);
+          const data = await response.blob();
+          //const ext = url.split(".").pop(); // url 구조에 맞게 수정할 것
+          const filename = item.file.split("/").pop(); // url 구조에 맞게 수정할 것
+          //const metadata = { type: `image/${ext}` };
+          // console.log(decodeURI(filename));
+          console.log(filename.toString());
+          console.log(decodeURI(filename));
+          let file = new File([data], decodeURI(filename));
+
+          let fileNameNotAvailable = ["stl", "stp", "step"];
+          const extension = item.file.split(".");
+          console.log(extension);
+          //console.log(fileNameAvailable)
+
+          if (!fileNameNotAvailable.includes(extension[extension.length - 1])) {
+            if (item.share_inform) {
+              this.props.ManufactureProcess.openFileArray.push(file);
+            } else {
+              this.props.ManufactureProcess.privateFileArray.push(file);
+            }
+          }
+
+          console.log(toJS(this.props.ManufactureProcess.openFileArray));
+        }
+      );
     }
+
     if (!ManufactureProcess.checkPaymentButton) {
       window.addEventListener("scroll", this.loadScroll);
     }
@@ -532,6 +846,9 @@ class FileUploadContainer extends Component {
   componentWillUnmount = () => {
     const { ManufactureProcess } = this.props;
     ManufactureProcess.dataPrice = [];
+    ManufactureProcess.openFileArray = [];
+    ManufactureProcess.privateFileArray = [];
+    ManufactureProcess.changeProject = false;
     window.removeEventListener("scroll", this.loadScroll);
   };
 
@@ -618,8 +935,8 @@ class FileUploadContainer extends Component {
     );
 
     //기본정보입력에서 받은 의뢰서로 바꾸기
-    ManufactureProcessFormData.append("request", 2467);
-    
+    ManufactureProcessFormData.append("request", "");
+    // this.setState({fileList:fileList})
     console.log(ManufactureProcessFormData);
     ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
       .then((res) => {
@@ -807,7 +1124,7 @@ class FileUploadContainer extends Component {
             ManufactureProcess.categoryDefaultValue.mid.id
           );
           //기본정보입력에서 받은 의뢰서로 바꾸기
-          ManufactureProcessFormData.append("request", 2467);
+          ManufactureProcessFormData.append("request", "");
           console.log(ManufactureProcessFormData);
           this.setState({ loading: true });
           ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
@@ -887,7 +1204,7 @@ class FileUploadContainer extends Component {
             ManufactureProcess.categoryDefaultValue.mid.id
           );
           //기본정보입력에서 받은 의뢰서로 바꾸기
-          ManufactureProcessFormData.append("request", 2467);
+          ManufactureProcessFormData.append("request", "");
 
           console.log(ManufactureProcessFormData);
           console.log(file);
@@ -1355,8 +1672,10 @@ class FileUploadContainer extends Component {
                           this.setState({ fileList: fileList.splice(idx, 1) });
 
                           if (fileList.length === 0) {
-                            this.setState({ checkFileUpload: false });
-                            this.props.ManufactureProcess.checkFileUpload = false;
+                            if (ManufactureProcess.changeProject) {
+                              this.setState({ checkFileUpload: false });
+                              this.props.ManufactureProcess.checkFileUpload = false;
+                            }
 
                             if (
                               !this.props.ManufactureProcess.checkFileUpload
@@ -1598,8 +1917,10 @@ class FileUploadContainer extends Component {
                             });
 
                             if (fileList.length === 0) {
-                              this.setState({ checkFileUpload: false });
-                              this.props.ManufactureProcess.checkFileUpload = false;
+                              if (ManufactureProcess.changeProject) {
+                                this.setState({ checkFileUpload: false });
+                                this.props.ManufactureProcess.checkFileUpload = false;
+                              }
 
                               if (
                                 !this.props.ManufactureProcess.checkFileUpload
@@ -1843,10 +2164,46 @@ class FileUploadContainer extends Component {
               {ManufactureProcess.changeProject ? (
                 <span
                   onClick={() => {
-                    this.requestSubmit(
-                      0,
-                      this.props.Project.projectDetailData.request_set[0].id
-                    );
+                    let check_count = 0;
+                    fileList.map((item, idx) => {
+                      item.fileName;
+                      let fileNameAvailable = ["txt"];
+                      const extension = item.fileName.split(".");
+
+                      //console.log(fileNameAvailable)
+                      if (
+                        item.quantity.value === 0 ||
+                        item.quantity.value === ""
+                      ) {
+                        console.log("수량을 입력해주세요");
+                        check_count++;
+                      }
+
+                      if (
+                        fileNameAvailable.includes(
+                          extension[extension.length - 1]
+                        )
+                      ) {
+                        this.props.ManufactureProcess.privateFileArray.push({
+                          file: item,
+                        });
+                      }
+                    });
+
+                    if (check_count) {
+                      alert("수량을 입력해주세요");
+                    } else {
+                      ManufactureProcess.checkPaymentButton = true;
+
+                      if (ManufactureProcess.projectSubmitLoading) {
+                        this.requestSubmit(
+                          0,
+                          this.props.Project.projectDetailData.request_set[0].id
+                        );
+                      } else {
+                        alert("요청 중입니다. 잠시만 기다려주세요.");
+                      }
+                    }
                   }}
                 >
                   프로젝트 수정 완료
@@ -1884,11 +2241,17 @@ class FileUploadContainer extends Component {
                       alert("수량을 입력해주세요");
                     } else {
                       ManufactureProcess.checkPaymentButton = true;
+
+                      if (ManufactureProcess.projectSubmitLoading) {
+                        this.requestSubmit(1);
+                      } else {
+                        alert("요청 중입니다. 잠시만 기다려주세요.");
+                      }
                     }
 
                     
 
-                    this.requestSubmit(1);
+                    // this.requestSubmit(1);
                   }}
                 >
                   상담 및 가격 요청하기
@@ -1984,8 +2347,9 @@ const StlBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 93%;
   box-sizing: border-box;
+  align-self: flex-start;
   > div {
     width: 100%;
     text-align: left;
