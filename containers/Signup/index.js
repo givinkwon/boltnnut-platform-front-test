@@ -11,7 +11,9 @@ import Step2Conatiner from "./Step2";
 class SignupConatiner extends React.Component {
   componentDidMount = () => {
     const { Auth } = this.props;
-    Auth.setType("client");
+    if (Auth.type !== "expert") {
+      Auth.setType("client");
+    }
   };
   render() {
     const { Auth } = this.props;
