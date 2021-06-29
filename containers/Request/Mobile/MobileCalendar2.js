@@ -4,7 +4,6 @@ import moment from "moment";
 import { inject, observer } from "mobx-react";
 const prevMonth = "/static/images/request/Calendar/MobilePrevMonth.svg";
 const nextMonth = "/static/images/request/Calendar/MobileNextMonth.svg";
-// const dropdown = '/static/images/request/Step4/dropdown.png';
 const calendar = "/static/images/calendar.svg";
 
 @inject("Request", "Schedule")
@@ -52,6 +51,7 @@ class Week extends Component {
     Schedule.clickDay = dayValue.date(day).format("YYYY-MM-DD");
     Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   };
+  
   mapDaysToComponents = (Days, fn = () => {}) => {
     const { Schedule } = this.props;
     console.log(Schedule.today);

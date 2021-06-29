@@ -11,10 +11,6 @@ const star = "/static/icon/star.svg";
 @inject("Partner", "Auth")
 @observer
 class QuestionBox extends React.Component {
-  // constructor (props) {
-  //     super(props);
-  //     this.hideLoader = this.hideLoader.bind(this);
-  // }
   state = {
     width: null,
   };
@@ -35,24 +31,6 @@ class QuestionBox extends React.Component {
     if (checkIndex != key) {
       checkIndexFunc(id, Array[key - 1].score);
     }
-    // if (checkIndex == -1) {
-
-    //   checkIndexFunc(id, Array[key - 1].score);
-    // } else {
-    //   if (checkIndex == key) {
-
-    //     checkIndexFunc(id, -1);
-    //   } else {
-
-    //     checkIndexFunc(id, Array[key - 1].score);
-    //   }
-
-    // }
-    // if (Array[key - 1].checked == true) {
-    //   Array[key - 1].checked = false;
-    // } else {
-    //   Array[key - 1].checked = true;
-    // }
     console.log(`후 : ${checkIndex}`);
   };
 

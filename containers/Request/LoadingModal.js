@@ -33,10 +33,6 @@ class LoadingModal extends React.Component {
       >
         {open ? (
           <>
-            {/* <button className="close" onClick={close}>
-              {" "}
-              &times;{" "}
-            </button> */}
             <section>
               <header>Loading...</header>
               <main>견적을 산출하는데까지 최대 1분 정도 걸립니다.</main>

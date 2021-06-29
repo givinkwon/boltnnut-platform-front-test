@@ -13,8 +13,6 @@ import Spinner from "components/Spinner";
 import { toJS } from "mobx";
 import * as AccountAPI from "axios/Account";
 
-//import ProjectContainer from 'containers/Project/index'
-
 import ProjectContainer from "../../containers/Project/index";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
@@ -42,14 +40,6 @@ class Project extends React.Component {
     
     // 중복
     await Auth.checkLogin();
-
-    // if(Auth.logged_in_client) {
-    //   console.log('클라이언트 의뢰 목록 로딩 시작')
-    //   Answer.loadCategories()
-    //   Answer.loadClientRequestList(Auth.logged_in_client.id, () => {
-    //     console.log('클라이언트 의뢰 목록 로딩 끝')
-    //   })
-    // }
     // page ip 기록
     const formData = new FormData();
 
@@ -84,28 +74,7 @@ class Project extends React.Component {
     } else {
       alert("로그인이 필요합니다");
       Router.push("/login");
-      //     Project.getPage(918, () => {
-      //       console.log('프로젝트 목록 로딩 끝')
-      //       console.log(Project.project_count)
-      //  })
     }
-    // else{
-    //
-    // }
-
-    //Project.getNextPage()
-
-    // if(Auth.logged_in_client) {
-    //   console.log('프로젝트 목록 로딩 시작')
-
-    //   Project.loadProject(Auth.logged_in_client.id, () => {
-    //     console.log('프로젝트 목록 로딩 끝')
-    //   })
-
-    //   // Project.loadProject(954, () => {
-    //   //      console.log('프로젝트 목록 로딩 끝')
-    //   // })
-    // }
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -120,9 +89,6 @@ class Project extends React.Component {
     return (
       <div>
         {Loading.is_open}
-        {/* {console.log(toJS(Auth.logged_in_user))}
-        {console.log(toJS(Auth.logged_in_partner))} */}
-        {/* {Loading.is_open && <Spinner/>} */}
         <Head>
           <title>볼트앤너트</title>
         </Head>

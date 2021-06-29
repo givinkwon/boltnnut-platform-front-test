@@ -46,32 +46,10 @@ class RightConatiner extends Component {
     const request = Answer.getRequestById(Answer.current_request_id)
 
     console.log("다음 페이지 로딩 시도");
-    //console.log(this.props.Auth.logged_in_client.client_class);
 
     const count = Answer.answers.length;
 
-    //for(let i = (count - 5) < 0 ? 0 : count-5; i < count; i++) {
-    //  if(!Answer.answers[i].active || Answer.answers[i].state === 0) {
-    //    alert('제안된 파트너의 미팅 신청 여부를 모두 결정하시고나면 재신청하실 수 있습니다')
-    //    return
-    //  }
-    //}
-
-    //if (Answer.answers_count <= 5) {
-    //  this.openModal();
-    //  return;
-    //}
-    //else {
-    //  if (this.props.Auth.logged_in_client.client_class) {
-    //    if(request && !request.add_meeting) {
-    //      Answer.patchAddMeeting();
-    //    }
-
         Answer.loadNextAnswerPage();
-    //  } else {
-    //    this.setState({ ...this.state, classModal_open: true });
-    //  }
-    // }
   };
 
   render() {
@@ -100,14 +78,6 @@ class RightConatiner extends Component {
                     업체 상세정보 페이지에서 연락처 확인 후 전화를 걸어 개발 상담을 진행하세요!
                 </Text.FontSize20>
             </ExtraMeeting>}
-            {/*<CardContainer
-              key={item.id}
-              Answer={Answer}
-              item={item}
-              partner={Answer.getPartnerById(item.partner)}
-              observer={idx === data.length - 1}
-
-            />*/}
             {item.active &&
             <CardContainer
               key={item.id}
@@ -132,14 +102,6 @@ class RightConatiner extends Component {
                     업체 상세정보 페이지에서 연락처 확인 후 전화를 걸어 개발 상담을 진행하세요!
                 </Text.FontSize20>
             </ExtraMeeting>}
-            {/*<CardContainer
-              key={item.id}
-              Answer={Answer}
-              item={item}
-              partner={Answer.getPartnerById(item.partner)}
-              observer={idx === data.length - 1}
-
-            />*/}
             {!item.active &&
             <CardContainer
               key={item.id}
@@ -152,19 +114,6 @@ class RightConatiner extends Component {
             </>
           );
         })}
-
-        {/*this.props.Answer.answers_next && <ExtraMeeting>
-          <Text.FontSize20 color="#404040" fontWeight={500}>
-            로딩하기 버튼을 누르면 나머지 개발사의 정보도 확인할 수 있습니다
-          </Text.FontSize20>
-          <Text.FontSize24
-            color="#404040"
-            fontWeight={700}
-            onClick={this.loadNextPage}
-          >
-            로딩하기
-          </Text.FontSize24>
-        </ExtraMeeting>*/}
       </Right>
     );
   }

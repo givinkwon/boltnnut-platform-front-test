@@ -36,8 +36,6 @@ class MobileManufacturerContentContainer extends React.Component {
     const { Partner } = this.props;
 
     console.log(typeof processArray);
-
-    // Project.search_text = "";
     Partner.currentPage = 1;
 
     console.log("did mount");
@@ -45,10 +43,6 @@ class MobileManufacturerContentContainer extends React.Component {
     Partner.getPartner();
     Partner.getCategory();
     Partner.getCity();
-    // await Auth.checkLogin();
-    // if(Auth.logged_in_partner){
-    //   Project.getProjectByPrice()
-    // }
   }
 
   componentWillUnmount() {
@@ -60,10 +54,8 @@ class MobileManufacturerContentContainer extends React.Component {
   movePage = (e) => {
     const { Partner, Auth } = this.props;
     e.preventDefault();
-    // Project.category_reset()
     const newPage = e.target.innerText * 1;
     Partner.currentPage = newPage;
-    // Project.getProjectByPrice(Project.search_text, newPage)
     Partner.getPartner(newPage);
   };
 
@@ -73,10 +65,8 @@ class MobileManufacturerContentContainer extends React.Component {
     console.log(toJS(Partner.currentPage));
     console.log(toJS(Partner.partner_page));
     if (Partner.currentPage < Partner.partner_page) {
-      // Project.category_reset()
       const nextPage = Partner.currentPage + 1;
       Partner.currentPage = nextPage;
-      // Project.getProjectByPrice(Project.search_text, Project.currentPage)
       console.log(nextPage);
       Partner.getPartner(nextPage);
     }
@@ -86,11 +76,9 @@ class MobileManufacturerContentContainer extends React.Component {
     const { Partner } = this.props;
     e.preventDefault();
     if (Partner.currentPage > 1) {
-      // Project.category_reset()
       const newPage = Partner.currentPage - 1;
       Partner.currentPage = newPage;
       Partner.getPartner(newPage);
-      // Project.getProjectByPrice(Project.search_text, Project.currentPage)
     }
   };
 
@@ -99,18 +87,13 @@ class MobileManufacturerContentContainer extends React.Component {
     Partner.category_name_list = null;
     console.log(item.id);
     Partner.partner_detail_list = [];
-    //Project.selectedProjectId = id;
     Partner.partner_detail_list.push({ item: item });
     console.log(toJS(Partner.partner_detail_list));
     Partner.newIndex = 1;
     Partner.category_name_list = Partner.category_dic[idx];
     console.log(idx);
-    //console.log(toJS(Partner.category_dic[idx]));
     console.log(toJS(Partner.category_name_list));
     await Partner.getPartnerDetail(item.id);
-
-    // await Router.push(`/project/${id}`);
-    //Project.setProjectDetailData(id);
   };
 
   render() {
@@ -124,16 +107,7 @@ class MobileManufacturerContentContainer extends React.Component {
         <Background id="MyBackground">
           <Container style={{ display: "block" }}>
             {console.log(width)}
-            {/* <MobileSearchBar /> */}
             <Body active={this.props.Partner.check_click_filter}>
-              {/* <FilterSearch>dsfsdfds</FilterSearch> */}
-              {/* <Filter style={{ paddingTop: "32px" }}>
-                <Font20>필터</Font20>
-                <RadioBox data={region_data} />
-              </Filter> */}
-
-              {/* <Background> */}
-              {/* { Project.projectDataList.length > 0 && Project.projectDataList.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
               <Main>
                 <div>
                   <Header
@@ -144,10 +118,6 @@ class MobileManufacturerContentContainer extends React.Component {
                     <Font15>
                       <span>{Partner.partner_count}개</span>의 제조사
                     </Font15>
-                    {/* <span>
-              <Font14>모든 제조의뢰</Font14>
-              <img src={pass4}/>
-            </span> */}
                     <div style={{ width: "100px" }}>
                       <input
                         style={{ display: "none" }}
@@ -163,11 +133,9 @@ class MobileManufacturerContentContainer extends React.Component {
                         placeholder="전체"
                         styles={customStyles}
                         options={Partner.filter_category_ary}
-                        //options={processArray}
+
                         getOptionLabel={(option) => option.category}
-                        // getOptionLabel={(option) => {
-                        //   option.label;
-                        // }}
+ 
                         value={Partner.input_process_filter}
                         onChange={Partner.setProcessFilter}
                       />
@@ -175,28 +143,21 @@ class MobileManufacturerContentContainer extends React.Component {
                   </Header>
                 </div>
                 {Partner.partner_list &&
-                  // Partner.currentPage > 0 &&
+  
                   Partner.partner_list.map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         {console.log(this.props.width)}
 
-                        {/* <div
-                          style={{ width: "100%" }}
-                          onClick={() => this.pushToDetail(item, idx)}
-                        > */}
                         <ProposalCard
                           data={item}
                           width={this.props.width}
                           idx={idx}
-                          // middleCategory={Project.middle_category_name[idx]}
-                          // mainCategory={Project.main_category_name[idx]}
-                          // newData={Project.data_dt[idx]}
-                          // checkTotal={Project.filter_price}
+             
                           handleIntersection={this.handleIntersection}
                           customer="partner"
                         />
-                        {/* </div> */}
+  
                       </Background>
                     );
                   })}
@@ -283,7 +244,7 @@ class MobileManufacturerContentContainer extends React.Component {
             {" "}
             {5 * (current_set - 1) + 5}{" "}
           </PageCount>
-          {/* <PageCount> ... </PageCount> */}
+
           <img
             src={pass2}
             style={{
@@ -315,7 +276,6 @@ const customStyles = {
     color: state.isSelected ? "#000000" : "#555555",
     backgroundColor: "#fff",
     borderRadius: 0,
-    // padding: 16,
     fontSize: 12,
   }),
   control: () => ({
@@ -323,8 +283,7 @@ const customStyles = {
     fontWeight: "normal",
     lineHeight: 34,
     letterSpacing: "-0.45px",
-    // border: "1px solid #c7c7c7",
-    // borderRadius: "3px",
+
     color: "#c1bfbf",
     display: "flex",
   }),
@@ -393,47 +352,6 @@ const region_data = [
     checked: "false",
   },
 ];
-
-// const data = [
-//   {
-//     consultation: '상담 진행',
-//     name: '컴퓨터',
-//     date: '2021.03.02' ,
-//     period: '120일',
-//     estimate: '10,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     date: '2021.03.03' ,
-//     period: '121일',
-//     estimate: '11,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '키보드',
-//     date: '2021.03.04' ,
-//     period: '122일',
-//     estimate: '12,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     name: '마우스',
-//     date: '2021.03.05' ,
-//     period: '123일',
-//     estimate: '13,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '프린터',
-//     date: '2021.03.06' ,
-//     period: '124일',
-//     estimate: '14,000,000원'
-//   },
-// ]
 
 const PageBar = styled.div`
   width: 80%;

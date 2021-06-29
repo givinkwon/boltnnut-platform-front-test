@@ -202,27 +202,6 @@ class CompanyConatiner extends React.Component {
                 getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
             </SelectBox>
           </W50>
-          {/*<W30 center>
-            <InputComponent placeholder='종업원 수를 입력해주세요' label='종업원 수' type='number' onChange={Auth.setEmployee} value={Auth.employee}/>
-          </W30>
-          <W30>
-            <InputComponent placeholder='설립연도를 입력해주세요' label='설립연도' type='number' onChange={Auth.setCareer} value={Auth.career}/>
-          </W30>
-          <W30>
-            <InputComponent placeholder='매출액을 입력해주세요' label='매출액' type='number' onChange={Auth.setRevenue} value={Auth.revenue}/>
-          </W30>*/}
-          {/*<W30 select>
-            <SelectBox>
-              <Text.FontSize20 color={DARKGRAY} fontWeight={500}>지역</Text.FontSize20>
-              <SelectComponent
-                styles={customStyles} options={Auth.region_data} value={Auth.region}
-                getOptionLabel={(option) => option.region} placeholder='옵션을 선택해주세요' onChange={Auth.setRegion}/>
-            </SelectBox>
-          </W30>*/}
-          {/*<W100>
-            <Text.FontSize20 style={{marginTop: 15}} color={DARKGRAY} fontWeight={500}>주요사업</Text.FontSize20>
-            <TextArea placeholder='주요사업을 입력해주세요' col={3} onChange={Auth.setInfoBiz} value={Auth.info_biz}/>
-          </W100>*/}
           <W100>
             <Text.FontSize20 style={{marginTop: 12}} color={DARKGRAY} fontWeight={500}>주요거래처[대표 거래처 3곳 이상]</Text.FontSize20>
             <TextArea placeholder='주요거래처를 입력해주세요' col={3} onChange={Auth.setDeal} value={Auth.deal}/>
@@ -231,108 +210,6 @@ class CompanyConatiner extends React.Component {
             <Text.FontSize20 style={{marginTop: 12}} color={DARKGRAY} fontWeight={500}>회사소개[100자 이상]</Text.FontSize20>
             <TextArea placeholder='회사소개를 입력해주세요' col={3} onChange={Auth.setInfoCompany} value={Auth.info_company}/>
           </W100>
-          {/*
-          <W100>
-           <SearchCategory>
-            <Text.FontSize20 color="#001A56!important;" fontWeight={700}>가능한 제품 분야</Text.FontSize20>
-            <Text.FontSize14 color={DARKGRAY} fontWeight={500}>자동차용품, 의료용품, 산업장비 및 부품, 주방용품, 생활용품, 유아용품, 가전/디지털, 스포츠용품을 검색해보세요</Text.FontSize14>
-           </SearchCategory>
-          </W100>
-
-          <W100>
-            <SearchCategory>
-
-              <div>
-                <InputComponent placeholder='검색어를 입력해주세요' type='text' onChange={this.searchPossible} value={possible_search}/>
-                {
-                  possible_list.length > 0 && possible_search && (
-                    <SearchResult>
-                      {possible_list.map((main) => {
-                        console.log('구분선')
-                        return main.category_set.map((sub, idx) => {
-                          console.log(sub.category)
-                          console.log(sub.subclass_set.length)
-                          return sub.subclass_set.length > 0 && sub.subclass_set.map((_sub, index) => {
-                            return (
-                              <Text.FontSize14
-                                key={index}
-                                onClick={() => this.selectPossible(_sub)}
-                                color={DARKGRAY}
-                                fontWeight={500}
-                                dangerouslySetInnerHTML={{__html: `${main.maincategory} > ${sub.category} > ${_sub.subclass}`}}
-                              />
-                            )
-                          })
-                        })
-                      })}
-                    </SearchResult>
-                  )
-                }
-                <Button color={possible_selected ? PRIMARY : '#dedede'} onClick={this.addPossibleSet}>
-                  <Text.FontSize20 color={possible_selected ? WHITE : DARKGRAY} fontWeight={500}>추가하기</Text.FontSize20>
-                </Button>
-              </div>
-            </SearchCategory>
-          </W100>
-          {
-            Auth.possible_set && Auth.possible_set.length > 0 && (
-              <W100>
-                <BadgeList>
-                {
-                  Auth.possible_set.map((item, idx) => {
-                    return (
-                      <Badge key={idx}>
-                        <Text.FontSize20 color={DARKGRAY} fontWeight={500}>#{item.subclass}</Text.FontSize20>
-                        <img src={badge_close} onClick={() => Auth.removePossibleSet(idx)}/>
-                      </Badge>
-                    )
-                  })
-                }
-                </BadgeList>
-              </W100>
-            )
-          }
-          */}
-          <W100>
-            {/*<SearchCategory>
-              <Text.FontSize20 color="#001A56!important;" fontWeight={700}>진행한 제품들</Text.FontSize20>
-              <Text.FontSize14 color={BLACK1} fontWeight={500}>자동차용품, 의료용품, 산업장비 및 부품, 주방용품, 생활용품, 유아용품, 가전/디지털, 스포츠용품을 검색해보세요</Text.FontSize14>
-           </SearchCategory>*/}
-           <Text.FontSize20 style={{marginTop: 12}} color={DARKGRAY} fontWeight={500}>진행한 제품[10개 이상]</Text.FontSize20>
-           <TextArea placeholder='진행한 제품들을 입력해주세요' col={3} onChange={Auth.setHistories} value={Auth.histories}/>
-
-          </W100>
-          {/*<W100>
-            <SearchCategory>
-              <div>
-                <InputComponent placeholder='검색어를 입력해주세요' type='text' onChange={this.searchHistory} value={history_search}/>
-                {
-                  history_list.length > 0 && history_search && (
-                    <SearchResult>
-                      {history_list.map((main) => {
-                        return main.category_set.map((sub, idx) => {
-                          return sub.subclass_set.length > 0 && sub.subclass_set.map((_sub, index) => {
-                            return (
-                              <Text.FontSize14
-                                key={index}
-                                onClick={() => this.selectHistory(_sub)}
-                                color={DARKGRAY}
-                                fontWeight={500}
-                                dangerouslySetInnerHTML={{__html: `${main.maincategory} > ${sub.category} > ${_sub.subclass}`}}
-                              />
-                            )
-                          })
-                        })
-                      })}
-                    </SearchResult>
-                  )
-                }
-                <Button color={history_selected ? PRIMARY : '#dedede'} onClick={this.addHistorySet}>
-                  <Text.FontSize20 color={history_selected ? WHITE : DARKGRAY} fontWeight={500}>추가하기</Text.FontSize20>
-                </Button>
-              </div>
-            </SearchCategory>
-          </W100>*/}
           {
             Auth.history_set && Auth.history_set.length > 0 && (
               <W100>
@@ -512,69 +389,7 @@ const Button = styled.div`
     margin-top: 0;
   }
 `
-// const SearchCategory = styled.div`
-//   display: flex;
-//   align-items: center;
-//   > p {
-//     margin-top: 12px;
-//     margin-right: 10px;
-//     white-space: nowrap;
-//     color: ${PRIMARY};
-//     width: 180px;
-//   }
-//   > div {
-//     display: flex;
-//     align-items: center;
-//     width: 100%;
-//     position: relative;
-//     > div {
-//       max-width: 420px;
-//     }
-//   }
 
-//   @media (min-width: 0px) and (max-width: 767.98px) {
-//     flex-direction: column;
-//     align-items: flex-start;
-//     > p {
-//       margin-bottom: 12px;
-//     }
-//     > p:nth-of-type(2) {
-//       line-height: 15px;
-//       width: 100%;
-//       white-space: break-spaces;
-//       word-break: break-all;
-//     }
-//   }
-
-//   @media (min-width: 768px) and (max-width: 991.98px) {
-//     flex-direction: column;
-//     align-items: flex-start;
-//     > p {
-//       margin-bottom: 12px;
-//     }
-//     > p:nth-of-type(2) {
-//       width: 100%;
-//     }
-//   }
-//   @media (min-width: 768px) and (max-width: 991.98px) {
-//     flex-direction: column;
-//     align-items: flex-start;
-//     > p {
-//       margin-bottom: 12px;
-//     }
-//     > p:nth-of-type(2) {
-//       width: 50%;
-//     }
-//    }
-//   @media (min-width: 1300px) {
-//     flex-direction: column;
-//     align-items: flex-start;
-//     > p {
-//       margin-bottom: 12px;
-//     }
-//   }
-
-// `
 const TextArea = styled.textarea`
   resize: none;
   width: calc(100% - 18px);

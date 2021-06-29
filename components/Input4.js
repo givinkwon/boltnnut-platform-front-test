@@ -7,8 +7,6 @@ import TextField from '@material-ui/core/TextField';
 // 아이디 비밀번호 찾기 페이지
 const CustomInput = withStyles({
   root: {
-    // width: ${props => props.width ? props.width : "100%"};
-    // width: '100%',
     marginTop: '10px',
     marginBottom: '30px',
     border : '1px',
@@ -42,24 +40,7 @@ const CustomInput = withStyles({
       '&.Mui-focused fieldset': {
         borderColor: '#0933b3',
       },
-    }, 
-    // '& input': {
-    //   color: '#999999',
-    //   '&::placeholder': {
-    //     color: '#c7c7c7',
-    //   }
-    // },
-    // '& .MuiTextField-root': {
-    // },
-    // '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-    //   borderBottom: '2px solid #c7c7c7',
-    // },
-    // '& .MuiInput-underline:before': {
-    //   borderBottom: '1px solid #c7c7c7',
-    // },
-    // '& .MuiInput-underline:after': {
-    //   borderBottomColor: '#c7c7c7',
-    // },       
+    },       
   },            
 })(TextField);
 

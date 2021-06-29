@@ -50,7 +50,6 @@ class SelectComp extends React.Component {
 
   handleChange = (selectedOption) => {
     this.props.onChange
-     //this.props.onChange(selectedOption);
   };
   render() {
     const { options, placeholder, styles, getOptionLabel, value } = this.props;

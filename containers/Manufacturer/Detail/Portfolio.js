@@ -48,14 +48,12 @@ class PortfolioConatiner extends React.Component {
 
     console.log(width);
     console.log(toJS(Partner.portFolioList));
-    // await Partner.getPortfolio();
 
     const img = document.getElementById("image");
     console.log(img);
   };
   render() {
-    const { Answer, file, Partner, width } = this.props;
-    // const { current_partner } = Answer
+    const { Answer, file, Partner, width } = this.props
 
     console.log(file);
     var settings = {
@@ -93,7 +91,6 @@ class PortfolioConatiner extends React.Component {
     };
     return (
       <>
-        {/* { current_partner && current_partner.portfolio_set.length > 0 && */}
         <div
           id="portfolio"
           style={{
@@ -105,36 +102,9 @@ class PortfolioConatiner extends React.Component {
             borderRadius: "8px",
           }}
         >
-          {/* <Header>
-            <Text.FontSize20 color={WHITE} fontWeight={700}>
-              포트폴리오
-            </Text.FontSize20>
-          </Header> */}
+
           <Content>
             <Slider {...settings} ref={(slider) => (this.slider = slider)}>
-              {/* {
-              current_partner && current_partner.portfolio_set.map((item, idx) => {
-                return <Image key={idx} ratio='65%' src={item.img_portfolio}/>
-              })
-            } */}
-
-              {/* {Partner.portFolioList &&
-                Partner.portFolioList.map((item, idx) => {
-                  console.log(toJS(item.img_portfolio));
-                  return (
-                    <Image
-                      key={idx}
-                      ratio="65%"
-                             size="contain"
-                repeat="no-repeat"
-                      src={item.img_portfolio}
-                      onClick={() => {                      
-                        const src = this.slider.props.children[idx].props.src;
-                        this.activeHandler(src);
-                      }}
-                    />
-                  );
-                })} */}
               <Image
                 id="image"
                 ratio="65%"
@@ -156,8 +126,6 @@ class PortfolioConatiner extends React.Component {
                 size="contain"
                 repeat="no-repeat"
                 onClick={() => {
-                  // console.log(this);
-                  // console.log(this.slider.props.children[0].props.src);
                   const src = this.slider.props.children[1].props.src;
                   this.activeHandler(src);
                 }}
@@ -168,8 +136,6 @@ class PortfolioConatiner extends React.Component {
                 size="contain"
                 repeat="no-repeat"
                 onClick={() => {
-                  // console.log(this);
-                  // console.log(this.slider.props.children[0].props.src);
                   const src = this.slider.props.children[2].props.src;
                   this.activeHandler(src);
                 }}
@@ -178,8 +144,6 @@ class PortfolioConatiner extends React.Component {
                 ratio="65%"
                 src={camera_img}
                 onClick={() => {
-                  // console.log(this);
-                  // console.log(this.slider.props.children[0].props.src);
                   const src = this.slider.props.children[3].props.src;
                   this.activeHandler(src);
                 }}
@@ -190,30 +154,21 @@ class PortfolioConatiner extends React.Component {
                 size="contain"
                 repeat="no-repeat"
                 onClick={() => {
-                  // console.log(this);
-                  // console.log(this.slider.props.children[0].props.src);
                   const src = this.slider.props.children[4].props.src;
                   this.activeHandler(src);
                 }}
               />
             </Slider>
             {
-              // (current_partner && current_partner.portfolio_set.length > 0)
-              //   && (
-              // Partner.portFolioList && Partner.portFolioList.length > 0 && (
               <>
                 <Arrow left onClick={this.sliderPrev} />
                 <Arrow right onClick={this.sliderNext} />
               </>
-              // )
-              // )
+
             }
           </Content>
 
           {this.state.modalOpen && (
-            // <Layer>
-            //   {/* <Postcode /> */}
-            //   <span>
             <Modal width={width}>
               <button
                 className="close"
@@ -232,12 +187,9 @@ class PortfolioConatiner extends React.Component {
                 style={{ backgroundRepeat: "no-repeat" }}
               />
             </Modal>
-            //   </span>
-            // </Layer>
           )}
           {this.state.modalOpen && <Layer />}
         </div>
-        {/* } */}
       </>
     );
   }

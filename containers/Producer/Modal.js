@@ -2,16 +2,13 @@ import React from "react";
 import Select from "react-select";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
-//import Modal from '../../../commons/components/Modals/Modal';
 
 @inject("Partner", "Auth")
 @observer
 class Modal extends React.Component {
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-    const { open, close, header, children, width } = this.props;
-    // console.log(open);
-    // console.log(children);
+    const { open, close, header, children, width } = this.props
     return (
       <ModalBox
         modal={open ? "openModal modal" : "modal"}

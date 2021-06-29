@@ -54,13 +54,6 @@ class MobileBanner12Container extends React.Component {
                   지역별, 입력별 필터를 통해 원하는 조건의 <br />
                   전문업체 검색이 가능합니다. <br />
                 </Body>
-                {/* <Buttonv1
-                    onClick={() => Router.push("/request")}
-                    style={{ width: "304px", height: "64px" }}
-                    fontSize="23"
-                  >
-                    지금 무료 가견적 받기
-                  </Buttonv1> */}
               </ContainerBox>
 
               <ContainerBox>
@@ -83,13 +76,6 @@ class MobileBanner12Container extends React.Component {
                   *원하는 제조사만 민감 정보를
                   <br />볼 수 있게 공개 할 수 있습니다.
                 </Body>
-                {/* <Buttonv1
-                  onClick={() => Router.push("/request")}
-                  style={{ width: "304px", height: "64px" }}
-                  fontSize="23"
-                >
-                  1:1 컨설팅 받기
-                </Buttonv1> */}
               </ContainerBox>
 
               <ContainerBox>

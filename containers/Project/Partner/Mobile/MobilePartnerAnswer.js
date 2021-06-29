@@ -40,10 +40,6 @@ class PartnerAnswer extends React.Component {
 
   submit = () => {
     const {Project, Answer, Auth} = this.props;
-    //console.log(Project.projectDataList[0].id);
-    //console.log(Project.projectDataList[0].request_set[0].id);
-    //console.log(toJS(Auth.logged_in_partner.id));
-    //console.log(Answer.content1);
     Answer.CreateAnswer(Project.projectDataList[0].id,toJS(Auth.logged_in_partner.id),Project.projectDataList[0].request_set[0].id,Answer.content1); // project, partner, request, content1
     Project.newIndex = 3;
   }
@@ -157,7 +153,6 @@ class PartnerAnswer extends React.Component {
                       <pre style={{ whiteSpace: "break-spaces" }}>
                         {projectDetailData &&
                           projectDetailData.request_set[0].order_request_open}
-                        {/* {Project.projectDetailData.request_set[0].order_request_open} */}
                       </pre>
                     
                     <File>
@@ -169,11 +164,6 @@ class PartnerAnswer extends React.Component {
                                 <div>
                                   <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                                     <img src={file_img} />
-                                    {/* <DownloadFile
-                              file={item.file}
-                              href={decodeURI(item.file)}
-                              download
-                            ></DownloadFile> */}
                                     <span
                                       onClick={() =>
                                         this.downloadFile(item.file)

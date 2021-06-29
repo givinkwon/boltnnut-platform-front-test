@@ -191,47 +191,6 @@ class TabConatiner extends React.Component {
             return;
     }
     }
-    {/*if (!content) {
-      alert("의뢰내용을 입력해주세요.");
-      return;
-    }
-    if(content.length < 100){
-      alert(`의뢰내용이 부족합니다. 주요 기능과 기존 개발단계 포함된 의뢰 내용을 100자 이상 써주세요,
-의뢰내용이 부족하면 의뢰서가 반려되거나 파트너들이 매칭되지 않을 수 있습니다.`);
-      return;
-    }
-    if (!price) {
-      alert("희망견적을 입력해주세요.");
-      return;
-    }
-    if (!day) {
-      alert("희망기간을 입력해주세요.");
-      return;
-    }
-
-
-    if (!file) {
-      if(this.props.Request.category_id == 1){
-        alert("스케치가 포함된 기획 문서를 첨부해주세요. 해당 파일이 없으면 의뢰서가 반려되거나 파트너가 매칭되지 않을 수 있습니다.");
-        return;
-      }
-
-      if(this.props.Request.category_id == 3){
-        alert("Stp, Stl 등 설계 파일을 첨부해주세요. 해당 파일이 없으면 의뢰서가 반려되거나 파트너가 매칭되지 않을 수 있습니다.");
-        return;
-      }
-
-      if(this.props.Request.category_id == 4){
-        alert("Stp, Stl 등 설계 파일을 첨부해주세요. 해당 파일이 없으면 의뢰서가 반려되거나 파트너가 매칭되지 않을 수 있습니다.");
-        return;
-      }
-    }*/}
-
-    /*
-      client: client.id,
-      product: this.props.project_id,
-      category: toJS(this.props.Request.category_middle_set),
-    */
     this.setState({ loading: true });
     var formData = new FormData();
     formData.append("content", "1")
@@ -246,10 +205,6 @@ class TabConatiner extends React.Component {
     if(Request.client_id ==18){
         formData.append("name", name + ":" + phone);
     }
-    {/*formData.append("content", content);
-    formData.append("price", price);
-    formData.append("day", day);
-    */}
     if(file) {
       formData.append("file", file);
     }
@@ -268,11 +223,7 @@ class TabConatiner extends React.Component {
           RequestAPI.selectSave(req)
             .then((res) => {
               console.log(res);
-              //router.push('/answer/' + res.data.request)
               Request.tab = 4
-              //this.setState({
-              //  selected: 0,
-              //  index: index + 1,
               });
             })
             .catch((e) => {
@@ -282,27 +233,6 @@ class TabConatiner extends React.Component {
 
         const token = localStorage.getItem("token")
         if(!token) { return }
-        {/*console.log(res.data.category.join(','))
-        const new_req = {
-            headers: {
-                Authorization: `Token ${token}`,
-            },
-            data: {
-                subclass: res.data.product,
-                subject: res.data.name,
-                category: res.data.category,
-            },
-        }
-        RequestAPI.sendKakao(new_req)
-          .then((res) => {
-            console.log("sendKakao :", res);
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-            console.log(e.response.new_req);
-          });
-          */}
       })
       .catch((e) => {
         console.log(e);
@@ -361,70 +291,6 @@ class TabConatiner extends React.Component {
 
             </W100>
             }
-            {/*<W100 style={{ alignItems: 'flex-start' }}>
-              <TextBox active={true} style={{ marginTop: 0 }}>
-                <Text.FontSize20 color={WHITE} fontWeight={700}>
-                  의뢰 내용
-                </Text.FontSize20>
-              </TextBox>
-
-              {this.state.example == true ?  (
-
-              <TextArea
-                value={mainCategory.maincategory == "설계" ? this.state.example_content : this.state.example_content2 }
-                rows={8}
-              />
-              ) : (
-              <TextArea
-                placeholder="의뢰내용을 적어주세요. 자세한 내용은 상단의 '예시 의뢰서 확인하기' 버튼을 확인하세요"
-                value={this.props.Request.input_content}
-				onChange={this.setInputContent}
-                rows={8}
-
-              />
-              )}
-            </W100>
-            <W100>
-              <TextBox active={true} style={{ marginTop: 10 }}>
-                <Text.FontSize20 color={WHITE} fontWeight={700}>
-                  희망기간
-                </Text.FontSize20>
-              </TextBox>
-              {this.state.example == true ?  (
-              <TextArea
-                value={mainCategory.maincategory == "설계" ? '80일' : '60일' }
-              />
-              ) : (
-              <TextArea
-                type="number"
-                placeholder="80(일) - 숫자만 적어주세요"
-                value={this.props.Request.input_day}
-				onChange={this.setInputDay}
-              />
-              )}
-
-            </W100>
-            <W100>
-              <TextBox active={true} style={{ marginTop: 10 }}>
-                <Text.FontSize20 color={WHITE} fontWeight={700}>
-                  희망 견적
-                </Text.FontSize20>
-              </TextBox>
-               {this.state.example == true ?  (
-              <TextArea
-                value={mainCategory.maincategory == "설계" ? '2500만원' : '6000만원' }
-              />
-              ) : (
-              <TextArea
-                type="number"
-                placeholder="4000(만원) - 숫자만 적어주세요."
-                value={this.props.Request.input_price}
-				onChange={this.setInputPrice}
-              />
-              )}
-
-            </W100>
-            */}
             <W100 style={{marginTop: 10}}>
               <TextBox active={true} style={{ marginTop: 10 }}>
                 <Text.FontSize20 color={WHITE} fontWeight={700}>
@@ -449,14 +315,6 @@ class TabConatiner extends React.Component {
                 </InputBox>
               </Wrap>
             </W100>
-            {/*
-            <W100 style={{marginTop: 50}}>
-             <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-                * 비용을 적절하게 작성하지 않으면 의뢰서가 반려되거나 파트너들이 매칭되지 않을 수 있습니다.
-                <br/><br/> 제조 예산을 정하기 어려우신 분들께서는 볼트앤너트 공식 전화(02-926-6637)로 전화주시면
-                <br/><br/> 볼트앤너트 제조 매니저가 해당 프로젝트에 적합한 예산을 정하는 방법을 알려드립니다.
-             </Text.FontSize20>
-            </W100>*/}
 
           </Content>
         </Board>

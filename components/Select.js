@@ -52,7 +52,6 @@ class SelectComp extends React.Component {
     const { options, placeholder, styles, getOptionLabel,defaultValue, value } = this.props;
     return (
       <Select
-        // components = {menuani}
         id={this.props.id}
         className={this.props.className}
         styles={styles ? styles : customStyles}

@@ -34,9 +34,6 @@ class Banner1Container extends React.Component {
                 </span>
               </Main>
               <Content>
-                {/* {ProjectCount}건의 데이터에 기반한 자동견적 알고리즘이
-                <br />
-                평균 2일의 견적 시간을 한 번에 해결해 드립니다. */}
                 제조사별 견적 도출 데이터를 학습한 AI 시스템이 <br />
                 제작 가능 전문 업체와 견적을 바로 안내드립니다.
               </Content>

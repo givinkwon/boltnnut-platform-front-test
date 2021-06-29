@@ -36,7 +36,6 @@ class ProjectContentContainer extends React.Component {
     await Project.getProjectDetail(id);
     Project.newIndex = 1;
     Project.selectedProjectId = id;
-    // await Router.push(`/project/${id}`);
     Project.setProjectDetailData(id);
   };
 
@@ -49,15 +48,12 @@ class ProjectContentContainer extends React.Component {
     console.log("did mount");
 
     await Auth.checkLogin();
-    // if (Auth.logged_in_partner) {
       Project.getProjectByPrice();
-    // }
   }
 
   movePage = (e) => {
     const { Project, Auth } = this.props;
     e.preventDefault();
-    // Project.category_reset()
     const newPage = e.target.innerText * 1;
 
     Project.currentPage = newPage;
@@ -68,7 +64,6 @@ class ProjectContentContainer extends React.Component {
     const { Project, Auth } = this.props;
     e.preventDefault();
     if (Project.currentPage < Project.project_page) {
-      // Project.category_reset()
       const nextPage = Project.currentPage + 1;
       Project.currentPage = nextPage;
       Project.getProjectByPrice(Project.search_text, Project.currentPage);
@@ -79,7 +74,6 @@ class ProjectContentContainer extends React.Component {
     const { Project } = this.props;
     e.preventDefault();
     if (Project.currentPage > 1) {
-      // Project.category_reset()
       const newPage = Project.currentPage - 1;
       Project.currentPage = newPage;
       Project.getProjectByPrice(Project.search_text, Project.currentPage);
@@ -103,9 +97,6 @@ class ProjectContentContainer extends React.Component {
                 <span>필터</span>
                 <RadioBox data={request_data} />
               </Filter>
-
-              {/* <Background> */}
-              {/* { Project.projectDataList.length > 0 && Project.projectDataList.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
               <Main>
                 <Header style={{ paddingTop: "32px" }}>
                   <Font20 style={{ marginLeft: "-9px" }}>
@@ -114,10 +105,6 @@ class ProjectContentContainer extends React.Component {
                     </span>
                     의 상담 요청 프로젝트가 있습니다.
                   </Font20>
-                  {/* <span>
-              <Font14>모든 제조의뢰</Font14>
-              <img src={pass4}/>
-            </span> */}
                 </Header>
                 {Project.projectDataList &&
                   Project.currentPage > 0 &&
@@ -230,7 +217,6 @@ class ProjectContentContainer extends React.Component {
             {" "}
             {5 * (current_set - 1) + 5}{" "}
           </PageCount>
-          {/* <PageCount> ... </PageCount> */}
           <img
             src={pass2}
             style={{

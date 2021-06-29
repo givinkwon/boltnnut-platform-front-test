@@ -11,17 +11,6 @@ const kakaypay_icon = "/static/images/kakao_pay.png";
 @inject("Auth", "Payment")
 @observer
 class PaymentContainer extends React.Component {
-  // pay = () => {
-  //   try {
-  //     if (this.props.Auth.logged_in_client.client_class) {
-  //       alert("프라임 회원 기간이 끝난 뒤, 재구매 하실 수 있습니다.");
-  //     } else {
-  //       this.props.Payment.clientOrder("html5_inicis");
-  //     }
-  //   } catch {
-  //     alert("로그인이 필요합니다.");
-  //   }
-  // };
   render() {
     const { Auth, Payment } = this.props;
     return (

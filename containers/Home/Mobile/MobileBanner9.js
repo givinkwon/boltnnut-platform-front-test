@@ -7,7 +7,6 @@ import Fade from "react-reveal/Fade";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
 
-// const image1 = "/static/images/Home/Banner9/Banner9_img1.png"
 const passImg = "/static/images/pass7.png";
 const image1 = "/static/images/Home/Mobile/MobileBanner9/MobileBanner9_bg.png";
 
@@ -25,8 +24,6 @@ class MobileBanner9Container extends React.Component {
                 박람회 영업하기는 이제 그만
               </Header>
               <Body>
-                {/* 제조 발주를 위한 빠른 업체 검색 <br />
-                볼트앤너트에서 가능합니다. */}
                 프로젝트 상담을 통해 기획 단계부터 실무자 분들과 소통해보세요.{" "}
                 <br />
                 전문 상담을 통해 자사의 전문성을 제안하고 신규 거래처를

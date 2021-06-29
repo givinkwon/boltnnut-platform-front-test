@@ -38,7 +38,6 @@ class MobileProjectContentContainer extends React.Component {
     await Project.getProjectDetail(id);
     Project.newIndex = 1;
 
-    // await Router.push(`/project/${id}`);
     Project.setProjectDetailData(id);
   };
 

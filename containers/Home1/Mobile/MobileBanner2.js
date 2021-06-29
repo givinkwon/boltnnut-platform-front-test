@@ -17,7 +17,6 @@ class MobileBanner2Container extends React.Component {
             <Middle>
               포트폴리오부터 계약 후기까지!
               <br />
-              {/* <span>무료 도면 수정 </span> */}
               5000개의 전국 제조사 정보 제공
             </Middle>
             <ImgContainer>

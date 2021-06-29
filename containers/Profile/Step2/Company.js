@@ -174,15 +174,6 @@ class CompanyConatiner extends React.Component {
           <W30>
             <InputComponent placeholder='상호명을 입력해주세요' label='상호명' type='text' onChange={Profile.setCompanyName} value={Profile.company_name}/>
           </W30>
-        {/*<W30 center> //0928수정
-            <InputComponent placeholder='종업원 수를 입력해주세요' label='종업원 수' type='number' onChange={Profile.setEmployee} value={Profile.employee}/>
-          </W30>
-          <W30>
-            <InputComponent placeholder='설립연도를 입력해주세요' label='설립연도' type='number' onChange={Profile.setCareer} value={Profile.career}/>
-          </W30>
-          <W30>
-            <InputComponent placeholder='매출액을 입력해주세요' label='매출액' type='number' onChange={Profile.setRevenue} value={Profile.revenue}/>
-          </W30>*/}
           <W30 center select>
             <SelectBox>
               <Text.FontSize20 color={DARKGRAY} fontWeight={500}>시/도</Text.FontSize20>
@@ -191,18 +182,6 @@ class CompanyConatiner extends React.Component {
                 getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Profile.setCity}/>
             </SelectBox>
           </W30>
-          {/*<W30 select>
-            <SelectBox>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>지역</Text.FontSize20>
-                <SelectComponent
-                  styles={customStyles} options={Profile.region_data} value={region}
-                  getOptionLabel={(option) => option.region} placeholder='옵션을 선택해주세요' onChange={Profile.setRegion}/>
-              </SelectBox>
-          </W30>*/}
-          {/*<W100>
-            <Text.FontSize20 style={{marginTop: 15}} color={DARKGRAY} fontWeight={500}>주요사업</Text.FontSize20>
-            <TextArea placeholder='주요사업을 입력해주세요' col={3} onChange={Profile.setInfoBiz} value={Profile.info_biz}/>
-          </W100>*/}
           <W100>
             <Text.FontSize20 style={{marginTop: 12}} color={DARKGRAY} fontWeight={500}>주요거래처</Text.FontSize20>
             <TextArea placeholder='주요거래처를 입력해주세요' col={3} onChange={Profile.setDeal} value={Profile.deal}/>
@@ -215,119 +194,6 @@ class CompanyConatiner extends React.Component {
             <Text.FontSize20 style={{marginTop: 12}} color={DARKGRAY} fontWeight={500}>회사 소개[100자 이상]</Text.FontSize20>
             <TextArea placeholder='회사소개를 입력해 주세요.' col={3} onChange={Profile.setInfoCompany} value={Profile.info_company}/>
           </W100>
-          {/*
-          <W100>
-           <SearchCategory>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>가능한 제품 분야</Text.FontSize20>
-            <Text.FontSize14 color="#767676!important;" fontWeight={500}>자동차용품, 의료용품, 산업장비 및 부품, 주방용품, 생활용품, 유아용품, 가전/디지털, 스포츠용품을 검색해보세요</Text.FontSize14>
-           </SearchCategory>
-          </W100>
-
-          <W100>
-            <SearchCategory>
-              <div>
-                <InputComponent placeholder='검색어를 입력해주세요' type='text' onChange={this.searchPossible} value={possible_search}/>
-                {
-                  possible_list.length > 0 && possible_search && (
-                    <SearchResult>
-                      {possible_list.map((main) => {
-                        return main.category_set.map((sub, idx) => {
-                          return sub.subclass_set.length > 0 && sub.subclass_set.map((_sub, index) => {
-                            return (
-                              <Text.FontSize14
-                                key={index}
-                                onClick={() => this.selectPossible(_sub)}
-                                color={DARKGRAY}
-                                fontWeight={500}
-                                dangerouslySetInnerHTML={{__html: `${main.maincategory} > ${sub.category} > ${_sub.subclass}`}}
-                              />
-                            );
-                          })
-                        })
-                      })}
-                    </SearchResult>
-                  )
-                }
-                <Button color={possible_selected ? PRIMARY : '#dedede'} onClick={this.addPossibleSet}>
-                  <Text.FontSize20 color={possible_selected ? WHITE : "#404040"} fontWeight={500}>추가하기</Text.FontSize20>
-                </Button>
-              </div>
-            </SearchCategory>
-          </W100>
-          {
-            Profile.possible_set && Profile.possible_set.length > 0 && (
-              <W100>
-                <BadgeList>
-                {
-                  Profile.possible_set.map((item, idx) => {
-                    return (
-                      <Badge key={item.id}>
-                        <Text.FontSize20 color={DARKGRAY} fontWeight={500}>#{item.subclass}</Text.FontSize20>
-                        <img src={badge_close} onClick={() => Profile.removePossibleSet(idx)}/>
-                      </Badge>
-                    )
-                  })
-                }
-                </BadgeList>
-              </W100>
-            )
-          }
-          */}
-          {/*<W100>
-           <SearchCategory>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>진행한 제품 분야</Text.FontSize20>
-            <Text.FontSize14 color="#767676!important;"  fontWeight={500}>자동차용품, 의료용품, 산업장비 및 부품, 주방용품, 생활용품, 유아용품, 가전/디지털, 스포츠용품을 검색해보세요</Text.FontSize14>
-           </SearchCategory>
-          </W100>
-          <W100>
-            <SearchCategory>
-              <div>
-                <InputComponent placeholder='검색어를 입력해주세요' type='text' onChange={this.searchHistory} value={history_search}/>
-                {
-                  history_list.length > 0 && history_search && (
-                    <SearchResult>
-                      {history_list.map((main) => {
-                        return main.category_set.map((sub, idx) => {
-                          return sub.subclass_set.length > 0 && sub.subclass_set.map((_sub, index) => {
-                            return (
-                              <Text.FontSize14
-                                key={index}
-                                onClick={() => this.selectHistory(_sub)}
-                                color={DARKGRAY}
-                                fontWeight={500}
-                                dangerouslySetInnerHTML={{__html: `${main.maincategory} > ${sub.category} > ${_sub.subclass}`}}
-                              />
-                            )
-                          })
-                        })
-                      })}
-                    </SearchResult>
-                  )
-                }
-                <Button color={history_selected ? PRIMARY : '#dedede'} onClick={this.addHistorySet}>
-                  <Text.FontSize20 color={history_selected ? WHITE : '#404040'} fontWeight={500}>추가하기</Text.FontSize20>
-                </Button>
-              </div>
-            </SearchCategory>
-          </W100>
-          {
-            Profile.history_set && Profile.history_set.length > 0 && (
-              <W100>
-                <BadgeList>
-                {
-                  Profile.history_set.map((item, idx) => {
-                    return (
-                      <Badge key={idx}>
-                        <Text.FontSize20 color={DARKGRAY} fontWeight={500}>#{item.subclass}</Text.FontSize20>
-                        <img src={badge_close} onClick={() => Profile.removeHistorySet(idx)}/>
-                      </Badge>
-                    )
-                  })
-                }
-                </BadgeList>
-              </W100>
-            )
-          }*/}
         </Content>
       </div>
     )

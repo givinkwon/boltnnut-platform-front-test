@@ -6,7 +6,6 @@ import Buttonv1 from "components/Buttonv1";
 import Fade from "react-reveal/Fade";
 import Router from "next/router";
 
-// const image1 = "/static/images/Home/Banner9/Banner9_img1.png"
 const image1 = "/static/images/Home/Mobile/MobileBanner9/MobileBanner9_bg.png";
 class MobileBanner9Container extends React.Component {
   render() {

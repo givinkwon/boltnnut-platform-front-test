@@ -56,7 +56,6 @@ class Step1Container extends React.Component {
     step: 1,
     activeCount: 0,
     currentCount: 0,
-    // list:[false,false,false,false,],
     check:'none',
   }
   selectCheck = (idx) =>{
@@ -81,19 +80,6 @@ class Step1Container extends React.Component {
       return false;
     }
   }
-
-
-  // selectClick = (idx) => {
-  //   const{list} = this.state;
-  //   this.setState({list: list.map((item, j) => {if(j==idx){return true;}})});
-
-  // }
-
-  // selectOut= (idx) =>{
-  //   const{list} = this.state;
-  //   this.setState({list: list.map((item, j) => {if(j==idx){return false;}})});
-
-  // }
 
   handleChange = (value) => {
     const { Request } = this.props;
@@ -181,49 +167,6 @@ class Step1Container extends React.Component {
           />
           </AnimatedSelectBox>
         </SelectRow>
-
-       {/* <SelectRow>      
-        <AnimatedSelectBox active={this.state.list[0]===true} onClick ={()=>this.state.list[0]? this.selectOut(0):this.selectClick(0)}  onBlur = {()=>this.selectOut(0)} >
-          <input style={{display: 'none'}} value={Request.select_big ? Request.select_big.maincategory : ''} class="Input"/>   
-          <SelectComponent
-             styles={customStyles} options={Request.big_category_list} value={Request.select_big} 
-          getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Request.setBigCategory}
-          />
-        </AnimatedSelectBox>
-        <div style={{marginRight: 38}}/>
-  
-        <AnimatedSelectBox active={this.state.list[1]===true} onClick ={()=>this.state.list[1]? this.selectOut(1):this.selectClick(1)}  onBlur = {()=>this.selectOut(1)} >
-        <input style={{display: 'none'}} value={Request.select_mid ? Request.select_mid.category : ''} class="Input"/>
-        <SelectComponent
-             styles={customStyles} options={Request.mid_category_list} value={Request.select_mid}
-            getOptionLabel={(option) => option.category} placeholder='옵션을 선택해주세요' onChange={Request.setMidCategory}
-          />
-        </AnimatedSelectBox>
-        </SelectRow>
-        <Header style={{marginTop: 30}}> 
-            희망 예산
-        </Header>
-        <SelectRow style={{width: 380}}>
-          <AnimatedSelectBox active={this.state.list[2]===true} onClick ={()=>this.state.list[2]? this.selectOut(2):this.selectClick(2)}  onBlur = {()=>this.selectOut(2)}>
-          <input style={{display: 'none'}} value={Request.input_price ? Request.input_price.value : ''} class="Input"/>
-          <SelectComponent
-             styles={customStyles} options={costArray} value={Request.input_price}
-            getOptionLabel={(option) => option.label} placeholder='예산을 선택해 주세요.' onChange={Request.setPrice}
-          />
-          </AnimatedSelectBox>
-        </SelectRow>
-          <Header style={{marginTop: 30}}>
-            개발 기간
-          </Header>
-        <SelectRow >
-          <AnimatedSelectBox active={this.state.list[3]===true} onClick ={()=>this.state.list[3]? this.selectOut(3):this.selectClick(3)}  onBlur = {()=>this.selectOut(3)}>
-          <input style={{display: 'none'}} value={Request.input_day ? Request.input_day.value : ''} class="Input"/>
-          <SelectComponent
-            styles={customStyles} options={dueArray} value={Request.input_day}
-            getOptionLabel={(option) => option.label} placeholder='개월' onChange={Request.setDue}
-          />
-          </AnimatedSelectBox>
-        </SelectRow>  */}
      </>
     );
   }

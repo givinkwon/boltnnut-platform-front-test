@@ -29,12 +29,6 @@ class TabletBanner2Container extends React.Component {
                 <span>포트폴리오부터 계약 후기까지!</span>
                 <span>5000개의 전국 제조사 정보 제공</span>
               </Middle>
-              {/* <ImgContainer>
-              <img
-                src={Img}
-                style={{ width: 347, height: 230, borderRadius: 7 }}
-              />
-            </ImgContainer> */}
 
               <Body>
                 남동공단부터 창원까지,

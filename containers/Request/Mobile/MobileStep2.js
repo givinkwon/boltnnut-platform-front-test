@@ -73,7 +73,6 @@ class MobileStep2Container extends React.Component {
     };
 
     let activeHandler = (idx) => {
-      // console.log(idx===DetailQuestion.SelectChecked)
       if (idx === DetailQuestion.SelectChecked) {
         return true;
       } else {
@@ -83,7 +82,7 @@ class MobileStep2Container extends React.Component {
     return (
       <>
         <TitleContainer>
-          {/* <img src={Qimage}/> */}
+          
           <span class="title">Q.</span>
           {/* Array 문제로 DetailQuestion 형식 고쳤음. */}
           <TitleQue>{DetailQuestion.title_list[DetailQuestion.index - 1] && DetailQuestion.title_list[DetailQuestion.index - 1].question}</TitleQue>
@@ -113,7 +112,7 @@ class MobileStep2Container extends React.Component {
                           type="file"
                           style={{display: 'none'}}
                           onChange={(e) => this.onChangeFile(e,{nextTitle:8}, 1)}
-                          // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
+                          
                         />
                       </FileSelect>
                     </>

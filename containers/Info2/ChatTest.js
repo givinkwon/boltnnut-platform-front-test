@@ -9,7 +9,6 @@ import * as RequestAPI from "axios/Request";
 import { ROOT_URL } from "axios/index";
 import { toJS } from "mobx";
 
-// console.log(Root);
 @inject("Auth", "Project", "Partner", "Chat")
 @observer
 class ChatTestContainer extends React.Component {
@@ -33,24 +32,12 @@ class ChatTestContainer extends React.Component {
   };
 
   onChangeFile = async (e) => {
-    // let fileNameAvailable = ["stl", "stp"];
     let fileName;
 
     let file = [];
-    // let fileNameAvailable = ["txt"];
-
     if (e.currentTarget.files[0]) {
-      // !fileNameAvailable.includes(
-      // e.currentTarget.files[0].name.split(".")[e.currentTarget.files.length];
-      // )
-      // {
-      //   return alert("파일 확장자명 (stl, stp만 가능) 을 확인해주세요.");
-      // }
       fileName = e.currentTarget.files[0].name;
       await this.setState({ currentFile: e.currentTarget.files[0] });
-
-      // const extension = item.fileName.split(".");
-      //console.log(e.currentTarget.files[0]);
 
       console.log(this.userType);
 
@@ -66,47 +53,26 @@ class ChatTestContainer extends React.Component {
         file.push({
           chat_type: 1,
 
-          //message: "이미지",
           answer: 17378,
           origin_file: this.state.currentFile,
           type: this.userType,
         });
-
-        // }else if(extension === "ppt" || extension==="pdf" || extension==="stl" || extension==="stp" || extension==="xlex"){
       }
-      // else if (extension === "txt") {
-      //   file.push({
-      //     chat_type: 2,
-      //     message: "텍스트",
-      //     origin_file: this.state.currentFile,
-      //   });
-      // }
       else {
         file.push({
           chat_type: 2,
-          // message: "파일",
           answer: 238,
           origin_file: this.state.currentFile,
           type: this.userType,
         });
       }
 
-      // console.log(file);
-      // console.log(file[0].answer);
-      // console.log(file[0].origin_file);
-      // console.log(this.userType);
-      // console.log(file[0].type);
-
       var formData = new FormData();
-      //formData.append("request_state", "업체수배");
-
-      //formData.append("request_state", 1);
 
       formData.append("chat_type", file[0].chat_type);
       formData.append("answer", file[0].answer);
       formData.append("file", file[0].origin_file);
       formData.append("user_type", 0);
-      //formData.append("user_type", this.userType);
 
       for (let key of formData.keys()) {
         console.log(key);
@@ -116,15 +82,8 @@ class ChatTestContainer extends React.Component {
       for (let value of formData.values()) {
         console.log(value);
       }
-      // const req = {
-      //   data: formData,
-      // };
-
       const Token = localStorage.getItem("token");
       const req = {
-        // headers: {
-        //   Authorization: `Token ${Token}`,
-        // },
         data: formData,
       };
 
@@ -137,7 +96,6 @@ class ChatTestContainer extends React.Component {
 
           this.chatSocket.send(
             JSON.stringify({
-              //message: decodeURI(file_url.split("/").pop()),
               type: this.userType,
               message: file_url,
               chatType: res.data.chat_type,
@@ -166,22 +124,8 @@ class ChatTestContainer extends React.Component {
   };
 
   socketClose = () => {
-    // this.chatSocket.send(
-    //   JSON.stringify({
-    //     message: "채팅방을 나갔습니다",
-    //     type: this.userType,
-    //     time: this.props.Chat.current_time,
-    //     bReceive: true,
-    //     file: this.state.currentFile,
-    //     chatType: 0,
-    //   })
-    // );
     this.chatSocket.close();
   };
-
-  // chatSocket = new WebSocket(
-  //   `wss://api.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
-  // );
 
   chatSocket = new WebSocket(
     `wss://api.boltnnut.com/ws/chat/` + `${this.props.roomName}` + "/"
@@ -196,9 +140,7 @@ class ChatTestContainer extends React.Component {
     console.log(fullMessage[0]);
     console.log(toJS(currentMessage));
 
-    // let test = await toJS(fullMessage);
     console.log(toJS(fullMessage).length);
-    // if (flag === 1)
     if (fullMessage.length > 0) {
       console.log("fullMessage forEach 돕니다");
       fullMessage.forEach((element) => {
@@ -215,55 +157,10 @@ class ChatTestContainer extends React.Component {
             console.log("READ complete");
           }
         }
-
-        // else {
-        //   // console.log("읽지않음");
-        // }
       });
     }
-    // else{
-    //   fullMessage.forEach((element) => {
-    //     // console.log("FULLMESSAGES");
-    //     if (
-    //       currentMessage.type != element.member &&
-    //       element.time <= currentMessage.time
-    //     ) {
-    //       element.bRead = true;
-    //       console.log("READ complete");
-    //     }
-    //     // else {
-    //     //   // console.log("읽지않음");
-    //     // }
-    //   });
-    // }
 
     // 메세지를 보낸 경우에 체크하여 카카오톡 보내기
-
-    // if (
-    //   fullMessage.length > 0 &&
-    //   currentMessage.message != "접속완료" &&
-    //   !currentMessage.bReceive &&
-    //   toJS(fullMessage)[fullMessage.length - 1].bRead == false &&
-    //   toJS(fullMessage)[fullMessage.length - 2].bRead == true
-    // ) {
-    //   {
-    //     console.log("우왕");
-
-    //     const req = {
-    //       phoneNum: "01075731803",
-    //       requestTitle: "DDDD",
-    //       name: "오규석", //보내는사람
-    //       text: "fff",
-    //     };
-    //     console.log("Send KAKAO");
-    //     RequestAPI.sendKakaoTalk(req)
-    //       .then((res) => console.log(res))
-    //       .catch((e) => {
-    //         console.log(e);
-    //         console.log(e.response);
-    //       });
-    //   }
-    // }
 
     if (
       fullMessage.length > 0 &&
@@ -341,7 +238,6 @@ class ChatTestContainer extends React.Component {
     temp.setMinutes(temp.getMinutes() + temp.getTimezoneOffset() * -1);
 
     this.props.Chat.current_time = temp;
-    // console.log(toJS(this.props.Chat.current_time));
   }
 
   loadPrevMessages = async (count) => {
@@ -349,17 +245,13 @@ class ChatTestContainer extends React.Component {
       extraUrl: `${this.props.roomName}`,
       params: {
         page: count,
-        // order: [["id", "ASC"]], //DESC
       },
     };
 
     ChatAPI.loadChat(loadChatReq)
       .then((res) => {
-        // const reverseChat = res.data.results.reverse();
         const reverseChat = res.data.results;
-        // console.log(reverseChat);
         ChatAPI.loadChatCount(this.props.roomName).then((m_res) => {
-          // console.log(m_res);
           // answer data 가져오기
           const req = {
             extraUrl: m_res.data.partner + `/`,
@@ -367,17 +259,8 @@ class ChatTestContainer extends React.Component {
           };
           var Temp = [];
           const Messages = this.props.Project.chatMessages;
-          // Messages.unshift({
-          //   member: 0,
-          //   text: `===============================${count}======================================`,
-          //   time: null,
-          //   bRead: true,
-          // });
           reverseChat.forEach(async (message) => {
-            // console.log(toJS(message));
-
-            // console.log(Messages);
-            // console.log(toJS(this.props.Project.chatMessages));
+      
             let readState = true;
             if (message.user_type === 0) {
               // console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
@@ -405,16 +288,8 @@ class ChatTestContainer extends React.Component {
               time: message.createdAt,
               bRead: readState,
             });
-
-            // await this.test(message);
-            // console.log(toJS(this.props.Project.chatMessages));
-            // if (Messages[0].time < Messages[1].time) {
-            //   console.log("asdnklasndlkasndlknaslkdnalksdnladsnkl");
-            // }
-
             this.setState({ f: 3 });
           });
-          // this.props.Project.chatMessages.unshift(Temp);
         });
       })
       .catch((e) => {
@@ -425,16 +300,6 @@ class ChatTestContainer extends React.Component {
     // RoomNumber 체크하기
     const { Partner, Project } = this.props;
     const roomNum = this.props.roomName;
-
-    // this.props.Project.chatMessages.push({
-    //   member: 1,
-    //   text: "ss",
-    //   time: "f",
-    //   bRead: false,
-    // });
-
-    // console.log(Partner.ClientInfo)
-    // const clientPhone = Partner.clientInfo.user.phone;
     let clientPhone = "";
     this.props.Chat.current_time = null;
     let temp = new Date();
@@ -462,20 +327,16 @@ class ChatTestContainer extends React.Component {
 
     ChatAPI.loadChat(loadChatReq).then((res) => {
       const reverseChat = res.data.results.reverse();
-      // console.log(reverseChat);
       if (res.data.count % 10 === 0) {
         this.setState({ chatPageLimit: res.data.count / 10 });
       } else {
         this.setState({ chatPageLimit: Math.floor(res.data.count / 10) + 1 });
       }
-      // alert(this.state.chatPageLimit);
       for (let i = 2; i <= this.state.chatPageLimit; i++) {
         this.loadPrevMessages(i);
       }
 
       ChatAPI.loadChatCount(roomNum).then((m_res) => {
-        // console.log(m_res);
-        // answer data 가져오기
         const req = {
           extraUrl: m_res.data.partner + `/`,
           params: {},
@@ -497,10 +358,7 @@ class ChatTestContainer extends React.Component {
         });
 
         reverseChat.forEach(async (message) => {
-          // console.log(toJS(message));
           const Messages = this.props.Project.chatMessages;
-          // console.log(Messages);
-          // console.log(toJS(this.props.Project.chatMessages));
           let readState = true;
           if (message.user_type === 0) {
             // console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
@@ -528,18 +386,10 @@ class ChatTestContainer extends React.Component {
             time: message.createdAt,
             bRead: readState,
           });
-
-          // await this.test(message);
-          // console.log(toJS(this.props.Project.chatMessages));
-          // if (Messages[0].time < Messages[1].time) {
-          //   console.log("asdnklasndlkasndlknaslkdnalksdnladsnkl");
-          // }
-
           this.setState({ f: 3 });
         });
       });
     });
-    // this.setState({ messages: [] });
 
     //============================================= onopen 시작 ============================================================
     this.chatSocket.onopen = async () => {
@@ -551,7 +401,6 @@ class ChatTestContainer extends React.Component {
       );
       console.log("onopen");
       console.log(toJS(this.props.Project.chatMessages));
-      // await this.props.Auth.checkLogin();
       if (this.props.Auth.logged_in_user) {
         this.userType = this.props.Auth.logged_in_user.type;
         console.log(this.userType);
@@ -577,7 +426,6 @@ class ChatTestContainer extends React.Component {
         );
       }, 500);
     };
-    // console.log(this.props.Auth.logged_in_user.type);
 
     //============================================= onopen 끝 ============================================================
     console.log(this.chatSocket);
@@ -591,7 +439,6 @@ class ChatTestContainer extends React.Component {
       const messages = this.props.Project.chatMessages;
       console.log(toJS(messages));
       if (!data.bReceive) {
-        //console.log(typeof(data.type), typeof(this.userType))
         if (data.type != this.userType) {
           console.log(
             "수신완료체크!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -628,13 +475,9 @@ class ChatTestContainer extends React.Component {
         }
       }
 
-      // if (data.bReceive)
       {
-        // console.log(this.props.Project.chatMessages);
-        // console.log(toJS(this.props.Project.chatMessages));
         this.checkRead(this.props.Project.chatMessages, data);
       }
-      // this.setState({ messages });
 
       let tempAnswerNum = roomNum;
       let chatCount = 0;
@@ -655,10 +498,7 @@ class ChatTestContainer extends React.Component {
       }
       ChatAPI.loadChatCount(tempAnswerNum).then((res) => {
         let clientChatCount = res.data.check_time_client;
-        // console.log(clientChatCount);
         let partnerChatCount = res.data.check_time_partner;
-        // console.log(res);
-        // console.log(res.data.partner);
         this.userType === 0
           ? (clientChatCount = new Date())
           : (partnerChatCount = new Date());
@@ -688,36 +528,6 @@ class ChatTestContainer extends React.Component {
     console.log(myMessage);
     console.log(this.userType);
     console.log(this.state.currentTime); // null
-    // console.log(this.props.Chat.current_time);
-
-    // console.log(toJS(this.props.Project.chatMessages));
-    // const fullMessage = this.props.Project.chatMessages;
-
-    // setTimeout(() => {
-    //   console.log("카톡 보낼지 체크");
-    //   if (
-    //     fullMessage.length > 0 &&
-    //     toJS(fullMessage)[fullMessage.length - 1].bRead == false &&
-    //     toJS(fullMessage)[fullMessage.length - 2].bRead == true
-    //   ) {
-    //     {
-    //       console.log(toJS(fullMessage));
-    //       const req = {
-    //         phoneNum: "01075731803",
-    //         requestTitle: "DDDD",
-    //         name: "오규석", //보내는사람
-    //         text: fullMessage[fullMessage.length - 1].text,
-    //       };
-    //       console.log("Send KAKAO");
-    //       RequestAPI.sendKakaoTalk(req)
-    //         .then((res) => console.log(res))
-    //         .catch((e) => {
-    //           console.log(e);
-    //           console.log(e.response);
-    //         });
-    //     }
-    //   }
-    // }, 5000);
 
     this.chatSocket.send(
       JSON.stringify({
@@ -742,7 +552,6 @@ class ChatTestContainer extends React.Component {
           }}
           style={{ display: "none" }}
         />
-        {/* {console.log(toJS(this.props.Project.chatMessages))} */}
         <ChatCardContainer
           messages={this.props.Project.chatMessages}
           onSendMessage={this.onSendMessage}

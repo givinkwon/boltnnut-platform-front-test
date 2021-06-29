@@ -82,9 +82,6 @@ export function getNextRegion(req) {
   return axios({
     method: "GET",
     url: nextUrl,
-    // url: req.nextUrl[4] === 's'
-    //   ? req.nextUrl
-    //   : StringUtils.insert(req.nextUrl, 's', 4),
   })
 }
 
@@ -102,9 +99,6 @@ export function getNextPage(req) {
   return axios({
     method: "GET",
     url: req.nextUrl,
-    // url: req.nextUrl[4] === 's'
-    //   ? req.nextUrl
-    //   : StringUtils.insert(req.nextUrl, 's', 4),
     headers: req.headers ? req.headers : null,
   })
 }

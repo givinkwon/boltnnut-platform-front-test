@@ -19,7 +19,6 @@ class CheckCallModal extends Component {
 
     await handleClose()
     if(acceptance) {
-      // answer.see_phone = true
       Answer.acceptMeeting(answerId)
       openCompleteCallModal()
     }

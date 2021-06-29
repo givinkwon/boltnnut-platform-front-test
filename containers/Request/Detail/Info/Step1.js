@@ -25,17 +25,6 @@ class Step1Conatiner extends React.Component {
               의뢰서 작성 시간은 최대 3분 입니다.
             </Text.FontSize20>
           </TextBox>
-          {/*<TextBox>
-            <div>
-              <Text.FontSize20 color={PRIMARY} fontWeight={500}>
-                2&nbsp;&nbsp;&nbsp;의뢰대기
-              </Text.FontSize20>
-            </div>
-            <Text.FontSize20 color="#4d4f5c" fontWeight={300}>
-                볼트앤너트의 큐레이션 알고리즘이 의뢰하신 제품의 제조사들을 찾아 매칭해드립니다.
-                의뢰서 작성 후 1영업일 이내로 볼트앤너트 매니저가 검토한 후, 24시간 이내 제조사를 매칭해드립니다.
-            </Text.FontSize20>
-          </TextBox>*/}
           <TextBox>
             <div>
               <Text.FontSize20 color={PRIMARY} fontWeight={500}>

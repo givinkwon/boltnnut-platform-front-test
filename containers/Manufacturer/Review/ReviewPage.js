@@ -67,11 +67,8 @@ class ReviewPage extends React.Component {
   };
 
   starCheckHandler = async (star_id, bool) => {
-    // console.log(`${star_id}번째 클릭 : ${bool}`);
     this.state.star_ary.map((data) => {
-      //   console.log(data.id - 1);
       if (star_id === data.id - 1) {
-        // console.log("TTTTTTTTTTT");
       }
     });
     await this.setState({
@@ -84,13 +81,10 @@ class ReviewPage extends React.Component {
           : data
       ),
     });
-    //console.log(this.state.star_ary);
   };
   starRatingHandler = async (star_id) => {
     const { Partner } = this.props;
-    //console.log(star_id);
     if (this.state.star_ary[star_id - 1].checked) {
-      //this.state.star_ary[star_id - 1].checked = false;
       const bool = false;
 
       for (let i = 0; i < star_id - 1; i++) {}
@@ -104,26 +98,22 @@ class ReviewPage extends React.Component {
       }
     }
     Partner.ratingPoint = star_id;
-    // console.log(toJS(Partner.ratingPoint));
   };
 
   openModal = () => {
     const { Partner } = this.props;
 
-    // console.log("requestmodal open click");
-    // this.setState({ modalOpen: true });
 
     Partner.searchProjectModalActive = true;
   };
   closeModal = () => {
     const { Partner } = this.props;
-    // console.log("requestmodal close click");
 
     Partner.searchProjectModalActive = false;
   };
   checkIndex = (id, idx) => {
     const { Partner } = this.props;
-    // console.log(typeof id);
+
     switch (id) {
       case "1":
         Partner.reviewKindnessIndex = idx;
@@ -146,7 +136,7 @@ class ReviewPage extends React.Component {
       textareaLineHeight = 20;
       this.setState({ maxRows: 10 });
     }
-    //const textareaLineHeight = 34;
+
     const { minRows, maxRows } = this.state;
     const { Partner } = this.props;
     const previousRows = event.target.rows;
@@ -180,20 +170,6 @@ class ReviewPage extends React.Component {
     var formData = new FormData();
 
     const { Auth, Partner } = this.props;
-
-    // console.log(toJS(Auth.logged_in_client.id));
-    // console.log(toJS(Partner.reviewPartnerId));
-    // console.log(toJS(Partner.projectName));
-
-    // console.log(toJS(Partner.ratingPoint));
-    // console.log(toJS(Partner.reviewKindnessIndex));
-    // console.log(toJS(Partner.reviewCommunicationIndex));
-    // console.log(toJS(Partner.reviewProfessionIndex));
-
-    // console.log(toJS(Partner.reviewContent));
-
-    // console.log(toJS(Partner.newPartner));
-    // console.log(toJS(Partner.reviewPartnerName));
 
     const now = new Date();
     console.log(now.toLocaleDateString().replace(/(\s*)/g, ""));
@@ -286,7 +262,6 @@ class ReviewPage extends React.Component {
               ) : (
                 <edit
                   onClick={() => {
-                    //this.openModal();
                     Partner.searchPartnerModalActive = true;
                   }}
                 >
@@ -350,7 +325,6 @@ class ReviewPage extends React.Component {
           </QuestionBox>
           <Section>
             {Partner.ratingPoint ? (
-              //<span>만족도 5점을 주셨네요, 어떤점이 좋았나요?</span>
               <span>
                 {console.log(toJS(Partner.ratingPoint))}
                 {this.state.star_ary[Partner.ratingPoint - 1].content2}
@@ -368,7 +342,6 @@ class ReviewPage extends React.Component {
                 rows={this.state.rows}
                 value={Partner.reviewContent}
                 defaultValue={Partner.reviewContent}
-                //className={"textarea"}
                 placeholderStyle={{ fontWeight: "400" }}
                 onChange={this.reviewHandler}
               />

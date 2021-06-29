@@ -36,14 +36,10 @@ class ManufacturerContentContainer extends React.Component {
   async componentDidMount() {
     const { Partner } = this.props;
 
-    // Project.search_text = "";
     Partner.currentPage = 1;
 
     console.log("did mount");
-    // PartnerAPI.getPPTInfo()
     Partner.getPartner();
-
-    //console.log(toJS(Partner.filter_category_ary.length));
     if (Partner.filter_category_ary.length === 1) {
       Partner.getCategory();
     }
@@ -51,10 +47,6 @@ class ManufacturerContentContainer extends React.Component {
       Partner.getCity();
     }
 
-    // await Auth.checkLogin();
-    // if(Auth.logged_in_partner){
-    //   Project.getProjectByPrice()
-    // }
   }
 
   componentWillUnmount() {
@@ -66,19 +58,12 @@ class ManufacturerContentContainer extends React.Component {
   }
 
   componentDidUpdate() {
-    // console.log("didupdate");
-    // console.log(toJS(this.props.Partner.check_loading_category));
-    // if (this.props.Partner.check_loading_category) {
-    //   this.setState({ g: 3 });
-    // }
   }
   movePage = (e) => {
     const { Partner, Auth } = this.props;
     e.preventDefault();
-    // Project.category_reset()
     const newPage = e.target.innerText * 1;
     Partner.currentPage = newPage;
-    // Project.getProjectByPrice(Project.search_text, newPage)
     console.log(toJS(this.category_dic));
     Partner.resetDevCategory();
     Partner.ReviewActive = false;
@@ -89,14 +74,9 @@ class ManufacturerContentContainer extends React.Component {
   pageNext = (e) => {
     const { Partner } = this.props;
     e.preventDefault();
-    // console.log(toJS(Partner.currentPage));
-    // console.log(toJS(Partner.partner_page));
     if (Partner.currentPage < Partner.partner_page) {
-      // Project.category_reset()
       const nextPage = Partner.currentPage + 1;
       Partner.currentPage = nextPage;
-      // Project.getProjectByPrice(Project.search_text, Project.currentPage)
-      // console.log(nextPage);
       console.log(toJS(this.category_dic));
       Partner.resetDevCategory();
       Partner.ReviewActive = false;
@@ -109,7 +89,6 @@ class ManufacturerContentContainer extends React.Component {
     const { Partner } = this.props;
     e.preventDefault();
     if (Partner.currentPage > 1) {
-      // Project.category_reset()
       const newPage = Partner.currentPage - 1;
       Partner.currentPage = newPage;
       console.log(toJS(this.category_dic));
@@ -117,7 +96,6 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       Partner.getPartner(newPage);
-      // Project.getProjectByPrice(Project.search_text, Project.currentPage)
     }
   };
 
@@ -126,18 +104,13 @@ class ManufacturerContentContainer extends React.Component {
     Partner.category_name_list = null;
     console.log(item.id);
     Partner.partner_detail_list = [];
-    //Project.selectedProjectId = id;
     Partner.partner_detail_list.push({ item: item });
     console.log(toJS(Partner.partner_detail_list));
     Partner.newIndex = 1;
     Partner.category_name_list = Partner.category_dic[idx];
     console.log(idx);
-    //console.log(toJS(Partner.category_dic[idx]));
     console.log(toJS(Partner.category_name_list));
     await Partner.getPartnerDetail(item.id);
-
-    // await Router.push(`/project/${id}`);
-    //Project.setProjectDetailData(id);
   };
 
   render() {
@@ -148,10 +121,8 @@ class ManufacturerContentContainer extends React.Component {
 
     return (
       <>
-        {/* {console.log("rendering")} */}
         <Background id="MyBackground">
           <Container>
-            {/* <SearchBar /> */}
             <Body>
               <Filter style={{ paddingTop: "32px" }}>
                 <Font20>필터</Font20>
@@ -164,9 +135,6 @@ class ManufacturerContentContainer extends React.Component {
                   data={this.props.Partner.filter_category_ary}
                 />
               </Filter>
-
-              {/* <Background> */}
-              {/* { Project.projectDataList.length > 0 && Project.projectDataList.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             */}
               <Main>
                 <Header style={{ paddingTop: "32px" }}>
                   <Font20 style={{ marginLeft: "-9px" }}>
@@ -175,28 +143,16 @@ class ManufacturerContentContainer extends React.Component {
                     </span>
                     의 제조사가 있습니다.
                   </Font20>
-                  {/* <span>
-              <Font14>모든 제조의뢰</Font14>
-              <img src={pass4}/>
-            </span> */}
                 </Header>
                 {Partner.partner_list &&
-                  // Partner.currentPage > 0 &&
                   Partner.partner_list.map((item, idx) => {
-                    // console.log(item.file);
                     return (
                       <Background style={{ marginBottom: "5px" }}>
-                        {/* {console.log(toJS(Partner.category_dic))} */}
                         <ProposalCard
                           data={item}
                           width={this.props.width}
-                          //categoryData={Partner.category_ary[idx]}
                           categoryData={Partner.category_dic[idx]}
                           idx={idx}
-                          // middleCategory={Project.middle_category_name[idx]}
-                          // mainCategory={Project.main_category_name[idx]}
-                          // newData={Project.data_dt[idx]}
-                          // checkTotal={Project.filter_price}
                           handleIntersection={this.handleIntersection}
                           customer="partner"
                         />
@@ -286,7 +242,6 @@ class ManufacturerContentContainer extends React.Component {
             {" "}
             {5 * (current_set - 1) + 5}{" "}
           </PageCount>
-          {/* <PageCount> ... </PageCount> */}
           <img
             src={pass2}
             style={{
@@ -348,47 +303,6 @@ const region_data = [
     checked: "false",
   },
 ];
-
-// const data = [
-//   {
-//     consultation: '상담 진행',
-//     name: '컴퓨터',
-//     date: '2021.03.02' ,
-//     period: '120일',
-//     estimate: '10,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     date: '2021.03.03' ,
-//     period: '121일',
-//     estimate: '11,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '키보드',
-//     date: '2021.03.04' ,
-//     period: '122일',
-//     estimate: '12,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     name: '마우스',
-//     date: '2021.03.05' ,
-//     period: '123일',
-//     estimate: '13,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '프린터',
-//     date: '2021.03.06' ,
-//     period: '124일',
-//     estimate: '14,000,000원'
-//   },
-// ]
 
 const PageBar = styled.div`
   width: 351px;
