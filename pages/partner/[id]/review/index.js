@@ -44,14 +44,6 @@ class PartnerDetail extends React.Component {
     return (
       <div>
         <Head>
-          {/* <title>Tirrilee :: {item[0].title}</title>
-          <meta property="og:url" content={`https://www.tirrilee.io/news/${item[0].id}`}/>
-          <meta property="og:image" content={item[0].thumbnail}/>
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content={`[${item[0].type}] ${item[0].title}`} />
-          <meta property="og:description" content={item[0].content} />
-          <meta name="description" content={item[0].content} />
-          <link rel="canonical" href={`https://www.tirrilee.io/portfolio/${item[0].id}`} /> */}
         </Head>
         <Nav />
         <PartnerReviewConatiner id={id}/>

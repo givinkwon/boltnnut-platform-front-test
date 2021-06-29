@@ -65,7 +65,6 @@ class DetailSearchFilterConatiner extends React.Component {
   openModal = () => {
     const { Partner } = this.props;
     console.log("open click");
-    // this.setState({ modalOpen: true });
     Partner.requestModalActive = true;
   };
   closeModal = () => {
@@ -86,7 +85,6 @@ class DetailSearchFilterConatiner extends React.Component {
               placeholder="대 카테고리"
               options={bigCategoryArray}
               getOptionLabel={(option) => option.label}
-              // value={Partner.input_category}
               onChange={Partner.setBigCategory}
               theme={(theme) => ({
                 ...theme,
@@ -102,7 +100,6 @@ class DetailSearchFilterConatiner extends React.Component {
               placeholder="소 카테고리"
               options={smallCategoryArray}
               getOptionLabel={(option) => option.label}
-              // value={Partner.input_category}
               onChange={Partner.setSmallCategory}
             />
           </div>
@@ -113,26 +110,20 @@ class DetailSearchFilterConatiner extends React.Component {
             placeholder="전체지역"
             options={this.props.Partner.filter_city_ary}
             getOptionLabel={(option) => option.city}
-            // value={Partner.input_category}
-            // onChange={Partner.setBigCategory}
           />
         </Location>
 
         <Budget>
           <span>예산</span>
           <FilterBox2 data={viewArray} />
-          {/* <FilterBox filter="budget" data={budgetArray} /> */}
           <InputContainer>
             {!Partner.minDirectInput && (
               <Select
-                // id="select"
-                // width="118px"
                 styles={customStyles}
                 placeholder="0"
                 style={{ overflow: "visible" }}
                 options={budgetArray}
                 getOptionLabel={(option) => option.label}
-                // value={data.quantity}
                 onChange={Partner.setMinBudget}
               />
             )}
@@ -154,21 +145,15 @@ class DetailSearchFilterConatiner extends React.Component {
               </DirectInputBox>
             )}
 
-            {/* <DirectInputBox>
-              <input placeholder="직접 입력하세요" />
-            </DirectInputBox> */}
 
             <span>원 ~ </span>
             {!Partner.maxDirectInput && (
               <Select
-                // id="select"
-                // width="118px"
                 styles={customStyles}
                 placeholder="0"
                 style={{ overflow: "visible" }}
                 options={budgetArray}
                 getOptionLabel={(option) => option.label}
-                // value={data.quantity}
                 onChange={Partner.setMaxBudget}
               />
             )}
@@ -190,30 +175,6 @@ class DetailSearchFilterConatiner extends React.Component {
               </DirectInputBox>
             )}
             <span>원</span>
-
-            {/* <InputBox>
-              <input
-                placeholder="0"
-                // value={Partner.search_text}
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "0")}
-                // onChange={this.searchText}
-                class="Input"
-                // onKeyDown={this.handleKeyDown}
-              />
-            </InputBox>
-            <span>원 ~</span>
-            <InputBox>
-              <input
-                placeholder="0"
-                // value={Partner.search_text}
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "0")}
-                // onChange={this.searchText}
-                class="Input"
-                // onKeyDown={this.handleKeyDown}
-              />
-            </InputBox> */}
           </InputContainer>
         </Budget>
         <Filter>
@@ -222,31 +183,14 @@ class DetailSearchFilterConatiner extends React.Component {
         </Filter>
 
         {Partner.requestModalActive && (
-          // <Layer onClick={this.modalHandler}>
           <Layer>
-            {/* <Postcode /> */}
             <span>
               <Modal
                 width={width}
                 open={Partner.requestModalActive}
                 close={this.closeModal}
-                // header="전화번호"
-                // title={data.real_phone}
-                // children={this.props.Partner.modalUserPhone}
-                //children={data.name}
               >
-                {/* <p>
-                            {data.user.phone
-                              ? data.user.phone
-                              : "전화번호 없음"}
-                          </p> */}
-                {/* <p>{idx}</p> */}
-                {/* <p>{data.name}</p> */}
               </Modal>
-              {/* <CheckBrowserModal
-                          open={this.props.Partner.modalActive}
-                          handleClose={this.closeModal}
-                        /> */}
             </span>
           </Layer>
         )}
@@ -260,15 +204,11 @@ export default DetailSearchFilterConatiner;
 const bigCategoryArray = [
   { label: "대 카테고리1", value: "대 카테고리1" },
   { label: "대 카테고리2", value: "대 카테고리2" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
 ];
 
 const smallCategoryArray = [
   { label: "소 카테고리1", value: "소 카테고리1" },
   { label: "소 카테고리2", value: "소 카테고리2" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
 ];
 
 const filterArray = [
@@ -282,7 +222,6 @@ const filterArray = [
 ];
 
 const budgetArray = [
-  // { id: 1, name: "전체", checked: false },
   { id: 1, label: "0", value: 0 },
   { id: 2, label: "1,000,000", value: 1000000 },
   { id: 3, label: "5,000,000", value: 5000000 },

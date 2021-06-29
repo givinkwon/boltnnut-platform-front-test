@@ -47,8 +47,6 @@ class Step2Container extends React.Component {
   };
 
   componentDidMount() {
-    // if(DetailQuestion.select)
-    //   DetailQuestion.index=1;
     DetailQuestion.pageCount = 0;
   }
 
@@ -134,7 +132,6 @@ class Step2Container extends React.Component {
                             {Request.drawFile
                               ? this.state.fileName
                               : "파일을 선택해 주세요. 부품별로 첨부해야 정확한 견적이 나옵니다"}
-                            {/* { Request.drawFile ? "파일이 있음" : "파일을 선택해 주세요." } */}
                           </Text>
                           <img src={fileImage} />
                           <input
@@ -144,7 +141,6 @@ class Step2Container extends React.Component {
                             onChange={(e) =>
                               this.onChangeFile(e, { nextTitle: 8 }, 1)
                             }
-                            // onClick={(event) => fileSelector({nextTitle: 8}, 1)}
                           />
                         </FileSelect>
                       </>

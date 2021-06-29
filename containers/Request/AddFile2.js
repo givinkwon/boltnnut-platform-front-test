@@ -29,20 +29,6 @@ class InputComponent extends React.Component {
     console.log(toJS(ManufactureProcess.openFileArray));
     if (ManufactureProcess.changeProject) {
       this.setState({ checkFileUpload: true });
-
-      // await Project.projectDetailData.request_set[0].requestfile_set.map(
-      //   (item, idx) => {
-      //     console.log(toJS(item));
-      //     if (item.share_inform) {
-      //       ManufactureProcess.openFileArray.push(item);
-      //     } else {
-      //       ManufactureProcess.privateFileArray.push(item);
-      //     }
-      //   }
-      // );
-      // await ManufactureProcess.openFileArray.push(
-      //   Project.projectDetailData.request_set[0].requestfile_set
-      // );
     }
 
     console.log(toJS(ManufactureProcess.openFileArray));
@@ -82,8 +68,6 @@ class InputComponent extends React.Component {
       }
 
       const fileName = e.currentTarget.files[0].name;
-      // this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
-      //ManufactureProcess.openFileArray.push({ file: e.currentTarget.files[0] });
 
       this.setState({
         ...this.state,
@@ -94,20 +78,6 @@ class InputComponent extends React.Component {
 
       const formData = new FormData();
       const files = e.target.files;
-
-      //formData.append('file', ManufactureProcess.openFileArray)
-      // for (let i = 0; i < ManufactureProcess.openFileArray.length; i++) {
-      //   formData.append(`file[${i}]`, ManufactureProcess.openFileArray[i].file);
-      //   console.log(toJS(ManufactureProcess.openFileArray[i]).file);
-      //   console.log(toJS(ManufactureProcess.openFileArray[i]));
-      // }
-      // for (let value of formData.values()) {
-      //   console.log(value);
-      // }
-
-      //console.log(formData.values);
-      //console.log(formData);
-
       Request.setCommonFile(e.currentTarget.files[0]);
       console.log(toJS(ManufactureProcess.openFileArray));
     }
@@ -124,11 +94,7 @@ class InputComponent extends React.Component {
           break;
         }
       }
-
-      //console.log(e.currentTarget.files[0]);
-      //console.log(e.currentTarget.files[1]);
       const fileName = e.currentTarget.files[0].name;
-      // this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
 
       this.setState({
         ...this.state,
@@ -366,7 +332,7 @@ const InputBox = styled.div`
   }
 }
 
-  // @media (min-width: 0px) and (max-width: 767.98px) { 
+   @media (min-width: 0px) and (max-width: 767.98px) { 
   //   height: 100%;
   //   height: 34px;
   //   object-fit: contain;
@@ -381,7 +347,20 @@ const InputBox = styled.div`
   //     width: 20px;
   //     height: 18px;
   //   }
-  // }
+  >div{
+    div:nth-of-type(2){
+      width: auto;
+      >span{      
+        >span{          
+          >span{
+            
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+   }
 `;
 const Wrap = styled.div`
   display: flex;
@@ -456,7 +435,7 @@ const FileText = styled(Content.FontSize18)`
   color: #c6c7cc;
   display: inline-flex;
   align-items: center;
-  padding: ${(props) => (props.mobile ? "0 0 0 14px" : "14px 16px")};
+  padding: ${(props) => (props.mobile ? "0 14px 0 14px" : "14px 16px")};
   flex-wrap: wrap;
   background-color: #ffffff;
   box-sizing: border-box;
@@ -481,7 +460,7 @@ const FileText = styled(Content.FontSize18)`
       margin-right: 20px;
     }
   }
-  // @media (min-width: 0px) and (max-width: 767.98px) {
+  @media (min-width: 0px) and (max-width: 767.98px) {
   //   font-size: 14px !important;
   //   padding-top: 0px;
   //   font-weight: normal;
@@ -491,7 +470,7 @@ const FileText = styled(Content.FontSize18)`
   //   letter-spacing: -0.35px;
   //   text-align: left;
   //   color: #999999;
-  // }
+  }
 `;
 const DeleteFile = styled.img`
   width: 18px;
@@ -507,4 +486,8 @@ const DeleteFile = styled.img`
   margin-right: 29px;
   vertical-align: middle;
   cursor: pointer;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-right: 13px;
+  }
 `;

@@ -146,13 +146,10 @@ class SearchFilterConatiner extends React.Component {
 
   openModal = () => {
     const { Partner } = this.props;
-    // console.log("requestmodal open click");
-    // this.setState({ modalOpen: true });
     Partner.requestModalActive = true;
   };
   closeModal = () => {
     const { Partner } = this.props;
-    // console.log("requestmodal close click");
 
     Partner.requestModalActive = false;
   };
@@ -203,13 +200,13 @@ class SearchFilterConatiner extends React.Component {
   };
   componentDidMount = async () => {
     const { Partner } = this.props;
+    Partner.subButtonActive = false;
     // await Partner.init()
     // console.log(toJS(Partner.category_main_list));
     // console.log(toJS(Partner.category_middle_list));
   };
 
   componentWillUnmount = () => {
-    // console.log("unmount");
     const { Partner } = this.props;
     Partner.filterArray.map((data, idx) => {
       data.checked = false;
@@ -227,6 +224,7 @@ class SearchFilterConatiner extends React.Component {
       if (this.state.filter_category_active) {
         this.setState({ filter_category_active: false });
       } else {
+        console.log("e");
         this.setState({ filter_category_active: true });
       }
     }
@@ -237,7 +235,8 @@ class SearchFilterConatiner extends React.Component {
       <>
         {width && width > 767.99 ? (
           <ContainerV2>
-            <Search>
+            {console.log(`Active : ${Partner.subButtonActive}`)}
+            <Search active={Partner.subButtonActive}>
               <SearchBar />
               <FilterButton
                 onClick={() => {
@@ -249,13 +248,14 @@ class SearchFilterConatiner extends React.Component {
               </FilterButton>
               <div
                 onClick={() => {
-                  // Partner.filterArray.map((data, idx) => {
-                  //   data.checked = false;
-                  // });
                   this.openModal();
                 }}
               >
                 <span>업체수배&견적 무료의뢰 </span>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
               </div>
               <div>
                 <span>업체 찾기가 힘든 경우 클릭!</span>
@@ -270,6 +270,10 @@ class SearchFilterConatiner extends React.Component {
                 }}
               >
                 <span> 바로 AI 견적 받기 </span>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
               </div>
               <div>
                 <span>도면이 있는 경우 클릭!</span>
@@ -415,9 +419,7 @@ class SearchFilterConatiner extends React.Component {
             </Filter> */}
 
             {Partner.requestModalActive && (
-              // <Layer onClick={this.modalHandler}>
               <Layer>
-                {/* <Postcode /> */}
                 <span>
                   <Modal
                     width={width}
@@ -429,9 +431,7 @@ class SearchFilterConatiner extends React.Component {
             )}
 
             {Partner.requestDoneModalActive && (
-              // <Layer onClick={this.modalHandler}>
               <Layer>
-                {/* <Postcode /> */}
                 <span>
                   <DoneModal
                     width={width}
@@ -449,11 +449,8 @@ class SearchFilterConatiner extends React.Component {
               <div>
                 <MobileSelect
                   placeholder="대 카테고리"
-                  // options={bigCategoryArray}
                   options={this.props.Partner.category_main_list}
                   getOptionLabel={(option) => option.maincategory}
-                  // value={Partner.input_category}
-                  // style={{ width: "160px" }}
                   styles={mobileCustomStyles}
                   onChange={Partner.setMainCategory}
                   theme={(theme) => ({
@@ -491,14 +488,11 @@ class SearchFilterConatiner extends React.Component {
               <InputContainer>
                 {!Partner.minDirectInput && (
                   <MobileSelect
-                    // id="select"
-                    // width="118px"
                     styles={customStyles}
                     placeholder="0"
                     style={{ overflow: "visible" }}
                     options={budgetArray}
                     getOptionLabel={(option) => option.label}
-                    // value={data.quantity}
                     onChange={Partner.setMinBudget}
                     styles={mobileCustomStyles}
                   />
@@ -509,7 +503,6 @@ class SearchFilterConatiner extends React.Component {
                     <input
                       placeholder="직접 입력하세요"
                       onBlur={(e) => {
-                        // console.log(e.target.value);
                         if (e.target.value === "") {
                           Partner.minDirectInput = false;
                         }
@@ -525,14 +518,11 @@ class SearchFilterConatiner extends React.Component {
                 <span>원 ~ </span>
                 {!Partner.maxDirectInput && (
                   <MobileSelect
-                    // id="select"
-                    // width="118px"
                     styles={customStyles}
                     placeholder="0"
                     style={{ overflow: "visible" }}
                     options={budgetArray}
                     getOptionLabel={(option) => option.label}
-                    // value={data.quantity}
                     onChange={Partner.setMaxBudget}
                     styles={mobileCustomStyles}
                   />
@@ -543,7 +533,6 @@ class SearchFilterConatiner extends React.Component {
                     <input
                       placeholder="직접 입력하세요"
                       onBlur={(e) => {
-                        // console.log(e.target.value);
                         if (e.target.value === "") {
                           Partner.maxDirectInput = false;
                         }
@@ -634,11 +623,8 @@ class SearchFilterConatiner extends React.Component {
               </div>
             </CloseButton>
 
-            {/* {console.log(toJS(Partner.requestModalActive))} */}
             {Partner.requestModalActive && (
-              // <Layer onClick={this.modalHandler}>
               <Layer>
-                {/* <Postcode /> */}
                 <span>
                   <Modal
                     width={width}
@@ -650,9 +636,7 @@ class SearchFilterConatiner extends React.Component {
             )}
 
             {Partner.requestDoneModalActive && (
-              // <Layer onClick={this.modalHandler}>
               <Layer>
-                {/* <Postcode /> */}
                 <span>
                   <DoneModal
                     width={width}
@@ -674,19 +658,14 @@ export default SearchFilterConatiner;
 const bigCategoryArray = [
   { label: "대 카테고리1", value: "대 카테고리1" },
   { label: "대 카테고리2", value: "대 카테고리2" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
 ];
 
 const smallCategoryArray = [
   { label: "소 카테고리1", value: "소 카테고리1" },
   { label: "소 카테고리2", value: "소 카테고리2" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
 ];
 
 const budgetArray = [
-  // { id: 1, name: "전체", checked: false },
   { id: 1, label: "0", value: 0 },
   { id: 2, label: "1,000,000", value: 1000000 },
   { id: 3, label: "5,000,000", value: 5000000 },
@@ -746,16 +725,17 @@ const Search = styled.div`
 
   > div:nth-of-type(3),
   > div:nth-of-type(5) {
-    box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
     padding: 8px 16px 9px 16px;
     box-sizing: border-box;
-
+    box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
     height: 44px;
     // margin-bottom: 5px;
-    display: flex;
+    // display: none;
+
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    position: relative;
     > span {
       color: #0a2165;
       font-size: 18px;
@@ -763,6 +743,167 @@ const Search = styled.div`
       line-height: 28px;
       letter-spacing: -0.45px;
     }
+    > div {
+      position: absolute;
+      background-color: #0933b3;
+    }
+
+    display: ${(props) => (props.active ? "flex" : "none")};
+    // display: none;
+    // opacity: 0;
+
+    ${(props) =>
+      props.active &&
+      css`
+        > div:nth-of-type(1) {
+          @keyframes move_LtoR {
+            0% {
+              opacity: 0;
+              width: 0;
+              height: 3px;
+              top: 0;
+              left: 0;
+            }
+            50% {
+              opacity: 1;
+              width: 100%;
+            }
+            100% {
+              opacity: 0;
+              width: 0;
+              height: 3px;
+              top: 0;
+              left: 0;
+            }
+          }
+
+          animation: move_LtoR 2s ease-in-out;
+          animation-delay: 1.5s;
+        }
+
+        > div:nth-of-type(2) {
+          @keyframes move_TtoB {
+            0% {
+              opacity: 0;
+              width: 3px;
+              height: 0;
+              top: 0;
+              right: 0;
+            }
+            50% {
+              opacity: 1;
+              height: 100%;
+            }
+            100% {
+              opacity: 0;
+              width: 3px;
+              height: 0;
+              top: 0;
+              right: 0;
+            }
+          }
+
+          animation: move_TtoB 2s ease-in-out;
+          animation-delay: 1.5s;
+        }
+
+        > div:nth-of-type(3) {
+          @keyframes move_RtoL {
+            0% {
+              opacity: 0;
+              width: 0;
+              height: 3px;
+              bottom: 0;
+              right: 0;
+            }
+            50% {
+              opacity: 1;
+              width: 100%;
+            }
+            100% {
+              opacity: 0;
+              width: 0;
+              height: 3px;
+              bottom: 0;
+              right: 0;
+            }
+          }
+
+          animation: move_RtoL 2s ease-in-out;
+          animation-delay: 1.5s;
+        }
+
+        > div:nth-of-type(4) {
+          @keyframes move_BtoT {
+            0% {
+              opacity: 0;
+              width: 3px;
+              height: 0;
+              bottom: 0;
+              left: 0;
+            }
+            50% {
+              opacity: 1;
+              height: 100%;
+            }
+            100% {
+              opacity: 0;
+              width: 3px;
+              height: 0;
+              bottom: 0;
+              left: 0;
+            }
+          }
+
+          animation: move_BtoT 2s ease-in-out;
+          animation-delay: 1.5s;
+        }
+        > span {
+          @keyframes appear {
+            0% {
+              opacity: 0;
+              // transform: scale(1.3);
+            }
+
+            100% {
+              opacity: 1;
+              // transform: scale(1);
+              // transform: skewY(180deg);
+              // display: flex;
+            }
+          }
+
+          animation: appear 2s ease-in-out;
+          animation-delay: 1s;
+          animation-fill-mode: both;
+        }
+      `}
+  }
+
+  > div:nth-of-type(4),
+  > div:nth-of-type(6) {
+    display: ${(props) => (props.active ? "static" : "none")};
+
+    ${(props) =>
+      props.active &&
+      css`
+        @keyframes appear_two {
+          0% {
+            opacity: 0;
+            // transform: scale(1.3);
+          }
+
+          100% {
+            opacity: 1;
+            // transform: scale(1);
+            // transform: skewY(180deg);
+          }
+        }
+
+        animation: appear_two 2s ease-in-out;
+        animation-delay: 1.5s;
+        animation-fill-mode: both;
+      `}
   }
   > div:nth-of-type(4) {
     position: absolute;
@@ -812,12 +953,13 @@ const Search = styled.div`
       padding: 4px 8px 5px 8px;
       span {
         font-size: 11px;
+        // border: 3px solid red;
       }
     }
 
     > div:nth-of-type(4) {
       bottom: -25px;
-      right: 120px;
+      right: 165px;
       > span {
         font-size: 10px;
       }
@@ -825,40 +967,43 @@ const Search = styled.div`
 
     > div:nth-of-type(6) {
       bottom: -25px;
-      right: 6px;
+      right: 49px;
       > span {
         font-size: 10px;
       }
     }
+  }
 
-    @media (min-width: 992px) and (max-width: 1299.98px) {
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    > span {
+      font-size: 18px;
+      width: 50px;
+      border: 3px solid blue;
+    }
+
+    > div:nth-of-type(3) {
+      margin-right: 10px;
+      width: 200px;
+    }
+    > div:nth-of-type(5) {
+      width: 150px;
+    }
+
+    > div:nth-of-type(3),
+    > div:nth-of-type(5) {
+      padding: 6px 12px 7px 12px;
+      // border: 3px solid green;
+      span {
+        // border: 3px solid red;
+        font-size: 13px;
+      }
+    }
+
+    > div:nth-of-type(4) {
+      bottom: -25px;
+      right: 154px;
       > span {
-        font-size: 18px;
-        width: 50px;
-      }
-
-      > div:nth-of-type(3) {
-        margin-right: 10px;
-        width: 200px;
-      }
-      > div:nth-of-type(5) {
-        width: 150px;
-      }
-
-      > div:nth-of-type(3),
-      > div:nth-of-type(5) {
-        padding: 6px 12px 7px 12px;
-        span {
-          font-size: 13px;
-        }
-      }
-
-      > div:nth-of-type(4) {
-        bottom: -25px;
-        right: 133px;
-        > span {
-          font-size: 12px;
-        }
+        font-size: 12px;
       }
     }
 

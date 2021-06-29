@@ -80,14 +80,6 @@ class ProposalModal extends Component {
   }
 
   componentDidMount() {
-    // const splitedUrl = window.location.pathname.split('/')
-    // let pathname = splitedUrl[splitedUrl.length-2]
-    // const requestId = pathname === 'detail' ? splitedUrl[splitedUrl.length-3] : splitedUrl[splitedUrl.length-1]
-
-    // this.setState({
-    //   ...this.state,
-    //   requestId: requestId,
-    // })
   }
 
   handleClick = async () => {
@@ -106,13 +98,9 @@ class ProposalModal extends Component {
     var regexr1 = /^(\D*\d*\d{2,3}\D*\d{3,4}\D*\d{4}\D*\d*)|(\D*\d*[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}\D*\d*)$/g;
 
     let i1 = regexr1.test(this.props.Proposal.expert);
-    //let i2 = regexr2.test(this.props.Proposal.expert);
     let i3 = regexr1.test(this.props.Proposal.strategy);
-    //let i4 = regexr2.test(this.props.Proposal.strategy);
     let i5 = regexr1.test(this.props.Proposal.price);
-    //let i6 = regexr2.test(this.props.Proposal.price);
     let i7 = regexr1.test(this.props.Proposal.period);
-    //let i8 = regexr2.test(this.props.Proposal.period);
 
     if(i1) {
         alert('전화번호, 이메일 등의 직접 정보 입력 시 이용상 제재를 받을 수 있습니다.');
@@ -163,7 +151,6 @@ class ProposalModal extends Component {
 
   render() {
     const {Proposal, Answer, Auth, open, handleClose} = this.props;
-    //const {requestId} = this.state
     const product = '하이패스'
     const request = Proposal.current_request
     const subclass = request ? Answer.getSubclassById(request.product) : null
@@ -310,7 +297,7 @@ class ProposalModal extends Component {
                   placeholder="2400"
                 />
                 <Text.FontSize20 color="#404040" fontWeight={300}>
-                  &nbsp;만원{/* ~&nbsp; */}
+                  &nbsp;만원
                 </Text.FontSize20>
               </div>
             </div>
@@ -368,7 +355,7 @@ class ProposalModal extends Component {
                   placeholder="40"
                 />
                 <Text.FontSize20 color="#404040" fontWeight={300}>
-                  &nbsp;영업일{/* ~&nbsp; */}
+                  &nbsp;영업일
                 </Text.FontSize20>
               </div>
             </div>
@@ -389,7 +376,7 @@ class ProposalModal extends Component {
                   placeholder="2400"
                 />
                 <Text.FontSize20 color="#404040" fontWeight={300}>
-                  &nbsp;만원{/* ~&nbsp; */}
+                  &nbsp;만원
                 </Text.FontSize20>
               </div>
             </div>

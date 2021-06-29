@@ -19,18 +19,6 @@ class ClientConatiner extends React.Component {
     return (
       <CustomContainer>
         <Section1 />
-      {/*  <Section2 /> */}
-        {/* <ButtonComponent
-          style={{ marginTop: 30 }}
-          backgroundColor={PRIMARY}
-          borderColor={PRIMARY}
-          borderRadius={10}
-          onClick={this.toPay}
-        >
-         <Text.FontSize24 color={WHITE} fontWeight={500}>
-            미팅권 구매하기
-          </Text.FontSize24>
-        </ButtonComponent>*/}
       </CustomContainer>
     );
   }

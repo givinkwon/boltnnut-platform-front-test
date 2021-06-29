@@ -23,13 +23,7 @@ class SearchBarConatiner extends React.Component {
     this.props.Partner.search_text = e.target.value;
   };
   search = () => {
-  //  if (this.props.Auth.logged_in_partner) {
-  //    this.setState({ modal_open: true });
-  //  } else if (this.props.Auth.logged_in_client.client_class) {
       this.props.Partner.search();
-  // } else {
-  //    this.setState({ modal_open: true });
-  //  }
   };
   closeModal = () => {
     this.setState({
@@ -51,7 +45,6 @@ class SearchBarConatiner extends React.Component {
     const { Partner } = this.props;
     return (
       <Form>
-        {/*<CheckClassModal open={modal_open} handleClose={this.closeModal} />*/}
         <Container>
           <SearchBar>
             <ButtonComponent

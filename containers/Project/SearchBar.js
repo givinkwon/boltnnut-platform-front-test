@@ -36,7 +36,6 @@ class SearchBarConatiner extends React.Component {
   activeHandler = (idx) => {
     const { Project } = this.props;
     if (idx === Project.radiobox_checked_idx) {
-      // console.log("equal")
       return true;
     } else {
       return false;
@@ -51,7 +50,6 @@ class SearchBarConatiner extends React.Component {
       Project.filter = item.name;
       Project.project_next = null;
       Project.project_count = null;
-      // this.count = 0;
       Project.currentPage = 1;
       console.log(Project.filter);
       Project.getProjectByPrice(Project.search_text);
@@ -70,7 +68,6 @@ class SearchBarConatiner extends React.Component {
 
   searchText = (e) => {
     const { Project } = this.props;
-    // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
     Project.search_text = e.target.value;
     console.log(e.target);
@@ -136,8 +133,6 @@ class SearchBarConatiner extends React.Component {
         fontWeight: "normal",
         lineHeight: 34,
         letterSpacing: "-0.45px",
-        // border: "1px solid #c7c7c7",
-        // borderRadius: "3px",
         color: "#c1bfbf",
         display: "flex",
       }),
@@ -178,7 +173,6 @@ class SearchBarConatiner extends React.Component {
             <SearchBar>
               <input
                 placeholder=""
-                // value={Partner.search_text}
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "")}
                 onChange={this.searchText}
@@ -248,7 +242,6 @@ class SearchBarConatiner extends React.Component {
               {request_data.map((item, idx) => {
                 return (
                   <>
-                    {/* {console.log(toJS(item))} */}
                     <FilterContent
                       onClick={() => {
                         this.onClickHandler(item, item.id);

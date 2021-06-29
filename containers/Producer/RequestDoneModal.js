@@ -1,5 +1,4 @@
 import React from "react";
-// import Select from "react-select";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
 import Router from "next/router";
@@ -36,7 +35,6 @@ class RequestDoneModal extends React.Component {
   componentDidMount() {
     const { Partner } = this.props;
     console.log("didmount");
-    // Partner.requestModalActive = false;
   }
   render() {
     const { open, close, header, children, width, Partner } = this.props;
@@ -49,10 +47,6 @@ class RequestDoneModal extends React.Component {
           >
             {open ? (
               <>
-                {/* <button className="close" onClick={close}>
-              {" "}
-              &times;{" "}
-            </button> */}
                 <section>
                   <header>고객님의 제조 의뢰가 접수 되었습니다.</header>
                   <main>

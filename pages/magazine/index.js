@@ -15,12 +15,9 @@ const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 @observer
 class Index extends React.Component {
   state = {
-    width: 0,
+    width: "",
   };
   componentDidMount() {
-    // this.props.Magazine.init()
-    //창 크기
-    // conflict..?
     this.props.Auth.bgColor = "#f6f6f6";
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -29,11 +26,11 @@ class Index extends React.Component {
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
@@ -42,7 +39,7 @@ class Index extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-}
+  }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
   }

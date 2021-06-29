@@ -27,8 +27,6 @@ class PartnerPaymentConatiner extends React.Component {
             {tab == 1 && <NormalContainer/>}
             {tab == 2 && <PrimeContainer/>}
             {tab == 3 && <BusinessContainer/>}
-        {/*<CoinConatiner />*/}
-        {/*<PaymentConatiner />*/}
       </CustomContainer>
     );
   }

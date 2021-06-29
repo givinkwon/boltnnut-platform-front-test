@@ -13,7 +13,6 @@ const img_item3 = "static/images/request/Step2/ProductInfo/item3.svg";
 class MobileProductInfoContainer extends React.Component {
   componentDidMount()
   {
-    // console.log(this.props.ManufactureProcess.title_list);
   }
 
   render(){

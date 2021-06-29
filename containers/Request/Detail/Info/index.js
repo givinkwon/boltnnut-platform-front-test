@@ -11,8 +11,6 @@ class InfoConatiner extends React.Component {
     return (
       <Container>
         <Step1Container/>
-      {/*  <Step2Container/> */}
-      {/*  <Step3Conatiner/>*/}
       </Container>
     )
   }

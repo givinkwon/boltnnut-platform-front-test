@@ -11,10 +11,6 @@ const star = "/static/icon/star_blue3.svg";
 @inject("Partner", "Auth")
 @observer
 class ReviewCard extends React.Component {
-  // constructor (props) {
-  //     super(props);
-  //     this.hideLoader = this.hideLoader.bind(this);
-  // }
   state = {
     width: null,
   };

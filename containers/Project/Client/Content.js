@@ -38,8 +38,6 @@ class ProjectContentContainer extends React.Component {
     Project.selectedProjectId = id;
     await Project.getProjectDetail(id);
     Project.newIndex = 1;
-
-    // await Router.push(`/project/${id}`);
     Project.setProjectDetailData(id);
   };
 
@@ -102,7 +100,6 @@ class ProjectContentContainer extends React.Component {
           style={{ backgroundColor: "#f9f9f9", paddingTop: "49px" }}
           id="MyBackground"
         >
-          {/* {!Project.projectDataList[0] && <NoProject/>} */}
           {Project.project_existence &&
           Project.projectDataList &&
           Project.projectDataList[0] ? (
@@ -127,7 +124,6 @@ class ProjectContentContainer extends React.Component {
                             mainCategory={Project.main_category_name[idx]}
                             newData={Project.data_dt[idx]}
                             handleIntersection={this.handleIntersection}
-                            // onClick={() => this.pushToDetail(item.id)}
                           />
                         </div>
                       </Container>
@@ -214,7 +210,6 @@ class ProjectContentContainer extends React.Component {
                   {" "}
                   {5 * (current_set - 1) + 5}{" "}
                 </PageCount>
-                {/* <PageCount> ... </PageCount> */}
                 <img
                   src={pass2}
                   style={{

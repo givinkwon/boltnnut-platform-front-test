@@ -103,6 +103,5 @@ export function sendKakaoTalk(req) {
     method: "POST",
     url: `${ROOT_URL}/answer/chat/`,
     data: req,
-    // headers: req.headers ? req.headers : null,
   });
 }

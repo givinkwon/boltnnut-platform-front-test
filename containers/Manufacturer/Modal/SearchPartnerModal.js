@@ -8,14 +8,11 @@ import PartnerCard from "./PartnerCard";
 import { toJS } from "mobx";
 import * as PartnerAPI from "axios/Partner";
 
-//import Modal from '../../../commons/components/Modals/Modal';
 const star = "/static/icon/star.svg";
 const searchImg = "/static/images/search_cobalt-blue.png";
 
 const pass1 = "/static/images/pass1.png";
 const pass2 = "/static/images/pass2.png";
-
-//const star = "/static/icon/info/star.png";
 
 @inject("Partner", "Auth")
 @observer
@@ -46,71 +43,18 @@ class SearchPartnerModal extends React.Component {
     Partner.partnerExist = true;
   };
 
-  //   onSubmit = async () => {
-  //     const { Partner, Auth } = this.props;
-
-  //     let score = 0;
-  //     await this.state.star_ary.map((item, idx) => {
-  //       if (item.checked) {
-  //         score += 1;
-  //       }
-  //     });
-
-  //     // console.log(Auth.logged_in_client.id);
-  //     // console.log("제출 클릭!");
-  //     // console.log(Partner.reviewPartnerName);
-  //     // console.log(Partner.reviewContent);
-
-  //     // console.log(score);
-  //     var formData = new FormData();
-
-  //     formData.append("partnername", Partner.reviewPartnerName);
-  //     formData.append("client", Auth.logged_in_client.id);
-  //     formData.append("score", score);
-  //     formData.append("content", Partner.reviewContent);
-
-  //     // const Token = localStorage.getItem("token");
-
-  //     const req = {
-  //       data: formData,
-  //     };
-
-  //     // console.log(req);
-
-  //     PartnerAPI.setReview(req)
-  //       .then((res) => {
-  //         console.log("create: ", res);
-  //         alert("리뷰 작성이 정상적으로 완료되었습니다");
-  //         Partner.reviewModalActive = false;
-  //         // window.location.reload(true);
-  //         history.go(0);
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //         console.log(e.response);
-  //       });
-  //   };
 
   searchText = async (e) => {
     const { Partner } = this.props;
-    // Partner.reviewPartnerName = e.target.value;
-    // console.log(toJS(Partner.partnersName));
     if (Partner.partnersName != "") {
       await Partner.getPartnerName(Partner.partnersName);
       Partner.reviewCurrentPage = 1;
     }
-    // console.log(toJS(Partner.partnersList));
   };
 
   handleKeyDown = async (e) => {
     const { Partner } = this.props;
     if (e.key === "Enter") {
-      // console.log("Enter");
-      // console.log(e);
-      // console.log(toJS(Partner.partnersName));
-      //     if (Partner.partnersName != null) {
-      //       ManufactureProcess.saveSearchText(Partner.search_text);
-      //     }
 
       Partner.reviewCurrentPage = 1;
       Partner.getPartnerName(Partner.partnersName);
@@ -153,10 +97,7 @@ class SearchPartnerModal extends React.Component {
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
     const { open, close, header, children, width, data, Partner } = this.props;
-    // console.log(open);
-    // console.log(children);
     const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
-    // const current_set = 5;
     return (
       <ModalBox
         modal={open ? "openModal modal" : "modal"}
@@ -164,19 +105,7 @@ class SearchPartnerModal extends React.Component {
       >
         {open ? (
           <>
-            {/* <button
-              className="close"
-              onClick={(e) => {
-                e.stopPropagation();
-                close();
-              }}
-            >
-              {" "}
-              &times;{" "}
-            </button> */}
             <section>
-              {/* <header>{`${data.name} ${header}`}</header> */}
-              {/* <header>{`${header}`}</header> */}
               <header>파트너 찾기</header>
               <main>
                 <div>
@@ -186,9 +115,6 @@ class SearchPartnerModal extends React.Component {
                       console.log(e.target.value);
                       console.log("onBlur");
                       Partner.partnersName = e.target.value;
-                      // if (e.target.value === "") {
-                      //   Partner.maxDirectInput = false;
-                      // }
                       e.target.placeholder =
                         "원하는 분야의 제조업체를 검색하세요";
                     }}
@@ -337,7 +263,6 @@ class SearchPartnerModal extends React.Component {
                         {" "}
                         {5 * (current_set - 1) + 5}{" "}
                       </PageCount>
-                      {/* <PageCount> ... </PageCount> */}
                       <img
                         src={pass2}
                         style={{

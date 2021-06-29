@@ -33,9 +33,7 @@ class ProjectContainer extends React.Component {
   }
   async componentDidMount() {
     const { Auth, Project } = this.props;
-    // if (Auth.logged_in_client) {
-    //   await this.getProject(Auth.logged_in_client.id);
-    // }
+  
     await Auth.checkLogin();
     if (Auth.logged_in_client) {
       Project.getPage(Auth.logged_in_client.id);
@@ -43,7 +41,6 @@ class ProjectContainer extends React.Component {
     
     Project.newIndex = 0;
     Project.myIndex = 1;
-    // await Auth.checkLogin();
     
   }
 
@@ -143,19 +140,6 @@ class ProjectContainer extends React.Component {
 
 export default ProjectContainer;
 
-// const Header = styled.div`
-//   margin-top: 90px;
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-// `
-
-// const ProjectDivider = styled.div`
-// width: 100%;
-//   display: flex;
-//   flex-direction: row;
-//   border-bottom: 1px solid #c6c7cc;
-// `
 const DividingSelect = styled.div`
   margin-top: 42px;
   display: flex;

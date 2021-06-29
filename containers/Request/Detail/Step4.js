@@ -46,15 +46,6 @@ class Step4Conatiner extends React.Component {
     return (
       <Container style={{marginBottom: 60}}>
         <Board>
-
-          {/*<Text.FontSize28 color={DARKGRAY} fontWeight={500} style={{marginTop: 10}}>
-            공통질문
-          </Text.FontSize28>
-          <TitleBox>
-            <Text.FontSize40 color={BLACK} fontWeight={500}>
-              의뢰서 완성하기
-            </Text.FontSize40>
-          </TitleBox>*/}
           <Content>
             <Text.FontSize28 fontWeight={500}>의뢰서를 바탕으로 추가 문답 진행 후
             <br/><br/>

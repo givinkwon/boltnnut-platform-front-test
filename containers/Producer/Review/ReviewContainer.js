@@ -10,7 +10,6 @@ import Router from "next/router";
 @observer
 class ReviewContainer extends React.Component {
   state = {
-    // width: null,
     modalOpen: false,
   };
 
@@ -32,12 +31,6 @@ class ReviewContainer extends React.Component {
     this.setState({ modalOpen: true });
 
     this.props.Partner.reviewModalActive = true;
-    // if (!user_phone) {
-    //   this.props.Partner.modalUserPhone = "전화번호 없음";
-    // } else {
-    //   this.props.Partner.modalUserPhone = user_phone;
-    //   //this.props.Partner.modalUserPhone.splice(7, 0, "-")
-    // }
   };
   closeModal = () => {
     console.log("close click");
@@ -52,32 +45,16 @@ class ReviewContainer extends React.Component {
     return (
       <>
         {Partner.reviewModalActive && (
-          // <Layer onClick={this.modalHandler}>
           <Layer>
-            {/* <Postcode /> */}
             <span>
               <Modal
                 width={width}
                 open={this.props.Partner.reviewModalActive}
                 close={this.closeModal}
                 header="Review"
-                // data={data}
-                // title={data.real_phone}
                 children={this.props.Partner.modalUserPhone}
-                //children={data.name}
               >
-                {/* <p>
-                            {data.user.phone
-                              ? data.user.phone
-                              : "전화번호 없음"}
-                          </p> */}
-                {/* <p>{idx}</p> */}
-                {/* <p>{data.name}</p> */}
               </Modal>
-              {/* <CheckBrowserModal
-                          open={this.props.Partner.modalActive}
-                          handleClose={this.closeModal}
-                        /> */}
             </span>
           </Layer>
         )}
@@ -86,9 +63,6 @@ class ReviewContainer extends React.Component {
             reviewDone={Partner.review_done}
             onClick={() => {
               console.log("click");
-              // console.log(data.name);
-              // Partner.partnerName = data.name;
-              // console.log(Partner.partnerName);
               this.openModal();
             }}
           >
@@ -98,7 +72,6 @@ class ReviewContainer extends React.Component {
             reviewDone={Partner.review_done}
             loadReview={Partner.loadReviewData}
           >
-            {/* <h1>{data.name}</h1> */}
             {Partner.review_done && <ReviewCard />}
           </MainContainer>
         </div>

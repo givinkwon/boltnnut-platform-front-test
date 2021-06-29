@@ -1,12 +1,11 @@
 import React from "react";
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import SelectComponent from 'Select';
+import SelectComponent from "Select";
 import ButtonComponent from "components/Buttonv2";
 
-import Background from 'components/Background';
-import Container from 'components/Containerv1';
-
+import Background from "components/Background";
+import Container from "components/Containerv1";
 
 import { PRIMARY2 } from "static/style";
 
@@ -20,30 +19,24 @@ class SearchBarConatiner extends React.Component {
   };
 
   selectClick = () => {
-    const {list} = this.state;
+    const { list } = this.state;
     this.setState({ list: true });
+  };
 
-  }
-
-  selectOut= () =>{
-    const {list} = this.state;
+  selectOut = () => {
+    const { list } = this.state;
     this.setState({ list: false });
-
-  }
-
+  };
 
   searchText = (e) => {
-    const { Magazine } = this.props
-    // this.props.Partner.search_text = e.target.value;
-    //this.setState({search : e.target.value})
-    Magazine.search_text = e.target.value
+    const { Magazine } = this.props;
+    Magazine.search_text = e.target.value;
   };
   search = () => {
-    const { Magazine } = this.props
- 
-    Magazine.current_page = 1
-    Magazine.init(Magazine.search_text)
-    
+    const { Magazine } = this.props;
+
+    Magazine.current_page = 1;
+    Magazine.init(Magazine.search_text);
   };
   closeModal = () => {
     this.setState({
@@ -52,17 +45,16 @@ class SearchBarConatiner extends React.Component {
     });
   };
   handleKeyDown = (e) => {
-    const { Magazine } = this.props
-    if (e.key === "Enter") {      
-      Magazine.current_page = 1
-      Magazine.init(Magazine.search_text)
+    const { Magazine } = this.props;
+    if (e.key === "Enter") {
+      Magazine.current_page = 1;
+      Magazine.init(Magazine.search_text);
     }
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-    //console.log(this.props.Project.input_category) 
   }
-  render() {    
+  render() {
     const { Magazine } = this.props;
     return (
       <Form>
@@ -73,30 +65,30 @@ class SearchBarConatiner extends React.Component {
         <input style={{display: 'none'}} class="Input"/>       
           <Select placeholder='전체' options={categoryArray}  getOptionLabel={(option) => option.label}/>    
         </Box> */}
-          <SearchBar>        
-              <input
-                placeholder="원하는 분야의 제조업체를 검색하세요"
-                // value={Partner.search_text}
-                onFocus={(e) => e.target.placeholder = ''}
-                onBlur={(e) => e.target.placeholder = '원하는 분야의 제조업체를 검색하세요'}
-                onChange={this.searchText}                
-                class="Input"
-                onKeyDown={this.handleKeyDown}
-              />            
-          </SearchBar>
-          <SearchButton              
-                width={80}
-                borderColor={PRIMARY2}
-                borderRadius={0}
-                onClick={this.search}                
-              >
-                <img
-                  style={{ width: 18, height: 18}}
-                  src="/static/images/search_cobalt-blue.png"
-                />
-          </SearchButton>
+        <SearchBar>
+          <input
+            placeholder="원하는 분야의 제조업체를 검색하세요"
+            onFocus={(e) => (e.target.placeholder = "")}
+            onBlur={(e) =>
+              (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
+            }
+            onChange={this.searchText}
+            class="Input"
+            onKeyDown={this.handleKeyDown}
+          />
+        </SearchBar>
+        <SearchButton
+          width={80}
+          borderColor={PRIMARY2}
+          borderRadius={0}
+          onClick={this.search}
+        >
+          <img
+            style={{ width: 18, height: 18 }}
+            src="/static/images/search_cobalt-blue.png"
+          />
+        </SearchButton>
       </Form>
-
     );
   }
 }
@@ -104,19 +96,19 @@ class SearchBarConatiner extends React.Component {
 export default SearchBarConatiner;
 
 const categoryArray = [
-  {label: '전체', value: '전체'},
-  {label: '제목', value: '제목'},
-  {label: '내용', value: '내용'},  
+  { label: "전체", value: "전체" },
+  { label: "제목", value: "제목" },
+  { label: "내용", value: "내용" },
 ];
 
 const SearchBar = styled.div`
   display: flex;
   //width: 640px;
   width: 63%;
-  height: 80px;
+  height: 44px;
   box-sizing: border-box;
-  margin 0 24px;
-  
+  margin-right: 24px;
+
   input {
     width: 100%;
     padding: 0 14px;
@@ -126,7 +118,7 @@ const SearchBar = styled.div`
     :focus {
       outline: none;
     }
-    ::placeholder{
+    ::placeholder {
       color: #c1bfbf;
     }
   }
@@ -179,18 +171,17 @@ const SearchButton = styled(ButtonComponent)`
       display: none;
     }
   }
-`
-
+`;
 
 const Select = styled(SelectComponent)`
   width: 180px;
   height: 44px;
   box-sizing: border-box;
 
-  option{
+  option {
     color: #c1bfbf;
   }
-  
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin: 0;
     padding: 0;
@@ -203,32 +194,36 @@ const Select = styled(SelectComponent)`
     background-color: #ffffff;
     position: relative;
   }
-`
+`;
 
 const Box = styled.div`
   width: 18%;
 
-  ${ props => props.active && css`
-  svg{
-    @keyframes select{
-      0% {
-        transform: skewY(-180deg);
-      }
-    }
+  ${(props) =>
+    props.active &&
+    css`
+      svg {
+        @keyframes select {
+          0% {
+            transform: skewY(-180deg);
+          }
+        }
 
-    animation: select 0.4s ease-out;
-    transform: rotate(-180deg);
-  }
-  `}
-
-  ${props => !props.active && css`
-  svg{
-    @keyframes selectOut{
-      0% {
+        animation: select 0.4s ease-out;
         transform: rotate(-180deg);
       }
-    }
-    animation: selectOut 0.4s ;
-  }
-`}
-`
+    `}
+
+  ${(props) =>
+    !props.active &&
+    css`
+      svg {
+        @keyframes selectOut {
+          0% {
+            transform: rotate(-180deg);
+          }
+        }
+        animation: selectOut 0.4s;
+      }
+    `}
+`;

@@ -4,7 +4,6 @@ import moment from "moment";
 import { inject, observer } from 'mobx-react';
 const prevMonth = "/static/images/request/Calendar/MobilePrevMonth.svg";
 const nextMonth = "/static/images/request/Calendar/MobileNextMonth.svg";
-// const dropdown = '/static/images/request/Step4/dropdown.png';
 
 
 @inject('Request', 'Schedule')

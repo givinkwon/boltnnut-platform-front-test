@@ -48,24 +48,6 @@ class ProfileContainer extends Component {
         </CardHead>
         <CardBody>
           <AnswerWrapper>
-            {/*<CompanyInfo>
-              <div>
-                <CompanyInfoBox>
-                  <Text.FontSize24 color="#404040" fontWeight={700}>계약한 프로젝트</Text.FontSize24>
-                  <Text.FontSize24 color="#404040" fontWeight={500}>{Partner.detail.meeting_count}건</Text.FontSize24>
-                  <a onClick={() => Router.push(`/partner/${id}/review`)}>
-                    <img className="imageButton" src={'/static/images/button-go.png'}  />
-                  </a>
-                </CompanyInfoBox>
-                <CompanyInfoBox>
-                  <Text.FontSize24 color="#404040" fontWeight={700}>포트폴리오</Text.FontSize24>
-                  <Text.FontSize24 color="#404040" fontWeight={500}>{Partner.detail.portfolio_set.length}건</Text.FontSize24>
-                  <a onClick={() => this.pushToPortfolio(id)}>
-                    <img className="imageButton" src={'/static/images/button-go.png'}/>
-                  </a>
-                </CompanyInfoBox>
-              </div>
-            </CompanyInfo>*/}
             <AnswerInfoBox>
               <AnswerInfo>
                 <Text.FontSize14 color="#404040" fontWeight={700}>
@@ -93,56 +75,6 @@ class ProfileContainer extends Component {
               </AnswerInfo>
             </AnswerInfoBox>
           </AnswerWrapper>
-          {/*<RateBox>
-            <div>
-              <ScoreBox>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>의사소통</Text.FontSize20>
-                <Rating rating={Partner.detail.avg_talk_score === 0 ? 0 : Partner.detail.avg_talk_score.talk_score__avg}/>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-                  {Partner.detail.avg_talk_score === 0 ? '0.0' : Partner.detail.avg_talk_score.talk_score__avg.toFixed(1)}
-                </Text.FontSize20>
-              </ScoreBox>
-
-              <ScoreBox>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>전문성</Text.FontSize20>
-                <Rating rating={Partner.detail.avg_expert_score === 0 ? 0 : Partner.detail.avg_expert_score.expert_score__avg}/>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-                  {Partner.detail.avg_expert_score === 0 ? '0.0' : Partner.detail.avg_expert_score.expert_score__avg.toFixed(1)}
-                </Text.FontSize20>
-              </ScoreBox>
-
-              <ScoreBox last onlyPC>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>일정 만족도</Text.FontSize20>
-                <Rating rating={Partner.detail.avg_time_score === 0 ? 0 : Partner.detail.avg_time_score.time_score__avg}/>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-                  {Partner.detail.avg_time_score === 0 ? '0.0' : Partner.detail.avg_time_score.time_score__avg.toFixed(1)}
-                </Text.FontSize20>
-              </ScoreBox>
-            </div>
-            <div>
-              <ScoreBox>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>가격 만족도</Text.FontSize20>
-                <Rating rating={Partner.detail.avg_price_score === 0 ? 0 : Partner.detail.avg_price_score.price_score__avg}/>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-                  {Partner.detail.avg_price_score === 0 ? '0.0' : Partner.detail.avg_price_score.price_score__avg.toFixed(1)}
-                </Text.FontSize20>
-              </ScoreBox>
-
-              <ScoreBox>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>신뢰성</Text.FontSize20>
-                <Rating rating={Partner.detail.avg_result_score === 0 ? 0 : Partner.detail.avg_result_score.result_score__avg}/>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-                  {Partner.detail.avg_result_score === 0 ? '0.0' : Partner.detail.avg_result_score.result_score__avg.toFixed(1)}
-                </Text.FontSize20>
-              </ScoreBox>
-              <ScoreBox last>
-                <Text.FontSize18 color={DARKGRAY} fontWeight={500}>자세히 보기</Text.FontSize18>
-                <a onClick={() => Router.push(`/partner/${id}/review`)}>
-                  <img className="imageButton" src={'/static/images/button-go.png'}  />
-                </a>
-              </ScoreBox>
-            </div>
-          </RateBox>*/}
         </CardBody>
       </Card>
     )

@@ -66,29 +66,16 @@ class EmailConatiner extends React.Component {
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
-  // handleChange = (e) => {
-  //   this.setState({
-  //     [e.target.name]: e.target.value,
-  //   });
-  //   // 파라미터로 받은 event.target.name이 name 아닐 경우에만 handleCheck함수 실행
-  //   // setTimeout으로 딜레이를 준 이유는 딜레이를 주지 않았을 경우 setState 변경된 값이 handleCheck에서 바로 반영되지 않음
-  //   if (e.target.name !== 'name') {
-  //     setTimeout(this.handleCheck, 100);
-  //   }
-  // };
   handleCheck = () => {
     const { firstPassword, lastPassword } = this.state;
-    // 비밀번호 무입력 상태일 때와 둘 중에 하나의 값이 입력 상태가 아닐때
     if (firstPassword.length < 1 || lastPassword.length < 1) {
       this.setState({
         checkPassword: '📝패스워드 입력📝',
       });
-      // 비밀번호가 같다면 일치
     } else if (firstPassword === lastPassword) {
       this.setState({
         checkPassword: '✅일치 ✅',
       });
-      // 비밀번호가 같지 않다면 불일치
     } else {
       this.setState({
         checkPassword: '❌불일치 ❌',
@@ -102,9 +89,6 @@ class EmailConatiner extends React.Component {
 
     return (
       <div style={{marginBottom : 45}}>
-        {/* <Header>
-          <Text.FontSize20 color={WHITE} fontWeight={700}>{Auth.type === 'expert' ? '이메일/비밀번호' : '회원가입'} </Text.FontSize20>
-        </Header> */}
         <Content>
         { width > 767.98 ? (
           <>
@@ -120,10 +104,6 @@ class EmailConatiner extends React.Component {
 
           <W50 left>
             <InputComponent placeholder='-없이 입력해주세요' label='휴대전화' type='phone' onChange={Auth.setPhone} value={Auth.phone}/>
-            {/* <br/>
-            {Auth.type === 'expert' ? (<Text.FontSize14 color={DARKGRAY} fontWeight={500}>제조 의뢰 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
-                                     :(<Text.FontSize14 color={DARKGRAY} fontWeight={500}>파트너와 미팅 및 계약 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
-            } */}
           </W50>
           <W50 right>
             <SelectBox>
@@ -175,10 +155,6 @@ class EmailConatiner extends React.Component {
 
           <W100>
             <InputComponent placeholder='-없이 입력해주세요' label='휴대전화' type='phone' onChange={Auth.setPhone} value={Auth.phone}/>
-            {/* <br/>
-            {Auth.type === 'expert' ? (<Text.FontSize14 color={DARKGRAY} fontWeight={500}>제조 의뢰 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
-                                     :(<Text.FontSize14 color={DARKGRAY} fontWeight={500}>파트너와 미팅 및 계약 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
-            } */}
           </W100>
           <W100>
             <SelectBox>

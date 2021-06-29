@@ -28,8 +28,6 @@ const customStyles = {
     fontWeight: "normal",
     lineHeight: 34,
     letterSpacing: "-0.45px",
-    // border: "1px solid #c7c7c7",
-    // borderRadius: "3px",
     color: "#c1bfbf",
     display: "flex",
   }),

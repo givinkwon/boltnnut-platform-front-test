@@ -18,7 +18,6 @@ class CheckReviewModal extends Component {
 
     if(acceptance) {
       // 리뷰 post
-      // answer.writed_review = true
       postReview()
     }
   }

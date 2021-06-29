@@ -46,18 +46,6 @@ class Step1Conatiner extends React.Component {
     return (
       <Section>
         <Container>
-          {/* <Info>
-            <Text.FontSize24>
-              {
-                Auth.type === 'client' &&
-                  '의뢰를 하고자하는 의뢰사'
-              }
-              {
-                Auth.type === 'expert' &&
-                  '제조 전문성을 가진 제조사'
-              }
-            </Text.FontSize24>
-          </Info> */}
           { width > 767.98 ? (
             <>
             <ButtonBox>
@@ -168,18 +156,6 @@ const Image = styled.img`
   margin-left : 4px;
   margin-top : 4px;
 `
-// const Info = styled.div`
-//   > p {
-//     color: #aaaaaa;
-//     text-align: center;
-//     @media (min-width: 0px) and (max-width: 767.98px) {
-//       margin-top: 30px;
-//     }
-//     @media (min-width: 768px) {
-//       margin-top: 30px;
-//     }
-//   }
-// `
 const ButtonBox = styled.div`
   width: 100%;
   display: flex;

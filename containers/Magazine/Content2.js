@@ -36,10 +36,7 @@ class ContentConatiner extends React.Component {
   };
 
   activeHandler = (idx) => {
-    // console.log(`this.state.index : ${this.state.index}`)
-    // console.log(`idx : ${idx}`)
     if (idx === this.props.Magazine.category_checked_idx) {
-      // console.log("equal")
 
       return true;
     } else {
@@ -108,7 +105,7 @@ class ContentConatiner extends React.Component {
       setTimeout(() => {
         this.setState({ ...this.state, show: "visible" });
       }, 600);
-      //this.slider.slickNext();
+
     }
   };
   sliderPrev = () => {
@@ -120,15 +117,11 @@ class ContentConatiner extends React.Component {
       setTimeout(() => {
         this.setState({ ...this.state, show: "visible" });
       }, 600);
-      //this.slider.slickPrev();
     }
   };
   prevPage = () => {
     const { current, next } = this.state;
     const { Magazine } = this.props;
-    //var fullPage = parseInt((this.props.Magazine.magazine_list.length)/12)+1
-
-    //console.log("nextPage")
     console.log(Magazine.current_page);
     if (Magazine.current_page > 1) {
       console.log("current != fullPage");
@@ -137,17 +130,12 @@ class ContentConatiner extends React.Component {
       Magazine.current_page = Magazine.current_page - 1;
       this.setState({ ...this.state, current: newPage, show: "hidden" });
       this.setState({ ...this.state, show: "visible" });
-      //this.slider.slickNext();
     }
   };
   movePage = (e) => {
     const { Magazine } = this.props;
     const newPage = e.target.innerText * 1;
     Magazine.current_page = newPage;
-
-    //Magazine.magazine_list.slice((Magazine.current_page-1)*12, (Magazine.current_page)*12)
-
-    // Project.getProjectByPrice(Project.search_text, newPage)
   };
 
   nextPage = () => {
@@ -158,8 +146,6 @@ class ContentConatiner extends React.Component {
     Magazine.full_page =
       parseInt(this.props.Magazine.magazine_list.length / 12) + 1;
     console.log("nextPage");
-    // console.log(fullPage)
-    // console.log(current)
     console.log(Magazine.current_page);
     console.log(fullPage);
     if (Magazine.current_page < Magazine.full_page) {
@@ -169,18 +155,13 @@ class ContentConatiner extends React.Component {
       Magazine.current_page = Magazine.current_page + 1;
       this.setState({ ...this.state, current: newPage, show: "hidden" });
       this.setState({ ...this.state, show: "visible" });
-      //this.slider.slickNext();
     }
   };
 
   render() {
     const { prev, next, width, height, current, show } = this.state;
     const { Magazine } = this.props;
-    //const current_set = (parseInt(current/5) + 1)
-    //const current_set = (parseInt(Magazine.) + 1)
     const current_set = parseInt((Magazine.current_page - 1) / 5) + 1;
-
-    //Magazine.full_page = parseInt((this.props.Magazine.magazine_list.length)/12)+1
     var fullPage = parseInt(this.props.Magazine.magazine_list.length / 12) + 1;
 
     var settings = {
@@ -201,11 +182,10 @@ class ContentConatiner extends React.Component {
             <CategoryHeader>
               <span>카테고리</span>
             </CategoryHeader>
-
             {Magazine.categoryAry.map((item, idx) => {
               return (
                 <CategoryMenu checkMenu={item.checked} className="CategoryMenu">
-                  {/* {console.log(item.checked)} */}
+
                   <div
                     active={this.activeHandler(item.id)}
                     onClick={() => {
@@ -222,10 +202,7 @@ class ContentConatiner extends React.Component {
           </CategoryBox>
           <ContentBox>
             <Row>
-              {/* <div> */}
-              {/* <div style={{width: '280px', height: '140px', border: '3px solid red'}}>A</div> */}
               <SearchBar />
-              {/* {console.log(this.props.Magazine.magazine_list.slice((Magazine.current_page-1)*12, 12))} */}
               {console.log(Magazine.current_page)}
               {this.props.Magazine.magazine_list
                 .slice(
@@ -241,15 +218,10 @@ class ContentConatiner extends React.Component {
                           <span> {item.title} </span>
                         </Item>
                       )}
-                      {/* </div> */}
                     </>
                   );
                 })}
             </Row>
-
-            {/* </List> */}
-            {/* </Containerv1>
-        </Background> */}
             <PageBar>
               {current == 0 ? (
                 <img
@@ -342,7 +314,6 @@ class ContentConatiner extends React.Component {
                 {" "}
                 {5 * (current_set - 1) + 5}{" "}
               </PageCount>
-              {/* <PageCount> ... </PageCount> */}
               {current == fullPage ? (
                 <img
                   src={right}
@@ -363,7 +334,6 @@ class ContentConatiner extends React.Component {
                 />
               )}
             </PageBar>
-            {/* </FindExperct> */}
           </ContentBox>
         </ContainerBox>
       </>

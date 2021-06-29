@@ -6,8 +6,6 @@ import { inject, observer } from "mobx-react";
 import MobileContent1 from "./MobileContent1";
 import MoileContent2 from "./MobileContent2";
 
-//import BannerContainer from './Banner';
-
 @inject("Project")
 @observer
 class MobileProjectDetailContainer extends React.Component {
@@ -33,7 +31,6 @@ class MobileProjectDetailContainer extends React.Component {
           </Containerv1>
         </Background>
 
-        {/* <Content3 /> */}
       </>
     );
   }

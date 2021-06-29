@@ -29,14 +29,12 @@ class ProposalCard extends React.Component {
     } = this.props;
     const { width } = this.state;
 
-    // console.log(this.props.data.request_set[0].name);
     let name = "";
     let date = "";
     let period = "";
     let estimate = "";
     let status = "";
     let content = "";
-    // console.log(data.request_set[0]);
     if (data.request_set[0]) {
       name = data.request_set[0].name && data.request_set[0].name;
       date =
@@ -72,7 +70,6 @@ class ProposalCard extends React.Component {
               </StepTag>
             )}
             <HeaderWrapper>
-              {/* {console.log(name)} */}
               <Title>{name}</Title>
               <Content style={{ color: "#86888c", width: "20%" }}>
                 {date}
@@ -137,13 +134,6 @@ class ProposalCard extends React.Component {
                 <span>희망납기</span>
               </SubTitle>
               <Content>{period}</Content>
-              {/* <div style={{ display: "inline-flex" }}>
-                <Content>{date}</Content>
-              </div> */}
-              {/* <PriceTagBox>
-                <span class="tag1"> 견적 </span>
-                <span class="tag2">{estimate}</span>
-              </PriceTagBox> */}
             </FooterWrapper>
           </Card>
         )}

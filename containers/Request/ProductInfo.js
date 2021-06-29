@@ -13,18 +13,15 @@ const img_item3 = "static/images/request/Step2/ProductInfo/ProductInfo_item3.png
 class ProductInfoContainer extends React.Component {
     componentDidMount()
     {
-        // console.log(this.props.ManufactureProcess.title_list);
     }
     
   render(){
 
     let buttonClick = (e,data) => {
         const {DetailQuestion,ManufactureProcess} = this.props;
-        // console.log(e.currentTarget.getAttribute('value'));
         var idx=e.currentTarget.getAttribute('value');
         if(ManufactureProcess.SelectChecked===idx)
         {
-        //   DetailQuestion.nextPage = null;
           ManufactureProcess.SelectChecked='';
           ManufactureProcess.SelectedItem = null;
         }
@@ -32,9 +29,6 @@ class ProductInfoContainer extends React.Component {
         {
           ManufactureProcess.SelectChecked=idx;
           ManufactureProcess.SelectedItem = data;
-        //   console.log("ManuProcess SelectChecked="+idx);
-        //   DetailQuestion.nextPage = e.nextTitle;
-        //   DetailQuestion.SelectId = e.id;
         }
     };
 

@@ -14,7 +14,6 @@ class BannerConatiner extends React.Component {
     return (
       <Banner>
         <Container>
-          {/* <Text.FontSize48 color={WHITE} fontWeight={700}>{tab === 1 ? '클라이언트 이용방법' : '전문가 이용방법'}</Text.FontSize48> */}
           {Auth.logged_in_user &&
                 (Auth.logged_in_user.type === 0 ? (
                         <>

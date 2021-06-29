@@ -40,7 +40,6 @@ class RequestContentConatiner extends React.Component {
     }
     return (
       <TabWrap>
-        {/*<LeftContainer setTab={this.props.setTab} />*/}
         <ProfileContainer id={partner && partner.id}/>
 
         <RequestCard />

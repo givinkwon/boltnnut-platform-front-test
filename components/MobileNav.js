@@ -12,10 +12,8 @@ import Buttonv1 from "components/Buttonv1";
 import Home from "../pages";
 
 const close_ic = "/static/images/components/MobileNav/close_ic.svg";
-// const hamburger_ic = "/static/icon/hamburger.png";
 const hamburger_ic = "/static/images/components/MobileNav/hamburger.svg";
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
-//...
 @inject("Auth", "Partner", "Home")
 @observer
 class MobileNav extends React.Component {
@@ -59,8 +57,6 @@ class MobileNav extends React.Component {
           // 'http://localhost:3000/offered?tab=1&state=2'이면
           // queryParams = 'tab=1&state=2'
           queryParams.split("&").forEach((param) => {
-            // name = 'tab', 'state'
-            // value = '1', '2'
             const [name, value] = param.split("=");
             if (name === "tab") {
               currentTab = value;
@@ -84,11 +80,6 @@ class MobileNav extends React.Component {
         }
       });
     } else {
-      // 로그인 하지 않고 /partner/[id]로 들어오는 사용자 리다이렉트
-      //if(splitedRoute[1] === 'partner' && splitedRoute.length >= 3) {
-      //  alert("로그인이 필요합니다");
-      //  Router.push("/login");
-      //}
       this.needPermission.forEach((url) => {
         if (url === splitedRoute[1]) {
           if (requestId != 923) {
@@ -143,17 +134,19 @@ class MobileNav extends React.Component {
                   />
                   <img src={close_ic} style={{ float: "right" }} />
                 </div>
-                {Auth.logged_in_partner ? (
+                {/* {Auth.logged_in_partner ? (
                   <FreeButton onClick={() => Router.push("/project")}>
                     <span style={{ marginTop: 1 }}>프로젝트 찾아보기</span>
                   </FreeButton>
-                ) : Auth.home_index === 1 ? (
+                ) : (
                   <FreeButton onClick={() => Router.push("/request")}>
                     <span style={{ marginTop: 1 }}>
                       바로 견적 받고 업체 비교
                     </span>
                   </FreeButton>
-                ) : Auth.home_index === 2 ? (
+                )} */}
+
+                {/* : Auth.home_index === 2 ? (
                   <FreeButton onClick={() => Router.push("/producer")}>
                     <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
                   </FreeButton>
@@ -165,14 +158,18 @@ class MobileNav extends React.Component {
                   <FreeButton onClick={() => Router.push("/producer")}>
                     <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
                   </FreeButton>
-                )}
+                )} */}
               </ModalHeader>
               <>
                 <ModalContent>
-                  <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
+                  {Auth.logged_in_partner ? (
+                    <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
+                  ) : (
+                    <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
+                  )}
+
                   <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
 
-                  <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
                   {Auth.logged_in_user && (
                     <p onClick={() => Router.push("/chatting")}>채팅하기</p>
                   )}
@@ -221,13 +218,8 @@ class MobileNav extends React.Component {
         )}
         <Container>
           <NavWrap2>
-            {/* {typeof window !== 'undefined' && window.location.pathname != '/' && window.location.pathname !='/login' ? ( */}
             {this.props.src ===
             "/static/images/components/MobileNav/MobileLogo.svg" ? (
-              //   <Logo src={this.props.src} onClick={() => Router.back()} />
-              // ) : (
-              //   <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
-              // )}
 
               <Logo src={this.props.src} onClick={() => Router.push("/")} />
             ) : (
@@ -269,7 +261,7 @@ const ProfileMenu = styled.div`
 `;
 const ModalHeader = styled.div`
   width: 100%;
-  height: 160px;
+  // height: 160px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -291,6 +283,7 @@ const ModalHeader = styled.div`
 const ModalContent = styled.div`
   width: 100%;
   height: 158px;
+  // height: 110px;
   display: flex;
   border-bottom: solid 1px #e1e2e4;
   flex-direction: column;

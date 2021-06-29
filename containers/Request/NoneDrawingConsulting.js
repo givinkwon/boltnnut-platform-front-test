@@ -68,9 +68,7 @@ class NoneDrawingConsultingContainer extends React.Component {
     console.log(ManufactureProcess.purposeContent);
     if (item.checked) {
       item.checked = false;
-      // purposeAry[ManufactureProcess.purposeComment - 1] = false;
       ManufactureProcess.purposeContent = 0;
-      //this.setState({ purposeAry : })
     } else {
       item.checked = true;
       if (ManufactureProcess.purposeContent) {
@@ -209,12 +207,6 @@ class NoneDrawingConsultingContainer extends React.Component {
     const { ManufactureProcess, Schedule } = this.props;
     const { purposeAry } = this.state;
     ManufactureProcess.nonDrawingProjectSubmitLoading = false;
-    // return alert(`
-    // 	프로젝트이름: ${projectname}
-    // 	가로: ${row}
-    // 	세로: ${column}
-    // 	높이: ${height}
-    // 	`);
     let deadline_state = "";
     let processData = "";
     let detailProcessData = "";
@@ -287,11 +279,6 @@ class NoneDrawingConsultingContainer extends React.Component {
     console.log(ManufactureProcess.requestComment);
     console.log(ManufactureProcess.requestComment2);
     console.log(purpose.id1);
-    // let str = "";
-    // for (var i = 0; i < purpose.length; i++) {
-    //   str += `purpose.id[${i + 1}]`;
-    // }
-    // console.log(str);
 
     console.log("requestSubmit");
     console.log(Schedule.clickDay);
@@ -300,9 +287,6 @@ class NoneDrawingConsultingContainer extends React.Component {
 
     var formData = new FormData();
     formData.append("request_state", request_state);
-
-    //formData.append("request_state", str);
-    //formData.append("purpose", purpose)
     formData.append("name", projectname);
     // 선택한 날짜가 없으면, 기본 날짜 추가하기
     if (Schedule.clickDay) {
@@ -317,14 +301,11 @@ class NoneDrawingConsultingContainer extends React.Component {
     } else {
       formData.append("deadline_state", deadline_state);
     }
-    //ManufactureProcess.date_undefined
     formData.append("order_request_open", ManufactureProcess.requestComment);
     formData.append("order_request_close", ManufactureProcess.requestComment2);
-    //formData.append("file_open", ManufactureProcess.openFileArray[0]);
     for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
       formData.append(`file_open`, ManufactureProcess.openFileArray[i]);
     }
-    //formData.append("file_close", ManufactureProcess.privateFileArray);
     for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
       formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
     }
@@ -335,20 +316,7 @@ class NoneDrawingConsultingContainer extends React.Component {
     formData.append("detailprocess", 1);
     formData.append("number", 1);
 
-    // const formData = {
-    //   user: this.props.Auth.logged_in_user.id,
-    //   request_state: "상담요청",
-    //   name: projectname,
-    //   deadline: "2020-11-11 11:11",
-    //   deadline_state: ManufactureProcess.deliverystate,
-    //   order_request_open: ManufactureProcess.requestComment,
-    //   order_request_close: ManufactureProcess.requestComment2,
-    //   file_open: ManufactureProcess.openFileArray,
-    //   file_close: ManufactureProcess.privateFileArray,
-    // };
-
     const Token = localStorage.getItem("token");
-    //const token = "179bb0b55811073a76bc0894a7c73220da9a191d";
     const req = {
       headers: {
         Authorization: `Token ${Token}`,
@@ -370,11 +338,6 @@ class NoneDrawingConsultingContainer extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-
-    //
-    // const processAry = processData.split(",");
-    // const detailProcessAry = detailProcessData.split(",");
-    // ManufactureProcess.getProcessList(processAry, detailProcessAry);
   };
 
   render() {
@@ -444,90 +407,12 @@ class NoneDrawingConsultingContainer extends React.Component {
                 }
                 value={this.state.projectname}
                 onChange={(e) => {
-                  //console.log(e.target.value);
                   console.log(e);
                   this.setState({ projectname: e });
                 }}
               />
             </InlineDiv>
           </ProjectTitleBox>
-
-          {/* <ProductInfoBox>
-                  <InlineDiv>
-                     <FontSize24>가견적을 위한 제품 정보</FontSize24>
-                  </InlineDiv>
-
-                  <div style={{ display: 'flex', marginBottom: '24px' }}>
-                     <LengthHeightBox>
-                        <InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-                           <FontSize18 style={{ marginRight: '13px', width: '33px' }}>가로</FontSize18>
-                           <InputComponent
-                              class='Input'
-                              placeholder='0'
-                              onChange={e => {
-                                 this.setState({ row: e });
-                              }}
-                              width='144px'
-                           />
-                        </InlineDiv>
-
-                        <InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-                           <FontSize18 style={{ marginRight: '13px', width: '33px' }}>세로</FontSize18>
-                           <InputComponent
-                              class='Input'
-                              placeholder='0'
-                              onChange={e => {
-                                 this.setState({ column: e });
-                              }}
-                              width='144px'
-                           />
-                        </InlineDiv>
-
-                        <InlineDiv style={{ alignItems: 'center', marginTop: '16px' }}>
-                           <FontSize18 style={{ marginRight: '13px', width: '33px' }}>높이</FontSize18>
-                           <InputComponent
-                              class='Input'
-                              placeholder='0'
-                              onChange={e => {
-                                 this.setState({ height: e });
-                              }}
-                              width='144px'
-                           />
-                        </InlineDiv>
-                     </LengthHeightBox>
-
-                     <SelectBox style={{ marginLeft: '70px', width: '316px' }}>
-                        <InlineDiv style={{ alignItems: 'flex-end' }}>
-                           <FontSize18 style={{ width: '33px' }}>단위</FontSize18>
-                        </InlineDiv>
-
-                        <InlineDiv style={{ alignItems: 'flex-end' }}>
-                           <SelectCircle active={this.activeHandler(1)} onClick={() => this.unitCheckboxHandler(1)}>
-                              <CheckCircleImg src={checkcircle} active={this.activeHandler(1)} />
-                           </SelectCircle>
-                           <FontSize18>mm</FontSize18>
-                        </InlineDiv>
-
-                        <InlineDiv style={{ alignItems: 'flex-end' }}>
-                           <SelectCircle active={this.activeHandler(2)} onClick={() => this.unitCheckboxHandler(2)}>
-                              <CheckCircleImg src={checkcircle} active={this.activeHandler(2)} />
-                           </SelectCircle>
-                           <FontSize18>cm</FontSize18>
-                        </InlineDiv>
-
-                        <InlineDiv style={{ alignItems: 'flex-end' }}>
-                           <SelectCircle active={this.activeHandler(3)} onClick={() => this.unitCheckboxHandler(3)}>
-                              <CheckCircleImg src={checkcircle} active={this.activeHandler(3)} />
-                           </SelectCircle>
-                           <FontSize18>m</FontSize18>
-                        </InlineDiv>
-                     </SelectBox>
-                  </div>
-               </ProductInfoBox>
-               <ImageShape>
-                  <FontSize24>이미지 형상</FontSize24>
-               </ImageShape> */}
-
           <FontSize24 style={{ marginTop: "30px" }}>희망 납기일</FontSize24>
           <DeliveryDate
             checkDateConference={ManufactureProcess.date_conference}
@@ -694,7 +579,6 @@ class NoneDrawingConsultingContainer extends React.Component {
               <AddFile2
                 file={true}
                 isOpen={false}
-                //onChange={this.handleChange}
               />
               <div></div>
             </span>

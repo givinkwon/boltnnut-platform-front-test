@@ -52,14 +52,8 @@ class PartnerDetailContainer extends Component {
             <>
               <ProfileContainer id={partner && partner.id}/>
               <CompanyDetailContainer/>
-              {/*<CompanyInfoContainer/>*/}
-
-
               <PortfolioContainer/>
               <MachineConatiner/>
-              {/*<StructureConatiner/>
-              <CertificationConatiner/>
-              <ProcessConatiner/>*/}
               <RequestCardConatiner/>
               <HeightBox/>
             </>

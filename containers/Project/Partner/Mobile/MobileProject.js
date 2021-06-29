@@ -45,7 +45,6 @@ class MobileProjectContentContainer extends React.Component {
     await Project.getProjectDetail(id);
     Project.newIndex = 1;
     Project.selectedProjectId = id;
-    // await Router.push(`/project/${id}`);
     Project.setProjectDetailData(id);
   };
 
@@ -64,7 +63,6 @@ class MobileProjectContentContainer extends React.Component {
   movePage = (e) => {
     const { Project, Auth } = this.props;
     e.preventDefault();
-    // Project.category_reset()
     const newPage = e.target.innerText * 1;
 
     Project.currentPage = newPage;
@@ -75,7 +73,6 @@ class MobileProjectContentContainer extends React.Component {
     const { Project, Auth } = this.props;
     e.preventDefault();
     if (Project.currentPage < Project.project_page) {
-      // Project.category_reset()
       const nextPage = Project.currentPage + 1;
       Project.currentPage = nextPage;
       Project.getProjectByPrice(Project.search_text, Project.currentPage);
@@ -86,7 +83,6 @@ class MobileProjectContentContainer extends React.Component {
     const { Project } = this.props;
     e.preventDefault();
     if (Project.currentPage > 1) {
-      // Project.category_reset()
       const newPage = Project.currentPage - 1;
       Project.currentPage = newPage;
       Project.getProjectByPrice(Project.search_text, Project.currentPage);
@@ -109,7 +105,7 @@ class MobileProjectContentContainer extends React.Component {
             </Font15>
           
           {Project.projectDataList && Project.currentPage > 0 && Project.projectDataList.map((item, idx) => {
-            //   {data.map((item, idx) => {
+  
             return(            
               <div
                 style={{ cursor: "pointer", width: "100%", marginBottom: 14 }}
@@ -133,7 +129,6 @@ class MobileProjectContentContainer extends React.Component {
               <PageCount value = {5*(current_set - 1) + 2} active={Project.currentPage %5 == 3} style={{display:  Project.project_page < 5*(current_set - 1) + 3 ? 'none': 'block' }} onClick = {this.movePage}> {5*(current_set - 1) + 3} </PageCount>
               <PageCount value = {5*(current_set - 1) + 3} active={Project.currentPage %5 == 4} style={{display:  Project.project_page < 5*(current_set - 1) + 4 ? 'none': 'block' }} onClick = {this.movePage}> {5*(current_set - 1) + 4} </PageCount>
               <PageCount value = {5*(current_set - 1) + 4} active={Project.currentPage %5 == 0} style={{display:  Project.project_page < 5*(current_set - 1) + 5 ? 'none': 'block' }} onClick = {this.movePage}> {5*(current_set - 1) + 5} </PageCount>
-              {/* <PageCount> ... </PageCount> */}
             <img src={pass2} style={{opacity: Project.project_page == Project.currentPage  ? 0.4 : 1 }} onClick = {this.pageNext} />
         </PageBar>   
         </Container> 
@@ -142,48 +137,6 @@ class MobileProjectContentContainer extends React.Component {
         </>
     )}
   }
-
-// const data = [
-//   {
-//     consultation: '상담 진행',
-//     name: '컴퓨터',
-//     date: '2021.03.02' ,
-//     period: '120일',
-//     estimate: '10,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     name: '스캐너',
-//     date: '2021.03.03' ,
-//     period: '121일',
-//     estimate: '11,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '키보드',
-//     date: '2021.03.04' ,
-//     period: '122일',
-//     estimate: '12,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     name: '마우스',
-//     date: '2021.03.05' ,
-//     period: '123일',
-//     estimate: '13,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '프린터',
-//     date: '2021.03.06' ,
-//     period: '124일',
-//     estimate: '14,000,000원'
-//   },
-// ]
 
 const PageBar = styled.div`
   width: 280px;

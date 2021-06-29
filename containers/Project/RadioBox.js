@@ -37,7 +37,6 @@ class RadioBoxContainer extends React.Component {
           Project.filter = item.name     
           Project.project_next = null;
           Project.project_count = null;
-    // this.count = 0;
           Project.currentPage = 1;     
           console.log(Project.filter)
           Project.getProjectByPrice(Project.search_text)
@@ -45,10 +44,7 @@ class RadioBoxContainer extends React.Component {
       };
 
     activeHandler = (idx) => {
-      // console.log(`this.state.index : ${this.state.index}`)
-      // console.log(`idx : ${idx}`)
       if(idx=== Project.radiobox_checked_idx) {
-        // console.log("equal")
          return true; 
       } else { 
         return false; 
@@ -64,13 +60,7 @@ class RadioBoxContainer extends React.Component {
 
       return (
         <FormControl component="fieldset">
-        {/* <FormLabel component="legend" style={{marginTop: '28px'}}>금액</FormLabel> */}
         <Font16>상담 유형</Font16>
-        {/* <RadioGroup aria-label="number" name="number1">
-          <FormControlLabel value="one" control={<Checkbox />} label="정제의뢰" />
-          <FormControlLabel value="two" control={<Checkbox />} label="정제의뢰" />
-          <FormControlLabel value="three" control={<Radio />} label="" />                                
-        </RadioGroup> */}
         { data.map((item) => {
             return(                
                 <Item onClick = {()=>{this.test(item, item.id)}} active={this.activeHandler(item.id)}>

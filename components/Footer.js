@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
-
-// import Container from "./Container"; //
 import * as Text from "./Text";
 import * as Content from "components/Content";
 import * as Title from "components/Title";
@@ -79,20 +77,12 @@ class FooterComponent extends React.Component {
     width: 0,
     tab: 0,
   };
-  // handleBackground = () =>
-  // {
-  //   const color = document.getElementById("MyBackground").getAttribute("style");
-  //   console.log("color");
-  // }
 
   componentDidMount() {
     const { Magazine } = this.props;
     Magazine.init();
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-
-    // const color = document.getElementById("MyBackground");
-    // console.log("asndlnaskldnalksd="+color);
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -148,23 +138,6 @@ class FooterComponent extends React.Component {
                     </div>
                   </div>
                 </CompanyInfoWrapper>
-                {/* <CompanyInfoWrapper style={{ paddingTop: 16 }}>
-                  <span class="title">NOTICE</span>
-                  <Select
-                    styles={customStyles}
-                    options={
-                      this.props.Magazine.magazine_list &&
-                      this.props.Magazine.magazine_list
-                    }
-                    getOptionLabel={(option) => option.title}
-                    onChange={Magazine.setCurrent}
-                    value={
-                      Magazine.current
-                        ? Magazine.current
-                        : this.props.Magazine.magazine_list[0]
-                    }
-                  />
-                </CompanyInfoWrapper> */}
                 <CompanyInfoWrapper style={{ paddingTop: 14 }}>
                   <FaqTable>
                     <span class="cell" onClick={() => Router.push("/faq")}>
@@ -210,7 +183,6 @@ class FooterComponent extends React.Component {
           </>
         ) : (
           <>
-            {/* backColor==='white' ? footer=회색 : FOOTER=흰색 */}
             <Footer
               style={{
                 backgroundColor: this.props.color ? this.props.color : "white",
@@ -521,9 +493,6 @@ const Sns = styled.img`
   @media (min-width: 1300px) {
   }
 `;
-// const FontSize16 = styled.p`
-//   font-family: 'Roboto', sans-serif;
-// `;
 const MobileFooter = styled.div`
   background-color: ${PRIMARY};
   padding: 0px 0px;
