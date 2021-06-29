@@ -140,7 +140,7 @@ const Body = styled(Title.FontSize18)`
   text-align: left;
   color: #555963;
   > div:nth-of-type(1) {
-    text-align: center;
+    // text-align: center;
     > span {
       font-size: 18px;
       display: block;
@@ -157,7 +157,7 @@ const Body = styled(Title.FontSize18)`
   }
   > div:nth-of-type(2) {
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     > div {
       cursor: pointer;

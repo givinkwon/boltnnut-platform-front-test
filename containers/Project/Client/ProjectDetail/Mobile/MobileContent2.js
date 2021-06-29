@@ -8,6 +8,7 @@ import STLViewer from "stl-viewer";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
 import * as ManufactureProcessAPI from "axios/ManufactureProcess";
+import { toJS } from "mobx";
 const search_img = "/static/images/project/search.png";
 const fileimg = "/static/images/project/fileimg.svg";
 
@@ -44,11 +45,12 @@ class MobileContent2 extends React.Component {
   };
 
   changeProject = () => {
-    const { ManufactureProcess, Request } = this.props;
+    const { ManufactureProcess, Project } = this.props;
 
-    Router.push("/request");
+    console.log(toJS(Project.projectDetailData));
     ManufactureProcess.changeProject = true;
     ManufactureProcess.checkFileUpload = true;
+    Router.push("/request");
   };
 
   downloadFile(urls) {

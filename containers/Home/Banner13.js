@@ -153,7 +153,7 @@ const Body = styled(Title.FontSize24)`
   color: #555963;
 
   > div:nth-of-type(1) {
-    text-align: center;
+    // text-align: center;
     > span {
       display: block;
       font-size: 32px;
@@ -172,7 +172,7 @@ const Body = styled(Title.FontSize24)`
   // }
   > div:nth-of-type(2) {
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     > div {
       cursor: pointer;

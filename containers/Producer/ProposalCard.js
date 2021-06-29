@@ -212,6 +212,8 @@ class ProposalCard extends React.Component {
         await Partner.partner_detail_list.push({ item: data });
 
         console.log(Partner.partner_detail_list[0].item.id);
+        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
+        console.log(toJS(Partner.partner_detail_list[0]));
         Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id);
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/producer/detail");

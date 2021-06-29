@@ -61,6 +61,7 @@ class MobileSearchBarConatiner extends React.Component {
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
     if (ManufactureProcess.loadingSaveSearchText) {
+      Partner.subButtonActive = true;
       ManufactureProcess.saveSearchText(Partner.search_text);
       ManufactureProcess.loadingSaveSearchText = false;
       setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
@@ -79,6 +80,7 @@ class MobileSearchBarConatiner extends React.Component {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
       if (ManufactureProcess.loadingSaveSearchText) {
+        Partner.subButtonActive = true;
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
         setTimeout(
