@@ -208,7 +208,7 @@ const SearchBar = styled.div`
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     // margin-top: 40px;
-    width: ${(props) => (props.active ? "370px" : "100%")};
+    width: ${(props) => (props.active ? "410px" : "100%")};
     input {
       font-size: 17px;
       ::placeholder {
@@ -267,6 +267,22 @@ const Form = styled.div`
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     // width: 67%;
+
+    ${(props) =>
+      props.active &&
+      css`
+        @keyframes reduce_tablet {
+          0% {
+            width: 58%;
+          }
+
+          100% {
+            width: 47%;
+          }
+        }
+        animation: reduce_tablet 3s ease-in-out;
+      `}
+    width: ${(props) => (!props.active ? "100%" : "47%")};
   }
   @media (min-width: 1300px) {
     //margin-top: 0;
