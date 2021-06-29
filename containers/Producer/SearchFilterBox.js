@@ -763,7 +763,7 @@ const Search = styled.div`
     height: 44px;
     // margin-bottom: 5px;
     // display: none;
-    display: ${(props) => (props.active ? "flex" : "none")};
+
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -779,6 +779,10 @@ const Search = styled.div`
       position: absolute;
       background-color: #0933b3;
     }
+
+    display: ${(props) => (props.active ? "flex" : "none")};
+    // display: none;
+    // opacity: 0;
 
     ${(props) =>
       props.active &&
@@ -887,21 +891,23 @@ const Search = styled.div`
           animation-delay: 2s;
         }
 
-        @keyframes appear {
-          0% {
-            opacity: 0;
-            transform: scale(1.3);
-          }
+        // @keyframes appear {
+        //   0% {
+        //     opacity: 0;
+        //     transform: scale(1.3);
+        //   }
 
-          50% {
-            opacity: 1;
-            transform: scale(1);
-            // transform: skewY(180deg);
-          }
-        }
+        //   100% {
+        //     opacity: 1;
+        //     transform: scale(1);
+        //     // transform: skewY(180deg);
+        //     display: flex;
+        //   }
+        // }
 
-        animation: appear 1.5s ease-in-out;
-        animation-delay: 4s;
+        // animation: appear 4s ease-in-out;
+        // // animation-delay: 4s;
+        // animation-fill-mode: both;
       `}
   }
 
