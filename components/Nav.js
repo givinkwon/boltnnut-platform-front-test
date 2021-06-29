@@ -29,6 +29,9 @@ class Nav extends React.Component {
     partnerList: [],
   };
 
+  makeUrl = (url) => {
+    return window.location.protocol + "//" + window.location.host + "/" + url;
+  };
   alreadyLoggedin = ["login", "signup"];
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
   logout = () => {
@@ -155,7 +158,7 @@ class Nav extends React.Component {
                         onClick={() => Router.push("/magazine")}
                         active={url.indexOf("magazine") > -1}
                       >
-                        <p class="line"> 제조 인사이트 </p>
+                        <p class="line"> 제조 인사이트</p>
                       </NavLink>
                     </Fragment>
                   ) : (
@@ -166,7 +169,8 @@ class Nav extends React.Component {
                         active={url.indexOf("project") > -1}
                       >
                         {console.log(url)}
-                        <p class="line"> 프로젝트 찾기 </p>
+                        {/* <p class="line"> 프로젝트 찾기 </p> */}
+                        프로젝트 찾기
                       </NavLink>
                       <NavLink
                         onClick={() => Router.push("/magazine")}
@@ -183,7 +187,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/producer")}
                       active={url.indexOf("producer") > -1}
                     >
-                      <p class="line"> 제조사 찾기 </p>
+                      {/* <p class="line"> 프로젝트 찾기 </p> */}프로젝트 찾기
                     </NavLink>
 
                     {/* <NavLink
@@ -194,10 +198,11 @@ class Nav extends React.Component {
                     </NavLink> */}
 
                     <NavLink
-                      onClick={() => Router.push("/magazine")}
+                      // onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      제조 인사이트
+                      <a href={this.makeUrl("magazine")}>제조 인사이트</a>
+                      {/* 제조 인사이트 */}
                     </NavLink>
                   </Fragment>
                 )}
@@ -233,11 +238,13 @@ class Nav extends React.Component {
                 ) : (
                   <NavLink
                     onClick={() => {
-                      Router.push("/login"), Auth.reset();
+                      // Router.push("/login"), Auth.reset();
+                      Auth.reset();
                     }}
                     active={url.indexOf("login") > -1}
                   >
-                    로그인
+                    <a href={this.makeUrl("login")}>로그인</a>
+                    {/* 로그인 */}
                   </NavLink>
                 )}
 
@@ -412,7 +419,8 @@ const Menu = styled.div`
       `}
   }
 `;
-const NavLink = styled.p`
+const NavLink = styled.button`
+  border: none;
   margin: 0px;
   height: 60px;
   cursor: pointer;

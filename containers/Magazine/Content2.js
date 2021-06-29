@@ -182,7 +182,6 @@ class ContentConatiner extends React.Component {
             <CategoryHeader>
               <span>카테고리</span>
             </CategoryHeader>
-
             {Magazine.categoryAry.map((item, idx) => {
               return (
                 <CategoryMenu checkMenu={item.checked} className="CategoryMenu">

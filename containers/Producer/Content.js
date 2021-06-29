@@ -14,7 +14,7 @@ import ProposalCard from "./ProposalCard";
 import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
 import SearchBar from "./SearchBar";
-
+import ButtonSpinnerComponent from "components/ButtonSpinner";
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
 const pass4 = "static/images/pass4.png";
@@ -146,7 +146,6 @@ class ManufacturerContentContainer extends React.Component {
       }
     }
   };
-
   render() {
     const { Project, Partner } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
@@ -197,7 +196,7 @@ class ManufacturerContentContainer extends React.Component {
                     의 파트너가 있습니다.
                   </Font20>
                 </Header>
-                {Partner.partner_list.length === 0 && (
+                {/* {Partner.partner_list.length === 0 && (
                   <NoResultBox>
                     <Font20>원하는 업체를 찾기 어려우신가요?</Font20>
                     <Font14 style={{ color: "black", fontWeight: "300" }}>
@@ -212,7 +211,27 @@ class ManufacturerContentContainer extends React.Component {
                       <span>업체 수배 & 견적 의뢰</span>
                     </RequestButton>
                   </NoResultBox>
-                )}
+                )} */}
+                {Partner.partner_list.length === 0 &&
+                  (Partner.loadingFlag ? (
+                    <ButtonSpinnerComponent scale="30%" primary />
+                  ) : (
+                    <NoResultBox>
+                      <Font20>원하는 업체를 찾기 어려우신가요?</Font20>
+                      <Font14 style={{ color: "black", fontWeight: "300" }}>
+                        볼트앤너트 업체 수배 전문가가 숨어있는 공장까지 대신
+                        찾아드립니다.
+                      </Font14>
+                      <RequestButton
+                        onClick={() => {
+                          this.openModal();
+                        }}
+                      >
+                        <span>업체 수배 & 견적 의뢰</span>
+                      </RequestButton>
+                    </NoResultBox>
+                  ))}
+
                 {Partner.partner_list &&
                   Partner.partner_list.map((item, idx) => {
                     return (
