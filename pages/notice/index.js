@@ -15,7 +15,7 @@ class Index extends React.Component {
     this.props.Notice.init()
     // page ip 기록
     const formData = new FormData();
-
+    if (typeof window !== 'undefined') {
     formData.append("url", window.location.href);
     console.log(window.location.href)
     const req = {
@@ -31,7 +31,7 @@ class Index extends React.Component {
         console.log(e.response);
       });
   }
-
+  }
   render(){
     return (
       <div>
