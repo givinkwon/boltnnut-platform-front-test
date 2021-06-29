@@ -1369,6 +1369,7 @@ class Partner {
     console.log(page);
     console.log(toJS(this.filter_region));
 
+    console.log(this.search_text);
     this.partner_list = [];
     this.category_ary = [];
     console.log(toJS(this.category_ary));

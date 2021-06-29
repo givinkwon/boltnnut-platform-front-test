@@ -245,7 +245,7 @@ const Form = styled.div`
           width: 47%;
         }
       }
-      animation: reduce 3s ease-in-out;
+      animation: reduce 1s ease-in-out;
     `}
   width: ${(props) => (!props.active ? "100%" : "47%")};
 

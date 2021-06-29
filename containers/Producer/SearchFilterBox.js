@@ -624,7 +624,6 @@ class SearchFilterConatiner extends React.Component {
             </CloseButton>
 
             {Partner.requestModalActive && (
-
               <Layer>
                 <span>
                   <Modal
@@ -778,8 +777,8 @@ const Search = styled.div`
             }
           }
 
-          animation: move_LtoR 3s ease-in-out;
-          animation-delay: 2s;
+          animation: move_LtoR 2s ease-in-out;
+          animation-delay: 1.5s;
         }
 
         > div:nth-of-type(2) {
@@ -804,8 +803,8 @@ const Search = styled.div`
             }
           }
 
-          animation: move_TtoB 3s ease-in-out;
-          animation-delay: 2s;
+          animation: move_TtoB 2s ease-in-out;
+          animation-delay: 1.5s;
         }
 
         > div:nth-of-type(3) {
@@ -830,8 +829,8 @@ const Search = styled.div`
             }
           }
 
-          animation: move_RtoL 3s ease-in-out;
-          animation-delay: 2s;
+          animation: move_RtoL 2s ease-in-out;
+          animation-delay: 1.5s;
         }
 
         > div:nth-of-type(4) {
@@ -856,8 +855,8 @@ const Search = styled.div`
             }
           }
 
-          animation: move_BtoT 3s ease-in-out;
-          animation-delay: 2s;
+          animation: move_BtoT 2s ease-in-out;
+          animation-delay: 1.5s;
         }
         > span {
           @keyframes appear {
@@ -874,8 +873,8 @@ const Search = styled.div`
             }
           }
 
-          animation: appear 4s ease-in-out;
-          animation-delay: 2s;
+          animation: appear 2s ease-in-out;
+          animation-delay: 1s;
           animation-fill-mode: both;
         }
       `}
@@ -901,8 +900,8 @@ const Search = styled.div`
           }
         }
 
-        animation: appear_two 3s ease-in-out;
-        animation-delay: 3s;
+        animation: appear_two 2s ease-in-out;
+        animation-delay: 1.5s;
         animation-fill-mode: both;
       `}
   }

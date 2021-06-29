@@ -187,7 +187,7 @@ class Nav extends React.Component {
                       onClick={() => Router.push("/producer")}
                       active={url.indexOf("producer") > -1}
                     >
-                      {/* <p class="line"> 프로젝트 찾기 </p> */}프로젝트 찾기
+                      {/* <p class="line"> 프로젝트 찾기 </p> */}제조사 찾기
                     </NavLink>
 
                     {/* <NavLink
@@ -215,8 +215,7 @@ class Nav extends React.Component {
                     />
                     {is_profile && (
                       <ProfileMenu>
-                        <div>
-                        </div>
+                        <div></div>
                         <div>
                           <div onClick={() => Router.push("/chatting")}>
                             <Font16>채팅하기</Font16>
