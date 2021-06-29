@@ -143,17 +143,19 @@ class MobileNav extends React.Component {
                   />
                   <img src={close_ic} style={{ float: "right" }} />
                 </div>
-                {Auth.logged_in_partner ? (
+                {/* {Auth.logged_in_partner ? (
                   <FreeButton onClick={() => Router.push("/project")}>
                     <span style={{ marginTop: 1 }}>프로젝트 찾아보기</span>
                   </FreeButton>
-                ) : Auth.home_index === 1 ? (
+                ) : (
                   <FreeButton onClick={() => Router.push("/request")}>
                     <span style={{ marginTop: 1 }}>
                       바로 견적 받고 업체 비교
                     </span>
                   </FreeButton>
-                ) : Auth.home_index === 2 ? (
+                )} */}
+
+                {/* : Auth.home_index === 2 ? (
                   <FreeButton onClick={() => Router.push("/producer")}>
                     <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
                   </FreeButton>
@@ -165,14 +167,20 @@ class MobileNav extends React.Component {
                   <FreeButton onClick={() => Router.push("/producer")}>
                     <span style={{ marginTop: 1 }}>제조사 찾아보기</span>
                   </FreeButton>
-                )}
+                )} */}
               </ModalHeader>
               <>
                 <ModalContent>
-                  <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
+                  {console.log(Auth)}
+                  {console.log(Auth.logged_in_partner)}
+                  {Auth.logged_in_partner ? (
+                    <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
+                  ) : (
+                    <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
+                  )}
+
                   <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
 
-                  <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
                   {Auth.logged_in_user && (
                     <p onClick={() => Router.push("/chatting")}>채팅하기</p>
                   )}
@@ -269,7 +277,7 @@ const ProfileMenu = styled.div`
 `;
 const ModalHeader = styled.div`
   width: 100%;
-  height: 160px;
+  // height: 160px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -291,6 +299,7 @@ const ModalHeader = styled.div`
 const ModalContent = styled.div`
   width: 100%;
   height: 158px;
+  // height: 110px;
   display: flex;
   border-bottom: solid 1px #e1e2e4;
   flex-direction: column;
