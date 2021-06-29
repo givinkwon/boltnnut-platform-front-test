@@ -15,13 +15,13 @@ class Index extends React.Component {
     this.props.Notice.init()
     // page ip 기록 
     const formData = new FormData();
-    if(window){
+
     formData.append("url", window.location.href);
     console.log(window.location.href)
     const req = {
       data: formData,
     };
-    }
+    
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
@@ -39,7 +39,7 @@ class Index extends React.Component {
           <title>볼트앤너트</title>
         </Head>
         <Nav />
-        <NoticeConatiner/>
+        <NoticeConatiner window={window} />
         <Footer/>
       </div>
     )

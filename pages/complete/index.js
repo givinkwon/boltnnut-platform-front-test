@@ -18,7 +18,7 @@ class Complete extends React.Component {
     return (
       <div>
         <Nav />
-        <CompleteBannerContainer/>
+        <CompleteBannerContainer  window={window} />
         <Footer />
       </div>
     );
