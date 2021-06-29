@@ -12,24 +12,24 @@ import * as AccountAPI from "axios/Account";
 @observer
 class Index extends React.Component {
   componentDidMount() {
-    this.props.Notice.init()
-    // page ip 기록 
-    const formData = new FormData();
+    // this.props.Notice.init()
+    // // page ip 기록 
+    // const formData = new FormData();
 
-    formData.append("url", window.location.href);
-    console.log(window.location.href)
-    const req = {
-      data: formData,
-    };
+    // formData.append("url", window.location.href);
+    // console.log(window.location.href)
+    // const req = {
+    //   data: formData,
+    // };
     
-    AccountAPI.setUserPageIP(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
+    // AccountAPI.setUserPageIP(req)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //     console.log(e.response);
+    //   });
   
   }
   render(){
@@ -39,7 +39,7 @@ class Index extends React.Component {
           <title>볼트앤너트</title>
         </Head>
         <Nav />
-        <NoticeConatiner window={window} />
+        <NoticeConatiner/>
         <Footer/>
       </div>
     )
