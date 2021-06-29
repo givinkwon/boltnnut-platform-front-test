@@ -15,7 +15,7 @@ const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 @observer
 class Index extends React.Component {
   state = {
-    width: 0,
+    width: "",
   };
   componentDidMount() {
     this.props.Auth.bgColor = "#f6f6f6";
