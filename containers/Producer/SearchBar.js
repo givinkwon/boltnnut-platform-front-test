@@ -41,10 +41,12 @@ class SearchBarConatiner extends React.Component {
   };
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
-    console.log("click");
+    // console.log("click");
     // alert("EXECUTE");
     if (Partner.search_text != "") {
+      // console.log("click2");
       if (ManufactureProcess.loadingSaveSearchText) {
+        // console.log("click3");
         Partner.subButtonActive = true;
         console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
@@ -73,22 +75,24 @@ class SearchBarConatiner extends React.Component {
   handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
-      // console.log("Enter");
+      // console.log("Enter1");
       // console.log(e);
       // alert("enter");
-      // this.search();
+      this.search();
       // console.log(toJS(Partner.search_text));
-      if (Partner.search_text != "") {
-        if (ManufactureProcess.loadingSaveSearchText) {
-          Partner.subButtonActive = true;
-          ManufactureProcess.saveSearchText(Partner.search_text);
-          ManufactureProcess.loadingSaveSearchText = false;
-          setTimeout(
-            () => (ManufactureProcess.loadingSaveSearchText = true),
-            2000
-          );
-        }
-      }
+      // if (Partner.search_text != "") {
+      //   console.log("Enter2");
+      //   if (ManufactureProcess.loadingSaveSearchText) {
+      //     console.log("Enter3");
+      //     Partner.subButtonActive = true;
+      //     ManufactureProcess.saveSearchText(Partner.search_text);
+      //     ManufactureProcess.loadingSaveSearchText = false;
+      //     setTimeout(
+      //       () => (ManufactureProcess.loadingSaveSearchText = true),
+      //       2000
+      //     );
+      //   }
+      // }
 
       // Partner.currentPage = 1;
       // // Partner.resetDevCategory();
@@ -208,7 +212,7 @@ const SearchBar = styled.div`
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     // margin-top: 40px;
-    width: ${(props) => (props.active ? "370px" : "100%")};
+    width: ${(props) => (props.active ? "410px" : "100%")};
     input {
       font-size: 17px;
       ::placeholder {
@@ -267,6 +271,22 @@ const Form = styled.div`
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     // width: 67%;
+
+    ${(props) =>
+      props.active &&
+      css`
+        @keyframes reduce_tablet {
+          0% {
+            width: 58%;
+          }
+
+          100% {
+            width: 47%;
+          }
+        }
+        animation: reduce_tablet 3s ease-in-out;
+      `}
+    width: ${(props) => (!props.active ? "100%" : "47%")};
   }
   @media (min-width: 1300px) {
     //margin-top: 0;
