@@ -25,6 +25,7 @@
     "mobx-react": "5.2.3",
     "moment": "^2.29.1",
     "next": "9.1.6",
+    "pdfjs": "2.4.4",
     "prettier": "^2.2.1",
     "rc-slider": "^9.5.3",
     "react": "^16.14.0",
