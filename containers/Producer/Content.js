@@ -82,6 +82,7 @@ class ManufacturerContentContainer extends React.Component {
     console.log("content unmount");
     Partner.requestModalActive = false;
     Partner.requestDoneModalActive = false;
+    Partner.search_text = "";
     Partner.resetDevCategory();
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
     Partner.filter_city_ary = [{ id: 0, city: "전체" }];
