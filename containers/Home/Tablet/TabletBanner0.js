@@ -54,31 +54,7 @@ class TabletBanner0Container extends React.Component {
             <span>대한민국 제조사 정보 여기 다 있다.</span>
             <span>전문 업체 수배 플랫폼 볼트앤너트</span>
           </Header>
-          {/* <div>
-            <Title1 fontWeight={300} color={"#ffffff"}>
-              총 프로젝트 금액
-            </Title1>
-            <Content1 color={"#ffffff"}>
-              <CountFunc index={0} />
-            </Content1>
-
-            <div style={{ marginTop: 22 }} />
-            <Title1 fontWeight={300} color={"#ffffff"}>
-              의뢰 프로젝트
-            </Title1>
-            <Content1 color={"#ffffff"}>
-              <CountFunc index={1} projCount={ProjectCount} />
-            </Content1>
-
-            <div style={{ marginTop: 22 }} />
-            <Title1 fontWeight={300} color={"#ffffff"}>
-              개발 전문업체
-            </Title1>
-            <Content1 color={"#ffffff"}>
-              <CountFunc index={2} />
-            </Content1>
-          </div> */}
-
+          
           <Explanation>
             <Font20>남동공단부터 창원까지</Font20>
             <Font20>선별된 5000여 개 제조사 정보를</Font20>

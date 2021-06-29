@@ -1,8 +1,5 @@
 import React from "react";
 
-// import Container from 'components/Container'
-// import Section from 'components/Section'
-
 import BannerConatiner from "./Banner";
 import SearchBar from "./SearchBar";
 import SearchFilterBox from "./SearchFilterBox";
@@ -36,7 +33,6 @@ class ManufacturerConatiner extends React.Component {
                   <Background>
                     <Container>
                       <SearchBar />
-                      {/* <SearchFilterBox /> */}
                     </Container>
                   </Background>
 

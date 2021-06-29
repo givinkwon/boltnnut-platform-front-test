@@ -8,7 +8,6 @@ import Content2 from "./Content2";
 import ContentSub from "./ContentSub";
 import Content3 from "./Content3";
 import Content4 from "./Content4";
-//import BannerContainer from './Banner';
 
 @inject("Project")
 @observer
@@ -30,14 +29,10 @@ class ProjectDetailContainer extends React.Component {
           <Containerv1>
             <Container13>
               <Content1 user={user} />
-              {/* <Content2 /> */}
-              {/* <Content4 /> */}
             </Container13>
             <ContentSub user={user} />
           </Containerv1>
         </Background>
-
-        {/* <Content3 /> */}
       </>
     );
   }

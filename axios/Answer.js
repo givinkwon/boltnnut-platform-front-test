@@ -56,9 +56,6 @@ export function getNextClientRequestList(req) {
   return axios({
     method: "GET",
     url: req.nextUrl,
-    // url: req.nextUrl[4] === 's'
-    // 	? req.nextUrl
-    // 	: StringUtils.insert(req.nextUrl, 's', 4),
     params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
   });
@@ -83,9 +80,6 @@ export function getNextAnswerList(req) {
   return axios({
     method: "GET",
     url: req.nextUrl,
-    // url: req.nextUrl[4] === 's'
-    // 	? req.nextUrl
-    // 	: StringUtils.insert(req.nextUrl, 's', 4),
     params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
   });
@@ -112,18 +106,6 @@ export function postReview(req) {
   });
 }
 
-/*
-사용하지 않음
-export function activeFirst(req) {
-	return axios({
-		method: 'POST',
-		url: `${ROOT_URL}/answer/first-active/`,
-		params: req.params ? req.params : null,
-		headers: req.headers ? req.headers : null,
-	})
-}
-*/
-
 
 
 
@@ -133,12 +115,6 @@ export function changeActiveAnswer(req) {
     url: `${ROOT_URL}/answer/active/`,
     data: req.data ? req.data : null,
     headers: req.headers ? req.headers : null,
-    /*
-		data: {
-			'partner_id': partnerId,
-			'project_id': projectId
-		}
-		*/
   });
 }
 
@@ -199,9 +175,6 @@ export function getNextPage(req) {
   return axios({
     method: "GET",
     url: req.nextUrl,
-    // url: req.nextUrl[4] === 's'
-    // 	? req.nextUrl
-    // 	: StringUtils.insert(req.nextUrl, 's', 4),
     headers: req.headers ? req.headers : null,
   });
 }

@@ -25,31 +25,13 @@ class DetailConatiner extends React.Component {
   };
   onClickReviewHandler = () => {
     const { Partner } = this.props;
-
-    // if (Partner.ReviewActiveIndex === idx) {
-    //   console.log(`review false : ${idx}`);
-    //   this.setState({ activeReview: false });
-    //   Partner.ReviewActive = false;
-    //   Partner.ReviewActiveIndex = -1;
-    //   Partner.partnerName = "";
-    // } else {
-    //   console.log(`review true : ${idx}`);
-    //   this.setState({ activeReview: true });
-    //   Partner.ReviewActive = true;
-    //   Partner.ReviewActiveIndex = idx;
-    //   Partner.partnerName = name;
-    // }
     if (Partner.ReviewActive) {
-      //   console.log(`review false : ${idx}`);
       this.setState({ activeReview: false });
       Partner.ReviewActive = false;
-      //   Partner.ReviewActiveIndex = -1;
       Partner.partnerName = "";
     } else {
-      //   console.log(`review true : ${idx}`);
       this.setState({ activeReview: true });
       Partner.ReviewActive = true;
-      //   Partner.ReviewActiveIndex = idx;
       Partner.partnerName = Partner.partner_detail_list[0].item.name;
     }
   };
@@ -70,7 +52,6 @@ class DetailConatiner extends React.Component {
               회사이름
             </Text.FontSize20>
             <Text.FontSize20 color="#404040" fontWeight={300}>
-              {/* {Partner.detail.name && Partner.detail.name} */}
               {Partner.partner_detail_list[0].item.name}
             </Text.FontSize20>
           </W30>
@@ -79,7 +60,6 @@ class DetailConatiner extends React.Component {
               전화번호
             </Text.FontSize20>
             <Text.FontSize20 color="#404040" fontWeight={300}>
-              {/* {Partner.detail.employee} */}
               {Partner.partner_detail_list[0].item.user.phone
                 ? Partner.partner_detail_list[0].item.user.phone
                 : "전화번호 없음"}
@@ -91,7 +71,6 @@ class DetailConatiner extends React.Component {
               지역
             </Text.FontSize20>
             <Text.FontSize20 color="#404040" fontWeight={300}>
-              {/* {console.log(toJS(Partner.partner_detail_list[0].item.city))} */}
               {Partner.getCityName(Partner.partner_detail_list[0].item.city)}
             </Text.FontSize20>
           </W30>
@@ -119,19 +98,6 @@ class DetailConatiner extends React.Component {
                 )}
             </a>
           </W50>
-
-          {/* <W30>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              지역
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040" fontWeight={300}>
-              {Partner.getRegionNameById(Partner.partner_detail_list[0].city)}
-              sdfdsfdsfds
-            </Text.FontSize20>
-          </W30> */}
-
-          {/* {Partner.detail.product_possible &&
-            Partner.detail.product_possible.length > 0 && ( */}
           <W100>
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>
               가능한 제품 분야
@@ -153,16 +119,11 @@ class DetailConatiner extends React.Component {
                 })}
             </BadgeList>
           </W100>
-          {/* )} */}
-          {/* {Partner.detail.product_history &&
-            Partner.detail.product_history.length > 0 && ( */}
           <W100>
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>
               진행한 제품들
             </Text.FontSize20>
             <BadgeList>
-              {/* {Partner.detail.product_history.map((item, idx) => {
-                    return ( */}
               <Badge style={{ width: "100%" }}>
                 <Text.FontSize20
                   color="#404040"
@@ -173,12 +134,9 @@ class DetailConatiner extends React.Component {
                     wordBreak: "break-word",
                   }}
                 >
-                  {/* #{item.subclass} */}
                   {Partner.partner_detail_list[0].item.history}
                 </Text.FontSize20>
               </Badge>
-              {/* ); */}
-              {/* })} */}
             </BadgeList>
           </W100>
 
@@ -187,8 +145,6 @@ class DetailConatiner extends React.Component {
               회사 소개
             </Text.FontSize20>
             <BadgeList>
-              {/* {Partner.detail.product_history.map((item, idx) => {
-                    return ( */}
               <Badge style={{ width: "100%" }}>
                 <Text.FontSize20
                   color="#404040"
@@ -199,12 +155,9 @@ class DetailConatiner extends React.Component {
                     wordBreak: "break-word",
                   }}
                 >
-                  {/* #{item.subclass} */}
                   {Partner.partner_detail_list[0].item.info_company}
                 </Text.FontSize20>
               </Badge>
-              {/* ); */}
-              {/* })} */}
             </BadgeList>
           </W100>
 
@@ -215,18 +168,14 @@ class DetailConatiner extends React.Component {
             <ImageContainer file={Partner.partner_detail_list[0].item.file} />
           </W100>
 
-          {/* )} */}
           <Review onClick={() => this.onClickReviewHandler()}>리뷰 보기</Review>
         </Content>
 
         {this.props.Partner.ReviewActive && (
           <>
             <ReviewContainer
-              // data={data}
               width={width}
               Partner={Partner}
-              // categoryData={categoryData}
-              // idx={idx}
             />
           </>
         )}

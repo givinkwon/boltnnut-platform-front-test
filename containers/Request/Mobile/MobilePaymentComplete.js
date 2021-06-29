@@ -34,7 +34,7 @@ class MobilePaymentCompleteContainer extends React.Component {
 			<MobiletestDiv>
 				<MarginDiv />
 				<Background>
-					{/* <Containerv1 style={{ flexDirection: 'column' }}> */}
+					
 					<CompleteTitle>
 						<SuccessImg src={success} style={{ marginBottom: '18px' }} />
 						<InlineDiv>

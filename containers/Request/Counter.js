@@ -15,7 +15,6 @@ class CounterContainer extends React.Component {
   countCalc() {
     const { Request, Partner } = this.props;
     let result = 0;
-    //console.log(Request.select_big, Request.select_mid, Request.select_small)
 
     if (Partner.select_big != null && Partner.select_mid == null) {
       result =

@@ -100,17 +100,10 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <MobileBanner0Container />
-              {/* <MobileBanner10Container /> */}
               <MobileBanner2Container />
               <MobileBanner3Container />
               <MobileBanner5Container />
               <MobileBanner1Container />
-
-              {/* <MobileBanner4Container /> */}
-
-              {/* <MobileBanner6Container />
-              <MobileBanner7Container /> */}
-              {/* <MobileBanner10Container /> */}
               <MobileBanner12Container width={width} />
               <MobileBanner8Container />
               <MobileBanner9Container />
@@ -120,7 +113,6 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <TabletBanner0Container />
-              {/* <TabletBanner10Container /> */}
 
               <TabletBanner2Container />
               <TabletBanner3Container />
@@ -129,10 +121,6 @@ class HomeConatiner extends React.Component {
               <TabletBanner1Container />
 
               <TabletBanner12Container />
-              {/* <TabletBanner4Container />
-              <TabletBanner5Container />
-              <TabletBanner6Container />
-              <TabletBanner7Container /> */}
               <TabletBanner8Container />
               <TabletBanner9Container />
             </CustomContainer>
@@ -140,18 +128,7 @@ class HomeConatiner extends React.Component {
         ) : (
           <>
             <div style={{ overflow: "hidden" }}>
-              {/* <div
-                style={{ width: 300, height: 300, background: "green" }}
-                onClick={() => {
-                  // authorize();
-                  test()
-                    .then((res) => console.log(res))
-                    .catch((e) => console.log(e));
-                }}
-              ></div> */}
-              {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
               <Banner0Container />
-              {/* <Banner10Container/> */}
               <Banner2Container />
               <Banner3Container />
 
@@ -159,9 +136,6 @@ class HomeConatiner extends React.Component {
               <Banner1Conatiner />
 
               <Banner12Container />
-              {/* <Banner4Container />
-              <Banner6Container />
-              <Banner7Container /> */}
               <Banner8Container />
               <Banner9Container />
             </div>

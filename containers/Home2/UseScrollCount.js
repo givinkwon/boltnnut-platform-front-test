@@ -12,8 +12,6 @@ const UseScrollCount = (end, start = 0, duration = 3000, delay = 0,addAmount=1) 
       const { current } = element;
       if (current && entry.isIntersecting) 
       {
-        // let currentNumber = start;
-        // setCurrentNumber((currentNumber)=>start);
         const counter = setInterval(() => {
           numRef.current+=addAmount;
           current.innerHTML = numRef.current.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");                             
@@ -28,22 +26,11 @@ const UseScrollCount = (end, start = 0, duration = 3000, delay = 0,addAmount=1) 
     [end, start, stepTime, element],
   );
 
-  // useEffect(() => {
-  //   if (element.current) {
-  //     observer.current = new IntersectionObserver(onScroll, { threshold: 0.7 });
-  //     observer.current.observe(element.current);
-  //   }
-
-  //   // return () => observer && observer.disconnect();
-
-  // }, [onScroll]);
-
   useEffect(() => {
     if (element.current) {
       observer.current = new IntersectionObserver(onScroll, { threshold: 0 });
       observer.current.observe(element.current);
     }
-    // return () => observer && observer.disconnect();
     return() =>observer && observer.disconnect;
 
   }, [onScroll]);

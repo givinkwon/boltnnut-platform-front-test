@@ -73,29 +73,6 @@ class MobileBanner0Container extends React.Component {
               </Font16>
               <Font16>전문 업체만 골라보세요.</Font16>
             </Explanation>
-
-            {/* <Title1 fontWeight={300} color={'#ffffff'}>
-                  총 프로젝트 금액
-              </Font16>
-              <Content1 color={'#ffffff'}>
-                <CountFunc index={0}/> <span>원</span>
-              </Content1>
-
-              <div style={{marginTop: 25}} />
-              <Font16 color={'#ffffff'}>
-                  의뢰 프로젝트
-              </Font16>
-              <Content1 color={'#ffffff'}>
-                <CountFunc index={1} projCount={ProjectCount}/> <span>건</span>
-              </Content1> */}
-
-            {/* <div style={{ marginTop: 25 }} />
-            <Title1 fontWeight={300} color={"#ffffff"}>
-              개발 전문업체
-            </Title1>
-            <Content1 color={"#ffffff"}>
-              <CountFunc index={2} /> <span>개</span>
-            </Content1> */}
           </div>
           {Auth.logged_in_user && Auth.logged_in_user.type === 1 ? (
            <>

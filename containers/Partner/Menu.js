@@ -68,15 +68,9 @@ class MenuConatiner extends React.Component {
           width < 1299.98 ? (
               <MobileMenuBox style={{display: "none"}}>
                 <MobileMenuHeader>
-                  {/*<MobileMenuTab active={tab === 1} onClick={() => this.setTab(1)}>
-                    <Text.FontSize18 color={tab === 1 ? WHITE : DARKGRAY} fontWeight={700}>제품분야</Text.FontSize18>
-                  </MobileMenuTab>*/}
                   <MobileMenuTab active={tab === 2} onClick={() => this.setTab(2)}>
                     <Text.FontSize18 color={tab === 2 ? WHITE : DARKGRAY} fontWeight={700}>카테고리</Text.FontSize18>
                   </MobileMenuTab>
-                  {/*<MobileMenuTab active={tab === 3} onClick={() => this.setTab(3)}>
-                    <Text.FontSize18 color={tab === 3 ? WHITE : DARKGRAY} fontWeight={700}>지역</Text.FontSize18>
-                  </MobileMenuTab>*/}
                 </MobileMenuHeader>
 
                 <Menu>
@@ -107,16 +101,6 @@ class MenuConatiner extends React.Component {
             )
             : (
               <MenuBox>
-                {/*<Menu>
-                  <Header>
-                    <Text.FontSize18 color={WHITE} fontWeight={700}>제품분야</Text.FontSize18>
-                  </Header>
-                  {
-                    Partner.category_list.length > 0 && Partner.category_list.map((item, idx) => {
-                      return <MenuItem type='category' key={idx} data={item}/>
-                    })
-                  }
-                </Menu>*/}
                 <Menu>
                   <Header class="line">
                     <span>카테고리</span>

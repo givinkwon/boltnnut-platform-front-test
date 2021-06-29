@@ -19,9 +19,7 @@ class Banner4Container extends React.Component {
           }}
         >
           <FadeDiv bottom>
-            {/* <div> */}
             <div style={{ width: "100%", marginRight: "150px" }}>
-            {/* <div style={{ width: "100px", marginRight: "150px" }}> */}
               <img src={image1} style={{ height: "100%" }} />
             </div>
 
@@ -30,8 +28,6 @@ class Banner4Container extends React.Component {
               <Middle>
                 <span>포트폴리오부터 계약 후기까지!<br />
                 5000개의 전국 제조사 정보 제공</span>
-                {/* <span>포트폴리오부터 계약 후기까지!</span>
-                <span>5000개의 전국 제조사 정보 제공</span> */}
               </Middle>
               <Body>
                 남동공단부터 창원까지

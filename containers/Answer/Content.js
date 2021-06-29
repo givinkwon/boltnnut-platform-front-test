@@ -17,37 +17,6 @@ const right = 'static/icon/right-arrow.png'
 @inject('Project','Auth')
 @observer
 class AnswerContentContainer extends React.Component {
- 
-  // state = {
-  //   projectLength: 0,
-  //   project_idx: 3,
-  //   length: 0
-  // }
-  // componentDidMount () {
-  //   this.setState({...this.state, projectLength: this.props.length })
-  //   window.addEventListener('scroll', this.loadScroll);
-  // }
-
-  // loadScroll = () => {
-  //   const { project_idx, projectLength } = this.state;
-  //   var newIdx = project_idx + 3
-
-  //   if (typeof document != "undefined") {
-  //     var scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-  //     var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-  //     var clientHeight = document.documentElement.clientHeight;
-  //   }
-  //   if (scrollTop + clientHeight + 4 > scrollHeight && projectLength == null) {
-  //     this.setState({...this.state, projectLength: this.props.length})
-  //   }
-  //   if (scrollTop + clientHeight + 4 > scrollHeight && projectLength > project_idx ) {
-  //     if (newIdx < projectLength) {
-  //       this.setState({...this.state, project_idx: newIdx})
-  //     } else {
-  //       this.setState({...this.state, project_idx: projectLength})
-  //     }
-  //   }
-  // }
   state = {
     current: 0,
     next: true,
@@ -66,8 +35,7 @@ class AnswerContentContainer extends React.Component {
   
   componentDidMount() {
     const { Project } = this.props
-
-    //const { current, count } = this.state;    
+ 
     console.log("############################3="+Project.project_count)
     this.setState({...this.state, count: Project.project_count})
     
@@ -110,15 +78,11 @@ class AnswerContentContainer extends React.Component {
  
     this.updaProjectate(newPage, Project.project_count)
 
-    //if (this.state.current % 2 == 0) {
-      //console.log(this.state.current)
-
     // 실제 
     console.log(this.props.Auth.logged_in_client)
     Project.getNextPage(this.props.Auth.logged_in_client);
 
     // 임의
-    // Project.getNextPage(904);
       
     console.log(this.state)
     console.log(`project_count: ${Project.project_count}`)
@@ -147,29 +111,9 @@ class AnswerContentContainer extends React.Component {
     const user = Project.current_user_id
 
     console.log(count)
-
-    // https://velog.io/@cada/React%EC%9D%98-setState%EA%B0%80-%EC%9E%98%EB%AA%BB%EB%90%9C-%EA%B0%92%EC%9D%84-%EC%A3%BC%EB%8A%94-%EC%9D%B4%EC%9C%A0
-
-    
-// page_set == current_set
-
-    // const data = (data) => {
-    //   return data.filter((item) => 
-    //     this.props.Project.current_user_id === item.request_set[0].clientId
-    //   )
-    // }    
+     
       return(
         <>                
-        
-          {/* { Project && Project.projectData.slice(5*current, 5*(current+1)).map((item, idx) => {                            
-            return(
-              <Background style={{marginBottom: '5px'}}>
-                <Container>        
-                  <ProposalCard data={item} handleIntersection={this.handleIntersection}/> 
-               </Container>          
-              </Background>
-            )        
-            })} */}
            <PageBar>
             <img src={pass1} style={{opacity: current_set == 1 && current == 0  ? 0.4 : 1 }} onClick = {this.pagePrev}/>
               <PageCount onClick = {this.buttonClick} value = {5*(current_set - 1) + 1} active={current%5 == 0} style={{display:  page < 5*(current_set - 1) + 1 ? 'none': 'block' }}> {5*(current_set - 1) + 1} </PageCount>
@@ -177,7 +121,6 @@ class AnswerContentContainer extends React.Component {
               <PageCount value = {5*(current_set - 1) + 3} active={current%5 == 2} style={{display:  page < 5*(current_set - 1) + 3 ? 'none': 'block' }}> {5*(current_set - 1) + 3} </PageCount>
               <PageCount value = {5*(current_set - 1) + 4} active={current%5 == 3} style={{display:  page < 5*(current_set - 1) + 4 ? 'none': 'block' }}> {5*(current_set - 1) + 4} </PageCount>
               <PageCount value = {5*(current_set - 1) + 5} active={current%5 == 4} style={{display:  page < 5*(current_set - 1) + 5 ? 'none': 'block' }}> {5*(current_set - 1) + 5} </PageCount>
-              {/* <PageCount> ... </PageCount> */}
             <img src={pass2} style={{opacity: page == current ? 0.4 : 1, display: page == current? 'none' : 'block'}} onClick = {this.pageNext} />
         </PageBar>        
         </>

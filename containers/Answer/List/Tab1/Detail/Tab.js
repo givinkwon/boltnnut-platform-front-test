@@ -13,13 +13,9 @@ class TabConatiner extends React.Component {
     return (
       <Container>
         <Tabs>
-          {/*<Tab active={tab===1} onClick={() => setTab(1)}>
-            <Text.FontSize20 fontWeight={500}>큐레이션된 제조사</Text.FontSize20>
-          </Tab>*/}
           {tab==2 &&
           <Tab active={true} onClick={() => {router.back()}}>
 			<Text.FontSize20 fontWeight={500}>
-			    {/*<ArrowLeft src="/static/icon/left-arrow-white.png" />*/}
 			    제조사 리스트 돌아가기
 			</Text.FontSize20>
 		  </Tab>
@@ -27,10 +23,6 @@ class TabConatiner extends React.Component {
           <Tab active={tab===2} onClick={() => setTab(2)}>
             <Text.FontSize20 fontWeight={500}>제조사 정보</Text.FontSize20>
           </Tab>
-          {/*<Tab active={tab===3} onClick={() => setTab(3)}>
-            <Text.FontSize20 fontWeight={500}>제조사 스토리</Text.FontSize20>
-          </Tab>*/}
-
         </Tabs>
       </Container>
     )

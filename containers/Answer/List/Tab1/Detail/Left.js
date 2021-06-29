@@ -101,7 +101,6 @@ class LeftDetailContainer extends Component {
 							제안서 리스트 다시보기
 						</Text.FontSize18>
 					</div>
-                    {/*roomname = reqeust(id)_answer(id)*/}
 					<div onClick={() => {router.push('/chat/' + location.pathname.split('/')[2] + '_' + location.pathname.split('/')[4])}}>
 						<Text.FontSize18 color={WHITE} fontWeight={600}>
 							지원한 전문 제조사
@@ -204,27 +203,6 @@ class LeftDetailContainer extends Component {
 								</Text.FontSize16>
 							</ExtraInfo>
 						</div>
-
-                        {/*
-						<div>
-							<Text.FontSize18 color={PRIMARY} fontWeight={700}>
-								가능 제품 분야
-							</Text.FontSize18>
-
-							<ExtraInfo>
-								{
-									partner && partner.product_possible &&
-										partner.product_possible.map(
-											(item) => (
-												<Text.FontSize16 key={item.id} color="#4d4f5c">
-													{item.subclass}
-												</Text.FontSize16>
-											)
-										)
-								}
-							</ExtraInfo>
-						</div>
-                        */}
 						<div>
 							<Text.FontSize18 color={PRIMARY} fontWeight={700}>
 								진행한 제품
@@ -250,9 +228,6 @@ class LeftDetailContainer extends Component {
 			      	<Text.FontSize18 color={PRIMARY} fontWeight={700}>
 								포트폴리오
 							</Text.FontSize18>
-							{/*<Text.FontSize12 color="#898989" onClick={this.openPortfolioModal}>
-								더보기
-							</Text.FontSize12>*/}
 						</PortfolioLabel>
 
 						<PortfolioBox>

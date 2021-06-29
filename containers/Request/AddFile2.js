@@ -29,20 +29,6 @@ class InputComponent extends React.Component {
     console.log(toJS(ManufactureProcess.openFileArray));
     if (ManufactureProcess.changeProject) {
       this.setState({ checkFileUpload: true });
-
-      // await Project.projectDetailData.request_set[0].requestfile_set.map(
-      //   (item, idx) => {
-      //     console.log(toJS(item));
-      //     if (item.share_inform) {
-      //       ManufactureProcess.openFileArray.push(item);
-      //     } else {
-      //       ManufactureProcess.privateFileArray.push(item);
-      //     }
-      //   }
-      // );
-      // await ManufactureProcess.openFileArray.push(
-      //   Project.projectDetailData.request_set[0].requestfile_set
-      // );
     }
 
     console.log(toJS(ManufactureProcess.openFileArray));
@@ -82,8 +68,6 @@ class InputComponent extends React.Component {
       }
 
       const fileName = e.currentTarget.files[0].name;
-      // this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
-      //ManufactureProcess.openFileArray.push({ file: e.currentTarget.files[0] });
 
       this.setState({
         ...this.state,
@@ -94,20 +78,6 @@ class InputComponent extends React.Component {
 
       const formData = new FormData();
       const files = e.target.files;
-
-      //formData.append('file', ManufactureProcess.openFileArray)
-      // for (let i = 0; i < ManufactureProcess.openFileArray.length; i++) {
-      //   formData.append(`file[${i}]`, ManufactureProcess.openFileArray[i].file);
-      //   console.log(toJS(ManufactureProcess.openFileArray[i]).file);
-      //   console.log(toJS(ManufactureProcess.openFileArray[i]));
-      // }
-      // for (let value of formData.values()) {
-      //   console.log(value);
-      // }
-
-      //console.log(formData.values);
-      //console.log(formData);
-
       Request.setCommonFile(e.currentTarget.files[0]);
       console.log(toJS(ManufactureProcess.openFileArray));
     }
@@ -124,11 +94,7 @@ class InputComponent extends React.Component {
           break;
         }
       }
-
-      //console.log(e.currentTarget.files[0]);
-      //console.log(e.currentTarget.files[1]);
       const fileName = e.currentTarget.files[0].name;
-      // this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
 
       this.setState({
         ...this.state,

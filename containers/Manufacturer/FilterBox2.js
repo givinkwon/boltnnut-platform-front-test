@@ -35,29 +35,15 @@ class FilterBox2Container extends React.Component {
       Partner.filter_view = item.id;
       Partner.partner_next = null;
       Partner.partner_count = null;
-      // this.count = 0;
       Partner.currentPage = 1;
-      // console.log(Partner.filter_region)
-      // if(Partner.filter_region === "전체"){
-      //   Partner.getPartnerByPrice()
-      // }else{
-      //   Partner.getPartnerByPrice()
-      // }
-      //Partner.getPartnerByRegion(Partner.search_text);
-      // console.log(Partner.radiobox_checked_idx);
       Partner.category_dic = {};
-      //Partner.search_text = "";
-      //Partner.setCategory();
       Partner.getPartner();
     }
   };
 
   activeHandler = (idx, filter) => {
-    // console.log(`this.state.index : ${this.state.index}`)
-    // console.log(`idx : ${idx}`)
 
     if (idx === Partner.filterbox_view_checked_idx) {
-      // console.log("equal")
       return true;
     } else {
       return false;
@@ -82,14 +68,6 @@ class FilterBox2Container extends React.Component {
           borderRadius: "3px",
         }}
       >
-        {/* <FormLabel component="legend" style={{marginTop: '28px'}}>금액</FormLabel> */}
-        {/* {filter === "filter" ? <Font16>필터</Font16> : <Font16>예산</Font16>} */}
-
-        {/* <RadioGroup aria-label="number" name="number1">
-          <FormControlLabel value="one" control={<Checkbox />} label="정제의뢰" />
-          <FormControlLabel value="two" control={<Checkbox />} label="정제의뢰" />
-          <FormControlLabel value="three" control={<Radio />} label="" />                                
-        </RadioGroup> */}
         {data.map((item) => {
           return (
             <Item

@@ -32,12 +32,8 @@ class SearchBarConatiner extends React.Component {
 
   searchText = async (e) => {
     const { Partner } = this.props;
-    //console.log("click");
-    // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
     await (Partner.search_text = e.target.value);
-
-    //Partner.getPartner();
   };
   search = () => {
     const { Partner, ManufactureProcess } = this.props;
@@ -63,7 +59,6 @@ class SearchBarConatiner extends React.Component {
       }
     }
     Partner.currentPage = 1;
-    // Partner.resetDevCategory();
     Partner.getPartner();
     if (Partner.search_text) {
       Partner.isSearched = true;
@@ -111,8 +106,6 @@ class SearchBarConatiner extends React.Component {
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-    // this.search();
-    //console.log(this.props.Project.input_category);
   }
   render() {
     const { Partner, Request } = this.props;
@@ -142,7 +135,6 @@ class SearchBarConatiner extends React.Component {
           <SearchBar active={Partner.subButtonActive}>
             <input
               placeholder="원하는 분야의 제조업체를 검색하세요"
-              // value={Partner.search_text}
               onFocus={(e) => (e.target.placeholder = "")}
               onBlur={(e) =>
                 (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")

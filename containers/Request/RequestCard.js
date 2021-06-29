@@ -37,10 +37,6 @@ class RequestCardContainer extends Component {
     active: false
   }
 
-  // handleChange = (event, newValue) => {
-  //   this.setState({percentage: newValue})
-  // }
-
   CustomSliderThumbComponent = (props) => {
     const { Request } = this.props;
     return (
@@ -59,7 +55,6 @@ class RequestCardContainer extends Component {
 
   componentDidUpdate() {
     const { targets,active } = this.state;
-    // console.log(this.state);
     if (this.fullChecker(targets) == true && active == false) {
       this.setState({...this.state, active: true})
     } else if (this.fullChecker(targets) == false && active == true) {
@@ -158,8 +153,6 @@ class RequestCardContainer extends Component {
         }
         else {
           Request.titleData.push({"title_id":DetailQuestion.index,"title_select":DetailQuestion.SelectId});
-
-          // console.log(Request.drawFile);
           if(DetailQuestion.index==8)
           {
             const ManufactureProcessFormData = new FormData();
@@ -190,11 +183,6 @@ class RequestCardContainer extends Component {
             break;
           }
           // 도면에서 카테고리가 실리콘/플라스틱이 아닌 경우
-          // if(DetailQuestion.index == 8 && ManufactureProcess.SelectChecked != 1 && ManufactureProcess.SelectChecked != 2 ){
-          //   Request.step_index = 6;
-          //   break;
-          // }
-
           Request.step_index = 3;
         }
         Request.percentage += 14;
@@ -204,7 +192,6 @@ class RequestCardContainer extends Component {
   countCalc () {
     const { Request} = this.props;
     let result = 4997
-    //console.log(Request.select_big, Request.select_mid, Request.select_small)
 
     if(Request.select_big != null && Request.select_mid == null){
         result = Request.select_big.id === 0 ?  4997 : 460 * (((Request.select_big.id)/5) + 4)

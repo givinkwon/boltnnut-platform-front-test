@@ -45,16 +45,7 @@ class Step0Conatiner extends React.Component {
                 <li class="line2"></li>
               </Line>
             </LineBox>
-            
-            {/* <Line>
-              <Line1></Line1>
-              <Line2></Line2>
-              <LineBox>
-                <Line3 left></Line3>
-                <Line3 right></Line3>
-              </LineBox>
-              
-            </Line> */}
+          
             
             <ButtonBox>
               <Button active={Request.tab === 1} onClick={async() => await Request.setTab(1)}>
@@ -132,37 +123,6 @@ const Line = styled.ul`
     height : 64px
   }
 `
-// const Line = styled.div`
-//   color : #0933b3;
-//   size : 4px;
-// `
-
-// const Line1 = styled.hr`
-//   height : 50px;
-//   width : 0px;
-// `
-// const Line2 = styled.hr`
-//   width : 50% ; 
-// `
-// const LineBox = styled.div`
-//   width : 50%;
-//   margin-right : auto ; 
-//   margin-left : auto ; 
-// `
-// const Line3 = styled.hr`
-//   height : 50px;
-//   width : 0px;
-//   display : inline-flex;
-//   ${props => props.left && css`
-//     /* text-align : left */
-//     align : left;
-//     margin-right : 596px;
-//   `}
-//   ${props => props.right && css`
-//     /* text-align : right; */
-//     align : right;
-//   `}
-// `
 
 
 const ButtonBox = styled.div`

@@ -66,8 +66,6 @@ class Nav extends React.Component {
           // 'http://localhost:3000/offered?tab=1&state=2'이면
           // queryParams = 'tab=1&state=2'
           queryParams.split("&").forEach((param) => {
-            // name = 'tab', 'state'
-            // value = '1', '2'
             const [name, value] = param.split("=");
             if (name === "tab") {
               currentTab = value;
@@ -95,12 +93,6 @@ class Nav extends React.Component {
         alert("접근할 수 없는 페이지입니다");
         Router.push("/login");
       }
-
-      // // 로그인 하지 않고 /partner/[id]로 들어오는 사용자 리다이렉트
-      // if(splitedRoute[1] === 'partner' && splitedRoute.length >= 3) {
-      //  alert("로그인이 필요합니다");
-      //  Router.push("/login");
-      // }
       this.needPermission.forEach((url) => {
         if (url === splitedRoute[1]) {
           if (requestId != 923) {
@@ -224,9 +216,6 @@ class Nav extends React.Component {
                     {is_profile && (
                       <ProfileMenu>
                         <div>
-                          {/* <Font17>
-                            안녕하세요, 기빈님
-                          </Font17> */}
                         </div>
                         <div>
                           <div onClick={() => Router.push("/chatting")}>

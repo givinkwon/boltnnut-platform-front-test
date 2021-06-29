@@ -11,10 +11,6 @@ const star = "/static/icon/star_blue3.svg";
 @inject("Partner", "Auth")
 @observer
 class ReviewCard extends React.Component {
-  // constructor (props) {
-  //     super(props);
-  //     this.hideLoader = this.hideLoader.bind(this);
-  // }
   state = {
     width: null,
   };
@@ -27,59 +23,31 @@ class ReviewCard extends React.Component {
     console.log(totalCount);
     if (data) {
       console.log(`client id : ${data.client_id}, idx : ${idx}`);
-      // await Partner.getClientInfo(data.client_id);
       await Partner.getClientNameById(data.client_id, idx);
 
-      // console.log(Partner.clientInfo);
       console.log(Partner.clientInfoList);
-      // Partner.clientInfo.name
-      // Partner.clientInfo.user.username
     }
 
-    // const { Partner, Auth } = this.props;
-    // await Partner.getReview();
-
-    // console.log(toJS(Partner.review_ary));
-    // await Partner.getClientEmail();
-    // if (Partner.review_user_ary) {
-    //   this.setState({ g: 3 });
-    // }
   };
   componentWillUnmount = () => {
     const { Partner } = this.props;
     Partner.clientInfo = [];
     Partner.clientInfoList = [];
-    // Partner.review_ary = [];
-    // Partner.loadReviewData = 0;
-    // Partner.review_user_ary = [];
+
   };
 
   render() {
     const { data, width, Partner, categoryData, idx, totalCount } = this.props;
-    // console.log(data);
-    // console.log(toJS(Partner.partnerReviewList));
     console.log(toJS(Partner.clientInfoList));
     return (
       <>
         <Card>
-          {/* {Partner.clientInfo.user ? (
-            <name>{Partner.clientInfo.user.username}</name>
-          ) : (
-            <name>***</name>
-          )} */}
 
           {Partner.clientInfoList[idx] ? (
             <name>{Partner.clientInfoList[idx].user.username}</name>
           ) : (
             <name>***</name>
           )}
-
-          {/* {Partner.clientInfoList[data.client_id] ? (
-            <name>{Partner.clientInfoList[data.client_id].user.username}</name>
-          ) : (
-            <name>***</name>
-          )} */}
-
           <score>
             <span>
               <ReviewStarRating
@@ -89,24 +57,10 @@ class ReviewCard extends React.Component {
               />
             </span>
             <date>{data.date}</date>
-            {/* <span>{`   ${item.score}`}</span> */}
           </score>
           <history>{data.projectname}</history>
           <content>{data.content}</content>
-
-          {/* {Partner.review_user_ary && (
-                <name>{Partner.review_user_ary[idx]}</name>
-              )} */}
-
-          {/* <content>{item.content}</content> */}
         </Card>
-
-        {/* {Partner.loadReviewData === -1 && (
-          <NoCard reviewDone={Partner.review_done}>
-            <span>등록된 리뷰가 없습니다</span>
-          </NoCard>
-          // <h1></h1>
-        )} */}
       </>
     );
   }

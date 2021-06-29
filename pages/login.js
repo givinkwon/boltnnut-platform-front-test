@@ -56,8 +56,7 @@ class Home extends React.Component {
     const { width } = this.state;
     return (
       <div>
-        
-        {/* {Loading.is_open && <Spinner/>} */}
+      
         <Head>
 
           {/* SEO */}

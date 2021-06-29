@@ -26,7 +26,6 @@ class EstimateLogoSlider extends React.Component {
       <ItemBox>
         <StyledSlider {...SlideSettings}>
         {Request.random_partner_list && Request.random_partner_list.map((item, idx) => {
-              // console.log(item)
               return (                
                 <>
                 <div>

@@ -28,17 +28,8 @@ class Home extends React.Component {
     this.props.Loading.setOpen(true);
 
     this.props.Auth.home_index = 0;
-    //창 크기
-    // var newURL =
-    //   window.location.protocol +
-    //   "//" +
-    //   window.location.host +
-    //   "/" +
-    //   window.location.pathname;
-    // console.log(newURL);
 
     window.addEventListener("resize", this.updateDimensions);
-    // this.props.Auth.bgColor = "#ffffff";
     this.setState({ ...this.state, width: window.innerWidth });
     setTimeout(() => {
       this.props.Loading.setOpen(false);
@@ -92,12 +83,6 @@ class Home extends React.Component {
           </>
           <>
             {width && (
-              // (home_index == 0 ? (
-              //   <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
-              // ) : (
-              //   <Home2Conatiner width={width} reqList={Home.request_list} /> // k-장인 메인 페이지
-              // ))
-
               <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
               // <Home2Conatiner width={width} reqList={Home.request_list} /> // k-장인 메인 페이지
             )}

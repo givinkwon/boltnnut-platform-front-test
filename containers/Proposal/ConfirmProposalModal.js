@@ -15,19 +15,9 @@ import {withRouter} from "next/router";
 
 @inject('Proposal', 'Auth')
 class ConfirmProposalModal extends Component {
-  // state = {
-  //   requestId: -1
-  // }
+
 
   componentDidMount() {
-    // const splitedUrl = window.location.pathname.split('/')
-    // let pathname = splitedUrl[splitedUrl.length-2]
-    // const requestId = pathname === 'detail' ? splitedUrl[splitedUrl.length-3] : splitedUrl[splitedUrl.length-1]
-
-    // this.setState({
-    //   ...this.state,
-    //   requestId: requestId,
-    // })
   }
 
   handleClick = async (submit) => {
@@ -36,8 +26,6 @@ class ConfirmProposalModal extends Component {
     const {Auth, Proposal, handleClose, closeProposalModal,router} = this.props
     if(submit) {
         router.push('/profile/')
-      {/*await Auth.checkLogin()
-      Proposal.postProposal(Auth.logged_in_partner.id)*/}
     }
     await handleClose()
     await closeProposalModal()
@@ -45,7 +33,6 @@ class ConfirmProposalModal extends Component {
 
   render() {
     const {open, handleClose} = this.props;
-    //const {requestId} = this.state
     const request = null
     const product = '하이패스'
 

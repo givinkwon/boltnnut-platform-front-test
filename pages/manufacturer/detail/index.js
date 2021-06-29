@@ -32,10 +32,6 @@ class Index extends React.Component {
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
 
-    // Home.init();
-    // Auth.bgColor = "#ffffff";
-    // Loading.setOpen(true);
-    // setTimeout(() => Loading.setOpen(false), 500);
     // page ip 기록
     const formData = new FormData();
 
@@ -85,7 +81,6 @@ class Index extends React.Component {
             ))}
         </>
         <ManufacturerDetailContainer width={width} />
-        {/* <ManufacturerContainer width={width} /> */}
         <Footer />
       </div>
     );

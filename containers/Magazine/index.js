@@ -4,7 +4,6 @@ import Container from "components/Container";
 import Section from "components/Section";
 
 import BannerConatiner from "./Banner";
-//import ContentConatiner from './Content'
 import ContentConatiner from "./Content2";
 
 import TabletContentContainer from "./TabletMagazine";

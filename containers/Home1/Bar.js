@@ -518,7 +518,6 @@ class BarContainer extends React.Component {
     const { current } = this.props;
 
     return (
-      // this.Selector( current )
         this.Selector(1)
       )
   }

@@ -62,7 +62,6 @@ class PartnerInfoContainer extends React.Component {
       this.setState({next: true, prev: false})
     }
     else {
-      // slidesToShow : 2
       if(current === 1) {
         this.setState({next: false, prev: true})
       }

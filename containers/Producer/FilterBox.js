@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 
-//import FormControl from "@material-ui/core/FormControl";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -36,7 +35,6 @@ class FilterBoxContainer extends React.Component {
     const { Partner } = this.props;
     let partFilterAry = [];
     let temp = [];
-    // console.log(idx);
 
     if (filter === "filter" || filter === "mobileFilter") {
       if (this.props.Partner.filter_category_idx !== idx) {
@@ -62,51 +60,19 @@ class FilterBoxContainer extends React.Component {
         await Partner.getPartner();
       }
     }
-    // console.log(toJS(Partner.filterList));
-    // // onst str1 = arr.join();
-    // const filterString = Partner.filterList.join();
-    // Partner.filter_category = Partner.filterList.join();
-    // console.log(filterString);
-    // console.log(Partner.filter_category);
-
-    // if (this.props.purpose == "filter") {
-    //   console.log("11111");
-    //   Partner.getPartner();
-    // }
   };
 
   activeHandler = (idx, filter) => {
-    // console.log(`this.state.index : ${this.state.index}`)
-    // console.log(`idx : ${idx}`)
-    // console.log(toJS(this.props.Partner.filterArray));
     if (this.props.Partner.filterArray[idx]) {
       if (filter === "filter" || filter === "mobileFilter") {
-        //if (idx === Partner.filterbox_checked_idx) {
-        // console.log(toJS(this.props.Partner.filterArray));
-        // if(this.props.Partner.filter_category_idx === -1){
-        //   this.props.Partner.filter_category_idx = this.props.Partner.filterArray[idx].id
-
-        // }else{
-        //   this.props.Partner.filterArray[this.props.Partner.filter_category_idx-1].checked = false
-        //   this.props.Partner.filter_category_idx = this.props.Partner.filterArray[idx].id
-        // }
 
         if (idx === this.props.Partner.filter_category_idx) {
-          // console.log("equal")
           return true;
         } else {
           return false;
         }
-
-        // if (this.props.Partner.filterArray[idx].checked === true) {
-        //   // console.log("equal")
-        //   return true;
-        // } else {
-        //   return false;
-        // }
       } else {
         if (idx === Partner.filterbox_budget_checked_idx) {
-          // console.log("equal")
           return true;
         } else {
           return false;
@@ -121,7 +87,6 @@ class FilterBoxContainer extends React.Component {
   render() {
     const { checked, data, filter } = this.props;
     const { placeholder, label, disabled, ...props } = this.props;
-    // console.log(data);
 
     return (
       <FormControl
@@ -129,14 +94,6 @@ class FilterBoxContainer extends React.Component {
         style={{ flexDirection: "row", width: "100%", flexWrap: "wrap" }}
         filter={filter}
       >
-        {/* <FormLabel component="legend" style={{marginTop: '28px'}}>금액</FormLabel> */}
-        {/* {filter === "filter" ? <Font16>필터</Font16> : <Font16>예산</Font16>} */}
-
-        {/* <RadioGroup aria-label="number" name="number1">
-          <FormControlLabel value="one" control={<Checkbox />} label="정제의뢰" />
-          <FormControlLabel value="two" control={<Checkbox />} label="정제의뢰" />
-          <FormControlLabel value="three" control={<Radio />} label="" />                                
-        </RadioGroup> */}
         {filter === "filter" &&
           data.map((item) => {
             return (
@@ -167,7 +124,6 @@ class FilterBoxContainer extends React.Component {
               <Item
                 onClick={() => {
                   this.onClickFilterHandler(item, item.id - 1, filter);
-                  // console.log(item);
                 }}
                 active={this.activeHandler(item.id - 1, filter)}
                 filter={filter}

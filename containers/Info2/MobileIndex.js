@@ -14,59 +14,7 @@ class MobileInfoContainer extends React.Component {
 		return (
 			<>
 				<MobilePaymentPageContainer></MobilePaymentPageContainer>
-				{/* <MobilePaymentCompleteContainer></MobilePaymentCompleteContainer> */}
 			</>
-			// <Background>
-			//   <Header>
-			//     온라인 맞춤 제조 플랫폼,<br/>
-			//     <span>볼트앤너트</span>
-			//   </Header>
-			//   <img src={ Map }/>
-			//   <SubHeader>
-			//     전세계 5000개 네트워크를 통해 가전/생활용품, <br/>
-			//     산업 기계 및 장비, 개발 부품 발주까지 <br/>
-			//     빠르고 합리적 견적에 발주를 도와드립니다.
-			//   </SubHeader>
-			//   <ContentBox>
-			//     <p>AI 자동 견적 서비스</p>
-			//     <ImgContainer style={{marginBottom:50}}>
-			//       <img src={Banner1Img}/>
-			//       <img style={{position:'absolute', marginLeft: 112, marginTop:94}} src={Banner1Img2}/>
-			//     </ImgContainer>
-			//     <span>
-			//     5944개의 프로젝트 데이터를 학습한 볼트앤너트 <br/>
-			//     알고리즘은 요구되는 제품의 품질과 난이도에 <br/>
-			//     따라 최적 견적을 도출하고 그에 따라 전문가를 <br/>
-			//     자동 매칭합니다. 그를 통해 합리적인 견적으로 <br/>
-			//     성공적 발주를 할 수 있도록 돕습니다.
-			//   </span>
-			//     <div onClick={() => Router.push("/request")}>
-			//       지금 무료로 견적 받기
-			//     </div>
-			//   </ContentBox>
-			//   <ContentBox>
-			//     <p>전문적인 프로젝트 관리</p>
-			//     <img src={Banner2Img}/>
-			//     <span>
-			//     최대 40년 경력의 볼트앤너트 컨설턴트들이 발주 도면의 <br/>
-			//     생산성을 감리하고, 발주된 의뢰의 시작부터 납품까지 <br/>
-			//     검수함으로써 개발/생산품의 품질을 보장합니다.
-			//   </span>
-			//     <div onClick={() => Router.push("/request")}>
-			//       1:1 컨설팅 받기
-			//     </div>
-			//   </ContentBox>
-			//   <ContentBox>
-			//     <p>확실한 납기</p>
-			//     <img src={Banner3Img}/>
-			//     <span style={{marginBottom:80}}>
-			//     모든 개발/생산 프로젝트를 볼트앤너트 Management<br/>
-			//     프로세스를 통해 관리 및 감독하여 Delay issue를<br/>
-			//     선제적으로 차단하고, Misleading Task를 최소화하여 <br/>
-			//     확실한 납기를 보장합니다.
-			//   </span>
-			//   </ContentBox>
-			// </Background>
 		);
 	}
 }

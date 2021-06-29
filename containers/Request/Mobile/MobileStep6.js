@@ -7,7 +7,6 @@ import { inject, observer } from 'mobx-react';
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-// import ConsultantBoxContainer from './ConsultantBox'
 import MobileStepContainer from '../../../components/MobileStep';
 
 const DropdownArrow1 = "/static/images/request/Step3/Step3_Dropdown1.png";

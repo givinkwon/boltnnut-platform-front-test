@@ -41,11 +41,6 @@ class ProposalConatiner extends React.Component {
 
 		Proposal.setCurrentRequest(requestId)
 
-		{/*if(Proposal.isAlreadyOffered()) {
-			alert('이미 제안서를 작성했습니다')
-			return
-		}
-        */}
 		this.setState({
 			...this.state,
             openRequestContentModal: true,
@@ -63,7 +58,6 @@ class ProposalConatiner extends React.Component {
 	openProposalModal = () => {
 		this.setState({
 			...this.state,
-			//openProposalModal: true,
 			openConfirmProposalModal: true,
 		})
 	}
@@ -140,22 +134,11 @@ class ProposalConatiner extends React.Component {
         	handleClose={this.closeRequestContentModal}
         	openNext={this.openProposalModal}
         />
-        {/*<ProposalModal
-        	open={openProposalModal}
-        	handleClose={this.closeProposalModal}
-        	openNext={this.openConfirmProposalModal}
-        />*/}
         <ConfirmProposalModal
         	open={openConfirmProposalModal}
         	handleClose={this.closeConfirmProposalModal}
         	closeProposalModal={this.closeProposalModal}
         />
-
-        {/*<Order
-     			orderEnum={Proposal.order_enum}
-        	order={Proposal.order}
-        	setOrder={Proposal.setOrder}
-      	/>*/}
 
   			<Container>
 	  			{

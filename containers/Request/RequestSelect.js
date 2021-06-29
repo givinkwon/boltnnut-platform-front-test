@@ -45,36 +45,16 @@ class RequestSelectContainer extends React.Component {
   Next = (type) => {
     const { Request } = this.props;
     Request.request_type = type;
-    // if(Request.request_type==="production")
-    // {
-    // //   Auth.setStep(1)
-    //     // Request.step_index=2;
-    //     this.props.DetailQuestion.loadSelectFromTitle(1);
-    // }
-    // else
-    // {
-    //     // Request.step_index=1;
-    // }
     Request.step_index = 1;
   };
-  // state={
-  //   click: false,
-  // }
-  // testfunc = () => {
-  //   this.setState({click: true});
-  //   console.log(this.state.click);
-  // }
   render() {
     const { Request } = this.props;
     const { width } = this.state;
 
     return (
-      // <Section>
-      //   <Container>
       <div style={{ flexDirection: "column", width: "100%" }}>
         {width > 767.98 ? (
           <>
-            {/* <Box active={this.state.click===true} onClick ={this.testfunc}></Box> */}
             <HeadBox>
               <Font46>견적받기</Font46>
               <Font18 active={true}>
@@ -82,7 +62,6 @@ class RequestSelectContainer extends React.Component {
               </Font18>
             </HeadBox>
             <ButtonBox>
-              {/* <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}> */}
               <Button
                 id="sign_uo_button_client"
                 active={Request.request_type === "development"}
@@ -172,10 +151,6 @@ class RequestSelectContainer extends React.Component {
                 </ImageBox>
               </Button>
             </ButtonBox>
-            {/* <NextButton backgroundColor={Request.request_type ? PRIMARY : '#0a2165'} borderColor={Request.request_type ? PRIMARY : '#e6e6e6'} borderRadius={3} onClick={this.Next}>
-              <Text.FontSize24 color={Request.request_type ? WHITE : '#ffffff'} fontWeight={500}>다음</Text.FontSize24>
-              <Image src={right}/>
-            </NextButton> */}
           </>
         ) : (
           <ButtonBox>
@@ -202,8 +177,6 @@ class RequestSelectContainer extends React.Component {
           </ButtonBox>
         )}
       </div>
-      //   </Container>
-      // </Section>
     );
   }
 }
@@ -291,18 +264,6 @@ const Image = styled.img`
   margin-left: 4px;
   margin-top: 4px;
 `;
-// const Info = styled.div`
-//   > p {
-//     color: #aaaaaa;
-//     text-align: center;
-//     @media (min-width: 0px) and (max-width: 767.98px) {
-//       margin-top: 30px;
-//     }
-//     @media (min-width: 768px) {
-//       margin-top: 30px;
-//     }
-//   }
-// `
 
 const HeadBox = styled.div`
   width: 100%;
@@ -465,15 +426,3 @@ const ImgContainer = styled.div`
     margin-top: 10px;
   }
 `;
-// const Box = styled.div`
-// width: 50px;
-// height: 50px;
-// background-color: red;
-// ${props => props.active && css`
-
-//   display: flex;
-//   width: 500px;
-//   height: 500px;
-
-//     `}
-// `

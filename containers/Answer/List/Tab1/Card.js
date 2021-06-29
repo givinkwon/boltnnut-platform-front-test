@@ -78,7 +78,6 @@ class CardContainer extends Component {
           open={classModal_open}
           handleClose={this.closeClassModal}
         />
-        {/*<Card active={true}>*/}
         <Card
           active={item.active || this.props.Auth.logged_in_client.client_class}
         >
@@ -129,49 +128,9 @@ class CardContainer extends Component {
                     )}
                   </Text.FontSize14>
                 </AnswerInfo>
-
-                {/*<AnswerInfo>
-                <Text.FontSize14 color="#404040"  fontWeight={700}>
-                  미팅전환율
-                </Text.FontSize14>
-
-                <Text.FontSize14>
-                  <AnswerItem>
-                    {partner && Number(partner.meeting * 100).toFixed(1)} %
-                  </AnswerItem>
-                </Text.FontSize14>
-              </AnswerInfo>*/}
               </AnswerRight>
-
-              {/*<AnswerLeft>
-              <div>
-                <AnswerInfo>
-                  <Text.FontSize16 color="#404040" fontWeight={700}>
-                    견적
-                  </Text.FontSize16>
-                  <Text.FontSize16 color="#4b4b4b">
-                    {item.all_price +  "만원"}
-                  </Text.FontSize16>
-                </AnswerInfo>
-
-                <AnswerInfo>
-                  <Text.FontSize16 color="#404040"  fontWeight={700}>
-                    기간
-                  </Text.FontSize16>
-                  <Text.FontSize16 color="#4b4b4b">
-                    {item.day}일
-                  </Text.FontSize16>
-                </AnswerInfo>
-              </div>
-
-              <Text.FontSize16 color={DARKGRAY}>
-                {item.strategy}
-              </Text.FontSize16>
-            </AnswerLeft>*/}
             </AnswerWrapper>
           </CardBody>
-
-          {/*<CardFooter disabled={false} onClick={() => {this.handleClick(true, item.id)}}>*/}
           <CardFooter
             disabled={
               !item.active && !this.props.Auth.logged_in_client.client_class

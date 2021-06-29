@@ -60,7 +60,6 @@ class Partner extends React.Component {
       {width &&
       <div>
         {Loading.is_open}
-        {/* {Loading.is_open && <Spinner/>} */}
         <Head>
 
           {/* SEO */}

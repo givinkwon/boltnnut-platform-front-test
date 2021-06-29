@@ -208,12 +208,7 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
     } = this.state;
     const { ManufactureProcess, Schedule } = this.props;
     const { purposeAry } = this.state;
-    // return alert(`
-    // 	프로젝트이름: ${projectname}
-    // 	가로: ${row}
-    // 	세로: ${column}
-    // 	높이: ${height}
-    // 	`);
+
     let deadline_state = "";
     let processData = "";
     let detailProcessData = "";
@@ -280,11 +275,6 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
     console.log(ManufactureProcess.requestComment);
     console.log(ManufactureProcess.requestComment2);
     console.log(purpose.id1);
-    // let str = "";
-    // for (var i = 0; i < purpose.length; i++) {
-    //   str += `purpose.id[${i + 1}]`;
-    // }
-    // console.log(str);
 
     console.log("requestSubmit");
     console.log(Schedule.clickDay);
@@ -294,8 +284,6 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
     var formData = new FormData();
     formData.append("request_state", request_state);
 
-    //formData.append("request_state", str);
-    //formData.append("purpose", purpose)
     formData.append("name", projectname);
     // 선택한 날짜가 없으면, 기본 날짜 추가하기
     if (Schedule.clickDay) {
@@ -310,14 +298,14 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
     } else {
       formData.append("deadline_state", deadline_state);
     }
-    //ManufactureProcess.date_undefined
+    
     formData.append("order_request_open", ManufactureProcess.requestComment);
     formData.append("order_request_close", ManufactureProcess.requestComment2);
-    //formData.append("file_open", ManufactureProcess.openFileArray[0]);
+    
     for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
       formData.append(`file_open`, ManufactureProcess.openFileArray[i]);
     }
-    //formData.append("file_close", ManufactureProcess.privateFileArray);
+  
     for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
       formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
     }
@@ -328,20 +316,8 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
     formData.append("detailprocess", 1);
     formData.append("number", 1);
 
-    // const formData = {
-    //   user: this.props.Auth.logged_in_user.id,
-    //   request_state: "상담요청",
-    //   name: projectname,
-    //   deadline: "2020-11-11 11:11",
-    //   deadline_state: ManufactureProcess.deliverystate,
-    //   order_request_open: ManufactureProcess.requestComment,
-    //   order_request_close: ManufactureProcess.requestComment2,
-    //   file_open: ManufactureProcess.openFileArray,
-    //   file_close: ManufactureProcess.privateFileArray,
-    // };
-
+    
     const Token = localStorage.getItem("token");
-    //const token = "179bb0b55811073a76bc0894a7c73220da9a191d";
     const req = {
       headers: {
         Authorization: `Token ${Token}`,
@@ -361,11 +337,6 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-
-    //
-    // const processAry = processData.split(",");
-    // const detailProcessAry = detailProcessData.split(",");
-    // ManufactureProcess.getProcessList(processAry, detailProcessAry);
   };
 
   render() {
@@ -435,7 +406,6 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
                 }
                 value={this.state.projectname}
                 onChange={(e) => {
-                  //console.log(e.target.value);
                   console.log(e);
                   this.setState({ projectname: e });
                 }}
@@ -596,44 +566,7 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
                 <span
                   onClick={() => {
                     let check_count = 0;
-                    // fileList.map((item, idx) => {
-                    //   item.fileName;
-                    //   let fileNameAvailable = ["txt"];
-                    //   const extension = item.fileName.split(".");
-
-                    //   //console.log(fileNameAvailable)
-                    //   if (
-                    //     item.quantity.value === 0 ||
-                    //     item.quantity.value === ""
-                    //   ) {
-                    //     console.log("수량을 입력해주세요");
-                    //     check_count++;
-                    //   }
-
-                    //   if (
-                    //     fileNameAvailable.includes(
-                    //       extension[extension.length - 1]
-                    //     )
-                    //   ) {
-                    //     this.props.ManufactureProcess.privateFileArray.push({
-                    //       file: item,
-                    //     });
-                    //   }
-                    // });
-
-                    // if (check_count) {
-                    //   alert("수량을 입력해주세요");
-                    // } else {
-                    //   ManufactureProcess.checkPaymentButton = true;
-                    // }
-
-                    // console.log(
-                    //   toJS(this.props.ManufactureProcess.privateFileArray)
-                    // );
-                    // ManufactureProcess.fileArray.map((item, idx) => {
-                    //   console.log(item.file);
-                    // });
-
+                    
                     this.requestSubmit(1);
                   }}
                 >

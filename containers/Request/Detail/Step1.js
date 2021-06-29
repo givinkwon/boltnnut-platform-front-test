@@ -117,31 +117,6 @@ class TabConatiner extends React.Component {
     Request.select_reqs = [];
 
     this.props.Request.setFindCategory(this.state.check_list);
-    /*
-    const req = {
-      data: {
-        client: client.id,
-        product: this.props.project_id,
-        category: toJS(this.props.Request.category_middle_set),
-      },
-    };
-    // TODO CREATE REQUEST API
-
-    RequestAPI.create(req)
-      .then((res) => {
-        console.log('견적서 생성')
-
-        this.props.Request.id = res.data.id;
-        this.props.Request.created_request = res.data;
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-        console.log(e.response.data);
-        // Router.push("/");
-      });
-
-     */
   };
   componentDidMount() {
     CategoryAPI.getDevelop()
@@ -171,15 +146,6 @@ class TabConatiner extends React.Component {
             <Text.FontSize36 color={BLACK} fontWeight={700}>
               Q 의뢰하실 개발/제조 분야를 선택해 주세요.
             </Text.FontSize36>
-            {/*<div>
-              <img src="/static/images/question.png" />
-              <HelpText>
-                <Text.FontSize16 color="#767676">
-                  최적의 매칭을 위하여 한 의뢰에서 설계, 목업, 양산 중 한 영역만
-                  선택할 수 있습니다.
-                </Text.FontSize16>
-              </HelpText>
-            </div>*/}
           </TitleBox>
           <Content>
             {check_list &&
@@ -302,13 +268,6 @@ class TabConatiner extends React.Component {
                 );
               })}
             <div style={{ marginLeft: "auto" }}>
-              {/*<Text.FontSize18
-                style={{ marginTop: 12 }}
-                fontWeight={500}
-                color="#c6c6c6"
-              >
-                같은 영역에서는 중복 선택이 가능합니다
-              </Text.FontSize18>*/}
               <ButtonComponent
                 onClick={this.createRequest}
                 style={{

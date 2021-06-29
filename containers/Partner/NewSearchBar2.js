@@ -108,9 +108,7 @@ class SearchBarContainer2 extends React.Component {
     search: "",
     modal_open: false,
     value: 0,
-    //price_min: 0,
     price_max: [0,0],
-    //due_min: 0,
     due_max: [0,0],
     show_detail: "none",
     fileName: '',
@@ -164,13 +162,7 @@ class SearchBarContainer2 extends React.Component {
     this.props.Partner.search_text = e.target.value;
   };
   search = () => {
-  //  if (this.props.Auth.logged_in_partner) {
-  //    this.setState({ modal_open: true });
-  //  } else if (this.props.Auth.logged_in_client.client_class) {
       this.props.Partner.search();
-  // } else {
-  //    this.setState({ modal_open: true });
-  //  }
   };
   closeModal = () => {
     this.setState({
@@ -591,13 +583,6 @@ class SearchBarContainer2 extends React.Component {
          </SelectRow>
          <SelectRow>
              <Title> 희망예산 </Title>
-             {/*<PriceBox>
-               <PriceInput>
-               </PriceInput>
-               <span> ~ </span>
-               <PriceInput>
-               </PriceInput>
-             </PriceBox>*/}
              <this.RangeSlider/>
            </SelectRow>
          <SelectRow>

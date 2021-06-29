@@ -25,13 +25,6 @@ class TabletBanner9Container extends React.Component {
         }}
       >
         <Layer>
-          {/* <Containerv1
-            style={{
-              paddingBottom: 80,
-              paddingTop: 60,
-              justifyContent: "center",
-            }}
-          > */}
           <Fade bottom>
             <div>
               <Font18>
@@ -60,7 +53,6 @@ class TabletBanner9Container extends React.Component {
               </div>
             </div>
           </Fade>
-          {/* </Containerv1> */}
         </Layer>
       </Background>
     );

@@ -8,9 +8,6 @@ import StarRatingComponent from 'react-star-rating-component';
 // 이미지테스트
 const person = "/static/images/Home/Banner6/person.png";
 const person_mob = "/static/images/Home/Banner6/person_mob.png";
-
-//@inject('Answer')
-//@observer
 class ReviewCard extends Component {
     render() {
         const {item, big, footerimg} = this.props;

@@ -84,7 +84,6 @@ class Banner12Container extends React.Component {
 
         <Containerv1
           style={{
-            // paddingBottom: 250,
             justifyContent: "space-between",
           }}
         >

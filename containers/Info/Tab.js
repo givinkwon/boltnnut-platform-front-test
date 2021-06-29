@@ -28,56 +28,6 @@ class TabConatiner extends React.Component {
       nav2: this.slider2
     });
   }
-  // afterChangeHandler = (current) => {
-  //   const magazineCount = this.props.Magazine.magazine_list.length
-
-  //   if(current === 0){
-  //     this.setState({next: true, prev: false})
-  //   }
-  //   else {
-  //     // slidesToShow : 2
-  //     if(current === magazineCount - 2) {
-  //       this.setState({next: false, prev: true})
-  //     }
-  //     else {
-  //       this.setState({next: true, prev: true})
-  //     }
-  //   }
-
-  // }
-  // sampleNextArrow = () => {
-  //   const { className, style, onClick } = props;
-  //   return (
-  //     <div
-  //       className={className}
-  //       style={{ ...style, display: "block", background: "red" }}
-  //       onClick={onClick}
-  //     ><img src="right">zzz</img></div>
-  //   );
-  // }
-  // samplePrevArrow = () => {
-  //   const { className, style, onClick } = props;
-  //   return (
-  //     <div
-  //       className={className}
-  //       style={{ ...style, display: "block", background: "green" }}
-  //       onClick={onClick}
-  //     />
-  //   );
-  // }
-  // sliderNext = () => {
-  //   const breakpoint = this.slider1.state.breakpoint
-  //   this.slider1.slickNext()
-  // }
-  // sliderPrev = () => {
-  //   if(this.state.current === 0) {
-  //     this.setState({ prev: false,  next: true })
-  //   }
-  //   else {
-  //     this.setState({ prev: true })
-  //   }
-  //   this.slider1.slickPrev()
-  // }
   slider = null
   state = {
     current: 0,
@@ -126,7 +76,6 @@ class TabConatiner extends React.Component {
               {Request.tab === 3 ? (<UnderLineBox/>) : (<UnderLine/>)}
             </Tab>
           </Tabs>
-          {/* <Icon prev style={{marginRight : '15px', opacity: prev ? 1 : 0.4}} src={left} onClick={this.sliderPrev}/> */}
           
           
           <Tabs asNavFor={this.state.nav2}
@@ -167,7 +116,6 @@ class TabConatiner extends React.Component {
             </Tab>
             
           </Tabs>
-          {/* <Icon style={{marginLeft : '15px', opacity: next ? 1 : 0.4}} src={right} onClick={this.sliderNext}/> */}
          </TabsContainer>
        </Container>
 

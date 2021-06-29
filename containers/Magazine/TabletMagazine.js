@@ -36,10 +36,7 @@ class TabletContentContainer extends React.Component {
   }
 
   activeHandler = (idx) => {
-    // console.log(`this.state.index : ${this.state.index}`)
-    // console.log(`idx : ${idx}`)
     if(idx=== this.props.Magazine.mobile_category_checked_idx) {
-      // console.log("equal")
       
 
        return true; 
@@ -47,114 +44,27 @@ class TabletContentContainer extends React.Component {
       return false; 
     }
   };
-
-  // onClickHandler = (item, idx) => {
-  //   const { Magazine } = this.props;
-   
-  //   // 동일한 상위 카테고리를 클릭했을 경우
-  //   if(idx === Magazine.category_checked_idx){
-  //     const categoryMenuItem = document.querySelectorAll(`.CategoryMenuItem${idx}`)
-    
-  //     // 선택되어있는 경우 하위 카테고리 보이게 하기
-  //     if(item.checked){              
-  //       for(var i = 0; i< categoryMenuItem.length; i++){
-  //         categoryMenuItem[i].style.display = 'block'  
-  //       }        
-  //     }
-  //     // 선택 안 되어있는 경우 하위 카테고리 감추기
-  //     else{
-  //       for(var i = 0; i< categoryMenuItem.length; i++){
-  //         categoryMenuItem[i].style.display = 'none'
-  //       }        
-  //     }
-  //   }
-  //   // 다른 상위 카테고리를 클릭했을 경우
-  //   else if(idx !== Magazine.category_checked_idx) {
-  //     const categoryMenuPrevItem = document.querySelectorAll(`.CategoryMenuItem${Magazine.category_checked_idx}`)
-  //     const categoryMenuItem = document.querySelectorAll(`.CategoryMenuItem${idx}`)
-
-  //     // 이전 상위 카테고리의 첫 번째 하위 카테고리가 선택되고 나머지는 해제시킴
-  //     Magazine.categoryAry[Magazine.category_checked_idx].item[Magazine.category_detail_checked_idx].checked = false
-  //     Magazine.categoryAry[Magazine.category_checked_idx].item[0].checked = true
-  //     Magazine.category_detail_checked_idx = 0
-
-  //     // if(Magazine.category_checked_idx !== -1){
-      
-  //     // 이전에 선택한 상위 카테고리 체크 해제하고 지금 선택한 상위 카테고리는 체크
-  //     Magazine.categoryAry[Magazine.category_checked_idx].checked = false;
-  //     // }            
-  //     Magazine.category_checked_idx = idx      
-  //     Magazine.categoryAry[idx].checked = true;
-
-  //     // 이전에 선택한 상위 카테고리의 하위 카테고리 화면에 보이게 하는 여부
-  //     if(!item.checked){
-  //       for(var i = 0; i< categoryMenuPrevItem.length; i++){
-  //         categoryMenuPrevItem[i].style.display = 'block'  
-  //       }
-  //     }else{
-  //       for(var i = 0; i< categoryMenuPrevItem.length; i++){
-  //         categoryMenuPrevItem[i].style.display = 'none'
-  //       }        
-  //     }
-
-  //     // 현재 선택한 상위 카테고리의 하위 카테고리 화면에 보이게 하는 여부
-  //     if(Magazine.categoryAry[idx].checked){
-  //       for(var i = 0; i< categoryMenuItem.length; i++){
-  //         categoryMenuItem[i].style.display = 'block'  
-  //       }
-  //     }else{
-  //       for(var i = 0; i< categoryMenuItem.length; i++){
-  //         categoryMenuItem[i].style.display = 'none'
-  //       }        
-  //     }
-  //   }
-  //   this.setState({f:3})
-  // }
-
-  // onClickDetailHandler = (data, idx, id) => {
-  //   const { Magazine } = this.props
-   
-  //   if(id === Magazine.category_detail_checked_idx){
-    
-  //   }
-  //   else{
-  //     if(Magazine.categoryAry[idx].item[Magazine.category_detail_checked_idx]){
-  //       Magazine.categoryAry[idx].item[Magazine.category_detail_checked_idx].checked = false
-  //     }
-  //     Magazine.category_detail_checked_idx = id
-  //     Magazine.categoryAry[idx].item[id].checked = true
-      
-  //   }
-  // this.setState({g:3})
-    
-  // }
   categoryClickHandler = (item, idx) => {
     const { Magazine } = this.props
     const lowerCategory = document.getElementById("LowerCategory")
-    //console.log(lowerCategory)
 
     if(Magazine.mobile_category_checked_idx !== idx){
       if(Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx].item[Magazine.mobile_category_detail_checked_idx]){
-        //console.log(Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx])
         Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx].item[Magazine.mobile_category_detail_checked_idx].checked = false      
         Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx].item[0].checked = true  
         Magazine.mobile_category_detail_checked_idx = 0
       }
 
-      //console.log(item)
       item.checked = true
-      //console.log(Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx])
       Magazine.mobileUpperCategoryAry[Magazine.mobile_category_checked_idx].checked = false
       Magazine.mobile_category_checked_idx = idx
     }
     if(item.name === "전체"){
-      
-    //  console.log(lowerCategory)
+
     console.log("전체O")
       lowerCategory.style.display = 'none'
       this.setState({checked : false })
       Magazine.checked = false
-      //lowerCategory.style.display = 'none'
       
     }else{
       console.log("전체X")
@@ -167,19 +77,10 @@ class TabletContentContainer extends React.Component {
   }
 
   lowerCategoryClickHandler = (data, idx, id) => {
-    //console.log("click!")
     const { Magazine } = this.props
-
-    // console.log(Magazine.mobile_category_detail_checked_idx)
-    // console.log(id)
     if(Magazine.mobile_category_detail_checked_idx !== id){
       data.checked = true
-      // console.log(Magazine.mobileUpperCategoryAry[idx].item[id])
       Magazine.mobileUpperCategoryAry[idx].item[Magazine.mobile_category_detail_checked_idx].checked = false
-
-      // if(Magazine.categoryAry[idx].item[Magazine.category_detail_checked_idx]){
-      //   Magazine.categoryAry[idx].item[Magazine.category_detail_checked_idx].checked = false
-      // }
       Magazine.mobile_category_detail_checked_idx = id
       Magazine.mobileUpperCategoryAry[idx].item[id].checked = true
 
@@ -215,9 +116,6 @@ class TabletContentContainer extends React.Component {
   prevPage = () => {
     const {current, next} = this.state;
     const { Magazine } = this.props;
-    //var fullPage = parseInt((this.props.Magazine.magazine_list.length)/6)+1
-
-    //console.log("nextPage")
     console.log(Magazine.current_page)
     if (Magazine.current_page > 1) {
       console.log("current != fullPage")
@@ -226,7 +124,6 @@ class TabletContentContainer extends React.Component {
       Magazine.current_page = Magazine.current_page - 1
       this.setState({...this.state, current: newPage, show:'hidden'})
       this.setState({...this.state, show:'visible'})
-      //this.slider.slickNext();
     }
   }
 
@@ -237,10 +134,6 @@ class TabletContentContainer extends React.Component {
     const newPage = e.target.innerText*1;    
     
     Magazine.current_page = newPage
-
-    //Magazine.magazine_list.slice((Magazine.current_page-1)*6, (Magazine.current_page)*6)
-
-   // Project.getProjectByPrice(Project.search_text, newPage)
   }
 
   nextPage = () => {
@@ -250,8 +143,6 @@ class TabletContentContainer extends React.Component {
     var fullPage = parseInt((this.props.Magazine.magazine_list.length)/6)+1
     Magazine.mobile_full_page = parseInt((this.props.Magazine.magazine_list.length)/6)+1
     console.log("nextPage")
-    // console.log(fullPage)
-    // console.log(current)
     console.log(Magazine.current_page)
     console.log(fullPage)
     if (Magazine.current_page < Magazine.mobile_full_page) {
@@ -261,7 +152,6 @@ class TabletContentContainer extends React.Component {
       Magazine.current_page = Magazine.current_page + 1
       this.setState({...this.state, current: newPage, show:'hidden'})
       this.setState({...this.state, show:'visible'})
-      //this.slider.slickNext();
     }
   }
 
@@ -274,7 +164,6 @@ class TabletContentContainer extends React.Component {
       <>
       
         <CategoryMenu checked={Magazine.checked}>
-        {/* <Containerv1> */}
           <div></div>
           <div>
             { Magazine.mobileUpperCategoryAry.map((item, idx) => {
@@ -285,7 +174,6 @@ class TabletContentContainer extends React.Component {
               )
             })}             
             </div>
-          {/* </Containerv1> */}
           <div id="LowerCategory">
             
           { Magazine.mobileUpperCategoryAry.map((item, idx) => {
@@ -301,23 +189,6 @@ class TabletContentContainer extends React.Component {
           })}
           </div>
         </CategoryMenu>
-        
-     
-        {/* <FindExperct>
-            {              
-            magazine_idx && this.props.Magazine.magazine_list.slice(0,magazine_idx).map((item, idx) => {
-              return (
-              // <Row>
-                <Item
-                  onClick={() => this.pushToDetail(item.id)}>
-                  <Image ratio='45%' src={item.image}/>
-                  <span> {item.title} </span>
-                </Item>
-                // </Row>
-              )
-              })
-            }
-        </FindExperct> */}
 
         <Row checked={Magazine.checked}>
         {this.props.Magazine.magazine_list.slice((Magazine.current_page-1)*6, (Magazine.current_page)*6).map((item, idx) => {
@@ -330,7 +201,6 @@ class TabletContentContainer extends React.Component {
                   <span> {item.title} </span>
               </Item>
             )}
-                          {/* </div> */}
           </>
           )
                     
@@ -348,7 +218,6 @@ class TabletContentContainer extends React.Component {
               <PageCount value = {5*(current_set - 1) + 3} active={Magazine.current_page % 5 == 3} style={{display:  Magazine.mobile_full_page < 5*(current_set - 1) + 3 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 3} </PageCount>
               <PageCount value = {5*(current_set - 1) + 4} active={Magazine.current_page % 5 == 4} style={{display:  Magazine.mobile_full_page < 5*(current_set - 1) + 4 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 4} </PageCount>
               <PageCount value = {5*(current_set - 1) + 5} active={Magazine.current_page % 5 == 0} style={{display:  Magazine.mobile_full_page < 5*(current_set - 1) + 5 ? 'none': 'block' }} onClick={this.movePage}> {5*(current_set - 1) + 5} </PageCount>
-              {/* <PageCount> ... </PageCount> */}
                      
               <img src={right} onClick = {this.nextPage} style={{opacity: Magazine.current_page == Magazine.mobile_full_page  ? 0.4 : 1}}/>
       

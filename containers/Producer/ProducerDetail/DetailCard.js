@@ -30,7 +30,6 @@ const FileViewer = dynamic(() => import("react-file-viewer"), {
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 const waterMarkImg = "/static/images/logo_marine@2x.png";
-// const file = "./Case-Study-Shell.pdf";
 const type = "pdf";
 
 const onError = (e) => {
@@ -62,7 +61,6 @@ class DetailCardContainer extends React.Component {
 
   componentDidMount = async () => {
     const { Partner } = this.props;
-    // console.log("csfdffsdfd");
     console.log("mountmount");
     if (Partner.partner_detail_list.length == 0) {
       Router.push("/producer");
@@ -112,12 +110,7 @@ class DetailCardContainer extends React.Component {
     const { width, Partner } = this.props;
 
     const docs = [
-      // {
-      //   uri:
-      //     "https://boltnnutplatform-test.s3.amazonaws.com/media/partner/2021/6/21/0fe2d8bf12da4838b4cb35625153a1f3_partner.docx",
-      // },
       { uri: this.props.Partner.selectedIntroductionFile },
-      // { uri: require("./example-files/pdf.pdf") } // local
     ];
 
     return (
@@ -158,10 +151,6 @@ class DetailCardContainer extends React.Component {
             </div>
           </div>
           <InnerBox>
-            {/* <TopInlineBox>
-              <div>활동 가능</div>
-              <div style={{ textAlign: "left" }}>등록일자 ~~~</div>
-            </TopInlineBox> */}
 
             <IntroductionBox width={width}>
               <Font24>회사소개서</Font24>
@@ -174,10 +163,6 @@ class DetailCardContainer extends React.Component {
                   onError={onError}
                 />
               )}
-
-              {/* {availableFileType2.indexOf(
-                this.props.Partner.selectedIntroductionFileType
-              ) > -1 && <PPTViewer id="viewer-wrap" />} */}
 
               {availableFileType3.indexOf(
                 this.props.Partner.selectedIntroductionFileType

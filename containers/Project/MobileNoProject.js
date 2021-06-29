@@ -27,7 +27,6 @@ class MobileRequestComplete extends React.Component {
           {Auth.logged_in_client &&
           <>
             <RequestCompleteTitle>
-                {/* <SuccessImg src={success} style={{ marginBottom: '18px' , marginTop: '30px'}} /> */}
                 <FontSize18>
                   프로젝트를 등록해주세요
                 </FontSize18>
@@ -69,7 +68,6 @@ class MobileRequestComplete extends React.Component {
           {Auth.logged_in_partner && 
           <>
             <RequestCompleteTitle>
-                {/* <SuccessImg src={success} style={{ marginBottom: '18px' , marginTop: '30px'}} /> */}
                 <FontSize18>
                   프로젝트에 제안서를 넣어주세요
                 </FontSize18>

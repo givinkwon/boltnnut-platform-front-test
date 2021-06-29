@@ -6,9 +6,6 @@ import styled from "styled-components";
 import Fade from "react-reveal/Fade";
 import { inject, observer } from "mobx-react";
 
-// const MobileBanner1Img =
-//   "static/images/Home/Mobile/MobileBanner1/MobileBanner1Img.svg";
-
 const MobileBannerImg =
   "static/images/Home/Mobile/MobileBanner1/MobileBannerImg.png";
 const backgroundImg = "/static/images/Home/Banner3/Banner3_Bg.png";
@@ -24,9 +21,6 @@ class MobileBanner1Container extends React.Component {
           <Fade bottom>
             <Head>볼트앤너트 AI 자동 견적</Head>
             <Main>
-              {/* <span>
-                바로 나오는 <br />{" "}
-              </span>{" "} */}
               1초만에 나오는
               <br />
               제조사별 AI 자동 견적

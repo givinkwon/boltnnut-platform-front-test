@@ -27,7 +27,6 @@ class StoreConatiner extends React.Component {
   }
   async componentDidMount() {
     const { query } = this.props;
-    // this.props.Auth.logged_in_user && this.props.Auth.logged_in_user.type
     await this.props.Auth.checkLogin();
     try {
       this.setState({
@@ -47,21 +46,6 @@ class StoreConatiner extends React.Component {
     return (
       <>
         <ClientPaymentContainer />
-
-        {/*<BannerContainer tab={tab} />
-        <TabContainer tab={tab} setTab={this.setTab} />
-        {type === 1 ? (
-          <>
-            {tab === 1 && <PartnerInfoContainer />}
-            {tab === 2 && <PartnerPaymentContainer />}
-          </>
-        ) : (
-          <>
-            {tab === 1 && <ClientInfoContainer />}
-            {tab === 2 && <ClientPaymentContainer />}
-          </>
-        )}
-        */}
       </>
     );
   }

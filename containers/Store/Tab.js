@@ -19,18 +19,6 @@ class TabConatiner extends React.Component {
     return (
       <Container>
         <Tabs>
-          {/*Auth.logged_in_user &&
-                (Auth.logged_in_user.type === 0 ? (
-                  <Tab active={tab === 1} onClick={() => this.setTab(1)}>
-                    <Text.FontSize20 fontWeight={500}>이용안내</Text.FontSize20>
-                  </Tab>
-                ) : (
-                  <Tab2 active={tab === 1} onClick={() => this.setTab(1)}>
-                    <Text.FontSize20 fontWeight={500}>이용안내</Text.FontSize20>
-                  </Tab2>
-                )
-           )
-          }*/}
 
           {Auth.logged_in_user &&
                 (Auth.logged_in_user.type === 0 ? (
