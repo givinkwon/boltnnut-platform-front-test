@@ -37,28 +37,6 @@ class SearchBarConatiner extends React.Component {
         <Container style={{width: 'calc(100%-30px)'}}>
           <br/><br/><br/>
           <Text.FontSize40 color={BLACK1} fontWeight={700}>STEP1. 만들고자하는 제품 카테고리 고르기</Text.FontSize40>
-
-          {
-            /*
-          <SearchBar>
-            <input
-              placeholder="어떤 분야의 전문가를 찾으시나요?"
-              value={search}
-              onChange={this.searchText}
-              onKeyDown={this.handleKeyDown}
-            />
-            <ButtonComponent
-              backgroundColor={PRIMARY}
-              borderColor={PRIMARY}
-              borderRadius={0}
-            >
-              <Text.FontSize20 color={WHITE} fontWeight={500}>
-                제조사 찾기
-              </Text.FontSize20>
-            </ButtonComponent>
-          </SearchBar>
-          */
-          }
           <More>
 
             <div>

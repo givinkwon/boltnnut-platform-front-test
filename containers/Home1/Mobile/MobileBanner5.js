@@ -26,7 +26,6 @@ class MobileBanner5Container extends React.Component {
             <Header>민감 선택 정보 공개 서비스</Header>
             <Middle>
               원하는 업체만 <br /> 정보 공개 및 소통
-              {/* <span class="bold"> 100% 보증</span> */}
             </Middle>
             <img src={image1} style={{ marginTop: 32, marginBottom: 18 }} />
             <Body>

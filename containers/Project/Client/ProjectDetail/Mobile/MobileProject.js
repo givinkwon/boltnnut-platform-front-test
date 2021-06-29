@@ -38,7 +38,6 @@ class MobileProjectContentContainer extends React.Component {
     await Project.getProjectDetail(id);
     Project.newIndex = 1;
 
-    // await Router.push(`/project/${id}`);
     Project.setProjectDetailData(id);
   };
 
@@ -59,15 +58,6 @@ class MobileProjectContentContainer extends React.Component {
     }
     console.log(Auth.logged_in_client)    
   }
-
-  // afterChangeHandler = (current) => {
-  //   if(current === 0){
-  //     this.setState({next: true, prev: false})
-  //   } else {
-  //       this.setState({next: true, prev: true})
-  //   }
-  // }
- 
 
   movePage = (e) => {
     const { Project, Auth } = this.props 
@@ -100,8 +90,7 @@ class MobileProjectContentContainer extends React.Component {
   render() {
     const { Project } = this.props
     const current_set = (parseInt((Project.currentPage-1) /5)+1)    
-
-    // { Project.projectData.length > 0 && Project.projectData.slice(5*(Project.currentPage), 5*(Project.currentPage +1)).map((item, idx) => {                             
+    
       return(
         <>          
         <div>
@@ -111,7 +100,7 @@ class MobileProjectContentContainer extends React.Component {
           
           <>
           {Project.projectDataList.map((item, idx) => {
-            //   {data.map((item, idx) => {
+
             return(            
               <Background style={{marginBottom: '3px'}}>
                 <Container>        
@@ -144,49 +133,6 @@ class MobileProjectContentContainer extends React.Component {
         </>
     )}
   }
-
-// const data = [
-//   {
-//     consultation: '상담 진행',
-//     name: '컴퓨터',
-//     date: '2021.03.02' ,
-//     period: '120일',
-//     estimate: '10,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     name: '스캐너',
-//     date: '2021.03.03' ,
-//     period: '121일',
-//     estimate: '11,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '키보드',
-//     date: '2021.03.04' ,
-//     period: '122일',
-//     estimate: '12,000,000원'
-//   },
-
-//   {
-//     consultation: '상담 미진행',
-//     name: '마우스',
-//     date: '2021.03.05' ,
-//     period: '123일',
-//     estimate: '13,000,000원'
-//   },
-
-//   {
-//     consultation: '완료',
-//     name: '프린터',
-//     date: '2021.03.06' ,
-//     period: '124일',
-//     estimate: '14,000,000원'
-//   },
-// ]
-
 const PageBar = styled.div`
   width: 280px;
   margin-top: 109px;

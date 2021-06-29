@@ -33,22 +33,12 @@ class MobileContent1 extends React.Component {
   };
 
   getToday(date) {
-    //let date = new Date();
     console.log(date);
-    // let year = date.getFullYear();
-    // let month = ("0" + (1 + date.getMonth())).slice(-2);
-    // let day = ("0" + date.getDate()).slice(-2);
-
-    // console.log(year);
-    // console.log(month);
-    // console.log(day);
-    // return year + month + day;
   }
   modalHandler = (id) => {
     this.setState({ selectedRoom: id });
     const { Project } = this.props;
     Project.chatModalActive = !Project.chatModalActive;
-    // this.setState({ modalActive: !this.state.modalActive });
   };
   
   activeHandler = (active) => {
@@ -69,12 +59,6 @@ class MobileContent1 extends React.Component {
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
     Project.chatModalActive = false;
-    // const color = document.getElementsByClassName("Footer").setAttribute("style","background-color:red");
-    // const color = document.getElementById("MyFooter").getAttribute('style');
-    // console.log(color);
-    // Project.init(918)
-
-    //console.log(Auth)
     this.getToday(
       Project.projectDetailData &&
         Project.projectDetailData.request_set[0].deadline
@@ -82,8 +66,6 @@ class MobileContent1 extends React.Component {
     await Auth.checkLogin();
 
     if (Auth.logged_in_partner) {
-      // Project.getPage(1069);
-      // console.log(Project.selectedProjectId);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         console.log(toJS(Answer.answers));
         this.setState({ partnerList: Answer.answers });
@@ -98,8 +80,6 @@ class MobileContent1 extends React.Component {
           const PartnerDetailList = this.state.partnerDetailList;
           PartnerAPI.detail(answer.partner)
             .then((res) => {
-              // console.log(res);
-              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
               PartnerDetailList.push({
                 logo: res.data.logo,
                 name: res.data.name,
@@ -115,9 +95,7 @@ class MobileContent1 extends React.Component {
     }
 
     if (Auth.logged_in_client) {
-      // console.log(Auth.logged_in_client);
       Project.getPage(Auth.logged_in_client.id);
-      // console.log(Project.selectedProjectId);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         console.log(toJS(Answer.answers));
         this.setState({ partnerList: Answer.answers });
@@ -132,8 +110,6 @@ class MobileContent1 extends React.Component {
           const PartnerDetailList = this.state.partnerDetailList;
           PartnerAPI.detail(answer.partner)
             .then((res) => {
-              // console.log(res);
-              // console.log("ANSKLCNALKSCNLKASNCKLANSCLKANSCLKN");
               PartnerDetailList.push({
                 logo: res.data.logo,
                 name: res.data.name,
@@ -151,11 +127,8 @@ class MobileContent1 extends React.Component {
 
 render() {
   const { Project, Partner, user } = this.props;
-    // if (this.state.partnerDetailList[0]) {
-    //   console.log(this.state.partnerDetailList[0].name);
 
     const { projectDetailData } = Project;
-    // }
 
     let name = "";
     let date = "";
@@ -185,17 +158,13 @@ render() {
           maincategory = Project.maincategory;
           categoryname = Project.categoryname;
           maincategoryname = Project.maincategoryname;
-          // console.log(item);
         }
       });
 
     return(
       <Container1>
-         {/* {console.log(toJS(projectDetailData))} */}
           {Project.chatModalActive && (
-            // <Layer onClick={this.modalHandler}>
             <Layer>
-              {/* <Postcode /> */}
               <ChatTestContainer
                 roomName={this.state.selectedRoom}
               ></ChatTestContainer>
@@ -209,9 +178,6 @@ render() {
             <Font16 style = {{marginBottom: 8, fontWeight: 'bold', color: '#282c36', }}>{name}</Font16>
             <div style = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <div style = {{display: 'flex', flexDirection: 'row'}}>
-                  {/* <Font14 style = {{color: "#999999"}}></Font14>
-                  <img src={separator} style = {{marginLeft: 11, marginRight: 11}}/>
-                  <Font14 style = {{color: "#999999"}}></Font14> */}
               </div>
               
               <Font14 style = {{color: "#c6c7cc"}}>
@@ -224,15 +190,7 @@ render() {
             <Font14 style = {{color: "#999999"}}>예상 금액</Font14>
             <Font14 style = {{color: "#414550"}}>
               {projectDetailData && console.log(toJS(projectDetailData))}
-                    {/* 예상금액 0원일 때 미정으로 변경 */}
-                    {/* {projectDetailData &&
-                    projectDetailData.request_set[0].price.toLocaleString(
-                      "ko-KR"
-                    ) != 0
-                      ? projectDetailData.request_set[0].price.toLocaleString(
-                          "ko-KR"
-                        ) + " 원"
-                      : "미정"} */}
+
                     {projectDetailData && 
                     projectDetailData.request_set[0].price ?  
                     projectDetailData.request_set[0].price.toLocaleString("ko-KR")+"원" : "미정"}

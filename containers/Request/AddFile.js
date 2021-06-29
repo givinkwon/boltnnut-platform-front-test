@@ -50,11 +50,7 @@ class InputComponent extends React.Component {
 				checkFileUpload: true,
 			});
 			// 단일 첨부 방식
-			// ManufactureProcess.file = e.currentTarget.files[0]
-			// ManufactureProcess.fileName = fileName
-
 			Request.setCommonFile(e.currentTarget.files[0]);
-			// console.log(ManufactureProcess.fileArray);
 		}
 	};
 
@@ -148,9 +144,6 @@ class InputComponent extends React.Component {
 																	: 'none',
 															}}
 														/>
-
-														{/* 삭제 예정 */}
-														{/* <span>{(ManufactureProcess.fileArray.length-1) !== idx && <span>,</span>}</span> */}
 													</span>
 												</span>
 											</>

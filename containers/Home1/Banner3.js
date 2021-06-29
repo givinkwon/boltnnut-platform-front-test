@@ -32,8 +32,6 @@ class Banner3Container extends React.Component {
                 업체 검색이 한 번에
               </Middle>
               <Body>
-                {/* {ProjectCount}개 프로젝트 데이터를 학습한 AI 매칭 알고리즘이<br/>
-                내 의뢰의 전문가를 큐레이션해드립니다. */}
                 내가 원하는 생산품을 만들었던 제조업체를 <br />
                 볼트앤너트를 통해 바로 검색하세요. <br />
                 지역별, 입력별 필터를 통해 원하는 조건의 <br />

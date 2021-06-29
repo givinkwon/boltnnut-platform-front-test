@@ -34,8 +34,6 @@ class SearchBarConatiner extends React.Component {
 
   searchText = (e) => {
     const { Magazine } = this.props
-    // this.props.Partner.search_text = e.target.value;
-    //this.setState({search : e.target.value})
     Magazine.search_text = e.target.value
   };
   search = () => {
@@ -60,7 +58,6 @@ class SearchBarConatiner extends React.Component {
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-    //console.log(this.props.Project.input_category) 
   }
   render() {    
     const { Magazine } = this.props;
@@ -76,7 +73,6 @@ class SearchBarConatiner extends React.Component {
           <SearchBar>        
               <input
                 placeholder="원하는 분야의 제조업체를 검색하세요"
-                // value={Partner.search_text}
                 onFocus={(e) => e.target.placeholder = ''}
                 onBlur={(e) => e.target.placeholder = '원하는 분야의 제조업체를 검색하세요'}
                 onChange={this.searchText}                

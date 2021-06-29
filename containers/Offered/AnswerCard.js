@@ -92,18 +92,7 @@ class AnswerCard extends React.Component {
 				</CardTitle>
 				<CardBody>
 					<UpdateButton>
-						{
-							/*
-							!mode_update && (
-								<Text.FontSize20 color="#404040" style={{width: 'fit-content', marginTop: 4}}>
-									수정하기 >
-								</Text.FontSize20>
-							)
-							*/
-						}
 					</UpdateButton>
-
-					{/* 개발분야 */}
 					<div>
 						<Text.FontSize20 color={PRIMARY} fontWeight={700}>
 							개발분야
@@ -228,20 +217,6 @@ class AnswerCard extends React.Component {
 									영업일
 								</Text.FontSize20>
 							</div>
-							{
-								/*
-								<div>
-									<ReadOnlyStringField type="price">
-										<Text.FontSize20 color="#404040" fontWeight={500}>
-											10,000,000,000
-										</Text.FontSize20>
-									</ReadOnlyStringField>
-									<Text.FontSize20 color="#404040" fontWeight={500}>
-										원
-									</Text.FontSize20>
-								</div>
-								*/
-							}
 						</div>
 					</div>
 
@@ -274,20 +249,6 @@ class AnswerCard extends React.Component {
 									만원
 								</Text.FontSize20>
 							</div>
-							{
-								/*
-								<div>
-									<ReadOnlyStringField type="price">
-										<Text.FontSize20 color="#404040" fontWeight={500}>
-											10,000,000,000
-										</Text.FontSize20>
-									</ReadOnlyStringField>
-									<Text.FontSize20 color="#404040" fontWeight={500}>
-										원
-									</Text.FontSize20>
-								</div>
-								*/
-							}
 						</div>
 					</div>
 

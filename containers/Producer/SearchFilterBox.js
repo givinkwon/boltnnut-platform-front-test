@@ -142,26 +142,19 @@ class SearchFilterConatiner extends React.Component {
 
   openModal = () => {
     const { Partner } = this.props;
-    // console.log("requestmodal open click");
-    // this.setState({ modalOpen: true });
     Partner.requestModalActive = true;
   };
   closeModal = () => {
     const { Partner } = this.props;
-    // console.log("requestmodal close click");
 
     Partner.requestModalActive = false;
   };
 
   componentDidMount = async () => {
     const { Partner } = this.props;
-    // await Partner.init()
-    // console.log(toJS(Partner.category_main_list));
-    // console.log(toJS(Partner.category_middle_list));
   };
 
   componentWillUnmount = () => {
-    // console.log("unmount");
     const { Partner } = this.props;
     Partner.filterArray.map((data, idx) => {
       data.checked = false;
@@ -178,9 +171,6 @@ class SearchFilterConatiner extends React.Component {
               <SearchBar />
               <div
                 onClick={() => {
-                  // Partner.filterArray.map((data, idx) => {
-                  //   data.checked = false;
-                  // });
                   this.openModal();
                 }}
               >
@@ -191,151 +181,8 @@ class SearchFilterConatiner extends React.Component {
               </div>
             </Search>
 
-            {/* <Category>
-              <span>분야</span>
-              <div>
-                <Select
-                  placeholder="대 카테고리"
-                  // options={bigCategoryArray}
-                  options={this.props.Partner.category_main_list}
-                  getOptionLabel={(option) => option.maincategory}
-                  // value={Partner.input_category}
-                  // style={{ width: "160px" }}
-                  onChange={Partner.setMainCategory}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      neutral50: "#1A1A1A", // Placeholder color
-                    },
-                  })}
-                />
-              </div>
-              <div>
-                <Select
-                  placeholder="소 카테고리"
-                  options={Partner.category_middle_ary}
-                  getOptionLabel={(option) => option.category}
-                  value={
-                    Partner.category_middle_ary[0] &&
-                    Partner.input_small_category
-                  }
-                  onChange={Partner.setSmallCategory}
-                  defaultValue={
-                    Partner.category_middle_ary[0] &&
-                    Partner.category_middle_ary[0].cagegory
-                  }
-                />
-              </div>
-            </Category>
-            <Location>
-              <span>위치</span>
-              <Select
-                placeholder="전체지역"
-                options={this.props.Partner.filter_city_ary}
-                getOptionLabel={(option) => option.city}
-                // value={Partner.input_category}
-                onChange={Partner.setCityCategory}
-                // console.log(toJS(Partner.filter_region));
-                // Partner.partner_next = null;
-                // Partner.partner_count = null;
-
-                // Partner.currentPage = 1;
-
-                // Partner.category_dic = {};
-
-                // Partner.getPartner();
-              />
-            </Location>
-
-            <Budget>
-              <span>예산</span>
-              <FilterBox2 data={viewArray} width={width} />
-        
-              <InputContainer>
-                {!Partner.minDirectInput && (
-                  <Select
-                    // id="select"
-                    // width="118px"
-                    styles={customStyles}
-                    placeholder="0"
-                    style={{ overflow: "visible" }}
-                    options={budgetArray}
-                    getOptionLabel={(option) => option.label}
-                    // value={data.quantity}
-                    onChange={Partner.setMinBudget}
-                  />
-                )}
-
-                {Partner.minDirectInput && (
-                  <DirectInputBox>
-                    <input
-                      placeholder="직접 입력하세요"
-                      onBlur={(e) => {
-                        // console.log(e.target.value);
-                        if (e.target.value === "") {
-                          Partner.minDirectInput = false;
-                        }
-                      }}
-                      onFocus={(e) => {
-                        e.target.placeholder = "";
-                      }}
-                    />
-                  </DirectInputBox>
-                )}
-
-      
-
-                <span>원 ~ </span>
-                {!Partner.maxDirectInput && (
-                  <Select
-                    // id="select"
-                    // width="118px"
-                    styles={customStyles}
-                    placeholder="0"
-                    style={{ overflow: "visible" }}
-                    options={budgetArray}
-                    getOptionLabel={(option) => option.label}
-                    // value={data.quantity}
-                    onChange={Partner.setMaxBudget}
-                  />
-                )}
-
-                {Partner.maxDirectInput && (
-                  <DirectInputBox>
-                    <input
-                      placeholder="직접 입력하세요"
-                      onBlur={(e) => {
-                        // console.log(e.target.value);
-                        if (e.target.value === "") {
-                          Partner.maxDirectInput = false;
-                        }
-                      }}
-                      onFocus={(e) => {
-                        e.target.placeholder = "";
-                      }}
-                    />
-                  </DirectInputBox>
-                )}
-                <span>원</span>
-
-
-              </InputContainer>
-            </Budget>
-            <Filter>
-              <span>필터</span>
-              <span>(중복선택 가능)</span>
-              <FilterBox
-                filter="filter"
-                purpose="filter"
-                data={Partner.filterArray}
-              />
-            </Filter> */}
-
             {Partner.requestModalActive && (
-              // <Layer onClick={this.modalHandler}>
               <Layer>
-                {/* <Postcode /> */}
                 <span>
                   <Modal
                     width={width}
@@ -347,9 +194,7 @@ class SearchFilterConatiner extends React.Component {
             )}
 
             {Partner.requestDoneModalActive && (
-              // <Layer onClick={this.modalHandler}>
               <Layer>
-                {/* <Postcode /> */}
                 <span>
                   <DoneModal
                     width={width}
@@ -367,11 +212,8 @@ class SearchFilterConatiner extends React.Component {
               <div>
                 <MobileSelect
                   placeholder="대 카테고리"
-                  // options={bigCategoryArray}
                   options={this.props.Partner.category_main_list}
                   getOptionLabel={(option) => option.maincategory}
-                  // value={Partner.input_category}
-                  // style={{ width: "160px" }}
                   styles={mobileCustomStyles}
                   onChange={Partner.setMainCategory}
                   theme={(theme) => ({
@@ -407,36 +249,22 @@ class SearchFilterConatiner extends React.Component {
                 placeholder="전체지역"
                 options={this.props.Partner.filter_city_ary}
                 getOptionLabel={(option) => option.city}
-                // value={Partner.input_category}
                 onChange={Partner.setCityCategory}
                 styles={mobileCustomStyles}
-                // console.log(toJS(Partner.filter_region));
-                // Partner.partner_next = null;
-                // Partner.partner_count = null;
-
-                // Partner.currentPage = 1;
-
-                // Partner.category_dic = {};
-
-                // Partner.getPartner();
               />
             </Location>
 
             <Budget>
               <span>예산</span>
               <FilterBox2 data={viewArray} width={width} />
-              {/* <FilterBox filter="budget" data={budgetArray} /> */}
               <InputContainer>
                 {!Partner.minDirectInput && (
                   <MobileSelect
-                    // id="select"
-                    // width="118px"
                     styles={customStyles}
                     placeholder="0"
                     style={{ overflow: "visible" }}
                     options={budgetArray}
                     getOptionLabel={(option) => option.label}
-                    // value={data.quantity}
                     onChange={Partner.setMinBudget}
                     styles={mobileCustomStyles}
                   />
@@ -447,7 +275,6 @@ class SearchFilterConatiner extends React.Component {
                     <input
                       placeholder="직접 입력하세요"
                       onBlur={(e) => {
-                        // console.log(e.target.value);
                         if (e.target.value === "") {
                           Partner.minDirectInput = false;
                         }
@@ -459,21 +286,15 @@ class SearchFilterConatiner extends React.Component {
                   </DirectInputBox>
                 )}
 
-                {/* <DirectInputBox>
-              <input placeholder="직접 입력하세요" />
-            </DirectInputBox> */}
 
                 <span>원 ~ </span>
                 {!Partner.maxDirectInput && (
                   <MobileSelect
-                    // id="select"
-                    // width="118px"
                     styles={customStyles}
                     placeholder="0"
                     style={{ overflow: "visible" }}
                     options={budgetArray}
                     getOptionLabel={(option) => option.label}
-                    // value={data.quantity}
                     onChange={Partner.setMaxBudget}
                     styles={mobileCustomStyles}
                   />
@@ -484,7 +305,6 @@ class SearchFilterConatiner extends React.Component {
                     <input
                       placeholder="직접 입력하세요"
                       onBlur={(e) => {
-                        // console.log(e.target.value);
                         if (e.target.value === "") {
                           Partner.maxDirectInput = false;
                         }
@@ -497,29 +317,6 @@ class SearchFilterConatiner extends React.Component {
                 )}
                 <span>원</span>
 
-                {/* <InputBox>
-              <input
-                placeholder="0"
-                // value={Partner.search_text}
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "0")}
-                // onChange={this.searchText}
-                class="Input"
-                // onKeyDown={this.handleKeyDown}
-              />
-            </InputBox>
-            <span>원 ~</span>
-            <InputBox>
-              <input
-                placeholder="0"
-                // value={Partner.search_text}
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "0")}
-                // onChange={this.searchText}
-                class="Input"
-                // onKeyDown={this.handleKeyDown}
-              />
-            </InputBox> */}
               </InputContainer>
             </Budget>
             <Filter>
@@ -530,29 +327,6 @@ class SearchFilterConatiner extends React.Component {
                 purpose="filter"
                 data={Partner.filterArray}
               />
-              {/* <div style={{ width: "100px" }}>
-                <input
-                  style={{ display: "none" }}
-                  value={
-                    Request.select_big ? Request.select_big.maincategory : ""
-                  }
-                  class="Input"
-                />
-                {console.log(toJS(Partner.filter_category_ary))}
-                <MobileSelect
-                  placeholder="전체"
-                  styles={customStyles}
-                  options={Partner.filter_category_ary}
-                  //options={processArray}
-                  getOptionLabel={(option) => option.category}
-                  // getOptionLabel={(option) => {
-                  //   option.label;
-                  // }}
-                  value={Partner.input_process_filter}
-                  onChange={Partner.setProcessFilter}
-                  styles={mobileCustomStyles}
-                />
-              </div> */}
             </Filter>
 
             <CloseButton>
@@ -565,11 +339,9 @@ class SearchFilterConatiner extends React.Component {
               </div>
             </CloseButton>
 
-            {/* {console.log(toJS(Partner.requestModalActive))} */}
             {Partner.requestModalActive && (
-              // <Layer onClick={this.modalHandler}>
+
               <Layer>
-                {/* <Postcode /> */}
                 <span>
                   <Modal
                     width={width}
@@ -581,9 +353,7 @@ class SearchFilterConatiner extends React.Component {
             )}
 
             {Partner.requestDoneModalActive && (
-              // <Layer onClick={this.modalHandler}>
               <Layer>
-                {/* <Postcode /> */}
                 <span>
                   <DoneModal
                     width={width}
@@ -605,19 +375,14 @@ export default SearchFilterConatiner;
 const bigCategoryArray = [
   { label: "대 카테고리1", value: "대 카테고리1" },
   { label: "대 카테고리2", value: "대 카테고리2" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
 ];
 
 const smallCategoryArray = [
   { label: "소 카테고리1", value: "소 카테고리1" },
   { label: "소 카테고리2", value: "소 카테고리2" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
 ];
 
 const budgetArray = [
-  // { id: 1, name: "전체", checked: false },
   { id: 1, label: "0", value: 0 },
   { id: 2, label: "1,000,000", value: 1000000 },
   { id: 3, label: "5,000,000", value: 5000000 },

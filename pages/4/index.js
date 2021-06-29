@@ -20,9 +20,6 @@ class Index extends React.Component {
     home_index: 4,
   };
   componentDidMount() {
-    // this.props.Magazine.init()
-    //창 크기
-    // conflict..?
     this.props.Auth.home_index = 4;
     this.props.Auth.bgColor = "#f6f6f6";
 
@@ -74,21 +71,6 @@ class Index extends React.Component {
             <MobileNav src={logo_ic} width={width} index={Home.home_index} />
           )}
         </>
-
-        {/* <>
-          {width &&
-            (width > 767.98 ? (
-              <Nav />
-            ) : (
-              <>
-                <MobileNav
-                  //   headText={"제조 인사이트"}
-                  width={width}
-                  src={back_ic}
-                />
-              </>
-            ))}
-        </> */}
         {width && <Home4Container width={width} />}
         {width && <Footer />}
       </div>

@@ -35,7 +35,6 @@ class TabletBanner1Container extends React.Component {
                 </span>{" "}
               </Main>
 
-              {/* <Content>{ProjectCount}건의 데이터에 기반한 자동견적 알고리즘이<br/>평균 2일의 견적 시간을 한 번에 해결해 드립니다.</Content> */}
               <Content>
                 볼트앤너트 AI 자동 견적 알고리즘이 <br />
                 제작품에 대한 견적 범위를 바로 안내해드립니다.

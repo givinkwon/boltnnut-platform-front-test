@@ -1,8 +1,5 @@
 import React from "react";
 
-// import Container from 'components/Container'
-// import Section from 'components/Section'
-
 import BannerConatiner from "./Banner";
 import SearchBar from "./SearchBar";
 import SearchFilterBox from "./SearchFilterBox";
@@ -39,7 +36,6 @@ class ManufacturerConatiner extends React.Component {
                   <BannerConatiner />
                   <Background>
                     <Container>
-                      {/* <SearchBar /> */}
                       <SearchFilterBox width={this.props.width} />
                     </Container>
                   </Background>
@@ -55,7 +51,6 @@ class ManufacturerConatiner extends React.Component {
               {Partner.mobileRequestIndex == 0 && (
                 <>
                   <MobileSearchBar width={this.props.width} />
-                  {/* <SearchFilterBox width={this.props.width} /> */}
                   <MobileContentContainer width={this.props.width} />
                 </>
               )}

@@ -42,7 +42,6 @@ class SearchFilterConatiner extends React.Component {
               placeholder="대 카테고리"
               options={bigCategoryArray}
               getOptionLabel={(option) => option.label}
-              // value={Partner.input_category}
               onChange={Partner.setBigCategory}
             />
           </div>
@@ -51,7 +50,6 @@ class SearchFilterConatiner extends React.Component {
               placeholder="소 카테고리"
               options={smallCategoryArray}
               getOptionLabel={(option) => option.label}
-              // value={Partner.input_category}
               onChange={Partner.setSmallCategory}
             />
           </div>
@@ -62,8 +60,6 @@ class SearchFilterConatiner extends React.Component {
             placeholder="전체지역"
             options={this.props.Partner.filter_city_ary}
             getOptionLabel={(option) => option.city}
-            // value={Partner.input_category}
-            // onChange={Partner.setBigCategory}
           />
         </Location>
 
@@ -79,24 +75,18 @@ class SearchFilterConatiner extends React.Component {
             <InputBox>
               <input
                 placeholder="0"
-                // value={Partner.search_text}
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "0")}
-                // onChange={this.searchText}
                 class="Input"
-                // onKeyDown={this.handleKeyDown}
               />
             </InputBox>
             <span>원 ~</span>
             <InputBox>
               <input
                 placeholder="0"
-                // value={Partner.search_text}
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "0")}
-                // onChange={this.searchText}
                 class="Input"
-                // onKeyDown={this.handleKeyDown}
               />
             </InputBox>
             <span>원</span>
@@ -112,15 +102,11 @@ export default SearchFilterConatiner;
 const bigCategoryArray = [
   { label: "대 카테고리1", value: "대 카테고리1" },
   { label: "대 카테고리2", value: "대 카테고리2" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
 ];
 
 const smallCategoryArray = [
   { label: "소 카테고리1", value: "소 카테고리1" },
   { label: "소 카테고리2", value: "소 카테고리2" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
 ];
 
 const filterArray = [
@@ -134,7 +120,6 @@ const filterArray = [
 ];
 
 const budgetArray = [
-  // { id: 1, name: "전체", checked: false },
   { id: 1, name: "100만원~500만원", checked: false },
   { id: 2, name: "500만원~1000만원", checked: false },
   { id: 3, name: "1000만원~3000만원", checked: false },

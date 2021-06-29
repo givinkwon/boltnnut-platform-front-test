@@ -3,7 +3,6 @@ import "react-app-polyfill/stable";
 
 import React from "react";
 import App from "next/app";
-// import { Head } from 'next/document'
 
 import { Provider } from "mobx-react";
 import { createGlobalStyle } from "styled-components";
@@ -16,11 +15,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import * as AccountAPI from "axios/Account";
-
-// import { configure } from "mobx";
-// configure({
-//   useProxies: "never",
-// });
 
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
@@ -82,10 +76,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class MyApp extends App {
-  // constructor(props) {
-  //   super(props);
-  //   console.log("A");
-  // }
 
   state = {
     ie_user: false,
@@ -126,7 +116,6 @@ class MyApp extends App {
       console.log(
         "AAS@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       );
-      // alert("크롬 브라우저를 이용해주세요")
       this.setState({
         ...this.state,
         ie_user: true,

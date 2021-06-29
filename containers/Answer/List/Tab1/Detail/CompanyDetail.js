@@ -59,12 +59,6 @@ class CompanyDetailConatiner extends React.Component {
           <Text.FontSize20 color={WHITE} fontWeight={700}>회사정보</Text.FontSize20>
         </Header>
         <Content>
-          {/*<W30>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>상호명</Text.FontSize20>
-            <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-              {current_partner && current_partner.name}
-            </Text.FontSize20>
-          </W30>*/}
           <W30 center>
             <Text.FontSize20 color={PRIMARY} fontWeight={700}>종업원 수</Text.FontSize20>
             <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
@@ -83,55 +77,6 @@ class CompanyDetailConatiner extends React.Component {
               {current_partner && current_partner.revenue} 백만원
             </Text.FontSize20>
           </W30>
-          {/*<W30 center>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>시/도</Text.FontSize20>
-            <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-              {current_partner && Answer.getCityNameById(current_partner.city)}
-            </Text.FontSize20>
-          </W30>*/}
-          {/*<W30>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>지역</Text.FontSize20>
-            <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-              {current_partner && Answer.getRegionNameById(current_partner.region)}
-            </Text.FontSize20>
-          </W30>*/}
-
-          {/*
-            current_partner && current_partner.product_possible && current_partner.product_possible.length > 0 && (
-              <W100>
-                <Text.FontSize20 color={PRIMARY} fontWeight={700}>가능한 제품 분야</Text.FontSize20>
-                <BadgeList>
-                {
-                  current_partner && current_partner.product_possible.map((item, idx) => {
-                    return (
-                      <Badge key={idx}>
-                        <Text.FontSize20 color={DARKGRAY} fontWeight={500}>#{item.subclass}</Text.FontSize20>
-                      </Badge>
-                    )
-                  })
-                }
-                </BadgeList>
-              </W100>
-            )
-          }
-          {
-            current_partner && current_partner.product_history && current_partner.product_history.length > 0 && (
-              <W100>
-                <Text.FontSize20 color={PRIMARY} fontWeight={700}>진행한 제품들</Text.FontSize20>
-                <BadgeList>
-                {
-                  current_partner && current_partner.product_history.map((item, idx) => {
-                    return (
-                      <Badge key={idx}>
-                        <Text.FontSize20 color={DARKGRAY} fontWeight={500}>#{item.subclass}</Text.FontSize20>
-                      </Badge>
-                    )
-                  })
-                }
-                </BadgeList>
-              </W100>
-            )
-          }*/}
         </Content>
       </div>
     )

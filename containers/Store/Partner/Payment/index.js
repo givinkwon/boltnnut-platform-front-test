@@ -13,7 +13,6 @@ class PartnerPaymentConatiner extends React.Component {
   render() {
     return (
       <CustomContainer>
-      {/*  <PrepareConatiner/> */}
         <MyCoinConatiner/>
         <PriceConatiner/>
         <CoinConatiner/>

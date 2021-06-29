@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-// import SelectComponent from "./Select";
 import SelectComponent from "./MobileSelect";
 import ButtonComponent from "components/Buttonv2";
 
@@ -9,8 +8,6 @@ import Background from "components/Background";
 import Container from "components/Containerv1";
 
 import { toJS } from "mobx";
-
-// import RadioButton from "./RadioButton";
 
 import { PRIMARY2 } from "static/style";
 
@@ -40,7 +37,6 @@ class MobileSearchBarConatiner extends React.Component {
 
   searchText = (e) => {
     const { Partner } = this.props;
-    // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
     Partner.search_text = e.target.value;
   };
@@ -79,14 +75,10 @@ class MobileSearchBarConatiner extends React.Component {
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-    // console.log(this.props.Project.input_category);
   }
 
   onClickHandler = (idx) => {
-    // console.log("click");
     const { Partner } = this.props;
-    // console.log(idx);
-    // console.log(Partner.filter_checked_idx);
     if (Partner.filter_checked_idx !== idx) {
       this.setState({ index: idx });
       Partner.filter_checked_idx = idx;
@@ -94,7 +86,6 @@ class MobileSearchBarConatiner extends React.Component {
       Partner.filter_region = idx;
       Partner.partner_next = null;
       Partner.partner_count = null;
-      // this.count = 0;
       Partner.currentPage = 1;
       Partner.getPartner();
     }
@@ -103,10 +94,8 @@ class MobileSearchBarConatiner extends React.Component {
     const { Partner } = this.props;
 
     if (idx === Partner.filter_checked_idx) {
-      // console.log("ture");
       return true;
     } else {
-      // console.log("false");
       return false;
     }
   };
@@ -131,26 +120,12 @@ class MobileSearchBarConatiner extends React.Component {
           }
           onBlur={() => this.selectOut()}
         >
-          {/* <input
-            placeholder="원하는 분야의 제조업체를 검색하세요"
-            // value={Partner.search_text}
-            onFocus={(e) => (e.target.placeholder = "")}
-            onBlur={(e) =>
-              (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
-            }
-            onChange={this.searchText}
-            class="Input"
-            onKeyDown={this.handleKeyDown}
-          /> */}
         </Box>
         <SearchFilterBox>
           <SearchBar>
             <div>
               <input
                 style={{ display: "none" }}
-                // value={
-                //   Request.select_big ? Request.select_big.maincategory : ""
-                // }
                 class="Input"
               />
               <Select
@@ -163,12 +138,6 @@ class MobileSearchBarConatiner extends React.Component {
             </div>
             <div>
               <input
-                // placeholder="원하는 분야의 제조업체를 검색하세요"
-                // // value={Partner.search_text}
-                // onFocus={(e) => (e.target.placeholder = "")}
-                // onBlur={(e) =>
-                //   (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
-                // }
                 onChange={this.searchText}
                 class="Input"
                 onKeyDown={this.handleKeyDown}
@@ -202,7 +171,6 @@ class MobileSearchBarConatiner extends React.Component {
           {Partner.filter_city_ary.map((item, idx) => {
             return (
               <>
-                {/* {console.log(toJS(item))} */}
                 <FilterContent
                   onClick={() => {
                     this.onClickHandler(item.id);
@@ -235,8 +203,6 @@ const filterArray = [
 const categoryArray = [
   { label: "전체", value: "전체" },
   { label: "만든 제품", value: "만든 제품" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
 ];
 const region_data = [
   {

@@ -18,7 +18,6 @@ class Banner13Container extends React.Component {
         {/* <Fade bottom> */}
         <Box>
           <div>
-            {/* <Header>민감 정보 선택 공개 서비스</Header> */}
             <Middle>
               <p>대한민국 제조사 정보 여기 다 있다.</p>
             </Middle>
@@ -35,53 +34,9 @@ class Banner13Container extends React.Component {
                   <img src={passImg} />
                 </span>
               </div>
-
-              {/* <div
-                style={{
-                  color: "#ffffff",
-                  lineHeight: 1.5,
-                  fontSize: 18,
-                  opacity: 0.8,
-                  marginTop: 6,
-                }}
-              >
-                <img src={lock} style={{ marginRight: 8 }} />
-                민감 정보는 비공개로 작성 후 선택 공개하세요
-              </div> */}
             </Body>
           </div>
-          {/* <img
-              src={image1}
-              //   style={{ transform: "translate(-20%, -60%) scale(0.7)" }}
-            /> */}
-          {/* <Header>민감 정보 선택 공개 서비스</Header>
-              <Middle>
-                <p>
-                  원하는 업체만 <br />
-                  정보 공개 및 소통
-                </p>
-              </Middle>
-              <Body>
-                민감한 연구개발 정보는 내가 소통하고
-                <br />
-                검증한 업체에게만 공개할 수 있습니다.
-              </Body> */}
         </Box>
-        {/* <div>
-            <Header>민감 정보 선택 공개 서비스</Header>
-            <Middle>
-              <p>
-                원하는 업체만 <br />
-                정보 공개 및 소통
-              </p>
-            </Middle>
-            <Body>
-              민감한 연구개발 정보는 내가 소통하고
-              <br />
-              검증한 업체에게만 공개할 수 있습니다.
-            </Body>
-          </div> */}
-        {/* </Fade> */}
       </Container>
     );
   }

@@ -54,30 +54,6 @@ class TabletBanner0Container extends React.Component {
             전문 업체만 고르세요. 견적은 1초만에 드릴게요. <br />
             전문 업체 수배 플랫폼, 볼트앤너트
           </Header>
-          {/* <div>
-            <Title1 fontWeight={300} color={"#ffffff"}>
-              총 프로젝트 금액
-            </Title1>
-            <Content1 color={"#ffffff"}>
-              <CountFunc index={0} />
-            </Content1>
-
-            <div style={{ marginTop: 22 }} />
-            <Title1 fontWeight={300} color={"#ffffff"}>
-              의뢰 프로젝트
-            </Title1>
-            <Content1 color={"#ffffff"}>
-              <CountFunc index={1} projCount={ProjectCount} />
-            </Content1>
-
-            <div style={{ marginTop: 22 }} />
-            <Title1 fontWeight={300} color={"#ffffff"}>
-              개발 전문업체
-            </Title1>
-            <Content1 color={"#ffffff"}>
-              <CountFunc index={2} />
-            </Content1>
-          </div> */}
 
           <Explanation>
             <Font20>견적 고민 이제 그만! 제조사별 견적 AI 시스템으로</Font20>

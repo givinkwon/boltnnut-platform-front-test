@@ -73,9 +73,6 @@ class ContentConatiner extends React.Component {
   async componentDidMount() {
     const { Home, Partner } = this.props
 
-    // setTimeout(() => 
-    // this.props.Loading.setOpen(true), 4000);
-
     const self = this;
     const userAgent = window.navigator.userAgent;
     const searchButton = document.getElementById('searchbutton')
@@ -316,11 +313,6 @@ class ContentConatiner extends React.Component {
                     handleIntersection={this.handleIntersection}
                     observer={!this.props.Home.is_ie && idx === Partner.partner_list.length - 2}
                   />
-                  // Loading.is_open ? (
-                    
-                  // ):( 
-                  //   <Skeleton animation="wave" variant="rect" width="894px" height="200px" style={{ marginBottom: 20 }}/>
-                  // )
                   
                 )
               })

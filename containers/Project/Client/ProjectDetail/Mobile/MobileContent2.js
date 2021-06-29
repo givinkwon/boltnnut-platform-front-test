@@ -66,16 +66,7 @@ class MobileContent2 extends React.Component {
     const { Project, ManufactureProcess } = this.props;
     const { projectDetailData } = Project;
 
-    // console.log(toJS(item));
-    // console.log(toJS(projectDetailData));
-    // console.log(toJS(projectDetailData.request_set[0].estimate_set));
-
-    //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
-
-    // console.log(idx);
     console.log(process_idx);
-    // console.log(material_idx);
-    // console.log(detail_idx);
 
     let item_detail_idx = 0;
     if (process_idx === "1") {
@@ -83,13 +74,7 @@ class MobileContent2 extends React.Component {
     } else {
       item_detail_idx = detail_idx - material_idx;
     }
-
-    // console.log(item_detail_idx);
-    // console.log(this.state.process.length);
-    // console.log(projectDetailData.request_set[0].estimate_set.length);
     if (
-      // projectDetailData.request_set[0].estimate_set.length >
-      // this.state.process.length
       projectDetailData.request_set[0].estimate_set.length > this.count
     ) {
       this.count++;
@@ -99,14 +84,11 @@ class MobileContent2 extends React.Component {
       };
       await ManufactureProcessAPI.loadProcess(req).then((res) => {
         const data = res.data;
-        // console.log(data.name);
-        // console.log(data);
         console.log(data.detailmanufactureprocess_set);
         console.log(item_detail_idx);
         console.log(data.detailmanufactureprocess_set[item_detail_idx - 1]);
 
         this.setState({ process: this.state.process.concat(data.name) });
-        //this.process = this.process.concat(data.name);
         this.setState({
           detailProcess:
             data.detailmanufactureprocess_set[item_detail_idx - 1] &&
@@ -114,22 +96,13 @@ class MobileContent2 extends React.Component {
               data.detailmanufactureprocess_set[item_detail_idx - 1].name
             ),
         });
-        // this.detailProcess = this.detailProcess.concat(
-        //   data.detailmanufactureprocess_set[item_detail_idx - 1].name
-        // );
       });
       console.log(this.state.process);
       console.log(this.state.detailProcess);
-
-      //})
-      //this.setState({ render_process });
     }
   }
 
   componentDidMount() {
-    // const { Project, ManufactureProcess } = this.props;
-    // const { projectDetailData } = Project;
-    // count = projectDetailData.request_set[0].estimate_set.length
     console.log("componentDidMount");
     console.log(this.props.Project.projectDetailData);
   }
@@ -213,8 +186,6 @@ class MobileContent2 extends React.Component {
                   projectDetailData.request_set[0].estimate_set.map(
                     (item, idx) => {
                       {
-                        // console.log(toJS(item));
-                        //if (!this.state.render_process) {
                         this.loadProcess(
                           item,
                           idx,
@@ -233,18 +204,11 @@ class MobileContent2 extends React.Component {
                                 model={item.stl_file} // stl파일 주소
                                 width={120} // 가로
                                 height={120} // 세로
-                                // width={250}
-                                // height={210}
                                 modelColor="gray" // 색
                                 backgroundColor="white" // 배경색
                                 rotate={true} // 자동회전 유무
                                 orbitControls={true} // 마우스 제어 유무
                                 cameraX={500}
-                                //cameraZ={500}
-                                //lights={[2,4,1]}
-                                //lights={[2, 2, 2]}
-                                // lights={[0, 0, 1]}
-                                //lightColor={'red'}
                               />
                             </div>
                             <Box1 
@@ -274,18 +238,6 @@ class MobileContent2 extends React.Component {
                           <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                             <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>재료</Font15><Font15>{this.state.detailProcess[idx]}</Font15>
                           </div>
-                          {/* <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
-                          <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-                            <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>마감</Font15><Font15>금형/사출</Font15>
-                          </div>
-                          <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
-                          <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-                            <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>색상</Font15><Font15>금형/사출</Font15>
-                          </div>
-                          <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
-                          <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-                            <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>수량</Font15><Font15>금형/사출</Font15>
-                          </div> */}
                           <div style = {{borderStyle: "solid",borderTopWidth:1, borderTopColor:"#e1e2e4"}}></div>
                           <div style = {{height: 40, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                             <Font15 style = {{lineHeight: 2.67, fontWeight: 'bold', letterSpacing: -0.38}}>가격</Font15>
@@ -328,11 +280,7 @@ class MobileContent2 extends React.Component {
 
                               <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}} >
                                 <img src={fileimg} style={{width:20, height: 20, marginRight: 2 }} />
-                                {/* <DownloadFile
-                              file={item.file}
-                              href={decodeURI(item.file)}
-                              download
-                            ></DownloadFile> */}
+
                                 <Font14 style={{ color: "#767676", cursor: "pointer" }}
                                   onClick={() => this.downloadFile(item.file)}
                                 >

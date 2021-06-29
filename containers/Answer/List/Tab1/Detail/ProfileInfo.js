@@ -23,13 +23,6 @@ class ProfileInfoContainer extends Component {
           <Text.FontSize24 color={PRIMARY} fontWeight={500}>
             {partner && partner.user.phone}
           </Text.FontSize24>
-          {/*<Text.FontSize24 color={PRIMARY} fontWeight={500}>
-            &nbsp;{partner && partner.user.username}
-          </Text.FontSize24>*/}
-          {/*<Text.FontSize20 color={BLACK1} fontWeight={300}>
-            {partner && Answer.getCityNameById(partner.city)}
-          </Text.FontSize20>*/}
-
 
         </ProfileName>
         <ProfileRating>

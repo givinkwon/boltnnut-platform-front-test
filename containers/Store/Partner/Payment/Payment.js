@@ -25,10 +25,6 @@ class PaymentConatiner extends React.Component {
           <Text.FontSize24 color={WHITE} fontWeight={700}>결제수단</Text.FontSize24>
         </Header>
         <Content>
-          {/* <KakaoPay onClick={() => Payment.order('kakaopay')}>
-            <img src={kakaypay_icon}/>
-            <p>카카오페이</p>
-          </KakaoPay> */}
           <Inicis onClick={
             () => {
               Payment.current_coin = Auth.logged_in_partner.coin && Auth.logged_in_partner.coin

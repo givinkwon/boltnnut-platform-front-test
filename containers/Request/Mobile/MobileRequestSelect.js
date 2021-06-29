@@ -48,38 +48,20 @@ class MobileRequestSelectContainer extends React.Component {
   Next = (type) => {
     const { Request } = this.props
     Request.request_type=type;
-    // if(Request.request_type==="production")
-    // {
-    // //   Auth.setStep(1)
-    //     // Request.step_index=2;
-    //     this.props.DetailQuestion.loadSelectFromTitle(1);
-    // }
-    // else
-    // {
-    //     // Request.step_index=1;
-    // }
     Request.step_index=1;
   }
-  // state={
-  //   click: false,
-  // }
-  // testfunc = () => {
-  //   this.setState({click: true});
-  //   console.log(this.state.click);
-  // }
    render(){
     const { Request } = this.props
     const { width } = this.state
 
     return (
         //15, 18, 14, 13, 
-    //   <Section>
         <div style={{marginTop:0,width:'100%'}}>
             <HeadBox>
               <Font15 active={true}>나에게 맞는 제조방식을 선택해주세요.</Font15>
             </HeadBox>
             <ButtonBox>
-              {/* <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={() => Request.request_type="development"}> */}
+              
               <Button id="sign_uo_button_client" active={Request.request_type==="development"} onClick={()=>this.Next("development")}>
                     <ButtonText>
                     {/* 원래대로 */}
@@ -271,15 +253,3 @@ const ImgContainer = styled.div`
     margin-top: 10px;
   }
 `
-// const Box = styled.div`
-// width: 50px;
-// height: 50px;
-// background-color: red;
-// ${props => props.active && css`
-
-//   display: flex;
-//   width: 500px;
-//   height: 500px;
-
-//     `}
-// `

@@ -51,13 +51,6 @@ class MobileBanner12Container extends React.Component {
                   검증한 업체에게만 공개할 수 있습니다. <br />
                   *도면이 있다면 자동 견적을 받아 볼 수 있습니다. <br />
                 </Body>
-                {/* <Buttonv1
-                    onClick={() => Router.push("/request")}
-                    style={{ width: "304px", height: "64px" }}
-                    fontSize="23"
-                  >
-                    지금 무료 가견적 받기
-                  </Buttonv1> */}
               </ContainerBox>
 
               <ContainerBox>
@@ -69,13 +62,6 @@ class MobileBanner12Container extends React.Component {
                   4000여 개의 전문 제조사들이 정보 확인 후 <br />
                   상세한 상담과 제안을 진행할 수 있습니다. <br />
                 </Body>
-                {/* <Buttonv1
-                  onClick={() => Router.push("/request")}
-                  style={{ width: "304px", height: "64px" }}
-                  fontSize="23"
-                >
-                  1:1 컨설팅 받기
-                </Buttonv1> */}
               </ContainerBox>
 
               <ContainerBox>

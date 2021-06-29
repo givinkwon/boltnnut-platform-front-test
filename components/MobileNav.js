@@ -12,10 +12,8 @@ import Buttonv1 from "components/Buttonv1";
 import Home from "../pages";
 
 const close_ic = "/static/images/components/MobileNav/close_ic.svg";
-// const hamburger_ic = "/static/icon/hamburger.png";
 const hamburger_ic = "/static/images/components/MobileNav/hamburger.svg";
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
-//...
 @inject("Auth", "Partner", "Home")
 @observer
 class MobileNav extends React.Component {
@@ -77,8 +75,6 @@ class MobileNav extends React.Component {
           // 'http://localhost:3000/offered?tab=1&state=2'이면
           // queryParams = 'tab=1&state=2'
           queryParams.split("&").forEach((param) => {
-            // name = 'tab', 'state'
-            // value = '1', '2'
             const [name, value] = param.split("=");
             if (name === "tab") {
               currentTab = value;
@@ -102,11 +98,6 @@ class MobileNav extends React.Component {
         }
       });
     } else {
-      // 로그인 하지 않고 /partner/[id]로 들어오는 사용자 리다이렉트
-      //if(splitedRoute[1] === 'partner' && splitedRoute.length >= 3) {
-      //  alert("로그인이 필요합니다");
-      //  Router.push("/login");
-      //}
       this.needPermission.forEach((url) => {
         if (url === splitedRoute[1]) {
           if (requestId != 923) {
@@ -249,13 +240,8 @@ class MobileNav extends React.Component {
         )}
         <Container>
           <NavWrap2>
-            {/* {typeof window !== 'undefined' && window.location.pathname != '/' && window.location.pathname !='/login' ? ( */}
             {this.props.src ===
             "/static/images/components/MobileNav/MobileLogo.svg" ? (
-              //   <Logo src={this.props.src} onClick={() => Router.back()} />
-              // ) : (
-              //   <Logo src={this.props.src} onClick={()=>Router.push('/')}/>
-              // )}
 
               Auth.home_index === 4 ? (
                 <Logo src={this.props.src} onClick={() => Router.push("/4")} />
@@ -269,11 +255,6 @@ class MobileNav extends React.Component {
                 <Logo src={this.props.src} onClick={() => Router.push("/")} />
               )
             ) : (
-              // Auth.home_index === 3 && (<Logo src={this.props.src} onClick={() => Router.push("/3")} />)
-              // Auth.home_index === 2 && (<Logo src={this.props.src} onClick={() => Router.push("/2")} />)
-              // Auth.home_index === 1 && (<Logo src={this.props.src} onClick={() => Router.push("/5")} />)
-              // Auth.home_index === 0 && (<Logo src={this.props.src} onClick={() => Router.push("/")} />)
-
               <Logo src={this.props.src} onClick={() => Router.back()} />
             )}
 

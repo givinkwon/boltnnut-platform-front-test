@@ -32,16 +32,12 @@ class SearchBarConatiner extends React.Component {
 
   searchText = async (e) => {
     const { Partner } = this.props;
-    //console.log("click");
-    // this.props.Partner.search_text = e.target.value;
     this.setState({ search: e.target.value });
     await (Partner.search_text = e.target.value);
 
-    //Partner.getPartner();
   };
   search = async () => {
     const { Partner, ManufactureProcess } = this.props;
-    // console.log("click");
     if (Partner.search_text != "") {
       if (ManufactureProcess.loadingSaveSearchText) {
         ManufactureProcess.saveSearchText(Partner.search_text);
@@ -67,9 +63,6 @@ class SearchBarConatiner extends React.Component {
   handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
-      // console.log("Enter");
-      // console.log(e);
-      // console.log(toJS(Partner.search_text));
       if (Partner.search_text != "") {
         if (ManufactureProcess.loadingSaveSearchText) {
           ManufactureProcess.saveSearchText(Partner.search_text);
@@ -87,7 +80,6 @@ class SearchBarConatiner extends React.Component {
   };
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-    //console.log(this.props.Project.input_category);
   }
   render() {
     const { Partner, Request } = this.props;
@@ -100,11 +92,6 @@ class SearchBarConatiner extends React.Component {
           }
           onBlur={() => this.selectOut()}
         >
-          {/* <input
-            style={{ display: "none" }}
-            value={Request.select_big ? Request.select_big.maincategory : ""}
-            class="Input"
-          /> */}
           <Select
             placeholder="전체"
             options={categoryArray}
@@ -116,7 +103,6 @@ class SearchBarConatiner extends React.Component {
         <SearchBar>
           <input
             placeholder="원하는 분야의 제조업체를 검색하세요"
-            // value={Partner.search_text}
             onFocus={(e) => (e.target.placeholder = "")}
             onBlur={(e) =>
               (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
@@ -147,8 +133,6 @@ export default SearchBarConatiner;
 const categoryArray = [
   { label: "전체", value: "전체" },
   { label: "만든 제품", value: "만든 제품" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
 ];
 
 const SearchBar = styled.div`

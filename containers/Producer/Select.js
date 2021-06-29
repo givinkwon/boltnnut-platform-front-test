@@ -14,9 +14,6 @@ const customStyles = {
   indicatorSeparator: () => ({
     display: "none",
   }),
-  // placeholder: () => ({
-  //   color: "#c1bfbf",
-  // }),
   placeholder: (base) => ({
     ...base,
     color: "#c1bfbf",

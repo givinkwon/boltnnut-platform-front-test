@@ -49,11 +49,7 @@ class Index extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-    
-    // Home.init();
-    // Auth.bgColor = "#ffffff";
-    // Loading.setOpen(true);
-    // setTimeout(() => Loading.setOpen(false), 500);
+  
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -86,7 +82,6 @@ class Index extends React.Component {
             ))}
         </>
         <ManufacturerDetailContainer width={width} />
-        {/* <ManufacturerContainer width={width} /> */}
         <Footer />
       </div>
     );

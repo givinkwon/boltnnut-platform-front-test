@@ -72,7 +72,6 @@ class Account extends React.Component {
     return (
       <div>
         {Loading.is_open}
-        {/* {Loading.is_open && <Spinner/>} */}
         <Head>
           <title>볼트앤너트</title>
         </Head>

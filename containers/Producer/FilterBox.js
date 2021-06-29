@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 
-//import FormControl from "@material-ui/core/FormControl";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -36,27 +35,18 @@ class FilterBoxContainer extends React.Component {
     const { Partner } = this.props;
     let partFilterAry = [];
     let temp = [];
-    // console.log(idx);
 
     if (filter === "filter" || filter === "mobileFilter") {
       if (item.checked === false) {
         console.log(Partner.partner_count);
-        // this.setState({ index: idx });
 
         await Partner.filterArray.map((piece, id) => {
-          // console.log(piece.name);
           partFilterAry.push(piece.name);
         });
 
-        // console.log(Partner.filterArray[idx]);
         Partner.filterArray[idx].checked = true;
 
-        // console.log(this.props.Partner.filterArray[idx].name);
-
         if (this.props.Partner.filterArray[idx].name !== "기타") {
-          // if (Partner.filter_category) {
-          //   Partner.filter_category += ",";
-          // }
 
           Partner.filter_category_ary.filter(
             (data) => data.category === this.props.Partner.filterArray[idx].name
@@ -69,87 +59,26 @@ class FilterBoxContainer extends React.Component {
               )
             : (Partner.filterArray[idx].checked = true);
 
-          // Partner.filter_category_ary.filter(
-          //   (data) => data.category === this.props.Partner.filterArray[idx].name
-          // )[0]
-          //   ? (Partner.filter_category =
-          //       Partner.filter_category +
-          //       Partner.filter_category_ary.filter(
-          //         (data) =>
-          //           data.category === this.props.Partner.filterArray[idx].name
-          //       )[0].id)
-          //   : (Partner.filterArray[idx].checked = true);
-
-          // console.log(
-          //   toJS(
-          //     Partner.filter_category_ary.filter(
-          //       (data) =>
-          //         data.category === this.props.Partner.filterArray[idx].name
-          //     )[0].id
-          //   )
-          // );
-          // console.log(Partner.filter_category);
         } else {
-          // if (Partner.filter_category) {
-          //   Partner.filter_category += ",";
-          // }
-          // console.log(partFilterAry);
-          // console.log(Partner.filter_category_ary);
-          // console.log(
-          //   partFilterAry.includes(Partner.filter_category_ary[0].category)
-          // );
-
           Partner.filter_ary = await Partner.filter_category_ary.filter(
             (data) =>
-              // data.category !== partFilterAry
               partFilterAry.includes(data.category) === false
           );
-          // Partner.filter_ary.map((dt, id) => {
-          //   Partner.filter_category = Partner.filter_category + dt.id + ",";
-          //   if (id === 0) {
-          //     // console.log(dt);
-          //     Partner.filter_begin_idx = dt.id;
-          //   }
-          //   if (id === Partner.filter_ary.length - 1) {
-          //     // console.log(dt);
-          //     Partner.filter_end_idx = dt.id;
-          //   }
-          // });
 
           Partner.filter_ary.map((dt, id) => {
             Partner.filterList.push(dt.id);
             if (id === 0) {
-              // console.log(dt);
               Partner.filter_begin_id = dt.id;
             }
             if (id === Partner.filter_ary.length - 1) {
-              // console.log(dt);
               Partner.filter_end_id = dt.id;
             }
           });
-
-          // console.log(Partner.filter_category);
-          // Partner.filter_category = Partner.filter_category.slice(
-          //   0,
-          //   Partner.filter_category.length - 1
-          // );
-
-          // console.log(Partner.filter_category);
         }
       } else {
-        // this.setState({ index: idx });
         Partner.filterArray[idx].checked = false;
 
         if (this.props.Partner.filterArray[idx].name !== "기타") {
-          // console.log(toJS(Partner.filter_category));
-          // const begin_idx = Partner.filter_category
-          //   .toString()
-          //   .indexOf(
-          //     Partner.filter_category_ary.filter(
-          //       (data) =>
-          //         data.category === this.props.Partner.filterArray[idx].name
-          //     )[0].id
-          //   );
           console.log(
             Partner.filterList.indexOf(
               Partner.filter_category_ary.filter(
@@ -165,44 +94,8 @@ class FilterBoxContainer extends React.Component {
                 data.category === this.props.Partner.filterArray[idx].name
             )[0].id
           );
-
-          // console.log(Partner.filter_category.indexOf(Partner.filter_category_ary.filter(
-          //       (data) => data.category === this.props.Partner.filterArray[idx].name
-          //     )[0].id))
           Partner.filterList.splice(begin_id, 1);
-
-          // const last_idx = Partner.filter_category
-          //   .toString()
-          //   .indexOf(",", begin_idx);
-
-          // if (last_idx != -1) {
-          //   Partner.filter_category =
-          //     Partner.filter_category.slice(0, begin_idx) +
-          //     Partner.filter_category.slice(last_idx + 1);
-          //   // Partner.filter_category = Partner.filter_category.slice(begin_idx, last_idx+1)
-          // } else {
-          //   if (begin_idx != 0) {
-          //     Partner.filter_category = Partner.filter_category.slice(
-          //       0,
-          //       begin_idx - 1
-          //     );
-          //   }
-          //   Partner.filter_category = Partner.filter_category
-          //     .toString()
-          //     .slice(0, begin_idx);
-          // }
-
-          // console.log(toJS(Partner.filter_category));
-          // console.log(begin_idx);
-          // console.log(last_idx);
         } else {
-          // const begin_idx = Partner.filter_category
-          //   .toString()
-          //   .indexOf(Partner.filter_begin_idx);
-
-          // const last_idx = Partner.filter_category
-          //   .toString()
-          //   .indexOf(Partner.filter_end_idx);
 
           const begin_id = Partner.filterList.indexOf(Partner.filter_begin_id);
           const last_id = Partner.filterList.indexOf(Partner.filter_end_id);
@@ -211,36 +104,7 @@ class FilterBoxContainer extends React.Component {
           console.log(last_id);
           Partner.filterList.splice(begin_id, last_id - begin_id + 1);
           console.log(toJS(Partner.fileList));
-          // console.log(begin_idx);
-          // console.log(last_idx + 2);
-          // console.log(Partner.filter_category.length);
-
-          // if (last_idx + 2 === Partner.filter_category.length) {
-          //   if (begin_idx === 0) {
-          //     Partner.filter_category =
-          //       Partner.filter_category.slice(0, begin_idx) +
-          //       Partner.filter_category.slice(last_idx + 2);
-          //   } else {
-          //     Partner.filter_category =
-          //       Partner.filter_category.slice(0, begin_idx - 1) +
-          //       Partner.filter_category.slice(last_idx + 2);
-          //   }
-          // } else {
-          //   Partner.filter_category =
-          //     Partner.filter_category.slice(0, begin_idx) +
-          //     Partner.filter_category.slice(last_idx + 3);
-          // }
-
-          // console.log(toJS(Partner.filter_category));
         }
-
-        // Partner.partner_next = null;
-        // Partner.partner_count = null;
-        // Partner.currentPage = 1;
-        // Partner.resetDevCategory();
-        // if (this.props.purpose == "filter") {
-        //   Partner.getPartner();
-        // }
       }
     } else {
       if (Partner.filterbox_budget_checked_idx !== idx) {
@@ -249,16 +113,7 @@ class FilterBoxContainer extends React.Component {
         Partner.filter_budget = item.id;
         Partner.partner_next = null;
         Partner.partner_count = null;
-        // this.count = 0;
         Partner.currentPage = 1;
-        // console.log(Partner.filter_region)
-        // if(Partner.filter_region === "전체"){
-        //   Partner.getPartnerByPrice()
-        // }else{
-        //   Partner.getPartnerByPrice()
-        // }
-        //Partner.getPartnerByRegion(Partner.search_text);
-        // console.log(Partner.radiobox_category_checked_idx);
         Partner.resetDevCategory();
         if (this.props.purpose == "filter") {
           Partner.getPartner();
@@ -267,7 +122,6 @@ class FilterBoxContainer extends React.Component {
     }
 
     console.log(toJS(Partner.filterList));
-    // onst str1 = arr.join();
     const filterString = Partner.filterList.join();
     Partner.filter_category = Partner.filterList.join();
     console.log(filterString);
@@ -284,21 +138,15 @@ class FilterBoxContainer extends React.Component {
   };
 
   activeHandler = (idx, filter) => {
-    // console.log(`this.state.index : ${this.state.index}`)
-    // console.log(`idx : ${idx}`)
     if (this.props.Partner.filterArray[idx]) {
       if (filter === "filter" || filter === "mobileFilter") {
-        //if (idx === Partner.filterbox_checked_idx) {
-        // console.log(toJS(this.props.Partner.filterArray));
         if (this.props.Partner.filterArray[idx].checked === true) {
-          // console.log("equal")
           return true;
         } else {
           return false;
         }
       } else {
         if (idx === Partner.filterbox_budget_checked_idx) {
-          // console.log("equal")
           return true;
         } else {
           return false;
@@ -313,7 +161,6 @@ class FilterBoxContainer extends React.Component {
   render() {
     const { checked, data, filter } = this.props;
     const { placeholder, label, disabled, ...props } = this.props;
-    // console.log(data);
 
     return (
       <FormControl
@@ -321,14 +168,6 @@ class FilterBoxContainer extends React.Component {
         style={{ flexDirection: "row", width: "100%", flexWrap: "wrap" }}
         filter={filter}
       >
-        {/* <FormLabel component="legend" style={{marginTop: '28px'}}>금액</FormLabel> */}
-        {/* {filter === "filter" ? <Font16>필터</Font16> : <Font16>예산</Font16>} */}
-
-        {/* <RadioGroup aria-label="number" name="number1">
-          <FormControlLabel value="one" control={<Checkbox />} label="정제의뢰" />
-          <FormControlLabel value="two" control={<Checkbox />} label="정제의뢰" />
-          <FormControlLabel value="three" control={<Radio />} label="" />                                
-        </RadioGroup> */}
         {filter === "filter" &&
           data.map((item) => {
             return (
@@ -359,7 +198,6 @@ class FilterBoxContainer extends React.Component {
               <Item
                 onClick={() => {
                   this.onClickFilterHandler(item, item.id - 1, filter);
-                  // console.log(item);
                 }}
                 active={this.activeHandler(item.id - 1, filter)}
                 filter={filter}

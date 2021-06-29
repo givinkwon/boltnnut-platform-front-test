@@ -75,20 +75,6 @@ class Answer extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-
-    // if(Auth.logged_in_client) {
-    //   console.log('프로젝트 목록 로딩 시작')
-      
-    //   Project.loadProject(Auth.logged_in_client.id, () => {
-    //     console.log('프로젝트 목록 로딩 끝')
-    //   })
-
-    //   // Project.loadProject(954, () => {
-    //   //      console.log('프로젝트 목록 로딩 끝')
-    //   // })
-    // }
-    
-    
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
@@ -102,7 +88,6 @@ class Answer extends React.Component {
     return (
       <div>
         {Loading.is_open}
-        {/* {Loading.is_open && <Spinner/>} */}
         <Head>
           <title>볼트앤너트</title>
         </Head>

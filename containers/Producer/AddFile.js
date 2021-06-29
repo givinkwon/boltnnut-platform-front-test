@@ -31,38 +31,10 @@ class InputComponent extends React.Component {
     Partner.fileArray = [];
   }
   onChange = (e) => {
-    // if (this.props.type === "file") {
-    //   this.props.onChange(e.currentTarget.files[0]);
-    // } else {
-    //   this.props.onChange(e.currentTarget.value);
-    // }
   };
 
   onChangeFile = (e) => {
     const { Partner } = this.props;
-    // var file = document.getElementById("inputFile");
-
-    // var filePath = file.value;
-    // console.log(filePath);
-
-    // const reader = new FileReader();
-    // reader.readAsDataURL(e.currentTarget.files[0]);
-    // reader.addEventListener("load", () => {
-    //   this.setState({ src: reader.result });
-    //   //console.log(reader);
-    //   //console.log(reader.result);
-    // });
-
-    // if (e && e.currentTarget.files[0]) {
-    //   console.log(e.currentTarget.files[0]);
-    //   for (var item in e.currentTarget.files) {
-    //     console.log(item);
-    //     if (typeof e.currentTarget.files[item] === "object") {
-    //       ManufactureProcess.openFileArray.push(e.currentTarget.files[item]);
-    //     } else {
-    //       break;
-    //     }
-    //   }
     if (e && e.currentTarget.files[0]) {
       console.log(e.currentTarget);
       console.log(e.currentTarget.files[0]);
@@ -79,8 +51,6 @@ class InputComponent extends React.Component {
 
     console.log(toJS(Partner.fileArray));
     const fileName = e.currentTarget.files[0].name;
-    // this.setState({ fileArray: this.state.fileArray.push({ file: e.currentTarget.files[0] }) });
-    //ManufactureProcess.openFileArray.push({ file: e.currentTarget.files[0] });
 
     this.setState({
       ...this.state,
@@ -88,18 +58,6 @@ class InputComponent extends React.Component {
       fileName: fileName,
       checkFileUpload: true,
     });
-
-    //   const fileName = e.currentTarget.files[0].name;
-
-    //   this.setState({
-    //     ...this.state,
-    //     file: e.currentTarget.files[0],
-    //     fileName: fileName,
-    //     checkFileUpload: true,
-    //   });
-
-    //   Request.setCommonFile(e.currentTarget.files[0]);
-    //   console.log(toJS(ManufactureProcess.openFileArray));
   };
 
   render() {
@@ -202,7 +160,6 @@ class InputComponent extends React.Component {
                   this.file.current.click();
                 }}
               >
-                {/* <span>파일첨부</span> */}
                 <img src={addButtonImg} />
               </div>
               <div></div>

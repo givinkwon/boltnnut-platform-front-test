@@ -18,7 +18,6 @@ class BannerConatiner extends React.Component {
       >
         <Container>
           <Item>
-            {/*<Text.FontSize62 color={'#0a2165'}>제조 인사이트</Text.FontSize62>*/}
             <Text.FontSize32 color={WHITE}>제조사 찾기</Text.FontSize32>
             <Content.FontSize22 color={WHITE}>
               제작품 생산에 적합한 제조사들을 확인하세요.

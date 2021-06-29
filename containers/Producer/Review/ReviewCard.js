@@ -11,10 +11,6 @@ const star = "/static/icon/star.svg";
 @inject("Partner", "Auth")
 @observer
 class ReviewCard extends React.Component {
-  // constructor (props) {
-  //     super(props);
-  //     this.hideLoader = this.hideLoader.bind(this);
-  // }
   state = {
     width: null,
   };
@@ -42,11 +38,6 @@ class ReviewCard extends React.Component {
 
     return (
       <>
-        {/* {console.log("renderrenderrenderrenderrenderrenderrenderrenderrender")} */}
-        {/* {console.log(Partner.review_ary.length)}
-        {!Partner.review_ary.length && (
-          
-        )} */}
 
         {Partner.loadReviewData === 1 &&
           Partner.review_ary.map((item, idx) => (
@@ -70,11 +61,6 @@ class ReviewCard extends React.Component {
                 </span>
                 <span>{`   ${item.score}`}</span>
               </score>
-              {/* <name>{item.client}</name> */}
-              {/* <name>{Partner.userEmail}</name> */}
-
-              {/* console.log를 찍어야 값이 출력 (??) */}
-              {/* {console.log(toJS(Partner.review_user_ary))} */}
               {Partner.review_user_ary && (
                 <name>{Partner.review_user_ary[idx]}</name>
               )}
@@ -86,7 +72,6 @@ class ReviewCard extends React.Component {
           <NoCard reviewDone={Partner.review_done}>
             <span>등록된 리뷰가 없습니다</span>
           </NoCard>
-          // <h1></h1>
         )}
       </>
     );

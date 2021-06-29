@@ -39,14 +39,9 @@ class PartnerAnswer extends React.Component {
   };
 
   componentDidMount() {
-    // console.log(Project.projectDetailData.request_set[0].name)
   }
   submit = () => {
     const { Project, Answer, Auth } = this.props;
-    //console.log(Project.projectDataList[0].id);
-    //console.log(Project.projectDataList[0].request_set[0].id);
-    //console.log(toJS(Auth.logged_in_partner.id));
-    //console.log(Answer.content1);
     Answer.CreateAnswer(
       Project.projectDetailData,
       Auth.logged_in_partner.name,
@@ -140,7 +135,6 @@ class PartnerAnswer extends React.Component {
                       <pre style={{ whiteSpace: "break-spaces" }}>
                         {projectDetailData &&
                           projectDetailData.request_set[0].order_request_open}
-                        {/* {Project.projectDetailData.request_set[0].order_request_open} */}
                       </pre>
 
                       <File style={{ marginTop: 52 }}>
@@ -165,11 +159,6 @@ class PartnerAnswer extends React.Component {
                                           marginRight: 5,
                                         }}
                                       />
-                                      {/* <DownloadFile
-                              file={item.file}
-                              href={decodeURI(item.file)}
-                              download
-                            ></DownloadFile> */}
                                       <span
                                         onClick={() =>
                                           this.downloadFile(item.file)

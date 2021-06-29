@@ -23,25 +23,12 @@ class TabletBanner9Container extends React.Component {
         }}
       >
         <Layer>
-          {/* <Containerv1
-            style={{
-              paddingBottom: 80,
-              paddingTop: 60,
-              justifyContent: "center",
-            }}
-          > */}
           <Fade bottom>
             <div>
               <Font18>
                 제조 발주를 위한 빠른 업체 검색 <br />
                 볼트앤너트에서 가능합니다.
               </Font18>
-              {/* <Font16>
-                프로젝트 상담을 통해 기획 단계부터 실무자 분들과 소통해보세요.{" "}
-                <br />
-                전문 상담을 통해 자사의 전문성을 제안하고 신규 거래처를
-                탐색해보세요.
-              </Font16> */}
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button onClick={() => Router.push("/producer")}>
                   <span>지금 업체 찾기</span>
@@ -52,7 +39,6 @@ class TabletBanner9Container extends React.Component {
               </div>
             </div>
           </Fade>
-          {/* </Containerv1> */}
         </Layer>
       </Background>
     );

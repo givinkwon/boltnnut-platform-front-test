@@ -44,7 +44,6 @@ class Step2Conatiner extends React.Component {
   state = {
     width : 0, 
     accept_terms: true,
- //   accept_marketing: false,
     open_marketing: false,
 
   }
@@ -66,13 +65,6 @@ class Step2Conatiner extends React.Component {
       accept_terms: !this.state.accept_terms,
     })
   }
-
-//  toggleCheckBox2 = () => {
-//    this.setState({
-//      ...this.state,
-//      accept_marketing: !this.state.accept_marketing,
-//    })
-//  }
 
   openMarketingModal = () => {
 		this.setState({
@@ -147,9 +139,6 @@ class Step2Conatiner extends React.Component {
                 </Terms>
               </TermsContainer>
               <ButtonBox>
-                {/* <ButtonComponent backgroundColor='#e6e6e6' borderColor='#e6e6e6' borderRadius={100} onClick={() => Auth.setStep(0)}>
-                  <Text.FontSize20 color='#a0a0a0' fontWeight={500}>이전</Text.FontSize20>
-                </ButtonComponent> */}
                 <ButtonComponent id="sign_up_button_complete_div" backgroundColor={PRIMARY} borderColor={PRIMARY} borderRadius={100} onClick={this.handleSubmit}>
                   {
                     Auth.loading
@@ -193,9 +182,6 @@ class Step2Conatiner extends React.Component {
                 </Terms>
               </TermsContainer>
               <ButtonBox>
-                {/* <ButtonComponent backgroundColor='#e6e6e6' borderColor='#e6e6e6' borderRadius={100} onClick={() => Auth.setStep(0)}>
-                  <Text.FontSize20 color='#a0a0a0' fontWeight={500}>이전</Text.FontSize20>
-                </ButtonComponent> */}
                 <ButtonComponent id="sign_up_button_complete_div" backgroundColor={PRIMARY} borderColor={PRIMARY} borderRadius={100} onClick={this.handleSubmit}>
                   {
                     Auth.loading

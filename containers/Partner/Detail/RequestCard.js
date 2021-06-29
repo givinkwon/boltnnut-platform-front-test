@@ -48,63 +48,6 @@ class RequestCard extends React.Component {
         <div>
            <img onLoad={this.onImgLoad} src={pathname && "/static/images/partner/" + pathname + ".jpg"}/>
         </div>
-
-        {/*
-          <div>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              제품 이름
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040">
-              { product && product.subclass }
-            </Text.FontSize20>
-          </div>
-
-        {/*
-          <div>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              제품 설명
-            </Text.FontSize20>
-            <ReadOnlyTextField>
-              <Text.FontSize20 color="#c6c6c6">
-                { request && request.content }
-              </Text.FontSize20>
-            </ReadOnlyTextField>
-          </div>
-
-
-          <div>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              희망 기간
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040">
-              { request && request.day } 일
-            </Text.FontSize20>
-          </div>
-
-
-          <div>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              희망 견적
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040">
-              { request && FormatUtils.intcomma(request.price) } 만원
-            </Text.FontSize20>
-          </div>
-
-
-          <div>
-            <Text.FontSize20 color={PRIMARY} fontWeight={700}>
-              첨부 파일
-            </Text.FontSize20>
-
-            <DownloadFile file={ request && request.file } />
-          </div>
-
-          <RequestArea
-            mainCategory={ mainCategory }
-            selectSaves={ selectSaves }
-          />
-            */}
         </CardBody>
       </Card>
     )

@@ -42,7 +42,6 @@ const customStyles = {
     width: 108,
     height: 29,
     border: 'solid 1px #c6c7cc',
-    // backgroundColor: '#fff',
     display: 'flex',
     borderRadius: 3,
     padding: 4,

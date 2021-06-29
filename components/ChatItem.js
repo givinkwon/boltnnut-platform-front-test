@@ -13,7 +13,6 @@ class ChatItemContainer extends React.Component {
     content: this.props.content,
   };
   componentDidMount() {
-    // console.log(this.props.content);
     if(this.state.content)
     {
       if (this.state.content.length > 44) {
@@ -29,10 +28,6 @@ class ChatItemContainer extends React.Component {
           <PartnerBox onClick={() => this.props.modalHandler(this.props.id)}>
             <PartnerInfo>
               <img
-                // src={
-                //   this.props.logo &&
-                //   this.props.logo
-                // }
                 src={
                   "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
                 }
@@ -65,10 +60,6 @@ class ChatItemContainer extends React.Component {
             <BoxLeft>
               <PartnerInfo>
                 <img
-                  // src={
-                  //   this.props.logo &&
-                  //   this.props.logo
-                  // }
                   src={
                     "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
                   }

@@ -6,7 +6,6 @@ import Buttonv1 from "components/Buttonv1";
 import Fade from "react-reveal/Fade";
 import Router from "next/router";
 
-// const image1 = "/static/images/Home/Banner9/Banner9_img1.png"
 const passImg = "/static/images/pass7.png";
 const image1 = "/static/images/Home/Mobile/MobileBanner9/MobileBanner9_bg.png";
 class MobileBanner9Container extends React.Component {
@@ -16,10 +15,6 @@ class MobileBanner9Container extends React.Component {
         <Layer>
           <Fade bottom>
             <div>
-              {/* <Header>
-                메일로 회사소개서 보내기, <br />
-                박람회 영업하기는 이제 그만
-              </Header> */}
               <Body>
                 제조 발주를 위한 빠른 업체 검색 <br />
                 볼트앤너트에서 가능합니다.

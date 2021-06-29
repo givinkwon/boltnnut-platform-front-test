@@ -87,10 +87,6 @@ class PartnerEmailConatiner extends React.Component {
 
             <W50 left>
               <InputComponent placeholder='-없이 입력해주세요' label='휴대전화' type='phone' onChange={Auth.setPhone} value={Auth.phone}/>
-              {/* <br/>
-              {Auth.type === 'expert' ? (<Text.FontSize14 color={DARKGRAY} fontWeight={500}>제조 의뢰 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
-                                      :(<Text.FontSize14 color={DARKGRAY} fontWeight={500}>파트너와 미팅 및 계약 관련 카카오톡 및 SMS 알림 수신을 위해 올바른 번호를 입력해주세요</Text.FontSize14>)
-              } */}
             </W50>
             <W50 right>
               <SelectBox>
@@ -100,30 +96,6 @@ class PartnerEmailConatiner extends React.Component {
                   getOptionLabel={(option) => option.path} placeholder='옵션을 선택해주세요' onChange={Auth.setPath}/>
               </SelectBox>
             </W50>
-            {/* <W50 left>
-              <InputComponent placeholder='회사명을 입력해주세요' label='회사명' type='name' onChange={Auth.setName} value={Auth.name}/>
-              <br/>
-              {Auth.type === 'expert' ? ''
-                                      :(<Text.FontSize14 color={DARKGRAY} fontWeight={500}>개인인 경우 '개인'을 입력해주세요</Text.FontSize14>)
-              }
-            </W50>
-            <W50 right>
-              <InputComponent placeholder='직위를 입력해주세요' label='직위' type='title' onChange={Auth.setTitle} value={Auth.title}/>
-            </W50>
-            <W50 left>
-              <SelectBox>
-                <Text.FontSize20 color={DARKGRAY} fontWeight={500}>업종</Text.FontSize20>
-                <SelectComponent
-                  styles={customStyles} options={Auth.business_data} value={Auth.business}
-                  getOptionLabel={(option) => option.business} placeholder='옵션을 선택해주세요' onChange={Auth.setBusiness}/>
-              </SelectBox>
-            </W50>
-            {Auth.business && Auth.business.business == "기타" && <W50 right>
-              <InputComponent placeholder='기타 업종을 입력해주세요' label='업종' type='business2' onChange={Auth.setBusiness2} value={Auth.business2}/>
-              <br/>
-            </W50> */}
-
-
             </>
           ) : (
             <>

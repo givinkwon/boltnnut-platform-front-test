@@ -2,12 +2,6 @@ import Document, { Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet as StyledComponentSheets } from "styled-components";
 import { ServerStyleSheets as MaterialUiServerStyleSheets } from "@material-ui/styles";
 
-//import TagManager from 'react-gtm-module'
-
-//const tagManagerArgs = {
-//    gtmId: 'GTM-PWFPPZ5'
-//}
-
 export default class MyDocument extends Document {
   static getInitialProps = async (ctx) => {
     const styledComponentSheet = new StyledComponentSheets();
@@ -352,10 +346,6 @@ export default class MyDocument extends Document {
       `,
     };
   }
-
-  // async componentDidMount() {
-  //   TagManager.initialize(tagManagerArgs)
-  // }
   render() {
     return (
       <html>
@@ -501,17 +491,8 @@ export default class MyDocument extends Document {
             type="text/javascript"
             src="https://apis.google.com/js/client:platform.js"
           ></script>
-          {/* <script dangerouslySetInnerHTML={this.setAnalyticsApi()} /> */}
           <script dangerouslySetInnerHTML={this.setReportV4()} />
-          {/* ㅌㅌㅌ */}
-          {/* <script src="https://apis.google.com/js/client.js?onload=authorize"></script> */}
 
-          {/* <button id="auth-button" onclick="authorize()">
-            Authorize
-          </button> */}
-          {/* <textarea cols="80" rows="20" id="query-output"></textarea> */}
-          {/* ㅌㅌㅌ */}
-          {/* <p class="g-signin2" data-onsuccess="batchGet"></p> */}
 
 
 

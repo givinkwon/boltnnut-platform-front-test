@@ -17,8 +17,6 @@ class MobileBanner13Container extends React.Component {
       <Background backgroundColor="#ffffff">
         <Containerv1
           style={{
-            // paddingBottom: 306,
-            // paddingTop: 308,
             width: `${width - 80}px`,
             justifyContent: "space-between",
           }}
@@ -49,38 +47,7 @@ class MobileBanner13Container extends React.Component {
                 </div>
               </Body>
             </div>
-            {/* <img
-              src={image1}
-              //   style={{ transform: "translate(-20%, -60%) scale(0.7)" }}
-            /> */}
-            {/* <Header>민감 정보 선택 공개 서비스</Header>
-              <Middle>
-                <p>
-                  원하는 업체만 <br />
-                  정보 공개 및 소통
-                </p>
-              </Middle>
-              <Body>
-                민감한 연구개발 정보는 내가 소통하고
-                <br />
-                검증한 업체에게만 공개할 수 있습니다.
-              </Body> */}
           </Box>
-          {/* <div>
-            <Header>민감 정보 선택 공개 서비스</Header>
-            <Middle>
-              <p>
-                원하는 업체만 <br />
-                정보 공개 및 소통
-              </p>
-            </Middle>
-            <Body>
-              민감한 연구개발 정보는 내가 소통하고
-              <br />
-              검증한 업체에게만 공개할 수 있습니다.
-            </Body>
-          </div> */}
-          {/* </Fade> */}
         </Containerv1>
       </Background>
     );

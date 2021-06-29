@@ -59,64 +59,10 @@ class Tab2Container extends Component {
         <DialogHeader>
           <CloseModalButton handleClose={handleClose} />
           <Text.FontSize32 color={PRIMARY} fontWeight={600}>
-            {/*{request && request.name}*/}
             의뢰 내용 확인하기
           </Text.FontSize32>
-          {/*<Text.FontSize18 color="#797979" style={{marginTop: 8}}>
-            의뢰 했던 내용을 확인하세요.
-          </Text.FontSize18>*/}
         </DialogHeader>
-
         <DialogBody>
-
-          {/*
-          <div>
-            <Text.FontSize20 color={PRIMARY} fontWeight={600}>
-              제품 이름
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040" fontWeight={300}>
-              {product && product.subclass}
-            </Text.FontSize20>
-          </div>
-
-
-          <div>
-            <Text.FontSize20 color={PRIMARY} fontWeight={600}>
-              제품 설명
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040" fontWeight={300}>
-              {request && request.content}
-            </Text.FontSize20>
-          </div>
-
-
-          <div>
-            <Text.FontSize20 color={PRIMARY} fontWeight={600}>
-              희망 기간
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040" fontWeight={300}>
-              {request && request.day}일
-            </Text.FontSize20>
-          </div>
-
-
-          <div>
-            <Text.FontSize20 color={PRIMARY} fontWeight={600}>
-              희망 견적
-            </Text.FontSize20>
-            <Text.FontSize20 color="#404040" fontWeight={300}>
-              {request && FormatUtils.intcomma(request.price)}원
-            </Text.FontSize20>
-          </div>
-
-
-          <div>
-            <Text.FontSize20 color={PRIMARY} fontWeight={600}>
-              첨부 파일
-            </Text.FontSize20>
-
-            <DownloadFile file={request && request.file} />
-          </div>*/}
 
           {/* 의뢰 내용 */}
           <RequestArea

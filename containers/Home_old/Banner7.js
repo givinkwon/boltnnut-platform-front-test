@@ -4,7 +4,6 @@ import Containerv1 from "../../components/Containerv1";
 import Background from "components/Background";
 import * as Title from "components/Title";
 import Slider from 'react-slick';
-// import SliderWrapper from "./SliderStyle";
 import SliderMain from './SliderContent';
 import Fade from 'react-reveal/Fade';
 const pic = 'static/images/Home/Banner7/pic.png';

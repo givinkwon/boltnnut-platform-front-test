@@ -40,25 +40,6 @@ class Content4 extends React.Component {
     this.setState({ modalOpen: false });
   };
 
-  // openModal = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     modal_open: true,
-  //   });
-  // };
-  // closeModal = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     modal_open: false,
-  //   });
-  // };
-  // closeClassModal = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     classModal_open: false,
-  //   });
-  // };
-
   downloadFile(urls) {
     const blob = new Blob([this.content], { type: "text/plain" });
     const url = window.URL.createObjectURL(blob);
@@ -74,13 +55,6 @@ class Content4 extends React.Component {
     const { Project, ManufactureProcess } = this.props;
     const { projectDetailData } = Project;
 
-    //await projectDetailData && projectDetailData.request_set[0].estimate_set.map((item, idx) => {
-
-    // //console.log(idx);
-    // //console.log(process_idx);
-    // //console.log(material_idx);
-    // //console.log(detail_idx);
-
     let item_detail_idx = 0;
     if (process_idx === "1") {
       item_detail_idx = detail_idx - material_idx + 1;
@@ -89,8 +63,6 @@ class Content4 extends React.Component {
     }
 
     if (
-      // projectDetailData.request_set[0].estimate_set.length >
-      // this.state.process.length
       projectDetailData.request_set[0].estimate_set.length > this.count
     ) {
       this.count++;
@@ -112,36 +84,17 @@ class Content4 extends React.Component {
           }
         }
       });
-
-      //})
-      //this.setState({ render_process });
     }
   }
 
   async componentDidMount() {
-    // const { Project, ManufactureProcess } = this.props;
-    // const { projectDetailData } = Project;
-    // count = projectDetailData.request_set[0].estimate_set.length
-    // console.log("componentDidMount");
-    // console.log(this.props.Project.projectDetailData);
-    // (await this.props.ProjectprojectDetailData) &&
-    //   this.props.Project.projectDetailData.request_set[0].estimate_set.map(
-    //     (item, idx) => {
-    //       console.log(toJS(decodeURI(item.stl_file.split("/").pop())));
-    //     }
-    //   );
   }
   render() {
     const { Project, ManufactureProcess, user, Auth } = this.props;
     const { projectDetailData } = Project;
-    // console.log(toJS(projectDetailData.request_set[0].client));
-
-    // console.log(toJS(projectDetailData.request_set[0]));
-    // console.log(toJS(Auth.logged_in_client.id));
 
     return (
       <Background>
-        {/* <Containerv1 style={{ display: "flex", flexDirection: "column" }}> */}
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
           <RequestSubContainer style={{ marginBottom: 70 }}>
@@ -151,7 +104,6 @@ class Content4 extends React.Component {
                 <pre style={{ whiteSpace: "break-spaces" }}>
                   {projectDetailData &&
                     projectDetailData.request_set[0].order_request_open}
-                  {/* {Project.projectDetailData.request_set[0].order_request_open} */}
                 </pre>
               </RequestContent>
               <File>
@@ -169,11 +121,6 @@ class Content4 extends React.Component {
                                 src={file_img}
                                 style={{ marginRight: "14px" }}
                               />
-                              {/* <DownloadFile
-                              file={item.file}
-                              href={decodeURI(item.file)}
-                              download
-                            ></DownloadFile> */}
                               <span
                                 onClick={() => this.downloadFile(item.file)}
                                 style={{ cursor: "pointer" }}
@@ -216,8 +163,6 @@ class Content4 extends React.Component {
                   projectDetailData.request_set[0].estimate_set.map(
                     (item, idx) => {
                       {
-                        // console.log(toJS(item));
-                        //if (!this.state.render_process) {
                         this.loadProcess(
                           item,
                           idx,
@@ -225,8 +170,6 @@ class Content4 extends React.Component {
                           item.material,
                           item.category
                         );
-                        //}
-                        // console.log(process);
                       }
                       return (
                         <DrawingCard>
@@ -236,18 +179,11 @@ class Content4 extends React.Component {
                                 model={item.stl_file} // stl파일 주소
                                 width={120} // 가로
                                 height={120} // 세로
-                                // width={250}
-                                // height={210}
                                 modelColor="gray" // 색
                                 backgroundColor="white" // 배경색
                                 rotate={true} // 자동회전 유무
                                 orbitControls={true} // 마우스 제어 유무
                                 cameraX={500}
-                                //cameraZ={500}
-                                //lights={[2,4,1]}
-                                //lights={[2, 2, 2]}
-                                // lights={[0, 0, 1]}
-                                //lightColor={'red'}
                               />
                             </div>
                             <div
@@ -256,7 +192,6 @@ class Content4 extends React.Component {
                                 this.downloadFile(item.stl_file);
                               }}
                             >
-                              {/* <div onClick={this.openModal}> */}
                               <span
                                 onClick={() => {}}
                                 style={{ cursor: "pointer" }}
@@ -265,18 +200,12 @@ class Content4 extends React.Component {
                               </span>
                               <img src={download_img} />
                             </div>
-                            {/* <CloseModalButton handleClose={this.closeModal} /> */}
                             <Modal
                               open={this.state.modalOpen}
                               close={this.closeModal}
                               header="도면"
                               title="dd"
                             >
-                              {/* <p>
-                                dddddddddddddddddddddddddddddddddddddddddddddddd
-                                dddddddddddddddddddd dddd dddddddd dddd dddd
-                                dddd dddd dddddddd dddddddd
-                              </p> */}
                             </Modal>
                           </Header>
                           <Body>
@@ -323,19 +252,7 @@ class Content4 extends React.Component {
                                 )}
                               </div>
                             </DrawingInfo>
-
-                            {/* <div>
-                            <span>마감</span>
-                            <span>기본가공</span>
-                          </div>
-                          <div>
-                            <span>색상</span>
-                            <span>검정</span>
-                          </div> */}
                           </Body>
-                          {/* <Tail>
-                         
-                        </Tail> */}
                         </DrawingCard>
                       );
                     }
@@ -361,11 +278,6 @@ class Content4 extends React.Component {
                                   }}
                                 >
                                   <img src={file_img} />
-                                  {/* <DownloadFile
-                              file={item.file}
-                              href={decodeURI(item.file)}
-                              download
-                            ></DownloadFile> */}
                                   <span
                                     onClick={() => this.downloadFile(item.file)}
                                     style={{ cursor: "pointer" }}
@@ -399,7 +311,6 @@ class Content4 extends React.Component {
             </>
           )}
         </RequestContainer>
-        {/* </Containerv1> */}
       </Background>
     );
   }
@@ -464,10 +375,6 @@ const File = styled.div`
     }
   }
 `;
-
-// const RequestContainer = styled.div`
-//   width: 100%;
-// `;
 
 const DrawingCard = styled.div`
   width: 100%;
@@ -605,9 +512,3 @@ const DrawingInfo = styled.div`
     }
   }
 `;
-// const RequestBox = styled.div`
-//   height: 383px;
-//   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
-//   padding: 26px 43px;
-//   box-sizing: border-box;
-// `;

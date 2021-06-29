@@ -2,14 +2,10 @@ import React from "react";
 import Select from "react-select";
 import styled, { keyframes } from "styled-components";
 
-//import Modal from '../../../commons/components/Modals/Modal';
-
 class Modal extends React.Component {
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
     const { open, close, header, children, width } = this.props;
-    // console.log(open);
-    // console.log(children);
     return (
       <Layer
         onClick={(e) => {

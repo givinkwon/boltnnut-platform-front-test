@@ -56,23 +56,8 @@ class Info extends React.Component {
           {/* Title */}
           <title>볼트앤너트|서비스소개</title>
         </Head>
-        {/* <>
-        { width > 767.98 ? (
-          <Nav />
-          ) : (
-          <MobileNav src={ back_ic } headText={ "회사 소개" }/>
-          )
-        }
-        </> */}
         <Nav />
         <InfoConatiner/>
-        {/* { width > 767.98 ? (
-          <InfoConatiner/>
-        ) : (
-          <MobileInfoContainer/>
-        )
-        } */}
-        {/* <Footer /> */}
       </div>
       }
       </>

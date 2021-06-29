@@ -6,9 +6,7 @@ import { componentByNodeRegistery } from "mobx-react";
 import { inject, observer } from "mobx-react";
 import * as PartnerAPI from "axios/Partner";
 
-//import Modal from '../../../commons/components/Modals/Modal';
 const star = "/static/icon/star.svg";
-//const star = "/static/icon/info/star.png";
 
 @inject("Partner", "Auth")
 @observer
@@ -44,67 +42,10 @@ class SearchProjectModal extends React.Component {
     const { Partner } = this.props;
     Partner.searchProjectModalActive = false;
   };
-  //   onSubmit = async () => {
-  //     const { Partner, Auth } = this.props;
-
-  //     let score = 0;
-  //     await this.state.star_ary.map((item, idx) => {
-  //       if (item.checked) {
-  //         score += 1;
-  //       }
-  //     });
-
-  //     // console.log(Auth.logged_in_client.id);
-  //     // console.log("제출 클릭!");
-  //     // console.log(Partner.reviewPartnerName);
-  //     // console.log(Partner.reviewContent);
-
-  //     // console.log(score);
-  //     var formData = new FormData();
-
-  //     formData.append("partnername", Partner.reviewPartnerName);
-  //     formData.append("client", Auth.logged_in_client.id);
-  //     formData.append("score", score);
-  //     formData.append("content", Partner.reviewContent);
-
-  //     // const Token = localStorage.getItem("token");
-
-  //     const req = {
-  //       data: formData,
-  //     };
-
-  //     // console.log(req);
-
-  //     PartnerAPI.setReview(req)
-  //       .then((res) => {
-  //         console.log("create: ", res);
-  //         alert("리뷰 작성이 정상적으로 완료되었습니다");
-  //         Partner.reviewModalActive = false;
-  //         // window.location.reload(true);
-  //         history.go(0);
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //         console.log(e.response);
-  //       });
-  //   };
-
-  //   searchText = (e) => {
-  //     const { Partner } = this.props;
-  //     //console.log("click");
-  //     // this.props.Partner.search_text = e.target.value;
-  //     //this.setState({ search: e.target.value });
-  //     // console.log(e.target.value);
-  //     Partner.reviewPartnerName = e.target.value;
-
-  //     //Partner.getPartner();
-  //   };
 
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
     const { open, close, header, children, width, data, Partner } = this.props;
-    // console.log(open);
-    // console.log(children);
     return (
       <ModalBox
         modal={open ? "openModal modal" : "modal"}
@@ -112,19 +53,7 @@ class SearchProjectModal extends React.Component {
       >
         {open ? (
           <>
-            {/* <button
-              className="close"
-              onClick={(e) => {
-                e.stopPropagation();
-                close();
-              }}
-            >
-              {" "}
-              &times;{" "}
-            </button> */}
             <section>
-              {/* <header>{`${data.name} ${header}`}</header> */}
-              {/* <header>{`${header}`}</header> */}
               <header>프로젝트명</header>
               <main>
                 <div>
@@ -134,11 +63,7 @@ class SearchProjectModal extends React.Component {
                       Partner.projectName ? Partner.projectName : ""
                     }
                     onBlur={(e) => {
-                      // console.log(e.target.value);
                       Partner.projectName = e.target.value;
-                      // if (e.target.value === "") {
-                      //   Partner.maxDirectInput = false;
-                      // }
                       if (Partner.reviewSearchStep == 2) {
                         e.target.value = Partner.projectName;
                       } else {
