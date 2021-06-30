@@ -6,7 +6,9 @@ import Modal from "../Review/ReviewWritingModal";
 import ReviewCard from "../Review/ReviewCard";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
-const DocViewer= dynamic(() => import("react-doc-viewer"), {
+
+import {DocViewerRenderers} from "react-doc-viewer";
+const DocViewer = dynamic(() => import("react-doc-viewer"), {
   ssr: false,
 });
 const availableFileType1 = [
