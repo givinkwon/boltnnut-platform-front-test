@@ -10,7 +10,6 @@ import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 // test
 import HomeConatiner from "containers/Home";
-// import Home2Conatiner from "containers/Home4";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
@@ -84,7 +83,6 @@ class Home extends React.Component {
           <>
             {width && (
               <HomeConatiner width={width} reqList={Home.request_list} /> // 볼트앤너트 메인 페이지
-              // <Home2Conatiner width={width} reqList={Home.request_list} /> // k-장인 메인 페이지
             )}
           </>
           <>{width && <Footer />}</>
