@@ -1,7 +1,7 @@
 {
   "name": "tirrilee-next-boilerplate",
   "version": "0.1.0",
-  "private": true,
+  "private": true, 
   "scripts": {
     "dev": "cross-env NODE_PATH=. next dev",
     "build": "cross-env NODE_PATH=. next build",
