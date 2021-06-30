@@ -10,7 +10,7 @@ import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 // test
 import HomeConatiner from "containers/Home";
-import Home2Conatiner from "containers/Home4";
+// import Home2Conatiner from "containers/Home4";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { toJS } from "mobx";
