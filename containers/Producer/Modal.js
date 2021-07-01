@@ -8,7 +8,7 @@ import { inject, observer } from "mobx-react";
 class Modal extends React.Component {
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-    const { open, close, header, children, width } = this.props
+    const { open, close, header, children, width } = this.props;
     return (
       <ModalBox
         modal={open ? "openModal modal" : "modal"}
@@ -16,10 +16,10 @@ class Modal extends React.Component {
       >
         {open ? (
           <>
-            <button className="close" onClick={close}>
+            {/* <button className="close" onClick={close}>
               {" "}
               &times;{" "}
-            </button>
+            </button> */}
             <section>
               <header>전화번호</header>
               <main>{children}</main>
@@ -28,10 +28,11 @@ class Modal extends React.Component {
                   className="close"
                   onClick={(e) => {
                     e.stopPropagation();
-                    close();
+                    this.props.Partner.modalActive = false;
+                    this.props.close();
                   }}
                 >
-                  닫기
+                  <span>닫기</span>
                 </div>
               </footer>
             </section>
@@ -92,6 +93,12 @@ const ModalBox = styled.div`
       background-color: #0933b3;
       color: white;
       text-align: center;
+      border-radius: 4px;
+      > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
   > button {
@@ -113,7 +120,7 @@ const ModalBox = styled.div`
 
     z-index: 101;
 
-    height: 180px;
+    height: 150px;
     width: 90%;
 
     > section {
@@ -130,12 +137,18 @@ const ModalBox = styled.div`
         font-size: 22px;
       }
       > main {
-        height: 95%;
+        height: 100%;
         font-size: 16px;
         font-weight: 600;
       }
       > footer {
-        height: 40px;
+        height: 22px;
+        // margin-top: 20px;
+
+        > div {
+          height: 22px;
+          font-size: 14px;
+        }
       }
     }
     > button {

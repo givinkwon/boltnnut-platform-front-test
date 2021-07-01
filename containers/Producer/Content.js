@@ -122,8 +122,9 @@ class ManufacturerContentContainer extends React.Component {
 
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
+    console.log(Partner.modalActive);
 
-    if (!Partner.requestModalActive) {
+    if (!Partner.requestModalActive && !Partner.modalActive) {
       console.log("Detail click");
       Partner.category_name_list = null;
       Partner.partner_detail_list = [];

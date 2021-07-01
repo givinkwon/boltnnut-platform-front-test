@@ -52,7 +52,10 @@ class ProposalCard extends React.Component {
   };
 
   closeModal = (e) => {
-    e.stopPropagation();
+    if (e) {
+      console.log("e 존재");
+      e.stopPropagation();
+    }
 
     console.log("close click");
     this.setState({ modalOpen: false });
@@ -180,11 +183,11 @@ class ProposalCard extends React.Component {
         .split(".")
         [this.props.data.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
-      console.log(this.props.Partner.selectedIntroductionFileType);
-      console.log(this.props.data);
-      console.log(fileType);
-      console.log(availableFileType);
-      console.log(availableFileType.indexOf(fileType));
+      // console.log(this.props.Partner.selectedIntroductionFileType);
+      // console.log(this.props.data);
+      // console.log(fileType);
+      // console.log(availableFileType);
+      // console.log(availableFileType.indexOf(fileType));
       if (availableFileType.indexOf(fileType) > -1) {
         console.log("뷰어 페이지 router push");
         Partner.partner_detail_list = [];
@@ -235,7 +238,11 @@ class ProposalCard extends React.Component {
             <Card
               active={this.state.active}
               onClick={(e) => {
-                this.cardClick(e);
+                console.log(this.props.Partner.modalActive);
+                if (!this.props.Partner.modalActive) {
+                  console.log("x");
+                  this.cardClick(e);
+                }
               }}
               onMouseOver={() => {
                 this.activeHandler("active");
@@ -321,7 +328,6 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
-
               <Main>
                 <Name>{data.name}</Name>
                 <InfoOne>{data.info_company}</InfoOne>
@@ -341,23 +347,18 @@ class ProposalCard extends React.Component {
                           }
                         }}
                       >
-                        <img
-                          src={call_img}
-                        />
+                        <img src={call_img} />
 
                         {Partner.modalActive && (
                           <Layer>
-
                             <span>
                               <Modal
                                 width={width}
                                 open={this.props.Partner.modalActive}
                                 close={this.closeModal}
                                 header="전화번호"
-      
                                 children={this.props.Partner.modalUserPhone}
-                              >
-                              </Modal>
+                              ></Modal>
                             </span>
                           </Layer>
                         )}
@@ -534,8 +535,11 @@ const InfoOne = styled.div`
     line-height: 18px;
     letter-spacing: -0.33px;
   }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-bottom: 35px;
+  }
   @media (min-width: 1300px) {
-    width: 80%;
+    width: 90%;
   }
 `;
 const InfoTwo = styled.div`
@@ -549,8 +553,15 @@ margin-top: 16px;
     margin-right: 21px;
     display: inline-block;
   }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 85%;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 95%;
+  }
   @media (min-width: 1300px) {
-    width: 80%
+    width: 88%
   }
 `;
 

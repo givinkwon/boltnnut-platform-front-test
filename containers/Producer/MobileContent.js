@@ -127,7 +127,7 @@ class MobileManufacturerContentContainer extends React.Component {
     const { Partner } = this.props;
     Partner.category_name_list = null;
     Partner.partner_detail_list = [];
-    Partner.partner_detail_list.push({ item: item })
+    Partner.partner_detail_list.push({ item: item });
     Partner.category_name_list = Partner.category_dic[idx];
     if (this.state.dropDownIdx === -1) {
       await Partner.getCityName(Partner.partner_detail_list[0].item.city);
@@ -177,9 +177,9 @@ class MobileManufacturerContentContainer extends React.Component {
                     }}
                     active={Partner.subButtonActive}
                   >
-                    <Font15>
+                    {/* <Font15>
                       <span>{Partner.partner_count}개</span>의 파트너
-                    </Font15>
+                    </Font15> */}
                     <div>
                       <div
                         onClick={() => {
@@ -220,7 +220,6 @@ class MobileManufacturerContentContainer extends React.Component {
                   Partner.partner_list.map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
-
                         <div
                           onClick={() => this.pushToDetail(item, idx)}
                           style={{ width: "100%" }}
