@@ -30,7 +30,9 @@ class Nav extends React.Component {
   };
 
   makeUrl = (url) => {
+    if (typeof window !== 'undefined'){
     return window.location.protocol + "//" + window.location.host + "/" + url;
+    }
   };
   alreadyLoggedin = ["login", "signup"];
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
