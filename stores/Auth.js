@@ -58,6 +58,8 @@ class Auth {
 
   @observable home_index = 0;
 
+  @observable previous_url = "";
+
   @action reset = () => {
     this.email = "";
     this.password = "";
@@ -159,6 +161,12 @@ class Auth {
   };
   @action setLogo = (file) => {
     this.logo = file;
+  };
+
+  @action makeUrl = (url) => {
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
+    }
   };
 
   @action setCity = (obj) => {
@@ -451,7 +459,13 @@ class Auth {
         setTimeout(() => {
           this.loading = false;
 
-          Router.push("/");
+          if (this.previous_url == "") {
+            Router.push("/");
+          } else {
+            // this.makeUrl(this.previous_url);
+            Router.push("/" + this.previous_url);
+            this.previous_url = "";
+          }
         }, 800);
       })
       .catch((e) => {

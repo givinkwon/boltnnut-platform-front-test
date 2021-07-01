@@ -6,7 +6,7 @@ import Modal from "../Review/ReviewWritingModal";
 import ReviewCard from "../Review/ReviewCard";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import DocViewer, {DocViewerRenderers} from "react-doc-viewer";
 
 const availableFileType1 = [
   "png",
@@ -135,6 +135,7 @@ class DetailCardContainer extends React.Component {
                   documents={docs}
                   pluginRenderers={DocViewerRenderers}
                   height={width}
+                  window={window}
                   type={this.props.Partner.selectedIntroductionFileType}
                 />
               )}

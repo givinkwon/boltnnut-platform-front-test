@@ -165,6 +165,7 @@ class ProposalCard extends React.Component {
       link.click();
     } else {
       alert("로그인이 필요합니다.");
+      // this.props.Auth.previous_url = "producer";
       Router.push("/login");
     }
   };
@@ -205,6 +206,8 @@ class ProposalCard extends React.Component {
       }
     } else {
       alert("로그인이 필요합니다.");
+      // Router.back();
+      // this.props.Auth.previous_url = "producer";
       Router.push("/login");
     }
   };

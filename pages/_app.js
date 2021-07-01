@@ -81,7 +81,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class MyApp extends App {
-
   state = {
     ie_user: false,
     modal_shown: false,
@@ -141,7 +140,10 @@ class MyApp extends App {
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    formData.append("prevUrl", document.referrer);
+    document.referrer === ""
+      ? formData.append("prevUrl", "direct")
+      : formData.append("prevUrl", document.referrer);
+
     console.log(window.location.href);
     const req = {
       data: formData,

@@ -310,9 +310,8 @@ class FileUploadContainer extends Component {
 
     let request_state = "";
     if (ManufactureProcess.purposeContent) {
-      request_state = this.state.purposeAry[
-        ManufactureProcess.purposeContent - 1
-      ].name;
+      request_state =
+        this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
     }
     console.log(request_state);
 
@@ -358,7 +357,6 @@ class FileUploadContainer extends Component {
     formData.append("price", ManufactureProcess.orderMaxPrice);
     formData.append("blueprint_exist", 1);
 
-    
     for (var i = 0; i < fileList.length; i++) {
       console.log(toJS(fileList[i].selectBig.id));
       console.log(toJS(fileList[i].selectedMid.id));
@@ -410,7 +408,6 @@ class FileUploadContainer extends Component {
           this.props.Request.newIndex = 1;
           MyDataLayerPush({ event: "request_Drawing" });
           ManufactureProcess.reset();
-
         })
         .catch((e) => {
           ManufactureProcess.checkPaymentButton = false;
@@ -629,9 +626,8 @@ class FileUploadContainer extends Component {
         Project.projectDetailData.request_set[0].order_request_close;
       ManufactureProcess.requestComment2 =
         Project.projectDetailData.request_set[0].order_request_close;
-      const clickDayAry = Project.projectDetailData.request_set[0].deadline.split(
-        "T"
-      );
+      const clickDayAry =
+        Project.projectDetailData.request_set[0].deadline.split("T");
       Schedule.clickDay = clickDayAry[0];
       if (
         Project.projectDetailData.request_set[0].deadline_state ===
@@ -651,7 +647,6 @@ class FileUploadContainer extends Component {
           ManufactureProcess.purposeContent = idx + 1;
         }
       });
-
 
       await Project.projectDetailData.request_set[0].estimate_set.map(
         async (item, idx) => {
@@ -774,8 +769,7 @@ class FileUploadContainer extends Component {
         }
       );
 
-      for (let i = 0; i < this.props.Request.request_file_set.length; i++) {
-      }
+      for (let i = 0; i < this.props.Request.request_file_set.length; i++) {}
 
       console.log(this.state.requestFileId);
       console.log(this.state.requestId);
@@ -793,6 +787,7 @@ class FileUploadContainer extends Component {
 
   componentWillUnmount = () => {
     const { ManufactureProcess } = this.props;
+    fileList = [];
     ManufactureProcess.dataPrice = [];
     ManufactureProcess.openFileArray = [];
     ManufactureProcess.privateFileArray = [];
@@ -837,7 +832,6 @@ class FileUploadContainer extends Component {
             minprice += data.totalMinPrice;
             maxprice += data.totalMaxPrice;
           }
-
         } else {
           this.setState({ g: 3 });
         }
@@ -1067,7 +1061,6 @@ class FileUploadContainer extends Component {
 
           ManufactureProcessAPI.saveSelect(ManufactureProcessFormData)
             .then((res) => {
-
               loadingCounter++;
               console.log(toJS(res));
               this.setState({
@@ -1128,7 +1121,6 @@ class FileUploadContainer extends Component {
               console.log(e.response);
             });
         } else {
-
           const ManufactureProcessFormData = new FormData();
           ManufactureProcessFormData.append("blueprint", file);
           ManufactureProcessFormData.append(

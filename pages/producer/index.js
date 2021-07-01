@@ -13,7 +13,7 @@ import * as AccountAPI from "axios/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
-@inject("Project")
+@inject("Project", "Auth")
 @observer
 class Index extends React.Component {
   static getInitialProps({ query }) {
@@ -26,6 +26,8 @@ class Index extends React.Component {
 
   async componentDidMount() {
     const { Auth, Home, Answer, Loading } = this.props;
+    console.log("producer didmount2");
+    Auth.previous_url = "producer";
 
     console.log(Auth);
     //창 크기
@@ -36,11 +38,11 @@ class Index extends React.Component {
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
@@ -49,10 +51,12 @@ class Index extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-    
   }
   componentWillUnmount() {
+    const { Auth } = this.props;
     window.removeEventListener("resize", this.updateDimensions);
+    console.log("producer unmount2");
+    // Auth.previous_url = "";
   }
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });

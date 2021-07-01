@@ -125,6 +125,7 @@ class MobileManufacturerContentContainer extends React.Component {
 
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
+    console.log("pushtodetail");
     Partner.category_name_list = null;
     Partner.partner_detail_list = [];
     Partner.partner_detail_list.push({ item: item });
