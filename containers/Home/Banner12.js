@@ -15,6 +15,11 @@ const Ellipse = "/static/images/Home/Banner12/Ellipse.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 
 class Banner12Container extends React.Component {
+  makeUrl = (url) => {
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
+    }
+  };
   render() {
     return (
       <Background backgroundColor="#f6f6f6" style={{ padding: "100px 0" }}>
@@ -102,7 +107,7 @@ class Banner12Container extends React.Component {
                     전문업체 검색이 가능합니다. <br />
                   </Body>
                   <Buttonv1
-                    onClick={() => Router.push("/producer")}
+                    // onClick={() => Router.push("/producer")}
                     style={{
                       width: "304px",
                       height: "64px",
@@ -110,7 +115,7 @@ class Banner12Container extends React.Component {
                     }}
                     fontSize="23"
                   >
-                    지금 업체 찾기
+                    <a href={this.makeUrl("producer")}>지금 업체 찾기</a>
                   </Buttonv1>
                 </Contents>
                 <ImgBox
@@ -216,7 +221,7 @@ class Banner12Container extends React.Component {
                     <br />볼 수 있게 공개 할 수 있습니다.
                   </Body>
                   <Buttonv1
-                    onClick={() => Router.push("/producer")}
+                    // onClick={() => Router.push("/producer")}
                     style={{
                       width: "304px",
                       height: "64px",
@@ -224,7 +229,7 @@ class Banner12Container extends React.Component {
                     }}
                     fontSize="23"
                   >
-                    지금 업체 찾기
+                    <a href={this.makeUrl("producer")}>지금 업체 찾기</a>
                   </Buttonv1>
                 </Contents>
               </ContainerBox>
@@ -375,4 +380,9 @@ const ImgBox = styled.div`
     height: ${(props) => (props.height ? props.height : "")}px;
     // height: 341px;
   }
+`;
+
+const LookupBtn = styled.button`
+  background: none;
+  border: none;
 `;

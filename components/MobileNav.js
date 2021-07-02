@@ -108,6 +108,11 @@ class MobileNav extends React.Component {
       this.setState({ ...this.state, is_open: true });
     }
   };
+  makeUrl = (url) => {
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
+    }
+  };
 
   render() {
     const { Auth, Partner, width, Home } = this.props;
@@ -163,24 +168,31 @@ class MobileNav extends React.Component {
               <>
                 <ModalContent>
                   {Auth.logged_in_partner ? (
-                    <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
+                    // <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
+                    <a href={this.makeUrl("project")}>프로젝트 관리</a>
                   ) : (
-                    <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
+                    // <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
+                    <a href={this.makeUrl("producer")}>제조사 찾기</a>
                   )}
 
-                  <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
+                  {/* <p onClick={() => Router.push("/magazine")}>제조 인사이트</p> */}
+                  <a href={this.makeUrl("magazine")}>제조 인사이트</a>
 
                   {Auth.logged_in_user && (
-                    <p onClick={() => Router.push("/chatting")}>채팅하기</p>
+                    // <p onClick={() => Router.push("/chatting")}>채팅하기</p>
+                    <a href={this.makeUrl("chatting")}>채팅하기</a>
                   )}
                 </ModalContent>
               </>
               <ModalContent2>
-                <p onClick={() => Router.push("/faq")}>자주찾는 질문</p>
+                {/* <p onClick={() => Router.push("/faq")}>자주찾는 질문</p>
                 <p onClick={() => Router.push("/term/policy")}>이용약관</p>
                 <p onClick={() => Router.push("/term/personal")}>
                   개인정보 처리 방침
-                </p>
+                </p> */}
+                <a href={this.makeUrl("faq")}>자주찾는 질문</a>
+                <a href={this.makeUrl("term/policy")}>이용약관</a>
+                <a href={this.makeUrl("term/personal")}>개인정보 처리 방침</a>
               </ModalContent2>
               {Auth.logged_in_user ? (
                 <Footer>
@@ -220,7 +232,6 @@ class MobileNav extends React.Component {
           <NavWrap2>
             {this.props.src ===
             "/static/images/components/MobileNav/MobileLogo.svg" ? (
-
               <Logo src={this.props.src} onClick={() => Router.push("/")} />
             ) : (
               <Logo src={this.props.src} onClick={() => Router.back()} />
@@ -280,7 +291,9 @@ const ModalHeader = styled.div`
     white-space: nowrap;
   }
 `;
-const ModalContent = styled.div`
+const ModalContent = styled.button`
+  border: none;
+  background: none;
   width: 100%;
   height: 158px;
   // height: 110px;
@@ -289,7 +302,7 @@ const ModalContent = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
 
-  > p {
+  > a {
     font-family: NotoSansCJKkr;
     font-size: 15px;
     font-weight: bold;
@@ -364,13 +377,15 @@ const FreeButton = styled(Buttonv1)`
     color: #ffffff;
   }
 `;
-const ModalContent2 = styled.div`
+const ModalContent2 = styled.button`
+  border: none;
+  background: none;
   width: 100%;
   display: flex;
   flex-direction: column;
   margin-top: 27px;
 
-  > p {
+  > a {
     font-family: NotoSansCJKkr;
     font-size: 12px;
     font-weight: normal;
