@@ -35,7 +35,7 @@ class SearchBarConatiner extends React.Component {
     this.setState({ search: e.target.value });
     await (Partner.search_text = e.target.value);
   };
-  search = () => {
+  search = async () => {
     const { Partner, ManufactureProcess } = this.props;
     // console.log("click");
     // alert("EXECUTE");
@@ -59,7 +59,8 @@ class SearchBarConatiner extends React.Component {
       }
     }
     Partner.currentPage = 1;
-    Partner.getPartner();
+    Partner.click_count += 1;
+    await Partner.getPartner(Partner.currentPage, Partner.click_count);
     if (Partner.search_text) {
       Partner.isSearched = true;
     } else {

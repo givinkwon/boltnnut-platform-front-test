@@ -47,7 +47,7 @@ class ManufacturerContentContainer extends React.Component {
     Partner.currentPage = 1;
 
     console.log("content mount");
-    await Partner.getPartner();
+    await Partner.getPartner(1, Partner.click_count);
 
     if (Partner.filter_category_ary.length === 1) {
       Partner.getCategory();
@@ -68,9 +68,6 @@ class ManufacturerContentContainer extends React.Component {
     Partner.filter_city_ary = [{ id: 0, city: "전체" }];
   }
 
-  componentDidUpdate() {
-    const { Partner } = this.props;
-  }
   movePage = (e) => {
     const { Partner, Auth } = this.props;
     e.preventDefault();
@@ -81,9 +78,10 @@ class ManufacturerContentContainer extends React.Component {
     Partner.ReviewActive = false;
     Partner.ReviewActiveIndex = -1;
     this.setState({ dropDownActive: false, dropDownIdx: -1 });
+    Partner.click_count += 1;
     Partner.subButtonActive
       ? Partner.getOtherPartner(newPage)
-      : Partner.getPartner(newPage);
+      : Partner.getPartner(newPage, Partner.click_count);
   };
 
   pageNext = (e) => {
@@ -97,9 +95,10 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      Partner.click_count += 1;
       Partner.subButtonActive
         ? Partner.getOtherPartner(Partner.currentPage)
-        : Partner.getPartner(Partner.currentPage);
+        : Partner.getPartner(Partner.currentPage, Partner.click_count);
     }
   };
 
@@ -114,9 +113,10 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      Partner.click_count += 1;
       Partner.subButtonActive
         ? Partner.getOtherPartner(Partner.currentPage)
-        : Partner.getPartner(Partner.currentPage);
+        : Partner.getPartner(Partner.currentPage, Partner.click_count);
     }
   };
 
