@@ -159,6 +159,13 @@ class ManufacturerContentContainer extends React.Component {
         <Background id="MyBackground">
           <Container>
             <Body>
+              {Partner.detailLoadingFlag && (
+                <>
+                  <LoadingComponent scale="30%" primary />
+                  <Layer />
+                </>
+              )}
+
               {/* {Partner.partner_list.length > 0 && Partner.isSearched && (
                 <SubButtonBox>
                   <SubButton
@@ -544,6 +551,23 @@ const Font14 = styled(Content.FontSize14)`
   line-height: 30px !important;
   letter-spacing: -0.14px !important;
   color: #0933b3;
+`;
+
+const LoadingComponent = styled(ButtonSpinnerComponent)`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+`;
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 export default ManufacturerContentContainer;

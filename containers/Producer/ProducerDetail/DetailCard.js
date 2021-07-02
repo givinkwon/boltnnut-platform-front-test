@@ -61,6 +61,7 @@ class DetailCardContainer extends React.Component {
 
   componentDidMount = async () => {
     const { Partner } = this.props;
+    Partner.detailLoadingFlag = false;
     console.log("mountmount");
     if (Partner.partner_detail_list.length == 0) {
       Router.push("/producer");

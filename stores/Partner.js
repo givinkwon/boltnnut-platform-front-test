@@ -275,6 +275,7 @@ class Partner {
   @observable subButtonActive = false;
   @observable exceptionCategory = "";
   @observable loadingFlag = 1;
+  @observable detailLoadingFlag = false;
   @action resetReviewAry = () => {
     this.reviewKindnessIndex = 3;
     this.reviewCommunicationIndex = 3;

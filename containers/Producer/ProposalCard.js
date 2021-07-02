@@ -173,8 +173,14 @@ class ProposalCard extends React.Component {
     e.stopPropagation();
     const { data, Partner } = this.props;
 
+    Partner.detailLoadingFlag = true;
+    // setTimeout(() => {
+    //   Partner.detailLoadingFlag = false;
+    // }, 3000);
+
     if (this.props.Auth && this.props.Auth.logged_in_user) {
       if (!this.props.data.file) {
+        Partner.detailLoadingFlag = false;
         alert("해당 회사의 소개서가 존재하지 않습니다!");
         return;
       }
@@ -206,6 +212,7 @@ class ProposalCard extends React.Component {
       }
     } else {
       alert("로그인이 필요합니다.");
+      Partner.detailLoadingFlag = false;
       // Router.back();
       // this.props.Auth.previous_url = "producer";
       Router.push("/login");
