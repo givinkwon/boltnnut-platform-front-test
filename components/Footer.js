@@ -77,7 +77,11 @@ class FooterComponent extends React.Component {
     width: 0,
     tab: 0,
   };
-
+  makeUrl = (url) => {
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
+    }
+  };
   componentDidMount() {
     const { Magazine } = this.props;
     Magazine.init();
@@ -140,23 +144,38 @@ class FooterComponent extends React.Component {
                 </CompanyInfoWrapper>
                 <CompanyInfoWrapper style={{ paddingTop: 14 }}>
                   <FaqTable>
-                    <span class="cell" onClick={() => Router.push("/faq")}>
+                    {/* <span class="cell" onClick={() => Router.push("/faq")}>
                       자주찾는 질문
-                    </span>
+                    </span> */}
+                    <Button>
+                      <a href={this.makeUrl("faq")}>
+                        <span class="cell">자주찾는 질문</span>
+                      </a>
+                    </Button>
                     <img src={separator} />
-                    <span
+                    {/* <span
                       class="cell"
                       onClick={() => Router.push("/term/personal")}
                     >
                       개인정보처리방침
-                    </span>
+                    </span> */}
+                    <Button>
+                      <a href={this.makeUrl("term/personal")}>
+                        <span class="cell">개인정보처리방침</span>
+                      </a>
+                    </Button>
                     <img src={separator} />
-                    <span
+                    {/* <span
                       class="cell"
                       onClick={() => Router.push("/term/policy")}
                     >
                       이용약관
-                    </span>
+                    </span> */}
+                    <Button>
+                      <a href={this.makeUrl("term/policy")}>
+                        <span class="cell">이용약관</span>
+                      </a>
+                    </Button>
                   </FaqTable>
                   <InfoDetailContainer>
                     <span>
@@ -241,25 +260,50 @@ class FooterComponent extends React.Component {
                     </Font12>
                   </InfoDetailContainer>
                   <FaqTable>
-                    <span class="cell" onClick={() => Router.push("/faq")}>
+                    {/* <span class="cell" onClick={() => Router.push("/faq")}>
                       <Font12 style={{ fontWeight: 500 }}>자주찾는 질문</Font12>
-                    </span>
+                    </span> */}
+                    <Button>
+                      <a href={this.makeUrl("faq")}>
+                        <span class="cell">
+                          <Font12 style={{ fontWeight: 500 }}>
+                            자주찾는 질문
+                          </Font12>
+                        </span>
+                      </a>
+                    </Button>
                     <img src={separator} />
-                    <span
+                    {/* <span
                       class="cell"
                       onClick={() => Router.push("/term/policy")}
                     >
                       <Font12 style={{ fontWeight: 500 }}>이용약관</Font12>
-                    </span>
+                    </span> */}
+                    <Button>
+                      <a href={this.makeUrl("term/policy")}>
+                        <span class="cell">
+                          <Font12 style={{ fontWeight: 500 }}>이용약관</Font12>
+                        </span>
+                      </a>
+                    </Button>
                     <img src={separator} />
-                    <span
+                    {/* <span
                       class="cell"
                       onClick={() => Router.push("/term/personal")}
                     >
                       <Font12 style={{ fontWeight: 500 }}>
                         개인정보처리방침
                       </Font12>
-                    </span>
+                    </span> */}
+                    <Button>
+                      <a href={this.makeUrl("term/personal")}>
+                        <span class="cell">
+                          <Font12 style={{ fontWeight: 500 }}>
+                            개인정보처리방침
+                          </Font12>
+                        </span>
+                      </a>
+                    </Button>
                   </FaqTable>
                 </CompanyInfoWrapper>
                 <ImageWrapper>
@@ -268,27 +312,45 @@ class FooterComponent extends React.Component {
                     style={{ height: 13, alignSelf: "center" }}
                   />
                   <div class="imagebox">
-                    <img
+                    {/* <img
                       src={instargram}
                       style={{ height: 24, width: 24 }}
                       onClick={() =>
                         window.open("http://www.instargram.com/boltnnut_korea")
                       }
-                    />
-                    <img
+                    /> */}
+                    <Button>
+                      <a href="http://www.instargram.com/boltnnut_korea">
+                        <img
+                          src={instargram}
+                          style={{ height: 24, width: 24 }}
+                        />
+                      </a>
+                    </Button>
+                    {/* <img
                       src={blog}
                       style={{ height: 24, width: 24 }}
                       onClick={() =>
                         window.open("https://blog.naver.com/boltnnut_korea")
                       }
-                    />
-                    <img
+                    /> */}
+                    <Button>
+                      <a href="https://blog.naver.com/boltnnut_korea">
+                        <img src={blog} style={{ height: 24, width: 24 }} />
+                      </a>
+                    </Button>
+                    {/* <img
                       src={post}
                       style={{ height: 24, width: 24 }}
                       onClick={() =>
                         window.open("https://post.naver.com/boltnnut_korea")
                       }
-                    />
+                    /> */}
+                    <Button>
+                      <a href="https://post.naver.com/boltnnut_korea">
+                        <img src={post} style={{ height: 24, width: 24 }} />
+                      </a>
+                    </Button>
                   </div>
                 </ImageWrapper>
               </Containerv1>
@@ -741,4 +803,9 @@ const Font24 = styled(Content.FontSize24)`
   line-height: 1.5;
   letter-spacing: -0.6px;
   color: #282c36;
+`;
+
+const Button = styled.button`
+  border: none;
+  background: none;
 `;

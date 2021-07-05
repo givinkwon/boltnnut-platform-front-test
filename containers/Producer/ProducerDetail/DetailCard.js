@@ -6,8 +6,7 @@ import Modal from "../Review/ReviewWritingModal";
 import ReviewCard from "../Review/ReviewCard";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
-import DocViewer, {DocViewerRenderers} from "react-doc-viewer";
-
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 const availableFileType1 = [
   "png",
@@ -110,9 +109,7 @@ class DetailCardContainer extends React.Component {
   render() {
     const { width, Partner } = this.props;
 
-    const docs = [
-      { uri: this.props.Partner.selectedIntroductionFile },
-    ];
+    const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
 
     return (
       <>
@@ -152,7 +149,6 @@ class DetailCardContainer extends React.Component {
             </div>
           </div>
           <InnerBox>
-
             <IntroductionBox width={width}>
               <Font24>회사소개서</Font24>
               {availableFileType1.indexOf(

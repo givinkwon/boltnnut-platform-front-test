@@ -15,6 +15,11 @@ const image1 = "/static/images/Home/Banner9/Banner9_img1.png";
 @inject("Auth")
 @observer
 class Banner9Container extends React.Component {
+  makeUrl = (url) => {
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
+    }
+  };
   render() {
     return (
       <Background
@@ -48,10 +53,12 @@ class Banner9Container extends React.Component {
                   <Button
                     onClick={() => {
                       this.props.Auth.setType("expert");
-                      Router.push("/signup");
+                      // Router.push("/signup");
                     }}
                   >
-                    <span>파트너 가입하기</span>
+                    <a href={this.makeUrl("signup")}>
+                      <span>파트너 가입하기</span>
+                    </a>
                     {/* <span>
                       <img src={passImg} />
                     </span> */}
@@ -110,7 +117,7 @@ const Layer = styled.div`
   justify-content: center;
 `;
 
-const Button = styled.div`
+const Button = styled.button`
   cursor: pointer;
   margin-top: 34px;
   border: 2px solid #0933b3;
@@ -122,12 +129,14 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #0933b3;
-  > span:nth-of-type(1) {
-    font-size: 24px;
-    line-height: 52px;
-    letter-spacing: -0.65px;
-    color: #ffffff;
-    font-weight: 500;
+  > a {
+    > span:nth-of-type(1) {
+      font-size: 24px;
+      line-height: 52px;
+      letter-spacing: -0.65px;
+      color: #ffffff;
+      font-weight: 500;
+    }
   }
   > span:nth-of-type(2) {
     padding-top: 6px;
