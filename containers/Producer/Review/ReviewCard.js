@@ -19,15 +19,15 @@ class ReviewCard extends React.Component {
     console.log("componentDidMount");
 
     const { Partner, data, totalCount, idx } = this.props;
-    console.log(data);
-    console.log(totalCount);
+    // console.log(data);
+    // console.log(totalCount);
     if (data) {
-      console.log(`client id : ${data.client_id}, idx : ${idx}`);
-      // await Partner.getClientInfo(data.client_id);
-      await Partner.getClientNameById(data.client_id, idx);
+      // console.log(`client id : ${data.client}, idx : ${idx}`);
+      // await Partner.getClientInfo(data.client);
+      await Partner.getClientNameById(data.client, idx);
 
       // console.log(Partner.clientInfo);
-      console.log(Partner.clientInfoList);
+      // console.log(Partner.clientInfoList);
       // Partner.clientInfo.name
       // Partner.clientInfo.user.username
     }
@@ -54,7 +54,7 @@ class ReviewCard extends React.Component {
     const { data, width, Partner, categoryData, idx, totalCount } = this.props;
     // console.log(data);
     // console.log(toJS(Partner.partnerReviewList));
-    console.log(toJS(Partner.clientInfoList));
+    // console.log(toJS(Partner.clientInfoList));
     return (
       <>
         <Card>
@@ -64,14 +64,20 @@ class ReviewCard extends React.Component {
             <name>***</name>
           )} */}
 
-          {Partner.clientInfoList[idx] ? (
+          {/* {Partner.clientInfoList[idx] ? (
             <name>{Partner.clientInfoList[idx].user.username}</name>
+          ) : (
+            <name>***</name>
+          )} */}
+
+          {Partner.review_client_obj[idx] ? (
+            <name>{Partner.review_client_obj[idx]}</name>
           ) : (
             <name>***</name>
           )}
 
-          {/* {Partner.clientInfoList[data.client_id] ? (
-            <name>{Partner.clientInfoList[data.client_id].user.username}</name>
+          {/* {Partner.clientInfoList[data.client] ? (
+            <name>{Partner.clientInfoList[data.client].user.username}</name>
           ) : (
             <name>***</name>
           )} */}
@@ -88,6 +94,13 @@ class ReviewCard extends React.Component {
             {/* <span>{`   ${item.score}`}</span> */}
           </score>
           <history>{data.projectname}</history>
+          {/* <history>
+            {Partner.review_client_obj &&
+              console.log(`${idx} ++++++ ${Partner.review_client_obj[idx]}`)}
+
+            {Partner.review_client_obj && Partner.review_client_obj[idx]}
+          </history> */}
+
           <content>{data.content}</content>
 
           {/* {Partner.review_user_ary && (

@@ -282,7 +282,7 @@ class SearchPartnerModal extends React.Component {
                         onClick={() => {
                           Partner.reviewPartnerName = Partner.partnersName;
 
-                          Partner.reviewPartnerId = 5452; // 제조사 없을 경우
+                          Partner.reviewPartnerId = ""; // 제조사 없을 경우
                           Partner.reviewSearchStep = 2;
                           Partner.searchPartnerModalActive = false;
                           Partner.partnersList = [];

@@ -100,6 +100,19 @@ class Partner {
     8: [],
     9: [],
   };
+  @observable review_client_obj = {
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    7: [],
+    8: [],
+    9: [],
+  };
+
   @observable check_loading_category = false;
   @observable check_click_filter = false;
   @observable check_loading_develop = false;
@@ -236,6 +249,7 @@ class Partner {
   @observable partnerExist = true;
   @observable newPartner = 0; // 가입되어 있는 제조사 : 0, 가입되어 있지 않은 제조사 : 1
   @observable partnerReviewList = [];
+  @observable partnerAllReviewList = [];
 
   @observable searchPartnerModalActive = false;
   @observable reviewKindnessAry = [
@@ -266,7 +280,10 @@ class Partner {
   @observable partnerReviewNext = null;
   @observable partnerReviewCount = 0;
   @observable partnerPage = 0;
+
   @observable reviewCurrentPage = 1;
+  @observable review_partner_page = 0;
+  @observable review_partner_count = 0;
 
   // @observable clientInfoList = {};
   @observable clientInfoList = [];
@@ -283,6 +300,21 @@ class Partner {
   };
   @action resetDevCategory = () => {
     this.category_dic = {
+      0: [],
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: [],
+      7: [],
+      8: [],
+      9: [],
+    };
+  };
+
+  @action resetClientObj = () => {
+    this.review_client_obj = {
       0: [],
       1: [],
       2: [],
@@ -1748,9 +1780,7 @@ class Partner {
   };
 
   @action getPartnerName = async (name, page = 1) => {
-    console.log("333");
     this.partnersList = [];
-    console.log(name);
     const req = {
       params: {
         name: name,
@@ -1794,19 +1824,40 @@ class Partner {
       });
   };
 
-  @action getReviewByPartner = async (id) => {
+  @action getReviewByPartner = async (id, page_nation = 0, page = 1) => {
     console.log(id);
-    this.partnerReviewList = [];
+    console.log(page_nation);
+    console.log(page);
+    if (page_nation == 1) {
+      this.partnerReviewList = [];
+    } else {
+      this.partnerAllReviewList = [];
+    }
+
     const req = {
       params: {
         partner_id: id,
+        page_nation: page_nation,
+        page: page,
       },
     };
 
     await PartnerAPI.getReviewByPartner(req)
       .then(async (res) => {
-        this.partnerReviewList = await this.partnerReviewList.concat(res.data);
+        if (page_nation == 1) {
+          this.partnerReviewList = await this.partnerReviewList.concat(
+            res.data
+          );
+          this.review_partner_count = res.data.count;
+          this.review_partner_page =
+            parseInt((this.review_partner_count - 1) / 10) + 1;
+        } else {
+          this.partnerAllReviewList = await this.partnerAllReviewList.concat(
+            res.data
+          );
+        }
         console.log(this.partnerReviewList);
+        console.log(this.partnerAllReviewList);
       })
       .catch((e) => {
         console.log(e);
@@ -1828,16 +1879,29 @@ class Partner {
   // }
 
   @action getClientNameById = async (id, idx) => {
+    console.log(id);
+    console.log(idx);
     const req = {
       params: null,
     };
     await PartnerAPI.getClient(id, req).then(async (res) => {
+      console.log(res.data);
       console.log(`${idx} : ${id} ============= ${res.data}`);
       this.clientInfoList = await this.clientInfoList.concat(res.data);
 
       // this.clientInfoList[id] = res.data;
-      console.log(this.clientInfoList);
+
+      // console.log(this.clientInfoList);
+
+      if (!this.review_client_obj.hasOwnProperty(id)) {
+        this.review_client_obj[idx] = [];
+      }
+      this.review_client_obj[idx] = await [
+        ...this.review_client_obj[idx],
+        res.data.user.username,
+      ];
     });
+    console.log(toJS(this.review_client_obj));
   };
 }
 
