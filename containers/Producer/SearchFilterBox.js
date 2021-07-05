@@ -238,12 +238,14 @@ class SearchFilterConatiner extends React.Component {
             {console.log(`Active : ${Partner.subButtonActive}`)}
             <Search active={Partner.subButtonActive}>
               <SearchBar />
-              <FilterButton
-                onClick={() => {
-                  this.dropdownHandler("city");
-                }}
-              >
-                <span>필터</span>
+              <FilterButton>
+                <Button
+                  onClick={() => {
+                    this.dropdownHandler("city");
+                  }}
+                >
+                  <span>필터</span>
+                </Button>
                 <img src={filter_img} />
               </FilterButton>
               <div
@@ -1715,6 +1717,7 @@ const FilterContent = styled.div`
   }
 `;
 const FilterButton = styled.div`
+  background: none;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -1754,4 +1757,14 @@ const FilterButton = styled.div`
       width: 18px;
     }
   }
+`;
+
+const Button = styled.button`
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 34px;
+  letter-spacing: -0.45px;
+  color: #0933b3;
+  font-weight: normal;
 `;

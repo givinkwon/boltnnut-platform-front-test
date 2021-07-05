@@ -37,7 +37,6 @@ class ContentConatiner extends React.Component {
 
   activeHandler = (idx) => {
     if (idx === this.props.Magazine.category_checked_idx) {
-
       return true;
     } else {
       return false;
@@ -91,7 +90,9 @@ class ContentConatiner extends React.Component {
 
   pushToDetail = async (id) => {
     const { Magazine } = this.props;
-    await Router.push(`/magazine/${id}`);
+    // await Router.push(`/magazine/${id}`);
+    location.href = this.makeUrl("magazine/" + decodeURI(id));
+    await location.href;
   };
 
   sliderNext = () => {
@@ -105,7 +106,6 @@ class ContentConatiner extends React.Component {
       setTimeout(() => {
         this.setState({ ...this.state, show: "visible" });
       }, 600);
-
     }
   };
   sliderPrev = () => {
@@ -157,6 +157,11 @@ class ContentConatiner extends React.Component {
       this.setState({ ...this.state, show: "visible" });
     }
   };
+  makeUrl = (url) => {
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
+    }
+  };
 
   render() {
     const { prev, next, width, height, current, show } = this.state;
@@ -185,17 +190,18 @@ class ContentConatiner extends React.Component {
             {Magazine.categoryAry.map((item, idx) => {
               return (
                 <CategoryMenu checkMenu={item.checked} className="CategoryMenu">
-
-                  <div
-                    active={this.activeHandler(item.id)}
-                    onClick={() => {
-                      this.onClickHandler(item, idx);
-                    }}
-                  >
-                    <span className={`CategoryName${idx}`}>
-                      {item.category}
-                    </span>
-                  </div>
+                  <Button>
+                    <div
+                      active={this.activeHandler(item.id)}
+                      onClick={() => {
+                        this.onClickHandler(item, idx);
+                      }}
+                    >
+                      <span className={`CategoryName${idx}`}>
+                        {item.category}
+                      </span>
+                    </div>
+                  </Button>
                 </CategoryMenu>
               );
             })}
@@ -367,12 +373,12 @@ const CategoryMenu = styled.div`
     justify-content: space-between;
     width: 70%;
     cursor: pointer;
-    > span:nth-of-type(1) {
-      font-size: 18px;
-      line-height: 34px;
-      letter-spacing: -0.45px;
-      color: #414550;
-      font-weight: ${(props) => (props.checkMenu ? "bold" : "normal")};
+    // > span:nth-of-type(1) {
+    //   font-size: 18px;
+    //   line-height: 34px;
+    //   letter-spacing: -0.45px;
+    //   color: #414550;
+    //   font-weight: ${(props) => (props.checkMenu ? "bold" : "normal")};
     }
     > img {
       src: ${(props) =>
@@ -567,4 +573,14 @@ const PageCount = styled.span`
       font-weight: 700;
       color: #0933b3;
     `}
+`;
+
+const Button = styled.button`
+  border: none;
+  background: none;
+  font-size: 18px;
+  line-height: 34px;
+  letter-spacing: -0.45px;
+  color: #414550;
+  font-weight: ${(props) => (props.checkMenu ? "bold" : "normal")};
 `;

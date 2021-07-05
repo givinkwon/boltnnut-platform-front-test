@@ -30,8 +30,8 @@ class Nav extends React.Component {
   };
 
   makeUrl = (url) => {
-    if (typeof window !== 'undefined'){
-    return window.location.protocol + "//" + window.location.host + "/" + url;
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
     }
   };
   alreadyLoggedin = ["login", "signup"];
@@ -127,14 +127,19 @@ class Nav extends React.Component {
             style={{ display: "inline", justifyContent: "space-between" }}
           >
             <NavWrap>
-              <Logo src={logo_ic} onClick={() => Router.push("/")} />
-
+              {/* <Logo src={logo_ic} onClick={() => Router.push("/")} /> */}
+              <BoltLogo>
+                <a href={this.makeUrl("")}>
+                  <Logo src={logo_ic} />
+                </a>
+              </BoltLogo>
               <Menu is_open={is_open}>
                 <Close>
                   <Icon
                     src={close_ic}
                     onClick={() => this.setState({ is_open: false })}
                   />
+                  {/* <Icon src={close_ic} /> */}
                 </Close>
 
                 {this.props.Auth.logged_in_user ? (
@@ -143,42 +148,53 @@ class Nav extends React.Component {
 
                     <Fragment>
                       <NavLink
-                        onClick={() => Router.push("/producer")}
+                        // onClick={() => Router.push("/producer")}
                         active={url.indexOf("producer") > -1}
                       >
-                        <p class="line"> 제조사 찾기 </p>
+                        {/* <p class="line"> 제조사 찾기 </p> */}
+                        <a href={this.makeUrl("producer")}>
+                          <p class="line"> 제조사 찾기 </p>
+                        </a>
                       </NavLink>
 
                       <NavLink
-                        onClick={() => Router.push("/project")}
+                        // onClick={() => Router.push("/project")}
                         active={url.indexOf("project") > -1}
                       >
-                        <p class="line"> 프로젝트 관리 </p>
+                        <a href={this.makeUrl("project")}>
+                          <p class="line"> 프로젝트 관리 </p>
+                        </a>
                       </NavLink>
 
                       <NavLink
-                        onClick={() => Router.push("/magazine")}
+                        // onClick={() => Router.push("/magazine")}
                         active={url.indexOf("magazine") > -1}
                       >
-                        <p class="line"> 제조 인사이트</p>
+                        <a href={this.makeUrl("magazine")}>
+                          <p class="line"> 제조 인사이트 </p>
+                        </a>
                       </NavLink>
                     </Fragment>
                   ) : (
                     /* partner로 로그인 */
                     <Fragment>
                       <NavLink
-                        onClick={() => Router.push("/project")}
+                        // onClick={() => Router.push("/project")}
                         active={url.indexOf("project") > -1}
                       >
                         {console.log(url)}
                         {/* <p class="line"> 프로젝트 찾기 </p> */}
-                        프로젝트 찾기
+                        <a href={this.makeUrl("project")}>
+                          <p class="line"> 프로젝트 찾기 </p>
+                        </a>
                       </NavLink>
                       <NavLink
-                        onClick={() => Router.push("/magazine")}
+                        // onClick={() => Router.push("/magazine")}
                         active={url.indexOf("magazine") > -1}
                       >
-                        제조 인사이트
+                        <a href={this.makeUrl("magazine")}>
+                          <p class="line"> 제조 인사이트 </p>
+                        </a>
                       </NavLink>
                     </Fragment>
                   )
@@ -186,10 +202,12 @@ class Nav extends React.Component {
                   /* 로그인 안되어있는 경우 */
                   <Fragment>
                     <NavLink
-                      onClick={() => Router.push("/producer")}
+                      // onClick={() => Router.push("/producer")}
                       active={url.indexOf("producer") > -1}
                     >
-                      {/* <p class="line"> 프로젝트 찾기 </p> */}제조사 찾기
+                      <a href={this.makeUrl("producer")}>
+                        <p class="line"> 제조사 찾기 </p>
+                      </a>
                     </NavLink>
 
                     {/* <NavLink
@@ -203,7 +221,9 @@ class Nav extends React.Component {
                       // onClick={() => Router.push("/magazine")}
                       active={url.indexOf("magazine") > -1}
                     >
-                      <a href={this.makeUrl("magazine")}>제조 인사이트</a>
+                      <a href={this.makeUrl("magazine")}>
+                        <p class="line"> 제조 인사이트 </p>
+                      </a>
                       {/* 제조 인사이트 */}
                     </NavLink>
                   </Fragment>
@@ -219,19 +239,39 @@ class Nav extends React.Component {
                       <ProfileMenu>
                         <div></div>
                         <div>
-                          <div onClick={() => Router.push("/chatting")}>
-                            <Font16>채팅하기</Font16>
+                          {/* <div onClick={() => Router.push("/chatting")}> */}
+                          <div>
+                            <Button>
+                              <a href={this.makeUrl("chatting")}>
+                                <Font16>채팅하기</Font16>
+                              </a>
+                            </Button>
                           </div>
 
-                          <div onClick={() => Router.push("/account?tab=1")}>
-                            <Font16>계정설정</Font16>
+                          {/* <div onClick={() => Router.push("/account?tab=1")}> */}
+                          <div>
+                            <Button>
+                              <a href={this.makeUrl("account?tab=1")}>
+                                <Font16>계정설정</Font16>
+                              </a>
+                            </Button>
                           </div>
                         </div>
-                        <div
+                        {/* <div
                           style={{ backgroundColor: "#f3f3f3" }}
                           onClick={this.logout}
                         >
                           <Font16>로그아웃</Font16>
+                        </div> */}
+                        <div
+                          style={{ backgroundColor: "#f3f3f3" }}
+                          onClick={this.logout}
+                        >
+                          <Button>
+                            <a href={this.makeUrl("")}>
+                              <Font16>로그아웃</Font16>
+                            </a>
+                          </Button>
                         </div>
                       </ProfileMenu>
                     )}
@@ -244,7 +284,9 @@ class Nav extends React.Component {
                     }}
                     active={url.indexOf("login") > -1}
                   >
-                    <a href={this.makeUrl("login")}>로그인</a>
+                    <a href={this.makeUrl("login")}>
+                      <p class="line"> 로그인 </p>
+                    </a>
                     {/* 로그인 */}
                   </NavLink>
                 )}
@@ -287,6 +329,10 @@ class Nav extends React.Component {
 }
 export default Nav;
 
+const BoltLogo = styled.button`
+  background: none;
+  border: None;
+`;
 const Layer = styled.div`
   position: fixed;
   top: 0;
@@ -545,4 +591,9 @@ const Font17 = styled(Content.FontSize17)`
   line-height: 1.76;
   letter-spacing: -0.17px;
   text-align: left;
+`;
+
+const Button = styled.button`
+  background: none;
+  border: none;
 `;
