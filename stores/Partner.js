@@ -1750,9 +1750,10 @@ class Partner {
   @action getPartnerName = async (name, page = 1) => {
     console.log("333");
     this.partnersList = [];
+    console.log(name);
     const req = {
       params: {
-        request_name: name,
+        name: name,
         page: page,
       },
     };

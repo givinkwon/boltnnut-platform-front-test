@@ -361,18 +361,20 @@ class FileUploadContainer extends Component {
       console.log(toJS(fileList[i].selectBig.id));
       console.log(toJS(fileList[i].selectedMid.id));
       console.log(toJS(fileList[i].originFile));
-      formData.append(`blueprint`, fileList[i].originFile);
+      if (fileList[i].checked) {
+        formData.append(`blueprint`, fileList[i].originFile);
 
-      processData = processData + fileList[i].selectBig.id;
-      detailProcessData = detailProcessData + fileList[i].selectedMid.id;
-      quantityData = quantityData + fileList[i].quantity.value;
+        processData = processData + fileList[i].selectBig.id;
+        detailProcessData = detailProcessData + fileList[i].selectedMid.id;
+        quantityData = quantityData + fileList[i].quantity.value;
 
-      console.log(quantityData);
-      console.log(fileList[i].quantity.value);
-      if (i < fileList.length - 1) {
-        processData = processData + ",";
-        detailProcessData = detailProcessData + ",";
-        quantityData = quantityData + ",";
+        console.log(quantityData);
+        console.log(fileList[i].quantity.value);
+        if (i < fileList.length - 1) {
+          processData = processData + ",";
+          detailProcessData = detailProcessData + ",";
+          quantityData = quantityData + ",";
+        }
       }
     }
 
@@ -471,32 +473,34 @@ class FileUploadContainer extends Component {
       const modifyFormData = new FormData();
 
       for (var i = 0; i < fileList.length; i++) {
+        console.log(fileList[i]);
         console.log(fileList[i].originFile);
         console.log(toJS(fileList[i].selectBig.id));
         console.log(toJS(fileList[i].selectedMid.id));
         console.log(this.state.requestId);
         console.log(fileList[i].quantity.value);
 
-        modifyFormData.append("blueprint", fileList[i].originFile);
-        modifyFormData.append("process", fileList[i].selectBig.id);
-        modifyFormData.append("detailprocess", fileList[i].selectedMid.id);
-        modifyFormData.append("requestid", this.state.requestId);
-        modifyFormData.append("number", fileList[i].quantity.value);
+        if (fileList[i].checked) {
+          modifyFormData.append("blueprint", fileList[i].originFile);
+          modifyFormData.append("process", fileList[i].selectBig.id);
+          modifyFormData.append("detailprocess", fileList[i].selectedMid.id);
+          modifyFormData.append("requestid", this.state.requestId);
+          modifyFormData.append("number", fileList[i].quantity.value);
 
-        const req = {
-          headers: {
-            Authorization: `Token ${Token}`,
-          },
-          data: modifyFormData,
-        };
-
-        await RequestAPI.modifyEstimate(req)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+          const req = {
+            headers: {
+              Authorization: `Token ${Token}`,
+            },
+            data: modifyFormData,
+          };
+          await RequestAPI.modifyEstimate(req)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
       }
 
       const reqFormData = new FormData();
@@ -515,7 +519,10 @@ class FileUploadContainer extends Component {
       await RequestAPI.modifyProject(req)
         .then((res) => {
           console.log(`modify Project : ${res}`);
+          ManufactureProcess.projectSubmitLoading = true;
+          console.log(toJS(ManufactureProcess.projectSubmitLoading));
           ManufactureProcess.changeProject = false;
+
           this.props.Request.newIndex = 3;
         })
         .catch((e) => {
@@ -2206,12 +2213,14 @@ class FileUploadContainer extends Component {
                       const extension = item.fileName.split(".");
 
                       //console.log(fileNameAvailable)
-                      if (
-                        item.quantity.value === 0 ||
-                        item.quantity.value === ""
-                      ) {
-                        console.log("수량을 입력해주세요");
-                        check_count++;
+                      if (item.checked) {
+                        if (
+                          item.quantity.value === 0 ||
+                          item.quantity.value === ""
+                        ) {
+                          console.log("수량을 입력해주세요");
+                          check_count++;
+                        }
                       }
 
                       if (
@@ -2252,12 +2261,14 @@ class FileUploadContainer extends Component {
                       let fileNameAvailable = ["txt"];
                       const extension = item.fileName.split(".");
 
-                      if (
-                        item.quantity.value === 0 ||
-                        item.quantity.value === ""
-                      ) {
-                        console.log("수량을 입력해주세요");
-                        check_count++;
+                      if (item.checked) {
+                        if (
+                          item.quantity.value === 0 ||
+                          item.quantity.value === ""
+                        ) {
+                          console.log("수량을 입력해주세요");
+                          check_count++;
+                        }
                       }
 
                       if (

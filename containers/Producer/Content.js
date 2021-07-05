@@ -385,9 +385,6 @@ const NoResultBox = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const SubButtonBox = styled.div`
-  width: 100%;
-`;
 
 const SubButton = styled.div`
   display: flex;
@@ -402,53 +399,6 @@ const SubButton = styled.div`
     background: lightblue;
   }
 `;
-const region_data = [
-  {
-    id: 0,
-    name: "전체",
-    checked: "false",
-  },
-  {
-    id: 1,
-    name: "인천 남동|시화|반월공단",
-    checked: "false",
-  },
-  {
-    id: 2,
-    name: "인천 서구",
-    checked: "false",
-  },
-  {
-    id: 3,
-    name: "경기도 화성",
-    checked: "false",
-  },
-  {
-    id: 4,
-    name: "경기도 부천",
-    checked: "false",
-  },
-  {
-    id: 5,
-    name: "경기도 파주|양주|고양",
-    checked: "false",
-  },
-  {
-    id: 6,
-    name: "서울 문래동",
-    checked: "false",
-  },
-  {
-    id: 7,
-    name: "서울 성수동",
-    checked: "false",
-  },
-  {
-    id: 8,
-    name: "서울 을지로",
-    checked: "false",
-  },
-];
 
 const PageBar = styled.div`
   width: 351px;
@@ -507,13 +457,6 @@ const Main = styled.div`
   @media (min-width: 1300px) {
     width: 1200px;
   }
-`;
-const Filter = styled.div`
-  width: 220px;
-  border-right: 1px solid #e1e2e4;
-  margin-right: 33px;
-  padding-right: 9px;
-  box-sizing: border-box;
 `;
 
 const Header = styled.div`

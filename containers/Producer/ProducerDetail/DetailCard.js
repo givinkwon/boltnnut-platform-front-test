@@ -199,7 +199,7 @@ class DetailCardContainer extends React.Component {
               )}
             </div>
           </DetailInfoBox>
-          {/* <ReviewBox>
+          <ReviewBox>
             <label>평가 후기</label>
 
             <SummaryBox>
@@ -244,8 +244,7 @@ class DetailCardContainer extends React.Component {
             </SummaryBox>
             <content>
               {Partner.partnerReviewList &&
-                console.log(toJS(Partner.partnerReviewList[0].data))}
-              {Partner.partnerReviewList &&
+                Partner.partnerReviewList[0] &&
                 Partner.partnerReviewList[0].data.map((item, idx) => {
                   return (
                     <ReviewCard
@@ -255,8 +254,8 @@ class DetailCardContainer extends React.Component {
                     />
                   );
                 })}
-            </content> */}
-          {/* {Partner.reviewWritingModalActive && (
+            </content>
+            {Partner.reviewWritingModalActive && (
               <Layer>
                 <span>
                   <Modal
@@ -266,8 +265,8 @@ class DetailCardContainer extends React.Component {
                   ></Modal>
                 </span>
               </Layer>
-            )} */}
-          {/* </ReviewBox> */}
+            )}
+          </ReviewBox>
         </Card>
       </>
     );
