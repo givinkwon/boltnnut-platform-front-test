@@ -385,3 +385,5 @@ const Box = styled.div`
       }
     `}
 `;
+
+const Button = styled.button``;

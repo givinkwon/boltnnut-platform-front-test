@@ -12,6 +12,11 @@ const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 const lock = "static/images/Home/lock.svg";
 
 class Banner13Container extends React.Component {
+  makeUrl = (url) => {
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
+    }
+  };
   render() {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -31,18 +36,24 @@ class Banner13Container extends React.Component {
                 </div>
 
                 <div>
-                  <div onClick={() => Router.push("/producer")}>
-                    <span>업체 정보 조회</span>
+                  {/* <div onClick={() => Router.push("/producer")}> */}
+                  <div>
+                    {/* <span>업체 정보 조회</span>
+                    <span>
+                      <img src={passImg} />
+                    </span> */}
+                    <LookupBtn>
+                      <a href={this.makeUrl("producer")}>
+                        <span>업체 정보 조회</span>
+                      </a>
+                    </LookupBtn>
                     <span>
                       <img src={passImg} />
                     </span>
                   </div>
                 </div>
-
-               
               </Body>
             </div>
-          
           </Box>
         </Containerv2>
       </div>
@@ -152,6 +163,7 @@ const Body = styled(Title.FontSize24)`
     align-items: center;
     > div {
       cursor: pointer;
+      background: #ffffff;
       margin-top: 60px;
       border: 2px solid #0933b3;
       border-radius: 4px;
@@ -161,14 +173,16 @@ const Body = styled(Title.FontSize24)`
       justify-content: center;
       align-items: center;
       box-sizing: border-box;
-      > span:nth-of-type(1) {
-        margin-right: 15px;
-        font-size: 26px;
-        line-height: 52px;
-        letter-spacing: -0.65px;
-        color: #0933b3;
-        font-weight: 500;
-      }
+      // > a {
+      //   > span:nth-of-type(1) {
+      //     margin-right: 15px;
+      //     font-size: 26px;
+      //     line-height: 52px;
+      //     letter-spacing: -0.65px;
+      //     color: #0933b3;
+      //     font-weight: 500;
+      //   }
+      // }
       > span:nth-of-type(2) {
         padding-top: 6px;
         > img {
@@ -178,4 +192,14 @@ const Body = styled(Title.FontSize24)`
       }
     }
   }
+`;
+const LookupBtn = styled.button`
+  background: none;
+  border: none;
+  margin-right: 15px;
+  font-size: 26px;
+  line-height: 52px;
+  letter-spacing: -0.65px;
+  color: #0933b3;
+  font-weight: 500;
 `;

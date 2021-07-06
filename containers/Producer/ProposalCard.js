@@ -214,6 +214,7 @@ class ProposalCard extends React.Component {
 
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
+        // location.href = this.makeUrl("producer/detail");
       } else {
         console.log("file download");
         this.filedownload(this.props.data.file);
@@ -223,7 +224,9 @@ class ProposalCard extends React.Component {
       Partner.detailLoadingFlag = false;
       // Router.back();
       // this.props.Auth.previous_url = "producer";
-      Router.push("/login");
+      // Router.push("/login");
+      // Router.push("/login");
+      location.href = this.makeUrl("login");
     }
   };
 
@@ -242,6 +245,11 @@ class ProposalCard extends React.Component {
       Partner.ReviewActive = true;
       Partner.ReviewActiveIndex = idx;
       Partner.partnerName = name;
+    }
+  };
+  makeUrl = (url) => {
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
     }
   };
   render() {
@@ -301,7 +309,8 @@ class ProposalCard extends React.Component {
                     })}
                 </InfoTwo>
                 <AdditionBox>
-                  <div
+                  <div>
+                    {/* <div
                     style={{ cursor: "pointer", zIndex: 10 }}
                     onClick={async (event) => {
                       event.stopPropagation();
@@ -311,22 +320,41 @@ class ProposalCard extends React.Component {
                         this.openModal(data.user.phone);
                       } else {
                         alert("로그인이 필요합니다");
-                        Router.push("/login");
+                        // Router.push("/login");
+                        location.href = this.makeUrl("login");
                       }
                     }}
-                  >
-                    <span>전화번호</span>
+                  > */}
+                    <Button
+                      style={{ cursor: "pointer", zIndex: 10 }}
+                      onClick={async (event) => {
+                        event.stopPropagation();
+
+                        if (await this.checkLogin()) {
+                          this.clickLog(data);
+                          this.openModal(data.user.phone);
+                        } else {
+                          alert("로그인이 필요합니다");
+                          // Router.push("/login");
+                          location.href = this.makeUrl("login");
+                        }
+                      }}
+                    >
+                      <span>전화번호</span>
+                    </Button>
                   </div>
                   <div></div>
                   <div>
                     <img src={file_img2} />
-                    <Link
-                      target="_blank"
-                      onClick={(e) => this.cardClick(e)}
-                      download
-                    >
-                      <span>회사 소개서 보기</span>
-                    </Link>
+                    <Button>
+                      <Link
+                        target="_blank"
+                        onClick={(e) => this.cardClick(e)}
+                        download
+                      >
+                        <span>회사 소개서 보기</span>
+                      </Link>
+                    </Button>
                   </div>
                 </AdditionBox>
               </Main>
@@ -582,6 +610,13 @@ margin-top: 16px;
     width: 88%
   }
 `;
+const Button = styled.button`
+  background: none;
+  border: none;
+  font-size: 16px;
+  letter-spacing: -0.45px;
+  color: #000000;
+`;
 
 const AdditionBox = styled.div`
   //border: 2px solid green;
@@ -593,12 +628,13 @@ const AdditionBox = styled.div`
     // position: absolute;
     // top: 80%;
     // left: 82%;
-    > span {
-      font-size: 18px;
-      line-height: 40px;
-      letter-spacing: -0.45px;
-      color: #555963;
-    }
+    // > span {
+    //   font-size: 18px;
+    //   line-height: 40px;
+    //   letter-spacing: -0.45px;
+    //   color: #555963;
+    // }
+
     > img {
       //margin-left: 14px;
     }

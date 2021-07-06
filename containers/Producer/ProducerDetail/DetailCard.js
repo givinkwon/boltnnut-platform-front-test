@@ -180,6 +180,7 @@ class DetailCardContainer extends React.Component {
   render() {
     const { width, Partner } = this.props;
     const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
+
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
 
     return (

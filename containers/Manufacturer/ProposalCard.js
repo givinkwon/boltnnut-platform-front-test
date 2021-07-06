@@ -226,7 +226,6 @@ class ProposalCard extends React.Component {
                 <Name>{data.name}</Name>
                 <Phone>
                   <div style={{ cursor: "pointer" }}>
-
                     {Partner.modalActive && (
                       // <Layer onClick={this.modalHandler}>
                       <Layer>
@@ -241,7 +240,6 @@ class ProposalCard extends React.Component {
                         </span>
                       </Layer>
                     )}
-
                   </div>
                 </Phone>
                 <InfoOne>{data.info_company}</InfoOne>
@@ -267,7 +265,6 @@ class ProposalCard extends React.Component {
                     }}
                   >
                     <span>전화번호</span>
-
                   </div>
                   <div></div>
                   <div>
@@ -298,7 +295,6 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
-    
               <Main>
                 <Name>{data.name}</Name>
                 <InfoOne>{data.info_company}</InfoOne>
@@ -318,9 +314,7 @@ class ProposalCard extends React.Component {
                           }
                         }}
                       >
-                        <img
-                          src={call_img}
-                        />
+                        <img src={call_img} />
 
                         {Partner.modalActive && (
                           // <Layer onClick={this.modalHandler}>
@@ -332,12 +326,10 @@ class ProposalCard extends React.Component {
                                 close={this.closeModal}
                                 header="전화번호"
                                 children={this.props.Partner.modalUserPhone}
-                              >
-                              </Modal>
+                              ></Modal>
                             </span>
                           </Layer>
                         )}
-
                       </div>
                     </Phone>
                   </div>

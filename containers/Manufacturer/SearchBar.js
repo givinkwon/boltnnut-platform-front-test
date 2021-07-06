@@ -34,7 +34,6 @@ class SearchBarConatiner extends React.Component {
     const { Partner } = this.props;
     this.setState({ search: e.target.value });
     await (Partner.search_text = e.target.value);
-
   };
   search = async () => {
     const { Partner, ManufactureProcess } = this.props;
