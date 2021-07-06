@@ -138,15 +138,11 @@ class MobileSearchBarConatiner extends React.Component {
             this.state.list ? this.selectOut() : this.selectClick()
           }
           onBlur={() => this.selectOut()}
-        >
-        </Box>
+        ></Box>
         <SearchFilterBox>
           <SearchBar>
             <div>
-              <input
-                style={{ display: "none" }}
-                class="Input"
-              />
+              <input style={{ display: "none" }} class="Input" />
               <Select
                 placeholder="전체"
                 options={categoryArray}
@@ -181,7 +177,6 @@ class MobileSearchBarConatiner extends React.Component {
               </SearchButton>
             </div>
           </SearchBar>
-
 
           <Filter
             onClick={() => {
@@ -442,9 +437,11 @@ const SearchFilterBox = styled.div`
   display: flex;
   align-items: center;
 `;
-const Filter = styled.div`
+const Filter = styled.button`
   //border: 2px solid red;
   cursor: pointer;
+  background: none;
+  border: none;
   > div {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
     border-radius: 5px;

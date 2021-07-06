@@ -181,13 +181,13 @@ class MobileManufacturerContentContainer extends React.Component {
                       <span>{Partner.partner_count}개</span>의 파트너
                     </Font15>
                     <div>
-                      <div
+                      <button
                         onClick={() => {
                           Router.push("/request");
                         }}
                       >
                         <span>바로 AI 견적 받기</span>
-                      </div>
+                      </button>
 
                       {/* <content>
                         <span>도면이 있는 경우 클릭!</span>
@@ -195,13 +195,13 @@ class MobileManufacturerContentContainer extends React.Component {
                     </div>
 
                     <div>
-                      <div
+                      <button
                         onClick={() => {
                           Partner.mobileRequestIndex = 1;
                         }}
                       >
                         <span>업체수배&견적 무료의뢰 </span>
-                      </div>
+                      </button>
                     </div>
                   </Header>
                   <Description active={Partner.subButtonActive}>
@@ -439,6 +439,8 @@ const region_data = [
   },
 ];
 
+export default MobileManufacturerContentContainer;
+
 const PageBar = styled.div`
   width: 80%;
   margin-top: 109px;
@@ -546,7 +548,9 @@ const Header = styled.div`
     >div{
       width: 48%;
       
-      >div:nth-of-type(1){
+      >button:nth-of-type(1){
+        border: none;
+        background: none;
         box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
         padding: 8px 16px 9px 16px;
         box-sizing: border-box;
@@ -722,5 +726,3 @@ const Description = styled.div`
     // margin-left: 10px;
   }
 `;
-
-export default MobileManufacturerContentContainer;

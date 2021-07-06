@@ -26,6 +26,13 @@ class MobileNav extends React.Component {
 
   alreadyLoggedin = ["login", "signup"];
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
+
+  makeUrl = (url) => {
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
+    }
+  };
+
   logout = () => {
     localStorage.removeItem("token");
     if (localStorage.getItem("expiry")) {
@@ -47,7 +54,8 @@ class MobileNav extends React.Component {
         if (url === splitedRoute[1]) {
           alert("이미 로그인한 사용자입니다");
 
-          Router.push("/");
+          // Router.push("/");
+          location.href = this.makeUrl("");
         }
         // /offered 에서 tab 1을 거치지 않고 tab 2로 들어온 사용자 리다이렉트
         else if ("offered" === splitedRoute[1]) {
@@ -84,7 +92,8 @@ class MobileNav extends React.Component {
         if (url === splitedRoute[1]) {
           if (requestId != 923) {
             alert("로그인이 필요합니다");
-            Router.push("/login");
+            // Router.push("/login");
+            location.href = this.makeUrl("login");
           }
         }
       });
@@ -108,11 +117,6 @@ class MobileNav extends React.Component {
       this.setState({ ...this.state, is_open: true });
     }
   };
-  makeUrl = (url) => {
-    if (typeof window !== "undefined") {
-      return window.location.protocol + "//" + window.location.host + "/" + url;
-    }
-  };
 
   render() {
     const { Auth, Partner, width, Home } = this.props;
@@ -128,15 +132,18 @@ class MobileNav extends React.Component {
             >
               <ModalHeader>
                 <div style={{ marginBottom: 50, width: "100%" }}>
-                  <Logo
-                    onClick={() => {
-                      if (is_open == true) {
-                        Router.push("/");
-                      }
-                    }}
-                    src={logo_ic}
-                    style={{ float: "left" }}
-                  />
+                  <BoltLogo>
+                    <Logo
+                      onClick={() => {
+                        if (is_open == true) {
+                          // Router.push("/");
+                          location.href = this.makeUrl("");
+                        }
+                      }}
+                      src={logo_ic}
+                      style={{ float: "left" }}
+                    />
+                  </BoltLogo>
                   <img src={close_ic} style={{ float: "right" }} />
                 </div>
                 {/* {Auth.logged_in_partner ? (
@@ -208,7 +215,8 @@ class MobileNav extends React.Component {
                       borderRight: "solid 1px #e1e2e4",
                       height: 32,
                     }}
-                    onClick={() => Router.push("/login")}
+                    // onClick={() => Router.push("/login")}
+                    onClick={() => (location.href = this.makeUrl("login"))}
                   >
                     로그인
                   </div>
@@ -219,7 +227,8 @@ class MobileNav extends React.Component {
                       justifyContent: "center",
                       height: 32,
                     }}
-                    onClick={() => Router.push("/signup")}
+                    // onClick={() => Router.push("/signup")}
+                    onClick={() => (location.href = this.makeUrl("signup"))}
                   >
                     회원가입
                   </div>
@@ -232,9 +241,16 @@ class MobileNav extends React.Component {
           <NavWrap2>
             {this.props.src ===
             "/static/images/components/MobileNav/MobileLogo.svg" ? (
-              <Logo src={this.props.src} onClick={() => Router.push("/")} />
+              <BoltLogo>
+                <Logo
+                  src={this.props.src}
+                  onClick={() => (location.href = this.makeUrl(""))}
+                />
+              </BoltLogo>
             ) : (
-              <Logo src={this.props.src} onClick={() => Router.back()} />
+              <BoltLogo>
+                <Logo src={this.props.src} onClick={() => Router.back()} />
+              </BoltLogo>
             )}
 
             <HeadText>{this.props.headText}</HeadText>
@@ -419,6 +435,10 @@ const NavWrap2 = styled.div`
   background-color: #ffffff; // #f3f3f3
   padding-left: 18px;
   padding-right: 18px;
+`;
+const BoltLogo = styled.button`
+  background: none;
+  border: none;
 `;
 const Logo = styled.img`
   cursor: pointer;
