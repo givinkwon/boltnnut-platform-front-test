@@ -17,7 +17,8 @@ const back_ic = "/static/images/components/MobileNav/back_ic.svg";
   "Partner",
   "DetailQuestion",
   "ManufactureProcess",
-  "Schedule"
+  "Schedule",
+  "Auth"
 )
 @observer
 class Request extends React.Component {
@@ -31,19 +32,19 @@ class Request extends React.Component {
     this.props.ManufactureProcess.init();
     this.props.Schedule.init();
     //창 크기
+    this.props.Auth.previous_url = "request";
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-    
-    
+
     // page ip 기록
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
@@ -52,7 +53,6 @@ class Request extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-
   }
 
   componentWillUnmount() {

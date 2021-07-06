@@ -26,6 +26,7 @@ class Project extends React.Component {
 
   async componentDidMount() {
     const { Project, Auth, Home, Answer, Loading } = this.props;
+    Auth.previous_url = "project";
     console.log(Auth);
     console.log(toJS(Auth.logged_in_user));
     //창 크기
@@ -37,18 +38,17 @@ class Project extends React.Component {
     Loading.setOpen(true);
     setTimeout(() => Loading.setOpen(false), 500);
 
-    
     // 중복
     await Auth.checkLogin();
     // page ip 기록
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);

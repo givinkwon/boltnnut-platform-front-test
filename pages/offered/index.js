@@ -20,8 +20,8 @@ class Offered extends React.Component {
   async componentDidMount() {
     const { Loading, Offered, Auth, Answer, query } = this.props;
 
-    if(parseInt(query.tab) === 2) {
-      await Router.push('/offered?tab=1');
+    if (parseInt(query.tab) === 2) {
+      await Router.push("/offered?tab=1");
     }
 
     Loading.setOpen(true);
@@ -29,7 +29,7 @@ class Offered extends React.Component {
 
     await Auth.checkLogin();
 
-    if(Auth.logged_in_partner) {
+    if (Auth.logged_in_partner) {
       Answer.loadCategories();
 
       console.log("파트너가 제안한 목록 로딩 시작");
@@ -37,15 +37,17 @@ class Offered extends React.Component {
         console.log("파트너가 제안한 목록 로딩 끝");
       });
     }
+
+    this.props.Auth.previous_url = "offered";
     // page ip 기록
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);

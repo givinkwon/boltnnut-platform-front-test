@@ -11,7 +11,7 @@ import Spinner from 'components/Spinner'
 import PartnerConatiner from 'containers/Partner'
 import * as AccountAPI from "axios/Account";
 
-@inject('Counter', 'Post', 'Loading')
+@inject('Counter', 'Post', 'Loading'. 'Auth')
 @observer
 class Partner extends React.Component {
   state = {
@@ -25,6 +25,10 @@ class Partner extends React.Component {
      //창 크기
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+
+    this.props.Auth.previous_url = "partner";
+
+
     // page ip 기록
     const formData = new FormData();
 

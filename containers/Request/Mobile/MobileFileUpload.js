@@ -317,9 +317,8 @@ class FileUploadContainer extends Component {
 
     let request_state = "";
     if (ManufactureProcess.purposeContent) {
-      request_state = this.state.purposeAry[
-        ManufactureProcess.purposeContent - 1
-      ].name;
+      request_state =
+        this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
     }
     console.log(request_state);
 
@@ -367,20 +366,21 @@ class FileUploadContainer extends Component {
       console.log(toJS(fileList[i].selectBig.id));
       console.log(toJS(fileList[i].selectedMid.id));
       console.log(toJS(fileList[i].originFile));
-      formData.append(`blueprint`, fileList[i].originFile);
+      if (fileList[i].checked) {
+        formData.append(`blueprint`, fileList[i].originFile);
 
-      processData = processData + fileList[i].selectBig.id;
-      detailProcessData = detailProcessData + fileList[i].selectedMid.id;
-      quantityData = quantityData + fileList[i].quantity.value;
+        processData = processData + fileList[i].selectBig.id;
+        detailProcessData = detailProcessData + fileList[i].selectedMid.id;
+        quantityData = quantityData + fileList[i].quantity.value;
 
-      console.log(quantityData);
-      console.log(fileList[i].quantity.value);
-      if (i < fileList.length - 1) {
-        processData = processData + ",";
-        detailProcessData = detailProcessData + ",";
-        quantityData = quantityData + ",";
+        console.log(quantityData);
+        console.log(fileList[i].quantity.value);
+        if (i < fileList.length - 1) {
+          processData = processData + ",";
+          detailProcessData = detailProcessData + ",";
+          quantityData = quantityData + ",";
+        }
       }
-      
     }
 
     console.log(processData);
@@ -391,10 +391,8 @@ class FileUploadContainer extends Component {
     formData.append("detailprocess", detailProcessData);
     formData.append("number", quantityData);
 
-    
-
     const Token = localStorage.getItem("token");
-    
+
     if (flag) {
       const req = {
         headers: {
@@ -480,26 +478,28 @@ class FileUploadContainer extends Component {
         console.log(this.state.requestId);
         console.log(fileList[i].quantity.value);
 
-        modifyFormData.append("blueprint", fileList[i].originFile);
-        modifyFormData.append("process", fileList[i].selectBig.id);
-        modifyFormData.append("detailprocess", fileList[i].selectedMid.id);
-        modifyFormData.append("requestid", this.state.requestId);
-        modifyFormData.append("number", fileList[i].quantity.value);
+        if (fileList[i].checked) {
+          modifyFormData.append("blueprint", fileList[i].originFile);
+          modifyFormData.append("process", fileList[i].selectBig.id);
+          modifyFormData.append("detailprocess", fileList[i].selectedMid.id);
+          modifyFormData.append("requestid", this.state.requestId);
+          modifyFormData.append("number", fileList[i].quantity.value);
 
-        const req = {
-          headers: {
-            Authorization: `Token ${Token}`,
-          },
-          data: modifyFormData,
-        };
+          const req = {
+            headers: {
+              Authorization: `Token ${Token}`,
+            },
+            data: modifyFormData,
+          };
 
-        await RequestAPI.modifyEstimate(req)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+          await RequestAPI.modifyEstimate(req)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
       }
 
       const reqFormData = new FormData();
@@ -521,6 +521,7 @@ class FileUploadContainer extends Component {
       await RequestAPI.modifyProject(req)
         .then((res) => {
           console.log(`modify Project : ${res}`);
+          ManufactureProcess.projectSubmitLoading = true;
           ManufactureProcess.changeProject = false;
           this.props.Request.newIndex = 3;
         })
@@ -629,9 +630,8 @@ class FileUploadContainer extends Component {
         Project.projectDetailData.request_set[0].order_request_close;
       ManufactureProcess.requestComment2 =
         Project.projectDetailData.request_set[0].order_request_close;
-      const clickDayAry = Project.projectDetailData.request_set[0].deadline.split(
-        "T"
-      );
+      const clickDayAry =
+        Project.projectDetailData.request_set[0].deadline.split("T");
       Schedule.clickDay = clickDayAry[0];
       if (
         Project.projectDetailData.request_set[0].deadline_state ===
@@ -845,6 +845,7 @@ class FileUploadContainer extends Component {
 
   componentWillUnmount = () => {
     const { ManufactureProcess } = this.props;
+    fileList = [];
     ManufactureProcess.dataPrice = [];
     ManufactureProcess.openFileArray = [];
     ManufactureProcess.privateFileArray = [];
@@ -889,8 +890,6 @@ class FileUploadContainer extends Component {
             minprice += data.totalMinPrice;
             maxprice += data.totalMaxPrice;
           }
-
-          
         } else {
           this.setState({ g: 3 });
         }
@@ -981,7 +980,7 @@ class FileUploadContainer extends Component {
         document.documentElement.scrollTop,
         document.body.scrollTop
       );
-      
+
       const bannerHeight = 208;
       const paddingHeight = 215;
       const noticeBoxHeight = 90;
@@ -990,22 +989,17 @@ class FileUploadContainer extends Component {
         paddingHeight + standardHeight + fileList.length * 240;
       const card = document.getElementById("card");
 
-      
-
       if (card) {
         if (this.props.ManufactureProcess.checkFileUpload) {
           if (scrollTop > currentHeight) {
             card.style.display = "none";
             card.style.position = "static";
-            
           } else if (scrollTop < currentHeight) {
-            
             if (scrollTop > bannerHeight + 30) {
               card.style.display = "flex";
               card.style.position = "fixed";
-              
+
               this.setState({ checkHeight: true });
-              
             } else if (scrollTop < bannerHeight + 40) {
               card.style.display = "flex";
               card.style.position = "static";
@@ -1238,8 +1232,6 @@ class FileUploadContainer extends Component {
         let fileNameAvailable = ["stl", "stp"];
         const extension = data.name.split(".");
 
-        
-
         if (!fileNameAvailable.includes(extension[extension.length - 1])) {
           console.log("stl X");
           check_stl = false;
@@ -1260,7 +1252,6 @@ class FileUploadContainer extends Component {
 
       if (card) {
         card.style.display = "flex";
-        
       }
       dropHandler(acceptedFiles, stl_count);
     }, []);
@@ -1429,21 +1420,18 @@ class FileUploadContainer extends Component {
                           model={data.drawFile} // stl파일 주소
                           width={120} // 가로
                           height={120} // 세로
-                          
                           modelColor="gray" // 색
                           backgroundColor="white" // 배경색
                           rotate={true} // 자동회전 유무
                           orbitControls={true} // 마우스 제어 유무
                           cameraX={500}
-                          
                           lights={[0, 0, 1]}
-                          
                         />
                       </StlBox>
                       <ColumnBox>
                         <ManufactureBox>
                           <Label>생산공정</Label>
-                          <Select 
+                          <Select
                             defaultValue={
                               ManufactureProcess.categoryDefaultValue.big
                             }
@@ -1483,7 +1471,7 @@ class FileUploadContainer extends Component {
                           getOptionLabel={(option) => option.name}
                           onChange={(e) => {
                             ManufactureProcess.setMidCategory(e);
-                            
+
                             this.countQuantity(0, 0);
                             this.loadFileResopnse(idx);
                             this.countPrice();
@@ -1548,7 +1536,6 @@ class FileUploadContainer extends Component {
                                   }
                                 }
                               }}
-                              
                               onBlur={(e) => {
                                 console.log(e.target.value);
                                 console.log(data.prevQuantity);
@@ -1702,14 +1689,11 @@ class FileUploadContainer extends Component {
                           <div style={{ marginBottom: 30 }}>
                             {data.fileName}
                           </div>
-                          
-
-                          
                         </StlBox>
                         <ColumnBox>
                           <ManufactureBox>
                             <Label>생산공정</Label>
-                            <Select 
+                            <Select
                               defaultValue={
                                 ManufactureProcess.categoryDefaultValue.big
                               }
@@ -1719,7 +1703,6 @@ class FileUploadContainer extends Component {
                               getOptionLabel={(option) => option.name}
                               onChange={(e) => {
                                 ManufactureProcess.setBigCategory(e);
-                                
 
                                 data.selectBig = e;
                                 data.optionMid = e.detail;
@@ -1735,7 +1718,7 @@ class FileUploadContainer extends Component {
                                   }
                                   data.quantity = { label: "1", value: 1 };
                                 }
-                                
+
                                 this.setState({ g: 3 });
                               }}
                             />
@@ -1753,7 +1736,7 @@ class FileUploadContainer extends Component {
                             getOptionLabel={(option) => option.name}
                             onChange={(e) => {
                               ManufactureProcess.setMidCategory(e);
-                              
+
                               this.countQuantity(0, 0);
                               this.loadFileResopnse(idx);
                               this.countPrice();
@@ -1791,7 +1774,6 @@ class FileUploadContainer extends Component {
                                     );
                                   }
                                   this.onQuantityChange(data, value);
-                                  
                                 }}
                               />
                             )}
@@ -1819,7 +1801,6 @@ class FileUploadContainer extends Component {
                                     }
                                   }
                                 }}
-                                
                                 onBlur={(e) => {
                                   console.log(e.target.value);
                                   console.log(data.prevQuantity);
@@ -1832,7 +1813,7 @@ class FileUploadContainer extends Component {
                                     }
                                     data.prevQuantity = e.target.value;
                                   }
-                                  
+
                                   if (data.selectBig.name === "금형사출") {
                                     if (
                                       e.target.value > 0 &&
@@ -1958,8 +1939,6 @@ class FileUploadContainer extends Component {
               <p>가공품의 발주 요건에 따라 변경될 수 있습니다.</p>
               <p>본 견적은 후처리를 제외한 순수 단품 가공 견적입니다.</p>
             </div>
-
-            
           </PriceLabel>
 
           <PriceData>
@@ -1968,7 +1947,6 @@ class FileUploadContainer extends Component {
             </span>
             <span>~</span>
             <span>
-              
               {ManufactureProcess.orderMaxPrice.toLocaleString("ko-KR")}
               <span> 원</span>
             </span>
@@ -2171,12 +2149,14 @@ class FileUploadContainer extends Component {
                       const extension = item.fileName.split(".");
 
                       //console.log(fileNameAvailable)
-                      if (
-                        item.quantity.value === 0 ||
-                        item.quantity.value === ""
-                      ) {
-                        console.log("수량을 입력해주세요");
-                        check_count++;
+                      if (item.checked) {
+                        if (
+                          item.quantity.value === 0 ||
+                          item.quantity.value === ""
+                        ) {
+                          console.log("수량을 입력해주세요");
+                          check_count++;
+                        }
                       }
 
                       if (
@@ -2217,13 +2197,14 @@ class FileUploadContainer extends Component {
                       let fileNameAvailable = ["txt"];
                       const extension = item.fileName.split(".");
 
-                      
-                      if (
-                        item.quantity.value === 0 ||
-                        item.quantity.value === ""
-                      ) {
-                        console.log("수량을 입력해주세요");
-                        check_count++;
+                      if (item.checked) {
+                        if (
+                          item.quantity.value === 0 ||
+                          item.quantity.value === ""
+                        ) {
+                          console.log("수량을 입력해주세요");
+                          check_count++;
+                        }
                       }
 
                       if (
@@ -2248,8 +2229,6 @@ class FileUploadContainer extends Component {
                         alert("요청 중입니다. 잠시만 기다려주세요.");
                       }
                     }
-
-                    
 
                     // this.requestSubmit(1);
                   }}
@@ -2672,8 +2651,6 @@ const TableHeader = styled.div`
     margin-right: 85px;
   }
 `;
-
-
 
 const DirectInputBox = styled.div`
   font-size: 18px;

@@ -19,6 +19,7 @@ class Index extends React.Component {
   };
   componentDidMount() {
     this.props.Auth.bgColor = "#f6f6f6";
+    this.props.Auth.previous_url = "magazine";
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
     console.log(this.state.width);

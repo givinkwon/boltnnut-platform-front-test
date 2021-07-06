@@ -30,6 +30,8 @@ const FileViewer = dynamic(() => import("react-file-viewer"), {
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 const waterMarkImg = "/static/images/logo_marine@2x.png";
+const pass1 = "/static/images/pass1.png";
+const pass2 = "/static/images/pass2.png";
 const type = "pdf";
 
 const onError = (e) => {
@@ -61,7 +63,10 @@ class DetailCardContainer extends React.Component {
 
   componentDidMount = async () => {
     const { Partner } = this.props;
-    console.log("mountmount");
+    console.log(toJS(Partner.partnerAllReviewList));
+    console.log(toJS(Partner.partnerReviewList));
+    Partner.reviewCurrentPage = 1;
+    Partner.detailLoadingFlag = false;
     if (Partner.partner_detail_list.length == 0) {
       Router.push("/producer");
     }
@@ -80,9 +85,9 @@ class DetailCardContainer extends React.Component {
     // let total_kindness_score = 0;
     // let total_communication_score = 0;
     // let total_profession_score = 0;
-    // console.log(Partner.partnerReviewList);
+    // // console.log(Partner.partnerReviewList);
 
-    // await Partner.partnerReviewList[0].data.map((item, idx) => {
+    // await Partner.partnerAllReviewList[0].data.map((item, idx) => {
     //   total_consult_score += item.consult_score;
     //   total_kindness_score += item.kindness_score;
     //   total_communication_score += item.communication_score;
@@ -90,24 +95,91 @@ class DetailCardContainer extends React.Component {
     // });
     // this.setState({
     //   avg_consult_score:
-    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    //     total_consult_score / Partner.partnerAllReviewList[0].data.length,
     //   avg_kindness_score:
-    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    //     total_kindness_score / Partner.partnerAllReviewList[0].data.length,
     //   avg_communication_score:
-    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    //     total_communication_score / Partner.partnerAllReviewList[0].data.length,
     //   avg_profession_score:
-    //     total_consult_score / Partner.partnerReviewList[0].data.length,
+    //     total_profession_score / Partner.partnerAllReviewList[0].data.length,
     // });
     // console.log(total_consult_score);
-    // console.log(Partner.partnerReviewList[0].data.length);
+    // console.log(total_kindness_score);
+    // console.log(total_communication_score);
+    // console.log(total_profession_score);
+    // console.log(Partner.partnerAllReviewList[0].data.length);
 
     // console.log(5 / 2);
     // console.log(this.state.avg_consult_score);
     // console.log(Math.floor(this.state.avg_consult_score));
   };
+  // componentWillUnmount = () => {};
+
+  movePage = (e) => {
+    console.log("movePage");
+    const { Partner, Auth } = this.props;
+    e.preventDefault();
+    const newPage = e.target.innerText * 1;
+    Partner.reviewCurrentPage = newPage;
+    // Partner.resetDevCategory();
+    // Partner.check_loading_develop = false;
+    // Partner.ReviewActive = false;
+    // Partner.ReviewActiveIndex = -1;
+    // this.setState({ dropDownActive: false, dropDownIdx: -1 });
+    // Partner.click_count += 1;
+
+    Partner.getReviewByPartner(
+      Partner.partner_detail_list[0].item.id,
+      1,
+      newPage
+    );
+  };
+
+  pageNext = (e) => {
+    console.log("pageNext");
+    const { Partner } = this.props;
+    e.preventDefault();
+    if (Partner.reviewCurrentPage < Partner.review_partner_page) {
+      const nextPage = Partner.reviewCurrentPage + 1;
+      Partner.reviewCurrentPage = nextPage;
+      // Partner.check_loading_develop = false;
+      // Partner.resetDevCategory();
+      // Partner.ReviewActive = false;
+      // Partner.ReviewActiveIndex = -1;
+      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      // Partner.click_count += 1;
+      Partner.getReviewByPartner(
+        Partner.partner_detail_list[0].item.id,
+        1,
+        nextPage
+      );
+    }
+  };
+
+  pagePrev = (e) => {
+    console.log("pagePrev");
+    const { Partner } = this.props;
+    e.preventDefault();
+    if (Partner.reviewCurrentPage > 1) {
+      const previousPage = Partner.reviewCurrentPage - 1;
+      Partner.reviewCurrentPage = previousPage;
+      // Partner.resetDevCategory();
+      // Partner.check_loading_develop = false;
+      // Partner.ReviewActive = false;
+      // Partner.ReviewActiveIndex = -1;
+      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      // Partner.click_count += 1;
+      Partner.getReviewByPartner(
+        Partner.partner_detail_list[0].item.id,
+        1,
+        previousPage
+      );
+    }
+  };
 
   render() {
     const { width, Partner } = this.props;
+    const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
 
@@ -213,7 +285,7 @@ class DetailCardContainer extends React.Component {
                     />
                   </div>
                   <div>
-                    <span>{this.state.avg_consult_score.toFixed(2)}</span>
+                    <span>{this.state.avg_consult_score.toFixed(1)}</span>
                     <span>전체 누적 평점</span>
                   </div>
                 </mainscore>
@@ -221,36 +293,48 @@ class DetailCardContainer extends React.Component {
                   <div>
                     <span>친절도</span>
                     <div>
-                      <ReviewStarRating width={15} margin={1} score={3} />
+                      <ReviewStarRating
+                        width={15}
+                        margin={1}
+                        score={this.state.avg_kindness_score}
+                      />
                     </div>
                   </div>
 
                   <div>
                     <span>연락 빈도</span>
                     <div>
-                      <ReviewStarRating width={15} margin={1} score={2} />
+                      <ReviewStarRating
+                        width={15}
+                        margin={1}
+                        score={this.state.avg_communication_score}
+                      />
                     </div>
                   </div>
 
                   <div>
                     <span>전문성</span>
                     <div>
-                      <ReviewStarRating width={15} margin={1} score={5} />
+                      <ReviewStarRating
+                        width={15}
+                        margin={1}
+                        score={this.state.avg_profession_score}
+                      />
                     </div>
                   </div>
                 </subscore>
               </header>
-            </SummaryBox>
-            <content>
+            </SummaryBox> */}
+          {/* <content>
+              {console.log(toJS(Partner.partnerReviewList))}
               {Partner.partnerReviewList &&
-                console.log(toJS(Partner.partnerReviewList[0].data))}
-              {Partner.partnerReviewList &&
-                Partner.partnerReviewList[0].data.map((item, idx) => {
+                Partner.partnerReviewList[0] &&
+                Partner.partnerReviewList[0].current.map((item, idx) => {
                   return (
                     <ReviewCard
                       data={item}
                       idx={idx}
-                      totalCount={Partner.partnerReviewList[0].data.length}
+                      totalCount={Partner.partnerReviewList[0].current.length}
                     />
                   );
                 })}
@@ -266,7 +350,102 @@ class DetailCardContainer extends React.Component {
                 </span>
               </Layer>
             )} */}
-          {/* </ReviewBox> */}
+
+          {/* <PageBar>
+              <img
+                src={pass1}
+                style={{
+                  opacity:
+                    current_set == 1 && Partner.reviewCurrentPage <= 1
+                      ? 0.4
+                      : 1,
+                  cursor: "pointer",
+                }}
+                onClick={this.pagePrev}
+              />
+              <PageCount
+                onClick={this.movePage}
+                value={5 * (current_set - 1)}
+                active={Partner.reviewCurrentPage % 5 == 1}
+                style={{
+                  display:
+                    Partner.review_partner_page < 5 * (current_set - 1) + 1
+                      ? "none"
+                      : "block",
+                }}
+              >
+                {" "}
+                {5 * (current_set - 1) + 1}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 1}
+                active={Partner.reviewCurrentPage % 5 == 2}
+                style={{
+                  display:
+                    Partner.review_partner_page < 5 * (current_set - 1) + 2
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 2}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 2}
+                active={Partner.reviewCurrentPage % 5 == 3}
+                style={{
+                  display:
+                    Partner.review_partner_page < 5 * (current_set - 1) + 3
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 3}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 3}
+                active={Partner.reviewCurrentPage % 5 == 4}
+                style={{
+                  display:
+                    Partner.review_partner_page < 5 * (current_set - 1) + 4
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 4}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 4}
+                active={Partner.reviewCurrentPage % 5 == 0}
+                style={{
+                  display:
+                    Partner.review_partner_page < 5 * (current_set - 1) + 5
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 5}{" "}
+              </PageCount>
+              <img
+                src={pass2}
+                style={{
+                  opacity:
+                    Partner.review_partner_page == Partner.reviewCurrentPage
+                      ? 0.4
+                      : 1,
+                  cursor: "pointer",
+                }}
+                onClick={this.pageNext}
+              />
+            </PageBar>
+          </ReviewBox> */}
         </Card>
       </>
     );
@@ -698,4 +877,35 @@ const DOCViewer = styled(DocViewer)`
       }
     }
   }
+`;
+
+const PageBar = styled.div`
+  width: 351px;
+  margin-top: 109px;
+  margin-bottom: 157px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PageCount = styled.span`
+  width: 14px;
+  height: 30px;
+  font-size: 25px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: 0.63px;
+  text-align: left;
+  color: #999999;
+  cursor: pointer;
+  ${(props) =>
+    props.active &&
+    css`
+      font-weight: 700;
+      color: #0933b3;
+    `}
 `;

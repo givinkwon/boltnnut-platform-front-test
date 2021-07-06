@@ -9,6 +9,7 @@ class Partner {
   constructor() {
     //makeObservable(this);
   }
+  @observable click_count = 1;
   @observable detail = null;
   @observable requests = [];
   @observable clients = [];
@@ -86,6 +87,7 @@ class Partner {
   @observable category_name_ary = [];
   @observable category_name_list = null;
   @observable temp_category_name_ary = [];
+  @observable category_count = 0;
   @observable category_dic = {
     0: [],
     1: [],
@@ -98,6 +100,19 @@ class Partner {
     8: [],
     9: [],
   };
+  @observable review_client_obj = {
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    7: [],
+    8: [],
+    9: [],
+  };
+
   @observable check_loading_category = false;
   @observable check_click_filter = false;
   @observable check_loading_develop = false;
@@ -234,6 +249,7 @@ class Partner {
   @observable partnerExist = true;
   @observable newPartner = 0; // 가입되어 있는 제조사 : 0, 가입되어 있지 않은 제조사 : 1
   @observable partnerReviewList = [];
+  @observable partnerAllReviewList = [];
 
   @observable searchPartnerModalActive = false;
   @observable reviewKindnessAry = [
@@ -264,7 +280,10 @@ class Partner {
   @observable partnerReviewNext = null;
   @observable partnerReviewCount = 0;
   @observable partnerPage = 0;
+
   @observable reviewCurrentPage = 1;
+  @observable review_partner_page = 0;
+  @observable review_partner_count = 0;
 
   // @observable clientInfoList = {};
   @observable clientInfoList = [];
@@ -273,6 +292,7 @@ class Partner {
   @observable subButtonActive = false;
   @observable exceptionCategory = "";
   @observable loadingFlag = 1;
+  @observable detailLoadingFlag = false;
   @action resetReviewAry = () => {
     this.reviewKindnessIndex = 3;
     this.reviewCommunicationIndex = 3;
@@ -280,6 +300,21 @@ class Partner {
   };
   @action resetDevCategory = () => {
     this.category_dic = {
+      0: [],
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: [],
+      7: [],
+      8: [],
+      9: [],
+    };
+  };
+
+  @action resetClientObj = () => {
+    this.review_client_obj = {
       0: [],
       1: [],
       2: [],
@@ -1096,26 +1131,31 @@ class Partner {
   };
 
   @action setCategoryDic = async (req, sub_data, id) => {
+    console.log("ffffffffffffffffffffffffff");
+    // await Promise.all(
     await PartnerAPI.getPartnerCategory(req)
-      .then((res) => {
-        // console.log(toJS(res));
-        // console.log(`${sub_data} : ${toJS(res.data.category)}`);
-        //this.category_ary[idx].push(res.data.category);
-        // console.log(toJS(typeof this.category_name_ary));
-        //this.category_dic[id] = [1, 2, 3];
-        // console.log(`${id} +  ${toJS(this.category_dic.hasOwnProperty(id))}`);
+      .then(async (res) => {
+        console.log("gggggggggggggggggggggggg");
 
         if (!this.category_dic.hasOwnProperty(id)) {
           this.category_dic[id] = [];
         }
-        this.category_dic[id] = [...this.category_dic[id], res.data.category];
-        // console.log(toJS(this.category_dic));
+        this.category_dic[id] = await [
+          ...this.category_dic[id],
+          res.data.category,
+        ];
+        console.log(toJS(this.category_dic));
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
     // console.log(`${id} : ${toJS(this.category_dic[id])}`);
+    // console.log(toJS(this.category_dic))
+    // console.log(`3 : ${this.filterLoading}`);
+    // this.filterLoading = true;
+    // console.log(toJS(this.category_dic));
+    // );
   };
 
   @action getCategory = () => {
@@ -1361,22 +1401,14 @@ class Partner {
       });
     this.check_loading_develop = true;
     console.log(this.check_loading_develop);
+
     this.filterLoading = true;
   };
 
-  @action getPartner = async (page = 1) => {
-    console.log(toJS(this.filter_category));
-    console.log(page);
-    console.log(toJS(this.filter_region));
-
-    console.log(this.search_text);
+  @action getPartner = async (page = 1, click = 0) => {
     this.partner_list = [];
     this.category_ary = [];
-    console.log(toJS(this.category_ary));
-    this.resetDevCategory();
-    // console.log(toJS(this.category_dic));
-    //this.data_dt = [];
-    //console.log(this.filter_region);
+
     const token = localStorage.getItem("token");
     let req = { params: { page: page } };
     let temp = { params: { page: page } };
@@ -1387,7 +1419,6 @@ class Partner {
       req.params.city = this.filter_region;
     }
 
-    console.log(this.filter_category);
     if (this.filter_category) {
       //temp["category_middle__id"] = this.filter_category;
       // if(this.filter_category==1){
@@ -1395,7 +1426,6 @@ class Partner {
       // }
       switch (this.filter_category) {
         case 1:
-          console.log("1");
           req.params.category_middle__id = "2";
           break;
         case 2:
@@ -1430,13 +1460,6 @@ class Partner {
         req.params.history = this.search_text;
       }
     }
-    // console.log(toJS(this.search_class));
-    // if (this.search_text !== "") {
-    //   req.params.search = ParseInt(this.search_text);
-    // }
-
-    //console.log(temp);
-    console.log(req);
 
     await PartnerAPI.getPartners(req)
       .then(async (res) => {
@@ -1444,131 +1467,72 @@ class Partner {
         this.category_ary = [];
         this.category_name_ary = [];
         this.temp_category_name_ary;
+        this.category_count = 0;
 
         this.partner_list = await res.data.results;
         this.originPartnerList = this.partner_list;
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
-        console.log(toJS(this.partner_list));
+        await this.resetDevCategory();
+
         //this.category_ary = res.data.results.category_middle;
         this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-        this.partner_list.map((item, idx) => {
-          this.category_ary.push(item.category_middle);
-          //console.log(toJS(item));
-          // console.log(toJS(this.category_ary));
-          this.category_ary[idx].map((data, id) => {
-            //console.log(toJS(data));
-
-            // const request = {
-            //   id: data,
-            // };
-
-            // if(this.partner_list.length-1 === idx){
-
-            // }
-            // this.category_ary.map((data, id) => {
-            //   console.log(toJS(data));
-            // });
-            //   console.log(toJS(this.category_name_ary));
-
-            //   console.log(toJS(this.category_ary[idx]));
-            for (let i = 0; i < this.category_ary[idx].length; i++) {
-              const request = {
-                id: this.category_ary[idx][i],
-              };
-              // this.getPartnerCategory(request, i, idx);
-            }
-          });
+        await this.partner_list.map(async (item, idx) => {
+          await this.category_ary.push(item.category_middle);
+          this.category_count += 1;
         });
 
-        // //async function temp() {
-        let count = 0;
         await this.category_ary.map(async (data, id) => {
-          // console.log(toJS(data));
-          // console.log(id);
           await data.map(async (sub_data, index) => {
-            // console.log(toJS(sub_data));
-            // console.log(count++);
-            // console.log(id);
             const req = {
               id: sub_data,
             };
             if (this.isSearched) {
               this.exceptionCategory += sub_data + ",";
             }
-            //console.log(index);
-            await this.setCategoryDic(req, sub_data, id);
+
+            if (this.click_count != click) {
+              return;
+            }
+
+            await PartnerAPI.getPartnerCategory(req)
+              .then(async (res) => {
+                if (click == 0) {
+                  click += 1;
+                }
+
+                if (this.click_count == click) {
+                  if (!this.category_dic.hasOwnProperty(id)) {
+                    this.category_dic[id] = [];
+                  }
+                  this.category_dic[id] = await [
+                    ...this.category_dic[id],
+                    res.data.category,
+                  ];
+                } else {
+                  return;
+                }
+              })
+              .catch((e) => {
+                console.log(e);
+                console.log(e.response);
+              });
+            if (this.click_count != click) {
+              return;
+            }
           });
         });
-        // }
-        // temp();
-
-        // for(let i=0; i<this.category_ary.length; i++){
-        //   req = {
-        //     id: this.category_ary
-
-        //    };
-        // }
-
-        // // 2)
-        // PartnerAPI.getPartnerCategory(request)
-        //   .then((res) => {
-        //     console.log(toJS(res.data.category));
-        //     // this.category_ary[idx].push(res.data.category);
-
-        //     // if (idx === this.partner_list.length - 1) {
-        //     //   console.log("finish");
-        //     //   this.check_loading_category = true;
-        //     // }
-
-        //     console.log(toJS(this.category_ary[idx].length));
-        //     console.log(id);
-        //     console.log(toJS(this.category_ary[idx]));
-
-        //     if (this.category_ary[idx].length > id) {
-        //       console.log(
-        //         "조건조건조건조건조건조건조건조건조건조건조건조건"
-        //       );
-        //       this.temp_category_name_ary.push(res.data.category);
-        //       console.log(toJS(this.category_ary[idx].length));
-        //       console.log(id);
-        //       console.log(toJS(this.temp_category_name_ary));
-        //       if (this.category_ary[idx].length - 1 === id) {
-        //         this.category_name_ary.push(this.temp_category_name_ary);
-        //         this.temp_category_name_ary = [];
-        //         console.log(toJS(this.category_name_ary));
-        //       }
-
-        //       //this.category_ary[idx].push(res.data.category);
-
-        //       // if (idx === this.partner_list.length - 1) {
-        //       //   console.log("finish");
-        //       //   this.check_loading_category = true;
-        //       // }
-        //     }
-        //   })
-        //   .catch((e) => {
-        //     console.log(e);
-        //     console.log(e.response);
-        //   });
-
-        //            this.getPartnerCategory(request, 0, idx, id);
-
-        //this.getCategory();
-        //});
-
-        // console.log(toJS(this.partner_list));
-
-        //console.log(toJS(this.category_ary));
-        //console.log(toJS(this.category_name_ary));
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
     this.check_loading_develop = true;
-    console.log(this.check_loading_develop);
+
     this.filterLoading = true;
+    // if (this.click_count != click) {
+    //   return;
+    // }
   };
 
   @action getReview = async (page = 1, clientId = "") => {
@@ -1816,11 +1780,10 @@ class Partner {
   };
 
   @action getPartnerName = async (name, page = 1) => {
-    console.log("333");
     this.partnersList = [];
     const req = {
       params: {
-        request_name: name,
+        name: name,
         page: page,
       },
     };
@@ -1854,6 +1817,7 @@ class Partner {
       .then((res) => {
         console.log("create!!", res);
         this.resetReviewData();
+        this.reviewActiveIndex = 2;
       })
       .catch((e) => {
         console.log(e);
@@ -1861,19 +1825,40 @@ class Partner {
       });
   };
 
-  @action getReviewByPartner = async (id) => {
+  @action getReviewByPartner = async (id, page_nation = 0, page = 1) => {
     console.log(id);
-    this.partnerReviewList = [];
+    console.log(page_nation);
+    console.log(page);
+    if (page_nation == 1) {
+      this.partnerReviewList = [];
+    } else {
+      this.partnerAllReviewList = [];
+    }
+
     const req = {
       params: {
         partner_id: id,
+        page_nation: page_nation,
+        page: page,
       },
     };
 
     await PartnerAPI.getReviewByPartner(req)
       .then(async (res) => {
-        this.partnerReviewList = await this.partnerReviewList.concat(res.data);
+        if (page_nation == 1) {
+          this.partnerReviewList = await this.partnerReviewList.concat(
+            res.data
+          );
+          this.review_partner_count = res.data.count;
+          this.review_partner_page =
+            parseInt((this.review_partner_count - 1) / 10) + 1;
+        } else {
+          this.partnerAllReviewList = await this.partnerAllReviewList.concat(
+            res.data
+          );
+        }
         console.log(this.partnerReviewList);
+        console.log(this.partnerAllReviewList);
       })
       .catch((e) => {
         console.log(e);
@@ -1895,16 +1880,29 @@ class Partner {
   // }
 
   @action getClientNameById = async (id, idx) => {
+    console.log(id);
+    console.log(idx);
     const req = {
       params: null,
     };
     await PartnerAPI.getClient(id, req).then(async (res) => {
+      console.log(res.data);
       console.log(`${idx} : ${id} ============= ${res.data}`);
       this.clientInfoList = await this.clientInfoList.concat(res.data);
 
       // this.clientInfoList[id] = res.data;
-      console.log(this.clientInfoList);
+
+      // console.log(this.clientInfoList);
+
+      if (!this.review_client_obj.hasOwnProperty(id)) {
+        this.review_client_obj[idx] = [];
+      }
+      this.review_client_obj[idx] = await [
+        ...this.review_client_obj[idx],
+        res.data.user.username,
+      ];
     });
+    console.log(toJS(this.review_client_obj));
   };
 }
 

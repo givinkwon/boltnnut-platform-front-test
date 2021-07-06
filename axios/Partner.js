@@ -381,7 +381,7 @@ export function getPartnerName(req) {
 export function setPartnerReview(req) {
   return axios({
     method: "POST",
-    url: `${ROOT_URL}/partner-review/`,
+    url: `${ROOT_URL}/partnerreview/create/`,
     data: req.data ? req.data : null,
   });
 }
@@ -389,7 +389,7 @@ export function setPartnerReview(req) {
 export function getReviewByPartner(req) {
   return axios({
     method: "GET",
-    url: `${ROOT_URL}/partner-review/partner_filter/`,
+    url: `${ROOT_URL}/partnerreview/partner_filter/`,
     params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
   });

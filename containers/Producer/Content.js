@@ -47,7 +47,7 @@ class ManufacturerContentContainer extends React.Component {
     Partner.currentPage = 1;
 
     console.log("content mount");
-    await Partner.getPartner();
+    await Partner.getPartner(1, Partner.click_count);
 
     if (Partner.filter_category_ary.length === 1) {
       Partner.getCategory();
@@ -68,9 +68,6 @@ class ManufacturerContentContainer extends React.Component {
     Partner.filter_city_ary = [{ id: 0, city: "전체" }];
   }
 
-  componentDidUpdate() {
-    const { Partner } = this.props;
-  }
   movePage = (e) => {
     const { Partner, Auth } = this.props;
     e.preventDefault();
@@ -81,9 +78,10 @@ class ManufacturerContentContainer extends React.Component {
     Partner.ReviewActive = false;
     Partner.ReviewActiveIndex = -1;
     this.setState({ dropDownActive: false, dropDownIdx: -1 });
+    Partner.click_count += 1;
     Partner.subButtonActive
       ? Partner.getOtherPartner(newPage)
-      : Partner.getPartner(newPage);
+      : Partner.getPartner(newPage, Partner.click_count);
   };
 
   pageNext = (e) => {
@@ -97,9 +95,10 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      Partner.click_count += 1;
       Partner.subButtonActive
         ? Partner.getOtherPartner(Partner.currentPage)
-        : Partner.getPartner(Partner.currentPage);
+        : Partner.getPartner(Partner.currentPage, Partner.click_count);
     }
   };
 
@@ -114,16 +113,18 @@ class ManufacturerContentContainer extends React.Component {
       Partner.ReviewActive = false;
       Partner.ReviewActiveIndex = -1;
       this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      Partner.click_count += 1;
       Partner.subButtonActive
         ? Partner.getOtherPartner(Partner.currentPage)
-        : Partner.getPartner(Partner.currentPage);
+        : Partner.getPartner(Partner.currentPage, Partner.click_count);
     }
   };
 
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
+    console.log(Partner.modalActive);
 
-    if (!Partner.requestModalActive) {
+    if (!Partner.requestModalActive && !Partner.modalActive) {
       console.log("Detail click");
       Partner.category_name_list = null;
       Partner.partner_detail_list = [];
@@ -158,6 +159,13 @@ class ManufacturerContentContainer extends React.Component {
         <Background id="MyBackground">
           <Container>
             <Body>
+              {Partner.detailLoadingFlag && (
+                <>
+                  <LoadingComponent scale="30%" primary />
+                  <Layer />
+                </>
+              )}
+
               {/* {Partner.partner_list.length > 0 && Partner.isSearched && (
                 <SubButtonBox>
                   <SubButton
@@ -377,9 +385,6 @@ const NoResultBox = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const SubButtonBox = styled.div`
-  width: 100%;
-`;
 
 const SubButton = styled.div`
   display: flex;
@@ -394,53 +399,6 @@ const SubButton = styled.div`
     background: lightblue;
   }
 `;
-const region_data = [
-  {
-    id: 0,
-    name: "전체",
-    checked: "false",
-  },
-  {
-    id: 1,
-    name: "인천 남동|시화|반월공단",
-    checked: "false",
-  },
-  {
-    id: 2,
-    name: "인천 서구",
-    checked: "false",
-  },
-  {
-    id: 3,
-    name: "경기도 화성",
-    checked: "false",
-  },
-  {
-    id: 4,
-    name: "경기도 부천",
-    checked: "false",
-  },
-  {
-    id: 5,
-    name: "경기도 파주|양주|고양",
-    checked: "false",
-  },
-  {
-    id: 6,
-    name: "서울 문래동",
-    checked: "false",
-  },
-  {
-    id: 7,
-    name: "서울 성수동",
-    checked: "false",
-  },
-  {
-    id: 8,
-    name: "서울 을지로",
-    checked: "false",
-  },
-];
 
 const PageBar = styled.div`
   width: 351px;
@@ -500,13 +458,6 @@ const Main = styled.div`
     width: 1200px;
   }
 `;
-const Filter = styled.div`
-  width: 220px;
-  border-right: 1px solid #e1e2e4;
-  margin-right: 33px;
-  padding-right: 9px;
-  box-sizing: border-box;
-`;
 
 const Header = styled.div`
   width: 993px;
@@ -543,6 +494,23 @@ const Font14 = styled(Content.FontSize14)`
   line-height: 30px !important;
   letter-spacing: -0.14px !important;
   color: #0933b3;
+`;
+
+const LoadingComponent = styled(ButtonSpinnerComponent)`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+`;
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 export default ManufacturerContentContainer;

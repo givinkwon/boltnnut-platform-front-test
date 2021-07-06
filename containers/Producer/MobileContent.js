@@ -11,10 +11,10 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import ProposalCard from "./ProposalCard";
 
-import Select from "./MobileSelect";
-import RadioBox from "./RadioBox";
+import ButtonSpinnerComponent from "components/ButtonSpinner";
+
 import { toJS } from "mobx";
-import MobileSearchBar from "./MobileSearchBar";
+
 import Modal from "./RequestModal";
 
 const pass1 = "static/images/pass1.png";
@@ -125,6 +125,7 @@ class MobileManufacturerContentContainer extends React.Component {
 
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
+    console.log("pushtodetail");
     Partner.category_name_list = null;
     Partner.partner_detail_list = [];
     Partner.partner_detail_list.push({ item: item });
@@ -169,6 +170,13 @@ class MobileManufacturerContentContainer extends React.Component {
         <Background id="MyBackground">
           <Container style={{ display: "block" }}>
             <Body active={this.props.Partner.check_click_filter}>
+              {Partner.detailLoadingFlag && (
+                <>
+                  <LoadingComponent scale="30%" primary />
+                  <LoadingLayer />
+                </>
+              )}
+
               <Main>
                 <div>
                   <Header
@@ -177,9 +185,9 @@ class MobileManufacturerContentContainer extends React.Component {
                     }}
                     active={Partner.subButtonActive}
                   >
-                    <Font15>
+                    {/* <Font15>
                       <span>{Partner.partner_count}개</span>의 파트너
-                    </Font15>
+                    </Font15> */}
                     <div>
                       <div
                         onClick={() => {
@@ -721,6 +729,23 @@ const Description = styled.div`
   div:nth-of-type(2) {
     // margin-left: 10px;
   }
+`;
+
+const LoadingComponent = styled(ButtonSpinnerComponent)`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+`;
+const LoadingLayer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 export default MobileManufacturerContentContainer;

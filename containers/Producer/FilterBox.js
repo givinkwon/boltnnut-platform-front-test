@@ -36,36 +36,38 @@ class FilterBoxContainer extends React.Component {
     let partFilterAry = [];
     let temp = [];
 
+    // console.log(toJS(`1 : ${Partner.filterLoading}`));
     if (filter === "filter" || filter === "mobileFilter") {
+      // Partner.filterLoading = false;
+      // console.log(toJS(`2 : ${Partner.filterLoading}`));
+      await Partner.resetDevCategory();
       if (this.props.Partner.filter_category_idx !== idx) {
         this.setState({ index: idx });
         this.props.Partner.filter_category_idx = idx;
         Partner.filter_category = item.id;
         console.log(toJS(Partner.filter_category));
-
-        Partner.partner_next = null;
-        Partner.partner_count = null;
-        Partner.currentPage = 1;
-        await Partner.resetDevCategory();
-        await Partner.getPartner();
       } else {
         this.props.Partner.filter_category_idx = -1;
         Partner.filter_category = 0;
         console.log(toJS(Partner.filter_category));
 
-        Partner.partner_next = null;
-        Partner.partner_count = null;
-        Partner.currentPage = 1;
-        await Partner.resetDevCategory();
-        await Partner.getPartner();
+        // Partner.partner_next = null;
+        // Partner.partner_count = null;
+        // Partner.currentPage = 1;
+        // await Partner.resetDevCategory();
+        // await Partner.getPartner();
       }
+      Partner.partner_next = null;
+      Partner.partner_count = null;
+      Partner.currentPage = 1;
+      Partner.click_count += 1;
+      await Partner.getPartner(Partner.currentPage, Partner.click_count);
     }
   };
 
   activeHandler = (idx, filter) => {
     if (this.props.Partner.filterArray[idx]) {
       if (filter === "filter" || filter === "mobileFilter") {
-
         if (idx === this.props.Partner.filter_category_idx) {
           return true;
         } else {
@@ -99,7 +101,9 @@ class FilterBoxContainer extends React.Component {
             return (
               <Item
                 onClick={() => {
+                  // if (this.props.Partner.filterLoading) {
                   this.onClickFilterHandler(item, item.id - 1, filter);
+                  // }
                   console.log(item);
                 }}
                 active={this.activeHandler(item.id - 1, filter)}

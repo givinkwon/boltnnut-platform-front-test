@@ -38,7 +38,8 @@ class RadioBoxContainer extends React.Component {
         Partner.currentPage = 1;
         console.log(Partner.radiobox_checked_idx);
         Partner.category_dic = {};
-        Partner.getPartner();
+        Partner.click_count += 1;
+        Partner.getPartner(Partner.currentPage, Partner.click_count);
       } else {
         Partner.radiobox_checked_idx = -1;
         Partner.filter_region = 0;
@@ -47,7 +48,8 @@ class RadioBoxContainer extends React.Component {
         // this.count = 0;
         Partner.currentPage = 1;
         Partner.category_dic = {};
-        Partner.getPartner();
+        Partner.click_count += 1;
+        Partner.getPartner(Partner.currentPage, Partner.click_count);
       }
     } else {
       if (Partner.radiobox_category_checked_idx !== idx) {
@@ -59,7 +61,8 @@ class RadioBoxContainer extends React.Component {
         Partner.currentPage = 1;
         console.log(Partner.radiobox_category_checked_idx);
         Partner.category_dic = {};
-        Partner.getPartner();
+        Partner.click_count += 1;
+        Partner.getPartner(Partner.currentPage, Partner.click_count);
       }
     }
   };

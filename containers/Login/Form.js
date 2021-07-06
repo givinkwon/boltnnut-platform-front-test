@@ -26,9 +26,11 @@ class FormConatiner extends React.Component {
   componentDidMount() {
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+    console.log("didmount");
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
+    console.log("unmount");
   }
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
@@ -44,6 +46,7 @@ class FormConatiner extends React.Component {
     }
   };
   toSignUp = () => {
+    console.log("signup");
     this.props.Auth.setStep(0);
     Router.push("/signup");
   };

@@ -18,11 +18,15 @@ import MobileRequestDone from "./MobileRequestDone";
 class ManufacturerConatiner extends React.Component {
   async componentDidMount() {
     const { Auth, Partner } = this.props;
+    console.log("producer didmount");
     Partner.init();
     Partner.newIndex = 0;
     Partner.mobileRequestIndex = 0;
     await Auth.checkLogin();
   }
+  componentWillUnmount = () => {
+    console.log("producer unmount");
+  };
 
   render() {
     const { Auth, Partner } = this.props;
