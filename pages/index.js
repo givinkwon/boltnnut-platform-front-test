@@ -35,6 +35,7 @@ class Home extends React.Component {
     }, 1000);
 
     await this.props.Auth.checkLogin();
+    console.log("배포 테스트");
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
