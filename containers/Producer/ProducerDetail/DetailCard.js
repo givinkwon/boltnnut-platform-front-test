@@ -81,37 +81,37 @@ class DetailCardContainer extends React.Component {
     //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
     // }
 
-    let total_consult_score = 0;
-    let total_kindness_score = 0;
-    let total_communication_score = 0;
-    let total_profession_score = 0;
-    // console.log(Partner.partnerReviewList);
+    // let total_consult_score = 0;
+    // let total_kindness_score = 0;
+    // let total_communication_score = 0;
+    // let total_profession_score = 0;
+    // // console.log(Partner.partnerReviewList);
 
-    await Partner.partnerAllReviewList[0].data.map((item, idx) => {
-      total_consult_score += item.consult_score;
-      total_kindness_score += item.kindness_score;
-      total_communication_score += item.communication_score;
-      total_profession_score += item.profession_score;
-    });
-    this.setState({
-      avg_consult_score:
-        total_consult_score / Partner.partnerAllReviewList[0].data.length,
-      avg_kindness_score:
-        total_kindness_score / Partner.partnerAllReviewList[0].data.length,
-      avg_communication_score:
-        total_communication_score / Partner.partnerAllReviewList[0].data.length,
-      avg_profession_score:
-        total_profession_score / Partner.partnerAllReviewList[0].data.length,
-    });
-    console.log(total_consult_score);
-    console.log(total_kindness_score);
-    console.log(total_communication_score);
-    console.log(total_profession_score);
-    console.log(Partner.partnerAllReviewList[0].data.length);
+    // await Partner.partnerAllReviewList[0].data.map((item, idx) => {
+    //   total_consult_score += item.consult_score;
+    //   total_kindness_score += item.kindness_score;
+    //   total_communication_score += item.communication_score;
+    //   total_profession_score += item.profession_score;
+    // });
+    // this.setState({
+    //   avg_consult_score:
+    //     total_consult_score / Partner.partnerAllReviewList[0].data.length,
+    //   avg_kindness_score:
+    //     total_kindness_score / Partner.partnerAllReviewList[0].data.length,
+    //   avg_communication_score:
+    //     total_communication_score / Partner.partnerAllReviewList[0].data.length,
+    //   avg_profession_score:
+    //     total_profession_score / Partner.partnerAllReviewList[0].data.length,
+    // });
+    // console.log(total_consult_score);
+    // console.log(total_kindness_score);
+    // console.log(total_communication_score);
+    // console.log(total_profession_score);
+    // console.log(Partner.partnerAllReviewList[0].data.length);
 
-    console.log(5 / 2);
-    console.log(this.state.avg_consult_score);
-    console.log(Math.floor(this.state.avg_consult_score));
+    // console.log(5 / 2);
+    // console.log(this.state.avg_consult_score);
+    // console.log(Math.floor(this.state.avg_consult_score));
   };
   // componentWillUnmount = () => {};
 
@@ -269,7 +269,7 @@ class DetailCardContainer extends React.Component {
               )}
             </div>
           </DetailInfoBox>
-          <ReviewBox>
+          {/* <ReviewBox>
             <label>평가 후기</label>
 
             <SummaryBox>
@@ -323,8 +323,8 @@ class DetailCardContainer extends React.Component {
                   </div>
                 </subscore>
               </header>
-            </SummaryBox>
-            <content>
+            </SummaryBox> */}
+          {/* <content>
               {console.log(toJS(Partner.partnerReviewList))}
               {Partner.partnerReviewList &&
                 Partner.partnerReviewList[0] &&
@@ -337,8 +337,8 @@ class DetailCardContainer extends React.Component {
                     />
                   );
                 })}
-            </content>
-            {/* {Partner.reviewWritingModalActive && (
+            </content> */}
+          {/* {Partner.reviewWritingModalActive && (
               <Layer>
                 <span>
                   <Modal
@@ -350,7 +350,7 @@ class DetailCardContainer extends React.Component {
               </Layer>
             )} */}
 
-            <PageBar>
+          {/* <PageBar>
               <img
                 src={pass1}
                 style={{
@@ -444,7 +444,7 @@ class DetailCardContainer extends React.Component {
                 onClick={this.pageNext}
               />
             </PageBar>
-          </ReviewBox>
+          </ReviewBox> */}
         </Card>
       </>
     );

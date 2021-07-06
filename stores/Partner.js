@@ -1817,6 +1817,7 @@ class Partner {
       .then((res) => {
         console.log("create!!", res);
         this.resetReviewData();
+        this.reviewActiveIndex = 2;
       })
       .catch((e) => {
         console.log(e);
