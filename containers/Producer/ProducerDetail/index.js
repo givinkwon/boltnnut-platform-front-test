@@ -32,10 +32,11 @@ class ProducerDetailConatiner extends React.Component {
                   )}
                   {Partner.reviewActiveIndex == 2 && (
                     <CompleteContainer
+                      purpose="리뷰"
                       width={this.props.width}
                       Header="리뷰 작성이 완료되었습니다"
-                      MainOne="MainOne"
-                      MainTwo="MainTwo"
+                      MainOne="소중한 리뷰를 작성해 주셔서 감사합니다"
+                      MainTwo="워딩~~~~~~~~~"
                       ButtonOne="홈으로 가기"
                       ButtonTwo="제조사 찾기로 가기"
                       RouterOne=""

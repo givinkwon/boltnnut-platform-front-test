@@ -38,7 +38,7 @@ const onError = (e) => {
   console.log(e, "error in file-viewer");
 };
 
-@inject("Partner")
+@inject("Partner", "Auth")
 @observer
 class DetailCardContainer extends React.Component {
   state = {
@@ -52,19 +52,27 @@ class DetailCardContainer extends React.Component {
     const { Partner } = this.props;
     // console.log("requestmodal open click");
     // this.setState({ modalOpen: true });
-    Partner.reviewWritingModalActive = true;
+    Partner.reviewWritingModalActive = false;
   };
   closeModal = () => {
     const { Partner } = this.props;
     // console.log("requestmodal close click");
 
-    Partner.reviewWritingModalActive = false;
+    Partner.reviewWritingModalActive = true;
   };
 
   componentDidMount = async () => {
-    const { Partner } = this.props;
+    const { Partner, Auth } = this.props;
     console.log(toJS(Partner.partnerAllReviewList));
     console.log(toJS(Partner.partnerReviewList));
+    console.log(toJS(Auth));
+    console.log(toJS(Partner.review_partner_page));
+
+    if (Auth.logged_in_client) {
+      Partner.checkReviewWriting(Auth.logged_in_client.id);
+      // Partner.checkReviewWriting(5052);
+    }
+
     Partner.reviewCurrentPage = 1;
     Partner.detailLoadingFlag = false;
     if (Partner.partner_detail_list.length == 0) {
@@ -81,28 +89,31 @@ class DetailCardContainer extends React.Component {
     //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
     // }
 
-    // let total_consult_score = 0;
-    // let total_kindness_score = 0;
-    // let total_communication_score = 0;
-    // let total_profession_score = 0;
-    // // console.log(Partner.partnerReviewList);
+    let total_consult_score = 0;
+    let total_kindness_score = 0;
+    let total_communication_score = 0;
+    let total_profession_score = 0;
+    // console.log(Partner.partnerReviewList);
 
-    // await Partner.partnerAllReviewList[0].data.map((item, idx) => {
-    //   total_consult_score += item.consult_score;
-    //   total_kindness_score += item.kindness_score;
-    //   total_communication_score += item.communication_score;
-    //   total_profession_score += item.profession_score;
-    // });
-    // this.setState({
-    //   avg_consult_score:
-    //     total_consult_score / Partner.partnerAllReviewList[0].data.length,
-    //   avg_kindness_score:
-    //     total_kindness_score / Partner.partnerAllReviewList[0].data.length,
-    //   avg_communication_score:
-    //     total_communication_score / Partner.partnerAllReviewList[0].data.length,
-    //   avg_profession_score:
-    //     total_profession_score / Partner.partnerAllReviewList[0].data.length,
-    // });
+    (await Partner.partnerAllReviewList[0]) &&
+      Partner.partnerAllReviewList[0].data.map((item, idx) => {
+        total_consult_score += item.consult_score;
+        total_kindness_score += item.kindness_score;
+        total_communication_score += item.communication_score;
+        total_profession_score += item.profession_score;
+      });
+    Partner.partnerAllReviewList[0] &&
+      this.setState({
+        avg_consult_score:
+          total_consult_score / Partner.partnerAllReviewList[0].data.length,
+        avg_kindness_score:
+          total_kindness_score / Partner.partnerAllReviewList[0].data.length,
+        avg_communication_score:
+          total_communication_score /
+          Partner.partnerAllReviewList[0].data.length,
+        avg_profession_score:
+          total_profession_score / Partner.partnerAllReviewList[0].data.length,
+      });
     // console.log(total_consult_score);
     // console.log(total_kindness_score);
     // console.log(total_communication_score);
@@ -113,32 +124,38 @@ class DetailCardContainer extends React.Component {
     // console.log(this.state.avg_consult_score);
     // console.log(Math.floor(this.state.avg_consult_score));
   };
-  // componentWillUnmount = () => {};
+  componentWillUnmount = () => {
+    const { Partner, Auth } = this.props;
+    Partner.review_partner_page = 1;
+  };
 
   movePage = (e) => {
     console.log("movePage");
     const { Partner, Auth } = this.props;
-    e.preventDefault();
+    // e.preventDefault();
     const newPage = e.target.innerText * 1;
-    Partner.reviewCurrentPage = newPage;
-    // Partner.resetDevCategory();
-    // Partner.check_loading_develop = false;
-    // Partner.ReviewActive = false;
-    // Partner.ReviewActiveIndex = -1;
-    // this.setState({ dropDownActive: false, dropDownIdx: -1 });
-    // Partner.click_count += 1;
 
-    Partner.getReviewByPartner(
-      Partner.partner_detail_list[0].item.id,
-      1,
-      newPage
-    );
+    if (newPage != Partner.reviewCurrentPage) {
+      Partner.reviewCurrentPage = newPage;
+      // Partner.resetDevCategory();
+      // Partner.check_loading_develop = false;
+      // Partner.ReviewActive = false;
+      // Partner.ReviewActiveIndex = -1;
+      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      // Partner.click_count += 1;
+
+      Partner.getReviewByPartner(
+        Partner.partner_detail_list[0].item.id,
+        1,
+        newPage
+      );
+    }
   };
 
   pageNext = (e) => {
     console.log("pageNext");
     const { Partner } = this.props;
-    e.preventDefault();
+    // e.preventDefault();
     if (Partner.reviewCurrentPage < Partner.review_partner_page) {
       const nextPage = Partner.reviewCurrentPage + 1;
       Partner.reviewCurrentPage = nextPage;
@@ -159,7 +176,7 @@ class DetailCardContainer extends React.Component {
   pagePrev = (e) => {
     console.log("pagePrev");
     const { Partner } = this.props;
-    e.preventDefault();
+    // e.preventDefault();
     if (Partner.reviewCurrentPage > 1) {
       const previousPage = Partner.reviewCurrentPage - 1;
       Partner.reviewCurrentPage = previousPage;
@@ -188,7 +205,7 @@ class DetailCardContainer extends React.Component {
         <Card
           width={width}
           onContextMenu={(e) => {
-            e.preventDefault();
+            // e.preventDefault();
           }}
         >
           <HeaderBox>
@@ -206,7 +223,7 @@ class DetailCardContainer extends React.Component {
           </HeaderBox>
           <div
             onCentextMenu={(e) => {
-              e.preventDefault();
+              // e.preventDefault();
             }}
             style={{
               position: "fixed",
@@ -270,7 +287,7 @@ class DetailCardContainer extends React.Component {
               )}
             </div>
           </DetailInfoBox>
-          {/* <ReviewBox>
+          <ReviewBox>
             <label>평가 후기</label>
 
             <SummaryBox>
@@ -324,8 +341,8 @@ class DetailCardContainer extends React.Component {
                   </div>
                 </subscore>
               </header>
-            </SummaryBox> */}
-          {/* <content>
+            </SummaryBox>
+            <content>
               {console.log(toJS(Partner.partnerReviewList))}
               {Partner.partnerReviewList &&
                 Partner.partnerReviewList[0] &&
@@ -338,20 +355,48 @@ class DetailCardContainer extends React.Component {
                     />
                   );
                 })}
-            </content> */}
-          {/* {Partner.reviewWritingModalActive && (
+            </content>
+            {/* reviewWriting */}
+            {!Partner.reviewWritingModalActive ? (
               <Layer>
                 <span>
                   <Modal
                     width={width}
-                    open={Partner.reviewWritingModalActive}
+                    open={!Partner.reviewWritingModalActive}
                     close={this.closeModal}
-                  ></Modal>
+                    purpose="FirstReview"
+                    headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ?"
+                    headerTwo="첫 평가를 작성해주세요"
+                    bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
+                    bodyTwo="업체 평가 작성이 가능합니다."
+                  />
                 </span>
               </Layer>
-            )} */}
+            ) : (
+              Partner.review_partner_page === 1 &&
+              Partner.partnerReviewList.length === 0 && (
+                <Layer>
+                  <span>
+                    <Modal
+                      width={width}
+                      open={!Partner.partnerReviewList.length}
+                      close={this.closeModal}
+                      purpose="NoReview"
+                      headerOne="현재 작성 된 리뷰가 없습니다"
+                      headerTwo="첫 평가를 작성해주세요"
+                      bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
+                      bodyTwo="업체 평가 작성이 가능합니다."
+                    />
+                  </span>
+                </Layer>
+              )
+            )}
 
-          {/* <PageBar>
+            {/* <NoReviewItem>
+              <span>현재 작성 된 리뷰가 없습니다</span>
+            </NoReviewItem> */}
+
+            <PageBar acitve={!Partner.reviewWritingModalActive}>
               <img
                 src={pass1}
                 style={{
@@ -360,8 +405,15 @@ class DetailCardContainer extends React.Component {
                       ? 0.4
                       : 1,
                   cursor: "pointer",
+                  display:
+                    !Partner.partnerReviewList[0] &&
+                    Partner.review_partner_page === 1 &&
+                    "none",
                 }}
-                onClick={this.pagePrev}
+                onClick={() => {
+                  console.log("lll");
+                  this.pagePrev();
+                }}
               />
               <PageCount
                 onClick={this.movePage}
@@ -441,11 +493,15 @@ class DetailCardContainer extends React.Component {
                       ? 0.4
                       : 1,
                   cursor: "pointer",
+                  display:
+                    !Partner.partnerReviewList[0] &&
+                    Partner.review_partner_page === 1 &&
+                    "none",
                 }}
                 onClick={this.pageNext}
               />
             </PageBar>
-          </ReviewBox> */}
+          </ReviewBox>
         </Card>
       </>
     );
@@ -723,7 +779,7 @@ const Layer = styled.div`
   bottom: 0;
   z-index: 99;
   // opacity: 0.1;
-  background-color: rgba(0, 0, 0, 0.5);
+  // background-color: rgba(0, 0, 0, 0.5);
 
   > span {
     display: flex;
@@ -888,6 +944,7 @@ const PageBar = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-between;
+  filter: ${(props) => (props.acitve ? "blur(9px)" : "")};
 `;
 
 const PageCount = styled.span`
@@ -909,3 +966,5 @@ const PageCount = styled.span`
       color: #0933b3;
     `}
 `;
+
+const NoReviewItem = styled.div``;

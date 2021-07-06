@@ -42,7 +42,6 @@ class ProposalCard extends React.Component {
   };
 
   openModal = (user_phone) => {
-    console.log("open click");
     this.props.Partner.modalActive = true;
     if (!user_phone) {
       this.props.Partner.modalUserPhone = "전화번호 없음";
@@ -53,11 +52,9 @@ class ProposalCard extends React.Component {
 
   closeModal = (e) => {
     if (e) {
-      console.log("e 존재");
       e.stopPropagation();
     }
 
-    console.log("close click");
     this.setState({ modalOpen: false });
 
     this.props.Partner.modalActive = false;
@@ -200,9 +197,7 @@ class ProposalCard extends React.Component {
         Partner.partner_detail_list = [];
         await Partner.partner_detail_list.push({ item: data });
 
-        console.log(Partner.partner_detail_list[0].item.id);
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
-        console.log(toJS(Partner.partner_detail_list[0]));
         await Partner.getReviewByPartner(
           Partner.partner_detail_list[0].item.id,
           1,
@@ -256,6 +251,7 @@ class ProposalCard extends React.Component {
     const { data, width, Partner, categoryData, idx } = this.props;
 
     let category_data;
+    // console.log(data.logo);
 
     return (
       <>
@@ -264,9 +260,7 @@ class ProposalCard extends React.Component {
             <Card
               active={this.state.active}
               onClick={(e) => {
-                console.log(this.props.Partner.modalActive);
                 if (!this.props.Partner.modalActive) {
-                  console.log("x");
                   this.cardClick(e);
                 }
               }}

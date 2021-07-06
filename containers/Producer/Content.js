@@ -43,6 +43,7 @@ class ManufacturerContentContainer extends React.Component {
 
   async componentDidMount() {
     const { Partner } = this.props;
+    Partner.detailLoadingFlag = false;
 
     Partner.currentPage = 1;
 

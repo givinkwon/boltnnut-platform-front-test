@@ -16,30 +16,10 @@ class ReviewCard extends React.Component {
   };
 
   componentDidMount = async () => {
-    console.log("componentDidMount");
-
     const { Partner, data, totalCount, idx } = this.props;
-    // console.log(data);
-    // console.log(totalCount);
     if (data) {
-      // console.log(`client id : ${data.client}, idx : ${idx}`);
-      // await Partner.getClientInfo(data.client);
       await Partner.getClientNameById(data.client, idx);
-
-      // console.log(Partner.clientInfo);
-      // console.log(Partner.clientInfoList);
-      // Partner.clientInfo.name
-      // Partner.clientInfo.user.username
     }
-
-    // const { Partner, Auth } = this.props;
-    // await Partner.getReview();
-
-    // console.log(toJS(Partner.review_ary));
-    // await Partner.getClientEmail();
-    // if (Partner.review_user_ary) {
-    //   this.setState({ g: 3 });
-    // }
   };
   componentWillUnmount = () => {
     const { Partner } = this.props;
@@ -52,29 +32,30 @@ class ReviewCard extends React.Component {
 
   render() {
     const { data, width, Partner, categoryData, idx, totalCount } = this.props;
-    // console.log(data);
-    // console.log(toJS(Partner.partnerReviewList));
-    // console.log(toJS(Partner.clientInfoList));
+
     return (
       <>
-        <Card>
-          {/* {Partner.clientInfo.user ? (
-            <name>{Partner.clientInfo.user.username}</name>
-          ) : (
-            <name>***</name>
-          )} */}
+        <Card active={!Partner.reviewWritingModalActive}>
+          {Partner.review_client_obj[idx] &&
+            Partner.review_client_obj[idx].toString().length && (
+              <>
+                <name>
+                  {`${Partner.review_client_obj[idx]
+                    .toString()
+                    .substr(0, 2)
+                    .replace(/ /gi, "")}
+                  ${"*".repeat(
+                    Partner.review_client_obj[idx].toString().length - 2
+                  )}님`}
+                </name>
+              </>
+            )}
 
-          {/* {Partner.clientInfoList[idx] ? (
-            <name>{Partner.clientInfoList[idx].user.username}</name>
-          ) : (
-            <name>***</name>
-          )} */}
-
-          {Partner.review_client_obj[idx] ? (
+          {/* {Partner.review_client_obj[idx] ? (
             <name>{Partner.review_client_obj[idx]}</name>
           ) : (
             <name>***</name>
-          )}
+          )} */}
 
           {/* {Partner.clientInfoList[data.client] ? (
             <name>{Partner.clientInfoList[data.client].user.username}</name>
@@ -91,31 +72,11 @@ class ReviewCard extends React.Component {
               />
             </span>
             <date>{data.date}</date>
-            {/* <span>{`   ${item.score}`}</span> */}
           </score>
+
           <history>{data.projectname}</history>
-          {/* <history>
-            {Partner.review_client_obj &&
-              console.log(`${idx} ++++++ ${Partner.review_client_obj[idx]}`)}
-
-            {Partner.review_client_obj && Partner.review_client_obj[idx]}
-          </history> */}
-
           <content>{data.content}</content>
-
-          {/* {Partner.review_user_ary && (
-                <name>{Partner.review_user_ary[idx]}</name>
-              )} */}
-
-          {/* <content>{item.content}</content> */}
         </Card>
-
-        {/* {Partner.loadReviewData === -1 && (
-          <NoCard reviewDone={Partner.review_done}>
-            <span>등록된 리뷰가 없습니다</span>
-          </NoCard>
-          // <h1></h1>
-        )} */}
       </>
     );
   }
@@ -125,6 +86,7 @@ export default ReviewCard;
 
 const stars = [1, 2, 3, 4, 5];
 const Card = styled.div`
+  filter: ${(props) => (props.active ? "blur(9px)" : "")};
   //border: 3px solid green;
   width: 100%;
   //height: 30px;
@@ -159,7 +121,7 @@ const Card = styled.div`
   > name {
     font-size: 18px;
     color: #191919;
-    line-height: 27px;
+    // line-height: 27px;
     letter-spacing: -0.45px;
     font-weight: bold;
   }

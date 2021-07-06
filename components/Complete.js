@@ -4,8 +4,17 @@ import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
 import Router from "next/router";
+import { inject, observer } from "mobx-react";
 
+@inject("Auth", "Partner")
+@observer
 class Complete extends React.Component {
+  componentWillUnmount = () => {
+    const { Auth, Partner, purpose } = this.props;
+    if (purpose == "리뷰") {
+      Partner.reviewActiveIndex = 0;
+    }
+  };
   render() {
     const {
       Header,
@@ -15,6 +24,7 @@ class Complete extends React.Component {
       RouterOne,
       ButtonTwo,
       RouterTwo,
+      purpose,
     } = this.props;
     return (
       <Background>

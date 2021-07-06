@@ -123,7 +123,7 @@ class Partner {
   @observable ReviewActive = false;
   @observable reviewModalActive = false;
   @observable ReviewActiveIndex = 1;
-  @observable reviewWritingModalActive = true;
+  @observable reviewWritingModalActive = false;
 
   @observable modalUserPhone = "";
   @observable filterFile = false;
@@ -1829,6 +1829,8 @@ class Partner {
     console.log(id);
     console.log(page_nation);
     console.log(page);
+    console.log(this.review_partner_page);
+    // this.review_partner_page = 0;
     if (page_nation == 1) {
       this.partnerReviewList = [];
     } else {
@@ -1863,6 +1865,25 @@ class Partner {
       .catch((e) => {
         console.log(e);
         console.log(e.response);
+      });
+  };
+
+  @action checkReviewWriting = async (client_id) => {
+    console.log(client_id);
+    const req = {
+      params: {
+        client_id: client_id,
+      },
+    };
+
+    await PartnerAPI.checkReviewWriting(req)
+      .then((res) => {
+        this.reviewWritingModalActive = true;
+        console.log(res);
+      })
+      .catch((e) => {
+        this.reviewWritingModalActive = false;
+        console.log(e);
       });
   };
 

@@ -57,6 +57,10 @@ class ReviewPage extends React.Component {
 
   componentWillUnmount = () => {
     console.log("22222222222222222222222222");
+    const { Partner } = this.props;
+    if (Partner.reviewActiveIndex != 2) {
+      Partner.reviewActiveIndex = 0;
+    }
   };
 
   componentDidMount = () => {
