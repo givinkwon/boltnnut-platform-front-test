@@ -186,6 +186,7 @@ const ModalBox = styled.div`
     //background-color: blanchedalmond;
     //border: 1px solid blue;
     > header {
+      word-break: keep-all;
       position: relative;
       //   padding: 16px;
       font-weight: bold;
@@ -195,6 +196,7 @@ const ModalBox = styled.div`
       line-height: 44px;
       letter-spacing: -0.5px;
       color: #282c36;
+      height: 45%;
       > div:nth-of-type(1) {
         line-height: 0.78;
       }
@@ -203,6 +205,9 @@ const ModalBox = styled.div`
       background-color: white;
       text-align: center;
       height: 38%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       > div {
         display: flex;
@@ -316,8 +321,96 @@ const ModalBox = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    top: 30%;
+    height: 230px;
+    width: 60%;
+    right: 20%;
+    padding-top: 30px;
+    > section {
+      max-width: 900px;
+      width: 90%;
+      height: 87%;
+      margin: 0 auto;
+      > header {
+        font-size: 16px;
+        line-height: 1.48;
+        letter-spacing: -0.5px;
+
+        > div:nth-of-type(1) {
+          line-height: 1.48;
+        }
+      }
+      > main {
+        height: 45%;
+        > div {
+          p {
+            font-size: 12px;
+            line-height: 24px;
+          }
+        }
+      }
+      > footer {
+        > div {
+          width: 160px;
+          height: 30px;
+
+          > span {
+            font-size: 14px;
+            line-height: 77px;
+          }
+        }
+      }
+    }
+    > button {
+      font-size: 18px;
+      margin: 10px 10px 0 0;
+    }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    top: 30%;
+    height: 230px;
+    width: 60%;
+    right: 20%;
+    padding-top: 30px;
+    > section {
+      max-width: 900px;
+      width: 90%;
+      height: 87%;
+      margin: 0 auto;
+      > header {
+        font-size: 18px;
+        line-height: 1.48;
+        letter-spacing: -0.5px;
+
+        > div:nth-of-type(1) {
+          line-height: 1.48;
+        }
+      }
+      > main {
+        height: 45%;
+        > div {
+          p {
+            font-size: 14px;
+            line-height: 24px;
+          }
+        }
+      }
+      > footer {
+        > div {
+          width: 180px;
+          height: 36px;
+
+          > span {
+            font-size: 16px;
+            line-height: 77px;
+          }
+        }
+      }
+    }
+    > button {
+      font-size: 21px;
+      margin: 10px 10px 0 0;
+    }
   }
   @media (min-width: 1300px) {
   }

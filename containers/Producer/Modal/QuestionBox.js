@@ -164,4 +164,77 @@ const Card = styled.div`
       font-weight: normal;
     }
   }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+    height: 239px;
+
+    padding: 13px 0 36px 0;
+
+    header {
+      margin-bottom: 30px;
+      span {
+        font-size: 18px;
+      }
+    }
+    main {
+      margin-bottom: 27px;
+
+      div:nth-child(odd) {
+        width: 44px;
+        height: 44px;
+
+        > div {
+          width: 16px;
+          height: 16px;
+          border-radius: 8px;
+        }
+      }
+      div:nth-child(even) {
+        width: 189px;
+        height: 0px;
+      }
+    }
+    footer {
+      span {
+        font-size: 12px;
+      }
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+    height: 250px;
+
+    padding: 13px 0 45px 0;
+
+    header {
+      margin-bottom: 36px;
+      span {
+        font-size: 21px;
+      }
+    }
+    main {
+      margin-bottom: 30px;
+
+      div:nth-child(odd) {
+        width: 48px;
+        height: 48px;
+
+        > div {
+          width: 18px;
+          height: 18px;
+          border-radius: 9px;
+        }
+      }
+      div:nth-child(even) {
+        width: 189px;
+        height: 0px;
+      }
+    }
+    footer {
+      span {
+        font-size: 14px;
+      }
+    }
+  }
 `;

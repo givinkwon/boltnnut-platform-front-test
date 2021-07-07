@@ -510,8 +510,150 @@ const ModalBox = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    top: 6%;
+
+    width: 83%;
+    right: 8%;
+
+    padding: 46px 0 48px 80px;
+
+    height: 90vh;
+
+    > section {
+      max-width: 900px;
+      width: 90%;
+      height: 87%;
+
+      > header {
+        font-size: 16px;
+
+        margin-bottom: 10px;
+      }
+      > main {
+        padding-bottom: 21px;
+
+        > div {
+          input {
+            padding: 0;
+            padding-left: 10px;
+            height: 42px;
+
+            font-size: 16px;
+
+            width: 90%;
+
+            ::placeholder {
+              font-size: 16px;
+            }
+          }
+          > img {
+            width: 20px;
+            height: 20px;
+
+            right: 30px;
+          }
+        }
+      }
+      > content {
+        width: 100%;
+        height: 100px;
+        > div {
+          height: 50vh;
+        }
+      }
+      > footer {
+        margin-top: 30px;
+
+        > div {
+          width: 210px;
+          height: 46px;
+
+          > span {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+    > button {
+      font-size: 17px;
+
+      margin: 10px 10px 0 0;
+
+      border-radius: 50%;
+    }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    top: 6%;
+
+    width: 83%;
+    right: 8%;
+
+    padding: 46px 0 48px 80px;
+
+    height: 90vh;
+
+    > section {
+      max-width: 900px;
+      width: 90%;
+      height: 87%;
+
+      > header {
+        font-size: 18px;
+
+        margin-bottom: 10px;
+      }
+      > main {
+        padding-bottom: 21px;
+
+        > div {
+          input {
+            padding: 0;
+            padding-left: 10px;
+            height: 45px;
+
+            font-size: 18px;
+
+            width: 90%;
+
+            ::placeholder {
+              font-size: 18px;
+            }
+          }
+          > img {
+            width: 22px;
+            height: 22px;
+
+            right: 30px;
+          }
+        }
+      }
+      > content {
+        width: 100%;
+        height: 100px;
+        > div {
+          height: 50vh;
+        }
+      }
+      > footer {
+        margin-top: 115px;
+
+        > div {
+          width: 224px;
+          height: 51px;
+
+          > span {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+    > button {
+      font-size: 19px;
+
+      margin: 10px 10px 0 0;
+
+      border-radius: 50%;
+    }
   }
   @media (min-width: 1300px) {
   }
@@ -547,6 +689,39 @@ const NoPartner = styled.div`
       font-weight: bold;
     }
   }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-top: 24px;
+    height: 63%;
+    > span {
+      font-size: 16px;
+    }
+    > div {
+      width: 144px;
+      height: 32px;
+
+      > span {
+        font-size: 13px;
+        font-weight: 500;
+      }
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-top: 24px;
+    height: 63%;
+    > span {
+      font-size: 18px;
+    }
+    > div {
+      width: 151px;
+      height: 36px;
+
+      > span {
+        font-size: 15px;
+        font-weight: 500;
+      }
+    }
+  }
 `;
 
 const PageBar = styled.div`
@@ -558,6 +733,22 @@ const PageBar = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-top: 60px;
+    img {
+      width: 6px;
+      height: 18px;
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    img {
+      width: 8px;
+      height: 22px;
+    }
+  }
 `;
 
 const PageCount = styled.span`
@@ -578,4 +769,13 @@ const PageCount = styled.span`
       font-weight: 700;
       color: #0933b3;
     `}
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 18px;
+    width: 12px;
+    height: 26px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    font-size: 22px;
+  }
 `;

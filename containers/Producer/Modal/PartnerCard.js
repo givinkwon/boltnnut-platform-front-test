@@ -72,6 +72,12 @@ const Card = styled.div`
   align-items: center;
   background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
   cursor: pointer;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    min-height: 100px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+  }
 `;
 const Number = styled.div`
   flex-grow: 1;
@@ -87,6 +93,10 @@ const Logo = styled.div`
       width: 65px;
       height: 69px;
     }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
   }
 `;
 const Content = styled.div`
@@ -107,5 +117,25 @@ const Content = styled.div`
     letter-spacing: -0.45px;
     color: #191919;
     font-weight: normal;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 80%;
+    > name {
+      font-size: 16px;
+    }
+    > product {
+      font-size: 14px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 82%;
+
+    > name {
+      font-size: 18px;
+    }
+    > product {
+      font-size: 16px;
+    }
   }
 `;

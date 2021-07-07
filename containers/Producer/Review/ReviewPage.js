@@ -143,7 +143,7 @@ class ReviewPage extends React.Component {
 
   reviewHandler = (event) => {
     let textareaLineHeight = 0;
-    if (this.props.width > 797.98) {
+    if (this.props.width > 768) {
       textareaLineHeight = 34;
       this.setState({ maxRows: 15 });
     } else {
@@ -439,6 +439,17 @@ const Card = styled.div`
   padding-top: 132px;
   padding-bottom: 116px;
   box-sizing: border-box;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-top: 45px;
+    padding-top: 70px;
+    padding-bottom: 58px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-top: 50px;
+    padding-top: 80px;
+    padding-bottom: 60px;
+  }
 `;
 const Header = styled.div`
   display: flex;
@@ -460,7 +471,29 @@ const Header = styled.div`
     color: #0933b3;
     font-weight: bold;
     margin-top: 14px;
-  }
+    
+
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      > div {
+        width: 34px;
+        height: 34px;        
+      }
+      > span {
+        font-size: 20px;        
+      }
+    }
+    @media (min-width: 992px) and (max-width: 1299.98px) {
+      > div {
+        width: 40px;
+        height: 40px;        
+      }
+      > span {
+        font-size: 23px;        
+      }
+
+    
+
 `;
 const Search = styled.div`
   width: 80%;
@@ -476,6 +509,7 @@ const Search = styled.div`
   > div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     > span {
       font-size: 18px;
       line-height: 40px;
@@ -485,6 +519,9 @@ const Search = styled.div`
     }
     > edit {
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       > span {
         font-size: 18px;
         line-height: 34px;
@@ -515,10 +552,70 @@ const Search = styled.div`
   > div:nth-of-type(1) {
     margin-bottom: 17px;
   }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-top: 40px;
+
+    height: 134px;
+
+    padding: 20px 21px 10px 21px;
+
+    > div {
+      > span {
+        font-size: 14px;
+      }
+      > edit {
+        > span {
+          font-size: 14px;
+          margin-right: 7px;
+        }
+      }
+      > div {
+        width: 124px;
+        height: 28px;
+        > span {
+          font-size: 14px;
+        }
+      }
+    }
+    > div:nth-of-type(1) {
+      margin-bottom: 11px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 80%;
+    height: 144px;
+
+    margin-top: 40px;
+
+    padding: 24px 30px 16px 30px;
+
+    > div {
+      > span {
+        font-size: 16px;
+      }
+      > edit {
+        > span {
+          font-size: 16px;
+          margin-right: 8px;
+        }
+      }
+      > div {
+        width: 130px;
+        height: 32px;
+
+        > span {
+          font-size: 16px;
+        }
+      }
+    }
+    > div:nth-of-type(1) {
+      margin-bottom: 15px;
+    }
+  }
 `;
 const StarBox = styled.div`
   margin-top: 45px;
-  padding: 41px 0;
   box-sizing: border-box;
   border-top: 1px solid #e1e2e4;
   border-bottom: 1px solid #e1e2e4;
@@ -554,6 +651,49 @@ const StarBox = styled.div`
     letter-spacing: -0.4px;
     color: #c6c7cc;
     font-weight: normal;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-top: 36px;
+    padding: 32px 0;
+
+    > content {
+      font-size: 18px;
+
+      margin-bottom: 33px;
+    }
+    > starcontainer {
+      > div {
+        > img {
+          width: 29px;
+          height: 42px;
+        }
+      }
+    }
+    > span:last-child {
+      font-size: 12px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-top: 40px;
+    padding: 36px 0;
+
+    > content {
+      font-size: 21px;
+
+      margin-bottom: 36px;
+    }
+    > starcontainer {
+      > div {
+        > img {
+          width: 36px;
+          height: 42px;
+        }
+      }
+    }
+    > span:last-child {
+      font-size: 14px;
+    }
   }
 `;
 const QuestionBox = styled.div`
@@ -605,6 +745,40 @@ const Section = styled.div`
       white-space: pre-line;
     }
   }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 19px 0 98px 0;
+
+    > span {
+      font-size: 18px;
+
+      margin-bottom: 18px;
+    }
+
+    > div {
+      padding: 17px 18px 22px 19px;
+      > textarea {
+        // line-height: 20px;
+        font-size: 14px;
+      }
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    padding: 23px 0 128px 0;
+
+    > span {
+      font-size: 21px;
+
+      margin-bottom: 20px;
+    }
+
+    > div {
+      padding: 19px 20px 24px 21px;
+      > textarea {
+        font-size: 16px;
+      }
+    }
+  }
 `;
 const Footer = styled.div`
   display: flex;
@@ -632,6 +806,33 @@ const Footer = styled.div`
   }
   > div:nth-of-type(2) {
     background-color: #0933b3;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    div {
+      width: 190px;
+      height: 38px;
+
+      span {
+        font-size: 16px;
+      }
+    }
+    > div:nth-of-type(1) {
+      margin-right: 23px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    div {
+      width: 224px;
+      height: 51px;
+
+      span {
+        font-size: 18px;
+      }
+    }
+    > div:nth-of-type(1) {
+      margin-right: 28px;
+    }
   }
 `;
 

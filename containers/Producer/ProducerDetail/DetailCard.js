@@ -296,7 +296,7 @@ class DetailCardContainer extends React.Component {
                 <mainscore>
                   <div>
                     <ReviewStarRating
-                      width={31}
+                      width={width > 1300 ? "31" : width > 992 ? "26" : "22"}
                       margin={4}
                       score={Math.floor(this.state.avg_consult_score)}
                     />
@@ -306,12 +306,13 @@ class DetailCardContainer extends React.Component {
                     <span>전체 누적 평점</span>
                   </div>
                 </mainscore>
+                {}
                 <subscore>
                   <div>
                     <span>친절도</span>
                     <div>
                       <ReviewStarRating
-                        width={15}
+                        width={width > 1300 ? "15" : width > 992 ? "13" : "11"}
                         margin={1}
                         score={this.state.avg_kindness_score}
                       />
@@ -322,7 +323,7 @@ class DetailCardContainer extends React.Component {
                     <span>연락 빈도</span>
                     <div>
                       <ReviewStarRating
-                        width={15}
+                        width={width > 1300 ? "15" : width > 992 ? "13" : "11"}
                         margin={1}
                         score={this.state.avg_communication_score}
                       />
@@ -333,7 +334,7 @@ class DetailCardContainer extends React.Component {
                     <span>전문성</span>
                     <div>
                       <ReviewStarRating
-                        width={15}
+                        width={width > 1300 ? "15" : width > 992 ? "13" : "11"}
                         margin={1}
                         score={this.state.avg_profession_score}
                       />
@@ -365,7 +366,7 @@ class DetailCardContainer extends React.Component {
                     open={!Partner.reviewWritingModalActive}
                     close={this.closeModal}
                     purpose="FirstReview"
-                    headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ?"
+                    headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? "
                     headerTwo="첫 평가를 작성해주세요"
                     bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
                     bodyTwo="업체 평가 작성이 가능합니다."
@@ -714,6 +715,13 @@ const ReviewBox = styled.div`
     color: #282c36;
     font-weight: bold;
   }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 20px;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    font-size: 22px;
+  }
 `;
 
 const SummaryBox = styled.div`
@@ -766,6 +774,78 @@ const SummaryBox = styled.div`
         margin-bottom: 9px;
         display: flex;
         justify-content: space-between;
+        >div{
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }  
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    >label{
+      font-size: 20px;
+    }
+    > header {    
+      > mainscore {      
+        > div:nth-of-type(1) {
+          padding-top: 6px;        
+        }
+        > div:nth-of-type(2) {        
+          > span:nth-of-type(1) {
+            font-size: 32px;
+            line-height: 24px;
+            
+            margin-bottom: 6px;
+          }
+          > span:nth-of-type(2) {
+            font-size: 12px;
+            line-height: 18px;        
+          }
+        }
+      }
+      > subscore {      
+        width: 165px;
+        > div {
+          margin-bottom: 7px;
+          >span{
+            font-size:12px;
+          }
+        }
+      }
+    }
+  }
+
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    >label{
+      font-size: 22px;
+    }
+      > header {    
+    > mainscore {      
+      > div:nth-of-type(1) {
+        padding-top: 8px;        
+      }
+      > div:nth-of-type(2) {        
+        > span:nth-of-type(1) {
+          font-size: 40px;
+          line-height: 32px;
+          
+          margin-bottom: 8px;
+        }
+        > span:nth-of-type(2) {
+          font-size: 14px;
+          line-height: 24px;        
+        }
+      }
+    }
+   > subscore {      
+      width: 165px;
+      > div {
+        margin-bottom: 7px;
+        >span{
+          font-size:12px;
+        }
       }
     }
   }
@@ -945,6 +1025,30 @@ const PageBar = styled.div`
   display: flex;
   justify-content: space-between;
   filter: ${(props) => (props.acitve ? "blur(9px)" : "")};
+
+  img {
+    align-self: center;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 251px;
+    margin-top: 69px;
+    margin-bottom: 97px;
+    img {
+      width: 6px;
+      height: 18px;
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 301px;
+    margin-top: 84px;
+    margin-bottom: 127px;
+    img {
+      width: 8px;
+      height: 22px;
+    }
+  }
 `;
 
 const PageCount = styled.span`
@@ -965,6 +1069,15 @@ const PageCount = styled.span`
       font-weight: 700;
       color: #0933b3;
     `}
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 18px;
+    width: 12px;
+    height: 26px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    font-size: 22px;
+  }
 `;
 
 const NoReviewItem = styled.div``;

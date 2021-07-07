@@ -36,7 +36,7 @@ class ProducerDetailConatiner extends React.Component {
                       width={this.props.width}
                       Header="리뷰 작성이 완료되었습니다"
                       MainOne="소중한 리뷰를 작성해 주셔서 감사합니다"
-                      MainTwo="워딩~~~~~~~~~"
+                      MainTwo=""
                       ButtonOne="홈으로 가기"
                       ButtonTwo="제조사 찾기로 가기"
                       RouterOne=""

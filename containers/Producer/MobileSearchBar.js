@@ -53,27 +53,15 @@ class MobileSearchBarConatiner extends React.Component {
     this.setState({ search: e.target.value });
     Partner.search_text = e.target.value;
   };
-  search = () => {
+  search = async () => {
     const { Partner, ManufactureProcess } = this.props;
-    if (ManufactureProcess.loadingSaveSearchText) {
-      Partner.subButtonActive = true;
-      ManufactureProcess.saveSearchText(Partner.search_text);
-      ManufactureProcess.loadingSaveSearchText = false;
-      setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
-    }
+
     Partner.currentPage = 1;
     Partner.resetDevCategory();
-    Partner.getPartner();
-  };
-  closeModal = () => {
-    this.setState({
-      ...this.state,
-      modal_open: false,
-    });
-  };
-  handleKeyDown = (e) => {
-    const { Partner, ManufactureProcess } = this.props;
-    if (e.key === "Enter") {
+    await Partner.getPartner();
+    ManufactureProcess.PartnerCount = Partner.partner_count;
+
+    if (Partner.search_text != "") {
       if (ManufactureProcess.loadingSaveSearchText) {
         Partner.subButtonActive = true;
         ManufactureProcess.saveSearchText(Partner.search_text);
@@ -83,9 +71,31 @@ class MobileSearchBarConatiner extends React.Component {
           2000
         );
       }
+    }
+  };
+  closeModal = () => {
+    this.setState({
+      ...this.state,
+      modal_open: false,
+    });
+  };
+  handleKeyDown = async (e) => {
+    const { Partner, ManufactureProcess } = this.props;
+    if (e.key === "Enter") {
       Partner.currentPage = 1;
       Partner.resetDevCategory();
-      Partner.getPartner();
+      await Partner.getPartner();
+      ManufactureProcess.PartnerCount = Partner.partner_count;
+
+      if (ManufactureProcess.loadingSaveSearchText) {
+        Partner.subButtonActive = true;
+        ManufactureProcess.saveSearchText(Partner.search_text);
+        ManufactureProcess.loadingSaveSearchText = false;
+        setTimeout(
+          () => (ManufactureProcess.loadingSaveSearchText = true),
+          2000
+        );
+      }
     }
   };
   async componentDidMount() {
@@ -138,15 +148,11 @@ class MobileSearchBarConatiner extends React.Component {
             this.state.list ? this.selectOut() : this.selectClick()
           }
           onBlur={() => this.selectOut()}
-        >
-        </Box>
+        ></Box>
         <SearchFilterBox>
           <SearchBar>
             <div>
-              <input
-                style={{ display: "none" }}
-                class="Input"
-              />
+              <input style={{ display: "none" }} class="Input" />
               <Select
                 placeholder="전체"
                 options={categoryArray}
@@ -181,7 +187,6 @@ class MobileSearchBarConatiner extends React.Component {
               </SearchButton>
             </div>
           </SearchBar>
-
 
           <Filter
             onClick={() => {

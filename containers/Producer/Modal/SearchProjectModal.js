@@ -272,8 +272,102 @@ const ModalBox = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    top: 22%;
+    height: 446px;
+    width: 83%;
+    right: 8%;
+    padding: 32px 0 40px 52px;
+    > section {
+      max-width: 900px;
+      width: 90%;
+      height: 87%;
+      > header {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      > main {
+        height: 90%;
+
+        > div {
+          input {
+            height: 40px;
+
+            font-size: 16px;
+
+            ::placeholder {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+      > footer {
+        > div {
+          width: 200px;
+          height: 44px;
+
+          > span {
+            font-size: 16px;
+          }
+        }
+        > div:nth-of-type(1) {
+          margin-right: 14px;
+        }
+      }
+    }
+    > button {
+      font-size: 17px;
+
+      margin: 10px 10px 0 0;
+    }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    top: 22%;
+    height: 446px;
+    width: 83%;
+    right: 8%;
+    padding: 44px 0 50px 70px;
+    > section {
+      max-width: 900px;
+      width: 90%;
+      height: 87%;
+      > header {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      > main {
+        height: 90%;
+
+        > div {
+          input {
+            height: 42px;
+
+            font-size: 20px;
+
+            ::placeholder {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+      > footer {
+        > div {
+          width: 224px;
+          height: 51px;
+
+          > span {
+            font-size: 18px;
+          }
+        }
+        > div:nth-of-type(1) {
+          margin-right: 16px;
+        }
+      }
+    }
+    > button {
+      font-size: 19px;
+
+      margin: 10px 10px 0 0;
+    }
   }
   @media (min-width: 1300px) {
   }
