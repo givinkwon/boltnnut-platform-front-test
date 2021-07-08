@@ -63,25 +63,21 @@ class ReviewCard extends React.Component {
           ) : (
             <name>***</name>
           )} */}
-
           {/* {Partner.clientInfoList[idx] ? (
             <name>{Partner.clientInfoList[idx].user.username}</name>
           ) : (
             <name>***</name>
           )} */}
-
           {Partner.review_client_obj[idx] ? (
-            <name>{Partner.review_client_obj[idx]}</name>
+            <name>{Partner.review_client_obj[idx] + " 님"}</name>
           ) : (
-            <name>***</name>
+            <name>*** 님</name>
           )}
-
           {/* {Partner.clientInfoList[data.client] ? (
             <name>{Partner.clientInfoList[data.client].user.username}</name>
           ) : (
             <name>***</name>
           )} */}
-
           <score>
             <span>
               <ReviewStarRating
@@ -100,13 +96,10 @@ class ReviewCard extends React.Component {
 
             {Partner.review_client_obj && Partner.review_client_obj[idx]}
           </history> */}
-
           <content>{data.content}</content>
-
           {/* {Partner.review_user_ary && (
                 <name>{Partner.review_user_ary[idx]}</name>
               )} */}
-
           {/* <content>{item.content}</content> */}
         </Card>
 
@@ -139,12 +132,20 @@ const Card = styled.div`
   //align-items: center;
   padding: 46px 23px 32px 26px;
   box-sizing: border-box;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 12px;
+  }
   > score {
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-weight: 600;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      height: 30px;
+    }
     > span:nth-of-type(1) {
       margin-right: 7px;
     }
@@ -154,22 +155,34 @@ const Card = styled.div`
       letter-spacing: -0.45px;
       color: #a4aab4;
       font-weight: 500;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        font-size: 12px;
+        color: #a4aab4;
+        width: 175px;
+      }
     }
   }
   > name {
     font-size: 18px;
     color: #191919;
-    line-height: 27px;
+    // line-height: 27px;
     letter-spacing: -0.45px;
     font-weight: bold;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      font-size: 12px;
+    }
   }
   > history {
     font-size: 18px;
-    line-height: 27px;
+    // line-height: 27px;
     letter-spacing: -0.45px;
     color: #a4aab4;
     font-weight: normal;
     margin-bottom: 22px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      font-size: 12px;
+      color: #a4aab4;
+    }
   }
   > content {
     white-space: break-spaces;

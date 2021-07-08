@@ -12,46 +12,37 @@ class ProducerDetailConatiner extends React.Component {
   componentDidMount() {
     const { Auth, Partner } = this.props;
     console.log(this.props.width);
-    // Partner.reviewActiveIndex = 2;
+    Partner.reviewActiveIndex = 1;
   }
   render() {
     const { Auth, Partner } = this.props;
     return (
       <>
-        {this.props.width &&
-          (this.props.width > 767.99 ? (
-            <>
-              <Background>
-                <Containerv1>
-                  {Partner.reviewActiveIndex == 0 && (
-                    <DetailCardContainer width={this.props.width} />
-                  )}
-
-                  {Partner.reviewActiveIndex == 1 && (
-                    <ReviewContainer width={this.props.width} />
-                  )}
-                  {Partner.reviewActiveIndex == 2 && (
-                    <CompleteContainer
-                      width={this.props.width}
-                      Header="리뷰 작성이 완료되었습니다"
-                      MainOne="MainOne"
-                      MainTwo="MainTwo"
-                      ButtonOne="홈으로 가기"
-                      ButtonTwo="제조사 찾기로 가기"
-                      RouterOne=""
-                      RouterTwo="producer"
-                    />
-                  )}
-                </Containerv1>
-              </Background>
-            </>
-          ) : (
-            <Background>
-              <Containerv1>
+        <>
+          <Background>
+            <Containerv1>
+              {Partner.reviewActiveIndex == 0 && (
                 <DetailCardContainer width={this.props.width} />
-              </Containerv1>
-            </Background>
-          ))}
+              )}
+
+              {Partner.reviewActiveIndex == 1 && (
+                <ReviewContainer width={this.props.width} />
+              )}
+              {Partner.reviewActiveIndex == 2 && (
+                <CompleteContainer
+                  width={this.props.width}
+                  Header="리뷰 작성이 완료되었습니다"
+                  MainOne="MainOne"
+                  MainTwo="MainTwo"
+                  ButtonOne="홈으로 가기"
+                  ButtonTwo="제조사 찾기로 가기"
+                  RouterOne=""
+                  RouterTwo="producer"
+                />
+              )}
+            </Containerv1>
+          </Background>
+        </>
       </>
     );
   }
