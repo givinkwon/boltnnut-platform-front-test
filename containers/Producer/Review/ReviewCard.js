@@ -19,15 +19,15 @@ class ReviewCard extends React.Component {
     console.log("componentDidMount");
 
     const { Partner, data, totalCount, idx } = this.props;
-    console.log(data);
-    console.log(totalCount);
+    // console.log(data);
+    // console.log(totalCount);
     if (data) {
-      console.log(`client id : ${data.client_id}, idx : ${idx}`);
-      // await Partner.getClientInfo(data.client_id);
-      await Partner.getClientNameById(data.client_id, idx);
+      // console.log(`client id : ${data.client}, idx : ${idx}`);
+      // await Partner.getClientInfo(data.client);
+      await Partner.getClientNameById(data.client, idx);
 
       // console.log(Partner.clientInfo);
-      console.log(Partner.clientInfoList);
+      // console.log(Partner.clientInfoList);
       // Partner.clientInfo.name
       // Partner.clientInfo.user.username
     }
@@ -54,7 +54,7 @@ class ReviewCard extends React.Component {
     const { data, width, Partner, categoryData, idx, totalCount } = this.props;
     // console.log(data);
     // console.log(toJS(Partner.partnerReviewList));
-    console.log(toJS(Partner.clientInfoList));
+    // console.log(toJS(Partner.clientInfoList));
     return (
       <>
         <Card>
@@ -63,19 +63,21 @@ class ReviewCard extends React.Component {
           ) : (
             <name>***</name>
           )} */}
-
-          {Partner.clientInfoList[idx] ? (
+          {/* {Partner.clientInfoList[idx] ? (
             <name>{Partner.clientInfoList[idx].user.username}</name>
           ) : (
             <name>***</name>
+          )} */}
+          {Partner.review_client_obj[idx] ? (
+            <name>{Partner.review_client_obj[idx] + " 님"}</name>
+          ) : (
+            <name>*** 님</name>
           )}
-
-          {/* {Partner.clientInfoList[data.client_id] ? (
-            <name>{Partner.clientInfoList[data.client_id].user.username}</name>
+          {/* {Partner.clientInfoList[data.client] ? (
+            <name>{Partner.clientInfoList[data.client].user.username}</name>
           ) : (
             <name>***</name>
           )} */}
-
           <score>
             <span>
               <ReviewStarRating
@@ -88,12 +90,16 @@ class ReviewCard extends React.Component {
             {/* <span>{`   ${item.score}`}</span> */}
           </score>
           <history>{data.projectname}</history>
-          <content>{data.content}</content>
+          {/* <history>
+            {Partner.review_client_obj &&
+              console.log(`${idx} ++++++ ${Partner.review_client_obj[idx]}`)}
 
+            {Partner.review_client_obj && Partner.review_client_obj[idx]}
+          </history> */}
+          <content>{data.content}</content>
           {/* {Partner.review_user_ary && (
                 <name>{Partner.review_user_ary[idx]}</name>
               )} */}
-
           {/* <content>{item.content}</content> */}
         </Card>
 
@@ -126,12 +132,20 @@ const Card = styled.div`
   //align-items: center;
   padding: 46px 23px 32px 26px;
   box-sizing: border-box;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 12px;
+  }
   > score {
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-weight: 600;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      height: 30px;
+    }
     > span:nth-of-type(1) {
       margin-right: 7px;
     }
@@ -141,22 +155,34 @@ const Card = styled.div`
       letter-spacing: -0.45px;
       color: #a4aab4;
       font-weight: 500;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        font-size: 12px;
+        color: #a4aab4;
+        width: 175px;
+      }
     }
   }
   > name {
     font-size: 18px;
     color: #191919;
-    line-height: 27px;
+    // line-height: 27px;
     letter-spacing: -0.45px;
     font-weight: bold;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      font-size: 12px;
+    }
   }
   > history {
     font-size: 18px;
-    line-height: 27px;
+    // line-height: 27px;
     letter-spacing: -0.45px;
     color: #a4aab4;
     font-weight: normal;
     margin-bottom: 22px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      font-size: 12px;
+      color: #a4aab4;
+    }
   }
   > content {
     white-space: break-spaces;

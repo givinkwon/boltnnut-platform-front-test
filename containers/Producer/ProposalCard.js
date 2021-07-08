@@ -52,7 +52,10 @@ class ProposalCard extends React.Component {
   };
 
   closeModal = (e) => {
-    e.stopPropagation();
+    if (e) {
+      console.log("e 존재");
+      e.stopPropagation();
+    }
 
     console.log("close click");
     this.setState({ modalOpen: false });
@@ -162,6 +165,7 @@ class ProposalCard extends React.Component {
       link.click();
     } else {
       alert("로그인이 필요합니다.");
+      // this.props.Auth.previous_url = "producer";
       Router.push("/login");
     }
   };
@@ -169,8 +173,14 @@ class ProposalCard extends React.Component {
     e.stopPropagation();
     const { data, Partner } = this.props;
 
+    Partner.detailLoadingFlag = true;
+    // setTimeout(() => {
+    //   Partner.detailLoadingFlag = false;
+    // }, 3000);
+
     if (this.props.Auth && this.props.Auth.logged_in_user) {
       if (!this.props.data.file) {
+        Partner.detailLoadingFlag = false;
         alert("해당 회사의 소개서가 존재하지 않습니다!");
         return;
       }
@@ -180,11 +190,11 @@ class ProposalCard extends React.Component {
         .split(".")
         [this.props.data.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
-      console.log(this.props.Partner.selectedIntroductionFileType);
-      console.log(this.props.data);
-      console.log(fileType);
-      console.log(availableFileType);
-      console.log(availableFileType.indexOf(fileType));
+      // console.log(this.props.Partner.selectedIntroductionFileType);
+      // console.log(this.props.data);
+      // console.log(fileType);
+      // console.log(availableFileType);
+      // console.log(availableFileType.indexOf(fileType));
       if (availableFileType.indexOf(fileType) > -1) {
         console.log("뷰어 페이지 router push");
         Partner.partner_detail_list = [];
@@ -193,7 +203,15 @@ class ProposalCard extends React.Component {
         console.log(Partner.partner_detail_list[0].item.id);
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
         console.log(toJS(Partner.partner_detail_list[0]));
-        Partner.getReviewByPartner(Partner.partner_detail_list[0].item.id);
+        await Partner.getReviewByPartner(
+          Partner.partner_detail_list[0].item.id,
+          1,
+          1
+        );
+        await Partner.getReviewByPartner(
+          Partner.partner_detail_list[0].item.id
+        );
+
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
         // location.href = this.makeUrl("producer/detail");
@@ -203,6 +221,10 @@ class ProposalCard extends React.Component {
       }
     } else {
       alert("로그인이 필요합니다.");
+      Partner.detailLoadingFlag = false;
+      // Router.back();
+      // this.props.Auth.previous_url = "producer";
+      // Router.push("/login");
       // Router.push("/login");
       location.href = this.makeUrl("login");
     }
@@ -242,7 +264,11 @@ class ProposalCard extends React.Component {
             <Card
               active={this.state.active}
               onClick={(e) => {
-                this.cardClick(e);
+                console.log(this.props.Partner.modalActive);
+                if (!this.props.Partner.modalActive) {
+                  console.log("x");
+                  this.cardClick(e);
+                }
               }}
               onMouseOver={() => {
                 this.activeHandler("active");
@@ -555,8 +581,11 @@ const InfoOne = styled.div`
     line-height: 18px;
     letter-spacing: -0.33px;
   }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-bottom: 35px;
+  }
   @media (min-width: 1300px) {
-    width: 80%;
+    width: 90%;
   }
 `;
 const InfoTwo = styled.div`
@@ -570,8 +599,15 @@ margin-top: 16px;
     margin-right: 21px;
     display: inline-block;
   }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 85%;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 95%;
+  }
   @media (min-width: 1300px) {
-    width: 80%
+    width: 88%
   }
 `;
 const Button = styled.button`

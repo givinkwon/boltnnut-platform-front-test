@@ -194,16 +194,10 @@ class SearchFilterConatiner extends React.Component {
     //     Partner.filter_dropdown = true;
     //   }
     // }
-    // console.log(Partner.check_filter_category);
-    // console.log(Partner.check_filter_city);
-    // console.log(Partner.filter_dropdown);
   };
   componentDidMount = async () => {
     const { Partner } = this.props;
     Partner.subButtonActive = false;
-    // await Partner.init()
-    // console.log(toJS(Partner.category_main_list));
-    // console.log(toJS(Partner.category_middle_list));
   };
 
   componentWillUnmount = () => {
@@ -230,7 +224,7 @@ class SearchFilterConatiner extends React.Component {
     }
   };
   render() {
-    const { Partner, Request, width } = this.props;
+    const { Partner, width } = this.props;
     return (
       <>
         {width && width > 767.99 ? (
@@ -265,9 +259,6 @@ class SearchFilterConatiner extends React.Component {
 
               <div
                 onClick={() => {
-                  // Partner.filterArray.map((data, idx) => {
-                  //   data.checked = false;
-                  // });
                   Router.push("/request");
                 }}
               >

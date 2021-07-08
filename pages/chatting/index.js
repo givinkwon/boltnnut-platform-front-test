@@ -15,8 +15,7 @@ const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
 @inject("Project", "Auth", "Home", "Answer", "Loading") // *_app.js <Provider>에 넘겨준 store명과 일치해야함. *inject: 컴포넌트에서 store에 접근 가능하게 함. 해당 store에 있는 값을 컴포넌트의 props로 주입시켜줌.
 @observer
-class Chatting extends React.Component{
-
+class Chatting extends React.Component {
   state = {
     width: null,
   };
@@ -35,9 +34,10 @@ class Chatting extends React.Component{
     Loading.setOpen(true);
     setTimeout(() => Loading.setOpen(false), 500);
 
+    this.props.Auth.previous_url = "chatting";
     // 중복
     await Auth.checkLogin();
-    if (!Auth.logged_in_user){
+    if (!Auth.logged_in_user) {
       alert("로그인이 필요합니다");
       Router.push("/login");
     }
@@ -45,11 +45,11 @@ class Chatting extends React.Component{
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
@@ -66,7 +66,7 @@ class Chatting extends React.Component{
     this.setState({ ...this.state, width: window.innerWidth });
   };
 
-  render(){
+  render() {
     const { Loading } = this.props;
     const { width } = this.state;
     const gray = "#f6f6f6";
@@ -82,11 +82,7 @@ class Chatting extends React.Component{
             <Nav />
           ) : (
             <div>
-              <MobileNav
-                src={back_ic}
-                headText={"채팅하기"}
-                width={width}
-              />
+              <MobileNav src={back_ic} headText={"채팅하기"} width={width} />
               <div style={{ height: "65px" }}></div>
             </div>
           )}
@@ -98,4 +94,4 @@ class Chatting extends React.Component{
   }
 }
 
-export default Chatting
+export default Chatting;

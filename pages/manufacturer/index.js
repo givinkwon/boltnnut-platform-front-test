@@ -13,7 +13,7 @@ import * as AccountAPI from "axios/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
-@inject("Project")
+@inject("Project", "Auth")
 @observer
 class Index extends React.Component {
   static getInitialProps({ query }) {
@@ -32,15 +32,16 @@ class Index extends React.Component {
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
 
+    this.props.Auth.previous_url = "manufacturer";
     // page ip 기록
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);

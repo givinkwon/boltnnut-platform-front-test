@@ -78,9 +78,7 @@ class MobileContent2 extends React.Component {
     } else {
       item_detail_idx = detail_idx - material_idx;
     }
-    if (
-      projectDetailData.request_set[0].estimate_set.length > this.count
-    ) {
+    if (projectDetailData.request_set[0].estimate_set.length > this.count) {
       this.count++;
 
       const req = {
@@ -467,7 +465,7 @@ class MobileContent2 extends React.Component {
                 onMouseOut={() => this.activeHandler("activeOne")}
                 onClick={async () => {
                   console.log("click!");
-                  // this.changeProject();
+                  this.changeProject();
                 }}
               >
                 <Font18
