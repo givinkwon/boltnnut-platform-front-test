@@ -198,7 +198,25 @@ class ReviewPage extends React.Component {
 
     // console.log(toJS(Partner.newPartner));
     // console.log(toJS(Partner.reviewPartnerName));
+    if (!Partner.projectName) {
+      alert("프로젝트 이름을 입력해주세요");
+      return;
+    }
 
+    if (!Partner.reviewPartnerName) {
+      alert("파트너가 입력되지 않았습니다. 다시 검색해주세요");
+      return;
+    }
+
+    if (!Partner.ratingPoint) {
+      alert("점수를 입력해주세요");
+      return;
+    }
+
+    if (!Partner.reviewContent) {
+      alert("리뷰 내용을 입력해주세요");
+      return;
+    }
     const now = new Date();
     console.log(now.toLocaleDateString().replace(/(\s*)/g, ""));
 

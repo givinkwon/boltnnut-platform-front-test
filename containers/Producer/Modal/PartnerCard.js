@@ -53,7 +53,13 @@ class PartnerCard extends React.Component {
           </Logo>
           <Content>
             <name>{name}</name>
-            <product>{history}</product>
+
+            {history &&
+              (width < 767.98 && history.toString().length > 14 ? (
+                <product>{history.toString().substring(0, 14) + "..."}</product>
+              ) : (
+                <product>{history}</product>
+              ))}
           </Content>
         </Card>
       </>
@@ -72,6 +78,10 @@ const Card = styled.div`
   align-items: center;
   background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
   cursor: pointer;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    min-height: 0px;
+  }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     min-height: 100px;
@@ -117,6 +127,15 @@ const Content = styled.div`
     letter-spacing: -0.45px;
     color: #191919;
     font-weight: normal;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 68%;
+    > name {
+      font-size: 14px;
+    }
+    > product {
+      font-size: 13px;
+    }
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {

@@ -338,10 +338,11 @@ const ModalBox = styled.div`
   border-radius: 10px;
   padding: 52px 0 60px 98px;
   box-sizing: border-box;
-  height: 90vh;
+  //height: 90vh;
+  height: 700px;
 
   > section {
-    max-width: 900px;
+    // max-width: 900px;
     width: 90%;
     height: 87%;
     // margin: 0 auto;
@@ -407,7 +408,8 @@ const ModalBox = styled.div`
       height: 100px;
       > div {
         overflow-y: auto;
-        height: 50vh;
+        // height: 50vh;
+        height: 400px;
       }
     }
     > footer {
@@ -452,61 +454,79 @@ const ModalBox = styled.div`
     background-color: #f1f1f1;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    position: fixed;
+    top: 25%;
+    width: 83%;
+    right: 8%;
 
-    z-index: 101;
+    padding: 22px 20px 24px 20px;
 
-    height: 500px;
-    width: 90%;
-    right: 5%;
+    // height: 60vh;
+    height: 382px;
 
     > section {
-      max-width: 100%;
-      width: 90%;
-      height: 77%;
+      // max-width: 900px;
+      width: 100%;
+      height: 87%;
 
       > header {
-        position: relative;
-        padding: 8px;
-
-        font-weight: 600;
-
         font-size: 16px;
+
+        margin-bottom: 10px;
       }
       > main {
-        height: 95%;
-        font-size: 13px;
-        font-weight: 600;
+        border-bottom: 1px solid #c6c7cc;
+        padding-bottom: 10px;
+
         > div {
-          > div {
-            > textarea {
-              padding: 10px 12px;
-              box-sizing: border-box;
-              font-size: 11px;
-              line-height: 20px;
-              letter-spzcing: -0.45px;
-              color: #282c36;
-              border-radius: 5px;
-              overflow: auto;
-              height: auto;
-              font-family: inherit;
+          input {
+            padding: 0;
+            padding-left: 10px;
+            height: 28px;
+
+            font-size: 12px;
+
+            width: 90%;
+
+            ::placeholder {
+              font-size: 12px;
             }
+          }
+          > img {
+            width: 15px;
+            height: 15px;
+
+            right: 13px;
           }
         }
       }
-      > footer {
-        border-radius: 5px;
-        cursor: pointer;
-        height: 40px;
+      > content {
+        width: 100%;
+        height: 180px;
         > div {
-          font-size: 13px;
-          cursor: pointer;
+          // height: 30vh;
+          height: 150px;
+        }
+      }
+      > footer {
+        margin-top: 40px;
+
+        > div {
+          width: 110px;
+          height: 34px;
+          background-color: #e1e2e4;
+
+          > span {
+            font-size: 14px;
+          }
         }
       }
     }
     > button {
-      font-size: 12px;
+      font-size: 17px;
+
       margin: 10px 10px 0 0;
+
+      border-radius: 50%;
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -517,10 +537,11 @@ const ModalBox = styled.div`
 
     padding: 46px 0 48px 80px;
 
-    height: 90vh;
+    // height: 90vh;
+    height: 574px;
 
     > section {
-      max-width: 900px;
+      // max-width: 900px;
       width: 90%;
       height: 87%;
 
@@ -558,7 +579,8 @@ const ModalBox = styled.div`
         width: 100%;
         height: 100px;
         > div {
-          height: 50vh;
+          // height: 50vh;
+          height: 300px;
         }
       }
       > footer {
@@ -590,10 +612,10 @@ const ModalBox = styled.div`
 
     padding: 46px 0 48px 80px;
 
-    height: 90vh;
-
+    // height: 90vh;
+    height: 616px;
     > section {
-      max-width: 900px;
+      // max-width: 900px;
       width: 90%;
       height: 87%;
 
@@ -631,11 +653,12 @@ const ModalBox = styled.div`
         width: 100%;
         height: 100px;
         > div {
-          height: 50vh;
+          // height: 50vh;
+          height: 316px;
         }
       }
       > footer {
-        margin-top: 115px;
+        margin-top: 50px;
 
         > div {
           width: 224px;
@@ -656,6 +679,20 @@ const ModalBox = styled.div`
     }
   }
   @media (min-width: 1300px) {
+    > section {
+      > footer {
+        margin-top: 50px;
+
+        // > div {
+        //   width: 224px;
+        //   height: 51px;
+
+        //   > span {
+        //     font-size: 18px;
+        //   }
+        // }
+      }
+    }
   }
 `;
 
@@ -690,6 +727,23 @@ const NoPartner = styled.div`
     }
   }
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-top: 10px;
+    height: 63%;
+    > span {
+      font-size: 14px;
+      line-height: 20px;
+    }
+    > div {
+      width: 94px;
+      height: 26px;
+
+      > span {
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+  }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 24px;
     height: 63%;
@@ -735,6 +789,15 @@ const PageBar = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 209px;
+    margin-top: 40px;
+    img {
+      width: 4px;
+      height: 14px;
+    }
+  }
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 60px;
     img {
@@ -769,6 +832,12 @@ const PageCount = styled.span`
       font-weight: 700;
       color: #0933b3;
     `}
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 14px;
+    width: 10px;
+    height: 22px;
+  }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 18px;

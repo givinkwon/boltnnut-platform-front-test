@@ -77,6 +77,10 @@ const FontSize26 = styled(Title.FontSize26)`
   letter-spacing: -0.65px;
   color: #0a2165;
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 17px !important;
+  }
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 20px !important;
   }
@@ -97,6 +101,10 @@ const FontSize22 = styled(Title.FontSize22)`
   line-height: 1.82;
   letter-spacing: -0.55px;
   color: #282c36;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 14px !important;
+  }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 16px !important;
@@ -135,6 +143,10 @@ const RequestCompleteBox = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: #ffffff;
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 200px;
+  }
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     height: 270px;
   }
@@ -162,6 +174,10 @@ const RequestCompleteDesc = styled.div`
   // margin-bottom: 90px;
   height: 50%;
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 30%;
+  }
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     height: 40%;
   }
@@ -172,6 +188,11 @@ const ButtonBox = styled.div`
   justify-content: space-between;
   width: 520px;
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    justify-content: space-evenly;
+    // width: 320px;
+    width: 100%;
+  }
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 520px;
   }
@@ -201,6 +222,13 @@ const Button1 = styled.div`
 		background-color: #f6f6f6;
 		color: #0a2165;
 	}
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 12px;
+    width: 110px;
+    height: 31px;
+  }
+
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 16px;
@@ -234,6 +262,12 @@ const Button2 = styled.div`
   &:hover {
     transition: all 0.5s;
     background-color: #0a2165;
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 12px;
+    width: 110px;
+    height: 31px;
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
