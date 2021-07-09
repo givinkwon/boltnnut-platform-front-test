@@ -283,7 +283,7 @@ class ProposalCard extends React.Component {
                 {data &&
                   data.portfolio_set.map((item, idx) => {
                     return (
-                      <Item>
+                      <Item >
                         <img src={item.img_portfolio} />
                       </Item>    
                     );
@@ -318,7 +318,7 @@ class ProposalCard extends React.Component {
                     )}
                   </div>
                 </Phone>
-                <InfoOne>{data.info_company}</InfoOne>
+                <InfoOne>{data.info_company.length > 150 ? (data.info_company.slice(0,150) + "...") : (data.info_company)}</InfoOne>
                 <InfoTwo>
                   {categoryData &&
                     categoryData.map((item, idx) => {
@@ -409,7 +409,7 @@ class ProposalCard extends React.Component {
               </Header>
               <Main>
                 <Name>{data.name}</Name>
-                <InfoOne>{data.info_company}</InfoOne>
+                <InfoOne>{data.info_company.length > 100 ? (data.info_company.slice(0,100) + "...") : (data.info_company)}</InfoOne>
                 <Information>
                   <div>
                     <Phone>

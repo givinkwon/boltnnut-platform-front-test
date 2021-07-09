@@ -74,7 +74,7 @@ class Home extends React.Component {
           <title>볼트앤너트</title>
         </Head>
 
-        <div>
+        <div onContextMenu={(e)=> e.preventDefault()}  >
           {Loading.is_open}
 
           <>

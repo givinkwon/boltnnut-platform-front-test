@@ -7,6 +7,7 @@ import ReviewCard from "../Review/ReviewCard";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
 import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import Slider from "react-slick";
 
 const availableFileType1 = [
   "png",
@@ -108,8 +109,19 @@ class DetailCardContainer extends React.Component {
 
   render() {
     const { width, Partner } = this.props;
-
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
+
+    
+    const SlideSettings = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      draggable: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+    };
 
     return (
       <>
@@ -149,6 +161,21 @@ class DetailCardContainer extends React.Component {
             </div>
           </div>
           <InnerBox>
+          <IntroductionBox width={width}>
+              <Font24>포토폴리오</Font24>
+              <SliderContainer {...SlideSettings}>
+              {Partner.partner_detail_list.length != 0 && Partner.partner_detail_list[0].item.portfolio_set.length > 0 &&
+                  Partner.partner_detail_list[0].item.portfolio_set.map((item, idx) => {
+                    return (
+                      <Item>
+                        <img src={item.img_portfolio} />
+                      </Item>    
+                    );
+                  })}
+              </SliderContainer>
+
+          </IntroductionBox>
+
             <IntroductionBox width={width}>
               <Font24>회사소개서</Font24>
               {availableFileType1.indexOf(
@@ -697,5 +724,39 @@ const DOCViewer = styled(DocViewer)`
       }
       }
     }
+  }
+`;
+
+
+const SliderContainer = styled(Slider)`
+  .slick-list {
+    width: 100%;
+    .slick-track {
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+`;
+
+
+const Item = styled.div`
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // width: calc(14% - 40px);
+  padding: 20px 0;
+  margin: 0 20px;
+
+  > img {
+    // width: 100%;
+    // display: inline-block;
+    // position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    width: 141px;
+    height: 141px;
   }
 `;

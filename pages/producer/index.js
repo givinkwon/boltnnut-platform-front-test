@@ -61,7 +61,7 @@ class Index extends React.Component {
   render() {
     const { width } = this.state;
     return (
-      <div>
+      <div onContextMenu={(e)=> e.preventDefault()} >
         <Head>
           <title>볼트앤너트|제조사 찾기</title>
         </Head>
@@ -71,8 +71,8 @@ class Index extends React.Component {
             (width > 767.98 ? (
               <Nav />
             ) : (
-              <div>
-                <MobileNav
+              <div >
+                <MobileNav 
                   src={back_ic}
                   headText={"제조사 관리"}
                   width={width}
@@ -82,7 +82,7 @@ class Index extends React.Component {
             ))}
         </>
 
-        <ProducerContainer width={width} />
+        <ProducerContainer  width={width} />
         <Footer />
       </div>
     );
