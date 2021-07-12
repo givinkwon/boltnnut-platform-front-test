@@ -17,7 +17,7 @@ class Magazine {
 
   @observable mobileLowerCategoryAry = [];
 
-  @observable category_checked_idx = -1;
+  @observable category_checked_idx = 2;
   @observable category_detail_checked_idx = 0;
 
   @observable mobile_category_checked_idx = -1;
