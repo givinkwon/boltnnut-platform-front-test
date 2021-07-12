@@ -37,6 +37,7 @@ class Home extends React.Component {
     }, 1000);
 
     await this.props.Auth.checkLogin();
+    console.log("배포 테스트");
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -75,7 +76,7 @@ class Home extends React.Component {
           <title>볼트앤너트</title>
         </Head>
 
-        <div>
+        <div onContextMenu={(e)=> e.preventDefault()}  >
           {Loading.is_open}
 
           <>
