@@ -17,7 +17,7 @@ import ManufactureProcess from "./ManufactureProcess";
 import Schedule from "./Schedule";
 import Project from "./Project";
 import Chat from "./Chat";
-
+import Common from "./Common";
 export default {
   Counter,
   Post,
@@ -38,4 +38,5 @@ export default {
   Schedule,
   Project,
   Chat,
+  Common,
 };

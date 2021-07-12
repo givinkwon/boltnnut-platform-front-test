@@ -1,17 +1,17 @@
-import React from 'react';
-import styled, {css} from 'styled-components';
-import { inject, observer } from 'mobx-react';
+import React from "react";
+import styled, { css } from "styled-components";
+import { inject, observer } from "mobx-react";
 import * as Text from "components/Text";
 import * as Content from "components/Content";
-import MobileContent2 from './MobileContent2';
-import {toJS} from "mobx";
+import MobileContent2 from "./MobileContent2";
+import { toJS } from "mobx";
 import * as PartnerAPI from "axios/Partner";
-import ChatTestContainer from "containers/Info2/ChatTest";
+import ChatTestContainer from "containers/CS/Info2/ChatTest";
 
 const fileimgBlack = "/static/images/project/fileimgBlack.svg";
 const separator = "/static/images/components/Footer/separator.png";
-const downpass = '/static/images/pass5.png';
-const uppass = '/static/images/pass6.png';
+const downpass = "/static/images/pass5.png";
+const uppass = "/static/images/pass6.png";
 const callImg = "/static/images/project/Call.svg";
 const messagesImg = "/static/images/project/Messages.svg";
 
@@ -40,7 +40,7 @@ class MobileContent1 extends React.Component {
     const { Project } = this.props;
     Project.chatModalActive = !Project.chatModalActive;
   };
-  
+
   activeHandler = (active) => {
     if (active === "activeOne") {
       if (this.state.activeOne) {
@@ -125,8 +125,8 @@ class MobileContent1 extends React.Component {
     }
   }
 
-render() {
-  const { Project, Partner, user } = this.props;
+  render() {
+    const { Project, Partner, user } = this.props;
 
     const { projectDetailData } = Project;
 
@@ -161,150 +161,196 @@ render() {
         }
       });
 
-    return(
+    return (
       <Container1>
-          {Project.chatModalActive && (
-            <Layer>
-              <ChatTestContainer
-                roomName={this.state.selectedRoom}
-              ></ChatTestContainer>
-            </Layer>
-          )}
-          <Head></Head>
-        <div style = {{marginBottom: 40}}>
+        {Project.chatModalActive && (
+          <Layer>
+            <ChatTestContainer
+              roomName={this.state.selectedRoom}
+            ></ChatTestContainer>
+          </Layer>
+        )}
+        <Head></Head>
+        <div style={{ marginBottom: 40 }}>
           <Head>
-            <Font15 style = {{color: "#0933b3", marginBottom: 14, fontWeight: 'bold'}}>{projectDetailData &&projectDetailData.request_set[0].request_state}</Font15>
+            <Font15
+              style={{ color: "#0933b3", marginBottom: 14, fontWeight: "bold" }}
+            >
+              {projectDetailData &&
+                projectDetailData.request_set[0].request_state}
+            </Font15>
 
-            <Font16 style = {{marginBottom: 8, fontWeight: 'bold', color: '#282c36', }}>{name}</Font16>
-            <div style = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-              <div style = {{display: 'flex', flexDirection: 'row'}}>
-              </div>
-              
-              <Font14 style = {{color: "#c6c7cc"}}>
-                {projectDetailData && 
-                projectDetailData.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")}</Font14>
+            <Font16
+              style={{ marginBottom: 8, fontWeight: "bold", color: "#282c36" }}
+            >
+              {name}
+            </Font16>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <div style={{ display: "flex", flexDirection: "row" }}></div>
+
+              <Font14 style={{ color: "#c6c7cc" }}>
+                {projectDetailData &&
+                  projectDetailData.request_set[0].createdAt
+                    .substr(0, 10)
+                    .replaceAll("-", ".")}
+              </Font14>
             </div>
           </Head>
 
           <Box1>
-            <Font14 style = {{color: "#999999"}}>예상 금액</Font14>
-            <Font14 style = {{color: "#414550"}}>
+            <Font14 style={{ color: "#999999" }}>예상 금액</Font14>
+            <Font14 style={{ color: "#414550" }}>
               {projectDetailData && console.log(toJS(projectDetailData))}
 
-                    {projectDetailData && 
-                    projectDetailData.request_set[0].price ?  
-                    projectDetailData.request_set[0].price.toLocaleString("ko-KR")+"원" : "미정"}
+              {projectDetailData && projectDetailData.request_set[0].price
+                ? projectDetailData.request_set[0].price.toLocaleString(
+                    "ko-KR"
+                  ) + "원"
+                : "미정"}
             </Font14>
           </Box1>
           <Box1>
-            <Font14 style = {{color: "#999999"}}>희망 납기</Font14>
-            <Font14 style = {{color: "#414550"}}>
+            <Font14 style={{ color: "#999999" }}>희망 납기</Font14>
+            <Font14 style={{ color: "#414550" }}>
               {projectDetailData &&
-              projectDetailData.request_set[0].deadline
-                .slice(2, 10)
-                .replace(/-/gi, ".")}</Font14>
+                projectDetailData.request_set[0].deadline
+                  .slice(2, 10)
+                  .replace(/-/gi, ".")}
+            </Font14>
           </Box1>
           <Box1>
-            <Font14 style = {{color: "#999999"}}>지원 제조사 수</Font14>
-            <Font14 style = {{color: "#414550"}}>{this.state.partnerList.length}</Font14>
+            <Font14 style={{ color: "#999999" }}>지원 제조사 수</Font14>
+            <Font14 style={{ color: "#414550" }}>
+              {this.state.partnerList.length}
+            </Font14>
           </Box1>
         </div>
-        <div style = {{marginBottom: 40}}>
-        
-          
-
+        <div style={{ marginBottom: 40 }}>
           {user === "partner" ? (
-                /* 파트너일 때 */
-                ""
-              ) : (
-          /* 클라이언트일 때 */
-          <>      
-          <Font16 style = {{fontWeight: 'bold', color: '#282c36'}}>지원한 파트너</Font16>
-          {/* map으로 뿌리기 */}
-          {this.state.partnerList.map((data, idx) => {
-            return(
-              <Box2 
-                  onClick={() => this.modalHandler(data.id)}
-                  active = {this.state.activeOne}
-                  onMouseOver = {() => this.activeHandler("activeOne")}
-                  onMouseOut = {() => this.activeHandler("activeOne")}  
-                  style = {{
-                  flexDirection: 'column', 
-                  alignItems: "center", 
-                  boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)"
-                  }}>
-                  <div style = {{width: "100%", display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
-                    {console.log("업체명")}
-   
-                    <Font14 style = {{fontWeight: '500', color: '#282c36'}}>{this.state.partnerDetailList[idx] &&
-                                this.state.partnerDetailList[idx].name}</Font14>
-                    <Font14 style = {{color: '#999999'}}>"프로젝트 보고 연락...</Font14>
-                    {() => this.activeHandler(idx)? (
-                        <img src = {uppass} style = {{height: 8, width: 15}}></img>
-                      ):(
-                      <img src = {downpass} style = {{height: 8, width: 15}}></img>
-                      )
-                    }
-                  </div>
-                  <div 
-                    active = {() => this.activeHandler(idx)} 
-                    onMouseover={() => this.modalHandler(data.id)}
-                    style = {{  
-                    width: "100%", 
-                    display: 'flex', 
-                    flexDirection: 'row', 
-                    alignItems: "center", 
-                    justifyContent: "space-evenly", 
-                    marginTop: 20,
-                    }}>
-                    <Icon>
-                      <img src = {fileimgBlack}></img>
-                      <Font12>회사소개서</Font12>
-                    </Icon>
-                    <img src = {separator} style = {{width: 1, height: 32}}></img>
-                    <Icon>
-                      <img src={callImg}></img>
+            /* 파트너일 때 */
+            ""
+          ) : (
+            /* 클라이언트일 때 */
+            <>
+              <Font16 style={{ fontWeight: "bold", color: "#282c36" }}>
+                지원한 파트너
+              </Font16>
+              {/* map으로 뿌리기 */}
+              {this.state.partnerList.map((data, idx) => {
+                return (
+                  <Box2
+                    onClick={() => this.modalHandler(data.id)}
+                    active={this.state.activeOne}
+                    onMouseOver={() => this.activeHandler("activeOne")}
+                    onMouseOut={() => this.activeHandler("activeOne")}
+                    style={{
+                      flexDirection: "column",
+                      alignItems: "center",
+                      boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {console.log("업체명")}
 
-                      <Font12>{this.state.partnerDetailList[idx] &&
-                                this.state.partnerDetailList[idx].phonenum}</Font12>
+                      <Font14 style={{ fontWeight: "500", color: "#282c36" }}>
+                        {this.state.partnerDetailList[idx] &&
+                          this.state.partnerDetailList[idx].name}
+                      </Font14>
+                      <Font14 style={{ color: "#999999" }}>
+                        "프로젝트 보고 연락...
+                      </Font14>
+                      {() =>
+                        this.activeHandler(idx) ? (
+                          <img
+                            src={uppass}
+                            style={{ height: 8, width: 15 }}
+                          ></img>
+                        ) : (
+                          <img
+                            src={downpass}
+                            style={{ height: 8, width: 15 }}
+                          ></img>
+                        )
+                      }
+                    </div>
+                    <div
+                      active={() => this.activeHandler(idx)}
+                      onMouseover={() => this.modalHandler(data.id)}
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-evenly",
+                        marginTop: 20,
+                      }}
+                    >
+                      <Icon>
+                        <img src={fileimgBlack}></img>
+                        <Font12>회사소개서</Font12>
+                      </Icon>
+                      <img
+                        src={separator}
+                        style={{ width: 1, height: 32 }}
+                      ></img>
+                      <Icon>
+                        <img src={callImg}></img>
 
-                    </Icon>
-                    <img src = {separator} style = {{width: 1, height: 32}}></img>
-                    <Icon>
-                      <img src={messagesImg}></img>
-                      <ChatNotice>
-                        <Font14>N</Font14>
-                      </ChatNotice>
-                      <Font12>채팅하기</Font12>
-                    </Icon>
-                    
-                  </div>
-                </Box2>
-            );
-            }
+                        <Font12>
+                          {this.state.partnerDetailList[idx] &&
+                            this.state.partnerDetailList[idx].phonenum}
+                        </Font12>
+                      </Icon>
+                      <img
+                        src={separator}
+                        style={{ width: 1, height: 32 }}
+                      ></img>
+                      <Icon>
+                        <img src={messagesImg}></img>
+                        <ChatNotice>
+                          <Font14>N</Font14>
+                        </ChatNotice>
+                        <Font12>채팅하기</Font12>
+                      </Icon>
+                    </div>
+                  </Box2>
+                );
+              })}
+            </>
           )}
-          </>
-          )
-          }
         </div>
-        < MobileContent2  user={user}/>
-        </Container1>
+        <MobileContent2 user={user} />
+      </Container1>
     );
   }
 }
-export default MobileContent1
+export default MobileContent1;
 
 const Container1 = styled.div`
-display: flex;
-flex-direction:column;
-width: 100%;
-`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 
 const Head = styled.div`
   word-break: break-all;
-`
-const Box1= styled.div`
-border-radius: 5px;
+`;
+const Box1 = styled.div`
+  border-radius: 5px;
   border: solid 1px #c6c7cc;
   background-color: #ffffff;
   display: flex;
@@ -313,10 +359,10 @@ border-radius: 5px;
   padding: 10px 14px 10px 14px;
   margin-top: 14px;
   word-break: break-all;
-`
+`;
 
 const Box2 = styled.div`
-border-radius: 5px;
+  border-radius: 5px;
   border: solid 1px #c6c7cc;
   background-color: #ffffff;
   display: flex;
@@ -324,17 +370,17 @@ border-radius: 5px;
   justify-content: space-between;
   padding: 10px 14px 10px 14px;
   margin-top: 14px;
-  
->div:nth-of-type(2) {
-  display: ${(props) => (props.active ? "flex !important" : "none !important")};
-}
-:hover{
-  border-style: solid;
-  border-color: #0933b3;
-  height: 114px;
-}
 
-`
+  > div:nth-of-type(2) {
+    display: ${(props) =>
+      props.active ? "flex !important" : "none !important"};
+  }
+  :hover {
+    border-style: solid;
+    border-color: #0933b3;
+    height: 114px;
+  }
+`;
 const PartnerBox = styled.div`
   margin-bottom: 12px;
   // width: 100%;
@@ -362,8 +408,8 @@ const BlackBox = styled.div`
 `;
 
 const Icon = styled.div`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   img {
@@ -371,9 +417,8 @@ flex-direction: column;
     hegiht: 26px;
   }
   p {
-
   }
-`
+`;
 const ChatNotice = styled.div`
   position: absolute;
   width: 22px;
@@ -391,13 +436,13 @@ const ChatNotice = styled.div`
 `;
 
 const Font12 = styled(Text.FontSize12)`
-font-weight: normal;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: 2.83;
   letter-spacing: -0.3px;
   color: #282c36;
-`
+`;
 
 const Font14 = styled(Content.FontSize14)`
   font-size: 14px;
@@ -406,16 +451,14 @@ const Font14 = styled(Content.FontSize14)`
   font-style: normal;
   line-height: 1.07;
   letter-spacing: -0.35px;
-  
-` 
+`;
 
 const Font15 = styled(Content.FontSize15)`
-  
   font-stretch: normal;
   font-style: normal;
   line-height: 1;
   letter-spacing: -0.38px;
-`
+`;
 
 const Font16 = styled(Content.FontSize16)`
   font-weight: bold;
@@ -423,7 +466,7 @@ const Font16 = styled(Content.FontSize16)`
   font-style: normal;
   line-height: 1.5;
   letter-spacing: -0.4px;
-`
+`;
 
 const Layer = styled.div`
   position: fixed;

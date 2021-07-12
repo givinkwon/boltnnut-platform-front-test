@@ -5,6 +5,7 @@ import Background from "components/Background";
 import * as Title from "components/Title";
 import Fade from "react-reveal/Fade";
 import Router from "next/router";
+import KSLink from "components/KSLink";
 
 const image1 = "/static/images/banner_dot.png";
 const passImg = "/static/images/pass7.png";
@@ -12,11 +13,6 @@ const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 const lock = "static/images/Home/lock.svg";
 
 class Banner13Container extends React.Component {
-  makeUrl = (url) => {
-    if (typeof window !== "undefined") {
-      return window.location.protocol + "//" + window.location.host + "/" + url;
-    }
-  };
   render() {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -36,16 +32,9 @@ class Banner13Container extends React.Component {
                 </div>
 
                 <div>
-                  {/* <div onClick={() => Router.push("/producer")}> */}
                   <div>
-                    {/* <span>업체 정보 조회</span>
-                    <span>
-                      <img src={passImg} />
-                    </span> */}
                     <LookupBtn>
-                      <a href={this.makeUrl("producer")}>
-                        <span>업체 정보 조회</span>
-                      </a>
+                      <KSLink url={"producer"} content={"업체 정보 조회"} />
                     </LookupBtn>
                     <span>
                       <img src={passImg} />

@@ -8,7 +8,7 @@ import Partner from "../../../stores/Partner";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
-import ChatTestContainer from "containers/Info2/ChatTest";
+import ChatTestContainer from "containers/CS/Info2/ChatTest";
 import NoProject from "../NoProject";
 
 @inject("Project", "Auth", "Partner")

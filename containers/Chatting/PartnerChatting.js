@@ -8,7 +8,7 @@ import { toJS } from "mobx";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
-import ChatTestContainer from "containers/Info2/ChatTest";
+import ChatTestContainer from "containers/CS/Info2/ChatTest";
 
 import NoProject from "containers/Project/NoProject";
 import Router from "next/router";
@@ -42,7 +42,7 @@ class MyProject extends React.Component {
   async getProject(data) {
     const { Project } = this.props;
     const partnerprojectlist = this.state.Partnerprojectlist;
-    console.log("getProject")
+    console.log("getProject");
     await Project.getProjectDetail(data.project);
     console.log("adsfsdafad");
     console.log(toJS(Project.projectDetailData));
@@ -62,7 +62,6 @@ class MyProject extends React.Component {
       this.setState({ Partnerprojectlist: partnerprojectlist });
     }
   }
-
 
   async componentDidMount() {
     const { Auth, Project, Partner } = this.props;

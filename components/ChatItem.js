@@ -12,11 +12,6 @@ class ChatItemContainer extends React.Component {
   state = {
     content: this.props.content,
   };
-  makeUrl = (url) => {
-    if (typeof window !== "undefined") {
-      return window.location.protocol + "//" + window.location.host + "/" + url;
-    }
-  };
   componentDidMount() {
     if (this.state.content) {
       if (this.state.content.length > 44) {
