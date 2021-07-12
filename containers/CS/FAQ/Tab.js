@@ -37,7 +37,7 @@ export default TabConatiner;
 
 const Outer = styled.div`
   background-color: ${PRIMARY};
-`
+`;
 const Tabs = styled.div`
   display: flex;
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -59,24 +59,24 @@ const Tab = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   > p {
     color: white;
     padding: 0 20px;
     border-right: 1px solid #dedede;
   }
   padding: 15px 0px;
-  
+
   :nth-of-type(1) > p {
     padding-left: 0;
   }
-  
+
   :last-child {
     > p {
       border-right: none;
     }
   }
-  
+
   ${(props) =>
     !props.active &&
     css`

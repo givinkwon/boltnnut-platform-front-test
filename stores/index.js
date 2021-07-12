@@ -18,7 +18,6 @@ import Schedule from "./Schedule";
 import Project from "./Project";
 import Chat from "./Chat";
 import Common from "./Common";
-
 export default {
   Counter,
   Post,

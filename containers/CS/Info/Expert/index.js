@@ -17,16 +17,16 @@ class ClientConatiner extends React.Component {
     Router.push("/static/manual/partner_manual.pdf");
     window.scrollTo(0, 0);
   };
-    state = {
+  state = {
     width: 0,
     tab: 0,
   };
   componentDidMount() {
-    window.addEventListener('resize', this.updateDimensions);
+    window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   }
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
+    window.removeEventListener("resize", this.updateDimensions);
   }
 
   updateDimensions = () => {
@@ -34,7 +34,7 @@ class ClientConatiner extends React.Component {
   };
 
   render() {
-    const { width } = this.state
+    const { width } = this.state;
     return (
       <CustomContainer>
         <Section1 />
@@ -42,13 +42,13 @@ class ClientConatiner extends React.Component {
         <Section3 />
         <Section4 />
         <ButtonComponent
-          style={{ marginTop: 30, width: '20%' }}
+          style={{ marginTop: 30, width: "20%" }}
           backgroundColor={PRIMARY}
           borderColor={PRIMARY}
           borderRadius={50}
           onClick={this.toPay}
         >
-         <Text.FontSize24 color={WHITE} fontWeight={500}>
+          <Text.FontSize24 color={WHITE} fontWeight={500}>
             {width < 992 ? "메뉴얼 보기" : "파트너 메뉴얼 보기"}
           </Text.FontSize24>
         </ButtonComponent>

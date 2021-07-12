@@ -11,8 +11,8 @@ const Banner1Img = "/static/images/Info/Banner1Img.png";
 const Banner1Img2 = "/static/images/Info/Banner1Img2.png";
 const Banner2Img = "/static/images/Info/Banner2Img.png";
 const Banner3Img = "/static/images/Info/Banner3Img.png";
-import PaymentPageContainer from "../Request/PaymentPage";
-import PaymentCompleteContainer from "../Request/PaymentComplete";
+import PaymentPageContainer from "Request/PaymentPage";
+import PaymentCompleteContainer from "Request/PaymentComplete";
 import ChatCardContainer from "./ChatCard";
 import ChatItemContainer from "components/ChatItem";
 import Containerv1 from "components/Containerv1";
@@ -30,6 +30,7 @@ class InfoContainer extends React.Component {
   async componentDidMount() {
     const { Project, Auth, Answer } = this.props;
     await Auth.checkLogin();
+
     Answer.loadAnswerListByPartnerId(Auth.logged_in_partner.id).then(() => {
       console.log(toJS(Answer.answers));
       this.setState({ partnerList: Answer.answers });
@@ -53,10 +54,7 @@ class InfoContainer extends React.Component {
   }
 
   render() {
-    return (
-      <>
-      </>
-    );
+    return <></>;
   }
 }
 

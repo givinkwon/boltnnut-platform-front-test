@@ -5,7 +5,7 @@ import * as Text from "components/Text";
 import { WHITE } from "static/style";
 import Background from "components/Background";
 import Container from "components/Containerv1";
-import * as Title from "../../components/Title";
+import * as Title from "components/Title";
 const BackImg = "static/images/answer/MaskGroup/MaskGroup77.png";
 
 import { inject, observer } from "mobx-react";
