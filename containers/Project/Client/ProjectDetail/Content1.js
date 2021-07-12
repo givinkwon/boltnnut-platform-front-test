@@ -9,7 +9,7 @@ import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import { Toolbar } from "material-ui";
 import { toJS } from "mobx";
-import ChatTestContainer from "containers/Info2/ChatTest";
+import ChatTestContainer from "containers/CS/Info2/ChatTest";
 import * as PartnerAPI from "axios/Partner";
 import ChatItemContainer from "components/ChatItem";
 const money = "/static/images/project/money.svg";
@@ -183,7 +183,6 @@ class Content1 extends React.Component {
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
-
                     {projectDetailData && projectDetailData.request_set[0].price
                       ? projectDetailData.request_set[0].price.toLocaleString(
                           "ko-KR"
