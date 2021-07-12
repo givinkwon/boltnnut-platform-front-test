@@ -12,6 +12,9 @@ const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
 const file_img2 = "static/images/manufacturer/file.png";
+import Slider from "react-slick";
+import { EqualStencilFunc } from "three";
+
 var availableFileType = [
   "png",
   "jpeg",
@@ -248,7 +251,31 @@ class ProposalCard extends React.Component {
     }
   };
   render() {
+
     const { data, width, Partner, categoryData, idx } = this.props;
+
+    const SlideSettings = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      draggable: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+    };
+
+    const SlideSettingsMobile = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      draggable: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+    };
+
 
     let category_data;
     // console.log(data.logo);
@@ -272,9 +299,25 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                <Logo>
+                <SliderContainer {...SlideSettings}>
+                {data &&
+                  data.portfolio_set.map((item, idx) => {
+                    return (
+                      <Item >
+                        <img src={item.img_portfolio} />
+                      </Item>    
+                    );
+                  })}
+                <Item>
                   <img src={data.logo} />
-                </Logo>
+                </Item>
+                <Item>
+                  <img src={data.logo} />
+                </Item>
+
+                
+                  
+                </SliderContainer>
               </Header>
               <Main>
                 <Name>{data.name}</Name>
@@ -295,7 +338,7 @@ class ProposalCard extends React.Component {
                     )}
                   </div>
                 </Phone>
-                <InfoOne>{data.info_company}</InfoOne>
+                <InfoOne>{data.info_company.length > 150 ? (data.info_company.slice(0,150) + "...") : (data.info_company)}</InfoOne>
                 <InfoTwo>
                   {categoryData &&
                     categoryData.map((item, idx) => {
@@ -368,9 +411,25 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
+              <Header>
+                <SliderMobileContainer {...SlideSettingsMobile}>
+                {data &&
+                  data.portfolio_set.map((item, idx) => {
+                    return (
+                      <Item>
+                        <img src={item.img_portfolio} />
+                      </Item>    
+                    );
+                  })}
+                <Item>
+                  <img src={data.logo} />
+                </Item>
+                  
+                </SliderMobileContainer>
+              </Header>
               <Main>
                 <Name>{data.name}</Name>
-                <InfoOne>{data.info_company}</InfoOne>
+                <InfoOne>{data.info_company.length > 100 ? (data.info_company.slice(0,100) + "...") : (data.info_company)}</InfoOne>
                 <Information>
                   <div>
                     <Phone>
@@ -574,6 +633,7 @@ const InfoOne = styled.div`
     font-size: 13px;
     line-height: 18px;
     letter-spacing: -0.33px;
+    height: 50%;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-bottom: 35px;
@@ -857,5 +917,49 @@ const Layer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
+  }
+`;
+
+const SliderContainer = styled(Slider)`
+  .slick-list {
+    width: 400px;
+    .slick-track {
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+`;
+
+const SliderMobileContainer = styled(Slider)`
+  .slick-list {
+    width: 144px;
+    .slick-track {
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+`;
+
+const Item = styled.div`
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // width: calc(14% - 40px);
+  padding: 20px 0;
+  margin: 0 20px;
+
+  > img {
+    // width: 100%;
+    // display: inline-block;
+    // position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    width: 141px;
+    height: 141px;
   }
 `;
