@@ -57,6 +57,10 @@ class ReviewPage extends React.Component {
 
   componentWillUnmount = () => {
     console.log("22222222222222222222222222");
+    const { Partner } = this.props;
+    if (Partner.reviewActiveIndex != 2) {
+      Partner.reviewActiveIndex = 0;
+    }
   };
 
   componentDidMount = () => {
@@ -139,7 +143,7 @@ class ReviewPage extends React.Component {
 
   reviewHandler = (event) => {
     let textareaLineHeight = 0;
-    if (this.props.width > 797.98) {
+    if (this.props.width > 768) {
       textareaLineHeight = 34;
       this.setState({ maxRows: 15 });
     } else {
@@ -176,7 +180,7 @@ class ReviewPage extends React.Component {
     Partner.resetReviewData();
     Partner.reviewActiveIndex = 0;
   };
-  onSubmitReview = () => {
+  onSubmitReview = async () => {
     var formData = new FormData();
 
     const { Auth, Partner } = this.props;
@@ -194,7 +198,25 @@ class ReviewPage extends React.Component {
 
     // console.log(toJS(Partner.newPartner));
     // console.log(toJS(Partner.reviewPartnerName));
+    if (!Partner.projectName) {
+      alert("프로젝트 이름을 입력해주세요");
+      return;
+    }
 
+    if (!Partner.reviewPartnerName) {
+      alert("파트너가 입력되지 않았습니다. 다시 검색해주세요");
+      return;
+    }
+
+    if (!Partner.ratingPoint) {
+      alert("점수를 입력해주세요");
+      return;
+    }
+
+    if (!Partner.reviewContent) {
+      alert("리뷰 내용을 입력해주세요");
+      return;
+    }
     const now = new Date();
     console.log(now.toLocaleDateString().replace(/(\s*)/g, ""));
 
@@ -236,7 +258,16 @@ class ReviewPage extends React.Component {
     formData.append("new_partner", Partner.newPartner);
     formData.append("partner_name", Partner.reviewPartnerName);
 
-    Partner.setPartnerReview(formData);
+    if (Partner.reviewLoading) {
+      alert("요청 중입니다");
+    }
+
+    if (!Partner.reviewLoading) {
+      Partner.reviewLoading = true;
+      await Partner.setPartnerReview(formData);
+
+      setTimeout(() => (Partner.reviewLoading = false), 2000);
+    }
   };
   render() {
     const { Partner, width } = this.props;
@@ -454,7 +485,19 @@ const Card = styled.div`
   padding-top: 132px;
   padding-bottom: 116px;
   box-sizing: border-box;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-top: 45px;
+    padding-top: 70px;
+    padding-bottom: 58px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-top: 50px;
+    padding-top: 80px;
+    padding-bottom: 60px;
+  }
   @media (min-width: 0px) and (max-width: 767.98px) {
+    box-shadow: none;
     padding-top: 40px;
     margin-top: 20px;
   }
@@ -480,6 +523,35 @@ const Header = styled.div`
     font-weight: bold;
     margin-top: 14px;
   }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > div {
+      > img {
+        width: 21px;
+        height: 14px;
+      }
+    }
+    > span {
+      display: none;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    > div {
+      width: 34px;
+      height: 34px;
+    }
+    > span {
+      font-size: 20px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    > div {
+      width: 40px;
+      height: 40px;
+    }
+    > span {
+      font-size: 23px;
+    }
+  }
 `;
 const Search = styled.div`
   width: 80%;
@@ -500,6 +572,7 @@ const Search = styled.div`
   > div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     @media (min-width: 0px) and (max-width: 767.98px) {
       align-items: center;
       height: 34px;
@@ -520,6 +593,9 @@ const Search = styled.div`
     }
     > edit {
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       > span {
         font-size: 18px;
         line-height: 34px;
@@ -560,10 +636,79 @@ const Search = styled.div`
       margin-bottom: 0px;
     }
   }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > div {
+      > edit {
+        > span {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-top: 40px;
+
+    height: 134px;
+
+    padding: 20px 21px 10px 21px;
+
+    > div {
+      > span {
+        font-size: 14px;
+      }
+      > edit {
+        > span {
+          font-size: 14px;
+          margin-right: 7px;
+        }
+      }
+      > div {
+        width: 124px;
+        height: 28px;
+        > span {
+          font-size: 14px;
+        }
+      }
+    }
+    > div:nth-of-type(1) {
+      margin-bottom: 11px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 80%;
+    height: 144px;
+
+    margin-top: 40px;
+
+    padding: 24px 30px 16px 30px;
+
+    > div {
+      > span {
+        font-size: 16px;
+      }
+      > edit {
+        > span {
+          font-size: 16px;
+          margin-right: 8px;
+        }
+      }
+      > div {
+        width: 130px;
+        height: 32px;
+
+        > span {
+          font-size: 16px;
+        }
+      }
+    }
+    > div:nth-of-type(1) {
+      margin-bottom: 15px;
+    }
+  }
 `;
 const StarBox = styled.div`
   margin-top: 45px;
-  padding: 41px 0;
   box-sizing: border-box;
   border-top: 1px solid #e1e2e4;
   border-bottom: 1px solid #e1e2e4;
@@ -615,6 +760,49 @@ const StarBox = styled.div`
     font-weight: normal;
     @media (min-width: 0px) and (max-width: 767.98px) {
       display: none;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-top: 36px;
+    padding: 32px 0;
+
+    > content {
+      font-size: 18px;
+
+      margin-bottom: 33px;
+    }
+    > starcontainer {
+      > div {
+        > img {
+          width: 29px;
+          height: 42px;
+        }
+      }
+    }
+    > span:last-child {
+      font-size: 12px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    margin-top: 40px;
+    padding: 36px 0;
+
+    > content {
+      font-size: 21px;
+
+      margin-bottom: 36px;
+    }
+    > starcontainer {
+      > div {
+        > img {
+          width: 36px;
+          height: 42px;
+        }
+      }
+    }
+    > span:last-child {
+      font-size: 14px;
     }
   }
 `;
@@ -681,6 +869,58 @@ const Section = styled.div`
       }
     }
   }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+
+    > span {
+      font-size: 16px;
+
+      margin-bottom: 12px;
+    }
+
+    > div {
+      padding: 10px;
+      > textarea {
+        line-height: 20px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 19px 0 98px 0;
+
+    > span {
+      font-size: 18px;
+
+      margin-bottom: 18px;
+    }
+
+    > div {
+      padding: 17px 18px 22px 19px;
+      > textarea {
+        // line-height: 20px;
+        font-size: 14px;
+      }
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    padding: 23px 0 128px 0;
+
+    > span {
+      font-size: 21px;
+
+      margin-bottom: 20px;
+    }
+
+    > div {
+      padding: 19px 20px 24px 21px;
+      > textarea {
+        font-size: 16px;
+      }
+    }
+  }
 `;
 const Footer = styled.div`
   display: flex;
@@ -715,6 +955,33 @@ const Footer = styled.div`
   }
   > div:nth-of-type(2) {
     background-color: #0933b3;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    div {
+      width: 190px;
+      height: 38px;
+
+      span {
+        font-size: 16px;
+      }
+    }
+    > div:nth-of-type(1) {
+      margin-right: 23px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    div {
+      width: 224px;
+      height: 51px;
+
+      span {
+        font-size: 18px;
+      }
+    }
+    > div:nth-of-type(1) {
+      margin-right: 28px;
+    }
   }
 `;
 

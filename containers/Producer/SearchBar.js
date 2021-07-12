@@ -44,6 +44,17 @@ class SearchBarConatiner extends React.Component {
       Partner.loadingFlag = false;
     }, 3000);
 
+    Partner.currentPage = 1;
+    Partner.click_count += 1;
+    await Partner.getPartner(Partner.currentPage, Partner.click_count);
+    ManufactureProcess.PartnerCount = Partner.partner_count;
+    console.log(toJS(ManufactureProcess.PartnerCount));
+    if (Partner.search_text) {
+      Partner.isSearched = true;
+    } else {
+      Partner.isSearched = false;
+    }
+
     if (Partner.search_text != "") {
       // console.log("click2");
       if (ManufactureProcess.loadingSaveSearchText) {
@@ -57,14 +68,6 @@ class SearchBarConatiner extends React.Component {
           2000
         );
       }
-    }
-    Partner.currentPage = 1;
-    Partner.click_count += 1;
-    await Partner.getPartner(Partner.currentPage, Partner.click_count);
-    if (Partner.search_text) {
-      Partner.isSearched = true;
-    } else {
-      Partner.isSearched = false;
     }
   };
   closeModal = () => {

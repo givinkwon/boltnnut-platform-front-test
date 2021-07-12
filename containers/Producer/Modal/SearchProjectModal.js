@@ -120,7 +120,7 @@ const ModalBox = styled.div`
   box-sizing: border-box;
 
   > section {
-    max-width: 900px;
+    // max-width: 900px;
     width: 90%;
     height: 87%;
     // margin: 0 auto;
@@ -214,66 +214,153 @@ const ModalBox = styled.div`
     background-color: #f1f1f1;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    position: fixed;
-
-    z-index: 101;
-
-    height: 500px;
-    width: 90%;
-    right: 5%;
-
+    top: 22%;
+    height: 228px;
+    width: 83%;
+    right: 8%;
+    padding: 22px 20px 24px 20px;
+    border-radius: 3px;
     > section {
-      max-width: 100%;
-      width: 90%;
-      height: 77%;
-
+      max-width: 900px;
+      width: 100%;
+      height: 87%;
       > header {
-        position: relative;
-        padding: 8px;
-
-        font-weight: 600;
-
         font-size: 16px;
+        margin-bottom: 0px;
       }
       > main {
-        height: 95%;
-        font-size: 13px;
-        font-weight: 600;
+        height: 79%;
+
         > div {
-          > div {
-            > textarea {
-              padding: 10px 12px;
-              box-sizing: border-box;
-              font-size: 11px;
-              line-height: 20px;
-              letter-spzcing: -0.45px;
-              color: #282c36;
-              border-radius: 5px;
-              overflow: auto;
-              height: auto;
-              font-family: inherit;
+          input {
+            height: 40px;
+
+            font-size: 14px;
+
+            ::placeholder {
+              font-size: 14px;
             }
           }
         }
       }
       > footer {
-        border-radius: 5px;
-        cursor: pointer;
-        height: 40px;
         > div {
-          font-size: 13px;
-          cursor: pointer;
+          width: 110px;
+          height: 34px;
+
+          > span {
+            font-size: 14px;
+          }
+        }
+        > div:nth-of-type(1) {
+          margin-right: 14px;
+          background-color: #e1e2e4;
         }
       }
     }
     > button {
-      font-size: 12px;
+      font-size: 14px;
+
       margin: 10px 10px 0 0;
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    top: 22%;
+    height: 446px;
+    width: 83%;
+    right: 8%;
+    padding: 32px 0 40px 52px;
+    > section {
+      max-width: 900px;
+      width: 90%;
+      height: 87%;
+      > header {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      > main {
+        height: 90%;
+
+        > div {
+          input {
+            height: 40px;
+
+            font-size: 16px;
+
+            ::placeholder {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+      > footer {
+        > div {
+          width: 200px;
+          height: 44px;
+
+          > span {
+            font-size: 16px;
+          }
+        }
+        > div:nth-of-type(1) {
+          margin-right: 14px;
+        }
+      }
+    }
+    > button {
+      font-size: 17px;
+
+      margin: 10px 10px 0 0;
+    }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    top: 22%;
+    height: 446px;
+    width: 83%;
+    right: 8%;
+    padding: 44px 0 50px 70px;
+    > section {
+      max-width: 900px;
+      width: 90%;
+      height: 87%;
+      > header {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      > main {
+        height: 90%;
+
+        > div {
+          input {
+            height: 42px;
+
+            font-size: 20px;
+
+            ::placeholder {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+      > footer {
+        > div {
+          width: 224px;
+          height: 51px;
+
+          > span {
+            font-size: 18px;
+          }
+        }
+        > div:nth-of-type(1) {
+          margin-right: 16px;
+        }
+      }
+    }
+    > button {
+      font-size: 19px;
+
+      margin: 10px 10px 0 0;
+    }
   }
   @media (min-width: 1300px) {
   }

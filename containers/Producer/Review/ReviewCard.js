@@ -16,30 +16,10 @@ class ReviewCard extends React.Component {
   };
 
   componentDidMount = async () => {
-    console.log("componentDidMount");
-
     const { Partner, data, totalCount, idx } = this.props;
-    // console.log(data);
-    // console.log(totalCount);
     if (data) {
-      // console.log(`client id : ${data.client}, idx : ${idx}`);
-      // await Partner.getClientInfo(data.client);
       await Partner.getClientNameById(data.client, idx);
-
-      // console.log(Partner.clientInfo);
-      // console.log(Partner.clientInfoList);
-      // Partner.clientInfo.name
-      // Partner.clientInfo.user.username
     }
-
-    // const { Partner, Auth } = this.props;
-    // await Partner.getReview();
-
-    // console.log(toJS(Partner.review_ary));
-    // await Partner.getClientEmail();
-    // if (Partner.review_user_ary) {
-    //   this.setState({ g: 3 });
-    // }
   };
   componentWillUnmount = () => {
     const { Partner } = this.props;
@@ -52,27 +32,31 @@ class ReviewCard extends React.Component {
 
   render() {
     const { data, width, Partner, categoryData, idx, totalCount } = this.props;
-    // console.log(data);
-    // console.log(toJS(Partner.partnerReviewList));
-    // console.log(toJS(Partner.clientInfoList));
+
     return (
       <>
-        <Card>
-          {/* {Partner.clientInfo.user ? (
-            <name>{Partner.clientInfo.user.username}</name>
+        <Card active={!Partner.reviewWritingModalActive}>
+          {Partner.review_client_obj[idx] &&
+            Partner.review_client_obj[idx].toString().length && (
+              <>
+                <name>
+                  {`${Partner.review_client_obj[idx]
+                    .toString()
+                    .substr(0, 2)
+                    .replace(/ /gi, "")}
+                  ${"*".repeat(
+                    Partner.review_client_obj[idx].toString().length - 2
+                  )}님`}
+                </name>
+              </>
+            )}
+
+          {/* {Partner.review_client_obj[idx] ? (
+            <name>{Partner.review_client_obj[idx]}</name>
           ) : (
             <name>***</name>
           )} */}
-          {/* {Partner.clientInfoList[idx] ? (
-            <name>{Partner.clientInfoList[idx].user.username}</name>
-          ) : (
-            <name>***</name>
-          )} */}
-          {Partner.review_client_obj[idx] ? (
-            <name>{Partner.review_client_obj[idx] + " 님"}</name>
-          ) : (
-            <name>*** 님</name>
-          )}
+
           {/* {Partner.clientInfoList[data.client] ? (
             <name>{Partner.clientInfoList[data.client].user.username}</name>
           ) : (
@@ -87,28 +71,11 @@ class ReviewCard extends React.Component {
               />
             </span>
             <date>{data.date}</date>
-            {/* <span>{`   ${item.score}`}</span> */}
           </score>
+
           <history>{data.projectname}</history>
-          {/* <history>
-            {Partner.review_client_obj &&
-              console.log(`${idx} ++++++ ${Partner.review_client_obj[idx]}`)}
-
-            {Partner.review_client_obj && Partner.review_client_obj[idx]}
-          </history> */}
           <content>{data.content}</content>
-          {/* {Partner.review_user_ary && (
-                <name>{Partner.review_user_ary[idx]}</name>
-              )} */}
-          {/* <content>{item.content}</content> */}
         </Card>
-
-        {/* {Partner.loadReviewData === -1 && (
-          <NoCard reviewDone={Partner.review_done}>
-            <span>등록된 리뷰가 없습니다</span>
-          </NoCard>
-          // <h1></h1>
-        )} */}
       </>
     );
   }
@@ -116,20 +83,14 @@ class ReviewCard extends React.Component {
 
 export default ReviewCard;
 
-const stars = [1, 2, 3, 4, 5];
 const Card = styled.div`
-  //border: 3px solid green;
+  filter: ${(props) => (props.active ? "blur(9px)" : "")};
   width: 100%;
-  //height: 30px;
   background-color: #ffffff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-
-  //margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  //align-items: center;
   padding: 46px 23px 32px 26px;
   box-sizing: border-box;
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -206,41 +167,62 @@ const Card = styled.div`
       font-size: 14px;
     }
   }
-`;
 
-const StarRating = styled.div``;
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 30px 17px 21px 17px;
 
-const StarImg = styled.div`
-  margin-right: 5px;
-  > img {
-    filter: ${(props) => (props.starActive ? "sepia(63%) saturate(10)" : "")};
-    cursor: pointer;
+    > score {
+      margin-bottom: 3px;
+
+      > span:nth-of-type(1) {
+        margin-right: 5px;
+      }
+      > date {
+        font-size: 14px;
+        line-height: 24px;
+      }
+    }
+    > name {
+      font-size: 14px;
+    }
+    > history {
+      font-size: 14px;
+      line-height: 16px;
+
+      margin-bottom: 14px;
+    }
+    > content {
+      font-size: 14px;
+      line-height: 16px;
+    }
   }
-`;
-const NoCard = styled.div`
-  font-size: 20px;
-  font-weight: bold;
-  position: absolute;
-  //top: 72%;
-  //bottom: 50px;
-  z-index: 20;
-  display: ${(props) => (props.reviewDone ? "flex" : "none")};
 
-  width: 30%;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  background-color: #0933b3;
-  border-radius: 5px;
-  > span {
-    color: #ffffff;
-  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    padding: 38px 20px 26px 22px;
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 40%;
-    height: 25px;
-    > span {
-      font-size: 12px;
+    > score {
+      margin-bottom: 4px;
+
+      > span:nth-of-type(1) {
+        margin-right: 6px;
+      }
+      > date {
+        font-size: 16px;
+        line-height: 32px;
+      }
+    }
+    > name {
+      font-size: 16px;
+    }
+    > history {
+      font-size: 16px;
+      line-height: 22px;
+
+      margin-bottom: 18px;
+    }
+    > content {
+      font-size: 16px;
+      line-height: 22px;
     }
   }
 `;

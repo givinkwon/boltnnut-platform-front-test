@@ -41,7 +41,7 @@ class Index extends React.Component {
       data: formData,
     };
 
-    AccountAPI.setUserPageIP(req)
+    await AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
       })

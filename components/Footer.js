@@ -80,7 +80,8 @@ class FooterComponent extends React.Component {
   };
   componentDidMount() {
     const { Magazine } = this.props;
-    Magazine.init();
+    // Magazine.init();
+    Magazine.getMagazine(2);
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   }

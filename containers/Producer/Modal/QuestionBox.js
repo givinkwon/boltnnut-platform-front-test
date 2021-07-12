@@ -121,8 +121,8 @@ const Card = styled.div`
       margin-bottom: 25px;
     }
     div:nth-child(odd) {
-      width: 31px;
-      height: 31px;
+      width: 54px;
+      height: 54px;
       border-radius: 27px;
       background-color: #f6f6f6;
       position: relative;
@@ -131,8 +131,8 @@ const Card = styled.div`
         border-radius: 27px;
       }
       > div {
-        width: 12px;
-        height: 12px;
+        width: 22px;
+        height: 22px;
         border-radius: 11px;
         background-color: #e1e2e4;
         position: absolute;
@@ -143,7 +143,7 @@ const Card = styled.div`
     }
     div:nth-child(even) {
       // display: none;
-      width: 39px;
+      width: 90px;
       height: 0px;
       border: 1px solid #e1e2e4;
     }
@@ -185,6 +185,125 @@ const Card = styled.div`
       @media (min-width: 0px) and (max-width: 767.98px) {
         font-size: 14px;
         font-weight: bold;
+      }
+    }
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 13px 0 0 0;
+    height: 210px;
+
+    header {
+      margin-top: 10px;
+      margin-bottom: 18px;
+
+      span {
+        font-size: 16px;
+      }
+    }
+    main {
+      margin-bottom: 35px;
+
+      width: 172px;
+      height: 32px;
+      margin-bottom: 25px;
+
+      div:nth-child(odd) {
+        width: 31px;
+        height: 31px;
+
+        border-radius: 27px;
+
+        > div {
+          width: 12px;
+          height: 12px;
+          border-radius: 11px;
+        }
+      }
+      div:nth-child(even) {
+        width: 31px;
+        height: 0px;
+
+        // border-radius: 27px;
+      }
+    }
+
+    footer {
+      span {
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 100%;
+    height: 239px;
+
+    padding: 13px 0 36px 0;
+
+    header {
+      margin-bottom: 30px;
+      span {
+        font-size: 18px;
+      }
+    }
+    main {
+      margin-bottom: 27px;
+
+      div:nth-child(odd) {
+        width: 44px;
+        height: 44px;
+
+        > div {
+          width: 16px;
+          height: 16px;
+          border-radius: 8px;
+        }
+      }
+      div:nth-child(even) {
+        width: 189px;
+        height: 0px;
+      }
+    }
+    footer {
+      span {
+        font-size: 12px;
+      }
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 100%;
+    height: 250px;
+
+    padding: 13px 0 45px 0;
+
+    header {
+      margin-bottom: 36px;
+      span {
+        font-size: 21px;
+      }
+    }
+    main {
+      margin-bottom: 30px;
+
+      div:nth-child(odd) {
+        width: 48px;
+        height: 48px;
+
+        > div {
+          width: 18px;
+          height: 18px;
+          border-radius: 9px;
+        }
+      }
+      div:nth-child(even) {
+        width: 189px;
+        height: 0px;
+      }
+    }
+    footer {
+      span {
+        font-size: 14px;
       }
     }
   }

@@ -7,6 +7,14 @@ import ReviewCard from "../Review/ReviewCard";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
 import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { inject, observer } from "mobx-react";
+import * as Title from "components/Title";
+
+const customRenderer = DocViewerRenderers;
+
+const star = "/static/icon/star_blue3.svg";
+const bluebar_empty = "/static/icon/bluebar_empty.svg";
 import Slider from "react-slick";
 
 const availableFileType1 = [
@@ -28,8 +36,7 @@ const availableFileType3 = ["doc", "docx", "txt", "html", "ppt", "pptx"];
 const FileViewer = dynamic(() => import("react-file-viewer"), {
   ssr: false,
 });
-import { inject, observer } from "mobx-react";
-import * as Title from "components/Title";
+
 const waterMarkImg = "/static/images/logo_marine@2x.png";
 const type = "pdf";
 
@@ -37,7 +44,9 @@ const onError = (e) => {
   console.log(e, "error in file-viewer");
 };
 
-@inject("Partner")
+let loadingCounter = 0;
+
+@inject("Partner", "Auth")
 @observer
 class DetailCardContainer extends React.Component {
   state = {
@@ -45,29 +54,105 @@ class DetailCardContainer extends React.Component {
     avg_kindness_score: 0,
     avg_communication_score: 0,
     avg_profession_score: 0,
+    docViewerLoading: false,
+    loading: 0,
   };
 
   openModal = () => {
     const { Partner } = this.props;
     // console.log("requestmodal open click");
     // this.setState({ modalOpen: true });
-    Partner.reviewWritingModalActive = true;
+    Partner.reviewWritingModalActive = false;
   };
   closeModal = () => {
     const { Partner } = this.props;
     // console.log("requestmodal close click");
 
-    Partner.reviewWritingModalActive = false;
+    Partner.reviewWritingModalActive = true;
+  };
+  docRender = () => {
+    console.log("AAAAAAAAAA");
+    console.log(this.props.Partner.docViewerLoading);
+    if (!this.props.Partner.docViewerLoading) {
+      setTimeout(() => {
+        // this.setState({ g: 3 });
+        // this.docRender();
+      }, 5000);
+    }
+    // if (!this.state.docViewerLoading) {
+    //   console.log(this.state.docViewerLoading);
+    //   // setTimeout(() => {}, 4000);
+    // }
   };
 
+  componentDidUpdate() {
+    // console.log(this.state.loading);
+    // console.log(loadingCounter);
+  }
+  shouldComponentUpdate = () => {
+    // console.log(`shouldComponentUpdate : ${this.state.loading}`);
+    // console.log(`shouldComponentUpdate : ${loadingCounter}`);
+
+    // console.log(this.state.loading == loadingCounter - 1);
+    // console.log(this.state.loading == 0);
+    return !this.state.loading;
+    // return this.state.loading == loadingCounter - 1;
+  };
   componentDidMount = async () => {
-    const { Partner } = this.props;
-    console.log("mountmount");
+    const { Partner, Auth } = this.props;
+    Partner.docViewerLoading = false;
+
+    console.log(toJS(Partner.partner_list)); // 10개의 제조사
+    console.log(toJS(Partner.partner_detail_list)); // 현재 제조사
+
+    // loadingCounter = 0;
+    console.log(this.state.loading);
+    this.docRender();
+
+    // this.setState({ loading: this.state.loading + 1 });
+
+    // this.setState((state) => {
+    //   return { loading: state.loading + 1 };
+    // });
+    customRenderer.weight = 2;
+    customRenderer.fileLoader = ({
+      documentURI,
+      signal,
+      fileLoaderComplete,
+    }) => {
+      console.log("bbb");
+      // customFileLoaderCode
+      // customFileLoaderCode().then(() => {
+      //   console.log("ccc");
+      //   fileLoaderComplete();
+      // });
+      fileLoaderComplete();
+    };
+
+    // console.log(customRenderer);
+    // console.log(toJS(Partner.partner_detail_list));
+    // console.log("detail page didmount");
+    // console.log(toJS(Partner.partnerAllReviewList));
+    // console.log(toJS(Partner.partnerReviewList));
+    // console.log(toJS(Auth));
+    // console.log(toJS(Partner.review_partner_page));
+
+    const height = document.getElementById("card").style;
+    // console.log(height);
+    // console.log(`HEIGHT : ${height}`);
+
+    if (Auth.logged_in_client) {
+      Partner.checkReviewWriting(Auth.logged_in_client.id);
+      // Partner.checkReviewWriting(5052);
+    }
+
+    Partner.reviewCurrentPage = 1;
+    Partner.detailLoadingFlag = false;
     if (Partner.partner_detail_list.length == 0) {
       Router.push("/producer");
     }
 
-    console.log(this.props.Partner.selectedIntroductionFileType);
+    // console.log(this.props.Partner.selectedIntroductionFileType);
 
     // if (this.props.Partner.selectedIntroductionFileType === "pptx") {
     //   var frameHTML =
@@ -83,35 +168,135 @@ class DetailCardContainer extends React.Component {
     // let total_profession_score = 0;
     // console.log(Partner.partnerReviewList);
 
-    // await Partner.partnerReviewList[0].data.map((item, idx) => {
-    //   total_consult_score += item.consult_score;
-    //   total_kindness_score += item.kindness_score;
-    //   total_communication_score += item.communication_score;
-    //   total_profession_score += item.profession_score;
-    // });
-    // this.setState({
-    //   avg_consult_score:
-    //     total_consult_score / Partner.partnerReviewList[0].data.length,
-    //   avg_kindness_score:
-    //     total_consult_score / Partner.partnerReviewList[0].data.length,
-    //   avg_communication_score:
-    //     total_consult_score / Partner.partnerReviewList[0].data.length,
-    //   avg_profession_score:
-    //     total_consult_score / Partner.partnerReviewList[0].data.length,
-    // });
-    // console.log(total_consult_score);
-    // console.log(Partner.partnerReviewList[0].data.length);
-
-    // console.log(5 / 2);
-    // console.log(this.state.avg_consult_score);
-    // console.log(Math.floor(this.state.avg_consult_score));
+    // (await Partner.partnerAllReviewList[0]) &&
+    //   Partner.partnerAllReviewList[0].data.map((item, idx) => {
+    //     total_consult_score += item.consult_score;
+    //     total_kindness_score += item.kindness_score;
+    //     total_communication_score += item.communication_score;
+    //     total_profession_score += item.profession_score;
+    //   });
+    // Partner.partnerAllReviewList[0] &&
+    //   this.setState({
+    //     avg_consult_score:
+    //       total_consult_score / Partner.partnerAllReviewList[0].data.length,
+    //     avg_kindness_score:
+    //       total_kindness_score / Partner.partnerAllReviewList[0].data.length,
+    //     avg_communication_score:
+    //       total_communication_score /
+    //       Partner.partnerAllReviewList[0].data.length,
+    //     avg_profession_score:
+    //       total_profession_score / Partner.partnerAllReviewList[0].data.length,
+    //   });
+  };
+  componentWillUnmount = () => {
+    const { Partner, Auth } = this.props;
+    Partner.review_partner_page = 1;
+    loadingCounter = 0;
   };
 
+  error = () => {
+    console.log("error");
+  };
+  movePage = (e) => {
+    console.log("movePage");
+    const { Partner, Auth } = this.props;
+    // e.preventDefault();
+    const newPage = e.target.innerText * 1;
+
+    if (newPage != Partner.reviewCurrentPage) {
+      Partner.reviewCurrentPage = newPage;
+      // Partner.resetDevCategory();
+      // Partner.check_loading_develop = false;
+      // Partner.ReviewActive = false;
+      // Partner.ReviewActiveIndex = -1;
+      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      // Partner.click_count += 1;
+
+      Partner.getReviewByPartner(
+        Partner.partner_detail_list[0].item.id,
+        1,
+        newPage
+      );
+    }
+  };
+
+  pageNext = (e) => {
+    console.log("pageNext");
+    const { Partner } = this.props;
+    // e.preventDefault();
+    if (Partner.reviewCurrentPage < Partner.review_partner_page) {
+      const nextPage = Partner.reviewCurrentPage + 1;
+      Partner.reviewCurrentPage = nextPage;
+      // Partner.check_loading_develop = false;
+      // Partner.resetDevCategory();
+      // Partner.ReviewActive = false;
+      // Partner.ReviewActiveIndex = -1;
+      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      // Partner.click_count += 1;
+      Partner.getReviewByPartner(
+        Partner.partner_detail_list[0].item.id,
+        1,
+        nextPage
+      );
+    }
+  };
+
+  pagePrev = (e) => {
+    console.log("pagePrev");
+    const { Partner } = this.props;
+    // e.preventDefault();
+    if (Partner.reviewCurrentPage > 1) {
+      const previousPage = Partner.reviewCurrentPage - 1;
+      Partner.reviewCurrentPage = previousPage;
+      // Partner.resetDevCategory();
+      // Partner.check_loading_develop = false;
+      // Partner.ReviewActive = false;
+      // Partner.ReviewActiveIndex = -1;
+      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
+      // Partner.click_count += 1;
+      Partner.getReviewByPartner(
+        Partner.partner_detail_list[0].item.id,
+        1,
+        previousPage
+      );
+    }
+  };
+
+  // countLoading = () => {
+  //   loadingCounter += 1;
+  //   console.log(loadingCounter);
+  // };
   render() {
     const { width, Partner } = this.props;
+    const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
+
+    // console.log(toJS(Partner.selectedIntroductionFile));
+
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
 
-    
+    console.log("render!");
+
+    // if (this.state.loading == 0) {
+    // loadingCounter += 1;
+    // console.log(loadingCounter);
+    this.setState((state) => {
+      console.log("state ++");
+      return { loading: state.loading + 1 };
+    });
+    // }
+
+    // if(this.state.loading === 1){
+    //   this.setState((state) => {
+    //     return { loading: state.loading + 1 };
+    //   });
+    // }
+
+    console.log(docs);
+    // console.log(loadingCounter);
+    // console.log(this.loadingCounter);
+    console.log(this.state.loading);
+    // const customDocRenderer =
+
     const SlideSettings = {
       dots: false,
       infinite: true,
@@ -126,10 +311,12 @@ class DetailCardContainer extends React.Component {
     return (
       <>
         <Card
+          id="card"
           width={width}
           onContextMenu={(e) => {
-            e.preventDefault();
+            // e.preventDefault();
           }}
+          onClick={() => this.setState({ g: 3 })}
         >
           <HeaderBox>
             <tag>
@@ -146,7 +333,7 @@ class DetailCardContainer extends React.Component {
           </HeaderBox>
           <div
             onCentextMenu={(e) => {
-              e.preventDefault();
+              // e.preventDefault();
             }}
             style={{
               position: "fixed",
@@ -161,20 +348,23 @@ class DetailCardContainer extends React.Component {
             </div>
           </div>
           <InnerBox>
-          <IntroductionBox width={width}>
+            <IntroductionBox width={width}>
               <Font24>포토폴리오</Font24>
               <SliderContainer {...SlideSettings}>
-              {Partner.partner_detail_list.length != 0 && Partner.partner_detail_list[0].item.portfolio_set.length > 0 &&
-                  Partner.partner_detail_list[0].item.portfolio_set.map((item, idx) => {
-                    return (
-                      <Item>
-                        <img src={item.img_portfolio} />
-                      </Item>    
-                    );
-                  })}
+                {Partner.partner_detail_list.length != 0 &&
+                  Partner.partner_detail_list[0].item.portfolio_set.length >
+                    0 &&
+                  Partner.partner_detail_list[0].item.portfolio_set.map(
+                    (item, idx) => {
+                      return (
+                        <Item>
+                          <img src={item.img_portfolio} />
+                        </Item>
+                      );
+                    }
+                  )}
               </SliderContainer>
-
-          </IntroductionBox>
+            </IntroductionBox>
 
             <IntroductionBox width={width}>
               <Font24>회사소개서</Font24>
@@ -190,15 +380,40 @@ class DetailCardContainer extends React.Component {
 
               {availableFileType3.indexOf(
                 this.props.Partner.selectedIntroductionFileType
-              ) > -1 && (
-                <DOCViewer
-                  documents={docs}
-                  pluginRenderers={DocViewerRenderers}
-                  height={width}
-                  window={window}
-                  type={this.props.Partner.selectedIntroductionFileType}
-                />
-              )}
+              ) > -1 &&
+                this.state.loading < 2 && (
+                  <>
+                    <div style={{ position: "relative" }}>
+                      <DOCViewer
+                        documents={docs}
+                        pluginRenderers={customRenderer}
+                        height={width}
+                        window={window}
+                        type={this.props.Partner.selectedIntroductionFileType}
+                      />
+
+                      {/* ppt 하단에 전체 보기 및 다운로드 막는 박스인데 스타일 컴포넌트로 할 예정 (임시) */}
+                      <div
+                        id="prevent"
+                        style={{
+                          position: "absolute",
+                          width: "90px",
+                          height: "22px",
+                          bottom: "0%",
+                          right: "0%",
+                          zIndex: "9999",
+                        }}
+                      />
+                    </div>
+                    {/* {this.countLoading()} */}
+                    {/* {loadingCounter == 2 && (loadingCounter += 1)} */}
+                    {console.log(loadingCounter)}
+                    {console.log(this.state.loading)}
+
+                    {/* {console.log(docs)} */}
+                    {/* {console.log(customRenderer.fileLoader)} */}
+                  </>
+                )}
             </IntroductionBox>
           </InnerBox>
           <DetailInfoBox>
@@ -226,49 +441,140 @@ class DetailCardContainer extends React.Component {
             </div>
           </DetailInfoBox>
           {/* <ReviewBox>
-            <label>평가 후기</label>
-
+    
+            <div>
+              <label>평가 후기</label>
+            </div>
+            
             <SummaryBox>
               <label>클라이언트 평균 만족도</label>
               <header>
                 <mainscore>
                   <div>
-                    <ReviewStarRating
-                      width={31}
-                      margin={4}
-                      score={Math.floor(this.state.avg_consult_score)}
-                    />
+                  
+                    <TotalRating>
+                      <div>
+                        <ReviewStarRating
+                          width={
+                            width > 1300 ? "31" : width > 992 ? "26" : "22"
+                          }
+                          margin={4}
+                          score={Math.floor(this.state.avg_consult_score)}
+                        />
+                      </div>
+                      <img src={star}></img>
+                    </TotalRating>                    
                   </div>
                   <div>
                     <span>{this.state.avg_consult_score.toFixed(2)}</span>
                     <span>전체 누적 평점</span>
                   </div>
                 </mainscore>
+
                 <subscore>
                   <div>
-                    <span>친절도</span>
-                    <div>
-                      <ReviewStarRating width={15} margin={1} score={3} />
-                    </div>
+                    <span
+                      style={{
+                        color: "#999999",
+                      }}
+                    >
+                      친절도
+                    </span>
+                    {width > 768 ? (
+                      <div>
+                        <ReviewStarRating
+                          width={
+                            width > 1300 ? "15" : width > 992 ? "13" : "11"
+                          }
+                          margin={1}
+                          score={this.state.avg_kindness_score}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <CustomSlider
+                          value={this.state.avg_kindness_score * 20}
+                        />
+                        <div>{this.state.avg_kindness_score.toFixed(1)}</div>
+                      </>
+                    )}
                   </div>
 
                   <div>
-                    <span>연락 빈도</span>
-                    <div>
-                      <ReviewStarRating width={15} margin={1} score={2} />
-                    </div>
+                    <span
+                      style={{
+                        color: "#999999",
+                      }}
+                    >
+                      연락 빈도
+                    </span>
+                    {width > 768 ? (
+                      <div>
+                        <ReviewStarRating
+                          width={
+                            width > 1300 ? "15" : width > 992 ? "13" : "11"
+                          }
+                          margin={1}
+                          score={this.state.avg_communication_score}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <CustomSlider
+                          value={this.state.avg_communication_score * 20}
+                        />
+                        <div>
+                          {this.state.avg_communication_score.toFixed(1)}
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   <div>
-                    <span>전문성</span>
-                    <div>
-                      <ReviewStarRating width={15} margin={1} score={5} />
-                    </div>
+                    <span
+                      style={{
+                        color: "#999999",
+                      }}
+                    >
+                      전문성
+                    </span>
+                    {width > 768 ? (
+                      <div>
+                        <ReviewStarRating
+                          width={
+                            width > 1300 ? "15" : width > 992 ? "13" : "11"
+                          }
+                          margin={1}
+                          score={this.state.avg_profession_score}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <CustomSlider
+                          value={this.state.avg_profession_score * 20}
+                        />
+                        <div>{this.state.avg_profession_score.toFixed(1)}</div>
+                      </>
+                    )}
                   </div>
                 </subscore>
               </header>
             </SummaryBox>
             <content>
+              
+              <ReviewTop>
+                {Partner.partnerReviewList[0] && (
+                  <TotalCount>
+                    전체 ({Partner.partnerReviewList[0].count})
+                  </TotalCount>
+                )}
+
+                <DateSorting>
+                  <div style={{ marginRight: "5px" }}>최신순</div>
+                  <img src={sort}></img>
+                </DateSorting>
+              </ReviewTop>
+              
               {Partner.partnerReviewList &&
                 console.log(toJS(Partner.partnerReviewList[0].data))}
               {Partner.partnerReviewList &&
@@ -281,19 +587,149 @@ class DetailCardContainer extends React.Component {
                     />
                   );
                 })}
-            </content> */}
-          {/* {Partner.reviewWritingModalActive && (
+            </content>            
+            {!Partner.reviewWritingModalActive ? (
               <Layer>
                 <span>
                   <Modal
                     width={width}
-                    open={Partner.reviewWritingModalActive}
+                    open={!Partner.reviewWritingModalActive}
                     close={this.closeModal}
-                  ></Modal>
+                    purpose="FirstReview"
+                    headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? "
+                    headerTwo="첫 평가를 작성해주세요"
+                    bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
+                    bodyTwo="업체 평가 작성이 가능합니다."
+                  />
                 </span>
               </Layer>
-            )} */}
-          {/* </ReviewBox> */}
+            ) : (
+              Partner.review_partner_page === 1 &&
+              Partner.partnerReviewList.length === 0 && (
+                <Layer>
+                  <span>
+                    <Modal
+                      width={width}
+                      open={!Partner.partnerReviewList.length}
+                      close={this.closeModal}
+                      purpose="NoReview"
+                      headerOne="현재 작성 된 리뷰가 없습니다"
+                      headerTwo="첫 평가를 작성해주세요"
+                      bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
+                      bodyTwo="업체 평가 작성이 가능합니다."
+                    />
+                  </span>
+                </Layer>
+              )
+            )}
+            
+
+            <PageBar acitve={!Partner.reviewWritingModalActive}>
+              <img
+                src={pass1}
+                style={{
+                  opacity:
+                    current_set == 1 && Partner.reviewCurrentPage <= 1
+                      ? 0.4
+                      : 1,
+                  cursor: "pointer",
+                  display:
+                    !Partner.partnerReviewList[0] &&
+                    Partner.review_partner_page === 1 &&
+                    "none",
+                }}
+                onClick={() => {
+                  console.log("lll");
+                  this.pagePrev();
+                }}
+              />
+              <PageCount
+                onClick={this.movePage}
+                value={5 * (current_set - 1)}
+                active={Partner.reviewCurrentPage % 5 == 1}
+                style={{
+                  display:
+                    Partner.review_partner_page < 5 * (current_set - 1) + 1
+                      ? "none"
+                      : "block",
+                }}
+              >
+                {" "}
+                {5 * (current_set - 1) + 1}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 1}
+                active={Partner.reviewCurrentPage % 5 == 2}
+                style={{
+                  display:
+                    Partner.review_partner_page < 5 * (current_set - 1) + 2
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 2}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 2}
+                active={Partner.reviewCurrentPage % 5 == 3}
+                style={{
+                  display:
+                    Partner.review_partner_page < 5 * (current_set - 1) + 3
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 3}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 3}
+                active={Partner.reviewCurrentPage % 5 == 4}
+                style={{
+                  display:
+                    Partner.review_partner_page < 5 * (current_set - 1) + 4
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 4}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (current_set - 1) + 4}
+                active={Partner.reviewCurrentPage % 5 == 0}
+                style={{
+                  display:
+                    Partner.review_partner_page < 5 * (current_set - 1) + 5
+                      ? "none"
+                      : "block",
+                }}
+                onClick={this.movePage}
+              >
+                {" "}
+                {5 * (current_set - 1) + 5}{" "}
+              </PageCount>
+              <img
+                src={pass2}
+                style={{
+                  opacity:
+                    Partner.review_partner_page == Partner.reviewCurrentPage
+                      ? 0.4
+                      : 1,
+                  cursor: "pointer",
+                  display:
+                    !Partner.partnerReviewList[0] &&
+                    Partner.review_partner_page === 1 &&
+                    "none",
+                }}
+                onClick={this.pageNext}
+              />
+            </PageBar>
+          </ReviewBox> */}
         </Card>
       </>
     );
@@ -346,6 +782,7 @@ const Card = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
+
   justify-content: center;
   padding: 54px 32px;
   box-sizing: border-box;
@@ -506,6 +943,13 @@ const ReviewBox = styled.div`
     color: #282c36;
     font-weight: bold;
   }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 20px;
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    font-size: 22px;
+  }
 `;
 
 const SummaryBox = styled.div`
@@ -554,10 +998,151 @@ const SummaryBox = styled.div`
       display: flex;
       flex-direction: column;
       width: 165px;
+     
       > div {
         margin-bottom: 9px;
         display: flex;
         justify-content: space-between;
+
+        // 4. (1)        
+        >div{
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }  
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    >label{
+      font-size: 20px;
+    }
+    > header {    
+      > mainscore {      
+        > div:nth-of-type(1) {
+          padding-top: 6px;        
+        }
+        > div:nth-of-type(2) {        
+          > span:nth-of-type(1) {
+            font-size: 32px;
+            line-height: 24px;
+            
+            margin-bottom: 6px;
+          }
+          > span:nth-of-type(2) {
+            font-size: 12px;
+            line-height: 18px;        
+          }
+        }
+      }
+      > subscore {      
+        width: 165px;
+        > div {
+          margin-bottom: 7px;
+          >span{
+            font-size:12px;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    >header{
+      > subscore {          
+        > div {      
+        
+          align-items: center;
+          >span{              
+            padding: 2px;
+            width: 180px;
+            // margin-bottom: 7px;
+          }
+          > span:nth-of-type(1) {
+              
+              margin-right: 10px;
+              font-size: 12px;
+              // width: 55px;
+              text-align: right;
+          
+            }
+            > div:nth-of-type(1) {
+              
+              // display: none;
+              font-size: 12px;
+            }
+            > div:nth-of-type(2) {
+              // display: none;
+              
+        
+              display: block;
+              font-size: 12px;
+                 
+            }
+          
+        }
+      }
+    }
+  }
+
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    >label{
+      font-size: 22px;
+    }
+      > header {    
+    > mainscore {      
+      > div:nth-of-type(1) {
+        padding-top: 8px;        
+      }
+      > div:nth-of-type(2) {        
+        > span:nth-of-type(1) {
+          font-size: 40px;
+          line-height: 32px;
+          
+          margin-bottom: 8px;
+        }
+        > span:nth-of-type(2) {
+          font-size: 14px;
+          line-height: 24px;        
+        }
+      }
+    }
+   > subscore {      
+      width: 165px;
+      > div {
+        margin-bottom: 7px;
+        >span{
+          font-size:12px;
+
+          // 4. (2)
+        align-items: center;
+        @media (min-width: 0px) and (max-width: 767.98px) {
+          padding: 2px;
+          width: 180px;
+          margin-bottom: 7px;
+        }
+        > span:nth-of-type(1) {
+          @media (min-width: 0px) and (max-width: 767.98px) {
+            margin-right: 10px;
+            font-size: 12px;
+            width: 55px;
+            text-align: right;
+          }
+        }
+        > div:nth-of-type(1) {
+          @media (min-width: 0px) and (max-width: 767.98px) {
+            display: none;
+          }
+        }
+        > div:nth-of-type(2) {
+          display: none;
+          @media (min-width: 0px) and (max-width: 767.98px) {
+            display: block;
+            font-size: 12px;
+          }
+// 4. (2)        
+}
       }
     }
   }
@@ -571,7 +1156,7 @@ const Layer = styled.div`
   bottom: 0;
   z-index: 99;
   // opacity: 0.1;
-  background-color: rgba(0, 0, 0, 0.5);
+  // background-color: rgba(0, 0, 0, 0.5);
 
   > span {
     display: flex;
@@ -693,22 +1278,25 @@ const DetailInfoBox = styled.div`
 const FileViewerContainer = styled(FileViewer)``;
 
 const DOCViewer = styled(DocViewer)`
-  > div:nth-of-type(1){
+min-height: 300px;
+.WACStatusBarContainer{
+  border: 3px solid red;
+}
+> div:nth-of-type(1){
     display: none;
-    z-index: 0;
-  }
-  > div:nth-of-type(2) {
-    // border: 3px solid red;
+    z-index: 0;    
+}
+> div:nth-of-type(2) {    
 
-    > div:nth-of-type(1) {
-      // height: 1000px;
-      height: ${(props) =>
-        (props.type === "pptx" || props.type === "ppt") &&
-        props.height / 2 - props.height / 5}px;
-        height: ${(props) =>
-          (props.type === "docx" || props.type === "doc") && 1200}px;
-    }
+  > div:nth-of-type(1) {
+    // height: 1000px;
+    height: ${(props) =>
+      (props.type === "pptx" || props.type === "ppt") &&
+      props.height / 2 - props.height / 5}px;
+    height: ${(props) =>
+      (props.type === "docx" || props.type === "doc") && 1200}px;
   }
+}
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     > div:nth-of-type(2) {
@@ -727,7 +1315,57 @@ const DOCViewer = styled(DocViewer)`
   }
 `;
 
+const PageBar = styled.div`
+  width: 351px;
+  margin-top: 109px;
+  margin-bottom: 157px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  filter: ${(props) => (props.acitve ? "blur(9px)" : "")};
 
+  img {
+    align-self: center;
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 171px;
+    margin-top: 54px;
+    margin-bottom: 67px;
+    img {
+      width: 4px;
+      height: 14px;
+    }
+  }
+
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 251px;
+    margin-top: 69px;
+    margin-bottom: 97px;
+    img {
+      width: 6px;
+      height: 18px;
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    width: 301px;
+    margin-top: 84px;
+    margin-bottom: 127px;
+    img {
+      width: 8px;
+      height: 22px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin: 50px auto 60px auto;
+    width: 250px;
+    > img {
+      height: 15px;
+    }
+  }
+  `;
 const SliderContainer = styled(Slider)`
   .slick-list {
     width: 100%;
@@ -740,6 +1378,42 @@ const SliderContainer = styled(Slider)`
   }
 `;
 
+const PageCount = styled.span`
+  width: 14px;
+  height: 30px;
+  font-size: 25px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: 0.63px;
+  text-align: left;
+  color: #999999;
+  cursor: pointer;
+  ${(props) =>
+    props.active &&
+    css`
+      font-weight: 700;
+      color: #0933b3;
+    `}
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 15px;
+    width: 12px;
+    height: 18px;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 18px;
+    width: 12px;
+    height: 26px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    font-size: 22px;
+  }
+`;
+
+const NoReviewItem = styled.div``;
 
 const Item = styled.div`
   // display: flex;

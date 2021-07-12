@@ -12,6 +12,7 @@ import SearchBar from "./SearchBar";
 import * as Text from "components/Text";
 import { BLACK1, GRAY, DARKGRAY, PRIMARY, WHITE } from "static/style";
 import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
 
 import * as FormatUtils from "utils/format";
 import * as RequestAPI from "axios/Request";
@@ -33,6 +34,8 @@ class ContentConatiner extends React.Component {
 
   componentDidMount = () => {
     this.props.Magazine.getMagazineCategory();
+    console.log(this.props.Magazine.category_checked_idx);
+    console.log(toJS(this.props.Magazine.magazine_list));
   };
 
   activeHandler = (idx) => {
@@ -45,7 +48,11 @@ class ContentConatiner extends React.Component {
 
   onClickHandler = (item, idx) => {
     const { Magazine } = this.props;
+    console.log(item.id);
     this.props.Magazine.getMagazine(item.id);
+    Magazine.current_page = 1;
+
+    console.log(Magazine.category_checked_idx);
 
     if (!Magazine.manufactureClick) {
       Magazine.manufactureClick = true;
@@ -182,6 +189,7 @@ class ContentConatiner extends React.Component {
               <span>카테고리</span>
             </CategoryHeader>
             {Magazine.categoryAry.map((item, idx) => {
+              // console.log(item);
               return (
                 <CategoryMenu checkMenu={item.checked} className="CategoryMenu">
                   <Button>
@@ -203,7 +211,7 @@ class ContentConatiner extends React.Component {
           <ContentBox>
             <Row>
               <SearchBar />
-              {console.log(Magazine.current_page)}
+              {/* {console.log(Magazine.current_page)} */}
               {this.props.Magazine.magazine_list
                 .slice(
                   (Magazine.current_page - 1) * 12,

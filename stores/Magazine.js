@@ -17,7 +17,7 @@ class Magazine {
 
   @observable mobileLowerCategoryAry = [];
 
-  @observable category_checked_idx = -1;
+  @observable category_checked_idx = 2;
   @observable category_detail_checked_idx = 0;
 
   @observable mobile_category_checked_idx = -1;
@@ -146,6 +146,8 @@ class Magazine {
       .then((res) => {
         this.categoryAry = res.data.results;
         console.log(res.data.results);
+        // console.log(this.categoryAry[0]);
+        // this.categoryAry[0].checked = true;
       })
       .catch((e) => {
         console.log(e);
