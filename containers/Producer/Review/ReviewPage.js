@@ -180,7 +180,7 @@ class ReviewPage extends React.Component {
     Partner.resetReviewData();
     Partner.reviewActiveIndex = 0;
   };
-  onSubmitReview = () => {
+  onSubmitReview = async () => {
     var formData = new FormData();
 
     const { Auth, Partner } = this.props;
@@ -258,7 +258,16 @@ class ReviewPage extends React.Component {
     formData.append("new_partner", Partner.newPartner);
     formData.append("partner_name", Partner.reviewPartnerName);
 
-    Partner.setPartnerReview(formData);
+    if (Partner.reviewLoading) {
+      alert("요청 중입니다");
+    }
+
+    if (!Partner.reviewLoading) {
+      Partner.reviewLoading = true;
+      await Partner.setPartnerReview(formData);
+
+      setTimeout(() => (Partner.reviewLoading = false), 2000);
+    }
   };
   render() {
     const { Partner, width } = this.props;
@@ -281,7 +290,12 @@ class ReviewPage extends React.Component {
                     this.openModal();
                   }}
                 >
-                  <span>입력하기</span>
+                  {this.props.width &&
+                    (this.props.width > 767.99 ? (
+                      <span>입력하기</span>
+                    ) : (
+                      <span>입력</span>
+                    ))}
                 </div>
               ) : (
                 <edit
@@ -396,23 +410,37 @@ class ReviewPage extends React.Component {
               />
             </div>
           </Section>
-          <Footer>
-            <div
-              onClick={() => {
-                this.onCancelReview();
-              }}
-            >
-              <span>취소</span>
-            </div>
+          {this.props.width &&
+            (this.props.width > 767.99 ? (
+              <Footer>
+                <div
+                  onClick={() => {
+                    this.onCancelReview();
+                  }}
+                >
+                  <span>취소</span>
+                </div>
 
-            <div
-              onClick={() => {
-                this.onSubmitReview();
-              }}
-            >
-              <span>작성하기</span>
-            </div>
-          </Footer>
+                <div
+                  onClick={() => {
+                    this.onSubmitReview();
+                  }}
+                >
+                  <span>작성하기</span>
+                </div>
+              </Footer>
+            ) : (
+              <Footer>
+                <div
+                  onClick={() => {
+                    this.onSubmitReview();
+                  }}
+                  style={{ marginRight: "0px", backgroundColor: "#0933b3" }}
+                >
+                  <span>작성하기</span>
+                </div>
+              </Footer>
+            ))}
 
           {Partner.searchProjectModalActive && (
             <Layer>
@@ -468,6 +496,11 @@ const Card = styled.div`
     padding-top: 80px;
     padding-bottom: 60px;
   }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    box-shadow: none;
+    padding-top: 40px;
+    margin-top: 20px;
+  }
 `;
 const Header = styled.div`
   display: flex;
@@ -489,51 +522,74 @@ const Header = styled.div`
     color: #0933b3;
     font-weight: bold;
     margin-top: 14px;
-    
-
-    }
-    @media (min-width: 768px) and (max-width: 991.98px) {
-      > div {
-        width: 34px;
-        height: 34px;        
-      }
-      > span {
-        font-size: 20px;        
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > div {
+      > img {
+        width: 21px;
+        height: 14px;
       }
     }
-    @media (min-width: 992px) and (max-width: 1299.98px) {
-      > div {
-        width: 40px;
-        height: 40px;        
-      }
-      > span {
-        font-size: 23px;        
-      }
-
-    
-
+    > span {
+      display: none;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    > div {
+      width: 34px;
+      height: 34px;
+    }
+    > span {
+      font-size: 20px;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    > div {
+      width: 40px;
+      height: 40px;
+    }
+    > span {
+      font-size: 23px;
+    }
+  }
 `;
 const Search = styled.div`
   width: 80%;
   height: 144px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   margin-top: 49px;
-
   display: flex;
   flex-direction: column;
-
   padding: 28px 54px 19px 43px;
   box-sizing: border-box;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 86px;
+    width: 90%;
+    padding: 10px;
+    margin-top: 50px;
+  }
+
   > div {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      align-items: center;
+      height: 34px;
+    }
+
     > span {
       font-size: 18px;
       line-height: 40px;
       letter-spacing: -0.45px;
       color: #282c36;
       font-weight: bold;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        font-size: 15px;
+        line-height: 2.67;
+        letter-spacing: -0.38px;
+        text-align: left;
+      }
     }
     > edit {
       cursor: pointer;
@@ -558,19 +614,38 @@ const Search = styled.div`
       justify-content: center;
       align-items: center;
       cursor: pointer;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        width: 73px;
+        height: 26px;
+      }
       > span {
         font-size: 18px;
         line-height: 34px;
         letter-spacing: -0.45px;
         color: #0933b3;
         font-weight: 500;
+        @media (min-width: 0px) and (max-width: 767.98px) {
+          font-size: 15px;
+        }
       }
     }
   }
   > div:nth-of-type(1) {
     margin-bottom: 17px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      margin-bottom: 0px;
+    }
   }
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > div {
+      > edit {
+        > span {
+          font-size: 15px;
+        }
+      }
+    }
+  }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-top: 40px;
 
@@ -651,15 +726,29 @@ const StarBox = styled.div`
     color: #282c36;
     font-weight: normal;
     margin-bottom: 41px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      font-size: 16px;
+      margin-bottom: 0px;
+    }
   }
   > starcontainer {
     display: flex;
     justify-content: center;
     margin-bottom: 37px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      margin-bottom: 0px;
+    }
     > div {
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        margin-bottom: 10px;
+      }
       > img {
         width: 45px;
         height: 42px;
+        @media (min-width: 0px) and (max-width: 767.98px) {
+          width: 36px;
+          height: 36px;
+        }
       }
     }
   }
@@ -669,6 +758,9 @@ const StarBox = styled.div`
     letter-spacing: -0.4px;
     color: #c6c7cc;
     font-weight: normal;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      display: none;
+    }
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
@@ -724,7 +816,9 @@ const Section = styled.div`
   width: 80%;
   padding: 29px 0 168px 0;
   box-sizing: border-box;
-
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 35px 0 35px 0;
+  }
   > span {
     font-size: 24px;
     line-height: 40px;
@@ -732,6 +826,15 @@ const Section = styled.div`
     color: #282c36;
     font-weight: bold;
     margin-bottom: 22px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      font-size: 16px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.5;
+      text-align: left;
+      color: #282c36;
+    }
   }
 
   > div {
@@ -761,6 +864,27 @@ const Section = styled.div`
         font-weight: normal;
       }
       white-space: pre-line;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+
+    > span {
+      font-size: 16px;
+
+      margin-bottom: 12px;
+    }
+
+    > div {
+      padding: 10px;
+      > textarea {
+        line-height: 20px;
+        font-size: 12px;
+      }
     }
   }
 
@@ -810,12 +934,19 @@ const Footer = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 164px;
+      height: 44px;
+    }
     span {
       font-size: 20px;
       line-height: 52px;
       letter-spacing: -0.5px;
       color: #ffffff;
       font-weight: bold;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        font-size: 16px;
+      }
     }
   }
   > div:nth-of-type(1) {

@@ -89,14 +89,25 @@ const Card = styled.div`
   padding: 13px 0 54px 0;
   box-sizing: border-box;
   border-bottom: 1px solid #e1e2e4;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 13px 0 0 0;
+    height: 210px;
+  }
   header {
     margin-bottom: 44px;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      margin-top: 10px;
+      margin-bottom: 18px;
+    }
     span {
       font-size: 24px;
       line-height: 40px;
       letter-spacing: -0.6px;
       color: #282c36;
       font-weight: normal;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        font-size: 16px;
+      }
     }
   }
   main {
@@ -104,6 +115,11 @@ const Card = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 172px;
+      height: 32px;
+      margin-bottom: 25px;
+    }
     div:nth-child(odd) {
       width: 54px;
       height: 54px;
@@ -111,6 +127,9 @@ const Card = styled.div`
       background-color: #f6f6f6;
       position: relative;
       cursor: pointer;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        border-radius: 27px;
+      }
       > div {
         width: 22px;
         height: 22px;
@@ -123,7 +142,8 @@ const Card = styled.div`
       }
     }
     div:nth-child(even) {
-      width: 189px;
+      // display: none;
+      width: 90px;
       height: 0px;
       border: 1px solid #e1e2e4;
     }
@@ -162,9 +182,59 @@ const Card = styled.div`
       letter-spacing: -0.4px;
       color: #0933b3;
       font-weight: normal;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        font-size: 14px;
+        font-weight: bold;
+      }
     }
   }
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 13px 0 0 0;
+    height: 210px;
+
+    header {
+      margin-top: 10px;
+      margin-bottom: 18px;
+
+      span {
+        font-size: 16px;
+      }
+    }
+    main {
+      margin-bottom: 35px;
+
+      width: 172px;
+      height: 32px;
+      margin-bottom: 25px;
+
+      div:nth-child(odd) {
+        width: 31px;
+        height: 31px;
+
+        border-radius: 27px;
+
+        > div {
+          width: 12px;
+          height: 12px;
+          border-radius: 11px;
+        }
+      }
+      div:nth-child(even) {
+        width: 31px;
+        height: 0px;
+
+        // border-radius: 27px;
+      }
+    }
+
+    footer {
+      span {
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+  }
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 100%;
     height: 239px;

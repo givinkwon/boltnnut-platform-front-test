@@ -447,9 +447,11 @@ const SearchFilterBox = styled.div`
   display: flex;
   align-items: center;
 `;
-const Filter = styled.div`
+const Filter = styled.button`
   //border: 2px solid red;
   cursor: pointer;
+  background: none;
+  border: none;
   > div {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
     border-radius: 5px;

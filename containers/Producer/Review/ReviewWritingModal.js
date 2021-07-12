@@ -265,13 +265,11 @@ const ModalBox = styled.div`
     background-color: #f1f1f1;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    position: fixed;
-
-    z-index: 101;
-
-    height: 500px;
-    width: 90%;
-    right: 5%;
+    top: 30%;
+    height: 230px;
+    width: 100%;
+    right: 0;
+    padding-top: 15px;
 
     > section {
       max-width: 100%;
@@ -285,12 +283,20 @@ const ModalBox = styled.div`
         font-weight: 600;
 
         font-size: 16px;
+
+        > div:nth-of-type(1),
+        div:nth-of-type(2) {
+          line-height: 1.48;
+        }
       }
       > main {
-        height: 95%;
+        height: 67px;
         font-size: 13px;
         font-weight: 600;
         > div {
+          p {
+            font-size: 14px;
+          }
           > div {
             > textarea {
               padding: 10px 12px;
@@ -312,7 +318,11 @@ const ModalBox = styled.div`
         cursor: pointer;
         height: 40px;
         > div {
-          font-size: 13px;
+          width: 172px;
+          height: 34px;
+          > span {
+            font-size: 13px;
+          }
         }
       }
     }

@@ -7,6 +7,15 @@ import ReviewCard from "../Review/ReviewCard";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
 import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import Slider from "@material-ui/core/Slider";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { inject, observer } from "mobx-react";
+import * as Title from "components/Title";
+
+const customRenderer = DocViewerRenderers;
+
+const star = "/static/icon/star_blue3.svg";
+const bluebar_empty = "/static/icon/bluebar_empty.svg";
 
 const availableFileType1 = [
   "png",
@@ -27,12 +36,12 @@ const availableFileType3 = ["doc", "docx", "txt", "html", "ppt", "pptx"];
 const FileViewer = dynamic(() => import("react-file-viewer"), {
   ssr: false,
 });
-import { inject, observer } from "mobx-react";
-import * as Title from "components/Title";
+
 const waterMarkImg = "/static/images/logo_marine@2x.png";
 const pass1 = "/static/images/pass1.png";
 const pass2 = "/static/images/pass2.png";
 const type = "pdf";
+const sort = "/static/icon/sort.svg";
 
 const onError = (e) => {
   console.log(e, "error in file-viewer");
@@ -46,6 +55,7 @@ class DetailCardContainer extends React.Component {
     avg_kindness_score: 0,
     avg_communication_score: 0,
     avg_profession_score: 0,
+    docViewerLoading: false,
   };
 
   openModal = () => {
@@ -60,13 +70,52 @@ class DetailCardContainer extends React.Component {
 
     Partner.reviewWritingModalActive = true;
   };
+  docRender = () => {
+    console.log("AAAAAAAAAA");
+    console.log(this.props.Partner.docViewerLoading);
+    if (!this.props.Partner.docViewerLoading) {
+      setTimeout(() => {
+        // this.setState({ g: 3 });
+        // this.docRender();
+      }, 5000);
+    }
+    // if (!this.state.docViewerLoading) {
+    //   console.log(this.state.docViewerLoading);
+    //   // setTimeout(() => {}, 4000);
+    // }
+  };
 
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
+    Partner.docViewerLoading = false;
+
+    this.docRender();
+    customRenderer.weight = 2;
+    customRenderer.fileLoader = ({
+      documentURI,
+      signal,
+      fileLoaderComplete,
+    }) => {
+      console.log("bbb");
+      // customFileLoaderCode
+      // customFileLoaderCode().then(() => {
+      //   console.log("ccc");
+      //   fileLoaderComplete();
+      // });
+      fileLoaderComplete();
+    };
+
+    console.log(customRenderer);
+    console.log(toJS(Partner.partner_detail_list));
+    console.log("detail page didmount");
     console.log(toJS(Partner.partnerAllReviewList));
     console.log(toJS(Partner.partnerReviewList));
     console.log(toJS(Auth));
     console.log(toJS(Partner.review_partner_page));
+
+    const height = document.getElementById("card").style;
+    console.log(height);
+    console.log(`HEIGHT : ${height}`);
 
     if (Auth.logged_in_client) {
       Partner.checkReviewWriting(Auth.logged_in_client.id);
@@ -129,6 +178,9 @@ class DetailCardContainer extends React.Component {
     Partner.review_partner_page = 1;
   };
 
+  error = () => {
+    console.log("error");
+  };
   movePage = (e) => {
     console.log("movePage");
     const { Partner, Auth } = this.props;
@@ -197,16 +249,22 @@ class DetailCardContainer extends React.Component {
   render() {
     const { width, Partner } = this.props;
     const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
+    // console.log(toJS(Partner.selectedIntroductionFile));
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
+
+    console.log(docs);
+    // const customDocRenderer =
 
     return (
       <>
         <Card
+          id="card"
           width={width}
           onContextMenu={(e) => {
             // e.preventDefault();
           }}
+          onClick={() => this.setState({ g: 3 })}
         >
           <HeaderBox>
             <tag>
@@ -253,13 +311,39 @@ class DetailCardContainer extends React.Component {
               {availableFileType3.indexOf(
                 this.props.Partner.selectedIntroductionFileType
               ) > -1 && (
-                <DOCViewer
-                  documents={docs}
-                  pluginRenderers={DocViewerRenderers}
-                  height={width}
-                  window={window}
-                  type={this.props.Partner.selectedIntroductionFileType}
-                />
+                <>
+                  <DOCViewer
+                    documents={docs}
+                    onLoad={() => {
+                      console.log("eee");
+                      // Partner.docViewerLoading = true;
+                      // this.setState({ docViewerLoading: true });
+                    }}
+                    // pluginRenderers={DocViewerRenderers}
+                    pluginRenderers={customRenderer}
+                    // pluginRenderers={
+                    //   (DocViewerRenderers.fileLoader = ({
+                    //     documentURI,
+                    //     signal,
+                    //     fileLoaderComplete,
+                    //   }) => {
+                    //     // fileLoaderCode().then(() => {
+                    //     console.log("complete");
+                    //     //   fileLoaderComplete();
+                    //     //   // });
+                    //   })
+                    // }
+                    height={width}
+                    window={window}
+                    type={this.props.Partner.selectedIntroductionFileType}
+                    // onError={this.onError}
+                    // errorComponent={CustomErrorComponent}
+                    // onError={this.onError}/>
+                    // fileLoaderComplete={() => console.log("Complete")}
+                  />
+                  {console.log(docs)}
+                  {console.log(customRenderer.fileLoader)}
+                </>
               )}
             </IntroductionBox>
           </InnerBox>
@@ -288,63 +372,147 @@ class DetailCardContainer extends React.Component {
             </div>
           </DetailInfoBox>
           <ReviewBox>
-            <label>평가 후기</label>
-
+            {/* 1. */}
+            {/* <label>평가 후기</label> */}
+            <div>
+              <label>평가 후기</label>
+            </div>
+            {/*  */}
             <SummaryBox>
               <label>클라이언트 평균 만족도</label>
               <header>
                 <mainscore>
                   <div>
-                    <ReviewStarRating
+                    {/* 2. */}
+                    {/* <ReviewStarRating
                       width={width > 1300 ? "31" : width > 992 ? "26" : "22"}
                       margin={4}
                       score={Math.floor(this.state.avg_consult_score)}
-                    />
+                    /> */}
+                    <TotalRating>
+                      <div>
+                        <ReviewStarRating
+                          width={
+                            width > 1300 ? "31" : width > 992 ? "26" : "22"
+                          }
+                          margin={4}
+                          score={Math.floor(this.state.avg_consult_score)}
+                        />
+                      </div>
+                      <img src={star}></img>
+                    </TotalRating>
+                    {/*  */}
                   </div>
                   <div>
                     <span>{this.state.avg_consult_score.toFixed(1)}</span>
                     <span>전체 누적 평점</span>
                   </div>
                 </mainscore>
-                {}
+
                 <subscore>
                   <div>
-                    <span>친절도</span>
-                    <div>
-                      <ReviewStarRating
-                        width={width > 1300 ? "15" : width > 992 ? "13" : "11"}
-                        margin={1}
-                        score={this.state.avg_kindness_score}
-                      />
-                    </div>
+                    <span
+                      style={{
+                        color: "#999999",
+                      }}
+                    >
+                      친절도
+                    </span>
+                    {width > 768 ? (
+                      <div>
+                        <ReviewStarRating
+                          width={
+                            width > 1300 ? "15" : width > 992 ? "13" : "11"
+                          }
+                          margin={1}
+                          score={this.state.avg_kindness_score}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <CustomSlider
+                          value={this.state.avg_kindness_score * 20}
+                        />
+                        <div>{this.state.avg_kindness_score.toFixed(1)}</div>
+                      </>
+                    )}
                   </div>
 
                   <div>
-                    <span>연락 빈도</span>
-                    <div>
-                      <ReviewStarRating
-                        width={width > 1300 ? "15" : width > 992 ? "13" : "11"}
-                        margin={1}
-                        score={this.state.avg_communication_score}
-                      />
-                    </div>
+                    <span
+                      style={{
+                        color: "#999999",
+                      }}
+                    >
+                      연락 빈도
+                    </span>
+                    {width > 768 ? (
+                      <div>
+                        <ReviewStarRating
+                          width={
+                            width > 1300 ? "15" : width > 992 ? "13" : "11"
+                          }
+                          margin={1}
+                          score={this.state.avg_communication_score}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <CustomSlider
+                          value={this.state.avg_communication_score * 20}
+                        />
+                        <div>
+                          {this.state.avg_communication_score.toFixed(1)}
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   <div>
-                    <span>전문성</span>
-                    <div>
-                      <ReviewStarRating
-                        width={width > 1300 ? "15" : width > 992 ? "13" : "11"}
-                        margin={1}
-                        score={this.state.avg_profession_score}
-                      />
-                    </div>
+                    <span
+                      style={{
+                        color: "#999999",
+                      }}
+                    >
+                      전문성
+                    </span>
+                    {width > 768 ? (
+                      <div>
+                        <ReviewStarRating
+                          width={
+                            width > 1300 ? "15" : width > 992 ? "13" : "11"
+                          }
+                          margin={1}
+                          score={this.state.avg_profession_score}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <CustomSlider
+                          value={this.state.avg_profession_score * 20}
+                        />
+                        <div>{this.state.avg_profession_score.toFixed(1)}</div>
+                      </>
+                    )}
                   </div>
                 </subscore>
               </header>
             </SummaryBox>
             <content>
-              {console.log(toJS(Partner.partnerReviewList))}
+              {/* 3. */}
+              <ReviewTop>
+                {Partner.partnerReviewList[0] && (
+                  <TotalCount>
+                    전체 ({Partner.partnerReviewList[0].count})
+                  </TotalCount>
+                )}
+
+                <DateSorting>
+                  <div style={{ marginRight: "5px" }}>최신순</div>
+                  <img src={sort}></img>
+                </DateSorting>
+              </ReviewTop>
+              {/*  */}
               {Partner.partnerReviewList &&
                 Partner.partnerReviewList[0] &&
                 Partner.partnerReviewList[0].current.map((item, idx) => {
@@ -511,6 +679,40 @@ class DetailCardContainer extends React.Component {
 
 export default DetailCardContainer;
 
+const CustomSlider = withStyles({
+  root: {
+    color: "#0933b3",
+    height: "7px !important",
+    width: "60%",
+    // cursor: "default",
+    // background: "red",
+    padding: 0,
+    display: "none",
+    marginRight: "10px",
+  },
+  thumb: {
+    // top: -10,
+    // paddingRight: 20,
+    // content: "apapap"
+    display: "none",
+  },
+  track: {
+    height: 6,
+    borderRadius: 10,
+  },
+  rail: {
+    color: "#e6e6e6",
+    opacity: 1,
+    height: 6,
+    borderRadius: 10,
+  },
+  "@media (min-width: 0px) and (max-width: 767.98px)": {
+    root: {
+      display: "block",
+    },
+  },
+})(Slider);
+
 const Font24 = styled(Title.FontSize24)`
   font-weight: bold;
   font-stretch: normal;
@@ -555,6 +757,7 @@ const Card = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
+
   justify-content: center;
   padding: 54px 32px;
   box-sizing: border-box;
@@ -708,12 +911,24 @@ const ReviewBox = styled.div`
   position: relative;
   // height: 500px;
   margin-top: 109px;
-  > label {
-    font-size: 24px;
-    line-height: 40px;
-    letter-spacing: -0.6px;
-    color: #282c36;
-    font-weight: bold;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-top: 60px;
+  }
+  > div {
+    > label {
+      font-size: 24px;
+      line-height: 40px;
+      letter-spacing: -0.6px;
+      color: #282c36;
+      font-weight: bold;
+      @media (min-width: 0px) and (max-width: 767.98px) {
+        object-fit: contain;
+        font-size: 16px;
+        line-height: 2.5;
+        letter-spacing: -0.4px;
+        text-align: left;
+      }
+    }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 20px;
@@ -727,6 +942,10 @@ const ReviewBox = styled.div`
 const SummaryBox = styled.div`
   margin-top: 50px;
   margin-bottom: 34px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
   > label {
     font-size: 24px;
     line-height: 40px;
@@ -735,6 +954,9 @@ const SummaryBox = styled.div`
     font-weight: 500;
     margin-bottom: 24px;
     display: block;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      display: none;
+    }
   }
   > header {
     display: flex;
@@ -756,6 +978,10 @@ const SummaryBox = styled.div`
           color: #282c36;
           font-weight: bold;
           margin-bottom: 12px;
+          @media (min-width: 0px) and (max-width: 767.98px) {
+            font-size: 32px;
+            margin-bottom: 0px;
+          }
         }
         > span:nth-of-type(2) {
           font-size: 16px;
@@ -763,6 +989,10 @@ const SummaryBox = styled.div`
           letter-spacing: -0.4px;
           color: #191919;
           font-weight: normal;
+          @media (min-width: 0px) and (max-width: 767.98px) {
+            color: #999999;
+            font-size: 14px;
+          }
         }
       }
     }
@@ -770,10 +1000,13 @@ const SummaryBox = styled.div`
       display: flex;
       flex-direction: column;
       width: 165px;
+     
       > div {
         margin-bottom: 9px;
         display: flex;
         justify-content: space-between;
+
+        // 4. (1)        
         >div{
           display: flex;
           align-items: center;
@@ -816,6 +1049,44 @@ const SummaryBox = styled.div`
     }
   }
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    >header{
+      > subscore {          
+        > div {      
+        
+          align-items: center;
+          >span{              
+            padding: 2px;
+            width: 180px;
+            // margin-bottom: 7px;
+          }
+          > span:nth-of-type(1) {
+              
+              margin-right: 10px;
+              font-size: 12px;
+              // width: 55px;
+              text-align: right;
+          
+            }
+            > div:nth-of-type(1) {
+              
+              // display: none;
+              font-size: 12px;
+            }
+            > div:nth-of-type(2) {
+              // display: none;
+              
+        
+              display: block;
+              font-size: 12px;
+                 
+            }
+          
+        }
+      }
+    }
+  }
+
 
   @media (min-width: 992px) and (max-width: 1299.98px) {
     >label{
@@ -845,9 +1116,89 @@ const SummaryBox = styled.div`
         margin-bottom: 7px;
         >span{
           font-size:12px;
+
+          // 4. (2)
+        align-items: center;
+        @media (min-width: 0px) and (max-width: 767.98px) {
+          padding: 2px;
+          width: 180px;
+          margin-bottom: 7px;
         }
+        > span:nth-of-type(1) {
+          @media (min-width: 0px) and (max-width: 767.98px) {
+            margin-right: 10px;
+            font-size: 12px;
+            width: 55px;
+            text-align: right;
+          }
+        }
+        > div:nth-of-type(1) {
+          @media (min-width: 0px) and (max-width: 767.98px) {
+            display: none;
+          }
+        }
+        > div:nth-of-type(2) {
+          display: none;
+          @media (min-width: 0px) and (max-width: 767.98px) {
+            display: block;
+            font-size: 12px;
+          }
+// 4. (2)        
+}
       }
     }
+  }
+`;
+
+const TotalRating = styled.div`
+  > div {
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      display: none;
+    }
+  }
+  > img {
+    display: none;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 21.7px;
+      height: 21px;
+      display: block;
+    }
+  }
+`;
+
+const ReviewTop = styled.div`
+  display: none;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const TotalCount = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.86;
+  letter-spacing: -0.35px;
+  text-align: left;
+`;
+
+const DateSorting = styled.div`
+  display: flex;
+  justify-content: center;
+  > div {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.86;
+    letter-spacing: -0.35px;
+    text-align: left;
+    color: #282c36;
+  }
+  > img {
+    width: 10px;
   }
 `;
 
@@ -981,20 +1332,21 @@ const DetailInfoBox = styled.div`
 const FileViewerContainer = styled(FileViewer)``;
 
 const DOCViewer = styled(DocViewer)`
+min-height: 300px;
   > div:nth-of-type(1){
     display: none;
-    z-index: 0;
+    z-index: 0;    
   }
   > div:nth-of-type(2) {
-    // border: 3px solid red;
+    border: 3px solid red;
 
     > div:nth-of-type(1) {
       // height: 1000px;
       height: ${(props) =>
         (props.type === "pptx" || props.type === "ppt") &&
         props.height / 2 - props.height / 5}px;
-        height: ${(props) =>
-          (props.type === "docx" || props.type === "doc") && 1200}px;
+      height: ${(props) =>
+        (props.type === "docx" || props.type === "doc") && 1200}px;
     }
   }
 
@@ -1030,6 +1382,17 @@ const PageBar = styled.div`
     align-self: center;
   }
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 171px;
+    margin-top: 54px;
+    margin-bottom: 67px;
+    img {
+      width: 4px;
+      height: 14px;
+    }
+  }
+
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 251px;
     margin-top: 69px;
@@ -1047,6 +1410,11 @@ const PageBar = styled.div`
     img {
       width: 8px;
       height: 22px;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    margin: 50px auto 60px auto;
+    width: 250px;
+    > img {
+      height: 15px;
     }
   }
 `;
@@ -1069,6 +1437,12 @@ const PageCount = styled.span`
       font-weight: 700;
       color: #0933b3;
     `}
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 15px;
+    width: 12px;
+    height: 18px;
+  }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     font-size: 18px;

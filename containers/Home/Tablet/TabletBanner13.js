@@ -11,6 +11,12 @@ const passImg = "/static/images/pass7.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 
 class TabletBanner13Container extends React.Component {
+  makeUrl = (url) => {
+    if (typeof window !== "undefined") {
+      return window.location.protocol + "//" + window.location.host + "/" + url;
+    }
+  };
+
   render() {
     const { width } = this.props;
     return (
@@ -30,12 +36,16 @@ class TabletBanner13Container extends React.Component {
                 </div>
 
                 <div>
-                  <div onClick={() => Router.push("/producer")}>
-                    <span>업체 정보 조회</span>
-                    <span>
-                      <img src={passImg} />
-                    </span>
-                  </div>
+                  {/* <div onClick={() => Router.push("/producer")}> */}
+                  <Button>
+                    <a href={this.makeUrl("producer")}>
+                      <span>업체 정보 조회</span>
+                      <span>
+                        <img src={passImg} />
+                      </span>
+                    </a>
+                  </Button>
+                  {/* </div> */}
                 </div>
               </Body>
             </div>
@@ -173,34 +183,68 @@ const Body = styled(Title.FontSize18)`
     //   // margin-bottom: 60px;
     // }
   }
-  > div:nth-of-type(2) {
+  // > div:nth-of-type(2) {
+  //   display: flex;
+  //   // justify-content: center;
+  //   align-items: center;
+  //   > div {
+  //     cursor: pointer;
+  //     margin-top: 30px;
+  //     border: 2px solid #0933b3;
+  //     border-radius: 4px;
+  //     width: 215px;
+  //     height: 40px;
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     > span:nth-of-type(1) {
+  //       margin-right: 15px;
+  //       font-size: 16px;
+  //       line-height: 52px;
+  //       letter-spacing: -0.65px;
+  //       color: #0933b3;
+  //       font-weight: 500;
+  //     }
+  //     > span:nth-of-type(2) {
+  //       padding-top: 8px;
+  //       > img {
+  //         width: 9px;
+  //         height: 18px;
+  //       }
+  //     }
+  //   }
+  // }
+`;
+
+const Button = styled.button`
+  background: none;
+  cursor: pointer;
+  margin-top: 30px;
+  border: 2px solid #0933b3;
+  border-radius: 4px;
+  width: 215px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > a {
     display: flex;
-    // justify-content: center;
+    justify-content: center;
     align-items: center;
-    > div {
-      cursor: pointer;
-      margin-top: 30px;
-      border: 2px solid #0933b3;
-      border-radius: 4px;
-      width: 215px;
-      height: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      > span:nth-of-type(1) {
-        margin-right: 15px;
-        font-size: 16px;
-        line-height: 52px;
-        letter-spacing: -0.65px;
-        color: #0933b3;
-        font-weight: 500;
-      }
-      > span:nth-of-type(2) {
-        padding-top: 8px;
-        > img {
-          width: 9px;
-          height: 18px;
-        }
+    margin-bottom: 2px;
+    > span:nth-of-type(1) {
+      margin-right: 15px;
+      font-size: 16px;
+      line-height: 52px;
+      letter-spacing: -0.65px;
+      color: #0933b3;
+      font-weight: 500;
+    }
+    > span:nth-of-type(2) {
+      padding-top: 8px;
+      > img {
+        width: 9px;
+        height: 18px;
       }
     }
   }

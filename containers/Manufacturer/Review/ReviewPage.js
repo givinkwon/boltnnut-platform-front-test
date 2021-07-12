@@ -103,7 +103,6 @@ class ReviewPage extends React.Component {
   openModal = () => {
     const { Partner } = this.props;
 
-
     Partner.searchProjectModalActive = true;
   };
   closeModal = () => {

@@ -339,12 +339,12 @@ const ModalBox = styled.div`
   padding: 52px 0 60px 98px;
   box-sizing: border-box;
   //height: 90vh;
-  height: 700px;
+  height: 600px;
 
   > section {
     // max-width: 900px;
     width: 90%;
-    height: 87%;
+    height: 300px;
     // margin: 0 auto;
     border-radius: 0.3rem;
     > header {
@@ -409,7 +409,7 @@ const ModalBox = styled.div`
       > div {
         overflow-y: auto;
         // height: 50vh;
-        height: 400px;
+        height: 300px;
       }
     }
     > footer {
