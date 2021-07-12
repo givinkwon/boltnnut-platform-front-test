@@ -363,35 +363,28 @@ class DetailCardContainer extends React.Component {
               ) > -1 &&
                 this.state.loading < 2 && (
                   <>
-                    <DOCViewer
-                      documents={docs}
-                      onLoad={() => {
-                        console.log("eee");
-                        // Partner.docViewerLoading = true;
-                        // this.setState({ docViewerLoading: true });
-                      }}
-                      // pluginRenderers={DocViewerRenderers}
-                      pluginRenderers={customRenderer}
-                      // pluginRenderers={
-                      //   (DocViewerRenderers.fileLoader = ({
-                      //     documentURI,
-                      //     signal,
-                      //     fileLoaderComplete,
-                      //   }) => {
-                      //     // fileLoaderCode().then(() => {
-                      //     console.log("complete");
-                      //     //   fileLoaderComplete();
-                      //     //   // });
-                      //   })
-                      // }
-                      height={width}
-                      window={window}
-                      type={this.props.Partner.selectedIntroductionFileType}
-                      // onError={this.onError}
-                      // errorComponent={CustomErrorComponent}
-                      // onError={this.onError}/>
-                      // fileLoaderComplete={() => console.log("Complete")}
-                    />
+                    <div style={{ position: "relative" }}>
+                      <DOCViewer
+                        documents={docs}
+                        pluginRenderers={customRenderer}
+                        height={width}
+                        window={window}
+                        type={this.props.Partner.selectedIntroductionFileType}
+                      />
+
+                      {/* ppt 하단에 전체 보기 및 다운로드 막는 박스인데 스타일 컴포넌트로 할 예정 (임시) */}
+                      <div
+                        id="prevent"
+                        style={{
+                          position: "absolute",
+                          width: "90px",
+                          height: "22px",
+                          bottom: "0%",
+                          right: "0%",
+                          zIndex: "9999",
+                        }}
+                      />
+                    </div>
                     {/* {this.countLoading()} */}
                     {/* {loadingCounter == 2 && (loadingCounter += 1)} */}
                     {console.log(loadingCounter)}
@@ -427,24 +420,18 @@ class DetailCardContainer extends React.Component {
               )}
             </div>
           </DetailInfoBox>
-          <ReviewBox>
-            {/* 1. */}
-            {/* <label>평가 후기</label> */}
+          {/* <ReviewBox>
+    
             <div>
               <label>평가 후기</label>
             </div>
-            {/*  */}
+            
             <SummaryBox>
               <label>클라이언트 평균 만족도</label>
               <header>
                 <mainscore>
                   <div>
-                    {/* 2. */}
-                    {/* <ReviewStarRating
-                      width={width > 1300 ? "31" : width > 992 ? "26" : "22"}
-                      margin={4}
-                      score={Math.floor(this.state.avg_consult_score)}
-                    /> */}
+                  
                     <TotalRating>
                       <div>
                         <ReviewStarRating
@@ -456,8 +443,7 @@ class DetailCardContainer extends React.Component {
                         />
                       </div>
                       <img src={star}></img>
-                    </TotalRating>
-                    {/*  */}
+                    </TotalRating>                    
                   </div>
                   <div>
                     <span>{this.state.avg_consult_score.toFixed(1)}</span>
@@ -555,7 +541,7 @@ class DetailCardContainer extends React.Component {
               </header>
             </SummaryBox>
             <content>
-              {/* 3. */}
+              
               <ReviewTop>
                 {Partner.partnerReviewList[0] && (
                   <TotalCount>
@@ -568,7 +554,7 @@ class DetailCardContainer extends React.Component {
                   <img src={sort}></img>
                 </DateSorting>
               </ReviewTop>
-              {/*  */}
+              
               {Partner.partnerReviewList &&
                 Partner.partnerReviewList[0] &&
                 Partner.partnerReviewList[0].current.map((item, idx) => {
@@ -580,8 +566,7 @@ class DetailCardContainer extends React.Component {
                     />
                   );
                 })}
-            </content>
-            {/* reviewWriting */}
+            </content>            
             {!Partner.reviewWritingModalActive ? (
               <Layer>
                 <span>
@@ -616,10 +601,7 @@ class DetailCardContainer extends React.Component {
                 </Layer>
               )
             )}
-
-            {/* <NoReviewItem>
-              <span>현재 작성 된 리뷰가 없습니다</span>
-            </NoReviewItem> */}
+            
 
             <PageBar acitve={!Partner.reviewWritingModalActive}>
               <img
@@ -726,7 +708,7 @@ class DetailCardContainer extends React.Component {
                 onClick={this.pageNext}
               />
             </PageBar>
-          </ReviewBox>
+          </ReviewBox> */}
         </Card>
       </>
     );
@@ -1389,21 +1371,24 @@ const FileViewerContainer = styled(FileViewer)``;
 
 const DOCViewer = styled(DocViewer)`
 min-height: 300px;
-  > div:nth-of-type(1){
+.WACStatusBarContainer{
+  border: 3px solid red;
+}
+> div:nth-of-type(1){
     display: none;
     z-index: 0;    
-  }
-  > div:nth-of-type(2) {    
+}
+> div:nth-of-type(2) {    
 
-    > div:nth-of-type(1) {
-      // height: 1000px;
-      height: ${(props) =>
-        (props.type === "pptx" || props.type === "ppt") &&
-        props.height / 2 - props.height / 5}px;
-      height: ${(props) =>
-        (props.type === "docx" || props.type === "doc") && 1200}px;
-    }
+  > div:nth-of-type(1) {
+    // height: 1000px;
+    height: ${(props) =>
+      (props.type === "pptx" || props.type === "ppt") &&
+      props.height / 2 - props.height / 5}px;
+    height: ${(props) =>
+      (props.type === "docx" || props.type === "doc") && 1200}px;
   }
+}
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     > div:nth-of-type(2) {
