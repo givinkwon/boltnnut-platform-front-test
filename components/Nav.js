@@ -12,6 +12,8 @@ import Containerv1 from "components/Containerv1";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
 import ChatTestContainer from "containers/Info2/ChatTest";
+import KSLink from "components/KSLink";
+
 const close_ic = "/static/icon/close.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
@@ -29,11 +31,6 @@ class Nav extends React.Component {
     partnerList: [],
   };
 
-  makeUrl = (url) => {
-    if (typeof window !== "undefined") {
-      return window.location.protocol + "//" + window.location.host + "/" + url;
-    }
-  };
   alreadyLoggedin = ["login", "signup"];
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
   logout = () => {
@@ -127,11 +124,8 @@ class Nav extends React.Component {
             style={{ display: "inline", justifyContent: "space-between" }}
           >
             <NavWrap>
-              {/* <Logo src={logo_ic} onClick={() => Router.push("/")} /> */}
               <BoltLogo>
-                <a href={this.makeUrl("")}>
-                  <Logo src={logo_ic} />
-                </a>
+                <KSLink url={""} logoImg={logo_ic} />
               </BoltLogo>
               <Menu is_open={is_open}>
                 <Close>
@@ -139,7 +133,6 @@ class Nav extends React.Component {
                     src={close_ic}
                     onClick={() => this.setState({ is_open: false })}
                   />
-                  {/* <Icon src={close_ic} /> */}
                 </Close>
 
                 {this.props.Auth.logged_in_user ? (
@@ -147,83 +140,38 @@ class Nav extends React.Component {
                     /* client로 로그인 */
 
                     <Fragment>
-                      <NavLink
-                        // onClick={() => Router.push("/producer")}
-                        active={url.indexOf("producer") > -1}
-                      >
-                        {/* <p class="line"> 제조사 찾기 </p> */}
-                        <a href={this.makeUrl("producer")}>
-                          <p class="line"> 제조사 찾기 </p>
-                        </a>
+                      <NavLink active={url.indexOf("producer") > -1}>
+                        <KSLink url={"producer"} content={"제조사 찾기"} />
                       </NavLink>
 
-                      <NavLink
-                        // onClick={() => Router.push("/project")}
-                        active={url.indexOf("project") > -1}
-                      >
-                        <a href={this.makeUrl("project")}>
-                          <p class="line"> 프로젝트 관리 </p>
-                        </a>
+                      <NavLink active={url.indexOf("project") > -1}>
+                        <KSLink url={"project"} content={"프로젝트 관리"} />
                       </NavLink>
 
-                      <NavLink
-                        // onClick={() => Router.push("/magazine")}
-                        active={url.indexOf("magazine") > -1}
-                      >
-                        <a href={this.makeUrl("magazine")}>
-                          <p class="line"> 제조 인사이트 </p>
-                        </a>
+                      <NavLink active={url.indexOf("magazine") > -1}>
+                        <KSLink url={"magazine"} content={"제조 인사이트"} />
                       </NavLink>
                     </Fragment>
                   ) : (
                     /* partner로 로그인 */
                     <Fragment>
-                      <NavLink
-                        // onClick={() => Router.push("/project")}
-                        active={url.indexOf("project") > -1}
-                      >
+                      <NavLink active={url.indexOf("project") > -1}>
                         {console.log(url)}
-                        {/* <p class="line"> 프로젝트 찾기 </p> */}
-                        <a href={this.makeUrl("project")}>
-                          <p class="line"> 프로젝트 찾기 </p>
-                        </a>
+                        <KSLink url={"project"} content={"프로젝트 찾기"} />
                       </NavLink>
-                      <NavLink
-                        // onClick={() => Router.push("/magazine")}
-                        active={url.indexOf("magazine") > -1}
-                      >
-                        <a href={this.makeUrl("magazine")}>
-                          <p class="line"> 제조 인사이트 </p>
-                        </a>
+                      <NavLink active={url.indexOf("magazine") > -1}>
+                        <KSLink url={"magazine"} content={"제조 인사이트"} />
                       </NavLink>
                     </Fragment>
                   )
                 ) : (
                   /* 로그인 안되어있는 경우 */
                   <Fragment>
-                    <NavLink
-                      // onClick={() => Router.push("/producer")}
-                      active={url.indexOf("producer") > -1}
-                    >
-                      <a href={this.makeUrl("producer")}>
-                        <p class="line"> 제조사 찾기 </p>
-                      </a>
+                    <NavLink active={url.indexOf("producer") > -1}>
+                      <KSLink url={"producer"} content={"제조사 찾기"} />
                     </NavLink>
-
-                    {/* <NavLink
-                      onClick={() => Router.push("/project")}
-                      active={url.indexOf("project") > -1}
-                    >
-                      <p class="line"> 프로젝트 찾기 </p>
-                    </NavLink> */}
-
-                    <NavLink
-                      // onClick={() => Router.push("/magazine")}
-                      active={url.indexOf("magazine") > -1}
-                    >
-                      <a href={this.makeUrl("magazine")}>
-                        <p class="line"> 제조 인사이트 </p>
-                      </a>
+                    <NavLink active={url.indexOf("magazine") > -1}>
+                      <KSLink url={"magazine"} content={"제조 인사이트"} />
                       {/* 제조 인사이트 */}
                     </NavLink>
                   </Fragment>
@@ -239,38 +187,32 @@ class Nav extends React.Component {
                       <ProfileMenu>
                         <div></div>
                         <div>
-                          {/* <div onClick={() => Router.push("/chatting")}> */}
                           <div>
                             <Button>
-                              <a href={this.makeUrl("chatting")}>
-                                <Font16>채팅하기</Font16>
-                              </a>
+                              <Font16>
+                                <KSLink url={"chatting"} content={"채팅하기"} />
+                              </Font16>
                             </Button>
                           </div>
-
-                          {/* <div onClick={() => Router.push("/account?tab=1")}> */}
                           <div>
                             <Button>
-                              <a href={this.makeUrl("account?tab=1")}>
-                                <Font16>계정설정</Font16>
-                              </a>
+                              <Font16>
+                                <KSLink
+                                  url={"account?tab=1"}
+                                  content={"계정설정"}
+                                />
+                              </Font16>
                             </Button>
                           </div>
                         </div>
-                        {/* <div
-                          style={{ backgroundColor: "#f3f3f3" }}
-                          onClick={this.logout}
-                        >
-                          <Font16>로그아웃</Font16>
-                        </div> */}
                         <div
                           style={{ backgroundColor: "#f3f3f3" }}
                           onClick={this.logout}
                         >
                           <Button>
-                            <a href={this.makeUrl("")}>
-                              <Font16>로그아웃</Font16>
-                            </a>
+                            <Font16>
+                              <KSLink url={""} content={"로그아웃"} />
+                            </Font16>
                           </Button>
                         </div>
                       </ProfileMenu>
@@ -279,38 +221,14 @@ class Nav extends React.Component {
                 ) : (
                   <NavLink
                     onClick={() => {
-                      // Router.push("/login"), Auth.reset();
                       Auth.reset();
                     }}
                     active={url.indexOf("login") > -1}
                   >
-                    <a href={this.makeUrl("login")}>
-                      <p class="line"> 로그인 </p>
-                    </a>
+                    <KSLink url={"login"} content={"로그인"} />
                     {/* 로그인 */}
                   </NavLink>
                 )}
-
-                {/* {this.props.Auth.logged_in_user &&
-                this.props.Auth.logged_in_user.type === 1 ? (
-                  partner로 로그인 
-                  <ButtonContainer
-                    first
-                    onClick={() => Router.push("/project")}
-                    active={url.indexOf("project") > -1}
-                  >
-                    프로젝트 관리
-                  </ButtonContainer>
-                ) : (
-                  <></>
-                  <ButtonContainer
-                    first
-                    onClick={() => Router.push("/producer")}
-                    active={url.indexOf("producer") > -1}
-                  >
-                    제조사 찾기
-                  </ButtonContainer>
-                )} */}
               </Menu>
               <Icon
                 src={hamburger_ic}

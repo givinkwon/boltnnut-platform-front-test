@@ -7,6 +7,7 @@ import * as Content from "components/Content";
 import Fade from "react-reveal/Fade";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
+import KSLink from "components/KSLink";
 
 const image1 = "/static/images/Home2/Banner13_img1.png";
 const image2 = "/static/images/Home2/Banner13_img2.png";
@@ -15,11 +16,6 @@ const Ellipse = "/static/images/Home/Banner12/Ellipse.png";
 const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
 
 class TabletBanner12Container extends React.Component {
-  makeUrl = (url) => {
-    if (typeof window !== "undefined") {
-      return window.location.protocol + "//" + window.location.host + "/" + url;
-    }
-  };
   render() {
     return (
       <Background backgroundColor="#f6f6f6" style={{ padding: "100px 0" }}>
@@ -114,7 +110,7 @@ class TabletBanner12Container extends React.Component {
                     }}
                     fontSize="13"
                   >
-                    <a href={this.makeUrl("producer")}>지금 업체 찾기</a>
+                    <KSLink url={"producer"} content={"지금 업체 찾기"} />
                   </Buttonv1>
                 </Contents>
                 <ImgBox
@@ -223,7 +219,7 @@ class TabletBanner12Container extends React.Component {
                     }}
                     fontSize="13"
                   >
-                    <a href={this.makeUrl("producer")}>지금 업체 찾기</a>
+                    <KSLink url={"producer"} content={"지금 업체 찾기"} />
                   </Buttonv1>
                 </Contents>
               </ContainerBox>

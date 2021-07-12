@@ -28,7 +28,7 @@ var availableFileType = [
   "doc",
   "html",
 ];
-@inject("Partner", "Auth")
+@inject("Partner", "Auth", "Common")
 @observer
 class ProposalCard extends React.Component {
   state = {
@@ -214,7 +214,6 @@ class ProposalCard extends React.Component {
 
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
-        // location.href = this.makeUrl("producer/detail");
       } else {
         console.log("file download");
         this.filedownload(this.props.data.file);
@@ -226,7 +225,7 @@ class ProposalCard extends React.Component {
       // this.props.Auth.previous_url = "producer";
       // Router.push("/login");
       // Router.push("/login");
-      location.href = this.makeUrl("login");
+      location.href = this.props.Common.makeUrl("login");
     }
   };
 
@@ -245,11 +244,6 @@ class ProposalCard extends React.Component {
       Partner.ReviewActive = true;
       Partner.ReviewActiveIndex = idx;
       Partner.partnerName = name;
-    }
-  };
-  makeUrl = (url) => {
-    if (typeof window !== "undefined") {
-      return window.location.protocol + "//" + window.location.host + "/" + url;
     }
   };
   render() {
@@ -310,21 +304,6 @@ class ProposalCard extends React.Component {
                 </InfoTwo>
                 <AdditionBox>
                   <div>
-                    {/* <div
-                    style={{ cursor: "pointer", zIndex: 10 }}
-                    onClick={async (event) => {
-                      event.stopPropagation();
-
-                      if (await this.checkLogin()) {
-                        this.clickLog(data);
-                        this.openModal(data.user.phone);
-                      } else {
-                        alert("로그인이 필요합니다");
-                        // Router.push("/login");
-                        location.href = this.makeUrl("login");
-                      }
-                    }}
-                  > */}
                     <Button
                       style={{ cursor: "pointer", zIndex: 10 }}
                       onClick={async (event) => {
@@ -336,7 +315,7 @@ class ProposalCard extends React.Component {
                         } else {
                           alert("로그인이 필요합니다");
                           // Router.push("/login");
-                          location.href = this.makeUrl("login");
+                          location.href = this.props.Common.makeUrl("login");
                         }
                       }}
                     >
