@@ -102,6 +102,9 @@ class DetailCardContainer extends React.Component {
     const { Partner, Auth } = this.props;
     Partner.docViewerLoading = false;
 
+    console.log(toJS(Partner.partner_list)); // 10개의 제조사
+    console.log(toJS(Partner.partner_detail_list)); // 현재 제조사
+
     // loadingCounter = 0;
     console.log(this.state.loading);
     this.docRender();
