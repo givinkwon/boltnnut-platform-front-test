@@ -21,7 +21,7 @@ const right = "static/icon/right-arrow.png";
 const dropDown = "static/images/pass5.png";
 const dropUp = "static/images/pass6.png";
 
-@inject("Magazine")
+@inject("Magazine", "Common")
 @observer
 class ContentConatiner extends React.Component {
   state = {
@@ -96,9 +96,8 @@ class ContentConatiner extends React.Component {
   };
 
   pushToDetail = async (id) => {
-    const { Magazine } = this.props;
-    // await Router.push(`/magazine/${id}`);
-    location.href = this.makeUrl("magazine/" + decodeURI(id));
+    const { Magazine, Common } = this.props;
+    location.href = Common.makeUrl("magazine/" + decodeURI(id));
     await location.href;
   };
 
@@ -162,11 +161,6 @@ class ContentConatiner extends React.Component {
       Magazine.current_page = Magazine.current_page + 1;
       this.setState({ ...this.state, current: newPage, show: "hidden" });
       this.setState({ ...this.state, show: "visible" });
-    }
-  };
-  makeUrl = (url) => {
-    if (typeof window !== "undefined") {
-      return window.location.protocol + "//" + window.location.host + "/" + url;
     }
   };
 
