@@ -47,6 +47,8 @@ const onError = (e) => {
   console.log(e, "error in file-viewer");
 };
 
+let loadingCounter = 0;
+
 @inject("Partner", "Auth")
 @observer
 class DetailCardContainer extends React.Component {
@@ -56,6 +58,7 @@ class DetailCardContainer extends React.Component {
     avg_communication_score: 0,
     avg_profession_score: 0,
     docViewerLoading: false,
+    loading: 0,
   };
 
   openModal = () => {
@@ -85,11 +88,32 @@ class DetailCardContainer extends React.Component {
     // }
   };
 
+  componentDidUpdate() {
+    // console.log(this.state.loading);
+    // console.log(loadingCounter);
+  }
+  shouldComponentUpdate = () => {
+    // console.log(`shouldComponentUpdate : ${this.state.loading}`);
+    // console.log(`shouldComponentUpdate : ${loadingCounter}`);
+
+    // console.log(this.state.loading == loadingCounter - 1);
+    // console.log(this.state.loading == 0);
+    return !this.state.loading;
+    // return this.state.loading == loadingCounter - 1;
+  };
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
     Partner.docViewerLoading = false;
 
+    // loadingCounter = 0;
+    console.log(this.state.loading);
     this.docRender();
+
+    // this.setState({ loading: this.state.loading + 1 });
+
+    // this.setState((state) => {
+    //   return { loading: state.loading + 1 };
+    // });
     customRenderer.weight = 2;
     customRenderer.fileLoader = ({
       documentURI,
@@ -105,17 +129,17 @@ class DetailCardContainer extends React.Component {
       fileLoaderComplete();
     };
 
-    console.log(customRenderer);
-    console.log(toJS(Partner.partner_detail_list));
-    console.log("detail page didmount");
-    console.log(toJS(Partner.partnerAllReviewList));
-    console.log(toJS(Partner.partnerReviewList));
-    console.log(toJS(Auth));
-    console.log(toJS(Partner.review_partner_page));
+    // console.log(customRenderer);
+    // console.log(toJS(Partner.partner_detail_list));
+    // console.log("detail page didmount");
+    // console.log(toJS(Partner.partnerAllReviewList));
+    // console.log(toJS(Partner.partnerReviewList));
+    // console.log(toJS(Auth));
+    // console.log(toJS(Partner.review_partner_page));
 
     const height = document.getElementById("card").style;
-    console.log(height);
-    console.log(`HEIGHT : ${height}`);
+    // console.log(height);
+    // console.log(`HEIGHT : ${height}`);
 
     if (Auth.logged_in_client) {
       Partner.checkReviewWriting(Auth.logged_in_client.id);
@@ -128,7 +152,7 @@ class DetailCardContainer extends React.Component {
       Router.push("/producer");
     }
 
-    console.log(this.props.Partner.selectedIntroductionFileType);
+    // console.log(this.props.Partner.selectedIntroductionFileType);
 
     // if (this.props.Partner.selectedIntroductionFileType === "pptx") {
     //   var frameHTML =
@@ -176,6 +200,7 @@ class DetailCardContainer extends React.Component {
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
     Partner.review_partner_page = 1;
+    loadingCounter = 0;
   };
 
   error = () => {
@@ -246,14 +271,39 @@ class DetailCardContainer extends React.Component {
     }
   };
 
+  // countLoading = () => {
+  //   loadingCounter += 1;
+  //   console.log(loadingCounter);
+  // };
   render() {
     const { width, Partner } = this.props;
     const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
+
     // console.log(toJS(Partner.selectedIntroductionFile));
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
 
+    console.log("render!");
+
+    // if (this.state.loading == 0) {
+    // loadingCounter += 1;
+    // console.log(loadingCounter);
+    this.setState((state) => {
+      console.log("state ++");
+      return { loading: state.loading + 1 };
+    });
+    // }
+
+    // if(this.state.loading === 1){
+    //   this.setState((state) => {
+    //     return { loading: state.loading + 1 };
+    //   });
+    // }
+
     console.log(docs);
+    // console.log(loadingCounter);
+    // console.log(this.loadingCounter);
+    console.log(this.state.loading);
     // const customDocRenderer =
 
     return (
@@ -310,41 +360,47 @@ class DetailCardContainer extends React.Component {
 
               {availableFileType3.indexOf(
                 this.props.Partner.selectedIntroductionFileType
-              ) > -1 && (
-                <>
-                  <DOCViewer
-                    documents={docs}
-                    onLoad={() => {
-                      console.log("eee");
-                      // Partner.docViewerLoading = true;
-                      // this.setState({ docViewerLoading: true });
-                    }}
-                    // pluginRenderers={DocViewerRenderers}
-                    pluginRenderers={customRenderer}
-                    // pluginRenderers={
-                    //   (DocViewerRenderers.fileLoader = ({
-                    //     documentURI,
-                    //     signal,
-                    //     fileLoaderComplete,
-                    //   }) => {
-                    //     // fileLoaderCode().then(() => {
-                    //     console.log("complete");
-                    //     //   fileLoaderComplete();
-                    //     //   // });
-                    //   })
-                    // }
-                    height={width}
-                    window={window}
-                    type={this.props.Partner.selectedIntroductionFileType}
-                    // onError={this.onError}
-                    // errorComponent={CustomErrorComponent}
-                    // onError={this.onError}/>
-                    // fileLoaderComplete={() => console.log("Complete")}
-                  />
-                  {console.log(docs)}
-                  {console.log(customRenderer.fileLoader)}
-                </>
-              )}
+              ) > -1 &&
+                this.state.loading < 2 && (
+                  <>
+                    <DOCViewer
+                      documents={docs}
+                      onLoad={() => {
+                        console.log("eee");
+                        // Partner.docViewerLoading = true;
+                        // this.setState({ docViewerLoading: true });
+                      }}
+                      // pluginRenderers={DocViewerRenderers}
+                      pluginRenderers={customRenderer}
+                      // pluginRenderers={
+                      //   (DocViewerRenderers.fileLoader = ({
+                      //     documentURI,
+                      //     signal,
+                      //     fileLoaderComplete,
+                      //   }) => {
+                      //     // fileLoaderCode().then(() => {
+                      //     console.log("complete");
+                      //     //   fileLoaderComplete();
+                      //     //   // });
+                      //   })
+                      // }
+                      height={width}
+                      window={window}
+                      type={this.props.Partner.selectedIntroductionFileType}
+                      // onError={this.onError}
+                      // errorComponent={CustomErrorComponent}
+                      // onError={this.onError}/>
+                      // fileLoaderComplete={() => console.log("Complete")}
+                    />
+                    {/* {this.countLoading()} */}
+                    {/* {loadingCounter == 2 && (loadingCounter += 1)} */}
+                    {console.log(loadingCounter)}
+                    {console.log(this.state.loading)}
+
+                    {/* {console.log(docs)} */}
+                    {/* {console.log(customRenderer.fileLoader)} */}
+                  </>
+                )}
             </IntroductionBox>
           </InnerBox>
           <DetailInfoBox>
@@ -1337,8 +1393,7 @@ min-height: 300px;
     display: none;
     z-index: 0;    
   }
-  > div:nth-of-type(2) {
-    border: 3px solid red;
+  > div:nth-of-type(2) {    
 
     > div:nth-of-type(1) {
       // height: 1000px;

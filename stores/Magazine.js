@@ -146,6 +146,8 @@ class Magazine {
       .then((res) => {
         this.categoryAry = res.data.results;
         console.log(res.data.results);
+        // console.log(this.categoryAry[0]);
+        // this.categoryAry[0].checked = true;
       })
       .catch((e) => {
         console.log(e);
