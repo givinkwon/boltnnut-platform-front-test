@@ -10,6 +10,9 @@ import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
+import Background from "components/Background";
+import ProposalCard from "../ProposalCard";
+
 
 const customRenderer = DocViewerRenderers;
 
@@ -266,6 +269,35 @@ class DetailCardContainer extends React.Component {
   //   loadingCounter += 1;
   //   console.log(loadingCounter);
   // };
+  
+  pushToDetail = async (item, idx) => {
+    const { Partner } = this.props;
+    console.log(Partner.modalActive);
+
+    if (!Partner.requestModalActive && !Partner.modalActive) {
+      console.log("Detail click");
+      Partner.category_name_list = null;
+      Partner.partner_detail_list = [];
+      Partner.partner_detail_list.push({ item: item });
+      Partner.category_name_list = Partner.category_dic[idx];
+
+      if (this.state.dropDownIdx === -1) {
+        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+        Partner.portFolioList = [];
+        await Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
+        this.setState({ dropDownActive: true, dropDownIdx: idx });
+      } else {
+        if (this.state.dropDownIdx === idx) {
+          this.setState({ dropDownActive: false, dropDownIdx: -1 });
+        } else {
+          await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+          Partner.portFolioList = [];
+          await Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
+          this.setState({ dropDownActive: true, dropDownIdx: idx });
+        }
+      }
+    }
+  };
   render() {
     const { width, Partner } = this.props;
     const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
@@ -440,6 +472,31 @@ class DetailCardContainer extends React.Component {
               )}
             </div>
           </DetailInfoBox>
+          <IntroductionBox width={width}>
+
+              <Font24>비슷한 제조사</Font24>
+              {Partner.partner_list &&
+                  Partner.partner_list.slice(1,4).map((item, idx) => {
+                    return (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div
+                          onClick={() => this.pushToDetail(item, idx)}
+                          style={{ width: "100%" }}
+                        >
+                          <ProposalCard
+                            data={item}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[idx])}
+                            idx={idx}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
+                      </Background>
+                    );
+                  })}
+
+            </IntroductionBox>
           {/* <ReviewBox>
     
             <div>
