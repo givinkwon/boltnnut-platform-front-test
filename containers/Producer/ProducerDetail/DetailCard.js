@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Router from "next/router";
 import Modal from "../Review/ReviewWritingModal";
 import ReviewCard from "../Review/ReviewCard";
+import MapContainer from "Map"
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
 import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
@@ -59,44 +60,16 @@ class DetailCardContainer extends React.Component {
   };
 
   openModal = () => {
-    const { Partner } = this.props;
-    // console.log("requestmodal open click");
-    // this.setState({ modalOpen: true });
+    const { Partner } = this.props;    
     Partner.reviewWritingModalActive = false;
   };
   closeModal = () => {
-    const { Partner } = this.props;
-    // console.log("requestmodal close click");
-
+    const { Partner } = this.props;    
     Partner.reviewWritingModalActive = true;
   };
-  docRender = () => {
-    console.log("AAAAAAAAAA");
-    console.log(this.props.Partner.docViewerLoading);
-    if (!this.props.Partner.docViewerLoading) {
-      setTimeout(() => {
-        // this.setState({ g: 3 });
-        // this.docRender();
-      }, 5000);
-    }
-    // if (!this.state.docViewerLoading) {
-    //   console.log(this.state.docViewerLoading);
-    //   // setTimeout(() => {}, 4000);
-    // }
-  };
-
-  componentDidUpdate() {
-    // console.log(this.state.loading);
-    // console.log(loadingCounter);
-  }
-  shouldComponentUpdate = () => {
-    // console.log(`shouldComponentUpdate : ${this.state.loading}`);
-    // console.log(`shouldComponentUpdate : ${loadingCounter}`);
-
-    // console.log(this.state.loading == loadingCounter - 1);
-    // console.log(this.state.loading == 0);
-    return !this.state.loading;
-    // return this.state.loading == loadingCounter - 1;
+  
+  shouldComponentUpdate = () => {    
+    return !this.state.loading;    
   };
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
@@ -105,41 +78,18 @@ class DetailCardContainer extends React.Component {
     console.log(toJS(Partner.partner_list)); // 10개의 제조사
     console.log(toJS(Partner.partner_detail_list)); // 현재 제조사
 
-    // loadingCounter = 0;
-    console.log(this.state.loading);
-    this.docRender();
-
-    // this.setState({ loading: this.state.loading + 1 });
-
-    // this.setState((state) => {
-    //   return { loading: state.loading + 1 };
-    // });
+        
     customRenderer.weight = 2;
     customRenderer.fileLoader = ({
       documentURI,
       signal,
       fileLoaderComplete,
-    }) => {
-      console.log("bbb");
-      // customFileLoaderCode
-      // customFileLoaderCode().then(() => {
-      //   console.log("ccc");
-      //   fileLoaderComplete();
-      // });
+    }) => {      
       fileLoaderComplete();
     };
+  
 
-    // console.log(customRenderer);
-    // console.log(toJS(Partner.partner_detail_list));
-    // console.log("detail page didmount");
-    // console.log(toJS(Partner.partnerAllReviewList));
-    // console.log(toJS(Partner.partnerReviewList));
-    // console.log(toJS(Auth));
-    // console.log(toJS(Partner.review_partner_page));
-
-    const height = document.getElementById("card").style;
-    // console.log(height);
-    // console.log(`HEIGHT : ${height}`);
+    const height = document.getElementById("card").style;    
 
     if (Auth.logged_in_client) {
       Partner.checkReviewWriting(Auth.logged_in_client.id);
@@ -162,6 +112,7 @@ class DetailCardContainer extends React.Component {
     //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
     // }
 
+ /* 리뷰를 위한 변수 및 연산 */
     // let total_consult_score = 0;
     // let total_kindness_score = 0;
     // let total_communication_score = 0;
@@ -197,21 +148,13 @@ class DetailCardContainer extends React.Component {
   error = () => {
     console.log("error");
   };
-  movePage = (e) => {
-    console.log("movePage");
-    const { Partner, Auth } = this.props;
-    // e.preventDefault();
+  movePage = (e) => {    
+    const { Partner, Auth } = this.props;    
     const newPage = e.target.innerText * 1;
 
     if (newPage != Partner.reviewCurrentPage) {
       Partner.reviewCurrentPage = newPage;
-      // Partner.resetDevCategory();
-      // Partner.check_loading_develop = false;
-      // Partner.ReviewActive = false;
-      // Partner.ReviewActiveIndex = -1;
-      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      // Partner.click_count += 1;
-
+      
       Partner.getReviewByPartner(
         Partner.partner_detail_list[0].item.id,
         1,
@@ -220,19 +163,12 @@ class DetailCardContainer extends React.Component {
     }
   };
 
-  pageNext = (e) => {
-    console.log("pageNext");
-    const { Partner } = this.props;
-    // e.preventDefault();
+  pageNext = (e) => {    
+    const { Partner } = this.props;    
     if (Partner.reviewCurrentPage < Partner.review_partner_page) {
       const nextPage = Partner.reviewCurrentPage + 1;
       Partner.reviewCurrentPage = nextPage;
-      // Partner.check_loading_develop = false;
-      // Partner.resetDevCategory();
-      // Partner.ReviewActive = false;
-      // Partner.ReviewActiveIndex = -1;
-      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      // Partner.click_count += 1;
+  
       Partner.getReviewByPartner(
         Partner.partner_detail_list[0].item.id,
         1,
@@ -242,18 +178,11 @@ class DetailCardContainer extends React.Component {
   };
 
   pagePrev = (e) => {
-    console.log("pagePrev");
     const { Partner } = this.props;
-    // e.preventDefault();
+  
     if (Partner.reviewCurrentPage > 1) {
       const previousPage = Partner.reviewCurrentPage - 1;
-      Partner.reviewCurrentPage = previousPage;
-      // Partner.resetDevCategory();
-      // Partner.check_loading_develop = false;
-      // Partner.ReviewActive = false;
-      // Partner.ReviewActiveIndex = -1;
-      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      // Partner.click_count += 1;
+      Partner.reviewCurrentPage = previousPage;      
       Partner.getReviewByPartner(
         Partner.partner_detail_list[0].item.id,
         1,
@@ -262,40 +191,15 @@ class DetailCardContainer extends React.Component {
     }
   };
 
-  // countLoading = () => {
-  //   loadingCounter += 1;
-  //   console.log(loadingCounter);
-  // };
   render() {
     const { width, Partner } = this.props;
-    const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
-
-    // console.log(toJS(Partner.selectedIntroductionFile));
+    const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;    
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
-
-    console.log("render!");
-
-    // if (this.state.loading == 0) {
-    // loadingCounter += 1;
-    // console.log(loadingCounter);
-    this.setState((state) => {
-      console.log("state ++");
+    
+    this.setState((state) => {      
       return { loading: state.loading + 1 };
-    });
-    // }
-
-    // if(this.state.loading === 1){
-    //   this.setState((state) => {
-    //     return { loading: state.loading + 1 };
-    //   });
-    // }
-
-    console.log(docs);
-    // console.log(loadingCounter);
-    // console.log(this.loadingCounter);
-    console.log(this.state.loading);
-    // const customDocRenderer =
+    });      
 
     const SlideSettings = {
       dots: false,
@@ -312,11 +216,7 @@ class DetailCardContainer extends React.Component {
       <>
         <Card
           id="card"
-          width={width}
-          onContextMenu={(e) => {
-            // e.preventDefault();
-          }}
-          onClick={() => this.setState({ g: 3 })}
+          width={width}                    
         >
           <HeaderBox>
             <tag>
@@ -404,14 +304,7 @@ class DetailCardContainer extends React.Component {
                           zIndex: "9999",
                         }}
                       />
-                    </div>
-                    {/* {this.countLoading()} */}
-                    {/* {loadingCounter == 2 && (loadingCounter += 1)} */}
-                    {console.log(loadingCounter)}
-                    {console.log(this.state.loading)}
-
-                    {/* {console.log(docs)} */}
-                    {/* {console.log(customRenderer.fileLoader)} */}
+                    </div>                    
                   </>
                 )}
             </IntroductionBox>
@@ -440,6 +333,11 @@ class DetailCardContainer extends React.Component {
               )}
             </div>
           </DetailInfoBox>
+
+          <div style={{width: "100%", height: "500px"}}>
+          <MapContainer/>
+          </div>
+
           {/* <ReviewBox>
     
             <div>

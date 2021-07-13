@@ -363,29 +363,14 @@ class Partner {
 
   @action setMainCategory = async (val) => {
     this.input_big_category = val;
-
-    console.log(val);
-    this.request_middle_list = this.input_big_category.category_set;
-    // this.selectedMidCategory = obj.category_set[0];
+    this.request_middle_list = this.input_big_category.category_set;    
     this.category_middle_ary = await this.category_middle_total_ary.filter(
       (item) => item.maincategory === val.id
     );
 
-    // console.log(toJS(this.category_middle_ary));
-    // console.log(toJS(this.category_middle_total_ary));
-    // console.log(
-    //   toJS(
-    //     this.category_middle_total_ary.filter(
-    //       (item) => item.maincategory === val.id
-    //     )
-    //   )
-    // );
 
     this.input_small_category = this.category_middle_ary[0];
 
-    // this.input_detail_big_category = val;
-    // this.input_detail_small_category = this.category_middle_ary[0];
-    // console.log(this.input_small_category);
   };
 
   @action setSmallCategory = (val) => {
@@ -1928,6 +1913,11 @@ class Partner {
     });
     console.log(toJS(this.review_client_obj));
   };
+
+  
 }
+
+
+
 
 export default new Partner();

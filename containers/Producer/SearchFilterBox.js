@@ -162,38 +162,7 @@ class SearchFilterConatiner extends React.Component {
     } else {
       Partner.filter_dropdown = true;
     }
-
-    // console.log("click");
-    // if (flag == "city") {
-    //   console.log("city");
-    //   if (Partner.check_filter_city) {
-    //     Partner.check_filter_city = false;
-    //     Partner.filter_dropdown = false;
-    //   } else {
-    //     Partner.check_filter_city = true;
-    //     Partner.filter_dropdown = true;
-    //   }
-
-    //   if (Partner.check_filter_category) {
-    //     Partner.check_filter_category = false;
-    //     // Partner.filter_dropdown = false;
-    //   }
-    // }
-    // if (flag == "category") {
-    //   console.log("category");
-    //   if (Partner.check_filter_city) {
-    //     Partner.check_filter_city = false;
-    //     // Partner.filter_dropdown = false;
-    //   }
-
-    //   if (Partner.check_filter_category) {
-    //     Partner.check_filter_category = false;
-    //     Partner.filter_dropdown = false;
-    //   } else {
-    //     Partner.check_filter_category = true;
-    //     Partner.filter_dropdown = true;
-    //   }
-    // }
+ 
   };
   componentDidMount = async () => {
     const { Partner } = this.props;
@@ -217,8 +186,7 @@ class SearchFilterConatiner extends React.Component {
     if (flag == "category") {
       if (this.state.filter_category_active) {
         this.setState({ filter_category_active: false });
-      } else {
-        console.log("e");
+      } else {        
         this.setState({ filter_category_active: true });
       }
     }
@@ -228,8 +196,7 @@ class SearchFilterConatiner extends React.Component {
     return (
       <>
         {width && width > 767.99 ? (
-          <ContainerV2>
-            {console.log(`Active : ${Partner.subButtonActive}`)}
+          <ContainerV2>          
             <Search active={Partner.subButtonActive}>
               <SearchBar />
               <FilterButton>
@@ -271,115 +238,18 @@ class SearchFilterConatiner extends React.Component {
               <div>
                 <span>도면이 있는 경우 클릭!</span>
               </div>
-            </Search>
-
-            {/* <Category>
-              <span>분야</span>
-              <div>
-                <Select
-                  placeholder="대 카테고리"
-                  // options={bigCategoryArray}
-                  options={this.props.Partner.category_main_list}
-                  getOptionLabel={(option) => option.maincategory}
-                  // value={Partner.input_category}
-                  // style={{ width: "160px" }}
-                  onChange={Partner.setMainCategory}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      neutral50: "#1A1A1A", // Placeholder color
-                    },
-                  })}
-                />
-              </div>
-              <div>
-                <Select
-                  placeholder="소 카테고리"
-                  options={Partner.category_middle_ary}
-                  getOptionLabel={(option) => option.category}
-                  value={
-                    Partner.category_middle_ary[0] &&
-                    Partner.input_small_category
-                  }
-                  onChange={Partner.setSmallCategory}
-                  defaultValue={
-                    Partner.category_middle_ary[0] &&
-                    Partner.category_middle_ary[0].cagegory
-                  }
-                />
-              </div>
-                </Category>*/}
-            {/* <Search>
-              <div
-                onClick={() => {
-                  // Partner.filterArray.map((data, idx) => {
-                  //   data.checked = false;
-                  // });
-                  Router.push("/request");
-                }}
-              >
-                <span> 바로 AI 견적 받기 </span>
-              </div>
-              <div>
-                <span>도면이 있는 경우 클릭!</span>
-              </div>
-            </Search> */}
-
-            {/* <FilterContainer>
-              <FilterItem
-                active={this.state.filter_city_active}
-                style={{ borderRight: "none" }}
-                onClick={() => {
-                  this.dropdownHandler("city");
-                }}
-                onMouseOver={() => {
-                  console.log("mouseOver");
-                  this.activeHandler("city");
-                }}
-                onMouseOut={() => {
-                  console.log("mouseOut");
-                  this.activeHandler("city");
-                }}
-              >
-                <span>지역 검색</span>
-              </FilterItem>
-
-              <FilterItem
-                active={this.state.filter_category_active}
-                onClick={() => {
-                  this.dropdownHandler("category");
-                }}
-                onMouseOver={() => {
-                  console.log("mouseOver");
-                  this.activeHandler("category");
-                }}
-                onMouseOut={() => {
-                  console.log("mouseOut");
-                  this.activeHandler("category");
-                }}
-              >
-                <span>분야 검색</span>
-              </FilterItem>
-            </FilterContainer> */}
+            </Search>         
 
             {Partner.filter_dropdown && (
               <FilterContent>
                 <city>
                   <label>지역검색</label>
                   <RadioBox
-                    filter="region"
-                    // data={this.props.Partner.filter_city_ary}
-                    data={this.props.Partner.cityArray}
-                    // cityArray
+                    filter="region"                    
+                    data={this.props.Partner.cityArray}                    
                   />
                 </city>
-
-                {/* <RadioBox
-                     filter="develop"
-                     // data={this.props.Partner.filter_category_ary}
-                     data={Partner.filterArray}
-                   /> */}
+           
                 <category>
                   <label>분야검색</label>
                   <FilterBox
@@ -390,26 +260,7 @@ class SearchFilterConatiner extends React.Component {
                 </category>
               </FilterContent>
             )}
-
-            {/* <Filter>
-              <span>위치</span>
-              <span>(중복선택 가능)</span>
-              <FilterBox
-                filter="filter"
-                purpose="filter"
-                data={Partner.filterArray}
-              />
-            </Filter> */}
-
-            {/* <Filter>
-              <span>분야</span>
-              <span>(중복선택 가능)</span>
-              <FilterBox
-                filter="filter"
-                purpose="filter"
-                data={Partner.filterArray}
-              />
-            </Filter> */}
+         
 
             {Partner.requestModalActive && (
               <Layer>
@@ -436,114 +287,9 @@ class SearchFilterConatiner extends React.Component {
             )}
           </ContainerV2>
         ) : (
-          <ContainerV2>
-            {/* <Category>
-              <span>분야</span>
-              <div>
-                <MobileSelect
-                  placeholder="대 카테고리"
-                  options={this.props.Partner.category_main_list}
-                  getOptionLabel={(option) => option.maincategory}
-                  styles={mobileCustomStyles}
-                  onChange={Partner.setMainCategory}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      neutral50: "#1A1A1A", // Placeholder color
-                    },
-                  })}
-                />
-              </div>
-              <div>
-                <MobileSelect
-                  placeholder="소 카테고리"
-                  options={Partner.category_middle_ary}
-                  getOptionLabel={(option) => option.category}
-                  value={
-                    Partner.category_middle_ary[0] &&
-                    Partner.input_small_category
-                  }
-                  styles={mobileCustomStyles}
-                  onChange={Partner.setSmallCategory}
-                  defaultValue={
-                    Partner.category_middle_ary[0] &&
-                    Partner.category_middle_ary[0].cagegory
-                  }
-                />
-              </div>
-            </Category> */}
-
-            {/* <Budget>
-              <span>예산</span>
-              <FilterBox2 data={viewArray} width={width} />
-    
-              <InputContainer>
-                {!Partner.minDirectInput && (
-                  <MobileSelect
-                    styles={customStyles}
-                    placeholder="0"
-                    style={{ overflow: "visible" }}
-                    options={budgetArray}
-                    getOptionLabel={(option) => option.label}
-                    onChange={Partner.setMinBudget}
-                    styles={mobileCustomStyles}
-                  />
-                )}
-
-                {Partner.minDirectInput && (
-                  <DirectInputBox>
-                    <input
-                      placeholder="직접 입력하세요"
-                      onBlur={(e) => {
-                        if (e.target.value === "") {
-                          Partner.minDirectInput = false;
-                        }
-                      }}
-                      onFocus={(e) => {
-                        e.target.placeholder = "";
-                      }}
-                    />
-                  </DirectInputBox>
-                )}
-
-      
-                <span>원 ~ </span>
-                {!Partner.maxDirectInput && (
-                  <MobileSelect
-                    styles={customStyles}
-                    placeholder="0"
-                    style={{ overflow: "visible" }}
-                    options={budgetArray}
-                    getOptionLabel={(option) => option.label}
-                    onChange={Partner.setMaxBudget}
-                    styles={mobileCustomStyles}
-                  />
-                )}
-
-                {Partner.maxDirectInput && (
-                  <DirectInputBox>
-                    <input
-                      placeholder="직접 입력하세요"
-                      onBlur={(e) => {
-                        if (e.target.value === "") {
-                          Partner.maxDirectInput = false;
-                        }
-                      }}
-                      onFocus={(e) => {
-                        e.target.placeholder = "";
-                      }}
-                    />
-                  </DirectInputBox>
-                )}
-                <span>원</span>
-
-    
-              </InputContainer>
-            </Budget> */}
+          <ContainerV2>         
             <Filter>
-              <span>분야필터</span>
-              {/* <span>(중복선택 가능)</span> */}
+              <span>분야필터</span>              
               <FilterBox
                 filter="mobileFilter"
                 purpose="filter"
@@ -555,45 +301,11 @@ class SearchFilterConatiner extends React.Component {
                 <MobileSelect
                   placeholder="전체지역"
                   options={this.props.Partner.filter_city_ary}
-                  getOptionLabel={(option) => option.city}
-                  // value={Partner.input_category}
+                  getOptionLabel={(option) => option.city}                  
                   onChange={Partner.setCityCategory}
-                  styles={mobileCustomStyles}
-                  // console.log(toJS(Partner.filter_region));
-                  // Partner.partner_next = null;
-                  // Partner.partner_count = null;
-
-                  // Partner.currentPage = 1;
-
-                  // Partner.category_dic = {};
-
-                  // Partner.getPartner();
+                  styles={mobileCustomStyles}                  
                 />
-              </Location>
-
-              {/* <div style={{ width: "100px" }}>
-                <input
-                  style={{ display: "none" }}
-                  value={
-                    Request.select_big ? Request.select_big.maincategory : ""
-                  }
-                  class="Input"
-                />
-                {console.log(toJS(Partner.filter_category_ary))}
-                <MobileSelect
-                  placeholder="전체"
-                  styles={customStyles}
-                  options={Partner.filter_category_ary}
-                  //options={processArray}
-                  getOptionLabel={(option) => option.category}
-                  // getOptionLabel={(option) => {
-                  //   option.label;
-                  // }}
-                  value={Partner.input_process_filter}
-                  onChange={Partner.setProcessFilter}
-                  styles={mobileCustomStyles}
-                />
-              </div> */}
+              </Location>          
             </Filter>
 
             <RequestButton>
@@ -648,35 +360,10 @@ class SearchFilterConatiner extends React.Component {
 
 export default SearchFilterConatiner;
 
-const bigCategoryArray = [
-  { label: "대 카테고리1", value: "대 카테고리1" },
-  { label: "대 카테고리2", value: "대 카테고리2" },
-];
-
-const smallCategoryArray = [
-  { label: "소 카테고리1", value: "소 카테고리1" },
-  { label: "소 카테고리2", value: "소 카테고리2" },
-];
-
-const budgetArray = [
-  { id: 1, label: "0", value: 0 },
-  { id: 2, label: "1,000,000", value: 1000000 },
-  { id: 3, label: "5,000,000", value: 5000000 },
-  { id: 4, label: "10,000,000", value: 10000000 },
-  { id: 5, label: "30,000,000", value: 30000000 },
-  { id: 6, label: "직접 입력", value: "" },
-];
-
-const viewArray = [
-  { id: 1, name: "공개", checked: false },
-  { id: 2, name: "비공개", checked: false },
-];
 const ContainerV2 = styled.div`
   margin-top: 32px;
   display: flex;
-  flex-direction: column;
-
-  // height: 400px;
+  flex-direction: column;  
   width: 1200px;
   margin-bottom: 30px;
 
@@ -721,10 +408,7 @@ const Search = styled.div`
     padding: 8px 16px 9px 16px;
     box-sizing: border-box;
     box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
-    height: 44px;
-    // margin-bottom: 5px;
-    // display: none;
-
+    height: 44px;    
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -742,8 +426,7 @@ const Search = styled.div`
     }
 
     display: ${(props) => (props.active ? "flex" : "none")};
-    // display: none;
-    // opacity: 0;
+
 
     ${(props) =>
       props.active &&
@@ -854,15 +537,11 @@ const Search = styled.div`
         > span {
           @keyframes appear {
             0% {
-              opacity: 0;
-              // transform: scale(1.3);
+              opacity: 0;              
             }
 
             100% {
-              opacity: 1;
-              // transform: scale(1);
-              // transform: skewY(180deg);
-              // display: flex;
+              opacity: 1;              
             }
           }
 
@@ -882,14 +561,11 @@ const Search = styled.div`
       css`
         @keyframes appear_two {
           0% {
-            opacity: 0;
-            // transform: scale(1.3);
+            opacity: 0;            
           }
 
           100% {
-            opacity: 1;
-            // transform: scale(1);
-            // transform: skewY(180deg);
+            opacity: 1;            
           }
         }
 
@@ -984,10 +660,8 @@ const Search = styled.div`
 
     > div:nth-of-type(3),
     > div:nth-of-type(5) {
-      padding: 6px 12px 7px 12px;
-      // border: 3px solid green;
-      span {
-        // border: 3px solid red;
+      padding: 6px 12px 7px 12px;      
+      span {        
         font-size: 13px;
       }
     }
@@ -1006,25 +680,7 @@ const Search = styled.div`
       > span {
         font-size: 12px;
       }
-    }
-
-    // > div:last-child {
-    //   // right: 119px;
-    //   right: 17px;
-    //   >span{
-
-    //   }
-    // }
-    // >div:nth-of-type(2){
-    //   // margin-left:30px;
-    //   width:112px;
-
-    //   >span{
-    //     font-size: 16px;
-    //     line-height: 28px;
-    //     letter-spacing: -0.45px;
-    //   }
-    // }
+    }  
   }
   @media (min-width: 1300px) {
   }
@@ -1141,24 +797,20 @@ const Filter = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: block;
     margin-bottom: 6px;
-    > div {
-      // display: inline-block;
+    > div {      
     }
     > div:nth-of-type(1) {
       margin-right: 32px;
     }
 
     > span:nth-of-type(1) {
-      font-size: 14px;
-      // width: 40px;
-      // display: block;
+      font-size: 14px;      
     }
     > span:nth-of-type(2) {
       font-size: 12px;
       line-height: 40px;
       letter-spacinig: -0.4px;
-      color: #282c36;
-      // width: 172px;
+      color: #282c36;      
       width: auto;
       float: right;
     }
@@ -1186,123 +838,6 @@ const Filter = styled.div`
   @media (min-width: 1300px) {
   }
 `;
-const Budget = styled.div`
-  margin-bottom: 24px;
-  > span {
-    font-size: 20px;
-    line-height: 40px;
-    letter-spacing: -0.5px;
-    color: #282c36;
-    font-weight: 500;
-    width: 70px;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: block;
-    margin-bottom: 6px;
-    > div {
-      display: inline-block;
-    }
-    > div:nth-of-type(1) {
-      // margin-right: 32px;
-      display: flex;
-    }
-
-    > span {
-      font-size: 14px;
-      // width: 40px;
-      display: block;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    display: flex;
-    align-items: center;
-
-    > span {
-      font-size: 16px;
-      width: 40px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    display: flex;
-    align-items: center;
-
-    > span {
-      font-size: 18px;
-      width: 50px;
-    }
-  }
-  @media (min-width: 1300px) {
-    display: flex;
-    align-items: center;
-  }
-`;
-
-const SearchBarddd = styled.div`
-  display: flex;
-  width: 690px;
-  height: 44px;
-  box-sizing: border-box;
-  margin 0 24px;
-  
-  input {
-    width: 100%;
-    padding: 0 14px;
-
-    border: 1px solid #c6c7cc;
-    border-radius: 3px;
-    :focus {
-      outline: none;
-    }
-    ::placeholder{
-      color: #c1bfbf;
-    }
-  }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    // margin-top: 30px;
-    flex-direction: column;
-    input {
-      font-size: 12px;
-      width: 100%;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    // margin-top: 30px;
-    input {
-      font-size: 16px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    // margin-top: 40px;
-    input {
-      font-size: 17px;
-      :focus {
-        outline: none;
-      }
-      ::placeholder{
-        color: #c1bfbf;
-      }
-    }
-  }
-  @media (min-width: 1300px) {
-    input {
-      font-size: 18px;
-      :focus {
-        outline: none;
-      }
-      ::placeholder{
-        color: #c1bfbf;
-      }
-    }
-  }
-`;
-const Form = styled.div`
-  margin-top: 90px;
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  height: 50px;
-`;
 
 const SearchButton = styled(ButtonComponent)`
   border-radius: 3px;
@@ -1319,26 +854,13 @@ const SearchButton = styled(ButtonComponent)`
 `;
 
 const MobileSelect = styled(MobileSelectComponent)`
-  width: 220px;
-  // height: 32px;
+  width: 220px;  
   box-sizing: border-box;
 
   option {
     color: #c1bfbf;
   }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    // margin: 0;
-    // padding: 0;
-    // margin-right: 8px;
-    // width: 100%;
-    // height: 32px;
-    // object-fit: contain;
-    // border-radius: 2px;
-    // border: solid 0.5px #c7c7c7;
-    // background-color: #ffffff;
-    // position: relative;
-  }
+  
 
   @media (min-width: 0px) and (max-width: 767.98px) {
   }
@@ -1347,14 +869,11 @@ const MobileSelect = styled(MobileSelectComponent)`
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 140px;
-  }
-  @media (min-width: 1300px) {
-  }
+  }  
 `;
 
 const Select = styled(SelectComponent)`
-  width: 220px;
-  // height: 32px;
+  width: 220px;  
   box-sizing: border-box;
 
   option {
@@ -1374,16 +893,14 @@ const Select = styled(SelectComponent)`
     position: relative;
   }
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
-  }
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 120px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 140px;
   }
-  @media (min-width: 1300px) {
-  }
+
 `;
 
 const Box = styled.div`
@@ -1418,8 +935,7 @@ const Box = styled.div`
     `}
 `;
 
-const InputContainer = styled.div`
-  //width: 25%;
+const InputContainer = styled.div`  
   display: flex;
 
   > span {
@@ -1440,12 +956,6 @@ const InputContainer = styled.div`
       margin-right: 8px;
     }
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-  }
-  @media (min-width: 1300px) {
-  }
 `;
 
 const InputBox = styled.div`
@@ -1456,8 +966,7 @@ box-sizing: border-box;
 margin 0 7px;
 
 input {
-  width: 100%;
-  //padding: 0 14px;
+  width: 100%;  
 
   border: 1px solid #c6c7cc;
   border-radius: 3px;
@@ -1512,14 +1021,11 @@ const DirectInputBox = styled.div`
         font-size: 10px;
       }
     }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-  }
+  }  
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 145px;
   }
-  @media (min-width: 1300px) {
-  }
+  
 `;
 
 const Layer = styled.div`
@@ -1528,8 +1034,7 @@ const Layer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 100;
-  // opacity: 0.1;
+  z-index: 100;  
   background-color: rgba(0, 0, 0, 0.5);
 
   > span {
@@ -1586,8 +1091,7 @@ const RequestButton = styled.div`
 `;
 
 const FilterContainer = styled.div`
-  margin-left: 25px;
-  // border: 3px solid #0933b3;
+  margin-left: 25px;  
   width: 100%;
   height: 44px;
   display: flex;
@@ -1630,8 +1134,7 @@ const FilterItem = styled.div`
 
 const FilterContent = styled.div`
   width: 100%;
-  margin-top: 19px;
-  // margin-left: 25px;
+  margin-top: 19px;  
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   border-radius: 0.5px;
   box-sizing: border-box;

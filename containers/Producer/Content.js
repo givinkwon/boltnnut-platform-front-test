@@ -47,7 +47,7 @@ class ManufacturerContentContainer extends React.Component {
 
     Partner.currentPage = 1;
 
-    console.log("content mount");
+    
     await Partner.getPartner(1, Partner.click_count);
 
     if (Partner.filter_category_ary.length === 1) {
@@ -437,12 +437,9 @@ const Body = styled.div`
   justify-content: center;
   align-items: center;
   border-top: 1px solid #e1e2e4;
-  border-bottom: 1px solid #e1e2e4;
-  // margin-top: 40px;
+  border-bottom: 1px solid #e1e2e4;  
 `;
-const Main = styled.div`
-  //width: 984px;
-
+const Main = styled.div`  
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 700px;
   }

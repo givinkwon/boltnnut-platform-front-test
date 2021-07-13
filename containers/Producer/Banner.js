@@ -54,11 +54,7 @@ const Item = styled.div`
   @media (min-width: 1300px) {
     height: 208px;
   }
-
-  // > p {
-  //   line-height: 1.5em;
-  //   word-break: keep-all;
-  // }
+  
   > p:nth-of-type(1) {
     font-weight: bold;
   }
@@ -66,9 +62,6 @@ const Item = styled.div`
   > p:nth-of-type(2) {
     margin-top: 43px; // 16 + (59-32)
   }
-  // > p:nth-of-type(3){
-  //   line-height: 1.3;
-  // }
 `;
 
 const Banner = styled.div`

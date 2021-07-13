@@ -54,9 +54,7 @@ class Index extends React.Component {
   }
   componentWillUnmount() {
     const { Auth } = this.props;
-    window.removeEventListener("resize", this.updateDimensions);
-    console.log("producer unmount2");
-    // Auth.previous_url = "";
+    window.removeEventListener("resize", this.updateDimensions);    
   }
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
