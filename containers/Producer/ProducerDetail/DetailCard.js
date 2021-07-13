@@ -206,7 +206,7 @@ class DetailCardContainer extends React.Component {
       console.log("Detail click");
       Partner.category_name_list = null;
       Partner.partner_detail_list = [];
-      Partner.partner_detail_list.push({ item: item });
+      Partner.partner_detail_list.push({ item: item, idx: idx });
       Partner.category_name_list = Partner.category_dic[idx];
 
       console.log(toJS(Partner.partner_detail_list))
@@ -239,9 +239,24 @@ class DetailCardContainer extends React.Component {
   }
   render() {
     const { width, Partner } = this.props;
+    const index = Partner.partner_detail_list[0].idx;
+    const length = Partner.partner_list.length;
+    console.log(index)
+
+
+    let arr = []
+    for (let i=0; i<length; i++){
+      arr.push(i)
+    }
     const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;    
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
+
+    // let arr = [1, 2, 3, 4, 5]
+    Partner.shuffleArray(arr)
+
+    let remainderAry = arr.filter((el) => el !== index)
+    console.log(remainderAry)
 
     console.log("rendering")
     console.log(toJS(Partner.partner_detail_list))
@@ -370,15 +385,94 @@ class DetailCardContainer extends React.Component {
 
           <IntroductionBox width={width}>
 
+
+
               <Font24>비슷한 제조사</Font24>
-              {Partner.partner_list &&
+
+              {Partner.partner_list && (
+                  length < 4 ? (
+                    console.log("AAAAAAAAA")
+                  ) : (
+                    index === 0 ? (
+                        console.log("BBBBBBBB")
+                    ) : (
+                      index === length-1 ? (
+                        console.log("CCCCCCCC")
+                      ) : (
+                        index === 1 ? (
+                              console.log("DDDDDDDDDD")
+                        ) : (
+                            console.log("EE")
+                        )
+                      )
+                    )
+                  )
+              )}
+
+
+              {Partner.partner_list && (
+                length < 4 ? (
+                    remainderAry.map((item, idx) => {              
+                    return (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();                            
+                            this.pushToDetail(Partner.partner_list[item], item)
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                        {console.log(item)}
+                          <ProposalCard
+                            data={Partner.partner_list[item]}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[item])}
+                            idx={item}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                            
+                          />
+                        </div>
+                      </Background>
+                    );
+                  })
+                ) : (
+              remainderAry.splice(0, 3).map((item, idx) => {              
+                    return (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();                            
+                            this.pushToDetail(Partner.partner_list[item], item)
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProposalCard
+                            data={Partner.partner_list[item]}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[item])}
+                            idx={item}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                            
+                          />
+                        </div>
+                      </Background>
+                    );
+                  })
+                )
+              )}
+
+
+
+
+              {/* {Partner.partner_list &&
                   Partner.partner_list.slice(1,4).map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         <div
                           onClick={(e) => {
-                            e.stopPropagation();
-                            console.log("CLICK")
+                            e.stopPropagation();                            
                             this.pushToDetail(item, idx)
                           }}
                           style={{ width: "100%" }}
@@ -395,7 +489,7 @@ class DetailCardContainer extends React.Component {
                         </div>
                       </Background>
                     );
-                  })}
+                  })} */}
 
             </IntroductionBox>
           {/* <ReviewBox>

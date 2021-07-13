@@ -1915,7 +1915,19 @@ class Partner {
     console.log(toJS(this.review_client_obj));
   };
 
-  
+
+ @action shuffleArray = array => {
+  for (let i = 0; i < array.length; i++) {
+    let j = Math.floor(Math.random() * (i + 1));
+    // [array[i], array[j]] = [array[j], array[i]];
+    const x = array[i];
+    array[i] = array[j];
+    array[j] = x;
+  }
+  return array;
+};
+
+
 }
 
 

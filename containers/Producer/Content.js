@@ -139,6 +139,26 @@ class ManufacturerContentContainer extends React.Component {
     }
   };
 
+
+ filedownload = (urls) => {
+    const { data } = this.props;
+
+    if (this.props.Auth && this.props.Auth.logged_in_user) {
+      if (!urls) {
+        alert("준비중입니다.");
+      }
+      const url = urls;
+      const link = document.createElement("a");
+      link.href = url;
+      link.click();
+    } else {
+      alert("로그인이 필요합니다.");
+      // this.props.Auth.previous_url = "producer";
+      Router.push("/login");
+    }
+  };
+
+
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
     console.log(Partner.modalActive);
@@ -147,8 +167,7 @@ class ManufacturerContentContainer extends React.Component {
     if (!Partner.requestModalActive && !Partner.modalActive) {
       console.log("Detail click");
       Partner.category_name_list = null;
-      Partner.partner_detail_list = [];
-      Partner.partner_detail_list.push({ item: item });
+      
       Partner.category_name_list = Partner.category_dic[idx];
 
 
@@ -170,7 +189,7 @@ class ManufacturerContentContainer extends React.Component {
       if (availableFileType.indexOf(fileType) > -1) {
         console.log("뷰어 페이지 router push");
         Partner.partner_detail_list = [];
-        await Partner.partner_detail_list.push({ item: item });
+        await Partner.partner_detail_list.push({ item: item, idx: idx });
 
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
         console.log(toJS(Partner.partner_detail_list))
