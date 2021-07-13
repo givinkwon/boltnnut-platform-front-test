@@ -190,17 +190,14 @@ class ProposalCard extends React.Component {
         .split(".")
         [this.props.data.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
-      // console.log(this.props.Partner.selectedIntroductionFileType);
-      // console.log(this.props.data);
-      // console.log(fileType);
-      // console.log(availableFileType);
-      // console.log(availableFileType.indexOf(fileType));
+ 
       if (availableFileType.indexOf(fileType) > -1) {
         console.log("뷰어 페이지 router push");
         Partner.partner_detail_list = [];
         await Partner.partner_detail_list.push({ item: data });
 
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
+        console.log(toJS(Partner.partner_detail_list))
         await Partner.getReviewByPartner(
           Partner.partner_detail_list[0].item.id,
           1,
@@ -212,6 +209,7 @@ class ProposalCard extends React.Component {
 
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
+        this.setState({g:3})
       } else {
         console.log("file download");
         this.filedownload(this.props.data.file);
@@ -225,6 +223,7 @@ class ProposalCard extends React.Component {
       // Router.push("/login");
       location.href = this.props.Common.makeUrl("login");
     }
+    
   };
 
   onClickReviewHandler = (idx, name) => {
@@ -280,11 +279,11 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
-              onClick={(e) => {
-                if (!this.props.Partner.modalActive) {
-                  this.cardClick(e);
-                }
-              }}
+              // onClick={(e) => {
+              //   if (!this.props.Partner.modalActive) {
+              //     this.cardClick(e);
+              //   }
+              // }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}

@@ -7,12 +7,16 @@ import ReviewCard from "../Review/ReviewCard";
 import MapContainer from "Map"
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import DocViewer from "DocViewer"
+//import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
+import Background from "components/Background";
+import ProposalCard from "../ProposalCard";
 
-const customRenderer = DocViewerRenderers;
+
+// const customRenderer = DocViewerRenderers;
 
 const star = "/static/icon/star_blue3.svg";
 const bluebar_empty = "/static/icon/bluebar_empty.svg";
@@ -57,6 +61,7 @@ class DetailCardContainer extends React.Component {
     avg_profession_score: 0,
     docViewerLoading: false,
     loading: 0,
+    g: 0,
   };
 
   openModal = () => {
@@ -79,14 +84,14 @@ class DetailCardContainer extends React.Component {
     console.log(toJS(Partner.partner_detail_list)); // 현재 제조사
 
         
-    customRenderer.weight = 2;
-    customRenderer.fileLoader = ({
-      documentURI,
-      signal,
-      fileLoaderComplete,
-    }) => {      
-      fileLoaderComplete();
-    };
+    // customRenderer.weight = 2;
+    // customRenderer.fileLoader = ({
+    //   documentURI,
+    //   signal,
+    //   fileLoaderComplete,
+    // }) => {      
+    //   fileLoaderComplete();
+    // };
   
 
     const height = document.getElementById("card").style;    
@@ -97,10 +102,7 @@ class DetailCardContainer extends React.Component {
     }
 
     Partner.reviewCurrentPage = 1;
-    Partner.detailLoadingFlag = false;
-    if (Partner.partner_detail_list.length == 0) {
-      Router.push("/producer");
-    }
+    Partner.detailLoadingFlag = false;    
 
     // console.log(this.props.Partner.selectedIntroductionFileType);
 
@@ -191,11 +193,58 @@ class DetailCardContainer extends React.Component {
     }
   };
 
+  // countLoading = () => {
+  //   loadingCounter += 1;
+  //   console.log(loadingCounter);
+  // };
+  
+  pushToDetail = async (item, idx) => {
+    const { Partner } = this.props;
+    console.log(Partner.modalActive);
+
+    if (!Partner.requestModalActive && !Partner.modalActive) {
+      console.log("Detail click");
+      Partner.category_name_list = null;
+      Partner.partner_detail_list = [];
+      Partner.partner_detail_list.push({ item: item });
+      Partner.category_name_list = Partner.category_dic[idx];
+
+      console.log(toJS(Partner.partner_detail_list))
+
+          
+      if (!item.file) {
+        Partner.detailLoadingFlag = false;
+        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        return;
+      }
+      this.props.Partner.selectedIntroductionFile = item.file;
+
+      const fileType = item.file
+        .split(".")
+        [item.file.split(".").length - 1].toLowerCase();
+      this.props.Partner.selectedIntroductionFileType = fileType;
+      // this.props.Partner.viewerLoading
+
+      
+      // this.reload();
+      this.setState((state) => {
+        return { g: state.g + 1};
+      })
+     
+    }
+  };
+
+  reload(){
+    (location || window.location || document.location).reload();
+  }
   render() {
     const { width, Partner } = this.props;
     const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;    
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
+
+    console.log("rendering")
+    console.log(toJS(Partner.partner_detail_list))
     
     this.setState((state) => {      
       return { loading: state.loading + 1 };
@@ -281,30 +330,10 @@ class DetailCardContainer extends React.Component {
               {availableFileType3.indexOf(
                 this.props.Partner.selectedIntroductionFileType
               ) > -1 &&
-                this.state.loading < 2 && (
+              (
                   <>
-                    <div style={{ position: "relative" }}>
-                      <DOCViewer
-                        documents={docs}
-                        pluginRenderers={customRenderer}
-                        height={width}
-                        window={window}
-                        type={this.props.Partner.selectedIntroductionFileType}
-                      />
-
-                      {/* ppt 하단에 전체 보기 및 다운로드 막는 박스인데 스타일 컴포넌트로 할 예정 (임시) */}
-                      <div
-                        id="prevent"
-                        style={{
-                          position: "absolute",
-                          width: "90px",
-                          height: "22px",
-                          bottom: "0%",
-                          right: "0%",
-                          zIndex: "9999",
-                        }}
-                      />
-                    </div>                    
+                    
+                      <DocViewer width={width}/>              
                   </>
                 )}
             </IntroductionBox>
@@ -334,10 +363,41 @@ class DetailCardContainer extends React.Component {
             </div>
           </DetailInfoBox>
 
+
           <div style={{width: "100%", height: "500px"}}>
           <MapContainer/>
           </div>
 
+          <IntroductionBox width={width}>
+
+              <Font24>비슷한 제조사</Font24>
+              {Partner.partner_list &&
+                  Partner.partner_list.slice(1,4).map((item, idx) => {
+                    return (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log("CLICK")
+                            this.pushToDetail(item, idx)
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProposalCard
+                            data={item}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[idx])}
+                            idx={idx}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                            
+                          />
+                        </div>
+                      </Background>
+                    );
+                  })}
+
+            </IntroductionBox>
           {/* <ReviewBox>
     
             <div>
@@ -1174,44 +1234,6 @@ const DetailInfoBox = styled.div`
   }
 `;
 const FileViewerContainer = styled(FileViewer)``;
-
-const DOCViewer = styled(DocViewer)`
-min-height: 300px;
-.WACStatusBarContainer{
-  border: 3px solid red;
-}
-> div:nth-of-type(1){
-    display: none;
-    z-index: 0;    
-}
-> div:nth-of-type(2) {    
-
-  > div:nth-of-type(1) {
-    // height: 1000px;
-    height: ${(props) =>
-      (props.type === "pptx" || props.type === "ppt") &&
-      props.height / 2 - props.height / 5}px;
-    height: ${(props) =>
-      (props.type === "docx" || props.type === "doc") && 1200}px;
-  }
-}
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    > div:nth-of-type(2) {
-      > div:nth-of-type(1) {
-        height: ${(props) =>
-          props.type === "pptx" || props.type === "ppt"
-            ? props.height
-              ? props.height / 3 + props.height / 3
-              : 0
-            : 300}px;
-
-
-      }
-      }
-    }
-  }
-`;
 
 const PageBar = styled.div`
   width: 351px;

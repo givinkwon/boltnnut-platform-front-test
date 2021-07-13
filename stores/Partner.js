@@ -9,6 +9,7 @@ class Partner {
   constructor() {
     //makeObservable(this);
   }
+  @observable viewerLoading = 0;
   @observable click_count = 1;
   @observable detail = null;
   @observable requests = [];

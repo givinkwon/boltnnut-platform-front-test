@@ -22,6 +22,24 @@ const pass4 = "static/images/pass4.png";
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 
+var availableFileType = [
+  "png",
+  "jpeg",
+  "gif",
+  "bmp",
+  "pdf",
+  "csv",
+  "xslx",
+  "docx",
+  "mp4",
+  "webm",
+  "mp3",
+  "pptx",
+  "doc",
+  "html",
+];
+
+
 @inject("Project", "Auth", "Partner")
 @observer
 class ManufacturerContentContainer extends React.Component {
@@ -124,6 +142,7 @@ class ManufacturerContentContainer extends React.Component {
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
     console.log(Partner.modalActive);
+    Partner.detailLoadingFlag = true;
 
     if (!Partner.requestModalActive && !Partner.modalActive) {
       console.log("Detail click");
@@ -132,21 +151,57 @@ class ManufacturerContentContainer extends React.Component {
       Partner.partner_detail_list.push({ item: item });
       Partner.category_name_list = Partner.category_dic[idx];
 
-      if (this.state.dropDownIdx === -1) {
-        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
-        Partner.portFolioList = [];
-        await Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
-        this.setState({ dropDownActive: true, dropDownIdx: idx });
-      } else {
-        if (this.state.dropDownIdx === idx) {
-          this.setState({ dropDownActive: false, dropDownIdx: -1 });
-        } else {
-          await Partner.getCityName(Partner.partner_detail_list[0].item.city);
-          Partner.portFolioList = [];
-          await Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
-          this.setState({ dropDownActive: true, dropDownIdx: idx });
-        }
+
+      
+
+    if (this.props.Auth && this.props.Auth.logged_in_user) {
+      if (!item.file) {
+        Partner.detailLoadingFlag = false;
+        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        return;
       }
+      this.props.Partner.selectedIntroductionFile = item.file;
+
+      const fileType = item.file
+        .split(".")
+        [item.file.split(".").length - 1].toLowerCase();
+      this.props.Partner.selectedIntroductionFileType = fileType;
+ 
+      if (availableFileType.indexOf(fileType) > -1) {
+        console.log("뷰어 페이지 router push");
+        Partner.partner_detail_list = [];
+        await Partner.partner_detail_list.push({ item: item });
+
+        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
+        console.log(toJS(Partner.partner_detail_list))
+        await Partner.getReviewByPartner(
+          Partner.partner_detail_list[0].item.id,
+          1,
+          1
+        );
+        await Partner.getReviewByPartner(
+          Partner.partner_detail_list[0].item.id
+        );
+
+        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+        Router.push("/producer/detail");
+        this.setState({g:3})
+      } else {
+        console.log("file download");
+        this.filedownload(item.file);
+      }
+    } else {
+      alert("로그인이 필요합니다.");
+      Partner.detailLoadingFlag = false;
+      // Router.back();
+      // this.props.Auth.previous_url = "producer";
+      // Router.push("/login");
+      // Router.push("/login");
+      location.href = this.props.Common.makeUrl("login");
+    }
+
+
+      
     }
   };
   render() {
