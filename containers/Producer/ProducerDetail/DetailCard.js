@@ -103,6 +103,7 @@ class DetailCardContainer extends React.Component {
       };
     });
 
+    console.log(toJS(Partner.partner_list));
     console.log(this.state.portfoliLocation);
     window.addEventListener("scroll", this.loadScroll);
 
@@ -400,7 +401,7 @@ class DetailCardContainer extends React.Component {
           </DetailInfoBox>
 
           <div style={{ width: "100%", height: "500px" }}>
-            <MapContainer />
+            <MapContainer city={Partner.city_name}/>
           </div>
 
           <IntroductionBox width={width}>

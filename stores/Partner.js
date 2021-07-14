@@ -10,7 +10,7 @@ class Partner {
     //makeObservable(this);
   }
 
-  @observable selectedTabIdx = 0;   // 선택한 tabBar의 index 저장하는 변수
+  @observable selectedTabIdx = 0; // 선택한 tabBar의 index 저장하는 변수
   @observable viewerLoading = 0;
   @observable click_count = 1;
   @observable detail = null;
@@ -366,14 +366,12 @@ class Partner {
 
   @action setMainCategory = async (val) => {
     this.input_big_category = val;
-    this.request_middle_list = this.input_big_category.category_set;    
+    this.request_middle_list = this.input_big_category.category_set;
     this.category_middle_ary = await this.category_middle_total_ary.filter(
       (item) => item.maincategory === val.id
     );
 
-
     this.input_small_category = this.category_middle_ary[0];
-
   };
 
   @action setSmallCategory = (val) => {
@@ -1917,46 +1915,37 @@ class Partner {
     console.log(toJS(this.review_client_obj));
   };
 
+  // 배열을 무작위로 섞는 함수
+  // 배열을 인자로 받음
+  @action shuffleArray = (array) => {
+    for (let i = 0; i < array.length; i++) {
+      let j = Math.floor(Math.random() * (i + 1));
+      // [array[i], array[j]] = [array[j], array[i]];
+      const x = array[i];
+      array[i] = array[j];
+      array[j] = x;
+    }
+    return array;
+  };
 
-// 배열을 무작위로 섞는 함수
-// 배열을 인자로 받음
- @action shuffleArray = array => {
-  for (let i = 0; i < array.length; i++) {
-    let j = Math.floor(Math.random() * (i + 1));
-    // [array[i], array[j]] = [array[j], array[i]];
-    const x = array[i];
-    array[i] = array[j];
-    array[j] = x;
-  }
-  return array;
-};
-
-@action clickHandler = (item, idx) => {  
-
-  if(this.selectedTabIdx === idx+1){
+  /* */
+  @action clickHandler = (item, idx) => {
+    if (this.selectedTabIdx === idx + 1) {
       this.selectedTabIdx = 0;
-  }else{
-          
-      this.selectedTabIdx = idx+1;
-    
-  }
+    } else {
+      this.selectedTabIdx = idx + 1;
+    }
+    console.log(this.selectedTabIdx);
+  };
 
-    
-    console.log(this.selectedTabIdx)
-  }
-
-  @action activeHandler = (item, idx) => {  
-    console.log(idx === this.selectedTabIdx-1)
-    if (idx === this.selectedTabIdx-1) {
+  @action activeHandler = (item, idx) => {
+    console.log(idx === this.selectedTabIdx - 1);
+    if (idx === this.selectedTabIdx - 1) {
       return true;
     } else {
       return false;
-    }      
-  }
+    }
+  };
 }
-
-
-
-
 
 export default new Partner();

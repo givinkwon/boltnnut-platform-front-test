@@ -27,11 +27,13 @@ class Index extends React.Component {
   async componentDidMount() {
     const { Auth, Home, Answer, Loading } = this.props;
 
+    /* 카카오 지도 API 불러오는 부분 */
     const script = document.createElement("script");
     script.async = true;
     script.src =
       "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&autoload=false";
     document.head.appendChild(script);
+
     console.log(Auth);
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
