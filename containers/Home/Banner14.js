@@ -7,7 +7,6 @@ import Fade from "react-reveal/Fade";
 import Router from "next/router";
 import Slider from "react-slick";
 
-
 const image1 = "/static/images/logo/logo_1.png";
 const image2 = "/static/images/logo/logo_2.png";
 const image3 = "/static/images/logo/logo_3.png";
@@ -96,7 +95,6 @@ class Banner14Container extends React.Component {
           <Item style={{ width: 141 }}>
             <img src={image16} />
           </Item>
-
         </SliderContainer>
       </>
     );

@@ -20,7 +20,7 @@ const banner1_img = "/static/images/Home/Banner1/Banner1_img.png";
 const banner_dot_img = "/static/images/Home/Banner12/Banner12_img1.png";
 const banner9_img = "/static/images/Home/Banner9/Banner9_img1.png";
 
-@inject("Answer", "Partner", "Auth")
+@inject("Answer", "Partner", "Auth", "Producer")
 @observer
 class PortfolioConatiner extends React.Component {
   state = {
@@ -28,16 +28,7 @@ class PortfolioConatiner extends React.Component {
     src: "",
   };
 
-  slider = null;
-  sliderNext = () => {
-    this.slider.slickNext();
-  };
-  sliderPrev = () => {
-    this.slider.slickPrev();
-  };
-
   activeHandler = (src) => {
-
     this.setState({ modalOpen: true, src: src });
   };
 
@@ -47,7 +38,7 @@ class PortfolioConatiner extends React.Component {
     const img = document.getElementById("image");
   };
   render() {
-    const { Answer, file, Partner, width } = this.props;
+    const { Answer, file, Partner, width, Producer } = this.props;
     var settings = {
       dots: false,
       infinite: false,
@@ -90,7 +81,7 @@ class PortfolioConatiner extends React.Component {
           <Content>
             {Partner.portFolioList.length != 0 ? (
               <Slider {...settings} ref={(slider) => (this.slider = slider)}>
-
+                czczcdzczc
                 {Partner.portFolioList.map((item, idx) => {
                   return (
                     <Image
@@ -117,14 +108,12 @@ class PortfolioConatiner extends React.Component {
               </>
             )}
 
-            {
-              Partner.portFolioList && Partner.portFolioList.length > 0 && (
-                <>
-                  <Arrow left onClick={this.sliderPrev} />
-                  <Arrow right onClick={this.sliderNext} />
-                </>
-              )
-            }
+            {Partner.portFolioList && Partner.portFolioList.length > 0 && (
+              <>
+                <Arrow left onClick={Producer.sliderPrev} />
+                <Arrow right onClick={Producer.sliderNext} />
+              </>
+            )}
           </Content>
 
           {this.state.modalOpen && (

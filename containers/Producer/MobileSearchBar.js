@@ -15,7 +15,14 @@ import { PRIMARY2 } from "static/style";
 const filter_img = "static/images/manufacturer/filter.png";
 const search_img = "static/images/manufacturer/search.png";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
+@inject(
+  "Auth",
+  "Project",
+  "Request",
+  "Partner",
+  "ManufactureProcess",
+  "Producer"
+)
 @observer
 class MobileSearchBarConatiner extends React.Component {
   state = {
@@ -26,33 +33,6 @@ class MobileSearchBarConatiner extends React.Component {
     filter_active: false,
   };
 
-  openModal = () => {
-    const { Partner } = this.props;
-    console.log("requestmodal open click");
-    Partner.requestModalActive = true;
-  };
-  closeModal = () => {
-    const { Partner } = this.props;
-    console.log("requestmodal close click");
-
-    Partner.requestModalActive = false;
-  };
-
-  selectClick = () => {
-    const { list } = this.state;
-    this.setState({ list: true });
-  };
-
-  selectOut = () => {
-    const { list } = this.state;
-    this.setState({ list: false });
-  };
-
-  searchText = (e) => {
-    const { Partner } = this.props;
-    this.setState({ search: e.target.value });
-    Partner.search_text = e.target.value;
-  };
   search = async () => {
     const { Partner, ManufactureProcess } = this.props;
 
@@ -73,12 +53,7 @@ class MobileSearchBarConatiner extends React.Component {
       }
     }
   };
-  closeModal = () => {
-    this.setState({
-      ...this.state,
-      modal_open: false,
-    });
-  };
+
   handleKeyDown = async (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
@@ -131,24 +106,18 @@ class MobileSearchBarConatiner extends React.Component {
     }
   };
 
-  filterActiveHandler = () => {
-    if (this.props.Partner.check_click_filter) {
-      this.props.Partner.check_click_filter = false;
-    } else {
-      this.props.Partner.check_click_filter = true;
-    }
-  };
+  // filterActiveHandler = () => {
+  //   if (this.props.Partner.check_click_filter) {
+  //     this.props.Partner.check_click_filter = false;
+  //   } else {
+  //     this.props.Partner.check_click_filter = true;
+  //   }
+  // };
+
   render() {
-    const { Partner } = this.props;
+    const { Partner, Producer } = this.props;
     return (
       <Form active={this.props.Partner.check_click_filter}>
-        <Box
-          active={this.state.list === true}
-          onClick={() =>
-            this.state.list ? this.selectOut() : this.selectClick()
-          }
-          onBlur={() => this.selectOut()}
-        ></Box>
         <SearchFilterBox>
           <SearchBar>
             <div>
@@ -169,7 +138,7 @@ class MobileSearchBarConatiner extends React.Component {
                 onBlur={(e) =>
                   (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
                 }
-                onChange={this.searchText}
+                onChange={Partner.searchText}
                 class="Input"
                 onKeyDown={this.handleKeyDown}
               />
@@ -190,7 +159,7 @@ class MobileSearchBarConatiner extends React.Component {
 
           <Filter
             onClick={() => {
-              this.filterActiveHandler();
+              Partner.filterActiveHandler();
             }}
           >
             <div>
@@ -514,37 +483,6 @@ const FilterContent = styled.div`
   }
 `;
 
-const Box = styled.div`
-  //   width: 220px;
-
-  ${(props) =>
-    props.active &&
-    css`
-      svg {
-        @keyframes select {
-          0% {
-            transform: skewY(-180deg);
-          }
-        }
-
-        animation: select 0.4s ease-out;
-        transform: rotate(-180deg);
-      }
-    `}
-
-  ${(props) =>
-    !props.active &&
-    css`
-      svg {
-        @keyframes selectOut {
-          0% {
-            transform: rotate(-180deg);
-          }
-        }
-        animation: selectOut 0.4s;
-      }
-    `}
-`;
 const Request = styled.div`
   > div:nth-of-type(1) {
     box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);

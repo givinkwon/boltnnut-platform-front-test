@@ -25,7 +25,7 @@ const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 const filter_img = "static/images/manufacturer/filter.png";
 
-@inject("Project", "Auth", "Partner")
+@inject("Project", "Auth", "Partner", "Producer")
 @observer
 class MobileManufacturerContentContainer extends React.Component {
   state = {
@@ -34,33 +34,15 @@ class MobileManufacturerContentContainer extends React.Component {
     filter_active: false,
   };
 
-  handleIntersection = (event) => {
-    if (event.isIntersecting) {
-      console.log("추가 로딩을 시도합니다");
-    }
-  };
-
-  activeHandler = (idx) => {
-    const { Partner } = this.props;
-
-    if (idx === Partner.filter_checked_idx) {
-      console.log("ture");
-      return true;
-    } else {
-      console.log("false");
-      return false;
-    }
-  };
-
-  filterActiveHandler = () => {
-    if (this.state.filter_active) {
-      this.setState({ filter_active: false });
-      this.props.Partner.check_click_filter = false;
-    } else {
-      this.setState({ filter_active: true });
-      this.props.Partner.check_click_filter = true;
-    }
-  };
+  // filterActiveHandler = () => {
+  //   if (this.state.filter_active) {
+  //     this.setState({ filter_active: false });
+  //     this.props.Partner.check_click_filter = false;
+  //   } else {
+  //     this.setState({ filter_active: true });
+  //     this.props.Partner.check_click_filter = true;
+  //   }
+  // };
 
   async componentDidMount() {
     const { Partner } = this.props;
@@ -91,76 +73,8 @@ class MobileManufacturerContentContainer extends React.Component {
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
   }
 
-  movePage = (e) => {
-    const { Partner, Auth } = this.props;
-    e.preventDefault();
-    const newPage = e.target.innerText * 1;
-    Partner.currentPage = newPage;
-    Partner.resetDevCategory();
-    Partner.getPartner(newPage);
-  };
-
-  pageNext = (e) => {
-    const { Partner } = this.props;
-    e.preventDefault();
-    if (Partner.currentPage < Partner.partner_page) {
-      const nextPage = Partner.currentPage + 1;
-      Partner.currentPage = nextPage;
-      Partner.resetDevCategory();
-      Partner.getPartner(nextPage);
-    }
-  };
-
-  pagePrev = (e) => {
-    const { Partner } = this.props;
-    e.preventDefault();
-    if (Partner.currentPage > 1) {
-      const newPage = Partner.currentPage - 1;
-
-      Partner.currentPage = newPage;
-      Partner.resetDevCategory();
-      Partner.getPartner(newPage);
-    }
-  };
-
-  pushToDetail = async (item, idx) => {
-    const { Partner } = this.props;
-    console.log("pushtodetail");
-    Partner.category_name_list = null;
-    Partner.partner_detail_list = [];
-    Partner.partner_detail_list.push({ item: item });
-    Partner.category_name_list = Partner.category_dic[idx];
-    if (this.state.dropDownIdx === -1) {
-      await Partner.getCityName(Partner.partner_detail_list[0].item.city);
-      Partner.portFolioList = [];
-      Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
-      this.setState({ dropDownActive: true, dropDownIdx: idx });
-    } else {
-      if (this.state.dropDownIdx === idx) {
-        this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      } else {
-        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
-        Partner.portFolioList = [];
-        Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
-        this.setState({ dropDownActive: true, dropDownIdx: idx });
-      }
-    }
-  };
-
-  openModal = () => {
-    const { Partner } = this.props;
-    console.log("requestmodal open click");
-    Partner.requestModalActive = true;
-  };
-  closeModal = () => {
-    const { Partner } = this.props;
-    console.log("requestmodal close click");
-
-    Partner.requestModalActive = false;
-  };
-
   render() {
-    const { Project, Partner, width } = this.props;
+    const { Project, Partner, width, Producer } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
@@ -229,7 +143,7 @@ class MobileManufacturerContentContainer extends React.Component {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         <div
-                          onClick={() => this.pushToDetail(item, idx)}
+                          onClick={() => Partner.pushToDetail(item, idx)}
                           style={{ width: "100%" }}
                         >
                           <ProposalCard
@@ -239,7 +153,7 @@ class MobileManufacturerContentContainer extends React.Component {
                             categoryData={toJS(Partner.category_dic[idx])}
                             dropDown={this.state.dropDownActive}
                             dropDownIdx={this.state.dropDownIdx}
-                            handleIntersection={this.handleIntersection}
+                            handleIntersection={Producer.handleIntersection}
                             customer="partner"
                           />
                         </div>
@@ -256,7 +170,7 @@ class MobileManufacturerContentContainer extends React.Component {
               <Modal
                 width={width}
                 open={Partner.requestModalActive}
-                close={this.closeModal}
+                close={Partner.closeModal}
               ></Modal>
             </span>
           </Layer>
@@ -268,10 +182,10 @@ class MobileManufacturerContentContainer extends React.Component {
               opacity: current_set == 1 && Partner.currentPage <= 1 ? 0.4 : 1,
               cursor: "pointer",
             }}
-            onClick={this.pagePrev}
+            onClick={Partner.pagePrev}
           />
           <PageCount
-            onClick={this.movePage}
+            onClick={Partner.movePage}
             value={5 * (current_set - 1)}
             active={Partner.currentPage % 5 == 1}
             style={{
@@ -293,7 +207,7 @@ class MobileManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={this.movePage}
+            onClick={Partner.movePage}
           >
             {" "}
             {5 * (current_set - 1) + 2}{" "}
@@ -307,7 +221,7 @@ class MobileManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={this.movePage}
+            onClick={Partner.movePage}
           >
             {" "}
             {5 * (current_set - 1) + 3}{" "}
@@ -321,7 +235,7 @@ class MobileManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={this.movePage}
+            onClick={Partner.movePage}
           >
             {" "}
             {5 * (current_set - 1) + 4}{" "}
@@ -335,7 +249,7 @@ class MobileManufacturerContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={this.movePage}
+            onClick={Partner.movePage}
           >
             {" "}
             {5 * (current_set - 1) + 5}{" "}
@@ -346,7 +260,7 @@ class MobileManufacturerContentContainer extends React.Component {
               opacity: Partner.partner_page == Partner.currentPage ? 0.4 : 1,
               cursor: "pointer",
             }}
-            onClick={this.pageNext}
+            onClick={Partner.pageNext}
           />
         </PageBar>
       </>

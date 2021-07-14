@@ -127,6 +127,7 @@ class RequestModal extends React.Component {
     console.log(Partner.partner_count);
     console.log(toJS(Partner.category_dic));
   };
+
   openDoneModal = async () => {
     const { Partner } = this.props;
     console.log("requestdonemodal open click");
@@ -146,7 +147,6 @@ class RequestModal extends React.Component {
 
     Partner.requestModalActive = false;
     await this.openDoneModal();
-
   };
 
   countPrice = () => {
@@ -191,7 +191,8 @@ class RequestModal extends React.Component {
     let minValue = 0;
     let maxValue = 0;
 
-    let emailval = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    let emailval =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
     // if (
     //   Partner.input_detail_big_category == null ||
@@ -283,8 +284,7 @@ class RequestModal extends React.Component {
           );
           console.log(
             Partner.filter_category_ary.filter(
-              (data) =>
-                partFilterAry.includes(data.category) === false
+              (data) => partFilterAry.includes(data.category) === false
             )
           );
         } else {
@@ -461,14 +461,14 @@ class RequestModal extends React.Component {
       });
   };
 
-  activeFileFilter = () => {
-    const { Partner } = this.props;
-    if (Partner.filterFile) {
-      Partner.filterFile = false;
-    } else {
-      Partner.filterFile = true;
-    }
-  };
+  // activeFileFilter = () => {
+  //   const { Partner } = this.props;
+  //   if (Partner.filterFile) {
+  //     Partner.filterFile = false;
+  //   } else {
+  //     Partner.filterFile = true;
+  //   }
+  // };
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
     const { open, close, header, children, width, Partner } = this.props;
@@ -722,7 +722,6 @@ class RequestModal extends React.Component {
                             </DirectInputBox>
                           )}
                           <span>원</span>
-
                         </InputContainer>
                       </Budget>
                       <File active={Partner.filterFile}>

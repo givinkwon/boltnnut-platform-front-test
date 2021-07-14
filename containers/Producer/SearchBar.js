@@ -11,7 +11,14 @@ import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
+@inject(
+  "Auth",
+  "Project",
+  "Request",
+  "Partner",
+  "ManufactureProcess",
+  "Producer"
+)
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -20,21 +27,16 @@ class SearchBarConatiner extends React.Component {
     list: false,
   };
 
-  selectClick = () => {
-    const { list } = this.state;
-    this.setState({ list: true });
-  };
+  // selectClick = () => {
+  //   const { list } = this.state;
+  //   this.setState({ list: true });
+  // };
 
-  selectOut = () => {
-    const { list } = this.state;
-    this.setState({ list: false });
-  };
+  // selectOut = () => {
+  //   const { list } = this.state;
+  //   this.setState({ list: false });
+  // };
 
-  searchText = async (e) => {
-    const { Partner } = this.props;
-    this.setState({ search: e.target.value });
-    await (Partner.search_text = e.target.value);
-  };
   search = async () => {
     const { Partner, ManufactureProcess } = this.props;
     // console.log("click");
@@ -70,12 +72,14 @@ class SearchBarConatiner extends React.Component {
       }
     }
   };
+
   closeModal = () => {
     this.setState({
       ...this.state,
       modal_open: false,
     });
   };
+
   handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
@@ -108,9 +112,11 @@ class SearchBarConatiner extends React.Component {
       // }
     }
   };
+
   async componentDidMount() {
     await this.props.Auth.checkLogin();
   }
+
   render() {
     const { Partner, Request } = this.props;
     return (
@@ -143,7 +149,7 @@ class SearchBarConatiner extends React.Component {
               onBlur={(e) =>
                 (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
               }
-              onChange={this.searchText}
+              onChange={Partner.searchText}
               class="Input"
               onKeyPress={this.handleKeyDown}
             />

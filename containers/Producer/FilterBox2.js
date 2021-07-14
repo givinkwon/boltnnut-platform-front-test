@@ -50,7 +50,6 @@ class FilterBox2Container extends React.Component {
   };
 
   activeHandler = (idx, filter) => {
-
     if (idx === Partner.filterbox_view_checked_idx) {
       return true;
     } else {
@@ -58,9 +57,6 @@ class FilterBox2Container extends React.Component {
     }
   };
 
-  handleChange = (e) => {
-    this.props.onChange(e.target.checked);
-  };
   render() {
     const { checked, data, filter } = this.props;
     const { placeholder, label, disabled, ...props } = this.props;
