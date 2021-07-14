@@ -29,16 +29,6 @@ class ProjectContentContainer extends React.Component {
     }
   };
 
-  pushToDetail = async (id) => {
-    const { Project } = this.props;
-    console.log(id);
-
-    await Project.getProjectDetail(id);
-    Project.newIndex = 1;
-    Project.selectedProjectId = id;
-    Project.setProjectDetailData(id);
-  };
-
   async componentDidMount() {
     const { Project, Auth } = this.props;
     Project.newIndex = 0;
@@ -48,37 +38,8 @@ class ProjectContentContainer extends React.Component {
     console.log("did mount");
 
     await Auth.checkLogin();
-      Project.getProjectByPrice();
+    Project.getProjectByPrice();
   }
-
-  movePage = (e) => {
-    const { Project, Auth } = this.props;
-    e.preventDefault();
-    const newPage = e.target.innerText * 1;
-
-    Project.currentPage = newPage;
-    Project.getProjectByPrice(Project.search_text, newPage);
-  };
-
-  pageNext = (e) => {
-    const { Project, Auth } = this.props;
-    e.preventDefault();
-    if (Project.currentPage < Project.project_page) {
-      const nextPage = Project.currentPage + 1;
-      Project.currentPage = nextPage;
-      Project.getProjectByPrice(Project.search_text, Project.currentPage);
-    }
-  };
-
-  pagePrev = (e) => {
-    const { Project } = this.props;
-    e.preventDefault();
-    if (Project.currentPage > 1) {
-      const newPage = Project.currentPage - 1;
-      Project.currentPage = newPage;
-      Project.getProjectByPrice(Project.search_text, Project.currentPage);
-    }
-  };
 
   render() {
     const { Project } = this.props;
@@ -89,52 +50,52 @@ class ProjectContentContainer extends React.Component {
     return (
       <>
         <Background id="MyBackground">
-          <Container style = {{flexDirection: "column"}}>
+          <Container style={{ flexDirection: "column" }}>
             <SearchBar />
             <>
-            <Body>
-              <Filter style={{ paddingTop: "32px" }}>
-                <span>필터</span>
-                <RadioBox data={request_data} />
-              </Filter>
-              <Main>
-                <Header style={{ paddingTop: "32px" }}>
-                  <Font20 style={{ marginLeft: "-9px" }}>
-                    <span style={{ fontWeight: "bold" }}>
-                      {Project.project_count}개
-                    </span>
-                    의 상담 요청 프로젝트가 있습니다.
-                  </Font20>
-                </Header>
-                {Project.projectDataList &&
-                  Project.currentPage > 0 &&
-                  Project.projectDataList.map((item, idx) => {
-                    {
-                      console.log(toJS(item));
-                    }
-                    return (
-                      <Background style={{ marginBottom: "34px" }}>
-                        <div
-                          style={{ cursor: "pointer", width: "100%" }}
-                          onClick={() => this.pushToDetail(item.id)}
-                        >
-                          {console.log(toJS(item))}
-                          {console.log("아이템")}
-                          <ProposalCard
-                            data={item}
-                            middleCategory={Project.middle_category_name[idx]}
-                            mainCategory={Project.main_category_name[idx]}
-                            newData={Project.data_dt[idx]}
-                            checkTotal={Project.filter_price}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
-                      </Background>
-                    );
-                  })}
-              </Main>
-            </Body>
+              <Body>
+                <Filter style={{ paddingTop: "32px" }}>
+                  <span>필터</span>
+                  <RadioBox data={request_data} />
+                </Filter>
+                <Main>
+                  <Header style={{ paddingTop: "32px" }}>
+                    <Font20 style={{ marginLeft: "-9px" }}>
+                      <span style={{ fontWeight: "bold" }}>
+                        {Project.project_count}개
+                      </span>
+                      의 상담 요청 프로젝트가 있습니다.
+                    </Font20>
+                  </Header>
+                  {Project.projectDataList &&
+                    Project.currentPage > 0 &&
+                    Project.projectDataList.map((item, idx) => {
+                      {
+                        console.log(toJS(item));
+                      }
+                      return (
+                        <Background style={{ marginBottom: "34px" }}>
+                          <div
+                            style={{ cursor: "pointer", width: "100%" }}
+                            onClick={() => Project.pushToDetail(item.id)}
+                          >
+                            {console.log(toJS(item))}
+                            {console.log("아이템")}
+                            <ProposalCard
+                              data={item}
+                              middleCategory={Project.middle_category_name[idx]}
+                              mainCategory={Project.main_category_name[idx]}
+                              newData={Project.data_dt[idx]}
+                              checkTotal={Project.filter_price}
+                              handleIntersection={this.handleIntersection}
+                              customer="partner"
+                            />
+                          </div>
+                        </Background>
+                      );
+                    })}
+                </Main>
+              </Body>
             </>
           </Container>
         </Background>
@@ -145,10 +106,14 @@ class ProjectContentContainer extends React.Component {
               opacity: current_set == 1 && Project.currentPage <= 1 ? 0.4 : 1,
               cursor: "pointer",
             }}
-            onClick={this.pagePrev}
+            onClick={() => {
+              Project.pagePrev(false);
+            }}
           />
           <PageCount
-            onClick={this.movePage}
+            onClick={(e) => {
+              Project.movePage(e, false);
+            }}
             value={5 * (current_set - 1)}
             active={Project.currentPage % 5 == 1}
             style={{
@@ -170,7 +135,9 @@ class ProjectContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={this.movePage}
+            onClick={(e) => {
+              Project.movePage(e, false);
+            }}
           >
             {" "}
             {5 * (current_set - 1) + 2}{" "}
@@ -184,7 +151,9 @@ class ProjectContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={this.movePage}
+            onClick={(e) => {
+              Project.movePage(e, false);
+            }}
           >
             {" "}
             {5 * (current_set - 1) + 3}{" "}
@@ -198,7 +167,9 @@ class ProjectContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={this.movePage}
+            onClick={(e) => {
+              Project.movePage(e, false);
+            }}
           >
             {" "}
             {5 * (current_set - 1) + 4}{" "}
@@ -212,7 +183,9 @@ class ProjectContentContainer extends React.Component {
                   ? "none"
                   : "block",
             }}
-            onClick={this.movePage}
+            onClick={(e) => {
+              Project.movePage(e, false);
+            }}
           >
             {" "}
             {5 * (current_set - 1) + 5}{" "}
@@ -223,7 +196,9 @@ class ProjectContentContainer extends React.Component {
               opacity: Project.project_page == Project.currentPage ? 0.4 : 1,
               cursor: "pointer",
             }}
-            onClick={this.pageNext}
+            onClick={() => {
+              Project.pageNext(false);
+            }}
           />
         </PageBar>
       </>
@@ -292,25 +267,25 @@ const Body = styled.div`
   margin-top: 40px;
 `;
 const Main = styled.div`
-  @media (min-width: 768px) and (max-width: 1299.98px){
+  @media (min-width: 768px) and (max-width: 1299.98px) {
     width: 560px;
-    padding-left: 20px; 
+    padding-left: 20px;
   }
-  @media (min-width: 1300px){
+  @media (min-width: 1300px) {
     width: 987px;
-    padding-left: 33px; 
+    padding-left: 33px;
   }
 `;
 const Filter = styled.div`
   display: flex;
   flex-direction: column;
-  @media(min-width: 768px) and (max-width: 1298px){
+  @media (min-width: 768px) and (max-width: 1298px) {
     width: 140px;
     border-right: 1px solid #e1e2e4;
     // margin-right: 33px;
     // padding-right: 9px;
     box-sizing: border-box;
-    >span{
+    > span {
       font-size: 18px;
       font-weight: 500 !important;
       font-stretch: normal !important;
@@ -320,13 +295,13 @@ const Filter = styled.div`
       color: #282c36;
     }
   }
-  @media(min-width: 1300px){
+  @media (min-width: 1300px) {
     width: 180px;
     border-right: 1px solid #e1e2e4;
     // margin-right: 33px;
     // padding-right: 9px;
     box-sizing: border-box;
-    >span{
+    > span {
       font-size: 20px;
       font-weight: 500 !important;
       font-stretch: normal !important;

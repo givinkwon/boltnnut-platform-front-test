@@ -8,7 +8,7 @@ import Partner from "../../../stores/Partner";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
-import ChatTestContainer from "containers/Info2/ChatTest";
+import ChatTestContainer from "containers/CS/Info2/ChatTest";
 import NoProject from "../NoProject";
 
 @inject("Project", "Auth", "Partner")
@@ -29,14 +29,6 @@ class MyProject extends React.Component {
     });
     const { Project } = this.props;
     Project.chatModalActive = !Project.chatModalActive;
-  };
-
-  pushToDetail = async (id) => {
-    const { Project } = this.props;
-    console.log(id);
-    await Project.getProjectDetail(id);
-    Project.newIndex = 1;
-    Project.selectedProjectId = id;
   };
 
   async getProject(data) {
@@ -105,7 +97,7 @@ class MyProject extends React.Component {
                             this.modalHandler(data.answerId, idx);
                           }}
                           user={Auth}
-                          pushToDetail={this.pushToDetail}
+                          pushToDetail={Project.pushToDetail}
                         />
                       )}
                     </BoxContainer>

@@ -8,6 +8,7 @@ import * as Title from "components/Title";
 import { PRIMARY, WHITE } from "static/style";
 import Containerv1 from "./Containerv1";
 import SelectComponent from "./Select";
+import KSLink from "./KSLink";
 
 const rowline = "/static/images/components/Footer/rowline.svg";
 const facebook_mob = "/static/images/components/Footer/facebook.svg";
@@ -77,14 +78,10 @@ class FooterComponent extends React.Component {
     width: 0,
     tab: 0,
   };
-  makeUrl = (url) => {
-    if (typeof window !== "undefined") {
-      return window.location.protocol + "//" + window.location.host + "/" + url;
-    }
-  };
   componentDidMount() {
     const { Magazine } = this.props;
-    Magazine.init();
+    // Magazine.init();
+    Magazine.getMagazine(2);
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   }
@@ -144,37 +141,19 @@ class FooterComponent extends React.Component {
                 </CompanyInfoWrapper>
                 <CompanyInfoWrapper style={{ paddingTop: 14 }}>
                   <FaqTable>
-                    {/* <span class="cell" onClick={() => Router.push("/faq")}>
-                      자주찾는 질문
-                    </span> */}
                     <Button>
-                      <a href={this.makeUrl("faq")}>
-                        <span class="cell">자주찾는 질문</span>
-                      </a>
+                      <KSLink url={"faq"} content={"자주찾는 질문"} />
                     </Button>
                     <img src={separator} />
-                    {/* <span
-                      class="cell"
-                      onClick={() => Router.push("/term/personal")}
-                    >
-                      개인정보처리방침
-                    </span> */}
                     <Button>
-                      <a href={this.makeUrl("term/personal")}>
-                        <span class="cell">개인정보처리방침</span>
-                      </a>
+                      <KSLink
+                        url={"term/personal"}
+                        content={"개인정보처리방침"}
+                      />
                     </Button>
                     <img src={separator} />
-                    {/* <span
-                      class="cell"
-                      onClick={() => Router.push("/term/policy")}
-                    >
-                      이용약관
-                    </span> */}
                     <Button>
-                      <a href={this.makeUrl("term/policy")}>
-                        <span class="cell">이용약관</span>
-                      </a>
+                      <KSLink url={"term/policy"} content={"이용약관"} />
                     </Button>
                   </FaqTable>
                   <InfoDetailContainer>
@@ -260,49 +239,25 @@ class FooterComponent extends React.Component {
                     </Font12>
                   </InfoDetailContainer>
                   <FaqTable>
-                    {/* <span class="cell" onClick={() => Router.push("/faq")}>
-                      <Font12 style={{ fontWeight: 500 }}>자주찾는 질문</Font12>
-                    </span> */}
                     <Button>
-                      <a href={this.makeUrl("faq")}>
-                        <span class="cell">
-                          <Font12 style={{ fontWeight: 500 }}>
-                            자주찾는 질문
-                          </Font12>
-                        </span>
-                      </a>
-                    </Button>
-                    <img src={separator} />
-                    {/* <span
-                      class="cell"
-                      onClick={() => Router.push("/term/policy")}
-                    >
-                      <Font12 style={{ fontWeight: 500 }}>이용약관</Font12>
-                    </span> */}
-                    <Button>
-                      <a href={this.makeUrl("term/policy")}>
-                        <span class="cell">
-                          <Font12 style={{ fontWeight: 500 }}>이용약관</Font12>
-                        </span>
-                      </a>
-                    </Button>
-                    <img src={separator} />
-                    {/* <span
-                      class="cell"
-                      onClick={() => Router.push("/term/personal")}
-                    >
                       <Font12 style={{ fontWeight: 500 }}>
-                        개인정보처리방침
+                        <KSLink url={"faq"} content={"자주찾는 질문"} />
                       </Font12>
-                    </span> */}
+                    </Button>
+                    <img src={separator} />
                     <Button>
-                      <a href={this.makeUrl("term/personal")}>
-                        <span class="cell">
-                          <Font12 style={{ fontWeight: 500 }}>
-                            개인정보처리방침
-                          </Font12>
-                        </span>
-                      </a>
+                      <Font12 style={{ fontWeight: 500 }}>
+                        <KSLink url={"term/policy"} content={"이용약관"} />
+                      </Font12>
+                    </Button>
+                    <img src={separator} />
+                    <Button>
+                      <Font12 style={{ fontWeight: 500 }}>
+                        <KSLink
+                          url={"term/personal"}
+                          content={"개인정보처리방침"}
+                        />
+                      </Font12>
                     </Button>
                   </FaqTable>
                 </CompanyInfoWrapper>
@@ -312,13 +267,6 @@ class FooterComponent extends React.Component {
                     style={{ height: 13, alignSelf: "center" }}
                   />
                   <div class="imagebox">
-                    {/* <img
-                      src={instargram}
-                      style={{ height: 24, width: 24 }}
-                      onClick={() =>
-                        window.open("http://www.instargram.com/boltnnut_korea")
-                      }
-                    /> */}
                     <Button>
                       <a href="http://www.instargram.com/boltnnut_korea">
                         <img
@@ -327,25 +275,11 @@ class FooterComponent extends React.Component {
                         />
                       </a>
                     </Button>
-                    {/* <img
-                      src={blog}
-                      style={{ height: 24, width: 24 }}
-                      onClick={() =>
-                        window.open("https://blog.naver.com/boltnnut_korea")
-                      }
-                    /> */}
                     <Button>
                       <a href="https://blog.naver.com/boltnnut_korea">
                         <img src={blog} style={{ height: 24, width: 24 }} />
                       </a>
                     </Button>
-                    {/* <img
-                      src={post}
-                      style={{ height: 24, width: 24 }}
-                      onClick={() =>
-                        window.open("https://post.naver.com/boltnnut_korea")
-                      }
-                    /> */}
                     <Button>
                       <a href="https://post.naver.com/boltnnut_korea">
                         <img src={post} style={{ height: 24, width: 24 }} />
@@ -680,18 +614,6 @@ const TelInfoWrapper = styled.div`
 const FaqTable = styled.table`
   width: auto;
   height: auto;
-  .cell {
-    display: table-cell;
-    font-size: 15px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.47;
-    letter-spacing: -0.38px;
-    text-align: left;
-    color: #282c36;
-    cursor: pointer;
-  }
   > img {
     margin-right: 10px;
     margin-left: 10px;
@@ -700,6 +622,22 @@ const FaqTable = styled.table`
     margin-bottom: 16px;
   }
 `;
+
+const Button = styled.button`
+  border: none;
+  background: none;
+  display: table-cell;
+  font-size: 15px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.47;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: #282c36;
+  cursor: pointer;
+`;
+
 const InfoDetailContainer = styled.div`
   width: auto;
   height: auto;
@@ -803,9 +741,4 @@ const Font24 = styled(Content.FontSize24)`
   line-height: 1.5;
   letter-spacing: -0.6px;
   color: #282c36;
-`;
-
-const Button = styled.button`
-  border: none;
-  background: none;
 `;

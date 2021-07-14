@@ -46,8 +46,8 @@ class ContentSub extends React.Component {
   }
 
   changeProject = () => {
-    const { ManufactureProcess, Request } = this.props;
-    console.log(Request.newIndex);
+    const { ManufactureProcess } = this.props;
+    // console.log(Request.newIndex);
 
     Router.push("/request");
     this.props.ManufactureProcess.changeProject = true;
@@ -92,7 +92,7 @@ class ContentSub extends React.Component {
               onMouseOut={() => this.activeHandler("activeOne")}
               onClick={async () => {
                 console.log("click!");
-                this.changeProject();
+                // this.changeProject();
                 console.log(this.props.ManufactureProcess.changeProject);
                 // Router.push("/request")
               }}

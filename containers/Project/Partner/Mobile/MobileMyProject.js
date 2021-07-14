@@ -8,7 +8,7 @@ import Partner from "stores/Partner";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
-import ChatTestContainer from "containers/Info2/ChatTest";
+import ChatTestContainer from "containers/CS/Info2/ChatTest";
 import ProposalCard from "components/ProposalCard";
 import MobileNoProject from "../../MobileNoProject";
 
@@ -25,14 +25,6 @@ class MyProject extends React.Component {
     const { Project } = this.props;
 
     Project.chatModalActive = !Project.chatModalActive;
-  };
-
-  pushToDetail = async (id) => {
-    const { Project } = this.props;
-
-    await Project.getProjectDetail(id);
-    Project.newIndex = 1;
-    Project.selectedProjectId = id;
   };
 
   async getProject(data) {
@@ -79,7 +71,7 @@ class MyProject extends React.Component {
                   <Container>
                     <div
                       style={{ cursor: "pointer", width: "100%" }}
-                      onClick={() => this.pushToDetail(item.id)}
+                      onClick={() => Project.pushToDetail(item.id)}
                     >
                       <ProposalCard
                         data={item}

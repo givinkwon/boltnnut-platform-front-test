@@ -10,11 +10,13 @@ import * as Text from "./Text";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
 import Home from "../pages";
+import KSLink from "./KSLink";
 
 const close_ic = "/static/images/components/MobileNav/close_ic.svg";
 const hamburger_ic = "/static/images/components/MobileNav/hamburger.svg";
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
-@inject("Auth", "Partner", "Home")
+
+@inject("Auth", "Partner", "Home", "Common")
 @observer
 class MobileNav extends React.Component {
   state = {
@@ -26,12 +28,6 @@ class MobileNav extends React.Component {
 
   alreadyLoggedin = ["login", "signup"];
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
-
-  makeUrl = (url) => {
-    if (typeof window !== "undefined") {
-      return window.location.protocol + "//" + window.location.host + "/" + url;
-    }
-  };
 
   logout = () => {
     localStorage.removeItem("token");
@@ -55,7 +51,7 @@ class MobileNav extends React.Component {
           alert("이미 로그인한 사용자입니다");
 
           // Router.push("/");
-          location.href = this.makeUrl("");
+          location.href = this.props.Common.makeUrl("");
         }
         // /offered 에서 tab 1을 거치지 않고 tab 2로 들어온 사용자 리다이렉트
         else if ("offered" === splitedRoute[1]) {
@@ -93,7 +89,7 @@ class MobileNav extends React.Component {
           if (requestId != 923) {
             alert("로그인이 필요합니다");
             // Router.push("/login");
-            location.href = this.makeUrl("login");
+            location.href = this.props.Common.makeUrl("login");
           }
         }
       });
@@ -119,7 +115,7 @@ class MobileNav extends React.Component {
   };
 
   render() {
-    const { Auth, Partner, width, Home } = this.props;
+    const { Auth, Partner, width, Hom, Common } = this.props;
     const { url, is_open, is_profile, token } = this.state;
     console.log(this.props);
     return (
@@ -137,7 +133,7 @@ class MobileNav extends React.Component {
                       onClick={() => {
                         if (is_open == true) {
                           // Router.push("/");
-                          location.href = this.makeUrl("");
+                          location.href = Common.makeUrl("");
                         }
                       }}
                       src={logo_ic}
@@ -175,31 +171,21 @@ class MobileNav extends React.Component {
               <>
                 <ModalContent>
                   {Auth.logged_in_partner ? (
-                    // <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
-                    <a href={this.makeUrl("project")}>프로젝트 관리</a>
+                    <KSLink url={"project"} content={"프로젝트 관리"} />
                   ) : (
-                    // <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
-                    <a href={this.makeUrl("producer")}>제조사 찾기</a>
+                    <KSLink url={"producer"} content={"제조사 찾기"} />
                   )}
-
-                  {/* <p onClick={() => Router.push("/magazine")}>제조 인사이트</p> */}
-                  <a href={this.makeUrl("magazine")}>제조 인사이트</a>
+                  <KSLink url={"magazine"} content={"제조 인사이트"} />
 
                   {Auth.logged_in_user && (
-                    // <p onClick={() => Router.push("/chatting")}>채팅하기</p>
-                    <a href={this.makeUrl("chatting")}>채팅하기</a>
+                    <KSLink url={"chatting"} content={"채팅하기"} />
                   )}
                 </ModalContent>
               </>
               <ModalContent2>
-                {/* <p onClick={() => Router.push("/faq")}>자주찾는 질문</p>
-                <p onClick={() => Router.push("/term/policy")}>이용약관</p>
-                <p onClick={() => Router.push("/term/personal")}>
-                  개인정보 처리 방침
-                </p> */}
-                <a href={this.makeUrl("faq")}>자주찾는 질문</a>
-                <a href={this.makeUrl("term/policy")}>이용약관</a>
-                <a href={this.makeUrl("term/personal")}>개인정보 처리 방침</a>
+                <KSLink url={"faq"} content={"자주찾는 질문"} />
+                <KSLink url={"term/policy"} content={"이용약관"} />
+                <KSLink url={"term/personal"} content={"개인정보 처리 방침"} />
               </ModalContent2>
               {Auth.logged_in_user ? (
                 <Footer>
@@ -215,8 +201,7 @@ class MobileNav extends React.Component {
                       borderRight: "solid 1px #e1e2e4",
                       height: 32,
                     }}
-                    // onClick={() => Router.push("/login")}
-                    onClick={() => (location.href = this.makeUrl("login"))}
+                    onClick={() => (location.href = Common.makeUrl("login"))}
                   >
                     로그인
                   </div>
@@ -227,8 +212,7 @@ class MobileNav extends React.Component {
                       justifyContent: "center",
                       height: 32,
                     }}
-                    // onClick={() => Router.push("/signup")}
-                    onClick={() => (location.href = this.makeUrl("signup"))}
+                    onClick={() => (location.href = Common.makeUrl("signup"))}
                   >
                     회원가입
                   </div>
@@ -244,7 +228,7 @@ class MobileNav extends React.Component {
               <BoltLogo>
                 <Logo
                   src={this.props.src}
-                  onClick={() => (location.href = this.makeUrl(""))}
+                  onClick={() => (location.href = Common.makeUrl(""))}
                 />
               </BoltLogo>
             ) : (

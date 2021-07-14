@@ -7,121 +7,118 @@ import { toJS } from "mobx";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
-import ChatTestContainer from "containers/Info2/ChatTest";
+import ChatTestContainer from "containers/CS/Info2/ChatTest";
 import * as PartnerAPI from "axios/Partner";
 
 import NoProject from "containers/Project/NoProject";
 
 @inject("Project", "Auth", "Answer")
 @observer
-class ClientChatting extends React.Component{
+class ClientChatting extends React.Component {
+  state = {
+    selectedRoom: null,
+    answerDetailList: [],
+    partnerList: [],
+  };
 
-state = {
-  selectedRoom: null,
-  answerDetailList: [],
-  partnerList:[],
-}
-
-async getProject(data){
-  const { Project } = this.props;
-  await Project.getAllProject(data)
-  Project.projectDataList.map((data, idx) =>{
-    data.answer_set.map((answer, idx) => {
-      PartnerAPI.detail(answer.partner)
-        .then((res) => {
-          Project.answerDetailList.push({
-            logo: res.data.logo,
-            name: res.data.name,
-            id: answer.id,
-            content: answer.content1,
-            project: data.id,
-          });
-          Project.projectQuickView.push({
-            check: null,
+  async getProject(data) {
+    const { Project } = this.props;
+    await Project.getAllProject(data);
+    Project.projectDataList.map((data, idx) => {
+      data.answer_set.map((answer, idx) => {
+        PartnerAPI.detail(answer.partner)
+          .then((res) => {
+            Project.answerDetailList.push({
+              logo: res.data.logo,
+              name: res.data.name,
+              id: answer.id,
+              content: answer.content1,
+              project: data.id,
+            });
+            Project.projectQuickView.push({
+              check: null,
+            });
           })
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
-})})};
-
-modalHandler = (id) => {
-  this.setState({ selectedRoom: id });
-  const { Project } = this.props;
-
-  Project.chatModalActive = !Project.chatModalActive;
-};
-
-async componentDidMount() {
-  const { Auth, Project} = this.props;
-  console.log("ClientChatting <Web> did mount");
-  await Auth.checkLogin();
-
-  Project.chattingIndex = 1;
-  if (Auth.logged_in_client) {
-    this.getProject(Auth.logged_in_client.id)
+          .catch((e) => {
+            console.log(e);
+            console.log(e.response);
+          });
+      });
+    });
   }
+
+  modalHandler = (id) => {
+    this.setState({ selectedRoom: id });
+    const { Project } = this.props;
+
+    Project.chatModalActive = !Project.chatModalActive;
+  };
+
+  async componentDidMount() {
+    const { Auth, Project } = this.props;
+    console.log("ClientChatting <Web> did mount");
+    await Auth.checkLogin();
+
+    Project.chattingIndex = 1;
+    if (Auth.logged_in_client) {
+      this.getProject(Auth.logged_in_client.id);
+    }
   }
   activeHandler = (idx) => {
     const { Project } = this.props;
-    if(Project.projectQuickView[idx].check){
-      Project.projectQuickView[idx].check = false
+    if (Project.projectQuickView[idx].check) {
+      Project.projectQuickView[idx].check = false;
+    } else {
+      Project.projectQuickView[idx].check = true;
     }
-    else{
-      Project.projectQuickView[idx].check = true
-    }
-  }
+  };
 
-  render(){
+  render() {
     const { Project, Auth } = this.props;
 
-    return(
+    return (
       <Background>
-        <Container style = {{display: "flex", flexDirection: "column"}}>
-          {Project.chatModalActive && 
+        <Container style={{ display: "flex", flexDirection: "column" }}>
+          {Project.chatModalActive && (
             <Layer onClick={this.modalHandler}>
               <ChatTestContainer
                 roomName={this.state.selectedRoom}
               ></ChatTestContainer>
             </Layer>
-          }
-          {Project.projectDataList && Project.projectDataList[0] 
-          ?
-          Project.projectDataList.map((item, idx) => 
-            {
-            return(
-              <ProjectContainer>  
-              <Font24>
-              {item.request_set[0].name}
-              <span>{item.answer_set.length}</span>
-              </Font24>
-              {Project.answerDetailList && Project.answerDetailList.map((data, idx) =>
-              {
-                return(
-                <>
-
-              {data.project ==item.id && (
-                <>
-                <ChatItemContainer
-                  logo={data.logo}
-                  name={data.name}
-                  id={data.id}
-                  content={data.content}
-                  modalHandler={this.modalHandler}
-                  user = {Auth}
-                  />
-                  </>
-              )}
-              </>
-              )}
-              )}
-              </ProjectContainer>  
-            )
-          })
-        :
-        <NoProject/>
-        }
+          )}
+          {Project.projectDataList && Project.projectDataList[0] ? (
+            Project.projectDataList.map((item, idx) => {
+              return (
+                <ProjectContainer>
+                  <Font24>
+                    {item.request_set[0].name}
+                    <span>{item.answer_set.length}</span>
+                  </Font24>
+                  {Project.answerDetailList &&
+                    Project.answerDetailList.map((data, idx) => {
+                      return (
+                        <>
+                          {data.project == item.id && (
+                            <>
+                              <ChatItemContainer
+                                logo={data.logo}
+                                name={data.name}
+                                id={data.id}
+                                content={data.content}
+                                modalHandler={this.modalHandler}
+                                user={Auth}
+                              />
+                            </>
+                          )}
+                        </>
+                      );
+                    })}
+                </ProjectContainer>
+              );
+            })
+          ) : (
+            <NoProject />
+          )}
         </Container>
       </Background>
     );
@@ -142,22 +139,20 @@ const Layer = styled.div`
 
 const ProjectContainer = styled.div`
   margin: 80px 0 20px 0;
-
-`
-
+`;
 
 const Font24 = styled(Content.FontSize24)`
-font-weight: bold;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 2.17 !important;
   letter-spacing: -0.6px !important;
   text-align: left;
   color: #282c36;
-  span{
+  span {
     color: #0933b3;
     margin-left: 8px;
   }
   border-bottom: solid 1px #c6c7cc;
   margin-bottom: 14px;
-  `
+`;

@@ -459,7 +459,7 @@ export default class MyDocument extends Document {
             async
           ></script>
         </Head>
-        <body>
+        <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
           <noscript>
             <iframe
               src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5"

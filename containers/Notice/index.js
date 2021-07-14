@@ -5,7 +5,7 @@ import Section from "components/Section";
 
 import BannerConatiner from "./Banner";
 import ContentConatiner from "./Content";
-import InnerBoxComponent from "./InnerBox";
+import InnerBoxComponent from "../CS/Notice/InnerBox";
 class NoticeConatiner extends React.Component {
   content1 = () => {
     return <>sdasdknascnkls</>;
@@ -20,7 +20,7 @@ class NoticeConatiner extends React.Component {
             <InnerBoxComponent
               entirePadding={24}
               marginTop={30}
-              Content2={() => {
+              Content={() => {
                 return <>hello</>;
               }}
             />

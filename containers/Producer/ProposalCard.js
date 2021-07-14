@@ -12,6 +12,9 @@ const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
 const file_img2 = "static/images/manufacturer/file.png";
+import Slider from "react-slick";
+import { EqualStencilFunc } from "three";
+
 var availableFileType = [
   "png",
   "jpeg",
@@ -28,7 +31,7 @@ var availableFileType = [
   "doc",
   "html",
 ];
-@inject("Partner", "Auth")
+@inject("Partner", "Auth", "Common")
 @observer
 class ProposalCard extends React.Component {
   state = {
@@ -42,7 +45,6 @@ class ProposalCard extends React.Component {
   };
 
   openModal = (user_phone) => {
-    console.log("open click");
     this.props.Partner.modalActive = true;
     if (!user_phone) {
       this.props.Partner.modalUserPhone = "전화번호 없음";
@@ -53,11 +55,9 @@ class ProposalCard extends React.Component {
 
   closeModal = (e) => {
     if (e) {
-      console.log("e 존재");
       e.stopPropagation();
     }
 
-    console.log("close click");
     this.setState({ modalOpen: false });
 
     this.props.Partner.modalActive = false;
@@ -200,9 +200,7 @@ class ProposalCard extends React.Component {
         Partner.partner_detail_list = [];
         await Partner.partner_detail_list.push({ item: data });
 
-        console.log(Partner.partner_detail_list[0].item.id);
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
-        console.log(toJS(Partner.partner_detail_list[0]));
         await Partner.getReviewByPartner(
           Partner.partner_detail_list[0].item.id,
           1,
@@ -214,7 +212,6 @@ class ProposalCard extends React.Component {
 
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
-        // location.href = this.makeUrl("producer/detail");
       } else {
         console.log("file download");
         this.filedownload(this.props.data.file);
@@ -226,7 +223,7 @@ class ProposalCard extends React.Component {
       // this.props.Auth.previous_url = "producer";
       // Router.push("/login");
       // Router.push("/login");
-      location.href = this.makeUrl("login");
+      location.href = this.props.Common.makeUrl("login");
     }
   };
 
@@ -247,15 +244,35 @@ class ProposalCard extends React.Component {
       Partner.partnerName = name;
     }
   };
-  makeUrl = (url) => {
-    if (typeof window !== "undefined") {
-      return window.location.protocol + "//" + window.location.host + "/" + url;
-    }
-  };
   render() {
+
     const { data, width, Partner, categoryData, idx } = this.props;
 
+    const SlideSettings = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      draggable: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+    };
+
+    const SlideSettingsMobile = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      draggable: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+    };
+
+
     let category_data;
+    // console.log(data.logo);
 
     return (
       <>
@@ -264,9 +281,7 @@ class ProposalCard extends React.Component {
             <Card
               active={this.state.active}
               onClick={(e) => {
-                console.log(this.props.Partner.modalActive);
                 if (!this.props.Partner.modalActive) {
-                  console.log("x");
                   this.cardClick(e);
                 }
               }}
@@ -278,9 +293,25 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                <Logo>
+                <SliderContainer {...SlideSettings}>
+                {data &&
+                  data.portfolio_set.map((item, idx) => {
+                    return (
+                      <Item >
+                        <img src={item.img_portfolio} />
+                      </Item>    
+                    );
+                  })}
+                <Item>
                   <img src={data.logo} />
-                </Logo>
+                </Item>
+                <Item>
+                  <img src={data.logo} />
+                </Item>
+
+                
+                  
+                </SliderContainer>
               </Header>
               <Main>
                 <Name>{data.name}</Name>
@@ -301,7 +332,7 @@ class ProposalCard extends React.Component {
                     )}
                   </div>
                 </Phone>
-                <InfoOne>{data.info_company}</InfoOne>
+                <InfoOne>{data.info_company.length > 150 ? (data.info_company.slice(0,150) + "...") : (data.info_company)}</InfoOne>
                 <InfoTwo>
                   {categoryData &&
                     categoryData.map((item, idx) => {
@@ -310,21 +341,6 @@ class ProposalCard extends React.Component {
                 </InfoTwo>
                 <AdditionBox>
                   <div>
-                    {/* <div
-                    style={{ cursor: "pointer", zIndex: 10 }}
-                    onClick={async (event) => {
-                      event.stopPropagation();
-
-                      if (await this.checkLogin()) {
-                        this.clickLog(data);
-                        this.openModal(data.user.phone);
-                      } else {
-                        alert("로그인이 필요합니다");
-                        // Router.push("/login");
-                        location.href = this.makeUrl("login");
-                      }
-                    }}
-                  > */}
                     <Button
                       style={{ cursor: "pointer", zIndex: 10 }}
                       onClick={async (event) => {
@@ -336,7 +352,7 @@ class ProposalCard extends React.Component {
                         } else {
                           alert("로그인이 필요합니다");
                           // Router.push("/login");
-                          location.href = this.makeUrl("login");
+                          location.href = this.props.Common.makeUrl("login");
                         }
                       }}
                     >
@@ -374,9 +390,25 @@ class ProposalCard extends React.Component {
                 this.activeHandler("active");
               }}
             >
+              <Header>
+                <SliderMobileContainer {...SlideSettingsMobile}>
+                {data &&
+                  data.portfolio_set.map((item, idx) => {
+                    return (
+                      <Item>
+                        <img src={item.img_portfolio} />
+                      </Item>    
+                    );
+                  })}
+                <Item>
+                  <img src={data.logo} />
+                </Item>
+                  
+                </SliderMobileContainer>
+              </Header>
               <Main>
                 <Name>{data.name}</Name>
-                <InfoOne>{data.info_company}</InfoOne>
+                <InfoOne>{data.info_company.length > 100 ? (data.info_company.slice(0,100) + "...") : (data.info_company)}</InfoOne>
                 <Information>
                   <div>
                     <Phone>
@@ -580,6 +612,7 @@ const InfoOne = styled.div`
     font-size: 13px;
     line-height: 18px;
     letter-spacing: -0.33px;
+    height: 50%;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-bottom: 35px;
@@ -863,5 +896,49 @@ const Layer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
+  }
+`;
+
+const SliderContainer = styled(Slider)`
+  .slick-list {
+    width: 400px;
+    .slick-track {
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+`;
+
+const SliderMobileContainer = styled(Slider)`
+  .slick-list {
+    width: 144px;
+    .slick-track {
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+`;
+
+const Item = styled.div`
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // width: calc(14% - 40px);
+  padding: 20px 0;
+  margin: 0 20px;
+
+  > img {
+    // width: 100%;
+    // display: inline-block;
+    // position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    width: 141px;
+    height: 141px;
   }
 `;

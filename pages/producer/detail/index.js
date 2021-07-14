@@ -41,7 +41,7 @@ class Index extends React.Component {
       data: formData,
     };
 
-    AccountAPI.setUserPageIP(req)
+    await AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
       })
@@ -65,7 +65,7 @@ class Index extends React.Component {
   render() {
     const { width } = this.state;
     return (
-      <div>
+      <div onContextMenu={(e)=> e.preventDefault()} >
         <Head>
           <title>볼트앤너트|제조사 상세</title>
         </Head>

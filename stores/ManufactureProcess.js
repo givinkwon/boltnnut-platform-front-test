@@ -15,6 +15,7 @@ class ManufactureProcess {
   constructor() {
     //makeObservable(this);
   }
+  @observable PartnerCount = 0;
   @observable loadingEstimate = false;
   @observable title_list = [];
   @observable SelectChecked = "";
@@ -169,7 +170,7 @@ class ManufactureProcess {
   @action setBigCategory = (e) => {
     this.selectedBigCategory = e;
     // this.midCategorySet = e.detail;
-    console.log(toJS(e))
+    console.log(toJS(e));
     console.log(toJS(this.selectedBigCategory));
     this.selectedMidCategory = e.detail[0];
   };
@@ -241,7 +242,9 @@ class ManufactureProcess {
   @action saveSearchText = (text) => {
     const formData = new FormData();
 
-    formData.append("text", text);
+    console.log(typeof this.PartnerCount);
+    formData.append("text", text); // 입력 텍스트
+    formData.append("count", this.PartnerCount); // 파트너 개수
 
     // const Token = localStorage.getItem("token");
 

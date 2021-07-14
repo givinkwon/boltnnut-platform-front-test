@@ -6,7 +6,7 @@ const getDate = new Date().toISOString();
 
 const BOLTNNUT_DOMAIN = "https://boltnnut.com";
 
-const formatted = sitemap => prettier.format(sitemap, { parser: "html" });
+const formatted = (sitemap) => prettier.format(sitemap, { parser: "html" });
 
 (async () => {
   const pages = await globby([
@@ -19,7 +19,7 @@ const formatted = sitemap => prettier.format(sitemap, { parser: "html" });
 
   const pagesSitemap = `
     ${pages
-      .map(page => {
+      .map((page) => {
         const path = page
           .replace("../pages/", "")
           .replace(".js", "")

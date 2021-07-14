@@ -92,7 +92,18 @@ class ReviewWritingModal extends React.Component {
 
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-    const { open, close, header, children, width, data } = this.props;
+    const {
+      open,
+      close,
+      header,
+      children,
+      width,
+      data,
+      headerOne,
+      headerTwo,
+      bodyOne,
+      bodyTwo,
+    } = this.props;
     // console.log(open);
     // console.log(children);
     return (
@@ -116,16 +127,13 @@ class ReviewWritingModal extends React.Component {
               {/* <header>{`${data.name} ${header}`}</header> */}
               {/* <header>{`${header}`}</header> */}
               <header>
-                <span>
-                  볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ?{" "}
-                  <br />첫 평가를 작성해주세요
-                </span>
-                <span></span>
+                <div>{headerOne}</div>
+                <div>{headerTwo}</div>
               </header>
               <main>
                 <div>
-                  <p>* 볼트앤너트에 등록된 업체가 아니더라도</p>
-                  <p>업체 평가 작성이 가능합니다.</p>
+                  <p>{bodyOne}</p>
+                  <p>{bodyTwo}</p>
                 </div>
               </main>
               <footer>
@@ -166,7 +174,7 @@ const ModalBox = styled.div`
   right: 20%;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 40%);
   border-radius: 10px;
-  padding-top: 15px;
+  padding-top: 30px;
   box-sizing: border-box;
 
   > section {
@@ -178,6 +186,7 @@ const ModalBox = styled.div`
     //background-color: blanchedalmond;
     //border: 1px solid blue;
     > header {
+      word-break: keep-all;
       position: relative;
       //   padding: 16px;
       font-weight: bold;
@@ -187,11 +196,18 @@ const ModalBox = styled.div`
       line-height: 44px;
       letter-spacing: -0.5px;
       color: #282c36;
+      height: 45%;
+      > div:nth-of-type(1) {
+        line-height: 0.78;
+      }
     }
     > main {
       background-color: white;
       text-align: center;
       height: 38%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       > div {
         display: flex;
@@ -223,6 +239,7 @@ const ModalBox = styled.div`
         justify-content: center;
         align-items: center;
         border-radius: 5px;
+        cursor: pointer;
 
         > span {
           font-size: 18px;
@@ -248,13 +265,11 @@ const ModalBox = styled.div`
     background-color: #f1f1f1;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
-    position: fixed;
-
-    z-index: 101;
-
-    height: 500px;
-    width: 90%;
-    right: 5%;
+    top: 30%;
+    height: 230px;
+    width: 100%;
+    right: 0;
+    padding-top: 15px;
 
     > section {
       max-width: 100%;
@@ -268,12 +283,20 @@ const ModalBox = styled.div`
         font-weight: 600;
 
         font-size: 16px;
+
+        > div:nth-of-type(1),
+        div:nth-of-type(2) {
+          line-height: 1.48;
+        }
       }
       > main {
-        height: 95%;
+        height: 67px;
         font-size: 13px;
         font-weight: 600;
         > div {
+          p {
+            font-size: 14px;
+          }
           > div {
             > textarea {
               padding: 10px 12px;
@@ -295,7 +318,11 @@ const ModalBox = styled.div`
         cursor: pointer;
         height: 40px;
         > div {
-          font-size: 13px;
+          width: 172px;
+          height: 34px;
+          > span {
+            font-size: 13px;
+          }
         }
       }
     }
@@ -305,8 +332,96 @@ const ModalBox = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
+    top: 30%;
+    height: 230px;
+    width: 60%;
+    right: 20%;
+    padding-top: 30px;
+    > section {
+      max-width: 900px;
+      width: 90%;
+      height: 87%;
+      margin: 0 auto;
+      > header {
+        font-size: 16px;
+        line-height: 1.48;
+        letter-spacing: -0.5px;
+
+        > div:nth-of-type(1) {
+          line-height: 1.48;
+        }
+      }
+      > main {
+        height: 45%;
+        > div {
+          p {
+            font-size: 12px;
+            line-height: 24px;
+          }
+        }
+      }
+      > footer {
+        > div {
+          width: 160px;
+          height: 30px;
+
+          > span {
+            font-size: 14px;
+            line-height: 77px;
+          }
+        }
+      }
+    }
+    > button {
+      font-size: 18px;
+      margin: 10px 10px 0 0;
+    }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
+    top: 30%;
+    height: 230px;
+    width: 60%;
+    right: 20%;
+    padding-top: 30px;
+    > section {
+      max-width: 900px;
+      width: 90%;
+      height: 87%;
+      margin: 0 auto;
+      > header {
+        font-size: 18px;
+        line-height: 1.48;
+        letter-spacing: -0.5px;
+
+        > div:nth-of-type(1) {
+          line-height: 1.48;
+        }
+      }
+      > main {
+        height: 45%;
+        > div {
+          p {
+            font-size: 14px;
+            line-height: 24px;
+          }
+        }
+      }
+      > footer {
+        > div {
+          width: 180px;
+          height: 36px;
+
+          > span {
+            font-size: 16px;
+            line-height: 77px;
+          }
+        }
+      }
+    }
+    > button {
+      font-size: 21px;
+      margin: 10px 10px 0 0;
+    }
   }
   @media (min-width: 1300px) {
   }

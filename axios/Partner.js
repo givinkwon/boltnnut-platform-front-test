@@ -395,6 +395,15 @@ export function getReviewByPartner(req) {
   });
 }
 
+export function checkReviewWriting(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partnerreview/client_filter/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
 export function getPPTInfo(req) {
   return axios({
     method: "GET",
