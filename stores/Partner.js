@@ -9,6 +9,8 @@ class Partner {
   constructor() {
     //makeObservable(this);
   }
+
+  @observable selectedTabIdx = 0;   // 선택한 tabBar의 index 저장하는 변수
   @observable viewerLoading = 0;
   @observable click_count = 1;
   @observable detail = null;
@@ -1916,6 +1918,8 @@ class Partner {
   };
 
 
+// 배열을 무작위로 섞는 함수
+// 배열을 인자로 받음
  @action shuffleArray = array => {
   for (let i = 0; i < array.length; i++) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -1927,8 +1931,30 @@ class Partner {
   return array;
 };
 
+@action clickHandler = (item, idx) => {  
 
+  if(this.selectedTabIdx === idx+1){
+      this.selectedTabIdx = 0;
+  }else{
+          
+      this.selectedTabIdx = idx+1;
+    
+  }
+
+    
+    console.log(this.selectedTabIdx)
+  }
+
+  @action activeHandler = (item, idx) => {  
+    console.log(idx === this.selectedTabIdx-1)
+    if (idx === this.selectedTabIdx-1) {
+      return true;
+    } else {
+      return false;
+    }      
+  }
 }
+
 
 
 

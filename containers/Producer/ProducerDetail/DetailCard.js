@@ -4,17 +4,17 @@ import dynamic from "next/dynamic";
 import Router from "next/router";
 import Modal from "../Review/ReviewWritingModal";
 import ReviewCard from "../Review/ReviewCard";
-import MapContainer from "Map"
+import MapContainer from "Map";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
-import DocViewer from "DocViewer"
+import DocViewer from "DocViewer";
 //import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 import Background from "components/Background";
 import ProposalCard from "../ProposalCard";
-
+import TabBar from "TabBar";
 
 // const customRenderer = DocViewerRenderers;
 
@@ -45,6 +45,7 @@ const FileViewer = dynamic(() => import("react-file-viewer"), {
 const waterMarkImg = "/static/images/logo_marine@2x.png";
 const type = "pdf";
 
+let portfoliLocation;
 const onError = (e) => {
   console.log(e, "error in file-viewer");
 };
@@ -62,39 +63,62 @@ class DetailCardContainer extends React.Component {
     docViewerLoading: false,
     loading: 0,
     g: 0,
+    portfoliLocation: 0,
+    introductionLocation: 0,
+    reviewLocation: 0,
+    mapLocation: 0,
   };
 
   openModal = () => {
-    const { Partner } = this.props;    
+    const { Partner } = this.props;
     Partner.reviewWritingModalActive = false;
   };
   closeModal = () => {
-    const { Partner } = this.props;    
+    const { Partner } = this.props;
     Partner.reviewWritingModalActive = true;
   };
-  
-  shouldComponentUpdate = () => {    
-    return !this.state.loading;    
+
+  shouldComponentUpdate = () => {
+    // return !this.state.loading;
+  };
+
+  loadScroll = () => {
+    // let location = document.querySelector("#portfolio");
+    // if (location) {
+    //   portfoliLocation = location.offsetTop;
+    // }
+    // this.setState((state) => {
+    //   return { portfoliLocation: document.querySelector("#portfolio").offsetTop };
+    // });
+    // console.log(this.state.portfoliLocation);
   };
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
     Partner.docViewerLoading = false;
 
+    this.setState((state) => {
+      return {
+        portfoliLocation: document.querySelector("#portfolio").offsetTop,
+        introductionLocation: document.querySelector("#introduction").offsetTop,
+      };
+    });
+
+    console.log(this.state.portfoliLocation);
+    window.addEventListener("scroll", this.loadScroll);
+
     console.log(toJS(Partner.partner_list)); // 10개의 제조사
     console.log(toJS(Partner.partner_detail_list)); // 현재 제조사
 
-        
     // customRenderer.weight = 2;
     // customRenderer.fileLoader = ({
     //   documentURI,
     //   signal,
     //   fileLoaderComplete,
-    // }) => {      
+    // }) => {
     //   fileLoaderComplete();
     // };
-  
 
-    const height = document.getElementById("card").style;    
+    const height = document.getElementById("card").style;
 
     if (Auth.logged_in_client) {
       Partner.checkReviewWriting(Auth.logged_in_client.id);
@@ -102,7 +126,7 @@ class DetailCardContainer extends React.Component {
     }
 
     Partner.reviewCurrentPage = 1;
-    Partner.detailLoadingFlag = false;    
+    Partner.detailLoadingFlag = false;
 
     // console.log(this.props.Partner.selectedIntroductionFileType);
 
@@ -114,7 +138,7 @@ class DetailCardContainer extends React.Component {
     //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
     // }
 
- /* 리뷰를 위한 변수 및 연산 */
+    /* 리뷰를 위한 변수 및 연산 */
     // let total_consult_score = 0;
     // let total_kindness_score = 0;
     // let total_communication_score = 0;
@@ -145,18 +169,19 @@ class DetailCardContainer extends React.Component {
     const { Partner, Auth } = this.props;
     Partner.review_partner_page = 1;
     loadingCounter = 0;
+    window.removeEventListener("scroll", this.loadScroll);
   };
 
   error = () => {
     console.log("error");
   };
-  movePage = (e) => {    
-    const { Partner, Auth } = this.props;    
+  movePage = (e) => {
+    const { Partner, Auth } = this.props;
     const newPage = e.target.innerText * 1;
 
     if (newPage != Partner.reviewCurrentPage) {
       Partner.reviewCurrentPage = newPage;
-      
+
       Partner.getReviewByPartner(
         Partner.partner_detail_list[0].item.id,
         1,
@@ -165,12 +190,12 @@ class DetailCardContainer extends React.Component {
     }
   };
 
-  pageNext = (e) => {    
-    const { Partner } = this.props;    
+  pageNext = (e) => {
+    const { Partner } = this.props;
     if (Partner.reviewCurrentPage < Partner.review_partner_page) {
       const nextPage = Partner.reviewCurrentPage + 1;
       Partner.reviewCurrentPage = nextPage;
-  
+
       Partner.getReviewByPartner(
         Partner.partner_detail_list[0].item.id,
         1,
@@ -181,10 +206,10 @@ class DetailCardContainer extends React.Component {
 
   pagePrev = (e) => {
     const { Partner } = this.props;
-  
+
     if (Partner.reviewCurrentPage > 1) {
       const previousPage = Partner.reviewCurrentPage - 1;
-      Partner.reviewCurrentPage = previousPage;      
+      Partner.reviewCurrentPage = previousPage;
       Partner.getReviewByPartner(
         Partner.partner_detail_list[0].item.id,
         1,
@@ -197,7 +222,7 @@ class DetailCardContainer extends React.Component {
   //   loadingCounter += 1;
   //   console.log(loadingCounter);
   // };
-  
+
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
     console.log(Partner.modalActive);
@@ -209,9 +234,8 @@ class DetailCardContainer extends React.Component {
       Partner.partner_detail_list.push({ item: item, idx: idx });
       Partner.category_name_list = Partner.category_dic[idx];
 
-      console.log(toJS(Partner.partner_detail_list))
+      console.log(toJS(Partner.partner_detail_list));
 
-          
       if (!item.file) {
         Partner.detailLoadingFlag = false;
         alert("해당 회사의 소개서가 존재하지 않습니다!");
@@ -225,45 +249,42 @@ class DetailCardContainer extends React.Component {
       this.props.Partner.selectedIntroductionFileType = fileType;
       // this.props.Partner.viewerLoading
 
-      
       // this.reload();
       this.setState((state) => {
-        return { g: state.g + 1};
-      })
-     
+        return { g: state.g + 1 };
+      });
     }
   };
 
-  reload(){
+  reload() {
     (location || window.location || document.location).reload();
   }
   render() {
     const { width, Partner } = this.props;
     const index = Partner.partner_detail_list[0].idx;
     const length = Partner.partner_list.length;
-    console.log(index)
+    console.log(index);
 
-
-    let arr = []
-    for (let i=0; i<length; i++){
-      arr.push(i)
+    let arr = [];
+    for (let i = 0; i < length; i++) {
+      arr.push(i);
     }
-    const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;    
+    const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
 
     // let arr = [1, 2, 3, 4, 5]
-    Partner.shuffleArray(arr)
+    Partner.shuffleArray(arr);
 
-    let remainderAry = arr.filter((el) => el !== index)
-    console.log(remainderAry)
+    let remainderAry = arr.filter((el) => el !== index);
+    console.log(remainderAry);
 
-    console.log("rendering")
-    console.log(toJS(Partner.partner_detail_list))
-    
-    this.setState((state) => {      
+    console.log("rendering");
+    console.log(toJS(Partner.partner_detail_list));
+
+    this.setState((state) => {
       return { loading: state.loading + 1 };
-    });      
+    });
 
     const SlideSettings = {
       dots: false,
@@ -278,10 +299,7 @@ class DetailCardContainer extends React.Component {
 
     return (
       <>
-        <Card
-          id="card"
-          width={width}                    
-        >
+        <Card id="card" width={width}>
           <HeaderBox>
             <tag>
               <span>활동 가능</span>
@@ -312,8 +330,13 @@ class DetailCardContainer extends React.Component {
             </div>
           </div>
           <InnerBox>
+            {console.log(this.state.portfoliLocation)}
+            <TabBar
+              portfoliLocation={this.state.portfoliLocation}
+              introductionLocation={this.state.introductionLocation}
+            />
             <IntroductionBox width={width}>
-              <Font24>포토폴리오</Font24>
+              <Font24 id="portfolio">포토폴리오</Font24>
               <SliderContainer {...SlideSettings}>
                 {Partner.partner_detail_list.length != 0 &&
                   Partner.partner_detail_list[0].item.portfolio_set.length >
@@ -331,7 +354,7 @@ class DetailCardContainer extends React.Component {
             </IntroductionBox>
 
             <IntroductionBox width={width}>
-              <Font24>회사소개서</Font24>
+              <Font24 id="introduction">회사소개서</Font24>
               {availableFileType1.indexOf(
                 this.props.Partner.selectedIntroductionFileType
               ) > -1 && (
@@ -344,13 +367,11 @@ class DetailCardContainer extends React.Component {
 
               {availableFileType3.indexOf(
                 this.props.Partner.selectedIntroductionFileType
-              ) > -1 &&
-              (
-                  <>
-                    
-                      <DocViewer width={width}/>              
-                  </>
-                )}
+              ) > -1 && (
+                <>
+                  <DocViewer width={width} />
+                </>
+              )}
             </IntroductionBox>
           </InnerBox>
           <DetailInfoBox>
@@ -378,51 +399,37 @@ class DetailCardContainer extends React.Component {
             </div>
           </DetailInfoBox>
 
-
-          <div style={{width: "100%", height: "500px"}}>
-          <MapContainer/>
+          <div style={{ width: "100%", height: "500px" }}>
+            <MapContainer />
           </div>
 
           <IntroductionBox width={width}>
+            <Font24>비슷한 제조사</Font24>
 
+            {Partner.partner_list &&
+              (length < 4
+                ? console.log("AAAAAAAAA")
+                : index === 0
+                ? console.log("BBBBBBBB")
+                : index === length - 1
+                ? console.log("CCCCCCCC")
+                : index === 1
+                ? console.log("DDDDDDDDDD")
+                : console.log("EE"))}
 
-
-              <Font24>비슷한 제조사</Font24>
-
-              {Partner.partner_list && (
-                  length < 4 ? (
-                    console.log("AAAAAAAAA")
-                  ) : (
-                    index === 0 ? (
-                        console.log("BBBBBBBB")
-                    ) : (
-                      index === length-1 ? (
-                        console.log("CCCCCCCC")
-                      ) : (
-                        index === 1 ? (
-                              console.log("DDDDDDDDDD")
-                        ) : (
-                            console.log("EE")
-                        )
-                      )
-                    )
-                  )
-              )}
-
-
-              {Partner.partner_list && (
-                length < 4 ? (
-                    remainderAry.map((item, idx) => {              
+            {Partner.partner_list &&
+              (length < 4
+                ? remainderAry.map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         <div
                           onClick={(e) => {
-                            e.stopPropagation();                            
-                            this.pushToDetail(Partner.partner_list[item], item)
+                            e.stopPropagation();
+                            this.pushToDetail(Partner.partner_list[item], item);
                           }}
                           style={{ width: "100%" }}
                         >
-                        {console.log(item)}
+                          {console.log(item)}
                           <ProposalCard
                             data={Partner.partner_list[item]}
                             width={this.props.width}
@@ -430,20 +437,18 @@ class DetailCardContainer extends React.Component {
                             idx={item}
                             handleIntersection={this.handleIntersection}
                             customer="partner"
-                            
                           />
                         </div>
                       </Background>
                     );
                   })
-                ) : (
-              remainderAry.splice(0, 3).map((item, idx) => {              
+                : remainderAry.splice(0, 3).map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         <div
                           onClick={(e) => {
-                            e.stopPropagation();                            
-                            this.pushToDetail(Partner.partner_list[item], item)
+                            e.stopPropagation();
+                            this.pushToDetail(Partner.partner_list[item], item);
                           }}
                           style={{ width: "100%" }}
                         >
@@ -454,19 +459,13 @@ class DetailCardContainer extends React.Component {
                             idx={item}
                             handleIntersection={this.handleIntersection}
                             customer="partner"
-                            
                           />
                         </div>
                       </Background>
                     );
-                  })
-                )
-              )}
+                  }))}
 
-
-
-
-              {/* {Partner.partner_list &&
+            {/* {Partner.partner_list &&
                   Partner.partner_list.slice(1,4).map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
@@ -490,8 +489,7 @@ class DetailCardContainer extends React.Component {
                       </Background>
                     );
                   })} */}
-
-            </IntroductionBox>
+          </IntroductionBox>
           {/* <ReviewBox>
     
             <div>
