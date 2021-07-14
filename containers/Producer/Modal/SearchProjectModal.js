@@ -27,17 +27,6 @@ class SearchProjectModal extends React.Component {
     ],
   };
 
-  moveReviewPage = () => {
-    const { Partner } = this.props;
-
-    if (Partner.reviewSearchStep == 2) {
-      Partner.searchProjectModalActive = false;
-    } else {
-      Partner.searchProjectModalActive = false;
-      Partner.searchPartnerModalActive = true;
-    }
-  };
-
   closeModal = () => {
     const { Partner } = this.props;
     Partner.searchProjectModalActive = false;
@@ -81,7 +70,7 @@ class SearchProjectModal extends React.Component {
                 <div onClick={this.closeModal}>
                   <span>닫기</span>
                 </div>
-                <div onClick={this.moveReviewPage}>
+                <div onClick={Partner.moveReviewPage}>
                   <span>다음</span>
                 </div>
               </footer>

@@ -10,7 +10,7 @@ import { toJS } from "mobx";
 const addButtonImg = "static/images/components/Input2/Mask.png";
 const deleteButtonImg = "/static/images/delete.png";
 
-@inject("Request", "ManufactureProcess", "Project", "Partner")
+@inject("Request", "ManufactureProcess", "Project", "Partner", "Producer")
 @observer
 class InputComponent extends React.Component {
   constructor(props) {
@@ -30,35 +30,6 @@ class InputComponent extends React.Component {
 
     Partner.fileArray = [];
   }
-  onChange = (e) => {
-  };
-
-  onChangeFile = (e) => {
-    const { Partner } = this.props;
-    if (e && e.currentTarget.files[0]) {
-      console.log(e.currentTarget);
-      console.log(e.currentTarget.files[0]);
-
-      for (var item in e.currentTarget.files) {
-        console.log(item);
-        if (typeof e.currentTarget.files[item] === "object") {
-          Partner.fileArray.push(e.currentTarget.files[item]);
-        } else {
-          break;
-        }
-      }
-    }
-
-    console.log(toJS(Partner.fileArray));
-    const fileName = e.currentTarget.files[0].name;
-
-    this.setState({
-      ...this.state,
-      file: e.currentTarget.files[0],
-      fileName: fileName,
-      checkFileUpload: true,
-    });
-  };
 
   render() {
     const {
@@ -71,6 +42,7 @@ class InputComponent extends React.Component {
       Partner,
       isOpen,
       mobile,
+      Producer,
       ...props
     } = this.props;
     const { fileName, checkFileUpload } = this.state;
@@ -85,7 +57,7 @@ class InputComponent extends React.Component {
           )}
           <InputBox marginTop={label ? 12 : 0}>
             <Input>
-              <input {...props} onChange={this.onChange} />
+              <input {...props} onChange={Producer.onChange} />
             </Input>
             {children}
           </InputBox>
@@ -109,9 +81,8 @@ class InputComponent extends React.Component {
                         onClick={() => {
                           if (checkFileUpload) {
                             Partner.fileArray.splice(idx, 1);
-                            const inputFile = document.getElementById(
-                              "inputFile"
-                            );
+                            const inputFile =
+                              document.getElementById("inputFile");
                             console.log(toJS(ManufactureProcess.openFileArray));
                             inputFile.innerHTML = "";
 
@@ -146,7 +117,7 @@ class InputComponent extends React.Component {
                 multiple={"multiple"}
                 fileName={"fileName[]"}
                 style={{ display: "none" }}
-                onChange={this.onChangeFile}
+                onChange={Partner.onChangeFile}
                 id="inputFile"
                 ref={this.file}
                 value=""

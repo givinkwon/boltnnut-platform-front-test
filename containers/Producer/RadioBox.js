@@ -83,9 +83,6 @@ class RadioBoxContainer extends React.Component {
     }
   };
 
-  handleChange = (e) => {
-    this.props.onChange(e.target.checked);
-  };
   render() {
     const { checked, data, filter } = this.props;
     const { placeholder, label, disabled, ...props } = this.props;

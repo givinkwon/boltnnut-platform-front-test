@@ -39,6 +39,7 @@ class Partner {
   @observable page = 1;
   @observable currentPage = 1;
 
+  @observable search = "";
   @observable search_text = "";
   @observable search_category = [];
   @observable search_develop = [];
@@ -296,11 +297,198 @@ class Partner {
   @observable exceptionCategory = "";
   @observable loadingFlag = 1;
   @observable detailLoadingFlag = false;
+
+  @observable dropDownActive = false;
+  @observable dropDownIdx = -1;
+
+  @observable fileName = "";
+  @observable file = "";
+  @observable checkFileUpload = false;
+
+  @observable filter_active = false;
+  @observable activeReview = false;
+
+  @action movePage = (e) => {
+    e.preventDefault();
+    const newPage = e.target.innerText * 1;
+    this.currentPage = newPage;
+    this.resetDevCategory();
+    this.check_loading_develop = false;
+    this.ReviewActive = false;
+    this.ReviewActiveIndex = -1;
+    this.dropDownActive = false;
+    this.dropDownIdx = -1;
+    this.click_count += 1;
+    this.subButtonActive
+      ? this.getOtherPartner(newPage)
+      : this.getPartner(newPage, this.click_count);
+  };
+
+  @action pageNext = (e) => {
+    e.preventDefault();
+    if (this.currentPage < this.partner_page) {
+      const nextPage = this.currentPage + 1;
+      this.currentPage = nextPage;
+      this.check_loading_develop = false;
+      this.resetDevCategory();
+      this.ReviewActive = false;
+      this.ReviewActiveIndex = -1;
+      this.dropDownActive = false;
+      this.dropDownIdx = -1;
+      this.click_count += 1;
+      this.subButtonActive
+        ? this.getOtherPartner(this.currentPage)
+        : this.getPartner(this.currentPage, this.click_count);
+    }
+  };
+
+  @action pagePrev = (e) => {
+    e.preventDefault();
+    if (this.currentPage > 1) {
+      const newPage = this.currentPage - 1;
+      this.currentPage = newPage;
+      this.resetDevCategory();
+      this.check_loading_develop = false;
+      this.ReviewActive = false;
+      this.ReviewActiveIndex = -1;
+      this.dropDownActive = false;
+      this.dropDownIdx = -1;
+      this.click_count += 1;
+      this.subButtonActive
+        ? this.getOtherPartner(this.currentPage)
+        : this.getPartner(this.currentPage, this.click_count);
+    }
+  };
+
+  @action pushToDetail = async (item, idx) => {
+    console.log(this.modalActive);
+
+    if (!this.requestModalActive && !this.modalActive) {
+      console.log("Detail click");
+      this.category_name_list = null;
+      this.partner_detail_list = [];
+      this.partner_detail_list.push({ item: item });
+      this.category_name_list = this.category_dic[idx];
+
+      if (this.state.dropDownIdx === -1) {
+        await this.getCityName(this.partner_detail_list[0].item.city);
+        this.portFolioList = [];
+        await this.getPortfolio(this.partner_detail_list[0].item.id);
+        this.dropDownActive = true;
+        this.dropDownIdx = idx;
+      } else {
+        if (this.state.dropDownIdx === idx) {
+          this.dropDownActive = false;
+          this.dropDownIdx = -1;
+        } else {
+          await this.getCityName(this.partner_detail_list[0].item.city);
+          this.portFolioList = [];
+          await this.getPortfolio(this.partner_detail_list[0].item.id);
+          this.dropDownActive = true;
+          this.dropDownIdx = idx;
+        }
+      }
+    }
+  };
+
+  @action onChangeFile = (e) => {
+    if (e && e.currentTarget.files[0]) {
+      console.log(e.currentTarget);
+      console.log(e.currentTarget.files[0]);
+
+      for (var item in e.currentTarget.files) {
+        console.log(item);
+        if (typeof e.currentTarget.files[item] === "object") {
+          this.fileArray.push(e.currentTarget.files[item]);
+        } else {
+          break;
+        }
+      }
+    }
+
+    console.log(toJS(this.fileArray));
+    const fileName = e.currentTarget.files[0].name;
+
+    this.file = e.currentTarget.files[0];
+    this.fileName = fileName;
+    this.checkFileUpload = true;
+  };
+
   @action resetReviewAry = () => {
     this.reviewKindnessIndex = 3;
     this.reviewCommunicationIndex = 3;
     this.reviewProfessionIndex = 3;
   };
+
+  @action openModal = () => {
+    console.log("open click");
+    this.requestModalActive = true;
+  };
+
+  @action closeModal = () => {
+    console.log("close click");
+    this.requestModalActive = false;
+  };
+
+  @action activeHandler = (idx) => {
+    if (idx === this.filter_checked_idx) {
+      console.log("ture");
+      return true;
+    } else {
+      console.log("false");
+      return false;
+    }
+  };
+
+  @action filterActiveHandler = () => {
+    if (this.filter_active) {
+      this.check_click_filter = false;
+    } else {
+      this.filter_active = true;
+      this.check_click_filter = true;
+    }
+  };
+
+  @action onClickReviewHandler = (idx, name) => {
+    if (this.ReviewActiveIndex === idx) {
+      console.log(`review false : ${idx}`);
+      this.activeReview = false;
+      this.ReviewActive = false;
+      this.ReviewActiveIndex = -1;
+      this.partnerName = "";
+    } else {
+      console.log(`review true : ${idx}`);
+      this.activeReview = true;
+      this.ReviewActive = true;
+      this.ReviewActiveIndex = idx;
+      this.partnerName = name;
+    }
+  };
+
+  @action activeFileFilter = () => {
+    if (this.filterFile) {
+      this.filterFile = false;
+    } else {
+      this.filterFile = true;
+    }
+  };
+
+  @action handleKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      this.reviewCurrentPage = 1;
+      this.getPartnerName(this.partnersName);
+    }
+  };
+
+  @action moveReviewPage = () => {
+    if (this.reviewSearchStep == 2) {
+      this.searchProjectModalActive = false;
+    } else {
+      this.searchProjectModalActive = false;
+      this.searchPartnerModalActive = true;
+    }
+  };
+
   @action resetDevCategory = () => {
     this.category_dic = {
       0: [],
@@ -346,6 +534,11 @@ class Partner {
     this.reviewPartnerName = "";
 
     this.reviewSearchStep = 1;
+  };
+
+  @action searchText = async (e) => {
+    this.search = e.target.value;
+    await (this.search_text = e.target.value);
   };
 
   @action setProcessFilter = (val) => {

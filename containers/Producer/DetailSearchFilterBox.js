@@ -62,18 +62,6 @@ class DetailSearchFilterConatiner extends React.Component {
     list: false,
   };
 
-  openModal = () => {
-    const { Partner } = this.props;
-    console.log("open click");
-    Partner.requestModalActive = true;
-  };
-  closeModal = () => {
-    const { Partner } = this.props;
-    console.log("close click");
-
-    Partner.requestModalActive = false;
-  };
-
   render() {
     const { Partner, Request, width } = this.props;
     return (
@@ -145,7 +133,6 @@ class DetailSearchFilterConatiner extends React.Component {
               </DirectInputBox>
             )}
 
-
             <span>원 ~ </span>
             {!Partner.maxDirectInput && (
               <Select
@@ -188,9 +175,8 @@ class DetailSearchFilterConatiner extends React.Component {
               <Modal
                 width={width}
                 open={Partner.requestModalActive}
-                close={this.closeModal}
-              >
-              </Modal>
+                close={Partner.closeModal}
+              ></Modal>
             </span>
           </Layer>
         )}

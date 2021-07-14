@@ -31,7 +31,7 @@ var availableFileType = [
   "doc",
   "html",
 ];
-@inject("Partner", "Auth", "Common")
+@inject("Partner", "Auth", "Common", "Producer")
 @observer
 class ProposalCard extends React.Component {
   state = {
@@ -73,6 +73,7 @@ class ProposalCard extends React.Component {
       return false;
     }
   };
+
   clickLog = (partner) => {
     const { Auth, Partner } = this.props;
 
@@ -107,17 +108,15 @@ class ProposalCard extends React.Component {
       });
   };
   componentDidMount() {
-    const { width } = this.props;
-    window.addEventListener("resize", this.updateDimensions);
+    const { width, Producer } = this.props;
+    window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
+    const { Producer } = this.props;
+    window.removeEventListener("resize", Producer.updateDimensions);
   }
-  updateDimensions = () => {
-    this.setState({ ...this.state, width: window.innerWidth });
-  };
 
   activeHandler = (type) => {
     switch (type) {
@@ -227,25 +226,25 @@ class ProposalCard extends React.Component {
     }
   };
 
-  onClickReviewHandler = (idx, name) => {
-    const { Partner } = this.props;
+  // onClickReviewHandler = (idx, name) => {
+  //   const { Partner } = this.props;
 
-    if (Partner.ReviewActiveIndex === idx) {
-      console.log(`review false : ${idx}`);
-      this.setState({ activeReview: false });
-      Partner.ReviewActive = false;
-      Partner.ReviewActiveIndex = -1;
-      Partner.partnerName = "";
-    } else {
-      console.log(`review true : ${idx}`);
-      this.setState({ activeReview: true });
-      Partner.ReviewActive = true;
-      Partner.ReviewActiveIndex = idx;
-      Partner.partnerName = name;
-    }
-  };
+  //   if (Partner.ReviewActiveIndex === idx) {
+  //     console.log(`review false : ${idx}`);
+  //     this.setState({ activeReview: false });
+  //     Partner.ReviewActive = false;
+  //     Partner.ReviewActiveIndex = -1;
+  //     Partner.partnerName = "";
+  //   } else {
+  //     console.log(`review true : ${idx}`);
+  //     this.setState({ activeReview: true });
+  //     Partner.ReviewActive = true;
+  //     Partner.ReviewActiveIndex = idx;
+  //     Partner.partnerName = name;
+  //   }
+  // };
+
   render() {
-
     const { data, width, Partner, categoryData, idx } = this.props;
 
     const SlideSettings = {
@@ -270,7 +269,6 @@ class ProposalCard extends React.Component {
       autoplaySpeed: 2000,
     };
 
-
     let category_data;
     // console.log(data.logo);
 
@@ -294,23 +292,20 @@ class ProposalCard extends React.Component {
             >
               <Header>
                 <SliderContainer {...SlideSettings}>
-                {data &&
-                  data.portfolio_set.map((item, idx) => {
-                    return (
-                      <Item >
-                        <img src={item.img_portfolio} />
-                      </Item>    
-                    );
-                  })}
-                <Item>
-                  <img src={data.logo} />
-                </Item>
-                <Item>
-                  <img src={data.logo} />
-                </Item>
-
-                
-                  
+                  {data &&
+                    data.portfolio_set.map((item, idx) => {
+                      return (
+                        <Item>
+                          <img src={item.img_portfolio} />
+                        </Item>
+                      );
+                    })}
+                  <Item>
+                    <img src={data.logo} />
+                  </Item>
+                  <Item>
+                    <img src={data.logo} />
+                  </Item>
                 </SliderContainer>
               </Header>
               <Main>
@@ -332,7 +327,11 @@ class ProposalCard extends React.Component {
                     )}
                   </div>
                 </Phone>
-                <InfoOne>{data.info_company.length > 150 ? (data.info_company.slice(0,150) + "...") : (data.info_company)}</InfoOne>
+                <InfoOne>
+                  {data.info_company.length > 150
+                    ? data.info_company.slice(0, 150) + "..."
+                    : data.info_company}
+                </InfoOne>
                 <InfoTwo>
                   {categoryData &&
                     categoryData.map((item, idx) => {
@@ -392,23 +391,26 @@ class ProposalCard extends React.Component {
             >
               <Header>
                 <SliderMobileContainer {...SlideSettingsMobile}>
-                {data &&
-                  data.portfolio_set.map((item, idx) => {
-                    return (
-                      <Item>
-                        <img src={item.img_portfolio} />
-                      </Item>    
-                    );
-                  })}
-                <Item>
-                  <img src={data.logo} />
-                </Item>
-                  
+                  {data &&
+                    data.portfolio_set.map((item, idx) => {
+                      return (
+                        <Item>
+                          <img src={item.img_portfolio} />
+                        </Item>
+                      );
+                    })}
+                  <Item>
+                    <img src={data.logo} />
+                  </Item>
                 </SliderMobileContainer>
               </Header>
               <Main>
                 <Name>{data.name}</Name>
-                <InfoOne>{data.info_company.length > 100 ? (data.info_company.slice(0,100) + "...") : (data.info_company)}</InfoOne>
+                <InfoOne>
+                  {data.info_company.length > 100
+                    ? data.info_company.slice(0, 100) + "..."
+                    : data.info_company}
+                </InfoOne>
                 <Information>
                   <div>
                     <Phone>

@@ -144,16 +144,6 @@ class SearchFilterConatiner extends React.Component {
     filter_category_active: false,
   };
 
-  openModal = () => {
-    const { Partner } = this.props;
-    Partner.requestModalActive = true;
-  };
-  closeModal = () => {
-    const { Partner } = this.props;
-
-    Partner.requestModalActive = false;
-  };
-
   dropdownHandler = (flag) => {
     const { Partner } = this.props;
 
@@ -244,7 +234,7 @@ class SearchFilterConatiner extends React.Component {
               </FilterButton>
               <div
                 onClick={() => {
-                  this.openModal();
+                  Partner.openModal();
                 }}
               >
                 <span>업체수배&견적 무료의뢰 </span>
@@ -417,7 +407,7 @@ class SearchFilterConatiner extends React.Component {
                   <Modal
                     width={width}
                     open={Partner.requestModalActive}
-                    close={this.closeModal}
+                    close={Partner.closeModal}
                   ></Modal>
                 </span>
               </Layer>
@@ -429,7 +419,7 @@ class SearchFilterConatiner extends React.Component {
                   <DoneModal
                     width={width}
                     open={Partner.requestDoneModalActive}
-                    close={this.closeModal}
+                    close={Partner.closeModal}
                   />
                 </span>
               </Layer>
@@ -622,7 +612,7 @@ class SearchFilterConatiner extends React.Component {
                   <Modal
                     width={width}
                     open={Partner.requestModalActive}
-                    close={this.closeModal}
+                    close={Partner.closeModal}
                   ></Modal>
                 </span>
               </Layer>
@@ -634,7 +624,7 @@ class SearchFilterConatiner extends React.Component {
                   <DoneModal
                     width={width}
                     open={Partner.requestDoneModalActive}
-                    close={this.closeModal}
+                    close={Partner.closeModal}
                   />
                 </span>
               </Layer>
