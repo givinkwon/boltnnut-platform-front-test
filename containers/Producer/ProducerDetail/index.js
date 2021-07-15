@@ -12,13 +12,6 @@ class ProducerDetailConatiner extends React.Component {
   componentDidMount() {
     const { Auth, Partner } = this.props;
     console.log(this.props.width);
-
-    const script = document.createElement("script");
-    script.async = true;
-    script.type = "text/javascript";
-    script.src =
-      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&​libraries=services&autoload=false";
-    document.head.appendChild(script);
   }
   render() {
     const { Auth, Partner } = this.props;

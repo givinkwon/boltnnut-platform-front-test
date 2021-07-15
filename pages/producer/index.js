@@ -28,13 +28,6 @@ class Index extends React.Component {
     const { Auth, Home, Answer, Loading } = this.props;
     console.log("producer didmount2");
 
-    const script = document.createElement("script");
-    script.async = true;
-    script.type = "text/javascript";
-    script.src =
-      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&​libraries=services&autoload=false";
-    document.head.appendChild(script);
-
     Auth.previous_url = "producer";
 
     console.log(Auth);

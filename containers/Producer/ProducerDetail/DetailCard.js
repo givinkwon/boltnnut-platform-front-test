@@ -104,7 +104,7 @@ class DetailCardContainer extends React.Component {
         portfoliLocation: document.querySelector("#portfolio").offsetTop,
         introductionLocation: document.querySelector("#introduction").offsetTop,
         // reviewLocation: document.querySelector("#review").offsetTop,
-        mapLocation: document.querySelector("#map").offsetTop,
+        mapLocation: document.querySelector("#maps").offsetTop,
       };
     });
 
@@ -695,7 +695,7 @@ class DetailCardContainer extends React.Component {
           {/* </ReviewBox> */}
 
           <MapBox>
-            {/* <Font24 id="map">위치</Font24> */}
+            <Font24 id="maps">위치</Font24>
             <MapContainer city={Partner.city_name} />
           </MapBox>
 
