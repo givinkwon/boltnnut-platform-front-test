@@ -43,7 +43,10 @@ const FileViewer = dynamic(() => import("react-file-viewer"), {
 });
 
 const waterMarkImg = "/static/images/logo_marine@2x.png";
+const pass1 = "/static/images/pass1.png";
+const pass2 = "/static/images/pass2.png";
 const type = "pdf";
+const sort = "/static/icon/sort.svg";
 
 let portfoliLocation;
 const onError = (e) => {
@@ -100,6 +103,8 @@ class DetailCardContainer extends React.Component {
       return {
         portfoliLocation: document.querySelector("#portfolio").offsetTop,
         introductionLocation: document.querySelector("#introduction").offsetTop,
+        // reviewLocation: document.querySelector("#review").offsetTop,
+        mapLocation: document.querySelector("#map").offsetTop,
       };
     });
 
@@ -140,31 +145,31 @@ class DetailCardContainer extends React.Component {
     // }
 
     /* 리뷰를 위한 변수 및 연산 */
-    // let total_consult_score = 0;
-    // let total_kindness_score = 0;
-    // let total_communication_score = 0;
-    // let total_profession_score = 0;
-    // console.log(Partner.partnerReviewList);
+    let total_consult_score = 0;
+    let total_kindness_score = 0;
+    let total_communication_score = 0;
+    let total_profession_score = 0;
+    console.log(Partner.partnerReviewList);
 
-    // (await Partner.partnerAllReviewList[0]) &&
-    //   Partner.partnerAllReviewList[0].data.map((item, idx) => {
-    //     total_consult_score += item.consult_score;
-    //     total_kindness_score += item.kindness_score;
-    //     total_communication_score += item.communication_score;
-    //     total_profession_score += item.profession_score;
-    //   });
-    // Partner.partnerAllReviewList[0] &&
-    //   this.setState({
-    //     avg_consult_score:
-    //       total_consult_score / Partner.partnerAllReviewList[0].data.length,
-    //     avg_kindness_score:
-    //       total_kindness_score / Partner.partnerAllReviewList[0].data.length,
-    //     avg_communication_score:
-    //       total_communication_score /
-    //       Partner.partnerAllReviewList[0].data.length,
-    //     avg_profession_score:
-    //       total_profession_score / Partner.partnerAllReviewList[0].data.length,
-    //   });
+    (await Partner.partnerAllReviewList[0]) &&
+      Partner.partnerAllReviewList[0].data.map((item, idx) => {
+        total_consult_score += item.consult_score;
+        total_kindness_score += item.kindness_score;
+        total_communication_score += item.communication_score;
+        total_profession_score += item.profession_score;
+      });
+    Partner.partnerAllReviewList[0] &&
+      this.setState({
+        avg_consult_score:
+          total_consult_score / Partner.partnerAllReviewList[0].data.length,
+        avg_kindness_score:
+          total_kindness_score / Partner.partnerAllReviewList[0].data.length,
+        avg_communication_score:
+          total_communication_score /
+          Partner.partnerAllReviewList[0].data.length,
+        avg_profession_score:
+          total_profession_score / Partner.partnerAllReviewList[0].data.length,
+      });
   };
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
@@ -335,6 +340,8 @@ class DetailCardContainer extends React.Component {
             <TabBar
               portfoliLocation={this.state.portfoliLocation}
               introductionLocation={this.state.introductionLocation}
+              reviewLocation={500}
+              mapLocation={this.state.mapLocation}
             />
             <IntroductionBox width={width}>
               <Font24 id="portfolio">포토폴리오</Font24>
@@ -400,109 +407,16 @@ class DetailCardContainer extends React.Component {
             </div>
           </DetailInfoBox>
 
-          <div style={{ width: "100%", height: "500px" }}>
-            <MapContainer city={Partner.city_name}/>
-          </div>
-
-          <IntroductionBox width={width}>
-            <Font24>비슷한 제조사</Font24>
-
-            {Partner.partner_list &&
-              (length < 4
-                ? console.log("AAAAAAAAA")
-                : index === 0
-                ? console.log("BBBBBBBB")
-                : index === length - 1
-                ? console.log("CCCCCCCC")
-                : index === 1
-                ? console.log("DDDDDDDDDD")
-                : console.log("EE"))}
-
-            {Partner.partner_list &&
-              (length < 4
-                ? remainderAry.map((item, idx) => {
-                    return (
-                      <Background style={{ marginBottom: "5px" }}>
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            this.pushToDetail(Partner.partner_list[item], item);
-                          }}
-                          style={{ width: "100%" }}
-                        >
-                          {console.log(item)}
-                          <ProposalCard
-                            data={Partner.partner_list[item]}
-                            width={this.props.width}
-                            categoryData={toJS(Partner.category_dic[item])}
-                            idx={item}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
-                      </Background>
-                    );
-                  })
-                : remainderAry.splice(0, 3).map((item, idx) => {
-                    return (
-                      <Background style={{ marginBottom: "5px" }}>
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            this.pushToDetail(Partner.partner_list[item], item);
-                          }}
-                          style={{ width: "100%" }}
-                        >
-                          <ProposalCard
-                            data={Partner.partner_list[item]}
-                            width={this.props.width}
-                            categoryData={toJS(Partner.category_dic[item])}
-                            idx={item}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
-                      </Background>
-                    );
-                  }))}
-
-            {/* {Partner.partner_list &&
-                  Partner.partner_list.slice(1,4).map((item, idx) => {
-                    return (
-                      <Background style={{ marginBottom: "5px" }}>
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();                            
-                            this.pushToDetail(item, idx)
-                          }}
-                          style={{ width: "100%" }}
-                        >
-                          <ProposalCard
-                            data={item}
-                            width={this.props.width}
-                            categoryData={toJS(Partner.category_dic[idx])}
-                            idx={idx}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                            
-                          />
-                        </div>
-                      </Background>
-                    );
-                  })} */}
-          </IntroductionBox>
           {/* <ReviewBox>
-    
-            <div>
+            <div id="review">
               <label>평가 후기</label>
-            </div>
-            
-            <SummaryBox>
+            </div> */}
+
+          {/* <SummaryBox>
               <label>클라이언트 평균 만족도</label>
               <header>
                 <mainscore>
                   <div>
-                  
                     <TotalRating>
                       <div>
                         <ReviewStarRating
@@ -514,7 +428,7 @@ class DetailCardContainer extends React.Component {
                         />
                       </div>
                       <img src={star}></img>
-                    </TotalRating>                    
+                    </TotalRating>
                   </div>
                   <div>
                     <span>{this.state.avg_consult_score.toFixed(2)}</span>
@@ -610,9 +524,8 @@ class DetailCardContainer extends React.Component {
                   </div>
                 </subscore>
               </header>
-            </SummaryBox>
-            <content>
-              
+            </SummaryBox> */}
+          {/* <content>
               <ReviewTop>
                 {Partner.partnerReviewList[0] && (
                   <TotalCount>
@@ -625,7 +538,7 @@ class DetailCardContainer extends React.Component {
                   <img src={sort}></img>
                 </DateSorting>
               </ReviewTop>
-              
+
               {Partner.partnerReviewList &&
                 console.log(toJS(Partner.partnerReviewList[0].data))}
               {Partner.partnerReviewList &&
@@ -638,7 +551,7 @@ class DetailCardContainer extends React.Component {
                     />
                   );
                 })}
-            </content>            
+            </content>
             {!Partner.reviewWritingModalActive ? (
               <Layer>
                 <span>
@@ -673,7 +586,6 @@ class DetailCardContainer extends React.Component {
                 </Layer>
               )
             )}
-            
 
             <PageBar acitve={!Partner.reviewWritingModalActive}>
               <img
@@ -779,8 +691,101 @@ class DetailCardContainer extends React.Component {
                 }}
                 onClick={this.pageNext}
               />
-            </PageBar>
-          </ReviewBox> */}
+            </PageBar> */}
+          {/* </ReviewBox> */}
+
+          <MapBox>
+            {/* <Font24 id="map">위치</Font24> */}
+            <MapContainer city={Partner.city_name} />
+          </MapBox>
+
+          <IntroductionBox width={width}>
+            <Font24>비슷한 제조사</Font24>
+
+            {Partner.partner_list &&
+              (length < 4
+                ? console.log("AAAAAAAAA")
+                : index === 0
+                ? console.log("BBBBBBBB")
+                : index === length - 1
+                ? console.log("CCCCCCCC")
+                : index === 1
+                ? console.log("DDDDDDDDDD")
+                : console.log("EE"))}
+
+            {Partner.partner_list &&
+              (length < 4
+                ? remainderAry.map((item, idx) => {
+                    return (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            this.pushToDetail(Partner.partner_list[item], item);
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                          {console.log(item)}
+                          <ProposalCard
+                            data={Partner.partner_list[item]}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[item])}
+                            idx={item}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
+                      </Background>
+                    );
+                  })
+                : remainderAry.splice(0, 3).map((item, idx) => {
+                    return (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            this.pushToDetail(Partner.partner_list[item], item);
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProposalCard
+                            data={Partner.partner_list[item]}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[item])}
+                            idx={item}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
+                      </Background>
+                    );
+                  }))}
+
+            {/* {Partner.partner_list &&
+                  Partner.partner_list.slice(1,4).map((item, idx) => {
+                    return (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();                            
+                            this.pushToDetail(item, idx)
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProposalCard
+                            data={item}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[idx])}
+                            idx={idx}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                            
+                          />
+                        </div>
+                      </Background>
+                    );
+                  })} */}
+          </IntroductionBox>
         </Card>
       </>
     );
@@ -788,6 +793,40 @@ class DetailCardContainer extends React.Component {
 }
 
 export default DetailCardContainer;
+
+const CustomSlider = withStyles({
+  root: {
+    color: "#0933b3",
+    height: "7px !important",
+    width: "60%",
+    // cursor: "default",
+    // background: "red",
+    padding: 0,
+    display: "none",
+    marginRight: "10px",
+  },
+  thumb: {
+    // top: -10,
+    // paddingRight: 20,
+    // content: "apapap"
+    display: "none",
+  },
+  track: {
+    height: 6,
+    borderRadius: 10,
+  },
+  rail: {
+    color: "#e6e6e6",
+    opacity: 1,
+    height: 6,
+    borderRadius: 10,
+  },
+  "@media (min-width: 0px) and (max-width: 767.98px)": {
+    root: {
+      display: "block",
+    },
+  },
+})(Slider);
 
 const Font24 = styled(Title.FontSize24)`
   font-weight: bold;
@@ -1445,5 +1484,61 @@ const Item = styled.div`
     cursor: pointer;
     width: 141px;
     height: 141px;
+  }
+`;
+
+const MapBox = styled.div`
+  width: 100%;
+  height: 500px;
+`;
+const TotalCount = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.86;
+  letter-spacing: -0.35px;
+  text-align: left;
+`;
+
+const TotalRating = styled.div`
+  > div {
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      display: none;
+    }
+  }
+  > img {
+    display: none;
+    @media (min-width: 0px) and (max-width: 767.98px) {
+      width: 21.7px;
+      height: 21px;
+      display: block;
+    }
+  }
+`;
+
+const ReviewTop = styled.div`
+  display: none;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const DateSorting = styled.div`
+  display: flex;
+  justify-content: center;
+  > div {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.86;
+    letter-spacing: -0.35px;
+    text-align: left;
+    color: #282c36;
+  }
+  > img {
+    width: 10px;
   }
 `;

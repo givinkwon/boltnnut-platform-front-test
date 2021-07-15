@@ -1931,7 +1931,7 @@ class Partner {
   /* */
   @action clickHandler = (item, idx) => {
     if (this.selectedTabIdx === idx + 1) {
-      this.selectedTabIdx = 0;
+      // this.selectedTabIdx = 0;
     } else {
       this.selectedTabIdx = idx + 1;
     }

@@ -10,9 +10,12 @@ class MapContainer extends React.Component {
   componentDidMount() {
     const script = document.createElement("script");
     script.async = true;
+    script.type = "text/javascript";
     script.src =
-      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&libraries=LIBRARY&autoload=false";
+      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&​libraries=services&autoload=false";
     document.head.appendChild(script);
+
+    // <script type=“text/javascript” src="//dapi.kakao.com/v2/maps/sdk.js?appkey=********&​libraries=services&autoload=false"></script>
 
     script.onload = () => {
       kakao.maps.load(() => {
@@ -33,6 +36,41 @@ class MapContainer extends React.Component {
         // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
         var zoomControl = new kakao.maps.ZoomControl();
         map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+        // let maps = new window.kakao.maps();
+        // console.log(map);
+        // console.log(maps);
+        // 주소-좌표 변환 객체를 생성합니다
+        // var geocoder = new window.kakao.maps.services.Geocoder();
+
+        // geocoder.addressSearch(
+        //   "제주특별자치도 제주시 첨단로 242",
+        //   function (result, status) {
+        //     // 정상적으로 검색이 완료됐으면
+        //     console.log(result);
+        //     if (status === kakao.maps.services.Status.OK) {
+        //       var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        //       console.log(coords);
+
+        //       // 결과값으로 받은 위치를 마커로 표시합니다
+        //       var marker = new kakao.maps.Marker({
+        //         map: map,
+        //         position: coords,
+        //       });
+
+        //       // 인포윈도우로 장소에 대한 설명을 표시합니다
+        //       var infowindow = new kakao.maps.InfoWindow({
+        //         content:
+        //           '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>',
+        //       });
+        //       infowindow.open(map, marker);
+
+        //       // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        //       map.setCenter(coords);
+        //     }
+        //   }
+        // );
 
         //마커가 표시 될 위치
         let markerPosition = new kakao.maps.LatLng(37.506502, 127.053617);
@@ -62,5 +100,4 @@ export default MapContainer;
 
 const Maps = styled.div`
   height: 400px;
-  border: 3px solid red;
 `;

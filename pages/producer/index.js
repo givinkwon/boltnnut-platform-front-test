@@ -27,6 +27,14 @@ class Index extends React.Component {
   async componentDidMount() {
     const { Auth, Home, Answer, Loading } = this.props;
     console.log("producer didmount2");
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.type = "text/javascript";
+    script.src =
+      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&​libraries=services&autoload=false";
+    document.head.appendChild(script);
+
     Auth.previous_url = "producer";
 
     console.log(Auth);
@@ -54,7 +62,7 @@ class Index extends React.Component {
   }
   componentWillUnmount() {
     const { Auth } = this.props;
-    window.removeEventListener("resize", this.updateDimensions);    
+    window.removeEventListener("resize", this.updateDimensions);
   }
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
@@ -63,7 +71,7 @@ class Index extends React.Component {
   render() {
     const { width } = this.state;
     return (
-      <div onContextMenu={(e)=> e.preventDefault()} >
+      <div onContextMenu={(e) => e.preventDefault()}>
         <Head>
           <title>볼트앤너트|제조사 찾기</title>
         </Head>
@@ -73,8 +81,8 @@ class Index extends React.Component {
             (width > 767.98 ? (
               <Nav />
             ) : (
-              <div >
-                <MobileNav 
+              <div>
+                <MobileNav
                   src={back_ic}
                   headText={"제조사 관리"}
                   width={width}
@@ -84,7 +92,7 @@ class Index extends React.Component {
             ))}
         </>
 
-        <ProducerContainer  width={width} />
+        <ProducerContainer width={width} />
         <Footer />
       </div>
     );

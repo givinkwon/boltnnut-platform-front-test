@@ -103,6 +103,10 @@ class RequestModal extends React.Component {
 
   componentDidMount = () => {
     const { Partner } = this.props;
+
+    window.onload = function () {
+      window.document.body.scroll = "auto";
+    };
     console.log(toJS(Partner.input_big_category));
     console.log(toJS(Partner.input_detail_big_category));
 
@@ -146,7 +150,6 @@ class RequestModal extends React.Component {
 
     Partner.requestModalActive = false;
     await this.openDoneModal();
-
   };
 
   countPrice = () => {
@@ -191,7 +194,8 @@ class RequestModal extends React.Component {
     let minValue = 0;
     let maxValue = 0;
 
-    let emailval = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    let emailval =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
     // if (
     //   Partner.input_detail_big_category == null ||
@@ -283,8 +287,7 @@ class RequestModal extends React.Component {
           );
           console.log(
             Partner.filter_category_ary.filter(
-              (data) =>
-                partFilterAry.includes(data.category) === false
+              (data) => partFilterAry.includes(data.category) === false
             )
           );
         } else {
@@ -722,7 +725,6 @@ class RequestModal extends React.Component {
                             </DirectInputBox>
                           )}
                           <span>원</span>
-
                         </InputContainer>
                       </Budget>
                       <File active={Partner.filterFile}>

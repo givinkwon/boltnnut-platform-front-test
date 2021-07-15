@@ -29,9 +29,10 @@ class Index extends React.Component {
 
     /* 카카오 지도 API 불러오는 부분 */
     const script = document.createElement("script");
+    script.type = "text/javascript";
     script.async = true;
     script.src =
-      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&autoload=false";
+      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&autoload=false&​libraries=services";
     document.head.appendChild(script);
 
     console.log(Auth);

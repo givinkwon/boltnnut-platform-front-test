@@ -20,7 +20,13 @@ class TabBarContainer extends React.Component {
   };
   render() {
     console.log("render");
-    const { Partner, portfoliLocation, introductionLocation } = this.props;
+    const {
+      Partner,
+      portfoliLocation,
+      introductionLocation,
+      reviewLocation,
+      mapLocation,
+    } = this.props;
     console.log(this.props.portfoliLocation);
 
     return (
@@ -37,6 +43,12 @@ class TabBarContainer extends React.Component {
                   }
                   if (idx === 1) {
                     window.scrollTo(0, introductionLocation);
+                  }
+                  if (idx === 2) {
+                    window.scrollTo(0, reviewLocation);
+                  }
+                  if (idx === 3) {
+                    window.scrollTo(0, mapLocation);
                   }
                   Partner.clickHandler(item, idx);
                   this.setState({ g: 3 });
