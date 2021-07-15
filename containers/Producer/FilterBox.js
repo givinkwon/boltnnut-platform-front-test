@@ -32,30 +32,21 @@ class FilterBoxContainer extends React.Component {
   }
 
   onClickFilterHandler = async (item, idx, filter) => {
-    const { Partner } = this.props;
     let partFilterAry = [];
     let temp = [];
 
-    // console.log(toJS(`1 : ${Partner.filterLoading}`));
     if (filter === "filter" || filter === "mobileFilter") {
-      // Partner.filterLoading = false;
-      // console.log(toJS(`2 : ${Partner.filterLoading}`));
+      const { Partner } = this.props;
       await Partner.resetDevCategory();
-      if (this.props.Partner.filter_category_idx !== idx) {
-        this.setState({ index: idx });
-        this.props.Partner.filter_category_idx = idx;
+      if (Partner.filter_category_idx !== idx) {
+        Partner.index = idx;
+        Partner.filter_category_idx = idx;
         Partner.filter_category = item.id;
         console.log(toJS(Partner.filter_category));
       } else {
-        this.props.Partner.filter_category_idx = -1;
+        Partner.filter_category_idx = -1;
         Partner.filter_category = 0;
         console.log(toJS(Partner.filter_category));
-
-        // Partner.partner_next = null;
-        // Partner.partner_count = null;
-        // Partner.currentPage = 1;
-        // await Partner.resetDevCategory();
-        // await Partner.getPartner();
       }
       Partner.partner_next = null;
       Partner.partner_count = null;
@@ -83,11 +74,8 @@ class FilterBoxContainer extends React.Component {
     }
   };
 
-  handleChange = (e) => {
-    this.props.onChange(e.target.checked);
-  };
   render() {
-    const { checked, data, filter } = this.props;
+    const { checked, data, filter, Partner } = this.props;
     const { placeholder, label, disabled, ...props } = this.props;
 
     return (

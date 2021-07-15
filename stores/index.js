@@ -6,7 +6,6 @@ import Request from "./Request";
 import Home from "./Home";
 import Answer from "./Answer";
 import Payment from "./Payment";
-import Partner from "./Partner";
 import Proposal from "./Proposal";
 import Offered from "./Offered";
 import Profile from "./Profile";
@@ -18,6 +17,9 @@ import Schedule from "./Schedule";
 import Project from "./Project";
 import Chat from "./Chat";
 import Common from "./Common";
+import Producer from "./Producer";
+import Partner from "./Partner";
+
 export default {
   Counter,
   Post,
@@ -39,4 +41,5 @@ export default {
   Project,
   Chat,
   Common,
+  Producer,
 };

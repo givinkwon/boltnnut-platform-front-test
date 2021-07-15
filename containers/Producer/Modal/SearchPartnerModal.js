@@ -14,7 +14,7 @@ const searchImg = "/static/images/search_cobalt-blue.png";
 const pass1 = "/static/images/pass1.png";
 const pass2 = "/static/images/pass2.png";
 
-@inject("Partner", "Auth")
+@inject("Partner", "Auth", "Producer")
 @observer
 class SearchPartnerModal extends React.Component {
   state = {
@@ -51,13 +51,13 @@ class SearchPartnerModal extends React.Component {
     }
   };
 
-  handleKeyDown = async (e) => {
-    const { Partner } = this.props;
-    if (e.key === "Enter") {
-      Partner.reviewCurrentPage = 1;
-      Partner.getPartnerName(Partner.partnersName);
-    }
-  };
+  // handleKeyDown = async (e) => {
+  //   const { Partner } = this.props;
+  //   if (e.key === "Enter") {
+  //     Partner.reviewCurrentPage = 1;
+  //     Partner.getPartnerName(Partner.partnersName);
+  //   }
+  // };
 
   movePage = (e) => {
     const { Partner, Auth } = this.props;
@@ -88,13 +88,14 @@ class SearchPartnerModal extends React.Component {
     }
   };
 
-  test = (e) => {
-    console.log(e);
-  };
+  // test = (e) => {
+  //   console.log(e);
+  // };
 
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-    const { open, close, header, children, width, data, Partner } = this.props;
+    const { open, close, header, children, width, data, Partner, Producer } =
+      this.props;
     const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
     return (
       <ModalBox
@@ -118,11 +119,11 @@ class SearchPartnerModal extends React.Component {
                     }}
                     onFocus={(e) => {
                       e.target.placeholder = "";
-                      this.test(e);
+                      Producer.test(e);
                       console.log(e.target.value);
                       console.log("onFocus");
                     }}
-                    onKeyDown={this.handleKeyDown}
+                    onKeyDown={Partner.handleKeyDown}
                     onChange={async (e) => {
                       Partner.partnersName = e.target.value;
                       console.log(toJS(Partner.partnersName));

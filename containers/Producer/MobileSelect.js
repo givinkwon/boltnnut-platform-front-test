@@ -1,3 +1,4 @@
+import { inject, observer } from "mobx-react";
 import React from "react";
 import Select from "react-select";
 
@@ -39,19 +40,19 @@ const customStyles = {
   },
 };
 
+@inject("Partner")
+@observer
 class SelectComp extends React.Component {
-  handleChange = (selectedOption) => {
-    this.props.onChange(selectedOption);
-  };
   render() {
-    const { options, placeholder, styles, getOptionLabel, value } = this.props;
+    const { options, placeholder, styles, getOptionLabel, value, Partner } =
+      this.props;
     return (
       <Select
         id={this.props.id}
         className={this.props.className}
         styles={styles ? styles : customStyles}
         value={value}
-        onChange={this.handleChange}
+        onChange={Partner.handleChange}
         getOptionLabel={(option) =>
           getOptionLabel ? getOptionLabel(option) : option.label
         }
