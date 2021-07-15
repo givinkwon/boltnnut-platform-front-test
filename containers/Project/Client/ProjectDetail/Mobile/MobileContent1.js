@@ -6,7 +6,7 @@ import * as Content from "components/Content";
 import MobileContent2 from "./MobileContent2";
 import { toJS } from "mobx";
 import * as PartnerAPI from "axios/Partner";
-import ChatTestContainer from "containers/CS/Info2/ChatTest";
+import ChatTestContainer from "containers/Chatting/Info2/ChatTest";
 
 const fileimgBlack = "/static/images/project/fileimgBlack.svg";
 const separator = "/static/images/components/Footer/separator.png";
