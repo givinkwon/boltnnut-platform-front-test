@@ -9,7 +9,7 @@ import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import { Toolbar } from "material-ui";
 import { toJS } from "mobx";
-import ChatTestContainer from "containers/CS/Info2/ChatTest";
+import ChatTestContainer from "containers/Chatting/Info2/ChatTest";
 import * as PartnerAPI from "axios/Partner";
 import ChatItemContainer from "components/ChatItem";
 const money = "/static/images/project/money.svg";
