@@ -8,7 +8,7 @@ import { toJS } from "mobx";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
-import ChatTestContainer from "containers/CS/Info2/ChatTest";
+import ChatTestContainer from "containers/Chatting/Info2/ChatTest";
 
 import NoProject from "containers/Project/NoProject";
 import Router from "next/router";

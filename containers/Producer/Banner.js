@@ -6,22 +6,24 @@ import Container from "components/Container";
 import * as Text from "components/Text";
 import * as Content from "components/Content";
 const BackImg = "static/images/answer/MaskGroup/MaskGroup77.png";
-import { WHITE } from "static/style";
+import { BLACK } from "static/style";
 
 class BannerConatiner extends React.Component {
   render() {
     return (
       <Background
-        src={BackImg}
-        backgroundColor={"#000000"}
-        style={{ height: 208, opacity: 0.9 }}
+        // src={BackImg}
+        backgroundColor={"#fff"}
+        style={{ height: 208 }}
       >
         <Container>
           <Item>
-            <Text.FontSize32 color={WHITE}>제조사 찾기</Text.FontSize32>
-            <Content.FontSize22 color={WHITE}>
+            <Text.FontSize40 color={BLACK} center={true}>
+              제조사 찾기
+            </Text.FontSize40>
+            <Content.FontSize22 color={"#0933B3"} center={true}>
               {" "}
-              내가 원하는 제품 및 부품의 개발/생산에 적합한 제조사들을 확인하세요.
+              나에게 맞는 제작업체를 찾아보세요.
             </Content.FontSize22>
           </Item>
         </Container>
