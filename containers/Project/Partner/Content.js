@@ -44,7 +44,7 @@ class ProjectContentContainer extends React.Component {
     Project.newIndex = 0;
     Project.search_text = "";
     Project.currentPage = 1;
-
+    
     console.log("did mount");
 
     await Auth.checkLogin();
@@ -106,20 +106,22 @@ class ProjectContentContainer extends React.Component {
                     의 상담 요청 프로젝트가 있습니다.
                   </Font20>
                 </Header>
+                
                 {Project.projectDataList &&
                   Project.currentPage > 0 &&
                   Project.projectDataList.map((item, idx) => {
                     {
-                      console.log(toJS(item));
+                   //   console.log(toJS(item));
                     }
                     return (
-                      <Background style={{ marginBottom: "34px" }}>
+                      <>
+                      {toJS(item.request_set.length > 0) &&
+                        <Background style={{ marginBottom: "34px" }}>
                         <div
                           style={{ cursor: "pointer", width: "100%" }}
                           onClick={() => this.pushToDetail(item.id)}
                         >
-                          {console.log(toJS(item))}
-                          {console.log("아이템")}
+
                           <ProposalCard
                             data={item}
                             middleCategory={Project.middle_category_name[idx]}
@@ -129,9 +131,13 @@ class ProjectContentContainer extends React.Component {
                             handleIntersection={this.handleIntersection}
                             customer="partner"
                           />
+                          
+                          
                         </div>
                       </Background>
-                    );
+                      }
+                      </>
+                      );
                   })}
               </Main>
             </Body>
