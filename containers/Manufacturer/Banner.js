@@ -6,24 +6,21 @@ import Container from "components/Container";
 import * as Text from "components/Text";
 import * as Content from "components/Content";
 const BackImg = "static/images/answer/MaskGroup/MaskGroup77.png";
-import { BLACK } from "static/style";
+import { WHITE } from "static/style";
 
 class BannerConatiner extends React.Component {
   render() {
     return (
       <Background
-        // src={BackImg}
-        backgroundColor={"#fff"}
-        style={{ height: 200 }}
+        src={BackImg}
+        backgroundColor={"#000000"}
+        style={{ height: 208, opacity: 0.9 }}
       >
         <Container>
           <Item>
-            <Text.FontSize36 color={BLACK} center={true}>
-              제조사 찾기
-            </Text.FontSize36>
-            <Content.FontSize22 color={"#0933B3"} center={true}>
-              {" "}
-              나에게 맞는 제작업체를 찾아보세요.
+            <Text.FontSize32 color={WHITE}>제조사 찾기</Text.FontSize32>
+            <Content.FontSize22 color={WHITE}>
+              내가 원하는 제품과 부품의 제조사들을 확인하세요.
             </Content.FontSize22>
           </Item>
         </Container>
@@ -66,8 +63,7 @@ const Item = styled.div`
   }
 
   > p:nth-of-type(2) {
-    margin-top: 30px; // 16 + (59-32)
-    font-weight: bold;
+    margin-top: 43px; // 16 + (59-32)
   }
   // > p:nth-of-type(3){
   //   line-height: 1.3;
