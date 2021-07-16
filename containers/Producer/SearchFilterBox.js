@@ -220,9 +220,10 @@ class SearchFilterConatiner extends React.Component {
         {width && width > 767.99 ? (
           <ContainerV2>
             {console.log(`Active : ${Partner.subButtonActive}`)}
+            <SearchBar />
+
             <Search active={Partner.subButtonActive}>
-              <SearchBar />
-              <FilterButton>
+              {/* <FilterButton>
                 <Button
                   onClick={() => {
                     this.dropdownHandler("city");
@@ -231,8 +232,8 @@ class SearchFilterConatiner extends React.Component {
                   <span>필터</span>
                 </Button>
                 <img src={filter_img} />
-              </FilterButton>
-              <div
+              </FilterButton> */}
+              {/* <div
                 onClick={() => {
                   Partner.openModal();
                 }}
@@ -242,12 +243,12 @@ class SearchFilterConatiner extends React.Component {
                 <div></div>
                 <div></div>
                 <div></div>
-              </div>
-              <div>
+              </div> */}
+              {/* <div>
                 <span>업체 찾기가 힘든 경우 클릭!</span>
-              </div>
+              </div> */}
 
-              <div
+              {/* <div
                 onClick={() => {
                   Router.push("/request");
                 }}
@@ -257,10 +258,10 @@ class SearchFilterConatiner extends React.Component {
                 <div></div>
                 <div></div>
                 <div></div>
-              </div>
-              <div>
+              </div> */}
+              {/* <div>
                 <span>도면이 있는 경우 클릭!</span>
-              </div>
+              </div> */}
             </Search>
 
             {/* <Category>
