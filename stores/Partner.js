@@ -10,6 +10,7 @@ class Partner {
     //makeObservable(this);
   }
 
+  @observable recentPartnerList = [];
   @observable selectedTabIdx = 0; // 선택한 tabBar의 index 저장하는 변수
   @observable viewerLoading = 0;
   @observable click_count = 1;

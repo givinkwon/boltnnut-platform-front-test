@@ -6,7 +6,7 @@ import { inject, observer } from "mobx-react";
 import Modal from "./Modal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import ReviewContainer from "./Review/ReviewContainer";
-import CheckBrowserModal from "containers/Home/CheckBrowserModal";
+// import CheckBrowserModal from "containers/Home/CheckBrowserModal";
 import * as AccountAPI from "axios/Account";
 const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
@@ -190,14 +190,14 @@ class ProposalCard extends React.Component {
         .split(".")
         [this.props.data.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
- 
+
       if (availableFileType.indexOf(fileType) > -1) {
         console.log("뷰어 페이지 router push");
         Partner.partner_detail_list = [];
         await Partner.partner_detail_list.push({ item: data });
 
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
-        console.log(toJS(Partner.partner_detail_list))
+        console.log(toJS(Partner.partner_detail_list));
         await Partner.getReviewByPartner(
           Partner.partner_detail_list[0].item.id,
           1,
@@ -209,7 +209,7 @@ class ProposalCard extends React.Component {
 
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
-        this.setState({g:3})
+        this.setState({ g: 3 });
       } else {
         console.log("file download");
         this.filedownload(this.props.data.file);
@@ -223,7 +223,6 @@ class ProposalCard extends React.Component {
       // Router.push("/login");
       location.href = this.props.Common.makeUrl("login");
     }
-    
   };
 
   onClickReviewHandler = (idx, name) => {
@@ -244,7 +243,6 @@ class ProposalCard extends React.Component {
     }
   };
   render() {
-
     const { data, width, Partner, categoryData, idx } = this.props;
 
     const SlideSettings = {
@@ -269,7 +267,6 @@ class ProposalCard extends React.Component {
       autoplaySpeed: 2000,
     };
 
-
     let category_data;
     // console.log(data.logo);
 
@@ -293,23 +290,20 @@ class ProposalCard extends React.Component {
             >
               <Header>
                 <SliderContainer {...SlideSettings}>
-                {data &&
-                  data.portfolio_set.map((item, idx) => {
-                    return (
-                      <Item >
-                        <img src={item.img_portfolio} />
-                      </Item>    
-                    );
-                  })}
-                <Item>
-                  <img src={data.logo} />
-                </Item>
-                <Item>
-                  <img src={data.logo} />
-                </Item>
-
-                
-                  
+                  {data &&
+                    data.portfolio_set.map((item, idx) => {
+                      return (
+                        <Item>
+                          <img src={item.img_portfolio} />
+                        </Item>
+                      );
+                    })}
+                  <Item>
+                    <img src={data.logo} />
+                  </Item>
+                  <Item>
+                    <img src={data.logo} />
+                  </Item>
                 </SliderContainer>
               </Header>
               <Main>
@@ -331,7 +325,11 @@ class ProposalCard extends React.Component {
                     )}
                   </div>
                 </Phone>
-                <InfoOne>{data.info_company.length > 150 ? (data.info_company.slice(0,150) + "...") : (data.info_company)}</InfoOne>
+                <InfoOne>
+                  {data.info_company.length > 150
+                    ? data.info_company.slice(0, 150) + "..."
+                    : data.info_company}
+                </InfoOne>
                 <InfoTwo>
                   {categoryData &&
                     categoryData.map((item, idx) => {
@@ -364,7 +362,7 @@ class ProposalCard extends React.Component {
                     <Button>
                       <Link
                         target="_blank"
-                        onClick={(e) => this.cardClick(e)}
+                        // onClick={(e) => this.cardClick(e)}
                         download
                       >
                         <span>회사 소개서 보기</span>
@@ -380,7 +378,7 @@ class ProposalCard extends React.Component {
             <Card
               active={this.state.active}
               onClick={(e) => {
-                this.cardClick(e);
+                // this.cardClick(e);
               }}
               onMouseOver={() => {
                 this.activeHandler("active");
@@ -391,23 +389,26 @@ class ProposalCard extends React.Component {
             >
               <Header>
                 <SliderMobileContainer {...SlideSettingsMobile}>
-                {data &&
-                  data.portfolio_set.map((item, idx) => {
-                    return (
-                      <Item>
-                        <img src={item.img_portfolio} />
-                      </Item>    
-                    );
-                  })}
-                <Item>
-                  <img src={data.logo} />
-                </Item>
-                  
+                  {data &&
+                    data.portfolio_set.map((item, idx) => {
+                      return (
+                        <Item>
+                          <img src={item.img_portfolio} />
+                        </Item>
+                      );
+                    })}
+                  <Item>
+                    <img src={data.logo} />
+                  </Item>
                 </SliderMobileContainer>
               </Header>
               <Main>
                 <Name>{data.name}</Name>
-                <InfoOne>{data.info_company.length > 100 ? (data.info_company.slice(0,100) + "...") : (data.info_company)}</InfoOne>
+                <InfoOne>
+                  {data.info_company.length > 100
+                    ? data.info_company.slice(0, 100) + "..."
+                    : data.info_company}
+                </InfoOne>
                 <Information>
                   <div>
                     <Phone>
@@ -445,7 +446,7 @@ class ProposalCard extends React.Component {
                   <div>
                     <Link
                       target="_blank"
-                      onClick={(e) => this.cardClick(e)}
+                      // onClick={(e) => this.cardClick(e)}
                       download
                     >
                       <span>회사 소개서 보기</span>

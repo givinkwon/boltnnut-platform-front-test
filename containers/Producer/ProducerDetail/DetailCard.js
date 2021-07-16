@@ -8,6 +8,9 @@ import MapContainer from "Map";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
 import DocViewer from "DocViewer";
+import RequestContainer from "Request";
+import RecentPartnerContainer from "RecentPartner";
+import SubBoxContainer from "SubBox";
 //import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
@@ -81,8 +84,11 @@ class DetailCardContainer extends React.Component {
     Partner.reviewWritingModalActive = true;
   };
 
-  shouldComponentUpdate = () => {
+  shouldComponentUpdate = (nextProps, nextState) => {
     // return !this.state.loading;
+    console.log(this.state.g);
+    console.log(nextState.g);
+    return this.state.g !== nextState.g;
   };
 
   loadScroll = () => {
@@ -173,6 +179,8 @@ class DetailCardContainer extends React.Component {
   };
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
+    console.log("unmount");
+    Partner.recentPartnerList.push(Partner.partner_detail_list[0].item);
     Partner.review_partner_page = 1;
     loadingCounter = 0;
     window.removeEventListener("scroll", this.loadScroll);
@@ -256,9 +264,20 @@ class DetailCardContainer extends React.Component {
       // this.props.Partner.viewerLoading
 
       // this.reload();
+      // myStorage = window.localStorage;
+
+      console.log(JSON.parse(localStorage.getItem("recent")));
+
+      Partner.recentPartnerList.push(Partner.partner_detail_list[0].item);
+
+      localStorage.setItem("recent", JSON.stringify(Partner.recentPartnerList));
+
       this.setState((state) => {
         return { g: state.g + 1 };
       });
+      window.scrollTo(0, 0);
+      console.log(this.state.g);
+      console.log(toJS(this.props.Partner.recentPartnerList));
     }
   };
 
@@ -720,8 +739,9 @@ class DetailCardContainer extends React.Component {
                       <Background style={{ marginBottom: "5px" }}>
                         <div
                           onClick={(e) => {
-                            e.stopPropagation();
+                            // e.stopPropagation();
                             this.pushToDetail(Partner.partner_list[item], item);
+                            console.log("click");
                           }}
                           style={{ width: "100%" }}
                         >
@@ -787,6 +807,12 @@ class DetailCardContainer extends React.Component {
                   })} */}
           </IntroductionBox>
         </Card>
+
+        <SubCard>
+          <SubBoxContainer />
+          {/* <RequestContainer /> */}
+          {/* <RecentPartnerContainer /> */}
+        </SubCard>
       </>
     );
   }
@@ -867,9 +893,9 @@ const TopInlineBox = styled.div`
 
 const Card = styled.div`
   margin-top: 50px;
-  width: 100%;
+  width: 70%;
   border-radius: 10px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
 
@@ -1541,4 +1567,9 @@ const DateSorting = styled.div`
   > img {
     width: 10px;
   }
+`;
+
+const SubCard = styled.div`
+  width: 300px;
+  margin-top: 180px;
 `;

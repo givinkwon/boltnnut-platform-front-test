@@ -412,3 +412,30 @@ export function getPPTInfo(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function setBookmarkPartner(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/bookmark/add/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getBookmarkPartner(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/bookmark/client/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function deleteBookmarkPartner(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/bookmark/sub/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
