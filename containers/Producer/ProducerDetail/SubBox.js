@@ -7,21 +7,70 @@ import { toJS } from "mobx";
 @inject("Partner", "Auth")
 @observer
 class SubBoxContainer extends React.Component {
+  componentDidMount = () => {
+    const { Partner, Auth, partnerId } = this.props;
+
+    const clientId = this.props.Auth.logged_in_client.id;
+    Partner.existBookmarkPartner(clientId, partnerId);
+  };
   render() {
-    console.log(toJS(this.props.Auth));
+    const { Partner, Auth, partnerId } = this.props;
+    console.log(this.props.Auth.logged_in_client.id);
+    console.log(toJS(`clientId: ${this.props.Auth.logged_in_client.id}`));
+    const clientId = this.props.Auth.logged_in_client.id;
+    console.log(toJS(`partnerId: ${partnerId}`));
     return (
       <>
         <Container>
           <ActiveItem>
             <div>자동견적&비슷한 업체를 추천 받고 싶다면</div>
-            <Button>
-              <div>
+
+            {/* {buttenArray.map((item, idx) => {
+              return (
+                <Button
+                  style={{ marginBottom: "12px" }}
+                  active={Partner.activeHandler("interested", item, idx)}                  
+                >
+                  <div
+                    onClick={() => {
+                      Partner.clickHandler("interested", item, idx);
+                      this.setState({ g: 3 });
+                    }}
+                  >
+                    <span>{item.name}</span>
+                  </div>
+                </Button>
+              );
+            })} */}
+            <Button
+              active={Partner.activeHandler("project")}
+              style={{ marginBottom: "12px" }}
+              type="project"
+            >
+              <div
+                onClick={() => {
+                  Partner.clickHandler("project");
+                  this.setState({ g: 3 });
+                }}
+              >
                 <span>프로젝트 의뢰하기</span>
               </div>
             </Button>
 
-            <Button>
-              <div>
+            <Button
+              active={Partner.activeHandler("interested")}
+              type="interested"
+            >
+              <div
+                onClick={async () => {
+                  Partner.clickHandler("interested");
+                  if (Partner.interestedIdx) {
+                    await Partner.setBookmarkPartner(clientId, partnerId);
+                    await Partner.getBookmarkPartner(clientId);
+                  }
+                  this.setState({ g: 3 });
+                }}
+              >
                 <span>관심 업체 등록하기</span>
               </div>
             </Button>
@@ -42,6 +91,11 @@ class SubBoxContainer extends React.Component {
     );
   }
 }
+
+const buttenArray = [
+  { id: 1, name: "프로젝트 의뢰하기" },
+  { id: 2, name: "관심 업체 등록하기" },
+];
 
 export default SubBoxContainer;
 
@@ -65,7 +119,30 @@ const ShowItem = styled.div`
   height: 80px;
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border: none;
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 230px;
+    height: 47px;
+    background-color: #ffffff;
+    border: ${(props) =>
+      props.active ? "1px solid #0933b3" : "1px solid #e1e2e4"};
+    border-radius: 5px;
+    > span {
+      font-size: 14px;
+      line-height: 9px;
+      letter-spacing: -0.35px;
+      color: #767676;
+    }
+  }
+`;
 
 const UserBox = styled.div``;
 

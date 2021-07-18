@@ -809,7 +809,7 @@ class DetailCardContainer extends React.Component {
         </Card>
 
         <SubCard>
-          <SubBoxContainer />
+          <SubBoxContainer partnerId={Partner.partner_detail_list[0].item.id}/>
           {/* <RequestContainer /> */}
           {/* <RecentPartnerContainer /> */}
         </SubCard>

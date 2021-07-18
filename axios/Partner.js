@@ -439,3 +439,12 @@ export function deleteBookmarkPartner(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function existBookmarkPartner(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/bookmark/exist/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}

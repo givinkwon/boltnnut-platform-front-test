@@ -10,6 +10,10 @@ class Partner {
     //makeObservable(this);
   }
 
+  /* /producer 우측 카드 변수 */
+  @observable interestedIdx = false;
+  @observable projectIdx = false;
+
   @observable recentPartnerList = [];
   @observable selectedTabIdx = 0; // 선택한 tabBar의 index 저장하는 변수
   @observable viewerLoading = 0;
@@ -1929,23 +1933,138 @@ class Partner {
     return array;
   };
 
-  /* */
-  @action clickHandler = (item, idx) => {
-    if (this.selectedTabIdx === idx + 1) {
-      // this.selectedTabIdx = 0;
-    } else {
-      this.selectedTabIdx = idx + 1;
+  /*  - 클릭 시 발생하는 이벤트 함수 
+      - type은 이벤트 종류를 명시
+      - item은 이벤트 발생 시 전달 받은 객체(type에 따라 다양)
+      - idx는 몇 번째 item인지 index를 의미 
+  */
+  @action clickHandler = (type, item = 0, idx = 0) => {
+    switch (type) {
+      case "tabbar":
+        if (this.selectedTabIdx === idx + 1) {
+          // this.selectedTabIdx = 0;
+        } else {
+          this.selectedTabIdx = idx + 1;
+        }
+        console.log(this.selectedTabIdx);
+        break;
+      case "interested":
+        this.interestedIdx = !this.interestedIdx;
+        console.log(this.interestedIdx);
+        break;
+      case "project":
+        this.projectIdx = !this.projectIdx;
+        console.log(this.projectIdx);
+        break;
     }
-    console.log(this.selectedTabIdx);
   };
 
-  @action activeHandler = (item, idx) => {
-    console.log(idx === this.selectedTabIdx - 1);
-    if (idx === this.selectedTabIdx - 1) {
-      return true;
-    } else {
-      return false;
+  /*  - 클릭한 후 상태에 관한 함수
+      - type은 이벤트 종류를 명시
+      - item은 이벤트 발생 시 전달 받은 객체(type에 따라 다양)
+      - idx는 몇 번째 item인지 index를 의미 
+  */
+  @action activeHandler = (type, item = 0, idx = 0) => {
+    console.log(type);
+    switch (type) {
+      case "interested":
+        console.log(this.interestedIdx);
+        if (this.interestedIdx) {
+          return true;
+        } else {
+          return false;
+        }
+        break;
+
+      case "project":
+        if (this.projectIdx) {
+          return true;
+        } else {
+          return false;
+        }
+        break;
+
+      case "tabbar":
+        console.log(idx === this.selectedTabIdx - 1);
+        if (idx === this.selectedTabIdx - 1) {
+          return true;
+        } else {
+          return false;
+        }
+        break;
     }
+  };
+
+  /*  
+      - 관심 업체를 등록하는 함수
+      - clientID : 클라이언트 Id,  partnerID: 파트너 Id
+  */
+  @action setBookmarkPartner = (clientID, partnerID) => {
+    console.log(clientID);
+    console.log(partnerID);
+    const formData = new FormData();
+    formData.append("clientID", clientID);
+    formData.append("partnerID", partnerID);
+
+    const req = {
+      data: formData,
+    };
+
+    PartnerAPI.setBookmarkPartner(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  /*  
+      - 로그인한 클라이언트가 관
+      - clientID : 클라이언트 Id,  partnerID: 파트너 Id
+  */
+  @action getBookmarkPartner = (clientID) => {
+    console.log(clientID);
+
+    const formData = new FormData();
+
+    formData.append("clientID", clientID);
+
+    const req = {
+      data: formData,
+    };
+
+    PartnerAPI.getBookmarkPartner(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action existBookmarkPartner = (clientID, partnerID) => {
+    console.log(clientID);
+    console.log(partnerID);
+    const formData = new FormData();
+
+    formData.append("clientID", clientID);
+    formData.append("partnerID", partnerID);
+
+    const req = {
+      data: formData,
+    };
+
+    PartnerAPI.existBookmarkPartner(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 }
 

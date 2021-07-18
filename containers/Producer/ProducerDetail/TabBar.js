@@ -6,18 +6,18 @@ import * as PartnerAPI from "axios/Partner";
 @inject("Partner", "Auth")
 @observer
 class TabBarContainer extends React.Component {
-  clickHandler = (item, idx) => {
-    const { Partner } = this.props;
+  // clickHandler = (item, idx) => {
+  //   const { Partner } = this.props;
 
-    if (Partner.selectedTabIdx === 0) {
-      console.log(item);
-      console.log(idx);
-      Partner.selectedTabIdx = idx + 1;
-    } else {
-      Partner.selectedTabIdx = 0;
-    }
-    console.log(Partner.selectedTabIdx);
-  };
+  //   if (Partner.selectedTabIdx === 0) {
+  //     console.log(item);
+  //     console.log(idx);
+  //     Partner.selectedTabIdx = idx + 1;
+  //   } else {
+  //     Partner.selectedTabIdx = 0;
+  //   }
+  //   console.log(Partner.selectedTabIdx);
+  // };
   render() {
     console.log("render");
     const {
@@ -50,10 +50,10 @@ class TabBarContainer extends React.Component {
                   if (idx === 3) {
                     window.scrollTo(0, mapLocation);
                   }
-                  Partner.clickHandler(item, idx);
+                  Partner.clickHandler("tabbar", item, idx);
                   this.setState({ g: 3 });
                 }}
-                active={Partner.activeHandler(item, idx)}
+                active={Partner.activeHandler("tabbar", item, idx)}
               >
                 <span>{item.name}</span>
               </Item>
