@@ -7,7 +7,7 @@ import SelectComponent from 'components/Select'
 
 
 import * as Text from 'components/Text'
-import * as Category from 'axios/Category'
+import * as Category from 'axios/Account/Category'
 import { PRIMARY, DARKGRAY, WHITE, BLACK } from 'static/style'
 
 const badge_close = 'static/images/badge_close.png'

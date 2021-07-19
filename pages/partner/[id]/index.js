@@ -3,12 +3,12 @@ import Head from 'next/head'
 import { withRouter } from 'next/router'
 import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
-import * as PartnerAPI from 'axios/Partner'
+import * as PartnerAPI from 'axios/Manufacture/Partner'
 
 // components
 import Nav from 'components/Nav'
 import Footer from 'components/Footer'
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
 import PartnerDetailConatiner from 'containers/Partner/Detail'
 

@@ -5,7 +5,7 @@ import Router from "next/router";
 import Nav from "components/Nav";
 import Footer from "components/Footer";
 
-import NoticeDetailConatiner from "containers/CS/Notice/Detail";
+import NoticeDetailConatiner from "containers/Common/Notice/Detail";
 import { inject, observer } from "mobx-react";
 
 @inject("Notice")

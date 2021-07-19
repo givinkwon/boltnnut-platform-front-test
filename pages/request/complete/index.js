@@ -11,9 +11,9 @@ import Footer from "components/Footer";
 
 import RequestDetailConatiner from "containers/Request/Detail";
 import CompleteBannerContainer from "containers/Request/Detail/NewComplete";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
-@inject("Answer", "Auth")
+@inject("Auth", "Answer")
 class Complete extends React.Component {
   componentDidMount () {
         // page ip 기록
