@@ -5,7 +5,6 @@ import * as Title from "components/Title";
 
 import { toJS } from "mobx";
 import { inject, observer } from "mobx-react";
-import * as ChatAPI from "axios/Chat";
 
 const star_img = "static/images/main/star_gray.png";
 const prevent_img = "static/images/info.png";

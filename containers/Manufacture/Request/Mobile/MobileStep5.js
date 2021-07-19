@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 const BusinessCard = "/static/images/request/Step5/명함.png";
 
-@inject("Schedule", "Request")
+@inject("Request", "Schedule")
 @observer
 class MobileStep5Container extends Component {
   state = {

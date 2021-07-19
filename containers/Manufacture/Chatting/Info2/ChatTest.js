@@ -1,11 +1,11 @@
 import React from "react";
-import * as ProposalAPI from "axios/Proposal";
+import * as ProposalAPI from "axios/Manufacture/Proposal";
 import { inject, observer } from "mobx-react";
 import styled, { css } from "styled-components";
 import ChatCardContainer from "./ChatCard";
-import * as ChatAPI from "axios/Chat";
-import * as PartnerAPI from "axios/Partner";
-import * as RequestAPI from "axios/Request";
+import * as ChatAPI from "axios/Manufacture/Chat";
+import * as PartnerAPI from "axios/Manufacture/Partner";
+import * as RequestAPI from "axios/Manufacture/Request";
 import { ROOT_URL } from "axios/index";
 import { toJS } from "mobx";
 

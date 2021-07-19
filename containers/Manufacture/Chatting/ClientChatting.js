@@ -8,7 +8,7 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
-import * as PartnerAPI from "axios/Partner";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 
 import NoProject from "containers/Manufacture/Project/Common/NoProject";
 

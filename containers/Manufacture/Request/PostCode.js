@@ -4,7 +4,6 @@ import styled, { css } from "styled-components";
 import { observer, inject } from "mobx-react";
 import { observable } from "mobx";
 import React from "react";
-import Payment from "stores/Payment";
 
 const Postcode = (observer) => {
   const [isAddress, setIsAddress] = useState("");

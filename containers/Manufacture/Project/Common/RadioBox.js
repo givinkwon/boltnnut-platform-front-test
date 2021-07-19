@@ -11,7 +11,7 @@ import { Checkbox } from "@material-ui/core";
 
 import * as Content from 'components/Content';
 
-import Project from "stores/Project";
+import Project from "stores/Manufacture/Project";
 
 const pass3 = 'static/images/pass3.png'
 

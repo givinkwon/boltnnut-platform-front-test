@@ -9,18 +9,18 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-import * as ManufactureProcessAPI from "axios/ManufactureProcess";
+import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
 import SelectComponent from "components/Select";
-import ManufactureProcess from "stores/ManufactureProcess";
+import ManufactureProcess from "stores/Manufacture/ManufactureProcess";
 import InputComponent from "AddFile2";
 
 import Calendar from "./Calendar2";
-import Magazine from "stores/Magazine";
+import Magazine from "stores/Common/Magazine";
 import { toJS } from "mobx";
 import Router from "next/router";
 import Modal from "LoadingModal";
 
-import * as RequestAPI from "axios/Request";
+import * as RequestAPI from "axios/Manufacture/Request";
 import axios from "axios";
 
 const pass2 = "static/images/pass2.png";
@@ -71,7 +71,7 @@ const customStyles = {
   },
 };
 
-@inject("Request", "ManufactureProcess", "Auth", "Schedule", "Project")
+@inject("Request", "ManufactureProcess", "Auth","Schedule", "Project")
 @observer
 class FileUploadContainer extends Component {
   static defaultProps = { title: "도면 파일을 업로드 해주세요." };

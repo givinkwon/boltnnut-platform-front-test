@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
-import * as PartnerAPI from "axios/Partner";
 
 const viewImg = "/static/images/producer/views.svg";
 const bookmarkImg = "/static/images/producer/bookmark.svg";
@@ -23,6 +22,7 @@ class HeaderContainer extends React.Component {
     const { Partner, Auth } = this.props;
     const clientId = Auth.logged_in_client.id;
     const partnerId = Partner.partner_detail_list[0].item.id;
+    console.log(Partner.interestedIdx);
 
     return (
       <>

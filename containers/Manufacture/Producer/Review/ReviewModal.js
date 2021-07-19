@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components";
 import StarRatingComponent from "react-star-rating-component";
 import { componentByNodeRegistery } from "mobx-react";
 import { inject, observer } from "mobx-react";
-import * as PartnerAPI from "axios/Partner";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 const star = "/static/icon/star.svg";
 
 @inject("Partner", "Auth")

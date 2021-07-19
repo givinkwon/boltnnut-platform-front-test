@@ -8,7 +8,7 @@ const img_item1 = "static/images/request/Step2/ProductInfo/ProductInfo_item1.png
 const img_item2 = "static/images/request/Step2/ProductInfo/ProductInfo_item2.png";
 const img_item3 = "static/images/request/Step2/ProductInfo/ProductInfo_item3.png";
 
-@inject('DetailQuestion', 'Request','ManufactureProcess')
+@inject('Request','ManufactureProcess')
 @observer
 class ProductInfoContainer extends React.Component {
     componentDidMount()

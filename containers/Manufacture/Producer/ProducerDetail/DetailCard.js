@@ -10,7 +10,7 @@ import { toJS } from "mobx";
 import DocViewer from "./DocViewer";
 import RequestContainer from "./Request";
 import SubBoxContainer from "./SubBox";
-import HeaderItem from "./HeaderContainer"
+import HeaderItem from "./HeaderContainer";
 //import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
@@ -336,10 +336,8 @@ class DetailCardContainer extends React.Component {
             <tag>
               <span>활동 가능</span>
             </tag>
-            
-            <HeaderItem>
-              
-            </HeaderItem>
+
+            <HeaderItem></HeaderItem>
             {Partner.partner_detail_list.length != 0 && (
               <content>
                 <span>{Partner.partner_detail_list[0].item.info_company}</span>
@@ -1586,4 +1584,6 @@ const DateSorting = styled.div`
 const SubCard = styled.div`
   width: 300px;
   margin-top: 180px;
+  border-left: 1px solid #e1e2e4;
+  padding-left: 52px;
 `;

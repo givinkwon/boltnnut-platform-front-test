@@ -1,15 +1,15 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import Background from "../../../components/Background";
-import Containerv1 from "../../../components/Containerv1";
-import * as Title from "../../../components/Title";
+import Background from "components/Background";
+import Containerv1 from "components/Containerv1";
+import * as Title from "components/Title";
 import InputComponent from "components/Input2";
 import { inject, observer } from "mobx-react";
 import Calendar from "./Calendar2";
 import AddFile from "AddFile";
 import AddFile2 from "AddFile2";
 
-import * as RequestAPI from "axios/Request";
+import * as RequestAPI from "axios/Manufacture/Request";
 import Router from "next/router";
 
 const checkcircle =

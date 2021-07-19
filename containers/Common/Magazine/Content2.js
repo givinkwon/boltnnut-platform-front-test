@@ -15,7 +15,7 @@ import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
 import * as FormatUtils from "utils/format";
-import * as RequestAPI from "axios/Request";
+import * as RequestAPI from "axios/Manufacture/Request";
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 const dropDown = "static/images/pass5.png";

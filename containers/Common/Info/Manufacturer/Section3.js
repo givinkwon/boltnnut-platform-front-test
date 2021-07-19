@@ -7,7 +7,6 @@ import Button from "components/Button";
 import RatioImage from 'components/RatioImage';
 import * as Text from "components/Text";
 import {BLACK, BLACK1, DARKGRAY, PRIMARY, WHITE} from 'static/style'
-import * as AnswerAPI  from 'axios/Answer'
 
 const search_ic = "static/icon/search.png";
 const image1 = "/static/images/logo/TAJO.png";

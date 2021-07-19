@@ -7,7 +7,7 @@ import Nav from "components/Nav";
 import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
 import RequestConatiner from "containers/Manufacture/Request";
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
@@ -15,10 +15,9 @@ const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 @inject(
   "Request",
   "Partner",
-  "DetailQuestion",
   "ManufactureProcess",
+  "Auth",
   "Schedule",
-  "Auth"
 )
 @observer
 class Request extends React.Component {
@@ -27,8 +26,7 @@ class Request extends React.Component {
   componentDidMount() {
     this.props.Partner.init();
     this.props.Request.init();
-    this.props.DetailQuestion.init();
-    this.props.DetailQuestion.loadSelectFromTitle(1);
+  
     this.props.ManufactureProcess.init();
     this.props.Schedule.init();
     //창 크기

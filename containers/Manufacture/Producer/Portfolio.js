@@ -20,7 +20,7 @@ const banner1_img = "/static/images/Home/Banner1/Banner1_img.png";
 const banner_dot_img = "/static/images/Home/Banner12/Banner12_img1.png";
 const banner9_img = "/static/images/Home/Banner9/Banner9_img1.png";
 
-@inject("Answer", "Partner", "Auth", "Producer")
+@inject("Partner", "Auth", "Answer", "Producer")
 @observer
 class PortfolioConatiner extends React.Component {
   state = {

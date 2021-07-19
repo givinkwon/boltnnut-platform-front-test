@@ -6,7 +6,7 @@ import { inject, observer } from "mobx-react";
 import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
-import Project from "stores/Project";
+import Project from "stores/Manufacture/Project";
 import { toJS } from "mobx";
 
 import SearchBarConatiner from "../../Common/SearchBar";

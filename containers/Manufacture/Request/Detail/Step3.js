@@ -9,7 +9,7 @@ import InputComponent from "components/Input2";
 import * as Text from "components/Text";
 import ButtonSpinner from "components/ButtonSpinner";
 
-import * as RequestAPI from "axios/Request";
+import * as RequestAPI from "axios/Manufacture/Request";
 
 import { DARKGRAY, BLACK, WHITE, PRIMARY } from "static/style";
 

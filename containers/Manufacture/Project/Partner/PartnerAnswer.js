@@ -7,7 +7,7 @@ import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import DownloadFile from "components/DownloadFile";
-import Answer from "stores/Answer";
+import Answer from "stores/Manufacture/Answer";
 const infoImg = "static/images/info.svg";
 const file_img = "/static/images/project/fileimg.svg";
 @inject("Project", "Answer", "Auth")

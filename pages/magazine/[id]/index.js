@@ -5,9 +5,9 @@ import Router from 'next/router'
 import Nav from 'components/Nav'
 import Footer from 'components/Footer'
 
-import MagazineDetailConatiner from 'containers/Magazine/Detail'
+import MagazineDetailConatiner from 'containers/Common/Magazine/Detail'
 import {inject, observer} from "mobx-react";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
 @inject('Magazine')
 @observer

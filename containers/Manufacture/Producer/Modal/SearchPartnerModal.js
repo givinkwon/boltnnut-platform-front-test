@@ -6,7 +6,7 @@ import { componentByNodeRegistery } from "mobx-react";
 import { inject, observer } from "mobx-react";
 import PartnerCard from "./PartnerCard";
 import { toJS } from "mobx";
-import * as PartnerAPI from "axios/Partner";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 
 const star = "/static/icon/star.svg";
 const searchImg = "/static/images/search_cobalt-blue.png";

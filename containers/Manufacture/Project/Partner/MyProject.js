@@ -4,7 +4,7 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import Partner from "stores/Partner";
+import Partner from "stores/Manufacture/Partner";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
