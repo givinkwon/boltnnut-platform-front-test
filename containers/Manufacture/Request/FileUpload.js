@@ -11,11 +11,11 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
 import SelectComponent from "components/Select";
-import ManufactureProcess from "stores/ManufactureProcess";
+import ManufactureProcess from "stores/Manufacture/ManufactureProcess";
 import InputComponent from "AddFile2";
 
 import Calendar from "./Calendar2";
-import Magazine from "stores/Magazine";
+import Magazine from "stores/Common/Magazine";
 import { toJS } from "mobx";
 import Router from "next/router";
 import Modal from "LoadingModal";

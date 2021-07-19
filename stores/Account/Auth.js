@@ -2,7 +2,7 @@ import { observable, action, makeObservable, toJS } from "mobx";
 import Router from "next/router";
 import * as AccountAPI from "axios/Account/Account";
 import * as CategoryAPI from "axios/Account/Category";
-import Account from "../pages/account";
+import Account from "pages/account";
 
 class Auth {
   constructor() {

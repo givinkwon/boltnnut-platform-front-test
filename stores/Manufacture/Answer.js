@@ -4,7 +4,7 @@ import * as AnswerAPI from "axios/Manufacture/Answer";
 import * as RequestAPI from "axios/Manufacture/Request";
 import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
-import { PRIMARY } from "../static/style";
+import { PRIMARY } from "static/style";
 
 /*
   API 실행 흐름

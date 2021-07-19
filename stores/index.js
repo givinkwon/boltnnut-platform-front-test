@@ -1,25 +1,23 @@
-import Counter from "./Counter";
-import Loading from "./Loading";
-import Auth from "./Auth";
-import Request from "./Request";
-import Home from "./Home";
-import Proposal from "./Proposal";
-import Offered from "./Offered";
-import Profile from "./Profile";
-import Notice from "./Notice";
-import Magazine from "./Magazine";
-import ManufactureProcess from "./ManufactureProcess";
-import Project from "./Project";
-import Chat from "./Chat";
-import Common from "./Common";
-import Producer from "./Producer";
-import Partner from "./Partner";
-import Post from "./Post";
-import Answer from "./Answer"
-import Schedule from "./Schedule"
+import Loading from "./Common/Loading";
+import Auth from "./Account/Auth";
+import Request from "./Manufacture/Request";
+import Home from "./Home/Home";
+import Proposal from "./Manufacture/Proposal";
+import Offered from "./Manufacture/Offered";
+import Profile from "./Account/Profile";
+import Notice from "./Common/Notice";
+import Magazine from "./Common/Magazine";
+import ManufactureProcess from "./Manufacture/ManufactureProcess";
+import Project from "./Manufacture/Project";
+import Chat from "./Manufacture/Chat";
+import Common from "./Common/Common";
+import Producer from "./Manufacture/Producer";
+import Partner from "./Manufacture/Partner";
+import Post from "./Manufacture/Post";
+import Answer from "./Manufacture/Answer"
+import Schedule from "./Manufacture/Schedule"
 
 export default {
-  Counter,
   Loading,
   Auth,
   Answer,

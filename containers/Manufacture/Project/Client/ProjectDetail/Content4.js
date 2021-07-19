@@ -11,7 +11,6 @@ const search_img = "/static/images/project/search.png";
 import Modal from "./Modal";
 import CloseModalButton from "components/CloseModalButton";
 import DownloadFile from "components/DownloadFile";
-import ManufactureProcess from "stores/ManufactureProcess";
 import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
 import { createNoSubstitutionTemplateLiteral } from "typescript";
 

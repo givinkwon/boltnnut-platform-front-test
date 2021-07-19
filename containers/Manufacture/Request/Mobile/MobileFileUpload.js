@@ -12,7 +12,7 @@ import * as Content from "components/Content";
 import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
 import * as RequestAPI from "axios/Manufacture/Request";
 import SelectComponent from "components/Select";
-import ManufactureProcess from "stores/ManufactureProcess";
+import ManufactureProcess from "stores/Manufacture/ManufactureProcess";
 import InputComponent from "../AddFile2";
 import Containerv1 from "components/Containerv1";
 import Calendar from "./MobileCalendar2";

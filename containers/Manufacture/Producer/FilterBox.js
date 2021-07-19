@@ -11,7 +11,7 @@ import { Checkbox } from "@material-ui/core";
 import { toJS } from "mobx";
 
 import * as Content from "components/Content";
-import Partner from "stores/Partner";
+import Partner from "stores/Manufacture/Partner";
 
 const pass3 = "static/images/pass3.png";
 

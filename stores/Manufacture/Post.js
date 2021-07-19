@@ -1,7 +1,7 @@
 import { observable, action } from "mobx";
 import * as PostAPI from "axios/Account/post";
 
-import Loading from "./Loading";
+import Loading from "stores/Common/Loading";
 
 class Post {
   constructor() {

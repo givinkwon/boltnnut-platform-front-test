@@ -7,7 +7,7 @@ import Observer from "@researchgate/react-intersection-observer";
 import NewButton from 'components/NewButton';
 import LogoSlider from "./LogoImageSlider";
 import * as ManufactureProcessApi from "axios/Manufacture/ManufactureProcess";
-import ManufactureProcess from "stores/ManufactureProcess";
+import ManufactureProcess from "stores/Manufacture/ManufactureProcess";
 
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
