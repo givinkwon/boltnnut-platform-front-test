@@ -8,7 +8,7 @@ import Nav from "components/Nav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 import Router from "next/router";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
 @inject("Loading", "Offered", "Answer", "Auth")
 @observer

@@ -6,7 +6,7 @@ import CheckBoxComponent from 'components/SignupCheckBox'
 
 import * as Text from 'components/Text'
 
-import * as Category from 'axios/Category'
+import * as Category from 'axios/Account/Category'
 
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
 

@@ -9,7 +9,7 @@ import Spinner from "components/Spinner";
 
 import StoreConatiner from "containers/Store";
 
-@inject("Counter", "Post", "Loading")
+@inject("Post", "Loading")
 @observer
 class Store extends React.Component {
   static getInitialProps({ query }) {
