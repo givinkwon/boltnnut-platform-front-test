@@ -6,8 +6,8 @@ import Container from "components/Container";
 import ButtonComponent from "components/Button";
 import * as Text from "components/Text";
 
-import * as CategoryAPI from "axios/Category";
-import * as RequestAPI from "axios/Request";
+import * as CategoryAPI from "axios/Account/Category";
+import * as RequestAPI from "axios/Manufacture/Request";
 
 import { DARKGRAY, BLACK, WHITE, PRIMARY } from "static/style";
 

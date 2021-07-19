@@ -10,7 +10,7 @@ import DownloadFile from "components/DownloadFile";
 import Answer from "stores/Answer";
 const infoImg = "static/images/info.svg";
 const file_img = "/static/images/project/fileimg.svg";
-@inject("Project", "Answer","Auth")
+@inject("Project","Answer", "Auth")
 @observer
 class PartnerAnswer extends React.Component {
   state = {

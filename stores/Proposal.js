@@ -1,8 +1,8 @@
 import { observable, action } from "mobx";
 import Router from "next/router";
-import * as ProposalAPI from "axios/Proposal";
-import * as PartnerAPI from "axios/Partner";
-import * as SelectAPI from "../axios/Select";
+import * as ProposalAPI from "axios/Manufacture/Proposal";
+import * as PartnerAPI from "axios/Manufacture/Partner";
+
 
 class Proposal {
   constructor() {
@@ -551,66 +551,7 @@ class Proposal {
       await this.loadSelectSave(request.id, categoryId);
     });
   };
-  @action loadSelectSave = async (requestId, categoryId) => {
-    console.log(`loadSelectSave(${requestId}, ${categoryId})`);
-
-    const token = localStorage.getItem("token");
-    const req = {
-      // params
-      params: {
-        request: requestId,
-        category: categoryId,
-      },
-      // headers
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-
-    this.select_saves.push({
-      category: categoryId,
-      selects: [],
-    });
-
-    await SelectAPI.getSelectSave(req)
-      .then(async (res) => {
-        const select_save = this.getSelectsByCategoryId(categoryId);
-        res.data.results.forEach((select) => {
-          select_save.selects.push(select);
-        });
-
-        console.log("선택질문 로딩");
-        console.log(res.data);
-
-        this.select_saves_next = res.data.next;
-
-        while (this.select_saves_next) {
-          const req = {
-            nextUrl: this.select_saves_next,
-            // headers
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          };
-
-          await ProposalAPI.getNextPage(req)
-            .then((res) => {
-              res.data.results.forEach((select) => {
-                select_save.selects.push(select);
-              });
-
-              this.select_saves_next = res.data.next;
-            })
-            .catch((e) => {
-              console.log(e.response);
-            });
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
+ 
 
   getRequestById = (id) => {
     if (id === -1) {

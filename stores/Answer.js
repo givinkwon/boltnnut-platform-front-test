@@ -1,10 +1,9 @@
 import { observable, action } from "mobx";
 import Router from "next/router";
-import * as AnswerAPI from "axios/Answer";
-import * as RequestAPI from "axios/Request";
-import * as CategoryAPI from "axios/Category";
-import * as SelectAPI from "axios/Select";
-import * as PartnerAPI from "axios/Partner";
+import * as AnswerAPI from "axios/Manufacture/Answer";
+import * as RequestAPI from "axios/Manufacture/Request";
+import * as CategoryAPI from "axios/Account/Category";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 import { PRIMARY } from "../static/style";
 
 /*
@@ -968,126 +967,7 @@ class Answer {
       await this.loadSelectSave(requestId, categoryId);
     });
   };
-  @action loadSelectSave = async (requestId, categoryId) => {
-    console.log(`loadSelectSave(${requestId}, ${categoryId})`);
-
-    if (requestId != 923) {
-      const token = localStorage.getItem("token");
-      const req = {
-        // params
-        params: {
-          request: requestId,
-          category: categoryId,
-        },
-        // headers
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      };
-
-      this.select_saves.push({
-        category: categoryId,
-        selects: [],
-      });
-
-      await SelectAPI.getSelectSave(req)
-        .then(async (res) => {
-          const select_save = this.getSelectsByCategoryId(categoryId);
-          res.data.results.forEach((select) => {
-            select_save.selects.push(select);
-          });
-
-          console.log("선택질문 로딩");
-          console.log(res.data);
-
-          this.select_saves_next = res.data.next;
-
-          while (this.select_saves_next) {
-            const req = {
-              nextUrl: this.select_saves_next,
-              // headers
-              headers: {
-                Authorization: `Token ${token}`,
-              },
-            };
-
-            await AnswerAPI.getNextPage(req)
-              .then((res) => {
-                res.data.results.forEach((select) => {
-                  select_save.selects.push(select);
-                });
-
-                this.select_saves_next = res.data.next;
-              })
-              .catch((e) => {
-                console.log(e.response);
-              });
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
-    }
-
-    if (requestId == 923) {
-      const req = {
-        // params
-        params: {
-          request: requestId,
-          category: categoryId,
-        },
-        // headers
-        headers: {
-          Authorization: `Token b2b0395a326f98188b79dcabdc7578d2fdcbc349`,
-        },
-      };
-
-      this.select_saves.push({
-        category: categoryId,
-        selects: [],
-      });
-
-      await SelectAPI.getSelectSave(req)
-        .then(async (res) => {
-          const select_save = this.getSelectsByCategoryId(categoryId);
-          res.data.results.forEach((select) => {
-            select_save.selects.push(select);
-          });
-
-          console.log("선택질문 로딩");
-          console.log(res.data);
-
-          this.select_saves_next = res.data.next;
-
-          while (this.select_saves_next) {
-            const req = {
-              nextUrl: this.select_saves_next,
-              // headers
-              headers: {
-                Authorization: `Token b2b0395a326f98188b79dcabdc7578d2fdcbc349`,
-              },
-            };
-
-            await AnswerAPI.getNextPage(req)
-              .then((res) => {
-                res.data.results.forEach((select) => {
-                  select_save.selects.push(select);
-                });
-
-                this.select_saves_next = res.data.next;
-              })
-              .catch((e) => {
-                console.log(e.response);
-              });
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
-    }
-  };
+  
 
   @action loadAnswerListPage = async (clientId, requestId, callback) => {
     console.log(`loadAnswerListPage(${clientId}, ${requestId})`);

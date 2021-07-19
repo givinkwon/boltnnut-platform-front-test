@@ -1,9 +1,8 @@
 import { observable, action } from "mobx";
 import Router from "next/router";
-import * as OfferedAPI from "axios/Offered";
-import * as SelectAPI from "../axios/Select";
-import * as ProposalAPI from "../axios/Proposal";
-import * as AnswerAPI from "../axios/Answer";
+import * as OfferedAPI from "axios/Manufacture/Offered";
+import * as ProposalAPI from "axios/Manufacture/Proposal";
+import * as AnswerAPI from "axios/Manufacture/Answer";
 
 class Offered {
   constructor() {
@@ -280,102 +279,9 @@ class Offered {
       await this.loadSelectSave(request.id, categoryId);
     });
   };
-  @action loadSelectSave = async (requestId, categoryId) => {
-    console.log(`loadSelectSave(${requestId}, ${categoryId})`);
+ 
 
-    const token = localStorage.getItem("token");
-    const req = {
-      // params
-      params: {
-        request: requestId,
-        category: categoryId,
-      },
-      // headers
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
 
-    this.select_saves.push({
-      category: categoryId,
-      selects: [],
-    });
-
-    await SelectAPI.getSelectSave(req)
-      .then(async (res) => {
-        const select_save = this.getSelectsByCategoryId(categoryId);
-        res.data.results.forEach((select) => {
-          select_save.selects.push(select);
-        });
-
-        console.log("선택질문 로딩");
-        console.log(res.data);
-
-        this.select_saves_next = res.data.next;
-
-        while (this.select_saves_next) {
-          const req = {
-            nextUrl: this.select_saves_next,
-            // headers
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          };
-
-          await ProposalAPI.getNextPage(req)
-            .then((res) => {
-              res.data.results.forEach((select) => {
-                select_save.selects.push(select);
-              });
-
-              this.select_saves_next = res.data.next;
-            })
-            .catch((e) => {
-              console.log(e.response);
-            });
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
-  @action updateAnswer = () => {
-    const token = localStorage.getItem("token");
-    const req = {
-      extraUrl: `${this.current_answer.id}/`,
-      // headers
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-      // data
-      data: {
-        category: this.input_category && this.input_category,
-        people: this.input_people && this.input_people,
-        strategy: this.input_strategy && this.input_strategy,
-        price: this.input_price && this.input_price,
-        period: this.input_period && this.input_period,
-        day: this.input_day && this.input_day,
-        all_price: this.input_all_price && this.input_all_price,
-        expert: this.input_expert && this.input_expert,
-      },
-    };
-
-    AnswerAPI.patchAnswer(req)
-      .then((res) => {
-        this.current_answer = res.data;
-
-        const idx = this.answers.findIndex(
-          (answer) => answer.id == this.current_answer.id
-        );
-        this.answers[idx] = res.data;
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
 
   getProjectById = (projectId) => {
     if (projectId === -1) {

@@ -5,7 +5,7 @@ import Section from "components/Section";
 
 import BannerConatiner from "./Banner";
 import ContentConatiner from "./Content";
-import * as PartnerAPI from "axios/Partner";
+import * as PartnerAPI from "axios/Manufacutre/Partner";
 import KSLink from "components/KSLink";
 import { inject, observer } from "mobx-react";
 import InnerBoxComponent from "./InnerBox";

@@ -9,9 +9,9 @@ import Footer from 'components/Footer'
 import Spinner from 'components/Spinner'
 
 import PartnerConatiner from 'containers/Partner'
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
-@inject('Counter', 'Post', 'Loading', 'Auth')
+@inject('Counter', 'Loading', 'Auth')
 @observer
 class Partner extends React.Component {
   state = {
@@ -21,8 +21,7 @@ class Partner extends React.Component {
     return {query}
   }
   componentDidMount() {
-    this.props.Post.getData()
-     //창 크기
+
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
 
@@ -56,7 +55,7 @@ class Partner extends React.Component {
   };
 
   render(){
-    const { Post, Counter, Loading } = this.props;
+    const { ounter, Loading } = this.props;
     const { width } = this.state;
 
     return (

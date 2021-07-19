@@ -5,7 +5,7 @@ import * as Text from "components/Text";
 import * as Content from "components/Content";
 import MobileContent2 from "./MobileContent2";
 import { toJS } from "mobx";
-import * as PartnerAPI from "axios/Partner";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
 
 const fileimgBlack = "/static/images/project/fileimgBlack.svg";
@@ -15,7 +15,7 @@ const uppass = "/static/images/pass6.png";
 const callImg = "/static/images/project/Call.svg";
 const messagesImg = "/static/images/project/Messages.svg";
 
-@inject("Project", "Auth", "Answer")
+@inject("Project", "Answer", "Auth")
 @observer
 class MobileContent1 extends React.Component {
   state = {

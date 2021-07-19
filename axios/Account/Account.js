@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ROOT_URL } from "./index";
+import { ROOT_URL } from "../index";
 
 //  로그인
 export function login(req) {

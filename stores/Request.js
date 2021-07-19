@@ -1,8 +1,8 @@
 import { observable, action, makeObservable, toJS } from "mobx";
 
-import * as CategoryAPI from "axios/Category";
-import * as PartnerAPI from "axios/Partner";
-import * as RequestAPI from "axios/Request";
+import * as CategoryAPI from "axios/Account/Category";
+import * as PartnerAPI from "axios/Manufacture/Partner";
+import * as RequestAPI from "axios/Manufacture/Request";
 
 import Router from "next/router";
 import moment from "moment";

@@ -1,6 +1,6 @@
 import { observable, action } from "mobx";
 
-import * as NoticeAPI from "axios/Notice";
+import * as NoticeAPI from "axios/Common/Notice";
 
 class Notice {
   constructor() {

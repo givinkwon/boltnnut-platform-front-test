@@ -7,7 +7,7 @@ import Background from "components/Background";
 import STLViewer from "stl-viewer";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
-import * as ManufactureProcessAPI from "axios/ManufactureProcess";
+import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
 import { toJS } from "mobx";
 const search_img = "/static/images/project/search.png";
 const fileimg = "/static/images/project/fileimg.svg";

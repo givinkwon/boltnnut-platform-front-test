@@ -1,7 +1,7 @@
 import { observable, action } from "mobx";
 
-import * as ProjectAPI from "axios/Project";
-import * as AccountAPI from "axios/Account";
+import * as ProjectAPI from "axios/Manufacture/Project";
+import * as AccountAPI from "axios/Account/Account";
 import { toJS } from "mobx";
 
 class Project {

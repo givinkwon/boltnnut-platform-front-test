@@ -1,7 +1,7 @@
 import { observable, action } from "mobx";
 
-import * as CategoryAPI from "axios/Category";
-import * as RequestAPI from "axios/Request";
+import * as CategoryAPI from "axios/Account/Category";
+import * as RequestAPI from "axios/Manufacture/Request";
 
 class Home {
   constructor() {

@@ -45,7 +45,7 @@ function createData(title, content, note) {
 }
 
 
-@inject('Request','Proposal','DetailQuestion','ManufactureProcess')
+@inject('Request','Proposal','ManufactureProcess')
 @observer
 class MobileStep3Container extends Component {
 

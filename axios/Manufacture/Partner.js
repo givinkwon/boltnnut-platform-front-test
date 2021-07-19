@@ -1,6 +1,6 @@
 import axios from "axios";
-import { ROOT_URL } from "./index";
-import * as StringUtils from "../utils/string";
+import { ROOT_URL } from "../index";
+import * as StringUtils from "../../utils/string";
 
 export function search(req) {
   return axios({

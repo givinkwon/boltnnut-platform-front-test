@@ -15,7 +15,6 @@ import { inject, observer } from "mobx-react";
 
 import RequestSelectContainer from "./RequestSelect";
 import Step1Container from "./Step1";
-import Step2Container from "./Step2";
 import Step3Container from "./Step3";
 import Step4Container from "./Step4";
 import Step5 from "./Step5";
@@ -34,7 +33,7 @@ import MobileRequestCompleteContainer from "./Mobile/MobileRequestComplete";
 import ModifyCompleteContainer from "./ModifyComplete";
 import MobileModifyCompleteContainer from "./Mobile/MobileModifyComplete";
 
-@inject("DetailQuestion", "Partner", "ManufactureProcess", "Request", "Auth")
+@inject("Partner", "ManufactureProcess", "Request", "Auth")
 @observer
 class RequestContainer extends React.Component {
   componentDidMount = () => {

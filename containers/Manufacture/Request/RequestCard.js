@@ -6,9 +6,7 @@ import 'intersection-observer'; // polyfill
 import Observer from "@researchgate/react-intersection-observer";
 import NewButton from 'components/NewButton';
 import LogoSlider from "./LogoImageSlider";
-import * as DetailQuestionApi from "axios/DetailQuestion";
-import * as ManufactureProcessApi from "axios/ManufactureProcess";
-import DetailQuestion from "stores/DetailQuestion";
+import * as ManufactureProcessApi from "axios/Manufacture/ManufactureProcess";
 import ManufactureProcess from "stores/ManufactureProcess";
 
 //Slider
@@ -27,7 +25,7 @@ import AnimationCount from 'react-count-animation';
 
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 
-@inject('Request', 'DetailQuestion','ManufactureProcess')
+@inject('Request', 'ManufactureProcess')
 @observer
 class RequestCardContainer extends Component {
   state = {

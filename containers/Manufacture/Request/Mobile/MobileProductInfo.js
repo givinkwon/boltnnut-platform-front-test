@@ -8,7 +8,7 @@ const img_item1 = "static/images/request/Step2/ProductInfo/item1.svg";
 const img_item2 = "static/images/request/Step2/ProductInfo/item2.svg";
 const img_item3 = "static/images/request/Step2/ProductInfo/item3.svg";
 
-@inject('DetailQuestion', 'Request','ManufactureProcess')
+@inject('Request','ManufactureProcess')
 @observer
 class MobileProductInfoContainer extends React.Component {
   componentDidMount()

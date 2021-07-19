@@ -1,5 +1,5 @@
 import { observable, action } from "mobx";
-import * as PostAPI from "axios/post";
+import * as PostAPI from "axios/Account/post";
 
 import Loading from "./Loading";
 

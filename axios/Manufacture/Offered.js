@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ROOT_URL } from "./index"
+import { ROOT_URL } from "../index"
 import * as StringUtils from 'utils/string'
 
 export function getAnswerList(req) {

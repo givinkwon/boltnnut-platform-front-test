@@ -9,7 +9,7 @@ import Footer from "components/Footer";
 import { inject, observer } from "mobx-react";
 
 import ProducerContainer from "containers/Manufacture/Producer/index";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 

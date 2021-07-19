@@ -6,8 +6,7 @@ import 'intersection-observer'; // polyfill
 import Observer from "@researchgate/react-intersection-observer";
 import NewButton from 'components/NewButton';
 import MobileLogoImageSlider from './MobileLogoImageSlider';
-import * as DetailQuestionApi from "axios/DetailQuestion";
-import DetailQuestion from "stores/DetailQuestion";
+
 
 //Slider
 import { withStyles,makeStyles } from '@material-ui/core/styles';
@@ -26,7 +25,7 @@ import AnimationCount from 'react-count-animation';
 const ThumbImage = "/static/images/request/RequestCard/Thumb.png";
 var titleData=[];
 
-@inject('Request', 'DetailQuestion','ManufactureProcess')
+@inject('Request', 'ManufactureProcess')
 @observer
 class MobileRequestCardContainer extends Component {
   state = {

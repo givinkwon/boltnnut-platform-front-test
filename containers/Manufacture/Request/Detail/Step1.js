@@ -8,9 +8,9 @@ import ButtonComponent from "components/Button";
 import CheckBoxComponent from "components/CustomCheckBox";
 import * as Text from "components/Text";
 
-import * as CategoryAPI from "axios/Category";
-import * as AccountAPI from "axios/Account";
-import * as RequestAPI from "axios/Request";
+import * as CategoryAPI from "axios/Account/Category";
+import * as AccountAPI from "axios/Account/Account";
+import * as RequestAPI from "axios/Manufacture/Request";
 
 import { DARKGRAY, BLACK, WHITE, PRIMARY } from "static/style";
 

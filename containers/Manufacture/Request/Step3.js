@@ -60,7 +60,7 @@ function createData(title, content, note) {
 }
 
 
-@inject('Request','Proposal','DetailQuestion','ManufactureProcess')
+@inject('Request','Proposal','ManufactureProcess')
 @observer
 class Step3Container extends Component {
 

@@ -12,7 +12,7 @@ import Modal from "./Modal";
 import CloseModalButton from "components/CloseModalButton";
 import DownloadFile from "components/DownloadFile";
 import ManufactureProcess from "stores/ManufactureProcess";
-import * as ManufactureProcessAPI from "axios/ManufactureProcess";
+import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
 import { createNoSubstitutionTemplateLiteral } from "typescript";
 
 const file_img = "/static/images/project/fileimg.svg";

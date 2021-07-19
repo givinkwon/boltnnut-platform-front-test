@@ -1,6 +1,6 @@
 import { observable, action } from "mobx";
-import * as ScheduleAPI from "../axios/Schedule";
-import * as AccountAPI from "axios/Account";
+import * as ScheduleAPI from "axios/Manufacture/Schedule";
+import * as AccountAPI from "axios/Account/Account";
 import moment from "moment";
 import Router, { withRouter } from "next/router";
 

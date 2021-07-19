@@ -6,7 +6,7 @@ import Footer from "components/Footer";
 
 import NoticeConatiner from "containers/Common/Notice";
 import { inject, observer } from "mobx-react";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
 @inject("Notice")
 @observer

@@ -14,9 +14,8 @@ const partnerbadge = "/static/images/project/partnerbadge.svg";
   "Request",
   "ManufactureProcess",
   "Auth",
-  "Schedule",
   "Project",
-  "Answer"
+  "Answer",
 )
 @observer
 class ContentSub extends React.Component {

@@ -1,7 +1,7 @@
 import { observable, action } from "mobx";
 
-import * as MagazineAPI from "axios/Magazine";
-import * as CategoryAPI from "axios/Category";
+import * as MagazineAPI from "axios/Common/Magazine";
+import * as CategoryAPI from "axios/Account/Category";
 import Router from "next/router";
 
 class Magazine {

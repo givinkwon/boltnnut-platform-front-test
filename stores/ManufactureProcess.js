@@ -2,7 +2,7 @@ import { observable, action } from "mobx";
 import Proposal from "./Proposal";
 import { toJS } from "mobx";
 
-import * as ManufactureProcessAPI from "axios/ManufactureProcess";
+import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
 class ManufactureProcess {
   /* 
   

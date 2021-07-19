@@ -1,8 +1,8 @@
 import { observable, action, toJS, makeObservable } from "mobx";
 import Router from "next/router";
-import * as AccountAPI from "axios/Account";
-import * as CategoryAPI from "axios/Category";
-import * as PartnerAPI from "axios/Partner";
+import * as AccountAPI from "axios/Account/Account";
+import * as CategoryAPI from "axios/Account/Category";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 
 class Profile {
   constructor() {

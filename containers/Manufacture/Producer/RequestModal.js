@@ -9,8 +9,8 @@ import FilterBox from "./FilterBox";
 import FilterBox2 from "./FilterBox2";
 import FileComponent from "./AddFile";
 
-import * as PartnerAPI from "axios/Partner";
-import * as RequestAPI from "axios/Request";
+import * as PartnerAPI from "axios/Manufacture/Partner";
+import * as RequestAPI from "axios/Manufacture/Request";
 import { toJS } from "mobx";
 
 const pass3 = "static/images/pass3.png";
