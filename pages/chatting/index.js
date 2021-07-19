@@ -8,7 +8,7 @@ import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 import { toJS } from "mobx";
 
-import ChattingContainer from "../../containers/Chatting/index";
+import ChattingContainer from "containers/Manufacture/Chatting/index";
 import * as AccountAPI from "axios/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";

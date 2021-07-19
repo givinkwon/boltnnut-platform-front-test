@@ -4,7 +4,7 @@ import * as CategoryAPI from "axios/Category";
 import * as PartnerAPI from "axios/Partner";
 import Router from "next/router";
 import { isConstructorDeclaration } from "typescript";
-import NoneDrawingConsultingContainer from "../containers/Request/NoneDrawingConsulting";
+import NoneDrawingConsultingContainer from "../containers/Manufacture/Request/NoneDrawingConsulting";
 
 class Partner {
   constructor() {

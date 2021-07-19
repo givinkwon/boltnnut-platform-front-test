@@ -49,6 +49,45 @@ class Project {
   // 채팅하기 페이지 간략히 보기 및 자세히 보기 관련 변수
   @observable projectQuickView = [];
 
+  //로그인 된 클라이언트 id
+  @observable loggedInClientId = null;
+
+  @action movePage = (e, isMyProject = true) => {
+    const newPage = e.target.innerText * 1;
+
+    this.currentPage = newPage;
+    isMyProject
+      ? this.getPage(this.loggedInClientId, newPage)
+      : this.getProjectByPrice(this.search_text, this.currentPage);
+  };
+
+  @action pageNext = (isMyProject = true) => {
+    if (this.currentPage < this.project_page) {
+      const nextPage = this.currentPage + 1;
+      this.currentPage = nextPage;
+      isMyProject
+        ? this.getPage(this.loggedInClientId, newPage)
+        : this.getProjectByPrice(this.search_text, this.currentPage);
+    }
+  };
+
+  @action pagePrev = (isMyProject = true) => {
+    if (this.currentPage > 1) {
+      const newPage = this.currentPage - 1;
+      this.currentPage = newPage;
+      isMyProject
+        ? this.getPage(this.loggedInClientId, newPage)
+        : this.getProjectByPrice(this.search_text, this.currentPage);
+    }
+  };
+  @action pushToDetail = async (id) => {
+    console.log(id);
+    this.selectedProjectId = id;
+    await this.getProjectDetail(id);
+    this.newIndex = 1;
+    this.setProjectDetailData(id);
+  };
+
   @action setCategory = (val) => {
     this.input_category = val;
   };
@@ -150,6 +189,14 @@ class Project {
   };
 
   /* 파트너 - 전체 + 가격 별 + search별 다 포함시켰음 */
+  /**
+   * @author Oh Kyu Seok
+   * @email cane1226@gmail.com
+   * @create date 2021-07-13 15:44:26
+   * @modify date 2021-07-13 15:44:26
+   * @desc 전체 프로젝트 가져오기. getProjectByPrice라는 이름에서 혼동할수도 있지만 가격으로 가져오는 함수는 아닙니다.
+   * 전체 프로젝트 / 내 프로젝트에서 전체 프로젝트를 가져오는 함수입니다.(함수 작성자 이상원)
+   */
   @action getProjectByPrice = (search_text, page = 1) => {
     this.projectDataList = [];
     this.data_dt = [];
