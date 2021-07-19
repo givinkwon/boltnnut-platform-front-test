@@ -3,13 +3,8 @@ import ClientContentContainer from "./Client/Content";
 import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobileProject";
 import ProjectSearch from "./Partner/Content";
 import MobileProjectSearch from "./Partner/Mobile/MobileProject";
-<<<<<<< HEAD:containers/Manufacture/Project/index.js
 import MobileMyProject from "./Partner/Mobile/MobileMyProject"
 import BannerContainer from "./Common/Banner";
-=======
-import MobileMyProject from "./Partner/Mobile/MobileMyProject";
-import BannerContainer from "./Banner";
->>>>>>> aa3fe0357b5d3bb3c30f57dc1c2af8dbea5742d9:containers/Project/index.js
 
 import ProjectDetailContainer from "./Client/ProjectDetail/ProjectDetail";
 import MobileProjectDetailContainer from "./Client/ProjectDetail/Mobile/MobileProjectDetail";
