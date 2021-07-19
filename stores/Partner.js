@@ -12,8 +12,8 @@ class Partner {
   }
 
   /* /producer 우측 카드 변수 */
-  @observable clientID = 0;
-  @observable partnerID = 0;
+  @observable totalPartnerBookmark = 0;
+  @observable totalClientBookmark = 0;
   @observable interestedIdx = false;
   @observable projectIdx = false;
 
@@ -2282,18 +2282,39 @@ class Partner {
       - 로그인한 클라이언트가 관
       - clientID : 클라이언트 Id,  partnerID: 파트너 Id
   */
-  @action getBookmarkPartner = async (clientID) => {
+  @action getBookmarkByClient = async (clientID) => {
     console.log(clientID);
 
-    const formData = new FormData();
+    const req = {
+      params: {
+        clientID: clientID,
+      },
+    };
 
+    await PartnerAPI.getBookmarkByClient(req)
+      .then((res) => {
+        console.log(res);
+        this.totalClientBookmark = res.data.count;
+        console.log(this.totalClientBookmark);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action deleteBookmarkPartner = async (clientID, partnerID) => {
+    console.log(clientID);
+    console.log(partnerID);
+    const formData = new FormData();
     formData.append("clientID", clientID);
+    formData.append("partnerID", partnerID);
 
     const req = {
       data: formData,
     };
 
-    await PartnerAPI.getBookmarkPartner(req)
+    await PartnerAPI.deleteBookmarkPartner(req)
       .then((res) => {
         console.log(res);
       })
@@ -2308,11 +2329,6 @@ class Partner {
     console.log(clientID);
     console.log(partnerID);
 
-    const formData = new FormData();
-
-    formData.append("clientID", clientID);
-    formData.append("partnerID", partnerID);
-
     const req = {
       params: {
         clientID: clientID,
@@ -2320,13 +2336,44 @@ class Partner {
       },
     };
 
-    // const req = {
-    //   data: formData,
-    // };
-
     await PartnerAPI.existBookmarkPartner(req)
       .then((res) => {
         console.log(res);
+        console.log(res.data.data);
+        if (res.data.data) {
+          this.interestedIdx = true;
+        } else {
+          this.interestedIdx = false;
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action checkedInterestedIdx = async (clientId, partnerId) => {
+    if (this.interestedIdx) {
+      await this.setBookmarkPartner(clientId, partnerId);
+    } else {
+      await this.deleteBookmarkPartner(clientId, partnerId);
+    }
+    await this.getBookmarkByClient(clientId);
+    await this.getTotalBookmarkByPartner(partnerId);
+  };
+
+  @action getTotalBookmarkByPartner = async (partnerId) => {
+    const req = {
+      params: {
+        partnerID: partnerId,
+      },
+    };
+
+    PartnerAPI.getTotalBookmarkByPartner(req)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.count);
+        this.totalPartnerBookmark = res.data.count;
       })
       .catch((e) => {
         console.log(e);

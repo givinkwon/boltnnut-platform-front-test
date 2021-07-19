@@ -1,18 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
   <defs>
     <style>
-      .cls-1, .cls-2 {
+      .cls-1 {
         fill: none;
       }
 
       .cls-2 {
-        stroke: #999;
-        stroke-linecap: round;
-        stroke-linejoin: round;
+        fill: #0933b3;
       }
     </style>
   </defs>
-  <g id="그룹_4231" data-name="그룹 4231" transform="translate(0.139 0)">
+  <g id="그룹_4233" data-name="그룹 4233" transform="translate(0.139 0)">
     <rect id="사각형_4760" data-name="사각형 4760" class="cls-1" width="20" height="20" transform="translate(-0.139 0)"/>
     <path id="_14182513331543238863" data-name="14182513331543238863" class="cls-2" d="M16.129,20.172,10.565,15.4,5,20.172V4.908A1.771,1.771,0,0,1,6.59,3h7.949a1.771,1.771,0,0,1,1.59,1.908Z" transform="translate(-0.254 -1.492)"/>
   </g>

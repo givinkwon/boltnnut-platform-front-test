@@ -422,18 +422,27 @@ export function setBookmarkPartner(req) {
   });
 }
 
-export function getBookmarkPartner(req) {
+export function getBookmarkByClient(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/bookmark/client/`,
-    data: req.data ? req.data : null,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getTotalBookmarkByPartner(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/bookmark/partner/`,
+    params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
   });
 }
 
 export function deleteBookmarkPartner(req) {
   return axios({
-    method: "GET",
+    method: "DELETE",
     url: `${ROOT_URL}/bookmark/sub/`,
     data: req.data ? req.data : null,
     headers: req.headers ? req.headers : null,

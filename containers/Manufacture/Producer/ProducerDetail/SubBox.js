@@ -12,6 +12,7 @@ class SubBoxContainer extends React.Component {
 
     const clientId = this.props.Auth.logged_in_client.id;
     await Partner.existBookmarkPartner(clientId, partnerId);
+    await Partner.getBookmarkByClient(clientId);
   };
   render() {
     const { Partner, Auth, partnerId } = this.props;
@@ -63,12 +64,10 @@ class SubBoxContainer extends React.Component {
             >
               <div
                 onClick={async () => {
-                  console.log("click!!");
+                  console.log(Partner.interestedIdx);
+
                   Partner.clickHandler("interested");
-                  if (Partner.interestedIdx) {
-                    await Partner.setBookmarkPartner(clientId, partnerId);
-                    await Partner.getBookmarkPartner(clientId);
-                  }
+                  Partner.checkedInterestedIdx(clientId, partnerId);
                   this.setState({ g: 3 });
                 }}
               >
@@ -84,7 +83,7 @@ class SubBoxContainer extends React.Component {
             </SubItem>
             <SubItem>
               <span>관심 업체 등록</span>
-              <span>0</span>
+              <span>{Partner.totalClientBookmark}</span>
             </SubItem>
           </ShowItem>
         </Container>
@@ -132,15 +131,29 @@ const Button = styled.button`
     align-items: center;
     width: 230px;
     height: 47px;
-    background-color: #ffffff;
-    border: ${(props) =>
-      props.active ? "1px solid #0933b3" : "1px solid #e1e2e4"};
+    background-color: ${(props) =>
+      props.type === "project"
+        ? props.active
+          ? "#0933b3"
+          : "#0933b3"
+        : props.active
+        ? "#eeeeee"
+        : "#ffffff"};
+
+    border: 1px solid #e1e2e4;
     border-radius: 5px;
     > span {
       font-size: 14px;
       line-height: 9px;
       letter-spacing: -0.35px;
-      color: #767676;
+      color: ${(props) =>
+        props.type === "project"
+          ? props.active
+            ? "#ffffff"
+            : "#ffffff"
+          : props.active
+          ? "#a4aab4"
+          : "#767676"};
     }
   }
 `;

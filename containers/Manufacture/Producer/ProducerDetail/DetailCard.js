@@ -4,26 +4,28 @@ import dynamic from "next/dynamic";
 import Router from "next/router";
 import Modal from "../Review/ReviewWritingModal";
 import ReviewCard from "../Review/ReviewCard";
-import MapContainer from "Map";
+import MapContainer from "./Map";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
-import DocViewer from "DocViewer";
-import RequestContainer from "Request";
-import RecentPartnerContainer from "RecentPartner";
-import SubBoxContainer from "SubBox";
+import DocViewer from "./DocViewer";
+import RequestContainer from "./Request";
+import SubBoxContainer from "./SubBox";
+import HeaderItem from "./HeaderContainer"
 //import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 import Background from "components/Background";
 import ProposalCard from "../ProposalCard";
-import TabBar from "TabBar";
+import TabBar from "./TabBar";
 
 // const customRenderer = DocViewerRenderers;
 
 const star = "/static/icon/star_blue3.svg";
 const bluebar_empty = "/static/icon/bluebar_empty.svg";
+const viewImg = "/static/images/producer/views.svg";
 const bookmarkImg = "/static/images/producer/bookmark.svg";
+const bookmarkBlueImg = "/static/images/producer/bookmark_blue.svg";
 import Slider from "react-slick";
 
 const availableFileType1 = [
@@ -85,10 +87,12 @@ class DetailCardContainer extends React.Component {
     Partner.reviewWritingModalActive = true;
   };
 
-  shouldComponentUpdate = (nextProps, nextState) => {
+  shouldComponentUpdate = (prevProps, nextState) => {
     // return !this.state.loading;
     console.log(this.state.g);
     console.log(nextState.g);
+    console.log(prevProps.Partner.interestedIdx);
+    console.log(this.props.Partner.interestedIdx);
     return this.state.g !== nextState.g;
   };
 
@@ -286,7 +290,9 @@ class DetailCardContainer extends React.Component {
     (location || window.location || document.location).reload();
   }
   render() {
-    const { width, Partner } = this.props;
+    const { width, Partner, Auth } = this.props;
+    const clientId = this.props.Auth.logged_in_client.id;
+    const partnerId = Partner.partner_detail_list[0].item.id;
     const index = Partner.partner_detail_list[0].idx;
     const length = Partner.partner_list.length;
     console.log(index);
@@ -330,12 +336,9 @@ class DetailCardContainer extends React.Component {
             <tag>
               <span>활동 가능</span>
             </tag>
-
+            
             <HeaderItem>
-              {Partner.partner_detail_list.length != 0 && (
-                <name>{Partner.partner_detail_list[0].item.name}</name>
-              )}
-              <img src={bookmarkImg}></img>
+              
             </HeaderItem>
             {Partner.partner_detail_list.length != 0 && (
               <content>
@@ -1053,11 +1056,11 @@ const HeaderBox = styled.div`
 
 `;
 
-const HeaderItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 34px;
-`;
+// const HeaderItem = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   margin-bottom: 34px;
+// `;
 
 const ReviewBox = styled.div`
   position: relative;
