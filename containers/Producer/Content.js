@@ -75,102 +75,92 @@ class ManufacturerContentContainer extends React.Component {
                   <Layer />
                 </>
               )}
-
-              {/* {Partner.partner_list.length > 0 && Partner.isSearched && (
-                <SubButtonBox>
-                  <SubButton
-                    onClick={() => {
-                      Partner.getOtherPartner();
-
-                      Partner.subButtonActive = !Partner.subButtonActive;
-                    }}
-                    active={Partner.subButtonActive}
-                  >
-                    <Font20 style={{ textAlign: "center" }}>
-                      기성품이 없는 신제품의 개발이 필요하신가요?
-                      <br />
-                      예, 신제품 개발 전문 업체로 추천해주세요
-                    </Font20>
-                  </SubButton>
-                  <SubButton
-                    onClick={() => {
-                      Router.push("/request");
-                    }}
-                  >
-                    <Font20 style={{ textAlign: "center" }}>
-                      도면이 있으신가요?
-                      <br />
-                      예, 최저가 가공 및 금형가로 즉시 견적 안내 드립니다.
-                    </Font20>
-                  </SubButton>
-                </SubButtonBox>
-              )} */}
-
+              <Header>
+                <Font20 style={{ marginLeft: "20px" }}>
+                  <span style={{ fontWeight: "bold" }}>
+                    {Partner.partner_count}개
+                  </span>
+                  의 제조사가 있습니다.
+                </Font20>
+                <Amount>
+                  <SpecificAmount>
+                    <img src="/static/icon/checkbox_off.svg"></img>
+                    <div>소량</div>
+                  </SpecificAmount>
+                  <SpecificAmount>
+                    <img src="/static/icon/checkbox_off.svg"></img>
+                    <div>대량</div>
+                  </SpecificAmount>
+                </Amount>
+              </Header>
               <Main>
-                <Header style={{ paddingTop: "32px" }}>
-                  <Font20 style={{ marginLeft: "-9px" }}>
-                    <span style={{ fontWeight: "bold" }}>
-                      {Partner.partner_count}개
-                    </span>
-                    의 파트너가 있습니다.
-                  </Font20>
-                </Header>
-                {/* {Partner.partner_list.length === 0 && (
-                  <NoResultBox>
-                    <Font20>원하는 업체를 찾기 어려우신가요?</Font20>
-                    <Font14 style={{ color: "black", fontWeight: "300" }}>
-                      볼트앤너트 업체 수배 전문가가 숨어있는 공장까지 대신
-                      찾아드립니다.
-                    </Font14>
-                    <RequestButton
-                      onClick={() => {
-                        this.openModal();
-                      }}
-                    >
-                      <span>업체 수배 & 견적 의뢰</span>
-                    </RequestButton>
-                  </NoResultBox>
-                )} */}
-                {Partner.partner_list.length === 0 &&
-                  (Partner.loadingFlag ? (
-                    <ButtonSpinnerComponent scale="30%" primary />
-                  ) : (
-                    <NoResultBox>
-                      <Font20>원하는 업체를 찾기 어려우신가요?</Font20>
-                      <Font14 style={{ color: "black", fontWeight: "300" }}>
-                        볼트앤너트 업체 수배 전문가가 숨어있는 공장까지 대신
-                        찾아드립니다.
-                      </Font14>
-                      <RequestButton
-                        onClick={() => {
-                          Partner.openModal();
-                        }}
-                      >
-                        <span>업체 수배 & 견적 의뢰</span>
-                      </RequestButton>
-                    </NoResultBox>
-                  ))}
-
-                {Partner.partner_list &&
-                  Partner.partner_list.map((item, idx) => {
-                    return (
-                      <Background style={{ marginBottom: "5px" }}>
-                        <div
-                          onClick={() => Partner.pushToDetail(item, idx)}
-                          style={{ width: "100%" }}
+                <MainBody>
+                  {Partner.partner_list.length === 0 &&
+                    (Partner.loadingFlag ? (
+                      <ButtonSpinnerComponent scale="30%" primary />
+                    ) : (
+                      <NoResultBox>
+                        <Font20>원하는 업체를 찾기 어려우신가요?</Font20>
+                        <Font14 style={{ color: "black", fontWeight: "300" }}>
+                          볼트앤너트 업체 수배 전문가가 숨어있는 공장까지 대신
+                          찾아드립니다.
+                        </Font14>
+                        <RequestButton
+                          onClick={() => {
+                            Partner.openModal();
+                          }}
                         >
-                          <ProposalCard
-                            data={item}
-                            width={this.props.width}
-                            categoryData={toJS(Partner.category_dic[idx])}
-                            idx={idx}
-                            handleIntersection={Producer.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
-                      </Background>
-                    );
-                  })}
+                          <span>업체 수배 & 견적 의뢰</span>
+                        </RequestButton>
+                      </NoResultBox>
+                    ))}
+
+                  {Partner.partner_list &&
+                    Partner.partner_list.map((item, idx) => {
+                      return (
+                        <Background style={{ marginBottom: "5px" }}>
+                          <div
+                            onClick={() => Partner.pushToDetail(item, idx)}
+                            style={{ width: "100%" }}
+                          >
+                            <ProposalCard
+                              data={item}
+                              width={this.props.width}
+                              categoryData={toJS(Partner.category_dic[idx])}
+                              idx={idx}
+                              handleIntersection={Producer.handleIntersection}
+                              customer="partner"
+                            />
+                          </div>
+                        </Background>
+                      );
+                    })}
+                </MainBody>
+                <Aside>
+                  <RecentPartner>
+                    <header>
+                      <div style={{ marginLeft: 10 }}>최근 본 제조사</div>
+                      <div style={{ marginRight: 10 }}>0</div>
+                    </header>
+                    <body>최근에 본 제조사가 없습니다.</body>
+                  </RecentPartner>
+                  <MyInfo>
+                    <header>
+                      <img src="/static/icon/login_img.svg"></img>
+                      <div>로그인 해주세요.</div>
+                    </header>
+                    <body>
+                      <RequestandRegister style={{ marginTop: 5 }}>
+                        <Text>프로젝트 의뢰</Text>
+                        <Conter>0</Conter>
+                      </RequestandRegister>
+                      <RequestandRegister>
+                        <Text>관심 업체 등록</Text>
+                        <Conter>0</Conter>
+                      </RequestandRegister>
+                    </body>
+                  </MyInfo>
+                </Aside>
               </Main>
             </Body>
           </Container>
@@ -342,16 +332,22 @@ const PageCount = styled.span`
 `;
 const Body = styled.div`
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  width: 100%;
+`;
+
+const Main = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const MainBody = styled.div`
+  padding-top: 30px;
   border-top: 1px solid #e1e2e4;
   border-bottom: 1px solid #e1e2e4;
-  // margin-top: 40px;
-`;
-const Main = styled.div`
-  //width: 984px;
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 700px;
   }
@@ -368,13 +364,83 @@ const Main = styled.div`
     width: 1200px;
   }
 `;
+const Aside = styled.div`
+  top: 15%;
+  position: sticky;
+  height: 80vh;
+`;
+
+const RecentPartner = styled.div`
+  width: 180px;
+  height: 50vh;
+  border-radius: 10px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.08);
+  border: solid 1px #f6f6f6;
+  background-color: #ffffff;
+  margin-left: 30px;
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 180px;
+    height: 52px;
+    background-color: #e1e2e4;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  body {
+    display: flex;
+    font-size: 14px;
+    line-height: 1.71;
+    letter-spacing: -0.35px;
+    text-align: center;
+    color: #999999;
+  }
+`;
+
+const MyInfo = styled.div`
+  width: 180px;
+  margin-left: 30px;
+  margin-top: 19px;
+  header {
+    padding-right: 5px;
+    padding-left: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #999999;
+    line-height: 5.5;
+    letter-spacing: -0.35px;
+    border-bottom: solid 2px #e1e2e4;
+    font-size: 14px;
+  }
+`;
+
+const RequestandRegister = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 15px;
+`;
+
+const Text = styled.div`
+  color: #1e2222;
+  font-size: 15px;
+`;
+
+const Conter = styled.div`
+  color: #0933b3;
+  font-size: 15px;
+`;
 
 const Header = styled.div`
-  width: 993px;
+  width: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
   position: relative;
+  padding-top: 32px;
+  margin-bottom: 5px;
   > span {
     position: absolute;
     left: 88%;
@@ -389,12 +455,32 @@ const Header = styled.div`
 `;
 
 const Font20 = styled(Title.FontSize20)`
-  font-weight: 500 !important;
+  font-weight: normal !important;
   font-stretch: normal !important;
   font-style: normal !important;
   line-height: 40px !important;
   letter-spacing: -0.5px !important;
   color: #282c36;
+`;
+
+const Amount = styled.div`
+  width: 135px;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 230px;
+`;
+
+const SpecificAmount = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  div {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #282c36;
+    line-height: 2.43;
+    letter-spacing: -0.35px;
+  }
 `;
 
 const Font14 = styled(Content.FontSize14)`

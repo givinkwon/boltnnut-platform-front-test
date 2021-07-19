@@ -125,8 +125,8 @@ class SearchBarConatiner extends React.Component {
               onKeyPress={this.handleKeyDown}
             />
             <img
-              style={{ width: 20, height: 20, marginRight: 25 }}
-              src="/static/icon/search.png"
+              style={{ width: 24, height: 24, marginRight: 25 }}
+              src="/static/icon/search_blue.svg"
               onClick={this.search}
             />
           </SearchBar>
@@ -151,24 +151,24 @@ const SearchBar = styled.div`
   align-items: center;
   // width: 601px;
   width: 100%;
-  height: 60px;
+  height: 60px; 
   box-sizing: border-box;
-  border: 1px solid #c6c7cc;
-  border-radius: 30px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 8px -3px;
+  border: solid 0.5px #c6c7cc;
+  border-radius: 60px;
+  box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
   // margin 0 24px;
 
   input {
     width: 100%;
     border: none;
-    border-radius: 30px;
+    border-radius: 60px;
     padding: 0 14px;
     margin-left: 10px;
     :focus {
       outline: none;
     }
     ::placeholder {
-      color: #000;
+      #c6c7cc
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -202,7 +202,7 @@ const SearchBar = styled.div`
   @media (min-width: 1300px) {
     // width: ${(props) => (props.active ? "501px" : "100%")};
     transition: 3s;
-    width: 100%;
+    width: 66%;
     input {
       font-size: 18px;
     }
@@ -216,38 +216,10 @@ const Form = styled.div`
   //margin-top: 90px;
   // width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   height: 44px;
 
-  ${(props) =>
-    props.active &&
-    css`
-      @keyframes reduce {
-        0% {
-          width: 100%;
-        }
-
-        100% {
-          width: 47%;
-        }
-      }
-      animation: reduce 1s ease-in-out;
-    `}
   width: ${(props) => (!props.active ? "100%" : "47%")};
-
-  ${(props) =>
-    !props.active &&
-    css`
-      @keyframes reduce_two {
-        0% {
-          width: 100%;
-        }
-        100% {
-          width: 100%;
-        }
-      }
-      animation: reduce_two 0.1s ease-in-out;
-    `}
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     // width: 54%;

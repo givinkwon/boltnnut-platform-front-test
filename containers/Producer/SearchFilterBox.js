@@ -221,9 +221,45 @@ class SearchFilterConatiner extends React.Component {
           <ContainerV2>
             {console.log(`Active : ${Partner.subButtonActive}`)}
             <SearchBar />
-
-            <Search active={Partner.subButtonActive}>
-              {/* <FilterButton>
+            <FilterCategory>
+              <Category>
+                <CategoryName>업체 분류</CategoryName>
+                <Field>
+                  <div>전체</div>
+                  <img src="/static/icon/down_arrow.svg"></img>
+                </Field>
+              </Category>
+              <Category>
+                <CategoryName>카테고리</CategoryName>
+                <Field>
+                  <div>전체</div>
+                  <img src="/static/icon/down_arrow.svg"></img>
+                </Field>
+              </Category>
+              <Category>
+                <CategoryName>지역</CategoryName>
+                <Field>
+                  <div>전체</div>
+                  <img src="/static/icon/down_arrow.svg"></img>
+                </Field>
+              </Category>
+              <Category>
+                <div
+                  style={{
+                    fontSize: "15px",
+                    lineHeight: 2.27,
+                    letterSpacing: "-0.38px",
+                    textAlign: "center",
+                    color: "#555963",
+                  }}
+                >
+                  공정, 소재
+                </div>
+                <img src="/static/icon/detail_filter.svg"></img>
+              </Category>
+            </FilterCategory>
+            {/* <Search active={Partner.subButtonActive}> */}
+            {/* <FilterButton>
                 <Button
                   onClick={() => {
                     this.dropdownHandler("city");
@@ -233,7 +269,7 @@ class SearchFilterConatiner extends React.Component {
                 </Button>
                 <img src={filter_img} />
               </FilterButton> */}
-              {/* <div
+            {/* <div
                 onClick={() => {
                   Partner.openModal();
                 }}
@@ -244,11 +280,11 @@ class SearchFilterConatiner extends React.Component {
                 <div></div>
                 <div></div>
               </div> */}
-              {/* <div>
+            {/* <div>
                 <span>업체 찾기가 힘든 경우 클릭!</span>
               </div> */}
 
-              {/* <div
+            {/* <div
                 onClick={() => {
                   Router.push("/request");
                 }}
@@ -259,10 +295,10 @@ class SearchFilterConatiner extends React.Component {
                 <div></div>
                 <div></div>
               </div> */}
-              {/* <div>
+            {/* <div>
                 <span>도면이 있는 경우 클릭!</span>
               </div> */}
-            </Search>
+            {/* </Search> */}
 
             {/* <Category>
               <span>분야</span>
@@ -639,29 +675,79 @@ class SearchFilterConatiner extends React.Component {
 
 export default SearchFilterConatiner;
 
-const bigCategoryArray = [
-  { label: "대 카테고리1", value: "대 카테고리1" },
-  { label: "대 카테고리2", value: "대 카테고리2" },
-];
+// const bigCategoryArray = [
+//   { label: "대 카테고리1", value: "대 카테고리1" },
+//   { label: "대 카테고리2", value: "대 카테고리2" },
+// ];
 
-const smallCategoryArray = [
-  { label: "소 카테고리1", value: "소 카테고리1" },
-  { label: "소 카테고리2", value: "소 카테고리2" },
-];
+// const smallCategoryArray = [
+//   { label: "소 카테고리1", value: "소 카테고리1" },
+//   { label: "소 카테고리2", value: "소 카테고리2" },
+// ];
 
-const budgetArray = [
-  { id: 1, label: "0", value: 0 },
-  { id: 2, label: "1,000,000", value: 1000000 },
-  { id: 3, label: "5,000,000", value: 5000000 },
-  { id: 4, label: "10,000,000", value: 10000000 },
-  { id: 5, label: "30,000,000", value: 30000000 },
-  { id: 6, label: "직접 입력", value: "" },
-];
+// const budgetArray = [
+//   { id: 1, label: "0", value: 0 },
+//   { id: 2, label: "1,000,000", value: 1000000 },
+//   { id: 3, label: "5,000,000", value: 5000000 },
+//   { id: 4, label: "10,000,000", value: 10000000 },
+//   { id: 5, label: "30,000,000", value: 30000000 },
+//   { id: 6, label: "직접 입력", value: "" },
+// ];
 
-const viewArray = [
-  { id: 1, name: "공개", checked: false },
-  { id: 2, name: "비공개", checked: false },
-];
+// const viewArray = [
+//   { id: 1, name: "공개", checked: false },
+//   { id: 2, name: "비공개", checked: false },
+// ];
+
+const FilterCategory = styled.div`
+  width: 100%;
+  margin-top: 40px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  background: none;
+  border: none;
+`;
+
+const Category = styled.div`
+  background: none;
+  border: none;
+  margin-right: 20px;
+`;
+
+const CategoryName = styled.div`
+  background: none;
+  border: none;
+  width: 204px;
+  font-size: 15px;
+  line-height: 2.27;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: #555963;
+}
+`;
+
+const Field = styled.div`
+  width: 204px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  div {
+    margin-left: 16px;
+    line-height: 2.27;
+    letter-spacing: -0.38px;
+    text-align: left;
+    color: #b3b3b3;
+  }
+  img {
+    margin-right: 12px;
+  }
+`;
+
 const ContainerV2 = styled.div`
   margin-top: 32px;
   display: flex;
@@ -1020,95 +1106,95 @@ const Search = styled.div`
   @media (min-width: 1300px) {
   }
 `;
-const Category = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 24px;
-  > div:nth-of-type(1) {
-    margin-right: 24px;
-  }
-  > span {
-    font-size: 20px;
-    line-height: 40px;
-    letter-spacing: -0.5px;
-    color: #282c36;
-    font-weight: 500;
-    width: 70px;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: block;
-    margin-bottom: 6px;
-    > div {
-      display: inline-block;
-    }
-    > div:nth-of-type(1) {
-      margin-right: 32px;
-    }
+// const Category = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 24px;
+//   > div:nth-of-type(1) {
+//     margin-right: 24px;
+//   }
+//   > span {
+//     font-size: 20px;
+//     line-height: 40px;
+//     letter-spacing: -0.5px;
+//     color: #282c36;
+//     font-weight: 500;
+//     width: 70px;
+//   }
+//   @media (min-width: 0px) and (max-width: 767.98px) {
+//     display: block;
+//     margin-bottom: 6px;
+//     > div {
+//       display: inline-block;
+//     }
+//     > div:nth-of-type(1) {
+//       margin-right: 32px;
+//     }
 
-    > span {
-      font-size: 14px;
-      // width: 40px;
-      display: block;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    > span {
-      font-size: 16px;
-      width: 40px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    > span {
-      font-size: 18px;
-      width: 50px;
-    }
-  }
-  @media (min-width: 1300px) {
-  }
-`;
-const Location = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 24px;
-  > span {
-    font-size: 20px;
-    line-height: 40px;
-    letter-spacing: -0.5px;
-    color: #282c36;
-    font-weight: 500;
-    width: 70px;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: block;
-    margin-bottom: 6px;
-    > div {
-      display: inline-block;
-    }
-    > div:nth-of-type(1) {
-      margin-right: 32px;
-    }
+//     > span {
+//       font-size: 14px;
+//       // width: 40px;
+//       display: block;
+//     }
+//   }
+//   @media (min-width: 768px) and (max-width: 991.98px) {
+//     > span {
+//       font-size: 16px;
+//       width: 40px;
+//     }
+//   }
+//   @media (min-width: 992px) and (max-width: 1299.98px) {
+//     > span {
+//       font-size: 18px;
+//       width: 50px;
+//     }
+//   }
+//   @media (min-width: 1300px) {
+//   }
+// `;
+// const Location = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 24px;
+//   > span {
+//     font-size: 20px;
+//     line-height: 40px;
+//     letter-spacing: -0.5px;
+//     color: #282c36;
+//     font-weight: 500;
+//     width: 70px;
+//   }
+//   @media (min-width: 0px) and (max-width: 767.98px) {
+//     display: block;
+//     margin-bottom: 6px;
+//     > div {
+//       display: inline-block;
+//     }
+//     > div:nth-of-type(1) {
+//       margin-right: 32px;
+//     }
 
-    > span {
-      font-size: 14px;
-      // width: 40px;
-      display: block;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    > span {
-      font-size: 16px;
-      width: 40px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    > span {
-      font-size: 18px;
-      width: 50px;
-    }
-  }
-  @media (min-width: 1300px) {
-  }
-`;
+//     > span {
+//       font-size: 14px;
+//       // width: 40px;
+//       display: block;
+//     }
+//   }
+//   @media (min-width: 768px) and (max-width: 991.98px) {
+//     > span {
+//       font-size: 16px;
+//       width: 40px;
+//     }
+//   }
+//   @media (min-width: 992px) and (max-width: 1299.98px) {
+//     > span {
+//       font-size: 18px;
+//       width: 50px;
+//     }
+//   }
+//   @media (min-width: 1300px) {
+//   }
+// `;
 
 const Filter = styled.div`
   display: flex;
