@@ -8,19 +8,12 @@ import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
 import Project from "stores/Project";
 import { toJS } from "mobx";
-<<<<<<< HEAD:containers/Manufacture/Project/Partner/Mobile/MobileProject.js
 
 import SearchBarConatiner from "../../Common/SearchBar";
-
-const pass1 = 'static/images/pass1.png'
-const pass2 = 'static/images/pass2.png'
 
 const left = 'static/icon/left-arrow.png'
 const right = 'static/icon/right-arrow.png'
 
-=======
-import SearchBarConatiner from "../../SearchBar";
->>>>>>> aa3fe0357b5d3bb3c30f57dc1c2af8dbea5742d9:containers/Project/Partner/Mobile/MobileProject.js
 import * as Content from "components/Content";
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
