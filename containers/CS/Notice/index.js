@@ -8,6 +8,7 @@ import ContentConatiner from "./Content";
 import * as PartnerAPI from "axios/Partner";
 import KSLink from "components/KSLink";
 import { inject, observer } from "mobx-react";
+import InnerBoxComponent from "./InnerBox";
 
 class NoticeConatiner extends React.Component {
   state = {
@@ -41,19 +42,23 @@ class NoticeConatiner extends React.Component {
   // };
 
   render() {
-    const { Grstore, Common } = this.props;
     return (
       <>
         <BannerConatiner />
         <Section>
           <Container>
             <ContentConatiner />
+            <InnerBoxComponent
+              outerStyles={{
+                marginTop: 30,
+                border: "1px solid black",
+                padding: 20,
+              }}
+              Content={() => {
+                return <>hello</>;
+              }}
+            />
             {/* {this.state.companyName} */}
-            <KSLink title={"오규asdasdasd석"} />
-            {this.state.companyName != null &&
-              this.state.companyName.map((item) => {
-                return <>{/* <div>{item.name}</div> */}</>;
-              })}
           </Container>
         </Section>
       </>

@@ -23,7 +23,8 @@ import * as Content from "components/Content";
 class MobileProjectContentContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.pushToDetail = this.pushToDetail.bind(this);
+    this.props.Project.pushToDetail =
+      this.props.Project.pushToDetail.bind(this);
   }
   state = {
     current: 0,
@@ -31,16 +32,6 @@ class MobileProjectContentContainer extends React.Component {
     prev: true,
     count: 0,
   };
-  pushToDetail = async (id) => {
-    const { Project } = this.props;
-    console.log(id);
-    Project.selectedProjectId = id;
-    await Project.getProjectDetail(id);
-    Project.newIndex = 1;
-
-    Project.setProjectDetailData(id);
-  };
-
   handleIntersection = (event) => {
     if (event.isIntersecting) {
       console.log("추가 로딩을 시도합니다");
@@ -58,42 +49,6 @@ class MobileProjectContentContainer extends React.Component {
     }
     console.log(Auth.logged_in_client);
   }
-
-  // afterChangeHandler = (current) => {
-  //   if(current === 0){
-  //     this.setState({next: true, prev: false})
-  //   } else {
-  //       this.setState({next: true, prev: true})
-  //   }
-  // }
-
-  movePage = (e) => {
-    const { Project, Auth } = this.props;
-    const newPage = e.target.innerText * 1;
-
-    Project.currentPage = newPage;
-    Project.getPage(Auth.logged_in_client.id, newPage);
-  };
-
-  pageNext = () => {
-    const { Project, Auth } = this.props;
-
-    if (Project.currentPage < Project.project_page) {
-      const nextPage = Project.currentPage + 1;
-      Project.currentPage = nextPage;
-      Project.getPage(Auth.logged_in_client.id, Project.currentPage);
-    }
-  };
-
-  pagePrev = () => {
-    const { Project, Auth } = this.props;
-
-    if (Project.currentPage > 1) {
-      const newPage = Project.currentPage - 1;
-      Project.currentPage = newPage;
-      Project.getPage(Auth.logged_in_client.id, Project.currentPage);
-    }
-  };
 
   render() {
     const { Project } = this.props;
@@ -116,7 +71,7 @@ class MobileProjectContentContainer extends React.Component {
                           width: "100%",
                           marginTop: 14,
                         }}
-                        onClick={() => this.pushToDetail(item.id)}
+                        onClick={() => Project.pushToDetail(item.id)}
                       >
                         <ProposalCard
                           width={this.props.width}
@@ -135,10 +90,10 @@ class MobileProjectContentContainer extends React.Component {
                     opacity:
                       current_set == 1 && Project.currentPage <= 1 ? 0.4 : 1,
                   }}
-                  onClick={this.pagePrev}
+                  onClick={Project.pagePrev}
                 />
                 <PageCount
-                  onClick={this.movePage}
+                  onClick={Project.movePage}
                   value={5 * (current_set - 1)}
                   active={Project.currentPage % 5 == 1}
                   style={{
@@ -160,7 +115,7 @@ class MobileProjectContentContainer extends React.Component {
                         ? "none"
                         : "block",
                   }}
-                  onClick={this.movePage}
+                  onClick={Project.movePage}
                 >
                   {" "}
                   {5 * (current_set - 1) + 2}{" "}
@@ -174,7 +129,7 @@ class MobileProjectContentContainer extends React.Component {
                         ? "none"
                         : "block",
                   }}
-                  onClick={this.movePage}
+                  onClick={Project.movePage}
                 >
                   {" "}
                   {5 * (current_set - 1) + 3}{" "}
@@ -188,7 +143,7 @@ class MobileProjectContentContainer extends React.Component {
                         ? "none"
                         : "block",
                   }}
-                  onClick={this.movePage}
+                  onClick={Project.movePage}
                 >
                   {" "}
                   {5 * (current_set - 1) + 4}{" "}
@@ -202,7 +157,7 @@ class MobileProjectContentContainer extends React.Component {
                         ? "none"
                         : "block",
                   }}
-                  onClick={this.movePage}
+                  onClick={Project.movePage}
                 >
                   {" "}
                   {5 * (current_set - 1) + 5}{" "}
@@ -214,7 +169,7 @@ class MobileProjectContentContainer extends React.Component {
                     opacity:
                       Project.project_page == Project.currentPage ? 0.4 : 1,
                   }}
-                  onClick={this.pageNext}
+                  onClick={Project.pageNext}
                 />
               </PageBar>
             </>
