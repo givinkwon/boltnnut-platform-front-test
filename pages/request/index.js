@@ -9,7 +9,7 @@ import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 import * as AccountAPI from "axios/Account";
 
-import RequestConatiner from "containers/Request";
+import RequestConatiner from "containers/Manufacture/Request";
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
 @inject(

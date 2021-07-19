@@ -5,7 +5,7 @@ import Nav from "components/Nav";
 import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 
-import MagazineConatiner from "containers/Magazine";
+import MagazineConatiner from "containers/Common/Magazine";
 import { inject, observer } from "mobx-react";
 import * as AccountAPI from "axios/Account";
 

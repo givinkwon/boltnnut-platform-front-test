@@ -7,7 +7,7 @@ import Nav from "../components/Nav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 
-import FAQConatiner from "containers/CS/FAQ";
+import FAQConatiner from "containers/Common/FAQ";
 import MobileNav from "../components/MobileNav";
 
 const back_ic = "/static/images/components/MobileNav/back.png";

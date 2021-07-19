@@ -3,7 +3,7 @@ import { observable, action, toJS, makeObservable } from "mobx";
 import * as CategoryAPI from "axios/Category";
 import * as PartnerAPI from "axios/Partner";
 import { isConstructorDeclaration } from "typescript";
-import NoneDrawingConsultingContainer from "../containers/Request/NoneDrawingConsulting";
+import NoneDrawingConsultingContainer from "../containers/Manufacture/Request/NoneDrawingConsulting";
 
 class Partner {
   constructor() {
