@@ -8,7 +8,6 @@ const Banner3Img = '/static/images/Info/Mobile/MobileBanner3Img.png';
 const Banner1Img = '/static/images/Info/Mobile/MobileBanner1Img.png';
 const Banner1Img2 = '/static/images/Info/Mobile/MobileBanner1Img2.png';
 import MobilePaymentPageContainer from '../Request/Mobile/MobilePaymentPage';
-import MobilePaymentCompleteContainer from '../Request/Mobile/MobilePaymentComplete';
 class MobileInfoContainer extends React.Component {
 	render() {
 		return (

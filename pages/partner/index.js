@@ -11,7 +11,7 @@ import Spinner from 'components/Spinner'
 import PartnerConatiner from 'containers/Partner'
 import * as AccountAPI from "axios/Account";
 
-@inject('Counter', 'Post', 'Loading'. 'Auth')
+@inject('Counter', 'Post', 'Loading', 'Auth')
 @observer
 class Partner extends React.Component {
   state = {

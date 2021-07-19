@@ -35,7 +35,7 @@ class ProjectContentContainer extends React.Component {
 
   handleIntersection = (event) => {
     if (event.isIntersecting) {
-      console.log("추가 로딩을 시도합니다");
+
     }
   };
 
@@ -75,6 +75,8 @@ class ProjectContentContainer extends React.Component {
                     console.log(toJS(item));
                   }
                   return (
+                    <>
+                    {toJS(item.request_set.length > 0) &&
                     <Background
                       style={{ marginTop: 34, backgroundColor: "#f9f9f9" }}
                     >
@@ -93,6 +95,8 @@ class ProjectContentContainer extends React.Component {
                         </div>
                       </Container>
                     </Background>
+                    }
+                    </>
                   );
                 })}
               <PageBar>
