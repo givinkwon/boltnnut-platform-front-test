@@ -11,7 +11,7 @@ import Containerv1 from "components/Containerv1";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
-import ChatTestContainer from "containers/CS/Info2/ChatTest";
+import ChatTestContainer from "containers/Chatting/Info2/ChatTest";
 const close_ic = "/static/icon/close.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";

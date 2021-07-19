@@ -11,7 +11,14 @@ import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
+@inject(
+  "Auth",
+  "Project",
+  "Request",
+  "Partner",
+  "ManufactureProcess",
+  "Producer"
+)
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -20,21 +27,6 @@ class SearchBarConatiner extends React.Component {
     list: false,
   };
 
-  selectClick = () => {
-    const { list } = this.state;
-    this.setState({ list: true });
-  };
-
-  selectOut = () => {
-    const { list } = this.state;
-    this.setState({ list: false });
-  };
-
-  searchText = async (e) => {
-    const { Partner } = this.props;
-    this.setState({ search: e.target.value });
-    await (Partner.search_text = e.target.value);
-  };
   search = async () => {
     const { Partner, ManufactureProcess } = this.props;
     // console.log("click");
@@ -70,12 +62,14 @@ class SearchBarConatiner extends React.Component {
       }
     }
   };
+
   closeModal = () => {
     this.setState({
       ...this.state,
       modal_open: false,
     });
   };
+
   handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
@@ -108,57 +102,34 @@ class SearchBarConatiner extends React.Component {
       // }
     }
   };
+
   async componentDidMount() {
     await this.props.Auth.checkLogin();
   }
+
   render() {
     const { Partner, Request } = this.props;
     return (
       <>
         <Form active={Partner.subButtonActive}>
-          {/* <Box
-            active={this.state.list === true}
-            onClick={() =>
-              this.state.list ? this.selectOut() : this.selectClick()
-            }
-            onBlur={() => this.selectOut()}
-          >
-            {/* <input
-            style={{ display: "none" }}
-            value={Request.select_big ? Request.select_big.maincategory : ""}
-            class="Input"
-          /> */}
-          {/* <Select
-              placeholder="전체"
-              options={categoryArray}
-              getOptionLabel={(option) => option.label}
-              value={Partner.input_category}
-              onChange={Partner.setCategory}
-            />
-          </Box> */}
           <SearchBar active={Partner.subButtonActive}>
             <input
-              placeholder="원하는 분야의 제조업체를 검색하세요"
+              placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
               onFocus={(e) => (e.target.placeholder = "")}
               onBlur={(e) =>
-                (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
+                (e.target.placeholder =
+                  "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
               }
-              onChange={this.searchText}
+              onChange={Partner.searchText}
               class="Input"
               onKeyPress={this.handleKeyDown}
             />
-          </SearchBar>
-          <SearchButton
-            width={80}
-            borderColor={PRIMARY2}
-            borderRadius={0}
-            onClick={this.search}
-          >
             <img
-              style={{ width: 18, height: 18 }}
-              src="/static/images/search_white.svg"
+              style={{ width: 20, height: 20, marginRight: 25 }}
+              src="/static/icon/search.png"
+              onClick={this.search}
             />
-          </SearchButton>
+          </SearchBar>
         </Form>
       </>
     );
@@ -176,21 +147,28 @@ const categoryArray = [
 
 const SearchBar = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   // width: 601px;
-  height: 44px;
+  width: 100%;
+  height: 60px;
   box-sizing: border-box;
+  border: 1px solid #c6c7cc;
+  border-radius: 30px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 8px -3px;
   // margin 0 24px;
 
   input {
     width: 100%;
+    border: none;
+    border-radius: 30px;
     padding: 0 14px;
-    border: 1px solid #c6c7cc;
-    border-radius: 3px;
+    margin-left: 10px;
     :focus {
       outline: none;
     }
     ::placeholder {
-      color: #c1bfbf;
+      color: #000;
     }
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -230,6 +208,10 @@ const SearchBar = styled.div`
     }
   }
 `;
+// const SearchIcon = styled.div`
+//   background: none;
+//   border: none;
+// `;
 const Form = styled.div`
   //margin-top: 90px;
   // width: 100%;

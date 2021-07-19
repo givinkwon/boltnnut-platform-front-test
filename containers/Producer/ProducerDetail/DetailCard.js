@@ -23,6 +23,7 @@ import TabBar from "TabBar";
 
 const star = "/static/icon/star_blue3.svg";
 const bluebar_empty = "/static/icon/bluebar_empty.svg";
+const bookmarkImg = "/static/images/producer/bookmark.svg";
 import Slider from "react-slick";
 
 const availableFileType1 = [
@@ -329,9 +330,13 @@ class DetailCardContainer extends React.Component {
             <tag>
               <span>활동 가능</span>
             </tag>
-            {Partner.partner_detail_list.length != 0 && (
-              <name>{Partner.partner_detail_list[0].item.name}</name>
-            )}
+
+            <HeaderItem>
+              {Partner.partner_detail_list.length != 0 && (
+                <name>{Partner.partner_detail_list[0].item.name}</name>
+              )}
+              <img src={bookmarkImg}></img>
+            </HeaderItem>
             {Partner.partner_detail_list.length != 0 && (
               <content>
                 <span>{Partner.partner_detail_list[0].item.info_company}</span>
@@ -809,7 +814,7 @@ class DetailCardContainer extends React.Component {
         </Card>
 
         <SubCard>
-          <SubBoxContainer partnerId={Partner.partner_detail_list[0].item.id}/>
+          <SubBoxContainer partnerId={Partner.partner_detail_list[0].item.id} />
           {/* <RequestContainer /> */}
           {/* <RecentPartnerContainer /> */}
         </SubCard>
@@ -949,7 +954,7 @@ const HeaderBox = styled.div`
     letter-spacinig: -0.65px;
     color: #282c36;
     font-weight: bold;
-    margin-bottom: 34px;
+    // margin-bottom: 34px;
   }
   content {
     span {
@@ -1046,6 +1051,12 @@ const HeaderBox = styled.div`
     }
   }
 
+`;
+
+const HeaderItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 34px;
 `;
 
 const ReviewBox = styled.div`

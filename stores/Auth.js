@@ -232,6 +232,7 @@ class Auth {
       this.category_middle_set = [id, ...this.category_middle_set];
     }
   };
+
   @action checkLogin = async () => {
     const token = localStorage.getItem("token");
     const expiry = localStorage.getItem("expiry");

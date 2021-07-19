@@ -131,6 +131,7 @@ class RequestModal extends React.Component {
     console.log(Partner.partner_count);
     console.log(toJS(Partner.category_dic));
   };
+
   openDoneModal = async () => {
     const { Partner } = this.props;
     console.log("requestdonemodal open click");
@@ -464,14 +465,14 @@ class RequestModal extends React.Component {
       });
   };
 
-  activeFileFilter = () => {
-    const { Partner } = this.props;
-    if (Partner.filterFile) {
-      Partner.filterFile = false;
-    } else {
-      Partner.filterFile = true;
-    }
-  };
+  // activeFileFilter = () => {
+  //   const { Partner } = this.props;
+  //   if (Partner.filterFile) {
+  //     Partner.filterFile = false;
+  //   } else {
+  //     Partner.filterFile = true;
+  //   }
+  // };
   render() {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
     const { open, close, header, children, width, Partner } = this.props;
@@ -501,61 +502,6 @@ class RequestModal extends React.Component {
                   </header>
                   <main>
                     <ContainerV2>
-                      {/* <Category>
-                        <span>분야</span>
-                        <div style={{ marginRight: "24px" }}>
-                          <Select
-                            placeholder="대 카테고리"
-                            // options={bigCategoryArray}
-                            options={this.props.Partner.category_main_list}
-                            getOptionLabel={(option) => option.maincategory}
-                            // value={Partner.input_category}
-                            onChange={Partner.setDetailBigCategory}
-                            theme={(theme) => ({
-                              ...theme,
-                              colors: {
-                                ...theme.colors,
-                                neutral50: "#1A1A1A", // Placeholder color
-                              },
-                            })}
-                          />
-                        </div>
-                        <div>
-                          <Select
-                            placeholder="소 카테고리"
-                            options={Partner.category_middle_ary}
-                            getOptionLabel={(option) => option.category}
-                            value={
-                              Partner.category_middle_ary[0] &&
-                              Partner.input_detail_small_category
-                            }
-                            onChange={Partner.setDetailSmallCategory}
-                            defaultValue={
-                              Partner.category_middle_ary[0] &&
-                              Partner.category_middle_ary[0].cagegory
-                            }
-                          />
-                        </div>
-                      </Category>
-                      <Location>
-                        <span>위치</span>
-                        <Select
-                          placeholder="전체지역"
-                          options={this.props.Partner.filter_city_ary}
-                          getOptionLabel={(option) => option.city}
-                          // value={Partner.input_category}
-                          onChange={Partner.setDetailCityCategory}
-                        />
-                      </Location> */}
-
-                      {/* <Filter>
-                        <span>필터</span>
-                        <FilterBox
-                          filter="filter"
-                          purpose="request"
-                          data={Partner.filterArray}
-                        />
-                      </Filter> */}
                       <Email>
                         <span>이메일</span>
                         <div>
@@ -732,7 +678,7 @@ class RequestModal extends React.Component {
                         <FileComponent file={true} />
                         <nofile
                           onClick={() => {
-                            this.activeFileFilter();
+                            Partner.activeFileFilter();
                           }}
                         >
                           <div>
@@ -1448,12 +1394,14 @@ const MobileContainer = styled.div`
 
 const ModalBox = styled.div`
   // display: none;
+  overflow: auto;
   position: fixed;
   //top: 40%;
   //right: 14%;
   // bottom: 0;
   // left: 0;
   z-index: 101;
+  height: 90vh;
   background-color: white;
   // height: 823px;
   width: 1200px;

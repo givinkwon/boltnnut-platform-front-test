@@ -441,10 +441,12 @@ export function deleteBookmarkPartner(req) {
 }
 
 export function existBookmarkPartner(req) {
+  console.log(req);
+
   return axios({
     method: "GET",
     url: `${ROOT_URL}/bookmark/exist/`,
-    data: req.data ? req.data : null,
+    params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
   });
 }

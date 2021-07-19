@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { toJS } from "mobx";
 
 class ProposalCard extends React.Component {
   state = {
@@ -53,6 +54,7 @@ class ProposalCard extends React.Component {
       status =
         data.request_set[0].request_state && data.request_set[0].request_state;
     }
+
 
     return (
       <>

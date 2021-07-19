@@ -144,16 +144,6 @@ class SearchFilterConatiner extends React.Component {
     filter_category_active: false,
   };
 
-  openModal = () => {
-    const { Partner } = this.props;
-    Partner.requestModalActive = true;
-  };
-  closeModal = () => {
-    const { Partner } = this.props;
-
-    Partner.requestModalActive = false;
-  };
-
   dropdownHandler = (flag) => {
     const { Partner } = this.props;
 
@@ -196,10 +186,13 @@ class SearchFilterConatiner extends React.Component {
     return (
       <>
         {width && width > 767.99 ? (
-          <ContainerV2>          
+          
+          <ContainerV2>
+            {console.log(`Active : ${Partner.subButtonActive}`)}
+            <SearchBar />
+
             <Search active={Partner.subButtonActive}>
-              <SearchBar />
-              <FilterButton>
+              {/* <FilterButton>
                 <Button
                   onClick={() => {
                     this.dropdownHandler("city");
@@ -208,10 +201,10 @@ class SearchFilterConatiner extends React.Component {
                   <span>필터</span>
                 </Button>
                 <img src={filter_img} />
-              </FilterButton>
-              <div
+              </FilterButton> */}
+              {/* <div
                 onClick={() => {
-                  this.openModal();
+                  Partner.openModal();
                 }}
               >
                 <span>업체수배&견적 무료의뢰 </span>
@@ -219,12 +212,12 @@ class SearchFilterConatiner extends React.Component {
                 <div></div>
                 <div></div>
                 <div></div>
-              </div>
-              <div>
+              </div> */}
+              {/* <div>
                 <span>업체 찾기가 힘든 경우 클릭!</span>
-              </div>
+              </div> */}
 
-              <div
+              {/* <div
                 onClick={() => {
                   Router.push("/request");
                 }}
@@ -234,11 +227,103 @@ class SearchFilterConatiner extends React.Component {
                 <div></div>
                 <div></div>
                 <div></div>
+              </div> */}
+              {/* <div>
+                <span>도면이 있는 경우 클릭!</span>
+              </div>
+            </Search>         
+              </div> */}
+            </Search>
+
+            {/* <Category>
+              <span>분야</span>
+              <div>
+                <Select
+                  placeholder="대 카테고리"
+                  // options={bigCategoryArray}
+                  options={this.props.Partner.category_main_list}
+                  getOptionLabel={(option) => option.maincategory}
+                  // value={Partner.input_category}
+                  // style={{ width: "160px" }}
+                  onChange={Partner.setMainCategory}
+                  theme={(theme) => ({
+                    ...theme,
+                    colors: {
+                      ...theme.colors,
+                      neutral50: "#1A1A1A", // Placeholder color
+                    },
+                  })}
+                />
+              </div>
+              <div>
+                <Select
+                  placeholder="소 카테고리"
+                  options={Partner.category_middle_ary}
+                  getOptionLabel={(option) => option.category}
+                  value={
+                    Partner.category_middle_ary[0] &&
+                    Partner.input_small_category
+                  }
+                  onChange={Partner.setSmallCategory}
+                  defaultValue={
+                    Partner.category_middle_ary[0] &&
+                    Partner.category_middle_ary[0].cagegory
+                  }
+                />
+              </div>
+                </Category>*/}
+            {/* <Search>
+              <div
+                onClick={() => {
+                  // Partner.filterArray.map((data, idx) => {
+                  //   data.checked = false;
+                  // });
+                  Router.push("/request");
+                }}
+              >
+                <span> 바로 AI 견적 받기 </span>
               </div>
               <div>
                 <span>도면이 있는 경우 클릭!</span>
               </div>
-            </Search>         
+            </Search> */}
+
+            {/* <FilterContainer>
+              <FilterItem
+                active={this.state.filter_city_active}
+                style={{ borderRight: "none" }}
+                onClick={() => {
+                  this.dropdownHandler("city");
+                }}
+                onMouseOver={() => {
+                  console.log("mouseOver");
+                  this.activeHandler("city");
+                }}
+                onMouseOut={() => {
+                  console.log("mouseOut");
+                  this.activeHandler("city");
+                }}
+              >
+                <span>지역 검색</span>
+              </FilterItem>
+
+              <FilterItem
+                active={this.state.filter_category_active}
+                onClick={() => {
+                  this.dropdownHandler("category");
+                }}
+                onMouseOver={() => {
+                  console.log("mouseOver");
+                  this.activeHandler("category");
+                }}
+                onMouseOut={() => {
+                  console.log("mouseOut");
+                  this.activeHandler("category");
+                }}
+              >
+                <span>분야 검색</span>
+              </FilterItem>
+            </FilterContainer> */}
 
             {Partner.filter_dropdown && (
               <FilterContent>
@@ -268,7 +353,7 @@ class SearchFilterConatiner extends React.Component {
                   <Modal
                     width={width}
                     open={Partner.requestModalActive}
-                    close={this.closeModal}
+                    close={Partner.closeModal}
                   ></Modal>
                 </span>
               </Layer>
@@ -280,7 +365,7 @@ class SearchFilterConatiner extends React.Component {
                   <DoneModal
                     width={width}
                     open={Partner.requestDoneModalActive}
-                    close={this.closeModal}
+                    close={Partner.closeModal}
                   />
                 </span>
               </Layer>
@@ -334,7 +419,7 @@ class SearchFilterConatiner extends React.Component {
                   <Modal
                     width={width}
                     open={Partner.requestModalActive}
-                    close={this.closeModal}
+                    close={Partner.closeModal}
                   ></Modal>
                 </span>
               </Layer>
@@ -346,7 +431,7 @@ class SearchFilterConatiner extends React.Component {
                   <DoneModal
                     width={width}
                     open={Partner.requestDoneModalActive}
-                    close={this.closeModal}
+                    close={Partner.closeModal}
                   />
                 </span>
               </Layer>

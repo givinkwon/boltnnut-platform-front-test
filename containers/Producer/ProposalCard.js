@@ -31,7 +31,7 @@ var availableFileType = [
   "doc",
   "html",
 ];
-@inject("Partner", "Auth", "Common")
+@inject("Partner", "Auth", "Common", "Producer")
 @observer
 class ProposalCard extends React.Component {
   state = {
@@ -73,6 +73,7 @@ class ProposalCard extends React.Component {
       return false;
     }
   };
+
   clickLog = (partner) => {
     const { Auth, Partner } = this.props;
 
@@ -107,17 +108,15 @@ class ProposalCard extends React.Component {
       });
   };
   componentDidMount() {
-    const { width } = this.props;
-    window.addEventListener("resize", this.updateDimensions);
+    const { width, Producer } = this.props;
+    window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
+    const { Producer } = this.props;
+    window.removeEventListener("resize", Producer.updateDimensions);
   }
-  updateDimensions = () => {
-    this.setState({ ...this.state, width: window.innerWidth });
-  };
 
   activeHandler = (type) => {
     switch (type) {
@@ -225,23 +224,24 @@ class ProposalCard extends React.Component {
     }
   };
 
-  onClickReviewHandler = (idx, name) => {
-    const { Partner } = this.props;
+  // onClickReviewHandler = (idx, name) => {
+  //   const { Partner } = this.props;
 
-    if (Partner.ReviewActiveIndex === idx) {
-      console.log(`review false : ${idx}`);
-      this.setState({ activeReview: false });
-      Partner.ReviewActive = false;
-      Partner.ReviewActiveIndex = -1;
-      Partner.partnerName = "";
-    } else {
-      console.log(`review true : ${idx}`);
-      this.setState({ activeReview: true });
-      Partner.ReviewActive = true;
-      Partner.ReviewActiveIndex = idx;
-      Partner.partnerName = name;
-    }
-  };
+  //   if (Partner.ReviewActiveIndex === idx) {
+  //     console.log(`review false : ${idx}`);
+  //     this.setState({ activeReview: false });
+  //     Partner.ReviewActive = false;
+  //     Partner.ReviewActiveIndex = -1;
+  //     Partner.partnerName = "";
+  //   } else {
+  //     console.log(`review true : ${idx}`);
+  //     this.setState({ activeReview: true });
+  //     Partner.ReviewActive = true;
+  //     Partner.ReviewActiveIndex = idx;
+  //     Partner.partnerName = name;
+  //   }
+  // };
+
   render() {
     const { data, width, Partner, categoryData, idx } = this.props;
 

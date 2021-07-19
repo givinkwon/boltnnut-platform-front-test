@@ -7,11 +7,11 @@ import { toJS } from "mobx";
 @inject("Partner", "Auth")
 @observer
 class SubBoxContainer extends React.Component {
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const { Partner, Auth, partnerId } = this.props;
 
     const clientId = this.props.Auth.logged_in_client.id;
-    Partner.existBookmarkPartner(clientId, partnerId);
+    await Partner.existBookmarkPartner(clientId, partnerId);
   };
   render() {
     const { Partner, Auth, partnerId } = this.props;
@@ -63,6 +63,7 @@ class SubBoxContainer extends React.Component {
             >
               <div
                 onClick={async () => {
+                  console.log("click!!");
                   Partner.clickHandler("interested");
                   if (Partner.interestedIdx) {
                     await Partner.setBookmarkPartner(clientId, partnerId);
