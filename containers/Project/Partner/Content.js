@@ -80,7 +80,7 @@ class ProjectContentContainer extends React.Component {
                             <Background style={{ marginBottom: "34px" }}>
                               <div
                                 style={{ cursor: "pointer", width: "100%" }}
-                                onClick={() => this.pushToDetail(item.id)}
+                                onClick={() => Project.pushToDetail(item.id)}
                               >
                                 <ProposalCard
                                   data={item}
