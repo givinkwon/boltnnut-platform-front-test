@@ -46,8 +46,8 @@ class ContentSub extends React.Component {
   }
 
   changeProject = () => {
-    const { ManufactureProcess, Request } = this.props;
-    console.log(Request.newIndex);
+    const { ManufactureProcess } = this.props;
+    // console.log(Request.newIndex);
 
     Router.push("/request");
     this.props.ManufactureProcess.changeProject = true;

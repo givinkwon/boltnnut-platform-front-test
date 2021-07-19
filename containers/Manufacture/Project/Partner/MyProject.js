@@ -31,14 +31,6 @@ class MyProject extends React.Component {
     Project.chatModalActive = !Project.chatModalActive;
   };
 
-  pushToDetail = async (id) => {
-    const { Project } = this.props;
-    console.log(id);
-    await Project.getProjectDetail(id);
-    Project.newIndex = 1;
-    Project.selectedProjectId = id;
-  };
-
   async getProject(data) {
     const { Project } = this.props;
     const partnerprojectlist = this.state.Partnerprojectlist;
@@ -105,7 +97,7 @@ class MyProject extends React.Component {
                             this.modalHandler(data.answerId, idx);
                           }}
                           user={Auth}
-                          pushToDetail={this.pushToDetail}
+                          pushToDetail={Project.pushToDetail}
                         />
                       )}
                     </BoxContainer>

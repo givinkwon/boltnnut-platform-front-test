@@ -27,14 +27,6 @@ class MyProject extends React.Component {
     Project.chatModalActive = !Project.chatModalActive;
   };
 
-  pushToDetail = async (id) => {
-    const { Project } = this.props;
-
-    await Project.getProjectDetail(id);
-    Project.newIndex = 1;
-    Project.selectedProjectId = id;
-  };
-
   async getProject(data) {
     const { Project } = this.props;
     const partnerprojectlist = this.state.Partnerprojectlist;
@@ -79,7 +71,7 @@ class MyProject extends React.Component {
                   <Container>
                     <div
                       style={{ cursor: "pointer", width: "100%" }}
-                      onClick={() => this.pushToDetail(item.id)}
+                      onClick={() => Project.pushToDetail(item.id)}
                     >
                       <ProposalCard
                         data={item}
