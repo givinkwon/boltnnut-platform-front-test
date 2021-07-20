@@ -412,3 +412,50 @@ export function getPPTInfo(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function setBookmarkPartner(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/bookmark/add/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getBookmarkByClient(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/bookmark/client/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getTotalBookmarkByPartner(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/bookmark/partner/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function deleteBookmarkPartner(req) {
+  return axios({
+    method: "DELETE",
+    url: `${ROOT_URL}/bookmark/sub/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function existBookmarkPartner(req) {
+  console.log(req);
+
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/bookmark/exist/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}

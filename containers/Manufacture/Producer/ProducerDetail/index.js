@@ -12,7 +12,6 @@ class ProducerDetailConatiner extends React.Component {
   componentDidMount() {
     const { Auth, Partner } = this.props;
     console.log(this.props.width);
-    // Partner.reviewActiveIndex = 1;
   }
   render() {
     const { Auth, Partner } = this.props;
