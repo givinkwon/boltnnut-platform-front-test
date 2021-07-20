@@ -1739,46 +1739,46 @@ class Partner {
           this.category_count += 1;
         });
 
-        await this.category_ary.map(async (data, id) => {
-          await data.map(async (sub_data, index) => {
-            const req = {
-              id: sub_data,
-            };
-            if (this.isSearched) {
-              this.exceptionCategory += sub_data + ",";
-            }
+        //   await this.category_ary.map(async (data, id) => {
+        //     await data.map(async (sub_data, index) => {
+        //       const req = {
+        //         id: sub_data,
+        //       };
+        //       if (this.isSearched) {
+        //         this.exceptionCategory += sub_data + ",";
+        //       }
 
-            if (this.click_count != click) {
-              return;
-            }
+        //       if (this.click_count != click) {
+        //         return;
+        //       }
 
-            await PartnerAPI.getPartnerCategory(req)
-              .then(async (res) => {
-                if (click == 0) {
-                  click += 1;
-                }
+        //       await PartnerAPI.getPartnerCategory(req)
+        //         .then(async (res) => {
+        //           if (click == 0) {
+        //             click += 1;
+        //           }
 
-                if (this.click_count == click) {
-                  if (!this.category_dic.hasOwnProperty(id)) {
-                    this.category_dic[id] = [];
-                  }
-                  this.category_dic[id] = await [
-                    ...this.category_dic[id],
-                    res.data.category,
-                  ];
-                } else {
-                  return;
-                }
-              })
-              .catch((e) => {
-                console.log(e);
-                console.log(e.response);
-              });
-            if (this.click_count != click) {
-              return;
-            }
-          });
-        });
+        //           if (this.click_count == click) {
+        //             if (!this.category_dic.hasOwnProperty(id)) {
+        //               this.category_dic[id] = [];
+        //             }
+        //             this.category_dic[id] = await [
+        //               ...this.category_dic[id],
+        //               res.data.category,
+        //             ];
+        //           } else {
+        //             return;
+        //           }
+        //         })
+        //         .catch((e) => {
+        //           console.log(e);
+        //           console.log(e.response);
+        //         });
+        //       if (this.click_count != click) {
+        //         return;
+        //       }
+        //     });
+        //   });
       })
       .catch((e) => {
         console.log(e);

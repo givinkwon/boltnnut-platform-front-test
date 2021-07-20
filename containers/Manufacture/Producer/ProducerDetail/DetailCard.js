@@ -5,12 +5,13 @@ import Router from "next/router";
 import Modal from "../Review/ReviewWritingModal";
 import ReviewCard from "../Review/ReviewCard";
 import MapContainer from "./Map";
-import ReviewStarRating from "../Review/ReviewStarRating";
+
 import { toJS } from "mobx";
 import DocViewer from "./DocViewer";
 import SubBoxContainer from "./SubBox";
 import QuestionContainer from "./Question";
 import HeaderItem from "./HeaderContainer";
+import ReviewSummaryContainer from "../Review/ReviewBox";
 //import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
@@ -20,8 +21,6 @@ import ProposalCard from "../ProposalCard";
 import TabBar from "./TabBar";
 
 // const customRenderer = DocViewerRenderers;
-
-const star = "/static/icon/star_blue3.svg";
 const bluebar_empty = "/static/icon/bluebar_empty.svg";
 const viewImg = "/static/images/producer/views.svg";
 const bookmarkImg = "/static/images/producer/bookmark.svg";
@@ -161,34 +160,6 @@ class DetailCardContainer extends React.Component {
     //     '&embedded=true" class="viewer" frameborder="0"></iframe>';
     //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
     // }
-
-    /* 리뷰를 위한 변수 및 연산 */
-    let total_consult_score = 0;
-    let total_kindness_score = 0;
-    let total_communication_score = 0;
-    let total_profession_score = 0;
-    console.log(Partner.partnerReviewList);
-
-    // (await Partner.partnerAllReviewList[0]) &&
-    //   Partner.partnerAllReviewList[0].current.map((item, idx) => {
-    //     total_consult_score += item.consult_score;
-    //     total_kindness_score += item.kindness_score;
-    //     total_communication_score += item.communication_score;
-    //     total_profession_score += item.profession_score;
-    //   });
-    // Partner.partnerAllReviewList[0] &&
-    //   this.setState({
-    //     avg_consult_score:
-    //       total_consult_score / Partner.partnerAllReviewList[0].current.length,
-    //     avg_kindness_score:
-    //       total_kindness_score / Partner.partnerAllReviewList[0].current.length,
-    //     avg_communication_score:
-    //       total_communication_score /
-    //       Partner.partnerAllReviewList[0].current.length,
-    //     avg_profession_score:
-    //       total_profession_score /
-    //       Partner.partnerAllReviewList[0].current.length,
-    //   });
   };
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
@@ -451,120 +422,8 @@ class DetailCardContainer extends React.Component {
             <div>
               <label>평가 후기</label>
             </div>
-            {/* 
-            <SummaryBox>
-              <label>클라이언트 평균 만족도</label>
-              <header>
-                <mainscore>
-                  <div>
-                    <TotalRating>
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "31" : width > 992 ? "26" : "22"
-                          }
-                          margin={4}
-                          score={Math.floor(this.state.avg_consult_score)}
-                        />
-                      </div>
-                      <img src={star}></img>
-                    </TotalRating>
-                  </div>
-                  <div>
-                    <span>{this.state.avg_consult_score.toFixed(2)}</span>
-                    <span>전체 누적 평점</span>
-                  </div>
-                </mainscore>
 
-                <subscore>
-                  <div>
-                    <span
-                      style={{
-                        color: "#999999",
-                      }}
-                    >
-                      친절도
-                    </span>
-                    {width > 768 ? (
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "15" : width > 992 ? "13" : "11"
-                          }
-                          margin={1}
-                          score={this.state.avg_kindness_score}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        <CustomSlider
-                          value={this.state.avg_kindness_score * 20}
-                        />
-                        <div>{this.state.avg_kindness_score.toFixed(1)}</div>
-                      </>
-                    )}
-                  </div>
-
-                  <div>
-                    <span
-                      style={{
-                        color: "#999999",
-                      }}
-                    >
-                      연락 빈도
-                    </span>
-                    {width > 768 ? (
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "15" : width > 992 ? "13" : "11"
-                          }
-                          margin={1}
-                          score={this.state.avg_communication_score}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        <CustomSlider
-                          value={this.state.avg_communication_score * 20}
-                        />
-                        <div>
-                          {this.state.avg_communication_score.toFixed(1)}
-                        </div>
-                      </>
-                    )}
-                  </div>
-
-                  <div>
-                    <span
-                      style={{
-                        color: "#999999",
-                      }}
-                    >
-                      전문성
-                    </span>
-                    {width > 768 ? (
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "15" : width > 992 ? "13" : "11"
-                          }
-                          margin={1}
-                          score={this.state.avg_profession_score}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        <CustomSlider
-                          value={this.state.avg_profession_score * 20}
-                        />
-                        <div>{this.state.avg_profession_score.toFixed(1)}</div>
-                      </>
-                    )}
-                  </div>
-                </subscore>
-              </header>
-            </SummaryBox>
+            <ReviewSummaryContainer width={this.props.width}/>
             <content>
               <ReviewTop>
                 {Partner.partnerReviewList[0] && (
@@ -732,7 +591,6 @@ class DetailCardContainer extends React.Component {
                 onClick={this.pageNext}
               />
             </PageBar>
-            */}
           </ReviewBox>
 
           <MapBox>
@@ -758,7 +616,8 @@ class DetailCardContainer extends React.Component {
                             // e.stopPropagation();
                             this.props.Partner.viewerLoading = 0;
                             // this.props.Partner.subViewerLoading = 1;
-                            this.props.Partner.recentPartnerId = this.props.Partner.partner_detail_list[0].item.id
+                            this.props.Partner.recentPartnerId =
+                              this.props.Partner.partner_detail_list[0].item.id;
                             console.log(this.props.Partner.subViewerLoading);
                             this.pushToDetail(Partner.partner_list[item], item);
                             console.log("click");
@@ -785,7 +644,8 @@ class DetailCardContainer extends React.Component {
                             e.stopPropagation();
                             this.props.Partner.viewerLoading = 0;
                             // this.props.Partner.subViewerLoading = 1;
-                            this.props.Partner.recentPartnerId = this.props.Partner.partner_detail_list[0].item.id
+                            this.props.Partner.recentPartnerId =
+                              this.props.Partner.partner_detail_list[0].item.id;
                             console.log(this.props.Partner.subViewerLoading);
                             this.pushToDetail(Partner.partner_list[item], item);
                           }}
@@ -1097,202 +957,6 @@ const ReviewBox = styled.div`
   }
 `;
 
-const SummaryBox = styled.div`
-  margin-top: 50px;
-  margin-bottom: 34px;
-  > label {
-    font-size: 24px;
-    line-height: 40px;
-    letter-spacing: -0.6px;
-    color: #282c36;
-    font-weight: 500;
-    margin-bottom: 24px;
-    display: block;
-  }
-  > header {
-    display: flex;
-    justify-content: space-between;
-    > mainscore {
-      display: flex;
-      > div:nth-of-type(1) {
-        padding-top: 9px;
-        box-sizing: border-box;
-      }
-      > div:nth-of-type(2) {
-        display: flex;
-        flex-direction: column;
-        > span:nth-of-type(1) {
-          align-self: center;
-          font-size: 48px;
-          line-height: 40px;
-          letter-spacing: -1.2px;
-          color: #282c36;
-          font-weight: bold;
-          margin-bottom: 12px;
-        }
-        > span:nth-of-type(2) {
-          font-size: 16px;
-          line-height: 24px;
-          letter-spacing: -0.4px;
-          color: #191919;
-          font-weight: normal;
-        }
-      }
-    }
-    > subscore {
-      display: flex;
-      flex-direction: column;
-      width: 165px;
-     
-      > div {
-        margin-bottom: 9px;
-        display: flex;
-        justify-content: space-between;
-
-        // 4. (1)        
-        >div{
-          display: flex;
-          align-items: center;
-        }
-      }
-    }
-  }  
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    >label{
-      font-size: 20px;
-    }
-    > header {    
-      > mainscore {      
-        > div:nth-of-type(1) {
-          padding-top: 6px;        
-        }
-        > div:nth-of-type(2) {        
-          > span:nth-of-type(1) {
-            font-size: 32px;
-            line-height: 24px;
-            
-            margin-bottom: 6px;
-          }
-          > span:nth-of-type(2) {
-            font-size: 12px;
-            line-height: 18px;        
-          }
-        }
-      }
-      > subscore {      
-        width: 165px;
-        > div {
-          margin-bottom: 7px;
-          >span{
-            font-size:12px;
-          }
-        }
-      }
-    }
-  }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    >header{
-      > subscore {          
-        > div {      
-        
-          align-items: center;
-          >span{              
-            padding: 2px;
-            width: 180px;
-            // margin-bottom: 7px;
-          }
-          > span:nth-of-type(1) {
-              
-              margin-right: 10px;
-              font-size: 12px;
-              // width: 55px;
-              text-align: right;
-          
-            }
-            > div:nth-of-type(1) {
-              
-              // display: none;
-              font-size: 12px;
-            }
-            > div:nth-of-type(2) {
-              // display: none;
-              
-        
-              display: block;
-              font-size: 12px;
-                 
-            }
-          
-        }
-      }
-    }
-  }
-
-
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    >label{
-      font-size: 22px;
-    }
-      > header {    
-    > mainscore {      
-      > div:nth-of-type(1) {
-        padding-top: 8px;        
-      }
-      > div:nth-of-type(2) {        
-        > span:nth-of-type(1) {
-          font-size: 40px;
-          line-height: 32px;
-          
-          margin-bottom: 8px;
-        }
-        > span:nth-of-type(2) {
-          font-size: 14px;
-          line-height: 24px;        
-        }
-      }
-    }
-   > subscore {      
-      width: 165px;
-      > div {
-        margin-bottom: 7px;
-        >span{
-          font-size:12px;
-
-          // 4. (2)
-        align-items: center;
-        @media (min-width: 0px) and (max-width: 767.98px) {
-          padding: 2px;
-          width: 180px;
-          margin-bottom: 7px;
-        }
-        > span:nth-of-type(1) {
-          @media (min-width: 0px) and (max-width: 767.98px) {
-            margin-right: 10px;
-            font-size: 12px;
-            width: 55px;
-            text-align: right;
-          }
-        }
-        > div:nth-of-type(1) {
-          @media (min-width: 0px) and (max-width: 767.98px) {
-            display: none;
-          }
-        }
-        > div:nth-of-type(2) {
-          display: none;
-          @media (min-width: 0px) and (max-width: 767.98px) {
-            display: block;
-            font-size: 12px;
-          }
-// 4. (2)        
-}
-      }
-    }
-  }
-`;
-
 const Layer = styled.div`
   position: absolute;
   top: 0;
@@ -1559,22 +1223,6 @@ const TotalCount = styled.div`
   line-height: 2.86;
   letter-spacing: -0.35px;
   text-align: left;
-`;
-
-const TotalRating = styled.div`
-  > div {
-    @media (min-width: 0px) and (max-width: 767.98px) {
-      display: none;
-    }
-  }
-  > img {
-    display: none;
-    @media (min-width: 0px) and (max-width: 767.98px) {
-      width: 21.7px;
-      height: 21px;
-      display: block;
-    }
-  }
 `;
 
 const ReviewTop = styled.div`
