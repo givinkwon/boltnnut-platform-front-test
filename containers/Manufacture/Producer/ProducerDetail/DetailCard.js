@@ -8,8 +8,8 @@ import MapContainer from "./Map";
 import ReviewStarRating from "../Review/ReviewStarRating";
 import { toJS } from "mobx";
 import DocViewer from "./DocViewer";
-import RequestContainer from "./Request";
 import SubBoxContainer from "./SubBox";
+import QuestionContainer from "./Question";
 import HeaderItem from "./HeaderContainer";
 //import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
@@ -448,7 +448,7 @@ class DetailCardContainer extends React.Component {
             <div>
               <label>평가 후기</label>
             </div>
-
+            {/* 
             <SummaryBox>
               <label>클라이언트 평균 만족도</label>
               <header>
@@ -729,12 +729,18 @@ class DetailCardContainer extends React.Component {
                 onClick={this.pageNext}
               />
             </PageBar>
+            */}
           </ReviewBox>
 
           <MapBox>
             <Font24 id="maps">위치</Font24>
             <MapContainer city={Partner.city_name} />
           </MapBox>
+
+          <QuestionBox>
+            <Font24>업체 Q&A</Font24>
+            <QuestionContainer />
+          </QuestionBox>
 
           <IntroductionBox width={width}>
             <Font24>비슷한 제조사</Font24>
@@ -1538,6 +1544,11 @@ const Item = styled.div`
 `;
 
 const MapBox = styled.div`
+  width: 100%;
+  height: 500px;
+`;
+
+const QuestionBox = styled.div`
   width: 100%;
   height: 500px;
 `;

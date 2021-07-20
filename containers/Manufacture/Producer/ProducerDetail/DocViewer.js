@@ -26,6 +26,12 @@ class DocViewerContainer extends React.Component {
   render() {
     console.log(toJS(this.props.Partner.selectedIntroductionFile));
     console.log(this.props.Partner.viewerLoading);
+
+    // this.setState((state) => {
+    //   return { loading: state.loading + 1 };
+    // });
+
+    console.log(this.state.loading);
     const { width, Partner } = this.props;
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
     //
