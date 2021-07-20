@@ -20,8 +20,10 @@ class Partner {
   @observable projectIdx = false;
 
   @observable recentPartnerList = [];
+  @observable recentPartnerId = 0;
   @observable selectedTabIdx = 0; // 선택한 tabBar의 index 저장하는 변수
   @observable viewerLoading = 0;
+  @observable subViewerLoading = -1;
   @observable click_count = 1;
   @observable detail = null;
   @observable requests = [];
@@ -446,6 +448,7 @@ class Partner {
         console.log("뷰어 페이지 router push");
         this.partner_detail_list = [];
         await this.partner_detail_list.push({ item: item, idx: idx });
+        this.recentPartnerId = this.partner_detail_list[0].item.id;
 
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
         console.log(toJS(this.partner_detail_list));

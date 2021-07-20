@@ -20,16 +20,52 @@ class DocViewerContainer extends React.Component {
     console.log("docviewer unmount");
   }
 
-  shouldComponentUpdate = () => {
-    return !this.props.Partner.viewerLoading;
+  componentDidUpdate = () => {
+    console.log("didupdate");
+    if (
+      this.props.Partner.recentPartnerId !=
+      this.props.Partner.partner_detail_list[0].item.id
+    ) {
+      this.props.Partner.recentPartnerId =
+        this.props.Partner.partner_detail_list[0].item.id;
+    }
+  };
+  shouldComponentUpdate = (prevProps, nextState) => {
+    console.log(this.props.Partner.viewerLoading);
+    console.log(this.state.loading);
+    console.log(this.props.Partner.viewerLoading === this.state.loading);
+    console.log(prevProps);
+
+    console.log(this.props.Partner.recentPartnerId);
+    console.log(this.props.Partner.partner_detail_list[0].item.id);
+    console.log(
+      this.props.Partner.recentPartnerId !=
+        this.props.Partner.partner_detail_list[0].item.id
+    );
+
+    // this.props.Partner.subViewerLoading = this.state.loading;
+    // return (
+    //   this.props.Partner.viewerLoading === this.props.Partner.subViewerLoading
+    // );
+
+    return (
+      this.props.Partner.viewerLoading === this.state.loading ||
+      this.props.Partner.recentPartnerId !=
+        this.props.Partner.partner_detail_list[0].item.id
+    );
+
+    // return !this.props.Partner.viewerLoading;
   };
   render() {
     console.log(toJS(this.props.Partner.selectedIntroductionFile));
     console.log(this.props.Partner.viewerLoading);
 
-    // this.setState((state) => {
-    //   return { loading: state.loading + 1 };
-    // });
+    console.log(this.props.Partner.subViewerLoading);
+
+    this.setState((state) => {
+      return { loading: state.loading + 1 };
+    });
+    // this.props.Partner.subViewerLoading += 1;
 
     console.log(this.state.loading);
     const { width, Partner } = this.props;

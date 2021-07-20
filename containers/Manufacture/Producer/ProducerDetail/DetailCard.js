@@ -26,6 +26,7 @@ const bluebar_empty = "/static/icon/bluebar_empty.svg";
 const viewImg = "/static/images/producer/views.svg";
 const bookmarkImg = "/static/images/producer/bookmark.svg";
 const bookmarkBlueImg = "/static/images/producer/bookmark_blue.svg";
+
 import Slider from "react-slick";
 
 const availableFileType1 = [
@@ -109,7 +110,8 @@ class DetailCardContainer extends React.Component {
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
     Partner.docViewerLoading = false;
-
+    Partner.subViewerLoading = 0;
+    // Partner.viewerLoading += 1;
     this.setState((state) => {
       return {
         portfoliLocation: document.querySelector("#portfolio").offsetTop,
@@ -301,6 +303,7 @@ class DetailCardContainer extends React.Component {
     // const partnerId = Partner.partner_detail_list[0].item.id;
     const index = Partner.partner_detail_list[0].idx;
     const length = Partner.partner_list.length;
+    console.log(this.props.Partner.subViewerLoading);
     console.log(index);
     console.log(toJS(Partner.partnerReviewList[0]));
 
@@ -747,29 +750,21 @@ class DetailCardContainer extends React.Component {
 
             {Partner.partner_list &&
               (length < 4
-                ? console.log("AAAAAAAAA")
-                : index === 0
-                ? console.log("BBBBBBBB")
-                : index === length - 1
-                ? console.log("CCCCCCCC")
-                : index === 1
-                ? console.log("DDDDDDDDDD")
-                : console.log("EE"))}
-
-            {Partner.partner_list &&
-              (length < 4
                 ? remainderAry.map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
                         <div
                           onClick={(e) => {
                             // e.stopPropagation();
+                            this.props.Partner.viewerLoading = 0;
+                            // this.props.Partner.subViewerLoading = 1;
+                            this.props.Partner.recentPartnerId = this.props.Partner.partner_detail_list[0].item.id
+                            console.log(this.props.Partner.subViewerLoading);
                             this.pushToDetail(Partner.partner_list[item], item);
                             console.log("click");
                           }}
                           style={{ width: "100%" }}
                         >
-                          {console.log(item)}
                           <ProposalCard
                             data={Partner.partner_list[item]}
                             width={this.props.width}
@@ -788,6 +783,10 @@ class DetailCardContainer extends React.Component {
                         <div
                           onClick={(e) => {
                             e.stopPropagation();
+                            this.props.Partner.viewerLoading = 0;
+                            // this.props.Partner.subViewerLoading = 1;
+                            this.props.Partner.recentPartnerId = this.props.Partner.partner_detail_list[0].item.id
+                            console.log(this.props.Partner.subViewerLoading);
                             this.pushToDetail(Partner.partner_list[item], item);
                           }}
                           style={{ width: "100%" }}
