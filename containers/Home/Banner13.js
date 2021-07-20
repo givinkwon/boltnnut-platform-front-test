@@ -21,7 +21,7 @@ class Banner13Container extends React.Component {
           <Box>
             <div>
               {/* <Header>민감 정보 선택 공개 서비스</Header> */}
-              <div
+              {/* <div
                 onClick={() => {
                   const { Kakao } = window;
                   console.log(Kakao.isInitialized());
@@ -49,7 +49,7 @@ class Banner13Container extends React.Component {
                 }}
               >
                 카카오로그인
-              </div>
+              </div> */}
               <Middle>
                 <p>대한민국 제조사 정보 여기 다 있다.</p>
               </Middle>
