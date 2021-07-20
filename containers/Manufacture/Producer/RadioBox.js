@@ -68,6 +68,7 @@ class RadioBoxContainer extends React.Component {
   };
 
   activeHandler = (idx, filter) => {
+    console.log(this.props.Partner.radiobox_checked_idx)
     if (filter === "region") {
       if (idx === Partner.radiobox_checked_idx) {
         return true;

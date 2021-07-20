@@ -4,20 +4,28 @@ import dynamic from "next/dynamic";
 import Router from "next/router";
 import Modal from "../Review/ReviewWritingModal";
 import ReviewCard from "../Review/ReviewCard";
-import ReviewStarRating from "../Review/ReviewStarRating";
+import MapContainer from "./Map";
+
 import { toJS } from "mobx";
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import DocViewer from "./DocViewer";
+import SubBoxContainer from "./SubBox";
+import QuestionContainer from "./Question";
+import HeaderItem from "./HeaderContainer";
+import ReviewSummaryContainer from "../Review/ReviewBox";
+//import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 import Background from "components/Background";
 import ProposalCard from "../ProposalCard";
+import TabBar from "./TabBar";
 
-
-const customRenderer = DocViewerRenderers;
-
-const star = "/static/icon/star_blue3.svg";
+// const customRenderer = DocViewerRenderers;
 const bluebar_empty = "/static/icon/bluebar_empty.svg";
+const viewImg = "/static/images/producer/views.svg";
+const bookmarkImg = "/static/images/producer/bookmark.svg";
+const bookmarkBlueImg = "/static/images/producer/bookmark_blue.svg";
+
 import Slider from "react-slick";
 
 const availableFileType1 = [
@@ -41,8 +49,12 @@ const FileViewer = dynamic(() => import("react-file-viewer"), {
 });
 
 const waterMarkImg = "/static/images/logo_marine@2x.png";
+const pass1 = "/static/images/pass1.png";
+const pass2 = "/static/images/pass2.png";
 const type = "pdf";
+const sort = "/static/icon/sort.svg";
 
+let portfoliLocation;
 const onError = (e) => {
   console.log(e, "error in file-viewer");
 };
@@ -59,101 +71,85 @@ class DetailCardContainer extends React.Component {
     avg_profession_score: 0,
     docViewerLoading: false,
     loading: 0,
+    g: 0,
+    portfoliLocation: 0,
+    introductionLocation: 0,
+    reviewLocation: 0,
+    mapLocation: 0,
   };
 
   openModal = () => {
     const { Partner } = this.props;
-    // console.log("requestmodal open click");
-    // this.setState({ modalOpen: true });
     Partner.reviewWritingModalActive = false;
   };
   closeModal = () => {
     const { Partner } = this.props;
-    // console.log("requestmodal close click");
-
     Partner.reviewWritingModalActive = true;
   };
-  docRender = () => {
-    console.log("AAAAAAAAAA");
-    console.log(this.props.Partner.docViewerLoading);
-    if (!this.props.Partner.docViewerLoading) {
-      setTimeout(() => {
-        // this.setState({ g: 3 });
-        // this.docRender();
-      }, 5000);
-    }
-    // if (!this.state.docViewerLoading) {
-    //   console.log(this.state.docViewerLoading);
-    //   // setTimeout(() => {}, 4000);
-    // }
+
+  shouldComponentUpdate = (prevProps, nextState) => {
+    // return !this.state.loading;
+    console.log(this.state.g);
+    console.log(nextState.g);
+    console.log(prevProps.Partner.interestedIdx);
+    console.log(this.props.Partner.interestedIdx);
+    return this.state.g !== nextState.g;
   };
 
-  componentDidUpdate() {
-    // console.log(this.state.loading);
-    // console.log(loadingCounter);
-  }
-  shouldComponentUpdate = () => {
-    // console.log(`shouldComponentUpdate : ${this.state.loading}`);
-    // console.log(`shouldComponentUpdate : ${loadingCounter}`);
-
-    // console.log(this.state.loading == loadingCounter - 1);
-    // console.log(this.state.loading == 0);
-    return !this.state.loading;
-    // return this.state.loading == loadingCounter - 1;
+  loadScroll = () => {
+    // let location = document.querySelector("#portfolio");
+    // if (location) {
+    //   portfoliLocation = location.offsetTop;
+    // }
+    // this.setState((state) => {
+    //   return { portfoliLocation: document.querySelector("#portfolio").offsetTop };
+    // });
+    // console.log(this.state.portfoliLocation);
   };
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
     Partner.docViewerLoading = false;
+    Partner.subViewerLoading = 0;
+    // Partner.viewerLoading += 1;
+    this.setState((state) => {
+      return {
+        portfoliLocation: document.querySelector("#portfolio").offsetTop,
+        introductionLocation: document.querySelector("#introduction").offsetTop,
+        reviewLocation: document.getElementById("review").offsetTop,
+        mapLocation: document.querySelector("#maps").offsetTop,
+      };
+    });
+
+    console.log(toJS(Partner.partner_list));
+    console.log(this.state.portfoliLocation);
+    console.log(document.querySelector("#review").offsetTop);
+    console.log(this.state.reviewLocation);
+    window.addEventListener("scroll", this.loadScroll);
 
     console.log(toJS(Partner.partner_list)); // 10개의 제조사
     console.log(toJS(Partner.partner_detail_list)); // 현재 제조사
 
-    // loadingCounter = 0;
-    console.log(this.state.loading);
-    this.docRender();
-
-    // this.setState({ loading: this.state.loading + 1 });
-
-    // this.setState((state) => {
-    //   return { loading: state.loading + 1 };
-    // });
-    customRenderer.weight = 2;
-    customRenderer.fileLoader = ({
-      documentURI,
-      signal,
-      fileLoaderComplete,
-    }) => {
-      console.log("bbb");
-      // customFileLoaderCode
-      // customFileLoaderCode().then(() => {
-      //   console.log("ccc");
-      //   fileLoaderComplete();
-      // });
-      fileLoaderComplete();
-    };
-
-    // console.log(customRenderer);
-    // console.log(toJS(Partner.partner_detail_list));
-    // console.log("detail page didmount");
-    // console.log(toJS(Partner.partnerAllReviewList));
-    // console.log(toJS(Partner.partnerReviewList));
-    // console.log(toJS(Auth));
-    // console.log(toJS(Partner.review_partner_page));
+    // customRenderer.weight = 2;
+    // customRenderer.fileLoader = ({
+    //   documentURI,
+    //   signal,
+    //   fileLoaderComplete,
+    // }) => {
+    //   fileLoaderComplete();
+    // };
 
     const height = document.getElementById("card").style;
-    // console.log(height);
-    // console.log(`HEIGHT : ${height}`);
 
     if (Auth.logged_in_client) {
-      Partner.checkReviewWriting(Auth.logged_in_client.id);
+      await Partner.checkReviewWriting(Auth.logged_in_client.id);
       // Partner.checkReviewWriting(5052);
+      this.setState({ g: 3 });
     }
 
     Partner.reviewCurrentPage = 1;
     Partner.detailLoadingFlag = false;
-    if (Partner.partner_detail_list.length == 0) {
-      Router.push("/producer");
-    }
+
+    console.log(Partner.reviewWritingModalActive);
 
     // console.log(this.props.Partner.selectedIntroductionFileType);
 
@@ -164,56 +160,25 @@ class DetailCardContainer extends React.Component {
     //     '&embedded=true" class="viewer" frameborder="0"></iframe>';
     //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
     // }
-
-    // let total_consult_score = 0;
-    // let total_kindness_score = 0;
-    // let total_communication_score = 0;
-    // let total_profession_score = 0;
-    // console.log(Partner.partnerReviewList);
-
-    // (await Partner.partnerAllReviewList[0]) &&
-    //   Partner.partnerAllReviewList[0].data.map((item, idx) => {
-    //     total_consult_score += item.consult_score;
-    //     total_kindness_score += item.kindness_score;
-    //     total_communication_score += item.communication_score;
-    //     total_profession_score += item.profession_score;
-    //   });
-    // Partner.partnerAllReviewList[0] &&
-    //   this.setState({
-    //     avg_consult_score:
-    //       total_consult_score / Partner.partnerAllReviewList[0].data.length,
-    //     avg_kindness_score:
-    //       total_kindness_score / Partner.partnerAllReviewList[0].data.length,
-    //     avg_communication_score:
-    //       total_communication_score /
-    //       Partner.partnerAllReviewList[0].data.length,
-    //     avg_profession_score:
-    //       total_profession_score / Partner.partnerAllReviewList[0].data.length,
-    //   });
   };
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
+    console.log("unmount");
+    Partner.recentPartnerList.push(Partner.partner_detail_list[0].item);
     Partner.review_partner_page = 1;
     loadingCounter = 0;
+    window.removeEventListener("scroll", this.loadScroll);
   };
 
   error = () => {
     console.log("error");
   };
   movePage = (e) => {
-    console.log("movePage");
     const { Partner, Auth } = this.props;
-    // e.preventDefault();
     const newPage = e.target.innerText * 1;
 
     if (newPage != Partner.reviewCurrentPage) {
       Partner.reviewCurrentPage = newPage;
-      // Partner.resetDevCategory();
-      // Partner.check_loading_develop = false;
-      // Partner.ReviewActive = false;
-      // Partner.ReviewActiveIndex = -1;
-      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      // Partner.click_count += 1;
 
       Partner.getReviewByPartner(
         Partner.partner_detail_list[0].item.id,
@@ -224,18 +189,11 @@ class DetailCardContainer extends React.Component {
   };
 
   pageNext = (e) => {
-    console.log("pageNext");
     const { Partner } = this.props;
-    // e.preventDefault();
     if (Partner.reviewCurrentPage < Partner.review_partner_page) {
       const nextPage = Partner.reviewCurrentPage + 1;
       Partner.reviewCurrentPage = nextPage;
-      // Partner.check_loading_develop = false;
-      // Partner.resetDevCategory();
-      // Partner.ReviewActive = false;
-      // Partner.ReviewActiveIndex = -1;
-      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      // Partner.click_count += 1;
+
       Partner.getReviewByPartner(
         Partner.partner_detail_list[0].item.id,
         1,
@@ -245,18 +203,11 @@ class DetailCardContainer extends React.Component {
   };
 
   pagePrev = (e) => {
-    console.log("pagePrev");
     const { Partner } = this.props;
-    // e.preventDefault();
+
     if (Partner.reviewCurrentPage > 1) {
       const previousPage = Partner.reviewCurrentPage - 1;
       Partner.reviewCurrentPage = previousPage;
-      // Partner.resetDevCategory();
-      // Partner.check_loading_develop = false;
-      // Partner.ReviewActive = false;
-      // Partner.ReviewActiveIndex = -1;
-      // this.setState({ dropDownActive: false, dropDownIdx: -1 });
-      // Partner.click_count += 1;
       Partner.getReviewByPartner(
         Partner.partner_detail_list[0].item.id,
         1,
@@ -269,7 +220,7 @@ class DetailCardContainer extends React.Component {
   //   loadingCounter += 1;
   //   console.log(loadingCounter);
   // };
-  
+
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
     console.log(Partner.modalActive);
@@ -278,56 +229,80 @@ class DetailCardContainer extends React.Component {
       console.log("Detail click");
       Partner.category_name_list = null;
       Partner.partner_detail_list = [];
-      Partner.partner_detail_list.push({ item: item });
+      Partner.partner_detail_list.push({ item: item, idx: idx });
       Partner.category_name_list = Partner.category_dic[idx];
 
-      if (this.state.dropDownIdx === -1) {
-        await Partner.getCityName(Partner.partner_detail_list[0].item.city);
-        Partner.portFolioList = [];
-        await Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
-        this.setState({ dropDownActive: true, dropDownIdx: idx });
-      } else {
-        if (this.state.dropDownIdx === idx) {
-          this.setState({ dropDownActive: false, dropDownIdx: -1 });
-        } else {
-          await Partner.getCityName(Partner.partner_detail_list[0].item.city);
-          Partner.portFolioList = [];
-          await Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
-          this.setState({ dropDownActive: true, dropDownIdx: idx });
-        }
+      console.log(toJS(Partner.partner_detail_list));
+
+      if (!item.file) {
+        Partner.detailLoadingFlag = false;
+        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        return;
       }
+      this.props.Partner.selectedIntroductionFile = item.file;
+
+      const fileType = item.file
+        .split(".")
+        [item.file.split(".").length - 1].toLowerCase();
+      this.props.Partner.selectedIntroductionFileType = fileType;
+      // this.props.Partner.viewerLoading
+
+      // this.reload();
+      // myStorage = window.localStorage;
+
+      console.log(JSON.parse(localStorage.getItem("recent")));
+
+      Partner.recentPartnerList.push(Partner.partner_detail_list[0].item);
+
+      localStorage.setItem("recent", JSON.stringify(Partner.recentPartnerList));
+
+      this.setState((state) => {
+        return { g: state.g + 1 };
+      });
+      window.scrollTo(0, 0);
+      console.log(this.state.g);
+      console.log(toJS(this.props.Partner.recentPartnerList));
     }
   };
-  render() {
-    const { width, Partner } = this.props;
-    const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
 
-    // console.log(toJS(Partner.selectedIntroductionFile));
+  reload() {
+    (location || window.location || document.location).reload();
+  }
+  render() {
+    const { width, Partner, Auth } = this.props;
+    // const clientId = this.props.Auth.logged_in_client.id;
+    // const partnerId = Partner.partner_detail_list[0].item.id;
+    const index = Partner.partner_detail_list[0].idx;
+    const length = Partner.partner_list.length;
+    console.log(this.props.Partner.subViewerLoading);
+    console.log(index);
+    console.log(toJS(Partner.partnerReviewList[0]));
+
+    let arr = [];
+    for (let i = 0; i < length; i++) {
+      arr.push(i);
+    }
+    const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
 
-    console.log("render!");
+    // let arr = [1, 2, 3, 4, 5]
+    Partner.shuffleArray(arr);
 
-    // if (this.state.loading == 0) {
-    // loadingCounter += 1;
-    // console.log(loadingCounter);
+    let remainderAry = arr.filter((el) => el !== index);
+    console.log(remainderAry);
+
+    console.log("rendering");
+    console.log(toJS(Partner.partnerReviewList[0]));
+    if (Partner.partnerReviewList[0]) {
+      console.log(toJS(Partner.partnerReviewList[0].current));
+    }
+    console.log(toJS(Partner.partnerReviewList[0]));
+    console.log(toJS(Partner.partner_detail_list));
+
     this.setState((state) => {
-      console.log("state ++");
       return { loading: state.loading + 1 };
     });
-    // }
-
-    // if(this.state.loading === 1){
-    //   this.setState((state) => {
-    //     return { loading: state.loading + 1 };
-    //   });
-    // }
-
-    console.log(docs);
-    // console.log(loadingCounter);
-    // console.log(this.loadingCounter);
-    console.log(this.state.loading);
-    // const customDocRenderer =
 
     const SlideSettings = {
       dots: false,
@@ -342,21 +317,13 @@ class DetailCardContainer extends React.Component {
 
     return (
       <>
-        <Card
-          id="card"
-          width={width}
-          onContextMenu={(e) => {
-            // e.preventDefault();
-          }}
-          onClick={() => this.setState({ g: 3 })}
-        >
+        <Card id="card" width={width}>
           <HeaderBox>
             <tag>
               <span>활동 가능</span>
             </tag>
-            {Partner.partner_detail_list.length != 0 && (
-              <name>{Partner.partner_detail_list[0].item.name}</name>
-            )}
+
+            <HeaderItem></HeaderItem>
             {Partner.partner_detail_list.length != 0 && (
               <content>
                 <span>{Partner.partner_detail_list[0].item.info_company}</span>
@@ -380,8 +347,15 @@ class DetailCardContainer extends React.Component {
             </div>
           </div>
           <InnerBox>
+            {console.log(this.state.portfoliLocation)}
+            <TabBar
+              portfoliLocation={this.state.portfoliLocation}
+              introductionLocation={this.state.introductionLocation}
+              reviewLocation={this.state.reviewLocation}
+              mapLocation={this.state.mapLocation}
+            />
             <IntroductionBox width={width}>
-              <Font24>포토폴리오</Font24>
+              <Font24 id="portfolio">포토폴리오</Font24>
               <SliderContainer {...SlideSettings}>
                 {Partner.partner_detail_list.length != 0 &&
                   Partner.partner_detail_list[0].item.portfolio_set.length >
@@ -399,7 +373,7 @@ class DetailCardContainer extends React.Component {
             </IntroductionBox>
 
             <IntroductionBox width={width}>
-              <Font24>회사소개서</Font24>
+              <Font24 id="introduction">회사소개서</Font24>
               {availableFileType1.indexOf(
                 this.props.Partner.selectedIntroductionFileType
               ) > -1 && (
@@ -412,40 +386,11 @@ class DetailCardContainer extends React.Component {
 
               {availableFileType3.indexOf(
                 this.props.Partner.selectedIntroductionFileType
-              ) > -1 &&
-                this.state.loading < 2 && (
-                  <>
-                    <div style={{ position: "relative" }}>
-                      <DOCViewer
-                        documents={docs}
-                        pluginRenderers={customRenderer}
-                        height={width}
-                        window={window}
-                        type={this.props.Partner.selectedIntroductionFileType}
-                      />
-
-                      {/* ppt 하단에 전체 보기 및 다운로드 막는 박스인데 스타일 컴포넌트로 할 예정 (임시) */}
-                      <div
-                        id="prevent"
-                        style={{
-                          position: "absolute",
-                          width: "90px",
-                          height: "22px",
-                          bottom: "0%",
-                          right: "0%",
-                          zIndex: "9999",
-                        }}
-                      />
-                    </div>
-                    {/* {this.countLoading()} */}
-                    {/* {loadingCounter == 2 && (loadingCounter += 1)} */}
-                    {console.log(loadingCounter)}
-                    {console.log(this.state.loading)}
-
-                    {/* {console.log(docs)} */}
-                    {/* {console.log(customRenderer.fileLoader)} */}
-                  </>
-                )}
+              ) > -1 && (
+                <>
+                  <DocViewer width={width} />
+                </>
+              )}
             </IntroductionBox>
           </InnerBox>
           <DetailInfoBox>
@@ -472,153 +417,14 @@ class DetailCardContainer extends React.Component {
               )}
             </div>
           </DetailInfoBox>
-          <IntroductionBox width={width}>
 
-              <Font24>비슷한 제조사</Font24>
-              {Partner.partner_list &&
-                  Partner.partner_list.slice(1,4).map((item, idx) => {
-                    return (
-                      <Background style={{ marginBottom: "5px" }}>
-                        <div
-                          onClick={() => this.pushToDetail(item, idx)}
-                          style={{ width: "100%" }}
-                        >
-                          <ProposalCard
-                            data={item}
-                            width={this.props.width}
-                            categoryData={toJS(Partner.category_dic[idx])}
-                            idx={idx}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
-                      </Background>
-                    );
-                  })}
-
-            </IntroductionBox>
-          {/* <ReviewBox>
-    
+          <ReviewBox id="review">
             <div>
               <label>평가 후기</label>
             </div>
-            
-            <SummaryBox>
-              <label>클라이언트 평균 만족도</label>
-              <header>
-                <mainscore>
-                  <div>
-                  
-                    <TotalRating>
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "31" : width > 992 ? "26" : "22"
-                          }
-                          margin={4}
-                          score={Math.floor(this.state.avg_consult_score)}
-                        />
-                      </div>
-                      <img src={star}></img>
-                    </TotalRating>                    
-                  </div>
-                  <div>
-                    <span>{this.state.avg_consult_score.toFixed(2)}</span>
-                    <span>전체 누적 평점</span>
-                  </div>
-                </mainscore>
 
-                <subscore>
-                  <div>
-                    <span
-                      style={{
-                        color: "#999999",
-                      }}
-                    >
-                      친절도
-                    </span>
-                    {width > 768 ? (
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "15" : width > 992 ? "13" : "11"
-                          }
-                          margin={1}
-                          score={this.state.avg_kindness_score}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        <CustomSlider
-                          value={this.state.avg_kindness_score * 20}
-                        />
-                        <div>{this.state.avg_kindness_score.toFixed(1)}</div>
-                      </>
-                    )}
-                  </div>
-
-                  <div>
-                    <span
-                      style={{
-                        color: "#999999",
-                      }}
-                    >
-                      연락 빈도
-                    </span>
-                    {width > 768 ? (
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "15" : width > 992 ? "13" : "11"
-                          }
-                          margin={1}
-                          score={this.state.avg_communication_score}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        <CustomSlider
-                          value={this.state.avg_communication_score * 20}
-                        />
-                        <div>
-                          {this.state.avg_communication_score.toFixed(1)}
-                        </div>
-                      </>
-                    )}
-                  </div>
-
-                  <div>
-                    <span
-                      style={{
-                        color: "#999999",
-                      }}
-                    >
-                      전문성
-                    </span>
-                    {width > 768 ? (
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "15" : width > 992 ? "13" : "11"
-                          }
-                          margin={1}
-                          score={this.state.avg_profession_score}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        <CustomSlider
-                          value={this.state.avg_profession_score * 20}
-                        />
-                        <div>{this.state.avg_profession_score.toFixed(1)}</div>
-                      </>
-                    )}
-                  </div>
-                </subscore>
-              </header>
-            </SummaryBox>
+            <ReviewSummaryContainer width={this.props.width}/>
             <content>
-              
               <ReviewTop>
                 {Partner.partnerReviewList[0] && (
                   <TotalCount>
@@ -631,20 +437,20 @@ class DetailCardContainer extends React.Component {
                   <img src={sort}></img>
                 </DateSorting>
               </ReviewTop>
-              
-              {Partner.partnerReviewList &&
-                console.log(toJS(Partner.partnerReviewList[0].data))}
-              {Partner.partnerReviewList &&
-                Partner.partnerReviewList[0].data.map((item, idx) => {
+
+              {Partner.partnerReviewList[0] &&
+                console.log(toJS(Partner.partnerReviewList[0].current))}
+              {Partner.partnerReviewList[0] &&
+                Partner.partnerReviewList[0].current.map((item, idx) => {
                   return (
                     <ReviewCard
                       data={item}
                       idx={idx}
-                      totalCount={Partner.partnerReviewList[0].data.length}
+                      totalCount={Partner.partnerReviewList[0].current.length}
                     />
                   );
                 })}
-            </content>            
+            </content>
             {!Partner.reviewWritingModalActive ? (
               <Layer>
                 <span>
@@ -679,7 +485,6 @@ class DetailCardContainer extends React.Component {
                 </Layer>
               )
             )}
-            
 
             <PageBar acitve={!Partner.reviewWritingModalActive}>
               <img
@@ -786,14 +591,151 @@ class DetailCardContainer extends React.Component {
                 onClick={this.pageNext}
               />
             </PageBar>
-          </ReviewBox> */}
+          </ReviewBox>
+
+          <MapBox>
+            <Font24 id="maps">위치</Font24>
+            <MapContainer city={Partner.city_name} />
+          </MapBox>
+
+          <QuestionBox>
+            <Font24>업체 Q&A</Font24>
+            <QuestionContainer />
+          </QuestionBox>
+
+          <IntroductionBox width={width}>
+            <Font24>비슷한 제조사</Font24>
+
+            {Partner.partner_list &&
+              (length < 4
+                ? remainderAry.map((item, idx) => {
+                    return (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div
+                          onClick={(e) => {
+                            // e.stopPropagation();
+                            this.props.Partner.viewerLoading = 0;
+                            // this.props.Partner.subViewerLoading = 1;
+                            this.props.Partner.recentPartnerId =
+                              this.props.Partner.partner_detail_list[0].item.id;
+                            console.log(this.props.Partner.subViewerLoading);
+                            this.pushToDetail(Partner.partner_list[item], item);
+                            console.log("click");
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProposalCard
+                            data={Partner.partner_list[item]}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[item])}
+                            idx={item}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
+                      </Background>
+                    );
+                  })
+                : remainderAry.splice(0, 3).map((item, idx) => {
+                    return (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            this.props.Partner.viewerLoading = 0;
+                            // this.props.Partner.subViewerLoading = 1;
+                            this.props.Partner.recentPartnerId =
+                              this.props.Partner.partner_detail_list[0].item.id;
+                            console.log(this.props.Partner.subViewerLoading);
+                            this.pushToDetail(Partner.partner_list[item], item);
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProposalCard
+                            data={Partner.partner_list[item]}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[item])}
+                            idx={item}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
+                      </Background>
+                    );
+                  }))}
+
+            {/* {Partner.partner_list &&
+                  Partner.partner_list.slice(1,4).map((item, idx) => {
+                    return (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();                            
+                            this.pushToDetail(item, idx)
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProposalCard
+                            data={item}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[idx])}
+                            idx={idx}
+                            handleIntersection={this.handleIntersection}
+                            customer="partner"
+                            
+                          />
+                        </div>
+                      </Background>
+                    );
+                  })} */}
+          </IntroductionBox>
         </Card>
+
+        <SubCard>
+          <SubBoxContainer partnerId={Partner.partner_detail_list[0].item.id} />
+          {/* <RequestContainer /> */}
+          {/* <RecentPartnerContainer /> */}
+        </SubCard>
       </>
     );
   }
 }
 
 export default DetailCardContainer;
+
+const CustomSlider = withStyles({
+  root: {
+    color: "#0933b3",
+    height: "7px !important",
+    width: "60%",
+    // cursor: "default",
+    // background: "red",
+    padding: 0,
+    display: "none",
+    marginRight: "10px",
+  },
+  thumb: {
+    // top: -10,
+    // paddingRight: 20,
+    // content: "apapap"
+    display: "none",
+  },
+  track: {
+    height: 6,
+    borderRadius: 10,
+  },
+  rail: {
+    color: "#e6e6e6",
+    opacity: 1,
+    height: 6,
+    borderRadius: 10,
+  },
+  "@media (min-width: 0px) and (max-width: 767.98px)": {
+    root: {
+      display: "block",
+    },
+  },
+})(Slider);
 
 const Font24 = styled(Title.FontSize24)`
   font-weight: bold;
@@ -834,9 +776,9 @@ const TopInlineBox = styled.div`
 
 const Card = styled.div`
   margin-top: 50px;
-  width: 100%;
+  width: 70%;
   border-radius: 10px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
 
@@ -890,7 +832,7 @@ const HeaderBox = styled.div`
     letter-spacinig: -0.65px;
     color: #282c36;
     font-weight: bold;
-    margin-bottom: 34px;
+    // margin-bottom: 34px;
   }
   content {
     span {
@@ -989,11 +931,17 @@ const HeaderBox = styled.div`
 
 `;
 
+// const HeaderItem = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   margin-bottom: 34px;
+// `;
+
 const ReviewBox = styled.div`
   position: relative;
   // height: 500px;
   margin-top: 109px;
-  > label {
+  label {
     font-size: 24px;
     line-height: 40px;
     letter-spacing: -0.6px;
@@ -1006,202 +954,6 @@ const ReviewBox = styled.div`
 
   @media (min-width: 992px) and (max-width: 1299.98px) {
     font-size: 22px;
-  }
-`;
-
-const SummaryBox = styled.div`
-  margin-top: 50px;
-  margin-bottom: 34px;
-  > label {
-    font-size: 24px;
-    line-height: 40px;
-    letter-spacing: -0.6px;
-    color: #282c36;
-    font-weight: 500;
-    margin-bottom: 24px;
-    display: block;
-  }
-  > header {
-    display: flex;
-    justify-content: space-between;
-    > mainscore {
-      display: flex;
-      > div:nth-of-type(1) {
-        padding-top: 9px;
-        box-sizing: border-box;
-      }
-      > div:nth-of-type(2) {
-        display: flex;
-        flex-direction: column;
-        > span:nth-of-type(1) {
-          align-self: center;
-          font-size: 48px;
-          line-height: 40px;
-          letter-spacing: -1.2px;
-          color: #282c36;
-          font-weight: bold;
-          margin-bottom: 12px;
-        }
-        > span:nth-of-type(2) {
-          font-size: 16px;
-          line-height: 24px;
-          letter-spacing: -0.4px;
-          color: #191919;
-          font-weight: normal;
-        }
-      }
-    }
-    > subscore {
-      display: flex;
-      flex-direction: column;
-      width: 165px;
-     
-      > div {
-        margin-bottom: 9px;
-        display: flex;
-        justify-content: space-between;
-
-        // 4. (1)        
-        >div{
-          display: flex;
-          align-items: center;
-        }
-      }
-    }
-  }  
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    >label{
-      font-size: 20px;
-    }
-    > header {    
-      > mainscore {      
-        > div:nth-of-type(1) {
-          padding-top: 6px;        
-        }
-        > div:nth-of-type(2) {        
-          > span:nth-of-type(1) {
-            font-size: 32px;
-            line-height: 24px;
-            
-            margin-bottom: 6px;
-          }
-          > span:nth-of-type(2) {
-            font-size: 12px;
-            line-height: 18px;        
-          }
-        }
-      }
-      > subscore {      
-        width: 165px;
-        > div {
-          margin-bottom: 7px;
-          >span{
-            font-size:12px;
-          }
-        }
-      }
-    }
-  }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    >header{
-      > subscore {          
-        > div {      
-        
-          align-items: center;
-          >span{              
-            padding: 2px;
-            width: 180px;
-            // margin-bottom: 7px;
-          }
-          > span:nth-of-type(1) {
-              
-              margin-right: 10px;
-              font-size: 12px;
-              // width: 55px;
-              text-align: right;
-          
-            }
-            > div:nth-of-type(1) {
-              
-              // display: none;
-              font-size: 12px;
-            }
-            > div:nth-of-type(2) {
-              // display: none;
-              
-        
-              display: block;
-              font-size: 12px;
-                 
-            }
-          
-        }
-      }
-    }
-  }
-
-
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    >label{
-      font-size: 22px;
-    }
-      > header {    
-    > mainscore {      
-      > div:nth-of-type(1) {
-        padding-top: 8px;        
-      }
-      > div:nth-of-type(2) {        
-        > span:nth-of-type(1) {
-          font-size: 40px;
-          line-height: 32px;
-          
-          margin-bottom: 8px;
-        }
-        > span:nth-of-type(2) {
-          font-size: 14px;
-          line-height: 24px;        
-        }
-      }
-    }
-   > subscore {      
-      width: 165px;
-      > div {
-        margin-bottom: 7px;
-        >span{
-          font-size:12px;
-
-          // 4. (2)
-        align-items: center;
-        @media (min-width: 0px) and (max-width: 767.98px) {
-          padding: 2px;
-          width: 180px;
-          margin-bottom: 7px;
-        }
-        > span:nth-of-type(1) {
-          @media (min-width: 0px) and (max-width: 767.98px) {
-            margin-right: 10px;
-            font-size: 12px;
-            width: 55px;
-            text-align: right;
-          }
-        }
-        > div:nth-of-type(1) {
-          @media (min-width: 0px) and (max-width: 767.98px) {
-            display: none;
-          }
-        }
-        > div:nth-of-type(2) {
-          display: none;
-          @media (min-width: 0px) and (max-width: 767.98px) {
-            display: block;
-            font-size: 12px;
-          }
-// 4. (2)        
-}
-      }
-    }
   }
 `;
 
@@ -1334,44 +1086,6 @@ const DetailInfoBox = styled.div`
 `;
 const FileViewerContainer = styled(FileViewer)``;
 
-const DOCViewer = styled(DocViewer)`
-min-height: 300px;
-.WACStatusBarContainer{
-  border: 3px solid red;
-}
-> div:nth-of-type(1){
-    display: none;
-    z-index: 0;    
-}
-> div:nth-of-type(2) {    
-
-  > div:nth-of-type(1) {
-    // height: 1000px;
-    height: ${(props) =>
-      (props.type === "pptx" || props.type === "ppt") &&
-      props.height / 2 - props.height / 5}px;
-    height: ${(props) =>
-      (props.type === "docx" || props.type === "doc") && 1200}px;
-  }
-}
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    > div:nth-of-type(2) {
-      > div:nth-of-type(1) {
-        height: ${(props) =>
-          props.type === "pptx" || props.type === "ppt"
-            ? props.height
-              ? props.height / 3 + props.height / 3
-              : 0
-            : 300}px;
-
-
-      }
-      }
-    }
-  }
-`;
-
 const PageBar = styled.div`
   width: 351px;
   margin-top: 109px;
@@ -1490,4 +1204,56 @@ const Item = styled.div`
     width: 141px;
     height: 141px;
   }
+`;
+
+const MapBox = styled.div`
+  width: 100%;
+  height: 500px;
+`;
+
+const QuestionBox = styled.div`
+  width: 100%;
+  height: 500px;
+`;
+const TotalCount = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.86;
+  letter-spacing: -0.35px;
+  text-align: left;
+`;
+
+const ReviewTop = styled.div`
+  display: none;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const DateSorting = styled.div`
+  display: flex;
+  justify-content: center;
+  > div {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.86;
+    letter-spacing: -0.35px;
+    text-align: left;
+    color: #282c36;
+  }
+  > img {
+    width: 10px;
+  }
+`;
+
+const SubCard = styled.div`
+  width: 300px;
+  margin-top: 180px;
+  border-left: 1px solid #e1e2e4;
+  padding-left: 52px;
 `;
