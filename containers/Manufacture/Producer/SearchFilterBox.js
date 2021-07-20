@@ -152,38 +152,6 @@ class SearchFilterConatiner extends React.Component {
     } else {
       Partner.filter_dropdown = true;
     }
-
-    // console.log("click");
-    // if (flag == "city") {
-    //   console.log("city");
-    //   if (Partner.check_filter_city) {
-    //     Partner.check_filter_city = false;
-    //     Partner.filter_dropdown = false;
-    //   } else {
-    //     Partner.check_filter_city = true;
-    //     Partner.filter_dropdown = true;
-    //   }
-
-    //   if (Partner.check_filter_category) {
-    //     Partner.check_filter_category = false;
-    //     // Partner.filter_dropdown = false;
-    //   }
-    // }
-    // if (flag == "category") {
-    //   console.log("category");
-    //   if (Partner.check_filter_city) {
-    //     Partner.check_filter_city = false;
-    //     // Partner.filter_dropdown = false;
-    //   }
-
-    //   if (Partner.check_filter_category) {
-    //     Partner.check_filter_category = false;
-    //     Partner.filter_dropdown = false;
-    //   } else {
-    //     Partner.check_filter_category = true;
-    //     Partner.filter_dropdown = true;
-    //   }
-    // }
   };
   componentDidMount = async () => {
     const { Partner } = this.props;
@@ -221,142 +189,81 @@ class SearchFilterConatiner extends React.Component {
           <ContainerV2>
             {console.log(`Active : ${Partner.subButtonActive}`)}
             <SearchBar />
-
-            <Search active={Partner.subButtonActive}>
-              {/* <FilterButton>
-                <Button
-                  onClick={() => {
-                    this.dropdownHandler("city");
+            <FilterCategory>
+              <Category>
+                <CategoryName>카테고리</CategoryName>
+                <Field>
+                  <div>전체</div>
+                  <img
+                    src="/static/icon/down_arrow.svg"
+                    onClick={() => {
+                      this.dropdownHandler("city");
+                    }}
+                  ></img>
+                </Field>
+              </Category>
+              <Category>
+                <CategoryName>업체 분류</CategoryName>
+                <Field>
+                  <div>전체</div>
+                  <img src="/static/icon/down_arrow.svg"></img>
+                </Field>
+              </Category>
+              <Category>
+                <CategoryName>지역</CategoryName>
+                <Field>
+                  <div>전체</div>
+                  <img src="/static/icon/down_arrow.svg"></img>
+                </Field>
+              </Category>
+              <Category>
+                <div
+                  style={{
+                    fontSize: "15px",
+                    lineHeight: 2.27,
+                    letterSpacing: "-0.38px",
+                    textAlign: "center",
+                    color: "#555963",
                   }}
                 >
-                  <span>필터</span>
-                </Button>
-                <img src={filter_img} />
-              </FilterButton> */}
-              {/* <div
-                onClick={() => {
-                  Partner.openModal();
-                }}
-              >
-                <span>업체수배&견적 무료의뢰 </span>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div> */}
-              {/* <div>
-                <span>업체 찾기가 힘든 경우 클릭!</span>
-              </div> */}
-
-              {/* <div
-                onClick={() => {
-                  Router.push("/request");
-                }}
-              >
-                <span> 바로 AI 견적 받기 </span>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div> */}
-              {/* <div>
-                <span>도면이 있는 경우 클릭!</span>
-              </div> */}
-            </Search>
-
-            {/* <Category>
-              <span>분야</span>
-              <div>
-                <Select
-                  placeholder="대 카테고리"
-                  // options={bigCategoryArray}
-                  options={this.props.Partner.category_main_list}
-                  getOptionLabel={(option) => option.maincategory}
-                  // value={Partner.input_category}
-                  // style={{ width: "160px" }}
-                  onChange={Partner.setMainCategory}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      neutral50: "#1A1A1A", // Placeholder color
-                    },
-                  })}
-                />
-              </div>
-              <div>
-                <Select
-                  placeholder="소 카테고리"
-                  options={Partner.category_middle_ary}
-                  getOptionLabel={(option) => option.category}
-                  value={
-                    Partner.category_middle_ary[0] &&
-                    Partner.input_small_category
-                  }
-                  onChange={Partner.setSmallCategory}
-                  defaultValue={
-                    Partner.category_middle_ary[0] &&
-                    Partner.category_middle_ary[0].cagegory
-                  }
-                />
-              </div>
-                </Category>*/}
-            {/* <Search>
-              <div
-                onClick={() => {
-                  // Partner.filterArray.map((data, idx) => {
-                  //   data.checked = false;
-                  // });
-                  Router.push("/request");
-                }}
-              >
-                <span> 바로 AI 견적 받기 </span>
-              </div>
-              <div>
-                <span>도면이 있는 경우 클릭!</span>
-              </div>
-            </Search> */}
-
-            {/* <FilterContainer>
-              <FilterItem
-                active={this.state.filter_city_active}
-                style={{ borderRight: "none" }}
-                onClick={() => {
-                  this.dropdownHandler("city");
-                }}
-                onMouseOver={() => {
-                  console.log("mouseOver");
-                  this.activeHandler("city");
-                }}
-                onMouseOut={() => {
-                  console.log("mouseOut");
-                  this.activeHandler("city");
-                }}
-              >
-                <span>지역 검색</span>
-              </FilterItem>
-
-              <FilterItem
-                active={this.state.filter_category_active}
-                onClick={() => {
-                  this.dropdownHandler("category");
-                }}
-                onMouseOver={() => {
-                  console.log("mouseOver");
-                  this.activeHandler("category");
-                }}
-                onMouseOut={() => {
-                  console.log("mouseOut");
-                  this.activeHandler("category");
-                }}
-              >
-                <span>분야 검색</span>
-              </FilterItem>
-            </FilterContainer> */}
-
+                  공정, 소재
+                </div>
+                <Material>
+                  <img
+                    src="/static/icon/detail_filter.svg"
+                    style={{ widht: 24, height: 24 }}
+                  ></img>
+                  <img
+                    src="/static/icon/arrow_down.svg"
+                    style={{ widht: 12, height: 12 }}
+                  ></img>
+                </Material>
+              </Category>
+            </FilterCategory>
             {Partner.filter_dropdown && (
               <FilterContent>
-                <city>
+                <Aside>
+                  <Buy
+                    onMouseOver={() => {
+                      this.activeHandler("active");
+                    }}
+                    onMouseOut={() => {
+                      this.activeHandler("active");
+                    }}
+                  >
+                    완제품/부품 구매
+                  </Buy>
+                  <Develop>
+                    <div style={{ marginRight: 5 }}>개발 업체</div>
+                    <div style={{ color: "#999999" }}>(디자인, 기구설계)</div>
+                  </Develop>
+                  <Making>
+                    <div style={{ marginRight: 5 }}>제작 업체</div>
+                    <div style={{ color: "#999999" }}>(CNC 가공, 금형사출)</div>
+                  </Making>
+                </Aside>
+                <Main></Main>
+                {/* <city>
                   <label>지역검색</label>
                   <RadioBox
                     filter="region"
@@ -365,12 +272,6 @@ class SearchFilterConatiner extends React.Component {
                     // cityArray
                   />
                 </city>
-
-                {/* <RadioBox
-                     filter="develop"
-                     // data={this.props.Partner.filter_category_ary}
-                     data={Partner.filterArray}
-                   /> */}
                 <category>
                   <label>분야검색</label>
                   <FilterBox
@@ -378,7 +279,7 @@ class SearchFilterConatiner extends React.Component {
                     purpose="filter"
                     data={Partner.filterArray}
                   />
-                </category>
+                </category> */}
               </FilterContent>
             )}
 
@@ -639,29 +540,65 @@ class SearchFilterConatiner extends React.Component {
 
 export default SearchFilterConatiner;
 
-const bigCategoryArray = [
-  { label: "대 카테고리1", value: "대 카테고리1" },
-  { label: "대 카테고리2", value: "대 카테고리2" },
-];
+const FilterCategory = styled.div`
+  width: 100%;
+  margin-top: 40px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  background: none;
+  border: none;
+`;
 
-const smallCategoryArray = [
-  { label: "소 카테고리1", value: "소 카테고리1" },
-  { label: "소 카테고리2", value: "소 카테고리2" },
-];
+const Category = styled.div`
+  background: none;
+  border: none;
+  margin-right: 20px;
+`;
 
-const budgetArray = [
-  { id: 1, label: "0", value: 0 },
-  { id: 2, label: "1,000,000", value: 1000000 },
-  { id: 3, label: "5,000,000", value: 5000000 },
-  { id: 4, label: "10,000,000", value: 10000000 },
-  { id: 5, label: "30,000,000", value: 30000000 },
-  { id: 6, label: "직접 입력", value: "" },
-];
+const Material = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  width: 64px;
+  height: 40px;
+`;
 
-const viewArray = [
-  { id: 1, name: "공개", checked: false },
-  { id: 2, name: "비공개", checked: false },
-];
+const CategoryName = styled.div`
+  background: none;
+  border: none;
+  width: 204px;
+  font-size: 15px;
+  line-height: 2.27;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: #555963;
+}
+`;
+
+const Field = styled.div`
+  width: 204px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  div {
+    margin-left: 16px;
+    line-height: 2.27;
+    letter-spacing: -0.38px;
+    text-align: left;
+    color: #b3b3b3;
+  }
+  img {
+    margin-right: 12px;
+  }
+`;
+
 const ContainerV2 = styled.div`
   margin-top: 32px;
   display: flex;
@@ -1020,95 +957,95 @@ const Search = styled.div`
   @media (min-width: 1300px) {
   }
 `;
-const Category = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 24px;
-  > div:nth-of-type(1) {
-    margin-right: 24px;
-  }
-  > span {
-    font-size: 20px;
-    line-height: 40px;
-    letter-spacing: -0.5px;
-    color: #282c36;
-    font-weight: 500;
-    width: 70px;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: block;
-    margin-bottom: 6px;
-    > div {
-      display: inline-block;
-    }
-    > div:nth-of-type(1) {
-      margin-right: 32px;
-    }
+// const Category = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 24px;
+//   > div:nth-of-type(1) {
+//     margin-right: 24px;
+//   }
+//   > span {
+//     font-size: 20px;
+//     line-height: 40px;
+//     letter-spacing: -0.5px;
+//     color: #282c36;
+//     font-weight: 500;
+//     width: 70px;
+//   }
+//   @media (min-width: 0px) and (max-width: 767.98px) {
+//     display: block;
+//     margin-bottom: 6px;
+//     > div {
+//       display: inline-block;
+//     }
+//     > div:nth-of-type(1) {
+//       margin-right: 32px;
+//     }
 
-    > span {
-      font-size: 14px;
-      // width: 40px;
-      display: block;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    > span {
-      font-size: 16px;
-      width: 40px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    > span {
-      font-size: 18px;
-      width: 50px;
-    }
-  }
-  @media (min-width: 1300px) {
-  }
-`;
-const Location = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 24px;
-  > span {
-    font-size: 20px;
-    line-height: 40px;
-    letter-spacing: -0.5px;
-    color: #282c36;
-    font-weight: 500;
-    width: 70px;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: block;
-    margin-bottom: 6px;
-    > div {
-      display: inline-block;
-    }
-    > div:nth-of-type(1) {
-      margin-right: 32px;
-    }
+//     > span {
+//       font-size: 14px;
+//       // width: 40px;
+//       display: block;
+//     }
+//   }
+//   @media (min-width: 768px) and (max-width: 991.98px) {
+//     > span {
+//       font-size: 16px;
+//       width: 40px;
+//     }
+//   }
+//   @media (min-width: 992px) and (max-width: 1299.98px) {
+//     > span {
+//       font-size: 18px;
+//       width: 50px;
+//     }
+//   }
+//   @media (min-width: 1300px) {
+//   }
+// `;
+// const Location = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 24px;
+//   > span {
+//     font-size: 20px;
+//     line-height: 40px;
+//     letter-spacing: -0.5px;
+//     color: #282c36;
+//     font-weight: 500;
+//     width: 70px;
+//   }
+//   @media (min-width: 0px) and (max-width: 767.98px) {
+//     display: block;
+//     margin-bottom: 6px;
+//     > div {
+//       display: inline-block;
+//     }
+//     > div:nth-of-type(1) {
+//       margin-right: 32px;
+//     }
 
-    > span {
-      font-size: 14px;
-      // width: 40px;
-      display: block;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    > span {
-      font-size: 16px;
-      width: 40px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    > span {
-      font-size: 18px;
-      width: 50px;
-    }
-  }
-  @media (min-width: 1300px) {
-  }
-`;
+//     > span {
+//       font-size: 14px;
+//       // width: 40px;
+//       display: block;
+//     }
+//   }
+//   @media (min-width: 768px) and (max-width: 991.98px) {
+//     > span {
+//       font-size: 16px;
+//       width: 40px;
+//     }
+//   }
+//   @media (min-width: 992px) and (max-width: 1299.98px) {
+//     > span {
+//       font-size: 18px;
+//       width: 50px;
+//     }
+//   }
+//   @media (min-width: 1300px) {
+//   }
+// `;
 
 const Filter = styled.div`
   display: flex;
@@ -1621,83 +1558,59 @@ const FilterItem = styled.div`
 
 const FilterContent = styled.div`
   width: 100%;
-  margin-top: 19px;
-  // margin-left: 25px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  border-radius: 0.5px;
-  box-sizing: border-box;
+  height: 293px;
+  margin-top: 15px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
   display: flex;
-  flex-direction: column;
-  padding: 24px;
-  city {
-    padding-bottom: 24px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #e1e2e4;
-    label {
-      font-size: 18px;
-      line-height: 40px;
-      letter-spacing: -0.45px;
-      color: #282c36;
-      font-weight: 500;
-      margin-right: 93px;
-      display: inline-block;
-      width: 80px;
-    }
-    display: flex;
-  }
-  category {
-    padding-top: 24px;
-    box-sizing: border-box;
-    label {
-      font-size: 18px;
-      line-height: 40px;
-      letter-spacing: -0.45px;
-      color: #282c36;
-      font-weight: 500;
-      margin-right: 93px;
-      display: inline-block;
-      width: 94px;
-    }
-    display: flex;
-  }
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-
-    > city {
-      > label {
-        font-size: 13px;
-        margin-right: 40px;
-        width: 80px;
-      }
-    }
-    > category {
-      > label {
-        font-size: 13px;
-        margin-right: 31px;
-        width: 65px;
-      }
-    }
-  }
-
-
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    > city {
-      > label {
-        font-size: 15px;
-        margin-right: 40px;
-        width: 80px;
-      }
-    }
-    > category {
-      > label {
-        font-size: 15px;
-        margin-right: 55px;
-        width: 65px;
-      }
-    }
+  justify-content: space-between;
+  &:after {
+    border-top: 3px solid transparent;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 10px solid white;
+    content: "";
+    position: absolute;
+    top: 195px;
+    left: 450px;
   }
 `;
+
+const Aside = styled.div`
+  width: 319px;
+  border-right: solid 1px #e1e2e4;
+`;
+const Buy = styled.div`
+  height: 46px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  color: #282c36;
+  font-size: 15px;
+  background-color: ${(props) => (props.active ? "#ededef" : "#ffffff")};
+`;
+const Develop = styled.div`
+  height: 46px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-size: 15px;
+  color: #282c36;
+  background-color: ${(props) => (props.active ? "#ededef" : "#ffffff")};
+`;
+const Making = styled.div`
+  height: 46px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-size: 15px;
+  color: #282c36;
+  background-color: ${(props) => (props.active ? "#ededef" : "#ffffff")};
+`;
+const Main = styled.div``;
+
 const FilterButton = styled.div`
   background: none;
   display: flex;
