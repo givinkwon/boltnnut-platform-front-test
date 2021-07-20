@@ -113,7 +113,7 @@ class ManufacturerContentContainer extends React.Component {
               </Header>
               <Main>
                 <MainBody>
-                  {Partner.partner_list.length === 0 &&
+                  {Partner.partner_list && Partner.partner_list.length === 0 &&
                     (Partner.loadingFlag ? (
                       <ButtonSpinnerComponent scale="30%" primary />
                     ) : (

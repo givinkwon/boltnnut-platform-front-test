@@ -7,27 +7,23 @@ export function getMainCategory(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/maincategory/`,
-    params: req.data ? req.data : null,
   })
 }
 
 // 만든 제품 분야 : 중분류
 export function getCategory(req) {
-return axios({
-  method: "GET",
-  url: `${ROOT_URL}/category/`,
-  params: req.params ? req.params : null,
-  headers: req.headers ? req.headers : null,
-})
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/category/`,
+  })
 }
 
 // 업체 분류 분야 : 대분류
-export function getMainBusiness(req) {
-    return axios({
-      method: "GET",
-      url: `${ROOT_URL}/mainbusiness/`,
-      params: req.data ? req.data : null,
-    })
+export function getMainbusiness(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/mainbusiness/`,
+  })
 }
 
 // 업체 분류 분야 : 중분류
@@ -35,8 +31,6 @@ export function getBusiness(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/business/`,
-    params: req.params ? req.params : null,
-    headers: req.headers ? req.headers : null,
   })
 }
 
@@ -45,7 +39,6 @@ export function getDevelopbig() {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/developbig/`,
-    params: req.data ? req.data : null,
   });
 }
 
@@ -54,7 +47,6 @@ export function getDevelop() {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/develop/`,
-    params: req.data ? req.data : null,
   });
 }
 
@@ -63,7 +55,6 @@ export function getMainmaterial() {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/mainmaterial/`,
-    params: req.data ? req.data : null,
   });
 }
 
@@ -72,7 +63,6 @@ export function getMaterial() {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/material/`,
-    params: req.data ? req.data : null,
   });
 }
 
@@ -81,9 +71,9 @@ export function getCity() {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/city/`,
-    params: req.data ? req.data : null,
   });
 }
+
 
 // ======================= 기타 카테고리 ======================= 
 export function getPath() {
@@ -93,11 +83,18 @@ export function getPath() {
   });
 }
 
-export function getBusiness() {
+export function getBusiness_category() {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/business_category/`,
   });
+}
+
+export function getRegion() {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/region/`,
+  })
 }
 
 export function getNextRegion(req) {

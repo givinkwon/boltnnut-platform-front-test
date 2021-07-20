@@ -1093,16 +1093,7 @@ class Answer {
     );
     return this.develop_categories[idx];
   };
-  getSubclassById = (id) => {
-    if (id === -1) {
-      return;
-    }
 
-    console.log(`getSubclassById(${id})`);
-    const idx = this.subclasses.findIndex((subclass) => subclass.id == id);
-
-    return this.subclasses[idx];
-  };
   getMainCategoryById = (id) => {
     if (id === -1) {
       return;
@@ -1625,62 +1616,7 @@ class Answer {
         }
       });
   };
-  @action loadSubclasses = () => {
-    const token = localStorage.getItem("token");
-    const req = {
-      // params
-      // headers
-      headers: {
-        // Authorization: token && `Token ${token}`,
-      },
-    };
-
-    AnswerAPI.getSubclass(req)
-      .then(async (res) => {
-        this.subclasses = res.data.results;
-        this.subclasses_next = res.data.next;
-
-        console.log(
-          "loadSubclasses: 카테고리 길이 : " + this.subclasses.length
-        );
-
-        while (this.subclasses_next) {
-          const req = {
-            nextUrl: this.subclasses_next,
-            // headers
-            headers: {
-              // Authorization: token && `Token ${token}`,
-            },
-          };
-
-          await AnswerAPI.getNextPage(req)
-            .then((res) => {
-              this.subclasses = this.subclasses.concat(res.data.results);
-              this.subclasses_next = res.data.next;
-
-              console.log(
-                "loadSubclasses: 카테고리 길이 : " + this.subclasses.length
-              );
-            })
-            .catch((e) => {
-              try {
-                alert(e.response.data.message);
-              } catch {
-                console.log(e);
-                console.log(e.response);
-              }
-            });
-        }
-      })
-      .catch((e) => {
-        try {
-          alert(e.response.data.message);
-        } catch {
-          console.log(e);
-          console.log(e.response);
-        }
-      });
-  };
+  
   @action loadCityList = async () => {
     const token = localStorage.getItem("token");
 
@@ -1886,104 +1822,6 @@ class Answer {
   //    })
   //}
 
-  @action searchSubclass = async (type, value) => {
-    //   this.possible_list = []
-    this.history_list = [];
-    //   this.possible_subclass_list = []
-    this.history_subclass_list = [];
-
-    const req = {
-      // params
-      // headers
-      headers: {
-        // Authorization: `Token ${token}`,
-      },
-      // params
-      params: {
-        search: value,
-      },
-    };
-
-    return CategoryAPI.getSubclass(req)
-      .then(async (res) => {
-        console.log(res.data);
-
-        let next = res.data.next;
-        let subclasses = res.data.results;
-
-        while (next) {
-          const req = {
-            nextUrl: next,
-          };
-
-          await CategoryAPI.getNextPage(req)
-            .then((res) => {
-              next = res.data.next;
-              subclasses = subclasses.concat(res.data.results);
-            })
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-        }
-        console.log("로딩 끝");
-
-        // 색칠하기
-        const re = new RegExp(value, "g");
-        subclasses.forEach((subclassObj) => {
-          subclassObj.subclass = subclassObj.subclass.replace(
-            re,
-            `<span style="color: ${PRIMARY};">${value}</span>`
-          );
-        });
-
-        subclasses.forEach((subclass) => {
-          let main = null;
-          //    if(type === 'possible') {
-          //      main = this.possible_subclass_list.find(main => main.id === subclass.maincategory);
-          //    }
-          if (type === "history") {
-            main = this.history_subclass_list.find(
-              (main) => main.id === subclass.maincategory
-            );
-          }
-          if (!main) {
-            main = { ...this.getMainCategoryById(subclass.maincategory) };
-            let category = { ...this.getCategoryById(subclass.category) };
-            main.category_set = [category];
-            category.subclass_set = [subclass];
-
-            //      if(type === 'possible') {
-            //        this.possible_subclass_list.push(main)
-            //      }
-            if (type === "history") {
-              this.history_subclass_list.push(main);
-            }
-          } else {
-            let category = main.category_set.find(
-              (category) => category.id === subclass.category
-            );
-            console.log(`${main.maincategory}: ${main.category_set.length}`);
-            if (!category) {
-              category = { ...this.getCategoryById(subclass.category) };
-              category.subclass_set = [subclass];
-              main.category_set.push(category);
-            } else {
-              let alreadyExists = category.subclass_set.find(
-                (subclassObj) => subclassObj.id === subclass.id
-              );
-              if (!alreadyExists) {
-                category.subclass_set.push(subclass);
-              }
-            }
-          }
-        });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
   @action searchCategory = async (type, value) => {
     //  this.possible_category_list = []
     this.history_category_list = [];
@@ -2000,7 +1838,7 @@ class Answer {
       },
     };
 
-    return CategoryAPI.getCategoryMiddle(req)
+    return CategoryAPI.getCategory(req)
       .then(async (res) => {
         console.log(res.data);
 

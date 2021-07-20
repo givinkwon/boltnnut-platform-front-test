@@ -5,6 +5,9 @@ import InnerBoxComponent from "components/InnerBox";
 import * as Title from "components/Title";
 import * as Content from "components/Content";
 import ButtonComponent from "components/Button";
+import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
+
 const MainArr = ["제품", "기계/설비/장비", "부품", "공구류"];
 const SubArr = [
   "제품",
@@ -16,7 +19,13 @@ const SubArr = [
   "부품",
   "공구류",
 ];
+@inject("Category")
 class FilterModalContainer extends React.Component {
+  async componentDidMount() {
+    const { Category } = this.props;    
+    await Category.init();
+    console.log(toJS(Category.mainbusiness_list))
+  }
   state = {
     mainSelectIdx: 0,
     subSelectIdx: 0,
@@ -45,6 +54,8 @@ class FilterModalContainer extends React.Component {
     }
   };
   render() {
+    const { Category } = this.props;  
+
     return (
       <ModalBox>
         {/* <InnerBoxComponent
@@ -56,7 +67,8 @@ class FilterModalContainer extends React.Component {
         <MainCategoryBox>
           <>
             {/* map으로 뿌리기 */}
-            {MainArr.map((data, idx) => {
+            {Category.mainbusiness_list && toJS(Category.mainbusiness_list).map((data, idx) => {
+              console.log(Category.mainbusiness_list)
               return (
                 <MainCategoryButton
                   onClick={() => {

@@ -12,12 +12,13 @@ import { inject, observer } from "mobx-react";
 import DetailContainer from "./Detail/index";
 import MobileRequest from "./MobileRequest";
 import MobileRequestDone from "./MobileRequestDone";
+import { DiagnosticCategory } from "typescript";
 
-@inject("Auth", "Partner")
+@inject("Auth", "Partner", "Category")
 @observer
 class ProducerConatiner extends React.Component {
   async componentDidMount() {
-    const { Auth, Partner } = this.props;    
+    const { Auth, Partner, Category } = this.props;    
     Partner.init();
     Partner.newIndex = 0;
     Partner.mobileRequestIndex = 0;

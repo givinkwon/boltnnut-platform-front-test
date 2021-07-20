@@ -16,7 +16,7 @@ import { toJS } from "mobx";
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
-@inject("Home", "Loading", "Auth")
+@inject("Home", "Loading", "Auth", "Category")
 @observer
 class Home extends React.Component {
   state = {
@@ -25,7 +25,7 @@ class Home extends React.Component {
   };
   async componentDidMount() {
     this.props.Loading.setOpen(true);
-
+    
     this.props.Auth.home_index = 0;
     console.log("home didmount");
     this.props.Auth.previous_url = "";
