@@ -28,7 +28,7 @@ export function getProjectDetail(req) {
   });
 }
 
-export function getCategoryMiddle(req) {
+export function getCategory(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/category/${req.id}/`,
