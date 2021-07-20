@@ -8,10 +8,16 @@ import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import ReviewContainer from "./Review/ReviewContainer";
 import CheckBrowserModal from "containers/Home/CheckBrowserModal";
 import * as AccountAPI from "axios/Account/Account";
+import * as PartnerAPI from "axios/Manufacture/Partner";
+
 const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
 const file_img2 = "static/images/manufacturer/file.png";
+const star = "static/icon/star_yellow.svg";
+const viewcount = "static/icon/viewcount.svg";
+const bookmarkcount = "static/icon/bookmarkcount.svg";
+const location = "static/icon/location.svg";
 import Slider from "react-slick";
 import { EqualStencilFunc } from "three";
 
@@ -42,6 +48,7 @@ class ProposalCard extends React.Component {
     active: false,
     modalOpen: false,
     activeReview: false,
+    city: "",
   };
 
   openModal = (user_phone) => {
@@ -108,9 +115,22 @@ class ProposalCard extends React.Component {
       });
   };
   componentDidMount() {
-    const { width, Producer } = this.props;
+    const { width, Producer, data, Partner } = this.props;
     window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+
+    const req = {
+      id: data.city,
+    };
+
+    PartnerAPI.getCityName(req)
+      .then(async (res) => {
+        this.setState({ city: res.data.city });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   }
 
   componentWillUnmount() {
@@ -224,24 +244,6 @@ class ProposalCard extends React.Component {
     }
   };
 
-  // onClickReviewHandler = (idx, name) => {
-  //   const { Partner } = this.props;
-
-  //   if (Partner.ReviewActiveIndex === idx) {
-  //     console.log(`review false : ${idx}`);
-  //     this.setState({ activeReview: false });
-  //     Partner.ReviewActive = false;
-  //     Partner.ReviewActiveIndex = -1;
-  //     Partner.partnerName = "";
-  //   } else {
-  //     console.log(`review true : ${idx}`);
-  //     this.setState({ activeReview: true });
-  //     Partner.ReviewActive = true;
-  //     Partner.ReviewActiveIndex = idx;
-  //     Partner.partnerName = name;
-  //   }
-  // };
-
   render() {
     const { data, width, Partner, categoryData, idx } = this.props;
 
@@ -249,7 +251,7 @@ class ProposalCard extends React.Component {
       dots: false,
       infinite: true,
       speed: 500,
-      slidesToShow: 2,
+      slidesToShow: 1,
       slidesToScroll: 1,
       draggable: true,
       autoplay: true,
@@ -307,8 +309,45 @@ class ProposalCard extends React.Component {
                 </SliderContainer>
               </Header>
               <Main>
-                <Name>{data.name}</Name>
-                <Phone>
+                <Title>
+                  <div>
+                    <Name>{data.name}</Name>
+                    <Certification>
+                      <img src="/static/icon/certification_img.svg"></img>
+                      <div>신원 인증</div>
+                    </Certification>
+                  </div>
+                  <BookMark>
+                    <img src="/static/icon/bookmark.svg"></img>
+                  </BookMark>
+                </Title>
+                <Introduce>{data.history}</Introduce>
+                <Bottom>
+                  <BottomBox>
+                    <Review>
+                      <img src={star} style={{ marginRight: 5 }}></img>
+                      <Score>4.98/5.0 (리뷰 14)</Score>
+                    </Review>
+                    <Location>
+                      <img
+                        src={location}
+                        style={{ marginLeft: 15, marginRight: 5 }}
+                      ></img>
+                      <div>{this.state.city}</div>
+                    </Location>
+                  </BottomBox>
+                  <BottomBox>
+                    <ViewCount>
+                      <img src={viewcount} style={{ marginRight: 5 }}></img>
+                      <div>높음</div>
+                    </ViewCount>
+                    <BookmarkCount>
+                      <img src={bookmarkcount} style={{ marginRight: 5 }}></img>
+                      <div>0</div>
+                    </BookmarkCount>
+                  </BottomBox>
+                </Bottom>
+                {/* <Phone>
                   <div style={{ cursor: "pointer" }}>
                     {Partner.modalActive && (
                       <Layer>
@@ -324,19 +363,19 @@ class ProposalCard extends React.Component {
                       </Layer>
                     )}
                   </div>
-                </Phone>
-                <InfoOne>
+                </Phone> */}
+                {/* <InfoOne>
                   {data.info_company.length > 150
                     ? data.info_company.slice(0, 150) + "..."
                     : data.info_company}
-                </InfoOne>
-                <InfoTwo>
+                </InfoOne> */}
+                {/* <InfoTwo>
                   {categoryData &&
                     categoryData.map((item, idx) => {
                       return <span>{item}</span>;
                     })}
-                </InfoTwo>
-                <AdditionBox>
+                </InfoTwo> */}
+                {/* <AdditionBox>
                   <div>
                     <Button
                       style={{ cursor: "pointer", zIndex: 10 }}
@@ -369,7 +408,7 @@ class ProposalCard extends React.Component {
                       </Link>
                     </Button>
                   </div>
-                </AdditionBox>
+                </AdditionBox> */}
               </Main>
             </Card>
           </>
@@ -478,14 +517,12 @@ export default ProposalCard;
 
 const Card = styled.div`
   width: 100%;
-  //width: 987px;
   position: relative;
   object-fit: contain;
-  border-radius: 10px;
-  border: ${(props) =>
-    props.active ? "2px solid #0933b3" : "2px solid transparent"}; // #c6c7cc"
-  background-color: #ffffff;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  border-top: solid 1px #e1e2e4;
+  border-bottom: solid 1px #e1e2e4;
+  background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
+  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 
   display: flex;
 
@@ -501,21 +538,21 @@ const Card = styled.div`
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     height: 100%;
-    margin-bottom: 34px;
+    // margin-bottom: 34px;
     padding: 33px 0px 30px 34px;
     box-sizing: border-box;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     height: 100%;
-    margin-bottom: 34px;
+    // margin-bottom: 34px;
     padding: 33px 0px 30px 34px;
     box-sizing: border-box;
     // align-self: self-start;
     // width: 68%;
   }
   @media (min-width: 1300px) {
-    //height: 195px;
-    margin-bottom: 34px;
+    height: 100%;
+    // margin-bottom: 34px;
     padding: 33px 0px 30px 34px;
     box-sizing: border-box;
   }
@@ -550,13 +587,22 @@ const Main = styled.div`
     width: 80%;
   }
 `;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  > div:nth-of-type(1) {
+    display: flex;
+  }
+`;
+
 const Name = styled.div`
   font-size: 20px;
   line-height: 40px;
   letter-spacing: -0.5px;
   color: #282c36;
   font-weight: bold;
-  margin-bottom: 8px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     color: #0933b3;
     font-size: 16px;
@@ -564,32 +610,138 @@ const Name = styled.div`
     letter-spacing: -0.4px;
   }
 `;
-const Review = styled.div`
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  height: 30px;
-  border-radius: 5px;
-  background-color: #0933b3;
-  color: #ffffff;
-  span {
-    font-size: 16px;
-    font-weight: 500;
-  }
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 80px;
-    height: 20px;
-    > span {
-      font-size: 11px;
-    }
+const Certification = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20px;
+  img {
+    widht: 16px;
+    height: 16px;
+    margin-top: 13px;
+  }
+  div {
+    margin-left: 5px;
+    font-size: 16px;
+    line-height: 2.5;
+    letter-spacing: -0.4px;
+    text-align: left;
+    color: #999999;
   }
 `;
+
+const BookMark = styled.div`
+  margin-right: 20px;
+`;
+
+const Introduce = styled.div`
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 2.5;
+  letter-spacing: -0.4px;
+  color: #86888c;
+`;
+
+const Bottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 120px;
+  width: 95%;
+`;
+
+const BottomBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Review = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  img {
+    width: 22px;
+    height: 21px;
+  }
+`;
+
+const Score = styled.div`
+  font-size: 14px;
+`;
+
+const Location = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  div {
+    width: 200px;
+    font-size: 14px;
+    color: #282c36;
+    line-height: 2.86;
+    letter-spacing: -0.35px;
+  }
+  img {
+    width: 10.6px;
+    height: 15.3px;
+  }
+`;
+
+const ViewCount = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  div {
+    margin-left: 5px;
+    width: 50px;
+    font-size: 12px;
+    color: #999999;
+  }
+  img {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+const BookmarkCount = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  div {
+    font-size: 12px;
+    color: #999999;
+  }
+  img {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+// const Review = styled.div`
+//   position: absolute;
+//   top: 15px;
+//   right: 15px;
+//   cursor: pointer;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 100px;
+//   height: 30px;
+//   border-radius: 5px;
+//   background-color: #0933b3;
+//   color: #ffffff;
+//   span {
+//     font-size: 16px;
+//     font-weight: 500;
+//   }
+
+//   @media (min-width: 0px) and (max-width: 767.98px) {
+//     width: 80px;
+//     height: 20px;
+//     > span {
+//       font-size: 11px;
+//     }
+//   }
+// `;
+
 const Phone = styled.div`
   font-size: 16px;
   line-height: 40px;
@@ -901,7 +1053,7 @@ const Layer = styled.div`
 
 const SliderContainer = styled(Slider)`
   .slick-list {
-    width: 400px;
+    width: 262px;
     .slick-track {
       .slick-slide {
         display: flex;
@@ -938,7 +1090,7 @@ const Item = styled.div`
     border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
-    width: 141px;
-    height: 141px;
+    width: 262px;
+    height: 200px;
   }
 `;

@@ -14,17 +14,20 @@ class BannerConatiner extends React.Component {
       <Background
         // src={BackImg}
         backgroundColor={"#fff"}
-        style={{ height: 200 }}
+        style={{ height: 160 }}
       >
         <Container>
           <Item>
-            <Text.FontSize36 color={BLACK} center={true}>
+            <Text.FontSize32
+              color={BLACK}
+              center={true}
+              style={{
+                fontWeight: 500,
+                letterSpacing: "-0.8px",
+              }}
+            >
               제조사 찾기
-            </Text.FontSize36>
-            <Content.FontSize22 color={"#0933B3"} center={true}>
-              {" "}
-              나에게 맞는 제작업체를 찾아보세요.
-            </Content.FontSize22>
+            </Text.FontSize32>
           </Item>
         </Container>
       </Background>

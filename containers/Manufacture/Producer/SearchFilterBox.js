@@ -16,7 +16,7 @@ import Router from "next/router";
 import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
 import { PRIMARY2 } from "static/style";
-
+import FilterModalContainer from "./FilterModal";
 const filter_img = "static/images/filter.svg";
 
 const customStyles = {
@@ -147,12 +147,31 @@ class SearchFilterConatiner extends React.Component {
   dropdownHandler = (flag) => {
     const { Partner } = this.props;
 
+    // 카테고리 선택
+    if (flag == "business") {
+      console.log(1, flag);
+    }
+
+    // 업체 분류 선택
+    if (flag == "category") {
+      console.log(2, flag);
+    }
+
+    // 지역 선택
+    if (flag == "region") {
+      console.log(3, flag);
+    }
+
+    // 공정 선택
+    if (flag == "develop") {
+      console.log(4, flag);
+    }
+
     if (Partner.filter_dropdown) {
       Partner.filter_dropdown = false;
     } else {
       Partner.filter_dropdown = true;
     }
- 
   };
   componentDidMount = async () => {
     const { Partner } = this.props;
@@ -176,7 +195,7 @@ class SearchFilterConatiner extends React.Component {
     if (flag == "category") {
       if (this.state.filter_category_active) {
         this.setState({ filter_category_active: false });
-      } else {        
+      } else {
         this.setState({ filter_category_active: true });
       }
     }
@@ -186,155 +205,107 @@ class SearchFilterConatiner extends React.Component {
     return (
       <>
         {width && width > 767.99 ? (
-          
           <ContainerV2>
             {console.log(`Active : ${Partner.subButtonActive}`)}
             <SearchBar />
-
-            <Search active={Partner.subButtonActive}>
-              {/* <FilterButton>
-                <Button
-                  onClick={() => {
-                    this.dropdownHandler("city");
+            <FilterCategory>
+              <Category>
+                <CategoryName>카테고리</CategoryName>
+                <Field>
+                  <div>전체</div>
+                  <img
+                    src="/static/icon/down_arrow.svg"
+                    onClick={() => {
+                      this.dropdownHandler("business");
+                    }}
+                  ></img>
+                </Field>
+              </Category>
+              <Category>
+                <CategoryName>업체 분류</CategoryName>
+                <Field>
+                  <div>전체</div>
+                  <img
+                    src="/static/icon/down_arrow.svg"
+                    onClick={() => {
+                      this.dropdownHandler("category");
+                    }}
+                  ></img>
+                </Field>
+              </Category>
+              <Category>
+                <CategoryName>지역</CategoryName>
+                <Field>
+                  <div>전체</div>
+                  <img
+                    src="/static/icon/down_arrow.svg"
+                    onClick={() => {
+                      this.dropdownHandler("region");
+                    }}
+                  ></img>
+                </Field>
+              </Category>
+              <Category>
+                <div
+                  style={{
+                    fontSize: "15px",
+                    lineHeight: 2.27,
+                    letterSpacing: "-0.38px",
+                    textAlign: "center",
+                    color: "#555963",
                   }}
                 >
-                  <span>필터</span>
-                </Button>
-                <img src={filter_img} />
-              </FilterButton> */}
-              {/* <div
-                onClick={() => {
-                  Partner.openModal();
-                }}
-              >
-                <span>업체수배&견적 무료의뢰 </span>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div> */}
-              {/* <div>
-                <span>업체 찾기가 힘든 경우 클릭!</span>
-              </div> */}
-
-              {/* <div
-                onClick={() => {
-                  Router.push("/request");
-                }}
-              >
-                <span> 바로 AI 견적 받기 </span>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div> */}
-              {/* <div>
-                <span>도면이 있는 경우 클릭!</span>
-              </div>
-            </Search>         
-              </div> */}
-            </Search>
-
-            {/* <Category>
-              <span>분야</span>
-              <div>
-                <Select
-                  placeholder="대 카테고리"
-                  // options={bigCategoryArray}
-                  options={this.props.Partner.category_main_list}
-                  getOptionLabel={(option) => option.maincategory}
-                  // value={Partner.input_category}
-                  // style={{ width: "160px" }}
-                  onChange={Partner.setMainCategory}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      neutral50: "#1A1A1A", // Placeholder color
-                    },
-                  })}
-                />
-              </div>
-              <div>
-                <Select
-                  placeholder="소 카테고리"
-                  options={Partner.category_middle_ary}
-                  getOptionLabel={(option) => option.category}
-                  value={
-                    Partner.category_middle_ary[0] &&
-                    Partner.input_small_category
-                  }
-                  onChange={Partner.setSmallCategory}
-                  defaultValue={
-                    Partner.category_middle_ary[0] &&
-                    Partner.category_middle_ary[0].cagegory
-                  }
-                />
-              </div>
-                </Category>*/}
-            {/* <Search>
-              <div
-                onClick={() => {
-                  // Partner.filterArray.map((data, idx) => {
-                  //   data.checked = false;
-                  // });
-                  Router.push("/request");
-                }}
-              >
-                <span> 바로 AI 견적 받기 </span>
-              </div>
-              <div>
-                <span>도면이 있는 경우 클릭!</span>
-              </div>
-            </Search> */}
-
-            {/* <FilterContainer>
-              <FilterItem
-                active={this.state.filter_city_active}
-                style={{ borderRight: "none" }}
-                onClick={() => {
-                  this.dropdownHandler("city");
-                }}
-                onMouseOver={() => {
-                  console.log("mouseOver");
-                  this.activeHandler("city");
-                }}
-                onMouseOut={() => {
-                  console.log("mouseOut");
-                  this.activeHandler("city");
-                }}
-              >
-                <span>지역 검색</span>
-              </FilterItem>
-
-              <FilterItem
-                active={this.state.filter_category_active}
-                onClick={() => {
-                  this.dropdownHandler("category");
-                }}
-                onMouseOver={() => {
-                  console.log("mouseOver");
-                  this.activeHandler("category");
-                }}
-                onMouseOut={() => {
-                  console.log("mouseOut");
-                  this.activeHandler("category");
-                }}
-              >
-                <span>분야 검색</span>
-              </FilterItem>
-            </FilterContainer> */}
-
+                  공정, 소재
+                </div>
+                <Material>
+                  <div
+                    onClick={() => {
+                      this.dropdownHandler("develop");
+                    }}
+                  >
+                    <img
+                      src="/static/icon/detail_filter.svg"
+                      style={{ widht: 24, height: 24 }}
+                    ></img>
+                    <img
+                      src="/static/icon/arrow_down.svg"
+                      style={{ widht: 12, height: 12 }}
+                    ></img>
+                  </div>
+                </Material>
+              </Category>
+            </FilterCategory>
+            <FilterModalContainer></FilterModalContainer>
             {Partner.filter_dropdown && (
               <FilterContent>
-                <city>
+                <Aside>
+                  <Buy
+                    onMouseOver={() => {
+                      this.activeHandler("active");
+                    }}
+                    onMouseOut={() => {
+                      this.activeHandler("active");
+                    }}
+                  >
+                    완제품/부품 구매
+                  </Buy>
+                  <Develop>
+                    <div style={{ marginRight: 5 }}>개발 업체</div>
+                    <div style={{ color: "#999999" }}>(디자인, 기구설계)</div>
+                  </Develop>
+                  <Making>
+                    <div style={{ marginRight: 5 }}>제작 업체</div>
+                    <div style={{ color: "#999999" }}>(CNC 가공, 금형사출)</div>
+                  </Making>
+                </Aside>
+                <Main></Main>
+                {/* <city>
                   <label>지역검색</label>
                   <RadioBox
                     filter="region"                    
                     data={this.props.Partner.cityArray}                    
                   />
                 </city>
-           
                 <category>
                   <label>분야검색</label>
                   <FilterBox
@@ -342,11 +313,27 @@ class SearchFilterConatiner extends React.Component {
                     purpose="filter"
                     data={Partner.filterArray}
                   />
-                </category>
+                </category> */}
               </FilterContent>
             )}
-         
-
+            {/* <Filter>
+              <span>위치</span>
+              <span>(중복선택 가능)</span>
+              <FilterBox
+                filter="filter"
+                purpose="filter"
+                data={Partner.filterArray}
+              />
+            </Filter> */}
+            {/* <Filter>
+              <span>분야</span>
+              <span>(중복선택 가능)</span>
+              <FilterBox
+                filter="filter"
+                purpose="filter"
+                data={Partner.filterArray}
+              />
+            </Filter> */}
             {Partner.requestModalActive && (
               <Layer>
                 <span>
@@ -358,7 +345,6 @@ class SearchFilterConatiner extends React.Component {
                 </span>
               </Layer>
             )}
-
             {Partner.requestDoneModalActive && (
               <Layer>
                 <span>
@@ -372,9 +358,9 @@ class SearchFilterConatiner extends React.Component {
             )}
           </ContainerV2>
         ) : (
-          <ContainerV2>         
+          <ContainerV2>
             <Filter>
-              <span>분야필터</span>              
+              <span>분야필터</span>
               <FilterBox
                 filter="mobileFilter"
                 purpose="filter"
@@ -386,11 +372,11 @@ class SearchFilterConatiner extends React.Component {
                 <MobileSelect
                   placeholder="전체지역"
                   options={this.props.Partner.filter_city_ary}
-                  getOptionLabel={(option) => option.city}                  
+                  getOptionLabel={(option) => option.city}
                   onChange={Partner.setCityCategory}
-                  styles={mobileCustomStyles}                  
+                  styles={mobileCustomStyles}
                 />
-              </Location>          
+              </Location>
             </Filter>
 
             <RequestButton>
@@ -445,10 +431,69 @@ class SearchFilterConatiner extends React.Component {
 
 export default SearchFilterConatiner;
 
+const FilterCategory = styled.div`
+  width: 100%;
+  margin-top: 40px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  background: none;
+  border: none;
+`;
+
+const Category = styled.div`
+  background: none;
+  border: none;
+  margin-right: 20px;
+`;
+
+const Material = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  width: 64px;
+  height: 40px;
+`;
+
+const CategoryName = styled.div`
+  background: none;
+  border: none;
+  width: 204px;
+  font-size: 15px;
+  line-height: 2.27;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: #555963;
+}
+`;
+
+const Field = styled.div`
+  width: 204px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  div {
+    margin-left: 16px;
+    line-height: 2.27;
+    letter-spacing: -0.38px;
+    text-align: left;
+    color: #b3b3b3;
+  }
+  img {
+    margin-right: 12px;
+  }
+`;
+
 const ContainerV2 = styled.div`
   margin-top: 32px;
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
   width: 1200px;
   margin-bottom: 30px;
 
@@ -493,7 +538,7 @@ const Search = styled.div`
     padding: 8px 16px 9px 16px;
     box-sizing: border-box;
     box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
-    height: 44px;    
+    height: 44px;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -511,7 +556,6 @@ const Search = styled.div`
     }
 
     display: ${(props) => (props.active ? "flex" : "none")};
-
 
     ${(props) =>
       props.active &&
@@ -622,11 +666,11 @@ const Search = styled.div`
         > span {
           @keyframes appear {
             0% {
-              opacity: 0;              
+              opacity: 0;
             }
 
             100% {
-              opacity: 1;              
+              opacity: 1;
             }
           }
 
@@ -646,11 +690,11 @@ const Search = styled.div`
       css`
         @keyframes appear_two {
           0% {
-            opacity: 0;            
+            opacity: 0;
           }
 
           100% {
-            opacity: 1;            
+            opacity: 1;
           }
         }
 
@@ -745,8 +789,8 @@ const Search = styled.div`
 
     > div:nth-of-type(3),
     > div:nth-of-type(5) {
-      padding: 6px 12px 7px 12px;      
-      span {        
+      padding: 6px 12px 7px 12px;
+      span {
         font-size: 13px;
       }
     }
@@ -765,100 +809,100 @@ const Search = styled.div`
       > span {
         font-size: 12px;
       }
-    }  
+    }
   }
   @media (min-width: 1300px) {
   }
 `;
-const Category = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 24px;
-  > div:nth-of-type(1) {
-    margin-right: 24px;
-  }
-  > span {
-    font-size: 20px;
-    line-height: 40px;
-    letter-spacing: -0.5px;
-    color: #282c36;
-    font-weight: 500;
-    width: 70px;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: block;
-    margin-bottom: 6px;
-    > div {
-      display: inline-block;
-    }
-    > div:nth-of-type(1) {
-      margin-right: 32px;
-    }
+// const Category = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 24px;
+//   > div:nth-of-type(1) {
+//     margin-right: 24px;
+//   }
+//   > span {
+//     font-size: 20px;
+//     line-height: 40px;
+//     letter-spacing: -0.5px;
+//     color: #282c36;
+//     font-weight: 500;
+//     width: 70px;
+//   }
+//   @media (min-width: 0px) and (max-width: 767.98px) {
+//     display: block;
+//     margin-bottom: 6px;
+//     > div {
+//       display: inline-block;
+//     }
+//     > div:nth-of-type(1) {
+//       margin-right: 32px;
+//     }
 
-    > span {
-      font-size: 14px;
-      // width: 40px;
-      display: block;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    > span {
-      font-size: 16px;
-      width: 40px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    > span {
-      font-size: 18px;
-      width: 50px;
-    }
-  }
-  @media (min-width: 1300px) {
-  }
-`;
-const Location = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 24px;
-  > span {
-    font-size: 20px;
-    line-height: 40px;
-    letter-spacing: -0.5px;
-    color: #282c36;
-    font-weight: 500;
-    width: 70px;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: block;
-    margin-bottom: 6px;
-    > div {
-      display: inline-block;
-    }
-    > div:nth-of-type(1) {
-      margin-right: 32px;
-    }
+//     > span {
+//       font-size: 14px;
+//       // width: 40px;
+//       display: block;
+//     }
+//   }
+//   @media (min-width: 768px) and (max-width: 991.98px) {
+//     > span {
+//       font-size: 16px;
+//       width: 40px;
+//     }
+//   }
+//   @media (min-width: 992px) and (max-width: 1299.98px) {
+//     > span {
+//       font-size: 18px;
+//       width: 50px;
+//     }
+//   }
+//   @media (min-width: 1300px) {
+//   }
+// `;
+// const Location = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 24px;
+//   > span {
+//     font-size: 20px;
+//     line-height: 40px;
+//     letter-spacing: -0.5px;
+//     color: #282c36;
+//     font-weight: 500;
+//     width: 70px;
+//   }
+//   @media (min-width: 0px) and (max-width: 767.98px) {
+//     display: block;
+//     margin-bottom: 6px;
+//     > div {
+//       display: inline-block;
+//     }
+//     > div:nth-of-type(1) {
+//       margin-right: 32px;
+//     }
 
-    > span {
-      font-size: 14px;
-      // width: 40px;
-      display: block;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    > span {
-      font-size: 16px;
-      width: 40px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    > span {
-      font-size: 18px;
-      width: 50px;
-    }
-  }
-  @media (min-width: 1300px) {
-  }
-`;
+//     > span {
+//       font-size: 14px;
+//       // width: 40px;
+//       display: block;
+//     }
+//   }
+//   @media (min-width: 768px) and (max-width: 991.98px) {
+//     > span {
+//       font-size: 16px;
+//       width: 40px;
+//     }
+//   }
+//   @media (min-width: 992px) and (max-width: 1299.98px) {
+//     > span {
+//       font-size: 18px;
+//       width: 50px;
+//     }
+//   }
+//   @media (min-width: 1300px) {
+//   }
+// `;
 
 const Filter = styled.div`
   display: flex;
@@ -882,20 +926,20 @@ const Filter = styled.div`
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: block;
     margin-bottom: 6px;
-    > div {      
+    > div {
     }
     > div:nth-of-type(1) {
       margin-right: 32px;
     }
 
     > span:nth-of-type(1) {
-      font-size: 14px;      
+      font-size: 14px;
     }
     > span:nth-of-type(2) {
       font-size: 12px;
       line-height: 40px;
       letter-spacinig: -0.4px;
-      color: #282c36;      
+      color: #282c36;
       width: auto;
       float: right;
     }
@@ -939,13 +983,12 @@ const SearchButton = styled(ButtonComponent)`
 `;
 
 const MobileSelect = styled(MobileSelectComponent)`
-  width: 220px;  
+  width: 220px;
   box-sizing: border-box;
 
   option {
     color: #c1bfbf;
   }
-  
 
   @media (min-width: 0px) and (max-width: 767.98px) {
   }
@@ -954,11 +997,11 @@ const MobileSelect = styled(MobileSelectComponent)`
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 140px;
-  }  
+  }
 `;
 
 const Select = styled(SelectComponent)`
-  width: 220px;  
+  width: 220px;
   box-sizing: border-box;
 
   option {
@@ -978,14 +1021,12 @@ const Select = styled(SelectComponent)`
     position: relative;
   }
 
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 120px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 140px;
   }
-
 `;
 
 const Box = styled.div`
@@ -1020,7 +1061,7 @@ const Box = styled.div`
     `}
 `;
 
-const InputContainer = styled.div`  
+const InputContainer = styled.div`
   display: flex;
 
   > span {
@@ -1106,11 +1147,10 @@ const DirectInputBox = styled.div`
         font-size: 10px;
       }
     }
-  }  
+  }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 145px;
   }
-  
 `;
 
 const Layer = styled.div`
@@ -1119,7 +1159,7 @@ const Layer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 100;  
+  z-index: 100;
   background-color: rgba(0, 0, 0, 0.5);
 
   > span {
@@ -1176,7 +1216,7 @@ const RequestButton = styled.div`
 `;
 
 const FilterContainer = styled.div`
-  margin-left: 25px;  
+  margin-left: 25px;
   width: 100%;
   height: 44px;
   display: flex;
@@ -1219,82 +1259,59 @@ const FilterItem = styled.div`
 
 const FilterContent = styled.div`
   width: 100%;
-  margin-top: 19px;  
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  border-radius: 0.5px;
-  box-sizing: border-box;
+  height: 293px;
+  margin-top: 15px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
   display: flex;
-  flex-direction: column;
-  padding: 24px;
-  city {
-    padding-bottom: 24px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #e1e2e4;
-    label {
-      font-size: 18px;
-      line-height: 40px;
-      letter-spacing: -0.45px;
-      color: #282c36;
-      font-weight: 500;
-      margin-right: 93px;
-      display: inline-block;
-      width: 80px;
-    }
-    display: flex;
-  }
-  category {
-    padding-top: 24px;
-    box-sizing: border-box;
-    label {
-      font-size: 18px;
-      line-height: 40px;
-      letter-spacing: -0.45px;
-      color: #282c36;
-      font-weight: 500;
-      margin-right: 93px;
-      display: inline-block;
-      width: 94px;
-    }
-    display: flex;
-  }
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-
-    > city {
-      > label {
-        font-size: 13px;
-        margin-right: 40px;
-        width: 80px;
-      }
-    }
-    > category {
-      > label {
-        font-size: 13px;
-        margin-right: 31px;
-        width: 65px;
-      }
-    }
-  }
-
-
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    > city {
-      > label {
-        font-size: 15px;
-        margin-right: 40px;
-        width: 80px;
-      }
-    }
-    > category {
-      > label {
-        font-size: 15px;
-        margin-right: 55px;
-        width: 65px;
-      }
-    }
+  justify-content: space-between;
+  &:after {
+    border-top: 3px solid transparent;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 10px solid white;
+    content: "";
+    position: absolute;
+    top: 195px;
+    left: 450px;
   }
 `;
+
+const Aside = styled.div`
+  width: 319px;
+  border-right: solid 1px #e1e2e4;
+`;
+const Buy = styled.div`
+  height: 46px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  color: #282c36;
+  font-size: 15px;
+  background-color: ${(props) => (props.active ? "#ededef" : "#ffffff")};
+`;
+const Develop = styled.div`
+  height: 46px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-size: 15px;
+  color: #282c36;
+  background-color: ${(props) => (props.active ? "#ededef" : "#ffffff")};
+`;
+const Making = styled.div`
+  height: 46px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-size: 15px;
+  color: #282c36;
+  background-color: ${(props) => (props.active ? "#ededef" : "#ffffff")};
+`;
+const Main = styled.div``;
+
 const FilterButton = styled.div`
   background: none;
   display: flex;

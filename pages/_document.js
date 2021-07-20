@@ -351,6 +351,15 @@ export default class MyDocument extends Document {
     };
   }
 
+  setKakaoLogin() {
+    return {
+      __html: `
+        (function() {
+          Kakao.init("1469e9509222cfd066d35737d4359063");
+      })();
+      `,
+    };
+  }
   setBeusableAddition() {
     return {
       __html: `
@@ -459,7 +468,11 @@ export default class MyDocument extends Document {
             async
           ></script>
         </Head>
-        <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+        <body
+          oncontextmenu="return false"
+          ondragstart="return false"
+          onselectstart="return false"
+        >
           <noscript>
             <iframe
               src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5"
@@ -502,7 +515,15 @@ export default class MyDocument extends Document {
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
           ></script>
+
+          {/* 카카오로그인 */}
+          <script
+            type="text/javascript"
+            src="https://developers.kakao.com/sdk/js/kakao.js"
+          ></script>
+          <script dangerouslySetInnerHTML={this.setKakaoLogin()} />
           {/* 테스트 */}
+
           <script
             type="text/javascript"
             src="https://apis.google.com/js/client.js?onload=authorize"

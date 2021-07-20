@@ -1509,15 +1509,6 @@ class Partner {
               console.log(e.response);
             });
         }
-        // console.log(toJS(res.data.results));
-        // console.log(toJS(typeof this.filter_city_ary));
-        // console.log(toJS(this.filter_city_ary));
-        // this.filter_city_ary = this.filter_city_ary.filter(
-        //   (item) => item.id === 0 || item.id < 9
-        // );
-
-        // this.city_ary = this.city_ary.filter((item) => item.id < 9);
-        // console.log(toJS(this.filter_city_ary));
       })
       .catch((e) => {
         console.log(e);
@@ -1739,46 +1730,46 @@ class Partner {
           this.category_count += 1;
         });
 
-        //   await this.category_ary.map(async (data, id) => {
-        //     await data.map(async (sub_data, index) => {
-        //       const req = {
-        //         id: sub_data,
-        //       };
-        //       if (this.isSearched) {
-        //         this.exceptionCategory += sub_data + ",";
-        //       }
+        await this.category_ary.map(async (data, id) => {
+          await data.map(async (sub_data, index) => {
+            const req = {
+              id: sub_data,
+            };
+            if (this.isSearched) {
+              this.exceptionCategory += sub_data + ",";
+            }
 
-        //       if (this.click_count != click) {
-        //         return;
-        //       }
+            if (this.click_count != click) {
+              return;
+            }
 
-        //       await PartnerAPI.getPartnerCategory(req)
-        //         .then(async (res) => {
-        //           if (click == 0) {
-        //             click += 1;
-        //           }
+            await PartnerAPI.getPartnerCategory(req)
+              .then(async (res) => {
+                if (click == 0) {
+                  click += 1;
+                }
 
-        //           if (this.click_count == click) {
-        //             if (!this.category_dic.hasOwnProperty(id)) {
-        //               this.category_dic[id] = [];
-        //             }
-        //             this.category_dic[id] = await [
-        //               ...this.category_dic[id],
-        //               res.data.category,
-        //             ];
-        //           } else {
-        //             return;
-        //           }
-        //         })
-        //         .catch((e) => {
-        //           console.log(e);
-        //           console.log(e.response);
-        //         });
-        //       if (this.click_count != click) {
-        //         return;
-        //       }
-        //     });
-        //   });
+                if (this.click_count == click) {
+                  if (!this.category_dic.hasOwnProperty(id)) {
+                    this.category_dic[id] = [];
+                  }
+                  this.category_dic[id] = await [
+                    ...this.category_dic[id],
+                    res.data.category,
+                  ];
+                } else {
+                  return;
+                }
+              })
+              .catch((e) => {
+                console.log(e);
+                console.log(e.response);
+              });
+            if (this.click_count != click) {
+              return;
+            }
+          });
+        });
       })
       .catch((e) => {
         console.log(e);
