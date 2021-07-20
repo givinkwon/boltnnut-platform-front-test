@@ -4,7 +4,18 @@ import Background from "components/Background";
 import InnerBoxComponent from "components/InnerBox";
 import * as Title from "components/Title";
 import * as Content from "components/Content";
+import ButtonComponent from "components/Button";
 const MainArr = ["제품", "기계/설비/장비", "부품", "공구류"];
+const SubArr = [
+  "제품",
+  "기계/설비/장비",
+  "부품",
+  "공구류",
+  "제품",
+  "기계/설비/장비",
+  "부품",
+  "공구류",
+];
 class FilterModalContainer extends React.Component {
   state = {
     mainSelectIdx: 0,
@@ -59,17 +70,45 @@ class FilterModalContainer extends React.Component {
             })}
           </>
         </MainCategoryBox>
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "73.4%" }}>
           <SubCategoryBox>
-            {MainArr.map((data, idx) => {
-              return (
-                <SubCategoryButton active={this.activeHandler("sub", idx)}>
-                  <SubCategoryFont>{data}</SubCategoryFont>
-                </SubCategoryButton>
-              );
-            })}
+            <SubInnerBox>
+              {SubArr.map((data, idx) => {
+                return (
+                  <SubCategoryButton
+                    onClick={() => {
+                      this.buttonClick("sub", idx);
+                    }}
+                    active={this.activeHandler("sub", idx)}
+                  >
+                    <SubCategoryFont>{data}</SubCategoryFont>
+                  </SubCategoryButton>
+                );
+              })}
+            </SubInnerBox>
           </SubCategoryBox>
-          <ButtonBox>2</ButtonBox>
+          <ButtonBox>
+            <ButtonComponent
+              backgroundColor={"blue"}
+              borderRadius={3}
+              borderWidth={1}
+              borderColor={"gray"}
+            >
+              <MainCategoryFont color={"#505050"} fontWeight={500}>
+                회원가입
+              </MainCategoryFont>
+            </ButtonComponent>
+            <ButtonComponent
+              backgroundColor={"white"}
+              borderRadius={3}
+              borderWidth={1}
+              borderColor={"gray"}
+            >
+              <MainCategoryFont color={"#505050"} fontWeight={500}>
+                회원가입
+              </MainCategoryFont>
+            </ButtonComponent>
+          </ButtonBox>
         </div>
       </ModalBox>
     );
@@ -88,7 +127,7 @@ const ModalBox = styled.div`
 
 const MainCategoryBox = styled.div`
   height: 100%;
-  width: 26.6vw;
+  width: 26.6%;
   border-right: 1px solid #e1e2e4;
 `;
 
@@ -99,15 +138,26 @@ const MainCategoryButton = styled.div`
   }
 `;
 
-const SubCategoryButton = styled.div`
-  background: ${(props) => (props.active ? "#ededef" : "none")};
-`;
 const SubCategoryBox = styled.div`
   height: 78.8%;
   border-bottom: 1px solid #e1e2e4;
 `;
 
-const ButtonBox = styled.div``;
+const SubInnerBox = styled.div`
+  padding: 34px 18px 34px 18px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+const SubCategoryButton = styled.div`
+  width: 50%;
+  background: ${(props) => (props.active ? "#ededef" : "none")};
+  /* height:30px; */
+`;
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
 
 const MainCategoryFont = styled(Content.FontSize15)`
   font-weight: normal;
