@@ -2105,6 +2105,7 @@ class Partner {
           this.partnerReviewList = await this.partnerReviewList.concat(
             res.data
           );
+          console.log(this.partnerReviewList);
           this.review_partner_count = res.data.count;
           this.review_partner_page =
             parseInt((this.review_partner_count - 1) / 10) + 1;

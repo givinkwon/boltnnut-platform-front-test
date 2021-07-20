@@ -26,7 +26,7 @@ class TabBarContainer extends React.Component {
       reviewLocation,
       mapLocation,
     } = this.props;
-    console.log(this.props.portfoliLocation);
+    console.log(this.props.reviewLocation);
 
     return (
       <>
@@ -44,6 +44,7 @@ class TabBarContainer extends React.Component {
                     window.scrollTo(0, introductionLocation);
                   }
                   if (idx === 2) {
+                    console.log(reviewLocation);
                     window.scrollTo(0, reviewLocation);
                   }
                   if (idx === 3) {

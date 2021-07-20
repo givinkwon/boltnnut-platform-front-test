@@ -114,13 +114,15 @@ class DetailCardContainer extends React.Component {
       return {
         portfoliLocation: document.querySelector("#portfolio").offsetTop,
         introductionLocation: document.querySelector("#introduction").offsetTop,
-        // reviewLocation: document.querySelector("#review").offsetTop,
+        reviewLocation: document.getElementById("review").offsetTop,
         mapLocation: document.querySelector("#maps").offsetTop,
       };
     });
 
     console.log(toJS(Partner.partner_list));
     console.log(this.state.portfoliLocation);
+    console.log(document.querySelector("#review").offsetTop);
+    console.log(this.state.reviewLocation);
     window.addEventListener("scroll", this.loadScroll);
 
     console.log(toJS(Partner.partner_list)); // 10개의 제조사
@@ -138,12 +140,15 @@ class DetailCardContainer extends React.Component {
     const height = document.getElementById("card").style;
 
     if (Auth.logged_in_client) {
-      Partner.checkReviewWriting(Auth.logged_in_client.id);
+      await Partner.checkReviewWriting(Auth.logged_in_client.id);
       // Partner.checkReviewWriting(5052);
+      this.setState({ g: 3 });
     }
 
     Partner.reviewCurrentPage = 1;
     Partner.detailLoadingFlag = false;
+
+    console.log(Partner.reviewWritingModalActive);
 
     // console.log(this.props.Partner.selectedIntroductionFileType);
 
@@ -162,25 +167,26 @@ class DetailCardContainer extends React.Component {
     let total_profession_score = 0;
     console.log(Partner.partnerReviewList);
 
-    (await Partner.partnerAllReviewList[0]) &&
-      Partner.partnerAllReviewList[0].data.map((item, idx) => {
-        total_consult_score += item.consult_score;
-        total_kindness_score += item.kindness_score;
-        total_communication_score += item.communication_score;
-        total_profession_score += item.profession_score;
-      });
-    Partner.partnerAllReviewList[0] &&
-      this.setState({
-        avg_consult_score:
-          total_consult_score / Partner.partnerAllReviewList[0].data.length,
-        avg_kindness_score:
-          total_kindness_score / Partner.partnerAllReviewList[0].data.length,
-        avg_communication_score:
-          total_communication_score /
-          Partner.partnerAllReviewList[0].data.length,
-        avg_profession_score:
-          total_profession_score / Partner.partnerAllReviewList[0].data.length,
-      });
+    // (await Partner.partnerAllReviewList[0]) &&
+    //   Partner.partnerAllReviewList[0].current.map((item, idx) => {
+    //     total_consult_score += item.consult_score;
+    //     total_kindness_score += item.kindness_score;
+    //     total_communication_score += item.communication_score;
+    //     total_profession_score += item.profession_score;
+    //   });
+    // Partner.partnerAllReviewList[0] &&
+    //   this.setState({
+    //     avg_consult_score:
+    //       total_consult_score / Partner.partnerAllReviewList[0].current.length,
+    //     avg_kindness_score:
+    //       total_kindness_score / Partner.partnerAllReviewList[0].current.length,
+    //     avg_communication_score:
+    //       total_communication_score /
+    //       Partner.partnerAllReviewList[0].current.length,
+    //     avg_profession_score:
+    //       total_profession_score /
+    //       Partner.partnerAllReviewList[0].current.length,
+    //   });
   };
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
@@ -291,11 +297,12 @@ class DetailCardContainer extends React.Component {
   }
   render() {
     const { width, Partner, Auth } = this.props;
-    const clientId = this.props.Auth.logged_in_client.id;
-    const partnerId = Partner.partner_detail_list[0].item.id;
+    // const clientId = this.props.Auth.logged_in_client.id;
+    // const partnerId = Partner.partner_detail_list[0].item.id;
     const index = Partner.partner_detail_list[0].idx;
     const length = Partner.partner_list.length;
     console.log(index);
+    console.log(toJS(Partner.partnerReviewList[0]));
 
     let arr = [];
     for (let i = 0; i < length; i++) {
@@ -312,6 +319,11 @@ class DetailCardContainer extends React.Component {
     console.log(remainderAry);
 
     console.log("rendering");
+    console.log(toJS(Partner.partnerReviewList[0]));
+    if (Partner.partnerReviewList[0]) {
+      console.log(toJS(Partner.partnerReviewList[0].current));
+    }
+    console.log(toJS(Partner.partnerReviewList[0]));
     console.log(toJS(Partner.partner_detail_list));
 
     this.setState((state) => {
@@ -365,7 +377,7 @@ class DetailCardContainer extends React.Component {
             <TabBar
               portfoliLocation={this.state.portfoliLocation}
               introductionLocation={this.state.introductionLocation}
-              reviewLocation={500}
+              reviewLocation={this.state.reviewLocation}
               mapLocation={this.state.mapLocation}
             />
             <IntroductionBox width={width}>
@@ -432,12 +444,12 @@ class DetailCardContainer extends React.Component {
             </div>
           </DetailInfoBox>
 
-          {/* <ReviewBox>
-            <div id="review">
+          <ReviewBox id="review">
+            <div>
               <label>평가 후기</label>
-            </div> */}
+            </div>
 
-          {/* <SummaryBox>
+            <SummaryBox>
               <label>클라이언트 평균 만족도</label>
               <header>
                 <mainscore>
@@ -549,8 +561,8 @@ class DetailCardContainer extends React.Component {
                   </div>
                 </subscore>
               </header>
-            </SummaryBox> */}
-          {/* <content>
+            </SummaryBox>
+            <content>
               <ReviewTop>
                 {Partner.partnerReviewList[0] && (
                   <TotalCount>
@@ -564,15 +576,15 @@ class DetailCardContainer extends React.Component {
                 </DateSorting>
               </ReviewTop>
 
-              {Partner.partnerReviewList &&
-                console.log(toJS(Partner.partnerReviewList[0].data))}
-              {Partner.partnerReviewList &&
-                Partner.partnerReviewList[0].data.map((item, idx) => {
+              {Partner.partnerReviewList[0] &&
+                console.log(toJS(Partner.partnerReviewList[0].current))}
+              {Partner.partnerReviewList[0] &&
+                Partner.partnerReviewList[0].current.map((item, idx) => {
                   return (
                     <ReviewCard
                       data={item}
                       idx={idx}
-                      totalCount={Partner.partnerReviewList[0].data.length}
+                      totalCount={Partner.partnerReviewList[0].current.length}
                     />
                   );
                 })}
@@ -716,8 +728,8 @@ class DetailCardContainer extends React.Component {
                 }}
                 onClick={this.pageNext}
               />
-            </PageBar> */}
-          {/* </ReviewBox> */}
+            </PageBar>
+          </ReviewBox>
 
           <MapBox>
             <Font24 id="maps">위치</Font24>
@@ -1064,7 +1076,7 @@ const ReviewBox = styled.div`
   position: relative;
   // height: 500px;
   margin-top: 109px;
-  > label {
+  label {
     font-size: 24px;
     line-height: 40px;
     letter-spacing: -0.6px;
