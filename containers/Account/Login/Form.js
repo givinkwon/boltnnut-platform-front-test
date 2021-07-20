@@ -45,10 +45,14 @@ class FormConatiner extends React.Component {
       this.props.Auth.login();
     }
   };
-  toSignUp = () => {
-    console.log("signup");
+  toSignUp = (extra = "") => {
     this.props.Auth.setStep(0);
-    Router.push("/signup");
+    // Router.push(`/signup${extra}`);
+    Router.push(`/signup`);
+  };
+
+  toKakaoSignUp = () => {
+    Router.push("/signup/kakao");
   };
   toForgotID = () => {
     this.props.Auth.reset();
@@ -123,6 +127,50 @@ class FormConatiner extends React.Component {
                 <Line src={line} />
                 <Fotget onClick={this.toForgotPW}>비밀번호 찾기</Fotget>
               </More>
+              <ButtonBox>
+                <ButtonComponent
+                  backgroundColor={"yellow"}
+                  borderColor={WHITE}
+                  borderRadius={3}
+                  borderWidth={1}
+                  onClick={this.toKakaoSignUp}
+                  color={"black"}
+                >
+                  {Auth.loading ? (
+                    <ButtonSpinnerComponent primary />
+                  ) : (
+                    <span class="buttonText">카카오 아이디로 로그인</span>
+                  )}
+                </ButtonComponent>
+                <ButtonComponent
+                  backgroundColor={"lightgreen"}
+                  borderColor={WHITE}
+                  borderRadius={3}
+                  borderWidth={1}
+                  onClick={this.toKakaoSignUp}
+                  color={"black"}
+                >
+                  {Auth.loading ? (
+                    <ButtonSpinnerComponent primary />
+                  ) : (
+                    <span class="buttonText">네이버 아이디로 로그인</span>
+                  )}
+                </ButtonComponent>
+                <ButtonComponent
+                  backgroundColor={"gray"}
+                  borderColor={WHITE}
+                  borderRadius={3}
+                  borderWidth={1}
+                  onClick={this.toKakaoSignUp}
+                  color={"black"}
+                >
+                  {Auth.loading ? (
+                    <ButtonSpinnerComponent primary />
+                  ) : (
+                    <span class="buttonText">구글 아이디로 로그인</span>
+                  )}
+                </ButtonComponent>
+              </ButtonBox>
             </>
           ) : (
             <>

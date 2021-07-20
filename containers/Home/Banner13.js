@@ -21,6 +21,35 @@ class Banner13Container extends React.Component {
           <Box>
             <div>
               {/* <Header>민감 정보 선택 공개 서비스</Header> */}
+              {/* <div
+                onClick={() => {
+                  const { Kakao } = window;
+                  console.log(Kakao.isInitialized());
+                  console.log(Kakao);
+                  const scopes = "profile";
+                  Kakao.Auth.login({
+                    // scopes,
+                    success: function (authObj) {
+                      console.log(authObj);
+                      // Kakao.Auth.setAccessToken(authObj.access_token);
+
+                      Kakao.API.request({
+                        url: "/v2/user/me",
+                        success: function ({ kakao_account }) {
+                          // const { profile } = kakao_account;
+                          // console.log(profile);
+                          console.log(kakao_account);
+                        },
+                        fail: function (error) {
+                          console.log(error);
+                        },
+                      });
+                    },
+                  });
+                }}
+              >
+                카카오로그인
+              </div> */}
               <Middle>
                 <p>대한민국 제조사 정보 여기 다 있다.</p>
               </Middle>

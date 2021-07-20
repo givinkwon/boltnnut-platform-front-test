@@ -60,6 +60,31 @@ class Auth {
 
   @observable previous_url = "";
 
+  @action kakaoLogin = () => {
+    const { Kakao } = window;
+    console.log(Kakao.isInitialized());
+    console.log(Kakao);
+    const scopes = "profile";
+    Kakao.Auth.login({
+      // scopes,
+      success: function (authObj) {
+        console.log(authObj);
+        // Kakao.Auth.setAccessToken(authObj.access_token);
+
+        Kakao.API.request({
+          url: "/v2/user/me",
+          success: function ({ kakao_account }) {
+            // const { profile } = kakao_account;
+            // console.log(profile);
+            console.log(kakao_account);
+          },
+          fail: function (error) {
+            console.log(error);
+          },
+        });
+      },
+    });
+  };
   @action reset = () => {
     this.email = "";
     this.password = "";

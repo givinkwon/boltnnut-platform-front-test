@@ -16,7 +16,7 @@ import Router from "next/router";
 import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
 import { PRIMARY2 } from "static/style";
-
+import FilterModalContainer from "./FilterModal";
 const filter_img = "static/images/filter.svg";
 
 const customStyles = {
@@ -240,6 +240,7 @@ class SearchFilterConatiner extends React.Component {
                 </Material>
               </Category>
             </FilterCategory>
+            <FilterModalContainer></FilterModalContainer>
             {Partner.filter_dropdown && (
               <FilterContent>
                 <Aside>
@@ -282,7 +283,6 @@ class SearchFilterConatiner extends React.Component {
                 </category> */}
               </FilterContent>
             )}
-
             {/* <Filter>
               <span>위치</span>
               <span>(중복선택 가능)</span>
@@ -292,7 +292,6 @@ class SearchFilterConatiner extends React.Component {
                 data={Partner.filterArray}
               />
             </Filter> */}
-
             {/* <Filter>
               <span>분야</span>
               <span>(중복선택 가능)</span>
@@ -302,7 +301,6 @@ class SearchFilterConatiner extends React.Component {
                 data={Partner.filterArray}
               />
             </Filter> */}
-
             {Partner.requestModalActive && (
               <Layer>
                 <span>
@@ -314,7 +312,6 @@ class SearchFilterConatiner extends React.Component {
                 </span>
               </Layer>
             )}
-
             {Partner.requestDoneModalActive && (
               <Layer>
                 <span>
