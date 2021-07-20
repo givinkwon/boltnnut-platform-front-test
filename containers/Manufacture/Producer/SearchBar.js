@@ -219,29 +219,11 @@ const Form = styled.div`
   justify-content: center;
   height: 44px;
 
-  width: ${(props) => (!props.active ? "100%" : "47%")};
-
   @media (min-width: 768px) and (max-width: 991.98px) {
     // width: 54%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     // width: 67%;
-
-    ${(props) =>
-      props.active &&
-      css`
-        @keyframes reduce_tablet {
-          0% {
-            width: 58%;
-          }
-
-          100% {
-            width: 47%;
-          }
-        }
-        animation: reduce_tablet 3s ease-in-out;
-      `}
-    width: ${(props) => (!props.active ? "100%" : "47%")};
   }
   @media (min-width: 1300px) {
     //margin-top: 0;
@@ -316,31 +298,6 @@ const Box = styled.div`
   @media (min-width: 1300px) {
     width: 125px;
   }
-  ${(props) =>
-    props.active &&
-    css`
-      svg {
-        @keyframes select {
-          0% {
-            transform: skewY(-180deg);
-          }
-        }
-        animation: select 0.4s ease-out;
-        transform: rotate(-180deg);
-      }
-    `}
-  ${(props) =>
-    !props.active &&
-    css`
-      svg {
-        @keyframes selectOut {
-          0% {
-            transform: rotate(-180deg);
-          }
-        }
-        animation: selectOut 0.4s;
-      }
-    `}
 `;
 
 const Button = styled.button``;

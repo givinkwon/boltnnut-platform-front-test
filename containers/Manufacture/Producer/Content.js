@@ -45,6 +45,8 @@ class ManufacturerContentContainer extends React.Component {
     if (Partner.filter_city_ary.length === 1) {
       Partner.getCity();
     }
+    await this.props.Auth.checkLogin();
+    console.log(this.props.Auth.logged_in_user);
   }
 
   componentWillUnmount() {
@@ -59,7 +61,7 @@ class ManufacturerContentContainer extends React.Component {
   }
 
   render() {
-    const { Project, Partner, Producer } = this.props;
+    const { Project, Partner, Producer, Auth } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
@@ -147,7 +149,12 @@ class ManufacturerContentContainer extends React.Component {
                   <MyInfo>
                     <header>
                       <img src="/static/icon/login_img.svg"></img>
-                      <div>로그인 해주세요.</div>
+
+                      {Auth.logged_in_user ? (
+                        <div>{Auth.logged_in_user.username.split("@")[0]}</div>
+                      ) : (
+                        <div>로그인 해주세요.</div>
+                      )}
                     </header>
                     <body>
                       <RequestandRegister style={{ marginTop: 5 }}>
@@ -433,21 +440,18 @@ const MainBody = styled.div`
     width: 1200px;
   }
 `;
-const Aside = styled.div`
-  top: 15%;
-  position: sticky;
-  height: 80vh;
-`;
+const Aside = styled.div``;
 
 const RecentPartner = styled.div`
-  width: 180px;
-  height: 50vh;
+  height: 784px;
   border-radius: 10px;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.08);
   border: solid 1px #f6f6f6;
   background-color: #ffffff;
   margin-left: 30px;
   header {
+    font-size: 14px;
+    height: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -458,6 +462,12 @@ const RecentPartner = styled.div`
     border-top-right-radius: 10px;
   }
   body {
+    height: 744px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    font-size: 14px;
     display: flex;
     font-size: 14px;
     line-height: 1.71;

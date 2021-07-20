@@ -523,7 +523,7 @@ const Card = styled.div`
   object-fit: contain;
   border-top: solid 1px #e1e2e4;
   border-bottom: solid 1px #e1e2e4;
-  background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
+  background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
   // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 
   display: flex;
