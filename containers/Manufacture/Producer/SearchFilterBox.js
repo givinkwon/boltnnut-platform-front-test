@@ -147,6 +147,26 @@ class SearchFilterConatiner extends React.Component {
   dropdownHandler = (flag) => {
     const { Partner } = this.props;
 
+    // 카테고리 선택
+    if (flag == "business") {
+      console.log(1, flag);
+    };
+
+    // 업체 분류 선택
+    if (flag == "category") {
+      console.log(2, flag);
+    };
+
+    // 지역 선택
+    if (flag == "region") {
+      console.log(3, flag);
+    };
+
+    // 공정 선택
+    if (flag == "develop"){
+      console.log(4, flag);
+    };
+
     if (Partner.filter_dropdown) {
       Partner.filter_dropdown = false;
     } else {
@@ -197,7 +217,7 @@ class SearchFilterConatiner extends React.Component {
                   <img
                     src="/static/icon/down_arrow.svg"
                     onClick={() => {
-                      this.dropdownHandler("city");
+                      this.dropdownHandler("business");
                     }}
                   ></img>
                 </Field>
@@ -206,14 +226,24 @@ class SearchFilterConatiner extends React.Component {
                 <CategoryName>업체 분류</CategoryName>
                 <Field>
                   <div>전체</div>
-                  <img src="/static/icon/down_arrow.svg"></img>
+                  <img 
+                    src="/static/icon/down_arrow.svg"
+                    onClick={() => {
+                      this.dropdownHandler("category");
+                    }}
+                  ></img>
                 </Field>
               </Category>
               <Category>
                 <CategoryName>지역</CategoryName>
                 <Field>
                   <div>전체</div>
-                  <img src="/static/icon/down_arrow.svg"></img>
+                  <img 
+                    src="/static/icon/down_arrow.svg"
+                    onClick={() => {
+                      this.dropdownHandler("region");
+                    }}
+                  ></img>
                 </Field>
               </Category>
               <Category>
@@ -229,6 +259,7 @@ class SearchFilterConatiner extends React.Component {
                   공정, 소재
                 </div>
                 <Material>
+                  <div onClick={() => {this.dropdownHandler("develop");}}>
                   <img
                     src="/static/icon/detail_filter.svg"
                     style={{ widht: 24, height: 24 }}
@@ -237,6 +268,7 @@ class SearchFilterConatiner extends React.Component {
                     src="/static/icon/arrow_down.svg"
                     style={{ widht: 12, height: 12 }}
                   ></img>
+                  </div>
                 </Material>
               </Category>
             </FilterCategory>
