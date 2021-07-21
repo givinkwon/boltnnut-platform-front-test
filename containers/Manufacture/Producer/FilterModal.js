@@ -19,7 +19,9 @@ const SubArr = [
   "부품",
   "공구류",
 ];
+
 @inject("Category")
+@observer
 class FilterModalContainer extends React.Component {
   async componentDidMount() {
     const { Category } = this.props;    
@@ -68,7 +70,6 @@ class FilterModalContainer extends React.Component {
           <>
             {/* map으로 뿌리기 */}
             {Category.mainbusiness_list && toJS(Category.mainbusiness_list).map((data, idx) => {
-              console.log(Category.mainbusiness_list)
               return (
                 <MainCategoryButton
                   onClick={() => {
@@ -76,7 +77,7 @@ class FilterModalContainer extends React.Component {
                   }}
                   active={this.activeHandler("main", idx)}
                 >
-                  <MainCategoryFont>{data}</MainCategoryFont>
+                  <MainCategoryFont>{data.mainbusiness}</MainCategoryFont>
                 </MainCategoryButton>
               );
             })}
@@ -85,18 +86,25 @@ class FilterModalContainer extends React.Component {
         <div style={{ width: "73.4%" }}>
           <SubCategoryBox>
             <SubInnerBox>
-              {SubArr.map((data, idx) => {
-                return (
-                  <SubCategoryButton
-                    onClick={() => {
-                      this.buttonClick("sub", idx);
-                    }}
-                    active={this.activeHandler("sub", idx)}
-                  >
-                    <SubCategoryFont>{data}</SubCategoryFont>
-                  </SubCategoryButton>
-                );
-              })}
+              
+              {Category.mainbusiness_list && toJS(Category.mainbusiness_list).map((data, idx) => {
+                return(
+                
+                  data.business_set.map((sub_data, idx) => {
+
+                  return (
+                    <SubCategoryButton
+                      onClick={() => {
+                        this.buttonClick("sub", idx);
+                      }}
+                      active={this.activeHandler("sub", idx)}
+                    >
+                      <SubCategoryFont>{sub_data.business}</SubCategoryFont>
+                    </SubCategoryButton>
+                  );
+                })
+              )})}
+
             </SubInnerBox>
           </SubCategoryBox>
           <ButtonBox>
