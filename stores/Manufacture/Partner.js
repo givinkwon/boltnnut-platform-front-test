@@ -11,6 +11,22 @@ class Partner {
     //makeObservable(this);
   }
 
+  /* Page 관련 변수 */
+  @observable pageType = "";
+
+  /* Q/A 관련 변수 */
+  @observable mergeQuestionList = [];
+  @observable questionCurrentPage = 1;
+  @observable questionPage = 0;
+  @observable questionSaveCount = 0;
+  @observable questionSaveSuccess = 0;
+  @observable questionSearchText = ""; // 글 작성
+  @observable answerSearchText = ""; // 답변 작성
+  @observable secretIdx = 0;
+  @observable questionCount = 0;
+  @observable questionList = new Array(10);
+  @observable writingModalIdx = "";
+
   /* /producer 우측 카드 변수 */
   @observable totalPartnerBookmark = 0;
   @observable totalClientBookmark = 0;
@@ -458,6 +474,7 @@ class Partner {
           1
         );
         await this.getReviewByPartner(this.partner_detail_list[0].item.id);
+        await this.getQuestion(this.partner_detail_list[0].item.id);
 
         await this.getCityName(this.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
@@ -2213,6 +2230,10 @@ class Partner {
         this.projectIdx = !this.projectIdx;
         console.log(this.projectIdx);
         break;
+      case "secret":
+        this.secretIdx = !this.secretIdx;
+        console.log(this.secretIdx);
+        break;
     }
   };
 
@@ -2249,6 +2270,14 @@ class Partner {
           return false;
         }
         break;
+      case "secret":
+        console.log(this.secretIdx);
+        if (this.secretIdx) {
+          return true;
+        } else {
+          return false;
+        }
+        break;
     }
   };
 
@@ -2262,6 +2291,8 @@ class Partner {
         break;
     }
   };
+
+  @action submitHandler = () => {};
 
   /*  
       - 관심 업체를 등록하는 함수
@@ -2391,6 +2422,130 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+  };
+
+  @action mergeQuestion = async () => {
+    this.mergeQuestionList = [];
+    await this.questionList.map(async (item, idx) => {
+      console.log(item);
+      this.mergeQuestionList = this.mergeQuestionList.concat(item);
+      if (item.reply) {
+        await item.reply.map(async (subItem, subIdx) => {
+          console.log(subItem);
+          this.mergeQuestionList = this.mergeQuestionList.concat(subItem);
+        });
+      }
+    });
+    console.log(toJS(this.mergeQuestionList));
+  };
+
+  @action getQuestion = async (partnerId, page = 1) => {
+    console.log("getQuestion");
+    this.questionList = [];
+    const req = {
+      params: {
+        partnerID: partnerId,
+        page: page,
+      },
+    };
+
+    await PartnerAPI.getQuestion(req)
+      .then(async (res) => {
+        console.log(res);
+        // console.log(res.data.count);
+        this.questionCount = res.data.count;
+        this.questionList = await this.questionList.concat(res.data.results);
+        this.questionSaveSuccess = 1;
+        // questionList
+        this.questionPage = parseInt((this.questionCount - 1) / 5) + 1;
+
+        await this.mergeQuestion();
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action setQuestion = async (clientID, partnerID, secret, content) => {
+    console.log(clientID);
+    console.log(partnerID);
+    console.log(secret);
+    console.log(content);
+    const formData = new FormData();
+    formData.append("clientID", clientID);
+    formData.append("partnerID", partnerID);
+    formData.append("secret", secret ? 1 : 0);
+    formData.append("content", content);
+
+    const req = {
+      data: formData,
+    };
+
+    await PartnerAPI.setQuestion(req)
+      .then((res) => {
+        console.log(res);
+        alert("글 작성이 완료되었습니다");
+      })
+      .catch((e) => {
+        alert("글 작성을 실패했습니다");
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action setAnswerByQuestion = async (questionID, state, secret, content) => {
+    console.log(questionID);
+    console.log(state);
+    console.log(secret);
+    console.log(content);
+    const formData = new FormData();
+    formData.append("questionID", questionID);
+    formData.append("state", state);
+    formData.append("secret", secret ? 1 : 0);
+    formData.append("content", content);
+
+    const req = {
+      data: formData,
+    };
+
+    await PartnerAPI.setAnswerByQuestion(req)
+      .then((res) => {
+        console.log(res);
+        alert("답변 작성이 완료되었습니다");
+      })
+      .catch((e) => {
+        alert("답변 작성을 실패했습니다");
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action deleteQuestion = async (clientID, partnerID, questionID) => {
+    console.log(clientID);
+    console.log(partnerID);
+    console.log(secret);
+    console.log(content);
+    const formData = new FormData();
+    formData.append("clientID", clientID);
+    formData.append("partnerID", partnerID);
+    formData.append("questionID", questionID);
+
+    const req = {
+      data: formData,
+    };
+
+    await PartnerAPI.deleteQuestion(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+  @action changeQuestion = () => {
+    this.questionSaveCount += 1;
   };
 }
 

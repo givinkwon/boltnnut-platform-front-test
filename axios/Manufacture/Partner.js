@@ -452,11 +452,44 @@ export function deleteBookmarkPartner(req) {
 }
 
 export function existBookmarkPartner(req) {
-  console.log(req);
-
   return axios({
     method: "GET",
     url: `${ROOT_URL}/bookmark/exist/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function setQuestion(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/QnA/post/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+export function setAnswerByQuestion(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/QnA/answer_post/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function deleteQuestion(req) {
+  return axios({
+    method: "DELETE",
+    url: `${ROOT_URL}/QnA/delete/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getQuestion(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/QnA/get/`,
     params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
   });

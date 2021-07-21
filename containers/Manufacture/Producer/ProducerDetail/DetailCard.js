@@ -21,6 +21,7 @@ import Background from "components/Background";
 import ProposalCard from "../ProposalCard";
 import TabBar from "./TabBar";
 import InfoCard from "./InfoCard";
+import WritingContainer from "./Writing";
 import Slider from "react-slick";
 
 // const customRenderer = DocViewerRenderers;
@@ -33,6 +34,7 @@ const waterMarkImg = "/static/images/logo_marine@2x.png";
 const pass1 = "/static/images/pass1.png";
 const pass2 = "/static/images/pass2.png";
 const sort = "/static/icon/sort.svg";
+const rightAngleImg = "/static/images/producer/rightAngle.svg";
 
 const availableFileType1 = [
   "png",
@@ -77,6 +79,13 @@ class DetailCardContainer extends React.Component {
     mapLocation: 0,
   };
 
+  setQA = () => {
+    console.log("setQA");
+    this.setState((state) => {
+      this.setState({ g: state.g + 1 });
+    });
+  };
+
   openModal = () => {
     const { Partner } = this.props;
     Partner.reviewWritingModalActive = false;
@@ -87,7 +96,19 @@ class DetailCardContainer extends React.Component {
   };
 
   shouldComponentUpdate = (prevProps, nextState) => {
-    return this.state.g !== nextState.g;
+    const { Partner } = this.props;
+    console.log(this.state.g);
+    console.log(nextState.g);
+    if (Partner.questionSaveCount) {
+      setTimeout(() => {
+        if (Partner.questionSaveCount) {
+          Partner.questionSaveCount = 0;
+        }
+      }, 1000);
+      return true;
+    } else {
+      return this.state.g !== nextState.g;
+    }
   };
 
   componentDidMount = async () => {
@@ -172,47 +193,99 @@ class DetailCardContainer extends React.Component {
         });
   };
 
-  movePage = (e) => {
+  movePage = async (e) => {
     const { Partner, Auth } = this.props;
-    const newPage = e.target.innerText * 1;
 
-    if (newPage != Partner.reviewCurrentPage) {
-      Partner.reviewCurrentPage = newPage;
+    console.log(e);
+    console.log(Partner.pageType);
 
-      Partner.getReviewByPartner(
-        Partner.partner_detail_list[0].item.id,
-        1,
-        newPage
-      );
+    if (Partner.pageType === "question") {
+      const newPage = e.target.innerText * 1;
+
+      if (newPage != Partner.questionCurrentPage) {
+        Partner.questionCurrentPage = newPage;
+
+        await Partner.getQuestion(
+          Partner.partner_detail_list[0].item.id,
+
+          newPage
+        );
+      }
+    } else {
+      const newPage = e.target.innerText * 1;
+
+      if (newPage != Partner.reviewCurrentPage) {
+        Partner.reviewCurrentPage = newPage;
+
+        await Partner.getReviewByPartner(
+          Partner.partner_detail_list[0].item.id,
+          1,
+          newPage
+        );
+      }
     }
+
+    this.setState((state) => {
+      this.setState({ g: state.g + 1 });
+    });
   };
 
-  pageNext = (e) => {
+  pageNext = async () => {
     const { Partner } = this.props;
-    if (Partner.reviewCurrentPage < Partner.review_partner_page) {
-      const nextPage = Partner.reviewCurrentPage + 1;
-      Partner.reviewCurrentPage = nextPage;
 
-      Partner.getReviewByPartner(
-        Partner.partner_detail_list[0].item.id,
-        1,
-        nextPage
-      );
+    if (Partner.pageType === "question") {
+      if (Partner.questionCurrentPage < Partner.questionPage) {
+        const nextPage = Partner.questionCurrentPage + 1;
+        Partner.questionCurrentPage = nextPage;
+
+        await Partner.getQuestion(
+          Partner.partner_detail_list[0].item.id,
+          nextPage
+        );
+      }
+    } else {
+      if (Partner.reviewCurrentPage < Partner.review_partner_page) {
+        const nextPage = Partner.reviewCurrentPage + 1;
+        Partner.reviewCurrentPage = nextPage;
+
+        await Partner.getReviewByPartner(
+          Partner.partner_detail_list[0].item.id,
+          1,
+          nextPage
+        );
+      }
     }
+    this.setState((state) => {
+      this.setState({ g: state.g + 1 });
+    });
   };
 
-  pagePrev = (e) => {
+  pagePrev = async () => {
     const { Partner } = this.props;
 
-    if (Partner.reviewCurrentPage > 1) {
-      const previousPage = Partner.reviewCurrentPage - 1;
-      Partner.reviewCurrentPage = previousPage;
-      Partner.getReviewByPartner(
-        Partner.partner_detail_list[0].item.id,
-        1,
-        previousPage
-      );
+    if (Partner.pageType === "question") {
+      if (Partner.questionCurrentPage > 1) {
+        const previousPage = Partner.questionCurrentPage - 1;
+        Partner.questionCurrentPage = previousPage;
+        await Partner.getQuestion(
+          Partner.partner_detail_list[0].item.id,
+          previousPage
+        );
+      }
+    } else {
+      if (Partner.reviewCurrentPage > 1) {
+        const previousPage = Partner.reviewCurrentPage - 1;
+        Partner.reviewCurrentPage = previousPage;
+        await Partner.getReviewByPartner(
+          Partner.partner_detail_list[0].item.id,
+          1,
+          previousPage
+        );
+      }
     }
+    this.setState((state) => {
+      this.setState({ g: state.g + 1 });
+    });
   };
 
   pushToDetail = async (item, idx) => {
@@ -277,9 +350,15 @@ class DetailCardContainer extends React.Component {
   }
   render() {
     const { width, Partner, Auth } = this.props;
-    // const clientId = this.props.Auth.logged_in_client.id;
-    // const partnerId = Partner.partner_detail_list[0].item.id;
+    let clientId;
 
+    if (Auth.logged_in_client) {
+      clientId = Auth.logged_in_client.id;
+    }
+
+    const partnerId = Partner.partner_detail_list[0].item.id;
+
+    console.log(toJS(Partner.questionList));
     console.log(Partner.review_partner_page);
     console.log(Partner.partnerReviewList.length);
 
@@ -299,6 +378,8 @@ class DetailCardContainer extends React.Component {
       arr.push(i);
     }
     const current_set = parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
+    const QuestionCurrentSet =
+      parseInt((Partner.reviewCurrentPage - 1) / 5) + 1;
 
     const docs = [{ uri: this.props.Partner.selectedIntroductionFile }];
 
@@ -330,6 +411,8 @@ class DetailCardContainer extends React.Component {
       autoplay: true,
       autoplaySpeed: 2000,
     };
+
+    console.log(toJS(Partner.questionList));
 
     return (
       <>
@@ -750,9 +833,189 @@ class DetailCardContainer extends React.Component {
             <MapContainer city={Partner.city_name} />
           </MapBox>
 
+          {console.log(toJS(Partner.questionList))}
           <QuestionBox>
             <Font24>업체 Q&A</Font24>
-            <QuestionContainer />
+            {console.log(toJS(Partner.mergeQuestionList))}
+            {Partner.mergeQuestionList &&
+              Partner.mergeQuestionList.map((item, idx) => {
+                return (
+                  <QuestionContainer
+                    mergeData={Partner.mergeQuestionList}
+                    data={item}
+                    width={this.props.width}
+                    idx={idx}
+                    clientId={clientId}
+                    partnerId={partnerId}
+                    parentType="comment"
+                    setQA={this.setQA}
+                  />
+                );
+              })}
+            {/* {Partner.questionList &&
+              Partner.questionList.map((item, idx) => {
+                return (
+                  <>
+                    {console.log("PARENTPARENTPARENTPARENTPARENTPARENT")}
+                    <QuestionContainer
+                      data={item}
+                      width={this.props.width}
+                      idx={idx}
+                      clientId={clientId}
+                      partnerId={partnerId}
+                      parentType="comment"
+                      setQA={this.setQA}
+                    />
+                    {item.reply &&
+                      item.reply.map((subItem, subIdx) => (
+                        <>
+                          {console.log("SUBSUBSUBSUBSUBSUBSUBSUB")}
+                          <QuestionContainer
+                            subData={subItem}
+                            width={this.props.width}
+                            idx={subIdx}
+                            clientId={clientId}
+                            partnerId={partnerId}
+                            parentType="recomment"
+                            setQA={this.setQA}
+                          />
+                        </>
+                      ))}
+                  </>
+                );
+
+                {
+                  item.reply && console.log(item.reply);
+                } */}
+
+            <PageBar>
+              <img
+                src={pass1}
+                style={{
+                  opacity:
+                    QuestionCurrentSet == 1 && Partner.questionCurrentPage <= 1
+                      ? 0.4
+                      : 1,
+                  cursor: "pointer",
+                  display: !Partner.questionList[0] && "none",
+                }}
+                onClick={(e) => {
+                  console.log("prev");
+                  Partner.pageType = "question";
+                  this.pagePrev(e);
+                }}
+              />
+              <PageCount
+                onClick={(e) => {
+                  Partner.pageType = "question";
+                  this.movePage(e);
+                }}
+                value={5 * (QuestionCurrentSet - 1)}
+                active={Partner.questionCurrentPage % 5 == 1}
+                style={{
+                  display:
+                    Partner.questionPage < 5 * (QuestionCurrentSet - 1)
+                      ? "none"
+                      : "block",
+                }}
+              >
+                {" "}
+                {5 * (QuestionCurrentSet - 1) + 1}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (QuestionCurrentSet - 1) + 1}
+                active={Partner.questionCurrentPage % 5 == 2}
+                style={{
+                  display:
+                    Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 2
+                      ? "none"
+                      : "block",
+                }}
+                onClick={(e) => {
+                  Partner.pageType = "question";
+                  this.movePage(e);
+                }}
+              >
+                {" "}
+                {5 * (QuestionCurrentSet - 1) + 2}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (QuestionCurrentSet - 1) + 2}
+                active={Partner.questionCurrentPage % 5 == 3}
+                style={{
+                  display:
+                    Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 3
+                      ? "none"
+                      : "block",
+                }}
+                onClick={(e) => {
+                  Partner.pageType = "question";
+                  this.movePage(e);
+                }}
+              >
+                {" "}
+                {5 * (QuestionCurrentSet - 1) + 3}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (QuestionCurrentSet - 1) + 3}
+                active={Partner.questionCurrentPage % 5 == 4}
+                style={{
+                  display:
+                    Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 4
+                      ? "none"
+                      : "block",
+                }}
+                onClick={(e) => {
+                  Partner.pageType = "question";
+                  this.movePage(e);
+                }}
+              >
+                {" "}
+                {5 * (QuestionCurrentSet - 1) + 4}{" "}
+              </PageCount>
+              <PageCount
+                value={5 * (QuestionCurrentSet - 1) + 4}
+                active={Partner.questionCurrentPage % 5 == 0}
+                style={{
+                  display:
+                    Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 5
+                      ? "none"
+                      : "block",
+                }}
+                onClick={(e) => {
+                  Partner.pageType = "question";
+                  this.movePage(e);
+                }}
+              >
+                {" "}
+                {5 * (QuestionCurrentSet - 1) + 5}{" "}
+              </PageCount>
+              <img
+                src={pass2}
+                style={{
+                  opacity:
+                    Partner.questionPage == Partner.questionCurrentPage
+                      ? 0.4
+                      : 1,
+                  cursor: "pointer",
+                  display:
+                    !Partner.questionList[0] &&
+                    Partner.questionPage === 1 &&
+                    "none",
+                }}
+                onClick={(e) => {
+                  console.log("next");
+                  Partner.pageType = "question";
+                  this.pageNext(e);
+                }}
+              />
+            </PageBar>
+            <WritingContainer
+              type="comment"
+              clientId={clientId}
+              partnerId={partnerId}
+              setQA={this.setQA}
+            />
           </QuestionBox>
 
           <IntroductionBox width={width}>
@@ -1123,7 +1386,7 @@ const Layer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    // height: 100vh;
   }
 `;
 
@@ -1365,7 +1628,8 @@ const MapBox = styled.div`
 
 const QuestionBox = styled.div`
   width: 100%;
-  height: 500px;
+  // height: 500px;
+  margin-bottom: 160px;
 `;
 const TotalCount = styled.div`
   font-size: 14px;
@@ -1626,4 +1890,11 @@ const InfoBox = styled.div`
   display: flex;
   align-items: self-start;
   margin-bottom: 60px;
+`;
+
+const ParentRecommentBox = styled.div`
+  display: flex;
+  > img {
+    margin-right: 20px;
+  }
 `;
