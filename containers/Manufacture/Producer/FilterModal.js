@@ -24,9 +24,9 @@ const SubArr = [
 @observer
 class FilterModalContainer extends React.Component {
   async componentDidMount() {
-    const { Category } = this.props;    
+    const { Category } = this.props;
     await Category.init();
-    console.log(toJS(Category.mainbusiness_list))
+    console.log(toJS(Category.mainbusiness_list));
   }
   state = {
     mainSelectIdx: 0,
@@ -56,7 +56,7 @@ class FilterModalContainer extends React.Component {
     }
   };
   render() {
-    const { Category } = this.props;  
+    const { Category } = this.props;
 
     return (
       <ModalBox>
@@ -69,29 +69,29 @@ class FilterModalContainer extends React.Component {
         <MainCategoryBox>
           <>
             {/* map으로 뿌리기 */}
-            {Category.mainbusiness_list && toJS(Category.mainbusiness_list).map((data, idx) => {
-              return (
-                <MainCategoryButton
-                  onClick={() => {
-                    this.buttonClick("main", idx);
-                  }}
-                  active={this.activeHandler("main", idx)}
-                >
-                  <MainCategoryFont>{data.mainbusiness}</MainCategoryFont>
-                </MainCategoryButton>
-              );
-            })}
+            {Category.mainbusiness_list &&
+              toJS(Category.mainbusiness_list).map((data, idx) => {
+                return (
+                  <MainCategoryButton
+                    onClick={() => {
+                      this.buttonClick("main", idx);
+                    }}
+                    active={this.activeHandler("main", idx)}
+                  >
+                    <MainCategoryFont>{data.mainbusiness}</MainCategoryFont>
+                  </MainCategoryButton>
+                );
+              })}
           </>
         </MainCategoryBox>
+
         <div style={{ width: "73.4%" }}>
           <SubCategoryBox>
             <SubInnerBox>
-              
-              {Category.mainbusiness_list && toJS(Category.mainbusiness_list).map((data, idx) => {
-                return(
-                
-                  data.business_set.map((sub_data, idx) => {
-
+              {Category.mainbusiness_list &&
+                Category.mainbusiness_list[
+                  this.state.mainSelectIdx
+                ].business_set.map((sub_data, idx) => {
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -102,9 +102,7 @@ class FilterModalContainer extends React.Component {
                       <SubCategoryFont>{sub_data.business}</SubCategoryFont>
                     </SubCategoryButton>
                   );
-                })
-              )})}
-
+                })}
             </SubInnerBox>
           </SubCategoryBox>
           <ButtonBox>
@@ -130,6 +128,50 @@ class FilterModalContainer extends React.Component {
             </ButtonComponent>
           </ButtonBox>
         </div>
+        {/* <div style={{ width: "73.4%" }}>
+          <SubCategoryBox>
+            {console.log(Category.mainbusiness_list[0])}
+            <SubInnerBox>
+              {Category.mainbusiness_list &&
+                toJS(Category.mainbusiness_list).map((data, idx) => {
+                  return data.business_set.map((sub_data, idx) => {
+                    return (
+                      <SubCategoryButton
+                        onClick={() => {
+                          this.buttonClick("sub", idx);
+                        }}
+                        active={this.activeHandler("sub", idx)}
+                      >
+                        <SubCategoryFont>{sub_data.business}</SubCategoryFont>
+                      </SubCategoryButton>
+                    );
+                  });
+                })}
+            </SubInnerBox>
+          </SubCategoryBox>
+          <ButtonBox>
+            <ButtonComponent
+              backgroundColor={"blue"}
+              borderRadius={3}
+              borderWidth={1}
+              borderColor={"gray"}
+            >
+              <MainCategoryFont color={"#505050"} fontWeight={500}>
+                회원가입
+              </MainCategoryFont>
+            </ButtonComponent>
+            <ButtonComponent
+              backgroundColor={"white"}
+              borderRadius={3}
+              borderWidth={1}
+              borderColor={"gray"}
+            >
+              <MainCategoryFont color={"#505050"} fontWeight={500}>
+                회원가입
+              </MainCategoryFont>
+            </ButtonComponent>
+          </ButtonBox>
+        </div> */}
       </ModalBox>
     );
   }
