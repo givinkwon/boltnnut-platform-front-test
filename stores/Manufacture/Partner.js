@@ -91,7 +91,7 @@ class Partner {
   @observable city_next = 0;
   @observable city_name = "";
 
-  @observable business_name = "";
+  @observable business_name = [];
   @observable filter_checked_idx = 0;
 
   @observable input_process_filter = null;

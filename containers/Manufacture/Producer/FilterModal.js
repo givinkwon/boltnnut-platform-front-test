@@ -56,8 +56,8 @@ class FilterModalContainer extends React.Component {
     }
   };
   render() {
-    const { Category } = this.props;
-
+    const { Category, type } = this.props;
+    console.log(this.props.type)
     return (
       <ModalBox>
         {/* <InnerBoxComponent

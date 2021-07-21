@@ -463,12 +463,18 @@ export function existBookmarkPartner(req) {
 export function getBusinessCategory(req) {
   return axios({
     method: "GET",
-    url: `${ROOT_URL}/business-category/${req.id}`,
+    url: `${ROOT_URL}/partner/${req.id}`,
     params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
   });
 }
 
+export function getBusinessName(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/business/${req}`,
+  });
+}
 // export function getVisitPartner(req) {
 //   return axios({
 //     method: "GET",

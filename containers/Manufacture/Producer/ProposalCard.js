@@ -17,6 +17,8 @@ const file_img2 = "static/images/manufacturer/file.png";
 const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/icon/viewcount.svg";
 const bookmarkcount = "static/icon/bookmarkcount.svg";
+const bookmarkImg = "/static/icon/bookmark_empty.svg";
+const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
 const location = "static/icon/location.svg";
 import Slider from "react-slick";
 import { EqualStencilFunc } from "three";
@@ -125,6 +127,11 @@ class ProposalCard extends React.Component {
       id: data.city,
     };
 
+    console.log(data);
+    const partnerReq = {
+      id: data.id,
+    };
+
     PartnerAPI.getCityName(req)
       .then(async (res) => {
         this.setState({ city: res.data.city });
@@ -134,11 +141,20 @@ class ProposalCard extends React.Component {
         console.log(e.response);
       });
 
-    PartnerAPI.getBusinessCategory(req)
+    const temp = [];
+    PartnerAPI.getBusinessCategory(partnerReq)
       .then(async (res) => {
         console.log(res);
-        this.setState({ business: res.data.business });
-        console.log(this.business);
+        // this.setState({ business: res.data.business });
+        res.data.business.forEach((element) => {
+          console.log(element);
+          PartnerAPI.getBusinessName(element).then((res) => {
+            console.log(res);
+            temp.push(res.data.business);
+          });
+        });
+        this.setState({ business: temp });
+        console.log(toJS(this.state.business));
       })
       .catch((e) => {
         console.log(e);
@@ -331,11 +347,29 @@ class ProposalCard extends React.Component {
                     </Certification>
                   </div>
                   <BookMark>
-                    <img src="/static/icon/bookmark_empty.svg"></img>
+                    <img
+                      src={
+                        Partner.interestedIdx ? bookmarkBlueImg : bookmarkImg
+                      }
+                      onClick={async () => {
+                        Partner.clickHandler("interested");
+                        Partner.checkedInterestedIdx(clientId, partnerId);
+                        this.setState({ h: 3 });
+                      }}
+                    ></img>
                   </BookMark>
                 </Title>
                 <Introduce>{data.history}</Introduce>
-                <Hashtag>{this.state.business}</Hashtag>
+                {this.state.business.length !== 0 ? (
+                  <div style={{ display: "flex" }}>
+                    {this.state.business &&
+                      this.state.business.map((item, idx) => {
+                        return <Hashtag>#{item}</Hashtag>;
+                      })}
+                  </div>
+                ) : (
+                  <></>
+                )}
                 <Bottom>
                   <BottomBox>
                     <Review>
@@ -357,72 +391,10 @@ class ProposalCard extends React.Component {
                     </ViewCount>
                     <BookmarkCount>
                       <img src={bookmarkcount} style={{ marginRight: 5 }}></img>
-                      <div>0</div>
+                      <div>{Partner.totalPartnerBookmark}</div>
                     </BookmarkCount>
                   </BottomBox>
                 </Bottom>
-                {/* <Phone>
-                  <div style={{ cursor: "pointer" }}>
-                    {Partner.modalActive && (
-                      <Layer>
-                        <span>
-                          <Modal
-                            width={width}
-                            open={this.props.Partner.modalActive}
-                            close={this.closeModal}
-                            header="전화번호"
-                            children={this.props.Partner.modalUserPhone}
-                          ></Modal>
-                        </span>
-                      </Layer>
-                    )}
-                  </div>
-                </Phone> */}
-                {/* <InfoOne>
-                  {data.info_company.length > 150
-                    ? data.info_company.slice(0, 150) + "..."
-                    : data.info_company}
-                </InfoOne> */}
-                {/* <InfoTwo>
-                  {categoryData &&
-                    categoryData.map((item, idx) => {
-                      return <span>{item}</span>;
-                    })}
-                </InfoTwo> */}
-                {/* <AdditionBox>
-                  <div>
-                    <Button
-                      style={{ cursor: "pointer", zIndex: 10 }}
-                      onClick={async (event) => {
-                        event.stopPropagation();
-
-                        if (await this.checkLogin()) {
-                          this.clickLog(data);
-                          this.openModal(data.user.phone);
-                        } else {
-                          alert("로그인이 필요합니다");
-                          // Router.push("/login");
-                          location.href = this.props.Common.makeUrl("login");
-                        }
-                      }}
-                    >
-                      <span>전화번호</span>
-                    </Button>
-                  </div>
-                  <div></div>
-                  <div>
-                    <img src={file_img2} />
-                    <Button>
-                      <Link
-                        target="_blank"
-                        // onClick={(e) => this.cardClick(e)}
-                        download
-                      >
-                        <span>회사 소개서 보기</span>
-                      </Link>
-                    </Button>
-                  </div>
-                </AdditionBox> */}
               </Main>
             </Card>
           </>
@@ -536,8 +508,6 @@ const Card = styled.div`
   border-top: solid 1px #e1e2e4;
   border-bottom: solid 1px #e1e2e4;
   background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
-  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-
   display: flex;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -657,11 +627,19 @@ const Introduce = styled.div`
 `;
 const Hashtag = styled.div`
   display: flex;
+  font-size: 15px;
+  color: #555963;
   justify-content: center;
   align-items: center;
   height: 34px;
   border-radius: 5px;
   background-color: #f6f6f6;
+  margin-right: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
+  // &:hover {
+  //   background-color: #ffffff;
+  // }
 `;
 
 const Bottom = styled.div`
