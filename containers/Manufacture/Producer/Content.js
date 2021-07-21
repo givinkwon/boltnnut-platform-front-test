@@ -81,6 +81,7 @@ class ManufacturerContentContainer extends React.Component {
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
+    console.log(toJS(Partner.partner_list));
 
     return (
       <>
@@ -113,7 +114,8 @@ class ManufacturerContentContainer extends React.Component {
               </Header>
               <Main>
                 <MainBody>
-                  {Partner.partner_list.length === 0 &&
+                  {Partner.partner_list &&
+                    Partner.partner_list.length === 0 &&
                     (Partner.loadingFlag ? (
                       <ButtonSpinnerComponent scale="30%" primary />
                     ) : (

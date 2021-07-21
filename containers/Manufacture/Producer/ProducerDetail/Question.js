@@ -6,6 +6,9 @@ import { inject, observer } from "mobx-react";
 @inject("Partner", "Auth")
 @observer
 class QuestionContainer extends React.Component {
+  componentDidMount = () => {
+    console.log("Question Container");
+  };
   render() {
     return (
       <>

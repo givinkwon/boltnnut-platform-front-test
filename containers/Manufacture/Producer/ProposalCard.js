@@ -14,10 +14,10 @@ const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
 const file_img2 = "static/images/manufacturer/file.png";
-const star = "static/icon/star_yellow.svg";
-const viewcount = "static/icon/viewcount.svg";
-const bookmarkcount = "static/icon/bookmarkcount.svg";
-const location = "static/icon/location.svg";
+const star = "/static/icon/star_yellow.svg";
+const viewcount = "/static/icon/viewcount.svg";
+const bookmarkcount = "/static/icon/bookmarkcount.svg";
+const location = "/static/icon/location.svg";
 import Slider from "react-slick";
 import { EqualStencilFunc } from "three";
 
@@ -291,7 +291,7 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                <SliderContainer {...SlideSettings}>
+                {/* <SliderContainer {...SlideSettings}>
                   {data &&
                     data.portfolio_set.map((item, idx) => {
                       return (
@@ -306,7 +306,7 @@ class ProposalCard extends React.Component {
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                </SliderContainer>
+                </SliderContainer> */}
               </Header>
               <Main>
                 <Title>
@@ -427,7 +427,7 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                <SliderMobileContainer {...SlideSettingsMobile}>
+                {/* <SliderMobileContainer {...SlideSettingsMobile}>
                   {data &&
                     data.portfolio_set.map((item, idx) => {
                       return (
@@ -439,7 +439,7 @@ class ProposalCard extends React.Component {
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                </SliderMobileContainer>
+                </SliderMobileContainer> */}
               </Header>
               <Main>
                 <Name>{data.name}</Name>

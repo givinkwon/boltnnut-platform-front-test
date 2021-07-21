@@ -18,7 +18,7 @@ class ReviewBox extends React.Component {
     avg_communication_score: 0,
     avg_profession_score: 0,
   };
-  async componentdidmount() {
+  componentdidmount = () => {
     console.log("review componentdidmount");
 
     /* 리뷰를 위한 변수 및 연산 */
@@ -29,26 +29,26 @@ class ReviewBox extends React.Component {
     console.log(Partner.partnerReviewList);
     console.log(Partner.partnerAllReviewList);
 
-    (await Partner.partnerAllReviewList[0]) &&
-      Partner.partnerAllReviewList[0].data.map((item, idx) => {
-        total_consult_score += item.consult_score;
-        total_kindness_score += item.kindness_score;
-        total_communication_score += item.communication_score;
-        total_profession_score += item.profession_score;
-      });
-    Partner.partnerAllReviewList[0] &&
-      this.setState({
-        avg_consult_score:
-          total_consult_score / Partner.partnerAllReviewList[0].data.length,
-        avg_kindness_score:
-          total_kindness_score / Partner.partnerAllReviewList[0].data.length,
-        avg_communication_score:
-          total_communication_score /
-          Partner.partnerAllReviewList[0].data.length,
-        avg_profession_score:
-          total_profession_score / Partner.partnerAllReviewList[0].data.length,
-      });
-  }
+    // (await Partner.partnerAllReviewList[0]) &&
+    //   Partner.partnerAllReviewList[0].data.map((item, idx) => {
+    //     total_consult_score += item.consult_score;
+    //     total_kindness_score += item.kindness_score;
+    //     total_communication_score += item.communication_score;
+    //     total_profession_score += item.profession_score;
+    //   });
+    // Partner.partnerAllReviewList[0] &&
+    //   this.setState({
+    //     avg_consult_score:
+    //       total_consult_score / Partner.partnerAllReviewList[0].data.length,
+    //     avg_kindness_score:
+    //       total_kindness_score / Partner.partnerAllReviewList[0].data.length,
+    //     avg_communication_score:
+    //       total_communication_score /
+    //       Partner.partnerAllReviewList[0].data.length,
+    //     avg_profession_score:
+    //       total_profession_score / Partner.partnerAllReviewList[0].data.length,
+    //   });
+  };
   render() {
     const { Auth, Partner, width } = this.props;
     console.log("RENDER");

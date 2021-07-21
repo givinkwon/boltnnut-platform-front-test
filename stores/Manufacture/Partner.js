@@ -1536,122 +1536,122 @@ class Partner {
   };
 
   //기성품이 없는 신제품의 개발 버튼 클릭했을 때 호출
-  @action getOtherPartner = async (page = 1) => {
-    this.partner_list = [];
-    this.category_ary = [];
-    this.resetDevCategory();
+  // @action getOtherPartner = async (page = 1) => {
+  //   this.partner_list = [];
+  //   this.category_ary = [];
+  //   this.resetDevCategory();
 
-    const token = localStorage.getItem("token");
-    // alert(this.exceptionCategory);
-    let req = {
-      params: { page: page },
-    };
+  //   const token = localStorage.getItem("token");
+  //   // alert(this.exceptionCategory);
+  //   let req = {
+  //     params: { page: page },
+  //   };
 
-    let temp = { params: { page: page } };
-    if (this.filter_region) {
-      temp.params.city = this.filter_region;
-      req.params.city = this.filter_region;
-    }
+  //   let temp = { params: { page: page } };
+  //   if (this.filter_region) {
+  //     temp.params.city = this.filter_region;
+  //     req.params.city = this.filter_region;
+  //   }
 
-    if (this.subButtonActive) {
-      delete req.params.category_middle__id;
-    } else {
-      req.params.category_middle__id = 2;
-    }
+  //   if (this.subButtonActive) {
+  //     delete req.params.category_middle__id;
+  //   } else {
+  //     req.params.category_middle__id = 2;
+  //   }
 
-    // if (this.filter_category) {
-    //   //temp["category_middle__id"] = this.filter_category;
-    //   temp.params.category_middle__id = this.filter_category;
-    //   req.params.category_middle__id = this.filter_category;
-    // }
+  //   // if (this.filter_category) {
+  //   //   //temp["category_middle__id"] = this.filter_category;
+  //   //   temp.params.category_middle__id = this.filter_category;
+  //   //   req.params.category_middle__id = this.filter_category;
+  //   // }
 
-    delete req.params.search;
-    delete req.params.history;
+  //   delete req.params.search;
+  //   delete req.params.history;
 
-    if (this.search_class === "전체") {
-      if (this.search_text === "") {
-        delete req.params.search;
-      } else {
-        req.params.search = this.search_text;
-      }
-    }
+  //   if (this.search_class === "전체") {
+  //     if (this.search_text === "") {
+  //       delete req.params.search;
+  //     } else {
+  //       req.params.search = this.search_text;
+  //     }
+  //   }
 
-    if (this.search_class === "만든 제품") {
-      if (this.search_text === "") {
-        delete req.params.history;
-      } else {
-        req.params.history = this.search_text;
-      }
-    }
+  //   if (this.search_class === "만든 제품") {
+  //     if (this.search_text === "") {
+  //       delete req.params.history;
+  //     } else {
+  //       req.params.history = this.search_text;
+  //     }
+  //   }
 
-    console.log(req.params);
+  //   console.log(req.params);
 
-    await PartnerAPI.getPartners(req)
-      .then(async (res) => {
-        console.log(res);
-        this.partner_list = [];
-        this.category_ary = [];
-        this.category_name_ary = [];
-        this.temp_category_name_ary;
+  //   await PartnerAPI.getPartners(req)
+  //     .then(async (res) => {
+  //       console.log(res);
+  //       this.partner_list = [];
+  //       this.category_ary = [];
+  //       this.category_name_ary = [];
+  //       this.temp_category_name_ary;
 
-        this.partner_list = await res.data.results;
+  //       this.partner_list = await res.data.results;
 
-        this.partner_next = res.data.next;
-        this.partner_count = res.data.count;
-        console.log(toJS(this.partner_list));
-        //this.category_ary = res.data.results.category_middle;
-        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-        this.partner_list.map((item, idx) => {
-          console.log(item);
-          this.category_ary.push(item.category_middle);
-          //console.log(toJS(item));
-          console.log(toJS(this.category_ary));
-          this.category_ary[idx].map((data, id) => {
-            //console.log(toJS(data));
+  //       this.partner_next = res.data.next;
+  //       this.partner_count = res.data.count;
+  //       console.log(toJS(this.partner_list));
+  //       //this.category_ary = res.data.results.category_middle;
+  //       this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+  //       this.partner_list.map((item, idx) => {
+  //         console.log(item);
+  //         this.category_ary.push(item.category_middle);
+  //         //console.log(toJS(item));
+  //         console.log(toJS(this.category_ary));
+  //         this.category_ary[idx].map((data, id) => {
+  //           //console.log(toJS(data));
 
-            // const request = {
-            //   id: data,
-            // };
+  //           // const request = {
+  //           //   id: data,
+  //           // };
 
-            // if(this.partner_list.length-1 === idx){
+  //           // if(this.partner_list.length-1 === idx){
 
-            // }
-            // this.category_ary.map((data, id) => {
-            //   console.log(toJS(data));
-            // });
-            //   console.log(toJS(this.category_name_ary));
+  //           // }
+  //           // this.category_ary.map((data, id) => {
+  //           //   console.log(toJS(data));
+  //           // });
+  //           //   console.log(toJS(this.category_name_ary));
 
-            //   console.log(toJS(this.category_ary[idx]));
-            for (let i = 0; i < this.category_ary[idx].length; i++) {
-              const request = {
-                id: this.category_ary[idx][i],
-              };
-              // this.getPartnerCategory(request, i, idx);
-            }
-          });
-        });
+  //           //   console.log(toJS(this.category_ary[idx]));
+  //           for (let i = 0; i < this.category_ary[idx].length; i++) {
+  //             const request = {
+  //               id: this.category_ary[idx][i],
+  //             };
+  //             // this.getPartnerCategory(request, i, idx);
+  //           }
+  //         });
+  //       });
 
-        await this.category_ary.map(async (data, id) => {
-          console.log(toJS(data));
-          console.log(id);
-          await data.map(async (sub_data, index) => {
-            const req = {
-              id: sub_data,
-            };
+  //       await this.category_ary.map(async (data, id) => {
+  //         console.log(toJS(data));
+  //         console.log(id);
+  //         await data.map(async (sub_data, index) => {
+  //           const req = {
+  //             id: sub_data,
+  //           };
 
-            await this.setCategoryDic(req, sub_data, id);
-          });
-        });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-    this.check_loading_develop = true;
-    console.log(this.check_loading_develop);
+  //           await this.setCategoryDic(req, sub_data, id);
+  //         });
+  //       });
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //       console.log(e.response);
+  //     });
+  //   this.check_loading_develop = true;
+  //   console.log(this.check_loading_develop);
 
-    this.filterLoading = true;
-  };
+  //   this.filterLoading = true;
+  // };
 
   @action getPartner = async (page = 1, click = 0) => {
     this.partner_list = [];
@@ -1667,32 +1667,32 @@ class Partner {
       req.params.city = this.filter_region;
     }
 
-    if (this.filter_category) {
-      //temp["category_middle__id"] = this.filter_category;
-      // if(this.filter_category==1){
-      //   req.params.category_middle__id = this.filter_category;
-      // }
-      switch (this.filter_category) {
-        case 1:
-          req.params.category_middle__id = "2";
-          break;
-        case 2:
-          req.params.category_middle__id = "12,14";
-          break;
-        case 3:
-          req.params.category_middle__id = "14";
-          break;
-        case 4:
-          req.params.category_middle__id = "12";
-          break;
-        case 5:
-          req.params.category_middle__id = "12";
-          break;
-      }
+    // if (this.filter_category) {
+    //   //temp["category_middle__id"] = this.filter_category;
+    //   // if(this.filter_category==1){
+    //   //   req.params.category_middle__id = this.filter_category;
+    //   // }
+    //   switch (this.filter_category) {
+    //     case 1:
+    //       req.params.category_middle__id = "2";
+    //       break;
+    //     case 2:
+    //       req.params.category_middle__id = "12,14";
+    //       break;
+    //     case 3:
+    //       req.params.category_middle__id = "14";
+    //       break;
+    //     case 4:
+    //       req.params.category_middle__id = "12";
+    //       break;
+    //     case 5:
+    //       req.params.category_middle__id = "12";
+    //       break;
+    //   }
 
-      temp.params.category_middle__id = this.filter_category;
-      // req.params.category_middle__id = this.filter_category;
-    }
+    //   temp.params.category_middle__id = this.filter_category;
+    //   // req.params.category_middle__id = this.filter_category;
+    // }
     if (this.search_class === "전체") {
       if (this.search_text === "") {
         delete req.params.search;
@@ -1717,59 +1717,72 @@ class Partner {
         this.temp_category_name_ary;
         this.category_count = 0;
 
-        this.partner_list = await res.data.results;
+        console.log(res);
+
+        this.partner_list = await res.data.slice(0, 10);
+        console.log(typeof this.partner_list);
+        console.log(typeof this.city_ary);
+        console.log(this.partner_list);
+        console.log(res.data.length);
+        // this.partner_list = await this.partner_list.concat(res.data[1]);
+        // console.log(typeof this.partner_list);
         this.originPartnerList = this.partner_list;
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
+        // this.partner_list = this.partner_list.slice(0, 10);
+
         await this.resetDevCategory();
 
         //this.category_ary = res.data.results.category_middle;
-        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-        await this.partner_list.map(async (item, idx) => {
-          await this.category_ary.push(item.category_middle);
-          this.category_count += 1;
-        });
 
-        await this.category_ary.map(async (data, id) => {
-          await data.map(async (sub_data, index) => {
-            const req = {
-              id: sub_data,
-            };
-            if (this.isSearched) {
-              this.exceptionCategory += sub_data + ",";
-            }
+        /* this.partner_page = parseInt((this.partner_count - 1) / 10) + 1; */
+        this.partner_page = parseInt(res.data.length / 10) + 1;
 
-            if (this.click_count != click) {
-              return;
-            }
+        // await this.partner_list.map(async (item, idx) => {
+        //   await this.category_ary.push(item.category_middle);
+        //   this.category_count += 1;
+        // });
 
-            await PartnerAPI.getPartnerCategory(req)
-              .then(async (res) => {
-                if (click == 0) {
-                  click += 1;
-                }
+        //   await this.category_ary.map(async (data, id) => {
+        //     await data.map(async (sub_data, index) => {
+        //       const req = {
+        //         id: sub_data,
+        //       };
+        //       if (this.isSearched) {
+        //         this.exceptionCategory += sub_data + ",";
+        //       }
 
-                if (this.click_count == click) {
-                  if (!this.category_dic.hasOwnProperty(id)) {
-                    this.category_dic[id] = [];
-                  }
-                  this.category_dic[id] = await [
-                    ...this.category_dic[id],
-                    res.data.category,
-                  ];
-                } else {
-                  return;
-                }
-              })
-              .catch((e) => {
-                console.log(e);
-                console.log(e.response);
-              });
-            if (this.click_count != click) {
-              return;
-            }
-          });
-        });
+        //       if (this.click_count != click) {
+        //         return;
+        //       }
+
+        //       await PartnerAPI.getPartnerCategory(req)
+        //         .then(async (res) => {
+        //           if (click == 0) {
+        //             click += 1;
+        //           }
+
+        //           if (this.click_count == click) {
+        //             if (!this.category_dic.hasOwnProperty(id)) {
+        //               this.category_dic[id] = [];
+        //             }
+        //             this.category_dic[id] = await [
+        //               ...this.category_dic[id],
+        //               res.data.category,
+        //             ];
+        //           } else {
+        //             return;
+        //           }
+        //         })
+        //         .catch((e) => {
+        //           console.log(e);
+        //           console.log(e.response);
+        //         });
+        //       if (this.click_count != click) {
+        //         return;
+        //       }
+        //     });
+        //   });
       })
       .catch((e) => {
         console.log(e);
@@ -1781,6 +1794,8 @@ class Partner {
     // if (this.click_count != click) {
     //   return;
     // }
+
+    console.log(toJS(this.partner_list));
   };
 
   @action getReview = async (page = 1, clientId = "") => {

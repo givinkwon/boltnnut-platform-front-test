@@ -256,6 +256,8 @@ export function getRandomPartner(req) {
 }
 
 export function getPartners(req) {
+  console.log(req.params);
+
   return axios({
     method: "GET",
     url: `${ROOT_URL}/partner/`,
