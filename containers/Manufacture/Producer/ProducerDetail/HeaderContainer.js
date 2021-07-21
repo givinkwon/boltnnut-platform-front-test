@@ -53,18 +53,16 @@ class HeaderContainer extends React.Component {
 export default HeaderContainer;
 
 const Container = styled.div`
-  //   width: 100%;
-  //   height: 70px;
-  //   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-  //   display: flex;
-  //   justify-content: space-around;
-  //   align-items: center;
-  //   margin-bottom: 50px;
-  //   // border: 3px solid red;
-  //   position: relative;
   display: flex;
   justify-content: space-between;
   margin-bottom: 34px;
+  > name {
+    font-size: 26px;
+    line-height: 52px;
+    letter-spacinig: -0.65px;
+    color: #282c36;
+    font-weight: bold;
+  }
 `;
 
 const ImgBox = styled.div``;

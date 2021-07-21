@@ -20,17 +20,22 @@ import * as Title from "components/Title";
 import Background from "components/Background";
 import ProposalCard from "../ProposalCard";
 import TabBar from "./TabBar";
+import InfoCard from "./InfoCard";
 
 // const customRenderer = DocViewerRenderers;
 const star = "/static/icon/star_blue3.svg";
+const medalImg = "/static/images/producer/medal.svg";
+const drawerImg = "/static/images/producer/drawer.svg";
+const markImg = "/static/images/producer/mark.svg";
 const bluebar_empty = "/static/icon/bluebar_empty.svg";
 const viewImg = "/static/images/producer/views.svg";
 const bookmarkImg = "/static/images/producer/bookmark.svg";
 const bookmarkBlueImg = "/static/images/producer/bookmark_blue.svg";
-
-const viewcount = "static/icon/viewcount.svg";
-const bookmarkcount = "static/icon/bookmarkcount.svg";
-const location = "static/icon/location.svg";
+const waterMarkImg = "/static/images/logo_marine@2x.png";
+const pass1 = "/static/images/pass1.png";
+const pass2 = "/static/images/pass2.png";
+const type = "pdf";
+const sort = "/static/icon/sort.svg";
 
 import Slider from "react-slick";
 
@@ -53,12 +58,6 @@ const availableFileType3 = ["doc", "docx", "txt", "html", "ppt", "pptx"];
 const FileViewer = dynamic(() => import("react-file-viewer"), {
   ssr: false,
 });
-
-const waterMarkImg = "/static/images/logo_marine@2x.png";
-const pass1 = "/static/images/pass1.png";
-const pass2 = "/static/images/pass2.png";
-const type = "pdf";
-const sort = "/static/icon/sort.svg";
 
 let portfoliLocation;
 const onError = (e) => {
@@ -401,7 +400,29 @@ class DetailCardContainer extends React.Component {
               <span>활동 가능</span>
             </tag>
 
-            <HeaderItem></HeaderItem>
+            <HeaderItem />
+            <InfoBox>
+              <InfoCard
+                src={medalImg}
+                name="전문분야"
+                content="기구설계, 금형제작"
+              />
+              {Partner.partner_detail_list && (
+                <InfoCard
+                  src={drawerImg}
+                  name="진행한 제품군"
+                  content={Partner.partner_detail_list[0].item.history}
+                  marginLeft="21"
+                />
+              )}
+
+              <InfoCard
+                src={markImg}
+                name="지역"
+                content="서울 특별시"
+                marginLeft="21"
+              />
+            </InfoBox>
             {Partner.partner_detail_list && (
               <content>
                 <span>{Partner.partner_detail_list[0].item.info_company}</span>
@@ -498,12 +519,12 @@ class DetailCardContainer extends React.Component {
 
           <ReviewBox id="review">
             <div>
-              <label>평가 후기</label>
+              <label>실제 고객후기</label>
             </div>
 
             {/* <ReviewSummaryContainer width={this.props.width} /> */}
             <SummaryBox>
-              <label>클라이언트 평균 만족도</label>
+              {/* <label>클라이언트 평균 만족도</label> */}
               <header>
                 <mainscore>
                   <div>
@@ -1001,7 +1022,7 @@ const HeaderBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 174px;
-  tag {
+  >tag {
     width: 118px;
     height: 40px;
     border-radius: 3px;
@@ -1010,7 +1031,7 @@ const HeaderBox = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 34px;
-    span {
+    >span {
       color: #ffffff;
       font-size: 18px;
       line-height: 30px;
@@ -1018,7 +1039,7 @@ const HeaderBox = styled.div`
       font-weight: 500;
     }
   }
-  name {
+  >name {
     font-size: 26px;
     line-height: 52px;
     letter-spacinig: -0.65px;
@@ -1026,7 +1047,7 @@ const HeaderBox = styled.div`
     font-weight: bold;
     // margin-bottom: 34px;
   }
-  content {
+  >content {
     span {
       font-size: 18px;
       line-height: 34px;
@@ -1661,4 +1682,9 @@ const TotalRating = styled.div`
       display: block;
     }
   }
+`;
+const InfoBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
 `;
