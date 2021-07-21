@@ -140,7 +140,13 @@ class ManufacturerContentContainer extends React.Component {
                       return (
                         <Background style={{ marginBottom: "5px" }}>
                           <div
-                            onClick={() => Partner.pushToDetail(item, idx)}
+                            onClick={async () => {
+                              console.log(Auth);
+                              if (Auth.logged_in_client) {
+                                await Project.getPage(Auth.logged_in_client.id);
+                              }
+                              Partner.pushToDetail(item, idx);
+                            }}
                             style={{ width: "100%" }}
                           >
                             <ProposalCard

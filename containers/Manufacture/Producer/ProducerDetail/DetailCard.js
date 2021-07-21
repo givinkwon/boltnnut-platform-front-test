@@ -120,8 +120,8 @@ class DetailCardContainer extends React.Component {
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
     Partner.recentPartnerList.push(Partner.partner_detail_list[0].item);
-    Partner.review_partner_page = 1;
-    loadingCounter = 0;
+    Partner.review_partner_page = 0;
+    // loadingCounter = 0;
     window.removeEventListener("scroll", this.loadScroll);
   };
 
@@ -619,7 +619,7 @@ class DetailCardContainer extends React.Component {
                 </span>
               </Layer>
             ) : (
-              Partner.review_partner_page === 1 &&
+              Partner.review_partner_page === 0 &&
               Partner.partnerReviewList.length === 0 && (
                 <Layer>
                   <span>
@@ -663,7 +663,7 @@ class DetailCardContainer extends React.Component {
                 active={Partner.reviewCurrentPage % 5 == 1}
                 style={{
                   display:
-                    Partner.review_partner_page < 5 * (current_set - 1) + 1
+                    Partner.review_partner_page < 5 * (current_set - 1)
                       ? "none"
                       : "block",
                 }}

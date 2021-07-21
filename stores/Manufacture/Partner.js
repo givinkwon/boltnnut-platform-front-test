@@ -2109,6 +2109,7 @@ class Partner {
             res.data
           );
         }
+        console.log(this.review_partner_page);
         console.log(this.partnerReviewList);
         console.log(this.partnerAllReviewList);
       })

@@ -5,22 +5,23 @@ import { toJS } from "mobx";
 
 const userImg = "/static/images/producer/user.svg";
 
-@inject("Partner", "Auth")
+@inject("Partner", "Auth", "Project", "Common")
 @observer
 class SubBoxContainer extends React.Component {
   componentDidMount = async () => {
-    const { Partner, Auth, partnerId } = this.props;
+    const { Partner, Auth, partnerId, Project } = this.props;
 
     const clientId = this.props.Auth.logged_in_client.id;
     await Partner.existBookmarkPartner(clientId, partnerId);
     await Partner.getBookmarkByClient(clientId);
   };
   render() {
-    const { Partner, Auth, partnerId } = this.props;
+    const { Partner, Auth, partnerId, Project, Common } = this.props;
     console.log(this.props.Auth.logged_in_client.id);
     console.log(toJS(`clientId: ${this.props.Auth.logged_in_client.id}`));
     const clientId = this.props.Auth.logged_in_client.id;
     console.log(toJS(`partnerId: ${partnerId}`));
+    console.log(Project.project_count);
     return (
       <>
         <Container>
@@ -59,6 +60,7 @@ class SubBoxContainer extends React.Component {
                 }}
                 onClick={() => {
                   Partner.clickHandler("project");
+                  location.href = Common.makeUrl("request");
                   this.setState({ g: 3 });
                 }}
               >
@@ -96,7 +98,7 @@ class SubBoxContainer extends React.Component {
             </UserBox>
             <SubItem>
               <span>프로젝트 의뢰</span>
-              <span>0</span>
+              <span>{Project.project_count}</span>
             </SubItem>
             <SubItem>
               <span>관심 업체 등록</span>
