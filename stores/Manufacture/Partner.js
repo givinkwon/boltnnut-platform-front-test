@@ -1676,7 +1676,7 @@ class Partner {
       }
       )
       // 마지막 쉼표 제거하기 위함
-      this.business_string = this.business_string.substr(0, Category.business_selected.length*2-1)
+      this.business_string = this.business_string.substr(0, this.business_string.length-1)
       
       // 괄호를 없애서 전처리
       req.params.business = this.business_string; 
@@ -1684,14 +1684,15 @@ class Partner {
 
     // 업체 분류 선택되어 있을 때
     if (Category.category_selected.length) {
+      console.log(toJS(Category.category_selected))
       toJS(Category.category_selected).map((data) => {
         this.category_string += data + ","
         console.log(this.category_string)
       }
       )
       // 마지막 쉼표 제거하기 위함
-      this.category_string = this.category_string.substr(0, Category.category_selected.length*2-1)
-
+      this.category_string = this.category_string.substr(0, this.category_string.length-1)
+      console.log(this.category_string)
       // 괄호를 없애서 전처리
       req.params.category = this.category_string;
     }
@@ -1704,7 +1705,7 @@ class Partner {
       }
       )
       // 마지막 쉼표 제거하기 위함
-      this.city_string = this.city_string.substr(0, Category.city_selected.length*2-1)
+      this.city_string = this.city_string.substr(0, this.city_string.length.length-1)
       
       // 괄호를 없애서 전처리
       req.params.city = this.city_string; 
@@ -1718,7 +1719,7 @@ class Partner {
       }
       )
       // 마지막 쉼표 제거하기 위함
-      this.develop_string = this.develop_string.substr(0, Category.develop_selected.length*2-1)
+      this.develop_string = this.develop_string.substr(0, this.develop_string.length-1)
       
       // 괄호를 없애서 전처리
       req.params.develop = this.develop_string; 
@@ -1732,7 +1733,7 @@ class Partner {
       }
       )
       // 마지막 쉼표 제거하기 위함
-      this.material_string = this.material_string.substr(0, Category.material_selected.length*2-1)
+      this.material_string = this.material_string.substr(0, this.material_string.length-1)
       
       // 괄호를 없애서 전처리
       req.params.material = this.material_string; 
