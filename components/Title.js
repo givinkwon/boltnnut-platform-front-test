@@ -224,8 +224,7 @@ export const FontSize14 = styled.p`
   color: ${(props) => (props.color ? props.color : "#000000")};
   text-align: ${(props) => (props.center ? "center" : "left")};
   font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
-  letter-spacing: ${(props) =>
-    props.letterSpacing ? props.letterSpacing : -0.35};
+  letter-spacing: ${(props) => (props.letterSpacing ? props.letterSpacing : -0.35)};
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
   }
@@ -240,8 +239,7 @@ export const FontSize13 = styled.p`
   color: ${(props) => (props.color ? props.color : "#000000")};
   text-align: ${(props) => (props.center ? "center" : "left")};
   font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
-  letter-spacing: ${(props) =>
-    props.letterSpacing ? props.letterSpacing : -0.35};
+  letter-spacing: ${(props) => (props.letterSpacing ? props.letterSpacing : -0.35)};
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
     line-height: 1.46;
