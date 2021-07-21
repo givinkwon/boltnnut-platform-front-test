@@ -6,6 +6,8 @@ import Router from "next/router";
 import { isConstructorDeclaration } from "typescript";
 import NoneDrawingConsultingContainer from "containers/Manufacture/Request/NoneDrawingConsulting";
 
+import Category from "./Category"
+
 class Partner {
   constructor() {
     //makeObservable(this);
@@ -1659,54 +1661,35 @@ class Partner {
 
     const token = localStorage.getItem("token");
     let req = { params: { page: page } };
-    let temp = { params: { page: page } };
 
-    if (this.filter_region) {
-      console.log(this.filter_region);
-      temp.params.city = this.filter_region;
-      req.params.city = this.filter_region;
+    // 카테고리 선택되어 있을 때
+    if (Category.business_selected) {
+      console.log(Category.business_selected);
+      req.params.business = Category.business_selected;
     }
 
-    if (this.filter_category) {
-      //temp["category_middle__id"] = this.filter_category;
-      // if(this.filter_category==1){
-      //   req.params.category_middle__id = this.filter_category;
-      // }
-      switch (this.filter_category) {
-        case 1:
-          req.params.category_middle__id = "2";
-          break;
-        case 2:
-          req.params.category_middle__id = "12,14";
-          break;
-        case 3:
-          req.params.category_middle__id = "14";
-          break;
-        case 4:
-          req.params.category_middle__id = "12";
-          break;
-        case 5:
-          req.params.category_middle__id = "12";
-          break;
-      }
-
-      temp.params.category_middle__id = this.filter_category;
-      // req.params.category_middle__id = this.filter_category;
-    }
-    if (this.search_class === "전체") {
-      if (this.search_text === "") {
-        delete req.params.search;
-      } else {
-        req.params.search = this.search_text;
-      }
+    // 업체 분류 선택되어 있을 때
+    if (Category.category_selected) {
+      console.log(Category.category_selected);
+      req.params.category = Category.category_selected;
     }
 
-    if (this.search_class === "만든 제품") {
-      if (this.search_text === "") {
-        delete req.params.history;
-      } else {
-        req.params.history = this.search_text;
-      }
+    // 지역 분류 선택되어 있을 때
+    if (Category.city_selected) {
+      console.log(Category.city_selected);
+      req.params.city = Category.city_selected;
+    }
+    
+    // 공정 분류 선택되어 있을 때
+    if (Category.develop_selected) {
+      console.log(Category.develop_selected);
+      req.params.develop = Category.develop_selected;
+    }
+
+    // 소재 분류 선택되어 있을 때
+    if (Category.material_selected) {
+      console.log(Category.material_selected);
+      req.params.material = Category.material_selected;
     }
 
     await PartnerAPI.getPartners(req)
@@ -1729,51 +1712,6 @@ class Partner {
           await this.category_ary.push(item.category_middle);
           this.category_count += 1;
         });
-
-        // await this.category_ary.map(async (data, id) => {
-        //   await data.map(async (sub_data, index) => {
-        //     const req = {
-        //       id: sub_data,
-        //     };
-        //     if (this.isSearched) {
-        //       this.exceptionCategory += sub_data + ",";
-        //     }
-
-        //     if (this.click_count != click) {
-        //       return;
-        //     }
-
-        //     await PartnerAPI.getPartnerCategory(req)
-        //       .then(async (res) => {
-        //         if (click == 0) {
-        //           click += 1;
-        //         }
-
-        //         if (this.click_count == click) {
-        //           if (!this.category_dic.hasOwnProperty(id)) {
-        //             this.category_dic[id] = [];
-        //           }
-        //           this.category_dic[id] = await [
-        //             ...this.category_dic[id],
-        //             res.data.category,
-        //           ];
-        //         } else {
-        //           return;
-        //         }
-
-        //       }
-        //       )
-        //       .catch((e) => {
-        //         console.log(e);
-        //         console.log(e.response);
-        //       });
-        //     if (this.click_count != click) {
-        //       return;
-        //     }
-        //   });
-        // }
-
-        // );
       })
       .catch((e) => {
         console.log(e);
@@ -1782,9 +1720,6 @@ class Partner {
     this.check_loading_develop = true;
 
     this.filterLoading = true;
-    // if (this.click_count != click) {
-    //   return;
-    // }
   };
 
   @action getReview = async (page = 1, clientId = "") => {

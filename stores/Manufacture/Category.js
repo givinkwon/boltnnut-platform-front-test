@@ -158,7 +158,7 @@ class Category {
       this.material_selected.push(id);
     }
 
-    // this.search_selected();
+    Partner.getPartner();
   };
 
   // 선택된 필터를 제거하기
@@ -192,7 +192,7 @@ class Category {
       this.material_selected.splice(id, 1);
     }
 
-    // this.search_selected();
+    Partner.getPartner();
   };
 
   categoryActiveHandler = (idx, state) => {
@@ -240,44 +240,6 @@ class Category {
         return false;
       }
     }
-  };
-  // 선택된 필터 검색해보기
-  @action search_selected = async () => {
-    const req = {
-      data: {
-        business: this.business_selected,
-        category: this.category_selected,
-        city: this.city_selected,
-        develop: this.develop_selected,
-        material: this.material_selected,
-      },
-    };
-    PartnerAPI.search(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
-  @action getCityName = (id) => {
-    const req = {
-      id: id,
-    };
-
-    PartnerAPI.getCityName(req)
-      .then(async (res) => {
-        console.log(res);
-        this.city_name = res.data.city;
-        console.log(this.city_name);
-        // return res.data.city
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
   };
 }
 
