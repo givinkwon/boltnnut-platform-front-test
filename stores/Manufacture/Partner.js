@@ -1658,40 +1658,87 @@ class Partner {
   @action getPartner = async (page = 1, click = 0) => {
     this.partner_list = [];
     this.category_ary = [];
+    // data 저장용
+    this.business_string = [];
+    this.category_string = [];
+    this.city_string = [];
+    this.develop_string = [];
+    this.material_string = [];
 
     const token = localStorage.getItem("token");
     let req = { params: { page: page } };
 
     // 카테고리 선택되어 있을 때
-    if (Category.business_selected) {
-      console.log(Category.business_selected);
-      req.params.business = Category.business_selected;
+    if (Category.business_selected.length) {
+      toJS(Category.business_selected).map((data) => {
+        this.business_string += data + ","
+        console.log(this.business_string)
+      }
+      )
+      // 마지막 쉼표 제거하기 위함
+      this.business_string = this.business_string.substr(0, Category.business_selected.length*2-1)
+      
+      // 괄호를 없애서 전처리
+      req.params.business = this.business_string; 
     }
 
     // 업체 분류 선택되어 있을 때
-    if (Category.category_selected) {
-      console.log(Category.category_selected);
-      req.params.category = Category.category_selected;
+    if (Category.category_selected.length) {
+      toJS(Category.category_selected).map((data) => {
+        this.category_string += data + ","
+        console.log(this.category_string)
+      }
+      )
+      // 마지막 쉼표 제거하기 위함
+      this.category_string = this.category_string.substr(0, Category.category_selected.length*2-1)
+
+      // 괄호를 없애서 전처리
+      req.params.category = this.category_string;
     }
 
     // 지역 분류 선택되어 있을 때
-    if (Category.city_selected) {
-      console.log(Category.city_selected);
-      req.params.city = Category.city_selected;
+    if (Category.city_selected.length) {
+      toJS(Category.city_selected).map((data) => {
+        this.city_string += data + ","
+        console.log(this.city_string)
+      }
+      )
+      // 마지막 쉼표 제거하기 위함
+      this.city_string = this.city_string.substr(0, Category.city_selected.length*2-1)
+      
+      // 괄호를 없애서 전처리
+      req.params.city = this.city_string; 
     }
     
     // 공정 분류 선택되어 있을 때
-    if (Category.develop_selected) {
-      console.log(Category.develop_selected);
-      req.params.develop = Category.develop_selected;
+    if (Category.develop_selected.length) {
+      toJS(Category.develop_selected).map((data) => {
+        this.develop_string += data + ","
+        console.log(this.develop_string)
+      }
+      )
+      // 마지막 쉼표 제거하기 위함
+      this.develop_string = this.develop_string.substr(0, Category.develop_selected.length*2-1)
+      
+      // 괄호를 없애서 전처리
+      req.params.develop = this.develop_string; 
     }
 
     // 소재 분류 선택되어 있을 때
-    if (Category.material_selected) {
-      console.log(Category.material_selected);
-      req.params.material = Category.material_selected;
+    if (Category.material_selected.length) {
+      toJS(Category.material_selected).map((data) => {
+        this.material_string += data + ","
+        console.log(this.material_string)
+      }
+      )
+      // 마지막 쉼표 제거하기 위함
+      this.material_string = this.material_string.substr(0, Category.material_selected.length*2-1)
+      
+      // 괄호를 없애서 전처리
+      req.params.material = this.material_string; 
     }
 
+    console.log(req.params)
     await PartnerAPI.getPartners(req)
       .then(async (res) => {
         this.partner_list = [];
