@@ -291,7 +291,7 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                {/* <SliderContainer {...SlideSettings}>
+                <SliderContainer {...SlideSettings}>
                   {data &&
                     data.portfolio_set.map((item, idx) => {
                       return (
@@ -306,7 +306,7 @@ class ProposalCard extends React.Component {
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                </SliderContainer> */}
+                </SliderContainer>
               </Header>
               <Main>
                 <Title>
@@ -427,7 +427,7 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                {/* <SliderMobileContainer {...SlideSettingsMobile}>
+                <SliderMobileContainer {...SlideSettingsMobile}>
                   {data &&
                     data.portfolio_set.map((item, idx) => {
                       return (
@@ -439,7 +439,7 @@ class ProposalCard extends React.Component {
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                </SliderMobileContainer> */}
+                </SliderMobileContainer>
               </Header>
               <Main>
                 <Name>{data.name}</Name>

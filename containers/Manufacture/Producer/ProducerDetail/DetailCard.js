@@ -358,7 +358,7 @@ class DetailCardContainer extends React.Component {
               <InfoCard
                 src={markImg}
                 name="지역"
-                content="서울 특별시"
+                content={Partner.city_name}
                 marginLeft="21"
               />
             </InfoBox>
@@ -394,7 +394,7 @@ class DetailCardContainer extends React.Component {
             />
             <IntroductionBox width={width}>
               <Font24 id="portfolio">포토폴리오</Font24>
-              {/* <SliderContainer {...SlideSettings}>
+              <SliderContainer {...SlideSettings}>
                 {Partner.partner_detail_list &&
                   Partner.partner_detail_list[0].item.portfolio_set.length >
                     0 &&
@@ -407,7 +407,7 @@ class DetailCardContainer extends React.Component {
                       );
                     }
                   )}
-              </SliderContainer> */}
+              </SliderContainer>
             </IntroductionBox>
 
             <IntroductionBox width={width}>
