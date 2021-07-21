@@ -158,7 +158,7 @@ class SearchFilterConatiner extends React.Component {
     }
 
     // 지역 선택
-    if (flag == "region") {
+    if (flag == "city") {
       console.log(3, flag);
     }
 
@@ -240,7 +240,7 @@ class SearchFilterConatiner extends React.Component {
                   <img
                     src="/static/icon/down_arrow.svg"
                     onClick={() => {
-                      this.dropdownHandler("region");
+                      this.dropdownHandler("city");
                     }}
                   ></img>
                 </Field>
