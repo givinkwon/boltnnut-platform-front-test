@@ -142,6 +142,7 @@ class SearchFilterConatiner extends React.Component {
     list: false,
     filter_city_active: false,
     filter_category_active: false,
+    type: ""
   };
 
   dropdownHandler = (flag) => {
@@ -149,22 +150,22 @@ class SearchFilterConatiner extends React.Component {
 
     // 카테고리 선택
     if (flag == "business") {
-      console.log(1, flag);
+      this.setState({ ...this.state, type: "business" });
     }
 
     // 업체 분류 선택
     if (flag == "category") {
-      console.log(2, flag);
+      this.setState({ ...this.state, type: "category" });
     }
 
     // 지역 선택
-    if (flag == "region") {
-      console.log(3, flag);
+    if (flag == "city") {
+      this.setState({ ...this.state, type: "city" });
     }
 
     // 공정 선택
     if (flag == "develop") {
-      console.log(4, flag);
+      this.setState({ ...this.state, type: "develop" });
     }
 
     if (Partner.filter_dropdown) {
@@ -202,6 +203,7 @@ class SearchFilterConatiner extends React.Component {
   };
   render() {
     const { Partner, width } = this.props;
+    console.log(this.state.type)
     return (
       <>
         {width && width > 767.99 ? (
@@ -240,7 +242,7 @@ class SearchFilterConatiner extends React.Component {
                   <img
                     src="/static/icon/down_arrow.svg"
                     onClick={() => {
-                      this.dropdownHandler("region");
+                      this.dropdownHandler("city");
                     }}
                   ></img>
                 </Field>
@@ -275,7 +277,7 @@ class SearchFilterConatiner extends React.Component {
                 </Material>
               </Category>
             </FilterCategory>
-            <FilterModalContainer></FilterModalContainer>
+            <FilterModalContainer type={this.state.type}></FilterModalContainer>
             {Partner.filter_dropdown && (
               <FilterContent>
                 <Aside>

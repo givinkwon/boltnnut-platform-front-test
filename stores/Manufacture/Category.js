@@ -1,6 +1,7 @@
 import { observable, action, toJS, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Account/Category";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 import { isConstructorDeclaration } from "typescript";
 import NoneDrawingConsultingContainer from "containers/Manufacture/Request/NoneDrawingConsulting";
 
@@ -28,9 +29,15 @@ class Category {
   @observable developbig_list = [];
   @observable develop_list = [];
 
+  // 선택된 리스트
+  @observable business_selected = [];
+  @observable category_selected = [];
+  @observable city_selected = [];
+  @observable material_selected = [];
+  @observable develop_selected = [];
+
   /* init */
   @action init = async () => {
-    console.log("GG");
     // 카테고리 데이터 가져오기
     await CategoryAPI.getMainbusiness()
       .then((res) => {
@@ -111,95 +118,146 @@ class Category {
     // 공정 배열 초기화
     this.developbig_list = [];
     this.develop_list = [];
+
+    // 선택된 리스트
+    this.business_selected = [];
+    this.category_selected = [];
+    this.city_selected = [];
+    this.material_selected = [];
+    this.develop_selected = [];
   };
 
-  @action getCategory = () => {
-    this.filter_category_ary = [];
+  // 선택된 필터를 추가하기
+  // state : 선택된 대카테고리 테이블
+  // id : 선택된 중카테고리 id
+  @action add_selected = async (state, id) => {
+    // 카테고리 선택
+    if (state == "business") {
+      this.business_selected.push(id);
+    }
 
+    // 업체 분류 선택
+    if (state == "category") {
+      this.category_selected.push(id);
+    }
+
+    // 지역 선택
+    if (state == "city") {
+      this.city_selected.push(id);
+    }
+
+    // 공정 선택
+    if (state == "develop") {
+      this.develop_selected.push(id);
+    }
+
+    // 소재 선택
+    if (state == "material") {
+      this.material_selected.push(id);
+    }
+
+    // this.search_selected();
+  };
+
+  // 선택된 필터를 제거하기
+  // state : 선택된 대카테고리 테이블
+  // id : 선택된 중카테고리 id
+  @action remove_selected = async (state, id) => {
+    let deleteIdx;
+    // 카테고리 선택
+    if (state == "business") {
+      deleteIdx = this.business_selected.indexOf(id);
+      this.business_selected.splice(deleteIdx, 1);
+    }
+
+    // 업체 분류 선택
+    if (state == "category") {
+      this.category_selected.splice(id, 1);
+    }
+
+    // 지역 선택
+    if (state == "city") {
+      this.city_selected.splice(id, 1);
+    }
+
+    // 공정 선택
+    if (state == "develop") {
+      this.develop_selected.splice(id, 1);
+    }
+
+    // 소재 선택
+    if (state == "material") {
+      this.material_selected.splice(id, 1);
+    }
+
+    // this.search_selected();
+  };
+
+  categoryActiveHandler = (idx, state) => {
+    if (state == "business") {
+      if (this.business_selected.includes(idx)) {
+        return true;
+      } else {
+        console.log("RRR");
+        return false;
+      }
+    }
+
+    // 업체 분류 선택
+    if (state == "category") {
+      if (this.category_selected.includes(idx)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    // 지역 선택
+    if (state == "city") {
+      if (this.city_selected.includes(idx)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    // 공정 선택
+    if (state == "develop") {
+      if (this.develop_selected.includes(idx)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    // 소재 선택
+    if (state == "material") {
+      if (this.material_selected.includes(idx)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+  // 선택된 필터 검색해보기
+  @action search_selected = async () => {
     const req = {
-      // nextUrl: this.develop_next,
+      data: {
+        business: this.business_selected,
+        category: this.category_selected,
+        city: this.city_selected,
+        develop: this.develop_selected,
+        material: this.material_selected,
+      },
     };
-
-    PartnerAPI.getCategory(req)
-      .then(async (res) => {
-        this.filter_category_ary = this.filter_category_ary.concat(
-          res.data.results
-        );
-        this.develop_next = res.data.next;
-
-        while (this.develop_next) {
-          const req = {
-            nextUrl: this.develop_next,
-          };
-          await PartnerAPI.getNextDevelopPage(req)
-            .then((res) => {
-              this.filter_category_ary = this.filter_category_ary.concat(
-                res.data.results
-              );
-
-              this.develop_next = res.data.next;
-            })
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-        }
+    PartnerAPI.search(req)
+      .then((res) => {
+        console.log(res);
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-  };
-
-  @action getCity = () => {
-    //this.filter_category_ary = [];
-
-    const req = {
-      // nextUrl: this.develop_next,
-    };
-
-    PartnerAPI.getCity(req)
-      .then(async (res) => {
-        this.filter_city_ary = await this.filter_city_ary.concat(
-          res.data.results
-        );
-        console.log(toJS(this.filter_city_ary));
-        this.city_ary = this.city_ary.concat(res.data.results);
-        this.city_next = res.data.next;
-
-        // console.log(toJS(res.data.results));
-        // console.log(toJS(this.filter_city_ary));
-        // console.log(this.city_next);
-        while (this.city_next) {
-          const req = {
-            nextUrl: this.city_next,
-          };
-          await PartnerAPI.getNextCityPage(req)
-            .then((res) => {
-              // console.log(res);
-              this.filter_city_ary = this.filter_city_ary.concat(
-                res.data.results
-              );
-              this.city_ary = this.city_ary.concat(res.data.results);
-
-              this.city_next = res.data.next;
-              //console.log(this.city_next);
-              //this.project_page = parseInt(this.project_count/5) + 1
-              // if (callback) {
-              //   callback();
-              // }
-            })
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-    console.log(this.filter_city_ary);
   };
 
   @action getCityName = (id) => {
