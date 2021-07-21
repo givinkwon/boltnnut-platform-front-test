@@ -73,33 +73,7 @@ class SearchBarConatiner extends React.Component {
   handleKeyDown = (e) => {
     const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
-      // console.log("Enter1");
-      // console.log(e);
-      // alert("enter");
       this.search();
-      // console.log(toJS(Partner.search_text));
-      // if (Partner.search_text != "") {
-      //   console.log("Enter2");
-      //   if (ManufactureProcess.loadingSaveSearchText) {
-      //     console.log("Enter3");
-      //     Partner.subButtonActive = true;
-      //     ManufactureProcess.saveSearchText(Partner.search_text);
-      //     ManufactureProcess.loadingSaveSearchText = false;
-      //     setTimeout(
-      //       () => (ManufactureProcess.loadingSaveSearchText = true),
-      //       2000
-      //     );
-      //   }
-      // }
-
-      // Partner.currentPage = 1;
-      // // Partner.resetDevCategory();
-      // Partner.getPartner();
-      // if (Partner.search_text) {
-      //   Partner.isSearched = true;
-      // } else {
-      //   Partner.isSearched = false;
-      // }
     }
   };
 

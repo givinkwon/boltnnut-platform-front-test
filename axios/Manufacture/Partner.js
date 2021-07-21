@@ -412,3 +412,29 @@ export function getPPTInfo(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function getBusinessCategory(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/business-category/${req.id}`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function setVisitedPartner(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/lastvisitpartnerlog/`,
+    data: req.data ? req.data : null,
+  });
+}
+
+export function getVisitedPartner(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/lastvisitpartnerlog/${req.id}`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}

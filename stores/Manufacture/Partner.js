@@ -76,6 +76,7 @@ class Partner {
   @observable city_next = 0;
   @observable city_name = "";
 
+  @observable business_name = "";
   @observable filter_checked_idx = 0;
 
   @observable input_process_filter = null;
@@ -2120,6 +2121,23 @@ class Partner {
       ];
     });
     console.log(toJS(this.review_client_obj));
+  };
+
+  @action getBusinessCategory = (id) => {
+    const req = {
+      id: id,
+    };
+
+    PartnerAPI.getBusinessCategory(req)
+      .then((res) => {
+        console.log(res);
+        this.business_name = res.data.business;
+        console.log(this.business_name);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 }
 
