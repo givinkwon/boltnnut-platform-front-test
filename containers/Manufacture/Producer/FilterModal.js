@@ -56,8 +56,8 @@ class FilterModalContainer extends React.Component {
     }
   };
   render() {
-    const { Category } = this.props;
-
+    const { Category, type } = this.props;
+    console.log(this.props.type)
     return (
       <ModalBox>
         {/* <InnerBoxComponent
@@ -88,7 +88,7 @@ class FilterModalContainer extends React.Component {
         <div style={{ width: "73.4%" }}>
           <SubCategoryBox>
             <SubInnerBox>
-              {Category.mainbusiness_list &&
+              {Category.mainbusiness_list[this.state.mainSelectIdx] &&
                 Category.mainbusiness_list[
                   this.state.mainSelectIdx
                 ].business_set.map((sub_data, idx) => {
