@@ -4,7 +4,7 @@ import { withRouter } from 'next/router'
 import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
 
-import * as PartnerAPI from 'axios/Partner'
+import * as PartnerAPI from 'axios/Manufacture/Partner'
 
 // components
 import Nav from 'components/Nav'

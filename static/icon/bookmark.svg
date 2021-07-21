@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+      }
+
+      .cls-2 {
+        stroke: #0933b3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.5px;
+      }
+    </style>
+  </defs>
+  <g id="그룹_3524" data-name="그룹 3524" transform="translate(-1294 -813)">
+    <rect id="사각형_4760" data-name="사각형 4760" class="cls-1" width="40" height="40" transform="translate(1294 813)"/>
+    <path id="_14182513331543238863" data-name="14182513331543238863" class="cls-2" d="M19.8,25.83l-7.4-6.342L5,25.83V5.537A2.354,2.354,0,0,1,7.114,3H17.682A2.354,2.354,0,0,1,19.8,5.537Z" transform="translate(1301.586 818.71)"/>
+  </g>
+</svg>

@@ -350,6 +350,31 @@ export default class MyDocument extends Document {
       `,
     };
   }
+
+  setKakaoLogin() {
+    return {
+      __html: `
+        (function() {
+          Kakao.init("1469e9509222cfd066d35737d4359063");
+      })();
+      `,
+    };
+  }
+  setBeusableAddition() {
+    return {
+      __html: `
+        (function(w, d, a){
+          w.__baclient__ = {
+              load : function(src){
+                  var b = d.createElement("script");
+                  b.src = src; b.async=true; b.type = "text/javascript";
+                  d.getElementsByTagName("head")[0].appendChild(b);
+              }
+          };w.__baclient__.load(a);
+      })(window, document, "//ba.beusable.net/script/ba/c08687bf6b");
+      `,
+    };
+  }
   render() {
     return (
       <html>
@@ -443,7 +468,11 @@ export default class MyDocument extends Document {
             async
           ></script>
         </Head>
-        <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+        <body
+          oncontextmenu="return false"
+          ondragstart="return false"
+          onselectstart="return false"
+        >
           <noscript>
             <iframe
               src="https://www.googletagmanager.com/ns.html?id=GTM-PWFPPZ5"
@@ -455,6 +484,7 @@ export default class MyDocument extends Document {
           <Main />
           <script dangerouslySetInnerHTML={this.setChannelTalk()} />
           <script dangerouslySetInnerHTML={this.setBeusable()} />
+          <script dangerouslySetInnerHTML={this.setBeusableAddition()} />
           <NextScript />
           {/* GA Settings*/}
           <script
@@ -485,7 +515,15 @@ export default class MyDocument extends Document {
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
           ></script>
+
+          {/* 카카오로그인 */}
+          <script
+            type="text/javascript"
+            src="https://developers.kakao.com/sdk/js/kakao.js"
+          ></script>
+          <script dangerouslySetInnerHTML={this.setKakaoLogin()} />
           {/* 테스트 */}
+
           <script
             type="text/javascript"
             src="https://apis.google.com/js/client.js?onload=authorize"

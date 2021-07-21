@@ -6,6 +6,8 @@ import * as Title from "components/Title";
 import Fade from "react-reveal/Fade";
 import Router from "next/router";
 import KSLink from "components/KSLink";
+import * as AccountAPI from 'axios/Account/Account'
+import axios from "axios";
 
 const image1 = "/static/images/banner_dot.png";
 const passImg = "/static/images/pass7.png";
@@ -21,6 +23,53 @@ class Banner13Container extends React.Component {
           <Box>
             <div>
               {/* <Header>민감 정보 선택 공개 서비스</Header> */}
+              <div
+                onClick={() => {
+                  const { Kakao } = window;
+                  console.log(Kakao.isInitialized());
+                  console.log(Kakao);
+                  const scopes = "profile";
+                  Kakao.Auth.login({
+                    // scopes,
+                    success: function (authObj) {
+                      console.log(authObj);
+                      // Kakao.Auth.setAccessToken(authObj.access_token);
+
+                      Kakao.API.request({
+                        url: "/v2/user/me",
+                        success: function ({ kakao_account }) {
+                          // const { profile } = kakao_account;
+                          // console.log(profile);
+                          console.log(kakao_account);
+                          // 로그인하기
+                          console.log(authObj.access_token, kakao_account.email)
+                          const req = {
+                            data: kakao_account,
+                            // headers : {
+                            //   Authorization : `bearer ${authObj.access_token}`
+                            // }
+                          };
+                      
+                          AccountAPI.SNSlogin(req)
+                            .then((res) => {
+                              console.log(res);
+                            })
+                            .catch((e) => {
+                              console.log(e);
+                              console.log(e.response);
+                            });
+                            },
+                            fail: function (error) {
+                              console.log(error);
+                            },
+                      });
+                      
+                    },
+                  });
+                }}
+              >
+                카카오로그인
+              </div>
               <Middle>
                 <p>대한민국 제조사 정보 여기 다 있다.</p>
               </Middle>

@@ -11,9 +11,9 @@ import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 
 import { toJS } from "mobx";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
-import ProjectContainer from "../../containers/Project/index";
+import ProjectContainer from "containers/Manufacture/Project/index";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 

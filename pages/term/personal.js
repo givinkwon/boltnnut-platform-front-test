@@ -5,7 +5,7 @@ import Nav from "components/Nav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 
-import PersonalConatiner from "containers/CS/Term/Personal";
+import PersonalConatiner from "containers/Common/Term/Personal";
 import MobileNav from "../../components/MobileNav";
 import { inject, observer } from "mobx-react";
 const back_ic = "/static/images/components/MobileNav/back.png";

@@ -11,7 +11,7 @@ import Containerv1 from "components/Containerv1";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
-import ChatTestContainer from "containers/Chatting/Info2/ChatTest";
+import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
 import KSLink from "components/KSLink";
 
 const close_ic = "/static/icon/close.svg";
@@ -267,28 +267,6 @@ const ProfileMenu = styled.div`
   overflow: hidden;
   margin-top: 50px;
   width: 14em;
-  // > div {
-  //   padding: 15px 20px;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   cursor: pointer;
-  //   > p {
-  //     color: #414550;
-  //     font-weight: 500;
-  //   }
-  // :hover {
-  //   background-color: #f3f3f3;
-  //   > p {
-  //     color: ${PRIMARY};
-  //   }
-  // }
-  // }
-  // >div:nth-of-type(1){
-  //   padding: 17px 20px;
-  //   display: flex;
-  //   align-items: center;
-  // }
   > div:nth-of-type(2) {
     cursor: pointer;
     padding: 17px 0;

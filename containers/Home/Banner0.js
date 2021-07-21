@@ -14,7 +14,7 @@ import Buttonv1 from "components/Buttonv1";
 import Fade from "react-reveal/Fade";
 import UseScrollCount from "./UseScrollCount";
 
-import * as ProposalAPI from "axios/Proposal";
+import * as ProposalAPI from "axios/Manufacture/Proposal";
 
 import { inject, observer } from "mobx-react";
 

@@ -9,12 +9,12 @@ import { createGlobalStyle } from "styled-components";
 import IE from "components/IE";
 import ScrollToTop from "components/ScrollToTop";
 import stores from "stores";
-import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
+import CheckBrowserModal from "containers/Home/CheckBrowserModal";
 import PrepareModal from "../containers/Home/PrepareModal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
