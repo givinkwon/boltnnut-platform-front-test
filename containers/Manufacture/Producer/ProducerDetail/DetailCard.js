@@ -21,23 +21,18 @@ import Background from "components/Background";
 import ProposalCard from "../ProposalCard";
 import TabBar from "./TabBar";
 import InfoCard from "./InfoCard";
+import Slider from "react-slick";
 
 // const customRenderer = DocViewerRenderers;
+/* 이미지 관련 변수 */
 const star = "/static/icon/star_blue3.svg";
 const medalImg = "/static/images/producer/medal.svg";
 const drawerImg = "/static/images/producer/drawer.svg";
 const markImg = "/static/images/producer/mark.svg";
-const bluebar_empty = "/static/icon/bluebar_empty.svg";
-const viewImg = "/static/images/producer/views.svg";
-const bookmarkImg = "/static/images/producer/bookmark.svg";
-const bookmarkBlueImg = "/static/images/producer/bookmark_blue.svg";
 const waterMarkImg = "/static/images/logo_marine@2x.png";
 const pass1 = "/static/images/pass1.png";
 const pass2 = "/static/images/pass2.png";
-const type = "pdf";
 const sort = "/static/icon/sort.svg";
-
-import Slider from "react-slick";
 
 const availableFileType1 = [
   "png",
@@ -59,12 +54,10 @@ const FileViewer = dynamic(() => import("react-file-viewer"), {
   ssr: false,
 });
 
-let portfoliLocation;
 const onError = (e) => {
   console.log(e, "error in file-viewer");
 };
 
-let loadingCounter = 0;
 let index = 0;
 
 @inject("Partner", "Auth")
@@ -94,24 +87,9 @@ class DetailCardContainer extends React.Component {
   };
 
   shouldComponentUpdate = (prevProps, nextState) => {
-    // return !this.state.loading;
-    console.log(this.state.g);
-    console.log(nextState.g);
-    console.log(prevProps.Partner.interestedIdx);
-    console.log(this.props.Partner.interestedIdx);
     return this.state.g !== nextState.g;
   };
 
-  loadScroll = () => {
-    // let location = document.querySelector("#portfolio");
-    // if (location) {
-    //   portfoliLocation = location.offsetTop;
-    // }
-    // this.setState((state) => {
-    //   return { portfoliLocation: document.querySelector("#portfolio").offsetTop };
-    // });
-    // console.log(this.state.portfoliLocation);
-  };
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
     Partner.docViewerLoading = false;
@@ -126,46 +104,13 @@ class DetailCardContainer extends React.Component {
       };
     });
 
-    console.log(toJS(Partner.partner_list));
-    console.log(this.state.portfoliLocation);
-    console.log(document.querySelector("#review").offsetTop);
-    console.log(this.state.reviewLocation);
-    window.addEventListener("scroll", this.loadScroll);
-
-    console.log(toJS(Partner.partner_list)); // 10개의 제조사
-    console.log(toJS(Partner.partner_detail_list)); // 현재 제조사
-
-    // customRenderer.weight = 2;
-    // customRenderer.fileLoader = ({
-    //   documentURI,
-    //   signal,
-    //   fileLoaderComplete,
-    // }) => {
-    //   fileLoaderComplete();
-    // };
-
-    const height = document.getElementById("card").style;
-
     if (Auth.logged_in_client) {
       await Partner.checkReviewWriting(Auth.logged_in_client.id);
-      // Partner.checkReviewWriting(5052);
       this.setState({ g: 3 });
     }
 
     Partner.reviewCurrentPage = 1;
     Partner.detailLoadingFlag = false;
-
-    console.log(Partner.reviewWritingModalActive);
-
-    // console.log(this.props.Partner.selectedIntroductionFileType);
-
-    // if (this.props.Partner.selectedIntroductionFileType === "pptx") {
-    //   var frameHTML =
-    //     '<iframe src="https://docs.google.com/gview?url=' +
-    //     this.props.Partner.selectedIntroductionFile +
-    //     '&embedded=true" class="viewer" frameborder="0"></iframe>';
-    //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
-    // }
 
     await this.countTotalPoint();
     this.setState((state) => {
@@ -174,7 +119,6 @@ class DetailCardContainer extends React.Component {
   };
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
-    console.log("unmount");
     Partner.recentPartnerList.push(Partner.partner_detail_list[0].item);
     Partner.review_partner_page = 1;
     loadingCounter = 0;
@@ -270,11 +214,6 @@ class DetailCardContainer extends React.Component {
       );
     }
   };
-
-  // countLoading = () => {
-  //   loadingCounter += 1;
-  //   console.log(loadingCounter);
-  // };
 
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
@@ -1685,6 +1624,6 @@ const TotalRating = styled.div`
 `;
 const InfoBox = styled.div`
   display: flex;
-  align-items: center;
+  align-items: self-start;
   margin-bottom: 60px;
 `;

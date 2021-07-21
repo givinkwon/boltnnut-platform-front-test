@@ -1717,72 +1717,59 @@ class Partner {
         this.temp_category_name_ary;
         this.category_count = 0;
 
-        console.log(res);
-
-        this.partner_list = await res.data.slice(0, 10);
-        console.log(typeof this.partner_list);
-        console.log(typeof this.city_ary);
-        console.log(this.partner_list);
-        console.log(res.data.length);
-        // this.partner_list = await this.partner_list.concat(res.data[1]);
-        // console.log(typeof this.partner_list);
+        this.partner_list = await res.data.results;
         this.originPartnerList = this.partner_list;
         this.partner_next = res.data.next;
         this.partner_count = res.data.count;
-        // this.partner_list = this.partner_list.slice(0, 10);
-
         await this.resetDevCategory();
 
         //this.category_ary = res.data.results.category_middle;
-
-        /* this.partner_page = parseInt((this.partner_count - 1) / 10) + 1; */
-        this.partner_page = parseInt(res.data.length / 10) + 1;
-
+        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
         // await this.partner_list.map(async (item, idx) => {
         //   await this.category_ary.push(item.category_middle);
         //   this.category_count += 1;
         // });
 
-        //   await this.category_ary.map(async (data, id) => {
-        //     await data.map(async (sub_data, index) => {
-        //       const req = {
-        //         id: sub_data,
-        //       };
-        //       if (this.isSearched) {
-        //         this.exceptionCategory += sub_data + ",";
-        //       }
+        // await this.category_ary.map(async (data, id) => {
+        //   await data.map(async (sub_data, index) => {
+        //     const req = {
+        //       id: sub_data,
+        //     };
+        //     if (this.isSearched) {
+        //       this.exceptionCategory += sub_data + ",";
+        //     }
 
-        //       if (this.click_count != click) {
-        //         return;
-        //       }
+        //     if (this.click_count != click) {
+        //       return;
+        //     }
 
-        //       await PartnerAPI.getPartnerCategory(req)
-        //         .then(async (res) => {
-        //           if (click == 0) {
-        //             click += 1;
+        //     await PartnerAPI.getPartnerCategory(req)
+        //       .then(async (res) => {
+        //         if (click == 0) {
+        //           click += 1;
+        //         }
+
+        //         if (this.click_count == click) {
+        //           if (!this.category_dic.hasOwnProperty(id)) {
+        //             this.category_dic[id] = [];
         //           }
-
-        //           if (this.click_count == click) {
-        //             if (!this.category_dic.hasOwnProperty(id)) {
-        //               this.category_dic[id] = [];
-        //             }
-        //             this.category_dic[id] = await [
-        //               ...this.category_dic[id],
-        //               res.data.category,
-        //             ];
-        //           } else {
-        //             return;
-        //           }
-        //         })
-        //         .catch((e) => {
-        //           console.log(e);
-        //           console.log(e.response);
-        //         });
-        //       if (this.click_count != click) {
-        //         return;
-        //       }
-        //     });
+        //           this.category_dic[id] = await [
+        //             ...this.category_dic[id],
+        //             res.data.category,
+        //           ];
+        //         } else {
+        //           return;
+        //         }
+        //       })
+        //       .catch((e) => {
+        //         console.log(e);
+        //         console.log(e.response);
+        //       });
+        //     if (this.click_count != click) {
+        //       return;
+        //     }
         //   });
+        // });
       })
       .catch((e) => {
         console.log(e);
@@ -1794,7 +1781,6 @@ class Partner {
     // if (this.click_count != click) {
     //   return;
     // }
-
     console.log(toJS(this.partner_list));
   };
 
