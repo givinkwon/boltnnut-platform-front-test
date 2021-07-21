@@ -103,6 +103,10 @@ class RequestModal extends React.Component {
 
   componentDidMount = () => {
     const { Partner } = this.props;
+
+    window.onload = function () {
+      window.document.body.scroll = "auto";
+    };
     console.log(toJS(Partner.input_big_category));
     console.log(toJS(Partner.input_detail_big_category));
 

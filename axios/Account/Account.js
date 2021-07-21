@@ -100,3 +100,13 @@ export function setUserPageIP(req) {
     data: req.data,
   });
 }
+
+// SNS 로그인
+export function SNSlogin(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/snsuser/login/`,
+    data: req.data,
+    headers: req.headers ? req.headers : null,
+  });
+}

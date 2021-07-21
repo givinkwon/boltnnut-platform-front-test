@@ -225,6 +225,8 @@ class ProposalCard extends React.Component {
         Partner.partner_detail_list = [];
         await Partner.partner_detail_list.push({ item: data });
 
+        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
+        console.log(toJS(Partner.partner_detail_list));
         await Partner.getReviewByPartner(
           Partner.partner_detail_list[0].item.id,
           1,
@@ -236,6 +238,7 @@ class ProposalCard extends React.Component {
 
         await Partner.getCityName(Partner.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
+        this.setState({ g: 3 });
       } else {
         console.log("file download");
         this.filedownload(this.props.data.file);
@@ -285,11 +288,11 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
-              onClick={(e) => {
-                if (!this.props.Partner.modalActive) {
-                  this.cardClick(e);
-                }
-              }}
+              // onClick={(e) => {
+              //   if (!this.props.Partner.modalActive) {
+              //     this.cardClick(e);
+              //   }
+              // }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -412,7 +415,7 @@ class ProposalCard extends React.Component {
                     <Button>
                       <Link
                         target="_blank"
-                        onClick={(e) => this.cardClick(e)}
+                        // onClick={(e) => this.cardClick(e)}
                         download
                       >
                         <span>회사 소개서 보기</span>
@@ -428,7 +431,7 @@ class ProposalCard extends React.Component {
             <Card
               active={this.state.active}
               onClick={(e) => {
-                this.cardClick(e);
+                // this.cardClick(e);
               }}
               onMouseOver={() => {
                 this.activeHandler("active");
@@ -496,7 +499,7 @@ class ProposalCard extends React.Component {
                   <div>
                     <Link
                       target="_blank"
-                      onClick={(e) => this.cardClick(e)}
+                      // onClick={(e) => this.cardClick(e)}
                       download
                     >
                       <span>회사 소개서 보기</span>

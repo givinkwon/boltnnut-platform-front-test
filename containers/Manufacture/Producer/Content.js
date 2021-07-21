@@ -25,12 +25,11 @@ const rightarrow = "static/icon/right_arrow.svg";
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 
-@inject("Project", "Auth", "Partner", "Producer")
+@inject("Project", "Auth", "Partner", "Producer", "Common")
 @observer
 class ManufacturerContentContainer extends React.Component {
   state = {
     dropDownActive: false,
-    dropDownIdx: -1,
   };
 
   async componentDidMount() {
@@ -39,9 +38,6 @@ class ManufacturerContentContainer extends React.Component {
 
     Partner.currentPage = 1;
 
-    console.log(Partner.search_text);
-
-    console.log("content mount");
     await Partner.getPartner(1, Partner.click_count);
 
     if (Partner.filter_category_ary.length === 1) {
@@ -64,6 +60,24 @@ class ManufacturerContentContainer extends React.Component {
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
     Partner.filter_city_ary = [{ id: 0, city: "전체" }];
   }
+
+  filedownload = (urls) => {
+    const { data } = this.props;
+
+    if (this.props.Auth && this.props.Auth.logged_in_user) {
+      if (!urls) {
+        alert("준비중입니다.");
+      }
+      const url = urls;
+      const link = document.createElement("a");
+      link.href = url;
+      link.click();
+    } else {
+      alert("로그인이 필요합니다.");
+      // this.props.Auth.previous_url = "producer";
+      Router.push("/login");
+    }
+  };
 
   render() {
     const { Project, Partner, Producer, Auth } = this.props;
@@ -105,7 +119,8 @@ class ManufacturerContentContainer extends React.Component {
               </Header>
               <Main>
                 <MainBody>
-                  {Partner.partner_list.length === 0 &&
+                  {Partner.partner_list &&
+                    Partner.partner_list.length === 0 &&
                     (Partner.loadingFlag ? (
                       <ButtonSpinnerComponent scale="30%" primary />
                     ) : (

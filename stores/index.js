@@ -14,8 +14,9 @@ import Common from "./Common/Common";
 import Producer from "./Manufacture/Producer";
 import Partner from "./Manufacture/Partner";
 import Post from "./Manufacture/Post";
-import Answer from "./Manufacture/Answer"
-import Schedule from "./Manufacture/Schedule"
+import Answer from "./Manufacture/Answer";
+import Schedule from "./Manufacture/Schedule";
+import Category from "./Manufacture/Category";
 
 export default {
   Loading,
@@ -36,4 +37,5 @@ export default {
   Producer,
   Post,
   Schedule,
+  Category,
 };

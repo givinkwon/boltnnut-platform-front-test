@@ -16,7 +16,7 @@ import Router from "next/router";
 import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
 import { PRIMARY2 } from "static/style";
-
+import FilterModalContainer from "./FilterModal";
 const filter_img = "static/images/filter.svg";
 
 const customStyles = {
@@ -147,6 +147,26 @@ class SearchFilterConatiner extends React.Component {
   dropdownHandler = (flag) => {
     const { Partner } = this.props;
 
+    // 카테고리 선택
+    if (flag == "business") {
+      console.log(1, flag);
+    }
+
+    // 업체 분류 선택
+    if (flag == "category") {
+      console.log(2, flag);
+    }
+
+    // 지역 선택
+    if (flag == "region") {
+      console.log(3, flag);
+    }
+
+    // 공정 선택
+    if (flag == "develop") {
+      console.log(4, flag);
+    }
+
     if (Partner.filter_dropdown) {
       Partner.filter_dropdown = false;
     } else {
@@ -176,7 +196,6 @@ class SearchFilterConatiner extends React.Component {
       if (this.state.filter_category_active) {
         this.setState({ filter_category_active: false });
       } else {
-        console.log("e");
         this.setState({ filter_category_active: true });
       }
     }
@@ -197,7 +216,7 @@ class SearchFilterConatiner extends React.Component {
                   <img
                     src="/static/icon/down_arrow.svg"
                     onClick={() => {
-                      this.dropdownHandler("city");
+                      this.dropdownHandler("business");
                     }}
                   ></img>
                 </Field>
@@ -206,14 +225,24 @@ class SearchFilterConatiner extends React.Component {
                 <CategoryName>업체 분류</CategoryName>
                 <Field>
                   <div>전체</div>
-                  <img src="/static/icon/down_arrow.svg"></img>
+                  <img
+                    src="/static/icon/down_arrow.svg"
+                    onClick={() => {
+                      this.dropdownHandler("category");
+                    }}
+                  ></img>
                 </Field>
               </Category>
               <Category>
                 <CategoryName>지역</CategoryName>
                 <Field>
                   <div>전체</div>
-                  <img src="/static/icon/down_arrow.svg"></img>
+                  <img
+                    src="/static/icon/down_arrow.svg"
+                    onClick={() => {
+                      this.dropdownHandler("region");
+                    }}
+                  ></img>
                 </Field>
               </Category>
               <Category>
@@ -229,17 +258,24 @@ class SearchFilterConatiner extends React.Component {
                   공정, 소재
                 </div>
                 <Material>
-                  <img
-                    src="/static/icon/detail_filter.svg"
-                    style={{ widht: 24, height: 24 }}
-                  ></img>
-                  <img
-                    src="/static/icon/arrow_down.svg"
-                    style={{ widht: 12, height: 12 }}
-                  ></img>
+                  <div
+                    onClick={() => {
+                      this.dropdownHandler("develop");
+                    }}
+                  >
+                    <img
+                      src="/static/icon/detail_filter.svg"
+                      style={{ widht: 24, height: 24 }}
+                    ></img>
+                    <img
+                      src="/static/icon/arrow_down.svg"
+                      style={{ widht: 12, height: 12 }}
+                    ></img>
+                  </div>
                 </Material>
               </Category>
             </FilterCategory>
+            <FilterModalContainer></FilterModalContainer>
             {Partner.filter_dropdown && (
               <FilterContent>
                 <Aside>
@@ -266,10 +302,8 @@ class SearchFilterConatiner extends React.Component {
                 {/* <city>
                   <label>지역검색</label>
                   <RadioBox
-                    filter="region"
-                    // data={this.props.Partner.filter_city_ary}
-                    data={this.props.Partner.cityArray}
-                    // cityArray
+                    filter="region"                    
+                    data={this.props.Partner.cityArray}                    
                   />
                 </city>
                 <category>
@@ -282,7 +316,6 @@ class SearchFilterConatiner extends React.Component {
                 </category> */}
               </FilterContent>
             )}
-
             {/* <Filter>
               <span>위치</span>
               <span>(중복선택 가능)</span>
@@ -292,7 +325,6 @@ class SearchFilterConatiner extends React.Component {
                 data={Partner.filterArray}
               />
             </Filter> */}
-
             {/* <Filter>
               <span>분야</span>
               <span>(중복선택 가능)</span>
@@ -302,7 +334,6 @@ class SearchFilterConatiner extends React.Component {
                 data={Partner.filterArray}
               />
             </Filter> */}
-
             {Partner.requestModalActive && (
               <Layer>
                 <span>
@@ -314,7 +345,6 @@ class SearchFilterConatiner extends React.Component {
                 </span>
               </Layer>
             )}
-
             {Partner.requestDoneModalActive && (
               <Layer>
                 <span>
@@ -329,113 +359,8 @@ class SearchFilterConatiner extends React.Component {
           </ContainerV2>
         ) : (
           <ContainerV2>
-            {/* <Category>
-              <span>분야</span>
-              <div>
-                <MobileSelect
-                  placeholder="대 카테고리"
-                  options={this.props.Partner.category_main_list}
-                  getOptionLabel={(option) => option.maincategory}
-                  styles={mobileCustomStyles}
-                  onChange={Partner.setMainCategory}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      neutral50: "#1A1A1A", // Placeholder color
-                    },
-                  })}
-                />
-              </div>
-              <div>
-                <MobileSelect
-                  placeholder="소 카테고리"
-                  options={Partner.category_middle_ary}
-                  getOptionLabel={(option) => option.category}
-                  value={
-                    Partner.category_middle_ary[0] &&
-                    Partner.input_small_category
-                  }
-                  styles={mobileCustomStyles}
-                  onChange={Partner.setSmallCategory}
-                  defaultValue={
-                    Partner.category_middle_ary[0] &&
-                    Partner.category_middle_ary[0].cagegory
-                  }
-                />
-              </div>
-            </Category> */}
-
-            {/* <Budget>
-              <span>예산</span>
-              <FilterBox2 data={viewArray} width={width} />
-    
-              <InputContainer>
-                {!Partner.minDirectInput && (
-                  <MobileSelect
-                    styles={customStyles}
-                    placeholder="0"
-                    style={{ overflow: "visible" }}
-                    options={budgetArray}
-                    getOptionLabel={(option) => option.label}
-                    onChange={Partner.setMinBudget}
-                    styles={mobileCustomStyles}
-                  />
-                )}
-
-                {Partner.minDirectInput && (
-                  <DirectInputBox>
-                    <input
-                      placeholder="직접 입력하세요"
-                      onBlur={(e) => {
-                        if (e.target.value === "") {
-                          Partner.minDirectInput = false;
-                        }
-                      }}
-                      onFocus={(e) => {
-                        e.target.placeholder = "";
-                      }}
-                    />
-                  </DirectInputBox>
-                )}
-
-      
-                <span>원 ~ </span>
-                {!Partner.maxDirectInput && (
-                  <MobileSelect
-                    styles={customStyles}
-                    placeholder="0"
-                    style={{ overflow: "visible" }}
-                    options={budgetArray}
-                    getOptionLabel={(option) => option.label}
-                    onChange={Partner.setMaxBudget}
-                    styles={mobileCustomStyles}
-                  />
-                )}
-
-                {Partner.maxDirectInput && (
-                  <DirectInputBox>
-                    <input
-                      placeholder="직접 입력하세요"
-                      onBlur={(e) => {
-                        if (e.target.value === "") {
-                          Partner.maxDirectInput = false;
-                        }
-                      }}
-                      onFocus={(e) => {
-                        e.target.placeholder = "";
-                      }}
-                    />
-                  </DirectInputBox>
-                )}
-                <span>원</span>
-
-    
-              </InputContainer>
-            </Budget> */}
             <Filter>
               <span>분야필터</span>
-              {/* <span>(중복선택 가능)</span> */}
               <FilterBox
                 filter="mobileFilter"
                 purpose="filter"
@@ -448,44 +373,10 @@ class SearchFilterConatiner extends React.Component {
                   placeholder="전체지역"
                   options={this.props.Partner.filter_city_ary}
                   getOptionLabel={(option) => option.city}
-                  // value={Partner.input_category}
                   onChange={Partner.setCityCategory}
                   styles={mobileCustomStyles}
-                  // console.log(toJS(Partner.filter_region));
-                  // Partner.partner_next = null;
-                  // Partner.partner_count = null;
-
-                  // Partner.currentPage = 1;
-
-                  // Partner.category_dic = {};
-
-                  // Partner.getPartner();
                 />
               </Location>
-
-              {/* <div style={{ width: "100px" }}>
-                <input
-                  style={{ display: "none" }}
-                  value={
-                    Request.select_big ? Request.select_big.maincategory : ""
-                  }
-                  class="Input"
-                />
-                {console.log(toJS(Partner.filter_category_ary))}
-                <MobileSelect
-                  placeholder="전체"
-                  styles={customStyles}
-                  options={Partner.filter_category_ary}
-                  //options={processArray}
-                  getOptionLabel={(option) => option.category}
-                  // getOptionLabel={(option) => {
-                  //   option.label;
-                  // }}
-                  value={Partner.input_process_filter}
-                  onChange={Partner.setProcessFilter}
-                  styles={mobileCustomStyles}
-                />
-              </div> */}
             </Filter>
 
             <RequestButton>
@@ -603,8 +494,6 @@ const ContainerV2 = styled.div`
   margin-top: 32px;
   display: flex;
   flex-direction: column;
-
-  // height: 400px;
   width: 1200px;
   margin-bottom: 30px;
 
@@ -650,9 +539,6 @@ const Search = styled.div`
     box-sizing: border-box;
     box-shadow: 0 1px 3px 0 rgba(54, 56, 84, 0.3);
     height: 44px;
-    // margin-bottom: 5px;
-    // display: none;
-
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -670,8 +556,6 @@ const Search = styled.div`
     }
 
     display: ${(props) => (props.active ? "flex" : "none")};
-    // display: none;
-    // opacity: 0;
 
     ${(props) =>
       props.active &&
@@ -783,14 +667,10 @@ const Search = styled.div`
           @keyframes appear {
             0% {
               opacity: 0;
-              // transform: scale(1.3);
             }
 
             100% {
               opacity: 1;
-              // transform: scale(1);
-              // transform: skewY(180deg);
-              // display: flex;
             }
           }
 
@@ -811,13 +691,10 @@ const Search = styled.div`
         @keyframes appear_two {
           0% {
             opacity: 0;
-            // transform: scale(1.3);
           }
 
           100% {
             opacity: 1;
-            // transform: scale(1);
-            // transform: skewY(180deg);
           }
         }
 
@@ -913,9 +790,7 @@ const Search = styled.div`
     > div:nth-of-type(3),
     > div:nth-of-type(5) {
       padding: 6px 12px 7px 12px;
-      // border: 3px solid green;
       span {
-        // border: 3px solid red;
         font-size: 13px;
       }
     }
@@ -935,24 +810,6 @@ const Search = styled.div`
         font-size: 12px;
       }
     }
-
-    // > div:last-child {
-    //   // right: 119px;
-    //   right: 17px;
-    //   >span{
-
-    //   }
-    // }
-    // >div:nth-of-type(2){
-    //   // margin-left:30px;
-    //   width:112px;
-
-    //   >span{
-    //     font-size: 16px;
-    //     line-height: 28px;
-    //     letter-spacing: -0.45px;
-    //   }
-    // }
   }
   @media (min-width: 1300px) {
   }
@@ -1070,7 +927,6 @@ const Filter = styled.div`
     display: block;
     margin-bottom: 6px;
     > div {
-      // display: inline-block;
     }
     > div:nth-of-type(1) {
       margin-right: 32px;
@@ -1078,15 +934,12 @@ const Filter = styled.div`
 
     > span:nth-of-type(1) {
       font-size: 14px;
-      // width: 40px;
-      // display: block;
     }
     > span:nth-of-type(2) {
       font-size: 12px;
       line-height: 40px;
       letter-spacinig: -0.4px;
       color: #282c36;
-      // width: 172px;
       width: auto;
       float: right;
     }
@@ -1114,123 +967,6 @@ const Filter = styled.div`
   @media (min-width: 1300px) {
   }
 `;
-const Budget = styled.div`
-  margin-bottom: 24px;
-  > span {
-    font-size: 20px;
-    line-height: 40px;
-    letter-spacing: -0.5px;
-    color: #282c36;
-    font-weight: 500;
-    width: 70px;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    display: block;
-    margin-bottom: 6px;
-    > div {
-      display: inline-block;
-    }
-    > div:nth-of-type(1) {
-      // margin-right: 32px;
-      display: flex;
-    }
-
-    > span {
-      font-size: 14px;
-      // width: 40px;
-      display: block;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    display: flex;
-    align-items: center;
-
-    > span {
-      font-size: 16px;
-      width: 40px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    display: flex;
-    align-items: center;
-
-    > span {
-      font-size: 18px;
-      width: 50px;
-    }
-  }
-  @media (min-width: 1300px) {
-    display: flex;
-    align-items: center;
-  }
-`;
-
-const SearchBarddd = styled.div`
-  display: flex;
-  width: 690px;
-  height: 44px;
-  box-sizing: border-box;
-  margin 0 24px;
-  
-  input {
-    width: 100%;
-    padding: 0 14px;
-
-    border: 1px solid #c6c7cc;
-    border-radius: 3px;
-    :focus {
-      outline: none;
-    }
-    ::placeholder{
-      color: #c1bfbf;
-    }
-  }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    // margin-top: 30px;
-    flex-direction: column;
-    input {
-      font-size: 12px;
-      width: 100%;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    // margin-top: 30px;
-    input {
-      font-size: 16px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    // margin-top: 40px;
-    input {
-      font-size: 17px;
-      :focus {
-        outline: none;
-      }
-      ::placeholder{
-        color: #c1bfbf;
-      }
-    }
-  }
-  @media (min-width: 1300px) {
-    input {
-      font-size: 18px;
-      :focus {
-        outline: none;
-      }
-      ::placeholder{
-        color: #c1bfbf;
-      }
-    }
-  }
-`;
-const Form = styled.div`
-  margin-top: 90px;
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  height: 50px;
-`;
 
 const SearchButton = styled(ButtonComponent)`
   border-radius: 3px;
@@ -1248,24 +984,10 @@ const SearchButton = styled(ButtonComponent)`
 
 const MobileSelect = styled(MobileSelectComponent)`
   width: 220px;
-  // height: 32px;
   box-sizing: border-box;
 
   option {
     color: #c1bfbf;
-  }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    // margin: 0;
-    // padding: 0;
-    // margin-right: 8px;
-    // width: 100%;
-    // height: 32px;
-    // object-fit: contain;
-    // border-radius: 2px;
-    // border: solid 0.5px #c7c7c7;
-    // background-color: #ffffff;
-    // position: relative;
   }
 
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -1276,13 +998,10 @@ const MobileSelect = styled(MobileSelectComponent)`
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 140px;
   }
-  @media (min-width: 1300px) {
-  }
 `;
 
 const Select = styled(SelectComponent)`
   width: 220px;
-  // height: 32px;
   box-sizing: border-box;
 
   option {
@@ -1302,15 +1021,11 @@ const Select = styled(SelectComponent)`
     position: relative;
   }
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
-  }
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 120px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 140px;
-  }
-  @media (min-width: 1300px) {
   }
 `;
 
@@ -1347,7 +1062,6 @@ const Box = styled.div`
 `;
 
 const InputContainer = styled.div`
-  //width: 25%;
   display: flex;
 
   > span {
@@ -1368,12 +1082,6 @@ const InputContainer = styled.div`
       margin-right: 8px;
     }
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-  }
-  @media (min-width: 1300px) {
-  }
 `;
 
 const InputBox = styled.div`
@@ -1384,8 +1092,7 @@ box-sizing: border-box;
 margin 0 7px;
 
 input {
-  width: 100%;
-  //padding: 0 14px;
+  width: 100%;  
 
   border: 1px solid #c6c7cc;
   border-radius: 3px;
@@ -1441,12 +1148,8 @@ const DirectInputBox = styled.div`
       }
     }
   }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-  }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 145px;
-  }
-  @media (min-width: 1300px) {
   }
 `;
 
@@ -1457,7 +1160,6 @@ const Layer = styled.div`
   right: 0;
   bottom: 0;
   z-index: 100;
-  // opacity: 0.1;
   background-color: rgba(0, 0, 0, 0.5);
 
   > span {
@@ -1515,7 +1217,6 @@ const RequestButton = styled.div`
 
 const FilterContainer = styled.div`
   margin-left: 25px;
-  // border: 3px solid #0933b3;
   width: 100%;
   height: 44px;
   display: flex;

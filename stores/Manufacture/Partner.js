@@ -2,6 +2,7 @@ import { observable, action, toJS, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
+import Router from "next/router";
 import { isConstructorDeclaration } from "typescript";
 import NoneDrawingConsultingContainer from "containers/Manufacture/Request/NoneDrawingConsulting";
 
@@ -9,6 +10,20 @@ class Partner {
   constructor() {
     //makeObservable(this);
   }
+
+  /* /producer 우측 카드 변수 */
+  @observable totalPartnerBookmark = 0;
+  @observable totalClientBookmark = 0;
+  @observable hoverInterestedIdx = false;
+  @observable hoverProjectIdx = false;
+  @observable interestedIdx = false;
+  @observable projectIdx = false;
+
+  @observable recentPartnerList = [];
+  @observable recentPartnerId = 0;
+  @observable selectedTabIdx = 0; // 선택한 tabBar의 index 저장하는 변수
+  @observable viewerLoading = 0;
+  @observable subViewerLoading = -1;
   @observable click_count = 1;
   @observable detail = null;
   @observable requests = [];
@@ -92,6 +107,23 @@ class Partner {
   @observable category_name_list = null;
   @observable temp_category_name_ary = [];
   @observable category_count = 0;
+
+  @observable availableFileType = [
+    "png",
+    "jpeg",
+    "gif",
+    "bmp",
+    "pdf",
+    "csv",
+    "xslx",
+    "docx",
+    "mp4",
+    "webm",
+    "mp3",
+    "pptx",
+    "doc",
+    "html",
+  ];
   @observable category_dic = {
     0: [],
     1: [],
@@ -361,33 +393,79 @@ class Partner {
     }
   };
 
+  // @action pushToDetail = async (item, idx) => {
+  //   console.log(this.modalActive);
+
+  //   if (!this.requestModalActive && !this.modalActive) {
+  //     console.log("Detail click");
+  //     this.category_name_list = null;
+  //     this.partner_detail_list = [];
+  //     this.partner_detail_list.push({ item: item });
+  //     this.category_name_list = this.category_dic[idx];
+
+  //     if (this.dropDownIdx === -1) {
+  //       await this.getCityName(this.partner_detail_list[0].item.city);
+  //       this.portFolioList = [];
+  //       await this.getPortfolio(this.partner_detail_list[0].item.id);
+  //       this.dropDownActive = true;
+  //       this.dropDownIdx = idx;
+  //     } else {
+  //       if (this.dropDownIdx === idx) {
+  //         this.dropDownActive = false;
+  //         this.dropDownIdx = -1;
+  //       } else {
+  //         await this.getCityName(this.partner_detail_list[0].item.city);
+  //         this.portFolioList = [];
+  //         await this.getPortfolio(this.partner_detail_list[0].item.id);
+  //         this.dropDownActive = true;
+  //         this.dropDownIdx = idx;
+  //       }
+  //     }
+  //   }
+  // };
+
   @action pushToDetail = async (item, idx) => {
-    console.log(this.modalActive);
+    this.detailLoadingFlag = true;
 
     if (!this.requestModalActive && !this.modalActive) {
       console.log("Detail click");
       this.category_name_list = null;
-      this.partner_detail_list = [];
-      this.partner_detail_list.push({ item: item });
+
       this.category_name_list = this.category_dic[idx];
 
-      if (this.state.dropDownIdx === -1) {
+      if (!item.file) {
+        this.detailLoadingFlag = false;
+        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        return;
+      }
+      this.selectedIntroductionFile = item.file;
+
+      const fileType = item.file
+        .split(".")
+        [item.file.split(".").length - 1].toLowerCase();
+      this.selectedIntroductionFileType = fileType;
+
+      if (this.availableFileType.indexOf(fileType) > -1) {
+        console.log("뷰어 페이지 router push");
+        this.partner_detail_list = [];
+        await this.partner_detail_list.push({ item: item, idx: idx });
+        this.recentPartnerId = this.partner_detail_list[0].item.id;
+
+        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
+        console.log(toJS(this.partner_detail_list));
+        await this.getReviewByPartner(
+          this.partner_detail_list[0].item.id,
+          1,
+          1
+        );
+        await this.getReviewByPartner(this.partner_detail_list[0].item.id);
+
         await this.getCityName(this.partner_detail_list[0].item.city);
-        this.portFolioList = [];
-        await this.getPortfolio(this.partner_detail_list[0].item.id);
-        this.dropDownActive = true;
-        this.dropDownIdx = idx;
+        Router.push("/producer/detail");
+        // this.setState({ g: 3 });
       } else {
-        if (this.state.dropDownIdx === idx) {
-          this.dropDownActive = false;
-          this.dropDownIdx = -1;
-        } else {
-          await this.getCityName(this.partner_detail_list[0].item.city);
-          this.portFolioList = [];
-          await this.getPortfolio(this.partner_detail_list[0].item.id);
-          this.dropDownActive = true;
-          this.dropDownIdx = idx;
-        }
+        console.log("file download");
+        this.filedownload(item.file);
       }
     }
   };
@@ -557,29 +635,12 @@ class Partner {
 
   @action setMainCategory = async (val) => {
     this.input_big_category = val;
-
-    console.log(val);
     this.request_middle_list = this.input_big_category.category_set;
-    // this.selectedMidCategory = obj.category_set[0];
     this.category_middle_ary = await this.category_middle_total_ary.filter(
       (item) => item.maincategory === val.id
     );
 
-    // console.log(toJS(this.category_middle_ary));
-    // console.log(toJS(this.category_middle_total_ary));
-    // console.log(
-    //   toJS(
-    //     this.category_middle_total_ary.filter(
-    //       (item) => item.maincategory === val.id
-    //     )
-    //   )
-    // );
-
     this.input_small_category = this.category_middle_ary[0];
-
-    // this.input_detail_big_category = val;
-    // this.input_detail_small_category = this.category_middle_ary[0];
-    // console.log(this.input_small_category);
   };
 
   @action setSmallCategory = (val) => {
@@ -1449,15 +1510,6 @@ class Partner {
               console.log(e.response);
             });
         }
-        // console.log(toJS(res.data.results));
-        // console.log(toJS(typeof this.filter_city_ary));
-        // console.log(toJS(this.filter_city_ary));
-        // this.filter_city_ary = this.filter_city_ary.filter(
-        //   (item) => item.id === 0 || item.id < 9
-        // );
-
-        // this.city_ary = this.city_ary.filter((item) => item.id < 9);
-        // console.log(toJS(this.filter_city_ary));
       })
       .catch((e) => {
         console.log(e);
@@ -1679,46 +1731,50 @@ class Partner {
           this.category_count += 1;
         });
 
-        await this.category_ary.map(async (data, id) => {
-          await data.map(async (sub_data, index) => {
-            const req = {
-              id: sub_data,
-            };
-            if (this.isSearched) {
-              this.exceptionCategory += sub_data + ",";
-            }
+        // await this.category_ary.map(async (data, id) => {
+        //   await data.map(async (sub_data, index) => {
+        //     const req = {
+        //       id: sub_data,
+        //     };
+        //     if (this.isSearched) {
+        //       this.exceptionCategory += sub_data + ",";
+        //     }
 
-            if (this.click_count != click) {
-              return;
-            }
+        //     if (this.click_count != click) {
+        //       return;
+        //     }
 
-            await PartnerAPI.getPartnerCategory(req)
-              .then(async (res) => {
-                if (click == 0) {
-                  click += 1;
-                }
+        //     await PartnerAPI.getPartnerCategory(req)
+        //       .then(async (res) => {
+        //         if (click == 0) {
+        //           click += 1;
+        //         }
 
-                if (this.click_count == click) {
-                  if (!this.category_dic.hasOwnProperty(id)) {
-                    this.category_dic[id] = [];
-                  }
-                  this.category_dic[id] = await [
-                    ...this.category_dic[id],
-                    res.data.category,
-                  ];
-                } else {
-                  return;
-                }
-              })
-              .catch((e) => {
-                console.log(e);
-                console.log(e.response);
-              });
-            if (this.click_count != click) {
-              return;
-            }
-          });
-        });
+        //         if (this.click_count == click) {
+        //           if (!this.category_dic.hasOwnProperty(id)) {
+        //             this.category_dic[id] = [];
+        //           }
+        //           this.category_dic[id] = await [
+        //             ...this.category_dic[id],
+        //             res.data.category,
+        //           ];
+        //         } else {
+        //           return;
+        //         }
+
+        //       }
+        //       )
+        //       .catch((e) => {
+        //         console.log(e);
+        //         console.log(e.response);
+        //       });
+        //     if (this.click_count != click) {
+        //       return;
+        //     }
+        //   });
+        // }
+
+        // );
       })
       .catch((e) => {
         console.log(e);
@@ -2048,6 +2104,7 @@ class Partner {
           this.partnerReviewList = await this.partnerReviewList.concat(
             res.data
           );
+          console.log(this.partnerReviewList);
           this.review_partner_count = res.data.count;
           this.review_partner_page =
             parseInt((this.review_partner_count - 1) / 10) + 1;
@@ -2121,6 +2178,222 @@ class Partner {
       ];
     });
     console.log(toJS(this.review_client_obj));
+  };
+
+  // 배열을 무작위로 섞는 함수
+  // 배열을 인자로 받음
+  @action shuffleArray = (array) => {
+    for (let i = 0; i < array.length; i++) {
+      let j = Math.floor(Math.random() * (i + 1));
+      // [array[i], array[j]] = [array[j], array[i]];
+      const x = array[i];
+      array[i] = array[j];
+      array[j] = x;
+    }
+    return array;
+  };
+
+  /*  - 클릭 시 발생하는 이벤트 함수 
+      - type은 이벤트 종류를 명시
+      - item은 이벤트 발생 시 전달 받은 객체(type에 따라 다양)
+      - idx는 몇 번째 item인지 index를 의미 
+  */
+  @action clickHandler = (type, item = 0, idx = 0) => {
+    switch (type) {
+      case "tabbar":
+        if (this.selectedTabIdx === idx + 1) {
+          // this.selectedTabIdx = 0;
+        } else {
+          this.selectedTabIdx = idx + 1;
+        }
+        console.log(this.selectedTabIdx);
+        break;
+      case "interested":
+        this.interestedIdx = !this.interestedIdx;
+        console.log(this.interestedIdx);
+        break;
+      case "project":
+        this.projectIdx = !this.projectIdx;
+        console.log(this.projectIdx);
+        break;
+    }
+  };
+
+  /*  - 클릭한 후 상태에 관한 함수
+      - type은 이벤트 종류를 명시
+      - item은 이벤트 발생 시 전달 받은 객체(type에 따라 다양)
+      - idx는 몇 번째 item인지 index를 의미 
+  */
+  @action activeHandler = (type, item = 0, idx = 0) => {
+    console.log(type);
+    switch (type) {
+      case "interested":
+        console.log(this.interestedIdx);
+        if (this.interestedIdx) {
+          return true;
+        } else {
+          return false;
+        }
+        break;
+
+      case "project":
+        if (this.projectIdx) {
+          return true;
+        } else {
+          return false;
+        }
+        break;
+
+      case "tabbar":
+        console.log(idx === this.selectedTabIdx - 1);
+        if (idx === this.selectedTabIdx - 1) {
+          return true;
+        } else {
+          return false;
+        }
+        break;
+    }
+  };
+
+  @action hoverHandler = (type, action) => {
+    switch (type) {
+      case "project":
+        this.hoverProjectIdx = action;
+        break;
+      case "interested":
+        this.hoverInterestedIdx = action;
+        break;
+    }
+  };
+
+  /*  
+      - 관심 업체를 등록하는 함수
+      - clientID : 클라이언트 Id,  partnerID: 파트너 Id
+  */
+  @action setBookmarkPartner = async (clientID, partnerID) => {
+    console.log(clientID);
+    console.log(partnerID);
+    const formData = new FormData();
+    formData.append("clientID", clientID);
+    formData.append("partnerID", partnerID);
+
+    const req = {
+      data: formData,
+    };
+
+    await PartnerAPI.setBookmarkPartner(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  /*  
+      - 로그인한 클라이언트가 관
+      - clientID : 클라이언트 Id,  partnerID: 파트너 Id
+  */
+  @action getBookmarkByClient = async (clientID) => {
+    console.log(clientID);
+
+    const req = {
+      params: {
+        clientID: clientID,
+      },
+    };
+
+    await PartnerAPI.getBookmarkByClient(req)
+      .then((res) => {
+        console.log(res);
+        this.totalClientBookmark = res.data.count;
+        console.log(this.totalClientBookmark);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action deleteBookmarkPartner = async (clientID, partnerID) => {
+    console.log(clientID);
+    console.log(partnerID);
+    const formData = new FormData();
+    formData.append("clientID", clientID);
+    formData.append("partnerID", partnerID);
+
+    const req = {
+      data: formData,
+    };
+
+    await PartnerAPI.deleteBookmarkPartner(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action existBookmarkPartner = async (clientID, partnerID) => {
+    console.log(typeof clientID);
+    console.log(clientID);
+    console.log(partnerID);
+
+    const req = {
+      params: {
+        clientID: clientID,
+        partnerID: partnerID,
+      },
+    };
+
+    await PartnerAPI.existBookmarkPartner(req)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.data);
+        console.log(typeof res.data.data);
+        if (parseInt(res.data.data)) {
+          this.interestedIdx = true;
+        } else {
+          this.interestedIdx = false;
+        }
+        console.log(this.interestedIdx);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action checkedInterestedIdx = async (clientId, partnerId) => {
+    if (this.interestedIdx) {
+      await this.setBookmarkPartner(clientId, partnerId);
+    } else {
+      await this.deleteBookmarkPartner(clientId, partnerId);
+    }
+    await this.getBookmarkByClient(clientId);
+    await this.getTotalBookmarkByPartner(partnerId);
+  };
+
+  @action getTotalBookmarkByPartner = async (partnerId) => {
+    const req = {
+      params: {
+        partnerID: partnerId,
+      },
+    };
+
+    PartnerAPI.getTotalBookmarkByPartner(req)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.count);
+        this.totalPartnerBookmark = res.data.count;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 
   @action getBusinessCategory = (id) => {
