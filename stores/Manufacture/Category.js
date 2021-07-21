@@ -5,6 +5,8 @@ import * as PartnerAPI from "axios/Manufacture/Partner";
 import { isConstructorDeclaration } from "typescript";
 import NoneDrawingConsultingContainer from "containers/Manufacture/Request/NoneDrawingConsulting";
 
+import Partner from "./Partner";
+
 class Category {
   constructor() {
     //makeObservable(this);

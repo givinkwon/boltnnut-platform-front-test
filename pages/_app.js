@@ -16,6 +16,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 import * as AccountAPI from "axios/Account/Account";
 
+
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
@@ -177,7 +178,7 @@ class MyApp extends App {
           handleClose={this.closeModal}
         />
         <Provider {...stores}>
-          <Component {...pageProps} />
+            <Component {...pageProps} />
         </Provider>
       </ScrollToTop>
     );
