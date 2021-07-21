@@ -135,27 +135,27 @@ class Category {
     @action add_selected = async (state, id) => {
       // 카테고리 선택
       if (state == "business") {
-        this.business_selected.append(id)
+        this.business_selected.push(id)
       }
 
       // 업체 분류 선택
       if (state == "category") {
-        this.category_selected.append(id)
+        this.category_selected.push(id)
       }
 
       // 지역 선택
       if (state == "city") {
-        this.city_selected.append(id)
+        this.city_selected.push(id)
       }
 
       // 공정 선택
       if (state == "develop") {
-        this.develop_selected.append(id)
+        this.develop_selected.push(id)
       }
 
       // 소재 선택
       if (state == "material") {
-        this.material_selected.append(id)
+        this.material_selected.push(id)
       }
       
       this.search_selected()
