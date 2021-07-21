@@ -32,12 +32,13 @@ class FilterModalContainer extends React.Component {
     var subCategoryTypeDic = {};
     mainCategoryTypeDic["business"] = Category.mainbusiness_list;
     mainCategoryTypeDic["category"] = Category.maincategory_list;
+    mainCategoryTypeDic["city"] = Category.city_list;
+    mainCategoryTypeDic["material"] = Category.mainmaterial_list;
+    mainCategoryTypeDic["develop"] = Category.developbig_list;
 
     // console.log(Category.mainbusiness_list);
 
     this.setState({ mainCategoryTypeDic: mainCategoryTypeDic });
-    console.log(toJS(mainCategoryTypeDic["business"]));
-    // console.log(toJS(mainCategoryTypeDic["business"]).mainbusiness);
   }
   state = {
     mainSelectIdx: 0,
@@ -85,6 +86,7 @@ class FilterModalContainer extends React.Component {
   render() {
     const { Category, type } = this.props;
     console.log(this.props.type);
+    console.log(this.state.mainSelectIdx)
     return (
       <ModalBox>
         {/* <InnerBoxComponent
@@ -106,21 +108,24 @@ class FilterModalContainer extends React.Component {
                     active={this.activeHandler("main", idx)}
                   >
                     <MainCategoryFont>
-                      {this.state.mainCategoryTypeDic[type][idx].mainbusiness}
+                      {this.state.mainCategoryTypeDic[type][idx].maincategory}
                     </MainCategoryFont>
                   </MainCategoryButton>
                 );
               })}
+
           </>
         </MainCategoryBox>
 
         <div style={{ width: "73.4%" }}>
           <SubCategoryBox>
             <SubInnerBox>
-              {Category.mainbusiness_list[this.state.mainSelectIdx] &&
+              {/* 카테고리 선택 */}
+              {type == 'business' && Category.mainbusiness_list[this.state.mainSelectIdx] &&
                 Category.mainbusiness_list[
                   this.state.mainSelectIdx
                 ].business_set.map((sub_data, idx) => {
+                  
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -128,10 +133,47 @@ class FilterModalContainer extends React.Component {
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >
-                      <SubCategoryFont>{sub_data.business}</SubCategoryFont>
+                      <SubCategoryFont>{sub_data.category}</SubCategoryFont>
                     </SubCategoryButton>
                   );
                 })}
+
+              {/* 업체 분류 선택 */}
+              {type == 'category' && Category.maincategory_list[this.state.mainSelectIdx] &&
+                Category.maincategory_list[
+                  this.state.mainSelectIdx
+                ].category_set.map((sub_data, idx) => {
+                  
+                  return (
+                    <SubCategoryButton
+                      onClick={() => {
+                        this.buttonClick("sub", sub_data.id);
+                      }}
+                      active={Category.categoryActiveHandler(sub_data.id, type)}
+                    >
+                      <SubCategoryFont>{sub_data.category}</SubCategoryFont>
+                    </SubCategoryButton>
+                  );
+                })}
+
+              {/* 공정 분류 선택 */}
+              {type == 'develop' && Category.developbig_list[this.state.mainSelectIdx] &&
+                Category.developbig_list[
+                  this.state.mainSelectIdx
+                ].develop_set.map((sub_data, idx) => {
+                  
+                  return (
+                    <SubCategoryButton
+                      onClick={() => {
+                        this.buttonClick("sub", sub_data.id);
+                      }}
+                      active={Category.categoryActiveHandler(sub_data.id, type)}
+                    >
+                      <SubCategoryFont>{sub_data.category}</SubCategoryFont>
+                    </SubCategoryButton>
+                  );
+                })}
+
             </SubInnerBox>
           </SubCategoryBox>
           <ButtonBox>
@@ -142,7 +184,7 @@ class FilterModalContainer extends React.Component {
               borderColor={"gray"}
             >
               <MainCategoryFont color={"#505050"} fontWeight={500}>
-                회원가입
+                초기화
               </MainCategoryFont>
             </ButtonComponent>
             <ButtonComponent
@@ -152,7 +194,7 @@ class FilterModalContainer extends React.Component {
               borderColor={"gray"}
             >
               <MainCategoryFont color={"#505050"} fontWeight={500}>
-                회원가입
+                적용
               </MainCategoryFont>
             </ButtonComponent>
           </ButtonBox>
