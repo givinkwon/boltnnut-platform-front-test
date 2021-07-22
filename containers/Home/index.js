@@ -71,16 +71,20 @@ import axios from "axios";
 @inject("Home")
 @observer
 class HomeConatiner extends React.Component {
+
   state = {
     next: true,
     prev: false,
     width: 0,
     tab: 0,
   };
+
   componentDidMount() {
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+  
   }
+
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
   }

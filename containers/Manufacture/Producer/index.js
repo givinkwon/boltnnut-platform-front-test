@@ -14,15 +14,31 @@ import MobileRequest from "./MobileRequest";
 import MobileRequestDone from "./MobileRequestDone";
 import { DiagnosticCategory } from "typescript";
 
-@inject("Auth", "Partner", "Category")
+// cookie 추가
+import Cookies from 'js-cookie';
+
+@inject("Auth", "Partner", "Category","Cookie")
 @observer
 class ProducerConatiner extends React.Component {
   async componentDidMount() {
-    const { Auth, Partner, Category } = this.props;    
+    let partner_view_data = [];
+    const { Auth, Partner, Category, Cookie } = this.props;    
     Partner.init();
     Partner.newIndex = 0;
     Partner.mobileRequestIndex = 0;
     await Auth.checkLogin();
+
+    
+    // Cookie 값 가지고 와서 리스트에 먼저 저장
+    partner_view_data = Cookies.get('partner_view')
+    // list 전처리
+    partner_view_data = partner_view_data.replace('[','').replace(']','').split(',')
+
+    if(partner_view_data !== undefined && partner_view_data !== 'undefined'){
+      partner_view_data.map((data) =>
+        Cookie.add_partner_view(data)
+      )
+    }
   }  
 
   render() {

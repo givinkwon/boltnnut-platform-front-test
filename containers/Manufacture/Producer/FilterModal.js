@@ -7,6 +7,7 @@ import * as Content from "components/Content";
 import ButtonComponent from "components/Button";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
+import Category from "../../../stores/Manufacture/Category";
 
 const MainArr = ["제품", "기계/설비/장비", "부품", "공구류"];
 const SubArr = [
@@ -26,13 +27,26 @@ class FilterModalContainer extends React.Component {
   async componentDidMount() {
     const { Category } = this.props;
     await Category.init();
-    console.log(toJS(Category.mainbusiness_list));
+    console.log("ASNCKLANSCLKNLAKSCNLKANSCLKNASLCK");
+    var mainCategoryTypeDic = {};
+    var subCategoryTypeDic = {};
+    mainCategoryTypeDic["business"] = Category.mainbusiness_list;
+    mainCategoryTypeDic["category"] = Category.maincategory_list;
+    mainCategoryTypeDic["city"] = Category.city_list;
+    mainCategoryTypeDic["material"] = Category.mainmaterial_list;
+    mainCategoryTypeDic["develop"] = Category.developbig_list;
+
+    // console.log(Category.mainbusiness_list);
+
+    this.setState({ mainCategoryTypeDic: mainCategoryTypeDic });
   }
   state = {
     mainSelectIdx: 0,
     subSelectIdx: 0,
+    mainCategoryTypeDic: {},
   };
   activeHandler = (type, idx) => {
+    const { Category } = this.props;
     if (type === "main") {
       if (idx === this.state.mainSelectIdx) {
         return true;
@@ -40,24 +54,52 @@ class FilterModalContainer extends React.Component {
         return false;
       }
     } else {
-      if (idx === this.state.subSelectIdx) {
+      if (Category.category_selected.includes(idx)) {
         return true;
       } else {
         return false;
       }
+
+      // if (idx === this.state.subSelectIdx) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
     }
   };
 
   buttonClick = (type, idx) => {
+    const { Category } = this.props;
+
+    // 지역일 때는 다르게
+    if (this.props.type == "city"){
+      if (Category.categoryActiveHandler(idx, this.props.type)) {
+        console.log("remove selected");
+        Category.remove_selected(this.props.type, idx);
+      } else {
+        console.log("add selected");
+        Category.add_selected(this.props.type, idx);
+      }
+    }
+
+
     if (type === "main") {
       this.setState({ mainSelectIdx: idx });
     } else {
-      this.setState({ subSelectIdx: idx });
+      if (Category.categoryActiveHandler(idx, this.props.type)) {
+        console.log("remove selected");
+        Category.remove_selected(this.props.type, idx);
+      } else {
+        console.log("add selected");
+        Category.add_selected(this.props.type, idx);
+      }
+      // this.setState({ subSelectIdx: idx });
     }
   };
   render() {
     const { Category, type } = this.props;
-    console.log(this.props.type)
+    console.log(this.props.type);
+    console.log(this.state.mainSelectIdx)
     return (
       <ModalBox>
         {/* <InnerBoxComponent
@@ -69,8 +111,8 @@ class FilterModalContainer extends React.Component {
         <MainCategoryBox>
           <>
             {/* map으로 뿌리기 */}
-            {Category.mainbusiness_list &&
-              toJS(Category.mainbusiness_list).map((data, idx) => {
+            {this.props.type != "city" && this.state.mainCategoryTypeDic[type] &&
+              toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
                 return (
                   <MainCategoryButton
                     onClick={() => {
@@ -78,31 +120,89 @@ class FilterModalContainer extends React.Component {
                     }}
                     active={this.activeHandler("main", idx)}
                   >
-                    <MainCategoryFont>{data.mainbusiness}</MainCategoryFont>
+                    <MainCategoryFont>
+                      {this.state.mainCategoryTypeDic[type][idx].maincategory}
+                    </MainCategoryFont>
                   </MainCategoryButton>
                 );
               })}
+            {/* city 일 떄 */}
+            {this.props.type == "city" && this.state.mainCategoryTypeDic[type] &&
+              toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
+                return (
+                  <MainCategoryButton
+                    onClick={() => {
+                      this.buttonClick("main", data.id);
+                    }}
+                    active={Category.categoryActiveHandler(data.id, type)}
+                  >
+                    <MainCategoryFont>
+                      {this.state.mainCategoryTypeDic[type][idx].maincategory}
+                    </MainCategoryFont>
+                  </MainCategoryButton>
+                );
+              })}
+
           </>
         </MainCategoryBox>
 
         <div style={{ width: "73.4%" }}>
           <SubCategoryBox>
             <SubInnerBox>
-              {Category.mainbusiness_list[this.state.mainSelectIdx] &&
+              {/* 카테고리 선택 */}
+              {type == 'business' && Category.mainbusiness_list[this.state.mainSelectIdx] &&
                 Category.mainbusiness_list[
                   this.state.mainSelectIdx
                 ].business_set.map((sub_data, idx) => {
+                  
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("sub", idx);
+                        this.buttonClick("sub", sub_data.id);
                       }}
-                      active={this.activeHandler("sub", idx)}
+                      active={Category.categoryActiveHandler(sub_data.id, type)}
                     >
-                      <SubCategoryFont>{sub_data.business}</SubCategoryFont>
+                      <SubCategoryFont>{sub_data.category}</SubCategoryFont>
                     </SubCategoryButton>
                   );
                 })}
+
+              {/* 업체 분류 선택 */}
+              {type == 'category' && Category.maincategory_list[this.state.mainSelectIdx] &&
+                Category.maincategory_list[
+                  this.state.mainSelectIdx
+                ].category_set.map((sub_data, idx) => {
+                  
+                  return (
+                    <SubCategoryButton
+                      onClick={() => {
+                        this.buttonClick("sub", sub_data.id);
+                      }}
+                      active={Category.categoryActiveHandler(sub_data.id, type)}
+                    >
+                      <SubCategoryFont>{sub_data.category}</SubCategoryFont>
+                    </SubCategoryButton>
+                  );
+                })}
+
+              {/* 공정 분류 선택 */}
+              {type == 'develop' && Category.developbig_list[this.state.mainSelectIdx] &&
+                Category.developbig_list[
+                  this.state.mainSelectIdx
+                ].develop_set.map((sub_data, idx) => {
+                  
+                  return (
+                    <SubCategoryButton
+                      onClick={() => {
+                        this.buttonClick("sub", sub_data.id);
+                      }}
+                      active={Category.categoryActiveHandler(sub_data.id, type)}
+                    >
+                      <SubCategoryFont>{sub_data.category}</SubCategoryFont>
+                    </SubCategoryButton>
+                  );
+                })}
+
             </SubInnerBox>
           </SubCategoryBox>
           <ButtonBox>
@@ -113,7 +213,7 @@ class FilterModalContainer extends React.Component {
               borderColor={"gray"}
             >
               <MainCategoryFont color={"#505050"} fontWeight={500}>
-                회원가입
+                초기화
               </MainCategoryFont>
             </ButtonComponent>
             <ButtonComponent
@@ -123,55 +223,11 @@ class FilterModalContainer extends React.Component {
               borderColor={"gray"}
             >
               <MainCategoryFont color={"#505050"} fontWeight={500}>
-                회원가입
+                적용
               </MainCategoryFont>
             </ButtonComponent>
           </ButtonBox>
         </div>
-        {/* <div style={{ width: "73.4%" }}>
-          <SubCategoryBox>
-            {console.log(Category.mainbusiness_list[0])}
-            <SubInnerBox>
-              {Category.mainbusiness_list &&
-                toJS(Category.mainbusiness_list).map((data, idx) => {
-                  return data.business_set.map((sub_data, idx) => {
-                    return (
-                      <SubCategoryButton
-                        onClick={() => {
-                          this.buttonClick("sub", idx);
-                        }}
-                        active={this.activeHandler("sub", idx)}
-                      >
-                        <SubCategoryFont>{sub_data.business}</SubCategoryFont>
-                      </SubCategoryButton>
-                    );
-                  });
-                })}
-            </SubInnerBox>
-          </SubCategoryBox>
-          <ButtonBox>
-            <ButtonComponent
-              backgroundColor={"blue"}
-              borderRadius={3}
-              borderWidth={1}
-              borderColor={"gray"}
-            >
-              <MainCategoryFont color={"#505050"} fontWeight={500}>
-                회원가입
-              </MainCategoryFont>
-            </ButtonComponent>
-            <ButtonComponent
-              backgroundColor={"white"}
-              borderRadius={3}
-              borderWidth={1}
-              borderColor={"gray"}
-            >
-              <MainCategoryFont color={"#505050"} fontWeight={500}>
-                회원가입
-              </MainCategoryFont>
-            </ButtonComponent>
-          </ButtonBox>
-        </div> */}
       </ModalBox>
     );
   }

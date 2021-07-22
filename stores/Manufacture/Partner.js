@@ -6,6 +6,8 @@ import Router from "next/router";
 import { isConstructorDeclaration } from "typescript";
 import NoneDrawingConsultingContainer from "containers/Manufacture/Request/NoneDrawingConsulting";
 
+import Category from "./Category"
+
 class Partner {
   constructor() {
     //makeObservable(this);
@@ -1656,59 +1658,89 @@ class Partner {
   @action getPartner = async (page = 1, click = 0) => {
     this.partner_list = [];
     this.category_ary = [];
+    // data 저장용
+    this.business_string = [];
+    this.category_string = [];
+    this.city_string = [];
+    this.develop_string = [];
+    this.material_string = [];
 
     const token = localStorage.getItem("token");
     let req = { params: { page: page } };
-    let temp = { params: { page: page } };
 
-    if (this.filter_region) {
-      console.log(this.filter_region);
-      temp.params.city = this.filter_region;
-      req.params.city = this.filter_region;
-    }
-
-    if (this.filter_category) {
-      //temp["category_middle__id"] = this.filter_category;
-      // if(this.filter_category==1){
-      //   req.params.category_middle__id = this.filter_category;
-      // }
-      switch (this.filter_category) {
-        case 1:
-          req.params.category_middle__id = "2";
-          break;
-        case 2:
-          req.params.category_middle__id = "12,14";
-          break;
-        case 3:
-          req.params.category_middle__id = "14";
-          break;
-        case 4:
-          req.params.category_middle__id = "12";
-          break;
-        case 5:
-          req.params.category_middle__id = "12";
-          break;
+    // 카테고리 선택되어 있을 때
+    if (Category.business_selected.length) {
+      toJS(Category.business_selected).map((data) => {
+        this.business_string += data + ","
+        console.log(this.business_string)
       }
-
-      temp.params.category_middle__id = this.filter_category;
-      // req.params.category_middle__id = this.filter_category;
+      )
+      // 마지막 쉼표 제거하기 위함
+      this.business_string = this.business_string.substr(0, this.business_string.length-1)
+      
+      // 괄호를 없애서 전처리
+      req.params.business = this.business_string; 
     }
-    if (this.search_class === "전체") {
-      if (this.search_text === "") {
-        delete req.params.search;
-      } else {
-        req.params.search = this.search_text;
+
+    // 업체 분류 선택되어 있을 때
+    if (Category.category_selected.length) {
+      console.log(toJS(Category.category_selected))
+      toJS(Category.category_selected).map((data) => {
+        this.category_string += data + ","
+        console.log(this.category_string)
       }
+      )
+      // 마지막 쉼표 제거하기 위함
+      this.category_string = this.category_string.substr(0, this.category_string.length-1)
+      console.log(this.category_string)
+      // 괄호를 없애서 전처리
+      req.params.category = this.category_string;
     }
 
-    if (this.search_class === "만든 제품") {
-      if (this.search_text === "") {
-        delete req.params.history;
-      } else {
-        req.params.history = this.search_text;
+    // 지역 분류 선택되어 있을 때
+    if (Category.city_selected.length) {
+      toJS(Category.city_selected).map((data) => {
+        this.city_string += data + ","
+        console.log(this.city_string)  
       }
+      )
+      // 마지막 쉼표 제거하기 위함
+ 
+      this.city_string = this.city_string.substr(0, this.city_string.length-1)
+  
+      // 괄호를 없애서 전처리
+      req.params.city = this.city_string; 
+    }
+    
+    // 공정 분류 선택되어 있을 때
+    if (Category.develop_selected.length) {
+      toJS(Category.develop_selected).map((data) => {
+        this.develop_string += data + ","
+        console.log(this.develop_string)
+      }
+      )
+      // 마지막 쉼표 제거하기 위함
+      this.develop_string = this.develop_string.substr(0, this.develop_string.length-1)
+      
+      // 괄호를 없애서 전처리
+      req.params.develop = this.develop_string; 
     }
 
+    // 소재 분류 선택되어 있을 때
+    if (Category.material_selected.length) {
+      toJS(Category.material_selected).map((data) => {
+        this.material_string += data + ","
+        console.log(this.material_string)
+      }
+      )
+      // 마지막 쉼표 제거하기 위함
+      this.material_string = this.material_string.substr(0, this.material_string.length-1)
+      
+      // 괄호를 없애서 전처리
+      req.params.material = this.material_string; 
+    }
+
+    console.log(req.params)
     await PartnerAPI.getPartners(req)
       .then(async (res) => {
         this.partner_list = [];
@@ -1729,51 +1761,6 @@ class Partner {
           await this.category_ary.push(item.category_middle);
           this.category_count += 1;
         });
-
-        // await this.category_ary.map(async (data, id) => {
-        //   await data.map(async (sub_data, index) => {
-        //     const req = {
-        //       id: sub_data,
-        //     };
-        //     if (this.isSearched) {
-        //       this.exceptionCategory += sub_data + ",";
-        //     }
-
-        //     if (this.click_count != click) {
-        //       return;
-        //     }
-
-        //     await PartnerAPI.getPartnerCategory(req)
-        //       .then(async (res) => {
-        //         if (click == 0) {
-        //           click += 1;
-        //         }
-
-        //         if (this.click_count == click) {
-        //           if (!this.category_dic.hasOwnProperty(id)) {
-        //             this.category_dic[id] = [];
-        //           }
-        //           this.category_dic[id] = await [
-        //             ...this.category_dic[id],
-        //             res.data.category,
-        //           ];
-        //         } else {
-        //           return;
-        //         }
-
-        //       }
-        //       )
-        //       .catch((e) => {
-        //         console.log(e);
-        //         console.log(e.response);
-        //       });
-        //     if (this.click_count != click) {
-        //       return;
-        //     }
-        //   });
-        // }
-
-        // );
       })
       .catch((e) => {
         console.log(e);
@@ -1782,9 +1769,6 @@ class Partner {
     this.check_loading_develop = true;
 
     this.filterLoading = true;
-    // if (this.click_count != click) {
-    //   return;
-    // }
   };
 
   @action getReview = async (page = 1, clientId = "") => {
