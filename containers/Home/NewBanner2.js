@@ -5,13 +5,37 @@ import { inject, observer } from "mobx-react";
 import CategoryCardComponent from "../../components/CategoryCard";
 import Containerv1 from "../../components/Containerv1";
 import Fade from "react-reveal/Fade";
+import Background from "components/Background";
+import ProposalCard from "../Manufacture/Producer/ProposalCard";
+import { toJS } from "mobx"
 
-@inject("Home")
+@inject("Home","Partner","Auth","Producer","Category")
 @observer
 class NewBanner2Container extends React.Component {
+
+
+  async componentDidMount() {
+    const { Partner, Category } = this.props;
+    Partner.detailLoadingFlag = false;
+
+    Partner.currentPage = 1;
+
+    // 리스트 초기화 && 선택하기
+    Category.reset()
+    Category.add_selected("category", 1);
+    
+
+
+  }
+  
+
   onClickCategory = (idx) => {
-    const { Home } = this.props;
+    const { Home, Category, Partner } = this.props;
     Home.categoryIndex = idx;
+    // 리스트 초기화 && 선택하기
+    Category.reset()
+    Category.add_selected("category", idx);
+
   };
 
   onCompareCategory = (idx) => {
@@ -25,19 +49,21 @@ class NewBanner2Container extends React.Component {
   };
 
   render() {
+    // id는 실제 DB의 id로 해야함
     const nameTable = [
-      { id: 1, name: "액세서리, 잡화" },
-      { id: 1, name: "뷰티, 화장품" },
-      { id: 3, name: "생활용품" },
-      { id: 4, name: "가전" },
-      { id: 5, name: "레저, 스포츠" },
-      { id: 6, name: "애견" },
-      { id: 7, name: "유아" },
-      { id: 8, name: "가구" },
-      { id: 9, name: "소방" },
-      { id: 10, name: "건설" },
-      { id: 11, name: "부품, 공구, 작업기계류" },
+      { id: 1, name: "생활/위생" },
+      { id: 2, name: "디지털/가전" },
+      { id: 5, name: "반려" },
+      { id: 6, name: "인테리어" },
+      { id: 7, name: "주방" },
+      { id: 41, name: "전자/반도체 부품" },
+      { id: 46, name: "볼트/너트류" },
+      { id: 39, name: "동력전달부품" },
+      { id: 20, name: "냉난방/공조" },
+      { id: 22, name: "밴딩/포장" },
     ];
+    
+    const { Partner, Auth, Producer, Category } = this.props;
 
     return (
       <div style={{ display: "flex", justifyContent: "center", marginTop: "200px" }}>
@@ -55,7 +81,31 @@ class NewBanner2Container extends React.Component {
               ))}
             </CategoryBox>
 
-            <CategoryCardComponent />
+            {Partner.partner_list &&
+                    Partner.partner_list.map((item, idx) => {
+                      
+                      return (
+                        <>
+                        {idx < 3 &&
+                        <Background style={{ marginBottom: "5px" }}>
+                          <div
+                            onClick={() => Partner.pushToDetail(item, idx)}
+                            style={{ width: "100%" }}
+                          >
+                            <ProposalCard
+                              data={item}
+                              width={this.props.width}
+                              categoryData={toJS(Partner.category_dic[idx])}
+                              idx={idx}
+                              handleIntersection={Producer.handleIntersection}
+                              customer="partner"
+                            />
+                          </div>
+                        </Background>
+                        }
+                        </>
+                      );
+              })}
           </Containerv1>
         </Fade>
       </div>
