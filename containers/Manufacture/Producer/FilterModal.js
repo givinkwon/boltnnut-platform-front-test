@@ -70,6 +70,19 @@ class FilterModalContainer extends React.Component {
 
   buttonClick = (type, idx) => {
     const { Category } = this.props;
+
+    // 지역일 때는 다르게
+    if (this.props.type == "city"){
+      if (Category.categoryActiveHandler(idx, this.props.type)) {
+        console.log("remove selected");
+        Category.remove_selected(this.props.type, idx);
+      } else {
+        console.log("add selected");
+        Category.add_selected(this.props.type, idx);
+      }
+    }
+
+
     if (type === "main") {
       this.setState({ mainSelectIdx: idx });
     } else {
@@ -98,7 +111,7 @@ class FilterModalContainer extends React.Component {
         <MainCategoryBox>
           <>
             {/* map으로 뿌리기 */}
-            {this.state.mainCategoryTypeDic[type] &&
+            {this.props.type != "city" && this.state.mainCategoryTypeDic[type] &&
               toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
                 return (
                   <MainCategoryButton
@@ -106,6 +119,22 @@ class FilterModalContainer extends React.Component {
                       this.buttonClick("main", idx);
                     }}
                     active={this.activeHandler("main", idx)}
+                  >
+                    <MainCategoryFont>
+                      {this.state.mainCategoryTypeDic[type][idx].maincategory}
+                    </MainCategoryFont>
+                  </MainCategoryButton>
+                );
+              })}
+            {/* city 일 떄 */}
+            {this.props.type == "city" && this.state.mainCategoryTypeDic[type] &&
+              toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
+                return (
+                  <MainCategoryButton
+                    onClick={() => {
+                      this.buttonClick("main", data.id);
+                    }}
+                    active={Category.categoryActiveHandler(data.id, type)}
                   >
                     <MainCategoryFont>
                       {this.state.mainCategoryTypeDic[type][idx].maincategory}

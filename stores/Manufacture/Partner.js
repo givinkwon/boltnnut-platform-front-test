@@ -1701,12 +1701,13 @@ class Partner {
     if (Category.city_selected.length) {
       toJS(Category.city_selected).map((data) => {
         this.city_string += data + ","
-        console.log(this.city_string)
+        console.log(this.city_string)  
       }
       )
       // 마지막 쉼표 제거하기 위함
-      this.city_string = this.city_string.substr(0, this.city_string.length.length-1)
-      
+ 
+      this.city_string = this.city_string.substr(0, this.city_string.length-1)
+  
       // 괄호를 없애서 전처리
       req.params.city = this.city_string; 
     }

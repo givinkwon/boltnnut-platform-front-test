@@ -146,6 +146,7 @@ class Category {
     // 지역 선택
     if (state == "city") {
       this.city_selected.push(id);
+      console.log(toJS(this.city_selected))
     }
 
     // 공정 선택
@@ -174,22 +175,26 @@ class Category {
 
     // 업체 분류 선택
     if (state == "category") {
-      this.category_selected.splice(id, 1);
+      deleteIdx = this.category_selected.indexOf(id);
+      this.category_selected.splice(deleteIdx, 1);
     }
 
     // 지역 선택
     if (state == "city") {
-      this.city_selected.splice(id, 1);
+      deleteIdx = this.city_selected.indexOf(id);
+      this.city_selected.splice(deleteIdx, 1);
     }
 
     // 공정 선택
     if (state == "develop") {
-      this.develop_selected.splice(id, 1);
+      deleteIdx = this.develop_selected.indexOf(id);
+      this.develop_selected.splice(deleteIdx, 1);
     }
 
     // 소재 선택
     if (state == "material") {
-      this.material_selected.splice(id, 1);
+      deleteIdx = this.material_selected.indexOf(id);
+      this.material_selected.splice(deleteIdx, 1);
     }
 
     Partner.getPartner();
@@ -200,7 +205,6 @@ class Category {
       if (this.business_selected.includes(idx)) {
         return true;
       } else {
-        console.log("RRR");
         return false;
       }
     }
