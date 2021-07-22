@@ -982,6 +982,9 @@ class DetailCardContainer extends React.Component {
                         this.pagePrev(e);
                       }}
                     />
+                    {console.log(Partner.questionPage)}
+                    {console.log(QuestionCurrentSet)}
+                    {console.log(Partner.questionList.length)}
                     <PageCount
                       onClick={(e) => {
                         Partner.pageType = "question";
@@ -991,7 +994,7 @@ class DetailCardContainer extends React.Component {
                       active={Partner.questionCurrentPage % 5 == 1}
                       style={{
                         display:
-                          Partner.questionPage < 5 * (QuestionCurrentSet - 1) &&
+                          Partner.questionPage < 5 * QuestionCurrentSet &&
                           Partner.questionList.length === 0
                             ? "none"
                             : "block",
