@@ -44,9 +44,15 @@ class FilterModalContainer extends React.Component {
     mainSelectIdx: 0,
     subSelectIdx: 0,
     mainCategoryTypeDic: {},
+    
+    // 공정 대분류
+    develop_active: false,
+    // 소재 대분류
+    material_active: false,
   };
   activeHandler = (type, idx) => {
     const { Category } = this.props;
+
     if (type === "main") {
       if (idx === this.state.mainSelectIdx) {
         return true;
@@ -64,6 +70,27 @@ class FilterModalContainer extends React.Component {
 
   buttonClick = (type, idx) => {
     const { Category } = this.props;
+
+    // 공정 클릭 했을 때
+    if (type == "develop") {
+      if (Category.categoryActiveHandler(idx, type)) {
+        console.log("remove selected");
+        Category.remove_selected(type, idx);
+      } else {
+        console.log("add selected");
+        Category.add_selected(type, idx);
+      }
+    }
+    // 소재 클릭 했을 때
+    if (type == "material") {
+      if (Category.categoryActiveHandler(idx, type)) {
+        console.log("remove selected");
+        Category.remove_selected(type, idx);
+      } else {
+        console.log("add selected");
+        Category.add_selected(type, idx);
+      }
+    }
 
     // 지역일 때는 다르게
     if (this.props.type == "city") {
@@ -89,22 +116,98 @@ class FilterModalContainer extends React.Component {
       // this.setState({ subSelectIdx: idx });
     }
   };
+
+  // 소재, 공정 클릭 했을 때
+  CategoryClick = (state) => {
+    const { Category, type } = this.props;
+    if (state == "develop"){
+      //this.props.type = "develop"
+      this.setState({ ...this.state, develop_active: !this.state.develop_active, material_active: false });
+      
+      console.log(this.state.develop_active)
+    }
+
+    if (state == "material"){
+      //this.props.type = "material"
+      this.setState({ ...this.state, material_active: !this.state.material_active, develop_active: false });
+      
+    }
+  }
+
   render() {
     const { Category, type } = this.props;
     console.log(this.props.type);
     console.log(this.state.mainSelectIdx);
     return (
       <ModalBox>
-        {/* <InnerBoxComponent
-        //   outerStyles={{padding:''}}
-          Content={() => {
-            return <>asd</>;
-          }}
-        ></InnerBoxComponent> */}
+        {/* 공정 | 소재 선택했을 때 띄워주기 */}
+
+        { type == "develop&material" &&
+        <AddCategoryBox>
+            <AddCategoryButton
+              onClick={() => {
+                this.CategoryClick("develop");
+              }}
+              active={this.state.develop_active}
+            >
+              <AddCategoryFont>
+                공정
+              </AddCategoryFont>
+            </AddCategoryButton>
+
+            <AddCategoryButton
+              onClick={() => {
+                this.CategoryClick("material");
+              }}
+              active={this.state.material_active}
+            >
+              <AddCategoryFont>
+                소재
+              </AddCategoryFont>
+            </AddCategoryButton>
+        </AddCategoryBox>        
+        }
+        
         <MainCategoryBox>
           <>
+            {/* 공정 선택일 때 */}
+            {this.state.develop_active &&
+              this.state.mainCategoryTypeDic["develop"] &&
+              toJS(this.state.mainCategoryTypeDic["develop"]).map((data, idx) => {
+                return (
+                  <MainCategoryButton
+                    onClick={() => {
+                      this.buttonClick("main", idx);
+                    }}
+                    active={this.activeHandler("main", idx)}
+                  >
+                    <MainCategoryFont>
+                      {this.state.mainCategoryTypeDic["develop"][idx].maincategory}
+                    </MainCategoryFont>
+                  </MainCategoryButton>
+                );
+              })}
+
+              {/* 소재 선택일 때 */}
+              {this.state.material_active &&
+                this.state.mainCategoryTypeDic["material"] &&
+                toJS(this.state.mainCategoryTypeDic["material"]).map((data, idx) => {
+                  return (
+                    <MainCategoryButton
+                      onClick={() => {
+                        this.buttonClick("main", idx);
+                      }}
+                      active={this.activeHandler("main", idx)}
+                    >
+                      <MainCategoryFont>
+                        {this.state.mainCategoryTypeDic["material"][idx].maincategory}
+                      </MainCategoryFont>
+                    </MainCategoryButton>
+                );
+              })}
+
             {/* map으로 뿌리기 */}
-            {this.props.type != "city" &&
+            {this.props.type != "develop&material" && this.props.type != "city" &&
               this.state.mainCategoryTypeDic[type] &&
               toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
                 return (
@@ -180,7 +283,7 @@ class FilterModalContainer extends React.Component {
                 })}
 
               {/* 공정 분류 선택 */}
-              {type == "develop" &&
+              {this.state.develop_active &&
                 Category.developbig_list[this.state.mainSelectIdx] &&
                 Category.developbig_list[
                   this.state.mainSelectIdx
@@ -188,9 +291,27 @@ class FilterModalContainer extends React.Component {
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("sub", sub_data.id);
+                        this.buttonClick("develop", sub_data.id);
                       }}
-                      active={Category.categoryActiveHandler(sub_data.id, type)}
+                      active={Category.categoryActiveHandler(sub_data.id, "develop")}
+                    >
+                      <SubCategoryFont>{sub_data.category}</SubCategoryFont>
+                    </SubCategoryButton>
+                  );
+                })}
+
+              {/* 소재 분류 선택 */}
+              {this.state.material_active &&
+                Category.mainmaterial_list[this.state.mainSelectIdx] &&
+                Category.mainmaterial_list[
+                  this.state.mainSelectIdx
+                ].material_set.map((sub_data, idx) => {
+                  return (
+                    <SubCategoryButton
+                      onClick={() => {
+                        this.buttonClick("material", sub_data.id);
+                      }}
+                      active={Category.categoryActiveHandler(sub_data.id, "material")}
                     >
                       <SubCategoryFont>{sub_data.category}</SubCategoryFont>
                     </SubCategoryButton>
@@ -236,6 +357,20 @@ const ModalBox = styled.div`
   background-color: #ffffff;
 `;
 
+const AddCategoryBox = styled.div`
+  height: 100%;
+  width: 26.6%;
+  border-right: 1px solid #e1e2e4;
+`;
+
+const AddCategoryButton = styled.div`
+  background: ${(props) => (props.active ? "#ededef" : "none")};
+  > p {
+    color: ${(props) => props.active && "#0933b3"};
+  }
+`;
+
+
 const MainCategoryBox = styled.div`
   height: 100%;
   width: 26.6%;
@@ -268,6 +403,16 @@ const ButtonBox = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+`;
+
+const AddCategoryFont = styled(Content.FontSize15)`
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.27;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: #282c36;
 `;
 
 const MainCategoryFont = styled(Content.FontSize15)`
