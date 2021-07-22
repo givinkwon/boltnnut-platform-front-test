@@ -102,7 +102,9 @@ class QuestionContainer extends React.Component {
             )}
 
             <Content>
-              {!data.secret || clientId === data.client ? (
+              {!data.secret ||
+              clientId === data.client ||
+              loggedInPartnerId === partnerId ? (
                 <content>{data.content}</content>
               ) : (
                 <content>비밀 댓글입니다.</content>
