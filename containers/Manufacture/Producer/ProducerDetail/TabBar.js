@@ -94,7 +94,13 @@ const Item = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1;
-  border-bottom: ${(props) => (props.active ? "2px solid black" : "")};
+  background-color: ${(props) => (props.active ? "#ffffff" : "#f6f6f6")};
+  border: 1px solid #e3e4e6;
+  border-bottom: ${(props) =>
+    props.active ? "1px solid #ffffff" : "1px solid #E3E4E6"};
+  border-top: ${(props) =>
+    props.active ? "3px solid #2E323C" : "1px solid #E3E4E6"};
+
   > span {
     font-size: 19px;
     color: rgb(0, 0, 0);
