@@ -37,6 +37,7 @@ const Card = styled.div`
   height: 390px;
   overflow: hidden;
   align-items: self-start;
+  width: 100%;
 `;
 
 const ImgBox = styled.div`

@@ -1311,10 +1311,6 @@ const Font24 = styled(Title.FontSize24)`
 const IntroductionBox = styled.div`
   width: auto;
   text-align: center;
-  background-color: #f6f6f6;
-  height: 609px;
-  padding-top: 38px;
-  box-sizing: border-box;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     canvas {
