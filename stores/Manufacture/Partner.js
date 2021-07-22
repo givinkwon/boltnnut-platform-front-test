@@ -1712,9 +1712,10 @@ class Partner {
         console.log(this.city_string);
       });
       // 마지막 쉼표 제거하기 위함
+
       this.city_string = this.city_string.substr(
         0,
-        this.city_string.length.length - 1
+        this.city_string.length - 1
       );
 
       // 괄호를 없애서 전처리

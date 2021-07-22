@@ -59,17 +59,23 @@ class FilterModalContainer extends React.Component {
       } else {
         return false;
       }
-
-      // if (idx === this.state.subSelectIdx) {
-      //   return true;
-      // } else {
-      //   return false;
-      // }
     }
   };
 
   buttonClick = (type, idx) => {
     const { Category } = this.props;
+
+    // 지역일 때는 다르게
+    if (this.props.type == "city") {
+      if (Category.categoryActiveHandler(idx, this.props.type)) {
+        console.log("remove selected");
+        Category.remove_selected(this.props.type, idx);
+      } else {
+        console.log("add selected");
+        Category.add_selected(this.props.type, idx);
+      }
+    }
+
     if (type === "main") {
       this.setState({ mainSelectIdx: idx });
     } else {
@@ -86,7 +92,7 @@ class FilterModalContainer extends React.Component {
   render() {
     const { Category, type } = this.props;
     console.log(this.props.type);
-    console.log(this.state.mainSelectIdx)
+    console.log(this.state.mainSelectIdx);
     return (
       <ModalBox>
         {/* <InnerBoxComponent
@@ -98,7 +104,8 @@ class FilterModalContainer extends React.Component {
         <MainCategoryBox>
           <>
             {/* map으로 뿌리기 */}
-            {this.state.mainCategoryTypeDic[type] &&
+            {this.props.type != "city" &&
+              this.state.mainCategoryTypeDic[type] &&
               toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
                 return (
                   <MainCategoryButton
@@ -113,7 +120,23 @@ class FilterModalContainer extends React.Component {
                   </MainCategoryButton>
                 );
               })}
-
+            {/* city 일 떄 */}
+            {this.props.type == "city" &&
+              this.state.mainCategoryTypeDic[type] &&
+              toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
+                return (
+                  <MainCategoryButton
+                    onClick={() => {
+                      this.buttonClick("main", data.id);
+                    }}
+                    active={Category.categoryActiveHandler(data.id, type)}
+                  >
+                    <MainCategoryFont>
+                      {this.state.mainCategoryTypeDic[type][idx].maincategory}
+                    </MainCategoryFont>
+                  </MainCategoryButton>
+                );
+              })}
           </>
         </MainCategoryBox>
 
@@ -121,11 +144,11 @@ class FilterModalContainer extends React.Component {
           <SubCategoryBox>
             <SubInnerBox>
               {/* 카테고리 선택 */}
-              {type == 'business' && Category.mainbusiness_list[this.state.mainSelectIdx] &&
+              {type == "business" &&
+                Category.mainbusiness_list[this.state.mainSelectIdx] &&
                 Category.mainbusiness_list[
                   this.state.mainSelectIdx
                 ].business_set.map((sub_data, idx) => {
-                  
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -139,11 +162,11 @@ class FilterModalContainer extends React.Component {
                 })}
 
               {/* 업체 분류 선택 */}
-              {type == 'category' && Category.maincategory_list[this.state.mainSelectIdx] &&
+              {type == "category" &&
+                Category.maincategory_list[this.state.mainSelectIdx] &&
                 Category.maincategory_list[
                   this.state.mainSelectIdx
                 ].category_set.map((sub_data, idx) => {
-                  
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -157,11 +180,11 @@ class FilterModalContainer extends React.Component {
                 })}
 
               {/* 공정 분류 선택 */}
-              {type == 'develop' && Category.developbig_list[this.state.mainSelectIdx] &&
+              {type == "develop" &&
+                Category.developbig_list[this.state.mainSelectIdx] &&
                 Category.developbig_list[
                   this.state.mainSelectIdx
                 ].develop_set.map((sub_data, idx) => {
-                  
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -173,7 +196,6 @@ class FilterModalContainer extends React.Component {
                     </SubCategoryButton>
                   );
                 })}
-
             </SubInnerBox>
           </SubCategoryBox>
           <ButtonBox>

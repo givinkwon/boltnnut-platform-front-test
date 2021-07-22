@@ -51,20 +51,28 @@ class ManufacturerContentContainer extends React.Component {
     await this.props.Auth.checkLogin();
     console.log(this.props.Auth.logged_in_user);
 
-    const recent_partner_name = [];
-    const recent_partner_img = [];
-    Cookie.partner_view_list.map((item, idx) => {
+    var recent_partner_dic = {};
+
+    await Cookie.partner_view_list.map((item, idx) => {
       console.log(item);
-      Partner.getRecentPartner(item);
-      recent_partner_name.push(Partner.recent_partner_name);
-      recent_partner_img.push(Partner.recent_partner_img);
+
+      PartnerAPI.detail(item)
+        .then((res) => {
+          console.log(res);
+          recent_partner_dic[res.data.name] =
+            res.data.portfolio_set[0].img_portfolio;
+          this.setState({
+            recent_partner_dic: recent_partner_dic,
+          });
+
+          console.log(toJS(this.state.recent_partner_dic));
+          console.log(toJS(this.state.recent_partner_dic.length));
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
     });
-    this.setState({
-      recent_partner_name: recent_partner_name,
-      recent_partner_img: recent_partner_img,
-    });
-    console.log(toJS(this.state.recent_partner_name));
-    console.log(toJS(this.state.recent_partner_img));
   }
 
   componentWillUnmount() {
@@ -101,7 +109,6 @@ class ManufacturerContentContainer extends React.Component {
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
-    console.log(toJS(Cookie.partner_view_list));
     return (
       <>
         <Background id="MyBackground">
@@ -208,13 +215,20 @@ class ManufacturerContentContainer extends React.Component {
                       <div style={{ marginRight: 10 }}>0</div>
                     </header>
                     <body>
-                      {this.state.recent_partner_name &&
-                        this.state.recent_partner_name.map((item, idx) => {
-                          return <div>{item}</div>;
-                        })}
-                      최근에 본 제조사가
-                      <br />
-                      없습니다.
+                      {/* {this.state.recent_partner_dic ? (
+                        this.state.recent_partner_dic.map((item, idx) => {
+                          <RecentPartnerContent>
+                            <div>{item.key}</div>
+                            <img src={item.value}></img>
+                          </RecentPartnerContent>;
+                        })
+                      ) : (
+                        <div>
+                          최근에 본 제조사가
+                          <br />
+                          없습니다.
+                        </div>
+                      )} */}
                     </body>
                   </RecentPartner>
                   <MyInfo>
@@ -579,6 +593,8 @@ const RecentPartner = styled.div`
     color: #999999;
   }
 `;
+
+const RecentPartnerContent = styled.div``;
 
 const MyInfo = styled.div`
   width: 180px;
