@@ -22,6 +22,8 @@ class HeaderContainer extends React.Component {
     const { Partner, Auth } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = Partner.partner_detail_list[0].item.id;
+    const loggedInPartnerId =
+      Auth.logged_in_partner && Auth.logged_in_partner.id;
     console.log(Partner.interestedIdx);
 
     return (
@@ -37,9 +39,11 @@ class HeaderContainer extends React.Component {
             <img
               src={Partner.interestedIdx ? bookmarkBlueImg : bookmarkImg}
               onClick={async () => {
-                Partner.clickHandler("interested");
-                Partner.checkedInterestedIdx(clientId, partnerId);
-                this.setState({ h: 3 });
+                if (!loggedInPartnerId) {
+                  Partner.clickHandler("interested");
+                  Partner.checkedInterestedIdx(clientId, partnerId);
+                  this.setState({ h: 3 });
+                }
               }}
             />
             <span>{Partner.totalPartnerBookmark}</span>

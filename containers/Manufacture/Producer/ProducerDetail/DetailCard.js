@@ -364,6 +364,9 @@ class DetailCardContainer extends React.Component {
     console.log(Auth);
     const partnerId = Partner.partner_detail_list[0].item.id;
 
+    const loggedInPartnerId =
+      Auth.logged_in_partner && Auth.logged_in_partner.id;
+
     console.log(toJS(Partner.questionList));
     console.log(Partner.review_partner_page);
     console.log(Partner.partnerReviewList.length);
@@ -422,7 +425,7 @@ class DetailCardContainer extends React.Component {
 
     return (
       <>
-        <Card id="card" width={width}>
+        <Card id="card" width={width} partner={loggedInPartnerId}>
           <HeaderBox>
             <tag>
               <span>활동 가능</span>
@@ -1115,11 +1118,15 @@ class DetailCardContainer extends React.Component {
           </IntroductionBox>
         </Card>
 
-        <SubCard>
-          <SubBoxContainer partnerId={Partner.partner_detail_list[0].item.id} />
-          {/* <RequestContainer /> */}
-          {/* <RecentPartnerContainer /> */}
-        </SubCard>
+        {!Auth.logged_in_partner && (
+          <SubCard>
+            <SubBoxContainer
+              partnerId={Partner.partner_detail_list[0].item.id}
+            />
+            {/* <RequestContainer /> */}
+            {/* <RecentPartnerContainer /> */}
+          </SubCard>
+        )}
       </>
     );
   }
@@ -1200,7 +1207,7 @@ const TopInlineBox = styled.div`
 
 const Card = styled.div`
   margin-top: 50px;
-  width: 70%;
+  width: ${(props) => (props.partner ? "100%" : "70%")};
   border-radius: 10px;
   // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   display: flex;
