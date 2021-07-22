@@ -146,7 +146,7 @@ class Category {
     // 지역 선택
     if (state == "city") {
       this.city_selected.push(id);
-      console.log(toJS(this.city_selected))
+      console.log(toJS(this.city_selected));
     }
 
     // 공정 선택

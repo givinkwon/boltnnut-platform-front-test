@@ -14,9 +14,11 @@ const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
 const file_img2 = "static/images/manufacturer/file.png";
-const star = "static/icon/star_yellow.svg";
+const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/icon/viewcount.svg";
 const bookmarkcount = "static/icon/bookmarkcount.svg";
+const bookmarkImg = "/static/icon/bookmark_empty.svg";
+const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
 const location = "static/icon/location.svg";
 import Slider from "react-slick";
 import { EqualStencilFunc } from "three";
@@ -49,6 +51,7 @@ class ProposalCard extends React.Component {
     modalOpen: false,
     activeReview: false,
     city: "",
+    business: "",
   };
 
   openModal = (user_phone) => {
@@ -119,13 +122,39 @@ class ProposalCard extends React.Component {
     window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
 
+    console.log(data.business);
     const req = {
       id: data.city,
+    };
+
+    console.log(data);
+    const partnerReq = {
+      id: data.id,
     };
 
     PartnerAPI.getCityName(req)
       .then(async (res) => {
         this.setState({ city: res.data.city });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    const temp = [];
+    PartnerAPI.getBusinessCategory(partnerReq)
+      .then(async (res) => {
+        console.log(res);
+        // this.setState({ business: res.data.business });
+        res.data.business.forEach((element) => {
+          console.log(element);
+          PartnerAPI.getBusinessName(element).then((res) => {
+            console.log(res);
+            temp.push(res.data.business);
+          });
+        });
+        this.setState({ business: temp });
+        console.log(toJS(this.state.business));
       })
       .catch((e) => {
         console.log(e);
@@ -193,9 +222,6 @@ class ProposalCard extends React.Component {
     const { data, Partner } = this.props;
 
     Partner.detailLoadingFlag = true;
-    // setTimeout(() => {
-    //   Partner.detailLoadingFlag = false;
-    // }, 3000);
 
     if (this.props.Auth && this.props.Auth.logged_in_user) {
       if (!this.props.data.file) {
@@ -252,7 +278,7 @@ class ProposalCard extends React.Component {
       infinite: true,
       speed: 500,
       slidesToShow: 1,
-      slidesToScroll: 1,
+      slidesToScroll: 0,
       draggable: true,
       autoplay: true,
       autoplaySpeed: 2000,
@@ -263,7 +289,7 @@ class ProposalCard extends React.Component {
       infinite: true,
       speed: 500,
       slidesToShow: 1,
-      slidesToScroll: 1,
+      slidesToScroll: 0,
       draggable: true,
       autoplay: true,
       autoplaySpeed: 2000,
@@ -296,7 +322,10 @@ class ProposalCard extends React.Component {
                     data.portfolio_set.map((item, idx) => {
                       return (
                         <Item>
-                          <img src={item.img_portfolio} />
+                          <img
+                            src={item.img_portfolio}
+                            style={{ borderRadius: 8 }}
+                          />
                         </Item>
                       );
                     })}
@@ -318,15 +347,34 @@ class ProposalCard extends React.Component {
                     </Certification>
                   </div>
                   <BookMark>
-                    <img src="/static/icon/bookmark.svg"></img>
+                    <img
+                      src={
+                        Partner.interestedIdx ? bookmarkBlueImg : bookmarkImg
+                      }
+                      onClick={async () => {
+                        Partner.clickHandler("interested");
+                        Partner.checkedInterestedIdx(clientId, partnerId);
+                        this.setState({ h: 3 });
+                      }}
+                    ></img>
                   </BookMark>
                 </Title>
                 <Introduce>{data.history}</Introduce>
+                {this.state.business.length !== 0 ? (
+                  <div style={{ display: "flex" }}>
+                    {this.state.business &&
+                      this.state.business.map((item, idx) => {
+                        return <Hashtag>#{item}</Hashtag>;
+                      })}
+                  </div>
+                ) : (
+                  <></>
+                )}
                 <Bottom>
                   <BottomBox>
                     <Review>
                       <img src={star} style={{ marginRight: 5 }}></img>
-                      <Score>4.98/5.0 (리뷰 14)</Score>
+                      <Score>4.98/5.0</Score>
                     </Review>
                     <Location>
                       <img
@@ -343,72 +391,10 @@ class ProposalCard extends React.Component {
                     </ViewCount>
                     <BookmarkCount>
                       <img src={bookmarkcount} style={{ marginRight: 5 }}></img>
-                      <div>0</div>
+                      <div>{Partner.totalPartnerBookmark}</div>
                     </BookmarkCount>
                   </BottomBox>
                 </Bottom>
-                {/* <Phone>
-                  <div style={{ cursor: "pointer" }}>
-                    {Partner.modalActive && (
-                      <Layer>
-                        <span>
-                          <Modal
-                            width={width}
-                            open={this.props.Partner.modalActive}
-                            close={this.closeModal}
-                            header="전화번호"
-                            children={this.props.Partner.modalUserPhone}
-                          ></Modal>
-                        </span>
-                      </Layer>
-                    )}
-                  </div>
-                </Phone> */}
-                {/* <InfoOne>
-                  {data.info_company.length > 150
-                    ? data.info_company.slice(0, 150) + "..."
-                    : data.info_company}
-                </InfoOne> */}
-                {/* <InfoTwo>
-                  {categoryData &&
-                    categoryData.map((item, idx) => {
-                      return <span>{item}</span>;
-                    })}
-                </InfoTwo> */}
-                {/* <AdditionBox>
-                  <div>
-                    <Button
-                      style={{ cursor: "pointer", zIndex: 10 }}
-                      onClick={async (event) => {
-                        event.stopPropagation();
-
-                        if (await this.checkLogin()) {
-                          this.clickLog(data);
-                          this.openModal(data.user.phone);
-                        } else {
-                          alert("로그인이 필요합니다");
-                          // Router.push("/login");
-                          location.href = this.props.Common.makeUrl("login");
-                        }
-                      }}
-                    >
-                      <span>전화번호</span>
-                    </Button>
-                  </div>
-                  <div></div>
-                  <div>
-                    <img src={file_img2} />
-                    <Button>
-                      <Link
-                        target="_blank"
-                        // onClick={(e) => this.cardClick(e)}
-                        download
-                      >
-                        <span>회사 소개서 보기</span>
-                      </Link>
-                    </Button>
-                  </div>
-                </AdditionBox> */}
               </Main>
             </Card>
           </>
@@ -521,9 +507,7 @@ const Card = styled.div`
   object-fit: contain;
   border-top: solid 1px #e1e2e4;
   border-bottom: solid 1px #e1e2e4;
-  background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
-  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-
+  background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
   display: flex;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
@@ -601,7 +585,7 @@ const Name = styled.div`
   font-size: 20px;
   line-height: 40px;
   letter-spacing: -0.5px;
-  color: #282c36;
+  color: #1e2222;
   font-weight: bold;
   @media (min-width: 0px) and (max-width: 767.98px) {
     color: #0933b3;
@@ -639,7 +623,20 @@ const Introduce = styled.div`
   font-size: 16px;
   line-height: 2.5;
   letter-spacing: -0.4px;
-  color: #86888c;
+  color: #1e2222;
+`;
+const Hashtag = styled.div`
+  display: flex;
+  font-size: 15px;
+  color: #555963;
+  justify-content: center;
+  align-items: center;
+  height: 34px;
+  border-radius: 5px;
+  background-color: #f6f6f6;
+  margin-right: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
 `;
 
 const Bottom = styled.div`
@@ -675,7 +672,7 @@ const Location = styled.div`
   div {
     width: 200px;
     font-size: 14px;
-    color: #282c36;
+    color: #767676;
     line-height: 2.86;
     letter-spacing: -0.35px;
   }

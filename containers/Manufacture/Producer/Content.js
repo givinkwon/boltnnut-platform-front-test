@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import Router from "next/router";
 import Slider from "react-slick";
 import { inject, observer } from "mobx-react";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 
 import * as Title from "components/Title";
 import * as Content from "components/Content";
@@ -15,14 +16,18 @@ import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
 import SearchBar from "./SearchBar";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
-const pass1 = "static/images/pass1.png";
+import List from "material-ui/List";
+import Cookies from "js-cookie";
+const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
 const pass4 = "static/images/pass4.png";
+const nosearch = "static/icon/nosearch.svg";
+const rightarrow = "static/icon/right_arrow.svg";
 
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 
-@inject("Project", "Auth", "Partner", "Producer", "Common")
+@inject("Project", "Auth", "Partner", "Producer", "Common", "Cookie")
 @observer
 class ManufacturerContentContainer extends React.Component {
   state = {
@@ -30,7 +35,7 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   async componentDidMount() {
-    const { Partner } = this.props;
+    const { Partner, Cookie } = this.props;
     Partner.detailLoadingFlag = false;
 
     Partner.currentPage = 1;
@@ -45,6 +50,29 @@ class ManufacturerContentContainer extends React.Component {
     }
     await this.props.Auth.checkLogin();
     console.log(this.props.Auth.logged_in_user);
+
+    var recent_partner_dic = {};
+
+    await Cookie.partner_view_list.map((item, idx) => {
+      console.log(item);
+
+      PartnerAPI.detail(item)
+        .then((res) => {
+          console.log(res);
+          recent_partner_dic[res.data.name] =
+            res.data.portfolio_set[0].img_portfolio;
+          this.setState({
+            recent_partner_dic: recent_partner_dic,
+          });
+
+          console.log(toJS(this.state.recent_partner_dic));
+          console.log(toJS(this.state.recent_partner_dic.length));
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+    });
   }
 
   componentWillUnmount() {
@@ -77,11 +105,10 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   render() {
-    const { Project, Partner, Producer, Auth } = this.props;
+    const { Project, Partner, Producer, Auth, Cookie } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
-
     return (
       <>
         <Background id="MyBackground">
@@ -93,6 +120,19 @@ class ManufacturerContentContainer extends React.Component {
                   <Layer />
                 </>
               )}
+              {Partner.subButtonActive ? (
+                <RequestMiddle>
+                  <div>
+                    기존 제품 검색보다 원하는 조건에 딱 맞는 신제품 제조를
+                    원하시나요?
+                  </div>
+                  <RequestBtn onClick={Partner.openModal}>
+                    맞춤형 문의하기
+                  </RequestBtn>
+                </RequestMiddle>
+              ) : (
+                <></>
+              )}
               <Header>
                 <Font20 style={{ marginLeft: "20px" }}>
                   <span style={{ fontWeight: "bold" }}>
@@ -100,36 +140,50 @@ class ManufacturerContentContainer extends React.Component {
                   </span>
                   의 제조사가 있습니다.
                 </Font20>
-                <Amount>
-                  <SpecificAmount>
-                    <img src="/static/icon/checkbox_off.svg"></img>
-                    <div>소량</div>
-                  </SpecificAmount>
-                  <SpecificAmount>
-                    <img src="/static/icon/checkbox_off.svg"></img>
-                    <div>대량</div>
-                  </SpecificAmount>
-                </Amount>
               </Header>
               <Main>
                 <MainBody>
-                  {Partner.partner_list && Partner.partner_list.length === 0 &&
+                  {Partner.partner_list &&
+                    Partner.partner_list.length === 0 &&
                     (Partner.loadingFlag ? (
                       <ButtonSpinnerComponent scale="30%" primary />
                     ) : (
                       <NoResultBox>
-                        <Font20>원하는 업체를 찾기 어려우신가요?</Font20>
-                        <Font14 style={{ color: "black", fontWeight: "300" }}>
-                          볼트앤너트 업체 수배 전문가가 숨어있는 공장까지 대신
-                          찾아드립니다.
-                        </Font14>
-                        <RequestButton
-                          onClick={() => {
-                            Partner.openModal();
-                          }}
-                        >
-                          <span>업체 수배 & 견적 의뢰</span>
-                        </RequestButton>
+                        <img src={nosearch}></img>
+                        <NoSearch>
+                          <span style={{ fontWeight: "bold" }}>
+                            '{Partner.search_text}'
+                          </span>
+                          에 대한 검색 결과가 없습니다.
+                        </NoSearch>
+                        <Explain>
+                          <Question>
+                            다음 제안사항에 맞춰 다시 검색해보는건 어떠신가요?
+                          </Question>
+                          <ExplainList>
+                            <li>철자가 정확한지 확인해보세요. </li>
+                            <li>
+                              더 포괄적인 상위 항목을 검색해보세요.{" "}
+                              <span style={{ marginLeft: 20 }}>
+                                ex. 도마{" "}
+                                <img
+                                  src={rightarrow}
+                                  style={{ marginLeft: 10, marginRight: 10 }}
+                                />{" "}
+                                주방용품
+                              </span>
+                            </li>
+                            <li style={{ marginBottom: 60 }}>
+                              카테고리를 이용하여 검색해보세요.
+                            </li>
+                          </ExplainList>
+                          <Question>
+                            유사한 연관 검색어를 찾아보시겠어요?
+                          </Question>
+                          <ExplainList>
+                            <li>향초, 디퓨저</li>
+                          </ExplainList>
+                        </Explain>
                       </NoResultBox>
                     ))}
 
@@ -160,7 +214,22 @@ class ManufacturerContentContainer extends React.Component {
                       <div style={{ marginLeft: 10 }}>최근 본 제조사</div>
                       <div style={{ marginRight: 10 }}>0</div>
                     </header>
-                    <body>최근에 본 제조사가 없습니다.</body>
+                    <body>
+                      {/* {this.state.recent_partner_dic ? (
+                        this.state.recent_partner_dic.map((item, idx) => {
+                          <RecentPartnerContent>
+                            <div>{item.key}</div>
+                            <img src={item.value}></img>
+                          </RecentPartnerContent>;
+                        })
+                      ) : (
+                        <div>
+                          최근에 본 제조사가
+                          <br />
+                          없습니다.
+                        </div>
+                      )} */}
+                    </body>
                   </RecentPartner>
                   <MyInfo>
                     <header>
@@ -179,7 +248,7 @@ class ManufacturerContentContainer extends React.Component {
                       </RequestandRegister>
                       <RequestandRegister>
                         <Text>관심 업체 등록</Text>
-                        <Conter>0</Conter>
+                        <Conter>{Partner.totalClientBookmark}</Conter>
                       </RequestandRegister>
                     </body>
                   </MyInfo>
@@ -379,6 +448,36 @@ const NoResultBox = styled.div`
   justify-content: center;
 `;
 
+const NoSearch = styled.div`
+  line-height: 1.54;
+  letter-spacing: -0.65px;
+  text-align: left;
+  color: #0933b3;
+  font-size: 26px;
+  margin-top: 12px;
+  margin-bottom: 60px;
+`;
+
+const Explain = styled.div`
+  font-family: NotoSansCJKkr;
+`;
+
+const ExplainList = styled.div`
+  margin-top: 26px;
+  margin-bottom: 18px;
+  font-size: 20px;
+  line-height: 2;
+  letter-spacing: -0.5px;
+  color: #1e2222;
+`;
+
+const Question = styled.div`
+  line-height: 1.67;
+  letter-spacing: -0.6px;
+  color: #1e2222;
+  font-size: 24px;
+`;
+
 const SubButton = styled.div`
   display: flex;
   justify-content: center;
@@ -456,10 +555,13 @@ const MainBody = styled.div`
     width: 1200px;
   }
 `;
-const Aside = styled.div``;
+const Aside = styled.div`
+  width: 200px;
+`;
 
 const RecentPartner = styled.div`
   height: 784px;
+  width: 180px;
   border-radius: 10px;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.08);
   border: solid 1px #f6f6f6;
@@ -471,7 +573,6 @@ const RecentPartner = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 180px;
     height: 52px;
     background-color: #e1e2e4;
     border-top-left-radius: 10px;
@@ -492,6 +593,8 @@ const RecentPartner = styled.div`
     color: #999999;
   }
 `;
+
+const RecentPartnerContent = styled.div``;
 
 const MyInfo = styled.div`
   width: 180px;
@@ -558,26 +661,6 @@ const Font20 = styled(Title.FontSize20)`
   color: #282c36;
 `;
 
-const Amount = styled.div`
-  width: 135px;
-  display: flex;
-  justify-content: space-between;
-  margin-right: 230px;
-`;
-
-const SpecificAmount = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  div {
-    margin-left: 10px;
-    font-size: 14px;
-    color: #282c36;
-    line-height: 2.43;
-    letter-spacing: -0.35px;
-  }
-`;
-
 const Font14 = styled(Content.FontSize14)`
   font-weight: bold !important;
   font-stretch: normal !important;
@@ -594,6 +677,7 @@ const LoadingComponent = styled(ButtonSpinnerComponent)`
   transform: translate(-50%, -50%);
   z-index: 1;
 `;
+
 const Layer = styled.div`
   position: fixed;
   top: 0;
@@ -602,6 +686,38 @@ const Layer = styled.div`
   bottom: 0;
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.3);
+`;
+
+const RequestMiddle = styled.div`
+  width: 120%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: #f6f6f6;
+  div{
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.4px;
+    color: #555963;
+    margin-right: 40px;
+}
+  }
+`;
+
+const RequestBtn = styled.button`
+  width: 145px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 29px;
+  border: solid 1.5px #0933b3;
+  background: none;
+  font-size: 15px;
+  letter-spacing: -0.38px;
+  color: #0933b3;
+}
 `;
 
 export default ManufacturerContentContainer;
