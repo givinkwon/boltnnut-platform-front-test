@@ -5,11 +5,13 @@ import * as Title from "../../components/Title";
 import * as Text from "../../components/Text";
 import { inject, observer } from "mobx-react";
 import Fade from "react-reveal/Fade";
+import Background from "../../components/Background";
 
 // Images
 const stepimg1 = "/static/images/stepimg1.png";
 const stepimg2 = "/static/images/stepimg2.png";
 const stepimg3 = "/static/images/stepimg3.png";
+const backgroundlogo = "/static/images/backgroundlogo.svg";
 
 @inject("Home")
 @observer
@@ -50,41 +52,53 @@ class NewBanner4Container extends React.Component {
     ];
 
     return (
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "140px", marginBottom: "140px" }}>
-        <Fade left>
-          <Containerv1 style={{ justifyContent: "center", flexDirection: "column" }}>
-            <InnerContainer>
-              <Title32>"저희 사무실 근처에 이런 제품 만드는 공장이 없나요?</Title32>
-              <Title32>볼트앤너트 플랫폼에서 내 제품 분야에 꼭 맞는 업체를 찾아보세요."</Title32>
-            </InnerContainer>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <CustomContainer>
+          <Fade left>
+            <Containerv1 style={{ justifyContent: "center", flexDirection: "column" }}>
+              <InnerContainer>
+                <Title32>"저희 사무실 근처에 이런 제품 만드는 공장이 없나요?"</Title32>
+                <Title32>볼트앤너트 플랫폼에서 내 제품 분야에 꼭 맞는 업체를 찾아보세요.</Title32>
+              </InnerContainer>
 
-            <StepContainer>
-              <img src={this.onChangeStepImage()} />
+              <StepContainer>
+                <img src={this.onChangeStepImage()} />
 
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                {stepBoxArray.map((v, idx) => (
-                  <StepBox onClick={() => this.onClickStepBox(idx)} active={this.onCompareStepBox(idx)}>
-                    <TextDiv>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                  {stepBoxArray.map((v, idx) => (
+                    <StepBox onClick={() => this.onClickStepBox(idx)} active={this.onCompareStepBox(idx)}>
                       <Text13 active={this.onCompareStepBox(idx)}>{v.step}</Text13>
-                    </TextDiv>
 
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <Text22>{v.title}</Text22>
+                      <div style={{ display: "flex", flexDirection: "column", marginTop: "25px" }}>
+                        <Text22>{v.title}</Text22>
+                        <Text17>{v.desc}</Text17>
+                      </div>
+                    </StepBox>
+                  ))}
+                </div>
+              </StepContainer>
+            </Containerv1>
+          </Fade>
+        </CustomContainer>
 
-                      <Text17>{v.desc}</Text17>
-                    </div>
-                  </StepBox>
-                ))}
-              </div>
-            </StepContainer>
-          </Containerv1>
-        </Fade>
+        <BackgroundLogo src={backgroundlogo} />
       </div>
     );
   }
 }
 
 export default NewBanner4Container;
+
+const CustomContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 140px;
+  margin-bottom: 30px;
+`;
+
+const BackgroundLogo = styled.img`
+  height: 121px;
+`;
 
 const InnerContainer = styled.div`
   display: flex;
@@ -109,28 +123,23 @@ const StepContainer = styled.div`
 
 const StepBox = styled.div`
   display: inline-flex;
-  align-items: center;
   justify-content: space-around;
   width: 384px;
   height: 156px;
   margin-top: 17px;
   border-radius: 10px;
-  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
   cursor: pointer;
+  box-shadow: ${(props) => (props.active ? "4px 5px 20px 0 rgba(0, 0, 0, 0.16)" : "none")};
   background-color: ${(props) => (props.active ? "#ffffff" : "#eeeeee")};
-`;
 
-const TextDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 54px;
-  height: 30px;
-  border-radius: 4px;
-  background-color: #f6f6f6;
+  :hover {
+    box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
+  }
 `;
 
 const Text13 = styled(Text.FontSize13)`
+  margin-top: 35px;
+  height: 19px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -150,6 +159,7 @@ const Text22 = styled(Text.FontSize22)`
 
 const Text17 = styled(Text.FontSize17)`
   width: 261px;
+  margin-top: 15px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;

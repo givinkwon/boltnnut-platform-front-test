@@ -15,8 +15,8 @@ class NewBanner6Container extends React.Component {
       <CustomBackground>
         <Container>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Title26>"신제품을 개발하고 싶으신가요?</Title26>
-            <Title26>1분만에 프로젝트를 등록하고 맞춤형 업체 정보를 받아보세요."</Title26>
+            <Title26>신제품을 개발하고 싶으신가요?</Title26>
+            <Title26>1분만에 프로젝트를 등록하고 맞춤형 업체 정보를 받아보세요.</Title26>
           </div>
 
           <RequestButton>
