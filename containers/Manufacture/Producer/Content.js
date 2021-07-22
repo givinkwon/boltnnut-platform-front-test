@@ -224,20 +224,20 @@ class ManufacturerContentContainer extends React.Component {
                       <div style={{ marginRight: 10 }}>0</div>
                     </header>
                     <body>
-                      {/* {this.state.recent_partner_dic ? (
-                        this.state.recent_partner_dic.map((item, idx) => {
+                      {this.state.recent_partner_dic ? (
+                        Object.keys(this.state.recent_partner_dic).map((name) => 
                           <RecentPartnerContent>
-                            <div>{item.key}</div>
-                            <img src={item.value}></img>
-                          </RecentPartnerContent>;
-                        })
+                            <div>{name}</div>
+                            <img src={this.state.recent_partner_dic[name]}></img>
+                          </RecentPartnerContent>
+                        )
                       ) : (
                         <div>
                           최근에 본 제조사가
                           <br />
                           없습니다.
                         </div>
-                      )} */}
+                      )}
                     </body>
                   </RecentPartner>
                   <MyInfo>
