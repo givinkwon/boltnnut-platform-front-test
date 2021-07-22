@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #0933b3;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+
+      .cls-1 {
+        stroke-linecap: square;
+      }
+
+      .cls-2 {
+        stroke-linecap: round;
+      }
+    </style>
+  </defs>
+  <g id="그룹_3603" data-name="그룹 3603" transform="translate(-896 -553)">
+    <g id="그룹_3259" data-name="그룹 3259" transform="translate(-410 245)">
+      <ellipse id="타원_27" data-name="타원 27" class="cls-1" cx="9.778" cy="9.778" rx="9.778" ry="9.778" transform="translate(1309 312)"/>
+      <line id="선_34" data-name="선 34" class="cls-2" x2="7.111" y2="7.111" transform="translate(1325.891 328.889)"/>
+    </g>
+    <rect id="사각형_5133" data-name="사각형 5133" class="cls-3" width="31" height="31" transform="translate(896 553)"/>
+  </g>
+</svg>
