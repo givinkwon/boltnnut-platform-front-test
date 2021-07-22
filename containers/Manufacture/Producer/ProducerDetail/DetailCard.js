@@ -17,13 +17,14 @@ import ReviewSummaryContainer from "../Review/ReviewBox";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
-import Background from "components/Background";
-import ProposalCard from "../ProposalCard";
+import ProposalCard from "./ProposalCard";
 import TabBar from "./TabBar";
 import InfoCard from "./InfoCard";
 import WritingContainer from "./Writing";
 import Slider from "react-slick";
 import BlackBox from "./BlackBox";
+import Background from "components/Background";
+import Containerv1 from "components/Containerv1";
 
 // const customRenderer = DocViewerRenderers;
 /* 이미지 관련 변수 */
@@ -36,6 +37,7 @@ const pass1 = "/static/images/pass1.png";
 const pass2 = "/static/images/pass2.png";
 const sort = "/static/icon/sort.svg";
 const rightAngleImg = "/static/images/producer/rightAngle.svg";
+const upImg = "/static/images/producer/up.svg";
 
 const availableFileType1 = [
   "png",
@@ -429,126 +431,139 @@ class DetailCardContainer extends React.Component {
     console.log(toJS(Partner.questionList));
 
     return (
-      <>
-        <Card id="card" width={width} partner={loggedInPartnerId}>
-          <HeaderBox>
-            <tag>
-              <span>활동 가능</span>
-            </tag>
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <Background>
+          <Containerv1>
+            <div style={{ display: "flex", width: "100%" }}>
+              <Card id="card" width={width} partner={loggedInPartnerId}>
+                <HeaderBox>
+                  <tag>
+                    <span>활동 가능</span>
+                  </tag>
 
-            <HeaderItem />
-            <InfoBox>
-              <InfoCard
-                src={medalImg}
-                name="전문분야"
-                content="기구설계, 금형제작"
-              />
-              {Partner.partner_detail_list && (
-                <InfoCard
-                  src={drawerImg}
-                  name="진행한 제품군"
-                  content={Partner.partner_detail_list[0].item.history}
-                  marginLeft="21"
-                />
-              )}
+                  <HeaderItem />
+                  <InfoBox>
+                    <InfoCard
+                      src={medalImg}
+                      name="전문분야"
+                      content="기구설계, 금형제작"
+                    />
+                    {Partner.partner_detail_list && (
+                      <InfoCard
+                        src={drawerImg}
+                        name="진행한 제품군"
+                        content={Partner.partner_detail_list[0].item.history}
+                        marginLeft="21"
+                      />
+                    )}
 
-              <InfoCard
-                src={markImg}
-                name="지역"
-                content={Partner.city_name}
-                marginLeft="21"
-              />
-            </InfoBox>
-            {Partner.partner_detail_list && (
-              <content>
-                <span>{Partner.partner_detail_list[0].item.info_company}</span>
-              </content>
-            )}
-          </HeaderBox>
-          <div
-            onCentextMenu={(e) => {
-              // e.preventDefault();
-            }}
-            style={{
-              position: "fixed",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%,-50%)",
-              zIndex: 1,
-            }}
-          >
-            <div style={{ opacity: 0.2 }}>
-              <img src={waterMarkImg} />
-            </div>
-          </div>
-          <InnerBox>
-            {console.log(this.state.portfoliLocation)}
-            <TabBar
-              portfoliLocation={this.state.portfoliLocation}
-              introductionLocation={this.state.introductionLocation}
-              reviewLocation={this.state.reviewLocation}
-              mapLocation={this.state.mapLocation}
-            />
-            <IntroductionBox width={width}>
-              <Font24 id="portfolio">포토폴리오</Font24>
-              <SliderContainer {...SlideSettings}>
-                {Partner.partner_detail_list &&
-                  Partner.partner_detail_list[0].item.portfolio_set.length >
-                    0 &&
-                  Partner.partner_detail_list[0].item.portfolio_set.map(
-                    (item, idx) => {
-                      return (
-                        <Item>
-                          <img src={item.img_portfolio} />
-                        </Item>
-                      );
-                    }
+                    <InfoCard
+                      src={markImg}
+                      name="지역"
+                      content={Partner.city_name}
+                      marginLeft="21"
+                    />
+                  </InfoBox>
+                  {Partner.partner_detail_list && (
+                    <content>
+                      <span>
+                        {Partner.partner_detail_list[0].item.info_company}
+                      </span>
+                    </content>
                   )}
-              </SliderContainer>
-            </IntroductionBox>
+                </HeaderBox>
+                <div
+                  onCentextMenu={(e) => {
+                    // e.preventDefault();
+                  }}
+                  style={{
+                    position: "fixed",
+                    left: "50%",
+                    top: "50%",
+                    transform: "translate(-50%,-50%)",
+                    zIndex: 1,
+                  }}
+                >
+                  <div style={{ opacity: 0.2 }}>
+                    <img src={waterMarkImg} />
+                  </div>
+                </div>
+                <InnerBox>
+                  {console.log(this.state.portfoliLocation)}
+                  <TabBar
+                    portfoliLocation={this.state.portfoliLocation}
+                    introductionLocation={this.state.introductionLocation}
+                    reviewLocation={this.state.reviewLocation}
+                    mapLocation={this.state.mapLocation}
+                  />
+                  <IntroductionBox width={width}>
+                    <Font24 id="portfolio">포토폴리오</Font24>
+                    <SliderContainer {...SlideSettings}>
+                      {Partner.partner_detail_list &&
+                        Partner.partner_detail_list[0].item.portfolio_set
+                          .length > 0 &&
+                        Partner.partner_detail_list[0].item.portfolio_set.map(
+                          (item, idx) => {
+                            return (
+                              <Item>
+                                <img src={item.img_portfolio} />
+                              </Item>
+                            );
+                          }
+                        )}
+                    </SliderContainer>
+                  </IntroductionBox>
 
-            <IntroductionBox width={width}>
-              <Font24 id="introduction">회사소개서</Font24>
+                  <IntroductionBox width={width}>
+                    <Font24 id="introduction">회사소개서</Font24>
 
-              {/* {(!Auth.logged_in_client || !Auth.logged_in_partner) && (
+                    {/* {(!Auth.logged_in_client || !Auth.logged_in_partner) && (
                 // <BlackBox />
               )} */}
-              {availableFileType1.indexOf(
-                this.props.Partner.selectedIntroductionFileType
-              ) > -1 &&
-                (notLoginUser ? (
-                  <div style={{ filter: "blur(9px)" }}>
-                    <FileViewerContainer
-                      fileType={this.props.Partner.selectedIntroductionFileType}
-                      filePath={this.props.Partner.selectedIntroductionFile}
-                      onError={onError}
-                    />
-                  </div>
-                ) : (
-                  <div>
-                    <FileViewerContainer
-                      fileType={this.props.Partner.selectedIntroductionFileType}
-                      filePath={this.props.Partner.selectedIntroductionFile}
-                      onError={onError}
-                    />
-                  </div>
-                ))}
+                    {availableFileType1.indexOf(
+                      this.props.Partner.selectedIntroductionFileType
+                    ) > -1 &&
+                      (notLoginUser ? (
+                        <div style={{ filter: "blur(9px)" }}>
+                          <FileViewerContainer
+                            fileType={
+                              this.props.Partner.selectedIntroductionFileType
+                            }
+                            filePath={
+                              this.props.Partner.selectedIntroductionFile
+                            }
+                            onError={onError}
+                          />
+                        </div>
+                      ) : (
+                        <div>
+                          <FileViewerContainer
+                            fileType={
+                              this.props.Partner.selectedIntroductionFileType
+                            }
+                            filePath={
+                              this.props.Partner.selectedIntroductionFile
+                            }
+                            onError={onError}
+                          />
+                        </div>
+                      ))}
 
-              {availableFileType3.indexOf(
-                this.props.Partner.selectedIntroductionFileType
-              ) > -1 &&
-                (notLoginUser ? (
-                  <div style={{ filter: "blur(9px)" }}>
-                    <DocViewer width={width} />
-                  </div>
-                ) : (
-                  <div style={{ border: "3px solid red" }}>
-                    <DocViewer width={width} />
-                  </div>
-                ))}
-            </IntroductionBox>
-          </InnerBox>
-          {/* <DetailInfoBox>
+                    {availableFileType3.indexOf(
+                      this.props.Partner.selectedIntroductionFileType
+                    ) > -1 &&
+                      (notLoginUser ? (
+                        <div style={{ filter: "blur(9px)" }}>
+                          <DocViewer width={width} />
+                        </div>
+                      ) : (
+                        <div style={{ border: "3px solid red" }}>
+                          <DocViewer width={width} />
+                        </div>
+                      ))}
+                  </IntroductionBox>
+                </InnerBox>
+                {/* <DetailInfoBox>
             <div>
               <label>
                 <span>지역</span>
@@ -573,320 +588,347 @@ class DetailCardContainer extends React.Component {
             </div>
           </DetailInfoBox> */}
 
-          <ReviewBox id="review">
-            <div>
-              <label>실제 고객후기</label>
-            </div>
-
-            {/* <ReviewSummaryContainer width={this.props.width} /> */}
-            <SummaryBox login={notLoginUser}>
-              {/* <label>클라이언트 평균 만족도</label> */}
-              <header>
-                <mainscore>
+                <ReviewBox id="review">
                   <div>
-                    <TotalRating>
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "31" : width > 992 ? "26" : "22"
-                          }
-                          margin={4}
-                          score={Math.floor(this.state.avg_consult_score)}
-                        />
-                      </div>
-                      <img src={star}></img>
-                    </TotalRating>
-                  </div>
-                  <div>
-                    <span>{this.state.avg_consult_score.toFixed(2)}</span>
-                    <span>전체 누적 평점</span>
-                  </div>
-                </mainscore>
-
-                <subscore>
-                  <div>
-                    <span
-                      style={{
-                        color: "#999999",
-                      }}
-                    >
-                      친절도
-                    </span>
-                    {width > 768 ? (
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "15" : width > 992 ? "13" : "11"
-                          }
-                          margin={1}
-                          score={this.state.avg_kindness_score}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        <CustomSlider
-                          value={this.state.avg_kindness_score * 20}
-                        />
-                        <div>{this.state.avg_kindness_score.toFixed(1)}</div>
-                      </>
-                    )}
+                    <label>실제 고객후기</label>
                   </div>
 
-                  <div>
-                    <span
-                      style={{
-                        color: "#999999",
-                      }}
-                    >
-                      연락 빈도
-                    </span>
-                    {width > 768 ? (
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "15" : width > 992 ? "13" : "11"
-                          }
-                          margin={1}
-                          score={this.state.avg_communication_score}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        <CustomSlider
-                          value={this.state.avg_communication_score * 20}
-                        />
+                  {/* <ReviewSummaryContainer width={this.props.width} /> */}
+                  <SummaryBox login={notLoginUser}>
+                    {/* <label>클라이언트 평균 만족도</label> */}
+                    <header>
+                      <mainscore>
                         <div>
-                          {this.state.avg_communication_score.toFixed(1)}
+                          <TotalRating>
+                            <div>
+                              <ReviewStarRating
+                                width={
+                                  width > 1300
+                                    ? "31"
+                                    : width > 992
+                                    ? "26"
+                                    : "22"
+                                }
+                                margin={4}
+                                score={Math.floor(this.state.avg_consult_score)}
+                              />
+                            </div>
+                            <img src={star}></img>
+                          </TotalRating>
                         </div>
-                      </>
-                    )}
-                  </div>
+                        <div>
+                          <span>{this.state.avg_consult_score.toFixed(2)}</span>
+                          <span>전체 누적 평점</span>
+                        </div>
+                      </mainscore>
 
-                  <div>
-                    <span
+                      <subscore>
+                        <div>
+                          <span
+                            style={{
+                              color: "#999999",
+                            }}
+                          >
+                            친절도
+                          </span>
+                          {width > 768 ? (
+                            <div>
+                              <ReviewStarRating
+                                width={
+                                  width > 1300
+                                    ? "15"
+                                    : width > 992
+                                    ? "13"
+                                    : "11"
+                                }
+                                margin={1}
+                                score={this.state.avg_kindness_score}
+                              />
+                            </div>
+                          ) : (
+                            <>
+                              <CustomSlider
+                                value={this.state.avg_kindness_score * 20}
+                              />
+                              <div>
+                                {this.state.avg_kindness_score.toFixed(1)}
+                              </div>
+                            </>
+                          )}
+                        </div>
+
+                        <div>
+                          <span
+                            style={{
+                              color: "#999999",
+                            }}
+                          >
+                            연락 빈도
+                          </span>
+                          {width > 768 ? (
+                            <div>
+                              <ReviewStarRating
+                                width={
+                                  width > 1300
+                                    ? "15"
+                                    : width > 992
+                                    ? "13"
+                                    : "11"
+                                }
+                                margin={1}
+                                score={this.state.avg_communication_score}
+                              />
+                            </div>
+                          ) : (
+                            <>
+                              <CustomSlider
+                                value={this.state.avg_communication_score * 20}
+                              />
+                              <div>
+                                {this.state.avg_communication_score.toFixed(1)}
+                              </div>
+                            </>
+                          )}
+                        </div>
+
+                        <div>
+                          <span
+                            style={{
+                              color: "#999999",
+                            }}
+                          >
+                            전문성
+                          </span>
+                          {width > 768 ? (
+                            <div>
+                              <ReviewStarRating
+                                width={
+                                  width > 1300
+                                    ? "15"
+                                    : width > 992
+                                    ? "13"
+                                    : "11"
+                                }
+                                margin={1}
+                                score={this.state.avg_profession_score}
+                              />
+                            </div>
+                          ) : (
+                            <>
+                              <CustomSlider
+                                value={this.state.avg_profession_score * 20}
+                              />
+                              <div>
+                                {this.state.avg_profession_score.toFixed(1)}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </subscore>
+                    </header>
+                  </SummaryBox>
+
+                  <content>
+                    <ReviewTop>
+                      {Partner.partnerReviewList[0] && (
+                        <TotalCount>
+                          전체 ({Partner.partnerReviewList[0].count})
+                        </TotalCount>
+                      )}
+
+                      <DateSorting>
+                        <div style={{ marginRight: "5px" }}>최신순</div>
+                        <img src={sort}></img>
+                      </DateSorting>
+                    </ReviewTop>
+
+                    {Partner.partnerReviewList[0] &&
+                      console.log(toJS(Partner.partnerReviewList[0].current))}
+                    {Partner.partnerReviewList[0] &&
+                      Partner.partnerReviewList[0].current.map((item, idx) => {
+                        return (
+                          <ReviewCard
+                            data={item}
+                            idx={idx}
+                            totalCount={
+                              Partner.partnerReviewList[0].current.length
+                            }
+                          />
+                        );
+                      })}
+                  </content>
+                  {!Partner.reviewWritingModalActive ? (
+                    <Layer>
+                      <span>
+                        <Modal
+                          width={width}
+                          open={!Partner.reviewWritingModalActive}
+                          close={this.closeModal}
+                          purpose="FirstReview"
+                          headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? "
+                          headerTwo="첫 평가를 작성해주세요"
+                          bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
+                          bodyTwo="업체 평가 작성이 가능합니다."
+                        />
+                      </span>
+                    </Layer>
+                  ) : (
+                    Partner.review_partner_page === 0 &&
+                    Partner.partnerReviewList.length === 0 && (
+                      <Layer>
+                        <span>
+                          <Modal
+                            width={width}
+                            open={!Partner.partnerReviewList.length}
+                            close={this.closeModal}
+                            purpose="NoReview"
+                            headerOne="현재 작성 된 리뷰가 없습니다"
+                            headerTwo="첫 평가를 작성해주세요"
+                            bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
+                            bodyTwo="업체 평가 작성이 가능합니다."
+                          />
+                        </span>
+                      </Layer>
+                    )
+                  )}
+
+                  <PageBar acitve={!Partner.reviewWritingModalActive}>
+                    <img
+                      src={pass1}
                       style={{
-                        color: "#999999",
+                        opacity:
+                          current_set == 1 && Partner.reviewCurrentPage <= 1
+                            ? 0.4
+                            : 1,
+                        cursor: "pointer",
+                        display:
+                          !Partner.partnerReviewList[0] &&
+                          Partner.review_partner_page === 1 &&
+                          "none",
+                      }}
+                      onClick={() => {
+                        console.log("lll");
+                        this.pagePrev();
+                      }}
+                    />
+                    <PageCount
+                      onClick={this.movePage}
+                      value={5 * (current_set - 1)}
+                      active={Partner.reviewCurrentPage % 5 == 1}
+                      style={{
+                        display:
+                          Partner.review_partner_page < 5 * (current_set - 1)
+                            ? "none"
+                            : "block",
                       }}
                     >
-                      전문성
-                    </span>
-                    {width > 768 ? (
-                      <div>
-                        <ReviewStarRating
-                          width={
-                            width > 1300 ? "15" : width > 992 ? "13" : "11"
-                          }
-                          margin={1}
-                          score={this.state.avg_profession_score}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        <CustomSlider
-                          value={this.state.avg_profession_score * 20}
-                        />
-                        <div>{this.state.avg_profession_score.toFixed(1)}</div>
-                      </>
-                    )}
-                  </div>
-                </subscore>
-              </header>
-            </SummaryBox>
-
-            <content>
-              <ReviewTop>
-                {Partner.partnerReviewList[0] && (
-                  <TotalCount>
-                    전체 ({Partner.partnerReviewList[0].count})
-                  </TotalCount>
-                )}
-
-                <DateSorting>
-                  <div style={{ marginRight: "5px" }}>최신순</div>
-                  <img src={sort}></img>
-                </DateSorting>
-              </ReviewTop>
-
-              {Partner.partnerReviewList[0] &&
-                console.log(toJS(Partner.partnerReviewList[0].current))}
-              {Partner.partnerReviewList[0] &&
-                Partner.partnerReviewList[0].current.map((item, idx) => {
-                  return (
-                    <ReviewCard
-                      data={item}
-                      idx={idx}
-                      totalCount={Partner.partnerReviewList[0].current.length}
+                      {" "}
+                      {5 * (current_set - 1) + 1}{" "}
+                    </PageCount>
+                    <PageCount
+                      value={5 * (current_set - 1) + 1}
+                      active={Partner.reviewCurrentPage % 5 == 2}
+                      style={{
+                        display:
+                          Partner.review_partner_page <
+                          5 * (current_set - 1) + 2
+                            ? "none"
+                            : "block",
+                      }}
+                      onClick={this.movePage}
+                    >
+                      {" "}
+                      {5 * (current_set - 1) + 2}{" "}
+                    </PageCount>
+                    <PageCount
+                      value={5 * (current_set - 1) + 2}
+                      active={Partner.reviewCurrentPage % 5 == 3}
+                      style={{
+                        display:
+                          Partner.review_partner_page <
+                          5 * (current_set - 1) + 3
+                            ? "none"
+                            : "block",
+                      }}
+                      onClick={this.movePage}
+                    >
+                      {" "}
+                      {5 * (current_set - 1) + 3}{" "}
+                    </PageCount>
+                    <PageCount
+                      value={5 * (current_set - 1) + 3}
+                      active={Partner.reviewCurrentPage % 5 == 4}
+                      style={{
+                        display:
+                          Partner.review_partner_page <
+                          5 * (current_set - 1) + 4
+                            ? "none"
+                            : "block",
+                      }}
+                      onClick={this.movePage}
+                    >
+                      {" "}
+                      {5 * (current_set - 1) + 4}{" "}
+                    </PageCount>
+                    <PageCount
+                      value={5 * (current_set - 1) + 4}
+                      active={Partner.reviewCurrentPage % 5 == 0}
+                      style={{
+                        display:
+                          Partner.review_partner_page <
+                          5 * (current_set - 1) + 5
+                            ? "none"
+                            : "block",
+                      }}
+                      onClick={this.movePage}
+                    >
+                      {" "}
+                      {5 * (current_set - 1) + 5}{" "}
+                    </PageCount>
+                    <img
+                      src={pass2}
+                      style={{
+                        opacity:
+                          Partner.review_partner_page ==
+                          Partner.reviewCurrentPage
+                            ? 0.4
+                            : 1,
+                        cursor: "pointer",
+                        display:
+                          !Partner.partnerReviewList[0] &&
+                          Partner.review_partner_page === 1 &&
+                          "none",
+                      }}
+                      onClick={this.pageNext}
                     />
-                  );
-                })}
-            </content>
-            {!Partner.reviewWritingModalActive ? (
-              <Layer>
-                <span>
-                  <Modal
-                    width={width}
-                    open={!Partner.reviewWritingModalActive}
-                    close={this.closeModal}
-                    purpose="FirstReview"
-                    headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? "
-                    headerTwo="첫 평가를 작성해주세요"
-                    bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
-                    bodyTwo="업체 평가 작성이 가능합니다."
-                  />
-                </span>
-              </Layer>
-            ) : (
-              Partner.review_partner_page === 0 &&
-              Partner.partnerReviewList.length === 0 && (
-                <Layer>
-                  <span>
-                    <Modal
-                      width={width}
-                      open={!Partner.partnerReviewList.length}
-                      close={this.closeModal}
-                      purpose="NoReview"
-                      headerOne="현재 작성 된 리뷰가 없습니다"
-                      headerTwo="첫 평가를 작성해주세요"
-                      bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
-                      bodyTwo="업체 평가 작성이 가능합니다."
-                    />
-                  </span>
-                </Layer>
-              )
-            )}
+                  </PageBar>
+                </ReviewBox>
 
-            <PageBar acitve={!Partner.reviewWritingModalActive}>
-              <img
-                src={pass1}
-                style={{
-                  opacity:
-                    current_set == 1 && Partner.reviewCurrentPage <= 1
-                      ? 0.4
-                      : 1,
-                  cursor: "pointer",
-                  display:
-                    !Partner.partnerReviewList[0] &&
-                    Partner.review_partner_page === 1 &&
-                    "none",
-                }}
-                onClick={() => {
-                  console.log("lll");
-                  this.pagePrev();
-                }}
-              />
-              <PageCount
-                onClick={this.movePage}
-                value={5 * (current_set - 1)}
-                active={Partner.reviewCurrentPage % 5 == 1}
-                style={{
-                  display:
-                    Partner.review_partner_page < 5 * (current_set - 1)
-                      ? "none"
-                      : "block",
-                }}
-              >
-                {" "}
-                {5 * (current_set - 1) + 1}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (current_set - 1) + 1}
-                active={Partner.reviewCurrentPage % 5 == 2}
-                style={{
-                  display:
-                    Partner.review_partner_page < 5 * (current_set - 1) + 2
-                      ? "none"
-                      : "block",
-                }}
-                onClick={this.movePage}
-              >
-                {" "}
-                {5 * (current_set - 1) + 2}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (current_set - 1) + 2}
-                active={Partner.reviewCurrentPage % 5 == 3}
-                style={{
-                  display:
-                    Partner.review_partner_page < 5 * (current_set - 1) + 3
-                      ? "none"
-                      : "block",
-                }}
-                onClick={this.movePage}
-              >
-                {" "}
-                {5 * (current_set - 1) + 3}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (current_set - 1) + 3}
-                active={Partner.reviewCurrentPage % 5 == 4}
-                style={{
-                  display:
-                    Partner.review_partner_page < 5 * (current_set - 1) + 4
-                      ? "none"
-                      : "block",
-                }}
-                onClick={this.movePage}
-              >
-                {" "}
-                {5 * (current_set - 1) + 4}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (current_set - 1) + 4}
-                active={Partner.reviewCurrentPage % 5 == 0}
-                style={{
-                  display:
-                    Partner.review_partner_page < 5 * (current_set - 1) + 5
-                      ? "none"
-                      : "block",
-                }}
-                onClick={this.movePage}
-              >
-                {" "}
-                {5 * (current_set - 1) + 5}{" "}
-              </PageCount>
-              <img
-                src={pass2}
-                style={{
-                  opacity:
-                    Partner.review_partner_page == Partner.reviewCurrentPage
-                      ? 0.4
-                      : 1,
-                  cursor: "pointer",
-                  display:
-                    !Partner.partnerReviewList[0] &&
-                    Partner.review_partner_page === 1 &&
-                    "none",
-                }}
-                onClick={this.pageNext}
-              />
-            </PageBar>
-          </ReviewBox>
+                <MapBox>
+                  <Font24 id="maps">위치</Font24>
+                  <MapContainer city={Partner.city_name} />
+                </MapBox>
 
-          <MapBox>
-            <Font24 id="maps">위치</Font24>
-            <MapContainer city={Partner.city_name} />
-          </MapBox>
-
-          {console.log(toJS(Partner.questionList))}
-          <QuestionBox>
-            <Font24>업체 Q&A</Font24>
-            {console.log(toJS(Partner.mergeQuestionList))}
-            {Partner.mergeQuestionList &&
-              Partner.mergeQuestionList.map((item, idx) => {
-                return (
-                  <QuestionContainer
-                    mergeData={Partner.mergeQuestionList}
-                    data={item}
-                    width={this.props.width}
-                    idx={idx}
-                    clientId={clientId}
-                    partnerId={partnerId}
-                    parentType="comment"
-                    setQA={this.setQA}
-                  />
-                );
-              })}
-            {/* {Partner.questionList &&
+                {console.log(toJS(Partner.questionList))}
+                <QuestionBox>
+                  <Font24>업체 Q&A</Font24>
+                  {console.log(toJS(Partner.mergeQuestionList))}
+                  {Partner.mergeQuestionList &&
+                    Partner.mergeQuestionList.map((item, idx) => {
+                      return (
+                        <QuestionContainer
+                          mergeData={Partner.mergeQuestionList}
+                          data={item}
+                          width={this.props.width}
+                          idx={idx}
+                          clientId={clientId}
+                          partnerId={partnerId}
+                          parentType="comment"
+                          setQA={this.setQA}
+                        />
+                      );
+                    })}
+                  {/* {Partner.questionList &&
               Partner.questionList.map((item, idx) => {
                 return (
                   <>
@@ -922,201 +964,260 @@ class DetailCardContainer extends React.Component {
                   item.reply && console.log(item.reply);
                 } */}
 
-            <PageBar>
-              <img
-                src={pass1}
-                style={{
-                  opacity:
-                    QuestionCurrentSet == 1 && Partner.questionCurrentPage <= 1
-                      ? 0.4
-                      : 1,
-                  cursor: "pointer",
-                  display: !Partner.questionList[0] && "none",
-                }}
-                onClick={(e) => {
-                  console.log("prev");
-                  Partner.pageType = "question";
-                  this.pagePrev(e);
-                }}
-              />
-              <PageCount
-                onClick={(e) => {
-                  Partner.pageType = "question";
-                  this.movePage(e);
-                }}
-                value={5 * (QuestionCurrentSet - 1)}
-                active={Partner.questionCurrentPage % 5 == 1}
-                style={{
-                  display:
-                    Partner.questionPage < 5 * (QuestionCurrentSet - 1) &&
-                    Partner.questionList.length === 0
-                      ? "none"
-                      : "block",
-                }}
-              >
-                {" "}
-                {5 * (QuestionCurrentSet - 1) + 1}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (QuestionCurrentSet - 1) + 1}
-                active={Partner.questionCurrentPage % 5 == 2}
-                style={{
-                  display:
-                    Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 2
-                      ? "none"
-                      : "block",
-                }}
-                onClick={(e) => {
-                  Partner.pageType = "question";
-                  this.movePage(e);
-                }}
-              >
-                {" "}
-                {5 * (QuestionCurrentSet - 1) + 2}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (QuestionCurrentSet - 1) + 2}
-                active={Partner.questionCurrentPage % 5 == 3}
-                style={{
-                  display:
-                    Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 3
-                      ? "none"
-                      : "block",
-                }}
-                onClick={(e) => {
-                  Partner.pageType = "question";
-                  this.movePage(e);
-                }}
-              >
-                {" "}
-                {5 * (QuestionCurrentSet - 1) + 3}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (QuestionCurrentSet - 1) + 3}
-                active={Partner.questionCurrentPage % 5 == 4}
-                style={{
-                  display:
-                    Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 4
-                      ? "none"
-                      : "block",
-                }}
-                onClick={(e) => {
-                  Partner.pageType = "question";
-                  this.movePage(e);
-                }}
-              >
-                {" "}
-                {5 * (QuestionCurrentSet - 1) + 4}{" "}
-              </PageCount>
-              <PageCount
-                value={5 * (QuestionCurrentSet - 1) + 4}
-                active={Partner.questionCurrentPage % 5 == 0}
-                style={{
-                  display:
-                    Partner.questionPage < 5 * (QuestionCurrentSet - 1) + 5
-                      ? "none"
-                      : "block",
-                }}
-                onClick={(e) => {
-                  Partner.pageType = "question";
-                  this.movePage(e);
-                }}
-              >
-                {" "}
-                {5 * (QuestionCurrentSet - 1) + 5}{" "}
-              </PageCount>
-              <img
-                src={pass2}
-                style={{
-                  opacity:
-                    Partner.questionPage == Partner.questionCurrentPage
-                      ? 0.4
-                      : 1,
-                  cursor: "pointer",
-                  display:
-                    !Partner.questionList[0] &&
-                    Partner.questionPage === 1 &&
-                    "none",
-                }}
-                onClick={(e) => {
-                  console.log("next");
-                  Partner.pageType = "question";
-                  this.pageNext(e);
-                }}
-              />
-            </PageBar>
-            {Auth.logged_in_client && Auth.logged_in_client.id && (
-              <WritingContainer
-                type="comment"
-                clientId={clientId}
-                partnerId={partnerId}
-                setQA={this.setQA}
-              />
-            )}
-          </QuestionBox>
+                  <PageBar>
+                    <img
+                      src={pass1}
+                      style={{
+                        opacity:
+                          QuestionCurrentSet == 1 &&
+                          Partner.questionCurrentPage <= 1
+                            ? 0.4
+                            : 1,
+                        cursor: "pointer",
+                        display: !Partner.questionList[0] && "none",
+                      }}
+                      onClick={(e) => {
+                        console.log("prev");
+                        Partner.pageType = "question";
+                        this.pagePrev(e);
+                      }}
+                    />
+                    <PageCount
+                      onClick={(e) => {
+                        Partner.pageType = "question";
+                        this.movePage(e);
+                      }}
+                      value={5 * (QuestionCurrentSet - 1)}
+                      active={Partner.questionCurrentPage % 5 == 1}
+                      style={{
+                        display:
+                          Partner.questionPage < 5 * (QuestionCurrentSet - 1) &&
+                          Partner.questionList.length === 0
+                            ? "none"
+                            : "block",
+                      }}
+                    >
+                      {" "}
+                      {5 * (QuestionCurrentSet - 1) + 1}{" "}
+                    </PageCount>
+                    <PageCount
+                      value={5 * (QuestionCurrentSet - 1) + 1}
+                      active={Partner.questionCurrentPage % 5 == 2}
+                      style={{
+                        display:
+                          Partner.questionPage <
+                          5 * (QuestionCurrentSet - 1) + 2
+                            ? "none"
+                            : "block",
+                      }}
+                      onClick={(e) => {
+                        Partner.pageType = "question";
+                        this.movePage(e);
+                      }}
+                    >
+                      {" "}
+                      {5 * (QuestionCurrentSet - 1) + 2}{" "}
+                    </PageCount>
+                    <PageCount
+                      value={5 * (QuestionCurrentSet - 1) + 2}
+                      active={Partner.questionCurrentPage % 5 == 3}
+                      style={{
+                        display:
+                          Partner.questionPage <
+                          5 * (QuestionCurrentSet - 1) + 3
+                            ? "none"
+                            : "block",
+                      }}
+                      onClick={(e) => {
+                        Partner.pageType = "question";
+                        this.movePage(e);
+                      }}
+                    >
+                      {" "}
+                      {5 * (QuestionCurrentSet - 1) + 3}{" "}
+                    </PageCount>
+                    <PageCount
+                      value={5 * (QuestionCurrentSet - 1) + 3}
+                      active={Partner.questionCurrentPage % 5 == 4}
+                      style={{
+                        display:
+                          Partner.questionPage <
+                          5 * (QuestionCurrentSet - 1) + 4
+                            ? "none"
+                            : "block",
+                      }}
+                      onClick={(e) => {
+                        Partner.pageType = "question";
+                        this.movePage(e);
+                      }}
+                    >
+                      {" "}
+                      {5 * (QuestionCurrentSet - 1) + 4}{" "}
+                    </PageCount>
+                    <PageCount
+                      value={5 * (QuestionCurrentSet - 1) + 4}
+                      active={Partner.questionCurrentPage % 5 == 0}
+                      style={{
+                        display:
+                          Partner.questionPage <
+                          5 * (QuestionCurrentSet - 1) + 5
+                            ? "none"
+                            : "block",
+                      }}
+                      onClick={(e) => {
+                        Partner.pageType = "question";
+                        this.movePage(e);
+                      }}
+                    >
+                      {" "}
+                      {5 * (QuestionCurrentSet - 1) + 5}{" "}
+                    </PageCount>
+                    <img
+                      src={pass2}
+                      style={{
+                        opacity:
+                          Partner.questionPage == Partner.questionCurrentPage
+                            ? 0.4
+                            : 1,
+                        cursor: "pointer",
+                        display:
+                          !Partner.questionList[0] &&
+                          Partner.questionPage === 1 &&
+                          "none",
+                      }}
+                      onClick={(e) => {
+                        console.log("next");
+                        Partner.pageType = "question";
+                        this.pageNext(e);
+                      }}
+                    />
+                  </PageBar>
+                  {Auth.logged_in_client && Auth.logged_in_client.id && (
+                    <WritingContainer
+                      type="comment"
+                      clientId={clientId}
+                      partnerId={partnerId}
+                      setQA={this.setQA}
+                    />
+                  )}
+                </QuestionBox>
+              </Card>
 
-          <IntroductionBox width={width}>
-            <Font24>비슷한 제조사</Font24>
+              {!Auth.logged_in_partner && (
+                <SubCard>
+                  <SubBoxContainer
+                    partnerId={Partner.partner_detail_list[0].item.id}
+                  />
+                  {/* <RequestContainer /> */}
+                  {/* <RecentPartnerContainer /> */}
+                </SubCard>
+              )}
+            </div>
+          </Containerv1>
+        </Background>
 
-            {Partner.partner_list &&
-              (length < 4
-                ? remainderAry.map((item, idx) => {
-                    return (
-                      <Background style={{ marginBottom: "5px" }}>
-                        <div
-                          onClick={(e) => {
-                            // e.stopPropagation();
-                            this.props.Partner.viewerLoading = 0;
-                            // this.props.Partner.subViewerLoading = 1;
-                            this.props.Partner.recentPartnerId =
-                              this.props.Partner.partner_detail_list[0].item.id;
-                            console.log(this.props.Partner.subViewerLoading);
-                            this.pushToDetail(Partner.partner_list[item], item);
-                            console.log("click");
-                          }}
-                          style={{ width: "100%" }}
-                        >
-                          <ProposalCard
-                            data={Partner.partner_list[item]}
-                            width={this.props.width}
-                            categoryData={toJS(Partner.category_dic[item])}
-                            idx={item}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
-                      </Background>
-                    );
-                  })
-                : remainderAry.splice(0, 3).map((item, idx) => {
-                    return (
-                      <Background style={{ marginBottom: "5px" }}>
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            this.props.Partner.viewerLoading = 0;
-                            // this.props.Partner.subViewerLoading = 1;
-                            this.props.Partner.recentPartnerId =
-                              this.props.Partner.partner_detail_list[0].item.id;
-                            console.log(this.props.Partner.subViewerLoading);
-                            this.pushToDetail(Partner.partner_list[item], item);
-                          }}
-                          style={{ width: "100%" }}
-                        >
-                          <ProposalCard
-                            data={Partner.partner_list[item]}
-                            width={this.props.width}
-                            categoryData={toJS(Partner.category_dic[item])}
-                            idx={item}
-                            handleIntersection={this.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
-                      </Background>
-                    );
-                  }))}
+        <IntroductionBox
+          width={width}
+          style={{
+            backgroundColor: "#f6f6f6",
+            height: "609px",
+            paddingTop: "38px",
+            boxSizing: "border-box",
+            position: "relative",
+          }}
+        >
+          <img
+            src={upImg}
+            style={{
+              position: "absolute",
+              bottom: "8%",
+              right: "0",
+              zIndex: "1",
+            }}
+            onClick={() => {
+              window.scrollTo(0, 0);
+            }}
+          />
+          <Background backgroundColor="#f6f6f6">
+            <Containerv1>
+              <SimilarBox>
+                <Font24>비슷한 업체 더보기</Font24>
 
-            {/* {Partner.partner_list &&
+                <Background
+                  backgroundColor="#f6f6f6"
+                  style={{ marginBottom: "5px" }}
+                >
+                  <div style={{ display: "flex", width: "100%" }}>
+                    {Partner.partner_list &&
+                      (length < 4
+                        ? remainderAry.map((item, idx) => {
+                            return (
+                              <div
+                                onClick={(e) => {
+                                  // e.stopPropagation();
+                                  this.props.Partner.viewerLoading = 0;
+                                  // this.props.Partner.subViewerLoading = 1;
+                                  this.props.Partner.recentPartnerId =
+                                    this.props.Partner.partner_detail_list[0].item.id;
+                                  console.log(
+                                    this.props.Partner.subViewerLoading
+                                  );
+                                  this.pushToDetail(
+                                    Partner.partner_list[item],
+                                    item
+                                  );
+                                  console.log("click");
+                                }}
+                                style={{ width: "100%", marginRight: "24px" }}
+                              >
+                                <ProposalCard
+                                  data={Partner.partner_list[item]}
+                                  width={this.props.width}
+                                  categoryData={toJS(
+                                    Partner.category_dic[item]
+                                  )}
+                                  idx={item}
+                                  handleIntersection={this.handleIntersection}
+                                  customer="partner"
+                                />
+                              </div>
+                            );
+                          })
+                        : remainderAry.splice(0, 3).map((item, idx) => {
+                            return (
+                              <div
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  this.props.Partner.viewerLoading = 0;
+                                  // this.props.Partner.subViewerLoading = 1;
+                                  this.props.Partner.recentPartnerId =
+                                    this.props.Partner.partner_detail_list[0].item.id;
+                                  console.log(
+                                    this.props.Partner.subViewerLoading
+                                  );
+                                  this.pushToDetail(
+                                    Partner.partner_list[item],
+                                    item
+                                  );
+                                }}
+                                style={{ width: "100%", marginRight: "24px" }}
+                              >
+                                <ProposalCard
+                                  data={Partner.partner_list[item]}
+                                  width={this.props.width}
+                                  categoryData={toJS(
+                                    Partner.category_dic[item]
+                                  )}
+                                  idx={item}
+                                  handleIntersection={this.handleIntersection}
+                                  customer="partner"
+                                />
+                              </div>
+                            );
+                          }))}
+                  </div>
+                </Background>
+                {/* {Partner.partner_list &&
                   Partner.partner_list.slice(1,4).map((item, idx) => {
                     return (
                       <Background style={{ marginBottom: "5px" }}>
@@ -1140,19 +1241,11 @@ class DetailCardContainer extends React.Component {
                       </Background>
                     );
                   })} */}
-          </IntroductionBox>
-        </Card>
-
-        {!Auth.logged_in_partner && (
-          <SubCard>
-            <SubBoxContainer
-              partnerId={Partner.partner_detail_list[0].item.id}
-            />
-            {/* <RequestContainer /> */}
-            {/* <RecentPartnerContainer /> */}
-          </SubCard>
-        )}
-      </>
+              </SimilarBox>
+            </Containerv1>
+          </Background>
+        </IntroductionBox>
+      </div>
     );
   }
 }
@@ -1201,6 +1294,7 @@ const Font24 = styled(Title.FontSize24)`
   letter-spacing: -0.6px;
   text-align: left;
   color: #282c36;
+  margin-bottom: 32px;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 16px !important;
@@ -1217,6 +1311,10 @@ const Font24 = styled(Title.FontSize24)`
 const IntroductionBox = styled.div`
   width: auto;
   text-align: center;
+  background-color: #f6f6f6;
+  height: 609px;
+  padding-top: 38px;
+  box-sizing: border-box;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     canvas {
@@ -1939,4 +2037,10 @@ const ParentRecommentBox = styled.div`
   > img {
     margin-right: 20px;
   }
+`;
+
+const Main = styled.div``;
+
+const SimilarBox = styled.div`
+  width: 100%;
 `;

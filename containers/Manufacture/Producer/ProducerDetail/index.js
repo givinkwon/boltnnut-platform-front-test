@@ -27,18 +27,18 @@ class ProducerDetailConatiner extends React.Component {
       path: "/",
       expires,
     });
-    // alert(Cookies.get('partner_view'))
+    // alert(Cookies.get("partner_view"));
   }
   render() {
     const { Auth, Partner } = this.props;
     return (
       <>
+        {Partner.reviewActiveIndex == 0 && (
+          <DetailCardContainer width={this.props.width} />
+        )}
+
         <Background>
           <Containerv1>
-            {Partner.reviewActiveIndex == 0 && (
-              <DetailCardContainer width={this.props.width} />
-            )}
-
             {Partner.reviewActiveIndex == 1 && (
               <ReviewContainer width={this.props.width} />
             )}

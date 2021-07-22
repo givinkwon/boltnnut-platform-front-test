@@ -100,7 +100,11 @@ class SubBoxContainer extends React.Component {
             </UserBox>
             <SubItem>
               <span>프로젝트 의뢰</span>
-              <span>{Project.project_count}</span>
+              {Project.project_count ? (
+                <span>{Project.project_count}</span>
+              ) : (
+                <span>0</span>
+              )}
             </SubItem>
             <SubItem>
               <span>관심 업체 등록</span>
