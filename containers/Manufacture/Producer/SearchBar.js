@@ -36,6 +36,11 @@ class SearchBarConatiner extends React.Component {
   search = async () => {
     const { Partner, ManufactureProcess, Category } = this.props;
     
+
+    // 연관검색어 저장
+    Partner.suggest_list = this.state.suggs
+    console.log(toJS(Partner.suggest_list))
+
     await Router.push('/producer')
     // console.log("click");
 
@@ -48,8 +53,6 @@ class SearchBarConatiner extends React.Component {
     Partner.click_count += 1;
 
 
-    // 카테고리 리셋하기
-    await Category.reset();
     await Partner.search();
 
 
@@ -97,6 +100,7 @@ class SearchBarConatiner extends React.Component {
 
   async componentDidMount() {
     await this.props.Auth.checkLogin();
+
   }
 
   // 구글 연관검색어
@@ -140,6 +144,9 @@ class SearchBarConatiner extends React.Component {
   // the request will not send if the input was the same as the suggsKeywords
   // or length equals to 0
   requestSuggestions(keywords) {
+    const { Partner } = this.props;
+
+    
     // current suggs was request with the input keywords
     // no need to send again
     if (this.checkSuggsKeywords(keywords)) {
@@ -167,11 +174,10 @@ class SearchBarConatiner extends React.Component {
         //console.log(data);
         if (this.checkSuggsKeywords(data[0])) {
           this.setState({suggs:data[1]});
+
         }
       }.bind(this)
-
     });
-    
   }
 
   // 검색창에 검색을 할 때 text를 observable에 저장하고, 구글 연관검색어 검색
@@ -249,7 +255,6 @@ class SearchBarConatiner extends React.Component {
     
     let suggestions = null;
     // Partner.searchText가 처음에 null 값이라 에러가 떠서 공백문자를 더해줌
-    console.log(this.state.showSuggestions, this.checkSuggsKeywords(Partner.search_text+""), this.state.suggs)
     // 구글 검색 제안 리스트
     if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.search_text+"")) {
       suggestions = this.state.suggs.map(function(value, index) {

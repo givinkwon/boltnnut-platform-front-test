@@ -345,6 +345,9 @@ class Partner {
   @observable recent_partner_name = "";
   @observable recent_partner_img = "";
 
+  // 구글 연관검색어 저장
+  @observable suggest_list = []; 
+
   @action movePage = (e) => {
     e.preventDefault();
     const newPage = e.target.innerText * 1;
@@ -791,6 +794,8 @@ class Partner {
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
+
+    this.suggest_list = [];
   };
 
   @action getClientInfo = async (id) => {

@@ -109,6 +109,7 @@ class ManufacturerContentContainer extends React.Component {
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
+    console.log(Partner.suggest_list)
     return (
       <>
         <Background id="MyBackground">
@@ -181,7 +182,15 @@ class ManufacturerContentContainer extends React.Component {
                             유사한 연관 검색어를 찾아보시겠어요?
                           </Question>
                           <ExplainList>
-                            <li>향초, 디퓨저</li>
+                            {Partner.suggest_list.map((data) =>{
+                            
+                            return(
+                            
+                              <li>{data + ", "}</li>
+                            
+                            )}
+                            )
+                            }
                           </ExplainList>
                         </Explain>
                       </NoResultBox>
