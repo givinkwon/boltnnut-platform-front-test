@@ -23,6 +23,7 @@ import TabBar from "./TabBar";
 import InfoCard from "./InfoCard";
 import WritingContainer from "./Writing";
 import Slider from "react-slick";
+import BlackBox from "./BlackBox";
 
 // const customRenderer = DocViewerRenderers;
 /* 이미지 관련 변수 */
@@ -356,6 +357,10 @@ class DetailCardContainer extends React.Component {
   render() {
     const { width, Partner, Auth } = this.props;
     let clientId;
+    let notLoginUser = false;
+    if (!Auth.logged_in_client || !Auth.logged_in_partner) {
+      notLoginUser = true;
+    }
 
     if (Auth.logged_in_client) {
       clientId = Auth.logged_in_client.id;
@@ -504,23 +509,43 @@ class DetailCardContainer extends React.Component {
 
             <IntroductionBox width={width}>
               <Font24 id="introduction">회사소개서</Font24>
+
+              {/* {(!Auth.logged_in_client || !Auth.logged_in_partner) && (
+                // <BlackBox />
+              )} */}
               {availableFileType1.indexOf(
                 this.props.Partner.selectedIntroductionFileType
-              ) > -1 && (
-                <FileViewerContainer
-                  fileType={this.props.Partner.selectedIntroductionFileType}
-                  filePath={this.props.Partner.selectedIntroductionFile}
-                  onError={onError}
-                />
-              )}
+              ) > -1 &&
+                (notLoginUser ? (
+                  <div style={{ filter: "blur(9px)" }}>
+                    <FileViewerContainer
+                      fileType={this.props.Partner.selectedIntroductionFileType}
+                      filePath={this.props.Partner.selectedIntroductionFile}
+                      onError={onError}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <FileViewerContainer
+                      fileType={this.props.Partner.selectedIntroductionFileType}
+                      filePath={this.props.Partner.selectedIntroductionFile}
+                      onError={onError}
+                    />
+                  </div>
+                ))}
 
               {availableFileType3.indexOf(
                 this.props.Partner.selectedIntroductionFileType
-              ) > -1 && (
-                <>
-                  <DocViewer width={width} />
-                </>
-              )}
+              ) > -1 &&
+                (notLoginUser ? (
+                  <div style={{ filter: "blur(9px)" }}>
+                    <DocViewer width={width} />
+                  </div>
+                ) : (
+                  <div style={{ border: "3px solid red" }}>
+                    <DocViewer width={width} />
+                  </div>
+                ))}
             </IntroductionBox>
           </InnerBox>
           {/* <DetailInfoBox>
@@ -554,7 +579,7 @@ class DetailCardContainer extends React.Component {
             </div>
 
             {/* <ReviewSummaryContainer width={this.props.width} /> */}
-            <SummaryBox>
+            <SummaryBox login={notLoginUser}>
               {/* <label>클라이언트 평균 만족도</label> */}
               <header>
                 <mainscore>
@@ -1694,6 +1719,7 @@ const SubCard = styled.div`
 const SummaryBox = styled.div`
   margin-top: 50px;
   margin-bottom: 34px;
+  filter: ${(props) => (props.login ? "blur(9px)" : "")};
   > label {
     font-size: 24px;
     line-height: 40px;

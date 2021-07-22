@@ -96,6 +96,7 @@ class SubBoxContainer extends React.Component {
           <ShowItem>
             <UserBox>
               <img src={userImg} />
+              <div>로그인 해주세요.</div>
             </UserBox>
             <SubItem>
               <span>프로젝트 의뢰</span>
@@ -182,8 +183,17 @@ const Button = styled.button`
 
 const UserBox = styled.div`
   border-bottom: 1px solid #e1e2e4;
-  padding-bottom: 16px;
+  // padding-bottom: 16px;
   margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  > div {
+    font-size: 14px;
+    line-height: 77px;
+    letter-spacing: -0.35px;
+    color: #999999;
+    font-weight: normal;
+  }
 `;
 
 const SubItem = styled.div`

@@ -461,11 +461,11 @@ class Partner {
 
       this.category_name_list = this.category_dic[idx];
 
-      // if (!item.file) {
-      //   this.detailLoadingFlag = false;
-      //   alert("해당 회사의 소개서가 존재하지 않습니다!");
-      //   return;
-      // }
+      if (!item.file) {
+        this.detailLoadingFlag = false;
+        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        return;
+      }
       this.selectedIntroductionFile = item.file;
 
       const fileType = item.file
