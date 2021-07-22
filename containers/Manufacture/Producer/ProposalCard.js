@@ -637,9 +637,6 @@ const Hashtag = styled.div`
   margin-right: 20px;
   padding-right: 10px;
   padding-left: 10px;
-  // &:hover {
-  //   background-color: #ffffff;
-  // }
 `;
 
 const Bottom = styled.div`

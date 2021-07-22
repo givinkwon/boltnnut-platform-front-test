@@ -7,6 +7,7 @@ import BannerConatiner from "../Banner";
 import ContentConatiner from "./Content";
 
 class ManufacturerDetailConatiner extends React.Component {
+
   render() {
     return (
       <>

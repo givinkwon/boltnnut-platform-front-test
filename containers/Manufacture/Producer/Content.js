@@ -25,7 +25,7 @@ const rightarrow = "static/icon/right_arrow.svg";
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 
-@inject("Project", "Auth", "Partner", "Producer", "Common")
+@inject("Project", "Auth", "Partner", "Producer", "Common", "Cookie")
 @observer
 class ManufacturerContentContainer extends React.Component {
   state = {
@@ -80,11 +80,11 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   render() {
-    const { Project, Partner, Producer, Auth } = this.props;
+    const { Project, Partner, Producer, Auth, Cookie } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
-
+    console.log(toJS(Cookie.partner_view_list));
     return (
       <>
         <Background id="MyBackground">
