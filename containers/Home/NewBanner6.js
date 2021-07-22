@@ -5,6 +5,7 @@ import Background from "../../components/Background";
 import Button from "../../components/Button";
 import * as Title from "../../components/Title";
 import * as Text from "../../components/Text";
+import Router from "next/router";
 
 // images
 const Banner6BackgroundImg = "/static/images/Banner6BackgroundImg.png";
@@ -19,7 +20,7 @@ class NewBanner6Container extends React.Component {
             <Title26>1분만에 프로젝트를 등록하고 맞춤형 업체 정보를 받아보세요.</Title26>
           </div>
 
-          <RequestButton>
+          <RequestButton onClick={() => Router.push("/request")}>
             <Text20>맞춤형 문의하기</Text20>
           </RequestButton>
         </Container>
