@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import Router from "next/router";
 import Slider from "react-slick";
 import { inject, observer } from "mobx-react";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 
 import * as Title from "components/Title";
 import * as Content from "components/Content";
@@ -16,6 +17,7 @@ import { toJS } from "mobx";
 import SearchBar from "./SearchBar";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
 import List from "material-ui/List";
+import Cookies from "js-cookie";
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
 const pass4 = "static/images/pass4.png";
@@ -33,7 +35,7 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   async componentDidMount() {
-    const { Partner } = this.props;
+    const { Partner, Cookie } = this.props;
     Partner.detailLoadingFlag = false;
 
     Partner.currentPage = 1;
@@ -48,6 +50,21 @@ class ManufacturerContentContainer extends React.Component {
     }
     await this.props.Auth.checkLogin();
     console.log(this.props.Auth.logged_in_user);
+
+    const recent_partner_name = [];
+    const recent_partner_img = [];
+    Cookie.partner_view_list.map((item, idx) => {
+      console.log(item);
+      Partner.getRecentPartner(item);
+      recent_partner_name.push(Partner.recent_partner_name);
+      recent_partner_img.push(Partner.recent_partner_img);
+    });
+    this.setState({
+      recent_partner_name: recent_partner_name,
+      recent_partner_img: recent_partner_img,
+    });
+    console.log(toJS(this.state.recent_partner_name));
+    console.log(toJS(this.state.recent_partner_img));
   }
 
   componentWillUnmount() {
@@ -191,6 +208,10 @@ class ManufacturerContentContainer extends React.Component {
                       <div style={{ marginRight: 10 }}>0</div>
                     </header>
                     <body>
+                      {this.state.recent_partner_name &&
+                        this.state.recent_partner_name.map((item, idx) => {
+                          return <div>{item}</div>;
+                        })}
                       최근에 본 제조사가
                       <br />
                       없습니다.
@@ -213,7 +234,7 @@ class ManufacturerContentContainer extends React.Component {
                       </RequestandRegister>
                       <RequestandRegister>
                         <Text>관심 업체 등록</Text>
-                        <Conter>0</Conter>
+                        <Conter>{Partner.totalClientBookmark}</Conter>
                       </RequestandRegister>
                     </body>
                   </MyInfo>
