@@ -10,6 +10,7 @@ import Router from "next/router";
 import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
+import Category from "../../../stores/Manufacture/Category";
 
 @inject(
   "Auth",
@@ -17,7 +18,8 @@ import { PRIMARY2 } from "static/style";
   "Request",
   "Partner",
   "ManufactureProcess",
-  "Producer"
+  "Producer",
+  "Category"
 )
 @observer
 class SearchBarConatiner extends React.Component {
@@ -32,11 +34,11 @@ class SearchBarConatiner extends React.Component {
 
   // 검색함수
   search = async () => {
-    const { Partner, ManufactureProcess } = this.props;
+    const { Partner, ManufactureProcess, Category } = this.props;
     
     await Router.push('/producer')
     // console.log("click");
-    // alert("EXECUTE");
+
     Partner.loadingFlag = true;
     setTimeout(() => {
       Partner.loadingFlag = false;
@@ -44,19 +46,29 @@ class SearchBarConatiner extends React.Component {
 
     Partner.currentPage = 1;
     Partner.click_count += 1;
-    await Partner.getPartner(Partner.currentPage, Partner.click_count);
+
+
+    // 카테고리 리셋하기
+    await Category.reset();
+    await Partner.search();
+
+
+
+
+    // 전체 파트너 숫자
     ManufactureProcess.PartnerCount = Partner.partner_count;
     console.log(toJS(ManufactureProcess.PartnerCount));
+    
+
+    // 검색어 로그에 저장하기 위한 함수
     if (Partner.search_text) {
       Partner.isSearched = true;
     } else {
       Partner.isSearched = false;
     }
-
+    console.log(Partner.search_text, ManufactureProcess.loadingSaveSearchText, )
     if (Partner.search_text != "") {
-      // console.log("click2");
       if (ManufactureProcess.loadingSaveSearchText) {
-        // console.log("click3");
         Partner.subButtonActive = true;
         console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
@@ -165,18 +177,18 @@ class SearchBarConatiner extends React.Component {
   // 검색창에 검색을 할 때 text를 observable에 저장하고, 구글 연관검색어 검색
   handleSearcherInputChange(event) {
     const { Partner } = this.props;
-    Partner.searchText = event.target.value;
+    Partner.search_text = event.target.value;
     this.setState({showSuggestions: true});
-    this.requestSuggestions(Partner.searchText);
+    this.requestSuggestions(Partner.search_text);
   }
 
   // 제안된 키워드를 선택했을 때, 그 키워드를 text에 저장하고 적용
   handleClickSuggetionsKeywords(event) {
     const { Partner } = this.props;
     console.log(event.target.textContent)
-    Partner.searchText = event.target.textContent
+    Partner.search_text = event.target.textContent
     this.setState({showSuggestions: false});
-    this.requestSuggestions(Partner.searchText);
+    this.requestSuggestions(Partner.search_text);
     // 검색하기
     this.search()
   }
@@ -216,9 +228,9 @@ class SearchBarConatiner extends React.Component {
 
         if (li.length > 0) {
           // 리스트가 있고, 엔터 시에 클릭된 텍스트로 구글 연관 검색
-          Partner.searchText = li.text()
+          Partner.search_text = li.text()
           this.setState({showSuggestions: false});
-          this.requestSuggestions(Partner.searchText);
+          this.requestSuggestions(Partner.search_text);
         } else {
           this.setState({showSuggestions: false});
         }
@@ -237,9 +249,9 @@ class SearchBarConatiner extends React.Component {
     
     let suggestions = null;
     // Partner.searchText가 처음에 null 값이라 에러가 떠서 공백문자를 더해줌
-    console.log(this.state.showSuggestions, this.checkSuggsKeywords(Partner.searchText+""), this.state.suggs)
+    console.log(this.state.showSuggestions, this.checkSuggsKeywords(Partner.search_text+""), this.state.suggs)
     // 구글 검색 제안 리스트
-    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.searchText+"")) {
+    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.search_text+"")) {
       suggestions = this.state.suggs.map(function(value, index) {
         return (<li key={index} className="searcher-suggs-word" onClick={this.handleClickSuggetionsKeywords.bind(this)} onMouseOver={this.handleHoverSearcherSuggestions.bind(this)}>{value}</li>);
       }.bind(this));
@@ -257,7 +269,7 @@ class SearchBarConatiner extends React.Component {
                   "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
               }
               onChange={this.handleSearcherInputChange.bind(this)}
-              value = {Partner.searchText}
+              value = {Partner.search_text}
               class="Input"
               onKeyPress={this.handleKeyDown}
             />
