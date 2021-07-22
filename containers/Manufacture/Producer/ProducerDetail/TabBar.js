@@ -26,7 +26,10 @@ class TabBarContainer extends React.Component {
       reviewLocation,
       mapLocation,
     } = this.props;
+    console.log(this.props.portfoliLocation);
+    console.log(this.props.introductionLocation);
     console.log(this.props.reviewLocation);
+    console.log(this.props.mapLocation);
 
     return (
       <>

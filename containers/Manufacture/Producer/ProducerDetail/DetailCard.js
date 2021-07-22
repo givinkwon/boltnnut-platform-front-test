@@ -125,14 +125,48 @@ class DetailCardContainer extends React.Component {
     Partner.docViewerLoading = false;
     Partner.subViewerLoading = 0;
     // Partner.viewerLoading += 1;
+
+    let portfolioObject = document.getElementById("portfolio");
+
+    let portfolioPosY = portfolioObject.offsetTop;
+    if (portfolioObject.offsetParent) {
+      portfolioPosY += portfolioObject.offsetParent.offsetTop;
+    }
+
+    let introductionObject = document.getElementById("introduction");
+
+    let introductionPosY = introductionObject.offsetTop;
+    if (introductionObject.offsetParent) {
+      introductionPosY += introductionObject.offsetParent.offsetTop;
+    }
+
+    let reviewObject = document.getElementById("review");
+
+    let reviewPosY = reviewObject.offsetTop;
+    if (reviewObject.offsetParent) {
+      reviewPosY += reviewObject.offsetParent.offsetTop;
+    }
+
+    let mapsObject = document.getElementById("maps");
+
+    let mapsPosY = mapsObject.offsetTop;
+    if (mapsObject.offsetParent) {
+      mapsPosY += mapsObject.offsetParent.offsetTop;
+    }
+
     this.setState((state) => {
       return {
-        portfoliLocation: document.querySelector("#portfolio").offsetTop,
-        introductionLocation: document.querySelector("#introduction").offsetTop,
-        reviewLocation: document.getElementById("review").offsetTop,
-        mapLocation: document.querySelector("#maps").offsetTop,
+        // portfoliLocation: document
+        //   .getElementById("portfolio")
+        //   .getBoundingClientRect().top,
+        portfoliLocation: portfolioPosY,
+        introductionLocation: introductionPosY,
+        reviewLocation: reviewPosY,
+        mapLocation: mapsPosY,
       };
     });
+    console.log(document.getElementById("portfolio"));
+    console.log(document.getElementById("portfolio").offsetTop);
 
     if (Auth.logged_in_client) {
       await Partner.checkReviewWriting(Auth.logged_in_client.id);
@@ -417,6 +451,9 @@ class DetailCardContainer extends React.Component {
     console.log(toJS(Partner.partnerReviewList[0]));
     console.log(toJS(Partner.partner_detail_list));
 
+    console.log(this.state.portfoliLocation);
+    console.log(this.state.introductionLocation);
+    console.log(this.state.reviewLocation);
     this.setState((state) => {
       return { loading: state.loading + 1 };
     });
@@ -1311,6 +1348,7 @@ const Font24 = styled(Title.FontSize24)`
   text-align: left;
   color: #282c36;
   margin-bottom: 32px;
+  position: relative;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 16px !important;
