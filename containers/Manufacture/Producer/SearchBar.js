@@ -11,30 +11,23 @@ import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
 
-@inject(
-  "Auth",
-  "Project",
-  "Request",
-  "Partner",
-  "ManufactureProcess",
-  "Producer"
-)
+@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer")
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
     search: "",
     modal_open: false,
     list: false,
-    suggsKeywords:"", 
-    suggs:[], 
-    showSuggs:false
+    suggsKeywords: "",
+    suggs: [],
+    showSuggs: false,
   };
 
   // 검색함수
   search = async () => {
     const { Partner, ManufactureProcess } = this.props;
-    
-    await Router.push('/producer')
+
+    await Router.push("/producer");
     // console.log("click");
     // alert("EXECUTE");
     Partner.loadingFlag = true;
@@ -61,10 +54,7 @@ class SearchBarConatiner extends React.Component {
         console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(
-          () => (ManufactureProcess.loadingSaveSearchText = true),
-          2000
-        );
+        setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
       }
     }
   };
@@ -91,11 +81,11 @@ class SearchBarConatiner extends React.Component {
   handleMouseDown(event) {
     let x = $(document).scrollLeft() + event.clientX; // event.offsetX
     let y = $(document).scrollTop() + event.clientY; // event.offsetY
-    
+
     // did not click on the search input or the suggestion list
-    if (this.state.showSuggestions && !this.checkXYInElement(x, y, '.searcher-suggs') && !this.checkXYInElement(x, y, '.searcher-input')) {
-        this.setState({showSuggestions: false});
-      }
+    if (this.state.showSuggestions && !this.checkXYInElement(x, y, ".searcher-suggs") && !this.checkXYInElement(x, y, ".searcher-input")) {
+      this.setState({ showSuggestions: false });
+    }
   }
 
   checkXYInElement(x, y, className) {
@@ -104,10 +94,10 @@ class SearchBarConatiner extends React.Component {
       return false;
     }
 
-    let rect = {x: elem.offset().left, y: elem.offset().top, w: elem.outerWidth(), h: elem.outerHeight()};
+    let rect = { x: elem.offset().left, y: elem.offset().top, w: elem.outerWidth(), h: elem.outerHeight() };
 
-    if (x < rect.x || y < rect.y || x > (rect.x + rect.w) || y > (rect.y + rect.h)) {
-      return false;      
+    if (x < rect.x || y < rect.y || x > rect.x + rect.w || y > rect.y + rect.h) {
+      return false;
     }
 
     return true;
@@ -136,49 +126,47 @@ class SearchBarConatiner extends React.Component {
 
     // empty keywords just reset the suggsKeywords and suggs
     if (keywords.length == 0) {
-      this.setState({suggsKeywords:"", suggs:[]});
+      this.setState({ suggsKeywords: "", suggs: [] });
       return;
     }
 
     let urlKeywords = encodeURIComponent(keywords.toLowerCase());
-    this.setState({suggsKeywords:urlKeywords, suggs:[]});
-    let url = 'https://suggestqueries.google.com/complete/search?output=chrome&q='+urlKeywords;
+    this.setState({ suggsKeywords: urlKeywords, suggs: [] });
+    let url = "https://suggestqueries.google.com/complete/search?output=chrome&q=" + urlKeywords;
     // use JSONP (issue: http://security.stackexchange.com/questions/23438/security-risks-with-jsonp/23439#23439)
     // just for CORS trick
     $.ajax({
       url: url,
-      dataType: 'jsonp',
-      type: 'GET',
-      success: function(data, textStatus, jqXHR) {
+      dataType: "jsonp",
+      type: "GET",
+      success: function (data, textStatus, jqXHR) {
         // data[0] was the keywords to search
         // data[1] was the array of the google suggestion keywords
         //console.log(data);
         if (this.checkSuggsKeywords(data[0])) {
-          this.setState({suggs:data[1]});
+          this.setState({ suggs: data[1] });
         }
-      }.bind(this)
-
+      }.bind(this),
     });
-    
   }
 
   // 검색창에 검색을 할 때 text를 observable에 저장하고, 구글 연관검색어 검색
   handleSearcherInputChange(event) {
     const { Partner } = this.props;
     Partner.searchText = event.target.value;
-    this.setState({showSuggestions: true});
+    this.setState({ showSuggestions: true });
     this.requestSuggestions(Partner.searchText);
   }
 
   // 제안된 키워드를 선택했을 때, 그 키워드를 text에 저장하고 적용
   handleClickSuggetionsKeywords(event) {
     const { Partner } = this.props;
-    console.log(event.target.textContent)
-    Partner.searchText = event.target.textContent
-    this.setState({showSuggestions: false});
+    console.log(event.target.textContent);
+    Partner.searchText = event.target.textContent;
+    this.setState({ showSuggestions: false });
     this.requestSuggestions(Partner.searchText);
     // 검색하기
-    this.search()
+    this.search();
   }
 
   // handel the key down event of the search input
@@ -188,7 +176,7 @@ class SearchBarConatiner extends React.Component {
       this.handleSelectSuggestions(event);
     } else {
       // just show the suggestions list
-      this.setState({showSuggestions: true});
+      this.setState({ showSuggestions: true });
     }
   }
 
@@ -196,31 +184,31 @@ class SearchBarConatiner extends React.Component {
   handleSelectSuggestions(event) {
     const { Partner } = this.props;
     // 선택되어 있는 추천 검색어 가지고 오기
-    let li = $('.searcher-suggs-word.selected');
+    let li = $(".searcher-suggs-word.selected");
     // 40 => down, 38 => up >> 내려갈 때 혹은 올라올 때 선택된 키워드 변경
     if (event.keyCode == 40 || event.keyCode == 38) {
       event.preventDefault();
       if (li.length == 0) {
-        $('.searcher-suggs-word:first-child').toggleClass('selected');
+        $(".searcher-suggs-word:first-child").toggleClass("selected");
       } else if (event.keyCode == 40) {
-        li.removeClass('selected');
-        li.next().toggleClass('selected');
+        li.removeClass("selected");
+        li.next().toggleClass("selected");
       } else {
-        li.removeClass('selected');
-        li.prev().toggleClass('selected');
+        li.removeClass("selected");
+        li.prev().toggleClass("selected");
       }
     } else {
-      // 13 => enter 
+      // 13 => enter
       if (event.keyCode == 13) {
         event.preventDefault();
 
         if (li.length > 0) {
           // 리스트가 있고, 엔터 시에 클릭된 텍스트로 구글 연관 검색
-          Partner.searchText = li.text()
-          this.setState({showSuggestions: false});
+          Partner.searchText = li.text();
+          this.setState({ showSuggestions: false });
           this.requestSuggestions(Partner.searchText);
         } else {
-          this.setState({showSuggestions: false});
+          this.setState({ showSuggestions: false });
         }
       }
     }
@@ -228,48 +216,50 @@ class SearchBarConatiner extends React.Component {
 
   // 마우스 호버에 따라서 클래스 적용을 함으로써 Css 적용 변경
   handleHoverSearcherSuggestions(event) {
-    $('.searcher-suggs-word.selected').removeClass('selected');
-    $('.searcher-suggs-word:hover').addClass('selected');
+    $(".searcher-suggs-word.selected").removeClass("selected");
+    $(".searcher-suggs-word:hover").addClass("selected");
   }
 
   render() {
     const { Partner, Request } = this.props;
-    
+
     let suggestions = null;
     // Partner.searchText가 처음에 null 값이라 에러가 떠서 공백문자를 더해줌
-    console.log(this.state.showSuggestions, this.checkSuggsKeywords(Partner.searchText+""), this.state.suggs)
+    console.log(this.state.showSuggestions, this.checkSuggsKeywords(Partner.searchText + ""), this.state.suggs);
     // 구글 검색 제안 리스트
-    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.searchText+"")) {
-      suggestions = this.state.suggs.map(function(value, index) {
-        return (<li key={index} className="searcher-suggs-word" onClick={this.handleClickSuggetionsKeywords.bind(this)} onMouseOver={this.handleHoverSearcherSuggestions.bind(this)}>{value}</li>);
-      }.bind(this));
+    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.searchText + "")) {
+      suggestions = this.state.suggs.map(
+        function (value, index) {
+          return (
+            <li key={index} className="searcher-suggs-word" onClick={this.handleClickSuggetionsKeywords.bind(this)} onMouseOver={this.handleHoverSearcherSuggestions.bind(this)}>
+              {value}
+            </li>
+          );
+        }.bind(this)
+      );
     }
-    
+
     return (
       <>
         <Form active={Partner.subButtonActive}>
-          <SearchBar active={Partner.subButtonActive}>
-            <input
-              placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
-              onFocus={(e) => (e.target.placeholder = "")}
-              onBlur={(e) =>
-                (e.target.placeholder =
-                  "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
-              }
-              onChange={this.handleSearcherInputChange.bind(this)}
-              value = {Partner.searchText}
-              class="Input"
-              onKeyPress={this.handleKeyDown}
-            />
-            <img
-              style={{ width: 24, height: 24, marginRight: 25 }}
-              src="/static/icon/search_blue.svg"
-              onClick={this.search}
-            />
-            <ul className="searcher-suggs">
-              {suggestions}
-            </ul>
-          </SearchBar>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <SearchBar active={Partner.subButtonActive}>
+              <input
+                placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
+                onChange={this.handleSearcherInputChange.bind(this)}
+                value={Partner.searchText}
+                class="Input"
+                onKeyPress={this.handleKeyDown}
+              />
+              <img style={{ width: 24, height: 24, marginRight: 25 }} src="/static/icon/search_blue.svg" onClick={this.search} />
+            </SearchBar>
+
+            <CustomUl>
+              <CustomLiBox>{suggestions}</CustomLiBox>
+            </CustomUl>
+          </div>
         </Form>
       </>
     );
@@ -277,6 +267,31 @@ class SearchBarConatiner extends React.Component {
 }
 
 export default SearchBarConatiner;
+const CustomUl = styled.ul`
+  width: 588px;
+  height: 150px;
+  margin-left: 30px;
+  font-size: 18px;
+  }
+`;
+
+const CustomLiBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 588px;
+  height: 140px;
+  cursor: pointer;
+  overflow: scroll;
+
+  > li {
+    margin-top: 20px;
+    font-size: 18px;
+
+    :hover {
+      background-color: #f2f2f2;
+    }
+  }
+`;
 
 const categoryArray = [
   { label: "전체", value: "전체" },
@@ -289,17 +304,14 @@ const SearchBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // width: 601px;
-  width: 100%;
-  height: 60px; 
   box-sizing: border-box;
-  border: solid 0.5px #c6c7cc;
+  border: solid 0.5px #0933b3;
   border-radius: 60px;
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
-  // margin 0 24px;
 
   input {
-    width: 100%;
+    width: 500px;
+    height: 59px;
     border: none;
     border-radius: 60px;
     padding: 0 14px;
@@ -342,7 +354,7 @@ const SearchBar = styled.div`
   @media (min-width: 1300px) {
     // width: ${(props) => (props.active ? "501px" : "100%")};
     transition: 3s;
-    width: 66%;
+    width: 100%;
     input {
       font-size: 18px;
     }
@@ -350,13 +362,9 @@ const SearchBar = styled.div`
   
   // 구글 검색 관련
   .searcher-suggs {
-    position: absolute;
-    width: 475px;
-    box-shadow: 0px 3px 3px #ccc;
-    background-color: white;
-    margin-top: 1px;
-    padding-left: 0px;
-    padding-right: 25px;
+    // position: absolute;
+    // background-color: red;
+    // width: 588px;
   }
 
   .searcher-suggs-word {
@@ -384,16 +392,13 @@ const SearchBar = styled.div`
   }
   
 `;
-// const SearchIcon = styled.div`
-//   background: none;
-//   border: none;
-// `;
+
 const Form = styled.div`
-  //margin-top: 90px;
-  // width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 588px;
   height: 44px;
+  margin-top: 80px;
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     // width: 54%;
@@ -475,5 +480,3 @@ const Box = styled.div`
     width: 125px;
   }
 `;
-
-const Button = styled.button``;
