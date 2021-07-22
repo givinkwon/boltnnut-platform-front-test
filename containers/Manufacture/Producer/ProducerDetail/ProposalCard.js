@@ -38,6 +38,7 @@ const Card = styled.div`
   overflow: hidden;
   align-items: self-start;
   width: 100%;
+  background-color: #ffffff;
 `;
 
 const ImgBox = styled.div`

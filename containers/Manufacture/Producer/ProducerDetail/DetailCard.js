@@ -25,6 +25,7 @@ import Slider from "react-slick";
 import BlackBox from "./BlackBox";
 import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
+import PortfolioConatiner from "./Portfolio";
 
 // const customRenderer = DocViewerRenderers;
 /* 이미지 관련 변수 */
@@ -360,7 +361,7 @@ class DetailCardContainer extends React.Component {
     const { width, Partner, Auth } = this.props;
     let clientId;
     let notLoginUser = false;
-    if (!Auth.logged_in_client || !Auth.logged_in_partner) {
+    if (!Auth.logged_in_client && !Auth.logged_in_partner) {
       notLoginUser = true;
     }
 
@@ -369,7 +370,10 @@ class DetailCardContainer extends React.Component {
     }
 
     console.log(Auth);
-    const partnerId = Partner.partner_detail_list[0].item.id;
+    const partnerId =
+      Partner.partner_detail_list &&
+      Partner.partner_detail_list[0].item &&
+      Partner.partner_detail_list[0].item.id;
 
     const loggedInPartnerId =
       Auth.logged_in_partner && Auth.logged_in_partner.id;
@@ -496,9 +500,12 @@ class DetailCardContainer extends React.Component {
                     reviewLocation={this.state.reviewLocation}
                     mapLocation={this.state.mapLocation}
                   />
-                  <IntroductionBox width={width}>
+                  <IntroductionBox
+                    width={width}
+                    style={{ marginBottom: "162px" }}
+                  >
                     <Font24 id="portfolio">포토폴리오</Font24>
-                    <SliderContainer {...SlideSettings}>
+                    {/* <SliderContainer {...SlideSettings}>
                       {Partner.partner_detail_list &&
                         Partner.partner_detail_list[0].item.portfolio_set
                           .length > 0 &&
@@ -511,15 +518,18 @@ class DetailCardContainer extends React.Component {
                             );
                           }
                         )}
-                    </SliderContainer>
+                    </SliderContainer> */}
+                    <PortfolioConatiner
+                      data={Partner.partner_detail_list[0].item}
+                    />
                   </IntroductionBox>
 
                   <IntroductionBox width={width}>
                     <Font24 id="introduction">회사소개서</Font24>
 
-                    {/* {(!Auth.logged_in_client || !Auth.logged_in_partner) && (
-                // <BlackBox />
-              )} */}
+                    {!Auth.logged_in_client && !Auth.logged_in_partner && (
+                      <BlackBox content="이 제조사의 회사소개서를 보고싶다면?" />
+                    )}
                     {availableFileType1.indexOf(
                       this.props.Partner.selectedIntroductionFileType
                     ) > -1 &&
@@ -557,7 +567,7 @@ class DetailCardContainer extends React.Component {
                           <DocViewer width={width} />
                         </div>
                       ) : (
-                        <div style={{ border: "3px solid red" }}>
+                        <div>
                           <DocViewer width={width} />
                         </div>
                       ))}
@@ -757,7 +767,10 @@ class DetailCardContainer extends React.Component {
                         );
                       })}
                   </content>
-                  {!Partner.reviewWritingModalActive ? (
+
+                  {!Auth.logged_in_client && !Auth.logged_in_partner ? (
+                    <BlackBox content="이 제조사의 리뷰를 보고싶다면?" />
+                  ) : !Partner.reviewWritingModalActive ? (
                     <Layer>
                       <span>
                         <Modal
@@ -1314,6 +1327,7 @@ const Font24 = styled(Title.FontSize24)`
 const IntroductionBox = styled.div`
   width: auto;
   text-align: center;
+  position: relative;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     canvas {
@@ -1361,7 +1375,7 @@ const Card = styled.div`
 const HeaderBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 174px;
+  margin-bottom: 146px;
   >tag {
     width: 118px;
     height: 40px;
@@ -1762,6 +1776,7 @@ const Item = styled.div`
 const MapBox = styled.div`
   width: 100%;
   height: 500px;
+  margin-bottom: 160px;
 `;
 
 const QuestionBox = styled.div`
