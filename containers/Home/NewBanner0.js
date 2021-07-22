@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Containerv1 from "../../components/Containerv1";
 import * as Title from "components/Title";
 import * as Text from "components/Text";
+import SearchBar from "../Manufacture/Producer/SearchBar";
 
 const search = "/static/images/search.svg";
 const banner0img = "/static/images/banner0img.png";
@@ -18,6 +19,45 @@ class NewBanner0Container extends React.Component {
     });
   }
 
+  // 검색함수
+  search = async () => {
+    const { Partner, ManufactureProcess } = this.props;
+    
+    await Router.push('/producer')
+    // console.log("click");
+    // alert("EXECUTE");
+    Partner.loadingFlag = true;
+    setTimeout(() => {
+      Partner.loadingFlag = false;
+    }, 3000);
+
+    Partner.currentPage = 1;
+    Partner.click_count += 1;
+    await Partner.getPartner(Partner.currentPage, Partner.click_count);
+    ManufactureProcess.PartnerCount = Partner.partner_count;
+    console.log(toJS(ManufactureProcess.PartnerCount));
+    if (Partner.search_text) {
+      Partner.isSearched = true;
+    } else {
+      Partner.isSearched = false;
+    }
+
+    if (Partner.search_text != "") {
+      // console.log("click2");
+      if (ManufactureProcess.loadingSaveSearchText) {
+        // console.log("click3");
+        Partner.subButtonActive = true;
+        console.log(Partner.subButtonActive);
+        ManufactureProcess.saveSearchText(Partner.search_text);
+        ManufactureProcess.loadingSaveSearchText = false;
+        setTimeout(
+          () => (ManufactureProcess.loadingSaveSearchText = true),
+          2000
+        );
+      }
+    }
+  };
+
   render() {
     return (
       <div style={{ display: "flex", justifyContent: "center", marginTop: "200px" }}>
@@ -30,13 +70,11 @@ class NewBanner0Container extends React.Component {
             </Header>
             <Middle> 당신에게 맞는 제조사 정보를 바로 조회해보세요.</Middle>
             <SearchBar>
-              <Input placeholder="원하는 분야나 비슷한 제품을 검색해보세요." onChange={this.handleChangeInputValue.bind(this)} value={this.state.text} />
-              <img src={search} />
             </SearchBar>
           </LeftBox>
 
           <RightBox>
-            <img src={banner0img} />
+            <img src={banner0img} onClick={this.search} />
           </RightBox>
         </Containerv1>
       </div>
@@ -81,26 +119,6 @@ const Middle = styled(Text.FontSize20)`
   margin-top: 20px;
 `;
 
-const SearchBar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-
-  font-size: 18px;
-  height: 59px;
-  object-fit: contain;
-  border-radius: 60px;
-  box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
-  border: solid 1px #0933b3;
-  background-color: #ffffff;
-  margin-top: 80px;
-  padding-left: 32px;
-  padding-right: 32px;
-
-  > img {
-    cursor: pointer;
-  }
-`;
 
 const Input = styled.input`
   border: none;
