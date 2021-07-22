@@ -11,15 +11,16 @@ class SubBoxContainer extends React.Component {
   componentDidMount = async () => {
     const { Partner, Auth, partnerId, Project } = this.props;
 
-    const clientId = this.props.Auth.logged_in_client.id;
+    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     await Partner.existBookmarkPartner(clientId, partnerId);
     await Partner.getBookmarkByClient(clientId);
   };
   render() {
     const { Partner, Auth, partnerId, Project, Common } = this.props;
-    console.log(this.props.Auth.logged_in_client.id);
-    console.log(toJS(`clientId: ${this.props.Auth.logged_in_client.id}`));
-    const clientId = this.props.Auth.logged_in_client.id;
+    // console.log(this.props.Auth.logged_in_client.id);
+    // console.log(toJS(`clientId: ${this.props.Auth.logged_in_client.id}`));
+    const clientId =
+      this.props.Auth.logged_in_client && this.props.Auth.logged_in_client.id;
     console.log(toJS(`partnerId: ${partnerId}`));
     console.log(Project.project_count);
     return (

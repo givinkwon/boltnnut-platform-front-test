@@ -99,13 +99,18 @@ class DetailCardContainer extends React.Component {
     const { Partner } = this.props;
     console.log(this.state.g);
     console.log(nextState.g);
-    if (Partner.questionSaveCount) {
-      setTimeout(() => {
-        if (Partner.questionSaveCount) {
-          Partner.questionSaveCount = 0;
-        }
-      }, 1000);
-      return true;
+    if (Partner.questionSaveCount || Partner.questionLoadSuccess) {
+      if (Partner.questionSaveCount) {
+        setTimeout(() => {
+          if (Partner.questionSaveCount) {
+            Partner.questionSaveCount = 0;
+          }
+        }, 1000);
+        return true;
+      }
+      if (Partner.questionLoadSuccess) {
+        return true;
+      }
     } else {
       return this.state.g !== nextState.g;
     }
@@ -356,6 +361,7 @@ class DetailCardContainer extends React.Component {
       clientId = Auth.logged_in_client.id;
     }
 
+    console.log(Auth);
     const partnerId = Partner.partner_detail_list[0].item.id;
 
     console.log(toJS(Partner.questionList));
@@ -514,7 +520,7 @@ class DetailCardContainer extends React.Component {
               )}
             </IntroductionBox>
           </InnerBox>
-          <DetailInfoBox>
+          {/* <DetailInfoBox>
             <div>
               <label>
                 <span>지역</span>
@@ -537,7 +543,7 @@ class DetailCardContainer extends React.Component {
                 <content>{Partner.partner_detail_list[0].item.history}</content>
               )}
             </div>
-          </DetailInfoBox>
+          </DetailInfoBox> */}
 
           <ReviewBox id="review">
             <div>
@@ -914,7 +920,8 @@ class DetailCardContainer extends React.Component {
                 active={Partner.questionCurrentPage % 5 == 1}
                 style={{
                   display:
-                    Partner.questionPage < 5 * (QuestionCurrentSet - 1)
+                    Partner.questionPage < 5 * (QuestionCurrentSet - 1) &&
+                    Partner.questionList.length === 0
                       ? "none"
                       : "block",
                 }}
@@ -1010,12 +1017,14 @@ class DetailCardContainer extends React.Component {
                 }}
               />
             </PageBar>
-            <WritingContainer
-              type="comment"
-              clientId={clientId}
-              partnerId={partnerId}
-              setQA={this.setQA}
-            />
+            {Auth.logged_in_client && Auth.logged_in_client.id && (
+              <WritingContainer
+                type="comment"
+                clientId={clientId}
+                partnerId={partnerId}
+                setQA={this.setQA}
+              />
+            )}
           </QuestionBox>
 
           <IntroductionBox width={width}>

@@ -12,7 +12,7 @@ class HeaderContainer extends React.Component {
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
 
-    const clientId = Auth.logged_in_client.id;
+    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = Partner.partner_detail_list[0].item.id;
     await Partner.existBookmarkPartner(clientId, partnerId);
     await Partner.getTotalBookmarkByPartner(partnerId);
@@ -20,7 +20,7 @@ class HeaderContainer extends React.Component {
   render() {
     console.log("render");
     const { Partner, Auth } = this.props;
-    const clientId = Auth.logged_in_client.id;
+    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = Partner.partner_detail_list[0].item.id;
     console.log(Partner.interestedIdx);
 

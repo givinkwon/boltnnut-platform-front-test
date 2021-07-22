@@ -13,15 +13,14 @@ import ImageContainer from "../Portfolio";
 
 import { toJS } from "mobx";
 
+
 @inject("Partner")
 @observer
 class DetailConatiner extends React.Component {
   componentDidMount = () => {
     // getPortfolio
     const { Partner } = this.props;
-    console.log(toJS(Partner.partner_detail_list[0].item.id));
 
-    Partner.getPortfolio(Partner.partner_detail_list[0].item.id);
   };
   onClickReviewHandler = () => {
     const { Partner } = this.props;

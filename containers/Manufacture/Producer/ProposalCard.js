@@ -270,7 +270,7 @@ class ProposalCard extends React.Component {
     };
 
     let category_data;
-    // console.log(data.logo);
+    console.log(data.logo);
 
     return (
       <>
@@ -303,9 +303,9 @@ class ProposalCard extends React.Component {
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                  <Item>
+                  {/* <Item>
                     <img src={data.logo} />
-                  </Item>
+                  </Item> */}
                 </SliderContainer>
               </Header>
               <Main>

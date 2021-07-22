@@ -47,6 +47,24 @@ class ManufacturerContentContainer extends React.Component {
     console.log(this.props.Auth.logged_in_user);
   }
 
+  /* Parnter (진수정밀) 제조사 상세 찾기용 임의 함수 (삭제할 예정) */
+  temp = (e) => {
+    const { Partner } = this.props;
+    e.preventDefault();
+    // const newPage = e.target.innerText * 1;
+    // Partner.currentPage = 182;
+    Partner.currentPage = 386;
+    Partner.resetDevCategory();
+    Partner.check_loading_develop = false;
+    Partner.ReviewActive = false;
+    Partner.ReviewActiveIndex = -1;
+    Partner.dropDownActive = false;
+    Partner.dropDownIdx = -1;
+    Partner.click_count += 1;
+
+    Partner.getPartner(386, this.click_count);
+    // Partner.getPartner(182, this.click_count);
+  };
   componentWillUnmount() {
     const { Partner } = this.props;
     console.log("content unmount");
@@ -196,6 +214,8 @@ class ManufacturerContentContainer extends React.Component {
             </Body>
           </Container>
         </Background>
+
+        <div onClick={this.temp}>진수정밀</div>
         <PageBar>
           <img
             src={pass1}

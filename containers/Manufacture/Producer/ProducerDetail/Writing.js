@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
+import NoticeCard from "./Notice";
 import Partner from "../../../../stores/Manufacture/Partner";
 
 const checkImg = "/static/images/producer/check.svg";
@@ -8,6 +9,9 @@ const checkImg = "/static/images/producer/check.svg";
 @inject("Partner", "Auth")
 @observer
 class WritingContainer extends React.Component {
+  componentDidMount = () => {
+    console.log("componentdidmount");
+  };
   activeHandler = (e) => {
     const { Partner } = this.props;
     console.log(e);
@@ -31,6 +35,8 @@ class WritingContainer extends React.Component {
     console.log(placeholder);
     return (
       <>
+        {type === "comment" && <NoticeCard />}
+
         <Container>
           <Content>
             <textarea
@@ -115,7 +121,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 770px;
+  // width: 770px;
   height: 254px;
   border: 1px solid #c6c7cc;
   border-radius: 5px;

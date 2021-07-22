@@ -2,6 +2,8 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
 import WritingContainer from "./Writing";
+import { toJS } from "mobx";
+import NoticeCard from "./Notice";
 import Partner from "../../../../stores/Manufacture/Partner";
 
 const rightAngleImg = "/static/images/producer/rightAngle.svg";
@@ -13,8 +15,12 @@ class QuestionContainer extends React.Component {
     writingModalIdx: "",
     g: 0,
   };
-  componentDidMount = () => {
+  componentDidMount = async () => {
+    const { idx, Partner, data } = this.props;
     console.log("Question Container");
+
+    // await Partner.getClientNameById(data.client, idx, "question");
+    console.log(toJS(Partner.questionClientInfo));
   };
 
   shouldComponentUpdate = (prevProps, nextState) => {
@@ -58,10 +64,22 @@ class QuestionContainer extends React.Component {
       clientId,
       partnerId,
       parentType,
+      mergeData,
+      Auth,
     } = this.props;
     console.log("renderrender");
     console.log(parentType);
-    console.log(data.created_at.slice(0, data.created_at.indexOf("T")));
+    console.log(data);
+    let name = data.name;
+    console.log(name);
+    console.log(toJS(mergeData));
+    // console.log(data.created_at.slice(0, data.created_at.indexOf("T")));
+    console.log(idx);
+    const loggedInPartnerId =
+      Auth.logged_in_partner && Auth.logged_in_partner.id;
+
+    console.log(loggedInPartnerId);
+    console.log(partnerId);
     // if (parentType === "comment") {
     //   console.log(data);
     // } else {
@@ -72,44 +90,64 @@ class QuestionContainer extends React.Component {
       <>
         <Container>
           <Card>
-            {!data.client && (
+            {data.recomment && (
               <Recomment>
                 <img src={rightAngleImg} />
               </Recomment>
             )}
-            <Category>Q.</Category>
+            {data.recomment && data.state ? (
+              <Category>A.</Category>
+            ) : (
+              <Category>Q.</Category>
+            )}
+
             <Content>
-              {data.secret ? (
-                <content>비밀 댓글입니다.</content>
-              ) : (
+              {!data.secret || clientId === data.client ? (
                 <content>{data.content}</content>
+              ) : (
+                <content>비밀 댓글입니다.</content>
               )}
 
-              {data.client && (
-                <answer
-                  onClick={() => {
-                    console.log(Partner.writingModalIdx);
-                    console.log(idx + 1);
-                    if (Partner.writingModalIdx === idx + 1) {
-                      Partner.writingModalIdx = 0;
-                    } else {
-                      Partner.writingModalIdx = idx + 1;
-                    }
-                    // this.setState({ h: 3 });
-                    // this.setState((state) => {
-                    //   return {
-                    //     g: state.g + 1,
-                    //   };
-                    // });
-                    console.log(this.state.writingModal);
-                  }}
-                >
-                  답글달기
-                </answer>
-              )}
+              {!data.recomment &&
+                (clientId === data.client ||
+                  loggedInPartnerId === partnerId) && (
+                  <answer
+                    onClick={() => {
+                      console.log(Partner.writingModalIdx);
+                      console.log(idx + 1);
+                      if (Partner.writingModalIdx === idx + 1) {
+                        Partner.writingModalIdx = 0;
+                      } else {
+                        Partner.writingModalIdx = idx + 1;
+                      }
+                      // this.setState({ h: 3 });
+                      // this.setState((state) => {
+                      //   return {
+                      //     g: state.g + 1,
+                      //   };
+                      // });
+                      console.log(this.state.writingModal);
+                    }}
+                  >
+                    답글달기
+                  </answer>
+                )}
             </Content>
             <Info>
-              {data.client && <Name>{data.client}</Name>}
+              {console.log(toJS(data))}
+              {console.log(name)}
+              {data.client ? (
+                <Name>{data.client}</Name>
+              ) : (
+                <Name style={{ color: "#0933b3" }}>제조업체</Name>
+              )}
+              {/* <hr /> */}
+              {!data.state && (
+                <Name>{Partner.questionClientInfo[idx]}</Name>
+                // <Name>{data.name}</Name>
+              )}
+
+              {data.state && <Name>제조업체</Name>}
 
               <Date>
                 {data.created_at.slice(0, data.created_at.indexOf("T"))}
@@ -122,13 +160,16 @@ class QuestionContainer extends React.Component {
         {Partner.writingModalIdx === idx + 1 && (
           <RecommentBox>
             <img src={rightAngleImg} />
-            <WritingContainer
-              type="recomment"
-              clientId={clientId}
-              partnerId={partnerId}
-              data={data}
-              setQA={this.props.setQA()}
-            />
+            <div style={{ width: "100%" }}>
+              <NoticeCard />
+              <WritingContainer
+                type="recomment"
+                clientId={clientId}
+                partnerId={partnerId}
+                data={data}
+                setQA={this.props.setQA()}
+              />
+            </div>
           </RecommentBox>
         )}
       </>
@@ -145,9 +186,11 @@ const Container = styled.div`
 
 const Card = styled.div`
   display: flex;
-  align-items: center;
+  // align-items: center;
   border-bottom: 1px solid #e1e2e4;
   min-height: 134px;
+  padding-top: 20px;
+  box-sizing: border-box;
 `;
 const Category = styled.div`
   font-size: 18px;
@@ -165,11 +208,23 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  white-space: break-spaces;
+  justify-content: space-between;
   > answer {
     cursor: pointer;
+    font-size: 16px;
+    line-height: 40px;
+    letter-spacing: -0.4px;
+    color: #86888c;
+    font-weight: normal;
+    text-decoration-line: underline;
   }
 `;
-const Info = styled.div``;
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
 const Name = styled.div`
   line-height: 40px;
   font-size: 16px;
@@ -190,6 +245,7 @@ const RecommentBox = styled.div`
   border-bottom: 1px solid #e1e2e4;
   padding-bottom: 30px;
   padding-left: 30px;
+  margin-top: 30px;
   > img {
     margin-right: 20px;
   }
@@ -197,6 +253,7 @@ const RecommentBox = styled.div`
 
 const Recomment = styled.div`
   display: flex;
+  align-self: baseline;
   > img {
     margin-right: 20px;
   }

@@ -1,346 +1,246 @@
 import { observable, action, toJS, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Account/Category";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 import { isConstructorDeclaration } from "typescript";
 import NoneDrawingConsultingContainer from "containers/Manufacture/Request/NoneDrawingConsulting";
 
-class Category {
-    constructor() {
+import Partner from "./Partner";
 
+class Category {
+  constructor() {
+    //makeObservable(this);
+  }
+
+  // 카테고리 배열
+  @observable mainbusiness_list = [];
+  @observable business_list = [];
+
+  // 업체 분류 배열
+  @observable maincategory_list = [];
+  @observable category_list = [];
+
+  // 지역 배열
+  @observable city_list = [];
+
+  // 소재 배열
+  @observable mainmaterial_list = [];
+  @observable material_list = [];
+
+  // 공정 배열
+  @observable developbig_list = [];
+  @observable develop_list = [];
+
+  // 선택된 리스트
+  @observable business_selected = [];
+  @observable category_selected = [];
+  @observable city_selected = [];
+  @observable material_selected = [];
+  @observable develop_selected = [];
+
+  /* init */
+  @action init = async () => {
+    // 카테고리 데이터 가져오기
+    await CategoryAPI.getMainbusiness()
+      .then((res) => {
+        this.mainbusiness_list = res.data.results;
+        console.log(toJS(this.mainbusiness_list));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    // 업체 분류 가져오기
+    await CategoryAPI.getMainCategory()
+      .then(async (res) => {
+        this.maincategory_list = res.data.results;
+        console.log(toJS(this.maincategory_list));
+        this.category_list.forEach((mainCategory) => {
+          this.category_list = this.category_list.concat(
+            mainCategory.category_set
+          );
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    // 지역 가져오기
+    await CategoryAPI.getCity()
+      .then((res) => {
+        this.city_list = res.data.results;
+        console.log(toJS(this.city_list));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    // 소재 가져오기
+    await CategoryAPI.getMainmaterial()
+      .then((res) => {
+        this.mainmaterial_list = res.data.results;
+        console.log(toJS(this.mainmaterial_list));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    // 공정 가져오기
+    await CategoryAPI.getDevelopbig()
+      .then((res) => {
+        this.developbig_list = res.data.results;
+        console.log(toJS(this.developbig_list));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  /* reset */
+  @action reset = () => {
+    // 카테고리 배열 초기화
+    this.mainbusiness_list = [];
+    this.business_list = [];
+
+    // 업체 분류 배열 초기화
+    this.maincategory_list = [];
+    this.category_list = [];
+
+    // 지역 배열 초기화
+    this.city_list = [];
+
+    // 소재 배열 초기화
+    this.mainmaterial_list = [];
+    this.material_list = [];
+
+    // 공정 배열 초기화
+    this.developbig_list = [];
+    this.develop_list = [];
+
+    // 선택된 리스트
+    this.business_selected = [];
+    this.category_selected = [];
+    this.city_selected = [];
+    this.material_selected = [];
+    this.develop_selected = [];
+  };
+
+  // 선택된 필터를 추가하기
+  // state : 선택된 대카테고리 테이블
+  // id : 선택된 중카테고리 id
+  @action add_selected = async (state, id) => {
+    // 카테고리 선택
+    if (state == "business") {
+      this.business_selected.push(id);
     }
 
-    // 카테고리 배열
-    @observable business_arr = [];
+    // 업체 분류 선택
+    if (state == "category") {
+      this.category_selected.push(id);
+    }
 
-    /* 카테고리 */
-    @action getPartner = async (page = 1, click = 0) => {
-        this.partner_list = [];
-        this.category_ary = [];
-    
-        const token = localStorage.getItem("token");
-        let req = { params: { page: page } };
-        let temp = { params: { page: page } };
-    
-        if (this.filter_region) {
-          console.log(this.filter_region);
-          temp.params.city = this.filter_region;
-          req.params.city = this.filter_region;
-        }
-    
-        if (this.filter_category) {
-          switch (this.filter_category) {
-            case 1:
-              req.params.category_middle__id = "2";
-              break;
-            case 2:
-              req.params.category_middle__id = "12,14";
-              break;
-            case 3:
-              req.params.category_middle__id = "14";
-              break;
-            case 4:
-              req.params.category_middle__id = "12";
-              break;
-            case 5:
-              req.params.category_middle__id = "12";
-              break;
-          }
-    
-          temp.params.category_middle__id = this.filter_category;
-          // req.params.category_middle__id = this.filter_category;
-        }
-        if (this.search_class === "전체") {
-          if (this.search_text === "") {
-            delete req.params.search;
-          } else {
-            req.params.search = this.search_text;
-          }
-        }
-    
-        if (this.search_class === "만든 제품") {
-          if (this.search_text === "") {
-            delete req.params.history;
-          } else {
-            req.params.history = this.search_text;
-          }
-        }
-    
-        await PartnerAPI.getPartners(req)
-          .then(async (res) => {
-            this.partner_list = [];
-            this.category_ary = [];
-            this.category_name_ary = [];
-            this.temp_category_name_ary;
-            this.category_count = 0;
-    
-            this.partner_list = await res.data.results;
-            this.originPartnerList = this.partner_list;
-            this.partner_next = res.data.next;
-            this.partner_count = res.data.count;
-            await this.resetDevCategory();
-    
-            //this.category_ary = res.data.results.category_middle;
-            this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-            await this.partner_list.map(async (item, idx) => {
-              await this.category_ary.push(item.category_middle);
-              this.category_count += 1;
-            });
-    
-              await this.category_ary.map(async (data, id) => {
-                await data.map(async (sub_data, index) => {
-                  const req = {
-                    id: sub_data,
-                  };
-                  if (this.isSearched) {
-                    this.exceptionCategory += sub_data + ",";
-                  }
-    
-                  if (this.click_count != click) {
-                    return;
-                  }
-    
-                  await PartnerAPI.getPartnerCategory(req)
-                    .then(async (res) => {
-                      if (click == 0) {
-                        click += 1;
-                      }
-    
-                      if (this.click_count == click) {
-                        if (!this.category_dic.hasOwnProperty(id)) {
-                          this.category_dic[id] = [];
-                        }
-                        this.category_dic[id] = await [
-                          ...this.category_dic[id],
-                          res.data.category,
-                        ];
-                      } else {
-                        return;
-                      }
-                    })
-                    .catch((e) => {
-                      console.log(e);
-                      console.log(e.response);
-                    });
-                  if (this.click_count != click) {
-                    return;
-                  }
-                });
-              });
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-        this.check_loading_develop = true;
-    
-        this.filterLoading = true;        
-      };
+    // 지역 선택
+    if (state == "city") {
+      this.city_selected.push(id);
+    }
 
+    // 공정 선택
+    if (state == "develop") {
+      this.develop_selected.push(id);
+    }
 
+    // 소재 선택
+    if (state == "material") {
+      this.material_selected.push(id);
+    }
 
-      @action getCategory = () => {
-        this.filter_category_ary = [];
-    
-        const req = {
-          // nextUrl: this.develop_next,
-        };
-    
-        PartnerAPI.getCategory(req)
-          .then(async (res) => {
-            this.filter_category_ary = this.filter_category_ary.concat(
-              res.data.results
-            );
-            this.develop_next = res.data.next;
-                
-            while (this.develop_next) {
-              const req = {
-                nextUrl: this.develop_next,
-              };              
-              await PartnerAPI.getNextDevelopPage(req)
-                .then((res) => {
-                  
-                  this.filter_category_ary = this.filter_category_ary.concat(
-                    res.data.results
-                  );
-    
-                  this.develop_next = res.data.next;
-                })
-                .catch((e) => {
-                  console.log(e);
-                  console.log(e.response);
-                });
-            }                        
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-      };
+    Partner.getPartner();
+  };
 
+  // 선택된 필터를 제거하기
+  // state : 선택된 대카테고리 테이블
+  // id : 선택된 중카테고리 id
+  @action remove_selected = async (state, id) => {
+    let deleteIdx;
+    // 카테고리 선택
+    if (state == "business") {
+      deleteIdx = this.business_selected.indexOf(id);
+      this.business_selected.splice(deleteIdx, 1);
+    }
 
+    // 업체 분류 선택
+    if (state == "category") {
+      this.category_selected.splice(id, 1);
+    }
 
+    // 지역 선택
+    if (state == "city") {
+      this.city_selected.splice(id, 1);
+    }
 
-    
-    // 업체 분류 배열
-    @observable category_arr = [];
-    
-    // 지역 배열
-    @observable region_arr = [];
+    // 공정 선택
+    if (state == "develop") {
+      this.develop_selected.splice(id, 1);
+    }
 
+    // 소재 선택
+    if (state == "material") {
+      this.material_selected.splice(id, 1);
+    }
 
-    @action getCity = () => {
-        //this.filter_category_ary = [];
-    
-        const req = {
-          // nextUrl: this.develop_next,
-        };
-    
-        PartnerAPI.getCity(req)
-          .then(async (res) => {
-            this.filter_city_ary = await this.filter_city_ary.concat(
-              res.data.results
-            );
-            console.log(toJS(this.filter_city_ary));
-            this.city_ary = this.city_ary.concat(res.data.results);
-            this.city_next = res.data.next;
-    
-            // console.log(toJS(res.data.results));
-            // console.log(toJS(this.filter_city_ary));
-            // console.log(this.city_next);
-            while (this.city_next) {
-              const req = {
-                nextUrl: this.city_next,
-              };
-              await PartnerAPI.getNextCityPage(req)
-                .then((res) => {
-                  // console.log(res);
-                  this.filter_city_ary = this.filter_city_ary.concat(
-                    res.data.results
-                  );
-                  this.city_ary = this.city_ary.concat(res.data.results);
-    
-                  this.city_next = res.data.next;
-                  //console.log(this.city_next);
-                  //this.project_page = parseInt(this.project_count/5) + 1
-                  // if (callback) {
-                  //   callback();
-                  // }
-                })
-                .catch((e) => {
-                  console.log(e);
-                  console.log(e.response);
-                });
-            }
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-        console.log(this.filter_city_ary);
-      };
+    Partner.getPartner();
+  };
 
+  categoryActiveHandler = (idx, state) => {
+    if (state == "business") {
+      if (this.business_selected.includes(idx)) {
+        return true;
+      } else {
+        console.log("RRR");
+        return false;
+      }
+    }
 
+    // 업체 분류 선택
+    if (state == "category") {
+      if (this.category_selected.includes(idx)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
-    @action getCityName = (id) => {
-        const req = {
-          id: id,
-        };
-    
-        PartnerAPI.getCityName(req)
-          .then(async (res) => {
-            console.log(res);
-            this.city_name = res.data.city;
-            console.log(this.city_name);
-            // return res.data.city
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-      };
+    // 지역 선택
+    if (state == "city") {
+      if (this.city_selected.includes(idx)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
-      
+    // 공정 선택
+    if (state == "develop") {
+      if (this.develop_selected.includes(idx)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
-    
-    // 공정 배열
-    @observable develop_arr = [];
+    // 소재 선택
+    if (state == "material") {
+      if (this.material_selected.includes(idx)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+}
 
-
-
-    /* init */
-    @action init = async () => {
-        CategoryAPI.getMainCategory()
-          .then(async (res) => {
-            this.category_main_list = res.data.results;
-            this.big_category_all = res.data.results;
-            console.log(res.data.results.splice(0, 4));
-            this.category_list = res.data.results;
-            this.category_list.forEach((mainCategory) => {
-              this.category_middle_list = this.category_middle_list.concat(
-                mainCategory.category_set
-              );
-            });
-            await this.category_main_list.map((mainCategory) => {
-              this.category_middle_total_ary =
-                this.category_middle_total_ary.concat(mainCategory.category_set);
-            });
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-        CategoryAPI.getDevelop()
-          .then((res) => {
-            this.develop_list = res.data.results;
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-        CategoryAPI.getCity()
-          .then((res) => {
-            this.city_list = res.data.results;
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-      };
-
-
-      /* reset */
-      @action reset = () => {
-        this.detail = null;
-        this.category_list = [];
-        this.category_middle_list = [];
-        this.develop_list = [];
-        this.city_list = [];
-    
-        this.partner_list = [];
-        this.partner_count = 0;
-        this.partner_next = null;
-        this.page = 1;
-    
-        this.search_text = "";
-        this.search_category = [];
-        this.search_develop = [];
-        this.search_region = [];
-      };
-
-
-      @action resetDevCategory = () => {
-        this.category_dic = {
-          0: [],
-          1: [],
-          2: [],
-          3: [],
-          4: [],
-          5: [],
-          6: [],
-          7: [],
-          8: [],
-          9: [],
-        };
-      };
-
-      
+export default new Category();
