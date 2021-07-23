@@ -23,8 +23,8 @@ class Cookie {
   };
 
   @action delete_partner_view = async (id) => {
-    deleteIdx = this.city_selected.indexOf(id);
-    this.city_selected.splice(deleteIdx, 1);
+    deleteIdx = this.partner_view_list.indexOf(id);
+    this.partner_view_list.splice(deleteIdx, 1);
   };
 }
 

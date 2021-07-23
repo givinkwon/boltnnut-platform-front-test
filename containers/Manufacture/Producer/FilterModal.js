@@ -321,6 +321,7 @@ const ModalBox = styled.div`
   height: 293px;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
+
 `;
 
 const AddCategoryBox = styled.div`
