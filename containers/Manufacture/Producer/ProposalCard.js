@@ -296,7 +296,7 @@ class ProposalCard extends React.Component {
     };
 
     let category_data;
-    // console.log(data.logo);
+    console.log(data.logo);
 
     return (
       <>
