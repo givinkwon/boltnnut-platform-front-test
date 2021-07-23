@@ -267,10 +267,11 @@ class SearchBarConatiner extends React.Component {
               <img style={{ width: 24, height: 24, marginRight: 25, cursor: "pointer" }} src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
 
-            {this.state.showSuggestions && this.state.suggs.length > 0 && <CustomUl>
-              <CustomLiBox>{suggestions}</CustomLiBox>
-            </CustomUl>
-            }
+            {this.state.showSuggestions && this.state.suggs.length > 0 && (
+              <CustomUl>
+                <CustomLiBox>{suggestions}</CustomLiBox>
+              </CustomUl>
+            )}
           </div>
         </Form>
       </>
@@ -325,7 +326,7 @@ const SearchBar = styled.div`
   width: 100%;
 
   input {
-    width: 360px;
+    width: 700px;
     height: 59px;
     border: none;
     border-radius: 60px;

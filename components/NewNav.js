@@ -167,7 +167,7 @@ class Nav extends React.Component {
                       <KSLink url={"producer"} content={"제조사 찾기"} />
                     </NavLink>
                     <NavLink active={url.indexOf("magazine") > -1}>
-                      <KSLink url={"magazine"} content={"제조 인사이트"} />
+                      <KSLink url={"magazine"} content={"제조 매거진"} />
                       {/* 제조 인사이트 */}
                     </NavLink>
                   </Fragment>
@@ -325,7 +325,7 @@ const Icon = styled.img`
 const Menu = styled.div`
   display: flex;
   align-items: center;
-  margin-left: auto;
+  margin-left: 60px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: none;
     flex-direction: column;
