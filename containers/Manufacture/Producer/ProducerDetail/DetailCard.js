@@ -191,6 +191,14 @@ class DetailCardContainer extends React.Component {
     // 지역 가지고 오기
     //console.log(toJS(Partner.partner_detail_list[0].item.city))
     Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city))
+
+    // 비즈니스 가지고 오기
+    console.log(toJS(Partner.partner_detail_list[0].item.business))
+    toJS(Partner.partner_detail_list[0].item.business).map((item) => 
+        Partner.getBusinessName(item)
+        
+    )
+    console.log(toJS(Partner.business_name))
   
     await this.countTotalPoint();
     this.setState((state) => {
@@ -420,6 +428,7 @@ class DetailCardContainer extends React.Component {
     }
 
     console.log(Auth);
+    console.log(Partner.partner_detail_list)
     const partnerId =
       Partner.partner_detail_list &&
       Partner.partner_detail_list[0].item &&
@@ -503,7 +512,7 @@ class DetailCardContainer extends React.Component {
                     <InfoCard
                       src={medalImg}
                       name="전문분야"
-                      content="기구설계, 금형제작"
+                      content={Partner.business_name}
                     />
                     {Partner.partner_detail_list && (
                       <InfoCard
@@ -979,7 +988,7 @@ class DetailCardContainer extends React.Component {
                 <QuestionBox>
                   <Font24>업체 Q&A</Font24>
                   {console.log(toJS(Partner.mergeQuestionList))}
-                  {Partner.mergeQuestionList &&
+                  {Partner.mergeQuestionList == false &&
                     Partner.mergeQuestionList.map((item, idx) => {
                       return (
                         <QuestionContainer
