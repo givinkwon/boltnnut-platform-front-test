@@ -54,6 +54,7 @@ const Button = styled.button`
   text-decoration: underline;
   font-weight: bold;
   text-underline-position: under;
+  cursor: pointer;
 `;
 
 const Content = styled.div`

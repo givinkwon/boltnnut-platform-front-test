@@ -39,7 +39,7 @@ class HeaderContainer extends React.Component {
             <img
               src={Partner.interestedIdx ? bookmarkBlueImg : bookmarkImg}
               onClick={async () => {
-                if (!loggedInPartnerId) {
+                if (!loggedInPartnerId && clientId) {
                   Partner.clickHandler("interested");
                   Partner.checkedInterestedIdx(clientId, partnerId);
                   this.setState({ h: 3 });

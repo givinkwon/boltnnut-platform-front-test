@@ -7,6 +7,7 @@ import RatioImage from "components/RatioImage";
 import * as Text from "components/Text";
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from "static/style";
 import { toJS } from "mobx";
+import BlackBox from "./BlackBox";
 
 const rowline = "/static/images/components/Footer/rowline.svg";
 const facebook_mob = "/static/images/components/Footer/facebook.svg";
@@ -46,7 +47,13 @@ class PortfolioConatiner extends React.Component {
     const img = document.getElementById("image");
   };
   render() {
-    const { Answer, file, Partner, width, Producer, data } = this.props;
+    const { width, data, Auth } = this.props;
+
+    let notLoginUser = false;
+    if (!Auth.logged_in_client && !Auth.logged_in_partner) {
+      notLoginUser = true;
+    }
+
     var settings = {
       dots: false,
       infinite: false,
@@ -112,7 +119,7 @@ class PortfolioConatiner extends React.Component {
               </>
             )}
 
-            {data && data.portfolio_set.length > 0 && (
+            {data && data.portfolio_set.length > 0 && !notLoginUser && (
               <>
                 <Arrow left onClick={this.sliderPrev} />
                 <Arrow right onClick={this.sliderNext} />
@@ -143,7 +150,7 @@ class PortfolioConatiner extends React.Component {
           {this.state.modalOpen && <Layer />}
         </div>
         <div>
-          <SmallImageContainer>
+          <SmallImageContainer login={notLoginUser}>
             {data.portfolio_set.length != 0 &&
               data.portfolio_set.map((item, idx) => {
                 return (
@@ -158,6 +165,9 @@ class PortfolioConatiner extends React.Component {
                   </SmallImageBox>
                 );
               })}
+            {notLoginUser && (
+              <BlackBox content="이 제조사의 회사소개서를 보고싶다면?" />
+            )}
           </SmallImageContainer>
         </div>
       </>

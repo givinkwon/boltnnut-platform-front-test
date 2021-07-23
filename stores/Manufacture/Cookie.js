@@ -14,10 +14,12 @@ class Cookie {
   @observable partner_view_list = [];
 
   @action add_partner_view = async (id) => {
-    // console.log(id);
-    this.partner_view_list.push(id);
+    console.log(id);
+    if (!this.partner_view_list.includes(parseInt(id))) {
+      this.partner_view_list.push(parseInt(id));
+    }
 
-    // console.log(toJS(this.partner_view_list))
+    console.log(toJS(this.partner_view_list));
   };
 }
 

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="40" viewBox="0 0 60 40">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-1 {
+        stroke: #c6c7cc;
+      }
+
+      .cls-2, .cls-3 {
+        stroke: #0933b3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.5px;
+      }
+
+      .cls-3, .cls-5 {
+        fill: none;
+      }
+
+      .cls-4 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="그룹_3330" data-name="그룹 3330" transform="translate(-1276 -407)">
+    <g id="사각형_4673" data-name="사각형 4673" class="cls-1" transform="translate(1276 407)">
+      <rect class="cls-4" width="60" height="40" rx="3"/>
+      <rect class="cls-5" x="0.5" y="0.5" width="59" height="39" rx="2.5"/>
+    </g>
+    <g id="그룹_3034" data-name="그룹 3034" transform="translate(-82.223 -93.166)">
+      <g id="그룹_3033" data-name="그룹 3033" transform="translate(1379.999 511.057)">
+        <path id="패스_3930" data-name="패스 3930" class="cls-2" d="M393.454,1214.372v4.472l6.247,6.128v9.729l3.953-2.47v-7.261l6.244-6.126,0-.185v-4.287Z" transform="translate(-393.454 -1214.372)"/>
+        <line id="선_1620" data-name="선 1620" class="cls-3" x2="16.445" transform="translate(0 4.473)"/>
+      </g>
+    </g>
+  </g>
+</svg>

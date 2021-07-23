@@ -12,6 +12,15 @@ import Banner7Container from "./Banner7";
 import Banner8Container from "./Banner8";
 import BarContainer from "./Bar";
 
+// New
+import NewBanner0Container from "./NewBanner0";
+import NewBanner1Container from "./NewBanner1";
+import NewBanner2Container from "./NewBanner2";
+import NewBanner3Container from "./NewBanner3";
+import NewBanner4Container from "./NewBanner4";
+import NewBanner5Container from "./NewBanner5";
+import NewBanner6Container from "./NewBanner6";
+
 // Mobile Container
 import MobileBanner0Container from "./Mobile/MobileBanner0";
 import MobileBanner1Container from "./Mobile/MobileBanner1";
@@ -93,8 +102,7 @@ class HomeConatiner extends React.Component {
         data: {
           viewId: "0214568260",
           user: {
-            type:
-              "392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com",
+            type: "392846125574-q1os3ihbrss3u4hj7gcvkjhk6at6g7dl.apps.googleusercontent.com",
             userId: "463218669.1623114407",
           },
           dateRange: {
@@ -130,11 +138,19 @@ class HomeConatiner extends React.Component {
         ) : (
           <>
             <div style={{ overflow: "hidden" }}>
-              <Banner13Container width={width} />
-              <Banner14Container />
-              <Banner12Container />
-              <Banner8Container />
-              <Banner9Container />
+              <NewBanner0Container width={width} />
+              <NewBanner1Container width={width} />
+              <NewBanner2Container width={width} />
+              <NewBanner3Container width={width} />
+              <NewBanner4Container width={width} />
+              <NewBanner5Container width={width} />
+              <NewBanner6Container width={width} />
+
+              {/* <Banner13Container width={width} />
+            <Banner14Container />
+            <Banner12Container />
+            <Banner8Container />
+            <Banner9Container /> */}
             </div>
           </>
         )}
