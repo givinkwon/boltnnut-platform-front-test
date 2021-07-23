@@ -70,7 +70,7 @@ class QuestionContainer extends React.Component {
     console.log("renderrender");
     console.log(parentType);
     console.log(data);
-    let name = data.name;
+    let name = data && data.name;
     console.log(name);
     console.log(toJS(mergeData));
     // console.log(data.created_at.slice(0, data.created_at.indexOf("T")));

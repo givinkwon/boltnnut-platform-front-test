@@ -156,7 +156,7 @@ class PortfolioConatiner extends React.Component {
           <BlackBox top="80" content="이 제조사의 포트폴리오를 보고싶다면?" />
         )}
         <Footer>
-          <Block />
+          {notLoginUser && <Block />}
 
           <SmallImageContainer login={notLoginUser}>
             {data.portfolio_set.length != 0 &&

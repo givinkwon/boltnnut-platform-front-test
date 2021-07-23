@@ -314,7 +314,7 @@ class MobileDetailCardContainer extends React.Component {
       autoplay: true,
       autoplaySpeed: 2000,
     };
-    console.log(Partner.city_name)
+    console.log(Partner.city_name);
     return (
       <>
         <Card id="card" width={width}>
@@ -423,7 +423,7 @@ class MobileDetailCardContainer extends React.Component {
               <label>평가 후기</label>
             </div>
 
-            <ReviewSummaryContainer width={this.props.width}/>
+            <ReviewSummaryContainer width={this.props.width} />
             <content>
               <ReviewTop>
                 {Partner.partnerReviewList[0] && (
@@ -600,7 +600,7 @@ class MobileDetailCardContainer extends React.Component {
 
           <QuestionBox>
             <Font24>업체 Q&A</Font24>
-            <QuestionContainer />
+            {/* <QuestionContainer /> */}
           </QuestionBox>
 
           <IntroductionBox width={width}>
@@ -694,7 +694,7 @@ class MobileDetailCardContainer extends React.Component {
         {/* <SubCard>
           <SubBoxContainer partnerId={Partner.partner_detail_list[0].item.id} />
           {/* <RequestContainer /> */}
-          {/* <RecentPartnerContainer /> */}
+        {/* <RecentPartnerContainer /> */}
         {/* </SubCard> */}
       </>
     );

@@ -190,8 +190,8 @@ class DetailCardContainer extends React.Component {
 
     // 지역 가지고 오기
     //console.log(toJS(Partner.partner_detail_list[0].item.city))
-    Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city))
-  
+    Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city));
+
     await this.countTotalPoint();
     this.setState((state) => {
       return { g: state.g + 1 };
@@ -419,6 +419,7 @@ class DetailCardContainer extends React.Component {
       clientId = Auth.logged_in_client.id;
     }
 
+    console.log(toJS(Partner.partner_detail_list));
     console.log(Auth);
     const partnerId =
       Partner.partner_detail_list &&
@@ -579,7 +580,7 @@ class DetailCardContainer extends React.Component {
 
                   <IntroductionBox width={width}>
                     <Font24 id="introduction">회사소개서</Font24>
-
+                    {notLoginUser && <Block />}
                     {!Auth.logged_in_client && !Auth.logged_in_partner && (
                       <BlackBox content="이 제조사의 회사소개서를 보고싶다면?" />
                     )}
@@ -655,7 +656,7 @@ class DetailCardContainer extends React.Component {
                   <div>
                     <label>실제 고객후기</label>
                   </div>
-
+                  {notLoginUser && <Block />}
                   {/* <ReviewSummaryContainer width={this.props.width} /> */}
                   <SummaryBox login={notLoginUser}>
                     {/* <label>클라이언트 평균 만족도</label> */}
@@ -979,7 +980,8 @@ class DetailCardContainer extends React.Component {
                 <QuestionBox>
                   <Font24>업체 Q&A</Font24>
                   {console.log(toJS(Partner.mergeQuestionList))}
-                  {Partner.mergeQuestionList &&
+                  {console.log(toJS(Partner.mergeQuestionList.length))}
+                  {Partner.mergeQuestionList.length != 0 &&
                     Partner.mergeQuestionList.map((item, idx) => {
                       return (
                         <QuestionContainer
@@ -2111,4 +2113,11 @@ const Main = styled.div``;
 
 const SimilarBox = styled.div`
   width: 100%;
+`;
+
+const Block = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
 `;
