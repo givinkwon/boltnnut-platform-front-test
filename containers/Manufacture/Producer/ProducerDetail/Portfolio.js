@@ -155,10 +155,10 @@ class PortfolioConatiner extends React.Component {
         {notLoginUser && (
           <BlackBox top="80" content="이 제조사의 포트폴리오를 보고싶다면?" />
         )}
-        <Footer>
+        <Footer login={notLoginUser}>
           {notLoginUser && <Block />}
 
-          <SmallImageContainer login={notLoginUser}>
+          <SmallImageContainer>
             {data.portfolio_set.length != 0 &&
               data.portfolio_set.map((item, idx) => {
                 return (
@@ -446,7 +446,7 @@ const SmallImageBox = styled.div`
 
 const Footer = styled.div`
   position: relative;
-  filter: blur(9px);
+  filter: ${(props) => (props.login ? "blur(9px)" : "")};
 `;
 const Block = styled.div`
   position: absolute;
