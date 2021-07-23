@@ -10,11 +10,12 @@ import Router from "next/router";
 import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
-import Category from "../../../stores/Manufacture/Category";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer", "Category")
+const searchIcon = "/static/images/mobilesearchicon.svg";
+
+@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer")
 @observer
-class SearchBarConatiner extends React.Component {
+class NewMobileSearchBarConatiner extends React.Component {
   state = {
     search: "",
     modal_open: false,
@@ -26,15 +27,11 @@ class SearchBarConatiner extends React.Component {
 
   // 검색함수
   search = async () => {
-    const { Partner, ManufactureProcess, Category } = this.props;
-
-    // 연관검색어 저장
-    Partner.suggest_list = this.state.suggs;
-    console.log(toJS(Partner.suggest_list));
+    const { Partner, ManufactureProcess } = this.props;
 
     await Router.push("/producer");
     // console.log("click");
-
+    // alert("EXECUTE");
     Partner.loadingFlag = true;
     setTimeout(() => {
       Partner.loadingFlag = false;
@@ -42,22 +39,19 @@ class SearchBarConatiner extends React.Component {
 
     Partner.currentPage = 1;
     Partner.click_count += 1;
-
-    await Partner.search();
-
-    // 전체 파트너 숫자
+    await Partner.getPartner(Partner.currentPage, Partner.click_count);
     ManufactureProcess.PartnerCount = Partner.partner_count;
-    console.log(toJS(ManufactureProcess.PartnerCount));
-
-    // 검색어 로그에 저장하기 위한 함수
+    // console.log(toJS(ManufactureProcess.PartnerCount));
     if (Partner.search_text) {
       Partner.isSearched = true;
     } else {
       Partner.isSearched = false;
     }
-    console.log(Partner.search_text, ManufactureProcess.loadingSaveSearchText);
+
     if (Partner.search_text != "") {
+      // console.log("click2");
       if (ManufactureProcess.loadingSaveSearchText) {
+        // console.log("click3");
         Partner.subButtonActive = true;
         // console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
@@ -126,8 +120,6 @@ class SearchBarConatiner extends React.Component {
   // the request will not send if the input was the same as the suggsKeywords
   // or length equals to 0
   requestSuggestions(keywords) {
-    const { Partner } = this.props;
-
     // current suggs was request with the input keywords
     // no need to send again
     if (this.checkSuggsKeywords(keywords)) {
@@ -163,19 +155,18 @@ class SearchBarConatiner extends React.Component {
   // 검색창에 검색을 할 때 text를 observable에 저장하고, 구글 연관검색어 검색
   handleSearcherInputChange(event) {
     const { Partner } = this.props;
-    Partner.search_text = event.target.value;
-    console.log(event.target.value);
+    Partner.searchText = event.target.value;
     this.setState({ showSuggestions: true });
-    this.requestSuggestions(Partner.search_text);
+    this.requestSuggestions(Partner.searchText);
   }
 
   // 제안된 키워드를 선택했을 때, 그 키워드를 text에 저장하고 적용
   handleClickSuggetionsKeywords(event) {
     const { Partner } = this.props;
-    console.log(event.target.textContent);
-    Partner.search_text = event.target.textContent;
+    // console.log(event.target.textContent);
+    Partner.searchText = event.target.textContent;
     this.setState({ showSuggestions: false });
-    this.requestSuggestions(Partner.search_text);
+    this.requestSuggestions(Partner.searchText);
     // 검색하기
     this.search();
   }
@@ -215,9 +206,9 @@ class SearchBarConatiner extends React.Component {
 
         if (li.length > 0) {
           // 리스트가 있고, 엔터 시에 클릭된 텍스트로 구글 연관 검색
-          Partner.search_text = li.text();
+          Partner.searchText = li.text();
           this.setState({ showSuggestions: false });
-          this.requestSuggestions(Partner.search_text);
+          this.requestSuggestions(Partner.searchText);
         } else {
           this.setState({ showSuggestions: false });
         }
@@ -236,8 +227,9 @@ class SearchBarConatiner extends React.Component {
 
     let suggestions = null;
     // Partner.searchText가 처음에 null 값이라 에러가 떠서 공백문자를 더해줌
+    // console.log(this.state.showSuggestions, this.checkSuggsKeywords(Partner.searchText + ""), this.state.suggs);
     // 구글 검색 제안 리스트
-    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.search_text + "")) {
+    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.searchText + "")) {
       suggestions = this.state.suggs.map(
         function (value, index) {
           return (
@@ -255,15 +247,17 @@ class SearchBarConatiner extends React.Component {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <SearchBar active={Partner.subButtonActive}>
               <input
-                placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
+                placeholder="원하는 분야나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
+                onBlur={(e) => (e.target.placeholder = "원하는 분야나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
-                value={Partner.search_text}
+                value={Partner.searchText}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-              <img style={{ width: 24, height: 24, marginRight: 25 }} src="/static/icon/search_blue.svg" onClick={this.search} />
+
+              <img src={searchIcon} onClick={this.search} style={{ width: 24, height: 24, marginRight: 10, cursor: "pointer" }} />
+              {/* <img style={{ width: 24, height: 24, marginRight: 25 }} src="/static/icon/search_blue.svg" onClick={this.search} /> */}
             </SearchBar>
 
             <CustomUl>
@@ -276,7 +270,7 @@ class SearchBarConatiner extends React.Component {
   }
 }
 
-export default SearchBarConatiner;
+export default NewMobileSearchBarConatiner;
 const CustomUl = styled.ul`
   width: 588px;
   height: 150px;
@@ -303,70 +297,26 @@ const CustomLiBox = styled.div`
   }
 `;
 
-const categoryArray = [
-  { label: "전체", value: "전체" },
-  // { label: "만든 제품", value: "만든 제품" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
-];
-
 const SearchBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-sizing: border-box;
-  border: solid 0.5px #0933b3;
-  border-radius: 60px;
-  box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
+  width: 347px;
+  border-radius: 2px;
+  box-shadow: 4px 5px 4px 5px rgba(146, 146, 146, 0.2);
+  // border: solid 1px #0933b3;
 
   input {
-    width: 500px;
-    height: 59px;
+    width: 100%;
+    height: 56px;
     border: none;
-    border-radius: 60px;
-    padding: 0 14px;
-    margin-left: 10px;
+   
+    padding: 0 10px 0 10px;
     :focus {
       outline: none;
     }
     ::placeholder {
-      #c6c7cc
-    }
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    // margin-top: 30px;
-    flex-direction: column;
-    input {
-      font-size: 12px;
-      width: 100%;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    // margin-top: 30px;
-    width: ${(props) => (props.active ? "330px" : "100%")};
-    input {
-      font-size: 16px;
-      ::placeholder {
-        font-size: 13px;
-      }
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    // margin-top: 40px;
-    width: ${(props) => (props.active ? "410px" : "100%")};
-    input {
-      font-size: 17px;
-      ::placeholder {
-        font-size: 15px;
-      }
-    }
-  }
-  @media (min-width: 1300px) {
-    // width: ${(props) => (props.active ? "501px" : "100%")};
-    transition: 3s;
-    width: 100%;
-    input {
-      font-size: 18px;
+      #c6c7cc;
     }
   }
   
@@ -374,7 +324,7 @@ const SearchBar = styled.div`
   .searcher-suggs {
     // position: absolute;
     // background-color: red;
-    // width: 588px;
+    // width: 400px;
   }
 
   .searcher-suggs-word {
@@ -400,23 +350,11 @@ const SearchBar = styled.div`
     background-color: #0288D1;
     color: white;
   }
-  
 `;
 
 const Form = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  width: 588px;
-  height: 44px;
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    // width: 54%;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    // width: 67%;
-  }
-  @media (min-width: 1300px) {
-    //margin-top: 0;
-    // width: 75%;
-  }
+  width: 347px;
+  height: 56px;
+  margin-top: 36px;
+  margin-bottom: 150px;
 `;
