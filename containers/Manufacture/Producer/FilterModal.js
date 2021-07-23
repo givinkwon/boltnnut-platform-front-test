@@ -39,6 +39,7 @@ class FilterModalContainer extends React.Component {
     // console.log(Category.mainbusiness_list);
 
     this.setState({ mainCategoryTypeDic: mainCategoryTypeDic });
+    console.log(this.state.mainCategoryTypeDic);
   }
   state = {
     mainSelectIdx: 0,
