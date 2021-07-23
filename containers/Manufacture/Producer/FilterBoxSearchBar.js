@@ -10,12 +10,11 @@ import Router from "next/router";
 import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
+import Category from "../../../stores/Manufacture/Category";
 
-const searchIcon = "/static/images/mobilesearchicon.svg";
-
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer")
+@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer", "Category")
 @observer
-class NewMobileSearchBarConatiner extends React.Component {
+class SearchBarConatiner extends React.Component {
   state = {
     search: "",
     modal_open: false,
@@ -23,15 +22,20 @@ class NewMobileSearchBarConatiner extends React.Component {
     suggsKeywords: "",
     suggs: [],
     showSuggs: false,
+    searchbaractive: false,
   };
 
   // 검색함수
   search = async () => {
-    const { Partner, ManufactureProcess } = this.props;
+    const { Partner, ManufactureProcess, Category } = this.props;
+
+    // 연관검색어 저장
+    Partner.suggest_list = this.state.suggs;
+    console.log(toJS(Partner.suggest_list));
 
     await Router.push("/producer");
     // console.log("click");
-    // alert("EXECUTE");
+
     Partner.loadingFlag = true;
     setTimeout(() => {
       Partner.loadingFlag = false;
@@ -39,19 +43,22 @@ class NewMobileSearchBarConatiner extends React.Component {
 
     Partner.currentPage = 1;
     Partner.click_count += 1;
-    await Partner.getPartner(Partner.currentPage, Partner.click_count);
+
+    await Partner.search();
+
+    // 전체 파트너 숫자
     ManufactureProcess.PartnerCount = Partner.partner_count;
-    // console.log(toJS(ManufactureProcess.PartnerCount));
+    console.log(toJS(ManufactureProcess.PartnerCount));
+
+    // 검색어 로그에 저장하기 위한 함수
     if (Partner.search_text) {
       Partner.isSearched = true;
     } else {
       Partner.isSearched = false;
     }
-
+    console.log(Partner.search_text, ManufactureProcess.loadingSaveSearchText);
     if (Partner.search_text != "") {
-      // console.log("click2");
       if (ManufactureProcess.loadingSaveSearchText) {
-        // console.log("click3");
         Partner.subButtonActive = true;
         // console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
@@ -120,6 +127,8 @@ class NewMobileSearchBarConatiner extends React.Component {
   // the request will not send if the input was the same as the suggsKeywords
   // or length equals to 0
   requestSuggestions(keywords) {
+    const { Partner } = this.props;
+
     // current suggs was request with the input keywords
     // no need to send again
     if (this.checkSuggsKeywords(keywords)) {
@@ -155,18 +164,19 @@ class NewMobileSearchBarConatiner extends React.Component {
   // 검색창에 검색을 할 때 text를 observable에 저장하고, 구글 연관검색어 검색
   handleSearcherInputChange(event) {
     const { Partner } = this.props;
-    Partner.searchText = event.target.value;
+    Partner.search_text = event.target.value;
+    console.log(event.target.value);
     this.setState({ showSuggestions: true });
-    this.requestSuggestions(Partner.searchText);
+    this.requestSuggestions(Partner.search_text);
   }
 
   // 제안된 키워드를 선택했을 때, 그 키워드를 text에 저장하고 적용
   handleClickSuggetionsKeywords(event) {
     const { Partner } = this.props;
-    // console.log(event.target.textContent);
-    Partner.searchText = event.target.textContent;
+    console.log(event.target.textContent);
+    Partner.search_text = event.target.textContent;
     this.setState({ showSuggestions: false });
-    this.requestSuggestions(Partner.searchText);
+    this.requestSuggestions(Partner.search_text);
     // 검색하기
     this.search();
   }
@@ -206,9 +216,9 @@ class NewMobileSearchBarConatiner extends React.Component {
 
         if (li.length > 0) {
           // 리스트가 있고, 엔터 시에 클릭된 텍스트로 구글 연관 검색
-          Partner.searchText = li.text();
+          Partner.search_text = li.text();
           this.setState({ showSuggestions: false });
-          this.requestSuggestions(Partner.searchText);
+          this.requestSuggestions(Partner.search_text);
         } else {
           this.setState({ showSuggestions: false });
         }
@@ -227,9 +237,8 @@ class NewMobileSearchBarConatiner extends React.Component {
 
     let suggestions = null;
     // Partner.searchText가 처음에 null 값이라 에러가 떠서 공백문자를 더해줌
-    // console.log(this.state.showSuggestions, this.checkSuggsKeywords(Partner.searchText + ""), this.state.suggs);
     // 구글 검색 제안 리스트
-    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.searchText + "")) {
+    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.search_text + "")) {
       suggestions = this.state.suggs.map(
         function (value, index) {
           return (
@@ -247,17 +256,15 @@ class NewMobileSearchBarConatiner extends React.Component {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <SearchBar active={Partner.subButtonActive}>
               <input
-                placeholder="원하는 분야나 비슷한 제품을 검색해보세요."
+                placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "원하는 분야나 비슷한 제품을 검색해보세요.")}
+                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
-                value={Partner.searchText}
+                value={Partner.search_text}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-
-              <img src={searchIcon} onClick={this.search} style={{ width: 24, height: 24, marginRight: 10, cursor: "pointer" }} />
-              {/* <img style={{ width: 24, height: 24, marginRight: 25 }} src="/static/icon/search_blue.svg" onClick={this.search} /> */}
+              <img style={{ width: 24, height: 24, marginRight: 25 }} src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
 
             <CustomUl>
@@ -270,7 +277,8 @@ class NewMobileSearchBarConatiner extends React.Component {
   }
 }
 
-export default NewMobileSearchBarConatiner;
+export default SearchBarConatiner;
+
 const CustomUl = styled.ul`
   width: 588px;
   height: 150px;
@@ -285,10 +293,11 @@ const CustomLiBox = styled.div`
   width: 588px;
   height: 160px;
   overflow: scroll;
+  // background-color: #ffffff;
 
   > li {
     cursor: pointer;
-    margin-top: 20px;
+    margin: 20px 10px 0px 10px;
     font-size: 18px;
 
     :hover {
@@ -297,34 +306,81 @@ const CustomLiBox = styled.div`
   }
 `;
 
+const categoryArray = [
+  { label: "전체", value: "전체" },
+  // { label: "만든 제품", value: "만든 제품" },
+  // { label: "제목", value: "제목" },
+  // { label: "내용", value: "내용" },
+];
+
 const SearchBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 347px;
-  border-radius: 2px;
-  box-shadow: 4px 5px 4px 5px rgba(146, 146, 146, 0.2);
-  border: solid 1px #0933b3;
+  box-sizing: border-box;
+  border-radius: 60px;
+  box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
+  border: solid 0.5px #c6c7cc;
+  width: 100%;
 
   input {
-    width: 100%;
-    height: 56px;
+    width: 700px;
+    height: 59px;
     border: none;
-   
-    padding: 0 10px 0 10px;
+    border-radius: 60px;
+    padding: 0 14px;
+    margin-left: 10px;
+    font-size: 18px;
     :focus {
       outline: none;
     }
     ::placeholder {
-      #c6c7cc;
+      color: #c6c7cc;
+      font-size: 18px;
     }
   }
-  
+  // @media (min-width: 0px) and (max-width: 767.98px) {
+  //   // margin-top: 30px;
+  //   flex-direction: column;
+  //   input {
+  //     font-size: 12px;
+  //     width: 100%;
+  //   }
+  // }
+  // @media (min-width: 768px) and (max-width: 991.98px) {
+  //   // margin-top: 30px;
+  //   width: ${(props) => (props.active ? "330px" : "100%")};
+  //   input {
+  //     font-size: 16px;
+  //     ::placeholder {
+  //       font-size: 13px;
+  //     }
+  //   }
+  // }
+  // @media (min-width: 992px) and (max-width: 1299.98px) {
+  //   // margin-top: 40px;
+  //   width: ${(props) => (props.active ? "410px" : "100%")};
+  //   input {
+  //     font-size: 17px;
+  //     ::placeholder {
+  //       font-size: 15px;
+  //     }
+  //   }
+  // }
+  // @media (min-width: 1300px) {
+  //   // width: ${(props) => (props.active ? "501px" : "100%")};
+  //   transition: 3s;
+  //   width: 100%;
+  //   input {
+  //     font-size: 18px;
+  //   }
+  // }
+
   // 구글 검색 관련
   .searcher-suggs {
     // position: absolute;
     // background-color: red;
-    // width: 400px;
+    // width: 588px;
   }
 
   .searcher-suggs-word {
@@ -347,14 +403,24 @@ const SearchBar = styled.div`
   }
 
   .searcher-suggs-word.selected {
-    background-color: #0288D1;
+    background-color: #0288d1;
     color: white;
   }
 `;
 
 const Form = styled.div`
-  width: 347px;
-  height: 56px;
-  margin-top: 36px;
-  margin-bottom: 150px;
+  display: flex;
+  justify-content: center;
+  height: 44px;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    // width: 54%;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    // width: 67%;
+  }
+  @media (min-width: 1300px) {
+    //margin-top: 0;
+    // width: 75%;
+  }
 `;
