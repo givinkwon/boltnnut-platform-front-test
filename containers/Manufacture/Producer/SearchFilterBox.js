@@ -274,6 +274,7 @@ class SearchFilterConatiner extends React.Component {
             </FilterCategory>
             {Partner.filter_dropdown && <FilterModalContainer type={this.state.type}></FilterModalContainer>}
 
+
             {Partner.requestModalActive && (
               <Layer>
                 <span>
