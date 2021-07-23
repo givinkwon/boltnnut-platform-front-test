@@ -19,6 +19,15 @@ class SubBoxContainer extends React.Component {
     const { Partner, Auth, partnerId, Project, Common } = this.props;
     // console.log(this.props.Auth.logged_in_client.id);
     // console.log(toJS(`clientId: ${this.props.Auth.logged_in_client.id}`));
+    console.log(toJS(Auth));
+
+    let notLoginUser = false;
+    if (!Auth.logged_in_client && !Auth.logged_in_partner) {
+      notLoginUser = true;
+    }
+
+    const userEmail =
+      Auth.logged_in_client && Auth.logged_in_client.user.username;
     const clientId =
       this.props.Auth.logged_in_client && this.props.Auth.logged_in_client.id;
     console.log(toJS(`partnerId: ${partnerId}`));
@@ -96,7 +105,11 @@ class SubBoxContainer extends React.Component {
           <ShowItem>
             <UserBox>
               <img src={userImg} />
-              <div>로그인 해주세요.</div>
+              {notLoginUser ? (
+                <div>로그인 해주세요.</div>
+              ) : (
+                <div>{userEmail}</div>
+              )}
             </UserBox>
             <SubItem>
               <span>프로젝트 의뢰</span>
