@@ -13,33 +13,6 @@ class Partner {
     //makeObservable(this);
   }
 
-  /* Page 관련 변수 */
-  @observable pageType = "";
-
-  /* Q/A 관련 변수 */
-  @observable questionLoadSuccess = 0;
-  @observable questionClientInfo = {
-    0: "",
-    1: "",
-    2: "",
-    3: "",
-    4: "",
-    5: "",
-    6: "",
-  };
-
-  @observable mergeQuestionList = [];
-  @observable questionCurrentPage = 1;
-  @observable questionPage = 0;
-  @observable questionSaveCount = 0;
-  @observable questionSaveSuccess = 0;
-  @observable questionSearchText = ""; // 글 작성
-  @observable answerSearchText = ""; // 답변 작성
-  @observable secretIdx = 0;
-  @observable questionCount = 0;
-  @observable questionList = new Array(10);
-  @observable writingModalIdx = "";
-
   /* /producer 우측 카드 변수 */
   @observable totalPartnerBookmark = 0;
   @observable totalClientBookmark = 0;
@@ -374,9 +347,6 @@ class Partner {
   @observable recent_partner_name = "";
   @observable recent_partner_img = "";
 
-  // 구글 연관검색어 저장
-  @observable suggest_list = [];
-
   @action movePage = (e) => {
     e.preventDefault();
     const newPage = e.target.innerText * 1;
@@ -495,7 +465,6 @@ class Partner {
           1
         );
         await this.getReviewByPartner(this.partner_detail_list[0].item.id);
-        await this.getQuestion(this.partner_detail_list[0].item.id);
 
         await this.getCityName(this.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
@@ -627,17 +596,6 @@ class Partner {
       7: [],
       8: [],
       9: [],
-    };
-  };
-
-  @action resetQuestionClientObj = () => {
-    this.questionClientInfo = {
-      0: "",
-      1: "",
-      2: "",
-      3: "",
-      4: "",
-      5: "",
     };
   };
 
@@ -845,8 +803,6 @@ class Partner {
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
-
-    this.suggest_list = [];
   };
 
   @action getClientInfo = async (id) => {
@@ -963,30 +919,6 @@ class Partner {
     }
     this.searchjust();
   };
-
-  @action search = () => {
-    const name = this.search_text;
-
-    const req = {
-      data: {
-        search: name,
-        page: this.page,
-      },
-    };
-    console.log(req);
-    PartnerAPI.search(req)
-      .then((res) => {
-        console.log(res);
-        this.partner_list = res.data.results;
-        this.partner_count = res.data.count;
-        this.partner_next = res.data.next;
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
   @action setList = (id, type) => {
     if (type === "category") {
       const index = this.search_category.indexOf(id);
@@ -1011,6 +943,52 @@ class Partner {
       }
     }
     this.search();
+  };
+  @action search = () => {
+    const name = this.search_text;
+    const develop = this.search_develop;
+    const region = this.search_region;
+
+    let subclasses = [];
+    if (this.search_category) {
+      for (let i = 0; i < this.search_category.length; i++) {
+        const category_middle = this.getCategoryById(this.search_category[i]);
+
+        if (category_middle) {
+          category_middle.subclass_set.forEach((subclass) => {
+            subclasses.push(subclass.id);
+          });
+        }
+      }
+    }
+    console.log(subclasses);
+
+    const req = {
+      data: {
+        search: name,
+        // 제품 분야 = 가능 제품 분야
+        history_set__id: subclasses.toString() ? subclasses.toString() : null,
+        // history_set__id: toJS(develop).toString(),
+        region: region.toString() ? region.toString() : null,
+        // 카테고리 = 의뢰 분야
+        category_middle__id: toJS(develop).toString()
+          ? toJS(develop).toString()
+          : null,
+        page: this.page,
+      },
+    };
+    console.log(req);
+    PartnerAPI.search(req)
+      .then((res) => {
+        console.log(res);
+        this.partner_list = res.data.results;
+        this.partner_count = res.data.count;
+        this.partner_next = res.data.next;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 
   // 파트너 정보 제한 검색
@@ -1598,122 +1576,122 @@ class Partner {
   };
 
   //기성품이 없는 신제품의 개발 버튼 클릭했을 때 호출
-  // @action getOtherPartner = async (page = 1) => {
-  //   this.partner_list = [];
-  //   this.category_ary = [];
-  //   this.resetDevCategory();
+  @action getOtherPartner = async (page = 1) => {
+    this.partner_list = [];
+    this.category_ary = [];
+    this.resetDevCategory();
 
-  //   const token = localStorage.getItem("token");
-  //   // alert(this.exceptionCategory);
-  //   let req = {
-  //     params: { page: page },
-  //   };
+    const token = localStorage.getItem("token");
+    // alert(this.exceptionCategory);
+    let req = {
+      params: { page: page },
+    };
 
-  //   let temp = { params: { page: page } };
-  //   if (this.filter_region) {
-  //     temp.params.city = this.filter_region;
-  //     req.params.city = this.filter_region;
-  //   }
+    let temp = { params: { page: page } };
+    if (this.filter_region) {
+      temp.params.city = this.filter_region;
+      req.params.city = this.filter_region;
+    }
 
-  //   if (this.subButtonActive) {
-  //     delete req.params.category_middle__id;
-  //   } else {
-  //     req.params.category_middle__id = 2;
-  //   }
+    if (this.subButtonActive) {
+      delete req.params.category_middle__id;
+    } else {
+      req.params.category_middle__id = 2;
+    }
 
-  //   // if (this.filter_category) {
-  //   //   //temp["category_middle__id"] = this.filter_category;
-  //   //   temp.params.category_middle__id = this.filter_category;
-  //   //   req.params.category_middle__id = this.filter_category;
-  //   // }
+    // if (this.filter_category) {
+    //   //temp["category_middle__id"] = this.filter_category;
+    //   temp.params.category_middle__id = this.filter_category;
+    //   req.params.category_middle__id = this.filter_category;
+    // }
 
-  //   delete req.params.search;
-  //   delete req.params.history;
+    delete req.params.search;
+    delete req.params.history;
 
-  //   if (this.search_class === "전체") {
-  //     if (this.search_text === "") {
-  //       delete req.params.search;
-  //     } else {
-  //       req.params.search = this.search_text;
-  //     }
-  //   }
+    if (this.search_class === "전체") {
+      if (this.search_text === "") {
+        delete req.params.search;
+      } else {
+        req.params.search = this.search_text;
+      }
+    }
 
-  //   if (this.search_class === "만든 제품") {
-  //     if (this.search_text === "") {
-  //       delete req.params.history;
-  //     } else {
-  //       req.params.history = this.search_text;
-  //     }
-  //   }
+    if (this.search_class === "만든 제품") {
+      if (this.search_text === "") {
+        delete req.params.history;
+      } else {
+        req.params.history = this.search_text;
+      }
+    }
 
-  //   console.log(req.params);
+    console.log(req.params);
 
-  //   await PartnerAPI.getPartners(req)
-  //     .then(async (res) => {
-  //       console.log(res);
-  //       this.partner_list = [];
-  //       this.category_ary = [];
-  //       this.category_name_ary = [];
-  //       this.temp_category_name_ary;
+    await PartnerAPI.getPartners(req)
+      .then(async (res) => {
+        console.log(res);
+        this.partner_list = [];
+        this.category_ary = [];
+        this.category_name_ary = [];
+        this.temp_category_name_ary;
 
-  //       this.partner_list = await res.data.results;
+        this.partner_list = await res.data.results;
 
-  //       this.partner_next = res.data.next;
-  //       this.partner_count = res.data.count;
-  //       console.log(toJS(this.partner_list));
-  //       //this.category_ary = res.data.results.category_middle;
-  //       this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-  //       this.partner_list.map((item, idx) => {
-  //         console.log(item);
-  //         this.category_ary.push(item.category_middle);
-  //         //console.log(toJS(item));
-  //         console.log(toJS(this.category_ary));
-  //         this.category_ary[idx].map((data, id) => {
-  //           //console.log(toJS(data));
+        this.partner_next = res.data.next;
+        this.partner_count = res.data.count;
+        console.log(toJS(this.partner_list));
+        //this.category_ary = res.data.results.category_middle;
+        this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
+        this.partner_list.map((item, idx) => {
+          console.log(item);
+          this.category_ary.push(item.category_middle);
+          //console.log(toJS(item));
+          console.log(toJS(this.category_ary));
+          this.category_ary[idx].map((data, id) => {
+            //console.log(toJS(data));
 
-  //           // const request = {
-  //           //   id: data,
-  //           // };
+            // const request = {
+            //   id: data,
+            // };
 
-  //           // if(this.partner_list.length-1 === idx){
+            // if(this.partner_list.length-1 === idx){
 
-  //           // }
-  //           // this.category_ary.map((data, id) => {
-  //           //   console.log(toJS(data));
-  //           // });
-  //           //   console.log(toJS(this.category_name_ary));
+            // }
+            // this.category_ary.map((data, id) => {
+            //   console.log(toJS(data));
+            // });
+            //   console.log(toJS(this.category_name_ary));
 
-  //           //   console.log(toJS(this.category_ary[idx]));
-  //           for (let i = 0; i < this.category_ary[idx].length; i++) {
-  //             const request = {
-  //               id: this.category_ary[idx][i],
-  //             };
-  //             // this.getPartnerCategory(request, i, idx);
-  //           }
-  //         });
-  //       });
+            //   console.log(toJS(this.category_ary[idx]));
+            for (let i = 0; i < this.category_ary[idx].length; i++) {
+              const request = {
+                id: this.category_ary[idx][i],
+              };
+              // this.getPartnerCategory(request, i, idx);
+            }
+          });
+        });
 
-  //       await this.category_ary.map(async (data, id) => {
-  //         console.log(toJS(data));
-  //         console.log(id);
-  //         await data.map(async (sub_data, index) => {
-  //           const req = {
-  //             id: sub_data,
-  //           };
+        await this.category_ary.map(async (data, id) => {
+          console.log(toJS(data));
+          console.log(id);
+          await data.map(async (sub_data, index) => {
+            const req = {
+              id: sub_data,
+            };
 
-  //           await this.setCategoryDic(req, sub_data, id);
-  //         });
-  //       });
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //       console.log(e.response);
-  //     });
-  //   this.check_loading_develop = true;
-  //   console.log(this.check_loading_develop);
+            await this.setCategoryDic(req, sub_data, id);
+          });
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    this.check_loading_develop = true;
+    console.log(this.check_loading_develop);
 
-  //   this.filterLoading = true;
-  // };
+    this.filterLoading = true;
+  };
 
   @action getPartner = async (page = 1, click = 0) => {
     this.partner_list = [];
@@ -2166,7 +2144,6 @@ class Partner {
             res.data
           );
         }
-        console.log(this.review_partner_page);
         console.log(this.partnerReviewList);
         console.log(this.partnerAllReviewList);
       })
@@ -2208,41 +2185,28 @@ class Partner {
   // });
   // }
 
-  @action getClientNameById = async (id, idx, type = "default") => {
+  @action getClientNameById = async (id, idx) => {
     console.log(id);
     console.log(idx);
     const req = {
       params: null,
     };
-
     await PartnerAPI.getClient(id, req).then(async (res) => {
-      console.log(type);
-      if (type === "default") {
-        console.log(res.data);
-        console.log(`${idx} : ${id} ============= ${res.data}`);
-        this.clientInfoList = await this.clientInfoList.concat(res.data);
+      console.log(res.data);
+      console.log(`${idx} : ${id} ============= ${res.data}`);
+      this.clientInfoList = await this.clientInfoList.concat(res.data);
 
-        console.log(this.clientInfoList);
+      // this.clientInfoList[id] = res.data;
 
-        // this.clientInfoList[id] = res.data;
+      // console.log(this.clientInfoList);
 
-        // console.log(this.clientInfoList);
-
-        if (!this.review_client_obj.hasOwnProperty(id)) {
-          this.review_client_obj[idx] = [];
-        }
-        this.review_client_obj[idx] = await [
-          ...this.review_client_obj[idx],
-          res.data.user.username,
-        ];
+      if (!this.review_client_obj.hasOwnProperty(id)) {
+        this.review_client_obj[idx] = [];
       }
-      if (type === "question") {
-        console.log(res.data);
-        console.log(res.data.user.username);
-        this.questionClientInfo[idx] = await res.data.user.username;
-        console.log(toJS(this.questionClientInfo));
-        // return res.data.user.username;
-      }
+      this.review_client_obj[idx] = await [
+        ...this.review_client_obj[idx],
+        res.data.user.username,
+      ];
     });
     console.log(toJS(this.review_client_obj));
   };
@@ -2283,10 +2247,6 @@ class Partner {
         this.projectIdx = !this.projectIdx;
         console.log(this.projectIdx);
         break;
-      case "secret":
-        this.secretIdx = !this.secretIdx;
-        console.log(this.secretIdx);
-        break;
     }
   };
 
@@ -2323,14 +2283,6 @@ class Partner {
           return false;
         }
         break;
-      case "secret":
-        console.log(this.secretIdx);
-        if (this.secretIdx) {
-          return true;
-        } else {
-          return false;
-        }
-        break;
     }
   };
 
@@ -2344,8 +2296,6 @@ class Partner {
         break;
     }
   };
-
-  @action submitHandler = () => {};
 
   /*  
       - 관심 업체를 등록하는 함수
@@ -2477,109 +2427,6 @@ class Partner {
       });
   };
 
-  @action mergeQuestion = async () => {
-    this.mergeQuestionList = [];
-    // this.resetQuestionClientObj();
-    await this.questionList.map(async (item, idx) => {
-      console.log(item);
-
-      // await this.getClientNameById(item.client, idx, "question");
-      console.log(toJS(this.questionClientInfo));
-
-      // item.client = this.questionClientInfo[idx];
-      this.mergeQuestionList = this.mergeQuestionList.concat(item);
-      console.log(toJS(this.mergeQuestionList));
-      // console.log(item.client);
-      if (item.reply) {
-        await item.reply.map(async (subItem, subIdx) => {
-          console.log(subItem);
-          subItem.recomment = true;
-          if (!subItem.state) {
-            // subItem.client = this.questionClientInfo[idx];
-            subItem.client = item.client;
-          }
-          this.mergeQuestionList = this.mergeQuestionList.concat(subItem);
-          console.log(toJS(this.mergeQuestionList));
-        });
-      }
-    });
-    console.log(toJS(this.mergeQuestionList));
-    console.log(toJS(this.mergeQuestionList.length));
-    for (let i = 0; i < this.mergeQuestionList.length; i++) {
-      this.questionClientInfo[i] = "";
-    }
-    console.log(toJS(this.questionClientInfo));
-    await this.mergeQuestionList.map(async (item, idx) => {
-      await this.getClientNameById(item.client, idx, "question");
-
-      console.log(toJS(this.questionClientInfo));
-      // item.name = this.questionClientInfo[idx];
-      // if (this.questionClientInfo[this.mergeQuestionList.length - 1] !== "") {
-      //   this.questionLoadSuccess = 1;
-      //   setTimeout(() => {
-      //     this.questionLoadSuccess = 0;
-      //   }, 1000);
-      // }
-    });
-    console.log(toJS(this.mergeQuestionList));
-    console.log("END");
-  };
-
-  @action getQuestion = async (partnerId, page = 1) => {
-    console.log("getQuestion");
-    this.questionList = [];
-    const req = {
-      params: {
-        partnerID: partnerId,
-        page: page,
-      },
-    };
-
-    await PartnerAPI.getQuestion(req)
-      .then(async (res) => {
-        console.log(res);
-        // console.log(res.data.count);
-        this.questionCount = res.data.count;
-        this.questionList = await this.questionList.concat(res.data.results);
-        this.questionSaveSuccess = 1;
-        // questionList
-        this.questionPage = parseInt((this.questionCount - 1) / 5) + 1;
-
-        await this.mergeQuestion();
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
-  @action setQuestion = async (clientID, partnerID, secret, content) => {
-    console.log(clientID);
-    console.log(partnerID);
-    console.log(secret);
-    console.log(content);
-    const formData = new FormData();
-    formData.append("clientID", clientID);
-    formData.append("partnerID", partnerID);
-    formData.append("secret", secret ? 1 : 0);
-    formData.append("content", content);
-
-    const req = {
-      data: formData,
-    };
-
-    await PartnerAPI.setQuestion(req)
-      .then((res) => {
-        console.log(res);
-        alert("글 작성이 완료되었습니다");
-      })
-      .catch((e) => {
-        alert("글 작성을 실패했습니다");
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
   @action getBusinessCategory = (id) => {
     const req = {
       id: id,
@@ -2668,9 +2515,6 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-  };
-  @action changeQuestion = () => {
-    this.questionSaveCount += 1;
   };
 }
 

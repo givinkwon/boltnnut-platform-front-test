@@ -23,6 +23,7 @@ const pass2 = "static/images/pass2.svg";
 const pass4 = "static/images/pass4.png";
 const nosearch = "static/icon/nosearch.svg";
 const rightarrow = "static/icon/right_arrow.svg";
+const close = "static/icon/close_btn.svg";
 
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
@@ -51,7 +52,12 @@ class ManufacturerContentContainer extends React.Component {
     await this.props.Auth.checkLogin();
     console.log(this.props.Auth.logged_in_user);
 
-    var recent_partner_dic = {};
+    var recent_partner_dic = [];
+
+    await Partner.partner_list.map((item, idx) => {
+      Partner.getTotalBookmarkByPartner(item.id);
+      Partner.getReviewByPartner;
+    });
 
     await Cookie.partner_view_list.map((item, idx) => {
       console.log(item);
@@ -59,14 +65,16 @@ class ManufacturerContentContainer extends React.Component {
       PartnerAPI.detail(item)
         .then((res) => {
           console.log(res);
+
           recent_partner_dic[res.data.name] =
             res.data.portfolio_set[0].img_portfolio;
+
           this.setState({
             recent_partner_dic: recent_partner_dic,
+            recent_partner_name: res.data.name,
           });
-
-          console.log(toJS(this.state.recent_partner_dic));
-          console.log(toJS(this.state.recent_partner_dic.length));
+          console.log(this.state.recent_partner_dic);
+          console.log(this.recent_partner_name);
         })
         .catch((e) => {
           console.log(e);
@@ -79,8 +87,6 @@ class ManufacturerContentContainer extends React.Component {
   temp = (e) => {
     const { Partner } = this.props;
     e.preventDefault();
-    // const newPage = e.target.innerText * 1;
-    // Partner.currentPage = 182;
     Partner.currentPage = 386;
     Partner.resetDevCategory();
     Partner.check_loading_develop = false;
@@ -248,7 +254,20 @@ class ManufacturerContentContainer extends React.Component {
                         Object.keys(this.state.recent_partner_dic).map(
                           (name) => (
                             <RecentPartnerContent>
-                              <div>{name}</div>
+                              <div
+                                style={{
+                                  width: 156,
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <div style={{ width: 149 }}>{name}</div>
+                                <img
+                                  src={close}
+                                  style={{ widht: "7.7px", height: "7.7px" }}
+                                ></img>
+                              </div>
                               <img
                                 src={this.state.recent_partner_dic[name]}
                               ></img>
@@ -290,8 +309,6 @@ class ManufacturerContentContainer extends React.Component {
             </Body>
           </Container>
         </Background>
-
-        <div onClick={this.temp}>진수정밀</div>
         <PageBar>
           <img
             src={pass1}
@@ -591,11 +608,11 @@ const MainBody = styled.div`
   }
 `;
 const Aside = styled.div`
-  width: 200px;
+  width: 200px;e
 `;
 
 const RecentPartner = styled.div`
-  height: 784px;
+  height: 770px;
   width: 180px;
   border-radius: 10px;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.08);
@@ -614,10 +631,10 @@ const RecentPartner = styled.div`
     border-top-right-radius: 10px;
   }
   body {
-    height: 744px;
-    display: flex;
+    height: 730px;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 180px;
     font-size: 14px;
     display: flex;
@@ -629,7 +646,20 @@ const RecentPartner = styled.div`
   }
 `;
 
-const RecentPartnerContent = styled.div``;
+const RecentPartnerContent = styled.div`
+  height: 95%:
+  div {
+    font-size: 14px;
+    color: #1e2222;
+    line-height: 2.86;
+    letter-spacing: -0.35px;
+  }
+  img {
+    width: 156px;
+    height: 120px;
+    border-radius: 10px;
+  }
+`;
 
 const MyInfo = styled.div`
   width: 180px;

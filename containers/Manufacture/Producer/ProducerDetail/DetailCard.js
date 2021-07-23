@@ -225,6 +225,7 @@ class DetailCardContainer extends React.Component {
     console.log(total_kindness_score);
     console.log(total_communication_score);
     console.log(total_profession_score);
+    console.log(total_consult_score);
 
     Partner.partnerAllReviewList[0]
       ? this.setState({

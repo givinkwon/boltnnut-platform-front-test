@@ -3,7 +3,8 @@ import React from "react";
 import BannerConatiner from "./Banner";
 import SearchBar from "./SearchBar";
 import SearchFilterBox from "./SearchFilterBox";
-import MobileSearchBar from "./MobileSearchBar";
+import MobileSearchFilterBox from "./MobileSearchFilterBox";
+
 import ContentContainer from "./Content";
 import MobileContentContainer from "./MobileContent";
 import Container from "components/Containerv1";
@@ -68,7 +69,7 @@ class ProducerConatiner extends React.Component {
               {/* 제조사 찾기 모바일 버전 기본 화면 */}
               {Partner.mobileRequestIndex == 0 && (
                 <>
-                  <MobileSearchBar width={this.props.width} />
+                  <MobileSearchFilterBox width={this.props.width} />
                   <MobileContentContainer width={this.props.width} />
                 </>
               )}
