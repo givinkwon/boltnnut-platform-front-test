@@ -6,13 +6,13 @@ import { inject, observer } from "mobx-react";
 @observer
 class BlackBox extends React.Component {
   render() {
-    const { src, content, Common } = this.props;
+    const { src, content, Common, top } = this.props;
     return (
       <>
-        <Layer>
+        <Layer top={top}>
           <Content>{content}</Content>
           <Button onClick={() => (location.href = Common.makeUrl("login"))}>
-            볼트앤너트 회원가입
+            로그인하기
           </Button>
         </Layer>
       </>
@@ -37,7 +37,7 @@ const Layer = styled.div`
   height: 164px;
   position: absolute;
   z-index: 99;
-  top: 38%;
+  top: ${(props) => (props.top ? props.top : "38")}%;
   right: 20%;
   display: flex;
   flex-direction: column;

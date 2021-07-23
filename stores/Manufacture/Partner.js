@@ -505,6 +505,16 @@ class Partner {
     }
   };
 
+  @action filedownload = (url) => {
+    if (!url) {
+      alert("준비중입니다.");
+    }
+    // const url = data.file;
+    const link = document.createElement("a");
+    link.href = url;
+    link.click();
+  };
+
   @action onChangeFile = (e) => {
     if (e && e.currentTarget.files[0]) {
       console.log(e.currentTarget);
