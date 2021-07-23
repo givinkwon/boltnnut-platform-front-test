@@ -56,7 +56,6 @@ class Partner {
   @observable page = 1;
   @observable currentPage = 1;
 
-  @observable search = "";
   @observable search_text = "";
   @observable search_category = [];
   @observable search_develop = [];

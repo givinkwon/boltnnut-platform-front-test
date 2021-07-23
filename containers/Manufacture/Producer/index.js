@@ -4,7 +4,7 @@ import BannerConatiner from "./Banner";
 import SearchBar from "./SearchBar";
 import SearchFilterBox from "./SearchFilterBox";
 import MobileSearchFilterBox from "./MobileSearchFilterBox";
-import MobileSearchBar from "./MobileSearchBar";
+
 import ContentContainer from "./Content";
 import MobileContentContainer from "./MobileContent";
 import Container from "components/Containerv1";

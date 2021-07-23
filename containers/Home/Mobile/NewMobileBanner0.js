@@ -4,6 +4,8 @@ import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
 import NewMobileSearchBar from "../../Manufacture/Producer/NewMobileSearchBar";
 
+const startling = "/static/images/startline.svg";
+
 class NewMobileBanner0Container extends React.Component {
   render() {
     return (
@@ -16,6 +18,10 @@ class NewMobileBanner0Container extends React.Component {
           </Title16>
 
           <NewMobileSearchBar />
+
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <StartLine />
+          </div>
         </InnerContainer>
       </Container>
     );
@@ -23,6 +29,12 @@ class NewMobileBanner0Container extends React.Component {
 }
 
 export default NewMobileBanner0Container;
+
+const StartLine = styled.div`
+  width: 18px;
+  border: solid 1px #999999;
+  margin-bottom: 24px;
+`;
 
 const Container = styled(Containerv1)`
   display: flex;

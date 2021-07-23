@@ -3,10 +3,9 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import SelectComponent from "Select";
 import MobileSelectComponent from "MobileSelect";
-
+import FilterBoxSearchBar from "./FilterBoxSearchBar";
 import ButtonComponent from "components/Buttonv2";
 import SearchBar from "./SearchBar";
-import MobileSearchBar from "./SearchBar";
 import FilterBox from "./FilterBox";
 import FilterBox2 from "./FilterBox2";
 import Background from "components/Background";
@@ -207,7 +206,9 @@ class MobileSearchFilterConatiner extends React.Component {
     console.log(this.state.type)
     return (
           <ContainerV2>
-            <MobileSearchBar />
+
+            <FilterBoxSearchBar />
+
             <FilterCategory>
               <Category>
                 <CategoryName>카테고리</CategoryName>

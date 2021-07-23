@@ -126,15 +126,15 @@ class Nav extends React.Component {
               <BoltLogo>
                 <KSLink url={""} logoImg={bnlogo} />
               </BoltLogo>
+
               <Menu is_open={is_open}>
                 <Close>
-                  <Icon src={close_ic} onClick={() => this.setState({ is_open: false })} />
+                  <Icon src={bnlogo} onClick={() => this.setState({ is_open: false })} />
                 </Close>
 
                 {this.props.Auth.logged_in_user ? (
                   this.props.Auth.logged_in_user.type === 0 ? (
                     /* client로 로그인 */
-
                     <Fragment>
                       <NavLink active={url.indexOf("producer") > -1}>
                         <KSLink url={"producer"} content={"제조사 찾기"} />
@@ -172,6 +172,7 @@ class Nav extends React.Component {
                     </NavLink>
                   </Fragment>
                 )}
+
                 {/* 로그인한/안한 경우 */}
                 {token ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>
@@ -212,11 +213,12 @@ class Nav extends React.Component {
                     }}
                     active={url.indexOf("login") > -1}
                   >
-                    <KSLink url={"login"} content={"로그인"} />
+                    <KSLink url={"login"} content={"바꾸자"} />
                     {/* 로그인 */}
                   </NavLink>
                 )}
               </Menu>
+
               <Icon src={hamburger_ic} onClick={() => this.setState({ is_open: true })} />
               {is_open && <BG onClick={() => this.setState({ is_open: false })} />}
             </NavWrap>
