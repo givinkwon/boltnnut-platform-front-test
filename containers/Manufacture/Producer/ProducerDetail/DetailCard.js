@@ -104,7 +104,7 @@ class DetailCardContainer extends React.Component {
     console.log(this.state.g);
     console.log(nextState.g);
 
-    // return this.state.g !== nextState.g;
+    return this.state.g !== nextState.g;
   };
 
   componentDidMount = async () => {
@@ -225,7 +225,6 @@ class DetailCardContainer extends React.Component {
     console.log(total_kindness_score);
     console.log(total_communication_score);
     console.log(total_profession_score);
-    console.log(total_consult_score);
 
     Partner.partnerAllReviewList[0]
       ? this.setState({
@@ -882,8 +881,7 @@ class DetailCardContainer extends React.Component {
                       active={Partner.reviewCurrentPage % 5 == 1}
                       style={{
                         display:
-                          Partner.review_partner_page <
-                          5 * (current_set - 1) + 1
+                          Partner.review_partner_page < 5 * (current_set - 1)
                             ? "none"
                             : "block",
                       }}

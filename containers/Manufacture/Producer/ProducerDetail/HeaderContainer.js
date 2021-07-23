@@ -21,7 +21,8 @@ class HeaderContainer extends React.Component {
     console.log("render");
     const { Partner, Auth } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
-    const partnerId = Partner.partner_detail_list[0].item.id;
+    const partnerId =
+      Partner.partner_detail_list[0] && Partner.partner_detail_list[0].item.id;
     const loggedInPartnerId =
       Auth.logged_in_partner && Auth.logged_in_partner.id;
     console.log(Partner.interestedIdx);
