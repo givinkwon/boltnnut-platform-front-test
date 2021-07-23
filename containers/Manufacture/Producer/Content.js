@@ -247,7 +247,13 @@ class ManufacturerContentContainer extends React.Component {
                   <RecentPartner>
                     <header>
                       <div style={{ marginLeft: 10 }}>최근 본 제조사</div>
-                      <div style={{ marginRight: 10 }}>0</div>
+                      <div style={{ marginRight: 10 }}>
+                        {this.state.recent_partner_dic ? (
+                          Object.keys(this.state.recent_partner_dic).length
+                        ) : (
+                          <></>
+                        )}
+                      </div>
                     </header>
                     <body>
                       {this.state.recent_partner_dic ? (
@@ -608,7 +614,7 @@ const MainBody = styled.div`
   }
 `;
 const Aside = styled.div`
-  width: 200px;e
+  width: 240px;
 `;
 
 const RecentPartner = styled.div`

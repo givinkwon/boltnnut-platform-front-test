@@ -102,7 +102,12 @@ class SearchBarConatiner extends React.Component {
       return false;
     }
 
-    let rect = { x: elem.offset().left, y: elem.offset().top, w: elem.outerWidth(), h: elem.outerHeight() };
+    let rect = {
+      x: elem.offset().left,
+      y: elem.offset().top,
+      w: elem.outerWidth(),
+      h: elem.outerHeight(),
+    };
 
     if (x < rect.x || y < rect.y || x > rect.x + rect.w || y > rect.y + rect.h) {
       return false;

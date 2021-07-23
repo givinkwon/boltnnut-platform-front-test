@@ -60,6 +60,7 @@ const onError = (e) => {
 };
 
 let loadingCounter = 0;
+let index = 0;
 
 @inject("Partner", "Auth")
 @observer
@@ -164,7 +165,9 @@ class MobileDetailCardContainer extends React.Component {
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
     console.log("unmount");
-    Partner.recentPartnerList.push(Partner.partner_detail_list[0].item);
+    if (Partner.partner_detail_list[0]) {
+      Partner.recentPartnerList.push(Partner.partner_detail_list[0].item);
+    }
     Partner.review_partner_page = 1;
     loadingCounter = 0;
     window.removeEventListener("scroll", this.loadScroll);
@@ -272,7 +275,9 @@ class MobileDetailCardContainer extends React.Component {
     const { width, Partner, Auth } = this.props;
     // const clientId = this.props.Auth.logged_in_client.id;
     // const partnerId = Partner.partner_detail_list[0].item.id;
-    const index = Partner.partner_detail_list[0].idx;
+    if (Partner.partner_detail_list[0]) {
+      index = Partner.partner_detail_list[0].idx;
+    }
     const length = Partner.partner_list.length;
     console.log(this.props.Partner.subViewerLoading);
     console.log(index);
@@ -314,7 +319,7 @@ class MobileDetailCardContainer extends React.Component {
       autoplay: true,
       autoplaySpeed: 2000,
     };
-    console.log(Partner.city_name)
+    console.log(Partner.city_name);
     return (
       <>
         <Card id="card" width={width}>
@@ -423,7 +428,7 @@ class MobileDetailCardContainer extends React.Component {
               <label>평가 후기</label>
             </div>
 
-            <ReviewSummaryContainer width={this.props.width}/>
+            <ReviewSummaryContainer width={this.props.width} />
             <content>
               <ReviewTop>
                 {Partner.partnerReviewList[0] && (
@@ -600,7 +605,7 @@ class MobileDetailCardContainer extends React.Component {
 
           <QuestionBox>
             <Font24>업체 Q&A</Font24>
-            <QuestionContainer />
+            {/* <QuestionContainer /> */}
           </QuestionBox>
 
           <IntroductionBox width={width}>
@@ -694,7 +699,7 @@ class MobileDetailCardContainer extends React.Component {
         {/* <SubCard>
           <SubBoxContainer partnerId={Partner.partner_detail_list[0].item.id} />
           {/* <RequestContainer /> */}
-          {/* <RecentPartnerContainer /> */}
+        {/* <RecentPartnerContainer /> */}
         {/* </SubCard> */}
       </>
     );
