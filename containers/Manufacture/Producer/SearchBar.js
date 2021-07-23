@@ -10,8 +10,9 @@ import Router from "next/router";
 import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
+import Category from "../../../stores/Manufacture/Category";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer")
+@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer", "Category")
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -25,11 +26,15 @@ class SearchBarConatiner extends React.Component {
 
   // 검색함수
   search = async () => {
-    const { Partner, ManufactureProcess } = this.props;
+    const { Partner, ManufactureProcess, Category } = this.props;
+
+    // 연관검색어 저장
+    Partner.suggest_list = this.state.suggs;
+    console.log(toJS(Partner.suggest_list));
 
     await Router.push("/producer");
     // console.log("click");
-    // alert("EXECUTE");
+
     Partner.loadingFlag = true;
     setTimeout(() => {
       Partner.loadingFlag = false;
@@ -37,19 +42,22 @@ class SearchBarConatiner extends React.Component {
 
     Partner.currentPage = 1;
     Partner.click_count += 1;
-    await Partner.getPartner(Partner.currentPage, Partner.click_count);
+
+    await Partner.search();
+
+    // 전체 파트너 숫자
     ManufactureProcess.PartnerCount = Partner.partner_count;
-    // console.log(toJS(ManufactureProcess.PartnerCount));
+    console.log(toJS(ManufactureProcess.PartnerCount));
+
+    // 검색어 로그에 저장하기 위한 함수
     if (Partner.search_text) {
       Partner.isSearched = true;
     } else {
       Partner.isSearched = false;
     }
-
+    console.log(Partner.search_text, ManufactureProcess.loadingSaveSearchText);
     if (Partner.search_text != "") {
-      // console.log("click2");
       if (ManufactureProcess.loadingSaveSearchText) {
-        // console.log("click3");
         Partner.subButtonActive = true;
         // console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
@@ -118,6 +126,8 @@ class SearchBarConatiner extends React.Component {
   // the request will not send if the input was the same as the suggsKeywords
   // or length equals to 0
   requestSuggestions(keywords) {
+    const { Partner } = this.props;
+
     // current suggs was request with the input keywords
     // no need to send again
     if (this.checkSuggsKeywords(keywords)) {
@@ -153,18 +163,19 @@ class SearchBarConatiner extends React.Component {
   // 검색창에 검색을 할 때 text를 observable에 저장하고, 구글 연관검색어 검색
   handleSearcherInputChange(event) {
     const { Partner } = this.props;
-    Partner.searchText = event.target.value;
+    Partner.search_text = event.target.value;
+    console.log(event.target.value);
     this.setState({ showSuggestions: true });
-    this.requestSuggestions(Partner.searchText);
+    this.requestSuggestions(Partner.search_text);
   }
 
   // 제안된 키워드를 선택했을 때, 그 키워드를 text에 저장하고 적용
   handleClickSuggetionsKeywords(event) {
     const { Partner } = this.props;
-    // console.log(event.target.textContent);
-    Partner.searchText = event.target.textContent;
+    console.log(event.target.textContent);
+    Partner.search_text = event.target.textContent;
     this.setState({ showSuggestions: false });
-    this.requestSuggestions(Partner.searchText);
+    this.requestSuggestions(Partner.search_text);
     // 검색하기
     this.search();
   }
@@ -204,9 +215,9 @@ class SearchBarConatiner extends React.Component {
 
         if (li.length > 0) {
           // 리스트가 있고, 엔터 시에 클릭된 텍스트로 구글 연관 검색
-          Partner.searchText = li.text();
+          Partner.search_text = li.text();
           this.setState({ showSuggestions: false });
-          this.requestSuggestions(Partner.searchText);
+          this.requestSuggestions(Partner.search_text);
         } else {
           this.setState({ showSuggestions: false });
         }
@@ -225,9 +236,8 @@ class SearchBarConatiner extends React.Component {
 
     let suggestions = null;
     // Partner.searchText가 처음에 null 값이라 에러가 떠서 공백문자를 더해줌
-    // console.log(this.state.showSuggestions, this.checkSuggsKeywords(Partner.searchText + ""), this.state.suggs);
     // 구글 검색 제안 리스트
-    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.searchText + "")) {
+    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.search_text + "")) {
       suggestions = this.state.suggs.map(
         function (value, index) {
           return (
@@ -249,7 +259,7 @@ class SearchBarConatiner extends React.Component {
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
-                value={Partner.searchText}
+                value={Partner.search_text}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
@@ -408,74 +418,5 @@ const Form = styled.div`
   @media (min-width: 1300px) {
     //margin-top: 0;
     // width: 75%;
-  }
-`;
-
-const SearchButton = styled(ButtonComponent)`
-  // border-radius: 3px;
-  background-color: #0933b3;
-  margin-left: -5px;
-  box-sizing: border-box;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 70px;
-    border: 1px solid #ffffff80;
-    img {
-      margin-right: 0 !important;
-    }
-    > p {
-      display: none;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 44px;
-  }
-`;
-
-const Select = styled(SelectComponent)`
-  width: 220px;
-  height: 44px;
-  box-sizing: border-box;
-  option {
-    color: #c1bfbf;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin: 0;
-    padding: 0;
-    margin-right: 8px;
-    width: 100%;
-    height: 32px;
-    object-fit: contain;
-    border-radius: 2px;
-    border: solid 0.5px #c7c7c7;
-    background-color: #ffffff;
-    position: relative;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 120px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 140px;
-    > input {
-      ::placeholder {
-        font-size: 15px;
-      }
-    }
-  }
-  @media (min-width: 1300px) {
-    width: 125px;
-  }
-`;
-
-const Box = styled.div`
-  width: 220px;
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 120px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 140px;
-  }
-  @media (min-width: 1300px) {
-    width: 125px;
   }
 `;

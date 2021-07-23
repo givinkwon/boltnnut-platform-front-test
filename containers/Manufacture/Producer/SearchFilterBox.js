@@ -164,8 +164,8 @@ class SearchFilterConatiner extends React.Component {
     }
 
     // 공정 선택
-    if (flag == "develop") {
-      this.setState({ ...this.state, type: "develop" });
+    if (flag == "develop&material") {
+      this.setState({ ...this.state, type: "develop&material" });
     }
 
     if (Partner.filter_dropdown) {
@@ -262,7 +262,7 @@ class SearchFilterConatiner extends React.Component {
                 <Material>
                   <div
                     onClick={() => {
-                      this.dropdownHandler("develop");
+                      this.dropdownHandler("develop&material");
                     }}
                   >
                     <img

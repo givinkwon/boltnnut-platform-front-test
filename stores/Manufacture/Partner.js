@@ -6,7 +6,7 @@ import Router from "next/router";
 import { isConstructorDeclaration } from "typescript";
 import NoneDrawingConsultingContainer from "containers/Manufacture/Request/NoneDrawingConsulting";
 
-import Category from "./Category"
+import Category from "./Category";
 
 class Partner {
   constructor() {
@@ -56,7 +56,6 @@ class Partner {
   @observable page = 1;
   @observable currentPage = 1;
 
-  @observable search = "";
   @observable search_text = "";
   @observable search_category = [];
   @observable search_develop = [];
@@ -93,6 +92,7 @@ class Partner {
   @observable city_next = 0;
   @observable city_name = "";
 
+  @observable business_name = [];
   @observable filter_checked_idx = 0;
 
   @observable input_process_filter = null;
@@ -341,6 +341,12 @@ class Partner {
 
   @observable filter_active = false;
   @observable activeReview = false;
+
+  @observable recent_partner_name = "";
+  @observable recent_partner_img = "";
+
+  // 구글 연관검색어 저장
+  @observable suggest_list = []; 
 
   @action movePage = (e) => {
     e.preventDefault();
@@ -788,6 +794,8 @@ class Partner {
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
+
+    this.suggest_list = [];
   };
 
   @action getClientInfo = async (id) => {
@@ -904,6 +912,30 @@ class Partner {
     }
     this.searchjust();
   };
+  
+  @action search = () => {
+    const name = this.search_text;
+
+    const req = {
+      data: {
+        search: name,
+        page: this.page,
+      },
+    };
+    console.log(req);
+    PartnerAPI.search(req)
+      .then((res) => {
+        console.log(res);
+        this.partner_list = res.data.results;
+        this.partner_count = res.data.count;
+        this.partner_next = res.data.next;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
   @action setList = (id, type) => {
     if (type === "category") {
       const index = this.search_category.indexOf(id);
@@ -928,52 +960,6 @@ class Partner {
       }
     }
     this.search();
-  };
-  @action search = () => {
-    const name = this.search_text;
-    const develop = this.search_develop;
-    const region = this.search_region;
-
-    let subclasses = [];
-    if (this.search_category) {
-      for (let i = 0; i < this.search_category.length; i++) {
-        const category_middle = this.getCategoryById(this.search_category[i]);
-
-        if (category_middle) {
-          category_middle.subclass_set.forEach((subclass) => {
-            subclasses.push(subclass.id);
-          });
-        }
-      }
-    }
-    console.log(subclasses);
-
-    const req = {
-      data: {
-        search: name,
-        // 제품 분야 = 가능 제품 분야
-        history_set__id: subclasses.toString() ? subclasses.toString() : null,
-        // history_set__id: toJS(develop).toString(),
-        region: region.toString() ? region.toString() : null,
-        // 카테고리 = 의뢰 분야
-        category_middle__id: toJS(develop).toString()
-          ? toJS(develop).toString()
-          : null,
-        page: this.page,
-      },
-    };
-    console.log(req);
-    PartnerAPI.search(req)
-      .then((res) => {
-        console.log(res);
-        this.partner_list = res.data.results;
-        this.partner_count = res.data.count;
-        this.partner_next = res.data.next;
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
   };
 
   // 파트너 정보 제한 검색
@@ -1671,28 +1657,32 @@ class Partner {
     // 카테고리 선택되어 있을 때
     if (Category.business_selected.length) {
       toJS(Category.business_selected).map((data) => {
-        this.business_string += data + ","
-        console.log(this.business_string)
-      }
-      )
+        this.business_string += data + ",";
+        console.log(this.business_string);
+      });
       // 마지막 쉼표 제거하기 위함
-      this.business_string = this.business_string.substr(0, this.business_string.length-1)
-      
+      this.business_string = this.business_string.substr(
+        0,
+        this.business_string.length - 1
+      );
+
       // 괄호를 없애서 전처리
-      req.params.business = this.business_string; 
+      req.params.business = this.business_string;
     }
 
     // 업체 분류 선택되어 있을 때
     if (Category.category_selected.length) {
-      console.log(toJS(Category.category_selected))
+      console.log(toJS(Category.category_selected));
       toJS(Category.category_selected).map((data) => {
-        this.category_string += data + ","
-        console.log(this.category_string)
-      }
-      )
+        this.category_string += data + ",";
+        console.log(this.category_string);
+      });
       // 마지막 쉼표 제거하기 위함
-      this.category_string = this.category_string.substr(0, this.category_string.length-1)
-      console.log(this.category_string)
+      this.category_string = this.category_string.substr(
+        0,
+        this.category_string.length - 1
+      );
+      console.log(this.category_string);
       // 괄호를 없애서 전처리
       req.params.category = this.category_string;
     }
@@ -1700,47 +1690,53 @@ class Partner {
     // 지역 분류 선택되어 있을 때
     if (Category.city_selected.length) {
       toJS(Category.city_selected).map((data) => {
-        this.city_string += data + ","
-        console.log(this.city_string)  
-      }
-      )
+        this.city_string += data + ",";
+        console.log(this.city_string);
+      });
       // 마지막 쉼표 제거하기 위함
- 
-      this.city_string = this.city_string.substr(0, this.city_string.length-1)
-  
+
+      this.city_string = this.city_string.substr(
+        0,
+        this.city_string.length - 1
+      );
+
       // 괄호를 없애서 전처리
-      req.params.city = this.city_string; 
+      req.params.city = this.city_string;
     }
-    
+
     // 공정 분류 선택되어 있을 때
     if (Category.develop_selected.length) {
       toJS(Category.develop_selected).map((data) => {
-        this.develop_string += data + ","
-        console.log(this.develop_string)
-      }
-      )
+        this.develop_string += data + ",";
+        console.log(this.develop_string);
+      });
       // 마지막 쉼표 제거하기 위함
-      this.develop_string = this.develop_string.substr(0, this.develop_string.length-1)
-      
+      this.develop_string = this.develop_string.substr(
+        0,
+        this.develop_string.length - 1
+      );
+
       // 괄호를 없애서 전처리
-      req.params.develop = this.develop_string; 
+      req.params.develop = this.develop_string;
     }
 
     // 소재 분류 선택되어 있을 때
     if (Category.material_selected.length) {
       toJS(Category.material_selected).map((data) => {
-        this.material_string += data + ","
-        console.log(this.material_string)
-      }
-      )
+        this.material_string += data + ",";
+        console.log(this.material_string);
+      });
       // 마지막 쉼표 제거하기 위함
-      this.material_string = this.material_string.substr(0, this.material_string.length-1)
-      
+      this.material_string = this.material_string.substr(
+        0,
+        this.material_string.length - 1
+      );
+
       // 괄호를 없애서 전처리
-      req.params.material = this.material_string; 
+      req.params.material = this.material_string;
     }
 
-    console.log(req.params)
+    console.log(req.params);
     await PartnerAPI.getPartners(req)
       .then(async (res) => {
         this.partner_list = [];
@@ -2372,6 +2368,38 @@ class Partner {
         console.log(res);
         console.log(res.data.count);
         this.totalPartnerBookmark = res.data.count;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action getBusinessCategory = (id) => {
+    const req = {
+      id: id,
+    };
+
+    PartnerAPI.getBusinessCategory(req)
+      .then((res) => {
+        console.log(res);
+        this.business_name = res.data.business;
+        console.log(this.business_name);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action getRecentPartner = (id) => {
+    PartnerAPI.detail(id)
+      .then((res) => {
+        console.log(res);
+        this.recent_partner_name = res.data.name;
+        this.recent_partner_img = res.data.portfolio_set[0].img_portfolio;
+        console.log(this.recent_partner_name);
+        console.log(this.recent_partner_img);
       })
       .catch((e) => {
         console.log(e);

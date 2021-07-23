@@ -304,7 +304,7 @@ const SearchBar = styled.div`
   width: 347px;
   border-radius: 2px;
   box-shadow: 4px 5px 4px 5px rgba(146, 146, 146, 0.2);
-  border: solid 1px #0933b3;
+  // border: solid 1px #0933b3;
 
   input {
     width: 100%;

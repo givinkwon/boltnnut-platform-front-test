@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0933b3;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="그룹_4807" data-name="그룹 4807" transform="translate(-669 -1355)">
+    <path id="다각형_82" data-name="다각형 82" class="cls-1" d="M8.538,1.124a.5.5,0,0,1,.925,0l1.9,4.605a.5.5,0,0,0,.426.308l4.99.366a.5.5,0,0,1,.285.882l-3.815,3.2a.5.5,0,0,0-.164.5l1.19,4.823a.5.5,0,0,1-.747.546l-4.26-2.62a.5.5,0,0,0-.524,0l-4.26,2.62a.5.5,0,0,1-.747-.546l1.19-4.823a.5.5,0,0,0-.164-.5L.942,7.285A.5.5,0,0,1,1.227,6.4l4.99-.366a.5.5,0,0,0,.426-.308Z" transform="translate(670 1356)"/>
+    <rect id="사각형_5973" data-name="사각형 5973" class="cls-2" width="20" height="20" transform="translate(669 1355)"/>
+  </g>
+</svg>
