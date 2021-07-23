@@ -9,7 +9,7 @@ import Background from "../../components/Background";
 
 // Images
 const stepimg1 = "/static/images/stepimg1.png";
-const stepimg2 = "/static/images/stepimg2.png";
+const stepimg2 = "/static/images/stepimg2.svg";
 const stepimg3 = "/static/images/stepimg3.png";
 const backgroundlogo = "/static/images/backgroundlogo.svg";
 

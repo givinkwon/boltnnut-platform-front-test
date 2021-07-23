@@ -55,7 +55,7 @@ class CategoryConatiner extends React.Component {
             <Header>
               <Text.FontSize24 color={'#0933b3'} fontWeight={700}>제조분야</Text.FontSize24>
             </Header>
-            {
+            {/* {
               check_list && check_list.map((category, idx) => {
                 return (
                   <W100 key={idx}>
@@ -63,16 +63,12 @@ class CategoryConatiner extends React.Component {
                       <Text.FontSize20 color={'#505050'} fontWeight={700}>{category.maincategory}</Text.FontSize20>
                     </TextBox>
                     <CheckList>
-                      {
-                        category.develop_set.map((item, idx) => {
-                          return <CustomCheckBoxComponent key={idx} checked={Auth.category_middle_set.indexOf(item.id) > -1} onClick={() => Auth.setCategoryMiddleSet(item.id)}>{item.category}</CustomCheckBoxComponent>
-                        })
-                      }
+                        <CustomCheckBoxComponent key={idx} checked={Auth.category_middle_set.indexOf(category.id) > -1} onClick={() => Auth.setCategoryMiddleSet(category.id)}>{category.category}</CustomCheckBoxComponent>
                     </CheckList>
                   </W100>
                 )
               })
-            }
+            } */}
             </>
           ) : (
             <>

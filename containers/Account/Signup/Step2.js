@@ -89,7 +89,6 @@ class Step2Conatiner extends React.Component {
   render() {
     const { Auth } = this.props;
     const { width } = this.state;
-
     return (
       <SectionContainer style={{ paddingTop: 50, paddingBottom: 130 }}>
         <InfoContainer>
@@ -103,7 +102,7 @@ class Step2Conatiner extends React.Component {
               <>
                 <PartnerEmailConatiner />
                 <Company />
-                <Category />
+                {/* <Category /> */}
                 <File />
               </>
             )}

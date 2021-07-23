@@ -370,6 +370,10 @@ class Partner {
   @observable recent_partner_name = "";
   @observable recent_partner_img = "";
 
+  @observable total_review = 0;
+
+  @observable check_bookmark = -1;
+
   @action movePage = (e) => {
     e.preventDefault();
     const newPage = e.target.innerText * 1;
@@ -2499,6 +2503,7 @@ class Partner {
       });
   };
 
+
   @action mergeQuestion = async () => {
     this.mergeQuestionList = [];
     // this.resetQuestionClientObj();
@@ -2602,22 +2607,33 @@ class Partner {
       });
   };
 
-  @action getBusinessCategory = (id) => {
-    const req = {
-      id: id,
-    };
+  // @action getBusinessCategory = (id) => {
+  //   const req = {
+  //     id: id,
+  //   };
 
-    PartnerAPI.getBusinessCategory(req)
-      .then((res) => {
-        console.log(res);
-        this.business_name = res.data.business;
-        console.log(this.business_name);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
+  //   PartnerAPI.getTotalReview(req).then((res) => {
+  //     console.log(res);
+  //     // this.total_review = res.data.score
+  //   });
+  // };
+
+  // @action getBusinessCategory = (id) => {
+  //   const req = {
+  //     id: id,
+  //   };
+
+  //   PartnerAPI.getBusinessCategory(req)
+  //     .then((res) => {
+  //       console.log(res);
+  //       this.business_name = res.data.business;
+  //       console.log(this.business_name);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //       console.log(e.response);
+  //     });
+  // };
 
   @action setAnswerByQuestion = async (
     questionID,
@@ -2690,6 +2706,16 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+  };
+
+  @action BookmarkHandler = (idx) => {
+    if (idx !== this.check_bookmark) {
+      this.check_bookmark = idx;
+      return this.check_bookmark;
+    } else {
+      this.check_bookmark = -1;
+      return this.check_bookmark;
+    }
   };
 }
 

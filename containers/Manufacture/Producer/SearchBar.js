@@ -102,7 +102,12 @@ class SearchBarConatiner extends React.Component {
       return false;
     }
 
-    let rect = { x: elem.offset().left, y: elem.offset().top, w: elem.outerWidth(), h: elem.outerHeight() };
+    let rect = {
+      x: elem.offset().left,
+      y: elem.offset().top,
+      w: elem.outerWidth(),
+      h: elem.outerHeight(),
+    };
 
     if (x < rect.x || y < rect.y || x > rect.x + rect.w || y > rect.y + rect.h) {
       return false;
@@ -252,7 +257,7 @@ class SearchBarConatiner extends React.Component {
     return (
       <>
         <Form active={Partner.subButtonActive}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
             <SearchBar active={Partner.subButtonActive}>
               <input
                 placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
@@ -263,12 +268,15 @@ class SearchBarConatiner extends React.Component {
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-              <img style={{ width: 24, height: 24, marginRight: 25 }} src="/static/icon/search_blue.svg" onClick={this.search} />
+              <img style={{ width: 24, height: 24, marginRight: 25, cursor: "pointer" }} src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
 
-            <CustomUl>
+            {this.state.showSuggestions && this.state.suggs.length > 0 && (
+              <CustomUl>
               <CustomLiBox>{suggestions}</CustomLiBox>
             </CustomUl>
+            )}
+
           </div>
         </Form>
       </>
@@ -320,7 +328,7 @@ const SearchBar = styled.div`
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
 
   input {
-    width: 360px;
+    width: 100%;
     height: 59px;
     border: none;
     border-radius: 60px;
