@@ -60,7 +60,7 @@ class NewBanner0Container extends React.Component {
             <SearchBar />
           </LeftBox>
 
-          <img src={banner0img} />
+          <img src={banner0img} style={{ height: "340px" }} />
         </Containerv1>
       </div>
     );

@@ -32,6 +32,9 @@ import MobileBanner5Container from "./Mobile/MobileBanner5";
 import MobileBanner7Container from "./Mobile/MobileBanner7";
 import MobileBanner8Container from "./Mobile/MobileBanner8";
 
+// New
+import NewMobileBanner0Container from "./Mobile/NewMobileBanner0";
+
 // Tablet Container
 import TabletBanner0Container from "./Tablet/TabletBanner0";
 import TabletBanner1Container from "./Tablet/TabletBanner1";
@@ -71,7 +74,6 @@ import axios from "axios";
 @inject("Home")
 @observer
 class HomeConatiner extends React.Component {
-
   state = {
     next: true,
     prev: false,
@@ -82,7 +84,6 @@ class HomeConatiner extends React.Component {
   componentDidMount() {
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-  
   }
 
   componentWillUnmount() {
@@ -118,7 +119,9 @@ class HomeConatiner extends React.Component {
         {width < 767.98 ? (
           <>
             <CustomContainer>
-              <MobileBanner13Container width={width} />
+              <NewMobileBanner0Container width={width} />
+
+              {/* <MobileBanner13Container width={width} /> */}
               <MobileBanner14Container width={width} />
               <MobileBanner12Container width={width} />
               <MobileBanner8Container />
