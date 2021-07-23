@@ -51,7 +51,7 @@ class ManufacturerContentContainer extends React.Component {
     await this.props.Auth.checkLogin();
     console.log(this.props.Auth.logged_in_user);
 
-    var recent_partner_dic = {};
+    var recent_partner_dic = [];
 
     await Cookie.partner_view_list.map((item, idx) => {
       console.log(item);
@@ -59,14 +59,16 @@ class ManufacturerContentContainer extends React.Component {
       PartnerAPI.detail(item)
         .then((res) => {
           console.log(res);
+
           recent_partner_dic[res.data.name] =
             res.data.portfolio_set[0].img_portfolio;
+
           this.setState({
             recent_partner_dic: recent_partner_dic,
+            recent_partner_name: res.data.name,
           });
-
-          console.log(toJS(this.state.recent_partner_dic));
-          console.log(toJS(this.state.recent_partner_dic.length));
+          console.log(this.state.recent_partner_dic);
+          console.log(this.recent_partner_name);
         })
         .catch((e) => {
           console.log(e);
@@ -215,11 +217,13 @@ class ManufacturerContentContainer extends React.Component {
                       <div style={{ marginRight: 10 }}>0</div>
                     </header>
                     <body>
-                      {/* {this.state.recent_partner_dic ? (
-                        this.state.recent_partner_dic.map((item, idx) => {
+                      {/* {this.state.recent_partner_name ? (
+                        toJS(this.state.recent_partner_dic).map((item, idx) => {
                           <RecentPartnerContent>
-                            <div>{item.key}</div>
-                            <img src={item.value}></img>
+                            <div>{this.state.recent_partner_name}</div>
+                            <img
+                              src={item[this.state.recent_partner_name]}
+                            ></img>
                           </RecentPartnerContent>;
                         })
                       ) : (

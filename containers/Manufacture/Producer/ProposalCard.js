@@ -341,19 +341,24 @@ class ProposalCard extends React.Component {
                 <Title>
                   <div>
                     <Name>{data.name}</Name>
-                    <Certification>
-                      <img src="/static/icon/certification_img.svg"></img>
-                      <div>신원 인증</div>
-                    </Certification>
+                    {data.identification_state ? (
+                      <Certification>
+                        <img src="/static/icon/certification_img.svg"></img>
+                        <div>신원 인증</div>
+                      </Certification>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                   <BookMark>
                     <img
                       src={
                         Partner.interestedIdx ? bookmarkBlueImg : bookmarkImg
                       }
-                      onClick={async () => {
+                      onClick={async (e) => {
+                        e.stopPropagation();
                         Partner.clickHandler("interested");
-                        Partner.checkedInterestedIdx(clientId, partnerId);
+                        // Partner.checkedInterestedIdx(clientId, partnerId);
                         this.setState({ h: 3 });
                       }}
                     ></img>
