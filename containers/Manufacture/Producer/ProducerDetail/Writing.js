@@ -6,7 +6,7 @@ import Partner from "../../../../stores/Manufacture/Partner";
 
 const checkImg = "/static/images/producer/check.svg";
 
-@inject("Partner", "Auth")
+@inject("Partner", "Auth", "Common")
 @observer
 class WritingContainer extends React.Component {
   componentDidMount = () => {
@@ -19,12 +19,17 @@ class WritingContainer extends React.Component {
     Partner.questionSearchText = e.target.value;
   };
   render() {
-    const { Partner, type, clientId, partnerId } = this.props;
+    const { Partner, type, clientId, partnerId, Auth, Common } = this.props;
+    let notLoginUser = false;
+    if (!Auth.logged_in_client && !Auth.logged_in_partner) {
+      notLoginUser = true;
+    }
+
     let placeholder = "";
     if (type === "comment") {
       placeholder = "문의를 작성해주세요.";
     } else {
-      placeholder = "rhk***님에게 답글달기";
+      placeholder = "답글달기";
     }
     if (type === "recomment") {
       console.log(this.props.data);
@@ -75,27 +80,43 @@ class WritingContainer extends React.Component {
               <Button type="submit">
                 <div
                   onClick={async () => {
-                    if (type == "comment") {
-                      await Partner.setQuestion(
-                        clientId,
-                        partnerId,
-                        Partner.secretIdx,
-                        Partner.questionSearchText
-                      );
-                      await Partner.getQuestion(partnerId);
-                      console.log("comment");
-                      // this.props.setQA();
+                    if (notLoginUser) {
+                      location.href = Common.makeUrl("login");
                     } else {
-                      await Partner.setAnswerByQuestion(
-                        this.props.data.id,
-                        0,
-                        Partner.secretIdx,
-                        Partner.questionSearchText
-                      );
-                      await Partner.getQuestion(partnerId);
-                      console.log("recomment");
-                      // Partner.changeQuestion();
-                      // console.log(this.props.setQA);
+                      if (type == "comment") {
+                        await Partner.setQuestion(
+                          clientId,
+                          partnerId,
+                          Partner.secretIdx,
+                          Partner.questionSearchText
+                        );
+                        await Partner.getQuestion(partnerId);
+                        console.log("comment");
+                        this.props.setQA();
+                        // this.setState({ h: 3 });
+                      } else {
+                        if (clientId) {
+                          await Partner.setAnswerByQuestion(
+                            this.props.data.id,
+                            0,
+                            Partner.secretIdx,
+                            Partner.questionSearchText,
+                            clientId
+                          );
+                        } else {
+                          await Partner.setAnswerByQuestion(
+                            this.props.data.id,
+                            1,
+                            Partner.secretIdx,
+                            Partner.questionSearchText
+                          );
+                        }
+
+                        await Partner.getQuestion(partnerId);
+                        console.log("recomment");
+                        // Partner.changeQuestion();
+                        // console.log(this.props.setQA);
+                      }
                     }
                     // this.setState({ h: 3 });
                     console.log("eeeeeeeee");

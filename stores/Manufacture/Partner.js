@@ -92,7 +92,7 @@ class Partner {
   @observable city_next = 0;
   // city를 id로 주고 있어서 받아오기
   @observable city_name = "";
-  
+
   // business를 id로 주고 있어서 받아오기
   @observable business_name = [];
   @observable filter_checked_idx = 0;
@@ -1555,15 +1555,18 @@ class Partner {
 
   // business를 id로 주고 있어서 이름 가져오기
   @action getBusinessName = (id) => {
+    console.log(id);
     const req = {
       id: id,
     };
 
-    PartnerAPI.getBusinessName(req)
+    PartnerAPI.getBusinessName(req.id)
       .then(async (res) => {
         console.log("우왕", res);
-        this.business_name.push(res.data.category);
+        this.business_name.push(res.data.category + "   ");
         console.log(res.data.category);
+        console.log(this.business_name);
+        console.log(this.business_name.includes(res.data.category));
         // return res.data.city
       })
       .catch((e) => {
@@ -2441,6 +2444,64 @@ class Partner {
       });
   };
 
+  @action setAnswerByQuestion = async (
+    questionID,
+    state,
+    secret,
+    content,
+    clientID = ""
+  ) => {
+    console.log(questionID);
+    console.log(state);
+    console.log(secret);
+    console.log(content);
+    console.log(clientID);
+    const formData = new FormData();
+    formData.append("questionID", questionID);
+    formData.append("state", state);
+    formData.append("secret", secret ? 1 : 0);
+    formData.append("content", content);
+    formData.append("clientID", clientID);
+
+    const req = {
+      data: formData,
+    };
+
+    await PartnerAPI.setAnswerByQuestion(req)
+      .then((res) => {
+        console.log(res);
+        alert("답변 작성이 완료되었습니다");
+      })
+      .catch((e) => {
+        alert("답변 작성을 실패했습니다");
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action deleteQuestion = async (clientID, partnerID, questionID) => {
+    console.log(clientID);
+    console.log(partnerID);
+    console.log(secret);
+    console.log(content);
+    const formData = new FormData();
+    formData.append("clientID", clientID);
+    formData.append("partnerID", partnerID);
+    formData.append("questionID", questionID);
+
+    const req = {
+      data: formData,
+    };
+
+    await PartnerAPI.deleteQuestion(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
   @action getRecentPartner = (id) => {
     PartnerAPI.detail(id)
       .then((res) => {

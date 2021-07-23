@@ -11,6 +11,7 @@ class InfoCard extends React.Component {
   };
   render() {
     const { src, name, content, marginLeft } = this.props;
+
     return (
       <>
         <Card marginLeft={marginLeft}>
