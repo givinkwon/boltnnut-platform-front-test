@@ -12,6 +12,8 @@ class Partner {
   constructor() {
     //makeObservable(this);
   }
+
+  @observable hashBusinessCategory = [];
   /* Page 관련 변수 */
   @observable pageType = "";
   /* Q/A 관련 변수 */
@@ -2615,22 +2617,30 @@ class Partner {
   //   });
   // };
 
-  // @action getBusinessCategory = (id) => {
-  //   const req = {
-  //     id: id,
-  //   };
+  @action getBusinessCategory = async (id) => {
+    const req = {
+      id: id,
+    };
+    console.log(id);
+    await PartnerAPI.getBusinessCategory(req)
+      .then(async (res) => {
+        console.log(res);
+        this.business_name = res.data.business;
+        console.log(this.business_name);
 
-  //   PartnerAPI.getBusinessCategory(req)
-  //     .then((res) => {
-  //       console.log(res);
-  //       this.business_name = res.data.business;
-  //       console.log(this.business_name);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //       console.log(e.response);
-  //     });
-  // };
+        await res.data.business.forEach(async (element) => {
+          console.log(element);
+          await PartnerAPI.getBusinessName(element).then((res) => {
+            console.log(res);
+            this.hashBusinessCategory.push(res.data.category);
+          });
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 
   @action setAnswerByQuestion = async (
     questionID,
