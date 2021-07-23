@@ -269,10 +269,10 @@ class ManufacturerContentContainer extends React.Component {
                                 }}
                               >
                                 <div style={{ width: 149 }}>{name}</div>
-                                <img
+                                {/*<img
                                   src={close}
-                                  style={{ widht: "7.7px", height: "7.7px" }}
-                                ></img>
+                                  style={{ width: "7.7px", height: "7.7px" }}
+                                ></img>*/}
                               </div>
                               <img
                                 src={this.state.recent_partner_dic[name]}

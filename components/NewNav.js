@@ -141,7 +141,7 @@ class Nav extends React.Component {
                       </NavLink>
 
                       <NavLink active={url.indexOf("project") > -1}>
-                        <KSLink url={"project"} content={"프로젝트 관리"} />
+                        <KSLink url={"project"} content={"프로젝트 의뢰"} />
                       </NavLink>
 
                       <NavLink active={url.indexOf("magazine") > -1}>
@@ -151,6 +151,10 @@ class Nav extends React.Component {
                   ) : (
                     /* partner로 로그인 */
                     <Fragment>
+                      <NavLink active={url.indexOf("project") > -1}>
+                        {console.log(url)}
+                        <KSLink url={"producer"} content={"제조사 찾기"} />
+                      </NavLink>
                       <NavLink active={url.indexOf("project") > -1}>
                         {console.log(url)}
                         <KSLink url={"project"} content={"프로젝트 찾기"} />
@@ -166,13 +170,17 @@ class Nav extends React.Component {
                     <NavLink active={url.indexOf("producer") > -1}>
                       <KSLink url={"producer"} content={"제조사 찾기"} />
                     </NavLink>
+                    <NavLink active={url.indexOf("project") > -1}>
+                      <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                    </NavLink>
                     <NavLink active={url.indexOf("magazine") > -1}>
-                      <KSLink url={"magazine"} content={"제조 매거진"} />
+                      <KSLink url={"magazine"} content={"제조 인사이트"} />
                       {/* 제조 인사이트 */}
                     </NavLink>
                   </Fragment>
                 )}
-
+              </Menu>
+              <Menu>
                 {/* 로그인한/안한 경우 */}
                 {token ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>
@@ -217,8 +225,8 @@ class Nav extends React.Component {
                     {/* 로그인 */}
                   </NavLink>
                 )}
-              </Menu>
 
+              </Menu>
               <Icon src={hamburger_ic} onClick={() => this.setState({ is_open: true })} />
               {is_open && <BG onClick={() => this.setState({ is_open: false })} />}
             </NavWrap>
@@ -306,6 +314,9 @@ const NavWrap = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
+  > div:nth-of-type(1) {
+    margin-left: 60px !important;
+  }
 `;
 const Logo = styled.img`
   cursor: pointer;
@@ -325,7 +336,7 @@ const Icon = styled.img`
 const Menu = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 60px;
+  margin-left: auto;
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: none;
     flex-direction: column;
