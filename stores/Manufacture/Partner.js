@@ -2281,6 +2281,10 @@ class Partner {
         this.projectIdx = !this.projectIdx;
         console.log(this.projectIdx);
         break;
+      case "secret":
+        this.secretIdx = !this.secretIdx;
+        console.log(this.secretIdx);
+        break;
     }
   };
 
@@ -2312,6 +2316,14 @@ class Partner {
       case "tabbar":
         console.log(idx === this.selectedTabIdx - 1);
         if (idx === this.selectedTabIdx - 1) {
+          return true;
+        } else {
+          return false;
+        }
+        break;
+      case "secret":
+        console.log(this.secretIdx);
+        if (this.secretIdx) {
           return true;
         } else {
           return false;
