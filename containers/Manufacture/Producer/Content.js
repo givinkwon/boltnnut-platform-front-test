@@ -75,6 +75,24 @@ class ManufacturerContentContainer extends React.Component {
     });
   }
 
+  /* Parnter (진수정밀) 제조사 상세 찾기용 임의 함수 (삭제할 예정) */
+  temp = (e) => {
+    const { Partner } = this.props;
+    e.preventDefault();
+    // const newPage = e.target.innerText * 1;
+    // Partner.currentPage = 182;
+    Partner.currentPage = 386;
+    Partner.resetDevCategory();
+    Partner.check_loading_develop = false;
+    Partner.ReviewActive = false;
+    Partner.ReviewActiveIndex = -1;
+    Partner.dropDownActive = false;
+    Partner.dropDownIdx = -1;
+    Partner.click_count += 1;
+
+    Partner.getPartner(386, this.click_count);
+    // Partner.getPartner(182, this.click_count);
+  };
   componentWillUnmount() {
     const { Partner } = this.props;
     console.log("content unmount");
@@ -109,7 +127,9 @@ class ManufacturerContentContainer extends React.Component {
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
-    console.log(Partner.suggest_list)
+    console.log(toJS(Partner.partner_list));
+
+    console.log(Partner.suggest_list);
     return (
       <>
         <Background id="MyBackground">
@@ -182,15 +202,9 @@ class ManufacturerContentContainer extends React.Component {
                             유사한 연관 검색어를 찾아보시겠어요?
                           </Question>
                           <ExplainList>
-                            {Partner.suggest_list.map((data) =>{
-                            
-                            return(
-                            
-                              <li>{data + ", "}</li>
-                            
-                            )}
-                            )
-                            }
+                            {Partner.suggest_list.map((data) => {
+                              return <li>{data + ", "}</li>;
+                            })}
                           </ExplainList>
                         </Explain>
                       </NoResultBox>
@@ -201,7 +215,13 @@ class ManufacturerContentContainer extends React.Component {
                       return (
                         <Background style={{ marginBottom: "5px" }}>
                           <div
-                            onClick={() => Partner.pushToDetail(item, idx)}
+                            onClick={async () => {
+                              console.log(Auth);
+                              if (Auth.logged_in_client) {
+                                await Project.getPage(Auth.logged_in_client.id);
+                              }
+                              Partner.pushToDetail(item, idx);
+                            }}
                             style={{ width: "100%" }}
                           >
                             <ProposalCard
@@ -225,11 +245,15 @@ class ManufacturerContentContainer extends React.Component {
                     </header>
                     <body>
                       {this.state.recent_partner_dic ? (
-                        Object.keys(this.state.recent_partner_dic).map((name) => 
-                          <RecentPartnerContent>
-                            <div>{name}</div>
-                            <img src={this.state.recent_partner_dic[name]}></img>
-                          </RecentPartnerContent>
+                        Object.keys(this.state.recent_partner_dic).map(
+                          (name) => (
+                            <RecentPartnerContent>
+                              <div>{name}</div>
+                              <img
+                                src={this.state.recent_partner_dic[name]}
+                              ></img>
+                            </RecentPartnerContent>
+                          )
                         )
                       ) : (
                         <div>
@@ -266,6 +290,8 @@ class ManufacturerContentContainer extends React.Component {
             </Body>
           </Container>
         </Background>
+
+        <div onClick={this.temp}>진수정밀</div>
         <PageBar>
           <img
             src={pass1}
