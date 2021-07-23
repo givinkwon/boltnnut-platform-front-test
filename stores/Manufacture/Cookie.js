@@ -21,6 +21,13 @@ class Cookie {
 
     console.log(toJS(this.partner_view_list));
   };
+
+  @action delete_partner_view = async (id) => {
+    if (this.partner_view_list.includes(parseInt(id))) {
+      this.partner_view_list.delete(parseInt(id));
+    }
+    console.log(toJS(this.partner_view_list));
+  };
 }
 
 export default new Cookie();

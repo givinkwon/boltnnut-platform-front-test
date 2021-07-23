@@ -2,18 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
-import CategoryCardComponent from "../../components/CategoryCard";
 import Containerv1 from "../../components/Containerv1";
 import Fade from "react-reveal/Fade";
 import Background from "components/Background";
 import ProposalCard from "../Manufacture/Producer/ProposalCard";
-import { toJS } from "mobx"
+import { toJS } from "mobx";
 
-@inject("Home","Partner","Auth","Producer","Category")
+@inject("Home", "Partner", "Auth", "Producer", "Category")
 @observer
 class NewBanner2Container extends React.Component {
-
-
   async componentDidMount() {
     const { Partner, Category } = this.props;
     Partner.detailLoadingFlag = false;
@@ -21,21 +18,16 @@ class NewBanner2Container extends React.Component {
     Partner.currentPage = 1;
 
     // 리스트 초기화 && 선택하기
-    Category.reset()
+    Category.reset();
     Category.add_selected("category", 1);
-    
-
-
   }
-  
 
   onClickCategory = (idx) => {
     const { Home, Category, Partner } = this.props;
     Home.categoryIndex = idx;
     // 리스트 초기화 && 선택하기
-    Category.reset()
+    Category.reset();
     Category.add_selected("category", idx);
-
   };
 
   onCompareCategory = (idx) => {
@@ -62,7 +54,7 @@ class NewBanner2Container extends React.Component {
       { id: 20, name: "냉난방/공조" },
       { id: 22, name: "밴딩/포장" },
     ];
-    
+
     const { Partner, Auth, Producer, Category } = this.props;
 
     return (
@@ -82,29 +74,25 @@ class NewBanner2Container extends React.Component {
             </CategoryBox>
 
             {Partner.partner_list &&
-                    Partner.partner_list.map((item, idx) => {
-                      
-                      return (
-                        <>
-                        {idx < 3 &&
-                        <Background style={{ marginBottom: "5px" }}>
-                          <div
-                            onClick={() => Partner.pushToDetail(item, idx)}
-                            style={{ width: "100%" }}
-                          >
-                            <ProposalCard
-                              data={item}
-                              width={this.props.width}
-                              categoryData={toJS(Partner.category_dic[idx])}
-                              idx={idx}
-                              handleIntersection={Producer.handleIntersection}
-                              customer="partner"
-                            />
-                          </div>
-                        </Background>
-                        }
-                        </>
-                      );
+              Partner.partner_list.map((item, idx) => {
+                return (
+                  <>
+                    {idx < 3 && (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
+                          <ProposalCard
+                            data={item}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[idx])}
+                            idx={idx}
+                            handleIntersection={Producer.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
+                      </Background>
+                    )}
+                  </>
+                );
               })}
           </Containerv1>
         </Fade>

@@ -5,62 +5,48 @@ import * as Title from "components/Title";
 import * as Text from "components/Text";
 import SearchBar from "../Manufacture/Producer/SearchBar";
 
-const search = "/static/images/search.svg";
 const banner0img = "/static/images/banner0img.png";
 
 class NewBanner0Container extends React.Component {
-  state = {
-    text: "",
-  };
-
-  handleChangeInputValue(e) {
-    this.setState({
-      text: e.target.value,
-    });
-  }
-
   // 검색함수
-  search = async () => {
-    const { Partner, ManufactureProcess } = this.props;
-    
-    await Router.push('/producer')
-    // console.log("click");
-    // alert("EXECUTE");
-    Partner.loadingFlag = true;
-    setTimeout(() => {
-      Partner.loadingFlag = false;
-    }, 3000);
+  // search = async () => {
+  //   const { Partner, ManufactureProcess } = this.props;
 
-    Partner.currentPage = 1;
-    Partner.click_count += 1;
-    await Partner.getPartner(Partner.currentPage, Partner.click_count);
-    ManufactureProcess.PartnerCount = Partner.partner_count;
-    console.log(toJS(ManufactureProcess.PartnerCount));
-    if (Partner.search_text) {
-      Partner.isSearched = true;
-    } else {
-      Partner.isSearched = false;
-    }
+  //   await Router.push("/producer");
+  //   // console.log("click");
+  //   // alert("EXECUTE");
+  //   Partner.loadingFlag = true;
+  //   setTimeout(() => {
+  //     Partner.loadingFlag = false;
+  //   }, 3000);
 
-    if (Partner.search_text != "") {
-      // console.log("click2");
-      if (ManufactureProcess.loadingSaveSearchText) {
-        // console.log("click3");
-        Partner.subButtonActive = true;
-        console.log(Partner.subButtonActive);
-        ManufactureProcess.saveSearchText(Partner.search_text);
-        ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(
-          () => (ManufactureProcess.loadingSaveSearchText = true),
-          2000
-        );
-      }
-    }
-  };
+  //   Partner.currentPage = 1;
+  //   Partner.click_count += 1;
+  //   await Partner.getPartner(Partner.currentPage, Partner.click_count);
+  //   ManufactureProcess.PartnerCount = Partner.partner_count;
+  //   console.log(toJS(ManufactureProcess.PartnerCount));
+  //   if (Partner.search_text) {
+  //     Partner.isSearched = true;
+  //   } else {
+  //     Partner.isSearched = false;
+  //   }
+
+  //   if (Partner.search_text != "") {
+  //     // console.log("click2");
+  //     if (ManufactureProcess.loadingSaveSearchText) {
+  //       // console.log("click3");
+  //       Partner.subButtonActive = true;
+  //       console.log(Partner.subButtonActive);
+  //       ManufactureProcess.saveSearchText(Partner.search_text);
+  //       ManufactureProcess.loadingSaveSearchText = false;
+  //       setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
+  //     }
+  //   }
+  // };
 
   render() {
     return (
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "200px" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "200px", marginBottom: "188px" }}>
         <Containerv1 style={{ justifyContent: "space-between" }}>
           <LeftBox>
             <Header>
@@ -68,14 +54,13 @@ class NewBanner0Container extends React.Component {
               <br />
               여기 다 있다.
             </Header>
-            <Middle> 당신에게 맞는 제조사 정보를 바로 조회해보세요.</Middle>
-            <SearchBar>
-            </SearchBar>
+
+            <Middle>당신에게 맞는 제조사 정보를 바로 조회해보세요.</Middle>
+
+            <SearchBar />
           </LeftBox>
 
-          <RightBox>
-            <img src={banner0img} onClick={this.search} />
-          </RightBox>
+          <img src={banner0img} style={{ height: "340px" }} />
         </Containerv1>
       </div>
     );
@@ -87,10 +72,8 @@ export default NewBanner0Container;
 const LeftBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 558px;
+  width: 588px;
 `;
-
-const RightBox = styled.div``;
 
 const Header = styled(Title.FontSize48)`
   width: 420px;
@@ -117,29 +100,29 @@ const Middle = styled(Text.FontSize20)`
   text-align: left;
   color: #000000;
   margin-top: 20px;
+  margin-bottom: 80px;
 `;
 
+// const Input = styled.input`
+//   border: none;
+//   border-radius: 60px;
+//   width: 100%;
+//   font-size: 18px;
 
-const Input = styled.input`
-  border: none;
-  border-radius: 60px;
-  width: 100%;
-  font-size: 18px;
+//   :focus {
+//     outline: none;
+//   }
 
-  :focus {
-    outline: none;
-  }
-
-  ::placeholder {
-    object-fit: contain;
-    font-family: NotoSansCJKkr;
-    font-size: 18px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.89;
-    letter-spacing: -0.45px;
-    text-align: left;
-    color: #acadad;
-  }
-`;
+//   ::placeholder {
+//     object-fit: contain;
+//     font-family: NotoSansCJKkr;
+//     font-size: 18px;
+//     font-weight: normal;
+//     font-stretch: normal;
+//     font-style: normal;
+//     line-height: 1.89;
+//     letter-spacing: -0.45px;
+//     text-align: left;
+//     color: #acadad;
+//   }
+// `;

@@ -328,6 +328,16 @@ export function getReview(req) {
   });
 }
 
+export function getTotalReview(req) {
+  console.log(req);
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partnerreview/total_score/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
 export function getNextReviewPage(req) {
   return axios({
     method: "GET",

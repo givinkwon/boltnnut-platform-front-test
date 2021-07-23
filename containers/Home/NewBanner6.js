@@ -20,9 +20,12 @@ class NewBanner6Container extends React.Component {
             <Title26>1분만에 프로젝트를 등록하고 맞춤형 업체 정보를 받아보세요.</Title26>
           </div>
 
-          <RequestButton onClick={() => Router.push("/request")}>
-            <Text20>맞춤형 문의하기</Text20>
-          </RequestButton>
+          <a href={"request"}>
+            <RequestButton>
+              <Text20>맞춤형 문의하기</Text20>
+            </RequestButton>
+          </a>
+          {/* <RequestButton onClick={() => Router.push("/request")}> */}
         </Container>
       </CustomBackground>
     );

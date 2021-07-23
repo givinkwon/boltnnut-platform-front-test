@@ -91,8 +91,10 @@ class Partner {
   @observable city_ary = [];
   @observable filter_city_ary = [{ id: 0, city: "전체" }];
   @observable city_next = 0;
+  // city를 id로 주고 있어서 받아오기
   @observable city_name = "";
 
+  // business를 id로 주고 있어서 받아오기
   @observable business_name = [];
   @observable filter_checked_idx = 0;
 
@@ -346,6 +348,8 @@ class Partner {
   @observable recent_partner_name = "";
   @observable recent_partner_img = "";
 
+  @observable total_review = 0;
+
   @action movePage = (e) => {
     e.preventDefault();
     const newPage = e.target.innerText * 1;
@@ -473,6 +477,16 @@ class Partner {
         this.filedownload(item.file);
       }
     }
+  };
+
+  @action filedownload = (url) => {
+    if (!url) {
+      alert("준비중입니다.");
+    }
+    // const url = data.file;
+    const link = document.createElement("a");
+    link.href = url;
+    link.click();
   };
 
   @action onChangeFile = (e) => {
@@ -1523,6 +1537,7 @@ class Partner {
     console.log(this.filter_city_ary);
   };
 
+  // city를 id로 주고 있어서 이름 가져오기
   @action getCityName = (id) => {
     const req = {
       id: id,
@@ -1531,8 +1546,27 @@ class Partner {
     PartnerAPI.getCityName(req)
       .then(async (res) => {
         console.log(res);
-        this.city_name = res.data.city;
+        this.city_name = res.data.maincategory;
         console.log(this.city_name);
+        // return res.data.city
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  // business를 id로 주고 있어서 이름 가져오기
+  @action getBusinessName = (id) => {
+    const req = {
+      id: id,
+    };
+
+    PartnerAPI.getBusinessName(req)
+      .then(async (res) => {
+        console.log("우왕", res);
+        this.business_name.push(res.data.category);
+        console.log(res.data.category);
         // return res.data.city
       })
       .catch((e) => {
@@ -2393,22 +2427,35 @@ class Partner {
       });
   };
 
-  @action getBusinessCategory = (id) => {
-    const req = {
-      id: id,
-    };
+  // @action getTotalReview = async (partnerId) => {
+  //   const req = {
+  //     params: {
+  //       partnerID: partnerId,
+  //     }
+  //   };
 
-    PartnerAPI.getBusinessCategory(req)
-      .then((res) => {
-        console.log(res);
-        this.business_name = res.data.business;
-        console.log(this.business_name);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
+  //   PartnerAPI.getTotalReview(req).then((res) => {
+  //     console.log(res);
+  //     // this.total_review = res.data.score
+  //   });
+  // };
+
+  // @action getBusinessCategory = (id) => {
+  //   const req = {
+  //     id: id,
+  //   };
+
+  //   PartnerAPI.getBusinessCategory(req)
+  //     .then((res) => {
+  //       console.log(res);
+  //       this.business_name = res.data.business;
+  //       console.log(this.business_name);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //       console.log(e.response);
+  //     });
+  // };
 
   @action getRecentPartner = (id) => {
     PartnerAPI.detail(id)

@@ -61,6 +61,9 @@ class PortfolioConatiner extends React.Component {
       slidesToShow: 1,
       slidesToScroll: 1,
       initialSlide: 0,
+      draggable: false,
+      swipeToSlide: false,
+      touchMove: false,
       responsive: [
         {
           breakpoint: 1300,
@@ -149,7 +152,12 @@ class PortfolioConatiner extends React.Component {
           )}
           {this.state.modalOpen && <Layer />}
         </div>
-        <div>
+        {notLoginUser && (
+          <BlackBox top="80" content="이 제조사의 포트폴리오를 보고싶다면?" />
+        )}
+        <Footer>
+          <Block />
+
           <SmallImageContainer login={notLoginUser}>
             {data.portfolio_set.length != 0 &&
               data.portfolio_set.map((item, idx) => {
@@ -165,11 +173,8 @@ class PortfolioConatiner extends React.Component {
                   </SmallImageBox>
                 );
               })}
-            {notLoginUser && (
-              <BlackBox content="이 제조사의 회사소개서를 보고싶다면?" />
-            )}
           </SmallImageContainer>
-        </div>
+        </Footer>
       </>
     );
   }
@@ -437,4 +442,15 @@ const SmallImageBox = styled.div`
     width: 100%;
     height: 100%;
   }
+`;
+
+const Footer = styled.div`
+  position: relative;
+  filter: blur(9px);
+`;
+const Block = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
 `;

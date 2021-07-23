@@ -119,7 +119,7 @@ class ProposalCard extends React.Component {
       });
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     // console.log(data.id);
     const { width, Producer, data, Partner } = this.props;
     window.addEventListener("resize", Producer.updateDimensions);
@@ -133,20 +133,45 @@ class ProposalCard extends React.Component {
       id: data.id,
     };
 
+    const reviewReq = {
+      params: {
+        partner_id: data.id,
+      },
+    };
+
+    const BookmarkReq = {
+      params: {
+        partnerID: data.id,
+      },
+    };
+
     PartnerAPI.getCityName(req)
       .then(async (res) => {
-        this.setState({ city: res.data.city });
+        console.log(res);
+        this.setState({ city: res.data.maincategory });
+        console.log(this.state.maincategory);
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
 
-    PartnerAPI.getTotalBookmarkByPartner(partnerReq)
+    await PartnerAPI.getTotalReview(reviewReq)
+      .then((res) => {
+        console.log(res);
+        this.setState({ total_review: res.data.score });
+        console.log(this.state.total_review);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    await PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
       .then(async (res) => {
         console.log(res);
         console.log(res.data.count);
-        this.setState({ totalPartnerBookmark: res.count });
+        this.setState({ totalPartnerBookmark: res.data.count });
         console.log(this.state.totalPartnerBookmark);
       })
       .catch((e) => {
@@ -163,7 +188,7 @@ class ProposalCard extends React.Component {
           console.log(element);
           PartnerAPI.getBusinessName(element).then((res) => {
             console.log(res);
-            temp.push(res.data.business);
+            temp.push(res.data.category);
           });
         });
         this.setState({ business: temp });
@@ -370,9 +395,11 @@ class ProposalCard extends React.Component {
                       }
                       onClick={async () => {
                         // e.stopPropagation();
-                        Partner.clickHandler("interested");
-                        Partner.checkedInterestedIdx(clientId, partnerId);
-                        this.setState({ h: 3 });
+                        if (!loggedInPartnerId && clientId) {
+                          Partner.clickHandler("interested");
+                          Partner.checkedInterestedIdx(clientId, partnerId);
+                          this.setState({ h: 3 });
+                        }
                       }}
                     ></img>
                   </BookMark>
@@ -382,6 +409,7 @@ class ProposalCard extends React.Component {
                   <div style={{ display: "flex" }}>
                     {this.state.business &&
                       this.state.business.map((item, idx) => {
+                        console.log(item);
                         return <Hashtag>#{item}</Hashtag>;
                       })}
                   </div>
@@ -390,10 +418,14 @@ class ProposalCard extends React.Component {
                 )}
                 <Bottom>
                   <BottomBox>
-                    <Review>
-                      <img src={star} style={{ marginRight: 5 }}></img>
-                      <Score>{this.state.avg_consult_score}/5.0</Score>
-                    </Review>
+                    {this.state.total_review === -1 ? (
+                      <></>
+                    ) : (
+                      <Review>
+                        <img src={star} style={{ marginRight: 5 }}></img>
+                        <Score>{this.state.total_review}/5.0</Score>
+                      </Review>
+                    )}
                     <Location>
                       <img
                         src={location}
@@ -521,7 +553,7 @@ export default ProposalCard;
 
 const Card = styled.div`
   width: 100%;
-  position: relative;
+  // position: relative;
   object-fit: contain;
   border-top: solid 1px #e1e2e4;
   border-bottom: solid 1px #e1e2e4;
