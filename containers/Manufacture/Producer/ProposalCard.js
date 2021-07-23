@@ -52,6 +52,7 @@ class ProposalCard extends React.Component {
     activeReview: false,
     city: "",
     business: "",
+    totalPartnerBookmark: "",
   };
 
   openModal = (user_phone) => {
@@ -117,17 +118,17 @@ class ProposalCard extends React.Component {
         console.log(e.response);
       });
   };
+
   componentDidMount() {
+    // console.log(data.id);
     const { width, Producer, data, Partner } = this.props;
     window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
 
-    console.log(data.business);
     const req = {
       id: data.city,
     };
 
-    console.log(data);
     const partnerReq = {
       id: data.id,
     };
@@ -135,6 +136,18 @@ class ProposalCard extends React.Component {
     PartnerAPI.getCityName(req)
       .then(async (res) => {
         this.setState({ city: res.data.city });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    PartnerAPI.getTotalBookmarkByPartner(partnerReq)
+      .then(async (res) => {
+        console.log(res);
+        console.log(res.data.count);
+        this.setState({ totalPartnerBookmark: res.count });
+        console.log(this.state.totalPartnerBookmark);
       })
       .catch((e) => {
         console.log(e);
@@ -341,10 +354,14 @@ class ProposalCard extends React.Component {
                 <Title>
                   <div>
                     <Name>{data.name}</Name>
-                    <Certification>
-                      <img src="/static/icon/certification_img.svg"></img>
-                      <div>신원 인증</div>
-                    </Certification>
+                    {data.identification_state === true ? (
+                      <Certification>
+                        <img src="/static/icon/certification_img.svg"></img>
+                        <div>신원 인증</div>
+                      </Certification>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                   <BookMark>
                     <img
@@ -352,6 +369,7 @@ class ProposalCard extends React.Component {
                         Partner.interestedIdx ? bookmarkBlueImg : bookmarkImg
                       }
                       onClick={async () => {
+                        // e.stopPropagation();
                         Partner.clickHandler("interested");
                         Partner.checkedInterestedIdx(clientId, partnerId);
                         this.setState({ h: 3 });
@@ -374,7 +392,7 @@ class ProposalCard extends React.Component {
                   <BottomBox>
                     <Review>
                       <img src={star} style={{ marginRight: 5 }}></img>
-                      <Score>4.98/5.0</Score>
+                      <Score>{this.state.avg_consult_score}/5.0</Score>
                     </Review>
                     <Location>
                       <img
@@ -391,7 +409,7 @@ class ProposalCard extends React.Component {
                     </ViewCount>
                     <BookmarkCount>
                       <img src={bookmarkcount} style={{ marginRight: 5 }}></img>
-                      <div>{Partner.totalPartnerBookmark}</div>
+                      <div>{this.state.totalPartnerBookmark}</div>
                     </BookmarkCount>
                   </BottomBox>
                 </Bottom>

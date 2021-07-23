@@ -96,7 +96,11 @@ class SubBoxContainer extends React.Component {
           <ShowItem>
             <UserBox>
               <img src={userImg} />
-              <div>로그인 해주세요.</div>
+              {Auth.logged_in_user ? (
+                <div>{Auth.logged_in_user.username.split("@")[0]}</div>
+              ) : (
+                <div>로그인 해주세요.</div>
+              )}
             </UserBox>
             <SubItem>
               <span>프로젝트 의뢰</span>

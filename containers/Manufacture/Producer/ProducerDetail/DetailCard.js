@@ -176,6 +176,30 @@ class DetailCardContainer extends React.Component {
     Partner.reviewCurrentPage = 1;
     Partner.detailLoadingFlag = false;
 
+    console.log(Partner.reviewWritingModalActive);
+
+    // console.log(this.props.Partner.selectedIntroductionFileType);
+
+    // if (this.props.Partner.selectedIntroductionFileType === "pptx") {
+    //   var frameHTML =
+    //     '<iframe src="https://docs.google.com/gview?url=' +
+    //     this.props.Partner.selectedIntroductionFile +
+    //     '&embedded=true" class="viewer" frameborder="0"></iframe>';
+    //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
+    // }
+
+    // 지역 가지고 오기
+    //console.log(toJS(Partner.partner_detail_list[0].item.city))
+    Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city))
+
+    // 비즈니스 가지고 오기
+    console.log(toJS(Partner.partner_detail_list[0].item.business))
+    toJS(Partner.partner_detail_list[0].item.business).map((item) => 
+        Partner.getBusinessName(item)
+        
+    )
+    console.log(toJS(Partner.business_name))
+  
     await this.countTotalPoint();
     this.setState((state) => {
       return { g: state.g + 1 };
@@ -214,6 +238,7 @@ class DetailCardContainer extends React.Component {
     console.log(total_kindness_score);
     console.log(total_communication_score);
     console.log(total_profession_score);
+    console.log(total_consult_score);
 
     Partner.partnerAllReviewList[0]
       ? this.setState({
@@ -404,6 +429,7 @@ class DetailCardContainer extends React.Component {
     }
 
     console.log(Auth);
+    console.log(Partner.partner_detail_list)
     const partnerId =
       Partner.partner_detail_list &&
       Partner.partner_detail_list[0].item &&
@@ -487,7 +513,7 @@ class DetailCardContainer extends React.Component {
                     <InfoCard
                       src={medalImg}
                       name="전문분야"
-                      content="기구설계, 금형제작"
+                      content={Partner.business_name}
                     />
                     {Partner.partner_detail_list && (
                       <InfoCard
@@ -963,7 +989,7 @@ class DetailCardContainer extends React.Component {
                 <QuestionBox>
                   <Font24>업체 Q&A</Font24>
                   {console.log(toJS(Partner.mergeQuestionList))}
-                  {Partner.mergeQuestionList &&
+                  {Partner.mergeQuestionList == false &&
                     Partner.mergeQuestionList.map((item, idx) => {
                       return (
                         <QuestionContainer
