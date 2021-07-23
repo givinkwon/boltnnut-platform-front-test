@@ -2,6 +2,7 @@ import React from "react";
 import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
 import DetailCardContainer from "./DetailCard";
+import MobileDetailCardContainer from "./Mobile/MobileDetailCard"
 import ReviewContainer from "../Review/ReviewPage";
 import CompleteContainer from "components/Complete";
 import { inject, observer } from "mobx-react";
@@ -21,13 +22,16 @@ class ProducerDetailConatiner extends React.Component {
     }
 
     // 쿠키 저장하기
-    const expires = new Date();
-    expires.setMinutes(expires.getMinutes() + 2440);
-    Cookies.set("partner_view", Cookie.partner_view_list, {
-      path: "/",
-      expires,
-    });
-    // alert(Cookies.get("partner_view"));
+    const expires = new Date()
+    expires.setMinutes(expires.getMinutes() + 2440)
+    Cookies.set('partner_view', Cookie.partner_view_list
+    , {
+        path: '/',
+        expires,
+        
+      }
+    );
+    //alert(Cookies.get('partner_view'))
   }
   render() {
     const { Auth, Partner } = this.props;
@@ -39,6 +43,20 @@ class ProducerDetailConatiner extends React.Component {
 
         <Background>
           <Containerv1>
+            {Partner.reviewActiveIndex == 0 && this.props.width > 767.98 ? 
+            
+            (
+              <DetailCardContainer width={this.props.width} />
+            ) 
+            
+            :
+            
+            (
+              <MobileDetailCardContainer width={this.props.width} />
+            )
+            
+            }
+
             {Partner.reviewActiveIndex == 1 && (
               <ReviewContainer width={this.props.width} />
             )}

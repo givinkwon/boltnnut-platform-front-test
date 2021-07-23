@@ -176,6 +176,22 @@ class DetailCardContainer extends React.Component {
     Partner.reviewCurrentPage = 1;
     Partner.detailLoadingFlag = false;
 
+    console.log(Partner.reviewWritingModalActive);
+
+    // console.log(this.props.Partner.selectedIntroductionFileType);
+
+    // if (this.props.Partner.selectedIntroductionFileType === "pptx") {
+    //   var frameHTML =
+    //     '<iframe src="https://docs.google.com/gview?url=' +
+    //     this.props.Partner.selectedIntroductionFile +
+    //     '&embedded=true" class="viewer" frameborder="0"></iframe>';
+    //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
+    // }
+
+    // 지역 가지고 오기
+    //console.log(toJS(Partner.partner_detail_list[0].item.city))
+    Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city))
+  
     await this.countTotalPoint();
     this.setState((state) => {
       return { g: state.g + 1 };
