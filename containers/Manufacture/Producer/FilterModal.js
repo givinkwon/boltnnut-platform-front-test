@@ -9,6 +9,7 @@ import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import Category from "../../../stores/Manufacture/Category";
 
+const passimg = "static/images/passimg.svg";
 const MainArr = ["제품", "기계/설비/장비", "부품", "공구류"];
 const SubArr = ["제품", "기계/설비/장비", "부품", "공구류", "제품", "기계/설비/장비", "부품", "공구류"];
 
@@ -230,6 +231,9 @@ class FilterModalContainer extends React.Component {
               {type == "business" &&
                 Category.mainbusiness_list[this.state.mainSelectIdx] &&
                 Category.mainbusiness_list[this.state.mainSelectIdx].business_set.map((sub_data, idx) => {
+                  {
+                    console.log(sub_data);
+                  }
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -343,6 +347,7 @@ const MainCategoryButton = styled.div`
   > p {
     color: ${(props) => props.active && "#0933b3"};
   }
+  cursor: pointer;
 `;
 
 const SubCategoryBox = styled.div`
