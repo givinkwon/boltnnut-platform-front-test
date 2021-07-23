@@ -111,6 +111,7 @@ class ManufacturerContentContainer extends React.Component {
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
+    console.log(Partner.suggest_list);
     return (
       <>
         <Background id="MyBackground">
@@ -183,7 +184,9 @@ class ManufacturerContentContainer extends React.Component {
                             유사한 연관 검색어를 찾아보시겠어요?
                           </Question>
                           <ExplainList>
-                            <li>향초, 디퓨저</li>
+                            {Partner.suggest_list.map((data) => {
+                              return <li>{data + ", "}</li>;
+                            })}
                           </ExplainList>
                         </Explain>
                       </NoResultBox>
@@ -217,22 +220,24 @@ class ManufacturerContentContainer extends React.Component {
                       <div style={{ marginRight: 10 }}>0</div>
                     </header>
                     <body>
-                      {/* {this.state.recent_partner_name ? (
-                        toJS(this.state.recent_partner_dic).map((item, idx) => {
-                          <RecentPartnerContent>
-                            <div>{this.state.recent_partner_name}</div>
-                            <img
-                              src={item[this.state.recent_partner_name]}
-                            ></img>
-                          </RecentPartnerContent>;
-                        })
+                      {this.state.recent_partner_dic ? (
+                        Object.keys(this.state.recent_partner_dic).map(
+                          (name) => (
+                            <RecentPartnerContent>
+                              <div>{name}</div>
+                              <img
+                                src={this.state.recent_partner_dic[name]}
+                              ></img>
+                            </RecentPartnerContent>
+                          )
+                        )
                       ) : (
                         <div>
                           최근에 본 제조사가
                           <br />
                           없습니다.
                         </div>
-                      )} */}
+                      )}
                     </body>
                   </RecentPartner>
                   <MyInfo>

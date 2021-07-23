@@ -122,7 +122,7 @@ class ProposalCard extends React.Component {
     window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
 
-    console.log(data.business);
+    console.log(data.idenfication_state);
     const req = {
       id: data.city,
     };
@@ -341,7 +341,7 @@ class ProposalCard extends React.Component {
                 <Title>
                   <div>
                     <Name>{data.name}</Name>
-                    {data.identification_state ? (
+                    {data.identification_state === true ? (
                       <Certification>
                         <img src="/static/icon/certification_img.svg"></img>
                         <div>신원 인증</div>
