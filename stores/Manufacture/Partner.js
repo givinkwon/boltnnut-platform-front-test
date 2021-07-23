@@ -2569,10 +2569,10 @@ class Partner {
       });
   };
 
-  @action getBusinessCategory = (id) => {
-    const req = {
-      id: id,
-    };
+  // @action getBusinessCategory = (id) => {
+  //   const req = {
+  //     id: id,
+  //   };
 
   //   PartnerAPI.getTotalReview(req).then((res) => {
   //     console.log(res);
