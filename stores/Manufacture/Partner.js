@@ -56,6 +56,7 @@ class Partner {
   @observable page = 1;
   @observable currentPage = 1;
 
+  @observable search = "";
   @observable search_text = "";
   @observable search_category = [];
   @observable search_develop = [];
@@ -344,9 +345,6 @@ class Partner {
 
   @observable recent_partner_name = "";
   @observable recent_partner_img = "";
-
-  // 구글 연관검색어 저장
-  @observable suggest_list = []; 
 
   @action movePage = (e) => {
     e.preventDefault();
@@ -794,8 +792,6 @@ class Partner {
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
-
-    this.suggest_list = [];
   };
 
   @action getClientInfo = async (id) => {
@@ -912,30 +908,6 @@ class Partner {
     }
     this.searchjust();
   };
-  
-  @action search = () => {
-    const name = this.search_text;
-
-    const req = {
-      data: {
-        search: name,
-        page: this.page,
-      },
-    };
-    console.log(req);
-    PartnerAPI.search(req)
-      .then((res) => {
-        console.log(res);
-        this.partner_list = res.data.results;
-        this.partner_count = res.data.count;
-        this.partner_next = res.data.next;
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
   @action setList = (id, type) => {
     if (type === "category") {
       const index = this.search_category.indexOf(id);
@@ -960,6 +932,52 @@ class Partner {
       }
     }
     this.search();
+  };
+  @action search = () => {
+    const name = this.search_text;
+    const develop = this.search_develop;
+    const region = this.search_region;
+
+    let subclasses = [];
+    if (this.search_category) {
+      for (let i = 0; i < this.search_category.length; i++) {
+        const category_middle = this.getCategoryById(this.search_category[i]);
+
+        if (category_middle) {
+          category_middle.subclass_set.forEach((subclass) => {
+            subclasses.push(subclass.id);
+          });
+        }
+      }
+    }
+    console.log(subclasses);
+
+    const req = {
+      data: {
+        search: name,
+        // 제품 분야 = 가능 제품 분야
+        history_set__id: subclasses.toString() ? subclasses.toString() : null,
+        // history_set__id: toJS(develop).toString(),
+        region: region.toString() ? region.toString() : null,
+        // 카테고리 = 의뢰 분야
+        category_middle__id: toJS(develop).toString()
+          ? toJS(develop).toString()
+          : null,
+        page: this.page,
+      },
+    };
+    console.log(req);
+    PartnerAPI.search(req)
+      .then((res) => {
+        console.log(res);
+        this.partner_list = res.data.results;
+        this.partner_count = res.data.count;
+        this.partner_next = res.data.next;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 
   // 파트너 정보 제한 검색
