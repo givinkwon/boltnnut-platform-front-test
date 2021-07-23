@@ -206,93 +206,108 @@ class SearchFilterConatiner extends React.Component {
     const { Partner, width } = this.props;
     console.log(this.state.type);
     return (
-          <ContainerV2>
-            {console.log(`Active : ${Partner.subButtonActive}`)}
+      <ContainerV2>
+        {console.log(`Active : ${Partner.subButtonActive}`)}
 
-            <FilterBoxSearchBar />
+        <FilterBoxSearchBar />
 
-            <FilterCategory>
-              <Category>
-                <CategoryName>카테고리</CategoryName>
-                <Field>
-                  <div>전체</div>
-                  <img
-                    src="/static/icon/down_arrow.svg"
-                    onClick={() => {
-                      this.dropdownHandler("business");
-                    }}
-                  ></img>
-                </Field>
-              </Category>
-              <Category>
-                <CategoryName>업체 분류</CategoryName>
-                <Field>
-                  <div>전체</div>
-                  <img
-                    src="/static/icon/down_arrow.svg"
-                    onClick={() => {
-                      this.dropdownHandler("category");
-                    }}
-                  ></img>
-                </Field>
-              </Category>
-              <Category>
-                <CategoryName>지역</CategoryName>
-                <Field>
-                  <div>전체</div>
-                  <img
-                    src="/static/icon/down_arrow.svg"
-                    onClick={() => {
-                      this.dropdownHandler("city");
-                    }}
-                  ></img>
-                </Field>
-              </Category>
-              <Category>
-                <div
-                  style={{
-                    fontSize: "15px",
-                    lineHeight: 2.27,
-                    letterSpacing: "-0.38px",
-                    textAlign: "center",
-                    color: "#555963",
-                  }}
-                >
-                  공정, 소재
-                </div>
-                <Material>
-                  <div
-                    onClick={() => {
-                      this.dropdownHandler("develop&material");
-                    }}
-                  >
-                    <img src="/static/icon/detail_filter.svg" style={{ widht: 24, height: 24 }}></img>
-                    <img src="/static/icon/arrow_down.svg" style={{ widht: 12, height: 12 }}></img>
-                  </div>
-                </Material>
-              </Category>
-            </FilterCategory>
-            {Partner.filter_dropdown && <FilterModalContainer type={this.state.type}></FilterModalContainer>}
+        <FilterCategory>
+          <Category>
+            <CategoryName>카테고리</CategoryName>
+            <Field>
+              <div>전체</div>
+              <img
+                src="/static/icon/down_arrow.svg"
+                onClick={() => {
+                  this.dropdownHandler("business");
+                }}
+              ></img>
+            </Field>
+          </Category>
+          <Category>
+            <CategoryName>업체 분류</CategoryName>
+            <Field>
+              <div>전체</div>
+              <img
+                src="/static/icon/down_arrow.svg"
+                onClick={() => {
+                  this.dropdownHandler("category");
+                }}
+              ></img>
+            </Field>
+          </Category>
+          <Category>
+            <CategoryName>지역</CategoryName>
+            <Field>
+              <div>전체</div>
+              <img
+                src="/static/icon/down_arrow.svg"
+                onClick={() => {
+                  this.dropdownHandler("city");
+                }}
+              ></img>
+            </Field>
+          </Category>
+          <Category>
+            <div
+              style={{
+                fontSize: "15px",
+                lineHeight: 2.27,
+                letterSpacing: "-0.38px",
+                textAlign: "center",
+                color: "#555963",
+              }}
+            >
+              공정, 소재
+            </div>
+            <Material>
+              <div
+                onClick={() => {
+                  this.dropdownHandler("develop&material");
+                }}
+              >
+                <img
+                  src="/static/icon/detail_filter.svg"
+                  style={{ widht: 24, height: 24 }}
+                ></img>
+                <img
+                  src="/static/icon/arrow_down.svg"
+                  style={{ widht: 12, height: 12 }}
+                ></img>
+              </div>
+            </Material>
+          </Category>
+        </FilterCategory>
+        {Partner.filter_dropdown && (
+          <FilterModalContainer type={this.state.type}></FilterModalContainer>
+        )}
 
-
-            {Partner.requestModalActive && (
-              <Layer>
-                <span>
-                  <Modal width={width} open={Partner.requestModalActive} close={Partner.closeModal}></Modal>
-                </span>
-              </Layer>
-            )}
-            {Partner.requestDoneModalActive && (
-              <Layer>
-                <span>
-                  <DoneModal width={width} open={Partner.requestDoneModalActive} close={Partner.closeModal} />
-                </span>
-              </Layer>
-            )}
-          </ContainerV2>
-          )
-};
-};
+        {Partner.requestModalActive && (
+          <Layer>
+            <span>
+              <Modal
+                width={width}
+                open={Partner.requestModalActive}
+                close={Partner.closeModal}
+              ></Modal>
+            </span>
+          </Layer>
+        )}
+        {Partner.requestDoneModalActive && (
+          <Layer>
+            <span>
+              <DoneModal
+                width={width}
+                open={Partner.requestDoneModalActive}
+                close={Partner.closeModal}
+              />
+            </span>
+          </Layer>
+        )}
+      </ContainerV2>
+    );
+  }
+}
 
 export default SearchFilterConatiner;
 
