@@ -7,10 +7,11 @@ import { inject, observer } from "mobx-react";
 class ProposalCard extends React.Component {
   render() {
     const { data } = this.props;
+    console.log(data);
     return (
       <>
         <Card>
-          {data && data.portfolio_set && (
+          {data && data.portfolio_set.length !== 0 && (
             <ImgBox>
               <img src={data.portfolio_set[0].img_portfolio} />
             </ImgBox>
