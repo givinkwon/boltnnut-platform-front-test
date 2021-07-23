@@ -13,7 +13,14 @@ import { PRIMARY2 } from "static/style";
 
 const searchIcon = "/static/images/mobilesearchicon.svg";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer")
+@inject(
+  "Auth",
+  "Project",
+  "Request",
+  "Partner",
+  "ManufactureProcess",
+  "Producer"
+)
 @observer
 class NewMobileSearchBarConatiner extends React.Component {
   state = {
@@ -56,7 +63,10 @@ class NewMobileSearchBarConatiner extends React.Component {
         // console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
+        setTimeout(
+          () => (ManufactureProcess.loadingSaveSearchText = true),
+          2000
+        );
       }
     }
   };
@@ -85,7 +95,11 @@ class NewMobileSearchBarConatiner extends React.Component {
     let y = $(document).scrollTop() + event.clientY; // event.offsetY
 
     // did not click on the search input or the suggestion list
-    if (this.state.showSuggestions && !this.checkXYInElement(x, y, ".searcher-suggs") && !this.checkXYInElement(x, y, ".searcher-input")) {
+    if (
+      this.state.showSuggestions &&
+      !this.checkXYInElement(x, y, ".searcher-suggs") &&
+      !this.checkXYInElement(x, y, ".searcher-input")
+    ) {
       this.setState({ showSuggestions: false });
     }
   }
@@ -96,9 +110,19 @@ class NewMobileSearchBarConatiner extends React.Component {
       return false;
     }
 
-    let rect = { x: elem.offset().left, y: elem.offset().top, w: elem.outerWidth(), h: elem.outerHeight() };
+    let rect = {
+      x: elem.offset().left,
+      y: elem.offset().top,
+      w: elem.outerWidth(),
+      h: elem.outerHeight(),
+    };
 
-    if (x < rect.x || y < rect.y || x > rect.x + rect.w || y > rect.y + rect.h) {
+    if (
+      x < rect.x ||
+      y < rect.y ||
+      x > rect.x + rect.w ||
+      y > rect.y + rect.h
+    ) {
       return false;
     }
 
@@ -109,7 +133,9 @@ class NewMobileSearchBarConatiner extends React.Component {
   // true if the input was the same as the suggsKeywords
   // otherwise, false
   checkSuggsKeywords(keywords) {
-    if (this.state.suggsKeywords == encodeURIComponent(keywords.toLowerCase())) {
+    if (
+      this.state.suggsKeywords == encodeURIComponent(keywords.toLowerCase())
+    ) {
       return true;
     }
 
@@ -134,7 +160,9 @@ class NewMobileSearchBarConatiner extends React.Component {
 
     let urlKeywords = encodeURIComponent(keywords.toLowerCase());
     this.setState({ suggsKeywords: urlKeywords, suggs: [] });
-    let url = "https://suggestqueries.google.com/complete/search?output=chrome&q=" + urlKeywords;
+    let url =
+      "https://suggestqueries.google.com/complete/search?output=chrome&q=" +
+      urlKeywords;
     // use JSONP (issue: http://security.stackexchange.com/questions/23438/security-risks-with-jsonp/23439#23439)
     // just for CORS trick
     $.ajax({
@@ -229,11 +257,19 @@ class NewMobileSearchBarConatiner extends React.Component {
     // Partner.searchText가 처음에 null 값이라 에러가 떠서 공백문자를 더해줌
     // console.log(this.state.showSuggestions, this.checkSuggsKeywords(Partner.searchText + ""), this.state.suggs);
     // 구글 검색 제안 리스트
-    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.searchText + "")) {
+    if (
+      this.state.showSuggestions &&
+      this.checkSuggsKeywords(Partner.searchText + "")
+    ) {
       suggestions = this.state.suggs.map(
         function (value, index) {
           return (
-            <li key={index} className="searcher-suggs-word" onClick={this.handleClickSuggetionsKeywords.bind(this)} onMouseOver={this.handleHoverSearcherSuggestions.bind(this)}>
+            <li
+              key={index}
+              className="searcher-suggs-word"
+              onClick={this.handleClickSuggetionsKeywords.bind(this)}
+              onMouseOver={this.handleHoverSearcherSuggestions.bind(this)}
+            >
               {value}
             </li>
           );
@@ -249,14 +285,26 @@ class NewMobileSearchBarConatiner extends React.Component {
               <input
                 placeholder="원하는 분야나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "원하는 분야나 비슷한 제품을 검색해보세요.")}
+                onBlur={(e) =>
+                  (e.target.placeholder =
+                    "원하는 분야나 비슷한 제품을 검색해보세요.")
+                }
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.searchText}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
 
-              <img src={searchIcon} onClick={this.search} style={{ width: 24, height: 24, marginRight: 10, cursor: "pointer" }} />
+              <img
+                src={searchIcon}
+                onClick={this.search}
+                style={{
+                  width: 24,
+                  height: 24,
+                  marginRight: 10,
+                  cursor: "pointer",
+                }}
+              />
               {/* <img style={{ width: 24, height: 24, marginRight: 25 }} src="/static/icon/search_blue.svg" onClick={this.search} /> */}
             </SearchBar>
 

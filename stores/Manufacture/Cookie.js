@@ -21,6 +21,11 @@ class Cookie {
 
     console.log(toJS(this.partner_view_list));
   };
+
+  @action delete_partner_view = async (id) => {
+    deleteIdx = this.city_selected.indexOf(id);
+    this.city_selected.splice(deleteIdx, 1);
+  };
 }
 
 export default new Cookie();
