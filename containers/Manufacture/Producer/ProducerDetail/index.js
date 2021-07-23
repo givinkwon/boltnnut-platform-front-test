@@ -2,6 +2,7 @@ import React from "react";
 import Background from "components/Background";
 import Containerv1 from "components/Containerv1";
 import DetailCardContainer from "./DetailCard";
+import MobileDetailCardContainer from "./Mobile/MobileDetailCard"
 import ReviewContainer from "../Review/ReviewPage";
 import CompleteContainer from "components/Complete";
 import { inject, observer } from "mobx-react";
@@ -30,7 +31,7 @@ class ProducerDetailConatiner extends React.Component {
         
       }
     );
-    alert(Cookies.get('partner_view'))
+    //alert(Cookies.get('partner_view'))
   }
   render() {
     const { Auth, Partner } = this.props;
@@ -38,9 +39,19 @@ class ProducerDetailConatiner extends React.Component {
       <>
         <Background>
           <Containerv1>
-            {Partner.reviewActiveIndex == 0 && (
+            {Partner.reviewActiveIndex == 0 && this.props.width > 767.98 ? 
+            
+            (
               <DetailCardContainer width={this.props.width} />
-            )}
+            ) 
+            
+            :
+            
+            (
+              <MobileDetailCardContainer width={this.props.width} />
+            )
+            
+            }
 
             {Partner.reviewActiveIndex == 1 && (
               <ReviewContainer width={this.props.width} />

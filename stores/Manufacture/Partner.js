@@ -1513,7 +1513,7 @@ class Partner {
     PartnerAPI.getCityName(req)
       .then(async (res) => {
         console.log(res);
-        this.city_name = res.data.city;
+        this.city_name = res.data.maincategory;
         console.log(this.city_name);
         // return res.data.city
       })

@@ -2,23 +2,23 @@ import React from "react";
 import styled, { css } from "styled-components";
 import dynamic from "next/dynamic";
 import Router from "next/router";
-import Modal from "../Review/ReviewWritingModal";
-import ReviewCard from "../Review/ReviewCard";
-import MapContainer from "./Map";
+import Modal from "../../Review/ReviewWritingModal";
+import ReviewCard from "../../Review/ReviewCard";
+import MapContainer from "../Map";
 
 import { toJS } from "mobx";
-import DocViewer from "./DocViewer";
-import SubBoxContainer from "./SubBox";
-import QuestionContainer from "./Question";
-import HeaderItem from "./HeaderContainer";
-import ReviewSummaryContainer from "../Review/ReviewBox";
+import DocViewer from "../DocViewer";
+import SubBoxContainer from "../SubBox";
+import QuestionContainer from "../Question";
+import HeaderItem from "../HeaderContainer";
+import ReviewSummaryContainer from "../../Review/ReviewBox";
 //import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 import Background from "components/Background";
-import ProposalCard from "../ProposalCard";
-import TabBar from "./TabBar";
+import ProposalCard from "../../ProposalCard";
+import TabBar from "../TabBar";
 
 // const customRenderer = DocViewerRenderers;
 const bluebar_empty = "/static/icon/bluebar_empty.svg";
@@ -63,7 +63,7 @@ let loadingCounter = 0;
 
 @inject("Partner", "Auth")
 @observer
-class DetailCardContainer extends React.Component {
+class MobileDetailCardContainer extends React.Component {
   state = {
     avg_consult_score: 0,
     avg_kindness_score: 0,
@@ -160,10 +160,6 @@ class DetailCardContainer extends React.Component {
     //     '&embedded=true" class="viewer" frameborder="0"></iframe>';
     //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
     // }
-
-    // 지역 가지고 오기
-    //console.log(toJS(Partner.partner_detail_list[0].item.city))
-    Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city))
   };
   componentWillUnmount = () => {
     const { Partner, Auth } = this.props;
@@ -312,13 +308,13 @@ class DetailCardContainer extends React.Component {
       dots: false,
       infinite: true,
       speed: 500,
-      slidesToShow: 4,
+      slidesToShow: 2,
       slidesToScroll: 1,
       draggable: true,
       autoplay: true,
       autoplaySpeed: 2000,
     };
-
+    console.log(Partner.city_name)
     return (
       <>
         <Card id="card" width={width}>
@@ -695,17 +691,17 @@ class DetailCardContainer extends React.Component {
           </IntroductionBox>
         </Card>
 
-        <SubCard>
+        {/* <SubCard>
           <SubBoxContainer partnerId={Partner.partner_detail_list[0].item.id} />
           {/* <RequestContainer /> */}
           {/* <RecentPartnerContainer /> */}
-        </SubCard>
+        {/* </SubCard> */}
       </>
     );
   }
 }
 
-export default DetailCardContainer;
+export default MobileDetailCardContainer;
 
 const CustomSlider = withStyles({
   root: {
@@ -780,7 +776,7 @@ const TopInlineBox = styled.div`
 
 const Card = styled.div`
   margin-top: 50px;
-  width: 70%;
+  width: 100%;
   border-radius: 10px;
   // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   display: flex;
