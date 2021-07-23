@@ -103,25 +103,13 @@ class DetailCardContainer extends React.Component {
     const { Partner } = this.props;
     console.log(this.state.g);
     console.log(nextState.g);
-    if (Partner.questionSaveCount || Partner.questionLoadSuccess) {
-      if (Partner.questionSaveCount) {
-        setTimeout(() => {
-          if (Partner.questionSaveCount) {
-            Partner.questionSaveCount = 0;
-          }
-        }, 1000);
-        return true;
-      }
-      if (Partner.questionLoadSuccess) {
-        return true;
-      }
-    } else {
-      return this.state.g !== nextState.g;
-    }
+
+    return this.state.g !== nextState.g;
   };
 
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
+    Partner.business_name = [];
     Partner.docViewerLoading = false;
     Partner.subViewerLoading = 0;
     // Partner.viewerLoading += 1;
@@ -190,16 +178,15 @@ class DetailCardContainer extends React.Component {
 
     // 지역 가지고 오기
     //console.log(toJS(Partner.partner_detail_list[0].item.city))
-    Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city))
+    Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city));
 
     // 비즈니스 가지고 오기
-    console.log(toJS(Partner.partner_detail_list[0].item.business))
-    toJS(Partner.partner_detail_list[0].item.business).map((item) => 
-        Partner.getBusinessName(item)
-        
-    )
-    console.log(toJS(Partner.business_name))
-  
+    console.log(toJS(Partner.partner_detail_list[0].item.business));
+    toJS(Partner.partner_detail_list[0].item.business).map(
+      async (item) => await Partner.getBusinessName(item)
+    );
+    console.log(toJS(Partner.business_name));
+
     await this.countTotalPoint();
     this.setState((state) => {
       return { g: state.g + 1 };
@@ -238,7 +225,6 @@ class DetailCardContainer extends React.Component {
     console.log(total_kindness_score);
     console.log(total_communication_score);
     console.log(total_profession_score);
-    console.log(total_consult_score);
 
     Partner.partnerAllReviewList[0]
       ? this.setState({
@@ -418,6 +404,7 @@ class DetailCardContainer extends React.Component {
   }
   render() {
     const { width, Partner, Auth } = this.props;
+
     let clientId;
     let notLoginUser = false;
     if (!Auth.logged_in_client && !Auth.logged_in_partner) {
@@ -428,8 +415,9 @@ class DetailCardContainer extends React.Component {
       clientId = Auth.logged_in_client.id;
     }
 
+    console.log(toJS(Partner.partner_detail_list));
     console.log(Auth);
-    console.log(Partner.partner_detail_list)
+    console.log(Partner.partner_detail_list);
     const partnerId =
       Partner.partner_detail_list &&
       Partner.partner_detail_list[0].item &&
@@ -589,7 +577,7 @@ class DetailCardContainer extends React.Component {
 
                   <IntroductionBox width={width}>
                     <Font24 id="introduction">회사소개서</Font24>
-
+                    {notLoginUser && <Block />}
                     {!Auth.logged_in_client && !Auth.logged_in_partner && (
                       <BlackBox content="이 제조사의 회사소개서를 보고싶다면?" />
                     )}
@@ -665,7 +653,7 @@ class DetailCardContainer extends React.Component {
                   <div>
                     <label>실제 고객후기</label>
                   </div>
-
+                  {notLoginUser && <Block />}
                   {/* <ReviewSummaryContainer width={this.props.width} /> */}
                   <SummaryBox login={notLoginUser}>
                     {/* <label>클라이언트 평균 만족도</label> */}
@@ -989,7 +977,7 @@ class DetailCardContainer extends React.Component {
                 <QuestionBox>
                   <Font24>업체 Q&A</Font24>
                   {console.log(toJS(Partner.mergeQuestionList))}
-                  {Partner.mergeQuestionList == false &&
+                  {Partner.mergeQuestionList &&
                     Partner.mergeQuestionList.map((item, idx) => {
                       return (
                         <QuestionContainer
@@ -1171,7 +1159,7 @@ class DetailCardContainer extends React.Component {
                       }}
                     />
                   </PageBar>
-                  {Auth.logged_in_client && Auth.logged_in_client.id && (
+                  {!Auth.logged_in_partner && (
                     <WritingContainer
                       type="comment"
                       clientId={clientId}
@@ -2121,4 +2109,11 @@ const Main = styled.div``;
 
 const SimilarBox = styled.div`
   width: 100%;
+`;
+
+const Block = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
 `;

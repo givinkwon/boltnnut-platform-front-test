@@ -12,7 +12,30 @@ class Partner {
   constructor() {
     //makeObservable(this);
   }
-
+  /* Page 관련 변수 */
+  @observable pageType = "";
+  /* Q/A 관련 변수 */
+  @observable questionLoadSuccess = 0;
+  @observable questionClientInfo = {
+    0: "",
+    1: "",
+    2: "",
+    3: "",
+    4: "",
+    5: "",
+    6: "",
+  };
+  @observable mergeQuestionList = [];
+  @observable questionCurrentPage = 1;
+  @observable questionPage = 0;
+  @observable questionSaveCount = 0;
+  @observable questionSaveSuccess = 0;
+  @observable questionSearchText = ""; // 글 작성
+  @observable answerSearchText = ""; // 답변 작성
+  @observable secretIdx = 0;
+  @observable questionCount = 0;
+  @observable questionList = new Array(10);
+  @observable writingModalIdx = "";
   /* /producer 우측 카드 변수 */
   @observable totalPartnerBookmark = 0;
   @observable totalClientBookmark = 0;
@@ -469,7 +492,7 @@ class Partner {
           1
         );
         await this.getReviewByPartner(this.partner_detail_list[0].item.id);
-
+        await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
         Router.push("/producer/detail");
         // this.setState({ g: 3 });
@@ -586,6 +609,17 @@ class Partner {
       this.searchProjectModalActive = false;
       this.searchPartnerModalActive = true;
     }
+  };
+
+  @action resetQuestionClientObj = () => {
+    this.questionClientInfo = {
+      0: "",
+      1: "",
+      2: "",
+      3: "",
+      4: "",
+      5: "",
+    };
   };
 
   @action resetDevCategory = () => {
@@ -1559,15 +1593,18 @@ class Partner {
 
   // business를 id로 주고 있어서 이름 가져오기
   @action getBusinessName = (id) => {
+    console.log(id);
     const req = {
       id: id,
     };
 
-    PartnerAPI.getBusinessName(req)
+    PartnerAPI.getBusinessName(req.id)
       .then(async (res) => {
         console.log("우왕", res);
-        this.business_name.push(res.data.category);
+        this.business_name.push(res.data.category + "   ");
         console.log(res.data.category);
+        console.log(this.business_name);
+        console.log(this.business_name.includes(res.data.category));
         // return res.data.city
       })
       .catch((e) => {
@@ -2428,36 +2465,195 @@ class Partner {
       });
   };
 
-  // @action getTotalReview = async (partnerId) => {
-  //   const req = {
-  //     params: {
-  //       partnerID: partnerId,
-  //     }
-  //   };
+  @action mergeQuestion = async () => {
+    this.mergeQuestionList = [];
+    // this.resetQuestionClientObj();
+    await this.questionList.map(async (item, idx) => {
+      console.log(item);
 
-  //   PartnerAPI.getTotalReview(req).then((res) => {
-  //     console.log(res);
-  //     // this.total_review = res.data.score
-  //   });
-  // };
+      // await this.getClientNameById(item.client, idx, "question");
+      console.log(toJS(this.questionClientInfo));
 
-  // @action getBusinessCategory = (id) => {
-  //   const req = {
-  //     id: id,
-  //   };
+      // item.client = this.questionClientInfo[idx];
+      this.mergeQuestionList = this.mergeQuestionList.concat(item);
+      console.log(toJS(this.mergeQuestionList));
+      // console.log(item.client);
+      if (item.reply) {
+        await item.reply.map(async (subItem, subIdx) => {
+          console.log(subItem);
+          subItem.recomment = true;
+          if (!subItem.state) {
+            // subItem.client = this.questionClientInfo[idx];
+            subItem.client = item.client;
+          }
+          this.mergeQuestionList = this.mergeQuestionList.concat(subItem);
+          console.log(toJS(this.mergeQuestionList));
+        });
+      }
+    });
+    console.log(toJS(this.mergeQuestionList));
+    console.log(toJS(this.mergeQuestionList.length));
+    for (let i = 0; i < this.mergeQuestionList.length; i++) {
+      this.questionClientInfo[i] = "";
+    }
+    console.log(toJS(this.questionClientInfo));
+    await this.mergeQuestionList.map(async (item, idx) => {
+      await this.getClientNameById(item.client, idx, "question");
 
-  //   PartnerAPI.getBusinessCategory(req)
-  //     .then((res) => {
-  //       console.log(res);
-  //       this.business_name = res.data.business;
-  //       console.log(this.business_name);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //       console.log(e.response);
-  //     });
-  // };
+      console.log(toJS(this.questionClientInfo));
+      // item.name = this.questionClientInfo[idx];
+      // if (this.questionClientInfo[this.mergeQuestionList.length - 1] !== "") {
+      //   this.questionLoadSuccess = 1;
+      //   setTimeout(() => {
+      //     this.questionLoadSuccess = 0;
+      //   }, 1000);
+      // }
+    });
+    console.log(toJS(this.mergeQuestionList));
+    console.log("END");
+  };
 
+  @action getQuestion = async (partnerId, page = 1) => {
+    console.log("getQuestion");
+    this.questionList = [];
+    const req = {
+      params: {
+        partnerID: partnerId,
+        page: page,
+      },
+    };
+
+    await PartnerAPI.getQuestion(req)
+      .then(async (res) => {
+        console.log(res);
+        // console.log(res.data.count);
+        this.questionCount = res.data.count;
+        this.questionList = await this.questionList.concat(res.data.results);
+        this.questionSaveSuccess = 1;
+        // questionList
+        this.questionPage = parseInt((this.questionCount - 1) / 5) + 1;
+
+        await this.mergeQuestion();
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action setQuestion = async (clientID, partnerID, secret, content) => {
+    console.log(clientID);
+    console.log(partnerID);
+    console.log(secret);
+    console.log(content);
+    const formData = new FormData();
+    formData.append("clientID", clientID);
+    formData.append("partnerID", partnerID);
+    formData.append("secret", secret ? 1 : 0);
+    formData.append("content", content);
+
+    const req = {
+      data: formData,
+    };
+
+    await PartnerAPI.setQuestion(req)
+      .then((res) => {
+        console.log(res);
+        alert("글 작성이 완료되었습니다");
+      })
+      .catch((e) => {
+        alert("글 작성을 실패했습니다");
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action getBusinessCategory = (id) => {
+    const req = {
+      id: id,
+    };
+
+    PartnerAPI.getTotalReview(req).then((res) => {
+      console.log(res);
+      // this.total_review = res.data.score
+    });
+  };
+
+  @action getBusinessCategory = (id) => {
+    const req = {
+      id: id,
+    };
+
+    PartnerAPI.getBusinessCategory(req)
+      .then((res) => {
+        console.log(res);
+        this.business_name = res.data.business;
+        console.log(this.business_name);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action setAnswerByQuestion = async (
+    questionID,
+    state,
+    secret,
+    content,
+    clientID = ""
+  ) => {
+    console.log(questionID);
+    console.log(state);
+    console.log(secret);
+    console.log(content);
+    console.log(clientID);
+    const formData = new FormData();
+    formData.append("questionID", questionID);
+    formData.append("state", state);
+    formData.append("secret", secret ? 1 : 0);
+    formData.append("content", content);
+    formData.append("clientID", clientID);
+
+    const req = {
+      data: formData,
+    };
+
+    await PartnerAPI.setAnswerByQuestion(req)
+      .then((res) => {
+        console.log(res);
+        alert("답변 작성이 완료되었습니다");
+      })
+      .catch((e) => {
+        alert("답변 작성을 실패했습니다");
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  @action deleteQuestion = async (clientID, partnerID, questionID) => {
+    console.log(clientID);
+    console.log(partnerID);
+    console.log(secret);
+    console.log(content);
+    const formData = new FormData();
+    formData.append("clientID", clientID);
+    formData.append("partnerID", partnerID);
+    formData.append("questionID", questionID);
+
+    const req = {
+      data: formData,
+    };
+
+    await PartnerAPI.deleteQuestion(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
   @action getRecentPartner = (id) => {
     PartnerAPI.detail(id)
       .then((res) => {
@@ -2481,6 +2677,16 @@ class Partner {
       this.check_bookmark = -1;
       return this.check_bookmark;
     }
+  };
+
+  @action checkedBookmark = async (clientId, partnerId) => {
+    if (this.check_bookmark !== -1) {
+      await this.setBookmarkPartner(clientId, partnerId);
+    } else {
+      await this.deleteBookmarkPartner(clientId, partnerId);
+    }
+    await this.getBookmarkByClient(clientId);
+    await this.getTotalBookmarkByPartner(partnerId);
   };
 }
 

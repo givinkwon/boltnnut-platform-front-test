@@ -30,16 +30,16 @@ class QuestionContainer extends React.Component {
 
     console.log(prevProps.Partner.questionList);
 
-    if (Partner.questionSaveSuccess) {
-      setTimeout(() => {
-        if (Partner.questionSaveSuccess) {
-          Partner.questionSaveSuccess = 0;
-        }
-      }, 1000);
-      return true;
-    } else {
-      return this.state.g !== nextState.g;
-    }
+    // if (Partner.questionSaveSuccess) {
+    //   setTimeout(() => {
+    //     if (Partner.questionSaveSuccess) {
+    //       Partner.questionSaveSuccess = 0;
+    //     }
+    //   }, 1000);
+    //   return true;
+    // } else {
+    //   return this.state.g !== nextState.g;
+    // }
 
     // return true;
   };
@@ -70,7 +70,7 @@ class QuestionContainer extends React.Component {
     console.log("renderrender");
     console.log(parentType);
     console.log(data);
-    let name = data.name;
+    let name = data && data.name;
     console.log(name);
     console.log(toJS(mergeData));
     // console.log(data.created_at.slice(0, data.created_at.indexOf("T")));
