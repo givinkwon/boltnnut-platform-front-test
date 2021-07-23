@@ -374,7 +374,7 @@ class Partner {
 
   @observable total_review = 0;
 
-  @observable check_bookmark = -1;
+  @observable check_bookmark = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 
   @action movePage = (e) => {
     e.preventDefault();
@@ -2606,16 +2606,16 @@ class Partner {
       });
   };
 
-  // @action getBusinessCategory = (id) => {
-  //   const req = {
-  //     id: id,
-  //   };
+  @action getBusinessCategory = (id) => {
+    const req = {
+      id: id,
+    };
 
-  //   PartnerAPI.getTotalReview(req).then((res) => {
-  //     console.log(res);
-  //     // this.total_review = res.data.score
-  //   });
-  // };
+    PartnerAPI.getTotalReview(req).then((res) => {
+      console.log(res);
+      // this.total_review = res.data.score
+    });
+  };
 
   @action getBusinessCategory = async (id) => {
     const req = {
@@ -2716,13 +2716,53 @@ class Partner {
   };
 
   @action BookmarkHandler = (idx) => {
-    if (idx !== this.check_bookmark) {
-      this.check_bookmark = idx;
-      return this.check_bookmark;
+    if (idx !== this.check_bookmark[idx]) {
+      this.check_bookmark[idx] = idx;
+      return this.check_bookmark[idx];
     } else {
-      this.check_bookmark = -1;
-      return this.check_bookmark;
+      this.check_bookmark[idx] = -1;
+      return this.check_bookmark[idx];
     }
+  };
+
+  @action checkedBookmark = async (clientId, partnerId, idx) => {
+    if (this.check_bookmark[idx] !== -1) {
+      await this.setBookmarkPartner(clientId, partnerId);
+    } else {
+      await this.deleteBookmarkPartner(clientId, partnerId);
+    }
+    await this.getBookmarkByClient(clientId);
+    await this.getTotalBookmarkByPartner(partnerId);
+  };
+
+  @action existCheckedBookmark = async (clientID, partnerID, idx) => {
+    console.log(typeof clientID);
+    console.log(clientID);
+    console.log(partnerID);
+
+    const req = {
+      params: {
+        clientID: clientID,
+        partnerID: partnerID,
+      },
+    };
+
+    await PartnerAPI.existBookmarkPartner(req)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.data);
+        console.log(typeof res.data.data);
+        if (parseInt(res.data.data)) {
+          this.check_bookmark[idx] = idx;
+        } else {
+          this.check_bookmark[idx] = -1;
+        }
+        console.log(this.check_bookmark[idx]);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   };
 }
 

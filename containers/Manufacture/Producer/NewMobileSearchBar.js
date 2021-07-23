@@ -280,7 +280,7 @@ class NewMobileSearchBarConatiner extends React.Component {
     return (
       <>
         <Form active={Partner.subButtonActive}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
             <SearchBar active={Partner.subButtonActive}>
               <input
                 placeholder="원하는 분야나 비슷한 제품을 검색해보세요."
@@ -336,7 +336,8 @@ const CustomLiBox = styled.div`
   width: 588px;
   height: 160px;
   overflow: scroll;
-
+  background-color: #ffffff;
+  
   > li {
     cursor: pointer;
     margin-top: 20px;
