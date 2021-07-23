@@ -344,6 +344,8 @@ class DetailCardContainer extends React.Component {
 
   pushToDetail = async (item, idx) => {
     const { Partner } = this.props;
+    console.log(item);
+    console.log(idx);
     console.log(Partner.modalActive);
 
     if (!Partner.requestModalActive && !Partner.modalActive) {
@@ -356,7 +358,7 @@ class DetailCardContainer extends React.Component {
 
       Partner.category_name_list = null;
       Partner.partner_detail_list = [];
-      Partner.partner_detail_list.push({ item: item, idx: idx });
+      await Partner.partner_detail_list.push({ item: item, idx: idx });
       Partner.category_name_list = Partner.category_dic[idx];
 
       console.log(toJS(Partner.partner_detail_list));
@@ -371,15 +373,31 @@ class DetailCardContainer extends React.Component {
 
       // this.reload();
       // myStorage = window.localStorage;
+      console.log(this.props.Partner.partner_detail_list[0].item.id);
+
+      Partner.partnerReviewList = [];
+      Partner.partnerAllReviewList = [];
+      Partner.review_partner_page = 0;
+      Partner.review_partner_count = 0;
 
       await this.props.Partner.getReviewByPartner(
         this.props.Partner.partner_detail_list[0].item.id,
         1,
         1
       );
+
+      console.log("222222");
       await this.props.Partner.getReviewByPartner(
         this.props.Partner.partner_detail_list[0].item.id
       );
+
+      Partner.business_name = [];
+      toJS(Partner.partner_detail_list[0].item.business).map(
+        async (item) => await Partner.getBusinessName(item)
+      );
+
+      Partner.questionList = [];
+      await Partner.getQuestion(Partner.partner_detail_list[0].item.id);
 
       console.log(item.file);
       console.log(JSON.parse(localStorage.getItem("recent")));

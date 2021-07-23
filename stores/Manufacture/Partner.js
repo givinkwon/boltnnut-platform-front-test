@@ -490,6 +490,9 @@ class Partner {
         await this.getReviewByPartner(this.partner_detail_list[0].item.id);
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
+
+        console.o;
+
         Router.push("/producer/detail");
         // this.setState({ g: 3 });
       } else {
@@ -2184,6 +2187,17 @@ class Partner {
       .catch((e) => {
         console.log(e);
         console.log(e.response);
+
+        if (page_nation == 1) {
+          this.partnerReviewList = [];
+          console.log(this.partnerReviewList);
+          this.review_partner_count = 0;
+          this.review_partner_page = 0;
+        } else {
+          this.partnerAllReviewList = [];
+        }
+        console.log(this.partnerReviewList);
+        console.log(this.partnerAllReviewList);
       });
   };
 
@@ -2219,32 +2233,44 @@ class Partner {
   // });
   // }
 
-  @action getClientNameById = async (id, idx) => {
+  @action getClientNameById = async (id, idx, type = "default") => {
     console.log(id);
     console.log(idx);
     const req = {
       params: null,
     };
+
     await PartnerAPI.getClient(id, req).then(async (res) => {
-      console.log(res.data);
-      console.log(`${idx} : ${id} ============= ${res.data}`);
-      this.clientInfoList = await this.clientInfoList.concat(res.data);
+      console.log(type);
+      if (type === "default") {
+        console.log(res.data);
+        console.log(`${idx} : ${id} ============= ${res.data}`);
+        this.clientInfoList = await this.clientInfoList.concat(res.data);
 
-      // this.clientInfoList[id] = res.data;
+        console.log(this.clientInfoList);
 
-      // console.log(this.clientInfoList);
+        // this.clientInfoList[id] = res.data;
 
-      if (!this.review_client_obj.hasOwnProperty(id)) {
-        this.review_client_obj[idx] = [];
+        // console.log(this.clientInfoList);
+
+        if (!this.review_client_obj.hasOwnProperty(id)) {
+          this.review_client_obj[idx] = [];
+        }
+        this.review_client_obj[idx] = await [
+          ...this.review_client_obj[idx],
+          res.data.user.username,
+        ];
       }
-      this.review_client_obj[idx] = await [
-        ...this.review_client_obj[idx],
-        res.data.user.username,
-      ];
+      if (type === "question") {
+        console.log(res.data);
+        console.log(res.data.user.username);
+        this.questionClientInfo[idx] = await res.data.user.username;
+        console.log(toJS(this.questionClientInfo));
+        // return res.data.user.username;
+      }
     });
     console.log(toJS(this.review_client_obj));
   };
-
   // 배열을 무작위로 섞는 함수
   // 배열을 인자로 받음
   @action shuffleArray = (array) => {
