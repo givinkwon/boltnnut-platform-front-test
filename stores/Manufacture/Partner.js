@@ -117,8 +117,10 @@ class Partner {
   @observable city_ary = [];
   @observable filter_city_ary = [{ id: 0, city: "전체" }];
   @observable city_next = 0;
+  // city를 id로 주고 있어서 받아오기
   @observable city_name = "";
 
+  // business를 id로 주고 있어서 받아오기
   @observable business_name = [];
   @observable filter_checked_idx = 0;
 
@@ -1554,6 +1556,7 @@ class Partner {
     console.log(this.filter_city_ary);
   };
 
+  // city를 id로 주고 있어서 이름 가져오기
   @action getCityName = (id) => {
     const req = {
       id: id,
@@ -1564,6 +1567,28 @@ class Partner {
         console.log(res);
         this.city_name = res.data.maincategory;
         console.log(this.city_name);
+        // return res.data.city
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
+  // business를 id로 주고 있어서 이름 가져오기
+  @action getBusinessName = (id) => {
+    console.log(id);
+    const req = {
+      id: id,
+    };
+
+    PartnerAPI.getBusinessName(req.id)
+      .then(async (res) => {
+        console.log("우왕", res);
+        this.business_name.push(res.data.category + "   ");
+        console.log(res.data.category);
+        console.log(this.business_name);
+        console.log(this.business_name.includes(res.data.category));
         // return res.data.city
       })
       .catch((e) => {

@@ -33,10 +33,7 @@ class ProducerConatiner extends React.Component {
     // list 전처리
     console.log(partner_view_data);
     if (partner_view_data) {
-      partner_view_data = partner_view_data
-        .replace("[", "")
-        .replace("]", "")
-        .split(",");
+      partner_view_data = partner_view_data.replace("[", "").replace("]", "").split(",");
     }
 
     if (partner_view_data !== undefined && partner_view_data !== "undefined") {
@@ -64,9 +61,7 @@ class ProducerConatiner extends React.Component {
                 </>
               )}
               {/* 제조사 찾기 상세 페이지 */}
-              {Partner.newIndex == 1 && (
-                <DetailContainer width={this.props.width} />
-              )}
+              {Partner.newIndex == 1 && <DetailContainer width={this.props.width} />}
             </div>
           ) : (
             <>
@@ -78,13 +73,9 @@ class ProducerConatiner extends React.Component {
                 </>
               )}
               {/* 제조사 찾기 모바일 버전 업체 수배 화면 */}
-              {Partner.mobileRequestIndex == 1 && (
-                <MobileRequest width={this.props.width} />
-              )}
+              {Partner.mobileRequestIndex == 1 && <MobileRequest width={this.props.width} />}
               {/* 제조사 찾기 모바일 버전 업체 수배 완료 화면 */}
-              {Partner.mobileRequestIndex == 2 && (
-                <MobileRequestDone width={this.props.width} />
-              )}
+              {Partner.mobileRequestIndex == 2 && <MobileRequestDone width={this.props.width} />}
             </>
           ))}
       </>
