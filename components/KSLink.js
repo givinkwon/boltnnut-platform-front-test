@@ -6,6 +6,9 @@ import * as Content from "./Content";
 @inject("Common")
 @observer
 class KSLink extends React.Component {
+  componentDidMount() {
+    console.log(this.props.content);
+  }
   render() {
     return (
       <>

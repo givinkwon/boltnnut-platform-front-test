@@ -6,6 +6,7 @@ import MobileSelectComponent from "MobileSelect";
 
 import ButtonComponent from "components/Buttonv2";
 import SearchBar from "./SearchBar";
+import FilterBoxSearchBar from "./FilterBoxSearchBar";
 import FilterBox from "./FilterBox";
 import FilterBox2 from "./FilterBox2";
 import Background from "components/Background";
@@ -142,7 +143,7 @@ class SearchFilterConatiner extends React.Component {
     list: false,
     filter_city_active: false,
     filter_category_active: false,
-    type: ""
+    type: "",
   };
 
   dropdownHandler = (flag) => {
@@ -203,13 +204,15 @@ class SearchFilterConatiner extends React.Component {
   };
   render() {
     const { Partner, width } = this.props;
-    console.log(this.state.type)
+    console.log(this.state.type);
     return (
       <>
         {width && width > 767.99 ? (
           <ContainerV2>
             {console.log(`Active : ${Partner.subButtonActive}`)}
-            <SearchBar />
+
+            <FilterBoxSearchBar />
+
             <FilterCategory>
               <Category>
                 <CategoryName>카테고리</CategoryName>
@@ -265,14 +268,8 @@ class SearchFilterConatiner extends React.Component {
                       this.dropdownHandler("develop&material");
                     }}
                   >
-                    <img
-                      src="/static/icon/detail_filter.svg"
-                      style={{ widht: 24, height: 24 }}
-                    ></img>
-                    <img
-                      src="/static/icon/arrow_down.svg"
-                      style={{ widht: 12, height: 12 }}
-                    ></img>
+                    <img src="/static/icon/detail_filter.svg" style={{ widht: 24, height: 24 }}></img>
+                    <img src="/static/icon/arrow_down.svg" style={{ widht: 12, height: 12 }}></img>
                   </div>
                 </Material>
               </Category>
@@ -339,22 +336,14 @@ class SearchFilterConatiner extends React.Component {
             {Partner.requestModalActive && (
               <Layer>
                 <span>
-                  <Modal
-                    width={width}
-                    open={Partner.requestModalActive}
-                    close={Partner.closeModal}
-                  ></Modal>
+                  <Modal width={width} open={Partner.requestModalActive} close={Partner.closeModal}></Modal>
                 </span>
               </Layer>
             )}
             {Partner.requestDoneModalActive && (
               <Layer>
                 <span>
-                  <DoneModal
-                    width={width}
-                    open={Partner.requestDoneModalActive}
-                    close={Partner.closeModal}
-                  />
+                  <DoneModal width={width} open={Partner.requestDoneModalActive} close={Partner.closeModal} />
                 </span>
               </Layer>
             )}
@@ -363,11 +352,7 @@ class SearchFilterConatiner extends React.Component {
           <ContainerV2>
             <Filter>
               <span>분야필터</span>
-              <FilterBox
-                filter="mobileFilter"
-                purpose="filter"
-                data={Partner.filterArray}
-              />
+              <FilterBox filter="mobileFilter" purpose="filter" data={Partner.filterArray} />
 
               <Location>
                 <span>위치</span>
@@ -404,11 +389,7 @@ class SearchFilterConatiner extends React.Component {
             {Partner.requestModalActive && (
               <Layer>
                 <span>
-                  <Modal
-                    width={width}
-                    open={Partner.requestModalActive}
-                    close={Partner.closeModal}
-                  ></Modal>
+                  <Modal width={width} open={Partner.requestModalActive} close={Partner.closeModal}></Modal>
                 </span>
               </Layer>
             )}
@@ -416,11 +397,7 @@ class SearchFilterConatiner extends React.Component {
             {Partner.requestDoneModalActive && (
               <Layer>
                 <span>
-                  <DoneModal
-                    width={width}
-                    open={Partner.requestDoneModalActive}
-                    close={Partner.closeModal}
-                  />
+                  <DoneModal width={width} open={Partner.requestDoneModalActive} close={Partner.closeModal} />
                 </span>
               </Layer>
             )}
@@ -432,6 +409,15 @@ class SearchFilterConatiner extends React.Component {
 }
 
 export default SearchFilterConatiner;
+
+const TestDiv = styled.div`
+  width: 792px;
+  height: 59px;
+  border-radius: 60px;
+  box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
+  border: solid 0.5px #c6c7cc;
+  background-color: #ffffff;
+`;
 
 const FilterCategory = styled.div`
   width: 100%;
@@ -496,6 +482,7 @@ const ContainerV2 = styled.div`
   margin-top: 32px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 1200px;
   margin-bottom: 30px;
 
