@@ -448,54 +448,10 @@ class ProposalCard extends React.Component {
               <Main>
                 <Name>{data.name}</Name>
                 <InfoOne>
-                  {data.info_company.length > 100
-                    ? data.info_company.slice(0, 100) + "..."
+                  {data.info_company.length > 70
+                    ? data.info_company.slice(0, 70) + "..."
                     : data.info_company}
                 </InfoOne>
-                <Information>
-                  <div>
-                    <Phone>
-                      <div
-                        style={{ cursor: "pointer", zIndex: 10 }}
-                        onClick={async (e) => {
-                          e.stopPropagation();
-                          if (await this.checkLogin()) {
-                            this.clickLog(data);
-                            this.openModal(data.user.phone);
-                          } else {
-                            alert("로그인이 필요합니다");
-                            Router.push("/login");
-                          }
-                        }}
-                      >
-                        <img src={call_img} />
-
-                        {Partner.modalActive && (
-                          <Layer>
-                            <span>
-                              <Modal
-                                width={width}
-                                open={this.props.Partner.modalActive}
-                                close={this.closeModal}
-                                header="전화번호"
-                                children={this.props.Partner.modalUserPhone}
-                              ></Modal>
-                            </span>
-                          </Layer>
-                        )}
-                      </div>
-                    </Phone>
-                  </div>
-                  <div>
-                    <Link
-                      target="_blank"
-                      // onClick={(e) => this.cardClick(e)}
-                      download
-                    >
-                      <span>회사 소개서 보기</span>
-                    </Link>
-                  </div>
-                </Information>
               </Main>
             </Card>
             {this.props.Partner.ReviewActive &&
@@ -1080,7 +1036,7 @@ const SliderContainer = styled(Slider)`
 
 const SliderMobileContainer = styled(Slider)`
   .slick-list {
-    width: 144px;
+    width: 241px;
     .slick-track {
       .slick-slide {
         display: flex;
