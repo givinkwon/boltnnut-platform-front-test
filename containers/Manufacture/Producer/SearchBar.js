@@ -263,7 +263,7 @@ class SearchBarConatiner extends React.Component {
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-              <img style={{ width: 24, height: 24, marginRight: 25 }} src="/static/icon/search_blue.svg" onClick={this.search} />
+              <img style={{ width: 24, height: 24, marginRight: 25, cursor: "pointer" }} src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
 
             <CustomUl>

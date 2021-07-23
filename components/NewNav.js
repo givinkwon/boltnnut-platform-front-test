@@ -213,7 +213,7 @@ class Nav extends React.Component {
                     }}
                     active={url.indexOf("login") > -1}
                   >
-                    <KSLink url={"login"} content={"바꾸자"} />
+                    <KSLink url={"login"} content={"로그인"} />
                     {/* 로그인 */}
                   </NavLink>
                 )}
