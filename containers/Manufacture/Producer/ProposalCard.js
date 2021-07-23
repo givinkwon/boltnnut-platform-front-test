@@ -55,16 +55,6 @@ class ProposalCard extends React.Component {
     totalPartnerBookmark: "",
   };
 
-  BookmarkHandler = (idx) => {
-    if (idx !== this.check_bookmark) {
-      this.check_bookmark = idx;
-      return this.check_bookmark;
-    } else {
-      this.check_bookmark = -1;
-      return this.check_bookmark;
-    }
-  };
-
   openModal = (user_phone) => {
     this.props.Partner.modalActive = true;
     if (!user_phone) {
@@ -135,7 +125,7 @@ class ProposalCard extends React.Component {
 
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data.id;
-    await Partner.existBookmarkPartner(clientId, partnerId);
+    await Partner.existCheckedBookmark(clientId, partnerId, idx);
     await Partner.getTotalBookmarkByPartner(partnerId);
 
     window.addEventListener("resize", Producer.updateDimensions);
@@ -412,7 +402,7 @@ class ProposalCard extends React.Component {
                   <BookMark>
                     <img
                       src={
-                        Partner.check_bookmark === idx
+                        Partner.check_bookmark[idx] === idx
                           ? bookmarkBlueImg
                           : bookmarkImg
                       }
@@ -420,7 +410,7 @@ class ProposalCard extends React.Component {
                         if (!loggedInPartnerId && clientId) {
                           e.stopPropagation();
                           Partner.BookmarkHandler(idx);
-                          Partner.checkedBookmark(clientId, partnerId);
+                          Partner.checkedBookmark(clientId, partnerId, idx);
                         }
                       }}
                     ></img>
