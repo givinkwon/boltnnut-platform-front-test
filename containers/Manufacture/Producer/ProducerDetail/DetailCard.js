@@ -1163,7 +1163,7 @@ class DetailCardContainer extends React.Component {
                       }}
                     />
                   </PageBar>
-                  {Auth.logged_in_client && Auth.logged_in_client.id && (
+                  {!Auth.logged_in_partner && (
                     <WritingContainer
                       type="comment"
                       clientId={clientId}
