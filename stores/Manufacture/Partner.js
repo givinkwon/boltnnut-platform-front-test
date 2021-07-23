@@ -495,8 +495,6 @@ class Partner {
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
-        console.o;
-
         Router.push("/producer/detail");
         // this.setState({ g: 3 });
       } else {
@@ -2502,7 +2500,6 @@ class Partner {
         console.log(e.response);
       });
   };
-
 
   @action mergeQuestion = async () => {
     this.mergeQuestionList = [];

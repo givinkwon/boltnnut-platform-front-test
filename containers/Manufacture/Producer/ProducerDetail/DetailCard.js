@@ -380,6 +380,11 @@ class DetailCardContainer extends React.Component {
       Partner.review_partner_page = 0;
       Partner.review_partner_count = 0;
 
+      Partner.city_name = "";
+      await Partner.getCityName(Partner.partner_detail_list[0].item.city);
+
+      console.log(Partner.city_name);
+
       await this.props.Partner.getReviewByPartner(
         this.props.Partner.partner_detail_list[0].item.id,
         1,

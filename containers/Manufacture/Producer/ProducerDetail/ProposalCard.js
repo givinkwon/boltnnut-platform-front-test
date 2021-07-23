@@ -18,7 +18,7 @@ class ProposalCard extends React.Component {
           )}
           <Content>
             <Name>{data.name}</Name>
-            <Info>{data.deal}</Info>
+            <Info>{data.history}</Info>
             <Category>4</Category>
           </Content>
         </Card>
