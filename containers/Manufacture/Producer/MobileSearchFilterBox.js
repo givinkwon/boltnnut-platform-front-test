@@ -6,6 +6,7 @@ import MobileSelectComponent from "MobileSelect";
 
 import ButtonComponent from "components/Buttonv2";
 import SearchBar from "./SearchBar";
+import MobileSearchBar from "./SearchBar";
 import FilterBox from "./FilterBox";
 import FilterBox2 from "./FilterBox2";
 import Background from "components/Background";
@@ -135,7 +136,7 @@ const mobileCustomStyles = {
 
 @inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
 @observer
-class SearchFilterConatiner extends React.Component {
+class MobileSearchFilterConatiner extends React.Component {
   state = {
     search: "",
     modal_open: false,
@@ -206,7 +207,7 @@ class SearchFilterConatiner extends React.Component {
     console.log(this.state.type)
     return (
           <ContainerV2>
-            <SearchBar />
+            <MobileSearchBar />
             <FilterCategory>
               <Category>
                 <CategoryName>카테고리</CategoryName>
@@ -245,17 +246,7 @@ class SearchFilterConatiner extends React.Component {
                 </Field>
               </Category>
               <Category>
-                <div
-                  style={{
-                    fontSize: "15px",
-                    lineHeight: 2.27,
-                    letterSpacing: "-0.38px",
-                    textAlign: "center",
-                    color: "#555963",
-                  }}
-                >
-                  공정, 소재
-                </div>
+                <CategoryName>공정, 소재</CategoryName>
                 <Material>
                   <div
                     onClick={() => {
@@ -274,33 +265,7 @@ class SearchFilterConatiner extends React.Component {
                 </Material>
               </Category>
             </FilterCategory>
-            <FilterModalContainer type={this.state.type}></FilterModalContainer>
-            {Partner.filter_dropdown && (
-              <FilterContent>
-                <Aside>
-                  <Buy
-                    onMouseOver={() => {
-                      this.activeHandler("active");
-                    }}
-                    onMouseOut={() => {
-                      this.activeHandler("active");
-                    }}
-                  >
-                    완제품/부품 구매
-                  </Buy>
-                  <Develop>
-                    <div style={{ marginRight: 5 }}>개발 업체</div>
-                    <div style={{ color: "#999999" }}>(디자인, 기구설계)</div>
-                  </Develop>
-                  <Making>
-                    <div style={{ marginRight: 5 }}>제작 업체</div>
-                    <div style={{ color: "#999999" }}>(CNC 가공, 금형사출)</div>
-                  </Making>
-                </Aside>
-                <Main></Main>
-
-              </FilterContent>
-            )}
+            {Partner.filter_dropdown && <FilterModalContainer type={this.state.type}></FilterModalContainer>}
 
             {Partner.requestModalActive && (
               <Layer>
@@ -329,7 +294,7 @@ class SearchFilterConatiner extends React.Component {
 };
 };
 
-export default SearchFilterConatiner;
+export default MobileSearchFilterConatiner;
 
 const FilterCategory = styled.div`
   width: 100%;
@@ -342,6 +307,7 @@ const FilterCategory = styled.div`
 `;
 
 const Category = styled.div`
+  width: 30%;
   background: none;
   border: none;
   margin-right: 20px;
@@ -360,7 +326,6 @@ const Material = styled.div`
 const CategoryName = styled.div`
   background: none;
   border: none;
-  width: 204px;
   font-size: 15px;
   line-height: 2.27;
   letter-spacing: -0.38px;
@@ -370,7 +335,6 @@ const CategoryName = styled.div`
 `;
 
 const Field = styled.div`
-  width: 204px;
   height: 40px;
   display: flex;
   justify-content: space-between;
