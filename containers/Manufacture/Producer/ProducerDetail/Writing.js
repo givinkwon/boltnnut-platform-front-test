@@ -92,7 +92,8 @@ class WritingContainer extends React.Component {
                         );
                         await Partner.getQuestion(partnerId);
                         console.log("comment");
-                        // this.props.setQA();
+                        this.props.setQA();
+                        // this.setState({ h: 3 });
                       } else {
                         if (clientId) {
                           await Partner.setAnswerByQuestion(

@@ -85,9 +85,9 @@ class DetailCardContainer extends React.Component {
 
   setQA = () => {
     console.log("setQA");
-    // this.setState((state) => {
-    //   this.setState({ g: state.g + 1 });
-    // });
+    this.setState((state) => {
+      this.setState({ g: state.g + 1 });
+    });
   };
 
   openModal = () => {
@@ -104,7 +104,7 @@ class DetailCardContainer extends React.Component {
     console.log(this.state.g);
     console.log(nextState.g);
 
-    return this.state.g !== nextState.g;
+    // return this.state.g !== nextState.g;
   };
 
   componentDidMount = async () => {

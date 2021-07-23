@@ -30,16 +30,16 @@ class QuestionContainer extends React.Component {
 
     console.log(prevProps.Partner.questionList);
 
-    if (Partner.questionSaveSuccess) {
-      setTimeout(() => {
-        if (Partner.questionSaveSuccess) {
-          Partner.questionSaveSuccess = 0;
-        }
-      }, 1000);
-      return true;
-    } else {
-      return this.state.g !== nextState.g;
-    }
+    // if (Partner.questionSaveSuccess) {
+    //   setTimeout(() => {
+    //     if (Partner.questionSaveSuccess) {
+    //       Partner.questionSaveSuccess = 0;
+    //     }
+    //   }, 1000);
+    //   return true;
+    // } else {
+    //   return this.state.g !== nextState.g;
+    // }
 
     // return true;
   };
