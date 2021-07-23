@@ -12,7 +12,7 @@ class HeaderContainer extends React.Component {
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
 
-    const clientId = Auth.logged_in_client.id;
+    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = Partner.partner_detail_list[0].item.id;
     await Partner.existBookmarkPartner(clientId, partnerId);
     await Partner.getTotalBookmarkByPartner(partnerId);
@@ -20,8 +20,10 @@ class HeaderContainer extends React.Component {
   render() {
     console.log("render");
     const { Partner, Auth } = this.props;
-    const clientId = Auth.logged_in_client.id;
+    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = Partner.partner_detail_list[0].item.id;
+    const loggedInPartnerId =
+      Auth.logged_in_partner && Auth.logged_in_partner.id;
     console.log(Partner.interestedIdx);
 
     return (
@@ -37,9 +39,11 @@ class HeaderContainer extends React.Component {
             <img
               src={Partner.interestedIdx ? bookmarkBlueImg : bookmarkImg}
               onClick={async () => {
-                Partner.clickHandler("interested");
-                Partner.checkedInterestedIdx(clientId, partnerId);
-                this.setState({ h: 3 });
+                if (!loggedInPartnerId && clientId) {
+                  Partner.clickHandler("interested");
+                  Partner.checkedInterestedIdx(clientId, partnerId);
+                  this.setState({ h: 3 });
+                }
               }}
             />
             <span>{Partner.totalPartnerBookmark}</span>
@@ -53,18 +57,16 @@ class HeaderContainer extends React.Component {
 export default HeaderContainer;
 
 const Container = styled.div`
-  //   width: 100%;
-  //   height: 70px;
-  //   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-  //   display: flex;
-  //   justify-content: space-around;
-  //   align-items: center;
-  //   margin-bottom: 50px;
-  //   // border: 3px solid red;
-  //   position: relative;
   display: flex;
   justify-content: space-between;
   margin-bottom: 34px;
+  > name {
+    font-size: 26px;
+    line-height: 52px;
+    letter-spacinig: -0.65px;
+    color: #282c36;
+    font-weight: bold;
+  }
 `;
 
 const ImgBox = styled.div``;
