@@ -2597,16 +2597,24 @@ class Partner {
       });
   };
 
-  @action setAnswerByQuestion = async (questionID, state, secret, content) => {
+  @action setAnswerByQuestion = async (
+    questionID,
+    state,
+    secret,
+    content,
+    clientID = ""
+  ) => {
     console.log(questionID);
     console.log(state);
     console.log(secret);
     console.log(content);
+    console.log(clientID);
     const formData = new FormData();
     formData.append("questionID", questionID);
     formData.append("state", state);
     formData.append("secret", secret ? 1 : 0);
     formData.append("content", content);
+    formData.append("clientID", clientID);
 
     const req = {
       data: formData,

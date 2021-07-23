@@ -85,9 +85,9 @@ class DetailCardContainer extends React.Component {
 
   setQA = () => {
     console.log("setQA");
-    this.setState((state) => {
-      this.setState({ g: state.g + 1 });
-    });
+    // this.setState((state) => {
+    //   this.setState({ g: state.g + 1 });
+    // });
   };
 
   openModal = () => {
@@ -881,7 +881,8 @@ class DetailCardContainer extends React.Component {
                       active={Partner.reviewCurrentPage % 5 == 1}
                       style={{
                         display:
-                          Partner.review_partner_page < 5 * (current_set - 1)
+                          Partner.review_partner_page <
+                          5 * (current_set - 1) + 1
                             ? "none"
                             : "block",
                       }}
@@ -977,7 +978,7 @@ class DetailCardContainer extends React.Component {
                 <QuestionBox>
                   <Font24>업체 Q&A</Font24>
                   {console.log(toJS(Partner.mergeQuestionList))}
-                  {Partner.mergeQuestionList == false &&
+                  {Partner.mergeQuestionList &&
                     Partner.mergeQuestionList.map((item, idx) => {
                       return (
                         <QuestionContainer

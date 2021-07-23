@@ -29,7 +29,7 @@ class WritingContainer extends React.Component {
     if (type === "comment") {
       placeholder = "문의를 작성해주세요.";
     } else {
-      placeholder = "rhk***님에게 답글달기";
+      placeholder = "답글달기";
     }
     if (type === "recomment") {
       console.log(this.props.data);
@@ -94,12 +94,23 @@ class WritingContainer extends React.Component {
                         console.log("comment");
                         // this.props.setQA();
                       } else {
-                        await Partner.setAnswerByQuestion(
-                          this.props.data.id,
-                          0,
-                          Partner.secretIdx,
-                          Partner.questionSearchText
-                        );
+                        if (clientId) {
+                          await Partner.setAnswerByQuestion(
+                            this.props.data.id,
+                            0,
+                            Partner.secretIdx,
+                            Partner.questionSearchText,
+                            clientId
+                          );
+                        } else {
+                          await Partner.setAnswerByQuestion(
+                            this.props.data.id,
+                            1,
+                            Partner.secretIdx,
+                            Partner.questionSearchText
+                          );
+                        }
+
                         await Partner.getQuestion(partnerId);
                         console.log("recomment");
                         // Partner.changeQuestion();
