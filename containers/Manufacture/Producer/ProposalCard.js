@@ -121,7 +121,8 @@ class ProposalCard extends React.Component {
 
   async componentDidMount() {
     // console.log(data.id);
-    const { width, Producer, data, Partner } = this.props;
+    const { width, Producer, data, Partner, idx } = this.props;
+
     window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
 
@@ -257,8 +258,8 @@ class ProposalCard extends React.Component {
   };
   cardClick = async (e) => {
     e.stopPropagation();
-    const { data, Partner } = this.props;
-
+    const { data, Partner, idx } = this.props;
+    console.log(idx);
     Partner.detailLoadingFlag = true;
 
     if (this.props.Auth && this.props.Auth.logged_in_user) {
@@ -309,7 +310,11 @@ class ProposalCard extends React.Component {
   };
 
   render() {
-    const { data, width, Partner, categoryData, idx } = this.props;
+    const { data, width, Partner, categoryData, idx, Auth } = this.props;
+    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
+    const loggedInPartnerId =
+      Auth.logged_in_partner && Auth.logged_in_partner.id;
+    console.log(Partner.interestedIdx);
 
     const SlideSettings = {
       dots: false,
@@ -390,17 +395,22 @@ class ProposalCard extends React.Component {
                   </div>
                   <BookMark>
                     <img
-                      src={
-                        Partner.interestedIdx ? bookmarkBlueImg : bookmarkImg
-                      }
-                      onClick={async () => {
-                        // e.stopPropagation();
-                        if (!loggedInPartnerId && clientId) {
-                          Partner.clickHandler("interested");
-                          Partner.checkedInterestedIdx(clientId, partnerId);
-                          this.setState({ h: 3 });
-                        }
-                      }}
+                    // src={
+                    //   Partner.check_bookmark === idx ? bookmarkBlueImg : bookmarkImg
+                    // }
+                    // onClick={async () => {}
+                    // }
+                    // onClick={async (e) => {
+                    //   if (!loggedInPartnerId && clientId) {
+                    //     e.stopPropagation();
+                    //     Partner.clickHandler("interested");
+                    //   }
+                    //   // if (!loggedInPartnerId && clientId) {
+                    //   //   Partner.clickHandler("interested");
+                    //   //   Partner.checkedInterestedIdx(clientId, partnerId);
+                    //   //   this.setState({ h: 3 });
+                    //   // }
+                    // }}
                     ></img>
                   </BookMark>
                 </Title>
@@ -423,7 +433,17 @@ class ProposalCard extends React.Component {
                     ) : (
                       <Review>
                         <img src={star} style={{ marginRight: 5 }}></img>
-                        <Score>{this.state.total_review}/5.0</Score>
+                        <Score
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <div style={{ fontWeight: "bold" }}>
+                            {this.state.total_review}
+                          </div>
+                          /5.0
+                        </Score>
                       </Review>
                     )}
                     <Location>
@@ -480,54 +500,10 @@ class ProposalCard extends React.Component {
               <Main>
                 <Name>{data.name}</Name>
                 <InfoOne>
-                  {data.info_company.length > 100
-                    ? data.info_company.slice(0, 100) + "..."
+                  {data.info_company.length > 70
+                    ? data.info_company.slice(0, 70) + "..."
                     : data.info_company}
                 </InfoOne>
-                <Information>
-                  <div>
-                    <Phone>
-                      <div
-                        style={{ cursor: "pointer", zIndex: 10 }}
-                        onClick={async (e) => {
-                          e.stopPropagation();
-                          if (await this.checkLogin()) {
-                            this.clickLog(data);
-                            this.openModal(data.user.phone);
-                          } else {
-                            alert("로그인이 필요합니다");
-                            Router.push("/login");
-                          }
-                        }}
-                      >
-                        <img src={call_img} />
-
-                        {Partner.modalActive && (
-                          <Layer>
-                            <span>
-                              <Modal
-                                width={width}
-                                open={this.props.Partner.modalActive}
-                                close={this.closeModal}
-                                header="전화번호"
-                                children={this.props.Partner.modalUserPhone}
-                              ></Modal>
-                            </span>
-                          </Layer>
-                        )}
-                      </div>
-                    </Phone>
-                  </div>
-                  <div>
-                    <Link
-                      target="_blank"
-                      // onClick={(e) => this.cardClick(e)}
-                      download
-                    >
-                      <span>회사 소개서 보기</span>
-                    </Link>
-                  </div>
-                </Information>
               </Main>
             </Card>
             {this.props.Partner.ReviewActive &&
@@ -1112,7 +1088,7 @@ const SliderContainer = styled(Slider)`
 
 const SliderMobileContainer = styled(Slider)`
   .slick-list {
-    width: 144px;
+    width: 241px;
     .slick-track {
       .slick-slide {
         display: flex;

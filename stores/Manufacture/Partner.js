@@ -56,7 +56,6 @@ class Partner {
   @observable page = 1;
   @observable currentPage = 1;
 
-  @observable search = "";
   @observable search_text = "";
   @observable search_category = [];
   @observable search_develop = [];
@@ -349,6 +348,8 @@ class Partner {
   @observable recent_partner_img = "";
 
   @observable total_review = 0;
+
+  @observable check_bookmark = -1;
 
   @action movePage = (e) => {
     e.preventDefault();
@@ -2470,6 +2471,16 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+  };
+
+  @action BookmarkHandler = (idx) => {
+    if (idx !== this.check_bookmark) {
+      this.check_bookmark = idx;
+      return this.check_bookmark;
+    } else {
+      this.check_bookmark = -1;
+      return this.check_bookmark;
+    }
   };
 }
 

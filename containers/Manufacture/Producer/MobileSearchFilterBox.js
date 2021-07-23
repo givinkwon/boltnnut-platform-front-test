@@ -3,10 +3,9 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import SelectComponent from "Select";
 import MobileSelectComponent from "MobileSelect";
-
+import FilterBoxSearchBar from "./FilterBoxSearchBar";
 import ButtonComponent from "components/Buttonv2";
 import SearchBar from "./SearchBar";
-import FilterBoxSearchBar from "./FilterBoxSearchBar";
 import FilterBox from "./FilterBox";
 import FilterBox2 from "./FilterBox2";
 import Background from "components/Background";
@@ -136,14 +135,14 @@ const mobileCustomStyles = {
 
 @inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
 @observer
-class SearchFilterConatiner extends React.Component {
+class MobileSearchFilterConatiner extends React.Component {
   state = {
     search: "",
     modal_open: false,
     list: false,
     filter_city_active: false,
     filter_category_active: false,
-    type: "",
+    type: ""
   };
 
   dropdownHandler = (flag) => {
@@ -204,10 +203,9 @@ class SearchFilterConatiner extends React.Component {
   };
   render() {
     const { Partner, width } = this.props;
-    console.log(this.state.type);
+    console.log(this.state.type)
     return (
           <ContainerV2>
-            {console.log(`Active : ${Partner.subButtonActive}`)}
 
             <FilterBoxSearchBar />
 
@@ -249,68 +247,46 @@ class SearchFilterConatiner extends React.Component {
                 </Field>
               </Category>
               <Category>
-                <div
-                  style={{
-                    fontSize: "15px",
-                    lineHeight: 2.27,
-                    letterSpacing: "-0.38px",
-                    textAlign: "center",
-                    color: "#555963",
-                  }}
-                >
-                  공정, 소재
-                </div>
+                <CategoryName>공정, 소재</CategoryName>
                 <Material>
                   <div
                     onClick={() => {
                       this.dropdownHandler("develop&material");
                     }}
                   >
-                    <img src="/static/icon/detail_filter.svg" style={{ widht: 24, height: 24 }}></img>
-                    <img src="/static/icon/arrow_down.svg" style={{ widht: 12, height: 12 }}></img>
+                    <img
+                      src="/static/icon/detail_filter.svg"
+                      style={{ widht: 24, height: 24 }}
+                    ></img>
+                    <img
+                      src="/static/icon/arrow_down.svg"
+                      style={{ widht: 12, height: 12 }}
+                    ></img>
                   </div>
                 </Material>
               </Category>
             </FilterCategory>
-            <FilterModalContainer type={this.state.type}></FilterModalContainer>
-            {Partner.filter_dropdown && (
-              <FilterContent>
-                <Aside>
-                  <Buy
-                    onMouseOver={() => {
-                      this.activeHandler("active");
-                    }}
-                    onMouseOut={() => {
-                      this.activeHandler("active");
-                    }}
-                  >
-                    완제품/부품 구매
-                  </Buy>
-                  <Develop>
-                    <div style={{ marginRight: 5 }}>개발 업체</div>
-                    <div style={{ color: "#999999" }}>(디자인, 기구설계)</div>
-                  </Develop>
-                  <Making>
-                    <div style={{ marginRight: 5 }}>제작 업체</div>
-                    <div style={{ color: "#999999" }}>(CNC 가공, 금형사출)</div>
-                  </Making>
-                </Aside>
-                <Main></Main>
-
-              </FilterContent>
-            )}
+            {Partner.filter_dropdown && <FilterModalContainer type={this.state.type}></FilterModalContainer>}
 
             {Partner.requestModalActive && (
               <Layer>
                 <span>
-                  <Modal width={width} open={Partner.requestModalActive} close={Partner.closeModal}></Modal>
+                  <Modal
+                    width={width}
+                    open={Partner.requestModalActive}
+                    close={Partner.closeModal}
+                  ></Modal>
                 </span>
               </Layer>
             )}
             {Partner.requestDoneModalActive && (
               <Layer>
                 <span>
-                  <DoneModal width={width} open={Partner.requestDoneModalActive} close={Partner.closeModal} />
+                  <DoneModal
+                    width={width}
+                    open={Partner.requestDoneModalActive}
+                    close={Partner.closeModal}
+                  />
                 </span>
               </Layer>
             )}
@@ -319,16 +295,7 @@ class SearchFilterConatiner extends React.Component {
 };
 };
 
-export default SearchFilterConatiner;
-
-const TestDiv = styled.div`
-  width: 792px;
-  height: 59px;
-  border-radius: 60px;
-  box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
-  border: solid 0.5px #c6c7cc;
-  background-color: #ffffff;
-`;
+export default MobileSearchFilterConatiner;
 
 const FilterCategory = styled.div`
   width: 100%;
@@ -341,6 +308,7 @@ const FilterCategory = styled.div`
 `;
 
 const Category = styled.div`
+  width: 30%;
   background: none;
   border: none;
   margin-right: 20px;
@@ -359,7 +327,6 @@ const Material = styled.div`
 const CategoryName = styled.div`
   background: none;
   border: none;
-  width: 204px;
   font-size: 15px;
   line-height: 2.27;
   letter-spacing: -0.38px;
@@ -369,7 +336,6 @@ const CategoryName = styled.div`
 `;
 
 const Field = styled.div`
-  width: 204px;
   height: 40px;
   display: flex;
   justify-content: space-between;
@@ -393,7 +359,6 @@ const ContainerV2 = styled.div`
   margin-top: 32px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 1200px;
   margin-bottom: 30px;
 

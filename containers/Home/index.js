@@ -34,6 +34,7 @@ import MobileBanner8Container from "./Mobile/MobileBanner8";
 
 // New
 import NewMobileBanner0Container from "./Mobile/NewMobileBanner0";
+import NewMobileBanner1Container from "./Mobile/NewMobileBanner1";
 
 // Tablet Container
 import TabletBanner0Container from "./Tablet/TabletBanner0";
@@ -120,9 +121,10 @@ class HomeConatiner extends React.Component {
           <>
             <CustomContainer>
               <NewMobileBanner0Container width={width} />
+              <NewMobileBanner1Container width={width} />
 
               {/* <MobileBanner13Container width={width} /> */}
-              <MobileBanner14Container width={width} />
+              {/* <MobileBanner14Container width={width} /> */}
               <MobileBanner12Container width={width} />
               <MobileBanner8Container />
               <MobileBanner9Container />
