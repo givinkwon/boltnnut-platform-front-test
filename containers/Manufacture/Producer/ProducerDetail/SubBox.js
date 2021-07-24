@@ -92,10 +92,14 @@ class SubBoxContainer extends React.Component {
                 }}
                 onClick={async () => {
                   console.log(Partner.interestedIdx);
-
-                  Partner.clickHandler("interested");
-                  Partner.checkedInterestedIdx(clientId, partnerId);
-                  this.setState({ g: 3 });
+                  if (clientId) {
+                    Partner.clickHandler("interested");
+                    Partner.checkedInterestedIdx(clientId, partnerId);
+                    this.setState({ g: 3 });
+                  } else {
+                    location.href = Common.makeUrl("request");
+                    // this.setState({ g: 3 });
+                  }
                 }}
               >
                 <span>관심 업체 등록하기</span>
