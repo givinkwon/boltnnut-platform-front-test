@@ -431,11 +431,12 @@ export default FilterModalContainer;
 
 const ModalBox = styled.div`
   display: flex;
-  width: 100%;
+  width: 95%;
   height: 293px;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   margin-top: 10px;
+  align-self: center;
 `;
 
 const AddCategoryBox = styled.div`
