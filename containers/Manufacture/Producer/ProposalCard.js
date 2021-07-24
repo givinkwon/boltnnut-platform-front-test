@@ -121,7 +121,12 @@ class ProposalCard extends React.Component {
 
   async componentDidMount() {
     // console.log(data.id);
-    const { width, Producer, data, Partner, idx } = this.props;
+    const { width, Producer, data, Partner, idx, Auth } = this.props;
+
+    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
+    const partnerId = data.id;
+    await Partner.existCheckedBookmark(clientId, partnerId, idx);
+    await Partner.getTotalBookmarkByPartner(partnerId);
 
     window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -312,6 +317,7 @@ class ProposalCard extends React.Component {
   render() {
     const { data, width, Partner, categoryData, idx, Auth } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
+    const partnerId = data.id;
     const loggedInPartnerId =
       Auth.logged_in_partner && Auth.logged_in_partner.id;
     console.log(Partner.interestedIdx);
@@ -395,22 +401,18 @@ class ProposalCard extends React.Component {
                   </div>
                   <BookMark>
                     <img
-                    // src={
-                    //   Partner.check_bookmark === idx ? bookmarkBlueImg : bookmarkImg
-                    // }
-                    // onClick={async () => {}
-                    // }
-                    // onClick={async (e) => {
-                    //   if (!loggedInPartnerId && clientId) {
-                    //     e.stopPropagation();
-                    //     Partner.clickHandler("interested");
-                    //   }
-                    //   // if (!loggedInPartnerId && clientId) {
-                    //   //   Partner.clickHandler("interested");
-                    //   //   Partner.checkedInterestedIdx(clientId, partnerId);
-                    //   //   this.setState({ h: 3 });
-                    //   // }
-                    // }}
+                      src={
+                        Partner.check_bookmark[idx] === idx
+                          ? bookmarkBlueImg
+                          : bookmarkImg
+                      }
+                      onClick={async (e) => {
+                        if (!loggedInPartnerId && clientId) {
+                          e.stopPropagation();
+                          Partner.BookmarkHandler(idx);
+                          Partner.checkedBookmark(clientId, partnerId, idx);
+                        }
+                      }}
                     ></img>
                   </BookMark>
                 </Title>
