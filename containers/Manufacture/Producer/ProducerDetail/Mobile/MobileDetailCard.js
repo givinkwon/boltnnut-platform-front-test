@@ -1224,14 +1224,8 @@ class MobileDetailCardContainer extends React.Component {
             position: "relative",
           }}
         >
-          <img
+          <UpImg
             src={upImg}
-            style={{
-              position: "absolute",
-              bottom: "8%",
-              right: "0",
-              zIndex: "1",
-            }}
             onClick={() => {
               window.scrollTo(0, 0);
             }}
@@ -1245,7 +1239,9 @@ class MobileDetailCardContainer extends React.Component {
                   backgroundColor="#f6f6f6"
                   style={{ marginBottom: "5px" }}
                 >
-                  <div style={{ display: "flex", width: "100%" }}>
+                  <div
+                    style={{ width: "100%", display: "flex", flexWrap: "wrap" }}
+                  >
                     {Partner.partner_list &&
                       (length < 4
                         ? remainderAry.map((item, idx) => {
@@ -2064,4 +2060,16 @@ const Block = styled.div`
   width: 100%;
   height: 100%;
   z-index: 99;
+`;
+
+const UpImg = styled.img`
+  position: absolute;
+  bottom: 8%;
+  right: 0;
+  zindex: 1;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    bottom: 0;
+    width: 50px;
+  }
 `;
