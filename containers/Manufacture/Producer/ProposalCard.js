@@ -399,7 +399,7 @@ class ProposalCard extends React.Component {
                       <></>
                     )}
                   </div>
-                  <BookMark>
+                  {Auth.logged_in_user && (<BookMark>
                     <img
                       src={
                         Partner.check_bookmark[idx] === idx
@@ -415,6 +415,8 @@ class ProposalCard extends React.Component {
                       }}
                     ></img>
                   </BookMark>
+                  )  
+                  }
                 </Title>
                 <Introduce>{data.history}</Introduce>
                 {this.state.business.length !== 0 ? (
