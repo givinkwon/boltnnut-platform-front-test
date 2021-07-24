@@ -41,13 +41,13 @@ class CategoryConatiner extends React.Component {
     
     // checked 되어 있는 경우
     if(e.target.checked){
-      Category.add_selected("category", e.target.value, "signup")
-      console.log(Category.category_selected)
+      Category.add_selected("business", e.target.value, "signup")
+      console.log(Category.business_selected)
     } else 
     // checked 안되어 있는 경우
     {
-      Category.remove_selected("category", e.target.value, "signup")
-      console.log(Category.category_selected)
+      Category.remove_selected("business", e.target.value, "signup")
+      console.log(Category.business_selected)
     }
   }
 
@@ -65,10 +65,10 @@ class CategoryConatiner extends React.Component {
             <>
             {/* 카테고리 */}
             <Header>
-              <Text.FontSize24 color={'#0933b3'} fontWeight={700}>업체분류</Text.FontSize24>
+              <Text.FontSize24 color={'#0933b3'} fontWeight={700}>카테고리</Text.FontSize24>
             </Header>
             {
-              Category.maincategory_list && Category.maincategory_list.map((item, idx) => {
+              Category.mainbusiness_list && Category.mainbusiness_list.map((item, idx) => {
 
                 return (
                   <W100 key={idx}>
@@ -76,7 +76,7 @@ class CategoryConatiner extends React.Component {
                       <Text.FontSize20 color={'#505050'} fontWeight={700}>{item.maincategory}</Text.FontSize20>
                     </TextBox>
 
-                    {item && item.category_set.map((sub_item, idx) => {  
+                    {item && item.business_set.map((sub_item, idx) => {  
                     
                     return (
 
@@ -100,12 +100,12 @@ class CategoryConatiner extends React.Component {
           ) : (
             <>
             <Header>
-              <span class="Header">업체 분류</span><br/>
-              <span class="SmallHeader">업체 분류를 선택해주세요.(복수선택가능)</span>
+              <span class="Header">카테고리</span><br/>
+              <span class="SmallHeader">카테고리 분야를 선택해주세요.(복수선택가능)</span>
             </Header>
 
             {
-              Category.maincategory_list && Category.maincategory_list.map((item, idx) => {
+              Category.mainbusiness_list && Category.mainbusiness_list.map((item, idx) => {
 
                 return (
                   <W100 key={idx}>
@@ -113,7 +113,7 @@ class CategoryConatiner extends React.Component {
                       <Text.FontSize20 color={'#505050'} fontWeight={700}>{item.maincategory}</Text.FontSize20>
                     </TextBox>
 
-                    {item && item.category_set.map((sub_item, idx) => {  
+                    {item && item.business_set.map((sub_item, idx) => {  
                     
                     return (
 
