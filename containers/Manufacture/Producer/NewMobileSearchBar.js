@@ -249,11 +249,7 @@ class NewMobileSearchBarConatiner extends React.Component {
     return (
       <>
         <Form active={Partner.subButtonActive}>
-<<<<<<< HEAD
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-=======
-          <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
->>>>>>> d64440365e5bd9be3f5476fa80e8e900eb0b18f6
             <SearchBar active={Partner.subButtonActive}>
               <input
                 placeholder="원하는 분야나 비슷한 제품을 검색해보세요."
