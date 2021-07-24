@@ -24,7 +24,7 @@ const SubArr = [
 const arrowRightImg = "/static/images/producer/arrow_right.svg";
 const checkImg = "/static/images/producer/check.svg";
 
-@inject("Category")
+@inject("Category","Partner")
 @observer
 class FilterModalContainer extends React.Component {
   async componentDidMount() {
@@ -144,6 +144,14 @@ class FilterModalContainer extends React.Component {
       });
     }
   };
+
+  // 모달 종료하기
+  modalclose = () => {
+    const { Partner } = this.props;
+
+    Partner.filter_dropdown = false;
+    
+  }
 
   render() {
     const { Category, type } = this.props;
@@ -406,6 +414,7 @@ class FilterModalContainer extends React.Component {
               borderRadius={5}
               borderWidth={0.5}
               borderColor={"#c6c7cc"}
+              onClick={Category.reset_selected}
             >
               <MainCategoryFont color={"#282c36"} fontWeight={500}>
                 초기화
@@ -415,6 +424,7 @@ class FilterModalContainer extends React.Component {
               style={{ width: "80px", height: "42px" }}
               backgroundColor={"#0933b3"}
               borderRadius={5}
+              onClick={this.modalclose}
             >
               <MainCategoryFont color={"#ffffff"} fontWeight={500}>
                 적용

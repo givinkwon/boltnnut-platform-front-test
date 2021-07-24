@@ -102,6 +102,7 @@ class Category {
 
   /* reset */
   @action reset = () => {
+    console.log("Category Reset")
     // 카테고리 배열 초기화
     this.mainbusiness_list = [];
     this.business_list = [];
@@ -128,6 +129,24 @@ class Category {
     this.material_selected = [];
     this.develop_selected = [];
   };
+
+    /* 선택된 리스트 초기화 */
+    @action reset_selected = () => {
+      console.log("Category Reset")
+  
+      // 선택된 리스트
+      this.business_selected = [];
+      this.category_selected = [];
+      this.city_selected = [];
+      this.material_selected = [];
+      this.develop_selected = [];
+      
+      // 모달 끄기
+      Partner.filter_dropdown = false;
+
+      // 다시 가져오기
+      Partner.getPartner();
+    };
 
   // 선택된 필터를 추가하기
   // state : 선택된 대카테고리 테이블
