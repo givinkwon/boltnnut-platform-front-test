@@ -309,6 +309,7 @@ const CustomLiBox = styled.div`
       background-color: #f2f2f2;
     }
   }
+
 `;
 
 const categoryArray = [
