@@ -38,14 +38,14 @@ class ProducerDetailConatiner extends React.Component {
           <DetailCardContainer width={this.props.width} />
         )} */}
 
+        {Partner.reviewActiveIndex == 0 && this.props.width > 767.98 ? (
+          <DetailCardContainer width={this.props.width} />
+        ) : (
+          <MobileDetailCardContainer width={this.props.width} />
+        )}
+
         <Background>
           <Containerv1>
-            {Partner.reviewActiveIndex == 0 && this.props.width > 767.98 ? (
-              <DetailCardContainer width={this.props.width} />
-            ) : (
-              <MobileDetailCardContainer width={this.props.width} />
-            )}
-
             {Partner.reviewActiveIndex == 1 && (
               <ReviewContainer width={this.props.width} />
             )}

@@ -23,26 +23,26 @@ class QuestionContainer extends React.Component {
     console.log(toJS(Partner.questionClientInfo));
   };
 
-  shouldComponentUpdate = (prevProps, nextState) => {
-    const { idx, Partner } = this.props;
-    console.log(this.state.g);
-    console.log(nextState.g);
+  // shouldComponentUpdate = (prevProps, nextState) => {
+  //   const { idx, Partner } = this.props;
+  //   console.log(this.state.g);
+  //   console.log(nextState.g);
 
-    console.log(prevProps.Partner.questionList);
+  //   console.log(prevProps.Partner.questionList);
 
-    // if (Partner.questionSaveSuccess) {
-    //   setTimeout(() => {
-    //     if (Partner.questionSaveSuccess) {
-    //       Partner.questionSaveSuccess = 0;
-    //     }
-    //   }, 1000);
-    //   return true;
-    // } else {
-    //   return this.state.g !== nextState.g;
-    // }
+  //   // if (Partner.questionSaveSuccess) {
+  //   //   setTimeout(() => {
+  //   //     if (Partner.questionSaveSuccess) {
+  //   //       Partner.questionSaveSuccess = 0;
+  //   //     }
+  //   //   }, 1000);
+  //   //   return true;
+  //   // } else {
+  //   //   return this.state.g !== nextState.g;
+  //   // }
 
-    // return true;
-  };
+  //   // return true;
+  // };
 
   componentWillUnmount = () => {
     const { idx, Partner } = this.props;
@@ -169,7 +169,7 @@ class QuestionContainer extends React.Component {
                 clientId={clientId}
                 partnerId={partnerId}
                 data={data}
-                setQA={this.props.setQA()}
+                setQA={this.props.setQA}
               />
             </div>
           </RecommentBox>

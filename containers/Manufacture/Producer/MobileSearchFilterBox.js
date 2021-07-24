@@ -142,7 +142,7 @@ class MobileSearchFilterConatiner extends React.Component {
     list: false,
     filter_city_active: false,
     filter_category_active: false,
-    type: ""
+    type: "",
   };
 
   dropdownHandler = (flag) => {
@@ -203,98 +203,98 @@ class MobileSearchFilterConatiner extends React.Component {
   };
   render() {
     const { Partner, width } = this.props;
-    console.log(this.state.type)
+    console.log(this.state.type);
     return (
-        
-          <ContainerV2>
+      <ContainerV2>
+        <FilterBoxSearchBar />
 
-            <FilterBoxSearchBar />
+        <FilterCategory>
+          <Category>
+            <CategoryName>카테고리</CategoryName>
+            <Field>
+              <div>전체</div>
+              <img
+                src="/static/icon/down_arrow.svg"
+                onClick={() => {
+                  this.dropdownHandler("business");
+                }}
+              ></img>
+            </Field>
+          </Category>
+          <Category>
+            <CategoryName>업체 분류</CategoryName>
+            <Field>
+              <div>전체</div>
+              <img
+                src="/static/icon/down_arrow.svg"
+                onClick={() => {
+                  this.dropdownHandler("category");
+                }}
+              ></img>
+            </Field>
+          </Category>
+          <Category>
+            <CategoryName>지역</CategoryName>
+            <Field>
+              <div>전체</div>
+              <img
+                src="/static/icon/down_arrow.svg"
+                onClick={() => {
+                  this.dropdownHandler("city");
+                }}
+              ></img>
+            </Field>
+          </Category>
+          <Category>
+            <CategoryName>공정, 소재</CategoryName>
+            <Material>
+              <div
+                onClick={() => {
+                  this.dropdownHandler("develop&material");
+                }}
+              >
+                <img
+                  src="/static/icon/detail_filter.svg"
+                  style={{ widht: 24, height: 24 }}
+                ></img>
+                <img
+                  src="/static/icon/arrow_down.svg"
+                  style={{ widht: 12, height: 12 }}
+                ></img>
+              </div>
+            </Material>
+          </Category>
+        </FilterCategory>
+        {Partner.filter_dropdown && (
+          <FilterModalContainer type={this.state.type}></FilterModalContainer>
+        )}
 
-            <FilterCategory>
-              <Category>
-                <CategoryName>카테고리</CategoryName>
-                <Field>
-                  <div>전체</div>
-                  <img
-                    src="/static/icon/down_arrow.svg"
-                    onClick={() => {
-                      this.dropdownHandler("business");
-                    }}
-                  ></img>
-                </Field>
-              </Category>
-              <Category>
-                <CategoryName>업체 분류</CategoryName>
-                <Field>
-                  <div>전체</div>
-                  <img
-                    src="/static/icon/down_arrow.svg"
-                    onClick={() => {
-                      this.dropdownHandler("category");
-                    }}
-                  ></img>
-                </Field>
-              </Category>
-              <Category>
-                <CategoryName>지역</CategoryName>
-                <Field>
-                  <div>전체</div>
-                  <img
-                    src="/static/icon/down_arrow.svg"
-                    onClick={() => {
-                      this.dropdownHandler("city");
-                    }}
-                  ></img>
-                </Field>
-              </Category>
-              <Category>
-                <CategoryName>공정, 소재</CategoryName>
-                <Material>
-                  <div
-                    onClick={() => {
-                      this.dropdownHandler("develop&material");
-                    }}
-                  >
-                    <img
-                      src="/static/icon/detail_filter.svg"
-                      style={{ widht: 24, height: 24 }}
-                    ></img>
-                    <img
-                      src="/static/icon/arrow_down.svg"
-                      style={{ widht: 12, height: 12 }}
-                    ></img>
-                  </div>
-                </Material>
-              </Category>
-            </FilterCategory>
-            {Partner.filter_dropdown && <FilterModalContainer type={this.state.type}></FilterModalContainer>}
-
-            {Partner.requestModalActive && (
-              <Layer>
-                <span>
-                  <Modal
-                    width={width}
-                    open={Partner.requestModalActive}
-                    close={Partner.closeModal}
-                  ></Modal>
-                </span>
-              </Layer>
-            )}
-            {Partner.requestDoneModalActive && (
-              <Layer>
-                <span>
-                  <DoneModal
-                    width={width}
-                    open={Partner.requestDoneModalActive}
-                    close={Partner.closeModal}
-                  />
-                </span>
-              </Layer>
-            )}
-          </ContainerV2>
-          )
-};
-};
+        {Partner.requestModalActive && (
+          <Layer>
+            <span>
+              <Modal
+                width={width}
+                open={Partner.requestModalActive}
+                close={Partner.closeModal}
+              ></Modal>
+            </span>
+          </Layer>
+        )}
+        {Partner.requestDoneModalActive && (
+          <Layer>
+            <span>
+              <DoneModal
+                width={width}
+                open={Partner.requestDoneModalActive}
+                close={Partner.closeModal}
+              />
+            </span>
+          </Layer>
+        )}
+      </ContainerV2>
+    );
+  }
+}
 
 export default MobileSearchFilterConatiner;
 
@@ -313,6 +313,12 @@ const Category = styled.div`
   background: none;
   border: none;
   margin-right: 20px;
+  display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+
 `;
 
 const Material = styled.div`
@@ -322,22 +328,30 @@ const Material = styled.div`
   border-radius: 3px;
   border: solid 1px #c6c7cc;
   width: 64px;
-  height: 40px;
+  height: 30px;
+  align-self: center;
+  img:nth-of-type(1) {
+    height: 16px !important;
+  }
+  img:nth-of-type(2) {
+    height: 10px !important;
+  }
 `;
 
 const CategoryName = styled.div`
   background: none;
   border: none;
-  font-size: 15px;
+  font-size: 12px;
   line-height: 2.27;
   letter-spacing: -0.38px;
   text-align: left;
   color: #555963;
+  align-self: center;
 }
 `;
 
 const Field = styled.div`
-  height: 40px;
+  height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -350,9 +364,12 @@ const Field = styled.div`
     letter-spacing: -0.38px;
     text-align: left;
     color: #b3b3b3;
+    font-size: 12px;
   }
   img {
     margin-right: 12px;
+    width: 12px;
+    height: 12px;
   }
 `;
 

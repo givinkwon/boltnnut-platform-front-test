@@ -92,10 +92,14 @@ class SubBoxContainer extends React.Component {
                 }}
                 onClick={async () => {
                   console.log(Partner.interestedIdx);
-
-                  Partner.clickHandler("interested");
-                  Partner.checkedInterestedIdx(clientId, partnerId);
-                  this.setState({ g: 3 });
+                  if (clientId) {
+                    Partner.clickHandler("interested");
+                    Partner.checkedInterestedIdx(clientId, partnerId);
+                    this.setState({ g: 3 });
+                  } else {
+                    location.href = Common.makeUrl("request");
+                    // this.setState({ g: 3 });
+                  }
                 }}
               >
                 <span>관심 업체 등록하기</span>
@@ -152,11 +156,22 @@ const ActiveItem = styled.div`
     margin-bottom: 15px;
     font-size: 14px;
   }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 15px 0 6px 16px;
+    > div {
+      font-size: 11px;
+    }
+  }
 `;
 
 const ShowItem = styled.div`
   // border: 3px solid green;
   height: 80px;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 70%;
+  }
 `;
 
 const Button = styled.button`
@@ -196,6 +211,15 @@ const Button = styled.button`
           : "#767676"};
     }
   }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    > div {
+      width: 180px;
+      height: 34px;
+      > span {
+        font-size: 12px;
+      }
+    }
+  }
 `;
 
 const UserBox = styled.div`
@@ -211,6 +235,13 @@ const UserBox = styled.div`
     color: #999999;
     font-weight: normal;
   }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    height: 60px;
+    > img {
+      width: 30px;
+    }
+  }
 `;
 
 const SubItem = styled.div`
@@ -219,5 +250,11 @@ const SubItem = styled.div`
   justify-content: space-between;
   > span:last-child {
     color: #0933b3;
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    > span {
+      font-size: 13px;
+    }
   }
 `;

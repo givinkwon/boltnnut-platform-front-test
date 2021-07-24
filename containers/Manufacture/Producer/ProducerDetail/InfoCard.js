@@ -55,4 +55,18 @@ const Card = styled.div`
     color: #282c36;
     font-weight: normal;
   }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    margin-left: 12px;
+    > header {
+      font-size: 13px;
+      margin-bottom: 12px;
+      > img {
+        width: 20px;
+      }
+    }
+    > content {
+      font-size: 15px;
+    }
+  }
 `;
