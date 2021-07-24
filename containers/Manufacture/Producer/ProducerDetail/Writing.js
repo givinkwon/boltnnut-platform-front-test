@@ -176,7 +176,10 @@ const Content = styled.div`
       font-weight: normal;
     }
     white-space: pre-line;
-    @media (min-width: 0px) and (max-width: 767.98px) {
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 10px;
+    > textarea {
       font-size: 14px;
     }
   }
@@ -189,6 +192,9 @@ const Footer = styled.div`
   padding: 0 20px;
   box-sizing: border-box;
   height: 100%;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 0 10px;
+  }
 `;
 const SecretBox = styled.div`
   display: flex;
@@ -203,6 +209,19 @@ const SecretBox = styled.div`
       > img {
         display: ${(props) => (props.active ? "block" : "none")};
       }
+    }
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > div:nth-of-type(1) {
+      margin-right: 7px;
+
+      > div {
+        width: 14px;
+        height: 14px;
+      }
+    }
+    > span {
+      font-size: 12px;
     }
   }
 `;
@@ -227,6 +246,16 @@ const Button = styled.div`
       letter-spacing: -0.4px;
       font-weight: 500;
       color: #ffffff;
+    }
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > div {
+      width: 72px;
+      height: 28px;
+      > span {
+        font-size: 12px;
+        line-height: 18px;
+      }
     }
   }
 `;

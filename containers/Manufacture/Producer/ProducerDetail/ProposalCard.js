@@ -24,25 +24,42 @@ class ProposalCard extends React.Component {
     console.log(toJS(Partner.hashBusinessCategory));
   };
   render() {
-    const { data } = this.props;
+    const { data, width } = this.props;
     console.log(data);
     console.log(data.name);
     console.log(dataList);
     dataList.push(data);
     return (
       <>
-        <Card>
-          {data && data.portfolio_set.length !== 0 && (
-            <ImgBox>
-              <img src={data.portfolio_set[0].img_portfolio} />
-            </ImgBox>
-          )}
-          <Content>
-            <Name>{data.name}</Name>
-            <Info>{data.history}</Info>
-            <Category>4</Category>
-          </Content>
-        </Card>
+        {width > 767.98 ? (
+          <Card>
+            {data && data.portfolio_set.length !== 0 && (
+              <ImgBox>
+                <img src={data.portfolio_set[0].img_portfolio} />
+              </ImgBox>
+            )}
+            <Content>
+              <Name>{data.name}</Name>
+              <Info>{data.history}</Info>
+              {/* <Category>4</Category> */}
+            </Content>
+          </Card>
+        ) : (
+          <Card>
+            {data && data.portfolio_set.length !== 0 && (
+              <ImgBox>
+                <img src={data.portfolio_set[0].img_portfolio} />
+              </ImgBox>
+            )}
+            <Description>
+              <Content>
+                <Name>{data.name}</Name>
+                <Info>{data.history}</Info>
+                {/* <Category>4</Category> */}
+              </Content>
+            </Description>
+          </Card>
+        )}
       </>
     );
   }
@@ -61,6 +78,11 @@ const Card = styled.div`
   align-items: self-start;
   width: 100%;
   background-color: #ffffff;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    flex-direction: row;
+    height: 90%;
+    margin-bottom: 10px;
+  }
 `;
 
 const ImgBox = styled.div`
@@ -68,6 +90,12 @@ const ImgBox = styled.div`
   > img {
     width: 100%;
     height: 200px;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 30%;
+    > img {
+      height: 150px;
+    }
   }
 `;
 
@@ -78,6 +106,9 @@ const Content = styled.div`
   align-items: flex-start;
   padding: 16px 14px;
   box-sizing: border-box;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 8px 7px;
+  }
 `;
 
 const Name = styled.div`
@@ -86,6 +117,11 @@ const Name = styled.div`
   letter-spacing: -0.45px;
   color: #282c36;
   font-weight: bold;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 15px;
+    line-height: 22px;
+    margin-bottom: 10px;
+  }
 `;
 
 const Info = styled.div`
@@ -94,6 +130,18 @@ const Info = styled.div`
   letter-spacing: -0.4px;
   color: #86888c;
   font-weight: normal;
+  text-align: left;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 13px;
+    line-height: 18px;
+  }
+`;
+
+const Description = styled.div`
+  // border: 3px solid red;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 70%;
+  }
 `;
 
 const Category = styled.div``;

@@ -28,27 +28,31 @@ class ProducerDetailConatiner extends React.Component {
       path: "/",
       expires,
     });
+
+    console.log(Partner.reviewActiveIndex);
     //alert(Cookies.get('partner_view'))
   }
   render() {
     const { Auth, Partner } = this.props;
+    console.log(Partner.reviewActiveIndex);
     return (
       <>
         {/* {Partner.reviewActiveIndex == 0 && (
           <DetailCardContainer width={this.props.width} />
         )} */}
 
-        {Partner.reviewActiveIndex == 0 && this.props.width > 767.98 ? (
-          <DetailCardContainer width={this.props.width} />
-        ) : (
-          <MobileDetailCardContainer width={this.props.width} />
-        )}
-
+        {Partner.reviewActiveIndex == 0 &&
+          (this.props.width > 767.98 ? (
+            <DetailCardContainer width={this.props.width} />
+          ) : (
+            <MobileDetailCardContainer width={this.props.width} />
+          ))}
         <Background>
           <Containerv1>
             {Partner.reviewActiveIndex == 1 && (
               <ReviewContainer width={this.props.width} />
             )}
+
             {Partner.reviewActiveIndex == 2 && (
               <CompleteContainer
                 purpose="리뷰"

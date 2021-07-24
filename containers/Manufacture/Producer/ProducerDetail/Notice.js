@@ -16,7 +16,7 @@ class NoticeCard extends React.Component {
             이 제조사가 마음에 드시나요? <span>[프로젝트 의뢰하기]</span> 버튼을
             눌러 지금 바로 프로젝트를 시작해보세요!
           </content>
-          <img src={closeImg} />
+          {/* <img src={closeImg} /> */}
         </Card>
       </>
     );
