@@ -1,74 +1,74 @@
 import React from "react";
 import styled from "styled-components";
-import Background from "components/Background";
+import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
-import StarRatingComponent from "react-star-rating-component";
-import ReviewCard from "components/Review";
-import ReviewCard2 from "components/Review";
-import * as Content from "components/Content";
-import Fade from "react-reveal/Fade";
+import Background from "../../../components/Background";
+import Button from "../../../components/Button";
 
-const image1 = "/static/images/Home/Mobile/MobileBanner5/Banner5_img1.png";
+const background = "static/images/mobilebanner6backgroundimg.png";
 
 class MobileBanner5Container extends React.Component {
   render() {
     return (
-      <Background backgroundColor={"#f6f6f6"}>
-        <Fade bottom>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-              marginTop: 100,
-            }}
-          >
-            <Header>민감 선택 정보 공개 서비스</Header>
-            <Middle>
-              원하는 업체만 <br /> 정보 공개 및 소통
-            </Middle>
-            <img src={image1} style={{ marginTop: 32, marginBottom: 18 }} />
-            <Body>
-              민감한 연구개발 정보는 내가 소통하고 <br />
-              검증한 엄체에게만 공개할 수 있습니다.
-            </Body>
-          </div>
-        </Fade>
-      </Background>
+      <BackgroundContainer>
+        <Container>
+          <Title16>신제품을 개발하고 싶으신가요?</Title16>
+          <Title16>1분만에 프로젝트를 등록하고</Title16>
+          <Title16>전문 업체 정보들을 받아보세요.</Title16>
+
+          <RequestButton>
+            <Title15>맞춤형 문의하기</Title15>
+          </RequestButton>
+        </Container>
+      </BackgroundContainer>
     );
   }
 }
 
 export default MobileBanner5Container;
 
-const Header = styled(Title.FontSize13)`
-  font-weight: bold;
-  color: #0933b3;
-  height: 19px;
-  margin-bottom: 3px;
+const BackgroundContainer = styled(Background)`
+  display: flex;
+  justify-content: center;
+  height: 217px;
+  background-image: url(${background});
 `;
-const Middle = styled(Title.FontSize22)`
-  font-size: 23px !important;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 250px;
+`;
+
+const Title16 = styled(Title.FontSize16)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.45;
-  letter-spacing: -0.55px;
-  text-align: center;
-  color: #111111;
-  .bold {
-    font-weight: bold;
-  }
+  line-height: 1.75;
+  letter-spacing: -0.4px;
+  color: #282c36;
 `;
-const Body = styled(Content.FontSize15)`
-  height: 44px;
-  font-weight: normal;
+
+const Title15 = styled(Title.FontSize15)`
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.6;
+  line-height: 2;
   letter-spacing: -0.38px;
-  text-align: center;
-  color: #555963;
-  margin-bottom: 100px;
-  font-size: 16px;
+  color: #0933b3;
+`;
+
+const RequestButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 189px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 21px;
+  border: solid 1px #0933b3;
+  margin-top: 28px;
+  background: none;
+  cursor: pointer;
 `;

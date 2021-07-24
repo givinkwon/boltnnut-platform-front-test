@@ -374,7 +374,7 @@ const SearchBar = styled.div`
   padding-right: 17px;
 
   input {
-    width: 360px;
+    width: 700px;
     height: 59px;
     border: none;
     border-radius: 60px;
