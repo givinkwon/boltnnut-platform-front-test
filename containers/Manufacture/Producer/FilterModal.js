@@ -437,6 +437,8 @@ const ModalBox = styled.div`
   background-color: #ffffff;
   margin-top: 10px;
   align-self: center;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const AddCategoryBox = styled.div`
