@@ -26,8 +26,10 @@ const WhiteCheckbox = withStyles({
 })((props) => <Checkbox color="default" {...props} />);
 
 class CustomCheckBoxComponent extends React.Component {
+
   render() {
-    const { children, checked, onClick, className, name } = this.props
+    const { children, checked, onClick, className, name, value } = this.props
+
     return (
       <CheckBox >
         <FormControlLabel
@@ -36,6 +38,7 @@ class CustomCheckBoxComponent extends React.Component {
           }
           label={this.props.children}
           className={className} onClick={onClick}
+          value={value}
           />
       </CheckBox>
     )

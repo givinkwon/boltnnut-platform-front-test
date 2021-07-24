@@ -323,7 +323,7 @@ class NewMobileSearchBarConatiner extends React.Component {
 
 export default NewMobileSearchBarConatiner;
 const CustomUl = styled.ul`
-  width: 588px;
+  //width: 588px;
   height: 150px;
   margin-left: 30px;
   font-size: 18px;
@@ -333,11 +333,11 @@ const CustomUl = styled.ul`
 const CustomLiBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 588px;
+  //width: 588px;
   height: 160px;
   overflow: scroll;
   background-color: #ffffff;
-  
+
   > li {
     cursor: pointer;
     margin-top: 20px;
