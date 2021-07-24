@@ -595,6 +595,7 @@ class DetailCardContainer extends React.Component {
                     </SliderContainer> */}
                     <PortfolioConatiner
                       data={Partner.partner_detail_list[0].item}
+                      width={width}
                     />
                   </IntroductionBox>
 
@@ -602,7 +603,10 @@ class DetailCardContainer extends React.Component {
                     <Font24 id="introduction">회사소개서</Font24>
                     {notLoginUser && <Block />}
                     {!Auth.logged_in_client && !Auth.logged_in_partner && (
-                      <BlackBox content="이 제조사의 회사소개서를 보고싶다면?" />
+                      <BlackBox
+                        content="이 제조사의 회사소개서를 보고싶다면?"
+                        width={width}
+                      />
                     )}
                     {availableFileType1.indexOf(
                       this.props.Partner.selectedIntroductionFileType
@@ -843,7 +847,10 @@ class DetailCardContainer extends React.Component {
                   </content>
 
                   {!Auth.logged_in_client && !Auth.logged_in_partner ? (
-                    <BlackBox content="이 제조사의 리뷰를 보고싶다면?" />
+                    <BlackBox
+                      content="이 제조사의 리뷰를 보고싶다면?"
+                      width={width}
+                    />
                   ) : !Partner.reviewWritingModalActive ? (
                     <Layer>
                       <span>
@@ -1490,7 +1497,7 @@ const HeaderBox = styled.div`
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     margin-bottom: 32px;
-    tag {
+    >tag {
       width: 68px;
       height: 26px;
       margin-bottom: 14px;
@@ -1499,13 +1506,13 @@ const HeaderBox = styled.div`
         letter-spacing: -0.12px;
       }
     }
-    name {
+    >name {
       font-size: 16px;
       line-height: 15px;
       letter-spacinig: -0.4px;
       margin-bottom: 24px;
     }
-    content {
+    >content {
       border: 1px solid #c6c7cc;
       border-radius: 5px;
       padding: 24px 16px;
@@ -1520,7 +1527,7 @@ const HeaderBox = styled.div`
   @media (min-width: 768px) and (max-width: 991.98px) {
 
     margin-bottom:96px;
-    tag {
+    >tag {
       width: 88px;
       height: 32px;
       margin-bottom: 20px;
@@ -1529,13 +1536,13 @@ const HeaderBox = styled.div`
         letter-spacing: -0.12px;
       }
     }
-    name {
+    >name {
       font-size: 20px;
       line-height: 15px;
       letter-spacinig: -0.4px;
       margin-bottom: 20px;
     }
-    content {
+    >content {
       span {
         font-size: 16px;
         line-height: 26px;
@@ -1547,7 +1554,7 @@ const HeaderBox = styled.div`
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     margin-bottom: 144px;
-    tag {
+    >tag {
       width: 104px;
       height: 36px;
       margin-bottom: 28px;
@@ -1556,13 +1563,13 @@ const HeaderBox = styled.div`
         letter-spacing: -0.12px;
       }
     }
-    name {
+    >name {
       font-size: 23px;
       line-height: 15px;
       letter-spacinig: -0.4px;
       margin-bottom: 24px;
     }
-    content {
+    >content {
       span {
         font-size: 17px;
         line-height: 26px;
@@ -1900,6 +1907,13 @@ const SubCard = styled.div`
   margin-top: 180px;
   border-left: 1px solid #e1e2e4;
   padding-left: 52px;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding-left: 12px;
+  }
+  @media (min-width: 992px) and (max-width: 1299.98px) {
+    padding-left: 22px;
+  }
 `;
 
 /* Summary Box */

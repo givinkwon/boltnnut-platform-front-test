@@ -108,16 +108,16 @@ const Item = styled.div`
     font-size: 19px;
     color: rgb(0, 0, 0);
     font-weight: ${(props) => (props.active ? "bold" : "400")};
-    
+
     @media (min-width: 0px) and (max-width: 767.98px) {
       font-size: 14px;
     }
     @media (min-width: 768px) and (max-width: 991.98px) {
+      font-size: 16px;
     }
     @media (min-width: 992px) and (max-width: 1299.98px) {
     }
     @media (min-width: 1300px) {
     }
   }
-
 `;
