@@ -1,13 +1,34 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
+
+let dataList = [];
 
 @inject("Partner", "Auth")
 @observer
 class ProposalCard extends React.Component {
+  componentDidMount = async () => {
+    const { Partner, data, idx, categoryData } = this.props;
+    console.log(data);
+    console.log(data.name);
+    console.log(dataList);
+    console.log(dataList[2]);
+    console.log(dataList.length);
+
+    console.log(idx);
+    console.log(categoryData);
+
+    await Partner.getBusinessCategory(data.id);
+
+    console.log(toJS(Partner.hashBusinessCategory));
+  };
   render() {
     const { data } = this.props;
     console.log(data);
+    console.log(data.name);
+    console.log(dataList);
+    dataList.push(data);
     return (
       <>
         <Card>
@@ -18,7 +39,7 @@ class ProposalCard extends React.Component {
           )}
           <Content>
             <Name>{data.name}</Name>
-            <Info>{data.deal}</Info>
+            <Info>{data.history}</Info>
             <Category>4</Category>
           </Content>
         </Card>

@@ -113,6 +113,8 @@ class WritingContainer extends React.Component {
                         }
 
                         await Partner.getQuestion(partnerId);
+                        Partner.writingModalIdx = "";
+                        this.props.setQA();
                         console.log("recomment");
                         // Partner.changeQuestion();
                         // console.log(this.props.setQA);

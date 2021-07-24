@@ -6,7 +6,7 @@ import { inject, observer } from "mobx-react";
 @observer
 class BlackBox extends React.Component {
   render() {
-    const { src, content, Common, top } = this.props;
+    const { src, content, Common, top, width } = this.props;
     return (
       <>
         <Layer top={top}>
@@ -42,6 +42,15 @@ const Layer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 450px;
+    right: 0;
+  }
+
+  @media (min-width: 992px) and (max-width: 1279.98px) {
+    right: 0;
+  }
 `;
 
 const Button = styled.button`
