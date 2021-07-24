@@ -466,6 +466,21 @@ const AddCategoryButton = styled.div`
   > p {
     color: ${(props) => props.active && "#0933b3"};
   }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 6px 6px 6px 10px;
+    > img {
+      width: 12px;
+      height: 12px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 9px 9px 9px 15px;
+    > img {
+      width: 14px;
+      height: 14px;
+    }
+  }
 `;
 
 const MainCategoryBox = styled.div`
@@ -490,18 +505,44 @@ const MainCategoryButton = styled.div`
     color: ${(props) => props.active && "#0933b3"};
   }
   cursor: pointer;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 3px;
+    > img {
+      width: 12px;
+      height: 12px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 6px 6px 6px 9px;
+    > img {
+      width: 14px;
+      height: 14px;
+    }
+  }
 `;
 
 const SubCategoryBox = styled.div`
   height: 80%;
   border-bottom: 1px solid #e1e2e4;
   overflow-y: scroll;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 85%;
+  }
 `;
 
 const SubInnerBox = styled.div`
-  padding: 34px 18px 34px 18px;
+  padding: 34px 18px;
   display: flex;
   flex-wrap: wrap;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 20px 9px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 27px 15px;
+  }
 `;
 const SubCategoryButton = styled.div`
   width: 50%;
@@ -518,6 +559,10 @@ const ButtonBox = styled.div`
   align-items: center;
   height: 20%;
   padding-right: 20px;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    height: 15%;
+  }
 `;
 
 const AddCategoryFont = styled(Content.FontSize15)`
@@ -528,6 +573,17 @@ const AddCategoryFont = styled(Content.FontSize15)`
   letter-spacing: -0.38px;
   text-align: left;
   color: #282c36;
+  word-break: break-word;
+}
+
+
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 11px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 13px;
+  }
 `;
 
 const MainCategoryFont = styled(Content.FontSize15)`
@@ -538,6 +594,17 @@ const MainCategoryFont = styled(Content.FontSize15)`
   letter-spacing: -0.38px;
   text-align: left;
   color: ${(props) => (props.color ? props.color : "#282c36")};
+  word-break: break-word;
+}
+
+
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 11px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 13px;
+  }
 `;
 
 const SubCategoryFont = styled(Content.FontSize14)`
@@ -549,11 +616,31 @@ const SubCategoryFont = styled(Content.FontSize14)`
   text-align: left;
   color: #282c36;
   cursor: pointer;
+  word-break: break-word;
+}
+
+
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 10px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 12px;
+  }
 `;
 
 const ButtonComponent = styled(Button)`
   width: 80px;
   height: 42px;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 65px !important;
+    height: 30px !important;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 73px !important;
+    height: 36px !important;
+  }
 `;
 
 const CheckBox = styled.div`
@@ -564,5 +651,27 @@ const CheckBox = styled.div`
   cursor: pointer;
   > img {
     display: ${(props) => (props.active ? "block" : "none")};
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    min-height: 14px;
+    position: relative;
+    > img {
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      top: -1px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 16px;
+    height: 16px;
+    > img {
+      width: 17px;
+      height: 17px;
+    }
   }
 `;

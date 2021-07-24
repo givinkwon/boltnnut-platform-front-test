@@ -355,6 +355,8 @@ const CategoryName = styled.div`
   letter-spacing: -0.38px;
   text-align: left;
   color: #555963;
+
+
 }
 `;
 
@@ -393,6 +395,7 @@ const ContainerV2 = styled.div`
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     justify-content: center;
+    width: 100%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 115%;
