@@ -9,22 +9,14 @@ import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import Category from "../../../stores/Manufacture/Category";
 
+const passimg = "static/images/passimg.svg";
 const MainArr = ["제품", "기계/설비/장비", "부품", "공구류"];
-const SubArr = [
-  "제품",
-  "기계/설비/장비",
-  "부품",
-  "공구류",
-  "제품",
-  "기계/설비/장비",
-  "부품",
-  "공구류",
-];
+const SubArr = ["제품", "기계/설비/장비", "부품", "공구류", "제품", "기계/설비/장비", "부품", "공구류"];
 
 const arrowRightImg = "/static/images/producer/arrow_right.svg";
 const checkImg = "/static/images/producer/check.svg";
 
-@inject("Category")
+@inject("Category", "Partner")
 @observer
 class FilterModalContainer extends React.Component {
   async componentDidMount() {
@@ -145,6 +137,13 @@ class FilterModalContainer extends React.Component {
     }
   };
 
+  // 모달 종료하기
+  modalclose = () => {
+    const { Partner } = this.props;
+
+    Partner.filter_dropdown = false;
+  };
+
   render() {
     const { Category, type } = this.props;
     console.log(this.props.type);
@@ -182,50 +181,36 @@ class FilterModalContainer extends React.Component {
             {/* 공정 선택일 때 */}
             {this.state.develop_active &&
               this.state.mainCategoryTypeDic["develop"] &&
-              toJS(this.state.mainCategoryTypeDic["develop"]).map(
-                (data, idx) => {
-                  return (
-                    <MainCategoryButton
-                      onClick={() => {
-                        this.buttonClick("main", idx);
-                      }}
-                      active={this.activeHandler("main", idx)}
-                    >
-                      <MainCategoryFont>
-                        {
-                          this.state.mainCategoryTypeDic["develop"][idx]
-                            .maincategory
-                        }
-                      </MainCategoryFont>
-                      <img src={arrowRightImg} />
-                    </MainCategoryButton>
-                  );
-                }
-              )}
+              toJS(this.state.mainCategoryTypeDic["develop"]).map((data, idx) => {
+                return (
+                  <MainCategoryButton
+                    onClick={() => {
+                      this.buttonClick("main", idx);
+                    }}
+                    active={this.activeHandler("main", idx)}
+                  >
+                    <MainCategoryFont>{this.state.mainCategoryTypeDic["develop"][idx].maincategory}</MainCategoryFont>
+                    <img src={arrowRightImg} />
+                  </MainCategoryButton>
+                );
+              })}
 
             {/* 소재 선택일 때 */}
             {this.state.material_active &&
               this.state.mainCategoryTypeDic["material"] &&
-              toJS(this.state.mainCategoryTypeDic["material"]).map(
-                (data, idx) => {
-                  return (
-                    <MainCategoryButton
-                      onClick={() => {
-                        this.buttonClick("main", idx);
-                      }}
-                      active={this.activeHandler("main", idx)}
-                    >
-                      <MainCategoryFont>
-                        {
-                          this.state.mainCategoryTypeDic["material"][idx]
-                            .maincategory
-                        }
-                      </MainCategoryFont>
-                      <img src={arrowRightImg} />
-                    </MainCategoryButton>
-                  );
-                }
-              )}
+              toJS(this.state.mainCategoryTypeDic["material"]).map((data, idx) => {
+                return (
+                  <MainCategoryButton
+                    onClick={() => {
+                      this.buttonClick("main", idx);
+                    }}
+                    active={this.activeHandler("main", idx)}
+                  >
+                    <MainCategoryFont>{this.state.mainCategoryTypeDic["material"][idx].maincategory}</MainCategoryFont>
+                    <img src={arrowRightImg} />
+                  </MainCategoryButton>
+                );
+              })}
 
             {/* map으로 뿌리기 */}
             {this.props.type != "develop&material" &&
@@ -239,9 +224,7 @@ class FilterModalContainer extends React.Component {
                     }}
                     active={this.activeHandler("main", idx)}
                   >
-                    <MainCategoryFont>
-                      {this.state.mainCategoryTypeDic[type][idx].maincategory}
-                    </MainCategoryFont>
+                    <MainCategoryFont>{this.state.mainCategoryTypeDic[type][idx].maincategory}</MainCategoryFont>
                     <img src={arrowRightImg} />
                   </MainCategoryButton>
                 );
@@ -266,9 +249,7 @@ class FilterModalContainer extends React.Component {
               {/* 카테고리 선택 */}
               {type == "business" &&
                 Category.mainbusiness_list[this.state.mainSelectIdx] &&
-                Category.mainbusiness_list[
-                  this.state.mainSelectIdx
-                ].business_set.map((sub_data, idx) => {
+                Category.mainbusiness_list[this.state.mainSelectIdx].business_set.map((sub_data, idx) => {
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -276,12 +257,7 @@ class FilterModalContainer extends React.Component {
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >
-                      <CheckBox
-                        active={Category.categoryActiveHandler(
-                          sub_data.id,
-                          type
-                        )}
-                      >
+                      <CheckBox active={Category.categoryActiveHandler(sub_data.id, type)}>
                         <img src={checkImg} />
                       </CheckBox>
                       <SubCategoryFont>{sub_data.category}</SubCategoryFont>
@@ -299,15 +275,11 @@ class FilterModalContainer extends React.Component {
                       }}
                       active={Category.categoryActiveHandler(data.id, type)}
                     >
-                      <CheckBox
-                        active={Category.categoryActiveHandler(data.id, type)}
-                      >
+                      <CheckBox active={Category.categoryActiveHandler(data.id, type)}>
                         <img src={checkImg} />
                       </CheckBox>
 
-                      <SubCategoryFont>
-                        {this.state.mainCategoryTypeDic[type][idx].maincategory}
-                      </SubCategoryFont>
+                      <SubCategoryFont>{this.state.mainCategoryTypeDic[type][idx].maincategory}</SubCategoryFont>
                     </SubCategoryButton>
                   );
                 })}
@@ -315,9 +287,7 @@ class FilterModalContainer extends React.Component {
               {/* 업체 분류 선택 */}
               {type == "category" &&
                 Category.maincategory_list[this.state.mainSelectIdx] &&
-                Category.maincategory_list[
-                  this.state.mainSelectIdx
-                ].category_set.map((sub_data, idx) => {
+                Category.maincategory_list[this.state.mainSelectIdx].category_set.map((sub_data, idx) => {
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -325,12 +295,7 @@ class FilterModalContainer extends React.Component {
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >
-                      <CheckBox
-                        active={Category.categoryActiveHandler(
-                          sub_data.id,
-                          type
-                        )}
-                      >
+                      <CheckBox active={Category.categoryActiveHandler(sub_data.id, type)}>
                         <img src={checkImg} />
                       </CheckBox>
 
@@ -342,25 +307,15 @@ class FilterModalContainer extends React.Component {
               {/* 공정 분류 선택 */}
               {this.state.develop_active &&
                 Category.developbig_list[this.state.mainSelectIdx] &&
-                Category.developbig_list[
-                  this.state.mainSelectIdx
-                ].develop_set.map((sub_data, idx) => {
+                Category.developbig_list[this.state.mainSelectIdx].develop_set.map((sub_data, idx) => {
                   return (
                     <SubCategoryButton
                       onClick={() => {
                         this.buttonClick("develop", sub_data.id);
                       }}
-                      active={Category.categoryActiveHandler(
-                        sub_data.id,
-                        "develop"
-                      )}
+                      active={Category.categoryActiveHandler(sub_data.id, "develop")}
                     >
-                      <CheckBox
-                        active={Category.categoryActiveHandler(
-                          sub_data.id,
-                          "develop"
-                        )}
-                      >
+                      <CheckBox active={Category.categoryActiveHandler(sub_data.id, "develop")}>
                         <img src={checkImg} />
                       </CheckBox>
 
@@ -372,25 +327,15 @@ class FilterModalContainer extends React.Component {
               {/* 소재 분류 선택 */}
               {this.state.material_active &&
                 Category.mainmaterial_list[this.state.mainSelectIdx] &&
-                Category.mainmaterial_list[
-                  this.state.mainSelectIdx
-                ].material_set.map((sub_data, idx) => {
+                Category.mainmaterial_list[this.state.mainSelectIdx].material_set.map((sub_data, idx) => {
                   return (
                     <SubCategoryButton
                       onClick={() => {
                         this.buttonClick("material", sub_data.id);
                       }}
-                      active={Category.categoryActiveHandler(
-                        sub_data.id,
-                        "material"
-                      )}
+                      active={Category.categoryActiveHandler(sub_data.id, "material")}
                     >
-                      <CheckBox
-                        active={Category.categoryActiveHandler(
-                          sub_data.id,
-                          "material"
-                        )}
-                      >
+                      <CheckBox active={Category.categoryActiveHandler(sub_data.id, "material")}>
                         <img src={checkImg} />
                       </CheckBox>
                       <SubCategoryFont>{sub_data.category}</SubCategoryFont>
@@ -406,16 +351,13 @@ class FilterModalContainer extends React.Component {
               borderRadius={5}
               borderWidth={0.5}
               borderColor={"#c6c7cc"}
+              onClick={Category.reset_selected}
             >
               <MainCategoryFont color={"#282c36"} fontWeight={500}>
                 초기화
               </MainCategoryFont>
             </ButtonComponent>
-            <ButtonComponent
-              style={{ width: "80px", height: "42px" }}
-              backgroundColor={"#0933b3"}
-              borderRadius={5}
-            >
+            <ButtonComponent style={{ width: "80px", height: "42px" }} backgroundColor={"#0933b3"} borderRadius={5} onClick={this.modalclose}>
               <MainCategoryFont color={"#ffffff"} fontWeight={500}>
                 적용
               </MainCategoryFont>
