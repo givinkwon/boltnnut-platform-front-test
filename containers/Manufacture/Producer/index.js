@@ -43,7 +43,7 @@ class ProducerConatiner extends React.Component {
   }
 
   render() {
-    const { Auth, Partner } = this.props;
+    const { Auth, Partner, Search } = this.props;
     return (
       <>
         {this.props.width &&

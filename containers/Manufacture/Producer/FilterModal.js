@@ -328,6 +328,7 @@ const AddCategoryBox = styled.div`
   height: 100%;
   width: 26.6%;
   border-right: 1px solid #e1e2e4;
+  overflow-y: scroll;
 `;
 
 const AddCategoryButton = styled.div`
@@ -341,6 +342,7 @@ const MainCategoryBox = styled.div`
   height: 100%;
   width: 26.6%;
   border-right: 1px solid #e1e2e4;
+  overflow-y: scroll;
 `;
 
 const MainCategoryButton = styled.div`
@@ -354,6 +356,7 @@ const MainCategoryButton = styled.div`
 const SubCategoryBox = styled.div`
   height: 78.8%;
   border-bottom: 1px solid #e1e2e4;
+  overflow-y: scroll;
 `;
 
 const SubInnerBox = styled.div`

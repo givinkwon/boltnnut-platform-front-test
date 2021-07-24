@@ -295,7 +295,7 @@ const CustomLiBox = styled.div`
   width: 588px;
   height: 160px;
   overflow: scroll;
-  // background-color: #ffffff;
+  background-color: #ffffff;
 
   > li {
     cursor: pointer;

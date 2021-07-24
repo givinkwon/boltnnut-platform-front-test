@@ -298,8 +298,8 @@ const CustomLiBox = styled.div`
   flex-direction: column;
   width: 588px;
   height: 160px;
-  overflow: scroll;
-
+  overflow-y: scroll;
+  background-color: #ffffff;
   > li {
     cursor: pointer;
     margin-top: 20px;
@@ -309,6 +309,7 @@ const CustomLiBox = styled.div`
       background-color: #f2f2f2;
     }
   }
+
 `;
 
 const categoryArray = [

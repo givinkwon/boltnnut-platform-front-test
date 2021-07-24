@@ -205,6 +205,7 @@ class MobileSearchFilterConatiner extends React.Component {
     const { Partner, width } = this.props;
     console.log(this.state.type)
     return (
+        
           <ContainerV2>
 
             <FilterBoxSearchBar />
