@@ -100,13 +100,11 @@ class MobileDetailCardContainer extends React.Component {
     Partner.reviewWritingModalActive = true;
   };
 
-  shouldComponentUpdate = (prevProps, nextState) => {
-    const { Partner } = this.props;
-    console.log(this.state.g);
-    console.log(nextState.g);
-
-    return this.state.g !== nextState.g;
-  };
+  // shouldComponentUpdate = (prevProps, nextState) => {
+  //   const { Partner } = this.props;
+  //   console.log(this.state.g);
+  //   console.log(nextState.g);
+  // };
 
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
@@ -492,9 +490,9 @@ class MobileDetailCardContainer extends React.Component {
     console.log(this.state.portfoliLocation);
     console.log(this.state.introductionLocation);
     console.log(this.state.reviewLocation);
-    this.setState((state) => {
-      return { loading: state.loading + 1 };
-    });
+    // this.setState((state) => {
+    //   return { loading: state.loading + 1 };
+    // });
 
     const SlideSettings = {
       dots: false,

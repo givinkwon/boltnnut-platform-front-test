@@ -32,6 +32,7 @@ class ReviewWritingModal extends React.Component {
   moveReviewPage = () => {
     const { Partner } = this.props;
     Partner.reviewActiveIndex = 1;
+    this.setState({ g: 3 });
   };
 
   //   onSubmit = async () => {
