@@ -5,23 +5,20 @@ import * as Title from "components/Title";
 import NewMobileSearchBar from "../../Manufacture/Producer/NewMobileSearchBar";
 
 const startling = "/static/images/startline.svg";
+const mobilebanner0img = "/static/images/mobilebanner0img.svg";
 
 class NewMobileBanner0Container extends React.Component {
   render() {
     return (
       <Container>
         <InnerContainer>
+          <img src={mobilebanner0img} style={{ marginBottom: "34px" }} />
+
           <Title24>대한민국 제조사 정보 여기 다 있다.</Title24>
-          <Title16>
-            당신에게 맞는 제조사 정보를
-            <br /> 바로 조회해보세요.
-          </Title16>
+          <Title16 style={{ marginTop: "20px" }}>당신에게 맞는 제조사 정보를</Title16>
+          <Title16>바로 조회해보세요.</Title16>
 
           <NewMobileSearchBar />
-
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <StartLine />
-          </div>
         </InnerContainer>
       </Container>
     );
@@ -30,22 +27,18 @@ class NewMobileBanner0Container extends React.Component {
 
 export default NewMobileBanner0Container;
 
-const StartLine = styled.div`
-  width: 18px;
-  border: solid 1px #999999;
-  margin-bottom: 24px;
-`;
-
 const Container = styled(Containerv1)`
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 128px;
 `;
 
 const InnerContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: column;
+  align-items: center;
   width: 347px;
 `;
 
@@ -59,7 +52,6 @@ const Title24 = styled(Title.FontSize24)`
 `;
 
 const Title16 = styled(Title.FontSize16)`
-  margin-top: 20px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;

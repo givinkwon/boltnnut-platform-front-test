@@ -5,7 +5,7 @@ import * as Title from "components/Title";
 import * as Text from "components/Text";
 import SearchBar from "../Manufacture/Producer/SearchBar";
 
-const banner0img = "/static/images/banner0img.png";
+const banner0img = "/static/images/banner0img.svg";
 
 class NewBanner0Container extends React.Component {
   // 검색함수
@@ -60,7 +60,7 @@ class NewBanner0Container extends React.Component {
             <SearchBar />
           </LeftBox>
 
-          <img src={banner0img} style={{ height: "340px" }} />
+          <img src={banner0img} style={{ height: "420px" }} />
         </Containerv1>
       </div>
     );

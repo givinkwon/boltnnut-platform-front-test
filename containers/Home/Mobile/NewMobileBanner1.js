@@ -42,6 +42,10 @@ class MobileBanner14Container extends React.Component {
     return (
       <>
         <Container>
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "12px" }}>
+            <StartLine />
+          </div>
+
           <Box>
             <Title14>볼트앤너트는 제조분야를 선도하는</Title14>
             <Title14>많은 기업들과 함께합니다.</Title14>
@@ -78,6 +82,12 @@ class MobileBanner14Container extends React.Component {
 }
 
 export default MobileBanner14Container;
+
+const StartLine = styled.div`
+  width: 18px;
+  border: solid 1px #999999;
+  margin-bottom: 24px;
+`;
 
 const Container = styled.div`
   display: flex;
