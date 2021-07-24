@@ -100,11 +100,11 @@ class MobileDetailCardContainer extends React.Component {
     Partner.reviewWritingModalActive = true;
   };
 
-  // shouldComponentUpdate = (prevProps, nextState) => {
-  //   const { Partner } = this.props;
-  //   console.log(this.state.g);
-  //   console.log(nextState.g);
-  // };
+  shouldComponentUpdate = (prevProps, nextState) => {
+    const { Partner } = this.props;
+    console.log(this.state.g);
+    console.log(nextState.g);
+  };
 
   componentDidMount = async () => {
     const { Partner, Auth } = this.props;
