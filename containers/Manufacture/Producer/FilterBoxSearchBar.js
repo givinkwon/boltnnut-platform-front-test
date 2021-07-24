@@ -294,7 +294,7 @@ class SearchBarConatiner extends React.Component {
             style={{
               display: "flex",
               flexDirection: "column",
-              width: "100%",
+              width: "95%",
               alignItems: "center",
             }}
           >
