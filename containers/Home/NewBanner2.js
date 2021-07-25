@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
-import Containerv1 from "../../components/Containerv1";
+import Containerv1 from "components/Containerv1";
 import Fade from "react-reveal/Fade";
 import Background from "components/Background";
 import ProposalCard from "../Manufacture/Producer/ProposalCard";
