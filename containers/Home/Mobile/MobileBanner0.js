@@ -27,7 +27,7 @@ class MobileBanner0Container extends React.Component {
 
 export default MobileBanner0Container;
 
-const Container = styled(Containerv1)`
+const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

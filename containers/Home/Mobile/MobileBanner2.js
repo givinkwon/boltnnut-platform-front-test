@@ -107,9 +107,10 @@ class MobileBanner2Container extends React.Component {
 
 export default MobileBanner2Container;
 
-const Container = styled(Containerv1)`
+const Container = styled.div`
+  display: flex;
   justify-content: center;
-  width: 375px;
+  width: 100%;
   height: 841px;
   background-color: #f6f6f6;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.1);

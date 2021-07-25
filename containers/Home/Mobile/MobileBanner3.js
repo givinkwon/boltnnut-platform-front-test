@@ -101,7 +101,8 @@ class MobileBanner3Container extends React.Component {
 
 export default MobileBanner3Container;
 
-const Container = styled(Containerv1)`
+const Container = styled.div`
+  display: flex;
   justify-content: center;
   margin-top: 70px;
 `;
