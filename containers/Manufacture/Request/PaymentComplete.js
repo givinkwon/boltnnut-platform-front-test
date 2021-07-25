@@ -1,9 +1,9 @@
 import Divider from 'material-ui/Divider';
 import React from 'react';
 import styled, { css } from 'styled-components';
-import Background from '../../components/Background';
-import Containerv1 from '../../components/Containerv1';
-import * as Title from '../../components/Title';
+import Background from 'components/Background';
+import Containerv1 from 'components/Containerv1';
+import * as Title from 'components/Title';
 
 const success = '/static/images/request/PaymentComplete/success.png';
 

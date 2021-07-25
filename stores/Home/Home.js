@@ -15,6 +15,7 @@ class Home {
   @observable request_list = [];
   @observable home_idx = 0;
   @observable categoryIndex = 0;
+  @observable modalState = true;
 
   @action init = () => {
     CategoryAPI.getMainCategory()

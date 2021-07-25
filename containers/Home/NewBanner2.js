@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
-import Containerv1 from "../../components/Containerv1";
+import Containerv1 from "components/Containerv1";
 import Fade from "react-reveal/Fade";
 import Background from "components/Background";
 import ProposalCard from "../Manufacture/Producer/ProposalCard";
@@ -51,7 +51,7 @@ class NewBanner2Container extends React.Component {
       { id: 41, name: "전자/반도체 부품" },
       { id: 46, name: "볼트/너트류" },
       { id: 39, name: "동력전달부품" },
-      { id: 20, name: "냉난방/공조" },
+      { id: 19, name: "냉난방/공조" },
       { id: 22, name: "밴딩/포장" },
     ];
 
@@ -67,7 +67,7 @@ class NewBanner2Container extends React.Component {
 
             <CategoryBox>
               {nameTable.map((v, idx) => (
-                <CategoryTitle key={v.id} active={this.onCompareCategory(idx)} onClick={() => this.onClickCategory(idx)}>
+                <CategoryTitle key={v.id} active={this.onCompareCategory(idx)} onClick={() => this.onClickCategory(v.id)}>
                   {v.name}
                 </CategoryTitle>
               ))}

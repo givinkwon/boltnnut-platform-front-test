@@ -3,8 +3,11 @@ import styled from "styled-components";
 import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
 import * as Text from "components/Text";
-import Button from "../../../components/Button";
+import Button from "components/Button";
+import Background from "components/Background";
 import { inject, observer } from "mobx-react";
+import ProposalCard from "containers/Manufacture/Producer/ProposalCard";
+import { toJS } from "mobx";
 
 @inject("Home", "Partner", "Auth", "Producer", "Category")
 @observer
@@ -39,6 +42,7 @@ class MobileBanner2Container extends React.Component {
   };
 
   render() {
+    // id는 실제 DB의 id로 해야함
     const nameTable = [
       { id: 1, name: "생활/위생" },
       { id: 2, name: "디지털/가전" },
@@ -48,9 +52,10 @@ class MobileBanner2Container extends React.Component {
       { id: 41, name: "전자/반도체 부품" },
       { id: 46, name: "볼트/너트류" },
       { id: 39, name: "동력전달부품" },
-      { id: 20, name: "냉난방/공조" },
+      { id: 19, name: "냉난방/공조" },
       { id: 22, name: "밴딩/포장" },
     ];
+
 
     const { Partner, Auth, Producer, Category } = this.props;
 
@@ -65,7 +70,7 @@ class MobileBanner2Container extends React.Component {
           <CategoryBox>
             {nameTable.map((v, idx) => (
               <div style={{ width: "110px", marginRight: "18px" }}>
-                <CategoryTitle key={v.id} active={this.onCompareCategory(idx)} onClick={() => this.onClickCategory(idx)}>
+                <CategoryTitle key={v.id} active={this.onCompareCategory(idx)} onClick={() => this.onClickCategory(v.id)}>
                   {v.name}
                 </CategoryTitle>
               </div>
@@ -107,9 +112,10 @@ class MobileBanner2Container extends React.Component {
 
 export default MobileBanner2Container;
 
-const Container = styled(Containerv1)`
+const Container = styled.div`
+  display: flex;
   justify-content: center;
-  width: 375px;
+  width: 100%;
   height: 841px;
   background-color: #f6f6f6;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.1);
@@ -120,7 +126,7 @@ const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 70px;
-  width: 347px;
+  width: 100%;
 `;
 
 const Title20 = styled(Title.FontSize20)`
