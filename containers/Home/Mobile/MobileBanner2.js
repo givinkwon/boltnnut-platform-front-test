@@ -6,7 +6,7 @@ import * as Text from "components/Text";
 import Button from "components/Button";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
-import ProposalCard from "Containers/Manufacture/Producer/ProposalCard";
+import ProposalCard from "containers/Manufacture/Producer/ProposalCard";
 import { toJS } from "mobx";
 
 @inject("Home", "Partner", "Auth", "Producer", "Category")
