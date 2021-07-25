@@ -104,6 +104,8 @@ class MobileDetailCardContainer extends React.Component {
     const { Partner } = this.props;
     console.log(this.state.g);
     console.log(nextState.g);
+
+    return this.state.g !== nextState.g;
   };
 
   componentDidMount = async () => {
@@ -415,6 +417,7 @@ class MobileDetailCardContainer extends React.Component {
       this.setState((state) => {
         return { g: state.g + 1 };
       });
+
       window.scrollTo(0, 0);
       console.log(this.state.g);
       console.log(toJS(this.props.Partner.recentPartnerList));
@@ -490,9 +493,9 @@ class MobileDetailCardContainer extends React.Component {
     console.log(this.state.portfoliLocation);
     console.log(this.state.introductionLocation);
     console.log(this.state.reviewLocation);
-    // this.setState((state) => {
-    //   return { loading: state.loading + 1 };
-    // });
+    this.setState((state) => {
+      return { loading: state.loading + 1 };
+    });
 
     const SlideSettings = {
       dots: false,
@@ -2065,6 +2068,7 @@ const UpImg = styled.img`
   bottom: 8%;
   right: 0;
   zindex: 1;
+  cursor: pointer;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     bottom: 0;
