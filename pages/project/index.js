@@ -6,14 +6,15 @@ import { inject, observer } from "mobx-react";
 import Router from "next/router";
 
 import Nav from "components/Nav";
+import NewNav from "components/NewNav";
 import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 
 import { toJS } from "mobx";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
-import ProjectContainer from "../../containers/Project/index";
+import ProjectContainer from "containers/Manufacture/Project/index";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
@@ -94,14 +95,10 @@ class Project extends React.Component {
         </Head>
         <>
           {width > 767.98 ? (
-            <Nav />
+            <NewNav />
           ) : (
             <div>
-              <MobileNav
-                src={back_ic}
-                headText={"프로젝트 관리"}
-                width={width}
-              />
+              <MobileNav src={back_ic} headText={"프로젝트 관리"} width={width} />
               <div style={{ height: "54px" }}></div>
             </div>
           )}

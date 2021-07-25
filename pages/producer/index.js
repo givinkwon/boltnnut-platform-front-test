@@ -8,8 +8,8 @@ import Footer from "components/Footer";
 
 import { inject, observer } from "mobx-react";
 
-import ProducerContainer from "../../containers/Producer/index";
-import * as AccountAPI from "axios/Account";
+import ProducerContainer from "containers/Manufacture/Producer/index";
+import * as AccountAPI from "axios/Account/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
@@ -27,6 +27,7 @@ class Index extends React.Component {
   async componentDidMount() {
     const { Auth, Home, Answer, Loading } = this.props;
     console.log("producer didmount2");
+
     Auth.previous_url = "producer";
 
     console.log(Auth);
@@ -55,8 +56,6 @@ class Index extends React.Component {
   componentWillUnmount() {
     const { Auth } = this.props;
     window.removeEventListener("resize", this.updateDimensions);
-    console.log("producer unmount2");
-    // Auth.previous_url = "";
   }
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
@@ -65,7 +64,7 @@ class Index extends React.Component {
   render() {
     const { width } = this.state;
     return (
-      <div onContextMenu={(e)=> e.preventDefault()} >
+      <div onContextMenu={(e) => e.preventDefault()}>
         <Head>
           <title>볼트앤너트|제조사 찾기</title>
         </Head>
@@ -75,8 +74,8 @@ class Index extends React.Component {
             (width > 767.98 ? (
               <Nav />
             ) : (
-              <div >
-                <MobileNav 
+              <div>
+                <MobileNav
                   src={back_ic}
                   headText={"제조사 관리"}
                   width={width}
@@ -86,7 +85,7 @@ class Index extends React.Component {
             ))}
         </>
 
-        <ProducerContainer  width={width} />
+        <ProducerContainer width={width} />
         <Footer />
       </div>
     );

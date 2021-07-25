@@ -7,7 +7,7 @@ import SelectComponent from 'components/Select'
 
 
 import * as Text from 'components/Text'
-import * as Category from 'axios/Category'
+import * as Category from 'axios/Account/Category'
 import { PRIMARY, DARKGRAY, WHITE, BLACK } from 'static/style'
 
 const badge_close = 'static/images/badge_close.png'
@@ -199,7 +199,7 @@ class CompanyConatiner extends React.Component {
               <Text.FontSize20 color={DARKGRAY} fontWeight={500}>시/도</Text.FontSize20>
               <SelectComponent
                 styles={customStyles} options={Auth.city_data} value={Auth.city}
-                getOptionLabel={(option) => option.city} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
+                getOptionLabel={(option) => option.maincategory} placeholder='옵션을 선택해주세요' onChange={Auth.setCity}/>
             </SelectBox>
           </W50>
           <W100>
@@ -210,7 +210,11 @@ class CompanyConatiner extends React.Component {
             <Text.FontSize20 style={{marginTop: 12}} color={DARKGRAY} fontWeight={500}>회사소개[100자 이상]</Text.FontSize20>
             <TextArea placeholder='회사소개를 입력해주세요' col={3} onChange={Auth.setInfoCompany} value={Auth.info_company}/>
           </W100>
-          {
+          <W100>
+            <Text.FontSize20 style={{marginTop: 12}} color={DARKGRAY} fontWeight={500}>진행한 제품[10개 이상]</Text.FontSize20>
+            <TextArea placeholder='진행하셨던 제품을 써주세요. ex) 공기청정기' col={3} onChange={Auth.setHistories} value={Auth.histories}/>
+          </W100>
+          {/* {
             Auth.history_set && Auth.history_set.length > 0 && (
               <W100>
                 <BadgeList>
@@ -227,7 +231,7 @@ class CompanyConatiner extends React.Component {
                 </BadgeList>
               </W100>
             )
-          }
+          } */}
         </>
         ) : (
         <>

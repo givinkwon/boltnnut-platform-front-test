@@ -1,10 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Button = styled.div`
-  color: ${(props) => (props.color ? props.color : '#006cb3')};
-  border: solid ${(props) => (props.borderWidth ? props.borderWidth : '2px')} ${(props) => (props.borderColor ? props.borderColor : '#006cb3')};
-  background-color: ${(props) => (props.backgroundColor ? props.backgroundColor : '#ffffff')};
+  color: ${(props) => (props.color ? props.color : "#006cb3")};
+  border: ${(props) => (props.borderWidth ? props.borderWidth + "px" : "2px")}
+    solid ${(props) => (props.borderColor ? props.borderColor : "#006cb3")};
+  background-color: ${(props) =>
+    props.backgroundColor ? props.backgroundColor : "#ffffff"};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,12 +22,12 @@ const Button = styled.div`
     width: 160px;
     height: 52px;
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
+  @media (min-width: 992px) and (max-width: 1299.98px) {
     font-size: 14px;
     width: 180px;
     height: 54px;
   }
-  @media (min-width: 1300px) { 
+  @media (min-width: 1300px) {
     font-size: 16px;
     width: 200px;
     height: 56px;

@@ -12,7 +12,7 @@ import Footer from "components/Footer";
 import RequestDetailConatiner from "containers/Request/Detail";
 import CompleteBannerContainer from "containers/Request/Detail/NewComplete";
 
-@inject("Answer", "Auth")
+@inject("Auth","Answer")
 class Complete extends React.Component {
   render() {
     return (

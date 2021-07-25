@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="51" height="22" viewBox="0 0 51 22">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0933b3;
+        font-size: 15px;
+        font-family: NotoSansCJKkr-Bold, Noto Sans CJK KR;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+
+      .cls-2 {
+        fill: #0a2165;
+      }
+
+      .cls-3 {
+        fill: #86888c;
+        font-size: 13px;
+      }
+    </style>
+  </defs>
+  <text id="_4.8_5.0" data-name="4.8 / 5.0" class="cls-1" transform="translate(0 17)"><tspan x="0" y="0">4.8</tspan><tspan class="cls-2" y="0"> </tspan><tspan class="cls-3" y="0">/ 5.0</tspan></text>
+</svg>

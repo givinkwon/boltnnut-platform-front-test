@@ -6,13 +6,11 @@ import CheckBoxComponent from 'components/SignupCheckBox'
 
 import * as Text from 'components/Text'
 
-import * as Category from 'axios/Category'
-
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from 'static/style'
 
 const search_ic = 'static/icon/search.png'
 
-@inject('Auth')
+@inject('Auth','Category')
 @observer
 class CategoryConatiner extends React.Component {
   state = {
@@ -20,90 +18,126 @@ class CategoryConatiner extends React.Component {
     width : 0, 
 
   }
-  componentDidMount() {
+
+  async componentDidMount() {
+    const { Category } = this.props;
     window.addEventListener('resize', this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-    Category.getDevelop()
-    .then(res => {
-      console.log(res)
-      const results = res.data.results
-      this.setState({check_list : results})
-      console.log(results)
-    })
-    .catch(e => {
-      console.log(e)
-      console.log(e.response)
-    })
+
+    await Category.init()
   }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
   };
   updateDimensions = () => {
     this.setState({ ...this.state, width: window.innerWidth });
   };
-  render(){
-    const { check_list } = this.state
-    const { Auth } = this.props
-    const { width } = this.state;
 
+  checked = (e) => {
+    const { Category } = this.props;
+
+    console.log(e.target.checked)
+    
+    // checked 되어 있는 경우
+    if(e.target.checked){
+      Category.add_selected("category", e.target.value, "signup")
+      console.log(Category.category_selected)
+    } else 
+    // checked 안되어 있는 경우
+    {
+      Category.remove_selected("category", e.target.value, "signup")
+      console.log(Category.category_selected)
+    }
+  }
+
+  render(){
+    const { Auth, Category } = this.props
+    const { width } = this.state;
+ 
+    
     return (
       <div>
         
         <Content style={{marginBottom : 40}}>
+
           { width > 767.98 ? (
             <>
+            {/* 카테고리 */}
             <Header>
-              <Text.FontSize24 color={'#0933b3'} fontWeight={700}>제조분야</Text.FontSize24>
+              <Text.FontSize24 color={'#0933b3'} fontWeight={700}>업체분류</Text.FontSize24>
             </Header>
             {
-              check_list && check_list.map((category, idx) => {
+              Category.maincategory_list && Category.maincategory_list.map((item, idx) => {
+
                 return (
                   <W100 key={idx}>
                     <TextBox active={true}>
-                      <Text.FontSize20 color={'#505050'} fontWeight={700}>{category.maincategory}</Text.FontSize20>
+                      <Text.FontSize20 color={'#505050'} fontWeight={700}>{item.maincategory}</Text.FontSize20>
                     </TextBox>
-                    <CheckList>
-                      {
-                        category.develop_set.map((item, idx) => {
-                          return <CustomCheckBoxComponent key={idx} checked={Auth.category_middle_set.indexOf(item.id) > -1} onClick={() => Auth.setCategoryMiddleSet(item.id)}>{item.category}</CustomCheckBoxComponent>
-                        })
-                      }
-                    </CheckList>
+
+                    {item && item.category_set.map((sub_item, idx) => {  
+                    
+                    return (
+
+                      <CheckList>
+                        <CustomCheckBoxComponent onClick={this.checked} key={idx} value={sub_item.id}>{sub_item.category}</CustomCheckBoxComponent>
+                      </CheckList>
+                    )
+                    }
+                    )
+                    }
+                    
+                    
+                    
                   </W100>
                 )
               })
             }
+
+
             </>
           ) : (
             <>
             <Header>
-              <span class="Header">제조분야</span><br/>
-              <span class="SmallHeader">가능하신 제조분야를 선택해주세요.(복수선택가능)</span>
+              <span class="Header">업체 분류</span><br/>
+              <span class="SmallHeader">업체 분류를 선택해주세요.(복수선택가능)</span>
             </Header>
-            <>
-            </>
+
             {
-              check_list && check_list.map((category, idx) => {
+              Category.maincategory_list && Category.maincategory_list.map((item, idx) => {
+
                 return (
                   <W100 key={idx}>
                     <TextBox active={true}>
-                      <span class="listHeader">{category.maincategory}</span>
+                      <Text.FontSize20 color={'#505050'} fontWeight={700}>{item.maincategory}</Text.FontSize20>
                     </TextBox>
-                    <CheckList>
-                      {
-                        category.develop_set.map((item, idx) => {
-                          return <CustomCheckBoxComponent key={idx} checked={Auth.category_middle_set.indexOf(item.id) > -1} onClick={() => Auth.setCategoryMiddleSet(item.id)}>{item.category}</CustomCheckBoxComponent>
-                        })
-                      }
-                    </CheckList>
+
+                    {item && item.category_set.map((sub_item, idx) => {  
+                    
+                    return (
+
+                      <CheckList>
+                        <CustomCheckBoxComponent key={idx}>{sub_item.category}</CustomCheckBoxComponent>
+                      </CheckList>
+                    )
+                    }
+                    )
+                    }
+                    
+                    
+                    
                   </W100>
                 )
               })
             }
             </>
-          )}
-          
+          )
+
+          }
+
         </Content>
+
       </div>
     )
   }

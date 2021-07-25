@@ -1,6 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
-
+import React from "react";
+import styled from "styled-components";
 
 const Containerv1 = styled.div`
   display: inline-flex;
@@ -11,9 +10,9 @@ const Containerv1 = styled.div`
   @media (min-width: 768px) and (max-width: 1279.98px) {
     width: 720px;
   }
-  @media (min-width: 1280px) { 
+  @media (min-width: 1280px) {
     width: 1200px;
   }
-`
+`;
 
 export default Containerv1;

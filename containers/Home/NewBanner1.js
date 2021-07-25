@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import * as Text from "components/Text";
 import Slider from "react-slick";
+import Background from "../../components/Background";
 
 const image1 = "/static/images/logo/logo_1.png";
 const image2 = "/static/images/logo/logo_2.png";
@@ -34,7 +35,7 @@ class NewBanner1Container extends React.Component {
     };
 
     return (
-      <>
+      <CustomBackground>
         <Container>
           <Box>
             <Header>볼트앤너트는 제조분야를 선도하는 많은 기업들과 함께 하고있습니다.</Header>
@@ -91,20 +92,26 @@ class NewBanner1Container extends React.Component {
             </Item>
           </SliderContainer>
         </Container>
-      </>
+      </CustomBackground>
     );
   }
 }
 
 export default NewBanner1Container;
 
+const CustomBackground = styled(Background)`
+  height: 282px;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.06);
+  background-color: #ffffff;
+`;
+
 const Box = styled.div`
   background-position: center;
   background-size: cover;
   display: flex;
   width: 100%;
-  margin-top: 116px;
-  padding-top: 52px;
 
   height: 73px;
   position: relative;
@@ -120,8 +127,7 @@ const Box = styled.div`
 `;
 
 const Container = styled.div`
-  margin: 0 auto;
-  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.06);
+  padding-top: 30px;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: calc(100% - 28px);
@@ -147,7 +153,6 @@ const SliderContainer = styled(Slider)`
 `;
 
 const Item = styled.div`
-  padding: 20px 0;
   margin: 0 20px;
 
   > img {

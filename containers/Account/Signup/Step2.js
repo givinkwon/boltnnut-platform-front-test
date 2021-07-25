@@ -14,6 +14,9 @@ import { GRAY, DARKGRAY, PRIMARY, PRIMARY2, WHITE } from "static/style";
 import Email from "./Step2/Email";
 import Company from "./Step2/Company";
 import Category from "./Step2/Category";
+import Business from "./Step2/Business";
+import Develop from "./Step2/Develop";
+import Material from "./Step2/Material";
 import File from "./Step2/File";
 import MarketingModal from "./MarketingModal";
 import PartnerEmailConatiner from "./Step2/partnerEmail";
@@ -89,7 +92,6 @@ class Step2Conatiner extends React.Component {
   render() {
     const { Auth } = this.props;
     const { width } = this.state;
-
     return (
       <SectionContainer style={{ paddingTop: 50, paddingBottom: 130 }}>
         <InfoContainer>
@@ -103,7 +105,10 @@ class Step2Conatiner extends React.Component {
               <>
                 <PartnerEmailConatiner />
                 <Company />
+                <Business />
                 <Category />
+                <Develop />
+                <Material />
                 <File />
               </>
             )}

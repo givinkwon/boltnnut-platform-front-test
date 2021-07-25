@@ -8,8 +8,8 @@ import Footer from "components/Footer";
 
 import { inject, observer } from "mobx-react";
 
-import ManufacturerDetailContainer from "containers/Producer/ProducerDetail/index";
-import * as AccountAPI from "axios/Account";
+import ManufacturerDetailContainer from "containers/Manufacture/Producer/ProducerDetail/index";
+import * as AccountAPI from "axios/Account/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
@@ -65,7 +65,7 @@ class Index extends React.Component {
   render() {
     const { width } = this.state;
     return (
-      <div onContextMenu={(e)=> e.preventDefault()} >
+      <div onContextMenu={(e) => e.preventDefault()}>
         <Head>
           <title>볼트앤너트|제조사 상세</title>
         </Head>
