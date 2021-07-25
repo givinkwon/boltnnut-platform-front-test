@@ -50,20 +50,22 @@ class MobileBanner4Container extends React.Component {
 
           <ReviewContainer>
             {review.map((v, idx) => (
-              <ReviewBox>
-                <InnerReviewBox>
-                  <div style={{ display: "inline-flex", marginTop: "20px" }}>
-                    <Title13>{v.name}</Title13>
-                    <ReviewMyStarRatingComponent name="rate" starCount={5} starColor={"#0a2165"} value={5} />
-                  </div>
+              <div>
+                <ReviewBox>
+                  <InnerReviewBox>
+                    <div style={{ display: "inline-flex", marginTop: "20px" }}>
+                      <Title13>{v.name}</Title13>
+                      <ReviewMyStarRatingComponent name="rate" starCount={5} starColor={"#0a2165"} value={5} />
+                    </div>
 
-                  <Title12>{v.desc}</Title12>
+                    <Title12>{v.desc}</Title12>
 
-                  <div style={{ display: "flex", justifyContent: "flex-end", margin: "17px 0px 8px 0px" }}>
-                    <Title9>{v.date}</Title9>
-                  </div>
-                </InnerReviewBox>
-              </ReviewBox>
+                    <div style={{ display: "flex", justifyContent: "flex-end", margin: "17px 0px 8px 0px" }}>
+                      <Title9>{v.date}</Title9>
+                    </div>
+                  </InnerReviewBox>
+                </ReviewBox>
+              </div>
             ))}
           </ReviewContainer>
         </InnerContainer>
