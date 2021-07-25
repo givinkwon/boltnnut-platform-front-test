@@ -2068,6 +2068,7 @@ const UpImg = styled.img`
   bottom: 8%;
   right: 0;
   zindex: 1;
+  cursor: pointer;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     bottom: 0;
