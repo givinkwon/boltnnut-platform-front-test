@@ -5,6 +5,7 @@ import WritingContainer from "./Writing";
 import { toJS } from "mobx";
 import NoticeCard from "./Notice";
 import Partner from "../../../../stores/Manufacture/Partner";
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 
 const rightAngleImg = "/static/images/producer/rightAngle.svg";
 @inject("Partner", "Auth")
@@ -80,6 +81,8 @@ class QuestionContainer extends React.Component {
 
     console.log(loggedInPartnerId);
     console.log(partnerId);
+    console.log(clientId);
+    console.log(data.client);
     // if (parentType === "comment") {
     //   console.log(data);
     // } else {

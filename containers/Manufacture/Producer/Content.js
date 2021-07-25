@@ -315,6 +315,7 @@ class ManufacturerContentContainer extends React.Component {
             </Body>
           </Container>
         </Background>
+        <div onClick={() => Partner.getPartnerTemp()}>진수정밀</div>
         <PageBar>
           <img
             src={pass1}

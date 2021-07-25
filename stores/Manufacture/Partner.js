@@ -1733,6 +1733,35 @@ class Partner {
 
     this.filterLoading = true;
   };
+  @action getPartnerTemp = async () => {
+    let req = { extraUrl: 7866 };
+    console.log(req.extraUrl);
+
+    await PartnerAPI.getPartner(req)
+      .then(async (res) => {
+        console.log(res);
+
+        await this.partner_detail_list.push({ item: res.data, idx: 0 });
+        this.recentPartnerId = res.data.id;
+
+        // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
+        console.log(toJS(this.partner_detail_list));
+        await this.getReviewByPartner(
+          this.partner_detail_list[0].item.id,
+          1,
+          1
+        );
+        await this.getReviewByPartner(this.partner_detail_list[0].item.id);
+        await this.getQuestion(this.partner_detail_list[0].item.id);
+        await this.getCityName(this.partner_detail_list[0].item.city);
+
+        Router.push("/producer/detail");
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 
   @action getPartner = async (page = 1, click = 0) => {
     this.partner_list = [];
