@@ -22,6 +22,7 @@ import NewBanner5Container from "./NewBanner5";
 import NewBanner6Container from "./NewBanner6";
 
 // New
+import MobileModalContainer from "./Mobile/MobileModal";
 import MobileBanner0Container from "./Mobile/MobileBanner0";
 import MobileBanner1Container from "./Mobile/MobileBanner1";
 import MobileBanner2Container from "./Mobile/MobileBanner2";
@@ -82,7 +83,7 @@ class HomeConatiner extends React.Component {
     this.setState({ ...this.state, width: window.innerWidth });
   };
   render() {
-    const { width, reqList } = this.props;
+    const { width, reqList, Home } = this.props;
 
     function test() {
       console.log("R");
@@ -108,6 +109,8 @@ class HomeConatiner extends React.Component {
         {width < 767.98 ? (
           <>
             <CustomContainer>
+              {Home.modalState ? <MobileModalContainer /> : "none"}
+
               <MobileBanner0Container width={width} />
               <MobileBanner1Container width={width} />
               <MobileBanner2Container width={width} />
