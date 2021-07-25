@@ -42,6 +42,7 @@ class MobileBanner2Container extends React.Component {
   };
 
   render() {
+    // id는 실제 DB의 id로 해야함
     const nameTable = [
       { id: 1, name: "생활/위생" },
       { id: 2, name: "디지털/가전" },
@@ -51,9 +52,10 @@ class MobileBanner2Container extends React.Component {
       { id: 41, name: "전자/반도체 부품" },
       { id: 46, name: "볼트/너트류" },
       { id: 39, name: "동력전달부품" },
-      { id: 20, name: "냉난방/공조" },
+      { id: 19, name: "냉난방/공조" },
       { id: 22, name: "밴딩/포장" },
     ];
+
 
     const { Partner, Auth, Producer, Category } = this.props;
 
@@ -68,7 +70,7 @@ class MobileBanner2Container extends React.Component {
           <CategoryBox>
             {nameTable.map((v, idx) => (
               <div style={{ width: "110px", marginRight: "18px" }}>
-                <CategoryTitle key={v.id} active={this.onCompareCategory(idx)} onClick={() => this.onClickCategory(idx)}>
+                <CategoryTitle key={v.id} active={this.onCompareCategory(idx)} onClick={() => this.onClickCategory(v.id)}>
                   {v.name}
                 </CategoryTitle>
               </div>
