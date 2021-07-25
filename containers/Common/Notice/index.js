@@ -8,7 +8,7 @@ import ContentConatiner from "./Content";
 import * as PartnerAPI from "axios/Manufacutre/Partner";
 import KSLink from "components/KSLink";
 import { inject, observer } from "mobx-react";
-import InnerBoxComponent from "./InnerBox";
+import InnerBoxComponent from "components/InnerBox";
 
 class NoticeConatiner extends React.Component {
   state = {
