@@ -381,10 +381,6 @@ class MobileDetailCardContainer extends React.Component {
       Partner.review_partner_page = 0;
       Partner.review_partner_count = 0;
 
-      this.setState((state) => {
-        return { g: state.g + 1 };
-      });
-
       Partner.city_name = "";
       await Partner.getCityName(Partner.partner_detail_list[0].item.city);
 
@@ -417,6 +413,10 @@ class MobileDetailCardContainer extends React.Component {
       localStorage.setItem("recent", JSON.stringify(Partner.recentPartnerList));
 
       await this.countTotalPoint();
+
+      this.setState((state) => {
+        return { g: state.g + 1 };
+      });
 
       window.scrollTo(0, 0);
       console.log(this.state.g);
