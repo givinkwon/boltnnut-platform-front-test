@@ -56,10 +56,32 @@ const Card = styled.div`
     font-weight: normal;
   }
 
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 6px 5px;
+    margin-left: 5px;
+    > header {
+      > name {
+        font-size: 11px;
+      }
+
+      margin-bottom: 6px;
+      > img {
+        width: 20px;
+      }
+    }
+    > content {
+      font-size: 13px;
+      line-height: 20px;
+    }
+  }
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-left: 12px;
     > header {
-      font-size: 13px;
+      > name {
+        font-size: 13px;
+      }
+
       margin-bottom: 12px;
       > img {
         width: 20px;

@@ -77,7 +77,8 @@ class SubBoxContainer extends React.Component {
                 <span>프로젝트 의뢰하기</span>
               </div>
             </Button>
-
+            
+            {Auth.logged_in_user && (
             <Button
               active={Partner.activeHandler("interested")}
               hover={Partner.hoverInterestedIdx}
@@ -105,6 +106,8 @@ class SubBoxContainer extends React.Component {
                 <span>관심 업체 등록하기</span>
               </div>
             </Button>
+            )
+            }
           </ActiveItem>
           <ShowItem>
             <UserBox>

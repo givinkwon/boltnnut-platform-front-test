@@ -1230,6 +1230,7 @@ class DetailCardContainer extends React.Component {
               bottom: "8%",
               right: "0",
               zIndex: "1",
+              cursor: "pointer",
             }}
             onClick={() => {
               window.scrollTo(0, 0);

@@ -331,6 +331,7 @@ class ProposalCard extends React.Component {
       draggable: true,
       autoplay: true,
       autoplaySpeed: 2000,
+
     };
 
     const SlideSettingsMobile = {

@@ -193,6 +193,9 @@ const Card = styled.div`
   min-height: 134px;
   padding-top: 20px;
   box-sizing: border-box;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding-top: 12px;
+  }
 `;
 const Category = styled.div`
   font-size: 18px;
@@ -200,6 +203,12 @@ const Category = styled.div`
   letter-spacing: -0.45px;
   color: #282c36;
   margin-right: 12px;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 14px;
+    margin-right: 9px;
+    line-height: 18px;
+  }
 `;
 const Content = styled.div`
   font-size: 18px;
@@ -212,6 +221,7 @@ const Content = styled.div`
   flex-grow: 1;
   white-space: break-spaces;
   justify-content: space-between;
+  padding-bottom: 10px;
   > answer {
     cursor: pointer;
     font-size: 16px;
@@ -220,6 +230,16 @@ const Content = styled.div`
     color: #86888c;
     font-weight: normal;
     text-decoration-line: underline;
+  }
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 14px;
+    line-height: 18px;
+
+    > answer {
+      font-size: 13px;
+      line-height: 18px;
+    }
   }
 `;
 const Info = styled.div`
@@ -233,6 +253,11 @@ const Name = styled.div`
   letter-spacing: -0.4px;
   color: #555963;
   font-weight: normal;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    line-height: 18px;
+    font-size: 13px;
+  }
 `;
 const Date = styled.div`
   line-height: 27px;
@@ -240,6 +265,10 @@ const Date = styled.div`
   letter-spacing: -0.4px;
   color: #767676;
   font-weight: normal;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    line-height: 18px;
+    font-size: 13px;
+  }
 `;
 
 const RecommentBox = styled.div`
@@ -258,6 +287,12 @@ const Recomment = styled.div`
   align-self: baseline;
   > img {
     margin-right: 20px;
+  }
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    > img {
+      width: 11px;
+      margin-right: 8px;
+    }
   }
 `;
 

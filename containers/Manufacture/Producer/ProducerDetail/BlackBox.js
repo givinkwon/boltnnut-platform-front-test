@@ -37,11 +37,16 @@ const Layer = styled.div`
   height: 164px;
   position: absolute;
   z-index: 99;
-  top: ${(props) => (props.top ? props.top : "38")}%;
-  right: 20%;
+  top: ${(props) => (props.top ? props.top : "50")}%;
+  left: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transform: translate(-50%, -50%);
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 100%;
+    right: 0;
+  }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
     width: 450px;
@@ -64,6 +69,9 @@ const Button = styled.button`
   font-weight: bold;
   text-underline-position: under;
   cursor: pointer;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 13px;
+  }
 `;
 
 const Content = styled.div`
@@ -72,4 +80,8 @@ const Content = styled.div`
   letter-spacing: -0.45px;
   color: #000000;
   font-weight: normal;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 15px;
+  }
 `;

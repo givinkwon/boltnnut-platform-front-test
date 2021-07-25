@@ -106,10 +106,7 @@ class DocViewerContainer extends React.Component {
 export default DocViewerContainer;
 
 const DOCViewer = styled(DocViewer)`
-min-height: 300px;
-.WACStatusBarContainer{
-  border: 3px solid red;
-}
+// min-height: 300px;
 > div:nth-of-type(1){
     display: none;
     z-index: 0;    
