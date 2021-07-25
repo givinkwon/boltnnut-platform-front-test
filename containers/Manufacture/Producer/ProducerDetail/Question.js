@@ -141,18 +141,18 @@ class QuestionContainer extends React.Component {
             <Info>
               {console.log(toJS(data))}
               {console.log(name)}
-              {data.client ? (
-                <Name>{data.client}</Name>
+              {data.client && !data.state ? (
+                <Name>{Partner.questionClientInfo[idx]}</Name>
               ) : (
                 <Name style={{ color: "#0933b3" }}>제조업체</Name>
               )}
               {/* <hr /> */}
-              {!data.state && (
+              {/* {!data.state && (
                 <Name>{Partner.questionClientInfo[idx]}</Name>
                 // <Name>{data.name}</Name>
-              )}
+              )} */}
 
-              {data.state && <Name>제조업체</Name>}
+              {/* {data.state && <Name>제조업체</Name>} */}
 
               <Date>
                 {data.created_at.slice(0, data.created_at.indexOf("T"))}

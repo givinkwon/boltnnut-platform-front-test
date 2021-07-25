@@ -2549,6 +2549,9 @@ class Partner {
         await item.reply.map(async (subItem, subIdx) => {
           console.log(subItem);
           subItem.recomment = true;
+          if (!subItem.client) {
+            subItem.client = item.client;
+          }
           if (!subItem.state) {
             // subItem.client = this.questionClientInfo[idx];
             subItem.client = item.client;
