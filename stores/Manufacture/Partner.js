@@ -1733,6 +1733,8 @@ class Partner {
 
     this.filterLoading = true;
   };
+
+  /* 제조사 상세 페이지 - Q/A 기능 체크 용 함수 (파트너로 로그인해서 기능 확인) */
   @action getPartnerTemp = async () => {
     let req = { extraUrl: 7866 };
     console.log(req.extraUrl);
