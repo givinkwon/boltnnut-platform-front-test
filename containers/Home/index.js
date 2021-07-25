@@ -116,16 +116,16 @@ class HomeConatiner extends React.Component {
               <MobileBanner5Container width={width} />
             </CustomContainer>
           </>
-        ) : 767.99 < width && width < 1279.98 ? (
-          <>
-            <CustomContainer>
-              <TabletBanner13Container width={width} />
-              <TabletBanner14Container width={width} />
-              <TabletBanner12Container />
-              <TabletBanner8Container />
-              <TabletBanner9Container />
-            </CustomContainer>
-          </>
+        // ) : 767.99 < width && width < 1279.98 ? (
+        //   <>
+        //     <CustomContainer>
+        //       <TabletBanner13Container width={width} />
+        //       <TabletBanner14Container width={width} />
+        //       <TabletBanner12Container />
+        //       <TabletBanner8Container />
+        //       <TabletBanner9Container />
+        //     </CustomContainer>
+        //   </>
         ) : (
           <>
             <div style={{ overflow: "hidden" }}>
