@@ -19,7 +19,7 @@ import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import * as PartnerAPI from "axios/Manufacutre/Partner";
+import * as PartnerAPI from "axios/Manufacture/Partner";
 @inject("Project", "Auth", "Answer", "Partner")
 @observer
 class InfoContainer extends React.Component {
