@@ -862,8 +862,8 @@ class DetailCardContainer extends React.Component {
                             open={!Partner.reviewWritingModalActive}
                             close={this.closeModal}
                             purpose="FirstReview"
-                            headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? "
-                            headerTwo="첫 평가를 작성해주세요"
+                            headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? 첫 평가를 작성해주세요"
+                            headerTwo=""
                             bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
                             bodyTwo="업체 평가 작성이 가능합니다."
                           />
