@@ -848,45 +848,47 @@ class MobileDetailCardContainer extends React.Component {
                       })}
                   </content>
 
-                  {!Auth.logged_in_client && !Auth.logged_in_partner ? (
+                  {!Auth.logged_in_client && !Auth.logged_in_partner && (
                     <BlackBox
                       content="이 제조사의 리뷰를 보고싶다면?"
                       width={width}
                     />
-                  ) : !Partner.reviewWritingModalActive ? (
-                    <Layer>
-                      <span>
-                        <Modal
-                          width={width}
-                          open={!Partner.reviewWritingModalActive}
-                          close={this.closeModal}
-                          purpose="FirstReview"
-                          headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? "
-                          headerTwo="첫 평가를 작성해주세요"
-                          bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
-                          bodyTwo="업체 평가 작성이 가능합니다."
-                        />
-                      </span>
-                    </Layer>
-                  ) : (
-                    Partner.review_partner_page === 0 &&
-                    Partner.partnerReviewList.length === 0 && (
+                  )}
+                  {!Auth.logged_in_partner &&
+                    (!Partner.reviewWritingModalActive ? (
                       <Layer>
                         <span>
                           <Modal
                             width={width}
-                            open={!Partner.partnerReviewList.length}
+                            open={!Partner.reviewWritingModalActive}
                             close={this.closeModal}
-                            purpose="NoReview"
-                            headerOne="현재 작성 된 리뷰가 없습니다"
+                            purpose="FirstReview"
+                            headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? "
                             headerTwo="첫 평가를 작성해주세요"
                             bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
                             bodyTwo="업체 평가 작성이 가능합니다."
                           />
                         </span>
                       </Layer>
-                    )
-                  )}
+                    ) : (
+                      Partner.review_partner_page === 0 &&
+                      Partner.partnerReviewList.length === 0 && (
+                        <Layer>
+                          <span>
+                            <Modal
+                              width={width}
+                              open={!Partner.partnerReviewList.length}
+                              close={this.closeModal}
+                              purpose="NoReview"
+                              headerOne="현재 작성 된 리뷰가 없습니다"
+                              headerTwo="첫 평가를 작성해주세요"
+                              bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
+                              bodyTwo="업체 평가 작성이 가능합니다."
+                            />
+                          </span>
+                        </Layer>
+                      )
+                    ))}
 
                   <PageBar acitve={!Partner.reviewWritingModalActive}>
                     <img
