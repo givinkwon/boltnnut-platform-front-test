@@ -853,7 +853,7 @@ class DetailCardContainer extends React.Component {
                     />
                   )}
 
-                  {!Auth.logged_in_partner &&
+                  {Auth.logged_in_client &&
                     (!Partner.reviewWritingModalActive ? (
                       <Layer>
                         <span>
