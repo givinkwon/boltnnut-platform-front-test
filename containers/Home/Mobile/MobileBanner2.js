@@ -56,7 +56,6 @@ class MobileBanner2Container extends React.Component {
       { id: 22, name: "밴딩/포장" },
     ];
 
-
     const { Partner, Auth, Producer, Category } = this.props;
 
     return (
