@@ -66,6 +66,7 @@ const onError = (e) => {
 
 let loadingCounter = 0;
 let index = 0;
+let region;
 
 @inject("Partner", "Auth")
 @observer
@@ -430,6 +431,15 @@ class MobileDetailCardContainer extends React.Component {
   render() {
     const { width, Partner, Auth } = this.props;
 
+    region = "";
+    region =
+      Partner.partner_detail_list[0].item.region === null ||
+      Partner.partner_detail_list[0].item.region === "nan"
+        ? Partner.city_name
+        : Partner.partner_detail_list[0].item.region;
+
+    console.log(region);
+
     let clientId;
     let notLoginUser = false;
     if (!Auth.logged_in_client && !Auth.logged_in_partner) {
@@ -540,7 +550,12 @@ class MobileDetailCardContainer extends React.Component {
                     <InfoCard
                       src={markImg}
                       name="지역"
-                      content={Partner.city_name}
+                      content={
+                        Partner.partner_detail_list[0].item.region === "null" ||
+                        Partner.partner_detail_list[0].item.region === "nan"
+                          ? Partner.city_name
+                          : Partner.partner_detail_list[0].item.region
+                      }
                       marginLeft="21"
                     />
                   </InfoBox>
@@ -1018,7 +1033,7 @@ class MobileDetailCardContainer extends React.Component {
 
                 <MapBox>
                   <Font24 id="maps">위치</Font24>
-                  <MapContainer city={Partner.city_name} />
+                  <MapContainer city={region} />
                 </MapBox>
 
                 {console.log(toJS(Partner.questionList))}

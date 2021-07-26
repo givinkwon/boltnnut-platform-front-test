@@ -13,6 +13,7 @@ class Partner {
     //makeObservable(this);
   }
 
+  @observable detailRegion = ""
   @observable hashBusinessCategory = [];
   /* Page 관련 변수 */
   @observable pageType = "";

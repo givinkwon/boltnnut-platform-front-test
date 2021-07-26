@@ -65,6 +65,7 @@ const onError = (e) => {
 };
 
 let index = 0;
+let region = "";
 
 @inject("Partner", "Auth")
 @observer
@@ -113,6 +114,15 @@ class DetailCardContainer extends React.Component {
     Partner.docViewerLoading = false;
     Partner.subViewerLoading = 0;
     // Partner.viewerLoading += 1;
+
+    // Partner.detailRegion =
+    //   Partner.partner_detail_list[0].item.region === null ||
+    //   Partner.partner_detail_list[0].item.region === "nan"
+    //     ? Partner.city_name
+    //     : Partner.partner_detail_list[0].item.region;
+
+    console.log(region);
+    console.log(toJS(Partner.detailRegion));
 
     let portfolioObject = document.getElementById("portfolio");
 
@@ -428,10 +438,19 @@ class DetailCardContainer extends React.Component {
   render() {
     const { width, Partner, Auth } = this.props;
 
+    region = "";
+    region =
+      Partner.partner_detail_list[0].item.region === null ||
+      Partner.partner_detail_list[0].item.region === "nan"
+        ? Partner.city_name
+        : Partner.partner_detail_list[0].item.region;
+
+    console.log(region);
     console.log(
       Partner.reviewWritingModalActive || Auth.logged_in_partner !== null
     );
     console.log(Auth.logged_in_partner !== null);
+
     let clientId;
     let notLoginUser = false;
     if (!Auth.logged_in_client && !Auth.logged_in_partner) {
@@ -511,6 +530,9 @@ class DetailCardContainer extends React.Component {
     };
 
     console.log(toJS(Partner.questionList));
+    console.log(Partner.partner_detail_list[0].item.region);
+    console.log(Partner.partner_detail_list[0].item.region == "null");
+    console.log(Partner.city_name);
 
     return (
       <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
@@ -542,7 +564,7 @@ class DetailCardContainer extends React.Component {
                     <InfoCard
                       src={markImg}
                       name="지역"
-                      content={Partner.city_name}
+                      content={region}
                       marginLeft="21"
                     />
                   </InfoBox>
@@ -1023,9 +1045,10 @@ class DetailCardContainer extends React.Component {
                   </PageBar>
                 </ReviewBox>
 
+                {console.log(region)}
                 <MapBox>
                   <Font24 id="maps">위치</Font24>
-                  <MapContainer city={Partner.city_name} />
+                  <MapContainer city={region} />
                 </MapBox>
 
                 {console.log(toJS(Partner.questionList))}
