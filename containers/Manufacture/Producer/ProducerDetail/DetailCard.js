@@ -428,6 +428,10 @@ class DetailCardContainer extends React.Component {
   render() {
     const { width, Partner, Auth } = this.props;
 
+    console.log(
+      Partner.reviewWritingModalActive || Auth.logged_in_partner !== null
+    );
+    console.log(Auth.logged_in_partner !== null);
     let clientId;
     let notLoginUser = false;
     if (!Auth.logged_in_client && !Auth.logged_in_partner) {
@@ -815,7 +819,6 @@ class DetailCardContainer extends React.Component {
                       </subscore>
                     </header>
                   </SummaryBox>
-
                   <content>
                     <ReviewTop>
                       {Partner.partnerReviewList[0] && (
@@ -845,14 +848,12 @@ class DetailCardContainer extends React.Component {
                         );
                       })}
                   </content>
-
                   {!Auth.logged_in_client && !Auth.logged_in_partner && (
                     <BlackBox
                       content="이 제조사의 리뷰를 보고싶다면?"
                       width={width}
                     />
                   )}
-
                   {Auth.logged_in_client &&
                     (!Partner.reviewWritingModalActive ? (
                       <Layer>
@@ -888,8 +889,17 @@ class DetailCardContainer extends React.Component {
                         </Layer>
                       )
                     ))}
-
-                  <PageBar acitve={!Partner.reviewWritingModalActive}>
+                  {console.log("1111111111111")}
+                  {console.log(Auth.logged_in_partner)}
+                  {console.log(Partner.reviewWritingModalActive)}
+                  Partner.reviewWritingModalActive || Auth.logged_in_partner !==
+                  null )}
+                  <PageBar
+                    active={
+                      Partner.reviewWritingModalActive ||
+                      Auth.logged_in_partner !== null
+                    }
+                  >
                     <img
                       src={pass1}
                       style={{
@@ -1748,7 +1758,7 @@ const PageBar = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-between;
-  filter: ${(props) => (props.acitve ? "blur(9px)" : "")};
+  filter: ${(props) => (props.acitve ? "" : "blur(9px)")};
 
   img {
     align-self: center;

@@ -854,7 +854,7 @@ class MobileDetailCardContainer extends React.Component {
                       width={width}
                     />
                   )}
-                  {!Auth.logged_in_partner &&
+                  {Auth.logged_in_client &&
                     (!Partner.reviewWritingModalActive ? (
                       <Layer>
                         <span>
