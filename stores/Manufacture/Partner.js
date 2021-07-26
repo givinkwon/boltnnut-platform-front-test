@@ -1975,6 +1975,10 @@ class Partner {
       });
   };
 
+  /* 
+  클라이언트가 리뷰를 썼는지 안 썼는지 확인하는 함수 
+  페이지 번호와 클라이언트 ID를 인자로 받음
+  */
   @action checkReviewWriting = async (page = 1, clientId = "") => {
     // console.log(clientId);
     const req = {
@@ -2003,6 +2007,10 @@ class Partner {
     }
     // console.log(this.review_done);
   };
+
+  /* 
+    리뷰 데이터에서 클라이언트 ID로 Email 주소를 알아내는 함수
+  */
 
   @action async getClientEmail() {
     console.log("getClientEmail");
@@ -2135,6 +2143,11 @@ class Partner {
       });
   };
 
+  /* 
+    제조사명의 일부를 입력하면 그에 대한 제조사 정보를 받아오는 함수
+    제조사의 이름과 페이지 번호를 인자로 받음
+  */
+
   @action getPartnerName = async (name, page = 1) => {
     this.partnersList = [];
     const req = {
@@ -2164,6 +2177,10 @@ class Partner {
       });
   };
 
+  /* 
+    리뷰를 저장하는 함수
+  */
+
   @action setPartnerReview = async (formData) => {
     const req = {
       data: formData,
@@ -2181,6 +2198,11 @@ class Partner {
       });
   };
 
+  /* 
+    제조사 별로 리뷰를 가져오는 함수
+    제조사의 ID, 페이지 수, page_nation(1: 카운트 개수 O, 한 페이지당 5? 10?개씩의 데이터를 가져옴
+      0: 카운트 개수 X, 전체 데이터를 한 페이지로 가져옴)
+  */
   @action getReviewByPartner = async (id, page_nation = 0, page = 1) => {
     console.log(id);
     console.log(page_nation);
@@ -2268,6 +2290,10 @@ class Partner {
   // });
   // }
 
+  /* 
+    클라이언트 ID로 클라이언트 이름 가져오기 
+    type이 question일 경우 Q/A에 해당되고 나머지는 default  
+  */
   @action getClientNameById = async (id, idx, type = "default") => {
     console.log(id);
     console.log(idx);
@@ -2306,6 +2332,7 @@ class Partner {
     });
     console.log(toJS(this.review_client_obj));
   };
+
   // 배열을 무작위로 섞는 함수
   // 배열을 인자로 받음
   @action shuffleArray = (array) => {
@@ -2392,7 +2419,9 @@ class Partner {
         break;
     }
   };
-
+  /* 
+    호버될 때 일어나는 함수
+ */
   @action hoverHandler = (type, action) => {
     switch (type) {
       case "project":
@@ -2454,6 +2483,10 @@ class Partner {
       });
   };
 
+  /* 
+    - 북마크한 제조사를 다시 해제하는 함수
+  */
+
   @action deleteBookmarkPartner = async (clientID, partnerID) => {
     console.log(clientID);
     console.log(partnerID);
@@ -2475,6 +2508,9 @@ class Partner {
       });
   };
 
+  /* 
+    해당 제조사에 대해 북마크를 했는지 체크하는 함수
+  */
   @action existBookmarkPartner = async (clientID, partnerID) => {
     console.log(typeof clientID);
     console.log(clientID);
