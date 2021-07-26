@@ -2465,6 +2465,12 @@ class Partner {
   @action getBookmarkByClient = async (clientID) => {
     console.log(clientID);
 
+    if (!clientID) {
+      clientID = 20;
+    }
+
+    console.log(clientID);
+
     const req = {
       params: {
         clientID: clientID,
@@ -2515,6 +2521,10 @@ class Partner {
     console.log(typeof clientID);
     console.log(clientID);
     console.log(partnerID);
+
+    if (!clientID) {
+      clientID = 20;
+    }
 
     const req = {
       params: {
@@ -2809,6 +2819,10 @@ class Partner {
     console.log(typeof clientID);
     console.log(clientID);
     console.log(partnerID);
+
+    if (!clientID) {
+      clientID = 20;
+    }
 
     const req = {
       params: {

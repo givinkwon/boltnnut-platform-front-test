@@ -243,7 +243,7 @@ class ManufactureProcess {
     const formData = new FormData();
 
     console.log(typeof this.PartnerCount);
-    formData.append("text", text); // 입력 텍스트
+    formData.append("search", text); // 입력 텍스트
     formData.append("count", this.PartnerCount); // 파트너 개수
 
     // const Token = localStorage.getItem("token");
