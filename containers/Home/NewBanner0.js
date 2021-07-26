@@ -88,11 +88,7 @@ const Header = styled(Title.FontSize48)`
 `;
 
 const Middle = styled(Text.FontSize20)`
-<<<<<<< HEAD
-  // width: 387px;
-=======
   width: 100%;
->>>>>>> d1a291fc22bc22493cd397592497d33b02bf9041
   height: 29px;
   object-fit: contain;
   font-family: NotoSansCJKkr;
