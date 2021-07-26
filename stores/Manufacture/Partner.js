@@ -985,7 +985,7 @@ class Partner {
     }
     this.search();
   };
-  @action search = () => {
+  @action search = async () => {
     const name = this.search_text;
     const develop = this.search_develop;
     const region = this.search_region;
@@ -1019,7 +1019,7 @@ class Partner {
       },
     };
     console.log(req);
-    PartnerAPI.search(req)
+    await PartnerAPI.search(req)
       .then((res) => {
         console.log(res);
         this.partner_list = res.data.results;

@@ -890,15 +890,15 @@ class DetailCardContainer extends React.Component {
                       )
                     ))}
                   {console.log("1111111111111")}
-                  {console.log(Auth.logged_in_partner)}
+                  {console.log(Auth.logged_in_partner !== null)}
                   {console.log(Partner.reviewWritingModalActive)}
-                  Partner.reviewWritingModalActive || Auth.logged_in_partner !==
-                  null )}
-                  <PageBar
-                    active={
-                      Partner.reviewWritingModalActive ||
+                  {console.log(
+                    Partner.reviewWritingModalActive ||
                       Auth.logged_in_partner !== null
-                    }
+                  )}
+                  <PageBar
+                    login={notLoginUser}
+                    active={Partner.reviewWritingModalActive}
                   >
                     <img
                       src={pass1}
@@ -1071,7 +1071,7 @@ class DetailCardContainer extends React.Component {
                   item.reply && console.log(item.reply);
                 } */}
 
-                  <PageBar>
+                  <PageBar active={true}>
                     <img
                       src={pass1}
                       style={{
@@ -1756,9 +1756,9 @@ const PageBar = styled.div`
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  display: flex;
+  display: ${(props) => (props.login ? "none" : "flex")};
   justify-content: space-between;
-  filter: ${(props) => (props.acitve ? "" : "blur(9px)")};
+  filter: ${(props) => (props.acitve ? "blur(9px)" : "none")};
 
   img {
     align-self: center;

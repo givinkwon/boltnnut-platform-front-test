@@ -890,7 +890,12 @@ class MobileDetailCardContainer extends React.Component {
                       )
                     ))}
 
-                  <PageBar acitve={!Partner.reviewWritingModalActive}>
+                  <PageBar
+                    acitve={
+                      Partner.reviewWritingModalActive ||
+                      Auth.logged_in_partner !== null
+                    }
+                  >
                     <img
                       src={pass1}
                       style={{
@@ -1062,7 +1067,7 @@ class MobileDetailCardContainer extends React.Component {
                   item.reply && console.log(item.reply);
                 } */}
 
-                  <PageBar>
+                  <PageBar active={true}>
                     <img
                       src={pass1}
                       style={{
@@ -1662,7 +1667,7 @@ const PageBar = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-between;
-  filter: ${(props) => (props.acitve ? "blur(9px)" : "")};
+  filter: ${(props) => (props.acitve ? "blur(9px)" : "none")};
 
   img {
     align-self: center;
