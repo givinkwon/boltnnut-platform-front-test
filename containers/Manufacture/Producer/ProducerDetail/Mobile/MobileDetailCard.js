@@ -66,6 +66,7 @@ const onError = (e) => {
 
 let loadingCounter = 0;
 let index = 0;
+let region;
 
 @inject("Partner", "Auth")
 @observer
@@ -430,6 +431,15 @@ class MobileDetailCardContainer extends React.Component {
   render() {
     const { width, Partner, Auth } = this.props;
 
+    region = "";
+    region =
+      Partner.partner_detail_list[0].item.region === null ||
+      Partner.partner_detail_list[0].item.region === "nan"
+        ? Partner.city_name
+        : Partner.partner_detail_list[0].item.region;
+
+    console.log(region);
+
     let clientId;
     let notLoginUser = false;
     if (!Auth.logged_in_client && !Auth.logged_in_partner) {
@@ -540,7 +550,12 @@ class MobileDetailCardContainer extends React.Component {
                     <InfoCard
                       src={markImg}
                       name="지역"
-                      content={Partner.city_name}
+                      content={
+                        Partner.partner_detail_list[0].item.region === "null" ||
+                        Partner.partner_detail_list[0].item.region === "nan"
+                          ? Partner.city_name
+                          : Partner.partner_detail_list[0].item.region
+                      }
                       marginLeft="21"
                     />
                   </InfoBox>
@@ -684,7 +699,13 @@ class MobileDetailCardContainer extends React.Component {
                   </div>
                   {notLoginUser && <Block />}
                   {/* <ReviewSummaryContainer width={this.props.width} /> */}
-                  <SummaryBox login={notLoginUser}>
+                  <SummaryBox
+                    login={notLoginUser}
+                    active={
+                      !Partner.reviewWritingModalActive &&
+                      !Auth.logged_in_partner
+                    }
+                  >
                     {/* <label>클라이언트 평균 만족도</label> */}
                     <header>
                       <mainscore>
@@ -848,47 +869,57 @@ class MobileDetailCardContainer extends React.Component {
                       })}
                   </content>
 
-                  {!Auth.logged_in_client && !Auth.logged_in_partner ? (
+                  {!Auth.logged_in_client && !Auth.logged_in_partner && (
                     <BlackBox
                       content="이 제조사의 리뷰를 보고싶다면?"
                       width={width}
                     />
-                  ) : !Partner.reviewWritingModalActive ? (
-                    <Layer>
-                      <span>
-                        <Modal
-                          width={width}
-                          open={!Partner.reviewWritingModalActive}
-                          close={this.closeModal}
-                          purpose="FirstReview"
-                          headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? "
-                          headerTwo="첫 평가를 작성해주세요"
-                          bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
-                          bodyTwo="업체 평가 작성이 가능합니다."
-                        />
-                      </span>
-                    </Layer>
-                  ) : (
-                    Partner.review_partner_page === 0 &&
-                    Partner.partnerReviewList.length === 0 && (
+                  )}
+                  {Auth.logged_in_client &&
+                    (!Partner.reviewWritingModalActive ? (
                       <Layer>
                         <span>
                           <Modal
                             width={width}
-                            open={!Partner.partnerReviewList.length}
+                            open={!Partner.reviewWritingModalActive}
                             close={this.closeModal}
-                            purpose="NoReview"
-                            headerOne="현재 작성 된 리뷰가 없습니다"
+                            purpose="FirstReview"
+                            headerOne="볼트앤너트에 등록된 5,000 개 제조사 평가를 보고 싶으시다면 ? "
                             headerTwo="첫 평가를 작성해주세요"
                             bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
                             bodyTwo="업체 평가 작성이 가능합니다."
                           />
                         </span>
                       </Layer>
-                    )
-                  )}
+                    ) : (
+                      Partner.review_partner_page === 0 &&
+                      Partner.partnerReviewList.length === 0 && (
+                        <Layer>
+                          <span>
+                            <Modal
+                              width={width}
+                              open={!Partner.partnerReviewList.length}
+                              close={this.closeModal}
+                              purpose="NoReview"
+                              headerOne="현재 작성 된 리뷰가 없습니다"
+                              headerTwo="첫 평가를 작성해주세요"
+                              bodyOne="* 볼트앤너트에 등록된 업체가 아니더라도"
+                              bodyTwo="업체 평가 작성이 가능합니다."
+                            />
+                          </span>
+                        </Layer>
+                      )
+                    ))}
 
-                  <PageBar acitve={!Partner.reviewWritingModalActive}>
+                  <PageBar
+                    login={
+                      notLoginUser ||
+                      (Auth.logged_in_partner
+                        ? Partner.reviewWritingModalActive
+                        : !Partner.reviewWritingModalActive)
+                    }
+                    active={Partner.reviewWritingModalActive}
+                  >
                     <img
                       src={pass1}
                       style={{
@@ -1002,7 +1033,7 @@ class MobileDetailCardContainer extends React.Component {
 
                 <MapBox>
                   <Font24 id="maps">위치</Font24>
-                  <MapContainer city={Partner.city_name} />
+                  <MapContainer city={region} />
                 </MapBox>
 
                 {console.log(toJS(Partner.questionList))}
@@ -1060,7 +1091,7 @@ class MobileDetailCardContainer extends React.Component {
                   item.reply && console.log(item.reply);
                 } */}
 
-                  <PageBar>
+                  <PageBar active={true} type="QnA">
                     <img
                       src={pass1}
                       style={{
@@ -1506,6 +1537,7 @@ const ReviewBox = styled.div`
   position: relative;
   // height: 500px;
   margin-top: 109px;
+  user-select: none;
   label {
     font-size: 24px;
     line-height: 40px;
@@ -1654,13 +1686,13 @@ const FileViewerContainer = styled(FileViewer)``;
 const PageBar = styled.div`
   width: 351px;
   margin-top: 109px;
-  margin-bottom: 157px;
+  margin-bottom: ${(props) => (props.type === "QnA" ? "157px" : "")};
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  display: flex;
+  display: ${(props) => (props.login ? "none" : "flex")};
   justify-content: space-between;
-  filter: ${(props) => (props.acitve ? "blur(9px)" : "")};
+  filter: ${(props) => (props.acitve ? "blur(9px)" : "none")};
 
   img {
     align-self: center;
@@ -1774,6 +1806,7 @@ const Item = styled.div`
 const MapBox = styled.div`
   width: 100%;
   height: 500px;
+  margin-top: 157px;
 `;
 
 const QuestionBox = styled.div`
@@ -1828,7 +1861,7 @@ const SubCard = styled.div`
 const SummaryBox = styled.div`
   margin-top: 50px;
   margin-bottom: 34px;
-  filter: ${(props) => (props.login ? "blur(9px)" : "")};
+  filter: ${(props) => (props.login || props.active) && "blur(9px)"};
   > label {
     font-size: 24px;
     line-height: 40px;

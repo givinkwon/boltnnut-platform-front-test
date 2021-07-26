@@ -57,8 +57,7 @@ class ChatTestContainer extends React.Component {
           origin_file: this.state.currentFile,
           type: this.userType,
         });
-      }
-      else {
+      } else {
         file.push({
           chat_type: 2,
           answer: 238,
@@ -179,8 +178,8 @@ class ChatTestContainer extends React.Component {
           if (this.userType === 0) {
             req = {
               phoneNum: this.props.Partner.partnerdata.user.phone,
-              requestTitle: this.props.Project.projectDetailData.request_set[0]
-                .name,
+              requestTitle:
+                this.props.Project.projectDetailData.request_set[0].name,
               name: "클라이언트 님", //클라이언트 이름
               text: fullMessage[checkIdx].text,
             };
@@ -188,8 +187,8 @@ class ChatTestContainer extends React.Component {
           else {
             req = {
               phoneNum: this.props.Partner.clientInfo.user.phone,
-              requestTitle: this.props.Project.projectDetailData.request_set[0]
-                .name,
+              requestTitle:
+                this.props.Project.projectDetailData.request_set[0].name,
               name: this.props.Partner.partnerdata.name, //파트너 이름
               text: fullMessage[checkIdx].text,
             };
@@ -260,7 +259,6 @@ class ChatTestContainer extends React.Component {
           var Temp = [];
           const Messages = this.props.Project.chatMessages;
           reverseChat.forEach(async (message) => {
-      
             let readState = true;
             if (message.user_type === 0) {
               // console.log(m_res.data.check_time_partner); // 이건 밀리세컨드고
@@ -347,7 +345,10 @@ class ChatTestContainer extends React.Component {
           //콘솔 그룹
           const Color = "skyBlue";
 
-          clientPhone = Partner.clientInfo.user.phone;
+          clientPhone =
+            Partner.clientInfo &&
+            Partner.clientInfo.user &&
+            Partner.clientInfo.user.phone;
           console.group("%c 채팅창 정보", `color:${Color}; font-size:30px`);
           console.log(
             `%c채팅 번호(Answer id) = ${roomNum}\n클라이언트 휴대폰번호 = ${clientPhone}\n파트너 휴대폰번호 = ${this.props.Partner.partnerdata.user.phone}\n프로젝트 이름 = ${this.props.requestTitle}\n`,
