@@ -1522,6 +1522,7 @@ const ReviewBox = styled.div`
   position: relative;
   // height: 500px;
   margin-top: 109px;
+  user-select: none;
   label {
     font-size: 24px;
     line-height: 40px;
