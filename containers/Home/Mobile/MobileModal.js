@@ -40,8 +40,9 @@ export default MobileModalContainer;
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 441px;
+  height: 100%;
 
   position: fixed;
   top: 0px;
@@ -50,7 +51,7 @@ const Container = styled.div`
   left: 0px;
   z-index: 10000;
 
-  background-color: #92959a;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const InnerContainer = styled.div`
@@ -58,7 +59,8 @@ const InnerContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 280px;
+  width: 350px;
+  height: 441px;
   background-color: #ffffff;
   border-radius: 10px;
 `;

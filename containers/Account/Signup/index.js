@@ -6,6 +6,9 @@ import BannerConatiner from "./Banner";
 import Step1Conatiner from "./Step1";
 import Step2Conatiner from "./Step2";
 
+import SignupContainer from "./Signup";
+import ClientSignUpContainer from "./ClientSignup";
+
 @inject("Auth")
 @observer
 class SignupConatiner extends React.Component {
@@ -18,13 +21,16 @@ class SignupConatiner extends React.Component {
   render() {
     const { Auth } = this.props;
     return (
-      <div style={{ paddingTop: 90 }}>
-        <BannerConatiner />
-        {/* {Auth.step === 0 && <Step1Conatiner/>} */}
-        {/* {Auth.step === 1 && <Step2Conatiner/>} */}
+      <>
+        <ClientSignUpContainer />
+      </>
+      // <div style={{ paddingTop: 90 }}>
+      //   <BannerConatiner />
+      //   {Auth.step === 0 && <Step1Conatiner/>}
+      //   {Auth.step === 1 && <Step2Conatiner/>}
 
-        <Step2Conatiner />
-      </div>
+      //   <Step2Conatiner />
+      // </div>
     );
   }
 }
