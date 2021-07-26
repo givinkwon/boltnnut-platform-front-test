@@ -331,7 +331,6 @@ class ProposalCard extends React.Component {
       draggable: true,
       autoplay: true,
       autoplaySpeed: 2000,
-
     };
 
     const SlideSettingsMobile = {
@@ -400,24 +399,24 @@ class ProposalCard extends React.Component {
                       <></>
                     )}
                   </div>
-                  {Auth.logged_in_user && (<BookMark>
-                    <img
-                      src={
-                        Partner.check_bookmark[idx] === idx
-                          ? bookmarkBlueImg
-                          : bookmarkImg
-                      }
-                      onClick={async (e) => {
-                        if (!loggedInPartnerId && clientId) {
-                          e.stopPropagation();
-                          Partner.BookmarkHandler(idx);
-                          Partner.checkedBookmark(clientId, partnerId, idx);
+                  {Auth.logged_in_user && (
+                    <BookMark>
+                      <img
+                        src={
+                          Partner.check_bookmark[idx] === idx
+                            ? bookmarkBlueImg
+                            : bookmarkImg
                         }
-                      }}
-                    ></img>
-                  </BookMark>
-                  )  
-                  }
+                        onClick={async (e) => {
+                          if (!loggedInPartnerId && clientId) {
+                            e.stopPropagation();
+                            Partner.BookmarkHandler(idx);
+                            Partner.checkedBookmark(clientId, partnerId, idx);
+                          }
+                        }}
+                      ></img>
+                    </BookMark>
+                  )}
                 </Title>
                 <Introduce>{data.history}</Introduce>
                 {this.state.business.length !== 0 ? (
@@ -456,7 +455,11 @@ class ProposalCard extends React.Component {
                         src={location}
                         style={{ marginLeft: 15, marginRight: 5 }}
                       ></img>
-                      <div>{this.state.city}</div>
+                      <div>
+                        {data.region === null || data.region === "nan"
+                          ? this.state.city
+                          : data.region}
+                      </div>
                     </Location>
                   </BottomBox>
                   <BottomBox>
@@ -701,7 +704,7 @@ const Location = styled.div`
   justify-content: space-between;
   align-items: center;
   div {
-    width: 200px;
+    width: 100%;
     font-size: 14px;
     color: #767676;
     line-height: 2.86;

@@ -315,6 +315,8 @@ class ManufacturerContentContainer extends React.Component {
             </Body>
           </Container>
         </Background>
+        {/* 제조사 상세 페이지 - Q/A 기능 체크 용 함수 (파트너로 로그인해서 기능 확인) */}
+        {/* <div onClick={() => Partner.getPartnerTemp()}>진수정밀</div> */}
         <PageBar>
           <img
             src={pass1}
