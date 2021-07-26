@@ -684,7 +684,13 @@ class MobileDetailCardContainer extends React.Component {
                   </div>
                   {notLoginUser && <Block />}
                   {/* <ReviewSummaryContainer width={this.props.width} /> */}
-                  <SummaryBox login={notLoginUser}>
+                  <SummaryBox
+                    login={notLoginUser}
+                    active={
+                      !Partner.reviewWritingModalActive &&
+                      !Auth.logged_in_partner
+                    }
+                  >
                     {/* <label>클라이언트 평균 만족도</label> */}
                     <header>
                       <mainscore>
@@ -891,10 +897,13 @@ class MobileDetailCardContainer extends React.Component {
                     ))}
 
                   <PageBar
-                    acitve={
-                      Partner.reviewWritingModalActive ||
-                      Auth.logged_in_partner !== null
+                    login={
+                      notLoginUser ||
+                      (Auth.logged_in_partner
+                        ? Partner.reviewWritingModalActive
+                        : !Partner.reviewWritingModalActive)
                     }
+                    active={Partner.reviewWritingModalActive}
                   >
                     <img
                       src={pass1}
@@ -1067,7 +1076,7 @@ class MobileDetailCardContainer extends React.Component {
                   item.reply && console.log(item.reply);
                 } */}
 
-                  <PageBar active={true}>
+                  <PageBar active={true} type="QnA">
                     <img
                       src={pass1}
                       style={{
@@ -1661,11 +1670,11 @@ const FileViewerContainer = styled(FileViewer)``;
 const PageBar = styled.div`
   width: 351px;
   margin-top: 109px;
-  margin-bottom: 157px;
+  margin-bottom: ${(props) => (props.type === "QnA" ? "157px" : "")};
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  display: flex;
+  display: ${(props) => (props.login ? "none" : "flex")};
   justify-content: space-between;
   filter: ${(props) => (props.acitve ? "blur(9px)" : "none")};
 
@@ -1781,6 +1790,7 @@ const Item = styled.div`
 const MapBox = styled.div`
   width: 100%;
   height: 500px;
+  margin-top: 157px;
 `;
 
 const QuestionBox = styled.div`
@@ -1835,7 +1845,7 @@ const SubCard = styled.div`
 const SummaryBox = styled.div`
   margin-top: 50px;
   margin-bottom: 34px;
-  filter: ${(props) => (props.login ? "blur(9px)" : "")};
+  filter: ${(props) => (props.login || props.active) && "blur(9px)"};
   > label {
     font-size: 24px;
     line-height: 40px;
