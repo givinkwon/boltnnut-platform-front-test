@@ -71,7 +71,7 @@ const customStyles = {
   },
 };
 
-@inject("Request", "ManufactureProcess", "Auth","Schedule", "Project")
+@inject("Request", "ManufactureProcess", "Auth", "Schedule", "Project")
 @observer
 class FileUploadContainer extends Component {
   static defaultProps = { title: "도면 파일을 업로드 해주세요." };
@@ -259,7 +259,7 @@ class FileUploadContainer extends Component {
   changeSubmit = () => {};
   requestSubmit = async (flag, id) => {
     const { projectname, purposeAry } = this.state;
-    const { ManufactureProcess, Schedule, Request } = this.props;
+    const { ManufactureProcess, Schedule, Request, Project } = this.props;
 
     ManufactureProcess.projectSubmitLoading = false;
     console.log(toJS(ManufactureProcess.totalorderPrice));
@@ -385,10 +385,12 @@ class FileUploadContainer extends Component {
     console.log(processData);
     console.log(detailProcessData);
     console.log(quantityData);
+    console.log(Project.producerId);
 
     formData.append("process", processData);
     formData.append("detailprocess", detailProcessData);
     formData.append("number", quantityData);
+    formData.append("partner", Project.producerId);
 
     const Token = localStorage.getItem("token");
     console.log(Token);
