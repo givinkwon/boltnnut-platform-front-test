@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import Button from "components/Button";
-import SelectCard from "./SelectCard";
+import SelectCard from "../Signup/Step2/SelectCard";
 import Authentication from "./Authentication";
 import Explaination from "./Explaination";
 import Product from "./Product";
@@ -17,11 +17,11 @@ import { toJS } from "mobx";
 const arrowRightImg = "/static/images/producer/arrow_right.svg";
 const checkImg = "/static/images/producer/check.svg";
 
-@inject("Category", "Partner")
+@inject("Category", "Partner", "Profile")
 @observer
-class MainContainer extends React.Component {
+class ProfileContainer extends React.Component {
   async componentDidMount() {
-    const { Category } = this.props;
+    const { Category, Profile } = this.props;
     await Category.init();
     console.log(Category.business_list)
     var mainCategoryTypeDic = {};
@@ -32,6 +32,9 @@ class MainContainer extends React.Component {
     mainCategoryTypeDic["material"] = Category.mainmaterial_list;
     mainCategoryTypeDic["develop"] = Category.developbig_list;
 
+    // 파트너 데이터 가져오기
+    Profile.checkLogin()
+    console.log(localStorage.getItem("token"))
     // console.log(Category.mainbusiness_list);
 
     this.setState({ mainCategoryTypeDic: mainCategoryTypeDic });
@@ -147,7 +150,7 @@ class MainContainer extends React.Component {
 
 
   render() {
-    const { Category, type } = this.props;
+    const { Category, Profile, type } = this.props;
     return (
       <Container>
         <Name>(주)동성실리콘</Name>
@@ -163,7 +166,7 @@ class MainContainer extends React.Component {
               {Category.mainbusiness_list &&
                 Category.mainbusiness_list.map((data, idx) => {
                   data.business_set.map((sub_data,idx) => {
-                    console.log(toJS(sub_data.category))
+                    //console.log(toJS(sub_data.category))
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -192,7 +195,7 @@ class MainContainer extends React.Component {
               {Category.maincategory_list &&
                 Category.maincategory_list.map((data, idx) => {
                   data.category_set.map((sub_data,idx) => {
-                    console.log(toJS(sub_data.category))
+                   // console.log(toJS(sub_data.category))
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -221,7 +224,7 @@ class MainContainer extends React.Component {
               {Category.mainmaterial_list &&
                 Category.mainmaterial_list.map((data, idx) => {
                   data.material_set.map((sub_data,idx) => {
-                    console.log(toJS(sub_data.category))
+                  //  console.log(toJS(sub_data.category))
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -250,7 +253,7 @@ class MainContainer extends React.Component {
               {Category.developbig_list &&
                 Category.developbig_list.map((data, idx) => {
                   data.develop_set.map((sub_data,idx) => {
-                    console.log(toJS(sub_data.category))
+                   // console.log(toJS(sub_data.category))
                   return (
                     <SubCategoryButton
                       onClick={() => {
@@ -281,7 +284,7 @@ class MainContainer extends React.Component {
   }
 }
 
-export default MainContainer;
+export default ProfileContainer;
 
 const Container = styled.div`
   //   border: 3px solid red;
