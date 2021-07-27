@@ -25,11 +25,6 @@ class InputComponent extends React.Component {
   };
 
   async componentDidMount() {}
-  componentWillUnmount() {
-    const { Partner } = this.props;
-
-    Partner.fileArray = [];
-  }
 
   render() {
     const {
@@ -41,6 +36,7 @@ class InputComponent extends React.Component {
       mobile,
       Profile,
       content,
+      type,
       ...props
     } = this.props;
     const { fileName, checkFileUpload } = this.state;
@@ -76,7 +72,7 @@ class InputComponent extends React.Component {
                 multiple={"multiple"}
                 fileName={"fileName[]"}
                 style={{ display: "none" }}
-                onChange={Profile.onChangeFile}
+                onChange={(e) => Profile.onChangeFile(e, type)}
                 id="inputFile"
                 ref={this.file}
                 value=""

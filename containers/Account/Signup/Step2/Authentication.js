@@ -6,11 +6,14 @@ import FileComponent from "./AddFile";
 import * as Text from "components/Text";
 
 const addButtonImg = "static/images/components/Input2/Mask.png";
+const plusImg = "/static/images/signup/plus.svg";
+const closeImg = "/static/images/signup/close.svg";
 
-@inject("Auth", "Answer", "Partner")
+@inject("Auth", "Answer", "Partner", "Profile")
 @observer
 class Authentication extends React.Component {
   render() {
+    const { Profile } = this.props;
     return (
       <Container>
         <Header>
@@ -21,9 +24,19 @@ class Authentication extends React.Component {
             </Description>
           </Info>
 
-          <FileComponent file={true} content="인증하기" />
+          <FileComponent file={true} content="인증하기" type="authentication" />
         </Header>
-        <Main></Main>
+        <Main>
+          {Profile.authenticationFileArray &&
+            Profile.authenticationFileArray.map((item, idx) => {
+              return (
+                <Item>
+                  <div>{item.name}</div>
+                  <img src={closeImg} />
+                </Item>
+              );
+            })}
+        </Main>
         {/* <input
           type="file"
           multiple={"multiple"}
@@ -49,6 +62,19 @@ class Authentication extends React.Component {
       </Container>
     );
   }
+  //       <Header>
+  //         <Info>
+  //           <Name>포트폴리오</Name>
+  //           <Description>인증을 할 경우 업체에 대한 신뢰도와 의뢰율이 2배이상 높아집니다.</Description>
+  //         </Info>
+
+  //         <Button>파일 업로드하기</Button>
+  //       </Header>
+
+  //       <Main>사업자등록증 업로드</Main>
+  //     </Container>
+  //   );
+  // }
 }
 
 export default Authentication;
@@ -61,9 +87,11 @@ const Container = styled.div`
   margin-top: 100px;
   margin-bottom: 120px;
 `;
+
 const Info = styled.div`
   display: flex;
 `;
+
 const Name = styled.div`
   font-size: 24px;
   line-height: 34px;
@@ -72,6 +100,7 @@ const Name = styled.div`
   font-weight: bold;
   margin-right: 12px;
 `;
+
 const Description = styled.div`
   font-size: 16px;
   line-height: 34px;
@@ -79,6 +108,7 @@ const Description = styled.div`
   color: #555963;
   font-weight: normal;
 `;
+
 const Button = styled.button`
   font-size: 18px;
   line-height: 27px;
@@ -102,4 +132,16 @@ const Main = styled.div`
   width: 100%;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
   height: 406px;
+  padding: 20px 10px;
+  box-sizing: border-box;
+`;
+const Item = styled.div`
+  display: inline-flex;
+  border-radius: 20px;
+  align-items: center;
+  background-color: #f6f6f6;
+  height: 34px;
+  padding: 6px 12px 6px 16px;
+  box-sizing: border-box;
+  margin-right: 15px;
 `;

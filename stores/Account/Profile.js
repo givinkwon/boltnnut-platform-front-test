@@ -1440,7 +1440,9 @@ class Profile {
     return this.region_data[idx];
   };
 
-  @action onChangeFile = (e) => {
+  @action onChangeFile = (e, type) => {
+    console.log(e);
+    console.log(type);
     if (e && e.currentTarget.files[0]) {
       console.log(e.currentTarget);
       console.log(e.currentTarget.files[0]);
