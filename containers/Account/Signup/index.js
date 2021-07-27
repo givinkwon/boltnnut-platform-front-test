@@ -22,7 +22,7 @@ class SignupConatiner extends React.Component {
     const { Auth } = this.props;
     return (
       <div style={{ paddingTop: 90 }}>
-        {Auth.type !== "detailexpert" && <BannerConatiner />}
+        <BannerConatiner />
 
         {/* {Auth.step === 0 && <Step1Conatiner/>} */}
         {/* {Auth.step === 1 && <Step2Conatiner/>} */}

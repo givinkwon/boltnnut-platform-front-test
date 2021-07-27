@@ -198,8 +198,18 @@ class Nav extends React.Component {
                       />
                       {is_profile && (
                         <ProfileMenu>
-                          <div></div>
-                          <div>
+                            <div>
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink
+                                    url={"profile"}
+                                    content={"정보수정"}
+                                  />
+                                </Font16>
+                              </Button>
+                            </div>
+
                             <div>
                               <Button>
                                 <Font16>

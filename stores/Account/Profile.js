@@ -348,46 +348,32 @@ class Profile {
       .then((res) => {
         if (res.data.data.User.type == 0) {
           alert("잘못된 접근입니다.");
-          // Router.push("/");
-          Router.push("/account");
+          Router.push("/");
         } else if (res.data.data.User.type == 1) {
           console.log("파트너 정보 리로딩");
           console.log(res.data.data.Partner[0]);
           this.data = res.data.data.Partner[0];
+          // 회사명
           this.company_name = res.data.data.Partner[0].name;
+          // 지역
           this.setCity(this.getCityById(res.data.data.Partner[0].city));
-          this.setRegion(this.getRegionById(res.data.data.Partner[0].region));
-          this.career = res.data.data.Partner[0].career;
-          this.employee = res.data.data.Partner[0].employee;
-          this.revenue = res.data.data.Partner[0].revenue;
-          this.info_biz = res.data.data.Partner[0].info_biz;
+          // 상세 주소
+          this.region = res.data.data.Partner[0].region;
+          // 회사 소개
           this.info_company = res.data.data.Partner[0].info_company;
+          // 거래처
           this.deal = res.data.data.Partner[0].deal;
+          // 만든 제품군
           this.histories = res.data.data.Partner[0].history;
+
+          // 회사소개서 파일
+          this.file = res.data.data.Partner[0].file;
+
           // 카테고리 초기화
-          this.category_middle_set = [];
-          this.possible_set = [];
-          this.history_set = [];
-
-          res.data.data.Partner[0].category.forEach((category) => {
-            this.category_middle_set = this.category_middle_set.concat(
-              category.id
-            );
+          this.portfolio_set = [];
+          res.data.data.Partner[0].portfolio_set.map((data) => {
+            this.portfolio_set.push(data.img_portfolio);
           });
-
-          //      res.data.data.Partner[0].product_possible.forEach(subclass => {
-          //        this.possible_set.push(subclass)
-          //      })
-
-          res.data.data.Partner[0].product_history.forEach((subclass) => {
-            this.history_set.push(subclass);
-          });
-
-          this.setPortfolioSet(res.data.data.Partner[0].portfolio_set);
-          this.setStructureSet(res.data.data.Partner[0].structure_set);
-          this.setMachineSet(res.data.data.Partner[0].machine_set);
-          this.setCertificationSet(res.data.data.Partner[0].certification_set);
-          this.setProcessSet(res.data.data.Partner[0].process_set);
         }
       })
       .catch((e) => {
@@ -1424,21 +1410,17 @@ class Profile {
 
     console.log(`getCityById(${id})`);
     const idx = this.city_data.findIndex((city) => city.id == id);
-
+    console.log(this.city_data[idx]);
     return this.city_data[idx];
   };
-  getRegionById = (id) => {
-    if (id === -1) {
-      return;
-    }
 
-    console.log(`getRegionById(${id})`);
-    const idx = this.region_data.findIndex((city) => city.id == id);
+  //   console.log(`getRegionById(${id})`);
+  //   const idx = this.region_data.findIndex((city) => city.id == id);
 
-    console.log(idx);
+  //   console.log(idx);
 
-    return this.region_data[idx];
-  };
+  //   return this.region_data[idx];
+  // };
 
   @action onChangeFile = (e, type) => {
     console.log(e);

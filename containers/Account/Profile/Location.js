@@ -32,7 +32,10 @@ class Location extends React.Component {
   //         console.log(e);
   //       });
   //   };
+
   render() {
+    const { region } = this.props;
+    console.log(region);
     return (
       <Container>
         <Header>
@@ -43,7 +46,7 @@ class Location extends React.Component {
         <Main>
           <span>도로명주소</span>
           <div>
-            <input />
+            <input>{region}</input>
           </div>
           {/* <button onClick={this.onSubmitHandler}>입력</button> */}
         </Main>
