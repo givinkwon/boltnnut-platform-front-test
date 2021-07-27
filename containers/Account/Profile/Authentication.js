@@ -13,7 +13,7 @@ class Authentication extends React.Component {
       <Container>
       <Header>
         <Info>
-          <Name>포트폴리오</Name>
+          <Name>사업자 인증</Name>
           <Description>인증을 할 경우 업체에 대한 신뢰도와 의뢰율이 2배이상 높아집니다.</Description>
         </Info>
 

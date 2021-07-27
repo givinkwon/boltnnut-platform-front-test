@@ -21,8 +21,6 @@ import File from "./Step2/File";
 import MarketingModal from "./MarketingModal";
 import PartnerEmailConatiner from "./Step2/partnerEmail";
 
-import PartnerDetailContainer from "./Step2/PartnerDetailContainer";
-
 const search_ic = "static/icon/search.png";
 
 @inject("Auth", "Answer")
@@ -114,11 +112,7 @@ class Step2Conatiner extends React.Component {
                 <File />
               </>
             )}
-            {Auth.type === "detailexpert" && (
-              <>
-                <PartnerDetailContainer />
-              </>
-            )}
+
             {width > 767.98 ? (
               <>
                 <TermsContainer>

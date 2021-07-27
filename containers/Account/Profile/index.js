@@ -33,8 +33,7 @@ class ProfileContainer extends React.Component {
     mainCategoryTypeDic["develop"] = Category.developbig_list;
 
     // 파트너 데이터 가져오기
-    Profile.checkLogin()
-    console.log(localStorage.getItem("token"))
+    await Profile.checkLogin()
     // console.log(Category.mainbusiness_list);
 
     this.setState({ mainCategoryTypeDic: mainCategoryTypeDic });
@@ -151,6 +150,7 @@ class ProfileContainer extends React.Component {
 
   render() {
     const { Category, Profile, type } = this.props;
+
     return (
       <Container>
         <Name>(주)동성실리콘</Name>
@@ -273,12 +273,12 @@ class ProfileContainer extends React.Component {
             </SubInnerBox>
           </SubCategoryBox>
         </div>
-        <Authentication></Authentication>
-        <Explaination></Explaination>
-        <Product></Product>
-        <Introduction></Introduction>
-        <Portfolio></Portfolio>
-        <Location></Location>
+        <Authentication ></Authentication>
+        <Explaination info_company={Profile.info_company}></Explaination>
+        <Product histories={Profile.histories}></Product>
+        <Introduction file={Profile.file}></Introduction>
+        <Portfolio Portfolio_set={Profile.Portfolio_set}></Portfolio>
+        <Location region={Profile.region}></Location>
       </Container>
     );
   }

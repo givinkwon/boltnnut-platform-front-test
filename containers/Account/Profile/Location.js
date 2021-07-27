@@ -7,7 +7,10 @@ import * as Text from "components/Text";
 @inject("Auth", "Answer")
 @observer
 class Location extends React.Component {
+
   render() {
+    const {region} = this.props;
+    console.log(region)
     return (
       <Container>
         <Header>
@@ -18,7 +21,7 @@ class Location extends React.Component {
         <Main>
           <span>도로명주소</span>
           <div>
-            <input />
+            <input>{region}</input>
           </div>
         </Main>
       </Container>
