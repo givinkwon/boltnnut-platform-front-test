@@ -67,7 +67,7 @@ class NewBanner2Container extends React.Component {
 
             <CategoryBox>
               {nameTable.map((v, idx) => (
-                <CategoryTitle key={v.id} active={this.onCompareCategory(idx)} onClick={() => this.onClickCategory(v.id)}>
+                <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
                   {v.name}
                 </CategoryTitle>
               ))}

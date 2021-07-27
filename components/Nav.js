@@ -121,7 +121,9 @@ class Nav extends React.Component {
     return (
       <>
         <NavBox>
-          <Containerv1 style={{ display: "inline", justifyContent: "space-between" }}>
+          <Containerv1
+            style={{ display: "inline", justifyContent: "space-between" }}
+          >
             <NavWrap>
               <BoltLogo>
                 <KSLink url={""} logoImg={bnlogo} />
@@ -129,7 +131,10 @@ class Nav extends React.Component {
 
               <Menu is_open={is_open}>
                 <Close>
-                  <Icon src={bnlogo} onClick={() => this.setState({ is_open: false })} />
+                  <Icon
+                    src={bnlogo}
+                    onClick={() => this.setState({ is_open: false })}
+                  />
                 </Close>
 
                 {this.props.Auth.logged_in_user ? (
@@ -184,84 +189,102 @@ class Nav extends React.Component {
                 {/* 로그인한/안한 경우 */}
                 {token ? (
                   <>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <Avatar
+                        src={profile}
+                        onClick={() =>
+                          this.setState({ is_profile: !is_profile })
+                        }
+                      />
+                      {is_profile && (
+                        <ProfileMenu>
+                            <div>
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink
+                                    url={"profile"}
+                                    content={"정보수정"}
+                                  />
+                                </Font16>
+                              </Button>
+                            </div>
 
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Avatar src={profile} onClick={() => this.setState({ is_profile: !is_profile })} />
-                    {is_profile && (
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink
+                                    url={"chatting"}
+                                    content={"채팅하기"}
+                                  />
+                                </Font16>
+                              </Button>
+                            </div>
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink
+                                    url={"account?tab=1"}
+                                    content={"계정설정"}
+                                  />
+                                </Font16>
+                              </Button>
+                            </div>
+                          </div>
+                        </ProfileMenu>
+                      )}
+                    </div>
 
-                      <ProfileMenu>
-                        <div></div>
-                        <div>
-                          <div>
-                            <Button>
-                              <Font16>
-                                <KSLink url={"chatting"} content={"채팅하기"} />
-                              </Font16>
-                            </Button>
-                          </div>
-                          <div>
-                            <Button>
-                              <Font16>
-                                <KSLink url={"account?tab=1"} content={"계정설정"} />
-                              </Font16>
-                            </Button>
-                          </div>
-                        </div>
-                      </ProfileMenu>
-                    )}
-                  </div>
-                
-                <NavLink
-                  onClick={this.logout}
-                >
-                  <KSLink url={""} content={"로그아웃"} />
-                  {/* 로그아웃 */}
-                </NavLink>
-                
-                </>
-                
+                    <NavLink onClick={this.logout}>
+                      <KSLink url={""} content={"로그아웃"} />
+                      {/* 로그아웃 */}
+                    </NavLink>
+                  </>
                 ) : (
                   <>
-                  <NavLink
-                    onClick={() => {
-
-                      this.props.Auth.setType("expert");
-                      Router.push("/signup");
-                    }}
-                    active={url.indexOf("signup") > -1 && Auth.type =="expert"}
-                  >
-                    파트너 등록하기
-                  </NavLink>
-
-                  |
-
-                  <NavLink
-                    onClick={() => {
-
-                      this.props.Auth.setType("client");
-                      Router.push("/signup");
-                    }}
-                    active={url.indexOf("signup") > -1 && Auth.type =="client"}
-                  >
-                    
-                    회원가입
-                  </NavLink>
-
-                  <NavLink
-                    onClick={() => {
-                      Auth.reset();
-                    }}
-                    active={url.indexOf("login") > -1}
-                  >
-                    <KSLink url={"login"} content={"로그인"} />
-                    {/* 로그인 */}
-                  </NavLink>
+                    <NavLink
+                      onClick={() => {
+                        this.props.Auth.setType("detailexpert");
+                        Router.push("/signup");
+                      }}
+                      active={
+                        url.indexOf("signup") > -1 &&
+                        Auth.type == "detailexpert"
+                      }
+                    >
+                      파트너 등록하기
+                    </NavLink>
+                    |
+                    <NavLink
+                      onClick={() => {
+                        this.props.Auth.setType("client");
+                        Router.push("/signup");
+                      }}
+                      active={
+                        url.indexOf("signup") > -1 && Auth.type == "client"
+                      }
+                    >
+                      회원가입
+                    </NavLink>
+                    <NavLink
+                      onClick={() => {
+                        Auth.reset();
+                      }}
+                      active={url.indexOf("login") > -1}
+                    >
+                      <KSLink url={"login"} content={"로그인"} />
+                      {/* 로그인 */}
+                    </NavLink>
                   </>
                 )}
-
               </Menu>
-              <Icon src={hamburger_ic} onClick={() => this.setState({ is_open: true })} />
-              {is_open && <BG onClick={() => this.setState({ is_open: false })} />}
+              <Icon
+                src={hamburger_ic}
+                onClick={() => this.setState({ is_open: true })}
+              />
+              {is_open && (
+                <BG onClick={() => this.setState({ is_open: false })} />
+              )}
             </NavWrap>
           </Containerv1>
         </NavBox>

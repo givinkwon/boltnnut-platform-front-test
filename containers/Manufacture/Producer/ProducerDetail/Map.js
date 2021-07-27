@@ -6,7 +6,17 @@ import { inject, observer } from "mobx-react";
 /*global kakao*/
 
 class MapContainer extends React.Component {
-  componentDidMount() {
+  state = {
+    g: 0,
+  };
+  // shouldComponentUpdate = (prevProps, nextState) => {
+  //   const { Partner } = this.props;
+  //   console.log(this.state.g);
+  //   console.log(nextState.g);
+
+  //   return this.state.g !== nextState.g;
+  // };
+  getMap() {
     const { city } = this.props;
     const script = document.createElement("script");
     script.async = true;
@@ -15,6 +25,7 @@ class MapContainer extends React.Component {
       "https://dapi.kakao.com/v2/maps/sdk.js?appkey=1469e9509222cfd066d35737d4359063&libraries=services&autoload=false";
     document.head.appendChild(script);
 
+    console.log(city);
     script.onload = () => {
       kakao.maps.load(() => {
         let container = document.getElementById("map");
@@ -55,10 +66,10 @@ class MapContainer extends React.Component {
               position: coords,
             });
 
+            console.log(city);
             // 인포윈도우로 장소에 대한 설명을 표시합니다
             var infowindow = new kakao.maps.InfoWindow({
-              content:
-                '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>',
+              content: `<div style="width:150px;text-align:center;padding:6px 0;">${city}</div>`,
             });
             infowindow.open(map, marker);
 
@@ -79,10 +90,17 @@ class MapContainer extends React.Component {
         // marker.setMap(map);
       });
     };
+
+    // this.setState((state) => {
+    //   return {
+    //     g: state.g + 1,
+    //   };
+    // });
   }
   render() {
     const { city } = this.props;
     console.log(city);
+    this.getMap();
     return (
       <>
         <Maps id="map"></Maps>

@@ -241,7 +241,8 @@ class ManufactureProcess {
 
   @action saveSearchText = (text) => {
     const formData = new FormData();
-
+    console.log(this.PartnerCount);
+    console.log(text);
     console.log(typeof this.PartnerCount);
     formData.append("text", text); // 입력 텍스트
     formData.append("count", this.PartnerCount); // 파트너 개수

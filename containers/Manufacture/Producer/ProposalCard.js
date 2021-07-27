@@ -469,7 +469,11 @@ class ProposalCard extends React.Component {
                         src={location}
                         style={{ marginLeft: 15, marginRight: 5 }}
                       ></img>
-                      <div>{this.state.city}</div>
+                      <div>
+                        {data.region === null || data.region === "nan"
+                          ? this.state.city
+                          : data.region}
+                      </div>
                     </Location>
                   </BottomBox>
                   <BottomBox>
@@ -717,7 +721,7 @@ const Location = styled.div`
   justify-content: space-between;
   align-items: center;
   div {
-    width: 200px;
+    width: 100%;
     font-size: 14px;
     color: #767676;
     line-height: 2.86;

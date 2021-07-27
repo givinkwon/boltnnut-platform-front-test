@@ -37,6 +37,7 @@ const Card = styled.div`
   padding: 12px 10px;
   box-sizing: border-box;
   margin-left: ${(props) => (props.marginLeft ? props.marginLeft : 0)}px;
+  height: 100%;
   header {
     display: flex;
     margin-bottom: 25px;

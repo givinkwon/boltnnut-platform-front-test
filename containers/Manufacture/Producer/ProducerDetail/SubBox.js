@@ -5,7 +5,7 @@ import { toJS } from "mobx";
 
 const userImg = "/static/images/producer/user.svg";
 
-@inject("Partner", "Auth", "Project", "Common")
+@inject("Partner", "Auth", "Project", "Common", "Request")
 @observer
 class SubBoxContainer extends React.Component {
   componentDidMount = async () => {
@@ -16,7 +16,7 @@ class SubBoxContainer extends React.Component {
     await Partner.getBookmarkByClient(clientId);
   };
   render() {
-    const { Partner, Auth, partnerId, Project, Common } = this.props;
+    const { Partner, Auth, partnerId, Project, Common, Request } = this.props;
     // console.log(this.props.Auth.logged_in_client.id);
     // console.log(toJS(`clientId: ${this.props.Auth.logged_in_client.id}`));
     console.log(toJS(Auth));
@@ -70,6 +70,8 @@ class SubBoxContainer extends React.Component {
                 }}
                 onClick={() => {
                   Partner.clickHandler("project");
+                  Request.partner_request(partnerId);
+
                   location.href = Common.makeUrl("request");
                   this.setState({ g: 3 });
                 }}
