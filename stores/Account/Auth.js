@@ -243,9 +243,10 @@ class Auth {
   };
 
   @action getBusinessData = () => {
-    CategoryAPI.getBusiness()
+    CategoryAPI.getBusiness_client()
       .then((res) => {
         this.business_data = res.data.results;
+        console.log(this.business_data)
       })
       .catch((e) => {
         console.log(e);

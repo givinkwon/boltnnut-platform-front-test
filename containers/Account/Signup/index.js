@@ -6,6 +6,9 @@ import BannerConatiner from "./Banner";
 import Step1Conatiner from "./Step1";
 import Step2Conatiner from "./Step2";
 
+import SignupContainer from "./Signup";
+import ClientSignUpContainer from "./ClientSignup";
+
 @inject("Auth")
 @observer
 class SignupConatiner extends React.Component {
