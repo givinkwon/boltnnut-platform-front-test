@@ -84,6 +84,9 @@ class Request {
 
   @observable request_file_set = [];
 
+  // 선택한 파트너
+  @observable selected_partner = "";
+
   @action reset = () => {
     this.newIndex = 0;
     this.titleData = [];
@@ -101,6 +104,7 @@ class Request {
     this.maincategory_id = "";
     this.request_type = ""; // ""로 바꿔야됨. 임시방편
     this.numCount = null;
+    this.selected_partner = "";
   };
   @action setInputName = (val) => {
     //
@@ -124,6 +128,11 @@ class Request {
   @action setDue = (val) => {
     this.input_day = val;
   };
+  @action partner_request = (val) =>{
+    this.selected_partner = val;
+
+  }
+
   @action setNumCount = (val) => {
     console.log(val);
     if (val.label != "직접 입력") {
@@ -171,6 +180,12 @@ class Request {
     if (this.common_file) {
       formData.append("file", this.common_file);
     }
+
+    // 선택된 파트너가 있다면
+    if (this.selected_partner) {
+      formData.append("partner", this.selected_partner)
+    }
+
     const req = {
       data: formData,
     };
