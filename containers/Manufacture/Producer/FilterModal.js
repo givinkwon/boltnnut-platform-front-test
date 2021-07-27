@@ -106,7 +106,8 @@ class FilterModalContainer extends React.Component {
                     active={this.activeHandler("main", idx)}
                   >
                     <MainCategoryFont>
-                      {this.state.mainCategoryTypeDic[type][idx].mainbusiness}
+                      {/* 이 부분 수정필요 / 각 카테고리에 대응해야됨. */}
+                      {this.state.mainCategoryTypeDic[type][idx].mainbusiness} 
                     </MainCategoryFont>
                   </MainCategoryButton>
                 );
