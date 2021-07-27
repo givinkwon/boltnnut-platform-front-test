@@ -1,15 +1,29 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "../../../components/Containerv1";
-import * as Title from "../../../components/Title";
+import Containerv1 from "components/Containerv1";
+import * as Title from "components/Title";
+import { inject, observer } from 'mobx-react'
+
+import * as Text from 'components/Text'
+import { GRAY, DARKGRAY, PRIMARY, WHITE, BLACK } from 'static/style'
+import SelectComponent from 'components/Select'
 
 const signupdot = "/static/images/signupdot.svg";
 const signupkakao = "/static/images/signupkakao.svg";
 const gol = "/static/images/gol.svg";
 const dropdown = "/static/images/dropdown.svg";
 
+@inject('Auth')
+@observer
 class ClientSignUpContainer extends React.Component {
+  componentDidMount() {
+    this.props.Auth.getPathData()
+    this.props.Auth.getBusinessData()
+    window.addEventListener('resize', this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  };
   render() {
+    const { Auth } = this.props;
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
@@ -97,11 +111,9 @@ class ClientSignUpContainer extends React.Component {
             <Title18>업종</Title18>
 
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <DropDownSelectorsBox>
-                <CustomInput placeholder="선택해주세요" style={{ width: "282px", paddingLeft: "10px", border: "none", width: "588px" }} />
+              <SelectComponent options={Auth.business_data} value={Auth.business}
+                getOptionLabel={(option) => option.business} onChange={Auth.setBusiness} placeholder="선택해주세요" style={{ width: "100%", paddingLeft: "10px", border: "none", width: "588px" }} />
 
-                <img src={dropdown} style={{ marginRight: "15px" }} />
-              </DropDownSelectorsBox>
             </div>
           </div>
 

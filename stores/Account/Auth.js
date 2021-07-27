@@ -41,6 +41,7 @@ class Auth {
   @observable path = null;
   @observable business = null;
   @observable business2 = null;
+  @observable business3 = null;
   @observable city = null;
   @observable region = null;
   @observable info_company = "";
@@ -230,6 +231,9 @@ class Auth {
   @action setBusiness2 = (obj) => {
     this.business2 = obj;
   };
+  @action setBusiness3 = (obj) => {
+    this.business3 = obj;
+  };
 
   @action getCityData = () => {
     CategoryAPI.getCity()
@@ -253,9 +257,10 @@ class Auth {
   };
 
   @action getBusinessData = () => {
-    CategoryAPI.getBusiness()
+    CategoryAPI.getBusiness_client()
       .then((res) => {
         this.business_data = res.data.results;
+        console.log(this.business_data)
       })
       .catch((e) => {
         console.log(e);

@@ -83,10 +83,10 @@ export function getPath() {
   });
 }
 
-export function getBusiness_category() {
+export function getBusiness_client() {
   return axios({
     method: "GET",
-    url: `${ROOT_URL}/business_category/`,
+    url: `${ROOT_URL}/business_client/`,
   });
 }
 
