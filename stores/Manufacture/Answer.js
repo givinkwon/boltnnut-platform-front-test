@@ -944,9 +944,6 @@ class Answer {
     if (this.develop_big_categories.length === 0) {
       this.loadDevelopBigCategories();
     }
-    if (this.subclasses.length === 0) {
-      this.loadSubclasses();
-    }
     // 밖으로 빼도 괜찮지 않을까?
     if (this.city_list.length === 0) {
       this.loadCityList();
