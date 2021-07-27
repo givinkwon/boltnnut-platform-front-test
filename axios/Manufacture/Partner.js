@@ -256,6 +256,8 @@ export function getRandomPartner(req) {
 }
 
 export function getPartners(req) {
+  console.log(req.params);
+
   return axios({
     method: "GET",
     url: `${ROOT_URL}/partner/`,
@@ -321,6 +323,16 @@ export function getReview(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/partnerreviewtemp/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getTotalReview(req) {
+  console.log(req);
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partnerreview/total_score/`,
     params: req.params ? req.params : null,
     headers: req.headers ? req.headers : null,
   });
@@ -450,8 +462,6 @@ export function deleteBookmarkPartner(req) {
 }
 
 export function existBookmarkPartner(req) {
-  console.log(req);
-
   return axios({
     method: "GET",
     url: `${ROOT_URL}/bookmark/exist/`,
@@ -459,3 +469,69 @@ export function existBookmarkPartner(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+export function setQuestion(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/QnA/post/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+export function setAnswerByQuestion(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/QnA/answer_post/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function deleteQuestion(req) {
+  return axios({
+    method: "DELETE",
+    url: `${ROOT_URL}/QnA/delete/`,
+    data: req.data ? req.data : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+export function getBusinessCategory(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/partner/${req.id}`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+export function getQuestion(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/QnA/get/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+export function getBusinessName(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/business/${req}`,
+  });
+}
+// export function getVisitPartner(req) {
+//   return axios({
+//     method: "GET",
+//     url: `${ROOT_URL}/lastvisitpartnerlog`,
+//     params: req.params ? req.params : null,
+//     headers: req.headers ? req.headers : null,
+//   });
+// }
+
+// export function setVisitPartner(req) {
+//   return axios({
+//     method: "POST",
+//     url: `${ROOT_URL}/lastvisitpartnerlog`,
+//     data: req.data ? req.data : null,
+//     headers: req.headers ? req.headers : null,
+//   });
+// }

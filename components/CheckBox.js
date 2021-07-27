@@ -37,6 +37,7 @@ const PrimaryCheckbox = withStyles({
 class CheckBoxComponent extends React.Component {
   handleChange = (e) => {
     this.props.onChange(e.target.checked);
+    console.log(e.target.checked)
   };
   render() {
     const { checked } = this.props;

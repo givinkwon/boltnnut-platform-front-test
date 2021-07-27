@@ -3,7 +3,8 @@ import React from "react";
 import BannerConatiner from "./Banner";
 import SearchBar from "./SearchBar";
 import SearchFilterBox from "./SearchFilterBox";
-import MobileSearchBar from "./MobileSearchBar";
+import MobileSearchFilterBox from "./MobileSearchFilterBox";
+
 import ContentContainer from "./Content";
 import MobileContentContainer from "./MobileContent";
 import Container from "components/Containerv1";
@@ -15,40 +16,40 @@ import MobileRequestDone from "./MobileRequestDone";
 import { DiagnosticCategory } from "typescript";
 
 // cookie 추가
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
-@inject("Auth", "Partner", "Category","Cookie")
+@inject("Auth", "Partner", "Category", "Cookie")
 @observer
 class ProducerConatiner extends React.Component {
   async componentDidMount() {
     let partner_view_data = [];
-    const { Auth, Partner, Category, Cookie } = this.props;    
+    const { Auth, Partner, Category, Cookie } = this.props;
     Partner.init();
     Partner.newIndex = 0;
     Partner.mobileRequestIndex = 0;
     await Auth.checkLogin();
 
-    
     // Cookie 값 가지고 와서 리스트에 먼저 저장
-    partner_view_data = Cookies.get('partner_view')
+    partner_view_data = await Cookies.get("partner_view");
     // list 전처리
-    partner_view_data = partner_view_data.replace('[','').replace(']','').split(',')
-
-    if(partner_view_data !== undefined && partner_view_data !== 'undefined'){
-      partner_view_data.map((data) =>
-        Cookie.add_partner_view(data)
-      )
+    console.log(partner_view_data);
+    if (partner_view_data) {
+      partner_view_data = partner_view_data.replace("[", "").replace("]", "").split(",");
     }
-  }  
+
+    if (partner_view_data !== undefined && partner_view_data !== "undefined") {
+      partner_view_data.map((data) => Cookie.add_partner_view(data));
+    }
+  }
 
   render() {
-    const { Auth, Partner } = this.props;
+    const { Auth, Partner, Search } = this.props;
     return (
       <>
         {this.props.width &&
           (this.props.width > 767.99 ? (
             <div>
-            {/* 제조사 찾기 기본 화면 */}
+              {/* 제조사 찾기 기본 화면 */}
               {Partner.newIndex == 0 && (
                 <>
                   <BannerConatiner />
@@ -61,27 +62,21 @@ class ProducerConatiner extends React.Component {
                 </>
               )}
               {/* 제조사 찾기 상세 페이지 */}
-              {Partner.newIndex == 1 && (
-                <DetailContainer width={this.props.width} />
-              )}
+              {Partner.newIndex == 1 && <DetailContainer width={this.props.width} />}
             </div>
           ) : (
             <>
-            {/* 제조사 찾기 모바일 버전 기본 화면 */}
+              {/* 제조사 찾기 모바일 버전 기본 화면 */}
               {Partner.mobileRequestIndex == 0 && (
                 <>
-                  <MobileSearchBar width={this.props.width} />
+                  <MobileSearchFilterBox width={this.props.width} />
                   <MobileContentContainer width={this.props.width} />
                 </>
               )}
               {/* 제조사 찾기 모바일 버전 업체 수배 화면 */}
-              {Partner.mobileRequestIndex == 1 && (
-                <MobileRequest width={this.props.width} />
-              )}
+              {Partner.mobileRequestIndex == 1 && <MobileRequest width={this.props.width} />}
               {/* 제조사 찾기 모바일 버전 업체 수배 완료 화면 */}
-              {Partner.mobileRequestIndex == 2 && (
-                <MobileRequestDone width={this.props.width} />
-              )}
+              {Partner.mobileRequestIndex == 2 && <MobileRequestDone width={this.props.width} />}
             </>
           ))}
       </>

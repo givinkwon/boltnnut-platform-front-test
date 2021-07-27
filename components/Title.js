@@ -224,8 +224,7 @@ export const FontSize14 = styled.p`
   color: ${(props) => (props.color ? props.color : "#000000")};
   text-align: ${(props) => (props.center ? "center" : "left")};
   font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
-  letter-spacing: ${(props) =>
-    props.letterSpacing ? props.letterSpacing : -0.35};
+  letter-spacing: ${(props) => (props.letterSpacing ? props.letterSpacing : -0.35)};
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
   }
@@ -240,8 +239,7 @@ export const FontSize13 = styled.p`
   color: ${(props) => (props.color ? props.color : "#000000")};
   text-align: ${(props) => (props.center ? "center" : "left")};
   font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
-  letter-spacing: ${(props) =>
-    props.letterSpacing ? props.letterSpacing : -0.35};
+  letter-spacing: ${(props) => (props.letterSpacing ? props.letterSpacing : -0.35)};
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
     line-height: 1.46;
@@ -250,6 +248,23 @@ export const FontSize13 = styled.p`
   }
   @media (min-width: 1280px) {
     font-size: 13px;
+  }
+`;
+
+export const FontSize12 = styled.p`
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
+  letter-spacing: ${(props) => (props.letterSpacing ? props.letterSpacing : -0.35)};
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 12px;
+    line-height: 1.46;
+  }
+  @media (min-width: 768px) and (max-width: 1279.98px) {
+  }
+  @media (min-width: 1280px) {
+    font-size: 12px;
   }
 `;
 
@@ -267,5 +282,22 @@ export const FontSize20 = styled.p`
   }
   @media (min-width: 1280px) {
     font-size: 20px;
+  }
+`;
+
+export const FontSize9 = styled.p`
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
+  letter-spacing: ${(props) => (props.letterSpacing ? props.letterSpacing : -0.35)};
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 9px;
+    line-height: 1.46;
+  }
+  @media (min-width: 768px) and (max-width: 1279.98px) {
+  }
+  @media (min-width: 1280px) {
+    font-size: 9px;
   }
 `;

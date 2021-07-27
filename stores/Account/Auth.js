@@ -3,6 +3,7 @@ import Router from "next/router";
 import * as AccountAPI from "axios/Account/Account";
 import * as CategoryAPI from "axios/Account/Category";
 import Account from "pages/account";
+import Category from "stores/Manufacture/Category";
 
 class Auth {
   constructor() {
@@ -76,6 +77,20 @@ class Auth {
           success: function ({ kakao_account }) {
             // const { profile } = kakao_account;
             // console.log(profile);
+
+            const req = {
+              data: {
+                token: authObj.access_token,
+                username: kakao_account.email,
+                sns: 1,
+              },
+            };
+            console.log(req);
+            AccountAPI.SNSlogin(req)
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((res) => console.log(res));
             console.log(kakao_account);
           },
           fail: function (error) {
@@ -651,10 +666,10 @@ class Auth {
         return;
       }
 
-      if (this.category_middle_set.length === 0) {
-        await alert("개발분야를 선택 해주세요.");
-        return;
-      }
+      // if (this.category_set.length === 0) {
+      //   await alert("개발분야를 선택 해주세요.");
+      //   return;
+      // }
 
       if (!this.file) {
         await alert("회사소개서를 입력해주세요.");
@@ -693,24 +708,24 @@ class Auth {
       formData.append("phone", this.phone);
       formData.append("type", 1);
       formData.append("marketing", this.marketing);
-
+      formData.append("logo", this.logo);
       formData.append("name", this.company_name);
-      //   formData.append("employee", this.employee);
-      //  formData.append("career", this.career);
-      //  formData.append("revenue", this.revenue);
       formData.append("city", this.city.id);
-      //  formData.append("region", this.region.id);
-
-      formData.append("info_biz", this.info_biz);
       formData.append("deal", this.deal);
       formData.append("info_company", this.info_company);
-      {
-        /*formData.append("possible_set", possible_set);*/
-      }
       formData.append("history", this.histories);
 
-      formData.append("category_middle", this.category_middle_set);
-      formData.append("logo", this.logo);
+      // 카테고리 추가
+      console.log(Category.business_selected);
+      console.log(Category.category_selected);
+      console.log(Category.develop_selected);
+      console.log(Category.material_selected);
+      formData.append("business", Category.business_selected);
+      formData.append("category", Category.category_selected);
+      formData.append("develop", Category.develop_selected);
+      formData.append("material", Category.material_selected);
+
+      // 파일 추가
       formData.append("file", this.file);
       formData.append("resume", this.resume);
 

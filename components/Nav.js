@@ -15,6 +15,7 @@ import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
 import KSLink from "components/KSLink";
 
 const close_ic = "/static/icon/close.svg";
+const bnlogo = "/static/images/bnlogo.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
 const profile = "/static/images/profile.png";
@@ -120,32 +121,27 @@ class Nav extends React.Component {
     return (
       <>
         <NavBox>
-          <Containerv1
-            style={{ display: "inline", justifyContent: "space-between" }}
-          >
+          <Containerv1 style={{ display: "inline", justifyContent: "space-between" }}>
             <NavWrap>
               <BoltLogo>
-                <KSLink url={""} logoImg={logo_ic} />
+                <KSLink url={""} logoImg={bnlogo} />
               </BoltLogo>
+
               <Menu is_open={is_open}>
                 <Close>
-                  <Icon
-                    src={close_ic}
-                    onClick={() => this.setState({ is_open: false })}
-                  />
+                  <Icon src={bnlogo} onClick={() => this.setState({ is_open: false })} />
                 </Close>
 
                 {this.props.Auth.logged_in_user ? (
                   this.props.Auth.logged_in_user.type === 0 ? (
                     /* client로 로그인 */
-
                     <Fragment>
                       <NavLink active={url.indexOf("producer") > -1}>
                         <KSLink url={"producer"} content={"제조사 찾기"} />
                       </NavLink>
 
                       <NavLink active={url.indexOf("project") > -1}>
-                        <KSLink url={"project"} content={"프로젝트 관리"} />
+                        <KSLink url={"project"} content={"프로젝트 의뢰"} />
                       </NavLink>
 
                       <NavLink active={url.indexOf("magazine") > -1}>
@@ -155,6 +151,10 @@ class Nav extends React.Component {
                   ) : (
                     /* partner로 로그인 */
                     <Fragment>
+                      <NavLink active={url.indexOf("project") > -1}>
+                        {console.log(url)}
+                        <KSLink url={"producer"} content={"제조사 찾기"} />
+                      </NavLink>
                       <NavLink active={url.indexOf("project") > -1}>
                         {console.log(url)}
                         <KSLink url={"project"} content={"프로젝트 찾기"} />
@@ -170,20 +170,25 @@ class Nav extends React.Component {
                     <NavLink active={url.indexOf("producer") > -1}>
                       <KSLink url={"producer"} content={"제조사 찾기"} />
                     </NavLink>
+                    <NavLink active={url.indexOf("project") > -1}>
+                      <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                    </NavLink>
                     <NavLink active={url.indexOf("magazine") > -1}>
                       <KSLink url={"magazine"} content={"제조 인사이트"} />
                       {/* 제조 인사이트 */}
                     </NavLink>
                   </Fragment>
                 )}
+              </Menu>
+              <Menu>
                 {/* 로그인한/안한 경우 */}
                 {token ? (
+                  <>
+
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Avatar
-                      src={profile}
-                      onClick={() => this.setState({ is_profile: !is_profile })}
-                    />
+                    <Avatar src={profile} onClick={() => this.setState({ is_profile: !is_profile })} />
                     {is_profile && (
+
                       <ProfileMenu>
                         <div></div>
                         <div>
@@ -197,28 +202,51 @@ class Nav extends React.Component {
                           <div>
                             <Button>
                               <Font16>
-                                <KSLink
-                                  url={"account?tab=1"}
-                                  content={"계정설정"}
-                                />
+                                <KSLink url={"account?tab=1"} content={"계정설정"} />
                               </Font16>
                             </Button>
                           </div>
                         </div>
-                        <div
-                          style={{ backgroundColor: "#f3f3f3" }}
-                          onClick={this.logout}
-                        >
-                          <Button>
-                            <Font16>
-                              <KSLink url={""} content={"로그아웃"} />
-                            </Font16>
-                          </Button>
-                        </div>
                       </ProfileMenu>
                     )}
                   </div>
+                
+                <NavLink
+                  onClick={this.logout}
+                >
+                  <KSLink url={""} content={"로그아웃"} />
+                  {/* 로그아웃 */}
+                </NavLink>
+                
+                </>
+                
                 ) : (
+                  <>
+                  <NavLink
+                    onClick={() => {
+
+                      this.props.Auth.setType("expert");
+                      Router.push("/signup");
+                    }}
+                    active={url.indexOf("signup") > -1 && Auth.type =="expert"}
+                  >
+                    파트너 등록하기
+                  </NavLink>
+
+                  |
+
+                  <NavLink
+                    onClick={() => {
+
+                      this.props.Auth.setType("client");
+                      Router.push("/signup");
+                    }}
+                    active={url.indexOf("signup") > -1 && Auth.type =="client"}
+                  >
+                    
+                    회원가입
+                  </NavLink>
+
                   <NavLink
                     onClick={() => {
                       Auth.reset();
@@ -228,15 +256,12 @@ class Nav extends React.Component {
                     <KSLink url={"login"} content={"로그인"} />
                     {/* 로그인 */}
                   </NavLink>
+                  </>
                 )}
+
               </Menu>
-              <Icon
-                src={hamburger_ic}
-                onClick={() => this.setState({ is_open: true })}
-              />
-              {is_open && (
-                <BG onClick={() => this.setState({ is_open: false })} />
-              )}
+              <Icon src={hamburger_ic} onClick={() => this.setState({ is_open: true })} />
+              {is_open && <BG onClick={() => this.setState({ is_open: false })} />}
             </NavWrap>
           </Containerv1>
         </NavBox>
@@ -322,6 +347,9 @@ const NavWrap = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
+  > div:nth-of-type(1) {
+    margin-left: 60px !important;
+  }
 `;
 const Logo = styled.img`
   cursor: pointer;

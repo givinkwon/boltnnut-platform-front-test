@@ -31,11 +31,14 @@ class ReviewCard extends React.Component {
   };
 
   render() {
-    const { data, width, Partner, categoryData, idx, totalCount } = this.props;
+    const { data, width, Partner, categoryData, idx, totalCount, Auth } =
+      this.props;
 
     return (
       <>
-        <Card active={!Partner.reviewWritingModalActive}>
+        <Card
+          active={Partner.reviewWritingModalActive || Auth.logged_in_partner}
+        >
           {Partner.review_client_obj[idx] &&
             Partner.review_client_obj[idx].toString().length && (
               <>
@@ -84,7 +87,7 @@ class ReviewCard extends React.Component {
 export default ReviewCard;
 
 const Card = styled.div`
-  filter: ${(props) => (props.active ? "blur(9px)" : "")};
+  filter: ${(props) => (props.active ? "" : "blur(9px)")};
   width: 100%;
   background-color: #ffffff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);

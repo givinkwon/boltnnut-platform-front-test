@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="196" height="196" viewBox="0 0 196 196">
+    <g>
+        <g transform="translate(-657 -489) translate(712.03 538.107)">
+            <rect width="87.941" height="112.305" fill="#c8e3f6" rx="5" transform="translate(0 4.325)"/>
+            <rect width="66.796" height="85.303" fill="#f6f6f6" rx="3" transform="translate(10.572 17.826)"/>
+            <path fill="#413d43" d="M3272.588 1163.76h-23.067l.961-4.325h21.144z" transform="translate(-3217.084 -1159.435)"/>
+            <rect width="50.698" height="12.975" fill="#c9c9c9" rx="2" transform="translate(18.621 12.975)"/>
+        </g>
+        <text fill="#c6c7cc" font-family="NotoSansCJKkr-Medium, Noto Sans CJK KR" font-size="16px" font-weight="500" letter-spacing="-0.025em" transform="translate(-657 -489) translate(755 603)">
+            <tspan x="-25.976" y="0">project</tspan>
+        </text>
+        <path fill="none" d="M0 0H196V196H0z" transform="translate(-657 -489) translate(657 489)"/>
+    </g>
+</svg>
