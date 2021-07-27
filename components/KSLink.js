@@ -12,6 +12,7 @@ class KSLink extends React.Component {
         <a href={this.props.Common.makeUrl(this.props.url)}>
           {this.props.content}
           <Logo src={this.props.logoImg} />
+          <Image src={this.props.Image} />
         </a>
       </>
     );
@@ -25,3 +26,5 @@ const Logo = styled.img`
   width: auto;
   height: auto;
 `;
+
+const Image = styled.img``;

@@ -53,6 +53,7 @@ class ProposalCard extends React.Component {
     city: "",
     business: "",
     totalPartnerBookmark: "",
+    total_review: -1,
   };
 
   openModal = (user_phone) => {
@@ -127,6 +128,9 @@ class ProposalCard extends React.Component {
     const partnerId = data.id;
     await Partner.existCheckedBookmark(clientId, partnerId, idx);
     await Partner.getTotalBookmarkByPartner(partnerId);
+
+    const existLogo = data.logo.split("/")[4];
+    console.log(existLogo);
 
     window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -321,18 +325,7 @@ class ProposalCard extends React.Component {
     const loggedInPartnerId =
       Auth.logged_in_partner && Auth.logged_in_partner.id;
     console.log(Partner.interestedIdx);
-
-    const SlideSettings = {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 0,
-      draggable: true,
-      autoplay: true,
-      autoplaySpeed: 2000,
-
-    };
+    const existLogo = data.logo.split("/")[4];
 
     const SlideSettingsMobile = {
       dots: false,
@@ -354,11 +347,6 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
-              // onClick={(e) => {
-              //   if (!this.props.Partner.modalActive) {
-              //     this.cardClick(e);
-              //   }
-              // }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -367,25 +355,23 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                <SliderContainer {...SlideSettings}>
-                  {data &&
-                    data.portfolio_set.map((item, idx) => {
-                      return (
-                        <Item>
-                          <img
-                            src={item.img_portfolio}
-                            style={{ borderRadius: 8 }}
-                          />
-                        </Item>
-                      );
-                    })}
+                {data && data.portfolio_set.length > 0 ? (
+                  <Item>
+                    <img src={data.portfolio_set[0].img_portfolio}></img>
+                  </Item>
+                ) : existLogo === "null" ? (
+                  <Item>
+                    {this.state.active ? (
+                      <img src="static/images/noportfolio_img_over.svg" />
+                    ) : (
+                      <img src="static/images/noportfolio_img.svg" />
+                    )}
+                  </Item>
+                ) : (
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                  <Item>
-                    <img src={data.logo} />
-                  </Item>
-                </SliderContainer>
+                )}
               </Header>
               <Main>
                 <Title>
@@ -400,34 +386,61 @@ class ProposalCard extends React.Component {
                       <></>
                     )}
                   </div>
-                  {Auth.logged_in_user && (<BookMark>
-                    <img
-                      src={
-                        Partner.check_bookmark[idx] === idx
-                          ? bookmarkBlueImg
-                          : bookmarkImg
-                      }
-                      onClick={async (e) => {
-                        if (!loggedInPartnerId && clientId) {
-                          e.stopPropagation();
-                          Partner.BookmarkHandler(idx);
-                          Partner.checkedBookmark(clientId, partnerId, idx);
+                  {Auth.logged_in_user && (
+                    <BookMark>
+                      <img
+                        src={
+                          Partner.check_bookmark[idx] === idx
+                            ? bookmarkBlueImg
+                            : bookmarkImg
                         }
-                      }}
-                    ></img>
-                  </BookMark>
-                  )  
-                  }
+                        onClick={async (e) => {
+                          if (!loggedInPartnerId && clientId) {
+                            e.stopPropagation();
+                            Partner.BookmarkHandler(idx);
+                            Partner.checkedBookmark(clientId, partnerId, idx);
+                          }
+                        }}
+                      ></img>
+                    </BookMark>
+                  )}
                 </Title>
-                <Introduce>{data.history}</Introduce>
+                <Introduce
+                  style={{
+                    width: 630,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {data.history}
+                </Introduce>
                 {this.state.business.length !== 0 ? (
-                  <div style={{ display: "flex" }}>
-                    {this.state.business &&
-                      this.state.business.map((item, idx) => {
-                        console.log(item);
-                        return <Hashtag>#{item}</Hashtag>;
-                      })}
-                  </div>
+                  this.state.active ? (
+                    <div style={{ display: "flex" }}>
+                      {this.state.business &&
+                        this.state.business.map((item, idx) => {
+                          console.log(item);
+                          return (
+                            <Hashtag style={{ background: " #ffffff" }}>
+                              #{item}
+                            </Hashtag>
+                          );
+                        })}
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex" }}>
+                      {this.state.business &&
+                        this.state.business.map((item, idx) => {
+                          console.log(item);
+                          return (
+                            <Hashtag style={{ background: " #f6f6f6" }}>
+                              #{item}
+                            </Hashtag>
+                          );
+                        })}
+                    </div>
+                  )
                 ) : (
                   <></>
                 )}
@@ -488,19 +501,23 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                <SliderMobileContainer {...SlideSettingsMobile}>
-                  {data &&
-                    data.portfolio_set.map((item, idx) => {
-                      return (
-                        <Item>
-                          <img src={item.img_portfolio} />
-                        </Item>
-                      );
-                    })}
+                {data && data.portfolio_set.length > 0 ? (
+                  <Item>
+                    <img src={data.portfolio_set[0].img_portfolio}></img>
+                  </Item>
+                ) : existLogo === "null" ? (
+                  <Item>
+                    {this.state.active ? (
+                      <img src="static/images/noportfolio_img_over.svg" />
+                    ) : (
+                      <img src="static/images/noportfolio_img.svg" />
+                    )}
+                  </Item>
+                ) : (
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                </SliderMobileContainer>
+                )}
               </Header>
               <Main>
                 <Name>{data.name}</Name>
@@ -536,10 +553,10 @@ const Card = styled.div`
   width: 100%;
   // position: relative;
   object-fit: contain;
-  border-top: solid 1px #e1e2e4;
-  border-bottom: solid 1px #e1e2e4;
+  border-bottom: solid 2px #e1e2e4;
   background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
   display: flex;
+  cursor: pointer;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     // height: 108px;
@@ -664,7 +681,6 @@ const Hashtag = styled.div`
   align-items: center;
   height: 34px;
   border-radius: 5px;
-  background-color: #f6f6f6;
   margin-right: 20px;
   padding-right: 10px;
   padding-left: 10px;
@@ -1115,7 +1131,7 @@ const Item = styled.div`
     // width: 100%;
     // display: inline-block;
     // position: relative;
-    border-radius: 4px;
+    border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
     width: 262px;

@@ -151,6 +151,7 @@ class Partner {
     "pptx",
     "doc",
     "html",
+    "jpg",
   ];
   @observable category_dic = {
     0: [],
