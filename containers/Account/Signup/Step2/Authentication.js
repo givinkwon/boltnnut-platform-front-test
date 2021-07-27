@@ -1,23 +1,51 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
+import FileComponent from "./AddFile";
 
 import * as Text from "components/Text";
 
-@inject("Auth", "Answer")
+const addButtonImg = "static/images/components/Input2/Mask.png";
+
+@inject("Auth", "Answer", "Partner")
 @observer
 class Authentication extends React.Component {
   render() {
     return (
       <Container>
-        <Info>
-          <Name>회사 인증</Name>
-          <Description>
-            인증을 할 경우 업체에 대한 신뢰도와 의뢰율이 2배이상 높아집니다.
-          </Description>
-        </Info>
+        <Header>
+          <Info>
+            <Name>회사 인증</Name>
+            <Description>
+              인증을 할 경우 업체에 대한 신뢰도와 의뢰율이 2배이상 높아집니다.
+            </Description>
+          </Info>
 
-        <Button>인증하기</Button>
+          <FileComponent file={true} content="인증하기" />
+        </Header>
+        <Main></Main>
+        {/* <input
+          type="file"
+          multiple={"multiple"}
+          fileName={"fileName[]"}
+          style={{ display: "none" }}
+          onChange={this.props.Partner.onChangeFile}
+          id="inputFile"
+          ref={this.file}
+          value=""
+          placeholder={"파일을 선택해 주세요."}
+        /> */}
+
+        {/* <div
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            console.log(this.file);
+            this.file.current.click();
+          }}
+        >
+          <img src={addButtonImg} />
+        </div> */}
+        {/* <Button>인증하기</Button> */}
       </Container>
     );
   }
@@ -27,10 +55,9 @@ export default Authentication;
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e1e2e4;
+  flex-direction: column;
+  //   justify-content: space-between;
+  //   align-items: center;
   margin-top: 100px;
   margin-bottom: 120px;
 `;
@@ -60,4 +87,19 @@ const Button = styled.button`
   font-weight: 600;
   background-color: #ffffff;
   border: none;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e1e2e4;
+  //   width: 100%;
+  margin-bottom: 20px;
+`;
+const Main = styled.div`
+  width: 100%;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
+  height: 406px;
 `;
