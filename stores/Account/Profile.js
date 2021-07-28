@@ -52,6 +52,18 @@ class Profile {
   @observable process_set = [];
   @observable process_checked = [];
 
+  /* 파트너 등록하기 */
+  @observable authenticationFileArray = [];
+  @observable authenticationFileName = "";
+  @observable authenticationCheckFileUpload = false;
+
+  @observable introductionFileArray = [];
+  @observable introductionFile = "";
+  @observable introductionCheckFileUpload = false;
+
+  @observable portfolioFileArray = [];
+  @observable portfolioCheckFileUpload = false;
+
   @action reset = () => {
     this.email = "";
     this.password = "";
@@ -367,11 +379,9 @@ class Profile {
           // 카테고리 초기화
           this.portfolio_set = [];
           res.data.data.Partner[0].portfolio_set.map((data) => {
-            this.portfolio_set.push(data.img_portfolio)
-          }
-
-        )
-      }
+            this.portfolio_set.push(data.img_portfolio);
+          });
+        }
       })
       .catch((e) => {
         try {
@@ -1091,8 +1101,8 @@ class Profile {
         console.log("인증서 중요 표시 토글");
         console.log(res.data);
 
-        this.certification_set[idx].is_main = !this.certification_set[idx]
-          .is_main;
+        this.certification_set[idx].is_main =
+          !this.certification_set[idx].is_main;
         this.sortCertificationSet();
       })
       .catch((e) => {
@@ -1407,10 +1417,42 @@ class Profile {
 
     console.log(`getCityById(${id})`);
     const idx = this.city_data.findIndex((city) => city.id == id);
-    console.log(this.city_data[idx])
+    console.log(this.city_data[idx]);
     return this.city_data[idx];
   };
 
+  //   console.log(`getRegionById(${id})`);
+  //   const idx = this.region_data.findIndex((city) => city.id == id);
+
+  //   console.log(idx);
+
+  //   return this.region_data[idx];
+  // };
+
+  @action onChangeFile = (e, type) => {
+    console.log(e);
+    console.log(type);
+    if (e && e.currentTarget.files[0]) {
+      console.log(e.currentTarget);
+      console.log(e.currentTarget.files[0]);
+
+      for (var item in e.currentTarget.files) {
+        console.log(item);
+        if (typeof e.currentTarget.files[item] === "object") {
+          this.authenticationFileArray.push(e.currentTarget.files[item]);
+        } else {
+          break;
+        }
+      }
+    }
+
+    console.log(toJS(this.authenticationFileArray));
+    const fileName = e.currentTarget.files[0].name;
+
+    // this.file = e.currentTarget.files[0];
+    this.authenticationFileName = fileName;
+    this.authenticationCheckFileUpload = true;
+  };
 }
 
 export default new Profile();

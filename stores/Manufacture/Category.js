@@ -102,7 +102,7 @@ class Category {
 
   /* reset */
   @action reset = () => {
-    console.log("Category Reset")
+    console.log("Category Reset");
     // 카테고리 배열 초기화
     this.mainbusiness_list = [];
     this.business_list = [];
@@ -130,29 +130,29 @@ class Category {
     this.develop_selected = [];
   };
 
-    /* 선택된 리스트 초기화 */
-    @action reset_selected = () => {
-      console.log("Category Reset")
-  
-      // 선택된 리스트
-      this.business_selected = [];
-      this.category_selected = [];
-      this.city_selected = [];
-      this.material_selected = [];
-      this.develop_selected = [];
-      
-      // 모달 끄기
-      Partner.filter_dropdown = false;
+  /* 선택된 리스트 초기화 */
+  @action reset_selected = () => {
+    console.log("Category Reset");
 
-      // 다시 가져오기
-      Partner.getPartner();
-    };
+    // 선택된 리스트
+    this.business_selected = [];
+    this.category_selected = [];
+    this.city_selected = [];
+    this.material_selected = [];
+    this.develop_selected = [];
+
+    // 모달 끄기
+    Partner.filter_dropdown = false;
+
+    // 다시 가져오기
+    Partner.getPartner();
+  };
 
   // 선택된 필터를 추가하기
   // state : 선택된 대카테고리 테이블
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
-  @action add_selected = async (state, id, container="producer") => {
+  @action add_selected = async (state, id, container = "producer") => {
     // 카테고리 선택
     if (state == "business") {
       this.business_selected.push(id);
@@ -180,17 +180,16 @@ class Category {
     }
 
     // producer 페이지에서 왔을 때만
-    if (container == "producer"){
+    if (container == "producer") {
       Partner.getPartner();
     }
-
   };
 
   // 선택된 필터를 제거하기
   // state : 선택된 대카테고리 테이블
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
-  @action remove_selected = async (state, id, container="producer") => {
+  @action remove_selected = async (state, id, container = "producer") => {
     let deleteIdx;
     // 카테고리 선택
     if (state == "business") {
@@ -223,13 +222,14 @@ class Category {
     }
 
     // producer 페이지에서 왔을 때만
-    if (container == "producer"){
+    if (container == "producer") {
       Partner.getPartner();
     }
-
   };
 
   categoryActiveHandler = (idx, state) => {
+    console.log(idx);
+    console.log(state);
     if (state == "business") {
       if (this.business_selected.includes(idx)) {
         return true;
