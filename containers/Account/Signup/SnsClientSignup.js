@@ -8,14 +8,26 @@ const signupsearch = "/static/images/signupsearch.svg";
 const dropdown = "/static/images/dropdown.svg";
 const viewterms = "/static/images/viewterms.svg";
 
+const aa = [
+  { content: "만 14세 이상입니다", test: "(필수)" },
+  { content: "이용약관 동의", test: "(필수)" },
+  { content: "만ㅁㄴㅇㅁㄴㅇㅁㄴㅇ", test: "(선택)" },
+];
+
+// const checkboxState = [false, false, false];
 class SnsClientSignupContainer extends React.Component {
+  state = {
+    checkboxState: [false, false, false],
+  };
   render() {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
           <img src={signupdot} />
 
-          <Title32 style={{ marginTop: "20px" }}>추가정보를 입력해 주세요.</Title32>
+          <Title32 style={{ marginTop: "20px" }}>
+            추가정보를 입력해 주세요.
+          </Title32>
 
           {/* name */}
           <InputInnerBox>
@@ -58,31 +70,65 @@ class SnsClientSignupContainer extends React.Component {
 
             <BottomLineDiv />
 
-            <AgreeInnerBox style={{ marginTop: "14px" }}>
+            {aa.map((item, idx) => {
+              return (
+                <AgreeInnerBox style={{ marginTop: "14px" }}>
+                  <CustomCheckBox
+                    type="checkbox"
+                    onChange={(e) => {
+                      // this.state.checkboxState[idx] = e.currentTarget.checked;
+                      const a = this.state.checkboxState;
+                      a[idx] = e.currentTarget.checked;
+                      this.setState({ checkboxState: a });
+                    }}
+                  />
+                  <Title15>{item.content}</Title15>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                    {item.test}
+                  </Title14>
+                </AgreeInnerBox>
+              );
+            })}
+
+            {this.state.checkboxState.map((item, idx) => {
+              return <>{item.toString()} / </>;
+            })}
+            {/* <AgreeInnerBox style={{ marginTop: "14px" }}>
               <CustomCheckBox type="checkbox" />
               <Title15>만 14세 이상입니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (필수)
+              </Title14>
             </AgreeInnerBox>
 
             <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
               <CustomCheckBox type="checkbox" />
               <Title15>이용약관 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (필수)
+              </Title14>
               <ImgBox src={viewterms} />
             </AgreeInnerBox>
 
             <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
               <CustomCheckBox type="checkbox" />
               <Title15>개인정보 처리방침 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (필수)
+              </Title14>
               <ImgBox src={viewterms} />
             </AgreeInnerBox>
 
             <AgreeInnerBox>
-              <CustomCheckBox type="checkbox" />
+              <CustomCheckBox
+                type="checkbox"
+                onChange={(e) => console.log(e.currentTarget.checked)}
+              />
               <Title15>마케팅 정보 수신에 동의합니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(선택)</Title14>
-            </AgreeInnerBox>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (선택)
+              </Title14>
+            </AgreeInnerBox> */}
           </AgreeContainer>
 
           <SubmitButton>

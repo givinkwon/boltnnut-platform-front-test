@@ -35,11 +35,17 @@ class ClientSignupContainer extends React.Component {
 
           <LineDivContainer>
             <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 회원가입</Title14>
+            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>
+              SNS 간편 회원가입
+            </Title14>
             <LineDiv />
           </LineDivContainer>
 
-          <KakaoSignUp onClick={() => Router.push("/signup/SnsClientSignUp")}>
+          <KakaoSignUp
+            onClick={() => {
+              Router.push("/signup/snsclientsignup");
+            }}
+          >
             <KakaoSignupInnerBox>
               <KakaoImgBox>
                 <img src={signupkakao} />
@@ -54,7 +60,10 @@ class ClientSignupContainer extends React.Component {
             <Title18>이메일</Title18>
 
             <EmailInnerContainer>
-              <CustomInput placeholder="boltnnut@gmail.com" style={{ width: "437px" }} />
+              <CustomInput
+                placeholder="boltnnut@gmail.com"
+                style={{ width: "437px" }}
+              />
 
               <AuthenticateBtn>
                 <AuthenticateBtnText>인증하기</AuthenticateBtnText>
@@ -65,13 +74,19 @@ class ClientSignupContainer extends React.Component {
           {/* password */}
           <InputInnerBox>
             <Title18>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호를 입력해 주세요." type="password" />
+            <CustomInput
+              placeholder="비밀번호를 입력해 주세요."
+              type="password"
+            />
           </InputInnerBox>
 
           {/* password confirm */}
           <InputInnerBox>
             <Title18>비밀번호 확인</Title18>
-            <CustomInput placeholder="비밀번호를 한 번 더 입력해 주세요." type="password" />
+            <CustomInput
+              placeholder="비밀번호를 한 번 더 입력해 주세요."
+              type="password"
+            />
           </InputInnerBox>
 
           {/* name */}
@@ -101,7 +116,14 @@ class ClientSignupContainer extends React.Component {
           <InputInnerBox>
             <Title18>업종</Title18>
 
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "602px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "602px",
+              }}
+            >
               <SelectComponent
                 options={Auth.business_data}
                 value={Auth.business}
@@ -127,27 +149,35 @@ class ClientSignupContainer extends React.Component {
             <AgreeInnerBox style={{ marginTop: "14px" }}>
               <CustomCheckBox type="checkbox" />
               <Title15>만 14세 이상입니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (필수)
+              </Title14>
             </AgreeInnerBox>
 
             <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
               <CustomCheckBox type="checkbox" />
               <Title15>이용약관 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (필수)
+              </Title14>
               <ImgBox src={viewterms} />
             </AgreeInnerBox>
 
             <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
               <CustomCheckBox type="checkbox" />
               <Title15>개인정보 처리방침 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (필수)
+              </Title14>
               <ImgBox src={viewterms} />
             </AgreeInnerBox>
 
             <AgreeInnerBox>
               <CustomCheckBox type="checkbox" />
               <Title15>마케팅 정보 수신에 동의합니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(선택)</Title14>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (선택)
+              </Title14>
             </AgreeInnerBox>
           </AgreeContainer>
 

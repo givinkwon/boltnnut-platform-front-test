@@ -2,12 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
+import { inject, observer } from "mobx-react";
 
 const signupbnlogo = "/static/images/signupbnlogo.svg";
 const line1 = "/static/images/line1.svg";
 const signupkakao = "/static/images/signupkakao.svg";
 
+@inject("Auth", "Home")
+@observer
 class DefaultLoginContainer extends React.Component {
+  toKakaoSignUp = () => {
+    this.props.Auth.kakaoLogin();
+    // Router.push("/signup/kakao");
+  };
+
   render() {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -56,17 +64,21 @@ class DefaultLoginContainer extends React.Component {
 
           <SnsLoginContainer>
             <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 로그인</Title14>
+            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>
+              SNS 간편 로그인
+            </Title14>
             <LineDiv />
           </SnsLoginContainer>
 
-          <KakaoSignUp>
+          <KakaoSignUp onClick={this.toKakaoSignUp}>
             <KakaoSignUpInnerBox>
               <KakaoImgBox>
                 <img src={signupkakao} />
               </KakaoImgBox>
 
-              <Title16 style={{ color: "#1e2222" }}>카카오 계정으로 로그인</Title16>
+              <Title16 style={{ color: "#1e2222" }}>
+                카카오 계정으로 로그인
+              </Title16>
             </KakaoSignUpInnerBox>
           </KakaoSignUp>
         </Container>

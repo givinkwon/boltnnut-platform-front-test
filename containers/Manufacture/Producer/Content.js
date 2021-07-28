@@ -28,12 +28,16 @@ const close = "static/icon/close_btn.svg";
 
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
+const toparrowblue = "static/icon/top_arrow_blue.svg";
 
 @inject("Project", "Auth", "Partner", "Producer", "Common", "Cookie")
 @observer
 class ManufacturerContentContainer extends React.Component {
   state = {
     dropDownActive: false,
+    recent_partner_dic: [],
+    recent_partner: [],
+    recent_partner_namearr: [],
   };
 
   async componentDidMount() {
@@ -136,6 +140,10 @@ class ManufacturerContentContainer extends React.Component {
       // this.props.Auth.previous_url = "producer";
       Router.push("/login");
     }
+  };
+
+  TopScroll = () => {
+    window.scrollTo(0, 0);
   };
 
   render() {
@@ -247,7 +255,7 @@ class ManufacturerContentContainer extends React.Component {
                       </div>
                     </header>
                     <body>
-                      {this.state.recent_partner_dic ? (
+                      {this.state.recent_partner.length > 0 ? (
                         Object.keys(this.state.recent_partner_dic).map(
                           (name) => (
                             <RecentPartnerContent>
@@ -283,10 +291,21 @@ class ManufacturerContentContainer extends React.Component {
                                     expires.setMinutes(
                                       expires.getMinutes() + 2440
                                     );
-
                                     const a = this.state.recent_partner_dic;
+                                    const b = this.state.recent_partner;
+                                    console.log(b);
                                     delete a[name];
-                                    this.setState({ recent_partner_dic: a });
+                                    b.splice(
+                                      this.state.recent_partner_namearr.indexOf(
+                                        name
+                                      ),
+                                      1
+                                    );
+                                    console.log(b);
+                                    this.setState({
+                                      recent_partner_dic: a,
+                                      recent_partner: b,
+                                    });
                                     Cookies.set(
                                       "partner_view",
                                       Cookie.partner_view_list,
@@ -351,6 +370,10 @@ class ManufacturerContentContainer extends React.Component {
                 </Aside>
               </Main>
             </Body>
+            <TopButton onClick={this.TopScroll} style={{ cursor: "pointer" }}>
+              <img src={toparrowblue}></img>
+              <div style={{ marginTop: 5 }}>Top</div>
+            </TopButton>
           </Container>
         </Background>
         {/* 제조사 상세 페이지 - Q/A 기능 체크 용 함수 (파트너로 로그인해서 기능 확인) */}
@@ -837,6 +860,31 @@ const RequestBtn = styled.button`
   letter-spacing: -0.38px;
   color: #0933b3;
 }
+`;
+
+const TopButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 56px;
+  height: 56px;
+  // object-fit: contain;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  border-radius: 100%;
+  top: 78%;
+  left: 94.2%;
+  position: fixed;
+  z-index: 2;
+  div {
+    object-fit: contain;
+    font-family: NotoSansCJKkr;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.35px;
+    color: #0933b3;
+  }
 `;
 
 export default ManufacturerContentContainer;
