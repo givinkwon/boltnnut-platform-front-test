@@ -60,6 +60,12 @@ class Auth {
 
   @observable previous_url = "";
 
+  @observable checkboxState = [false, false, false, false];
+  @observable allCheckState = false;
+
+  @action kakaoSignup = () => {
+    Router.push("/kakao");
+  };
   @action kakaoLogin = () => {
     const { Kakao } = window;
     console.log(Kakao.isInitialized());
@@ -199,9 +205,7 @@ class Auth {
     this.city = obj;
     this.region = null;
     const city_data = this.city_data;
-    this.region_data = city_data.filter(
-      (item) => item.id === obj.id
-    )[0].region_set;
+    this.region_data = city_data.filter((item) => item.id === obj.id)[0].region_set;
   };
   @action setRegion = (obj) => {
     this.region = obj;

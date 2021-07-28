@@ -11,14 +11,7 @@ import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
 
-@inject(
-  "Auth",
-  "Project",
-  "Request",
-  "Partner",
-  "ManufactureProcess",
-  "Producer"
-)
+@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer")
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -55,10 +48,7 @@ class SearchBarConatiner extends React.Component {
         console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(
-          () => (ManufactureProcess.loadingSaveSearchText = true),
-          2000
-        );
+        setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
       }
     }
   };
@@ -112,24 +102,35 @@ class SearchBarConatiner extends React.Component {
     return (
       <>
         <Form active={Partner.subButtonActive}>
-          <SearchBar active={Partner.subButtonActive}>
-            <input
-              placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
-              onFocus={(e) => (e.target.placeholder = "")}
-              onBlur={(e) =>
-                (e.target.placeholder =
-                  "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
-              }
-              onChange={Partner.searchText}
-              class="Input"
-              onKeyPress={this.handleKeyDown}
-            />
-            <img
-              style={{ width: 24, height: 24, marginRight: 25 }}
-              src="/static/icon/search_blue.svg"
-              onClick={this.search}
-            />
-          </SearchBar>
+          <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
+            <SearchBar active={Partner.subButtonActive}>
+              <input
+                placeholder="원하는 분야나 비슷한 제품을 검색해보세요."
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
+                onChange={this.handleSearcherInputChange.bind(this)}
+                value={Partner.search_text}
+                class="Input"
+                onKeyPress={this.handleKeyDown}
+              />
+              <img
+                style={{
+                  width: 24,
+                  height: 24,
+                  marginRight: 32,
+                  cursor: "pointer",
+                }}
+                src="/static/icon/search_blue.svg"
+                onClick={this.search}
+              />
+            </SearchBar>
+
+            {this.state.showSuggestions && this.state.suggs.length > 0 && (
+              <CustomUl>
+                <CustomLiBox>{suggestions}</CustomLiBox>
+              </CustomUl>
+            )}
+          </div>
         </Form>
       </>
     );
