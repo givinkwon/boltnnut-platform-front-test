@@ -49,11 +49,6 @@ class FilterModalContainer extends React.Component {
     mainSelectIdx: 0,
     subSelectIdx: 0,
     mainCategoryTypeDic: {},
-
-    // 공정 대분류
-    develop_active: false,
-    // 소재 대분류
-    material_active: false,
   };
   activeHandler = (type, idx) => {
     const { Category } = this.props;
@@ -87,6 +82,7 @@ class FilterModalContainer extends React.Component {
     }
   };
 
+
   // 모달 종료하기
   modalclose = () => {
     const { Partner } = this.props;
@@ -105,86 +101,9 @@ class FilterModalContainer extends React.Component {
 
     return (
       <ModalBox>
-        {/* 공정 | 소재 선택했을 때 띄워주기 */}
+       
 
-        {type == "develop&material" && (
-          <AddCategoryBox>
-            <AddCategoryButton
-              onClick={() => {
-                this.CategoryClick("develop");
-              }}
-              active={this.state.develop_active}
-            >
-              <AddCategoryFont>공정</AddCategoryFont>
-              <img src={arrowRightImg} />
-            </AddCategoryButton>
-
-            <AddCategoryButton
-              onClick={() => {
-                this.CategoryClick("material");
-              }}
-              active={this.state.material_active}
-            >
-              <AddCategoryFont>소재</AddCategoryFont>
-              <img src={arrowRightImg} />
-            </AddCategoryButton>
-          </AddCategoryBox>
-        )}
-
-        <MainCategoryBox>
-          <>
-            {/* 공정 선택일 때 */}
-            {this.props.type === "develop" &&
-              this.state.mainCategoryTypeDic["develop"] &&
-              toJS(this.state.mainCategoryTypeDic["develop"]).map(
-                (data, idx) => {
-                  return (
-                    <MainCategoryButton
-                      onClick={() => {
-                        this.buttonClick("main", idx);
-                      }}
-                      active={this.activeHandler("main", idx)}
-                    >
-                      <MainCategoryFont>
-                        {
-                          this.state.mainCategoryTypeDic["develop"][idx]
-                            .maincategory
-                        }
-                      </MainCategoryFont>
-                      <img src={arrowRightImg} />
-                    </MainCategoryButton>
-                  );
-                }
-              )}
-
-            {/* 소재 선택일 때 */}
-            {this.props.type === "material" &&
-              this.state.mainCategoryTypeDic["material"] &&
-              toJS(this.state.mainCategoryTypeDic["material"]).map(
-                (data, idx) => {
-                  return (
-                    <MainCategoryButton
-                      onClick={() => {
-                        this.buttonClick("main", idx);
-                      }}
-                      active={this.activeHandler("main", idx)}
-                    >
-                      <MainCategoryFont>
-                        {
-                          this.state.mainCategoryTypeDic["material"][idx]
-                            .maincategory
-                        }
-                      </MainCategoryFont>
-                      <img src={arrowRightImg} />
-                    </MainCategoryButton>
-                  );
-                }
-              )}
-
-            {/* map으로 뿌리기 */}
-            {this.props.type != "develop&material" &&
-              this.props.type != "city" &&
-              this.state.mainCategoryTypeDic[type] &&
+            {this.state.mainCategoryTypeDic[type] &&
               toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
                 return (
                   <MainCategoryButton
@@ -201,18 +120,7 @@ class FilterModalContainer extends React.Component {
                 );
               })}
 
-            {/* city 일 떄 */}
-            {this.props.type == "city" && this.state.mainCategoryTypeDic[type] && (
-              <MainCategoryButton active={true}>
-                <MainCategoryFont>
-                  지역
-                  {/* {this.state.mainCategoryTypeDic[type][idx].maincategory} */}
-                </MainCategoryFont>
-                <img src={arrowRightImg} />
-              </MainCategoryButton>
-            )}
-          </>
-        </MainCategoryBox>
+           
 
         <div style={{ width: "73.4%" }}>
           <SubCategoryBox>
@@ -226,7 +134,7 @@ class FilterModalContainer extends React.Component {
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("sub", sub_data.id);
+                        this.buttonClick("business", sub_data.id);
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >
@@ -242,29 +150,7 @@ class FilterModalContainer extends React.Component {
                     </SubCategoryButton>
                   );
                 })}
-              {/* city 일 떄 */}
-              {this.props.type == "city" &&
-                this.state.mainCategoryTypeDic[type] &&
-                toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
-                  return (
-                    <SubCategoryButton
-                      onClick={() => {
-                        this.buttonClick("main", data.id);
-                      }}
-                      active={Category.categoryActiveHandler(data.id, type)}
-                    >
-                      <CheckBox
-                        active={Category.categoryActiveHandler(data.id, type)}
-                      >
-                        <img src={checkImg} />
-                      </CheckBox>
-
-                      <SubCategoryFont>
-                        {this.state.mainCategoryTypeDic[type][idx].maincategory}
-                      </SubCategoryFont>
-                    </SubCategoryButton>
-                  );
-                })}
+         
 
               {/* 업체 분류 선택 */}
               {type == "category" &&
@@ -275,7 +161,7 @@ class FilterModalContainer extends React.Component {
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("sub", sub_data.id);
+                        this.buttonClick("category", sub_data.id);
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >
@@ -292,10 +178,6 @@ class FilterModalContainer extends React.Component {
                     </SubCategoryButton>
                   );
                 })}
-
-              {console.log("2323232323232323")}
-              {console.log(this.state.develop_active)}
-              {console.log(Category.developbig_list[this.state.mainSelectIdx])}
 
               {/* 공정 분류 선택 */}
               {this.props.type === "develop" &&
