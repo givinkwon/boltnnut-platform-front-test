@@ -4,6 +4,8 @@ import { inject, observer } from "mobx-react";
 import { useDropzone } from "react-dropzone";
 import STLViewer from "stl-viewer";
 import FileImage from "FileImage.js";
+import Containerv1 from "components/Containerv1";
+import Background from "components/Background";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 // Components
@@ -29,6 +31,11 @@ const pass7 = "static/images/pass7.png";
 const deleteButtonImg = "/static/images/delete.png";
 const fileImg = "/static/images/file.png";
 const calendar = "/static/images/facebook.png";
+const reqeustlogo = "./static/images/request/request_logo.svg";
+const starred = "./static/images/request/star_red.svg";
+const down_arrow = "./static/images/request/down_arrow.svg";
+const help_face = "./static/images/request/help_face.svg";
+const checkbox = "./static/images/request/checkbox.svg";
 
 let fileList = [];
 let checkBox = false;
@@ -1308,6 +1315,168 @@ class FileUploadContainer extends Component {
     return (
       <>
         <Container>
+          <RequestHeader>
+            <img src={reqeustlogo} style={{ widht: 45, height: 45 }}></img>
+            <RequestTitle>
+              <span style={{ color: "#0933b3" }}>프로젝트 정보</span>를
+              입력해주세요.
+            </RequestTitle>
+          </RequestHeader>
+          <Body>
+            <Requestontent>
+              <RequestContentBox>
+                <ContentTitle>
+                  <span>문의 목적</span>
+                  <img src={starred} style={{ marginLeft: 4 }}></img>
+                  <span
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "normal",
+                      color: "#86888c",
+                      marginLeft: 12,
+                    }}
+                  >
+                    (중복 선택 가능)
+                  </span>
+                </ContentTitle>
+                <PurposeBtn>
+                  <RequestButton style={{ border: "none", color: "#414550" }}>
+                    <span>상담 요청</span>
+                  </RequestButton>
+                  <RequestButton>
+                    <span>견적 요청</span>
+                  </RequestButton>
+                  <RequestButton>
+                    <span>업체 수배</span>
+                  </RequestButton>
+                </PurposeBtn>
+              </RequestContentBox>
+              <RequestContentBox>
+                <ContentTitle>
+                  <div>프로젝트 제목</div>
+                  <img src={starred} style={{ marginLeft: 4 }}></img>
+                </ContentTitle>
+                <input
+                  style={{
+                    width: "100%",
+                    height: 42,
+                    border: "solid 1px #c6c7cc",
+                    borderRadius: 3,
+                  }}
+                ></input>
+              </RequestContentBox>
+              <RequestContentBox>
+                <ContentTitle>
+                  <div>희망 예산</div>
+                </ContentTitle>
+                <Budget>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      color: "#414550",
+                    }}
+                  >
+                    <BudgetBox>
+                      <span>0</span>
+                      <img src={down_arrow}></img>
+                    </BudgetBox>
+                    <span
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        fontSize: 16,
+                      }}
+                    >
+                      ~
+                    </span>
+                    <BudgetBox style={{ marginLeft: 16 }}>
+                      <span>0</span>
+                      <img src={down_arrow}></img>
+                    </BudgetBox>
+                    <span
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        fontSize: 16,
+                      }}
+                    >
+                      원
+                    </span>
+                  </div>
+                  <BudgetCheckbox>
+                    <img src={checkbox}></img>
+                    <span style={{ marginLeft: 8 }}>
+                      프로젝트 예산 조율이 가능합니다.
+                    </span>
+                  </BudgetCheckbox>
+                  <BudgetHelp>
+                    <span>예산 측정이 어려우신가요?</span>
+                  </BudgetHelp>
+                </Budget>
+              </RequestContentBox>
+              <RequestContentBox>
+                <ContentTitle style={{ marginBottom: 8 }}>
+                  <span>희망 납기일</span>
+                </ContentTitle>
+                <span
+                  style={{
+                    fontSize: 16,
+                    color: "#505050",
+                  }}
+                >
+                  프로젝트 제품분야에 해당하는 항목들을 선택해주세요.
+                </span>
+                <input
+                  style={{
+                    width: "100%",
+                    height: 42,
+                    marginTop: 16,
+                    border: "solid 1px #c6c7cc",
+                  }}
+                ></input>
+                <DateCheckbox>
+                  <img src={checkbox}></img>
+                  <span style={{ marginLeft: 8 }}>
+                    납기일 협의가 가능합니다.
+                  </span>
+                </DateCheckbox>
+              </RequestContentBox>
+              <RequestContentBox>
+                <ContentTitle style={{ marginBottom: 8 }}>
+                  <span>프로젝트 내용</span>
+                  <img src={starred}></img>
+                </ContentTitle>
+                <span
+                  style={{
+                    fontSize: 16,
+                    color: "#505050",
+                    letterSpacing: "-0.4px",
+                  }}
+                >
+                  - 프로젝트 내용을 상세히 작성할수록 더 적합한 파트너를 만날 수
+                  있습니다.
+                </span>
+                <Help>
+                  <img src={help_face}></img>
+                </Help>
+                <input
+                  style={{
+                    width: "100%",
+                    height: "433px",
+                    border: "solid 1px #c6c7cc",
+                  }}
+                ></input>
+              </RequestContentBox>
+            </Requestontent>
+            <RequestContentBox>
+              <ContentTitle>
+                <span>프로젝트 관련 파일</span>
+                <span>이미지 혹은 PDF 자료만 업로드가 가능합니다.</span>
+              </ContentTitle>
+              <InputComponent file={true} isOpen={true} />
+            </RequestContentBox>
+          </Body>
           <>
             <Card
               checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
@@ -2705,10 +2874,6 @@ const FileImageContainer = styled.div`
   align-items: center;
 `;
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-`;
 const CheckBox = styled.div`
   width:75px;
   display: flex;
