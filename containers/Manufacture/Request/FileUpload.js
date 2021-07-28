@@ -314,7 +314,7 @@ class FileUploadContainer extends Component {
         this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
     }
     console.log(request_state);
-
+    console.log(Request.selected_partner)
     console.log("requestSubmit");
     console.log(Schedule.clickDay);
     console.log(fileList);
@@ -322,7 +322,7 @@ class FileUploadContainer extends Component {
 
     formData.append("request_state", request_state);
     formData.append("name", projectname);
-
+    formData.append("partner", Request.selected_partner);
     // 선택한 날짜가 없으면, 기본 날짜 추가하기
     if (Schedule.clickDay) {
       formData.append("deadline", Schedule.clickDay + " 09:00");

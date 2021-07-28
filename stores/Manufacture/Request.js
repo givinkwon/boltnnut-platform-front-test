@@ -104,7 +104,6 @@ class Request {
     this.maincategory_id = "";
     this.request_type = ""; // ""로 바꿔야됨. 임시방편
     this.numCount = null;
-    this.selected_partner = "";
   };
   @action setInputName = (val) => {
     //
@@ -130,6 +129,7 @@ class Request {
   };
   @action partner_request = (val) => {
     this.selected_partner = val;
+    console.log(this.selected_partner);
   };
 
   @action setNumCount = (val) => {
@@ -206,6 +206,7 @@ class Request {
       });
   };
   @action init = (q) => {
+    console.log(this.selected_partner);
     CategoryAPI.getMainCategory()
       .then((res) => {
         this.big_category_list = res.data.results;

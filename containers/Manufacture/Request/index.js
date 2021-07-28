@@ -44,6 +44,7 @@ class RequestContainer extends React.Component {
       console.log("ABCVDSDSDSFDFDF");
       this.props.ManufactureProcess.reset();
     }
+    console.log(Request.selected_partner)
   };
   render() {
     const { Request } = this.props;
