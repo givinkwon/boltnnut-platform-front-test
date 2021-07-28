@@ -1,16 +1,41 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
+import * as AccountAPI from "axios/Account/Account";
 
 import * as Text from "components/Text";
 
 @inject("Auth", "Answer")
 @observer
 class Location extends React.Component {
+  state = {
+    text: "",
+    portfolioArray: [],
+  };
+  //   onChangeHandler = (e) => {
+  //     const text = e.target.value;
+  //     console.log(text);
+  //     this.setState({ text: e.target.value });
+  //   };
+  //   onSubmitHandler = () => {
+  //     const formData = new FormData();
+  //     formData.append("url", this.state.text);
+  //     const req = {
+  //       data: formData,
+  //     };
+  //     AccountAPI.getPortfolio(req)
+  //       .then((res) => {
+  //         console.log(res);
+  //         this.setState({ portfolioArray: res.data });
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
+  //   };
 
   render() {
-    const {region} = this.props;
-    console.log(region)
+    const { region } = this.props;
+    console.log(region);
     return (
       <Container>
         <Header>
@@ -23,7 +48,20 @@ class Location extends React.Component {
           <div>
             <input>{region}</input>
           </div>
+          {/* <button onClick={this.onSubmitHandler}>입력</button> */}
         </Main>
+        {/* <Temp>
+          {this.state.portfolioArray &&
+            this.state.portfolioArray.url &&
+            this.state.portfolioArray.url.map((item, idx) => {
+              return (
+                <>
+                  <img src={item} />
+                  <span>{this.state.portfolioArray.score[idx]}</span>
+                </>
+              );
+            })}          
+        </Temp> */}
       </Container>
     );
   }
@@ -113,3 +151,5 @@ const Main = styled.div`
         
   }
 `;
+
+const Temp = styled.div``;

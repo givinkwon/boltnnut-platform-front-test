@@ -2,13 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
-import Router from "next/router";
 
 const signupdot = "/static/images/signupdot.svg";
-const signupkakao = "/static/images/signupkakao.svg";
+const signupsearch = "/static/images/signupsearch.svg";
+const dropdown = "/static/images/dropdown.svg";
 const viewterms = "/static/images/viewterms.svg";
 
-class PartnerSignupContainer extends React.Component {
+const aa = [
+  { content: "만 14세 이상입니다", test: "(필수)" },
+  { content: "이용약관 동의", test: "(필수)" },
+  { content: "만ㅁㄴㅇㅁㄴㅇㅁㄴㅇ", test: "(선택)" },
+];
+
+// const checkboxState = [false, false, false];
+class SnsClientSignupContainer extends React.Component {
+  state = {
+    checkboxState: [false, false, false],
+  };
   render() {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -16,49 +26,8 @@ class PartnerSignupContainer extends React.Component {
           <img src={signupdot} />
 
           <Title32 style={{ marginTop: "20px" }}>
-            <b style={{ color: "#0933b3" }}>회원가입</b>을 진행해 주세요.
+            추가정보를 입력해 주세요.
           </Title32>
-
-          <LineDivContainer>
-            <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 회원가입</Title14>
-            <LineDiv />
-          </LineDivContainer>
-
-          <KakaoSignUp onClick={() => Router.push("/signup/SnsPartnerSignUp")}>
-            <KakaoSignupInnerBox>
-              <KakaoImgBox>
-                <img src={signupkakao} />
-              </KakaoImgBox>
-
-              <Title16>카카오 회원가입</Title16>
-            </KakaoSignupInnerBox>
-          </KakaoSignUp>
-
-          {/* email */}
-          <EmailContainer>
-            <Title18>이메일</Title18>
-
-            <EmailInnerContainer>
-              <CustomInput placeholder="boltnnut@gmail.com" style={{ width: "437px" }} />
-
-              <AuthenticateBtn>
-                <AuthenticateBtnText>인증하기</AuthenticateBtnText>
-              </AuthenticateBtn>
-            </EmailInnerContainer>
-          </EmailContainer>
-
-          {/* password */}
-          <InputInnerBox>
-            <Title18>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호를 입력해 주세요." type="password" />
-          </InputInnerBox>
-
-          {/* password confirm */}
-          <InputInnerBox>
-            <Title18>비밀번호 확인</Title18>
-            <CustomInput placeholder="비밀번호를 한 번 더 입력해 주세요." type="password" />
-          </InputInnerBox>
 
           {/* name */}
           <InputInnerBox>
@@ -66,16 +35,28 @@ class PartnerSignupContainer extends React.Component {
             <CustomInput placeholder="이름을 입력해 주세요." />
           </InputInnerBox>
 
-          {/* phone number */}
-          <InputInnerBox>
-            <Title18>휴대전화</Title18>
-            <CustomInput placeholder="- 없이 입력해 주세요" type="tel" />
+          {/* company name */}
+          <InputInnerBox style={{ position: "relative" }}>
+            <Title18>회사명</Title18>
+
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <CustomInput placeholder="근무하는 회사명을 입력해 주세요." />
+              <ImgBox src={signupsearch} style={{ marginRight: "22px" }} />
+            </div>
+
+            <div style={{ display: "inline-flex", marginTop: "14px" }}>
+              <CustomCheckBox type="checkbox" />
+              <Title15>개인일 경우 체크해 주세요.</Title15>
+            </div>
           </InputInnerBox>
 
-          {/* company name */}
+          {/* sectors */}
           <InputInnerBox>
-            <Title18>상호명</Title18>
-            <CustomInput placeholder="근무하고 계신 회사명을 입력해주세요." />
+            <Title18>업종</Title18>
+            <DropDownSelectorsBox>
+              <SectorsInput placeholder="옵션을 선택해 주세요." />
+              <img src={dropdown} style={{ marginRight: "15px" }} />
+            </DropDownSelectorsBox>
           </InputInnerBox>
 
           {/* agree */}
@@ -89,31 +70,65 @@ class PartnerSignupContainer extends React.Component {
 
             <BottomLineDiv />
 
-            <AgreeInnerBox style={{ marginTop: "14px" }}>
+            {aa.map((item, idx) => {
+              return (
+                <AgreeInnerBox style={{ marginTop: "14px" }}>
+                  <CustomCheckBox
+                    type="checkbox"
+                    onChange={(e) => {
+                      // this.state.checkboxState[idx] = e.currentTarget.checked;
+                      const a = this.state.checkboxState;
+                      a[idx] = e.currentTarget.checked;
+                      this.setState({ checkboxState: a });
+                    }}
+                  />
+                  <Title15>{item.content}</Title15>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                    {item.test}
+                  </Title14>
+                </AgreeInnerBox>
+              );
+            })}
+
+            {this.state.checkboxState.map((item, idx) => {
+              return <>{item.toString()} / </>;
+            })}
+            {/* <AgreeInnerBox style={{ marginTop: "14px" }}>
               <CustomCheckBox type="checkbox" />
               <Title15>만 14세 이상입니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (필수)
+              </Title14>
             </AgreeInnerBox>
 
             <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
               <CustomCheckBox type="checkbox" />
               <Title15>이용약관 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (필수)
+              </Title14>
               <ImgBox src={viewterms} />
             </AgreeInnerBox>
 
             <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
               <CustomCheckBox type="checkbox" />
               <Title15>개인정보 처리방침 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (필수)
+              </Title14>
               <ImgBox src={viewterms} />
             </AgreeInnerBox>
 
             <AgreeInnerBox>
-              <CustomCheckBox type="checkbox" />
+              <CustomCheckBox
+                type="checkbox"
+                onChange={(e) => console.log(e.currentTarget.checked)}
+              />
               <Title15>마케팅 정보 수신에 동의합니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(선택)</Title14>
-            </AgreeInnerBox>
+              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                (선택)
+              </Title14>
+            </AgreeInnerBox> */}
           </AgreeContainer>
 
           <SubmitButton>
@@ -125,7 +140,7 @@ class PartnerSignupContainer extends React.Component {
   }
 }
 
-export default PartnerSignupContainer;
+export default SnsClientSignupContainer;
 
 const ImgBox = styled.img`
   position: absolute;
@@ -200,7 +215,6 @@ const KakaoSignUp = styled.button`
   border: none;
   border-radius: 24px;
   background-color: #e1e2e4;
-  cursor: pointer;
 `;
 
 const KakaoImgBox = styled.div`
@@ -214,6 +228,26 @@ const CustomInput = styled.input`
   border: solid 1px #c7c7c7;
   padding-left: 10px;
   width: 588px;
+
+  ::placeholder {
+    color: #c7c7c7;
+  }
+`;
+
+const DropDownSelectorsBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 3px;
+  border: solid 1px #c7c7c7;
+  width: 602px;
+`;
+
+const SectorsInput = styled.input`
+  border: none;
+  padding-left: 10px;
+  width: 100%;
+  height: 42px;
 
   ::placeholder {
     color: #c7c7c7;
@@ -258,7 +292,6 @@ const AuthenticateBtn = styled.button`
   border-radius: 3px;
   border: solid 1px #c7c7c7;
   background-color: #ffffff;
-  cursor: pointer;
 `;
 
 const AuthenticateBtnText = styled(Title.FontSize16)`

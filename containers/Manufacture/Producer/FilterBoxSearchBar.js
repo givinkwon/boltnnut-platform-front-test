@@ -313,7 +313,6 @@ class SearchBarConatiner extends React.Component {
               />
               <img src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
-
             {this.state.showSuggestions && this.state.suggs.length > 0 && (
               <CustomUl>
                 <CustomLiBox>{suggestions}</CustomLiBox>
@@ -329,18 +328,17 @@ class SearchBarConatiner extends React.Component {
 export default SearchBarConatiner;
 
 const CustomUl = styled.ul`
-  width: 588px;
+  width: 100%;
   height: 150px;
-  margin-left: 30px;
   font-size: 18px;
-  }
+  margin-right: 1px;
 `;
 
 const CustomLiBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 588px;
-  height: 160px;
+  width: 100%;
+  height: 120px;
   overflow: scroll;
   background-color: #ffffff;
 
@@ -369,9 +367,9 @@ const SearchBar = styled.div`
   box-sizing: border-box;
   border-radius: 60px;
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
-  border: solid 0.5px #c6c7cc;
+  border: solid 1px #e1e2e4;
   width: 100%;
-  padding-right: 17px;
+  padding-right: 25px;
 
   input {
     width: 700px;
@@ -381,10 +379,12 @@ const SearchBar = styled.div`
     padding: 0 14px;
     margin-left: 10px;
     font-size: 18px;
+    margin-top: 2px;
     :focus {
       outline: none;
     }
     ::placeholder {
+      margin-top: 2px;
       color: #c6c7cc;
       font-size: 18px;
     }

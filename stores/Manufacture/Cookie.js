@@ -1,5 +1,4 @@
 import { observable, action, toJS, makeObservable } from "mobx";
-
 import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 import { isConstructorDeclaration } from "typescript";
@@ -12,6 +11,7 @@ class Cookie {
 
   // 최근 본 파트너
   @observable partner_view_list = [];
+  @observable deleteIdx = -1;
 
   @action add_partner_view = async (id) => {
     console.log(id);
@@ -23,8 +23,10 @@ class Cookie {
   };
 
   @action delete_partner_view = async (id) => {
-    deleteIdx = this.partner_view_list.indexOf(id);
-    this.partner_view_list.splice(deleteIdx, 1);
+    this.deleteIdx = this.partner_view_list.indexOf(id);
+    console.log(toJS(this.partner_view_list));
+    this.partner_view_list.splice(this.deleteIdx, 1);
+    console.log(toJS(this.partner_view_list));
   };
 }
 

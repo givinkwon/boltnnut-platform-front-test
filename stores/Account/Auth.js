@@ -86,6 +86,7 @@ class Auth {
               data: {
                 token: authObj.access_token,
                 username: "kstest@naver.cp",
+                // username: kakao_account.email,
                 sns: 1,
               },
             };
@@ -133,6 +134,7 @@ class Auth {
               .catch((res) => {
                 console.log(res);
                 // this.kakaoSignup();
+                Router.push("/signup");
               });
             console.log(kakao_account);
           },

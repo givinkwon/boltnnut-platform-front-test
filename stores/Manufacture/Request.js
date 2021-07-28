@@ -84,6 +84,9 @@ class Request {
 
   @observable request_file_set = [];
 
+  // 선택한 파트너
+  @observable selected_partner = "";
+
   @action reset = () => {
     this.newIndex = 0;
     this.titleData = [];
@@ -124,6 +127,11 @@ class Request {
   @action setDue = (val) => {
     this.input_day = val;
   };
+  @action partner_request = (val) => {
+    this.selected_partner = val;
+    console.log(this.selected_partner);
+  };
+
   @action setNumCount = (val) => {
     console.log(val);
     if (val.label != "직접 입력") {
@@ -171,6 +179,13 @@ class Request {
     if (this.common_file) {
       formData.append("file", this.common_file);
     }
+
+    console.log(this.selected_partner);
+    // 선택된 파트너가 있다면
+    if (this.selected_partner) {
+      formData.append("partner", this.selected_partner);
+    }
+
     const req = {
       data: formData,
     };
@@ -191,6 +206,7 @@ class Request {
       });
   };
   @action init = (q) => {
+    console.log(this.selected_partner);
     CategoryAPI.getMainCategory()
       .then((res) => {
         this.big_category_list = res.data.results;

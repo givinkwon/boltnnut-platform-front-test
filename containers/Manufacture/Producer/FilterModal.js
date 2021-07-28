@@ -546,7 +546,7 @@ const SubCategoryBox = styled.div`
 `;
 
 const SubInnerBox = styled.div`
-  padding: 34px 18px;
+  padding: 20px 18px;
   display: flex;
   flex-wrap: wrap;
 

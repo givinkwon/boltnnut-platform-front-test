@@ -1,14 +1,75 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { useDropzone } from "react-dropzone";
 import * as Text from "components/Text";
 
 const plusImg = "/static/images/signup/plus.svg";
-@inject("Auth", "Answer")
+const closeImg = "/static/images/signup/close.svg";
+
+@inject("Auth", "Answer", "Profile")
 @observer
 class Introduction extends React.Component {
+  componentWillUnmount = () => {
+    const { Profile } = this.props;
+    console.log("unmount");
+    Profile.introductionCheckFileUpload = false;
+  };
+
+  componentDidMount = () => {
+    const { Profile } = this.props;
+    console.log("mount");
+    console.log(Profile.introductionCheckFileUpload);
+    // Profile.introductionCheckFileUpload = false;
+  };
+  MyDropzone = () => {
+    const { Profile } = this.props;
+    const dropHandler = (files) => {
+      console.log(files);
+    };
+
+    const onDrop = useCallback((acceptedFiles) => {
+      acceptedFiles.map((data, idx) => {
+        console.log(data);
+        // Profile.introductionFileArray.push(data);
+        Profile.introductionFile = data;
+
+        console.log(Profile.introductionFile);
+        // console.log(Profile.introductionFileArray);
+        // <li key={data.path}>
+        //   {data.path} - {data.size} bytes
+        // </li>;
+        Profile.introductionCheckFileUpload = true;
+
+        Object.assign(data, { preview: URL.createObjectURL(data) });
+      });
+
+      dropHandler(acceptedFiles);
+    }, []);
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
+      multiple: false,
+    });
+
+    return (
+      <div {...getRootProps()} style={{ width: "100%" }}>
+        <input {...getInputProps()} />
+        <InputBox>
+          {isDragActive ? (
+            <p>Drop the files here ...</p>
+          ) : (
+            <img src={plusImg} />
+          )}
+        </InputBox>
+      </div>
+    );
+  };
+
   render() {
+    const { Profile } = this.props;
+
     return (
       <Container>
         <Header>
@@ -16,9 +77,25 @@ class Introduction extends React.Component {
 
           <Button>파일 업로드하기</Button>
         </Header>
-        <Main>
-          <img src={plusImg} />
-        </Main>
+
+        {Profile.introductionCheckFileUpload ? (
+          <Main>
+            {Profile.introductionFile && (
+              <Item>
+                <div>{Profile.introductionFile.name}</div>
+                <img
+                  src={closeImg}
+                  onClick={() => {
+                    Profile.introductionFile = "";
+                    Profile.introductionCheckFileUpload = false;
+                  }}
+                />
+              </Item>
+            )}
+          </Main>
+        ) : (
+          <this.MyDropzone onChange={this.scrollChange} />
+        )}
       </Container>
     );
   }
@@ -65,13 +142,103 @@ const Header = styled.div`
 `;
 const Main = styled.div`
   width: 100%;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
+  // box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
   height: 406px;
   position: relative;
+
+  > span {
+  }
+  > img {
+    width: 200px;
+    height: 200px;
+    border: 3px solid green;
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+  }
+`;
+
+const DropZoneContainer = styled.div`
+  > div {
+    display: flex;
+    align-items: center;
+    > span {
+      width: 26px;
+      height: 26px;
+      border-radius: 13px;
+      background-color: #0933b3;
+      margin-right: 20px;
+      position: relative;
+      > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #ffffff;
+        border: 1px solid white;
+      }
+      > div:nth-of-type(1) {
+        //border: 3px solid red;
+        width: 14px;
+        height: 0px;
+      }
+      > div:nth-of-type(2) {
+        width: 0px;
+        height: 14px;
+      }
+    }
+  }
+  p:nth-of-type(1) {
+    font-size: 20px;
+    line-height: 40px;
+    letter-spacing: -0.5px;
+    color: #282c36;
+    margin-bottom: 4px;
+    span {
+      color: #0933b3;
+      font-weight: 600;
+    }
+    :focus {
+      outline: none;
+    }
+  }
+  > p:nth-of-type(2) {
+    font-size: 16px;
+    //line-height: 40px;
+    letter-spacing: -0.4px;
+    color: #767676;
+  }
+`;
+
+const InputBox = styled.div`
+  width: 100%;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 430px;
+  text-align: center;
+  :focus {
+    outline: 0;
+  }
+  cursor: pointer;
   > img {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
+`;
+
+const Item = styled.div`
+  display: inline-flex;
+  border-radius: 20px;
+  align-items: center;
+  background-color: #f6f6f6;
+  height: 34px;
+  padding: 6px 12px 6px 16px;
+  box-sizing: border-box;
+  margin-right: 15px;
 `;

@@ -2,63 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
-import Router from "next/router";
 
 const signupdot = "/static/images/signupdot.svg";
-const signupkakao = "/static/images/signupkakao.svg";
+const signupsearch = "/static/images/signupsearch.svg";
+const dropdown = "/static/images/dropdown.svg";
 const viewterms = "/static/images/viewterms.svg";
 
-class PartnerSignupContainer extends React.Component {
+class SnsPartnerSignupContainer extends React.Component {
   render() {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
           <img src={signupdot} />
 
-          <Title32 style={{ marginTop: "20px" }}>
-            <b style={{ color: "#0933b3" }}>회원가입</b>을 진행해 주세요.
-          </Title32>
-
-          <LineDivContainer>
-            <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 회원가입</Title14>
-            <LineDiv />
-          </LineDivContainer>
-
-          <KakaoSignUp onClick={() => Router.push("/signup/SnsPartnerSignUp")}>
-            <KakaoSignupInnerBox>
-              <KakaoImgBox>
-                <img src={signupkakao} />
-              </KakaoImgBox>
-
-              <Title16>카카오 회원가입</Title16>
-            </KakaoSignupInnerBox>
-          </KakaoSignUp>
-
-          {/* email */}
-          <EmailContainer>
-            <Title18>이메일</Title18>
-
-            <EmailInnerContainer>
-              <CustomInput placeholder="boltnnut@gmail.com" style={{ width: "437px" }} />
-
-              <AuthenticateBtn>
-                <AuthenticateBtnText>인증하기</AuthenticateBtnText>
-              </AuthenticateBtn>
-            </EmailInnerContainer>
-          </EmailContainer>
-
-          {/* password */}
-          <InputInnerBox>
-            <Title18>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호를 입력해 주세요." type="password" />
-          </InputInnerBox>
-
-          {/* password confirm */}
-          <InputInnerBox>
-            <Title18>비밀번호 확인</Title18>
-            <CustomInput placeholder="비밀번호를 한 번 더 입력해 주세요." type="password" />
-          </InputInnerBox>
+          <Title32 style={{ marginTop: "20px" }}>추가정보를 입력해 주세요.</Title32>
 
           {/* name */}
           <InputInnerBox>
@@ -66,16 +23,14 @@ class PartnerSignupContainer extends React.Component {
             <CustomInput placeholder="이름을 입력해 주세요." />
           </InputInnerBox>
 
-          {/* phone number */}
-          <InputInnerBox>
-            <Title18>휴대전화</Title18>
-            <CustomInput placeholder="- 없이 입력해 주세요" type="tel" />
-          </InputInnerBox>
-
           {/* company name */}
-          <InputInnerBox>
+          <InputInnerBox style={{ position: "relative" }}>
             <Title18>상호명</Title18>
-            <CustomInput placeholder="근무하고 계신 회사명을 입력해주세요." />
+
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <CustomInput placeholder="등록하고자 하는 상호명을 입력해 주세요." />
+              <ImgBox src={signupsearch} style={{ marginRight: "22px" }} />
+            </div>
           </InputInnerBox>
 
           {/* agree */}
@@ -125,7 +80,7 @@ class PartnerSignupContainer extends React.Component {
   }
 }
 
-export default PartnerSignupContainer;
+export default SnsPartnerSignupContainer;
 
 const ImgBox = styled.img`
   position: absolute;
@@ -200,7 +155,6 @@ const KakaoSignUp = styled.button`
   border: none;
   border-radius: 24px;
   background-color: #e1e2e4;
-  cursor: pointer;
 `;
 
 const KakaoImgBox = styled.div`
@@ -214,6 +168,26 @@ const CustomInput = styled.input`
   border: solid 1px #c7c7c7;
   padding-left: 10px;
   width: 588px;
+
+  ::placeholder {
+    color: #c7c7c7;
+  }
+`;
+
+const DropDownSelectorsBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 3px;
+  border: solid 1px #c7c7c7;
+  width: 602px;
+`;
+
+const SectorsInput = styled.input`
+  border: none;
+  padding-left: 10px;
+  width: 100%;
+  height: 42px;
 
   ::placeholder {
     color: #c7c7c7;
@@ -258,7 +232,6 @@ const AuthenticateBtn = styled.button`
   border-radius: 3px;
   border: solid 1px #c7c7c7;
   background-color: #ffffff;
-  cursor: pointer;
 `;
 
 const AuthenticateBtnText = styled(Title.FontSize16)`
