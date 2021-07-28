@@ -41,6 +41,7 @@ class Auth {
   @observable path = null;
   @observable business = null;
   @observable business2 = null;
+  @observable business3 = null;
   @observable city = null;
   @observable region = null;
   @observable info_company = "";
@@ -216,6 +217,9 @@ class Auth {
   @action setBusiness2 = (obj) => {
     this.business2 = obj;
   };
+  @action setBusiness3 = (obj) => {
+    this.business3 = obj;
+  };
 
   @action getCityData = () => {
     CategoryAPI.getCity()
@@ -239,9 +243,10 @@ class Auth {
   };
 
   @action getBusinessData = () => {
-    CategoryAPI.getBusiness()
+    CategoryAPI.getBusiness_client()
       .then((res) => {
         this.business_data = res.data.results;
+        console.log(this.business_data)
       })
       .catch((e) => {
         console.log(e);
@@ -700,12 +705,12 @@ class Auth {
       formData.append("deal", this.deal);
       formData.append("info_company", this.info_company);
       formData.append("history", this.histories);
-      
+
       // 카테고리 추가
-      console.log(Category.business_selected)
-      console.log(Category.category_selected)
-      console.log(Category.develop_selected)
-      console.log(Category.material_selected)
+      console.log(Category.business_selected);
+      console.log(Category.category_selected);
+      console.log(Category.develop_selected);
+      console.log(Category.material_selected);
       formData.append("business", Category.business_selected);
       formData.append("category", Category.category_selected);
       formData.append("develop", Category.develop_selected);

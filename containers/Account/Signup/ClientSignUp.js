@@ -2,6 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
+import * as Text from "components/Text";
+import { inject, observer } from "mobx-react";
+import { GRAY, DARKGRAY, PRIMARY, WHITE, BLACK } from "static/style";
+import SelectComponent from "components/Select";
 import Router from "next/router";
 
 const signupdot = "/static/images/signupdot.svg";
@@ -9,8 +13,17 @@ const signupkakao = "/static/images/signupkakao.svg";
 const dropdown = "/static/images/dropdown.svg";
 const viewterms = "/static/images/viewterms.svg";
 
+@inject("Auth")
+@observer
 class ClientSignupContainer extends React.Component {
+  componentDidMount() {
+    this.props.Auth.getPathData();
+    this.props.Auth.getBusinessData();
+    window.addEventListener("resize", this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+  }
   render() {
+    const { Auth } = this.props;
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
@@ -87,10 +100,17 @@ class ClientSignupContainer extends React.Component {
           {/* sectors */}
           <InputInnerBox>
             <Title18>업종</Title18>
-            <DropDownSelectorsBox>
-              <SectorsInput placeholder="옵션을 선택해 주세요." />
-              <img src={dropdown} style={{ marginRight: "15px" }} />
-            </DropDownSelectorsBox>
+
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "602px" }}>
+              <SelectComponent
+                options={Auth.business_data}
+                value={Auth.business}
+                getOptionLabel={(option) => option.business}
+                onChange={Auth.setBusiness}
+                placeholder="선택해주세요"
+                style={{ paddingLeft: "10px", border: "none" }}
+              />
+            </div>
           </InputInnerBox>
 
           {/* agree */}
