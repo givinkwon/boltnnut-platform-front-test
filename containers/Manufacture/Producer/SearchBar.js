@@ -272,6 +272,7 @@ class SearchBarConatiner extends React.Component {
                 style={{
                   width: 24,
                   height: 24,
+                  marginRight: 32, 
                   cursor: "pointer",
                 }}
                 src="/static/icon/search_blue.svg"
