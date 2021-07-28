@@ -62,6 +62,9 @@ class Auth {
 
   @observable previous_url = "";
 
+  @action kakaoSignup = () => {
+    Router.push("/kakao");
+  };
   @action kakaoLogin = () => {
     const { Kakao } = window;
     console.log(Kakao.isInitialized());
@@ -78,6 +81,61 @@ class Auth {
           success: function ({ kakao_account }) {
             // const { profile } = kakao_account;
             // console.log(profile);
+
+            const req = {
+              data: {
+                token: authObj.access_token,
+                username: "kstest@naver.cp",
+                // username: kakao_account.email,
+                sns: 1,
+              },
+            };
+            console.log(req);
+
+            //POST to "${ROOT_URL}/snsuser/login/"
+            AccountAPI.SNSlogin(req)
+              //아이디가 DB에 이미 존재할 때
+              .then((res) => {
+                console.log(res);
+
+                this.logged_in_user = res.data.data.User;
+
+                if (this.logged_in_user.type === 0) {
+                  this.logged_in_client = res.data.data.Client[0];
+                  console.log(this.logged_in_client);
+                } else if (this.logged_in_user.type === 1) {
+                  this.logged_in_partner = res.data.data.Partner[0];
+                  console.log(this.logged_in_partner);
+                }
+
+                const token = res.data.data.token;
+                if (!this.always_login) {
+                  const now = new Date();
+                  let tomorrow = new Date();
+                  tomorrow.setDate(now.getDate() + 1);
+
+                  localStorage.setItem("expiry", tomorrow.getTime().toString());
+                }
+                localStorage.setItem("token", token);
+
+                setTimeout(() => {
+                  this.loading = false;
+
+                  if (this.previous_url == "" || this.previous_url == null) {
+                    Router.push("/");
+                  } else {
+                    console.log(this.previous_url);
+                    Router.push("/" + this.previous_url);
+                    this.previous_url = "";
+                  }
+                }, 800);
+              })
+              //아이디가 DB에 없을 때
+              .catch((res) => {
+                console.log(res);
+                // this.kakaoSignup();
+                Router.push("/signup");
+              });
             console.log(kakao_account);
           },
           fail: function (error) {
@@ -246,7 +304,7 @@ class Auth {
     CategoryAPI.getBusiness_client()
       .then((res) => {
         this.business_data = res.data.results;
-        console.log(this.business_data)
+        console.log(this.business_data);
       })
       .catch((e) => {
         console.log(e);
@@ -468,6 +526,7 @@ class Auth {
     };
     AccountAPI.login(req)
       .then((res) => {
+        console.log(res);
         this.logged_in_user = res.data.data.User;
 
         if (this.logged_in_user.type === 0) {

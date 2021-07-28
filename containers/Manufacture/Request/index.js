@@ -53,9 +53,6 @@ class RequestContainer extends React.Component {
       <>
         <Background>
           <Containerv1 style={{ width: 792 }}>
-            <ProjectRequest />
-          </Containerv1>
-          <Containerv1 style={{ width: 792 }}>
             <FileUploadContainer />
           </Containerv1>
         </Background>
