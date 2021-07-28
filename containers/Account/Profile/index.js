@@ -9,9 +9,14 @@ import SubContainer from "./SubContainer";
 
 import * as Text from "components/Text";
 
-@inject("Auth", "Answer")
+@inject("Auth", "Answer", "Profile")
 @observer
 class ProfileContainer extends React.Component {
+  async componentDidMount() {
+    const { Category, Profile } = this.props;
+    console.log("componentdidmount");
+    await Profile.checkLogin();
+  }
   render() {
     const { width } = this.props;
     return (

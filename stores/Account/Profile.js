@@ -342,7 +342,8 @@ class Profile {
       this.category_middle_set = [id, ...this.category_middle_set];
     }
   };
-  @action checkLogin = () => {
+  @action checkLogin = async () => {
+    console.log("checkLogin");
     const token = localStorage.getItem("token");
     const req = {
       data: {
@@ -354,7 +355,7 @@ class Profile {
       },
     };
 
-    AccountAPI.reloadUserInfo(req)
+    await AccountAPI.reloadUserInfo(req)
       .then((res) => {
         if (res.data.data.User.type == 0) {
           alert("잘못된 접근입니다.");
@@ -379,11 +380,16 @@ class Profile {
           // 회사소개서 파일
           this.file = res.data.data.Partner[0].file;
 
+
+          // this.introductionFile.push({name : this.file}) // 오류남
+          console.log(this.file);
+
           // 카테고리 초기화
           this.portfolio_set = [];
           res.data.data.Partner[0].portfolio_set.map((data) => {
             this.portfolio_set.push(data.img_portfolio);
           });
+          console.log(this.info_company);
         }
       })
       .catch((e) => {
@@ -399,6 +405,7 @@ class Profile {
         // Router.push("/");
         Router.push("/account");
       });
+    console.log(this.info_company);
   };
 
   @action signup = async () => {

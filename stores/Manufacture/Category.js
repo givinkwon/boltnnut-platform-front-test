@@ -128,6 +128,11 @@ class Category {
     this.city_selected = [];
     this.material_selected = [];
     this.develop_selected = [];
+
+    this.business_selected_name = [];
+    this.category_selected_name = [];
+    this.material_selected_name = [];
+    this.develop_selected_name = [];
   };
 
   /* 선택된 리스트 초기화 */
@@ -141,6 +146,11 @@ class Category {
     this.material_selected = [];
     this.develop_selected = [];
 
+    this.business_selected_name = [];
+    this.category_selected_name = [];
+    this.material_selected_name = [];
+    this.develop_selected_name = [];
+
     // 모달 끄기
     Partner.filter_dropdown = false;
 
@@ -153,6 +163,7 @@ class Category {
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
   @action add_selected = async (state, id, container = "producer") => {
+    console.log(typeof id);
     // 카테고리 선택
     if (state == "business") {
       this.business_selected.push(id);
@@ -228,7 +239,6 @@ class Category {
   };
 
   categoryActiveHandler = (idx, state) => {
-
     if (state == "business") {
       if (this.business_selected.includes(idx)) {
         return true;
@@ -240,7 +250,6 @@ class Category {
     // 업체 분류 선택
     if (state == "category") {
       if (this.category_selected.includes(idx)) {
-
         return true;
       } else {
         return false;
@@ -259,7 +268,7 @@ class Category {
     // 공정 선택
     if (state == "develop") {
       if (this.develop_selected.includes(idx)) {
-        console.log(idx)
+        console.log(idx);
         return true;
       } else {
         return false;
@@ -274,6 +283,42 @@ class Category {
         return false;
       }
     }
+  };
+
+  @action getNameByCategory = async (state) => {
+    console.log(state);
+    if (state === "business") {
+      console.log(state);
+      if (this.business_selected) {
+        console.log(state);
+        this.business_selected_name = [];
+        await this.business_selected.map(async (item, idx) => {
+          console.log(state);
+          await this.getBusinessName(state, item);
+        });
+      }
+      console.log(this.business_selected_name);
+    }
+  };
+
+  @action getBusinessName = async (state, id) => {
+    console.log(state);
+    const req = {
+      id: id,
+    };
+
+    await CategoryAPI.getBusinessName(req)
+      .then(async (res) => {
+        console.log(res.data.category);
+        this.business_selected_name = await this.business_selected_name.concat(
+          res.data.category
+        );
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    console.log(this.business_selected_name);
   };
 }
 

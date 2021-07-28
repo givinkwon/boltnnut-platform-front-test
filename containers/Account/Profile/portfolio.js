@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { useDropzone } from "react-dropzone";
 import * as Text from "components/Text";
+import { toJS } from "mobx";
 
 const plusImg = "/static/images/signup/plus.svg";
 const closeImg = "/static/images/signup/close.svg";
@@ -31,11 +32,11 @@ class portfolio extends React.Component {
     const onDrop = useCallback((acceptedFiles) => {
       acceptedFiles.map((data, idx) => {
         console.log(data);
-        Profile.portfolioFileArray.push(data);
+        Profile.Portfolio_set.push(data);
         // Profile.introductionFile = data;
 
         // console.log(Profile.introductionFile);
-        console.log(Profile.portfolioFileArray);
+        console.log(Profile.Portfolio_set);
 
         Profile.portfolioCheckFileUpload = true;
 
@@ -67,7 +68,10 @@ class portfolio extends React.Component {
   };
 
   render() {
-    const { Profile } = this.props;
+    const { Profile, Portfolio_set } = this.props;
+    console.log(toJS(Profile.portfolio_set));
+    console.log(toJS(Portfolio_set));
+
     return (
       <Container>
         <Header>
@@ -83,15 +87,15 @@ class portfolio extends React.Component {
 
         <Main>
           <SmallImageContainer>
-            {Profile.portfolioFileArray.length != 0 &&
-              Profile.portfolioFileArray.map((item, idx) => {
+            {Profile.Portfolio_set &&
+              Profile.Portfolio_set.map((item, idx) => {
                 return (
                   <SmallImageBox>
                     <img
                       src={closeImg}
                       onClick={() => {
                         console.log(idx);
-                        Profile.portfolioFileArray.splice(idx, 1);
+                        Profile.Portfolio_set.splice(idx, 1);
                       }}
                     />
                     <img src={item.preview} />
