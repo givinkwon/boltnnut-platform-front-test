@@ -11,7 +11,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 // Components
 import * as Content from "components/Content";
 import * as Title from "components/Title";
-import * as ManufactureProcessAPI from "axios/ManufactureProcess";
+import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
 import SelectComponent from "components/Select";
 import ManufactureProcess from "stores/Manufacture/ManufactureProcess";
 import InputComponent from "AddFile2";
