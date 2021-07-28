@@ -6,6 +6,8 @@ import { useDropzone } from "react-dropzone";
 import * as Text from "components/Text";
 
 const plusImg = "/static/images/signup/plus.svg";
+const closeImg = "/static/images/signup/close.svg";
+
 @inject("Auth", "Answer", "Profile")
 @observer
 class Introduction extends React.Component {
@@ -30,9 +32,11 @@ class Introduction extends React.Component {
     const onDrop = useCallback((acceptedFiles) => {
       acceptedFiles.map((data, idx) => {
         console.log(data);
-        Profile.introductionFileArray.push(data);
+        // Profile.introductionFileArray.push(data);
+        Profile.introductionFile = data;
 
-        console.log(Profile.introductionFileArray);
+        console.log(Profile.introductionFile);
+        // console.log(Profile.introductionFileArray);
         // <li key={data.path}>
         //   {data.path} - {data.size} bytes
         // </li>;
@@ -46,6 +50,7 @@ class Introduction extends React.Component {
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
+      multiple: false,
     });
 
     return (
@@ -75,10 +80,18 @@ class Introduction extends React.Component {
 
         {Profile.introductionCheckFileUpload ? (
           <Main>
-            {Profile.introductionFileArray &&
-              Profile.introductionFileArray.map((item, idx) => {
-                return <img src={item.preview} />;
-              })}
+            {Profile.introductionFile && (
+              <Item>
+                <div>{Profile.introductionFile.name}</div>
+                <img
+                  src={closeImg}
+                  onClick={() => {
+                    Profile.introductionFile = "";
+                    Profile.introductionCheckFileUpload = false;
+                  }}
+                />
+              </Item>
+            )}
           </Main>
         ) : (
           <this.MyDropzone onChange={this.scrollChange} />
@@ -132,6 +145,9 @@ const Main = styled.div`
   // box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
   height: 406px;
   position: relative;
+
+  > span {
+  }
   > img {
     width: 200px;
     height: 200px;
@@ -214,4 +230,15 @@ const InputBox = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
   }
+`;
+
+const Item = styled.div`
+  display: inline-flex;
+  border-radius: 20px;
+  align-items: center;
+  background-color: #f6f6f6;
+  height: 34px;
+  padding: 6px 12px 6px 16px;
+  box-sizing: border-box;
+  margin-right: 15px;
 `;

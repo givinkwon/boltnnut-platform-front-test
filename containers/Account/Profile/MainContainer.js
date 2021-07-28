@@ -107,15 +107,16 @@ class MainContainer extends React.Component {
     if (type === "main") {
       this.setState({ mainSelectIdx: idx });
     } else {
-      if (Category.categoryActiveHandler(idx, this.props.type)) {
+      if (Category.categoryActiveHandler(idx, type)) {
         console.log("remove selected");
-        Category.remove_selected(this.props.type, idx);
+        Category.remove_selected(type, idx);
       } else {
         console.log("add selected");
-        Category.add_selected(this.props.type, idx);
+        Category.add_selected(type, idx);
       }
       // this.setState({ subSelectIdx: idx });
     }
+    // this.setState({ g: 3 });
   };
 
   // 소재, 공정 클릭 했을 때
@@ -151,7 +152,7 @@ class MainContainer extends React.Component {
 
   render() {
     const { Category, Profile, type } = this.props;
-
+    const type1 = "business";
     return (
       <Container>
         <Name>(주)동성실리콘</Name>
@@ -169,20 +170,21 @@ class MainContainer extends React.Component {
                 Category.mainbusiness_list.map((data, idx) => {
                   return data.business_set.map((sub_data, idx) => {
                     console.log(toJS(sub_data.category));
+                    console.log(type1);
                     return (
                       <SubCategoryButton
                         onClick={() => {
-                          this.buttonClick("business", sub_data.id);
+                          this.buttonClick(type1, sub_data.id);
                         }}
                         active={Category.categoryActiveHandler(
                           sub_data.id,
-                          "business"
+                          type1
                         )}
                       >
                         <CheckBox
                           active={Category.categoryActiveHandler(
                             sub_data.id,
-                            "business"
+                            type1
                           )}
                         >
                           <img src={checkImg} />
@@ -208,7 +210,7 @@ class MainContainer extends React.Component {
                     return (
                       <SubCategoryButton
                         onClick={() => {
-                          this.buttonClick("sub", sub_data.id);
+                          this.buttonClick("main", sub_data.id);
                         }}
                         active={Category.categoryActiveHandler(
                           sub_data.id,
@@ -320,6 +322,7 @@ const Container = styled.div`
   //   border: 3px solid red;
   flex-grow: 5;
   padding-left: 30px;
+  width: 100%;
 `;
 
 const Name = styled.div`

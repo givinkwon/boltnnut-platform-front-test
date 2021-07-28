@@ -58,7 +58,11 @@ class Profile {
   @observable authenticationCheckFileUpload = false;
 
   @observable introductionFileArray = [];
+  @observable introductionFile = "";
   @observable introductionCheckFileUpload = false;
+
+  @observable portfolioFileArray = [];
+  @observable portfolioCheckFileUpload = false;
 
   @action reset = () => {
     this.email = "";
