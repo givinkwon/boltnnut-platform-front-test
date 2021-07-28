@@ -1,100 +1,184 @@
 import React from "react";
-import Background from "components/Background";
-import Containerv1 from "components/Containerv1";
-import * as Title from "components/Title";
 import styled from "styled-components";
+import Background from "components/Background";
+import * as Title from "components/Title";
 import Fade from "react-reveal/Fade";
-import { inject, observer } from "mobx-react";
+import Router from "next/router";
+import Slider from "react-slick";
 
-const MobileBannerImg =
-  "static/images/Home/Mobile/MobileBanner1/MobileBannerImg.png";
-const backgroundImg = "/static/images/Home/Banner3/Banner3_Bg.png";
+const logo_img1 = "/static/images/logo/logo_1.png";
+const logo_img2 = "/static/images/logo/logo_2.png";
+const logo_img3 = "/static/images/logo/logo_3.png";
+const logo_img4 = "/static/images/logo/logo_4.png";
+const logo_img5 = "/static/images/logo/logo_5.png";
+const logo_img6 = "/static/images/logo/logo_6.png";
+const logo_img7 = "/static/images/logo/logo_7.png";
+const logo_img8 = "/static/images/logo/logo_8.png";
+const logo_img9 = "/static/images/logo/logo_9.png";
+const logo_img10 = "/static/images/logo/logo_10.png";
+const logo_img11 = "/static/images/logo/logo_11.png";
+const logo_img12 = "/static/images/logo/logo_12.png";
+const logo_img13 = "/static/images/logo/logo_13.png";
+const logo_img14 = "/static/images/logo/logo_14.png";
+const logo_img15 = "/static/images/logo/logo_15.jpg";
+const logo_img16 = "/static/images/logo/logo_16.png";
 
-@inject("Proposal", "Partner")
-@observer
+const passImg = "/static/images/pass7.png";
+const backgroundImg = "/static/images/Home/Banner5/Banner5_Bg.png";
+
 class MobileBanner1Container extends React.Component {
   render() {
-    const ProjectCount = this.props.Proposal.projects_count;
+    const SlideSettings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      draggable: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+    };
+
     return (
-      <Background backgroundColor={"#0a2165"}>
-        <ContentContainer>
-          <Fade bottom>
-            <Head>볼트앤너트 AI 자동 견적</Head>
-            <Main>
-              바로 나오는
-              <br />
-              AI 자동 견적
-            </Main>
-            <ImageContainer>
-              <img src={MobileBannerImg} />
-            </ImageContainer>
-            <Content>
-              볼트앤너트 AI 자동 견적 알고리즘이
-              <br />
-              제작품에 대한 견적 범위를 바로 안내해드립니다.
-            </Content>
-          </Fade>
-        </ContentContainer>
-      </Background>
+      <>
+        <Container>
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "12px" }}>
+            <StartLine />
+          </div>
+
+          <Box>
+            <Title14>볼트앤너트는 제조분야를 선도하는</Title14>
+            <Title14>많은 기업들과 함께합니다.</Title14>
+          </Box>
+
+          <div style={{ display: "flex", flexDirection: "column", width: "347px" }}>
+            <Item style={{ display: "flex" }}>
+              <img src={logo_img1} />
+              <img src={logo_img2} />
+              <img src={logo_img3} />
+              <img src={logo_img4} />
+            </Item>
+            <Item style={{ display: "flex" }}>
+              <img src={logo_img5} />
+              <img src={logo_img6} />
+              <img src={logo_img7} />
+              <img src={logo_img8} />
+            </Item>
+            {/* <Item style={{ display: "flex" }}>
+          <img src={logo_img9} />
+          <img src={logo_img10} />
+          <img src={logo_img11} />
+          <img src={logo_img12} />
+        </Item>
+        <Item style={{ display: "flex" }}>
+          <img src={logo_img13} />
+          <img src={logo_img14} />
+          <img src={logo_img15} />
+          <img src={logo_img16} />
+        </Item> */}
+          </div>
+        </Container>
+      </>
     );
   }
 }
+
 export default MobileBanner1Container;
-const ContentContainer = styled(Containerv1)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+const StartLine = styled.div`
+  width: 18px;
+  border: solid 1px #999999;
+  margin-bottom: 24px;
 `;
-const ImageContainer = styled.div`
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   width: 100%;
-  margin: 29px 0px 18px 0px;
+  // height: 273px;
+  backdrop-filter: blur(14px);
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
 `;
-const Head = styled(Title.FontSize20)`
-  height: 19px;
-  font-size: 14px;
-  color: #ffffff;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.45;
-  letter-spacing: normal;
-  margin: 70px 0px 3px 0px;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 13px;
-  }
+
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+  width: 100%;
+  height: 55px;
 `;
-const Main = styled(Title.FontSize56)`
-  color: #ffffff;
-  font-size: 23px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.45;
-  letter-spacing: -0.55px;
-  text-align: center;
-  > span {
-    font-weight: bold;
-  }
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 23px;
-  }
-`;
-const Content = styled(Title.FontSize24)`
-  height: 46px;
-  font-size: 16px;
+
+const Title14 = styled(Title.FontSize14)`
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.47;
-  letter-spacing: -0.4px;
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 100px;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 16px;
-    height: 44px;
+  line-height: 1.57;
+  letter-spacing: -0.35px;
+  color: #999999;
+`;
+
+const SliderContainer = styled(Slider)`
+  .slick-list {
+    .slick-track {
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+        img {
+          width: 121px;
+          height: 121px;
+        }
+      }
+    }
+  }
+`;
+
+const Layer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 97;
+  // opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.7);
+`;
+
+const LogoBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  > img {
+    width: 76px;
+    height: 76px;
+  }
+`;
+
+const Item = styled.div`
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // width: calc(14% - 40px);
+  padding: 20px 0;
+  margin: 0 20px;
+
+  justify-content: center;
+
+  > img {
+    // width: 100%;
+    // display: inline-block;
+    // position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    // width: 88px;
+    // height: 88px;
+    width: 121px;
   }
 `;

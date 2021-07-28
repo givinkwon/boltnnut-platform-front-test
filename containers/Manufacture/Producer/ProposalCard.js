@@ -14,9 +14,11 @@ const message_img = "static/images/manufacturer/message.png";
 const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
 const file_img2 = "static/images/manufacturer/file.png";
-const star = "static/icon/star_yellow.svg";
+const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/icon/viewcount.svg";
 const bookmarkcount = "static/icon/bookmarkcount.svg";
+const bookmarkImg = "/static/icon/bookmark_empty.svg";
+const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
 const location = "static/icon/location.svg";
 import Slider from "react-slick";
 import { EqualStencilFunc } from "three";
@@ -49,6 +51,9 @@ class ProposalCard extends React.Component {
     modalOpen: false,
     activeReview: false,
     city: "",
+    business: "",
+    totalPartnerBookmark: "",
+    total_review: -1,
   };
 
   openModal = (user_phone) => {
@@ -114,8 +119,19 @@ class ProposalCard extends React.Component {
         console.log(e.response);
       });
   };
-  componentDidMount() {
-    const { width, Producer, data, Partner } = this.props;
+
+  async componentDidMount() {
+    // console.log(data.id);
+    const { width, Producer, data, Partner, idx, Auth } = this.props;
+
+    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
+    const partnerId = data.id;
+    await Partner.existCheckedBookmark(clientId, partnerId, idx);
+    await Partner.getTotalBookmarkByPartner(partnerId);
+
+    const existLogo = data.logo.split("/")[4];
+    console.log(existLogo);
+
     window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
 
@@ -123,9 +139,70 @@ class ProposalCard extends React.Component {
       id: data.city,
     };
 
+    const partnerReq = {
+      id: data.id,
+    };
+
+    const reviewReq = {
+      params: {
+        partner_id: data.id,
+      },
+    };
+
+    const BookmarkReq = {
+      params: {
+        partnerID: data.id,
+      },
+    };
+
     PartnerAPI.getCityName(req)
       .then(async (res) => {
-        this.setState({ city: res.data.city });
+        console.log(res);
+        this.setState({ city: res.data.maincategory });
+        console.log(this.state.maincategory);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    await PartnerAPI.getTotalReview(reviewReq)
+      .then((res) => {
+        console.log(res);
+        this.setState({ total_review: res.data.score });
+        console.log(this.state.total_review);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    await PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
+      .then(async (res) => {
+        console.log(res);
+        console.log(res.data.count);
+        this.setState({ totalPartnerBookmark: res.data.count });
+        console.log(this.state.totalPartnerBookmark);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    const temp = [];
+    PartnerAPI.getBusinessCategory(partnerReq)
+      .then(async (res) => {
+        console.log(res);
+        // this.setState({ business: res.data.business });
+        res.data.business.forEach((element) => {
+          console.log(element);
+          PartnerAPI.getBusinessName(element).then((res) => {
+            console.log(res);
+            temp.push(res.data.category);
+          });
+        });
+        this.setState({ business: temp });
+        console.log(toJS(this.state.business));
       })
       .catch((e) => {
         console.log(e);
@@ -190,12 +267,9 @@ class ProposalCard extends React.Component {
   };
   cardClick = async (e) => {
     e.stopPropagation();
-    const { data, Partner } = this.props;
-
+    const { data, Partner, idx } = this.props;
+    console.log(idx);
     Partner.detailLoadingFlag = true;
-    // setTimeout(() => {
-    //   Partner.detailLoadingFlag = false;
-    // }, 3000);
 
     if (this.props.Auth && this.props.Auth.logged_in_user) {
       if (!this.props.data.file) {
@@ -245,32 +319,27 @@ class ProposalCard extends React.Component {
   };
 
   render() {
-    const { data, width, Partner, categoryData, idx } = this.props;
-
-    const SlideSettings = {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      draggable: true,
-      autoplay: true,
-      autoplaySpeed: 2000,
-    };
+    const { data, width, Partner, categoryData, idx, Auth } = this.props;
+    const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
+    const partnerId = data.id;
+    const loggedInPartnerId =
+      Auth.logged_in_partner && Auth.logged_in_partner.id;
+    console.log(Partner.interestedIdx);
+    const existLogo = data.logo.split("/")[4];
 
     const SlideSettingsMobile = {
       dots: false,
       infinite: true,
       speed: 500,
       slidesToShow: 1,
-      slidesToScroll: 1,
+      slidesToScroll: 0,
       draggable: true,
       autoplay: true,
       autoplaySpeed: 2000,
     };
 
     let category_data;
-    // console.log(data.logo);
+    console.log(data.logo);
 
     return (
       <>
@@ -278,11 +347,6 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
-              // onClick={(e) => {
-              //   if (!this.props.Partner.modalActive) {
-              //     this.cardClick(e);
-              //   }
-              // }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -291,49 +355,125 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                <SliderContainer {...SlideSettings}>
-                  {data &&
-                    data.portfolio_set.map((item, idx) => {
-                      return (
-                        <Item>
-                          <img src={item.img_portfolio} />
-                        </Item>
-                      );
-                    })}
+                {data && data.portfolio_set.length > 0 ? (
+                  <Item>
+                    <img src={data.portfolio_set[0].img_portfolio}></img>
+                  </Item>
+                ) : existLogo === "null" ? (
+                  <Item>
+                    {this.state.active ? (
+                      <img src="static/images/noportfolio_img_over.svg" />
+                    ) : (
+                      <img src="static/images/noportfolio_img.svg" />
+                    )}
+                  </Item>
+                ) : (
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                  <Item>
-                    <img src={data.logo} />
-                  </Item>
-                </SliderContainer>
+                )}
               </Header>
               <Main>
                 <Title>
                   <div>
                     <Name>{data.name}</Name>
-                    <Certification>
-                      <img src="/static/icon/certification_img.svg"></img>
-                      <div>신원 인증</div>
-                    </Certification>
+                    {data.identification_state === true ? (
+                      <Certification>
+                        <img src="/static/icon/certification_img.svg"></img>
+                        <div>신원 인증</div>
+                      </Certification>
+                    ) : (
+                      <></>
+                    )}
                   </div>
-                  <BookMark>
-                    <img src="/static/icon/bookmark.svg"></img>
-                  </BookMark>
+                  {Auth.logged_in_user && (
+                    <BookMark>
+                      <img
+                        src={
+                          Partner.check_bookmark[idx] === idx
+                            ? bookmarkBlueImg
+                            : bookmarkImg
+                        }
+                        onClick={async (e) => {
+                          if (!loggedInPartnerId && clientId) {
+                            e.stopPropagation();
+                            Partner.BookmarkHandler(idx);
+                            Partner.checkedBookmark(clientId, partnerId, idx);
+                          }
+                        }}
+                      ></img>
+                    </BookMark>
+                  )}
                 </Title>
-                <Introduce>{data.history}</Introduce>
+                <Introduce
+                  style={{
+                    width: 630,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {data.history}
+                </Introduce>
+                {this.state.business.length !== 0 ? (
+                  this.state.active ? (
+                    <div style={{ display: "flex" }}>
+                      {this.state.business &&
+                        this.state.business.map((item, idx) => {
+                          console.log(item);
+                          return (
+                            <Hashtag style={{ background: " #ffffff" }}>
+                              #{item}
+                            </Hashtag>
+                          );
+                        })}
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex" }}>
+                      {this.state.business &&
+                        this.state.business.map((item, idx) => {
+                          console.log(item);
+                          return (
+                            <Hashtag style={{ background: " #f6f6f6" }}>
+                              #{item}
+                            </Hashtag>
+                          );
+                        })}
+                    </div>
+                  )
+                ) : (
+                  <></>
+                )}
                 <Bottom>
                   <BottomBox>
-                    <Review>
-                      <img src={star} style={{ marginRight: 5 }}></img>
-                      <Score>4.98/5.0 (리뷰 14)</Score>
-                    </Review>
+                    {this.state.total_review === -1 ? (
+                      <></>
+                    ) : (
+                      <Review>
+                        <img src={star} style={{ marginRight: 5 }}></img>
+                        <Score
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <div style={{ fontWeight: "bold" }}>
+                            {this.state.total_review}
+                          </div>
+                          /5.0
+                        </Score>
+                      </Review>
+                    )}
                     <Location>
                       <img
                         src={location}
                         style={{ marginLeft: 15, marginRight: 5 }}
                       ></img>
-                      <div>{this.state.city}</div>
+                      <div>
+                        {data.region === null || data.region === "nan"
+                          ? this.state.city
+                          : data.region}
+                      </div>
                     </Location>
                   </BottomBox>
                   <BottomBox>
@@ -343,72 +483,10 @@ class ProposalCard extends React.Component {
                     </ViewCount>
                     <BookmarkCount>
                       <img src={bookmarkcount} style={{ marginRight: 5 }}></img>
-                      <div>0</div>
+                      <div>{this.state.totalPartnerBookmark}</div>
                     </BookmarkCount>
                   </BottomBox>
                 </Bottom>
-                {/* <Phone>
-                  <div style={{ cursor: "pointer" }}>
-                    {Partner.modalActive && (
-                      <Layer>
-                        <span>
-                          <Modal
-                            width={width}
-                            open={this.props.Partner.modalActive}
-                            close={this.closeModal}
-                            header="전화번호"
-                            children={this.props.Partner.modalUserPhone}
-                          ></Modal>
-                        </span>
-                      </Layer>
-                    )}
-                  </div>
-                </Phone> */}
-                {/* <InfoOne>
-                  {data.info_company.length > 150
-                    ? data.info_company.slice(0, 150) + "..."
-                    : data.info_company}
-                </InfoOne> */}
-                {/* <InfoTwo>
-                  {categoryData &&
-                    categoryData.map((item, idx) => {
-                      return <span>{item}</span>;
-                    })}
-                </InfoTwo> */}
-                {/* <AdditionBox>
-                  <div>
-                    <Button
-                      style={{ cursor: "pointer", zIndex: 10 }}
-                      onClick={async (event) => {
-                        event.stopPropagation();
-
-                        if (await this.checkLogin()) {
-                          this.clickLog(data);
-                          this.openModal(data.user.phone);
-                        } else {
-                          alert("로그인이 필요합니다");
-                          // Router.push("/login");
-                          location.href = this.props.Common.makeUrl("login");
-                        }
-                      }}
-                    >
-                      <span>전화번호</span>
-                    </Button>
-                  </div>
-                  <div></div>
-                  <div>
-                    <img src={file_img2} />
-                    <Button>
-                      <Link
-                        target="_blank"
-                        // onClick={(e) => this.cardClick(e)}
-                        download
-                      >
-                        <span>회사 소개서 보기</span>
-                      </Link>
-                    </Button>
-                  </div>
-                </AdditionBox> */}
               </Main>
             </Card>
           </>
@@ -427,71 +505,31 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                <SliderMobileContainer {...SlideSettingsMobile}>
-                  {data &&
-                    data.portfolio_set.map((item, idx) => {
-                      return (
-                        <Item>
-                          <img src={item.img_portfolio} />
-                        </Item>
-                      );
-                    })}
+                {data && data.portfolio_set.length > 0 ? (
+                  <Item>
+                    <img src={data.portfolio_set[0].img_portfolio}></img>
+                  </Item>
+                ) : existLogo === "null" ? (
+                  <Item>
+                    {this.state.active ? (
+                      <img src="static/images/noportfolio_img_over.svg" />
+                    ) : (
+                      <img src="static/images/noportfolio_img.svg" />
+                    )}
+                  </Item>
+                ) : (
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                </SliderMobileContainer>
+                )}
               </Header>
               <Main>
                 <Name>{data.name}</Name>
                 <InfoOne>
-                  {data.info_company.length > 100
-                    ? data.info_company.slice(0, 100) + "..."
+                  {data.info_company.length > 70
+                    ? data.info_company.slice(0, 70) + "..."
                     : data.info_company}
                 </InfoOne>
-                <Information>
-                  <div>
-                    <Phone>
-                      <div
-                        style={{ cursor: "pointer", zIndex: 10 }}
-                        onClick={async (e) => {
-                          e.stopPropagation();
-                          if (await this.checkLogin()) {
-                            this.clickLog(data);
-                            this.openModal(data.user.phone);
-                          } else {
-                            alert("로그인이 필요합니다");
-                            Router.push("/login");
-                          }
-                        }}
-                      >
-                        <img src={call_img} />
-
-                        {Partner.modalActive && (
-                          <Layer>
-                            <span>
-                              <Modal
-                                width={width}
-                                open={this.props.Partner.modalActive}
-                                close={this.closeModal}
-                                header="전화번호"
-                                children={this.props.Partner.modalUserPhone}
-                              ></Modal>
-                            </span>
-                          </Layer>
-                        )}
-                      </div>
-                    </Phone>
-                  </div>
-                  <div>
-                    <Link
-                      target="_blank"
-                      // onClick={(e) => this.cardClick(e)}
-                      download
-                    >
-                      <span>회사 소개서 보기</span>
-                    </Link>
-                  </div>
-                </Information>
               </Main>
             </Card>
             {this.props.Partner.ReviewActive &&
@@ -517,14 +555,12 @@ export default ProposalCard;
 
 const Card = styled.div`
   width: 100%;
-  position: relative;
+  // position: relative;
   object-fit: contain;
-  border-top: solid 1px #e1e2e4;
-  border-bottom: solid 1px #e1e2e4;
-  background-color: ${(props) => (props.active ? "#f6f6f6" : "#ffffff")};
-  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-
+  border-bottom: solid 2px #e1e2e4;
+  background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
   display: flex;
+  cursor: pointer;
 
   @media (min-width: 0px) and (max-width: 767.98px) {
     // height: 108px;
@@ -601,7 +637,7 @@ const Name = styled.div`
   font-size: 20px;
   line-height: 40px;
   letter-spacing: -0.5px;
-  color: #282c36;
+  color: #1e2222;
   font-weight: bold;
   @media (min-width: 0px) and (max-width: 767.98px) {
     color: #0933b3;
@@ -639,7 +675,19 @@ const Introduce = styled.div`
   font-size: 16px;
   line-height: 2.5;
   letter-spacing: -0.4px;
-  color: #86888c;
+  color: #1e2222;
+`;
+const Hashtag = styled.div`
+  display: flex;
+  font-size: 15px;
+  color: #555963;
+  justify-content: center;
+  align-items: center;
+  height: 34px;
+  border-radius: 5px;
+  margin-right: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
 `;
 
 const Bottom = styled.div`
@@ -673,9 +721,9 @@ const Location = styled.div`
   justify-content: space-between;
   align-items: center;
   div {
-    width: 200px;
+    width: 100%;
     font-size: 14px;
-    color: #282c36;
+    color: #767676;
     line-height: 2.86;
     letter-spacing: -0.35px;
   }
@@ -1065,7 +1113,7 @@ const SliderContainer = styled(Slider)`
 
 const SliderMobileContainer = styled(Slider)`
   .slick-list {
-    width: 144px;
+    width: 241px;
     .slick-track {
       .slick-slide {
         display: flex;
@@ -1087,7 +1135,7 @@ const Item = styled.div`
     // width: 100%;
     // display: inline-block;
     // position: relative;
-    border-radius: 4px;
+    border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
     width: 262px;

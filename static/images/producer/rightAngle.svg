@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #c6c7cc;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <path id="패스_4458" data-name="패스 4458" class="cls-1" d="M-5478.9-4002v20h20" transform="translate(5479.902 4003)"/>
+</svg>

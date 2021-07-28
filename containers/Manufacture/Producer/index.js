@@ -3,7 +3,8 @@ import React from "react";
 import BannerConatiner from "./Banner";
 import SearchBar from "./SearchBar";
 import SearchFilterBox from "./SearchFilterBox";
-import MobileSearchBar from "./MobileSearchBar";
+import MobileSearchFilterBox from "./MobileSearchFilterBox";
+
 import ContentContainer from "./Content";
 import MobileContentContainer from "./MobileContent";
 import Container from "components/Containerv1";
@@ -14,25 +15,44 @@ import MobileRequest from "./MobileRequest";
 import MobileRequestDone from "./MobileRequestDone";
 import { DiagnosticCategory } from "typescript";
 
-@inject("Auth", "Partner", "Category")
+// cookie 추가
+import Cookies from "js-cookie";
+
+@inject("Auth", "Partner", "Category", "Cookie")
 @observer
 class ProducerConatiner extends React.Component {
   async componentDidMount() {
-    const { Auth, Partner, Category } = this.props;    
+    let partner_view_data = [];
+    const { Auth, Partner, Category, Cookie } = this.props;
     Partner.init();
     Partner.newIndex = 0;
     Partner.mobileRequestIndex = 0;
     await Auth.checkLogin();
-  }  
+
+    // Cookie 값 가지고 와서 리스트에 먼저 저장
+    partner_view_data = await Cookies.get("partner_view");
+    // list 전처리
+    console.log(partner_view_data);
+    if (partner_view_data) {
+      partner_view_data = partner_view_data
+        .replace("[", "")
+        .replace("]", "")
+        .split(",");
+    }
+
+    if (partner_view_data !== undefined && partner_view_data !== "undefined") {
+      partner_view_data.map((data) => Cookie.add_partner_view(data));
+    }
+  }
 
   render() {
-    const { Auth, Partner } = this.props;
+    const { Auth, Partner, Search } = this.props;
     return (
       <>
         {this.props.width &&
           (this.props.width > 767.99 ? (
             <div>
-            {/* 제조사 찾기 기본 화면 */}
+              {/* 제조사 찾기 기본 화면 */}
               {Partner.newIndex == 0 && (
                 <>
                   <BannerConatiner />
@@ -51,10 +71,10 @@ class ProducerConatiner extends React.Component {
             </div>
           ) : (
             <>
-            {/* 제조사 찾기 모바일 버전 기본 화면 */}
+              {/* 제조사 찾기 모바일 버전 기본 화면 */}
               {Partner.mobileRequestIndex == 0 && (
                 <>
-                  <MobileSearchBar width={this.props.width} />
+                  <MobileSearchFilterBox width={this.props.width} />
                   <MobileContentContainer width={this.props.width} />
                 </>
               )}

@@ -206,7 +206,7 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
       duedate,
       duecheck,
     } = this.state;
-    const { ManufactureProcess, Schedule } = this.props;
+    const { ManufactureProcess, Schedule, Request } = this.props;
     const { purposeAry } = this.state;
 
     let deadline_state = "";
@@ -315,7 +315,7 @@ class MobileNoneDrawingConsultingContainer extends React.Component {
     formData.append("process", 1);
     formData.append("detailprocess", 1);
     formData.append("number", 1);
-
+    formData.append("partner", Request.selected_partner);
     
     const Token = localStorage.getItem("token");
     const req = {

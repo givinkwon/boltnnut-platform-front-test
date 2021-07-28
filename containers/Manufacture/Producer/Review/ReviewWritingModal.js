@@ -32,6 +32,7 @@ class ReviewWritingModal extends React.Component {
   moveReviewPage = () => {
     const { Partner } = this.props;
     Partner.reviewActiveIndex = 1;
+    this.setState({ g: 3 });
   };
 
   //   onSubmit = async () => {
@@ -198,7 +199,7 @@ const ModalBox = styled.div`
       color: #282c36;
       height: 45%;
       > div:nth-of-type(1) {
-        line-height: 0.78;
+        line-height: 1.28;
       }
     }
     > main {

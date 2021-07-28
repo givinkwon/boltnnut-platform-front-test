@@ -24,8 +24,9 @@ class Request extends React.Component {
   state = {};
 
   componentDidMount() {
+    const {Partner, Request} = this.props;
     this.props.Partner.init();
-    this.props.Request.init();
+    console.log(Request.selected_partner)
   
     this.props.ManufactureProcess.init();
     this.props.Schedule.init();
