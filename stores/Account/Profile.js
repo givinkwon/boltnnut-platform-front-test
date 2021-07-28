@@ -64,6 +64,9 @@ class Profile {
   @observable portfolioFileArray = [];
   @observable portfolioCheckFileUpload = false;
 
+  @observable locationAddress = "";
+  @observable locationModalActive = false;
+
   @action reset = () => {
     this.email = "";
     this.password = "";

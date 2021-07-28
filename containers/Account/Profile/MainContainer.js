@@ -151,7 +151,7 @@ class MainContainer extends React.Component {
   };
 
   render() {
-    const { Category, Profile, type } = this.props;
+    const { Category, Profile, type, width } = this.props;
     const type1 = "business";
     return (
       <Container>
@@ -310,7 +310,7 @@ class MainContainer extends React.Component {
         <Product histories={Profile.histories}></Product>
         <Introduction file={Profile.file}></Introduction>
         <Portfolio Portfolio_set={Profile.Portfolio_set}></Portfolio>
-        <Location region={Profile.region}></Location>
+        <Location region={Profile.region} width={width}></Location>
       </Container>
     );
   }
@@ -320,9 +320,9 @@ export default MainContainer;
 
 const Container = styled.div`
   //   border: 3px solid red;
-  flex-grow: 5;
+  // flex-grow: 5;
   padding-left: 30px;
-  width: 100%;
+  width: 72%;
 `;
 
 const Name = styled.div`

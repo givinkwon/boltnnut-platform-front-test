@@ -87,7 +87,13 @@ class portfolio extends React.Component {
               Profile.portfolioFileArray.map((item, idx) => {
                 return (
                   <SmallImageBox>
-                    <img src={closeImg} />
+                    <img
+                      src={closeImg}
+                      onClick={() => {
+                        console.log(idx);
+                        Profile.portfolioFileArray.splice(idx, 1);
+                      }}
+                    />
                     <img src={item.preview} />
                   </SmallImageBox>
                 );
@@ -210,6 +216,13 @@ const SmallImageBox = styled.div`
   border-radius: 3px;
   margin-right: 10px;
   cursor: pointer;
+  position: relative;
+
+  > img:nth-of-type(1) {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+  }
 
   > img:nth-of-type(2) {
     width: 100%;

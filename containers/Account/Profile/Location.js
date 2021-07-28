@@ -2,66 +2,79 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import * as AccountAPI from "axios/Account/Account";
-
+import DaumPostcode from "react-daum-postcode";
+import LocationSearchModal from "./LocationSearchModal";
 import * as Text from "components/Text";
 
-@inject("Auth", "Answer")
+@inject("Auth", "Answer", "Profile")
 @observer
 class Location extends React.Component {
   state = {
-    text: "",
-    portfolioArray: [],
+    modalActive: false,
   };
-  //   onChangeHandler = (e) => {
-  //     const text = e.target.value;
-  //     console.log(text);
-  //     this.setState({ text: e.target.value });
-  //   };
-  //   onSubmitHandler = () => {
-  //     const formData = new FormData();
-  //     formData.append("url", this.state.text);
-  //     const req = {
-  //       data: formData,
-  //     };
-  //     AccountAPI.getPortfolio(req)
-  //       .then((res) => {
-  //         console.log(res);
-  //         this.setState({ portfolioArray: res.data });
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //       });
-  //   };
+
+  openModal = () => {
+    const { Profile } = this.props;
+    console.log("open click");
+
+    Profile.locationModalActive = true;
+  };
+  closeModal = () => {
+    const { Profile } = this.props;
+    console.log("close click");
+    Profile.locationModalActive = false;
+  };
+
+  handleComplete = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+  };
 
   render() {
-    const { region } = this.props;
-    console.log(region);
+    const { region, width, Profile } = this.props;
+
     return (
       <Container>
         <Header>
           <Name>위치</Name>
 
-          <Button>주소 검색</Button>
+          <Button onClick={() => (Profile.locationModalActive = true)}>
+            주소 검색
+          </Button>
         </Header>
         <Main>
           <span>도로명주소</span>
           <div>
-            <input>{region}</input>
+            <span>{Profile.LocationAddress}</span>
           </div>
           {/* <button onClick={this.onSubmitHandler}>입력</button> */}
         </Main>
-        {/* <Temp>
-          {this.state.portfolioArray &&
-            this.state.portfolioArray.url &&
-            this.state.portfolioArray.url.map((item, idx) => {
-              return (
-                <>
-                  <img src={item} />
-                  <span>{this.state.portfolioArray.score[idx]}</span>
-                </>
-              );
-            })}          
-        </Temp> */}
+        {Profile.locationModalActive && (
+          <Layer>
+            {/* <Postcode /> */}
+            <span>
+              <LocationSearchModal
+                width={width}
+                open={this.openModal}
+                close={this.closeModal}
+                header=""
+              />
+            </span>
+          </Layer>
+        )}
       </Container>
     );
   }
@@ -122,6 +135,9 @@ const Main = styled.div`
   > div {
     width: 100%;
     border: 1px solid #c6c7cc;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
 
     > input {
         width: 99%;
@@ -153,3 +169,21 @@ const Main = styled.div`
 `;
 
 const Temp = styled.div``;
+
+const Layer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  // opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.05);
+
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+`;

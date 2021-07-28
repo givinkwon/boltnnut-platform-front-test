@@ -13,13 +13,17 @@ import * as Text from "components/Text";
 @observer
 class ProfileContainer extends React.Component {
   render() {
+    const { width } = this.props;
     return (
       <>
         <Background>
           <Containerv1>
             <Container>
-              <SubContainer style={{ border: "5px solid green" }} />
-              <MainContainer />
+              <SubContainer
+                width={width}
+                style={{ border: "5px solid green" }}
+              />
+              <MainContainer width={width} />
             </Container>
           </Containerv1>
         </Background>
