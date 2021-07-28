@@ -228,8 +228,7 @@ class Category {
   };
 
   categoryActiveHandler = (idx, state) => {
-    console.log(idx);
-    console.log(state);
+
     if (state == "business") {
       if (this.business_selected.includes(idx)) {
         return true;
@@ -241,6 +240,7 @@ class Category {
     // 업체 분류 선택
     if (state == "category") {
       if (this.category_selected.includes(idx)) {
+
         return true;
       } else {
         return false;
@@ -259,6 +259,7 @@ class Category {
     // 공정 선택
     if (state == "develop") {
       if (this.develop_selected.includes(idx)) {
+        console.log(idx)
         return true;
       } else {
         return false;

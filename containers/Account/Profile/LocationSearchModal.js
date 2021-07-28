@@ -50,11 +50,10 @@ class LocationSearchModal extends React.Component {
 export default LocationSearchModal;
 
 const modalStyle = {
-  position: "absolute",
   zIndex: "100",
   border: "1px solid #000000",
   overflow: "hidden",
-  width: "600px",
+  width: "800px",
   height: "333px",
 };
 
@@ -63,9 +62,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-  margin-top: 100px;
-  margin-bottom: 120px;
 `;
 
 const PostBox = styled(DaumPostcode)`

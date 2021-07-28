@@ -109,6 +109,7 @@ const Button = styled.button`
   font-weight: 600;
   background-color: #ffffff;
   border: none;
+  cursor: pointer;
 `;
 
 const Header = styled.div`
@@ -124,7 +125,7 @@ const Main = styled.div`
   display: flex;
   align-items: center;
   > span {
-    width: 90px;
+    width: 95px;
     font-size: 18px;
     line-height: 27px;
     letter-spacing: -0.45px;
@@ -138,6 +139,8 @@ const Main = styled.div`
     min-height: 36px;
     display: flex;
     align-items: center;
+    padding: 3px 10px;
+    box-sizing: border-box;
 
     > input {
         width: 99%;
@@ -178,7 +181,7 @@ const Layer = styled.div`
   bottom: 0;
   z-index: 100;
   // opacity: 0.1;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.5);
 
   > span {
     display: flex;

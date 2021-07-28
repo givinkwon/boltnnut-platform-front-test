@@ -19,6 +19,8 @@ import { toJS } from "mobx";
 import { PRIMARY2 } from "static/style";
 import FilterModalContainer from "./FilterModal";
 const filter_img = "static/images/filter.svg";
+const down_arrow = "/static/icon/down_arrow.svg";
+const up_arrow = "/static/icon/up_arrow.svg";
 
 const customStyles = {
   container: (base, state) => {
@@ -144,6 +146,9 @@ class SearchFilterConatiner extends React.Component {
     filter_city_active: false,
     filter_category_active: false,
     type: "",
+    category_arrow: false,
+    classify_arrow: false,
+    location_arrow: false,
   };
 
   dropdownHandler = (flag) => {
@@ -201,7 +206,29 @@ class SearchFilterConatiner extends React.Component {
         this.setState({ filter_category_active: true });
       }
     }
+    if (flag == "category_arrow") {
+      if (this.state.category_arrow) {
+        this.setState({ category_arrow: false });
+      } else {
+        this.setState({ category_arrow: true });
+      }
+    }
+    if (flag == "classify_arrow") {
+      if (this.state.classify_arrow) {
+        this.setState({ classify_arrow: false });
+      } else {
+        this.setState({ classify_arrow: true });
+      }
+    }
+    if (flag == "location_arrow") {
+      if (this.state.location_arrow) {
+        this.setState({ location_arrow: false });
+      } else {
+        this.setState({ location_arrow: true });
+      }
+    }
   };
+
   render() {
     const { Partner, width } = this.props;
     console.log(this.state.type);
@@ -217,9 +244,10 @@ class SearchFilterConatiner extends React.Component {
             <Field>
               <div>전체</div>
               <img
-                src="/static/icon/down_arrow.svg"
+                src={this.state.category_arrow ? up_arrow : down_arrow}
                 onClick={() => {
                   this.dropdownHandler("business");
+                  this.activeHandler("category_arrow");
                 }}
               ></img>
             </Field>
@@ -229,9 +257,10 @@ class SearchFilterConatiner extends React.Component {
             <Field>
               <div>전체</div>
               <img
-                src="/static/icon/down_arrow.svg"
+                src={this.state.classify_arrow ? up_arrow : down_arrow}
                 onClick={() => {
                   this.dropdownHandler("category");
+                  this.activeHandler("classify_arrow");
                 }}
               ></img>
             </Field>
@@ -241,9 +270,10 @@ class SearchFilterConatiner extends React.Component {
             <Field>
               <div>전체</div>
               <img
-                src="/static/icon/down_arrow.svg"
+                src={this.state.location_arrow ? up_arrow : down_arrow}
                 onClick={() => {
                   this.dropdownHandler("city");
+                  this.activeHandler("location_arrow");
                 }}
               ></img>
             </Field>
@@ -258,7 +288,7 @@ class SearchFilterConatiner extends React.Component {
                 color: "#555963",
               }}
             >
-              공정, 소재
+              공정/소재
             </div>
             <Material>
               <div
@@ -272,7 +302,12 @@ class SearchFilterConatiner extends React.Component {
                 ></img>
                 <img
                   src="/static/icon/arrow_down.svg"
-                  style={{ widht: 12, height: 12 }}
+                  style={{
+                    widht: 12,
+                    height: 12,
+                    marginLeft: 2,
+                    marginBottom: 5,
+                  }}
                 ></img>
               </div>
             </Material>
@@ -378,6 +413,7 @@ const Field = styled.div`
   }
   img {
     margin-right: 12px;
+    cursor: pointer;
   }
 `;
 
