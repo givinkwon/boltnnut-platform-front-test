@@ -6,14 +6,15 @@ import { inject, observer } from "mobx-react";
 import Router from "next/router";
 
 import Nav from "components/Nav";
+import NewNav from "components/NewNav";
 import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
 
 import { toJS } from "mobx";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
-import ProjectContainer from "../../containers/Project/index";
+import ProjectContainer from "containers/Manufacture/Project/index";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
@@ -26,6 +27,7 @@ class Project extends React.Component {
 
   async componentDidMount() {
     const { Project, Auth, Home, Answer, Loading } = this.props;
+    Auth.previous_url = "project";
     console.log(Auth);
     console.log(toJS(Auth.logged_in_user));
     //창 크기
@@ -37,18 +39,17 @@ class Project extends React.Component {
     Loading.setOpen(true);
     setTimeout(() => Loading.setOpen(false), 500);
 
-    
     // 중복
     await Auth.checkLogin();
     // page ip 기록
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
@@ -94,14 +95,10 @@ class Project extends React.Component {
         </Head>
         <>
           {width > 767.98 ? (
-            <Nav />
+            <NewNav />
           ) : (
             <div>
-              <MobileNav
-                src={back_ic}
-                headText={"프로젝트 관리"}
-                width={width}
-              />
+              <MobileNav src={back_ic} headText={"프로젝트 관리"} width={width} />
               <div style={{ height: "54px" }}></div>
             </div>
           )}

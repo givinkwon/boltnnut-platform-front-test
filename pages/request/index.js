@@ -7,43 +7,43 @@ import Nav from "components/Nav";
 import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
-import RequestConatiner from "containers/Request";
+import RequestConatiner from "containers/Manufacture/Request";
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
 @inject(
   "Request",
   "Partner",
-  "DetailQuestion",
   "ManufactureProcess",
-  "Schedule"
+  "Auth",
+  "Schedule",
 )
 @observer
 class Request extends React.Component {
   state = {};
 
   componentDidMount() {
+    const {Partner, Request} = this.props;
     this.props.Partner.init();
-    this.props.Request.init();
-    this.props.DetailQuestion.init();
-    this.props.DetailQuestion.loadSelectFromTitle(1);
+    console.log(Request.selected_partner)
+  
     this.props.ManufactureProcess.init();
     this.props.Schedule.init();
     //창 크기
+    this.props.Auth.previous_url = "request";
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
-    
-    
+
     // page ip 기록
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
@@ -52,7 +52,6 @@ class Request extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-
   }
 
   componentWillUnmount() {

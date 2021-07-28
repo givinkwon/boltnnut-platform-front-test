@@ -5,9 +5,9 @@ import Nav from "components/Nav";
 import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 
-import MagazineConatiner from "containers/Magazine";
+import MagazineConatiner from "containers/Common/Magazine";
 import { inject, observer } from "mobx-react";
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
@@ -19,6 +19,7 @@ class Index extends React.Component {
   };
   componentDidMount() {
     this.props.Auth.bgColor = "#f6f6f6";
+    this.props.Auth.previous_url = "magazine";
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
     console.log(this.state.width);

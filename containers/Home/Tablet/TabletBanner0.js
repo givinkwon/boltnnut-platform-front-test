@@ -54,7 +54,7 @@ class TabletBanner0Container extends React.Component {
             <span>대한민국 제조사 정보 여기 다 있다.</span>
             <span>전문 업체 수배 플랫폼 볼트앤너트</span>
           </Header>
-          
+
           <Explanation>
             <Font20>남동공단부터 창원까지</Font20>
             <Font20>선별된 5000여 개 제조사 정보를</Font20>

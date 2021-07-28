@@ -10,11 +10,13 @@ import * as Text from "./Text";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
 import Home from "../pages";
+import KSLink from "./KSLink";
 
 const close_ic = "/static/images/components/MobileNav/close_ic.svg";
 const hamburger_ic = "/static/images/components/MobileNav/hamburger.svg";
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
-@inject("Auth", "Partner", "Home")
+
+@inject("Auth", "Partner", "Home", "Common")
 @observer
 class MobileNav extends React.Component {
   state = {
@@ -26,6 +28,7 @@ class MobileNav extends React.Component {
 
   alreadyLoggedin = ["login", "signup"];
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
+
   logout = () => {
     localStorage.removeItem("token");
     if (localStorage.getItem("expiry")) {
@@ -47,7 +50,8 @@ class MobileNav extends React.Component {
         if (url === splitedRoute[1]) {
           alert("이미 로그인한 사용자입니다");
 
-          Router.push("/");
+          // Router.push("/");
+          location.href = this.props.Common.makeUrl("");
         }
         // /offered 에서 tab 1을 거치지 않고 tab 2로 들어온 사용자 리다이렉트
         else if ("offered" === splitedRoute[1]) {
@@ -84,7 +88,8 @@ class MobileNav extends React.Component {
         if (url === splitedRoute[1]) {
           if (requestId != 923) {
             alert("로그인이 필요합니다");
-            Router.push("/login");
+            // Router.push("/login");
+            location.href = this.props.Common.makeUrl("login");
           }
         }
       });
@@ -110,28 +115,28 @@ class MobileNav extends React.Component {
   };
 
   render() {
-    const { Auth, Partner, width, Home } = this.props;
+    const { Auth, Partner, width, Hom, Common } = this.props;
     const { url, is_open, is_profile, token } = this.state;
     console.log(this.props);
     return (
       <NavBox>
         {is_open && (
           <Modal>
-            <ProfileMenu
-              width={this.props.width}
-              onClick={() => this.setState({ is_open: false })}
-            >
+            <ProfileMenu width={this.props.width} onClick={() => this.setState({ is_open: false })}>
               <ModalHeader>
                 <div style={{ marginBottom: 50, width: "100%" }}>
-                  <Logo
-                    onClick={() => {
-                      if (is_open == true) {
-                        Router.push("/");
-                      }
-                    }}
-                    src={logo_ic}
-                    style={{ float: "left" }}
-                  />
+                  <BoltLogo>
+                    <Logo
+                      onClick={() => {
+                        if (is_open == true) {
+                          // Router.push("/");
+                          location.href = Common.makeUrl("");
+                        }
+                      }}
+                      src={logo_ic}
+                      style={{ float: "left" }}
+                    />
+                  </BoltLogo>
                   <img src={close_ic} style={{ float: "right" }} />
                 </div>
                 {/* {Auth.logged_in_partner ? (
@@ -162,25 +167,16 @@ class MobileNav extends React.Component {
               </ModalHeader>
               <>
                 <ModalContent>
-                  {Auth.logged_in_partner ? (
-                    <p onClick={() => Router.push("/project")}>프로젝트 관리</p>
-                  ) : (
-                    <p onClick={() => Router.push("/producer")}>제조사 찾기</p>
-                  )}
+                  {Auth.logged_in_partner ? <KSLink url={"project"} content={"프로젝트 관리"} /> : <KSLink url={"producer"} content={"제조사 찾기"} />}
+                  <KSLink url={"magazine"} content={"제조 인사이트"} />
 
-                  <p onClick={() => Router.push("/magazine")}>제조 인사이트</p>
-
-                  {Auth.logged_in_user && (
-                    <p onClick={() => Router.push("/chatting")}>채팅하기</p>
-                  )}
+                  {Auth.logged_in_user && <KSLink url={"chatting"} content={"채팅하기"} />}
                 </ModalContent>
               </>
               <ModalContent2>
-                <p onClick={() => Router.push("/faq")}>자주찾는 질문</p>
-                <p onClick={() => Router.push("/term/policy")}>이용약관</p>
-                <p onClick={() => Router.push("/term/personal")}>
-                  개인정보 처리 방침
-                </p>
+                <KSLink url={"faq"} content={"자주찾는 질문"} />
+                <KSLink url={"term/policy"} content={"이용약관"} />
+                <KSLink url={"term/personal"} content={"개인정보 처리 방침"} />
               </ModalContent2>
               {Auth.logged_in_user ? (
                 <Footer>
@@ -196,7 +192,7 @@ class MobileNav extends React.Component {
                       borderRight: "solid 1px #e1e2e4",
                       height: 32,
                     }}
-                    onClick={() => Router.push("/login")}
+                    onClick={() => (location.href = Common.makeUrl("login"))}
                   >
                     로그인
                   </div>
@@ -207,7 +203,7 @@ class MobileNav extends React.Component {
                       justifyContent: "center",
                       height: 32,
                     }}
-                    onClick={() => Router.push("/signup")}
+                    onClick={() => (location.href = Common.makeUrl("signup"))}
                   >
                     회원가입
                   </div>
@@ -218,12 +214,14 @@ class MobileNav extends React.Component {
         )}
         <Container>
           <NavWrap2>
-            {this.props.src ===
-            "/static/images/components/MobileNav/MobileLogo.svg" ? (
-
-              <Logo src={this.props.src} onClick={() => Router.push("/")} />
+            {this.props.src === "/static/images/components/MobileNav/MobileLogo.svg" ? (
+              <BoltLogo>
+                <Logo src={this.props.src} onClick={() => (location.href = Common.makeUrl(""))} />
+              </BoltLogo>
             ) : (
-              <Logo src={this.props.src} onClick={() => Router.back()} />
+              <BoltLogo>
+                <Logo src={this.props.src} onClick={() => Router.back()} />
+              </BoltLogo>
             )}
 
             <HeadText>{this.props.headText}</HeadText>
@@ -253,8 +251,7 @@ const ProfileMenu = styled.div`
   z-index: 10000;
   top: 0;
   right: 0;
-  // transform: translate3d(${(props) =>
-    props.width ? props.width - 156 : 10}px, calc(55%), 0);
+  // transform: translate3d(${(props) => (props.width ? props.width - 156 : 10)}px, calc(55%), 0);
   display: flex;
   flex-direction: column;
   }
@@ -280,7 +277,9 @@ const ModalHeader = styled.div`
     white-space: nowrap;
   }
 `;
-const ModalContent = styled.div`
+const ModalContent = styled.button`
+  border: none;
+  background: none;
   width: 100%;
   height: 158px;
   // height: 110px;
@@ -289,7 +288,7 @@ const ModalContent = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
 
-  > p {
+  > a {
     font-family: NotoSansCJKkr;
     font-size: 15px;
     font-weight: bold;
@@ -364,13 +363,15 @@ const FreeButton = styled(Buttonv1)`
     color: #ffffff;
   }
 `;
-const ModalContent2 = styled.div`
+const ModalContent2 = styled.button`
+  border: none;
+  background: none;
   width: 100%;
   display: flex;
   flex-direction: column;
   margin-top: 27px;
 
-  > p {
+  > a {
     font-family: NotoSansCJKkr;
     font-size: 12px;
     font-weight: normal;
@@ -404,6 +405,10 @@ const NavWrap2 = styled.div`
   background-color: #ffffff; // #f3f3f3
   padding-left: 18px;
   padding-right: 18px;
+`;
+const BoltLogo = styled.button`
+  background: none;
+  border: none;
 `;
 const Logo = styled.img`
   cursor: pointer;

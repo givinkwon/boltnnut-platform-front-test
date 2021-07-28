@@ -7,6 +7,7 @@ import * as Content from "components/Content";
 import Fade from "react-reveal/Fade";
 import Buttonv1 from "components/Buttonv1";
 import Router from "next/router";
+import KSLink from "components/KSLink";
 
 const image1 = "/static/images/Home2/Banner13_img1.png";
 const image2 = "/static/images/Home2/Banner13_img2.png";
@@ -102,7 +103,7 @@ class Banner12Container extends React.Component {
                     전문업체 검색이 가능합니다. <br />
                   </Body>
                   <Buttonv1
-                    onClick={() => Router.push("/producer")}
+                    // onClick={() => Router.push("/producer")}
                     style={{
                       width: "304px",
                       height: "64px",
@@ -110,7 +111,7 @@ class Banner12Container extends React.Component {
                     }}
                     fontSize="23"
                   >
-                    지금 업체 찾기
+                    <KSLink url={"producer"} content={"지금 업체 찾기"} />
                   </Buttonv1>
                 </Contents>
                 <ImgBox
@@ -216,7 +217,7 @@ class Banner12Container extends React.Component {
                     <br />볼 수 있게 공개 할 수 있습니다.
                   </Body>
                   <Buttonv1
-                    onClick={() => Router.push("/producer")}
+                    // onClick={() => Router.push("/producer")}
                     style={{
                       width: "304px",
                       height: "64px",
@@ -224,7 +225,7 @@ class Banner12Container extends React.Component {
                     }}
                     fontSize="23"
                   >
-                    지금 업체 찾기
+                    <KSLink url={"producer"} content={"지금 업체 찾기"} />
                   </Buttonv1>
                 </Contents>
               </ContainerBox>
@@ -375,4 +376,9 @@ const ImgBox = styled.div`
     height: ${(props) => (props.height ? props.height : "")}px;
     // height: 341px;
   }
+`;
+
+const LookupBtn = styled.button`
+  background: none;
+  border: none;
 `;

@@ -1,101 +1,173 @@
 import React from "react";
 import styled from "styled-components";
-
-//Components
-import Background from "components/Background";
+import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
-import * as Content from "components/Content";
-import Fade from "react-reveal/Fade";
+import * as Text from "components/Text";
+import Button from "../../../components/Button";
 
-import { inject, observer } from "mobx-react";
+const bluedot = "static/images/bluedot.svg";
+const stepimg1 = "/static/images/stepimg1.png";
+const stepimg2 = "/static/images/stepimg2.svg";
+const stepimg3 = "/static/images/stepimg3.png";
 
-//Image
-const image1 = "/static/images/Home/Banner3/image1.png";
-
-@inject("Proposal")
-@observer
 class MobileBanner3Container extends React.Component {
+  state = {
+    stepBoxIndex: 0,
+    stepImgIndex: 0,
+    stepImgActive: false,
+  };
+
+  onClickStepBox = (idx) => {
+    this.setState({ stepBoxIndex: idx, stepImgIndex: idx, stepImgActive: true });
+  };
+
+  onCompareStepBox = (idx) => {
+    if (this.state.stepBoxIndex === idx) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  onChangeStepImage = () => {
+    if (this.state.stepImgIndex === 0) {
+      return stepimg1;
+    } else if (this.state.stepBoxIndex === 1) {
+      return stepimg2;
+    } else if (this.state.stepBoxIndex === 2) {
+      return stepimg3;
+    }
+  };
+
   render() {
-    const ProjectCount = this.props.Proposal.projects_count;
+    const stepBoxArray = ["Step1", "Step2", "Step3"];
+
     return (
-      <Background
-        style={{
-          paddingBottom: 100,
-          paddingTop: 100,
-          justifyContent: "center",
-        }}
-      >
-        <Fade bottom>
-          <div>
-            <Header>제조사 필터링 서비스</Header>
-            <Middle>
-              <span>원하는 생산품을 만들었던</span>
-              <span>업체 검색이 한 번에</span>
-            </Middle>
-            <div>
-              <img
-                src={image1}
-                style={{ width: 347, height: 230, borderRadius: 7 }}
-              />
-            </div>
-            <Body>
-              <span>내가 원하는 생산품을 만들었던 제조업체를</span>
-              <span>볼트앤너트를 통해 바로 검색하세요.</span>
-              <span>지역별, 입력별 필터를 통해 원하는 조건의</span>
-              <span>전문업체 검색이 가능합니다.</span>
-            </Body>
-          </div>
-        </Fade>
-      </Background>
+      <Container>
+        <InnerBox>
+          <Title20>"이 제품 만드는 공장 없나요?"</Title20>
+          <Title20>볼트앤너트에서 내 제품 분야에 꼭 맞는</Title20>
+          <Title20>업체를 찾아보세요.</Title20>
+
+          <StepContainer>
+            {stepBoxArray.map((v, idx) => (
+              <StepBox onClick={() => this.onClickStepBox(idx)} active={this.onCompareStepBox(idx)}>
+                <Title12 active={this.onCompareStepBox(idx)}>{v}</Title12>
+                <BlueDotImg src={bluedot} active={this.onCompareStepBox(idx)} />
+              </StepBox>
+            ))}
+          </StepContainer>
+
+          <img src={this.onChangeStepImage()} style={{ width: "346px", height: "205px", marginTop: "23px" }} />
+
+          {this.state.stepBoxIndex === 0 ? (
+            <>
+              <Title18 style={{ marginTop: "32px" }}>제조사 찾기</Title18>
+              <Title15 style={{ marginTop: "18px" }}>한번의 검색으로 제품제 맞는</Title15>
+              <Title15 style={{ marginBottom: "70px" }}>카테고리의 제조사를 찾아보세요.</Title15>
+            </>
+          ) : this.state.stepBoxIndex === 1 ? (
+            <>
+              <Title18 style={{ marginTop: "32px" }}>제조사에 의뢰하기</Title18>
+              <Title15 style={{ marginTop: "18px" }}>제조사를 비교하고 간단한 양식에</Title15>
+              <Title15 style={{ marginBottom: "70px" }}>맞춰 견적 요청서를 작성해 보세요.</Title15>
+            </>
+          ) : (
+            <>
+              <Title18 style={{ marginTop: "32px" }}>제조사와 직접 채팅하기</Title18>
+              <Title15 style={{ marginTop: "18px" }}>제조사에게 견적 요청서를 자세히</Title15>
+              <Title15 style={{ marginBottom: "70px" }}>상담받고 견적을 조율해 보세요.</Title15>
+            </>
+          )}
+
+          {/* {textArray.map((v, idx) => (
+            <>
+              <Title18 style={{ marginTop: "32px" }} active={this.onCompareStepBox(idx) }>
+                {v.title}
+              </Title18>
+              <Title15 style={{ marginTop: "18px" }} active={this.onCompareStepBox(idx)}>
+                {v.desc1}
+              </Title15>
+              <Title15 style={{ marginBottom: "70px" }} active={this.onCompareStepBox(idx)}>
+                {v.desc2}
+              </Title15>
+            </>
+          ))} */}
+        </InnerBox>
+      </Container>
     );
   }
 }
 
 export default MobileBanner3Container;
 
-const Header = styled(Title.FontSize13)`
-  height: 19px;
-  color: #0933b3;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.46;
-  letter-spacing: normal;
-  margin-bottom: 3px;
-  text-align: center;
-`;
-const Middle = styled(Content.FontSize22)`
-  font-size: 23px !important;
-  height: 62px;
-  color: #282c36;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.64;
-  letter-spacing: -0.55px;
-  margin-bottom: 32px;
-  text-align: center;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    line-height: 1.45;
-  }
-  > span {
-    font-weight: bold;
-    display: block;
-  }
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
 `;
 
-const Body = styled(Content.FontSize15)`
-  font-size: 16px !important;
-  height: 44px;
+const InnerBox = styled.div`
+  width: 346px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Title20 = styled(Title.FontSize20)`
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.6;
+  line-height: 1.4;
+  letter-spacing: -0.5px;
+  color: #111111;
+`;
+
+const Title12 = styled(Title.FontSize12)`
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: -0.3px;
+  color: ${(props) => (props.active ? "#282c36" : "#8d8d8e")};
+`;
+
+const Title18 = styled(Title.FontSize18)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.22;
+  letter-spacing: -0.45px;
+  color: #000000;
+`;
+
+const Title15 = styled(Title.FontSize15)`
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.47;
   letter-spacing: -0.38px;
-  color: #414550;
-  margin-top: 18px;
-  text-align: center;
-  > span {
-    display: block;
-  }
+  color: #555963;
+`;
+
+const StepContainer = styled.div`
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+`;
+
+const StepBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70px;
+  cursor: pointer;
+`;
+
+const BlueDotImg = styled.img`
+  width: 5px;
+  height: 5px;
+  margin-top: 6px;
+  display: ${(props) => (props.active ? "inline-block" : "none")};
 `;

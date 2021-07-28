@@ -8,12 +8,12 @@ import Footer from "components/Footer";
 
 import { inject, observer } from "mobx-react";
 
-import ProducerContainer from "../../containers/Producer/index";
-import * as AccountAPI from "axios/Account";
+import ProducerContainer from "containers/Manufacture/Producer/index";
+import * as AccountAPI from "axios/Account/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
-@inject("Project")
+@inject("Project", "Auth")
 @observer
 class Index extends React.Component {
   static getInitialProps({ query }) {
@@ -26,6 +26,9 @@ class Index extends React.Component {
 
   async componentDidMount() {
     const { Auth, Home, Answer, Loading } = this.props;
+    console.log("producer didmount2");
+
+    Auth.previous_url = "producer";
 
     console.log(Auth);
     //창 크기
@@ -36,11 +39,11 @@ class Index extends React.Component {
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    console.log(window.location.href)
+    console.log(window.location.href);
     const req = {
       data: formData,
     };
-  
+
     AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
@@ -49,9 +52,9 @@ class Index extends React.Component {
         console.log(e);
         console.log(e.response);
       });
-    
   }
   componentWillUnmount() {
+    const { Auth } = this.props;
     window.removeEventListener("resize", this.updateDimensions);
   }
   updateDimensions = () => {
@@ -61,7 +64,7 @@ class Index extends React.Component {
   render() {
     const { width } = this.state;
     return (
-      <div>
+      <div onContextMenu={(e) => e.preventDefault()}>
         <Head>
           <title>볼트앤너트|제조사 찾기</title>
         </Head>

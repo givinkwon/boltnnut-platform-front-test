@@ -5,6 +5,9 @@ import Background from "components/Background";
 import * as Title from "components/Title";
 import Fade from "react-reveal/Fade";
 import Router from "next/router";
+import KSLink from "components/KSLink";
+import * as AccountAPI from 'axios/Account/Account'
+import axios from "axios";
 
 const image1 = "/static/images/banner_dot.png";
 const passImg = "/static/images/pass7.png";
@@ -20,6 +23,53 @@ class Banner13Container extends React.Component {
           <Box>
             <div>
               {/* <Header>민감 정보 선택 공개 서비스</Header> */}
+              <div
+                onClick={() => {
+                  const { Kakao } = window;
+                  console.log(Kakao.isInitialized());
+                  console.log(Kakao);
+                  const scopes = "profile";
+                  Kakao.Auth.login({
+                    // scopes,
+                    success: function (authObj) {
+                      console.log(authObj);
+                      // Kakao.Auth.setAccessToken(authObj.access_token);
+
+                      Kakao.API.request({
+                        url: "/v2/user/me",
+                        success: function ({ kakao_account }) {
+                          // const { profile } = kakao_account;
+                          // console.log(profile);
+                          console.log(kakao_account);
+                          // 로그인하기
+                          console.log(authObj.access_token, kakao_account.email)
+                          const req = {
+                            data: kakao_account,
+                            // headers : {
+                            //   Authorization : `bearer ${authObj.access_token}`
+                            // }
+                          };
+                      
+                          AccountAPI.SNSlogin(req)
+                            .then((res) => {
+                              console.log(res);
+                            })
+                            .catch((e) => {
+                              console.log(e);
+                              console.log(e.response);
+                            });
+                            },
+                            fail: function (error) {
+                              console.log(error);
+                            },
+                      });
+                      
+                    },
+                  });
+                }}
+              >
+                카카오로그인
+              </div>
               <Middle>
                 <p>대한민국 제조사 정보 여기 다 있다.</p>
               </Middle>
@@ -31,18 +81,17 @@ class Banner13Container extends React.Component {
                 </div>
 
                 <div>
-                  <div onClick={() => Router.push("/producer")}>
-                    <span>업체 정보 조회</span>
+                  <div>
+                    <LookupBtn>
+                      <KSLink url={"producer"} content={"업체 정보 조회"} />
+                    </LookupBtn>
                     <span>
                       <img src={passImg} />
                     </span>
                   </div>
                 </div>
-
-               
               </Body>
             </div>
-          
           </Box>
         </Containerv2>
       </div>
@@ -152,6 +201,7 @@ const Body = styled(Title.FontSize24)`
     align-items: center;
     > div {
       cursor: pointer;
+      background: #ffffff;
       margin-top: 60px;
       border: 2px solid #0933b3;
       border-radius: 4px;
@@ -161,14 +211,16 @@ const Body = styled(Title.FontSize24)`
       justify-content: center;
       align-items: center;
       box-sizing: border-box;
-      > span:nth-of-type(1) {
-        margin-right: 15px;
-        font-size: 26px;
-        line-height: 52px;
-        letter-spacing: -0.65px;
-        color: #0933b3;
-        font-weight: 500;
-      }
+      // > a {
+      //   > span:nth-of-type(1) {
+      //     margin-right: 15px;
+      //     font-size: 26px;
+      //     line-height: 52px;
+      //     letter-spacing: -0.65px;
+      //     color: #0933b3;
+      //     font-weight: 500;
+      //   }
+      // }
       > span:nth-of-type(2) {
         padding-top: 6px;
         > img {
@@ -178,4 +230,14 @@ const Body = styled(Title.FontSize24)`
       }
     }
   }
+`;
+const LookupBtn = styled.button`
+  background: none;
+  border: none;
+  margin-right: 15px;
+  font-size: 26px;
+  line-height: 52px;
+  letter-spacing: -0.65px;
+  color: #0933b3;
+  font-weight: 500;
 `;

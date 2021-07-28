@@ -9,12 +9,13 @@ import { createGlobalStyle } from "styled-components";
 import IE from "components/IE";
 import ScrollToTop from "components/ScrollToTop";
 import stores from "stores";
-import CheckBrowserModal from "../containers/Home/CheckBrowserModal";
+import CheckBrowserModal from "containers/Home/CheckBrowserModal";
 import PrepareModal from "../containers/Home/PrepareModal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import * as AccountAPI from "axios/Account";
+import * as AccountAPI from "axios/Account/Account";
+
 
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
@@ -81,7 +82,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class MyApp extends App {
-
   state = {
     ie_user: false,
     modal_shown: false,
@@ -141,7 +141,10 @@ class MyApp extends App {
     const formData = new FormData();
 
     formData.append("url", window.location.href);
-    formData.append("prevUrl", document.referrer);
+    document.referrer === ""
+      ? formData.append("prevUrl", "direct")
+      : formData.append("prevUrl", document.referrer);
+
     console.log(window.location.href);
     const req = {
       data: formData,
@@ -175,7 +178,7 @@ class MyApp extends App {
           handleClose={this.closeModal}
         />
         <Provider {...stores}>
-          <Component {...pageProps} />
+            <Component {...pageProps} />
         </Provider>
       </ScrollToTop>
     );

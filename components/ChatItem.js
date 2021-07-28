@@ -13,13 +13,11 @@ class ChatItemContainer extends React.Component {
     content: this.props.content,
   };
   componentDidMount() {
-    if(this.state.content)
-    {
+    if (this.state.content) {
       if (this.state.content.length > 44) {
         this.setState({ content: this.state.content.slice(0, 45) + " ···" });
       }
     }
-    
   }
   render() {
     return (
@@ -74,9 +72,10 @@ class ChatItemContainer extends React.Component {
               <Font18 style={{ marginLeft: 80 }}>{this.state.content}</Font18>
             </BoxLeft>
             <IconBox style={{ marginRight: 21 }}>
-              <GoToProject onClick={() => Router.push("/project")}>
+              <GoToProject
+                onClick={() => this.props.pushToDetail(this.props.project)}
+              >
                 <Font16
-                  onClick={() => this.props.pushToDetail(this.props.project)}
                   style={{ borderBottom: "1px solid", whiteSpace: "nowrap" }}
                 >
                   프로젝트 보기
@@ -167,7 +166,9 @@ const PartnerBox = styled.div`
   padding: 0 28px 0 28px;
 `;
 
-const GoToProject = styled.div`
+const GoToProject = styled.button`
+  border: none;
+  background: #ffffff;
   cursor: pointer;
 `;
 

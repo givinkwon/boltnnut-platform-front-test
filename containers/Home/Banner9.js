@@ -8,6 +8,7 @@ import Buttonv1 from "components/Buttonv1";
 import Fade from "react-reveal/Fade";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
+import KSLink from "components/KSLink";
 
 const passImg = "/static/images/pass7.png";
 const image1 = "/static/images/Home/Banner9/Banner9_img1.png";
@@ -48,27 +49,11 @@ class Banner9Container extends React.Component {
                   <Button
                     onClick={() => {
                       this.props.Auth.setType("expert");
-                      Router.push("/signup");
                     }}
                   >
-                    <span>파트너 가입하기</span>
-                    {/* <span>
-                      <img src={passImg} />
-                    </span> */}
+                    <KSLink url={"signup"} content={"파트너 가입하기"} />
                   </Button>
                 </div>
-
-                {/* <Buttonv1
-                  style={{
-                    height: 70,
-                    width: 316,
-                    margin: "0 auto",
-                    marginTop: 34,
-                  }}
-                  onClick={() => Router.push("/producer")}
-                >
-                  <Font24>지금 업체 찾기</Font24>
-                </Buttonv1> */}
               </div>
             </Fade>
           </Containerv1>
@@ -110,7 +95,7 @@ const Layer = styled.div`
   justify-content: center;
 `;
 
-const Button = styled.div`
+const Button = styled.button`
   cursor: pointer;
   margin-top: 34px;
   border: 2px solid #0933b3;
@@ -122,18 +107,18 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #0933b3;
-  > span:nth-of-type(1) {
-    font-size: 24px;
-    line-height: 52px;
-    letter-spacing: -0.65px;
-    color: #ffffff;
-    font-weight: 500;
-  }
-  > span:nth-of-type(2) {
-    padding-top: 6px;
-    > img {
-      width: 11px;
-      height: 21px;
-    }
-  }
+  // > a {
+  //   > span:nth-of-type(1) {
+  //     font-size: 24px;
+  //     line-height: 52px;
+  //     letter-spacing: -0.65px;
+  //     color: #ffffff;
+  //     font-weight: 500;
+  //   }
+  // }
+  font-size: 24px;
+  line-height: 52px;
+  letter-spacing: -0.65px;
+  color: #ffffff;
+  font-weight: 500;
 `;

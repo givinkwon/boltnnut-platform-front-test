@@ -7,7 +7,7 @@ import Nav from 'components/Nav'
 import MobileNav from 'components/MobileNav'
 import Footer from 'components/Footer'
 
-import ForgetIdConatiner from 'containers/ForgetId'
+import ForgetIdConatiner from 'containers/Account/ForgetId'
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 

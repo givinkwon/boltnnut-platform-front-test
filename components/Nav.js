@@ -11,8 +11,11 @@ import Containerv1 from "components/Containerv1";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
-import ChatTestContainer from "containers/Info2/ChatTest";
+import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
+import KSLink from "components/KSLink";
+
 const close_ic = "/static/icon/close.svg";
+const bnlogo = "/static/images/bnlogo.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
 const profile = "/static/images/profile.png";
@@ -29,11 +32,6 @@ class Nav extends React.Component {
     partnerList: [],
   };
 
-  makeUrl = (url) => {
-    if (typeof window !== 'undefined'){
-    return window.location.protocol + "//" + window.location.host + "/" + url;
-    }
-  };
   alreadyLoggedin = ["login", "signup"];
   needPermission = ["profile", "answer", "proposal", "offered", "account"];
   logout = () => {
@@ -127,12 +125,14 @@ class Nav extends React.Component {
             style={{ display: "inline", justifyContent: "space-between" }}
           >
             <NavWrap>
-              <Logo src={logo_ic} onClick={() => Router.push("/")} />
+              <BoltLogo>
+                <KSLink url={""} logoImg={bnlogo} />
+              </BoltLogo>
 
               <Menu is_open={is_open}>
                 <Close>
                   <Icon
-                    src={close_ic}
+                    src={bnlogo}
                     onClick={() => this.setState({ is_open: false })}
                   />
                 </Close>
@@ -140,135 +140,143 @@ class Nav extends React.Component {
                 {this.props.Auth.logged_in_user ? (
                   this.props.Auth.logged_in_user.type === 0 ? (
                     /* client로 로그인 */
-
                     <Fragment>
-                      <NavLink
-                        onClick={() => Router.push("/producer")}
-                        active={url.indexOf("producer") > -1}
-                      >
-                        <p class="line"> 제조사 찾기 </p>
+                      <NavLink active={url.indexOf("producer") > -1}>
+                        <KSLink url={"producer"} content={"제조사 찾기"} />
                       </NavLink>
 
-                      <NavLink
-                        onClick={() => Router.push("/project")}
-                        active={url.indexOf("project") > -1}
-                      >
-                        <p class="line"> 프로젝트 관리 </p>
+                      <NavLink active={url.indexOf("project") > -1}>
+                        <KSLink url={"project"} content={"프로젝트 의뢰"} />
                       </NavLink>
 
-                      <NavLink
-                        onClick={() => Router.push("/magazine")}
-                        active={url.indexOf("magazine") > -1}
-                      >
-                        <p class="line"> 제조 인사이트</p>
+                      <NavLink active={url.indexOf("magazine") > -1}>
+                        <KSLink url={"magazine"} content={"제조 인사이트"} />
                       </NavLink>
                     </Fragment>
                   ) : (
                     /* partner로 로그인 */
                     <Fragment>
-                      <NavLink
-                        onClick={() => Router.push("/project")}
-                        active={url.indexOf("project") > -1}
-                      >
+                      <NavLink active={url.indexOf("project") > -1}>
                         {console.log(url)}
-                        {/* <p class="line"> 프로젝트 찾기 </p> */}
-                        프로젝트 찾기
+                        <KSLink url={"producer"} content={"제조사 찾기"} />
                       </NavLink>
-                      <NavLink
-                        onClick={() => Router.push("/magazine")}
-                        active={url.indexOf("magazine") > -1}
-                      >
-                        제조 인사이트
+                      <NavLink active={url.indexOf("project") > -1}>
+                        {console.log(url)}
+                        <KSLink url={"project"} content={"프로젝트 찾기"} />
+                      </NavLink>
+                      <NavLink active={url.indexOf("magazine") > -1}>
+                        <KSLink url={"magazine"} content={"제조 인사이트"} />
                       </NavLink>
                     </Fragment>
                   )
                 ) : (
                   /* 로그인 안되어있는 경우 */
                   <Fragment>
-                    <NavLink
-                      onClick={() => Router.push("/producer")}
-                      active={url.indexOf("producer") > -1}
-                    >
-                      {/* <p class="line"> 프로젝트 찾기 </p> */}제조사 찾기
+                    <NavLink active={url.indexOf("producer") > -1}>
+                      <KSLink url={"producer"} content={"제조사 찾기"} />
                     </NavLink>
-
-                    {/* <NavLink
-                      onClick={() => Router.push("/project")}
-                      active={url.indexOf("project") > -1}
-                    >
-                      <p class="line"> 프로젝트 찾기 </p>
-                    </NavLink> */}
-
-                    <NavLink
-                      // onClick={() => Router.push("/magazine")}
-                      active={url.indexOf("magazine") > -1}
-                    >
-                      <a href={this.makeUrl("magazine")}>제조 인사이트</a>
+                    <NavLink active={url.indexOf("project") > -1}>
+                      <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                    </NavLink>
+                    <NavLink active={url.indexOf("magazine") > -1}>
+                      <KSLink url={"magazine"} content={"제조 인사이트"} />
                       {/* 제조 인사이트 */}
                     </NavLink>
                   </Fragment>
                 )}
+              </Menu>
+              <Menu>
                 {/* 로그인한/안한 경우 */}
                 {token ? (
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Avatar
-                      src={profile}
-                      onClick={() => this.setState({ is_profile: !is_profile })}
-                    />
-                    {is_profile && (
-                      <ProfileMenu>
-                        <div></div>
-                        <div>
-                          <div onClick={() => Router.push("/chatting")}>
-                            <Font16>채팅하기</Font16>
-                          </div>
+                  <>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <Avatar
+                        src={profile}
+                        onClick={() =>
+                          this.setState({ is_profile: !is_profile })
+                        }
+                      />
+                      {is_profile && (
+                        <ProfileMenu>
+                            <div>
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink
+                                    url={"profile"}
+                                    content={"정보수정"}
+                                  />
+                                </Font16>
+                              </Button>
+                            </div>
 
-                          <div onClick={() => Router.push("/account?tab=1")}>
-                            <Font16>계정설정</Font16>
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink
+                                    url={"chatting"}
+                                    content={"채팅하기"}
+                                  />
+                                </Font16>
+                              </Button>
+                            </div>
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink
+                                    url={"account?tab=1"}
+                                    content={"계정설정"}
+                                  />
+                                </Font16>
+                              </Button>
+                            </div>
                           </div>
-                        </div>
-                        <div
-                          style={{ backgroundColor: "#f3f3f3" }}
-                          onClick={this.logout}
-                        >
-                          <Font16>로그아웃</Font16>
-                        </div>
-                      </ProfileMenu>
-                    )}
-                  </div>
+                        </ProfileMenu>
+                      )}
+                    </div>
+
+                    <NavLink onClick={this.logout}>
+                      <KSLink url={""} content={"로그아웃"} />
+                      {/* 로그아웃 */}
+                    </NavLink>
+                  </>
                 ) : (
-                  <NavLink
-                    onClick={() => {
-                      // Router.push("/login"), Auth.reset();
-                      Auth.reset();
-                    }}
-                    active={url.indexOf("login") > -1}
-                  >
-                    <a href={this.makeUrl("login")}>로그인</a>
-                    {/* 로그인 */}
-                  </NavLink>
+                  <>
+                    <NavLink
+                      onClick={() => {
+                        this.props.Auth.setType("detailexpert");
+                        Router.push("/signup");
+                      }}
+                      active={
+                        url.indexOf("signup") > -1 &&
+                        Auth.type == "detailexpert"
+                      }
+                    >
+                      파트너 등록하기
+                    </NavLink>
+                    |
+                    <NavLink
+                      onClick={() => {
+                        this.props.Auth.setType("client");
+                        Router.push("/signup");
+                      }}
+                      active={
+                        url.indexOf("signup") > -1 && Auth.type == "client"
+                      }
+                    >
+                      회원가입
+                    </NavLink>
+                    <NavLink
+                      onClick={() => {
+                        Auth.reset();
+                      }}
+                      active={url.indexOf("login") > -1}
+                    >
+                      <KSLink url={"login"} content={"로그인"} />
+                      {/* 로그인 */}
+                    </NavLink>
+                  </>
                 )}
-
-                {/* {this.props.Auth.logged_in_user &&
-                this.props.Auth.logged_in_user.type === 1 ? (
-                  partner로 로그인 
-                  <ButtonContainer
-                    first
-                    onClick={() => Router.push("/project")}
-                    active={url.indexOf("project") > -1}
-                  >
-                    프로젝트 관리
-                  </ButtonContainer>
-                ) : (
-                  <></>
-                  <ButtonContainer
-                    first
-                    onClick={() => Router.push("/producer")}
-                    active={url.indexOf("producer") > -1}
-                  >
-                    제조사 찾기
-                  </ButtonContainer>
-                )} */}
               </Menu>
               <Icon
                 src={hamburger_ic}
@@ -287,6 +295,10 @@ class Nav extends React.Component {
 }
 export default Nav;
 
+const BoltLogo = styled.button`
+  background: none;
+  border: None;
+`;
 const Layer = styled.div`
   position: fixed;
   top: 0;
@@ -303,28 +315,6 @@ const ProfileMenu = styled.div`
   overflow: hidden;
   margin-top: 50px;
   width: 14em;
-  // > div {
-  //   padding: 15px 20px;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   cursor: pointer;
-  //   > p {
-  //     color: #414550;
-  //     font-weight: 500;
-  //   }
-  // :hover {
-  //   background-color: #f3f3f3;
-  //   > p {
-  //     color: ${PRIMARY};
-  //   }
-  // }
-  // }
-  // >div:nth-of-type(1){
-  //   padding: 17px 20px;
-  //   display: flex;
-  //   align-items: center;
-  // }
   > div:nth-of-type(2) {
     cursor: pointer;
     padding: 17px 0;
@@ -380,6 +370,9 @@ const NavWrap = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
+  > div:nth-of-type(1) {
+    margin-left: 60px !important;
+  }
 `;
 const Logo = styled.img`
   cursor: pointer;
@@ -545,4 +538,9 @@ const Font17 = styled(Content.FontSize17)`
   line-height: 1.76;
   letter-spacing: -0.17px;
   text-align: left;
+`;
+
+const Button = styled.button`
+  background: none;
+  border: none;
 `;

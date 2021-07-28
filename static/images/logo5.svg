@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="24" viewBox="0 0 40 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #191919;
+        font-size: 16px;
+        font-family: NotoSansCJKkr-Bold, Noto Sans CJK KR;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+    </style>
+  </defs>
+  <text id="TAJO" class="cls-1" transform="translate(0 19)"><tspan x="0" y="0">TAJO</tspan></text>
+</svg>
