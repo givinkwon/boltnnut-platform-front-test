@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
+import { inject, observer } from "mobx-react";
+import ButtonSpinnerComponent from "components/ButtonSpinner";
 
 const signupdot = "/static/images/signupdot.svg";
 const signupsearch = "/static/images/signupsearch.svg";
@@ -14,12 +16,14 @@ const aa = [
   { content: "만ㅁㄴㅇㅁㄴㅇㅁㄴㅇ", test: "(선택)" },
 ];
 
-// const checkboxState = [false, false, false];
+@inject("Auth")
+@observer
 class SnsClientSignupContainer extends React.Component {
   state = {
     checkboxState: [false, false, false],
   };
   render() {
+    const { Auth } = this.props;
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
@@ -32,7 +36,13 @@ class SnsClientSignupContainer extends React.Component {
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
-            <CustomInput placeholder="이름을 입력해 주세요." />
+            <CustomInput
+              placeholder="이름을 입력해 주세요."
+              onChange={(e) => {
+                Auth.setName(e.currentTarget.value);
+              }}
+              value={Auth.name}
+            />
           </InputInnerBox>
 
           {/* company name */}
@@ -40,7 +50,13 @@ class SnsClientSignupContainer extends React.Component {
             <Title18>회사명</Title18>
 
             <div style={{ display: "flex", alignItems: "center" }}>
-              <CustomInput placeholder="근무하는 회사명을 입력해 주세요." />
+              <CustomInput
+                placeholder="근무하는 회사명을 입력해 주세요."
+                onChange={(e) => {
+                  Auth.setCompanyName(e.currentTarget.value);
+                }}
+                value={Auth.company_name}
+              />
               <ImgBox src={signupsearch} style={{ marginRight: "22px" }} />
             </div>
 
@@ -54,7 +70,13 @@ class SnsClientSignupContainer extends React.Component {
           <InputInnerBox>
             <Title18>업종</Title18>
             <DropDownSelectorsBox>
-              <SectorsInput placeholder="옵션을 선택해 주세요." />
+              <SectorsInput
+                placeholder="옵션을 선택해 주세요."
+                onChange={(e) => {
+                  Auth.setBusiness(e.currentTarget.value);
+                }}
+                value={Auth.business}
+              />
               <img src={dropdown} style={{ marginRight: "15px" }} />
             </DropDownSelectorsBox>
           </InputInnerBox>
@@ -79,6 +101,7 @@ class SnsClientSignupContainer extends React.Component {
                       // this.state.checkboxState[idx] = e.currentTarget.checked;
                       const a = this.state.checkboxState;
                       a[idx] = e.currentTarget.checked;
+
                       this.setState({ checkboxState: a });
                     }}
                   />
@@ -93,47 +116,18 @@ class SnsClientSignupContainer extends React.Component {
             {this.state.checkboxState.map((item, idx) => {
               return <>{item.toString()} / </>;
             })}
-            {/* <AgreeInnerBox style={{ marginTop: "14px" }}>
-              <CustomCheckBox type="checkbox" />
-              <Title15>만 14세 이상입니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
-                (필수)
-              </Title14>
-            </AgreeInnerBox>
-
-            <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
-              <CustomCheckBox type="checkbox" />
-              <Title15>이용약관 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
-                (필수)
-              </Title14>
-              <ImgBox src={viewterms} />
-            </AgreeInnerBox>
-
-            <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
-              <CustomCheckBox type="checkbox" />
-              <Title15>개인정보 처리방침 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
-                (필수)
-              </Title14>
-              <ImgBox src={viewterms} />
-            </AgreeInnerBox>
-
-            <AgreeInnerBox>
-              <CustomCheckBox
-                type="checkbox"
-                onChange={(e) => console.log(e.currentTarget.checked)}
-              />
-              <Title15>마케팅 정보 수신에 동의합니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
-                (선택)
-              </Title14>
-            </AgreeInnerBox> */}
           </AgreeContainer>
-
-          <SubmitButton>
-            <ButtonText>가입하기</ButtonText>
-          </SubmitButton>
+          {Auth.loading ? (
+            <ButtonSpinnerComponent scale="50%" primary />
+          ) : (
+            <SubmitButton
+              onClick={() => {
+                Auth.snsClientSignup();
+              }}
+            >
+              <ButtonText>가입하기</ButtonText>
+            </SubmitButton>
+          )}
         </Container>
       </div>
     );
