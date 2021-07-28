@@ -53,6 +53,7 @@ class Profile {
   @observable process_checked = [];
 
   /* 파트너 등록하기 */
+  @observable authenticationFile = "";
   @observable authenticationFileArray = [];
   @observable authenticationFileName = "";
   @observable authenticationCheckFileUpload = false;
@@ -379,7 +380,6 @@ class Profile {
 
           // 회사소개서 파일
           this.file = res.data.data.Partner[0].file;
-
 
           // this.introductionFile.push({name : this.file}) // 오류남
           console.log(this.file);
@@ -1449,7 +1449,9 @@ class Profile {
       for (var item in e.currentTarget.files) {
         console.log(item);
         if (typeof e.currentTarget.files[item] === "object") {
-          this.authenticationFileArray.push(e.currentTarget.files[item]);
+          this.authenticationFile = e.currentTarget.files[item];
+          // this.authenticationFileArray.push(e.currentTarget.files[item]);
+          console.log(this.authenticationFile);
         } else {
           break;
         }
