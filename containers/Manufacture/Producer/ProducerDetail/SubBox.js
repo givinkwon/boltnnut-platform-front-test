@@ -2,6 +2,8 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
+import { withRouter } from "next/router";
+import Router from "next/router";
 
 const userImg = "/static/images/producer/user.svg";
 
@@ -72,7 +74,7 @@ class SubBoxContainer extends React.Component {
                   Partner.clickHandler("project");
                   Request.partner_request(partnerId);
 
-                  location.href = Common.makeUrl("request");
+                  Router.push("/request")
                   this.setState({ g: 3 });
                 }}
               >
