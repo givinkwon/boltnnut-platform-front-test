@@ -3,7 +3,6 @@ import Router from "next/router";
 import * as AccountAPI from "axios/Account/Account";
 import * as CategoryAPI from "axios/Account/Category";
 import Account from "pages/account";
-import Category from "stores/Manufacture/Category";
 
 class Auth {
   constructor() {
@@ -41,7 +40,6 @@ class Auth {
   @observable path = null;
   @observable business = null;
   @observable business2 = null;
-  @observable business3 = null;
   @observable city = null;
   @observable region = null;
   @observable info_company = "";
@@ -62,6 +60,9 @@ class Auth {
 
   @observable previous_url = "";
 
+  @observable checkboxState = [false, false, false, false];
+  @observable allCheckState = false;
+
   @action kakaoSignup = () => {
     Router.push("/kakao");
   };
@@ -81,61 +82,6 @@ class Auth {
           success: function ({ kakao_account }) {
             // const { profile } = kakao_account;
             // console.log(profile);
-
-            const req = {
-              data: {
-                token: authObj.access_token,
-                username: "kstest@naver.cp",
-                // username: kakao_account.email,
-                sns: 1,
-              },
-            };
-            console.log(req);
-
-            //POST to "${ROOT_URL}/snsuser/login/"
-            AccountAPI.SNSlogin(req)
-              //아이디가 DB에 이미 존재할 때
-              .then((res) => {
-                console.log(res);
-
-                this.logged_in_user = res.data.data.User;
-
-                if (this.logged_in_user.type === 0) {
-                  this.logged_in_client = res.data.data.Client[0];
-                  console.log(this.logged_in_client);
-                } else if (this.logged_in_user.type === 1) {
-                  this.logged_in_partner = res.data.data.Partner[0];
-                  console.log(this.logged_in_partner);
-                }
-
-                const token = res.data.data.token;
-                if (!this.always_login) {
-                  const now = new Date();
-                  let tomorrow = new Date();
-                  tomorrow.setDate(now.getDate() + 1);
-
-                  localStorage.setItem("expiry", tomorrow.getTime().toString());
-                }
-                localStorage.setItem("token", token);
-
-                setTimeout(() => {
-                  this.loading = false;
-
-                  if (this.previous_url == "" || this.previous_url == null) {
-                    Router.push("/");
-                  } else {
-                    console.log(this.previous_url);
-                    Router.push("/" + this.previous_url);
-                    this.previous_url = "";
-                  }
-                }, 800);
-              })
-              //아이디가 DB에 없을 때
-              .catch((res) => {
-                console.log(res);
-                // this.kakaoSignup();
-                Router.push("/signup");
-              });
             console.log(kakao_account);
           },
           fail: function (error) {
@@ -259,9 +205,7 @@ class Auth {
     this.city = obj;
     this.region = null;
     const city_data = this.city_data;
-    this.region_data = city_data.filter(
-      (item) => item.id === obj.id
-    )[0].region_set;
+    this.region_data = city_data.filter((item) => item.id === obj.id)[0].region_set;
   };
   @action setRegion = (obj) => {
     this.region = obj;
@@ -274,9 +218,6 @@ class Auth {
   };
   @action setBusiness2 = (obj) => {
     this.business2 = obj;
-  };
-  @action setBusiness3 = (obj) => {
-    this.business3 = obj;
   };
 
   @action getCityData = () => {
@@ -301,10 +242,9 @@ class Auth {
   };
 
   @action getBusinessData = () => {
-    CategoryAPI.getBusiness_client()
+    CategoryAPI.getBusiness()
       .then((res) => {
         this.business_data = res.data.results;
-        console.log(this.business_data);
       })
       .catch((e) => {
         console.log(e);
@@ -526,7 +466,6 @@ class Auth {
     };
     AccountAPI.login(req)
       .then((res) => {
-        console.log(res);
         this.logged_in_user = res.data.data.User;
 
         if (this.logged_in_user.type === 0) {
@@ -716,10 +655,10 @@ class Auth {
         return;
       }
 
-      // if (this.category_set.length === 0) {
-      //   await alert("개발분야를 선택 해주세요.");
-      //   return;
-      // }
+      if (this.category_middle_set.length === 0) {
+        await alert("개발분야를 선택 해주세요.");
+        return;
+      }
 
       if (!this.file) {
         await alert("회사소개서를 입력해주세요.");
@@ -758,24 +697,24 @@ class Auth {
       formData.append("phone", this.phone);
       formData.append("type", 1);
       formData.append("marketing", this.marketing);
-      formData.append("logo", this.logo);
+
       formData.append("name", this.company_name);
+      //   formData.append("employee", this.employee);
+      //  formData.append("career", this.career);
+      //  formData.append("revenue", this.revenue);
       formData.append("city", this.city.id);
+      //  formData.append("region", this.region.id);
+
+      formData.append("info_biz", this.info_biz);
       formData.append("deal", this.deal);
       formData.append("info_company", this.info_company);
+      {
+        /*formData.append("possible_set", possible_set);*/
+      }
       formData.append("history", this.histories);
 
-      // 카테고리 추가
-      console.log(Category.business_selected);
-      console.log(Category.category_selected);
-      console.log(Category.develop_selected);
-      console.log(Category.material_selected);
-      formData.append("business", Category.business_selected);
-      formData.append("category", Category.category_selected);
-      formData.append("develop", Category.develop_selected);
-      formData.append("material", Category.material_selected);
-
-      // 파일 추가
+      formData.append("category_middle", this.category_middle_set);
+      formData.append("logo", this.logo);
       formData.append("file", this.file);
       formData.append("resume", this.resume);
 

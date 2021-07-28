@@ -1,14 +1,15 @@
 import React from "react";
 import Head from "next/head";
-import Form from "./Form";
-import DefaultLoginContainer from "./DefaultLogin";
+
+import LoginContainer from "./Login";
+
 
 class LoginConatiner extends React.Component {
   render() {
     return (
       <>
-        <DefaultLoginContainer />
-        {/* <Form /> */}
+        <LoginContainer />
+
       </>
     );
   }
