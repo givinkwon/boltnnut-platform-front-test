@@ -210,21 +210,33 @@ class SearchFilterConatiner extends React.Component {
       if (this.state.category_arrow) {
         this.setState({ category_arrow: false });
       } else {
-        this.setState({ category_arrow: true });
+        this.setState({
+          category_arrow: true,
+          classify_arrow: false,
+          location_arrow: false,
+        });
       }
     }
     if (flag == "classify_arrow") {
       if (this.state.classify_arrow) {
         this.setState({ classify_arrow: false });
       } else {
-        this.setState({ classify_arrow: true });
+        this.setState({
+          classify_arrow: true,
+          category_arrow: false,
+          location_arrow: false,
+        });
       }
     }
     if (flag == "location_arrow") {
       if (this.state.location_arrow) {
         this.setState({ location_arrow: false });
       } else {
-        this.setState({ location_arrow: true });
+        this.setState({
+          location_arrow: true,
+          category_arrow: false,
+          classify_arrow: false,
+        });
       }
     }
   };
@@ -292,6 +304,7 @@ class SearchFilterConatiner extends React.Component {
             </div>
             <Material>
               <div
+                style={{ cursor: "pointer" }}
                 onClick={() => {
                   this.dropdownHandler("develop&material");
                 }}
