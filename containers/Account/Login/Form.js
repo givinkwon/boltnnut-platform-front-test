@@ -52,7 +52,8 @@ class FormConatiner extends React.Component {
   };
 
   toKakaoSignUp = () => {
-    Router.push("/signup/kakao");
+    this.props.Auth.kakaoLogin();
+    // Router.push("/signup/kakao");
   };
   toForgotID = () => {
     this.props.Auth.reset();

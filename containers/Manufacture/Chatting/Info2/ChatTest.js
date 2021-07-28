@@ -395,8 +395,9 @@ class ChatTestContainer extends React.Component {
     //============================================= onopen 시작 ============================================================
     this.chatSocket.onopen = async () => {
       // alert("Open");
+      console.log(this.props.projectId);
       await this.props.Project.getProjectDetail(this.props.projectId);
-
+      console.log(Project.projectDetailData);
       await this.props.Partner.getClientInfo(
         Project.projectDetailData.request_set[0].client
       );
