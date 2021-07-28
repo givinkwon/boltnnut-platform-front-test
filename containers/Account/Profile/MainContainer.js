@@ -22,233 +22,95 @@ const checkImg = "/static/images/producer/check.svg";
 class MainContainer extends React.Component {
   async componentDidMount() {
     const { Category, Profile } = this.props;
-    await Category.init();
-    console.log(Category.business_list);
-    var mainCategoryTypeDic = {};
-    var subCategoryTypeDic = {};
-    mainCategoryTypeDic["business"] = Category.mainbusiness_list;
-    mainCategoryTypeDic["category"] = Category.maincategory_list;
-    mainCategoryTypeDic["city"] = Category.city_list;
-    mainCategoryTypeDic["material"] = Category.mainmaterial_list;
-    mainCategoryTypeDic["develop"] = Category.developbig_list;
+    // await Profile.checkLogin();
+    console.log(toJS(Profile.info_company));
+    console.log(toJS(Profile.portfolio_set));
 
-    // 파트너 데이터 가져오기
-    await Profile.checkLogin();
-    // console.log(Category.mainbusiness_list);
-
-    this.setState({ mainCategoryTypeDic: mainCategoryTypeDic });
-    console.log(this.state.mainCategoryTypeDic);
+    //   await Category.init();
+    //   console.log(Category.business_list);
+    //   var mainCategoryTypeDic = {};
+    //   var subCategoryTypeDic = {};
+    //   mainCategoryTypeDic["business"] = Category.mainbusiness_list;
+    //   mainCategoryTypeDic["category"] = Category.maincategory_list;
+    //   mainCategoryTypeDic["city"] = Category.city_list;
+    //   mainCategoryTypeDic["material"] = Category.mainmaterial_list;
+    //   mainCategoryTypeDic["develop"] = Category.developbig_list;
+    //   // 파트너 데이터 가져오기
+    //
+    //   // console.log(Category.mainbusiness_list);
+    //   this.setState({ mainCategoryTypeDic: mainCategoryTypeDic });
+    //   console.log(this.state.mainCategoryTypeDic);
+    // }
+    // state = {
+    //   mainSelectIdx: 0,
+    //   subSelectIdx: 0,
+    //   mainCategoryTypeDic: {},
+    //   // 공정 대분류
+    //   develop_active: false,
+    //   // 소재 대분류
+    //   material_active: false,
+    // };
+    // activeHandler = (type, idx) => {
+    //   const { Category } = this.props;
+    //   if (type === "main") {
+    //     if (idx === this.state.mainSelectIdx) {
+    //       return true;
+    //     } else {
+    //       return false;
+    //     }
+    //   } else {
+    //     if (Category.category_selected.includes(idx)) {
+    //       return true;
+    //     } else {
+    //       return false;
+    //     }
+    //   }
   }
-  state = {
-    mainSelectIdx: 0,
-    subSelectIdx: 0,
-    mainCategoryTypeDic: {},
 
-    // 공정 대분류
-    develop_active: false,
-    // 소재 대분류
-    material_active: false,
-  };
-  activeHandler = (type, idx) => {
-    const { Category } = this.props;
+  // buttonClick = (type, idx) => {
+  //   const { Category } = this.props;
 
-    if (type === "main") {
-      if (idx === this.state.mainSelectIdx) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      if (Category.category_selected.includes(idx)) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  };
-
-  buttonClick = (type, idx) => {
-    const { Category } = this.props;
-
-
-      if (Category.categoryActiveHandler(idx, type)) {
-        console.log("remove selected");
-        console.log(type, idx)
-        Category.remove_selected(type, idx);
-      } else {
-        console.log("add selected");
-        console.log(type, idx)
-        Category.add_selected(type, idx);
-    }
-
-  };
+  //   if (Category.categoryActiveHandler(idx, type)) {
+  //     console.log("remove selected");
+  //     console.log(type, idx);
+  //     Category.remove_selected(type, idx);
+  //   } else {
+  //     console.log("add selected");
+  //     console.log(type, idx);
+  //     Category.add_selected(type, idx);
+  //   }
+  // };
 
   // 모달 종료하기
-  modalclose = () => {
-    const { Partner } = this.props;
+  // modalclose = () => {
+  //   const { Partner } = this.props;
 
-    Partner.filter_dropdown = false;
-  };
+  //   Partner.filter_dropdown = false;
+  // };
 
   render() {
-    const { Category, Profile } = this.props;
+    const { Category, Profile, type, width } = this.props;
+    const type1 = "business";
     return (
       <Container>
-        <Name>(주)동성실리콘</Name>
+        <Name>{Profile.company_name}</Name>
         <Description>
-          해당 정보를 채울수록 클라이언트에게 '동성 실리콘'(가)이 노출될 확률이
-          올라가요!
+          해당 정보를 채울수록 클라이언트에게 '{Profile.company_name}'(가)이
+          노출될 확률이 올라가요!
         </Description>
         <div style={{ width: "100%" }}>
-          <SubCategoryBox>
-            전문분야
-            <SubInnerBox>
-              {console.log(toJS(Category.mainbusiness_list))}
-              {/* 카테고리 선택 */}
-              {Category.mainbusiness_list &&
-                Category.mainbusiness_list.map((data, idx) => {
-                  return data.business_set.map((sub_data, idx) => {
-
-                    return (
-                      <SubCategoryButton
-                        onClick={() => {
-                          this.buttonClick("business", sub_data.id);
-                        }}
-                        active={Category.categoryActiveHandler(
-                          sub_data.id,
-                          "business"
-                        )}
-                      >
-                        <CheckBox
-                          active={Category.categoryActiveHandler(
-                            sub_data.id,
-                            "business"
-                          )}
-                        >
-                          <img src={checkImg} />
-                        </CheckBox>
-                        <SubCategoryFont>{sub_data.category}</SubCategoryFont>
-                      </SubCategoryButton>
-                    );
-                  });
-                })}
-            </SubInnerBox>
-          </SubCategoryBox>
+          <SelectCard name="전문분야" id="1" type="category" />
+          <SelectCard name="제품분야" id="2" type="business" />
+          <SelectCard name="취급소재" id="3" type="material" />
+          <SelectCard name="전문공정" id="4" type="develop" />
         </div>
 
-        <div style={{ width: "100%" }}>
-          <SubCategoryBox>
-            제품분야
-            <SubInnerBox>
-              {/* 카테고리 선택 */}
-              {Category.maincategory_list &&
-                Category.maincategory_list.map((data, idx) => {
-                  return data.category_set.map((sub_data, idx) => {
-                    // console.log(toJS(sub_data.category))
-                    return (
-                      <SubCategoryButton
-                        onClick={() => {
-                          this.buttonClick("category", sub_data.id);
-                        }}
-                        active={Category.categoryActiveHandler(
-                          sub_data.id,
-                          "category"
-                        )}
-                      >
-                        <CheckBox
-                          active={Category.categoryActiveHandler(
-                            sub_data.id,
-                            "category"
-                          )}
-                        >
-                          <img src={checkImg} />
-                        </CheckBox>
-                        <SubCategoryFont>{sub_data.category}</SubCategoryFont>
-                      </SubCategoryButton>
-                    );
-                  });
-                })}
-            </SubInnerBox>
-          </SubCategoryBox>
-        </div>
-
-        <div style={{ width: "100%" }}>
-          <SubCategoryBox>
-            취급소재
-            <SubInnerBox>
-              {/* 카테고리 선택 */}
-              {Category.mainmaterial_list &&
-                Category.mainmaterial_list.map((data, idx) => {
-                  return data.material_set.map((sub_data, idx) => {
-                    //  console.log(toJS(sub_data.category))
-                    return (
-                      <SubCategoryButton
-                        onClick={() => {
-                          this.buttonClick("material", sub_data.id);
-                        }}
-                        active={Category.categoryActiveHandler(
-                          sub_data.id,
-                          "material"
-                        )}
-                      >
-                        <CheckBox
-                          active={Category.categoryActiveHandler(
-                            sub_data.id,
-                            "material"
-                          )}
-                        >
-                          <img src={checkImg} />
-                        </CheckBox>
-                        <SubCategoryFont>{sub_data.category}</SubCategoryFont>
-                      </SubCategoryButton>
-                    );
-                  });
-                })}
-            </SubInnerBox>
-          </SubCategoryBox>
-        </div>
-
-        <div style={{ width: "100%" }}>
-          <SubCategoryBox>
-            전문공정
-            <SubInnerBox>
-              {/* 카테고리 선택 */}
-              {Category.developbig_list &&
-                Category.developbig_list.map((data, idx) => {
-                  return data.develop_set.map((sub_data, idx) => {
-                    // console.log(toJS(sub_data.category))
-                    return (
-                      <SubCategoryButton
-                        onClick={() => {
-                          this.buttonClick("develop", sub_data.id);
-                        }}
-                        active={Category.categoryActiveHandler(
-                          sub_data.id,
-                          "develop"
-                        )}
-                      >
-                        <CheckBox
-                          active={Category.categoryActiveHandler(
-                            sub_data.id,
-                            "develop"
-                          )}
-                        >
-                          <img src={checkImg} />
-                        </CheckBox>
-                        <SubCategoryFont>{sub_data.category}</SubCategoryFont>
-                      </SubCategoryButton>
-                    );
-                  });
-                })}
-            </SubInnerBox>
-          </SubCategoryBox>
-        </div>
         <Authentication></Authentication>
         <Explaination info_company={Profile.info_company}></Explaination>
         <Product histories={Profile.histories}></Product>
         <Introduction file={Profile.file}></Introduction>
-        <Portfolio Portfolio_set={Profile.Portfolio_set}></Portfolio>
-        <Location region={Profile.region}></Location>
+        <Portfolio Portfolio_set={Profile.portfolio_set}></Portfolio>
+        <Location region={Profile.region} width={width}></Location>
       </Container>
     );
   }
@@ -258,9 +120,9 @@ export default MainContainer;
 
 const Container = styled.div`
   //   border: 3px solid red;
-  flex-grow: 5;
+  // flex-grow: 5;
   padding-left: 30px;
-  width: 100%;
+  width: 72%;
 `;
 
 const Name = styled.div`
@@ -367,5 +229,65 @@ const CheckBox = styled.div`
       width: 17px;
       height: 17px;
     }
+  }
+`;
+
+const MainCategoryBox = styled.div`
+  height: 100%;
+  width: 26.6%;
+  border-right: 1px solid #e1e2e4;
+  // overflow-y: scroll;
+`;
+
+const MainCategoryButton = styled.div`
+  background: ${(props) => (props.active ? "#ededef" : "none")};
+  height: 46px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px 12px 20px;
+  box-sizing: border-box;
+  > img {
+    display: ${(props) => (props.active ? "block" : "none")};
+  }
+  > p {
+    color: ${(props) => props.active && "#0933b3"};
+  }
+  cursor: pointer;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    padding: 3px;
+    > img {
+      width: 12px;
+      height: 12px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    padding: 6px 6px 6px 9px;
+    > img {
+      width: 14px;
+      height: 14px;
+    }
+  }
+`;
+
+const MainCategoryFont = styled(Content.FontSize15)`
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "normal")};
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.27;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: ${(props) => (props.color ? props.color : "#282c36")};
+  word-break: break-word;
+}
+
+
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 11px;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 13px;
   }
 `;

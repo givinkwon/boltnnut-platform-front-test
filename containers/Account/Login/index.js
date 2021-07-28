@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Form from "./Form";
 import DefaultLoginContainer from "./DefaultLogin";
 
 class LoginConatiner extends React.Component {
@@ -7,6 +8,7 @@ class LoginConatiner extends React.Component {
     return (
       <>
         <DefaultLoginContainer />
+        {/* <Form /> */}
       </>
     );
   }

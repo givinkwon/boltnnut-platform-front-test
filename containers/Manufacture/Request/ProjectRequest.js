@@ -5,12 +5,15 @@ import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import InputComponent from "AddFile2";
 
+
 import Buttonv1 from "components/Buttonv1";
+
 
 const reqeustlogo = "./static/images/request/request_logo.svg";
 const starred = "./static/images/request/star_red.svg";
 const down_arrow = "./static/images/request/down_arrow.svg";
 const help_face = "./static/images/request/help_face.svg";
+
 const checkbox = "./static/images/request/checkbox.svg";
 
 class ProjectRequest extends React.Component {
@@ -157,6 +160,7 @@ class ProjectRequest extends React.Component {
             <InputComponent file={true} isOpen={true} />
           </RequestContentBox>
         </Body>
+
       </>
     );
   }
@@ -175,14 +179,20 @@ const Header = styled.div`
   font-family: NotoSansCJKkr;
 `;
 
+
+`;
+
 const Title = styled.div`
+  font-family: NotoSansCJKkr;
   font-size: 32px;
   font-weight: 500;
   color: #1e2222;
   margin-top: 20px;
 `;
 
+
 const Body = styled.div``;
+
 
 const Content = styled.div``;
 
@@ -221,6 +231,7 @@ const Button = styled.div`
   letter-spacing: -0.4px;
 `;
 
+
 const Budget = styled.div`
   display: flex;
   flex-direction: column;
@@ -234,12 +245,15 @@ const BudgetBox = styled.div`
   height: 42px;
   border-radius: 3px;
   border: solid 1px #c6c7cc;
+
   margin-right: 16px;
+
 `;
 
 const BudgetCheckbox = styled.div`
   display: flex;
   justify-contet: flex-start;
+
   margin-top: 11px;
   font-size: 15px;
   line-height: 2.27;
@@ -255,6 +269,7 @@ const BudgetHelp = styled.div`
   letter-spacing: -0.38px;
   color: #0933b3;
 `;
+
 
 const DateCheckbox = styled.div`
   display: flex;
