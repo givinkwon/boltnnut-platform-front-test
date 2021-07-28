@@ -69,7 +69,7 @@ class InputComponent extends React.Component {
             <div>
               <input
                 type="file"
-                multiple={"multiple"}
+                // multiple={"multiple"}
                 fileName={"fileName[]"}
                 style={{ display: "none" }}
                 onChange={(e) => Profile.onChangeFile(e, type)}

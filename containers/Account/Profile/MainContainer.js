@@ -93,14 +93,14 @@ class MainContainer extends React.Component {
     const type1 = "business";
     return (
       <Container>
-        <Name>(주)동성실리콘</Name>
+        <Name>{Profile.company_name}</Name>
         <Description>
-          해당 정보를 채울수록 클라이언트에게 '동성 실리콘'(가)이 노출될 확률이
-          올라가요!
+          해당 정보를 채울수록 클라이언트에게 '{Profile.company_name}'(가)이
+          노출될 확률이 올라가요!
         </Description>
         <div style={{ width: "100%" }}>
-          <SelectCard name="전문분야" id="1" type="business" />
-          <SelectCard name="제품분야" id="2" type="category" />
+          <SelectCard name="전문분야" id="1" type="category" />
+          <SelectCard name="제품분야" id="2" type="business" />
           <SelectCard name="취급소재" id="3" type="material" />
           <SelectCard name="전문공정" id="4" type="develop" />
         </div>

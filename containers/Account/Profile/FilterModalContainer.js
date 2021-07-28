@@ -68,20 +68,23 @@ class FilterModalContainer extends React.Component {
     }
   };
 
-    buttonClick = (type, idx) => {
+  buttonClick = (type, idx) => {
     const { Category } = this.props;
 
-    if (Category.categoryActiveHandler(idx, type)) {
-      console.log("remove selected");
-      console.log(type, idx);
-      Category.remove_selected(type, idx);
+    if (type === "main") {
+      this.setState({ mainSelectIdx: idx });
     } else {
-      console.log("add selected");
-      console.log(type, idx);
-      Category.add_selected(type, idx);
+      if (Category.categoryActiveHandler(idx, type)) {
+        console.log("remove selected");
+        console.log(type, idx);
+        Category.remove_selected(type, idx);
+      } else {
+        console.log("add selected");
+        console.log(type, idx);
+        Category.add_selected(type, idx);
+      }
     }
   };
-
 
   // 모달 종료하기
   modalclose = () => {
@@ -101,26 +104,24 @@ class FilterModalContainer extends React.Component {
 
     return (
       <ModalBox>
-       
-
-            {this.state.mainCategoryTypeDic[type] &&
-              toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
-                return (
-                  <MainCategoryButton
-                    onClick={() => {
-                      this.buttonClick("main", idx);
-                    }}
-                    active={this.activeHandler("main", idx)}
-                  >
-                    <MainCategoryFont>
-                      {this.state.mainCategoryTypeDic[type][idx].maincategory}
-                    </MainCategoryFont>
-                    <img src={arrowRightImg} />
-                  </MainCategoryButton>
-                );
-              })}
-
-           
+        <MainCategoryBox>
+          {this.state.mainCategoryTypeDic[type] &&
+            toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
+              return (
+                <MainCategoryButton
+                  onClick={() => {
+                    this.buttonClick("main", idx);
+                  }}
+                  active={this.activeHandler("main", idx)}
+                >
+                  <MainCategoryFont>
+                    {this.state.mainCategoryTypeDic[type][idx].maincategory}
+                  </MainCategoryFont>
+                  <img src={arrowRightImg} />
+                </MainCategoryButton>
+              );
+            })}
+        </MainCategoryBox>
 
         <div style={{ width: "73.4%" }}>
           <SubCategoryBox>
@@ -150,7 +151,6 @@ class FilterModalContainer extends React.Component {
                     </SubCategoryButton>
                   );
                 })}
-         
 
               {/* 업체 분류 선택 */}
               {type == "category" &&

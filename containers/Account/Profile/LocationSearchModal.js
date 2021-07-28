@@ -54,7 +54,7 @@ const modalStyle = {
   border: "1px solid #000000",
   overflow: "hidden",
   width: "800px",
-  height: "333px",
+  height: "450px",
 };
 
 const Container = styled.div`

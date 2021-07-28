@@ -27,15 +27,12 @@ class Authentication extends React.Component {
           <FileComponent file={true} content="인증하기" type="authentication" />
         </Header>
         <Main>
-          {Profile.authenticationFileArray &&
-            Profile.authenticationFileArray.map((item, idx) => {
-              return (
-                <Item>
-                  <div>{item.name}</div>
-                  <img src={closeImg} />
-                </Item>
-              );
-            })}
+          {Profile.authenticationFile && (
+            <Item onClick={() => (Profile.authenticationFile = "")}>
+              <div>{Profile.authenticationFile.name}</div>
+              <img src={closeImg} />
+            </Item>
+          )}
         </Main>
         {/* <input
           type="file"
