@@ -21,7 +21,7 @@ class ProfileContainer extends React.Component {
     const { width } = this.props;
     return (
       <>
-        <Background>
+        <Background style={{ marginTop: "80px" }}>
           <Containerv1>
             <Container>
               <SubContainer
