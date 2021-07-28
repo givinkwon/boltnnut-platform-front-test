@@ -76,73 +76,14 @@ class FilterModalContainer extends React.Component {
   buttonClick = (type, idx) => {
     const { Category } = this.props;
 
-    // 공정 클릭 했을 때
-    if (type == "develop") {
-      if (Category.categoryActiveHandler(idx, type)) {
-        console.log("remove selected");
-        Category.remove_selected(type, idx);
-      } else {
-        console.log("add selected");
-        Category.add_selected(type, idx);
-      }
-    }
-    // 소재 클릭 했을 때
-    if (type == "material") {
-      if (Category.categoryActiveHandler(idx, type)) {
-        console.log("remove selected");
-        Category.remove_selected(type, idx);
-      } else {
-        console.log("add selected");
-        Category.add_selected(type, idx);
-      }
-    }
-
-    // 지역일 때는 다르게
-    if (this.props.type == "city") {
-      if (Category.categoryActiveHandler(idx, this.props.type)) {
-        console.log("remove selected");
-        Category.remove_selected(this.props.type, idx);
-      } else {
-        console.log("add selected");
-        Category.add_selected(this.props.type, idx);
-      }
-    }
-
-    if (type === "main") {
-      this.setState({ mainSelectIdx: idx });
+    if (Category.categoryActiveHandler(idx, type)) {
+      console.log("remove selected");
+      console.log(type, idx);
+      Category.remove_selected(type, idx);
     } else {
-      if (Category.categoryActiveHandler(idx, this.props.type)) {
-        console.log("remove selected");
-        Category.remove_selected(this.props.type, idx);
-      } else {
-        console.log("add selected");
-        Category.add_selected(this.props.type, idx);
-      }
-      // this.setState({ subSelectIdx: idx });
-    }
-  };
-
-  // 소재, 공정 클릭 했을 때
-  CategoryClick = (state) => {
-    const { Category, type } = this.props;
-    if (state == "develop") {
-      //this.props.type = "develop"
-      this.setState({
-        ...this.state,
-        develop_active: !this.state.develop_active,
-        material_active: false,
-      });
-
-      console.log(this.state.develop_active);
-    }
-
-    if (state == "material") {
-      //this.props.type = "material"
-      this.setState({
-        ...this.state,
-        material_active: !this.state.material_active,
-        develop_active: false,
-      });
+      console.log("add selected");
+      console.log(type, idx);
+      Category.add_selected(type, idx);
     }
   };
 
@@ -164,32 +105,6 @@ class FilterModalContainer extends React.Component {
 
     return (
       <ModalBox>
-        {/* 공정 | 소재 선택했을 때 띄워주기 */}
-
-        {type == "develop&material" && (
-          <AddCategoryBox>
-            <AddCategoryButton
-              onClick={() => {
-                this.CategoryClick("develop");
-              }}
-              active={this.state.develop_active}
-            >
-              <AddCategoryFont>공정</AddCategoryFont>
-              <img src={arrowRightImg} />
-            </AddCategoryButton>
-
-            <AddCategoryButton
-              onClick={() => {
-                this.CategoryClick("material");
-              }}
-              active={this.state.material_active}
-            >
-              <AddCategoryFont>소재</AddCategoryFont>
-              <img src={arrowRightImg} />
-            </AddCategoryButton>
-          </AddCategoryBox>
-        )}
-
         <MainCategoryBox>
           <>
             {/* 공정 선택일 때 */}
@@ -259,17 +174,6 @@ class FilterModalContainer extends React.Component {
                   </MainCategoryButton>
                 );
               })}
-
-            {/* city 일 떄 */}
-            {this.props.type == "city" && this.state.mainCategoryTypeDic[type] && (
-              <MainCategoryButton active={true}>
-                <MainCategoryFont>
-                  지역
-                  {/* {this.state.mainCategoryTypeDic[type][idx].maincategory} */}
-                </MainCategoryFont>
-                <img src={arrowRightImg} />
-              </MainCategoryButton>
-            )}
           </>
         </MainCategoryBox>
 
