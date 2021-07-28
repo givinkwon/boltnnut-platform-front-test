@@ -8,6 +8,8 @@ class Project {
   constructor() {
     //makeObservable(this);
   }
+  @observable producerId = null;
+
   @observable project_existence = true;
 
   // 프로젝트 데이터 관련 변수

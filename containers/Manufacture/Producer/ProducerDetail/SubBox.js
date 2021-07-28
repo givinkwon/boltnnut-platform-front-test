@@ -2,6 +2,8 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
+import { withRouter } from "next/router";
+import Router from "next/router";
 
 const userImg = "/static/images/producer/user.svg";
 
@@ -69,47 +71,49 @@ class SubBoxContainer extends React.Component {
                   Partner.hoverHandler("project", false);
                 }}
                 onClick={() => {
+                  console.log(location);
+                  Project.producerId = partnerId;
+                  console.log(Project.producerId);
                   Partner.clickHandler("project");
                   Request.partner_request(partnerId);
 
-                  location.href = Common.makeUrl("request");
+                  Router.push("/request")
                   this.setState({ g: 3 });
                 }}
               >
                 <span>프로젝트 의뢰하기</span>
               </div>
             </Button>
-            
+
             {Auth.logged_in_user && (
-            <Button
-              active={Partner.activeHandler("interested")}
-              hover={Partner.hoverInterestedIdx}
-              type="interested"
-            >
-              <div
-                onMouseOver={() => {
-                  Partner.hoverHandler("interested", true);
-                }}
-                onMouseOut={() => {
-                  Partner.hoverHandler("interested", false);
-                }}
-                onClick={async () => {
-                  console.log(Partner.interestedIdx);
-                  if (clientId) {
-                    Partner.clickHandler("interested");
-                    Partner.checkedInterestedIdx(clientId, partnerId);
-                    this.setState({ g: 3 });
-                  } else {
-                    location.href = Common.makeUrl("request");
-                    // this.setState({ g: 3 });
-                  }
-                }}
+              <Button
+                active={Partner.activeHandler("interested")}
+                hover={Partner.hoverInterestedIdx}
+                type="interested"
               >
-                <span>관심 업체 등록하기</span>
-              </div>
-            </Button>
-            )
-            }
+                <div
+                  onMouseOver={() => {
+                    Partner.hoverHandler("interested", true);
+                  }}
+                  onMouseOut={() => {
+                    Partner.hoverHandler("interested", false);
+                  }}
+                  onClick={async () => {
+                    console.log(Partner.interestedIdx);
+                    if (clientId) {
+                      Partner.clickHandler("interested");
+                      Partner.checkedInterestedIdx(clientId, partnerId);
+                      this.setState({ g: 3 });
+                    } else {
+                      location.href = Common.makeUrl("request");
+                      // this.setState({ g: 3 });
+                    }
+                  }}
+                >
+                  <span>관심 업체 등록하기</span>
+                </div>
+              </Button>
+            )}
           </ActiveItem>
           <ShowItem>
             <UserBox>

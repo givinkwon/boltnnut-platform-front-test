@@ -390,7 +390,7 @@ class FileUploadContainer extends Component {
     formData.append("process", processData);
     formData.append("detailprocess", detailProcessData);
     formData.append("number", quantityData);
-
+    formData.append("partner", Request.selected_partner);
     const Token = localStorage.getItem("token");
 
     if (flag) {

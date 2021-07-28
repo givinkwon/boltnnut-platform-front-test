@@ -104,7 +104,6 @@ class Request {
     this.maincategory_id = "";
     this.request_type = ""; // ""로 바꿔야됨. 임시방편
     this.numCount = null;
-    this.selected_partner = "";
   };
   @action setInputName = (val) => {
     //
@@ -128,10 +127,10 @@ class Request {
   @action setDue = (val) => {
     this.input_day = val;
   };
-  @action partner_request = (val) =>{
+  @action partner_request = (val) => {
     this.selected_partner = val;
-
-  }
+    console.log(this.selected_partner);
+  };
 
   @action setNumCount = (val) => {
     console.log(val);
@@ -181,9 +180,10 @@ class Request {
       formData.append("file", this.common_file);
     }
 
+    console.log(this.selected_partner);
     // 선택된 파트너가 있다면
     if (this.selected_partner) {
-      formData.append("partner", this.selected_partner)
+      formData.append("partner", this.selected_partner);
     }
 
     const req = {
@@ -206,6 +206,7 @@ class Request {
       });
   };
   @action init = (q) => {
+    console.log(this.selected_partner);
     CategoryAPI.getMainCategory()
       .then((res) => {
         this.big_category_list = res.data.results;

@@ -71,7 +71,7 @@ const customStyles = {
   },
 };
 
-@inject("Request", "ManufactureProcess", "Auth","Schedule", "Project")
+@inject("Request", "ManufactureProcess", "Auth", "Schedule", "Project")
 @observer
 class FileUploadContainer extends Component {
   static defaultProps = { title: "도면 파일을 업로드 해주세요." };
@@ -259,7 +259,7 @@ class FileUploadContainer extends Component {
   changeSubmit = () => {};
   requestSubmit = async (flag, id) => {
     const { projectname, purposeAry } = this.state;
-    const { ManufactureProcess, Schedule, Request } = this.props;
+    const { ManufactureProcess, Schedule, Request, Project } = this.props;
 
     ManufactureProcess.projectSubmitLoading = false;
     console.log(toJS(ManufactureProcess.totalorderPrice));
@@ -314,7 +314,7 @@ class FileUploadContainer extends Component {
         this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
     }
     console.log(request_state);
-
+    console.log(Request.selected_partner);
     console.log("requestSubmit");
     console.log(Schedule.clickDay);
     console.log(fileList);
@@ -322,7 +322,7 @@ class FileUploadContainer extends Component {
 
     formData.append("request_state", request_state);
     formData.append("name", projectname);
-
+    formData.append("partner", Request.selected_partner);
     // 선택한 날짜가 없으면, 기본 날짜 추가하기
     if (Schedule.clickDay) {
       formData.append("deadline", Schedule.clickDay + " 09:00");
@@ -385,10 +385,16 @@ class FileUploadContainer extends Component {
     console.log(processData);
     console.log(detailProcessData);
     console.log(quantityData);
+    console.log(Request.selected_partner);
+    console.log(Project.producerId);
 
     formData.append("process", processData);
     formData.append("detailprocess", detailProcessData);
     formData.append("number", quantityData);
+    // formData.append("partner", Project.producerId);
+    if (Request.selected_partner) {
+      formData.append("partner", Request.selected_partner);
+    }
 
     const Token = localStorage.getItem("token");
     console.log(Token);
@@ -590,8 +596,10 @@ class FileUploadContainer extends Component {
     console.log(ManufactureProcess.quantity);
   };
   async componentDidMount() {
-    const { ManufactureProcess, Project, Schedule } = this.props;
+    const { ManufactureProcess, Project, Schedule, Request } = this.props;
     const { purposeAry } = this.state;
+    console.log(Project.producerId);
+    console.log(Request.selected_partner);
 
     ManufactureProcess.loadingEstimate = false;
 
@@ -1951,20 +1959,45 @@ class FileUploadContainer extends Component {
             >
               <this.MyDropzone onChange={this.scrollChange}></this.MyDropzone>
             </ContentBox>
-
+            <Security>
+              <SecurityBox>
+                <span>도면 보안 설정</span>
+                <SecuritySetting>
+                  <span>모든 파트너가 도면 보기 가능</span>
+                  <span>
+                    모든 파트너가 도면을 볼 수 있으며
+                    <br />
+                    가장 정확한 견적을 받을 수 있습니다.
+                  </span>
+                </SecuritySetting>
+              </SecurityBox>
+              <SecurityBox>
+                <SecuritySetting>
+                  <span>허용된 파트너만 도면 보기</span>
+                  <span>
+                    채팅이나 견적서 요청에서
+                    <br />
+                    도면 열람 권한을 부여할 수 있습니다.
+                  </span>
+                </SecuritySetting>
+              </SecurityBox>
+            </Security>
             <NoFileButton checkFileUpload={ManufactureProcess.checkFileUpload}>
-              <div>*혹시 도면 파일이 없으신가요?</div>
               <div
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   this.props.Request.newIndex = 2;
                 }}
               >
-                <span>도면 파일 없이 상담 받기</span>
+                <span>의뢰 요청하기</span>
                 <span>
                   <img src={pass7} />
                 </span>
               </div>
+              <span>
+                이 프로젝트를 한 번 등록하면 다른 제조사에게 견적 요청을 보낼 때
+                똑같이 사용하실 수 있습니다.
+              </span>
             </NoFileButton>
             <Price
               checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
@@ -2462,7 +2495,7 @@ const EntireDelete = styled.div`
 `;
 
 const ContentBox = styled.div`
-  width: 1199px;
+  width: 100%;
   height: ${(props) => (props.checkFileUpload ? "100px" : "313px")};
   display: flex;
   flex-direction: column;
@@ -3302,3 +3335,16 @@ const Layer = styled.div`
     height: 100vh;
   }
 `;
+const Security = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const SecurityBox = styled.div`
+  width: 384px;
+  height: 140px;
+  border-radius: 5px;
+  border: solid 1px #c6c7cc;
+`;
+
+const SecuritySetting = styled.div``;

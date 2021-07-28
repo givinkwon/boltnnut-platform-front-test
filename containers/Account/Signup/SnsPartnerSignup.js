@@ -2,77 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
-import * as Text from "components/Text";
-import { inject, observer } from "mobx-react";
-import { GRAY, DARKGRAY, PRIMARY, WHITE, BLACK } from "static/style";
-import SelectComponent from "components/Select";
-import Router from "next/router";
 
 const signupdot = "/static/images/signupdot.svg";
-const signupkakao = "/static/images/signupkakao.svg";
+const signupsearch = "/static/images/signupsearch.svg";
 const dropdown = "/static/images/dropdown.svg";
 const viewterms = "/static/images/viewterms.svg";
 
-@inject("Auth")
-@observer
-class ClientSignupContainer extends React.Component {
-  componentDidMount() {
-    this.props.Auth.getPathData();
-    this.props.Auth.getBusinessData();
-    window.addEventListener("resize", this.updateDimensions);
-    this.setState({ ...this.state, width: window.innerWidth });
-  }
+class SnsPartnerSignupContainer extends React.Component {
   render() {
-    const { Auth } = this.props;
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
           <img src={signupdot} />
 
-          <Title32 style={{ marginTop: "20px" }}>
-            <b style={{ color: "#0933b3" }}>회원가입</b>을 진행해 주세요.
-          </Title32>
-
-          <LineDivContainer>
-            <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 회원가입</Title14>
-            <LineDiv />
-          </LineDivContainer>
-
-          <KakaoSignUp onClick={() => Router.push("/signup/SnsClientSignUp")}>
-            <KakaoSignupInnerBox>
-              <KakaoImgBox>
-                <img src={signupkakao} />
-              </KakaoImgBox>
-
-              <Title16>카카오 회원가입</Title16>
-            </KakaoSignupInnerBox>
-          </KakaoSignUp>
-
-          {/* email */}
-          <EmailContainer>
-            <Title18>이메일</Title18>
-
-            <EmailInnerContainer>
-              <CustomInput placeholder="boltnnut@gmail.com" style={{ width: "437px" }} />
-
-              <AuthenticateBtn>
-                <AuthenticateBtnText>인증하기</AuthenticateBtnText>
-              </AuthenticateBtn>
-            </EmailInnerContainer>
-          </EmailContainer>
-
-          {/* password */}
-          <InputInnerBox>
-            <Title18>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호를 입력해 주세요." type="password" />
-          </InputInnerBox>
-
-          {/* password confirm */}
-          <InputInnerBox>
-            <Title18>비밀번호 확인</Title18>
-            <CustomInput placeholder="비밀번호를 한 번 더 입력해 주세요." type="password" />
-          </InputInnerBox>
+          <Title32 style={{ marginTop: "20px" }}>추가정보를 입력해 주세요.</Title32>
 
           {/* name */}
           <InputInnerBox>
@@ -80,36 +23,13 @@ class ClientSignupContainer extends React.Component {
             <CustomInput placeholder="이름을 입력해 주세요." />
           </InputInnerBox>
 
-          {/* phone number */}
-          <InputInnerBox>
-            <Title18>휴대전화</Title18>
-            <CustomInput placeholder="- 없이 입력해 주세요" type="tel" />
-          </InputInnerBox>
-
           {/* company name */}
-          <InputInnerBox>
-            <Title18>회사명</Title18>
-            <CustomInput placeholder="- 없이 입력해 주세요" />
+          <InputInnerBox style={{ position: "relative" }}>
+            <Title18>상호명</Title18>
 
-            <div style={{ display: "inline-flex", marginTop: "14px" }}>
-              <CustomCheckBox type="checkbox" />
-              <Title15>개인일 경우 체크해 주세요.</Title15>
-            </div>
-          </InputInnerBox>
-
-          {/* sectors */}
-          <InputInnerBox>
-            <Title18>업종</Title18>
-
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "602px" }}>
-              <SelectComponent
-                options={Auth.business_data}
-                value={Auth.business}
-                getOptionLabel={(option) => option.business}
-                onChange={Auth.setBusiness}
-                placeholder="선택해주세요"
-                style={{ paddingLeft: "10px", border: "none" }}
-              />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <CustomInput placeholder="등록하고자 하는 상호명을 입력해 주세요." />
+              <ImgBox src={signupsearch} style={{ marginRight: "22px" }} />
             </div>
           </InputInnerBox>
 
@@ -160,7 +80,7 @@ class ClientSignupContainer extends React.Component {
   }
 }
 
-export default ClientSignupContainer;
+export default SnsPartnerSignupContainer;
 
 const ImgBox = styled.img`
   position: absolute;
@@ -235,7 +155,6 @@ const KakaoSignUp = styled.button`
   border: none;
   border-radius: 24px;
   background-color: #e1e2e4;
-  cursor: pointer;
 `;
 
 const KakaoImgBox = styled.div`
