@@ -110,3 +110,13 @@ export function SNSlogin(req) {
     headers: req.headers ? req.headers : null,
   });
 }
+
+// img portfoilo 임시
+export function getPortfolio(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/portfolio/img/`,
+    data: req.data,
+    headers: req.headers ? req.headers : null,
+  });
+}

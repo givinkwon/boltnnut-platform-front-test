@@ -67,7 +67,7 @@ const onError = (e) => {
 let index = 0;
 let region = "";
 
-@inject("Partner", "Auth")
+@inject("Partner", "Auth", "Common")
 @observer
 class DetailCardContainer extends React.Component {
   state = {
@@ -436,14 +436,20 @@ class DetailCardContainer extends React.Component {
     (location || window.location || document.location).reload();
   }
   render() {
-    const { width, Partner, Auth } = this.props;
+    const { width, Partner, Auth, Common } = this.props;
 
+    // if (!Partner.partner_detail_list[0].item) {
+    //   console.log("nonono");
+    //   location.href = Common.makeUrl("producer");
+    // }
     region = "";
-    region =
-      Partner.partner_detail_list[0].item.region === null ||
-      Partner.partner_detail_list[0].item.region === "nan"
-        ? Partner.city_name
-        : Partner.partner_detail_list[0].item.region;
+    if (Partner.partner_detail_list[0].item) {
+      region =
+        Partner.partner_detail_list[0].item.region === null ||
+        Partner.partner_detail_list[0].item.region === "nan"
+          ? Partner.city_name
+          : Partner.partner_detail_list[0].item.region;
+    }
 
     console.log(region);
     console.log(

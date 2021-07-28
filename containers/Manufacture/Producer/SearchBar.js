@@ -262,13 +262,21 @@ class SearchBarConatiner extends React.Component {
               <input
                 placeholder="원하는 분야나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "원하는 분야나 비슷한 제품을 검색해보세요.")}
+                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.search_text}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-              <img style={{ width: 24, height: 24, marginRight: 25, cursor: "pointer" }} src="/static/icon/search_blue.svg" onClick={this.search} />
+              <img
+                style={{
+                  width: 24,
+                  height: 24,
+                  cursor: "pointer",
+                }}
+                src="/static/icon/search_blue.svg"
+                onClick={this.search}
+              />
             </SearchBar>
 
             {this.state.showSuggestions && this.state.suggs.length > 0 && (
@@ -327,7 +335,7 @@ const SearchBar = styled.div`
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
 
   input {
-    width: 100%;
+    width: 90%;
     height: 59px;
     border: none;
     border-radius: 60px;
@@ -340,6 +348,7 @@ const SearchBar = styled.div`
       #c6c7cc
     }
   }
+  
   @media (min-width: 0px) and (max-width: 767.98px) {
     // margin-top: 30px;
     flex-direction: column;

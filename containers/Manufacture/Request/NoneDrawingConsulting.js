@@ -204,7 +204,7 @@ class NoneDrawingConsultingContainer extends React.Component {
       duedate,
       duecheck,
     } = this.state;
-    const { ManufactureProcess, Schedule } = this.props;
+    const { ManufactureProcess, Schedule, Request } = this.props;
     const { purposeAry } = this.state;
     ManufactureProcess.nonDrawingProjectSubmitLoading = false;
     let deadline_state = "";
@@ -222,7 +222,7 @@ class NoneDrawingConsultingContainer extends React.Component {
         str += ", ";
       }
     });
-
+    console.log(Request.selected_partner)
     // error 처리
     if (ManufactureProcess.purposeContent == 0) {
       alert("문의 목적을 선택해주세요");
@@ -315,7 +315,7 @@ class NoneDrawingConsultingContainer extends React.Component {
     formData.append("process", 1);
     formData.append("detailprocess", 1);
     formData.append("number", 1);
-
+    formData.append("partner", Request.selected_partner);
     const Token = localStorage.getItem("token");
     const req = {
       headers: {
