@@ -69,78 +69,18 @@ class MainContainer extends React.Component {
 
   buttonClick = (type, idx) => {
     const { Category } = this.props;
-    console.log(type);
-    console.log(idx);
 
-    // 공정 클릭 했을 때
-    if (type == "develop") {
+
       if (Category.categoryActiveHandler(idx, type)) {
         console.log("remove selected");
+        console.log(type, idx)
         Category.remove_selected(type, idx);
       } else {
         console.log("add selected");
+        console.log(type, idx)
         Category.add_selected(type, idx);
-      }
-    }
-    // 소재 클릭 했을 때
-    if (type == "material") {
-      if (Category.categoryActiveHandler(idx, type)) {
-        console.log("remove selected");
-        Category.remove_selected(type, idx);
-      } else {
-        console.log("add selected");
-        Category.add_selected(type, idx);
-      }
     }
 
-    // 지역일 때는 다르게
-    if (this.props.type == "city") {
-      if (Category.categoryActiveHandler(idx, this.props.type)) {
-        console.log("remove selected");
-        Category.remove_selected(this.props.type, idx);
-      } else {
-        console.log("add selected");
-        Category.add_selected(this.props.type, idx);
-      }
-    }
-
-    if (type === "main") {
-      this.setState({ mainSelectIdx: idx });
-    } else {
-      if (Category.categoryActiveHandler(idx, type)) {
-        console.log("remove selected");
-        Category.remove_selected(type, idx);
-      } else {
-        console.log("add selected");
-        Category.add_selected(type, idx);
-      }
-      // this.setState({ subSelectIdx: idx });
-    }
-    // this.setState({ g: 3 });
-  };
-
-  // 소재, 공정 클릭 했을 때
-  CategoryClick = (state) => {
-    const { Category, type } = this.props;
-    if (state == "develop") {
-      //this.props.type = "develop"
-      this.setState({
-        ...this.state,
-        develop_active: !this.state.develop_active,
-        material_active: false,
-      });
-
-      console.log(this.state.develop_active);
-    }
-
-    if (state == "material") {
-      //this.props.type = "material"
-      this.setState({
-        ...this.state,
-        material_active: !this.state.material_active,
-        develop_active: false,
-      });
-    }
   };
 
   // 모달 종료하기
@@ -151,8 +91,7 @@ class MainContainer extends React.Component {
   };
 
   render() {
-    const { Category, Profile, type } = this.props;
-    const type1 = "business";
+    const { Category, Profile } = this.props;
     return (
       <Container>
         <Name>(주)동성실리콘</Name>
@@ -169,22 +108,21 @@ class MainContainer extends React.Component {
               {Category.mainbusiness_list &&
                 Category.mainbusiness_list.map((data, idx) => {
                   return data.business_set.map((sub_data, idx) => {
-                    console.log(toJS(sub_data.category));
-                    console.log(type1);
+
                     return (
                       <SubCategoryButton
                         onClick={() => {
-                          this.buttonClick(type1, sub_data.id);
+                          this.buttonClick("business", sub_data.id);
                         }}
                         active={Category.categoryActiveHandler(
                           sub_data.id,
-                          type1
+                          "business"
                         )}
                       >
                         <CheckBox
                           active={Category.categoryActiveHandler(
                             sub_data.id,
-                            type1
+                            "business"
                           )}
                         >
                           <img src={checkImg} />
@@ -210,17 +148,17 @@ class MainContainer extends React.Component {
                     return (
                       <SubCategoryButton
                         onClick={() => {
-                          this.buttonClick("main", sub_data.id);
+                          this.buttonClick("category", sub_data.id);
                         }}
                         active={Category.categoryActiveHandler(
                           sub_data.id,
-                          "main"
+                          "category"
                         )}
                       >
                         <CheckBox
                           active={Category.categoryActiveHandler(
                             sub_data.id,
-                            "main"
+                            "category"
                           )}
                         >
                           <img src={checkImg} />
@@ -246,7 +184,7 @@ class MainContainer extends React.Component {
                     return (
                       <SubCategoryButton
                         onClick={() => {
-                          this.buttonClick("sub", sub_data.id);
+                          this.buttonClick("material", sub_data.id);
                         }}
                         active={Category.categoryActiveHandler(
                           sub_data.id,
@@ -282,7 +220,7 @@ class MainContainer extends React.Component {
                     return (
                       <SubCategoryButton
                         onClick={() => {
-                          this.buttonClick("sub", sub_data.id);
+                          this.buttonClick("develop", sub_data.id);
                         }}
                         active={Category.categoryActiveHandler(
                           sub_data.id,
