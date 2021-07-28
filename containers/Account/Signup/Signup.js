@@ -2,11 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
+import { inject, observer } from "mobx-react";
+import Router from "next/router";
 
 const signupbnlogo = "/static/images/signupbnlogo.svg";
 const partnersignupimg = "/static/images/partnersignupimg.svg";
 const clientsignupimg = "/static/images/clientsignupimg.svg";
 
+@inject("Auth")
+@observer
 class SignupContainer extends React.Component {
   render() {
     return (
@@ -19,7 +23,7 @@ class SignupContainer extends React.Component {
           </Title18>
 
           <SelectContainer>
-            <SelectBox>
+            <SelectBox onClick={() => Router.push("/signup/clientsignup")}>
               <Title16>제조사를 찾고 싶어요.</Title16>
               <img src={clientsignupimg} />
               <Title20>클라이언트</Title20>
@@ -30,7 +34,7 @@ class SignupContainer extends React.Component {
               </DescBox>
             </SelectBox>
 
-            <SelectBox>
+            <SelectBox onClick={() => Router.push("/signup/partnersignup")}>
               <Title16>일거리를 찾고 있어요.</Title16>
               <img src={partnersignupimg} />
               <Title20>제조사</Title20>
@@ -100,6 +104,11 @@ const SelectBox = styled.div`
   border-radius: 10px;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
+  cursor: pointer;
+
+  :hover {
+    border: solid 2px #0933b3;
+  }
 `;
 
 const DescBox = styled.div`
