@@ -53,6 +53,7 @@ class Profile {
   @observable process_checked = [];
 
   /* 파트너 등록하기 */
+  @observable authenticationFile = "";
   @observable authenticationFileArray = [];
   @observable authenticationFileName = "";
   @observable authenticationCheckFileUpload = false;
@@ -63,6 +64,9 @@ class Profile {
 
   @observable portfolioFileArray = [];
   @observable portfolioCheckFileUpload = false;
+
+  @observable locationAddress = "";
+  @observable locationModalActive = false;
 
   @action reset = () => {
     this.email = "";
@@ -339,7 +343,8 @@ class Profile {
       this.category_middle_set = [id, ...this.category_middle_set];
     }
   };
-  @action checkLogin = () => {
+  @action checkLogin = async () => {
+    console.log("checkLogin");
     const token = localStorage.getItem("token");
     const req = {
       data: {
@@ -351,7 +356,7 @@ class Profile {
       },
     };
 
-    AccountAPI.reloadUserInfo(req)
+    await AccountAPI.reloadUserInfo(req)
       .then((res) => {
         if (res.data.data.User.type == 0) {
           alert("잘못된 접근입니다.");
@@ -376,11 +381,15 @@ class Profile {
           // 회사소개서 파일
           this.file = res.data.data.Partner[0].file;
 
+          // this.introductionFile.push({name : this.file}) // 오류남
+          console.log(this.file);
+
           // 카테고리 초기화
           this.portfolio_set = [];
           res.data.data.Partner[0].portfolio_set.map((data) => {
             this.portfolio_set.push(data.img_portfolio);
           });
+          console.log(this.info_company);
         }
       })
       .catch((e) => {
@@ -396,6 +405,7 @@ class Profile {
         // Router.push("/");
         Router.push("/account");
       });
+    console.log(this.info_company);
   };
 
   @action signup = async () => {
@@ -1439,7 +1449,9 @@ class Profile {
       for (var item in e.currentTarget.files) {
         console.log(item);
         if (typeof e.currentTarget.files[item] === "object") {
-          this.authenticationFileArray.push(e.currentTarget.files[item]);
+          this.authenticationFile = e.currentTarget.files[item];
+          // this.authenticationFileArray.push(e.currentTarget.files[item]);
+          console.log(this.authenticationFile);
         } else {
           break;
         }

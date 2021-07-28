@@ -13,7 +13,7 @@ class Partner {
     //makeObservable(this);
   }
 
-  @observable detailRegion = ""
+  @observable detailRegion = "";
   @observable hashBusinessCategory = [];
   /* Page 관련 변수 */
   @observable pageType = "";
@@ -293,6 +293,7 @@ class Partner {
   @observable filter_begin_id = "";
   @observable filter_end_id = "";
 
+  @observable filter_dropdown_type = "";
   @observable filter_dropdown = false;
   @observable check_filter_city = false;
   @observable filter_city_idx = -1;

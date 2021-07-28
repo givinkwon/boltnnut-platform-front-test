@@ -4,19 +4,53 @@ import { inject, observer } from "mobx-react";
 
 import * as Text from "components/Text";
 
-@inject("Auth", "Answer")
+@inject("Auth", "Answer", "Profile")
 @observer
 class Product extends React.Component {
+  state = {
+    modify: false,
+  };
+
+  componentdidmount() {
+    const { Profile } = this.props;
+  }
+  onChangeHandler = (e) => {
+    const { Profile } = this.props;
+    console.log(e.target.value);
+    if (this.state.modify) {
+      Profile.deal = e.target.value;
+    }
+  };
+
   render() {
+    const { Profile } = this.props;
     return (
       <Container>
         <Header>
           <Name>진행한 제품군</Name>
 
-          <Button>수정하기</Button>
+          {this.state.modify ? (
+            <Button
+              onClick={() => {
+                this.setState({ modify: false });
+              }}
+            >
+              저장하기
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                document.getElementById("product").value = null;
+                this.setState({ modify: true });
+              }}
+            >
+              수정하기
+            </Button>
+          )}
         </Header>
         <Main>
           <textarea
+            id="product"
             placeholder="메세지를 입력하세요."
             autofocus="true"
             onFocus={(e) => (e.target.placeholder = "")}
@@ -25,8 +59,8 @@ class Product extends React.Component {
             type="text"
             className={"textarea"}
             placeholderStyle={{ fontWeight: "400" }}
-            // onChange={(e) => this.onChangeHandler(e)}
-            // value={this.state.text}
+            onChange={(e) => this.onChangeHandler(e)}
+            value={Profile.deal}
           />
         </Main>
       </Container>

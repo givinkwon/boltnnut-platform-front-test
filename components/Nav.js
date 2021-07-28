@@ -96,6 +96,7 @@ class Nav extends React.Component {
       this.needPermission.forEach((url) => {
         if (url === splitedRoute[1]) {
           if (requestId != 923) {
+            console.log("ddddddddd");
             alert("로그인이 필요합니다");
             Router.push("/login");
           }
@@ -198,7 +199,7 @@ class Nav extends React.Component {
                       />
                       {is_profile && (
                         <ProfileMenu>
-                            <div>
+                          <div>
                             <div>
                               <Button>
                                 <Font16>
