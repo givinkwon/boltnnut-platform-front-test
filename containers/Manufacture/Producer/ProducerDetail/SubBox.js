@@ -71,6 +71,7 @@ class SubBoxContainer extends React.Component {
                 onClick={() => {
                   console.log(location);
                   Project.producerId = partnerId;
+                  console.log(Project.producerId);
                   Partner.clickHandler("project");
                   Request.partner_request(partnerId);
 

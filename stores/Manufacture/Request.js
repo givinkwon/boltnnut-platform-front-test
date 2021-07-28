@@ -128,10 +128,9 @@ class Request {
   @action setDue = (val) => {
     this.input_day = val;
   };
-  @action partner_request = (val) =>{
+  @action partner_request = (val) => {
     this.selected_partner = val;
-
-  }
+  };
 
   @action setNumCount = (val) => {
     console.log(val);
@@ -181,9 +180,10 @@ class Request {
       formData.append("file", this.common_file);
     }
 
+    console.log(this.selected_partner);
     // 선택된 파트너가 있다면
     if (this.selected_partner) {
-      formData.append("partner", this.selected_partner)
+      formData.append("partner", this.selected_partner);
     }
 
     const req = {

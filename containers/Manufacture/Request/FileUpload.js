@@ -385,12 +385,16 @@ class FileUploadContainer extends Component {
     console.log(processData);
     console.log(detailProcessData);
     console.log(quantityData);
+    console.log(Request.selected_partner);
     console.log(Project.producerId);
 
     formData.append("process", processData);
     formData.append("detailprocess", detailProcessData);
     formData.append("number", quantityData);
-    formData.append("partner", Project.producerId);
+    // formData.append("partner", Project.producerId);
+    if (Request.selected_partner) {
+      formData.append("partner", Request.selected_partner);
+    }
 
     const Token = localStorage.getItem("token");
     console.log(Token);
@@ -592,8 +596,10 @@ class FileUploadContainer extends Component {
     console.log(ManufactureProcess.quantity);
   };
   async componentDidMount() {
-    const { ManufactureProcess, Project, Schedule } = this.props;
+    const { ManufactureProcess, Project, Schedule, Request } = this.props;
     const { purposeAry } = this.state;
+    console.log(Project.producerId);
+    console.log(Request.selected_partner);
 
     ManufactureProcess.loadingEstimate = false;
 

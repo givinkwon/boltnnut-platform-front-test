@@ -69,6 +69,8 @@ class MainContainer extends React.Component {
 
   buttonClick = (type, idx) => {
     const { Category } = this.props;
+    console.log(type);
+    console.log(idx);
 
     // 공정 클릭 했을 때
     if (type == "develop") {
@@ -165,22 +167,22 @@ class MainContainer extends React.Component {
               {/* 카테고리 선택 */}
               {Category.mainbusiness_list &&
                 Category.mainbusiness_list.map((data, idx) => {
-                  data.business_set.map((sub_data, idx) => {
-                    //console.log(toJS(sub_data.category))
+                  return data.business_set.map((sub_data, idx) => {
+                    console.log(toJS(sub_data.category));
                     return (
                       <SubCategoryButton
                         onClick={() => {
-                          this.buttonClick("sub", sub_data.id);
+                          this.buttonClick("business", sub_data.id);
                         }}
                         active={Category.categoryActiveHandler(
                           sub_data.id,
-                          type
+                          "business"
                         )}
                       >
                         <CheckBox
                           active={Category.categoryActiveHandler(
                             sub_data.id,
-                            type
+                            "business"
                           )}
                         >
                           <img src={checkImg} />
@@ -201,7 +203,7 @@ class MainContainer extends React.Component {
               {/* 카테고리 선택 */}
               {Category.maincategory_list &&
                 Category.maincategory_list.map((data, idx) => {
-                  data.category_set.map((sub_data, idx) => {
+                  return data.category_set.map((sub_data, idx) => {
                     // console.log(toJS(sub_data.category))
                     return (
                       <SubCategoryButton
@@ -210,13 +212,13 @@ class MainContainer extends React.Component {
                         }}
                         active={Category.categoryActiveHandler(
                           sub_data.id,
-                          type
+                          "main"
                         )}
                       >
                         <CheckBox
                           active={Category.categoryActiveHandler(
                             sub_data.id,
-                            type
+                            "main"
                           )}
                         >
                           <img src={checkImg} />
@@ -237,7 +239,7 @@ class MainContainer extends React.Component {
               {/* 카테고리 선택 */}
               {Category.mainmaterial_list &&
                 Category.mainmaterial_list.map((data, idx) => {
-                  data.material_set.map((sub_data, idx) => {
+                  return data.material_set.map((sub_data, idx) => {
                     //  console.log(toJS(sub_data.category))
                     return (
                       <SubCategoryButton
@@ -246,13 +248,13 @@ class MainContainer extends React.Component {
                         }}
                         active={Category.categoryActiveHandler(
                           sub_data.id,
-                          type
+                          "material"
                         )}
                       >
                         <CheckBox
                           active={Category.categoryActiveHandler(
                             sub_data.id,
-                            type
+                            "material"
                           )}
                         >
                           <img src={checkImg} />
@@ -273,7 +275,7 @@ class MainContainer extends React.Component {
               {/* 카테고리 선택 */}
               {Category.developbig_list &&
                 Category.developbig_list.map((data, idx) => {
-                  data.develop_set.map((sub_data, idx) => {
+                  return data.develop_set.map((sub_data, idx) => {
                     // console.log(toJS(sub_data.category))
                     return (
                       <SubCategoryButton
@@ -282,13 +284,13 @@ class MainContainer extends React.Component {
                         }}
                         active={Category.categoryActiveHandler(
                           sub_data.id,
-                          type
+                          "develop"
                         )}
                       >
                         <CheckBox
                           active={Category.categoryActiveHandler(
                             sub_data.id,
-                            type
+                            "develop"
                           )}
                         >
                           <img src={checkImg} />

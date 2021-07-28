@@ -6,14 +6,40 @@ import { useDropzone } from "react-dropzone";
 import * as Text from "components/Text";
 
 const plusImg = "/static/images/signup/plus.svg";
-@inject("Auth", "Answer")
+@inject("Auth", "Answer", "Profile")
 @observer
 class Introduction extends React.Component {
+  componentWillUnmount = () => {
+    const { Profile } = this.props;
+    console.log("unmount");
+    Profile.introductionCheckFileUpload = false;
+  };
+
+  componentDidMount = () => {
+    const { Profile } = this.props;
+    console.log("mount");
+    console.log(Profile.introductionCheckFileUpload);
+    // Profile.introductionCheckFileUpload = false;
+  };
   MyDropzone = () => {
-    const dropHandler = (files) => {};
+    const { Profile } = this.props;
+    const dropHandler = (files) => {
+      console.log(files);
+    };
 
     const onDrop = useCallback((acceptedFiles) => {
-      acceptedFiles.map((data, idx) => {});
+      acceptedFiles.map((data, idx) => {
+        console.log(data);
+        Profile.introductionFileArray.push(data);
+
+        console.log(Profile.introductionFileArray);
+        // <li key={data.path}>
+        //   {data.path} - {data.size} bytes
+        // </li>;
+        Profile.introductionCheckFileUpload = true;
+
+        Object.assign(data, { preview: URL.createObjectURL(data) });
+      });
 
       dropHandler(acceptedFiles);
     }, []);
@@ -23,40 +49,13 @@ class Introduction extends React.Component {
     });
 
     return (
-      <div {...getRootProps()}>
+      <div {...getRootProps()} style={{ width: "100%" }}>
         <input {...getInputProps()} />
-        <InputBox
-          checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
-        >
+        <InputBox>
           {isDragActive ? (
             <p>Drop the files here ...</p>
           ) : (
-            <DropZoneContainer>
-              {this.state.loading === true ? (
-                <>
-                  <div>Uploading files...</div>
-                  <CircularProgress
-                    style={{
-                      margin: "10px auto",
-                      width: "22px",
-                      height: "22px",
-                    }}
-                    className="spinner"
-                  />
-                </>
-              ) : (
-                <>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      flexDirection: "column",
-                      marginBottom: "24px",
-                    }}
-                  ></div>
-                </>
-              )}
-            </DropZoneContainer>
+            <img src={plusImg} />
           )}
         </InputBox>
       </div>
@@ -64,6 +63,8 @@ class Introduction extends React.Component {
   };
 
   render() {
+    const { Profile } = this.props;
+
     return (
       <Container>
         <Header>
@@ -71,9 +72,17 @@ class Introduction extends React.Component {
 
           <Button>파일 업로드하기</Button>
         </Header>
-        <Main>
-          <img src={plusImg} />
-        </Main>
+
+        {Profile.introductionCheckFileUpload ? (
+          <Main>
+            {Profile.introductionFileArray &&
+              Profile.introductionFileArray.map((item, idx) => {
+                return <img src={item.preview} />;
+              })}
+          </Main>
+        ) : (
+          <this.MyDropzone onChange={this.scrollChange} />
+        )}
       </Container>
     );
   }
@@ -120,14 +129,17 @@ const Header = styled.div`
 `;
 const Main = styled.div`
   width: 100%;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
+  // box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
   height: 406px;
   position: relative;
   > img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border: 3px solid green;
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
   }
 `;
 
@@ -180,5 +192,26 @@ const DropZoneContainer = styled.div`
     //line-height: 40px;
     letter-spacing: -0.4px;
     color: #767676;
+  }
+`;
+
+const InputBox = styled.div`
+  width: 100%;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 430px;
+  text-align: center;
+  :focus {
+    outline: 0;
+  }
+  cursor: pointer;
+  > img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `;
