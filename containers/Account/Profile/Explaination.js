@@ -3,20 +3,53 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 
 import * as Text from "components/Text";
+import Profile from "../../../stores/Account/Profile";
 
-@inject("Auth", "Answer")
+@inject("Auth", "Answer", "Profile")
 @observer
 class Explaination extends React.Component {
+  state = {
+    modify: false,
+  };
+  componentdidmount() {
+    const { Profile } = this.props;
+  }
+  onChangeHandler = (e) => {
+    const { Profile } = this.props;
+    console.log(e.target.value);
+    if (this.state.modify) {
+      Profile.info_company = e.target.value;
+    }
+  };
   render() {
+    const { Profile } = this.props;
     return (
       <Container>
         <Header>
           <Name>회사 상세설명</Name>
 
-          <Button>수정하기</Button>
+          {this.state.modify ? (
+            <Button
+              onClick={() => {
+                this.setState({ modify: false });
+              }}
+            >
+              저장하기
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                document.getElementById("explaination").value = null;
+                this.setState({ modify: true });
+              }}
+            >
+              수정하기
+            </Button>
+          )}
         </Header>
         <Main>
           <textarea
+            id="explaination"
             placeholder="메세지를 입력하세요."
             autofocus="true"
             onFocus={(e) => (e.target.placeholder = "")}
@@ -25,8 +58,8 @@ class Explaination extends React.Component {
             type="text"
             className={"textarea"}
             placeholderStyle={{ fontWeight: "400" }}
-            // onChange={(e) => this.onChangeHandler(e)}
-            // value={this.state.text}
+            onChange={(e) => this.onChangeHandler(e)}
+            value={Profile.info_company}
           />
         </Main>
       </Container>

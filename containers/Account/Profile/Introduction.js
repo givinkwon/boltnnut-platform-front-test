@@ -21,6 +21,7 @@ class Introduction extends React.Component {
     const { Profile } = this.props;
     console.log("mount");
     console.log(Profile.introductionCheckFileUpload);
+
     // Profile.introductionCheckFileUpload = false;
   };
   MyDropzone = () => {
@@ -69,6 +70,7 @@ class Introduction extends React.Component {
 
   render() {
     const { Profile } = this.props;
+    console.log(Profile.introductionFile);
 
     return (
       <Container>
@@ -80,13 +82,13 @@ class Introduction extends React.Component {
 
         {Profile.introductionCheckFileUpload ? (
           <Main>
-            {Profile.introductionFile && (
+            {Profile.file && (
               <Item>
                 <div>{Profile.introductionFile.name}</div>
                 <img
                   src={closeImg}
                   onClick={() => {
-                    Profile.introductionFile = "";
+                    Profile.file = "";
                     Profile.introductionCheckFileUpload = false;
                   }}
                 />
