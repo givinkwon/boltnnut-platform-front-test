@@ -260,9 +260,9 @@ class SearchBarConatiner extends React.Component {
           <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
             <SearchBar active={Partner.subButtonActive}>
               <input
-                placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
+                placeholder="원하는 분야나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
+                onBlur={(e) => (e.target.placeholder = "원하는 분야나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.search_text}
                 class="Input"
@@ -273,10 +273,9 @@ class SearchBarConatiner extends React.Component {
 
             {this.state.showSuggestions && this.state.suggs.length > 0 && (
               <CustomUl>
-              <CustomLiBox>{suggestions}</CustomLiBox>
-            </CustomUl>
+                <CustomLiBox>{suggestions}</CustomLiBox>
+              </CustomUl>
             )}
-
           </div>
         </Form>
       </>
@@ -309,7 +308,6 @@ const CustomLiBox = styled.div`
       background-color: #f2f2f2;
     }
   }
-
 `;
 
 const categoryArray = [
@@ -333,7 +331,7 @@ const SearchBar = styled.div`
     height: 59px;
     border: none;
     border-radius: 60px;
-    padding: 0 14px;
+    padding: 1px 24px 0px 24px;
     margin-left: 10px;
     :focus {
       outline: none;
@@ -376,6 +374,15 @@ const SearchBar = styled.div`
     width: 100%;
     input {
       font-size: 18px;
+
+      ::placeholder {
+        font-size: 18px;
+        font-family: NotoSansCJKkr;
+        line-height: 1.89;
+        letter-spacing: -0.20px;
+        object-fit: contain;
+        color: #acadad;
+      }
     }
   }
   
