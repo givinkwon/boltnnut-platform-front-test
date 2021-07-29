@@ -89,7 +89,7 @@ class PartnerSignupContainer extends React.Component {
             <Title18>이메일</Title18>
 
             <EmailInnerContainer>
-              <CustomInput placeholder="boltnnut@gmail.com" style={{ width: "437px", marginTop: "0px" }} />
+              <CustomInput placeholder="boltnnut@gmail.com" onChange={Auth.setEmail} value={Auth.email} style={{ width: "437px", marginTop: "0px" }} />
 
               <AuthenticateBtn>
                 <AuthenticateBtnText>인증하기</AuthenticateBtnText>
@@ -100,31 +100,31 @@ class PartnerSignupContainer extends React.Component {
           {/* password */}
           <InputInnerBox>
             <Title18>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호를 입력해 주세요." type="password" style={{ marginTop: "0px" }} />
+            <CustomInput placeholder="비밀번호를 입력해 주세요." onChange={Auth.setPassword} value={Auth.password} type="password" style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* password confirm */}
           <InputInnerBox>
             <Title18>비밀번호 확인</Title18>
-            <CustomInput placeholder="비밀번호를 한 번 더 입력해 주세요." type="password" style={{ marginTop: "0px" }} />
+            <CustomInput placeholder="비밀번호를 한 번 더 입력해 주세요." onChange={Auth.setPassword2} value={Auth.password2} type="password" style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
-            <CustomInput placeholder="이름을 입력해 주세요." style={{ marginTop: "0px" }} />
+            <CustomInput placeholder="이름을 입력해 주세요." onChange={Auth.setRealName} value={Auth.realName} style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* phone number */}
           <InputInnerBox>
             <Title18>휴대전화</Title18>
-            <CustomInput placeholder="- 없이 입력해 주세요" type="tel" style={{ marginTop: "0px" }} />
+            <CustomInput placeholder="- 없이 입력해 주세요" onChange={Auth.setPhone} value={Auth.phone} type="tel" style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* company name */}
           <InputInnerBox>
             <Title18>상호명</Title18>
-            <CustomInput placeholder="근무하고 계신 회사명을 입력해주세요." style={{ marginTop: "0px" }} />
+            <CustomInput placeholder="근무하고 계신 회사명을 입력해주세요." onChange={Auth.setCompanyName} value={Auth.company_name} style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* agree */}
