@@ -3513,3 +3513,127 @@ const SecurityBox = styled.div`
 `;
 
 const SecuritySetting = styled.div``;
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const RequestHeader = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 80px;
+  margin-bottom: 70px;
+  text-align: center;
+  font-family: NotoSansCJKkr;
+`;
+
+const RequestTitle = styled.div`
+  font-size: 32px;
+  font-weight: 500;
+  color: #1e2222;
+  margin-top: 20px;
+`;
+
+const Body = styled.div`
+  width: 100%;
+  font-family: NotoSansCJKkr;
+`;
+
+const Requestontent = styled.div``;
+
+const RequestContentBox = styled.div`
+  margin-bottom: 74px;
+`;
+
+const ContentTitle = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #1e2222;
+  margin-bottom: 16px;
+`;
+
+const PurposeBtn = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
+
+const RequestButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 42px;
+  border-radius: 30px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  border: solid 1px #0933b3;
+  background-color: #ffffff;
+  margin-right: 16px;
+  font-size: 16px;
+  color: #0933b3;
+  letter-spacing: -0.4px;
+`;
+
+const Budget = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const BudgetBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 204px;
+  height: 42px;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  margin-right: 16px;
+`;
+
+const BudgetCheckbox = styled.div`
+  display: flex;
+  justify-contet: flex-start;
+  margin-top: 11px;
+  font-size: 15px;
+  line-height: 2.27;
+  letter-spacing: -0.38px;
+  color: #505050;
+`;
+
+const BudgetHelp = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  algin-items: center;
+  font-size: 15px;
+  letter-spacing: -0.38px;
+  color: #0933b3;
+  margin-top: 13px;
+`;
+
+const DateCheckbox = styled.div`
+  display: flex;
+  justify-contet: flex-start;
+  margin-top: 12px;
+  font-size: 15px;
+  color: #505050;
+`;
+
+const Help = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 42px;
+  border-radius: 3px;
+  background-color: #edf4fe;
+  margin-top: 16px;
+  margin-bottom: 20px;
+`;
+
+// const FileUpload = styled.div``;
