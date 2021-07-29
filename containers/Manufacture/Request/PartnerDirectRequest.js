@@ -317,7 +317,7 @@ class PartnerDirectRequest extends Component {
                 >
                   <img
                     src={
-                      this.state.securityCheck1 ? circlecheck : circlecheckblue
+                      this.state.securityCheck1 ? circlecheckblue : circlecheck
                     }
                     style={{ width: 17, height: 17 }}
                   ></img>
@@ -336,7 +336,7 @@ class PartnerDirectRequest extends Component {
                 >
                   <img
                     src={
-                      this.state.securityCheck2 ? circlecheck : circlecheckblue
+                      this.state.securityCheck2 ? circlecheckblue : circlecheck
                     }
                     style={{ width: 17, height: 17 }}
                   ></img>
