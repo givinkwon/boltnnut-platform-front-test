@@ -25,13 +25,13 @@ const pass3 = "static/images/pass3.png";
 const pass7 = "static/images/pass7.png";
 const deleteButtonImg = "/static/images/delete.png";
 const fileImg = "/static/images/file.png";
-const calendar = "/static/images/facebook.png";
 const reqeustlogo = "./static/images/request/request_logo.svg";
 const starred = "./static/images/request/star_red.svg";
 const down_arrow = "./static/images/request/down_arrow.svg";
 const help_face = "./static/images/request/help_face.svg";
 const checkbox = "./static/images/request/checkbox.svg";
 const fileupload = "./static/images/request/fileupload.svg";
+const checkcircle = "./static/images/request/checkcircle.svg";
 
 let fileList = [];
 let checkBox = false;
@@ -1239,7 +1239,6 @@ class PartnerDirectRequest extends Component {
                             display: "flex",
                             alignItems: "center",
                             flexDirection: "column",
-                            marginBottom: "24px",
                           }}
                         >
                           <img src={fileupload}></img>
@@ -1252,7 +1251,6 @@ class PartnerDirectRequest extends Component {
                           <FileImage name=".STP" />
                           <FileImage name=".STEP" />
                           <FileImage name=".STL" />
-                          <FileImage name=".DWG" />
                         </FileImageContainer>
                       </>
                     )}
@@ -1317,17 +1315,25 @@ class PartnerDirectRequest extends Component {
                     (중복 선택 가능)
                   </span>
                 </ContentTitle>
-                <PurposeBtn>
-                  <RequestButton style={{ border: "none", color: "#414550" }}>
-                    <span>상담 요청</span>
-                  </RequestButton>
-                  <RequestButton>
-                    <span>견적 요청</span>
-                  </RequestButton>
-                  <RequestButton>
-                    <span>업체 수배</span>
-                  </RequestButton>
-                </PurposeBtn>
+                <SelectBox style={{ width: "555px", marginTop: "16px" }}>
+                  <InlineDiv style={{ alignItems: "flex-end" }}>
+                    {this.state.purposeAry.map((item, idx) => {
+                      return (
+                        <PurposeSelectCircle
+                          active={item.checked}
+                          onClick={() => {
+                            this.purposeHandler(item);
+                            console.log(idx);
+                          }}
+                        >
+                          <PurposeFont18 active={item.checked}>
+                            {item.name}
+                          </PurposeFont18>
+                        </PurposeSelectCircle>
+                      );
+                    })}
+                  </InlineDiv>
+                </SelectBox>
               </RequestContentBox>
               <RequestContentBox>
                 <ContentTitle>
@@ -1356,8 +1362,8 @@ class PartnerDirectRequest extends Component {
                     }}
                   >
                     <BudgetBox>
-                      <span>0</span>
-                      <img src={down_arrow}></img>
+                      <span style={{ marginLeft: 16 }}>0</span>
+                      <img src={down_arrow} style={{ marginRight: 12 }}></img>
                     </BudgetBox>
                     <span
                       style={{
@@ -1369,8 +1375,8 @@ class PartnerDirectRequest extends Component {
                       ~
                     </span>
                     <BudgetBox style={{ marginLeft: 16 }}>
-                      <span>0</span>
-                      <img src={down_arrow}></img>
+                      <span style={{ marginLeft: 16 }}>0</span>
+                      <img src={down_arrow} style={{ marginRight: 12 }}></img>
                     </BudgetBox>
                     <span
                       style={{
@@ -2114,10 +2120,25 @@ class PartnerDirectRequest extends Component {
             >
               <this.MyDropzone onChange={this.scrollChange}></this.MyDropzone>
             </ContentBox>
+
+            <span
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+                lineHeight: 1.89,
+                letterSpacing: -0.45,
+                marginBottom: 16,
+              }}
+            >
+              도면 보안 설정
+            </span>
             <Security>
               <SecurityBox>
-                <span>도면 보안 설정</span>
                 <SecuritySetting>
+                  <img
+                    scr={checkcircle}
+                    style={{ width: 50, height: 50 }}
+                  ></img>
                   <span>모든 파트너가 도면 보기 가능</span>
                   <span>
                     모든 파트너가 도면을 볼 수 있으며
@@ -2193,7 +2214,6 @@ class PartnerDirectRequest extends Component {
               </PriceData>
             </Price>
           </>
-          {/* )} */}
 
           {console.log(ManufactureProcess.checkFileUpload)}
 
@@ -2205,7 +2225,7 @@ class PartnerDirectRequest extends Component {
               <p style={{ fontSize: "16px", letterSpacing: "-0.4px" }}></p>
             </Label>
 
-            <SelectBox style={{ width: "555px", marginTop: "16px" }}>
+            {/* <SelectBox style={{ width: "555px", marginTop: "16px" }}>
               <InlineDiv style={{ alignItems: "flex-end" }}>
                 {this.state.purposeAry.map((item, idx) => {
                   return (
@@ -2223,7 +2243,7 @@ class PartnerDirectRequest extends Component {
                   );
                 })}
               </InlineDiv>
-            </SelectBox>
+            </SelectBox> */}
           </Purposebox>
 
           <Projectbox
@@ -2568,12 +2588,8 @@ const Box = styled.div`
     `}
 `;
 const ItemList = styled.div`
-  width: 101%;
-  height: 100%;
-  padding-left: 3px;
-  //padding-top: ${(props) => (props.checkFileUpload ? "215px" : "0")};
-  //padding-top: ${(props) =>
-    props.checkBannerHeight && props.checkFileUpload ? "215px" : "0"};
+  width: 100%;
+  height: 16px;
   padding-top: ${(props) =>
     props.checkBannerHeight && props.checkFileUpload ? "250px" : "0"};
 `;
@@ -2651,7 +2667,7 @@ const EntireDelete = styled.div`
 
 const ContentBox = styled.div`
   width: 100%;
-  height: ${(props) => (props.checkFileUpload ? "100px" : "313px")};
+  height: ${(props) => (props.checkFileUpload ? "100px" : "")};
   display: flex;
   flex-direction: column;
   border: 2px dashed #a4aab4;
@@ -2814,6 +2830,7 @@ const DeleteBox = styled.div`
 `;
 
 const InputBox = styled.div`
+  height: 236px !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2919,8 +2936,8 @@ const DropZoneContainer = styled.div`
     line-height: 2;
     letter-spacing: -0.38px;
     color: #1e2222;
-    margin-bottom: 6px;
-    margin-top: 11px;
+    margin-bottom: 3px;
+    margin-top: 6px;
     span {
       color: #0933b3;
       font-weight: 500;
@@ -3115,7 +3132,7 @@ const PurposeSelectCircle = styled.div`
   height: 44px;
   border-radius: 30px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: ${(props) => (props.active ? "#0933b3" : "#ffffff")};
+  border: ${(props) => (props.active ? "solid 1px #0933b3" : "")};
   cursor: pointer;
   margin-right: 30px;
 `;
@@ -3123,7 +3140,7 @@ const PurposeFont18 = styled.div`
   font-weight: normal;
   line-height: 1.89;
   letter-spacing: -0.45px;
-  color: ${(props) => (props.active ? "#ffffff" : "#414550")};
+  color: ${(props) => (props.active ? "#0933b3" : "#414550")};
 `;
 
 const Label = styled.div`
@@ -3498,7 +3515,12 @@ const SecurityBox = styled.div`
   border: solid 1px #c6c7cc;
 `;
 
-const SecuritySetting = styled.div``;
+const SecuritySetting = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+`;
 
 const Container = styled.div`
   width: 100%;

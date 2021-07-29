@@ -1,43 +1,43 @@
-import React, { Component } from 'react'
-import { render } from 'react-dom';
+import React, { Component } from "react";
+import { render } from "react-dom";
 import styled from "styled-components";
 
-
 class FileImage extends Component {
-    render(){
-        const {name} = this.props
-        return (
-            <Container>
-                <span>{name}</span>
-                <div></div>
-            </Container>
-        )
-    }
+  render() {
+    const { name } = this.props;
+    return (
+      <Container>
+        <span>{name}</span>
+        <div></div>
+      </Container>
+    );
+  }
 }
 
-export default FileImage
+export default FileImage;
 
 const Container = styled.div`
-  width: 65px;
-  height: 83px;
+  width: 50px;
+  height: 64px;
   border: 1px solid #c6c7cc;
   background-color: #ffffff;
-  position: relative;  
-  margin: 32px 19px 0 19px;
+  position: relative;
+  margin: 26px 16px 20px 16px;
 
-  >span{
+  > span {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #0933b3;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 35px;
     letter-spacing: -0.4px;
     text-align: left;
     font-weight: 500;
+    margin-top: 5px;
   }
-  > div{
+  > div {
     position: absolute;
     left: calc(99% - 22px);
     bottom: calc(99% - 22px);
@@ -52,9 +52,9 @@ const Container = styled.div`
     height: 64px;
     border: 1px solid #c6c7cc;
     background-color: #ffffff;
-    position: relative;  
+    position: relative;
     margin: 27px 15px 46px 15px;
-    >span{
+    > span {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -66,7 +66,7 @@ const Container = styled.div`
       text-align: left;
       font-weight: 500;
     }
-    >div{
+    > div {
       position: absolute;
       left: calc(99% - 15px);
       bottom: calc(99% - 15px);
@@ -78,13 +78,9 @@ const Container = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-
   }
-  @media (min-width: 992px) and (max-width: 1299.98px) { 
-
+  @media (min-width: 992px) and (max-width: 1299.98px) {
   }
-  @media (min-width: 1300px) { 
-
+  @media (min-width: 1300px) {
   }
-
-`
+`;
