@@ -122,9 +122,7 @@ class Nav extends React.Component {
     return (
       <>
         <NavBox>
-          <Containerv1
-            style={{ display: "inline", justifyContent: "space-between" }}
-          >
+          <Containerv1 style={{ display: "inline", justifyContent: "space-between" }}>
             <NavWrap>
               <BoltLogo>
                 <KSLink url={""} logoImg={bnlogo} />
@@ -132,10 +130,7 @@ class Nav extends React.Component {
 
               <Menu is_open={is_open}>
                 <Close>
-                  <Icon
-                    src={bnlogo}
-                    onClick={() => this.setState({ is_open: false })}
-                  />
+                  <Icon src={bnlogo} onClick={() => this.setState({ is_open: false })} />
                 </Close>
 
                 {this.props.Auth.logged_in_user ? (
@@ -191,22 +186,14 @@ class Nav extends React.Component {
                 {token ? (
                   <>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <Avatar
-                        src={profile}
-                        onClick={() =>
-                          this.setState({ is_profile: !is_profile })
-                        }
-                      />
+                      <Avatar src={profile} onClick={() => this.setState({ is_profile: !is_profile })} />
                       {is_profile && (
                         <ProfileMenu>
                           <div>
                             <div>
                               <Button>
                                 <Font16>
-                                  <KSLink
-                                    url={"profile"}
-                                    content={"정보수정"}
-                                  />
+                                  <KSLink url={"profile"} content={"정보수정"} />
                                 </Font16>
                               </Button>
                             </div>
@@ -214,20 +201,14 @@ class Nav extends React.Component {
                             <div>
                               <Button>
                                 <Font16>
-                                  <KSLink
-                                    url={"chatting"}
-                                    content={"채팅하기"}
-                                  />
+                                  <KSLink url={"chatting"} content={"채팅하기"} />
                                 </Font16>
                               </Button>
                             </div>
                             <div>
                               <Button>
                                 <Font16>
-                                  <KSLink
-                                    url={"account?tab=1"}
-                                    content={"계정설정"}
-                                  />
+                                  <KSLink url={"account?tab=1"} content={"계정설정"} />
                                 </Font16>
                               </Button>
                             </div>
@@ -248,10 +229,7 @@ class Nav extends React.Component {
                         this.props.Auth.setType("detailexpert");
                         Router.push("/signup");
                       }}
-                      active={
-                        url.indexOf("signup") > -1 &&
-                        Auth.type == "detailexpert"
-                      }
+                      active={url.indexOf("signup") > -1 && Auth.type == "detailexpert"}
                     >
                       파트너 등록하기
                     </NavLink>
@@ -261,9 +239,7 @@ class Nav extends React.Component {
                         this.props.Auth.setType("client");
                         Router.push("/signup");
                       }}
-                      active={
-                        url.indexOf("signup") > -1 && Auth.type == "client"
-                      }
+                      active={url.indexOf("signup") > -1 && Auth.type == "client"}
                     >
                       회원가입
                     </NavLink>
@@ -279,13 +255,8 @@ class Nav extends React.Component {
                   </>
                 )}
               </Menu>
-              <Icon
-                src={hamburger_ic}
-                onClick={() => this.setState({ is_open: true })}
-              />
-              {is_open && (
-                <BG onClick={() => this.setState({ is_open: false })} />
-              )}
+              <Icon src={hamburger_ic} onClick={() => this.setState({ is_open: true })} />
+              {is_open && <BG onClick={() => this.setState({ is_open: false })} />}
             </NavWrap>
           </Containerv1>
         </NavBox>

@@ -6,7 +6,7 @@ import * as Text from "components/Text";
 import Button from "components/Button";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
-import ProposalCard from "containers/Manufacture/Producer/ProposalCard";
+import MobileProposalCard from "containers/Manufacture/Producer/MobileProposalCard";
 import { toJS } from "mobx";
 
 @inject("Home", "Partner", "Auth", "Producer", "Category")
@@ -83,7 +83,7 @@ class MobileBanner2Container extends React.Component {
                   {idx < 3 && (
                     <Background style={{ marginBottom: "5px" }}>
                       <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
-                        <ProposalCard
+                        <MobileProposalCard
                           data={item}
                           width={this.props.width}
                           categoryData={toJS(Partner.category_dic[idx])}
