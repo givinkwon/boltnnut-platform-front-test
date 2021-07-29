@@ -4,12 +4,10 @@ import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 
 import SelectComponent from "components/Select";
-import ManufactureProcess from "stores/Manufacture/ManufactureProcess";
+
 import InputComponent from "AddFile2";
 
 import Calendar from "./Calendar2";
-
-import Modal from "LoadingModal";
 
 const pass3 = "static/images/pass3.png";
 const reqeustlogo = "./static/images/request/request_logo.svg";
@@ -21,13 +19,6 @@ const checkbox = "./static/images/request/checkbox.svg";
 @inject("Request", "Auth", "Schedule")
 @observer
 class PartnerDirectRequest extends Component {
-  state = {
-  purposeAry: [
-    { id: 1, name: "상담요청", checked: false },
-    { id: 2, name: "견적문의", checked: false },
-    { id: 3, name: "업체수배", checked: false },
-  ],
-}
   render() {
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
     다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
@@ -37,7 +28,8 @@ class PartnerDirectRequest extends Component {
     `;
 
   const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
-
+  const {Request} = this.props;
+  
     return (
       <>
         <Container>
@@ -66,13 +58,13 @@ class PartnerDirectRequest extends Component {
                   </span>
                 </ContentTitle>
                 <PurposeBtn>
-                  <RequestButton style={{ border: "none", color: "#414550" }}>
+                  <RequestButton onClick={Request.set_state(0)} style={{ border: "none", color: "#414550" }}>
                     <span>상담 요청</span>
                   </RequestButton>
-                  <RequestButton>
+                  <RequestButton onClick={Request.set_state(1)}>
                     <span>견적 요청</span>
                   </RequestButton>
-                  <RequestButton>
+                  <RequestButton onClick={Request.set_state(2)}>
                     <span>업체 수배</span>
                   </RequestButton>
                 </PurposeBtn>

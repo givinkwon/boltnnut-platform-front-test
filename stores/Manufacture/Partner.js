@@ -540,6 +540,8 @@ class Partner {
     this.file = e.currentTarget.files[0];
     this.fileName = fileName;
     this.checkFileUpload = true;
+
+    this.ImageSearch()
   };
 
   @action resetReviewAry = () => {
@@ -1035,101 +1037,48 @@ class Partner {
       });
   };
 
-  // 파트너 정보 제한 검색
-  @action searchjust = () => {
-    const name = this.search_text;
-    const develop = this.search_develop;
-    const region = this.search_region;
+  // 이미지 모달을 위한 state
+  @observable image_modal_state = false;
 
-    let subclasses = [];
-    if (this.search_category) {
-      for (let i = 0; i < this.search_category.length; i++) {
-        const category_middle = this.getCategoryById(this.search_category[i]);
-
-        if (category_middle) {
-          category_middle.subclass_set.forEach((subclass) => {
-            subclasses.push(subclass.id);
-          });
-        }
-      }
-    }
-    console.log(subclasses);
-
+  // image search를 위한 함수
+  @action ImageSearch = () => {
+    console.log(this.file)
+    // 데이터 만들기
+    var formData = new FormData();
+    formData.append("file", this.file);
+    console.log(formData)
     const req = {
-      data: {
-        search: name,
-        // 제품 분야 = 가능 제품 분야
-        history_set__id: subclasses.toString() ? subclasses.toString() : null,
-        // history_set__id: toJS(develop).toString(),
-        region: region.toString() ? region.toString() : null,
-        // 카테고리 = 의뢰 분야
-        category_middle__id: toJS(develop).toString()
-          ? toJS(develop).toString()
-          : null,
-        page: this.page,
-      },
+      data: formData,
     };
-    console.log(req);
-    PartnerAPI.searchjust(req)
+
+    PartnerAPI.imagesearch (req)
       .then((res) => {
         console.log(res);
-        this.partner_list = res.data.results;
-        this.partner_count = res.data.count;
-        this.partner_next = res.data.next;
+        this.partner_list = [];
+        this.partner_list = res.data.partner;     
+        this.partner_count = res.data.partner.length;
+
+        // image modal state 초기화
+        this.image_modal_state = false;
+
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-  };
+    
+  }
 
-  // 파트너 정보 제한 랜덤 검색
-  @action searchrandom = () => {
-    const name = this.search_text;
-    const develop = this.search_develop;
-    const region = this.search_region;
-
-    let subclasses = [];
-    if (this.search_category) {
-      for (let i = 0; i < this.search_category.length; i++) {
-        const category_middle = this.getCategoryById(this.search_category[i]);
-
-        if (category_middle) {
-          category_middle.subclass_set.forEach((subclass) => {
-            subclasses.push(subclass.id);
-          });
-        }
-      }
+  // 이미지 찾기 파일 설정
+  @action set_searchfile = (obj) => {
+    if (typeof obj == "object") {
+      this.request_file_set.push(obj)
+      console.log("file uploaded");
+    } else {
+      this.request_file = null;
     }
-    console.log(subclasses);
-
-    const req = {
-      data: {
-        search: name,
-        // 제품 분야 = 가능 제품 분야
-        history_set__id: subclasses.toString() ? subclasses.toString() : null,
-        // history_set__id: toJS(develop).toString(),
-        region: region.toString() ? region.toString() : null,
-        // 카테고리 = 의뢰 분야
-        category_middle__id: toJS(develop).toString()
-          ? toJS(develop).toString()
-          : null,
-        page: this.page,
-      },
-    };
-    console.log(req);
-    PartnerAPI.searchrandom(req)
-      .then((res) => {
-        console.log(res);
-        this.partner_list = res.data.results;
-        this.partner_count = res.data.count;
-        this.partner_next = res.data.next;
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
   };
+
 
   @action getNextPartner = () => {
     if (!this.partner_next) {

@@ -518,20 +518,13 @@ export function getBusinessName(req) {
     url: `${ROOT_URL}/business/${req}`,
   });
 }
-// export function getVisitPartner(req) {
-//   return axios({
-//     method: "GET",
-//     url: `${ROOT_URL}/lastvisitpartnerlog`,
-//     params: req.params ? req.params : null,
-//     headers: req.headers ? req.headers : null,
-//   });
-// }
 
-// export function setVisitPartner(req) {
-//   return axios({
-//     method: "POST",
-//     url: `${ROOT_URL}/lastvisitpartnerlog`,
-//     data: req.data ? req.data : null,
-//     headers: req.headers ? req.headers : null,
-//   });
-// }
+// 이미지 검색
+export function imagesearch(req) {
+  console.log(req)
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/portfolio/search_file/`,
+    data: req.data,
+  });
+}

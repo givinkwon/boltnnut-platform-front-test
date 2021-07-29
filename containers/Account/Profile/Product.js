@@ -33,6 +33,7 @@ class Product extends React.Component {
             <Button
               onClick={() => {
                 this.setState({ modify: false });
+                Profile.saveProduct(Profile.deal)
               }}
             >
               저장하기
