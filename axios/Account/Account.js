@@ -28,6 +28,15 @@ export function clientSignup(req) {
   });
 }
 
+// 클라이언트 카카오 회원가입
+export function snsClientSignup(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/client/sns-signup/`,
+    data: req.data,
+  });
+}
+
 // 파트너 회원가입
 export function partnerSignup(req) {
   return axios({

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="54" height="39" viewBox="0 0 54 39">
+    <defs>
+        <style>
+            .cls-2{fill:#c6c7cc}.cls-3{fill:#fff}
+        </style>
+    </defs>
+    <g id="그룹_5092" transform="translate(0.029)">
+        <g id="그룹_1896" transform="translate(14.745 6.718)">
+            <rect id="사각형_2418" width="25.021" height="23.118" fill="#a4aab4" rx="1" transform="translate(0 1.462)"/>
+            <rect id="사각형_2419" width="25.021" height="19.699" class="cls-2" rx="1" transform="translate(0 4.881)"/>
+            <g id="그룹_1774" transform="translate(2.687 8.079)">
+                <g id="그룹_1772">
+                    <rect id="사각형_2420" width="3.19" height="3.19" class="cls-3" rx="1"/>
+                    <rect id="사각형_2421" width="3.19" height="3.19" class="cls-3" rx="1" transform="translate(5.486)"/>
+                    <rect id="사각형_2422" width="3.19" height="3.19" class="cls-3" rx="1" transform="translate(10.972)"/>
+                    <rect id="사각형_2423" width="3.19" height="3.19" class="cls-3" rx="1" transform="translate(16.457)"/>
+                </g>
+                <g id="그룹_1773" transform="translate(0 5.057)">
+                    <rect id="사각형_2424" width="3.19" height="3.19" class="cls-3" rx="1"/>
+                    <rect id="사각형_2425" width="3.19" height="3.19" class="cls-3" rx="1" transform="translate(5.486)"/>
+                    <rect id="사각형_2426" width="3.19" height="3.19" class="cls-3" rx="1" transform="translate(10.972)"/>
+                    <rect id="사각형_2427" width="3.19" height="3.19" class="cls-3" rx="1" transform="translate(16.457)"/>
+                </g>
+                <rect id="사각형_2428" width="3.19" height="3.19" class="cls-3" rx="1" transform="translate(0 10.114)"/>
+                <rect id="사각형_2429" width="3.19" height="3.19" class="cls-3" rx="1" transform="translate(5.486 10.114)"/>
+                <rect id="사각형_2430" width="3.19" height="3.19" class="cls-3" rx="1" transform="translate(10.972 10.114)"/>
+                <rect id="사각형_3068" width="3.19" height="3.19" class="cls-3" rx="1" transform="translate(16.457 10.114)"/>
+            </g>
+            <rect id="사각형_2431" width="1.586" height="3.595" class="cls-2" rx=".793" transform="translate(3.489)"/>
+            <rect id="사각형_2432" width="1.586" height="3.595" class="cls-2" rx=".793" transform="translate(8.975)"/>
+            <rect id="사각형_2433" width="1.586" height="3.595" class="cls-2" rx=".793" transform="translate(14.46)"/>
+            <rect id="사각형_2434" width="1.586" height="3.595" class="cls-2" rx=".793" transform="translate(19.946)"/>
+        </g>
+        <path id="사각형_3084" fill="none" d="M0 0H54V39H0z" transform="translate(-0.029)"/>
+    </g>
+</svg>

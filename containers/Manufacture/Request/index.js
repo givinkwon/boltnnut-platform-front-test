@@ -32,6 +32,7 @@ import RequestCompleteContainer from "./RequestComplete";
 import MobileRequestCompleteContainer from "./Mobile/MobileRequestComplete";
 import ModifyCompleteContainer from "./ModifyComplete";
 import MobileModifyCompleteContainer from "./Mobile/MobileModifyComplete";
+import PartnerDirectRequest from "./PartnerDirectRequest";
 
 @inject("Partner", "ManufactureProcess", "Request", "Auth")
 @observer
@@ -52,7 +53,7 @@ class RequestContainer extends React.Component {
       <>
         <Background>
           <Containerv1 style={{ width: 792 }}>
-            <FileUploadContainer />
+            <PartnerDirectRequest />
           </Containerv1>
         </Background>
         {/* {this.props.width >= 1279.98 ? (

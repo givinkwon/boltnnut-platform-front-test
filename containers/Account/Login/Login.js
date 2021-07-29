@@ -31,13 +31,13 @@ class LoginContainer extends React.Component {
           {/* email */}
           <EmailContainer>
             <Title18 style={{ color: "#505050" }}>이메일</Title18>
-            <CustomInput placeholder="이메일" />
+            <CustomInput placeholder="이메일" style={{ marginTop: "0px" }} />
           </EmailContainer>
 
           {/* password */}
           <PasswordContainer>
             <Title18 style={{ color: "#505050" }}>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호" type="password" />
+            <CustomInput placeholder="비밀번호" type="password" style={{ marginTop: "0px" }} />
           </PasswordContainer>
 
           {/* loginstate && find ID/PW */}
@@ -107,6 +107,7 @@ const PasswordContainer = styled.div`
   flex-direction: column;
   margin-top: 20px;
   width: 588px;
+  margin-top: 40px;
 `;
 
 const LoginStateContainer = styled.div`
@@ -114,6 +115,7 @@ const LoginStateContainer = styled.div`
   justify-content: space-between;
   margin-top: 12px;
   width: 588px;
+  margin-top: 20px;
 `;
 
 const ButtonContainer = styled.div`
