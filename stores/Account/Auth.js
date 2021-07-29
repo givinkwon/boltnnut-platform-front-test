@@ -29,6 +29,7 @@ class Auth {
   @observable step = 0;
   @observable loading = false;
 
+  @observable realName = "";
   @observable company_name = "";
   @observable revenue = "";
   @observable employee = "";
@@ -108,8 +109,13 @@ class Auth {
   @action setPassword2 = (val) => {
     this.password2 = val;
   };
+  //회사명
   @action setName = (val) => {
     this.name = val;
+  };
+  //실명
+  @action setRealName = (val) => {
+    this.realName = val;
   };
   @action setTitle = (val) => {
     this.title = val;
@@ -578,7 +584,7 @@ class Auth {
     });
   };
 
-  @action snsClientSignup = async () => {
+  @action snsSignup = async () => {
     if (!this.email) {
       await alert("이메일을 입력해주세요.");
       return;
@@ -594,11 +600,10 @@ class Auth {
     console.log("company : ", this.name);
 
     console.log("business : ", this.business);
-
-    // if (this.type === "client")
-    if (true) {
-      if (!this.name) {
-        await alert("상호명을 입력해주세요.");
+    // if (true)
+    if (this.type === "client") {
+      if (!this.realName) {
+        await alert("이름을 입력해주세요.");
         return;
       }
       // if (!this.title) {
@@ -619,7 +624,7 @@ class Auth {
         data: {
           username: this.email,
           phone: this.phone,
-          name: this.name,
+          realName: this.realName,
           business: this.business,
           type: 0,
         },
@@ -644,80 +649,11 @@ class Auth {
           this.loading = false;
         });
     } else {
+      //파트너
       if (!this.company_name) {
         await alert("상호명을 입력해주세요.");
         return;
       }
-      {
-        /*if (!this.employee) {
-        await alert("종업원 수를 입력해주세요.");
-        return;
-      }
-      if (!this.career) {
-        await alert("설립연도를 입력해주세요.");
-        return;
-      }
-      if (!this.revenue) {
-        await alert("매출액을 입력해주세요.");
-        return;
-      }*/
-      }
-      if (!this.city) {
-        await alert("시/도를 입력해주세요.");
-        return;
-      }
-      {
-        /*if (!this.region) {
-        await alert("지역을 입력해주세요.");
-        return;
-      }
-
-      if (!this.info_biz) {
-        await alert("주요사업을 입력해주세요.");
-        return;
-      }*/
-      }
-      if (!this.deal) {
-        await alert("주요거래처를 입력해주세요.");
-        return;
-      }
-      if (!this.info_company) {
-        await alert("회사소개를 입력해주세요.");
-        return;
-      }
-      if (this.info_company.length < 100) {
-        await alert("회사소개를 100자 이상 입력해주세요");
-        return;
-      }
-
-      {
-        /*if (toJS(this.possible_set).length === 0) {
-        await alert("가능한 제품을 입력해주세요.");
-        return;
-      }*/
-      }
-      if (!this.histories) {
-        await alert("진행한 제품들을 10개 이상 입력해 주세요.");
-        return;
-      }
-
-      // if (this.category_set.length === 0) {
-      //   await alert("개발분야를 선택 해주세요.");
-      //   return;
-      // }
-
-      if (!this.file) {
-        await alert("회사소개서를 입력해주세요.");
-        return;
-      }
-      //  if (!this.logo) {
-      //    await alert("로고를 입력해주세요.");
-      //    return;
-      //  }
-      if (!this.resume) {
-        await alert("이력서를 첨부해 주세요.");
-        return;
-      } // 0923
 
       if (this.marketing == true) {
         this.marketing = 1;
@@ -726,43 +662,13 @@ class Auth {
       }
       var formData = new FormData();
 
-      {
-        /*var possible_set = [];
-      for (var i of this.possible_set) {
-        await possible_set.push(i.id);
-      }
-      */
-      }
-      var history_set = [];
-      for (var i of this.history_set) {
-        await history_set.push(i.id);
-      }
-
       formData.append("username", this.email);
-      formData.append("password", this.password);
-      formData.append("phone", this.phone);
+      // formData.append("password", this.password);
+      // formData.append("phone", this.phone);
       formData.append("type", 1);
       formData.append("marketing", this.marketing);
-      formData.append("logo", this.logo);
       formData.append("name", this.company_name);
-      formData.append("city", this.city.id);
-      formData.append("deal", this.deal);
-      formData.append("info_company", this.info_company);
-      formData.append("history", this.histories);
-
-      // 카테고리 추가
-      console.log(Category.business_selected);
-      console.log(Category.category_selected);
-      console.log(Category.develop_selected);
-      console.log(Category.material_selected);
-      formData.append("business", Category.business_selected);
-      formData.append("category", Category.category_selected);
-      formData.append("develop", Category.develop_selected);
-      formData.append("material", Category.material_selected);
-
-      // 파일 추가
-      formData.append("file", this.file);
-      formData.append("resume", this.resume);
+      formData.append("realName", this.realName);
 
       this.loading = true;
       const req = {
@@ -773,7 +679,7 @@ class Auth {
           setTimeout(() => {
             this.loading = false;
             alert("회원가입 성공");
-            MyDataLayerPush({ event: "SignUpComplete_Partner" });
+            // MyDataLayerPush({ event: "SignUpComplete_Partner" });
             this.reset();
             Router.push("/login");
           }, 800);

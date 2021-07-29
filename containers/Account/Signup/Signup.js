@@ -27,6 +27,7 @@ class SignupContainer extends React.Component {
           <SelectContainer>
             <SelectBox
               onClick={() => {
+                Auth.type = "client";
                 Auth.isSnsSignup
                   ? Router.push("/signup/snsclientsignup")
                   : Router.push("/signup/clientsignup");
@@ -46,6 +47,7 @@ class SignupContainer extends React.Component {
 
             <SelectBox
               onClick={() => {
+                Auth.type = "partner";
                 Auth.isSnsSignup
                   ? Router.push("/signup/snspartnersignup")
                   : Router.push("/signup/partnersignup");

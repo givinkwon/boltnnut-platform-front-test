@@ -45,6 +45,11 @@ class SnsClientSignupContainer extends React.Component {
     }
   };
 
+  // asdasd = () => {
+  //   "use strict";
+  //   tet = 333;
+  // };
+
   // 가입하기 submit 함수
   signupSubmit = () => {
     const { Auth } = this.props;
@@ -77,10 +82,8 @@ class SnsClientSignupContainer extends React.Component {
             <Title18>이름</Title18>
             <CustomInput
               placeholder="이름을 입력해 주세요."
-              onChange={(e) => {
-                Auth.setName(e.currentTarget.value);
-              }}
-              value={Auth.name}
+              onChange={Auth.setRealName}
+              value={Auth.realName}
             />
           </InputInnerBox>
 
@@ -91,9 +94,7 @@ class SnsClientSignupContainer extends React.Component {
             <div style={{ display: "flex", alignItems: "center" }}>
               <CustomInput
                 placeholder="근무하는 회사명을 입력해 주세요."
-                onChange={(e) => {
-                  Auth.setCompanyName(e.currentTarget.value);
-                }}
+                onChange={Auth.setCompanyName}
                 value={Auth.company_name}
               />
               <ImgBox src={signupsearch} style={{ marginRight: "22px" }} />
@@ -111,9 +112,7 @@ class SnsClientSignupContainer extends React.Component {
             <DropDownSelectorsBox>
               <SectorsInput
                 placeholder="옵션을 선택해 주세요."
-                onChange={(e) => {
-                  Auth.setBusiness(e.currentTarget.value);
-                }}
+                onChange={Auth.setBusiness}
                 value={Auth.business}
               />
               <img src={dropdown} style={{ marginRight: "15px" }} />
@@ -158,17 +157,13 @@ class SnsClientSignupContainer extends React.Component {
                 </AgreeInnerBox>
               );
             })}
-
-            {this.state.checkboxState.map((item, idx) => {
-              return <>{item.toString()} / </>;
-            })}
           </AgreeContainer>
           {Auth.loading ? (
             <ButtonSpinnerComponent scale="50%" primary />
           ) : (
             <SubmitButton
               onClick={() => {
-                Auth.snsClientSignup();
+                Auth.snsSignup();
               }}
             >
               <ButtonText>가입하기</ButtonText>
