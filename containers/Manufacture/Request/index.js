@@ -32,7 +32,6 @@ import RequestCompleteContainer from "./RequestComplete";
 import MobileRequestCompleteContainer from "./Mobile/MobileRequestComplete";
 import ModifyCompleteContainer from "./ModifyComplete";
 import MobileModifyCompleteContainer from "./Mobile/MobileModifyComplete";
-import ProjectRequest from "./ProjectRequest";
 
 @inject("Partner", "ManufactureProcess", "Request", "Auth")
 @observer
