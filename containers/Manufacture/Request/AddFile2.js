@@ -143,145 +143,126 @@ class InputComponent extends React.Component {
     return (
       <Wrap width={this.props.width}>
         <FileText mobile={mobile} checkFileUpload={this.state.checkFileUpload}>
-          <InputBox mobile={mobile}>
-            <input
-              type="file"
-              multiple={"multiple"}
-              fileName={"fileName[]"}
-              style={{ display: "none" }}
-              onChange={
-                isOpen ? this.openOnChangeFile : this.privateOnChangeFile
-              }
-              id="inputFile"
-              ref={this.file}
-              value=""
-              placeholder={"파일을 선택해 주세요."}
-            />
+          <InputBox
+            mobile={mobile}
+            style={{ width: "100%", display: "inline-flex" }}
+          >
             <div>
+              <input
+                type="file"
+                multiple={"multiple"}
+                fileName={"fileName[]"}
+                style={{ display: "none" }}
+                onChange={
+                  isOpen ? this.openOnChangeFile : this.privateOnChangeFile
+                }
+                id="inputFile"
+                ref={this.file}
+                value=""
+                placeholder={"파일을 선택해 주세요."}
+              />
+
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "#ffffff",
-                }}
                 onClick={() => {
                   console.log(this.file);
                   this.file.current.click();
                 }}
               >
-                <img
-                  src={addButtonImg}
-                  style={{
-                    verticalAlign: "baseline",
-                    width: 30,
-                    height: 30,
-                    paddingTop: 2,
-                  }}
-                />
-                <span
-                  style={{
-                    fontSize: 16,
-                    color: "#0933b3",
-                    lineHeight: 2.13,
-                    letterSpacing: -0.4,
-                    marginLeft: 20,
-                    fontFamily: "NotoSansCJKkr",
-                  }}
-                >
-                  파일첨부
-                </span>
+                <span>파일첨부</span>
+                <img src={addButtonImg} />
               </div>
-              {isOpen ? (
-                <>
-                  {ManufactureProcess.openFileArray.map((item, idx) => {
-                    return (
-                      <>
-                        <span
-                          onClick={() => {
-                            if (checkFileUpload) {
-                              ManufactureProcess.openFileArray.splice(idx, 1);
-                              const inputFile =
-                                document.getElementById("inputFile");
-                              console.log(
-                                toJS(ManufactureProcess.openFileArray)
-                              );
-                              inputFile.innerHTML = "";
+              <div>
+                {isOpen ? (
+                  <>
+                    {ManufactureProcess.openFileArray.map((item, idx) => {
+                      return (
+                        <>
+                          <span
+                            onClick={() => {
+                              if (checkFileUpload) {
+                                ManufactureProcess.openFileArray.splice(idx, 1);
+                                const inputFile =
+                                  document.getElementById("inputFile");
+                                console.log(
+                                  toJS(ManufactureProcess.openFileArray)
+                                );
+                                inputFile.innerHTML = "";
 
-                              if (
-                                ManufactureProcess.openFileArray.length === 0
-                              ) {
-                                this.setState({ checkFileUpload: false });
+                                if (
+                                  ManufactureProcess.openFileArray.length === 0
+                                ) {
+                                  this.setState({ checkFileUpload: false });
+                                }
                               }
-                            }
-                          }}
-                        >
-                          <span>
+                            }}
+                          >
                             <span>
-                              {!item.name
-                                ? decodeURI(item.file.split("/").pop())
-                                : item.name}
+                              <span>
+                                {!item.name
+                                  ? decodeURI(item.file.split("/").pop())
+                                  : item.name}
+                              </span>
+                              <DeleteFile
+                                src={deleteButtonImg}
+                                style={{
+                                  display: this.state.checkFileUpload
+                                    ? "inline"
+                                    : "none",
+                                }}
+                              />
                             </span>
-                            <DeleteFile
-                              src={deleteButtonImg}
-                              style={{
-                                display: this.state.checkFileUpload
-                                  ? "inline"
-                                  : "none",
-                              }}
-                            />
                           </span>
-                        </span>
-                      </>
-                    );
-                  })}
-                </>
-              ) : (
-                <>
-                  {ManufactureProcess.privateFileArray.map((item, idx) => {
-                    return (
-                      <>
-                        <span
-                          onClick={() => {
-                            if (checkFileUpload) {
-                              ManufactureProcess.privateFileArray.splice(
-                                idx,
-                                1
-                              );
-                              const inputFile =
-                                document.getElementById("inputFile");
-                              inputFile.innerHTML = "";
+                        </>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    {ManufactureProcess.privateFileArray.map((item, idx) => {
+                      return (
+                        <>
+                          <span
+                            onClick={() => {
+                              if (checkFileUpload) {
+                                ManufactureProcess.privateFileArray.splice(
+                                  idx,
+                                  1
+                                );
+                                const inputFile =
+                                  document.getElementById("inputFile");
+                                inputFile.innerHTML = "";
 
-                              if (
-                                ManufactureProcess.privateFileArray.length === 0
-                              ) {
-                                this.setState({ checkFileUpload: false });
+                                if (
+                                  ManufactureProcess.privateFileArray.length ===
+                                  0
+                                ) {
+                                  this.setState({ checkFileUpload: false });
+                                }
                               }
-                            }
-                          }}
-                        >
-                          <span>
+                            }}
+                          >
                             <span>
-                              {!item.name
-                                ? decodeURI(item.file.split("/").pop())
-                                : item.name}
+                              <span>
+                                {!item.name
+                                  ? decodeURI(item.file.split("/").pop())
+                                  : item.name}
+                              </span>
+                              <DeleteFile
+                                src={deleteButtonImg}
+                                style={{
+                                  display: this.state.checkFileUpload
+                                    ? "inline"
+                                    : "none",
+                                }}
+                              />
                             </span>
-                            <DeleteFile
-                              src={deleteButtonImg}
-                              style={{
-                                display: this.state.checkFileUpload
-                                  ? "inline"
-                                  : "none",
-                              }}
-                            />
                           </span>
-                        </span>
-                      </>
-                    );
-                  })}
-                </>
-              )}
+                        </>
+                      );
+                    })}
+                  </>
+                )}
+              </div>
             </div>
           </InputBox>
         </FileText>
@@ -293,28 +274,45 @@ class InputComponent extends React.Component {
 export default InputComponent;
 
 const InputBox = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 96%;
-  height: 45px;
+  height: 100%;
   width: 100%;
+  display: flex;
   align-items: center;  
   border: solid 1px #ffffff;
   color: #404040;
-  background-color: #ffffff;
   border-radius: 3px;
   box-sizing: border-box;
 
   >div{
-    width: 100%;
+    display: ${(props) => (props.mobile ? "" : "inline-flex")};
+    width: ${(props) => (props.mobile ? "100%" : "")};
 
     >div:nth-of-type(1){        
+      margin-right: 40px;
       cursor: pointer;
+      width: ${(props) => (props.mobile ? "100%" : "")};
+
+      >span{
+        font-size: ${(props) => (props.mobile ? "14px" : "18px")};
+        line-height: 40px;
+        letter-sacing: ${(props) => (props.mobile ? "-0.35px" : "-0.45px")};
+        color: #0933b3;
+        font-weight: normal;
+        box-sizing: border-box;
+        margin-right: 5px;
+      }
+      >img {
+        vertical-align : baseline;
+        width: ${(props) => (props.mobile ? "20px" : "")};
+        height: ${(props) => (props.mobile ? "18px" : "")};
+      }      
     }
       
     >div:nth-of-type(2){      
+      width: 950px;   
       word-wrap: break-word;
       word-break:break-all;
+      
       >span{      
         >span{          
           >span{
@@ -372,9 +370,6 @@ const Input = styled.div`
   margin-top: ${(props) => props.marginTop}px;
   color: #404040;
   font-weight: 400;
-  padding-left: 2.3%;
-  :focus {
-    outline: none;
   }
   > input {
     width: 100%;
@@ -425,20 +420,19 @@ const Input = styled.div`
   }
 `;
 const FileText = styled(Content.FontSize18)`
-  width: 100%;
+  //width: 1152px;
+  width: ${(props) => (props.mobile ? "100%" : "1152px")}
   font-stretch: normal;
   font-style: normal;
   line-height: 40px;
   letter-spacing: -0.18px;
   text-align: left;
   color: #c6c7cc;
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
   align-items: center;
-  padding: 27px 20px;
+  padding: ${(props) => (props.mobile ? "0 14px 0 14px" : "14px 16px")};
   flex-wrap: wrap;
-  background-color: #f6f6f6;
-  border: solid 0.5px #c7c7c7;
+  background-color: #ffffff;
   box-sizing: border-box;
   height: ${(props) => (props.mobile ? "100%" : "")}
   > span:nth-of-type(1) {
