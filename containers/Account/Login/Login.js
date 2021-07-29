@@ -18,7 +18,17 @@ class LoginContainer extends React.Component {
     // Router.push("/signup/kakao");
   };
 
+  handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      // TODO 검색 API
+      console.log("검색");
+      this.props.Auth.login();
+    }
+  };
+
   render() {
+    const { Auth } = this.props;
+
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
@@ -31,13 +41,23 @@ class LoginContainer extends React.Component {
           {/* email */}
           <EmailContainer>
             <Title18 style={{ color: "#505050" }}>이메일</Title18>
-            <CustomInput placeholder="이메일" style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="이메일"
+              onChange={Auth.setEmail}
+              style={{ marginTop: "0px" }}
+            />
           </EmailContainer>
 
           {/* password */}
           <PasswordContainer>
             <Title18 style={{ color: "#505050" }}>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호" type="password" style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="비밀번호"
+              onChange={Auth.setPassword}
+              onKeyDown={this.handleKeyDown}
+              type="password"
+              style={{ marginTop: "0px" }}
+            />
           </PasswordContainer>
 
           {/* loginstate && find ID/PW */}
@@ -55,18 +75,24 @@ class LoginContainer extends React.Component {
           </LoginStateContainer>
 
           <ButtonContainer>
-            <SignupBtn>
+            <SignupBtn
+              onClick={() => {
+                Router.push(`/signup`);
+              }}
+            >
               <Title18 style={{ color: "#0933b3" }}>회원가입</Title18>
             </SignupBtn>
 
-            <LoginBtn>
+            <LoginBtn onClick={Auth.login}>
               <Title18 style={{ color: "#ffffff" }}>로그인</Title18>
             </LoginBtn>
           </ButtonContainer>
 
           <SnsLoginContainer>
             <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 로그인</Title14>
+            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>
+              SNS 간편 로그인
+            </Title14>
             <LineDiv />
           </SnsLoginContainer>
 
@@ -76,7 +102,9 @@ class LoginContainer extends React.Component {
                 <img src={signupkakao} />
               </KakaoImgBox>
 
-              <Title16 style={{ color: "#1e2222" }}>카카오 계정으로 로그인</Title16>
+              <Title16 style={{ color: "#1e2222" }}>
+                카카오 계정으로 로그인
+              </Title16>
             </KakaoSignUpInnerBox>
           </KakaoSignUp>
         </Container>

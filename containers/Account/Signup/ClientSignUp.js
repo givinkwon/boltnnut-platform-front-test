@@ -60,8 +60,12 @@ class ClientSignupContainer extends React.Component {
     const { Auth } = this.props;
     const checkboxArr = Auth.checkboxState;
 
-    if (checkboxArr[0] === true && checkboxArr[1] === true && checkboxArr[2] === true) {
-      console.log("post!!!!");
+    if (
+      checkboxArr[0] === true &&
+      checkboxArr[1] === true &&
+      checkboxArr[2] === true
+    ) {
+      Auth.signup();
     } else {
       alert("필수 이용약관에 동의해 주세요");
     }
@@ -81,7 +85,9 @@ class ClientSignupContainer extends React.Component {
 
           <LineDivContainer>
             <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 회원가입</Title14>
+            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>
+              SNS 간편 회원가입
+            </Title14>
             <LineDiv />
           </LineDivContainer>
 
@@ -104,7 +110,12 @@ class ClientSignupContainer extends React.Component {
             <Title18>이메일</Title18>
 
             <EmailInnerContainer>
-              <CustomInput placeholder="boltnnut@gmail.com" style={{ width: "437px", marginTop: "0px" }} />
+              <CustomInput
+                placeholder="boltnnut@gmail.com"
+                onChange={Auth.setEmail}
+                value={Auth.email}
+                style={{ width: "437px", marginTop: "0px" }}
+              />
 
               <AuthenticateBtn>
                 <AuthenticateBtnText>인증하기</AuthenticateBtnText>
@@ -115,31 +126,59 @@ class ClientSignupContainer extends React.Component {
           {/* password */}
           <InputInnerBox>
             <Title18>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호를 입력해 주세요." type="password" style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="비밀번호를 입력해 주세요."
+              type="password"
+              onChange={Auth.setPassword}
+              value={Auth.password}
+              style={{ marginTop: "0px" }}
+            />
           </InputInnerBox>
 
           {/* password confirm */}
           <InputInnerBox>
             <Title18>비밀번호 확인</Title18>
-            <CustomInput placeholder="비밀번호를 한 번 더 입력해 주세요." type="password" style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="비밀번호를 한 번 더 입력해 주세요."
+              type="password"
+              onChange={Auth.setPassword2}
+              value={Auth.password2}
+              style={{ marginTop: "0px" }}
+            />
           </InputInnerBox>
 
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
-            <CustomInput placeholder="이름을 입력해 주세요." style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="이름을 입력해 주세요."
+              onChange={Auth.setRealName}
+              value={Auth.realName}
+              style={{ marginTop: "0px" }}
+            />
           </InputInnerBox>
 
           {/* phone number */}
           <InputInnerBox>
             <Title18>휴대전화</Title18>
-            <CustomInput placeholder="- 없이 입력해 주세요" type="tel" style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="- 없이 입력해 주세요"
+              onChange={Auth.setPhone}
+              value={Auth.phone}
+              type="tel"
+              style={{ marginTop: "0px" }}
+            />
           </InputInnerBox>
 
           {/* company name */}
           <InputInnerBox>
             <Title18>회사명</Title18>
-            <CustomInput placeholder="- 없이 입력해 주세요" style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="- 없이 입력해 주세요"
+              onChange={Auth.setCompanyName}
+              value={Auth.company_name}
+              style={{ marginTop: "0px" }}
+            />
 
             <div style={{ display: "inline-flex", marginTop: "25px" }}>
               <CustomCheckBox type="checkbox" />
@@ -150,7 +189,12 @@ class ClientSignupContainer extends React.Component {
           {/* rank */}
           <InputInnerBox>
             <Title18>직급</Title18>
-            <CustomInput placeholder="직급을 입력해 주세요." style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="직급을 입력해 주세요."
+              onChange={Auth.setTitle}
+              value={Auth.title}
+              style={{ marginTop: "0px" }}
+            />
           </InputInnerBox>
 
           {/* agree */}
@@ -184,7 +228,9 @@ class ClientSignupContainer extends React.Component {
                     }}
                   />
                   <Title15>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                    {item.essential}
+                  </Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );

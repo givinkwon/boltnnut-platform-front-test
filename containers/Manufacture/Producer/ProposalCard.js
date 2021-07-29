@@ -822,12 +822,12 @@ const InfoOne = styled.div`
   }
 `;
 const InfoTwo = styled.div`
-margin-top: 16px;
+  margin-top: 16px;
   > span {
     background-color: #e1e2e4;
     border: 1px solid #ffffff;
     border-radius: 5px;
-    padding 5px 12px;
+    padding: 5px 12px;
     box-sizing: border-box;
     margin-right: 21px;
     display: inline-block;
@@ -840,7 +840,7 @@ margin-top: 16px;
     width: 95%;
   }
   @media (min-width: 1300px) {
-    width: 88%
+    width: 88%;
   }
 `;
 const Button = styled.button`

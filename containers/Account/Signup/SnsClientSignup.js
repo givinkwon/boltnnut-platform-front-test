@@ -55,11 +55,7 @@ class SnsClientSignupContainer extends React.Component {
     const { Auth } = this.props;
     const checkboxArr = Auth.checkboxState;
 
-    if (
-      checkboxArr[0] === true &&
-      checkboxArr[1] === true &&
-      checkboxArr[2] === true
-    ) {
+    if (checkboxArr[0] === true && checkboxArr[1] === true && checkboxArr[2] === true) {
       console.log("post!!!!");
     } else {
       alert("필수 이용약관에 동의해 주세요");
@@ -73,18 +69,12 @@ class SnsClientSignupContainer extends React.Component {
         <Container>
           <img src={signupdot} />
 
-          <Title32 style={{ marginTop: "20px" }}>
-            추가정보를 입력해 주세요.
-          </Title32>
+          <Title32 style={{ marginTop: "20px" }}>추가정보를 입력해 주세요.</Title32>
 
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
-            <CustomInput
-              placeholder="이름을 입력해 주세요."
-              onChange={Auth.setRealName}
-              value={Auth.realName}
-            />
+            <CustomInput placeholder="이름을 입력해 주세요." onChange={Auth.setRealName} value={Auth.realName} style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* company name */}
@@ -92,12 +82,8 @@ class SnsClientSignupContainer extends React.Component {
             <Title18>회사명</Title18>
 
             <div style={{ display: "flex", alignItems: "center" }}>
-              <CustomInput
-                placeholder="근무하는 회사명을 입력해 주세요."
-                onChange={Auth.setCompanyName}
-                value={Auth.company_name}
-              />
-              <ImgBox src={signupsearch} style={{ marginRight: "22px" }} />
+              <CustomInput placeholder="근무하는 회사명을 입력해 주세요." onChange={Auth.setCompanyName} value={Auth.company_name} style={{ marginTop: "0px" }} />
+              <ImgBox src={signupsearch} style={{ marginRight: "22px", marginTop: "15px" }} />
             </div>
 
             <div style={{ display: "inline-flex", marginTop: "25px" }}>
@@ -107,16 +93,9 @@ class SnsClientSignupContainer extends React.Component {
           </InputInnerBox>
 
           {/* rank */}
-          <InputInnerBox>
-            <Title18>업종</Title18>
-            <DropDownSelectorsBox>
-              <SectorsInput
-                placeholder="옵션을 선택해 주세요."
-                onChange={Auth.setBusiness}
-                value={Auth.business}
-              />
-              <img src={dropdown} style={{ marginRight: "15px" }} />
-            </DropDownSelectorsBox>
+          <InputInnerBox style={{ marginTop: "15px" }}>
+            <Title18>직급</Title18>
+            <CustomInput placeholder="직급을 입력해 주세요." onChange={Auth.setTitle} value={Auth.title} style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* agree */}
@@ -145,14 +124,11 @@ class SnsClientSignupContainer extends React.Component {
                     onChange={(e) => {
                       const check = Auth.checkboxState;
                       check[idx] = e.currentTarget.checked;
-
                       Auth.checkboxState = check;
                     }}
                   />
                   <Title15>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
-                    {item.essential}
-                  </Title14>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
