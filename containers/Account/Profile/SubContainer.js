@@ -10,7 +10,12 @@ class SubContainer extends React.Component {
   render() {
     return (
       <Container>
-        <h1>SubContainer</h1>
+        <h1>프로필 수정</h1>
+        <h1>계정 설정</h1>
+
+        <h1>관심 제조사</h1>
+
+        <h1>채팅</h1>
       </Container>
     );
   }
