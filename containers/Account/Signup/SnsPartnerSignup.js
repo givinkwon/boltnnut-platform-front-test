@@ -69,7 +69,7 @@ class SnsPartnerSignupContainer extends React.Component {
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
-            <CustomInput placeholder="이름을 입력해 주세요." style={{ marginTop: "0px" }} />
+            <CustomInput placeholder="이름을 입력해 주세요." onChange={Auth.setRealName} value={Auth.realName} style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* company name */}
@@ -77,7 +77,7 @@ class SnsPartnerSignupContainer extends React.Component {
             <Title18>상호명</Title18>
 
             <div style={{ display: "flex", alignItems: "center" }}>
-              <CustomInput placeholder="등록하고자 하는 상호명을 입력해 주세요." style={{ marginTop: "0px" }} />
+              <CustomInput placeholder="등록하고자 하는 상호명을 입력해 주세요." onChange={Auth.setCompanyName} value={Auth.company_name} style={{ marginTop: "0px" }} />
               <ImgBox src={signupsearch} style={{ marginRight: "22px", marginBottom: "3px" }} />
             </div>
           </InputInnerBox>
