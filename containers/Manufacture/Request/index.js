@@ -32,6 +32,7 @@ import RequestCompleteContainer from "./RequestComplete";
 import MobileRequestCompleteContainer from "./Mobile/MobileRequestComplete";
 import ModifyCompleteContainer from "./ModifyComplete";
 import MobileModifyCompleteContainer from "./Mobile/MobileModifyComplete";
+import ProjectRequest from "./ProjectRequest";
 
 @inject("Partner", "ManufactureProcess", "Request", "Auth")
 @observer
@@ -50,23 +51,21 @@ class RequestContainer extends React.Component {
     const { Request } = this.props;
     return (
       <>
-        {this.props.width >= 1279.98 ? (
+        <Background>
+          <Containerv1 style={{ width: 792 }}>
+            <FileUploadContainer />
+          </Containerv1>
+        </Background>
+        {/* {this.props.width >= 1279.98 ? (
           <div style={{ overflow: "visible" }}>
-            <BannerContainer />
-
-            <Background backgroundColor={"#ffffff"}>
-              <Containerv1>
-                {console.log(`newIndex : ${Request.newIndex}`)}
+            {console.log(`newIndex : ${Request.newIndex}`)}
                 {Request.newIndex == 0 && (
                   <FileUploadContainer width={this.props.width} />
                 )}
                 {Request.newIndex == 1 && <RequestCompleteContainer />}
                 {Request.newIndex == 2 && <NoneDrawingConsultingContainer />}
                 {Request.newIndex == 3 && <ModifyCompleteContainer />}
-
-                {/* <PaymentPageContainer /> */}
-              </Containerv1>
-            </Background>
+            <PaymentPageContainer />
           </div>
         ) : (
           <>
@@ -75,7 +74,7 @@ class RequestContainer extends React.Component {
             {Request.newIndex == 2 && <MobileNoneDrawingConsultingContainer />}
             {Request.newIndex == 3 && <MobileModifyCompleteContainer />}
           </>
-        )}
+        )} */}
       </>
     );
   }

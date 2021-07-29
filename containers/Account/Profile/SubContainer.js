@@ -20,5 +20,6 @@ export default SubContainer;
 
 const Container = styled.div`
   border: 3px solid green;
-  flex-grow: 1;
+  // flex-grow: 1;
+  width: 25%;
 `;

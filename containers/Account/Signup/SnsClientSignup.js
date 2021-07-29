@@ -4,24 +4,63 @@ import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
 import { inject, observer } from "mobx-react";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
+import InputComponent from "components/Input";
 
 const signupdot = "/static/images/signupdot.svg";
 const signupsearch = "/static/images/signupsearch.svg";
 const dropdown = "/static/images/dropdown.svg";
 const viewterms = "/static/images/viewterms.svg";
 
-const aa = [
-  { content: "만 14세 이상입니다", test: "(필수)" },
-  { content: "이용약관 동의", test: "(필수)" },
-  { content: "만ㅁㄴㅇㅁㄴㅇㅁㄴㅇ", test: "(선택)" },
+const AgreeContent = [
+  { content: "만 14세 이상 입니다", essential: "(필수)", terms: 0 },
+  { content: "이용약관 동의", essential: "(필수)", terms: 1 },
+  { content: "개인정보 처리방침 동의", essential: "(필수)", terms: 1 },
+  { content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 },
 ];
 
 @inject("Auth")
 @observer
 class SnsClientSignupContainer extends React.Component {
-  state = {
-    checkboxState: [false, false, false],
+  // 전체동의 핸들러 함수
+  fullConsent = () => {
+    const { Auth } = this.props;
+    if (Auth.allCheckState === false) {
+      Auth.allCheckState = true;
+
+      Auth.checkboxState.forEach((item, idx) => {
+        const checkbox = Auth.checkboxState;
+        checkbox[idx] = true;
+        Auth.checkboxState = checkbox;
+        console.log("item : ", Auth.checkboxState);
+      });
+    } else {
+      Auth.allCheckState = false;
+
+      Auth.checkboxState.forEach((item, idx) => {
+        const checkbox = Auth.checkboxState;
+        checkbox[idx] = false;
+        Auth.checkboxState = checkbox;
+        console.log("item : ", Auth.checkboxState);
+      });
+    }
   };
+
+  // 가입하기 submit 함수
+  signupSubmit = () => {
+    const { Auth } = this.props;
+    const checkboxArr = Auth.checkboxState;
+
+    if (
+      checkboxArr[0] === true &&
+      checkboxArr[1] === true &&
+      checkboxArr[2] === true
+    ) {
+      console.log("post!!!!");
+    } else {
+      alert("필수 이용약관에 동의해 주세요");
+    }
+  };
+
   render() {
     const { Auth } = this.props;
     return (
@@ -60,13 +99,13 @@ class SnsClientSignupContainer extends React.Component {
               <ImgBox src={signupsearch} style={{ marginRight: "22px" }} />
             </div>
 
-            <div style={{ display: "inline-flex", marginTop: "14px" }}>
+            <div style={{ display: "inline-flex", marginTop: "25px" }}>
               <CustomCheckBox type="checkbox" />
               <Title15>개인일 경우 체크해 주세요.</Title15>
             </div>
           </InputInnerBox>
 
-          {/* sectors */}
+          {/* rank */}
           <InputInnerBox>
             <Title18>업종</Title18>
             <DropDownSelectorsBox>
@@ -86,29 +125,36 @@ class SnsClientSignupContainer extends React.Component {
             <Title18>이용약관동의</Title18>
 
             <AllAgreeInnerBox>
-              <CustomCheckBox type="checkbox" />
+              <CustomCheckBox
+                type="checkbox"
+                onChange={(e) => {
+                  this.setState({ allCheckState: e.currentTarget.checked });
+                }}
+                onClick={() => this.fullConsent()}
+              />
               <Title15>전체 동의합니다.</Title15>
             </AllAgreeInnerBox>
 
             <BottomLineDiv />
 
-            {aa.map((item, idx) => {
+            {AgreeContent.map((item, idx) => {
               return (
-                <AgreeInnerBox style={{ marginTop: "14px" }}>
+                <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
                   <CustomCheckBox
                     type="checkbox"
+                    checked={Auth.checkboxState[idx]}
                     onChange={(e) => {
-                      // this.state.checkboxState[idx] = e.currentTarget.checked;
-                      const a = this.state.checkboxState;
-                      a[idx] = e.currentTarget.checked;
+                      const check = Auth.checkboxState;
+                      check[idx] = e.currentTarget.checked;
 
-                      this.setState({ checkboxState: a });
+                      Auth.checkboxState = check;
                     }}
                   />
                   <Title15>{item.content}</Title15>
                   <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
-                    {item.test}
+                    {item.essential}
                   </Title14>
+                  {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
             })}
@@ -216,7 +262,7 @@ const KakaoImgBox = styled.div`
   left: 0;
 `;
 
-const CustomInput = styled.input`
+const CustomInput = styled(InputComponent)`
   height: 42px;
   border-radius: 3px;
   border: solid 1px #c7c7c7;
@@ -232,15 +278,14 @@ const DropDownSelectorsBox = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  border-radius: 3px;
-  border: solid 1px #c7c7c7;
+  position: relactive
   width: 602px;
 `;
 
-const SectorsInput = styled.input`
+const SectorsInput = styled(InputComponent)`
   border: none;
   padding-left: 10px;
-  width: 100%;
+  width: 588px;
   height: 42px;
 
   ::placeholder {
@@ -301,6 +346,7 @@ const BottomLineDiv = styled.div`
   width: 588px;
   border: 1px solid #c6c7cc;
   margin-top: 12px;
+  margin-bottom: 12px;
 `;
 
 const LineDivContainer = styled.div`
