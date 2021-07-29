@@ -88,6 +88,18 @@ class SearchBarConatiner extends React.Component {
             src="/static/images/search_cobalt-blue.png"
           />
         </SearchButton>
+
+        <SearchButton
+          width={80}
+          borderColor={PRIMARY2}
+          borderRadius={0}
+          onClick={this.search}
+        >
+          <img
+            style={{ width: 18, height: 18 }}
+            src="/static/images/image_search.png"
+          />
+        </SearchButton>
       </Form>
     );
   }

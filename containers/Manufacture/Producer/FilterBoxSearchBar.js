@@ -8,7 +8,7 @@ import Background from "components/Background";
 import Container from "components/Containerv1";
 import Router from "next/router";
 import { toJS } from "mobx";
-
+import AddFile from "./AddFile";
 import { PRIMARY2 } from "static/style";
 import Category from "../../../stores/Manufacture/Category";
 
@@ -31,6 +31,7 @@ class SearchBarConatiner extends React.Component {
     suggs: [],
     showSuggs: false,
     searchbaractive: false,
+
   };
 
   // 검색함수
@@ -261,6 +262,18 @@ class SearchBarConatiner extends React.Component {
     $(".searcher-suggs-word:hover").addClass("selected");
   }
 
+  closeModal = () => {
+    this.setState({
+      ...this.state,
+      modal_open: false,
+    });
+  };
+  // 이미지 버튼 클릭 시 모달 창 띄우기
+  imageModal = () => {
+    const { Partner } = this.props;
+    Partner.image_modal_state = !Partner.image_modal_state;
+  }
+
   render() {
     const { Partner, Request } = this.props;
 
@@ -311,8 +324,21 @@ class SearchBarConatiner extends React.Component {
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
+              <img src="/static/icon/Camera.svg" onClick={this.imageModal} />
+              {/* 이미지 검색 테스트용 */}
+              {Partner.image_modal_state &&
+                <span style={{ display: "inline-block" }}>
+                <AddFile
+                  file={true}
+                  isOpen={true}
+                  ///onChange={this.handleChange}
+                />
+                <div></div>
+              </span>
+              }
               <img src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
+            
             {this.state.showSuggestions && this.state.suggs.length > 0 && (
               <CustomUl>
                 <CustomLiBox>{suggestions}</CustomLiBox>

@@ -4,14 +4,12 @@ import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 
 import SelectComponent from "components/Select";
-import ManufactureProcess from "stores/Manufacture/ManufactureProcess";
+
 import InputComponent from "AddFile2";
 import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
 import Calendar from "./Calendar2";
-
-import Modal from "LoadingModal";
 
 const pass3 = "static/images/pass3.png";
 const reqeustlogo = "./static/images/request/request_logo.svg";
@@ -61,6 +59,7 @@ class PartnerDirectRequest extends Component {
     `;
 
     const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
+    const { Request } = this.props;
 
     return (
       <>
