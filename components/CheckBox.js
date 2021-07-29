@@ -7,18 +7,18 @@ import { WHITE, PRIMARY } from "static/style";
 
 const WhiteCheckbox = withStyles({
   root: {
-    padding: 0,
-    paddingRight: 10,
+    padding: "0px 9px",
+    // paddingRight: 10,
     color: "#c7c7c7",
     borderRadius: "3px",
     "&$checked": {
       color: WHITE,
-    "input:hover ~ &": {
-      boederColor: "#0933b3",
-    },
-    "&$checked": {
-      color: "#0933b3",
-    },
+      "input:hover ~ &": {
+        boederColor: "#0933b3",
+      },
+      "&$checked": {
+        color: "#0933b3",
+      },
     },
   },
   checked: {},
@@ -26,7 +26,7 @@ const WhiteCheckbox = withStyles({
 
 const PrimaryCheckbox = withStyles({
   root: {
-    color: '#404040',
+    color: "#404040",
     "&$checked": {
       color: PRIMARY,
     },
@@ -37,7 +37,7 @@ const PrimaryCheckbox = withStyles({
 class CheckBoxComponent extends React.Component {
   handleChange = (e) => {
     this.props.onChange(e.target.checked);
-    console.log(e.target.checked)
+    console.log(e.target.checked);
   };
   render() {
     const { checked } = this.props;
