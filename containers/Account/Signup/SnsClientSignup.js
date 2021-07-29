@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
 import { inject, observer } from "mobx-react";
+import ButtonSpinnerComponent from "components/ButtonSpinner";
 import InputComponent from "components/Input";
 
 const signupdot = "/static/images/signupdot.svg";
@@ -44,12 +45,21 @@ class SnsClientSignupContainer extends React.Component {
     }
   };
 
+  // asdasd = () => {
+  //   "use strict";
+  //   tet = 333;
+  // };
+
   // 가입하기 submit 함수
   signupSubmit = () => {
     const { Auth } = this.props;
     const checkboxArr = Auth.checkboxState;
 
-    if (checkboxArr[0] === true && checkboxArr[1] === true && checkboxArr[2] === true) {
+    if (
+      checkboxArr[0] === true &&
+      checkboxArr[1] === true &&
+      checkboxArr[2] === true
+    ) {
       console.log("post!!!!");
     } else {
       alert("필수 이용약관에 동의해 주세요");
@@ -58,27 +68,36 @@ class SnsClientSignupContainer extends React.Component {
 
   render() {
     const { Auth } = this.props;
-
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
           <img src={signupdot} />
 
-          <Title32 style={{ marginTop: "20px" }}>추가정보를 입력해 주세요.</Title32>
+          <Title32 style={{ marginTop: "20px" }}>
+            추가정보를 입력해 주세요.
+          </Title32>
 
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
-            <CustomInput placeholder="이름을 입력해 주세요." style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="이름을 입력해 주세요."
+              onChange={Auth.setRealName}
+              value={Auth.realName}
+            />
           </InputInnerBox>
 
           {/* company name */}
           <InputInnerBox style={{ position: "relative" }}>
             <Title18>회사명</Title18>
 
-            <div style={{ display: "flex", alignItems: "center", width: "588px" }}>
-              <CustomInput placeholder="근무하는 회사명을 입력해 주세요." style={{ marginTop: "0px" }} />
-              <ImgBox src={signupsearch} style={{ marginRight: "22px", marginTop: "15px" }} />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <CustomInput
+                placeholder="근무하는 회사명을 입력해 주세요."
+                onChange={Auth.setCompanyName}
+                value={Auth.company_name}
+              />
+              <ImgBox src={signupsearch} style={{ marginRight: "22px" }} />
             </div>
 
             <div style={{ display: "inline-flex", marginTop: "25px" }}>
@@ -89,8 +108,15 @@ class SnsClientSignupContainer extends React.Component {
 
           {/* rank */}
           <InputInnerBox>
-            <Title18>직급</Title18>
-            <CustomInput placeholder="직급을 입력해 주세요." style={{ marginTop: "0px" }} />
+            <Title18>업종</Title18>
+            <DropDownSelectorsBox>
+              <SectorsInput
+                placeholder="옵션을 선택해 주세요."
+                onChange={Auth.setBusiness}
+                value={Auth.business}
+              />
+              <img src={dropdown} style={{ marginRight: "15px" }} />
+            </DropDownSelectorsBox>
           </InputInnerBox>
 
           {/* agree */}
@@ -124,16 +150,25 @@ class SnsClientSignupContainer extends React.Component {
                     }}
                   />
                   <Title15>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                    {item.essential}
+                  </Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
             })}
           </AgreeContainer>
-
-          <SubmitButton onClick={() => this.signupSubmit()}>
-            <ButtonText>가입하기</ButtonText>
-          </SubmitButton>
+          {Auth.loading ? (
+            <ButtonSpinnerComponent scale="50%" primary />
+          ) : (
+            <SubmitButton
+              onClick={() => {
+                Auth.snsSignup();
+              }}
+            >
+              <ButtonText>가입하기</ButtonText>
+            </SubmitButton>
+          )}
         </Container>
       </div>
     );
