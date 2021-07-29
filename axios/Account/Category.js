@@ -1,13 +1,13 @@
 import axios from "axios";
 import { ROOT_URL } from "../index";
-import * as StringUtils from "utils/string"
+import * as StringUtils from "utils/string";
 
 // 만든 제품 분야 : 대분류
 export function getMainCategory(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/maincategory/`,
-  })
+  });
 }
 
 // 만든 제품 분야 : 중분류
@@ -15,7 +15,7 @@ export function getCategory(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/category/`,
-  })
+  });
 }
 
 // 업체 분류 분야 : 대분류
@@ -23,7 +23,7 @@ export function getMainbusiness(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/mainbusiness/`,
-  })
+  });
 }
 
 // 업체 분류 분야 : 중분류
@@ -31,7 +31,7 @@ export function getBusiness(req) {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/business/`,
-  })
+  });
 }
 
 // 공정 분류 분야 : 대분류
@@ -74,8 +74,14 @@ export function getCity() {
   });
 }
 
+export function getBusinessName(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/business/${req.id}/`,
+  });
+}
 
-// ======================= 기타 카테고리 ======================= 
+// ======================= 기타 카테고리 =======================
 export function getPath() {
   return axios({
     method: "GET",
@@ -94,24 +100,24 @@ export function getRegion() {
   return axios({
     method: "GET",
     url: `${ROOT_URL}/region/`,
-  })
+  });
 }
 
 export function getNextRegion(req) {
   return axios({
     method: "GET",
     url: nextUrl,
-  })
+  });
 }
 
 export function getMagazine() {
   return axios({
-    method: 'GET',
+    method: "GET",
     url: `${ROOT_URL}/magazine/`,
     params: {
-      ordering: '-is_top,-id',
+      ordering: "-is_top,-id",
     },
-  })
+  });
 }
 
 export function getNextPage(req) {
@@ -119,5 +125,5 @@ export function getNextPage(req) {
     method: "GET",
     url: req.nextUrl,
     headers: req.headers ? req.headers : null,
-  })
+  });
 }
