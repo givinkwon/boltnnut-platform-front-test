@@ -246,26 +246,24 @@ class Nav extends React.Component {
                     <NavLink
                       onClick={() => {
                         this.props.Auth.setType("detailexpert");
-                        Router.push("/signup");
                       }}
                       active={
                         url.indexOf("signup") > -1 &&
                         Auth.type == "detailexpert"
                       }
                     >
-                      파트너 등록하기
+                      <KSLink url={"signup"} content={"파트너 등록하기"} />
                     </NavLink>
                     |
                     <NavLink
                       onClick={() => {
                         this.props.Auth.setType("client");
-                        Router.push("/signup");
                       }}
                       active={
                         url.indexOf("signup") > -1 && Auth.type == "client"
                       }
                     >
-                      회원가입
+                      <KSLink url={"signup"} content={"회원가입"} />
                     </NavLink>
                     <NavLink
                       onClick={() => {

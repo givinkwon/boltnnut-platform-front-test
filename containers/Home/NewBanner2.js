@@ -58,16 +58,32 @@ class NewBanner2Container extends React.Component {
     const { Partner, Auth, Producer, Category } = this.props;
 
     return (
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "200px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "200px",
+        }}
+      >
         <Fade right>
-          <Containerv1 style={{ justifyContent: " center", flexDirection: "column" }}>
+          <Containerv1
+            style={{
+              justifyContent: " center",
+              flexDirection: "column",
+            }}
+          >
             <Header>
-              <b style={{ fontWeight: "bold" }}>5,660개</b>의 볼트앤너트의 업체 전문가들을 만나보세요.
+              <b style={{ fontWeight: "bold" }}>5,660개</b>의 볼트앤너트의 업체
+              전문가들을 만나보세요.
             </Header>
 
             <CategoryBox>
               {nameTable.map((v, idx) => (
-                <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
+                <CategoryTitle
+                  key={v.id}
+                  active={this.onCompareCategory(v.id)}
+                  onClick={() => this.onClickCategory(v.id)}
+                >
                   {v.name}
                 </CategoryTitle>
               ))}
@@ -79,7 +95,10 @@ class NewBanner2Container extends React.Component {
                   <>
                     {idx < 3 && (
                       <Background style={{ marginBottom: "5px" }}>
-                        <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
+                        <div
+                          onClick={() => Partner.pushToDetail(item, idx)}
+                          style={{ width: "100%" }}
+                        >
                           <ProposalCard
                             data={item}
                             width={this.props.width}
