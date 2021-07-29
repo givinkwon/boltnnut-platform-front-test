@@ -30,8 +30,9 @@ class Explaination extends React.Component {
 
           {this.state.modify ? (
             <Button
-              onClick={() => {
+              onClick={(e) => {
                 this.setState({ modify: false });
+                Profile.saveCompanyInfo(Profile.info_company)
               }}
             >
               저장하기

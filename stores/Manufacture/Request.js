@@ -83,7 +83,7 @@ class Request {
       this.request_file_set.push(obj)
       console.log("file uploaded");
     } else {
-      this.common_file = null;
+      this.request_file = null;
     }
   };
 
