@@ -18,7 +18,17 @@ class LoginContainer extends React.Component {
     // Router.push("/signup/kakao");
   };
 
+  handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      // TODO 검색 API
+      console.log("검색");
+      this.props.Auth.login();
+    }
+  };
+
   render() {
+    const { Auth } = this.props;
+
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
@@ -31,13 +41,13 @@ class LoginContainer extends React.Component {
           {/* email */}
           <EmailContainer>
             <Title18 style={{ color: "#505050" }}>이메일</Title18>
-            <CustomInput placeholder="이메일" style={{ marginTop: "0px" }} />
+            <CustomInput placeholder="이메일" onChange={Auth.setEmail} style={{ marginTop: "0px" }} />
           </EmailContainer>
 
           {/* password */}
           <PasswordContainer>
             <Title18 style={{ color: "#505050" }}>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호" type="password" style={{ marginTop: "0px" }} />
+            <CustomInput placeholder="비밀번호" onChange={Auth.setPassword} onKeyDown={this.handleKeyDown} type="password" style={{ marginTop: "0px" }} />
           </PasswordContainer>
 
           {/* loginstate && find ID/PW */}
