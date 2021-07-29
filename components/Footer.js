@@ -111,8 +111,8 @@ class FooterComponent extends React.Component {
                   </Font24>
                 </TelInfoWrapper>
                 <CompanyInfoWrapper>
-                  <span> 오전 10:00 ~ 오후 07:00 </span>
-                  <span> 점심시간 12:00 ~ 01:00 </span>
+                  <span> 업무시간 09:00 ~ 18:00 </span>
+                  <span> 점심시간 12:00 ~ 13:00 </span>
                   <div>
                     휴일( 토요일, 일요일, 공휴일 )
                     <div style={{ display: "flex" }}>
@@ -197,7 +197,7 @@ class FooterComponent extends React.Component {
                 <CompanyInfoWrapper>
                   <Font12 style={{ marginBottom: 2 }}>
                     {" "}
-                    평일 오전 10:00 ~ 오후 07:00 점심시간 12:00 ~ 01:00{" "}
+                    업무시간 09:00 ~ 18:00 점심시간 12:00 ~ 13:00{" "}
                   </Font12>
                   <Font12 style={{ marginTop: 0, marginBottom: 12 }}>
                     휴일 (토요일, 일요일, 공휴일 )
