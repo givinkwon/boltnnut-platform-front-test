@@ -76,9 +76,8 @@ class SubBoxContainer extends React.Component {
                   console.log(Project.producerId);
                   Partner.clickHandler("project");
                   Request.partner_request(partnerId);
-
-                  Router.push("/request")
-                  this.setState({ g: 3 });
+                  Router.push("/request");
+                  // this.setState({ g: 3 });
                 }}
               >
                 <span>프로젝트 의뢰하기</span>

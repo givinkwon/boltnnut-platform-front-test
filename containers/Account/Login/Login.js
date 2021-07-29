@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
+import ButtonComponent from "components/Button";
+import InputComponent from "components/Input";
 import { inject, observer } from "mobx-react";
 
 const signupbnlogo = "/static/images/signupbnlogo.svg";
@@ -10,13 +12,23 @@ const signupkakao = "/static/images/signupkakao.svg";
 
 @inject("Auth", "Home")
 @observer
-class DefaultLoginContainer extends React.Component {
+class LoginContainer extends React.Component {
   toKakaoSignUp = () => {
     this.props.Auth.kakaoLogin();
     // Router.push("/signup/kakao");
   };
 
+  handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      // TODO 검색 API
+      console.log("검색");
+      this.props.Auth.login();
+    }
+  };
+
   render() {
+    const { Auth } = this.props;
+
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
@@ -29,13 +41,13 @@ class DefaultLoginContainer extends React.Component {
           {/* email */}
           <EmailContainer>
             <Title18 style={{ color: "#505050" }}>이메일</Title18>
-            <CustomInput placeholder="이메일" />
+            <CustomInput placeholder="이메일" onChange={Auth.setEmail} style={{ marginTop: "0px" }} />
           </EmailContainer>
 
           {/* password */}
           <PasswordContainer>
             <Title18 style={{ color: "#505050" }}>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호" />
+            <CustomInput placeholder="비밀번호" onChange={Auth.setPassword} onKeyDown={this.handleKeyDown} type="password" style={{ marginTop: "0px" }} />
           </PasswordContainer>
 
           {/* loginstate && find ID/PW */}
@@ -64,9 +76,7 @@ class DefaultLoginContainer extends React.Component {
 
           <SnsLoginContainer>
             <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>
-              SNS 간편 로그인
-            </Title14>
+            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 로그인</Title14>
             <LineDiv />
           </SnsLoginContainer>
 
@@ -76,9 +86,7 @@ class DefaultLoginContainer extends React.Component {
                 <img src={signupkakao} />
               </KakaoImgBox>
 
-              <Title16 style={{ color: "#1e2222" }}>
-                카카오 계정으로 로그인
-              </Title16>
+              <Title16 style={{ color: "#1e2222" }}>카카오 계정으로 로그인</Title16>
             </KakaoSignUpInnerBox>
           </KakaoSignUp>
         </Container>
@@ -87,7 +95,7 @@ class DefaultLoginContainer extends React.Component {
   }
 }
 
-export default DefaultLoginContainer;
+export default LoginContainer;
 
 const Container = styled(Containerv1)`
   flex-direction: column;
@@ -109,6 +117,7 @@ const PasswordContainer = styled.div`
   flex-direction: column;
   margin-top: 20px;
   width: 588px;
+  margin-top: 40px;
 `;
 
 const LoginStateContainer = styled.div`
@@ -116,6 +125,7 @@ const LoginStateContainer = styled.div`
   justify-content: space-between;
   margin-top: 12px;
   width: 588px;
+  margin-top: 20px;
 `;
 
 const ButtonContainer = styled.div`
@@ -156,7 +166,7 @@ const Title14 = styled(Title.FontSize14)`
   letter-spacing: -0.35px;
 `;
 
-const CustomInput = styled.input`
+const CustomInput = styled(InputComponent)`
   height: 42px;
   border-radius: 3px;
   border: solid 1px #c6c7cc;

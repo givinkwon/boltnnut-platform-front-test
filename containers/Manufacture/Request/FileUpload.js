@@ -263,287 +263,6 @@ class FileUploadContainer extends Component {
       });
   };
 
-  changeSubmit = () => {};
-  requestSubmit = async (flag, id) => {
-    const { projectname, purposeAry } = this.state;
-    const { ManufactureProcess, Schedule, Request, Project } = this.props;
-
-    ManufactureProcess.projectSubmitLoading = false;
-    console.log(toJS(ManufactureProcess.totalorderPrice));
-    let deadline_state = "";
-    let processData = "";
-    let detailProcessData = "";
-    let quantityData = "";
-
-    console.log(ManufactureProcess.purposeContent);
-    // error 처리
-    if (ManufactureProcess.purposeContent == 0) {
-      alert("문의 목적을 선택해주세요");
-      ManufactureProcess.projectSubmitLoading = true;
-      return false;
-    }
-    if (projectname.length == 0) {
-      alert("프로젝트 제목을 입력해주세요");
-      ManufactureProcess.projectSubmitLoading = true;
-      return false;
-    }
-    if (projectname.length > 200) {
-      alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
-      ManufactureProcess.projectSubmitLoading = true;
-      return false;
-    }
-    if (ManufactureProcess.requestComment.length == 0) {
-      alert("공개내용을 작성해주세요");
-      ManufactureProcess.projectSubmitLoading = true;
-      return false;
-    }
-
-    if (ManufactureProcess.requestComment.length > 4500) {
-      alert("공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
-      ManufactureProcess.projectSubmitLoading = true;
-      return false;
-    }
-    if (ManufactureProcess.requestComment2.length > 4500) {
-      alert("비공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
-      ManufactureProcess.projectSubmitLoading = true;
-      return false;
-    }
-
-    ManufactureProcess.date_undefined
-      ? (deadline_state = "납기일미정")
-      : ManufactureProcess.date_conference
-      ? (deadline_state = "납기일협의가능")
-      : "";
-
-    let request_state = "";
-    if (ManufactureProcess.purposeContent) {
-      request_state =
-        this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
-    }
-    console.log(request_state);
-    console.log(Request.selected_partner);
-    console.log("requestSubmit");
-    console.log(Schedule.clickDay);
-    console.log(fileList);
-    var formData = new FormData();
-
-    formData.append("request_state", request_state);
-    formData.append("name", projectname);
-    formData.append("partner", Request.selected_partner);
-    // 선택한 날짜가 없으면, 기본 날짜 추가하기
-    if (Schedule.clickDay) {
-      formData.append("deadline", Schedule.clickDay + " 09:00");
-    } else {
-      formData.append("deadline", "2020-11-11 11:11");
-    }
-
-    // 선택한 납기 선택이 없으면 납기일 미정으로
-    if (deadline_state.length == 0) {
-      formData.append("deadline_state", "납기일미정");
-    } else {
-      formData.append("deadline_state", deadline_state);
-    }
-    formData.append("order_request_open", ManufactureProcess.requestComment);
-    formData.append("order_request_close", ManufactureProcess.requestComment2);
-
-    console.log(toJS(ManufactureProcess.openFileArray));
-    if (ManufactureProcess.openFileArray.length === 0) {
-      formData.append(`file_open`, "");
-    }
-    for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
-      formData.append(`file_open`, ManufactureProcess.openFileArray[i]);
-    }
-    console.log(toJS(ManufactureProcess.privateFileArray));
-    if (ManufactureProcess.privateFileArray.length === 0) {
-      formData.append(`file_close`, "");
-    }
-    for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
-      formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
-    }
-
-    formData.append("price", ManufactureProcess.orderMaxPrice);
-    formData.append("blueprint_exist", 1);
-
-    for (var i = 0; i < fileList.length; i++) {
-      console.log(toJS(fileList[i].selectBig.id));
-      console.log(toJS(fileList[i].selectedMid.id));
-      console.log(toJS(fileList[i].originFile));
-      if (fileList[i].checked) {
-        formData.append(`blueprint`, fileList[i].originFile);
-
-        processData = processData + fileList[i].selectBig.id;
-        detailProcessData = detailProcessData + fileList[i].selectedMid.id;
-        quantityData = quantityData + fileList[i].quantity.value;
-
-        console.log(quantityData);
-        console.log(fileList[i].quantity.value);
-        if (i < fileList.length - 1) {
-          processData = processData + ",";
-          detailProcessData = detailProcessData + ",";
-          quantityData = quantityData + ",";
-        }
-      }
-    }
-
-    for (var i = 0; i < fileList.length; i++) {
-      formData.append(`file_close`, fileList[i].originFile);
-    }
-
-    console.log(processData);
-    console.log(detailProcessData);
-    console.log(quantityData);
-    console.log(Request.selected_partner);
-    console.log(Project.producerId);
-
-    formData.append("process", processData);
-    formData.append("detailprocess", detailProcessData);
-    formData.append("number", quantityData);
-    // formData.append("partner", Project.producerId);
-    if (Request.selected_partner) {
-      formData.append("partner", Request.selected_partner);
-    }
-
-    const Token = localStorage.getItem("token");
-    console.log(Token);
-
-    if (flag) {
-      const req = {
-        headers: {
-          Authorization: `Token ${Token}`,
-        },
-        data: formData,
-      };
-
-      console.log(req);
-
-      RequestAPI.create(req)
-        .then((res) => {
-          console.log("create: ", res);
-          ManufactureProcess.projectSubmitLoading = true;
-          this.props.Request.newIndex = 1;
-          MyDataLayerPush({ event: "request_Drawing" });
-          ManufactureProcess.reset();
-        })
-        .catch((e) => {
-          ManufactureProcess.checkPaymentButton = false;
-          console.log(e);
-          console.log(e.response);
-        });
-
-      const processAry = processData.split(",");
-      const detailProcessAry = detailProcessData.split(",");
-      ManufactureProcess.getProcessList(processAry, detailProcessAry);
-    } else {
-      console.log(fileList);
-      // if (ManufactureProcess.openFileArray.length === 0) {
-      //   RequestFormData.append(`file`, "");
-      // }
-
-      // for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
-      //   RequestFormData.append(`file`, ManufactureProcess.openFileArray[i]);
-      //   RequestFormData.append("request", )
-      //   RequestFormData.append("share_inform", )
-      // }
-
-      //RequestFormData.append("file", )
-
-      await this.props.Project.projectDetailData.request_set[0].estimate_set.map(
-        async (item, idx) => {
-          console.log(item);
-
-          const req = {
-            id: item.id,
-          };
-
-          await RequestAPI.delEstimate(req)
-            .then((res) => {
-              console.log(toJS(res));
-            })
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-        }
-      );
-
-      for (let i = 0; i < this.props.Request.request_file_set.length; i++) {
-        await this.props.Request.deleteRequestFile(
-          this.props.Request.request_file_set[i]
-        );
-      }
-
-      if (ManufactureProcess.openFileArray.length !== 0) {
-        await ManufactureProcess.openFileArray.map(async (item, idx) => {
-          this.modifyRequestFile(item, true);
-        });
-      }
-      if (ManufactureProcess.privateFileArray.length !== 0) {
-        await ManufactureProcess.privateFileArray.map(async (item, idx) => {
-          this.modifyRequestFile(item, false);
-        });
-      }
-
-      const modifyFormData = new FormData();
-
-      for (var i = 0; i < fileList.length; i++) {
-        console.log(fileList[i]);
-        console.log(fileList[i].originFile);
-        console.log(toJS(fileList[i].selectBig.id));
-        console.log(toJS(fileList[i].selectedMid.id));
-        console.log(this.state.requestId);
-        console.log(fileList[i].quantity.value);
-
-        if (fileList[i].checked) {
-          modifyFormData.append("blueprint", fileList[i].originFile);
-          modifyFormData.append("process", fileList[i].selectBig.id);
-          modifyFormData.append("detailprocess", fileList[i].selectedMid.id);
-          modifyFormData.append("requestid", this.state.requestId);
-          modifyFormData.append("number", fileList[i].quantity.value);
-
-          const req = {
-            headers: {
-              Authorization: `Token ${Token}`,
-            },
-            data: modifyFormData,
-          };
-          await RequestAPI.modifyEstimate(req)
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        }
-      }
-
-      const reqFormData = new FormData();
-      const req = {
-        headers: {
-          Authorization: `Token ${Token}`,
-        },
-        data: formData,
-        id: this.state.requestId,
-      };
-
-      // for (var pair of formData.entries()) {
-      //   console.log(pair[0] + ", " + pair[1]);
-      // }
-
-      await RequestAPI.modifyProject(req)
-        .then((res) => {
-          console.log(`modify Project : ${res}`);
-          ManufactureProcess.projectSubmitLoading = true;
-          console.log(toJS(ManufactureProcess.projectSubmitLoading));
-          ManufactureProcess.changeProject = false;
-
-          this.props.Request.newIndex = 3;
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
-    }
-  };
 
   purposeHandler = (item) => {
     const { ManufactureProcess } = this.props;
@@ -2442,7 +2161,7 @@ class FileUploadContainer extends Component {
                       ManufactureProcess.checkPaymentButton = true;
 
                       if (ManufactureProcess.projectSubmitLoading) {
-                        this.requestSubmit(
+                        Request.requestSubmit(
                           0,
                           this.props.Project.projectDetailData.request_set[0].id
                         );
@@ -2489,7 +2208,7 @@ class FileUploadContainer extends Component {
                     } else {
                       ManufactureProcess.checkPaymentButton = true;
                       if (ManufactureProcess.projectSubmitLoading) {
-                        this.requestSubmit(1);
+                        Request.requestSubmit(1);
                       } else {
                         alert("요청 중입니다. 잠시만 기다려주세요.");
                       }
@@ -3513,3 +3232,127 @@ const SecurityBox = styled.div`
 `;
 
 const SecuritySetting = styled.div``;
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const RequestHeader = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 80px;
+  margin-bottom: 70px;
+  text-align: center;
+  font-family: NotoSansCJKkr;
+`;
+
+const RequestTitle = styled.div`
+  font-size: 32px;
+  font-weight: 500;
+  color: #1e2222;
+  margin-top: 20px;
+`;
+
+const Body = styled.div`
+  width: 100%;
+  font-family: NotoSansCJKkr;
+`;
+
+const Requestontent = styled.div``;
+
+const RequestContentBox = styled.div`
+  margin-bottom: 74px;
+`;
+
+const ContentTitle = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #1e2222;
+  margin-bottom: 16px;
+`;
+
+const PurposeBtn = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
+
+const RequestButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 42px;
+  border-radius: 30px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  border: solid 1px #0933b3;
+  background-color: #ffffff;
+  margin-right: 16px;
+  font-size: 16px;
+  color: #0933b3;
+  letter-spacing: -0.4px;
+`;
+
+const Budget = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const BudgetBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 204px;
+  height: 42px;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  margin-right: 16px;
+`;
+
+const BudgetCheckbox = styled.div`
+  display: flex;
+  justify-contet: flex-start;
+  margin-top: 11px;
+  font-size: 15px;
+  line-height: 2.27;
+  letter-spacing: -0.38px;
+  color: #505050;
+`;
+
+const BudgetHelp = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  algin-items: center;
+  font-size: 15px;
+  letter-spacing: -0.38px;
+  color: #0933b3;
+  margin-top: 13px;
+`;
+
+const DateCheckbox = styled.div`
+  display: flex;
+  justify-contet: flex-start;
+  margin-top: 12px;
+  font-size: 15px;
+  color: #505050;
+`;
+
+const Help = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 42px;
+  border-radius: 3px;
+  background-color: #edf4fe;
+  margin-top: 16px;
+  margin-bottom: 20px;
+`;
+
+// const FileUpload = styled.div``;

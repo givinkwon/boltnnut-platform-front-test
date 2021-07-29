@@ -3,13 +3,62 @@ import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
 import Router from "next/router";
+import InputComponent from "components/Input";
+import { inject, observer } from "mobx-react";
 
 const signupdot = "/static/images/signupdot.svg";
 const signupkakao = "/static/images/signupkakao.svg";
 const viewterms = "/static/images/viewterms.svg";
 
+const AgreeContent = [
+  { content: "만 14세 이상 입니다", essential: "(필수)", terms: 0 },
+  { content: "이용약관 동의", essential: "(필수)", terms: 1 },
+  { content: "개인정보 처리방침 동의", essential: "(필수)", terms: 1 },
+  { content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 },
+];
+
+@inject("Auth")
+@observer
 class PartnerSignupContainer extends React.Component {
+  // 전체동의 핸들러 함수
+  fullConsent = () => {
+    const { Auth } = this.props;
+    if (Auth.allCheckState === false) {
+      Auth.allCheckState = true;
+
+      Auth.checkboxState.forEach((item, idx) => {
+        const checkbox = Auth.checkboxState;
+        checkbox[idx] = true;
+        Auth.checkboxState = checkbox;
+        console.log("item : ", Auth.checkboxState);
+      });
+    } else {
+      Auth.allCheckState = false;
+
+      Auth.checkboxState.forEach((item, idx) => {
+        const checkbox = Auth.checkboxState;
+        checkbox[idx] = false;
+        Auth.checkboxState = checkbox;
+        console.log("item : ", Auth.checkboxState);
+      });
+    }
+  };
+
+  // 가입하기 submit 함수
+  signupSubmit = () => {
+    const { Auth } = this.props;
+    const checkboxArr = Auth.checkboxState;
+
+    if (checkboxArr[0] === true && checkboxArr[1] === true && checkboxArr[2] === true) {
+      console.log("post!!!!");
+    } else {
+      alert("필수 이용약관에 동의해 주세요");
+    }
+  };
+
   render() {
+    const { Auth } = this.props;
+
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
@@ -36,46 +85,46 @@ class PartnerSignupContainer extends React.Component {
           </KakaoSignUp>
 
           {/* email */}
-          <EmailContainer>
+          <InputInnerBox style={{ marginTop: "80px" }}>
             <Title18>이메일</Title18>
 
             <EmailInnerContainer>
-              <CustomInput placeholder="boltnnut@gmail.com" style={{ width: "437px" }} />
+              <CustomInput placeholder="boltnnut@gmail.com" onChange={Auth.setEmail} value={Auth.email} style={{ width: "437px", marginTop: "0px" }} />
 
               <AuthenticateBtn>
                 <AuthenticateBtnText>인증하기</AuthenticateBtnText>
               </AuthenticateBtn>
             </EmailInnerContainer>
-          </EmailContainer>
+          </InputInnerBox>
 
           {/* password */}
           <InputInnerBox>
             <Title18>비밀번호</Title18>
-            <CustomInput placeholder="비밀번호를 입력해 주세요." type="password" />
+            <CustomInput placeholder="비밀번호를 입력해 주세요." onChange={Auth.setPassword} value={Auth.password} type="password" style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* password confirm */}
           <InputInnerBox>
             <Title18>비밀번호 확인</Title18>
-            <CustomInput placeholder="비밀번호를 한 번 더 입력해 주세요." type="password" />
+            <CustomInput placeholder="비밀번호를 한 번 더 입력해 주세요." onChange={Auth.setPassword2} value={Auth.password2} type="password" style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
-            <CustomInput placeholder="이름을 입력해 주세요." />
+            <CustomInput placeholder="이름을 입력해 주세요." onChange={Auth.setRealName} value={Auth.realName} style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* phone number */}
           <InputInnerBox>
             <Title18>휴대전화</Title18>
-            <CustomInput placeholder="- 없이 입력해 주세요" type="tel" />
+            <CustomInput placeholder="- 없이 입력해 주세요" onChange={Auth.setPhone} value={Auth.phone} type="tel" style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* company name */}
           <InputInnerBox>
             <Title18>상호명</Title18>
-            <CustomInput placeholder="근무하고 계신 회사명을 입력해주세요." />
+            <CustomInput placeholder="근무하고 계신 회사명을 입력해주세요." onChange={Auth.setCompanyName} value={Auth.company_name} style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* agree */}
@@ -83,40 +132,40 @@ class PartnerSignupContainer extends React.Component {
             <Title18>이용약관동의</Title18>
 
             <AllAgreeInnerBox>
-              <CustomCheckBox type="checkbox" />
+              <CustomCheckBox
+                type="checkbox"
+                onChange={(e) => {
+                  this.setState({ allCheckState: e.currentTarget.checked });
+                }}
+                onClick={() => this.fullConsent()}
+              />
               <Title15>전체 동의합니다.</Title15>
             </AllAgreeInnerBox>
 
             <BottomLineDiv />
 
-            <AgreeInnerBox style={{ marginTop: "14px" }}>
-              <CustomCheckBox type="checkbox" />
-              <Title15>만 14세 이상입니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
-            </AgreeInnerBox>
+            {AgreeContent.map((item, idx) => {
+              return (
+                <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
+                  <CustomCheckBox
+                    type="checkbox"
+                    checked={Auth.checkboxState[idx]}
+                    onChange={(e) => {
+                      const check = Auth.checkboxState;
+                      check[idx] = e.currentTarget.checked;
 
-            <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
-              <CustomCheckBox type="checkbox" />
-              <Title15>이용약관 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
-              <ImgBox src={viewterms} />
-            </AgreeInnerBox>
-
-            <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
-              <CustomCheckBox type="checkbox" />
-              <Title15>개인정보 처리방침 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
-              <ImgBox src={viewterms} />
-            </AgreeInnerBox>
-
-            <AgreeInnerBox>
-              <CustomCheckBox type="checkbox" />
-              <Title15>마케팅 정보 수신에 동의합니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(선택)</Title14>
-            </AgreeInnerBox>
+                      Auth.checkboxState = check;
+                    }}
+                  />
+                  <Title15>{item.content}</Title15>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  {item.terms != 0 && <ImgBox src={viewterms} />}
+                </AgreeInnerBox>
+              );
+            })}
           </AgreeContainer>
 
-          <SubmitButton>
+          <SubmitButton onClick={() => this.signupSubmit()}>
             <ButtonText>가입하기</ButtonText>
           </SubmitButton>
         </Container>
@@ -208,8 +257,7 @@ const KakaoImgBox = styled.div`
   left: 0;
 `;
 
-const CustomInput = styled.input`
-  height: 42px;
+const CustomInput = styled(InputComponent)`
   border-radius: 3px;
   border: solid 1px #c7c7c7;
   padding-left: 10px;
@@ -254,7 +302,7 @@ const AuthenticateBtn = styled.button`
   justify-content: center;
   align-items: center;
   width: 139px;
-  height: 42px;
+  height: 100%;
   border-radius: 3px;
   border: solid 1px #c7c7c7;
   background-color: #ffffff;
@@ -274,6 +322,7 @@ const BottomLineDiv = styled.div`
   width: 588px;
   border: 1px solid #c6c7cc;
   margin-top: 12px;
+  margin-bottom: 12px;
 `;
 
 const LineDivContainer = styled.div`
@@ -302,7 +351,7 @@ const EmailInnerContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 588px;
 `;
 
 const InputInnerBox = styled.div`

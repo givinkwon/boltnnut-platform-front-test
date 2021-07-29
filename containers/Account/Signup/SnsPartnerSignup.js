@@ -2,14 +2,63 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
+import { inject, observer } from "mobx-react";
+import InputComponent from "components/Input";
 
 const signupdot = "/static/images/signupdot.svg";
 const signupsearch = "/static/images/signupsearch.svg";
 const dropdown = "/static/images/dropdown.svg";
 const viewterms = "/static/images/viewterms.svg";
 
+const AgreeContent = [
+  { content: "만 14세 이상 입니다", essential: "(필수)", terms: 0 },
+  { content: "이용약관 동의", essential: "(필수)", terms: 1 },
+  { content: "개인정보 처리방침 동의", essential: "(필수)", terms: 1 },
+  { content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 },
+];
+
+@inject("Auth")
+@observer
 class SnsPartnerSignupContainer extends React.Component {
+  // 전체동의 핸들러 함수
+  fullConsent = () => {
+    const { Auth } = this.props;
+    if (Auth.allCheckState === false) {
+      Auth.allCheckState = true;
+
+      Auth.checkboxState.forEach((item, idx) => {
+        const checkbox = Auth.checkboxState;
+        checkbox[idx] = true;
+        Auth.checkboxState = checkbox;
+        console.log("item : ", Auth.checkboxState);
+      });
+    } else {
+      Auth.allCheckState = false;
+
+      Auth.checkboxState.forEach((item, idx) => {
+        const checkbox = Auth.checkboxState;
+        checkbox[idx] = false;
+        Auth.checkboxState = checkbox;
+        console.log("item : ", Auth.checkboxState);
+      });
+    }
+  };
+
+  // 가입하기 submit 함수
+  signupSubmit = () => {
+    const { Auth } = this.props;
+    const checkboxArr = Auth.checkboxState;
+
+    if (checkboxArr[0] === true && checkboxArr[1] === true && checkboxArr[2] === true) {
+      console.log("post!!!!");
+    } else {
+      alert("필수 이용약관에 동의해 주세요");
+    }
+  };
+
   render() {
+    const { Auth } = this.props;
+
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
@@ -20,7 +69,7 @@ class SnsPartnerSignupContainer extends React.Component {
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
-            <CustomInput placeholder="이름을 입력해 주세요." />
+            <CustomInput placeholder="이름을 입력해 주세요." onChange={Auth.setRealName} value={Auth.realName} style={{ marginTop: "0px" }} />
           </InputInnerBox>
 
           {/* company name */}
@@ -28,8 +77,8 @@ class SnsPartnerSignupContainer extends React.Component {
             <Title18>상호명</Title18>
 
             <div style={{ display: "flex", alignItems: "center" }}>
-              <CustomInput placeholder="등록하고자 하는 상호명을 입력해 주세요." />
-              <ImgBox src={signupsearch} style={{ marginRight: "22px" }} />
+              <CustomInput placeholder="등록하고자 하는 상호명을 입력해 주세요." onChange={Auth.setCompanyName} value={Auth.company_name} style={{ marginTop: "0px" }} />
+              <ImgBox src={signupsearch} style={{ marginRight: "22px", marginBottom: "3px" }} />
             </div>
           </InputInnerBox>
 
@@ -38,40 +87,40 @@ class SnsPartnerSignupContainer extends React.Component {
             <Title18>이용약관동의</Title18>
 
             <AllAgreeInnerBox>
-              <CustomCheckBox type="checkbox" />
+              <CustomCheckBox
+                type="checkbox"
+                onChange={(e) => {
+                  this.setState({ allCheckState: e.currentTarget.checked });
+                }}
+                onClick={() => this.fullConsent()}
+              />
               <Title15>전체 동의합니다.</Title15>
             </AllAgreeInnerBox>
 
             <BottomLineDiv />
 
-            <AgreeInnerBox style={{ marginTop: "14px" }}>
-              <CustomCheckBox type="checkbox" />
-              <Title15>만 14세 이상입니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
-            </AgreeInnerBox>
+            {AgreeContent.map((item, idx) => {
+              return (
+                <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
+                  <CustomCheckBox
+                    type="checkbox"
+                    checked={Auth.checkboxState[idx]}
+                    onChange={(e) => {
+                      const check = Auth.checkboxState;
+                      check[idx] = e.currentTarget.checked;
 
-            <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
-              <CustomCheckBox type="checkbox" />
-              <Title15>이용약관 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
-              <ImgBox src={viewterms} />
-            </AgreeInnerBox>
-
-            <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
-              <CustomCheckBox type="checkbox" />
-              <Title15>개인정보 처리방침 동의</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(필수)</Title14>
-              <ImgBox src={viewterms} />
-            </AgreeInnerBox>
-
-            <AgreeInnerBox>
-              <CustomCheckBox type="checkbox" />
-              <Title15>마케팅 정보 수신에 동의합니다</Title15>
-              <Title14 style={{ color: "#999999", marginLeft: "4px" }}>(선택)</Title14>
-            </AgreeInnerBox>
+                      Auth.checkboxState = check;
+                    }}
+                  />
+                  <Title15>{item.content}</Title15>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  {item.terms != 0 && <ImgBox src={viewterms} />}
+                </AgreeInnerBox>
+              );
+            })}
           </AgreeContainer>
 
-          <SubmitButton>
+          <SubmitButton onClick={() => this.signupSubmit()}>
             <ButtonText>가입하기</ButtonText>
           </SubmitButton>
         </Container>
@@ -85,6 +134,7 @@ export default SnsPartnerSignupContainer;
 const ImgBox = styled.img`
   position: absolute;
   right: 0;
+  bottom: 0;
   cursor: pointer;
 `;
 
@@ -162,7 +212,7 @@ const KakaoImgBox = styled.div`
   left: 0;
 `;
 
-const CustomInput = styled.input`
+const CustomInput = styled(InputComponent)`
   height: 42px;
   border-radius: 3px;
   border: solid 1px #c7c7c7;
@@ -247,6 +297,7 @@ const BottomLineDiv = styled.div`
   width: 588px;
   border: 1px solid #c6c7cc;
   margin-top: 12px;
+  margin-bottom: 12px;
 `;
 
 const LineDivContainer = styled.div`
