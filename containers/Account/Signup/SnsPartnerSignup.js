@@ -78,7 +78,7 @@ class SnsPartnerSignupContainer extends React.Component {
 
             <div style={{ display: "flex", alignItems: "center" }}>
               <CustomInput placeholder="등록하고자 하는 상호명을 입력해 주세요." style={{ marginTop: "0px" }} />
-              <ImgBox src={signupsearch} style={{ marginRight: "22px" }} />
+              <ImgBox src={signupsearch} style={{ marginRight: "22px", marginBottom: "3px" }} />
             </div>
           </InputInnerBox>
 
