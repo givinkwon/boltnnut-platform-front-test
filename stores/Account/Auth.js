@@ -475,7 +475,7 @@ class Auth {
         setTimeout(() => {
           this.loading = false;
 
-          if (this.previous_url == "") {
+          if (this.previous_url == "" || this.previous_url == null) {
             Router.push("/");
           } else {
             // this.makeUrl(this.previous_url);
