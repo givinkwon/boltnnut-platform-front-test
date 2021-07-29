@@ -4,8 +4,6 @@ import { inject, observer } from "mobx-react";
 import { useDropzone } from "react-dropzone";
 import STLViewer from "stl-viewer";
 import FileImage from "FileImage.js";
-import Containerv1 from "components/Containerv1";
-import Background from "components/Background";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 // Components
@@ -17,15 +15,12 @@ import ManufactureProcess from "stores/Manufacture/ManufactureProcess";
 import InputComponent from "AddFile2";
 
 import Calendar from "./Calendar2";
-import Magazine from "stores/Common/Magazine";
 import { toJS } from "mobx";
 import Router from "next/router";
 import Modal from "LoadingModal";
 
 import * as RequestAPI from "axios/Manufacture/Request";
-import axios from "axios";
 
-const pass2 = "static/images/pass2.png";
 const pass3 = "static/images/pass3.png";
 const pass7 = "static/images/pass7.png";
 const deleteButtonImg = "/static/images/delete.png";
@@ -36,6 +31,7 @@ const starred = "./static/images/request/star_red.svg";
 const down_arrow = "./static/images/request/down_arrow.svg";
 const help_face = "./static/images/request/help_face.svg";
 const checkbox = "./static/images/request/checkbox.svg";
+const fileupload = "./static/images/request/fileupload.svg";
 
 let fileList = [];
 let checkBox = false;
@@ -80,7 +76,7 @@ const customStyles = {
 
 @inject("Request", "ManufactureProcess", "Auth", "Schedule", "Project")
 @observer
-class FileUploadContainer extends Component {
+class PartnerDirectRequest extends Component {
   static defaultProps = { title: "도면 파일을 업로드 해주세요." };
 
   estimateInfoList = [];
@@ -263,6 +259,287 @@ class FileUploadContainer extends Component {
       });
   };
 
+  changeSubmit = () => {};
+  requestSubmit = async (flag, id) => {
+    const { projectname, purposeAry } = this.state;
+    const { ManufactureProcess, Schedule, Request, Project } = this.props;
+
+    ManufactureProcess.projectSubmitLoading = false;
+    console.log(toJS(ManufactureProcess.totalorderPrice));
+    let deadline_state = "";
+    let processData = "";
+    let detailProcessData = "";
+    let quantityData = "";
+
+    console.log(ManufactureProcess.purposeContent);
+    // error 처리
+    if (ManufactureProcess.purposeContent == 0) {
+      alert("문의 목적을 선택해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
+      return false;
+    }
+    if (projectname.length == 0) {
+      alert("프로젝트 제목을 입력해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
+      return false;
+    }
+    if (projectname.length > 200) {
+      alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
+      return false;
+    }
+    if (ManufactureProcess.requestComment.length == 0) {
+      alert("공개내용을 작성해주세요");
+      ManufactureProcess.projectSubmitLoading = true;
+      return false;
+    }
+
+    if (ManufactureProcess.requestComment.length > 4500) {
+      alert("공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
+      return false;
+    }
+    if (ManufactureProcess.requestComment2.length > 4500) {
+      alert("비공개내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      ManufactureProcess.projectSubmitLoading = true;
+      return false;
+    }
+
+    ManufactureProcess.date_undefined
+      ? (deadline_state = "납기일미정")
+      : ManufactureProcess.date_conference
+      ? (deadline_state = "납기일협의가능")
+      : "";
+
+    let request_state = "";
+    if (ManufactureProcess.purposeContent) {
+      request_state =
+        this.state.purposeAry[ManufactureProcess.purposeContent - 1].name;
+    }
+    console.log(request_state);
+    console.log(Request.selected_partner);
+    console.log("requestSubmit");
+    console.log(Schedule.clickDay);
+    console.log(fileList);
+    var formData = new FormData();
+
+    formData.append("request_state", request_state);
+    formData.append("name", projectname);
+    formData.append("partner", Request.selected_partner);
+    // 선택한 날짜가 없으면, 기본 날짜 추가하기
+    if (Schedule.clickDay) {
+      formData.append("deadline", Schedule.clickDay + " 09:00");
+    } else {
+      formData.append("deadline", "2020-11-11 11:11");
+    }
+
+    // 선택한 납기 선택이 없으면 납기일 미정으로
+    if (deadline_state.length == 0) {
+      formData.append("deadline_state", "납기일미정");
+    } else {
+      formData.append("deadline_state", deadline_state);
+    }
+    formData.append("order_request_open", ManufactureProcess.requestComment);
+    formData.append("order_request_close", ManufactureProcess.requestComment2);
+
+    console.log(toJS(ManufactureProcess.openFileArray));
+    if (ManufactureProcess.openFileArray.length === 0) {
+      formData.append(`file_open`, "");
+    }
+    for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
+      formData.append(`file_open`, ManufactureProcess.openFileArray[i]);
+    }
+    console.log(toJS(ManufactureProcess.privateFileArray));
+    if (ManufactureProcess.privateFileArray.length === 0) {
+      formData.append(`file_close`, "");
+    }
+    for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
+      formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
+    }
+
+    formData.append("price", ManufactureProcess.orderMaxPrice);
+    formData.append("blueprint_exist", 1);
+
+    for (var i = 0; i < fileList.length; i++) {
+      console.log(toJS(fileList[i].selectBig.id));
+      console.log(toJS(fileList[i].selectedMid.id));
+      console.log(toJS(fileList[i].originFile));
+      if (fileList[i].checked) {
+        formData.append(`blueprint`, fileList[i].originFile);
+
+        processData = processData + fileList[i].selectBig.id;
+        detailProcessData = detailProcessData + fileList[i].selectedMid.id;
+        quantityData = quantityData + fileList[i].quantity.value;
+
+        console.log(quantityData);
+        console.log(fileList[i].quantity.value);
+        if (i < fileList.length - 1) {
+          processData = processData + ",";
+          detailProcessData = detailProcessData + ",";
+          quantityData = quantityData + ",";
+        }
+      }
+    }
+
+    for (var i = 0; i < fileList.length; i++) {
+      formData.append(`file_close`, fileList[i].originFile);
+    }
+
+    console.log(processData);
+    console.log(detailProcessData);
+    console.log(quantityData);
+    console.log(Request.selected_partner);
+    console.log(Project.producerId);
+
+    formData.append("process", processData);
+    formData.append("detailprocess", detailProcessData);
+    formData.append("number", quantityData);
+    // formData.append("partner", Project.producerId);
+    if (Request.selected_partner) {
+      formData.append("partner", Request.selected_partner);
+    }
+
+    const Token = localStorage.getItem("token");
+    console.log(Token);
+
+    if (flag) {
+      const req = {
+        headers: {
+          Authorization: `Token ${Token}`,
+        },
+        data: formData,
+      };
+
+      console.log(req);
+
+      RequestAPI.create(req)
+        .then((res) => {
+          console.log("create: ", res);
+          ManufactureProcess.projectSubmitLoading = true;
+          this.props.Request.newIndex = 1;
+          MyDataLayerPush({ event: "request_Drawing" });
+          ManufactureProcess.reset();
+        })
+        .catch((e) => {
+          ManufactureProcess.checkPaymentButton = false;
+          console.log(e);
+          console.log(e.response);
+        });
+
+      const processAry = processData.split(",");
+      const detailProcessAry = detailProcessData.split(",");
+      ManufactureProcess.getProcessList(processAry, detailProcessAry);
+    } else {
+      console.log(fileList);
+      // if (ManufactureProcess.openFileArray.length === 0) {
+      //   RequestFormData.append(`file`, "");
+      // }
+
+      // for (var i = 0; i < ManufactureProcess.openFileArray.length; i++) {
+      //   RequestFormData.append(`file`, ManufactureProcess.openFileArray[i]);
+      //   RequestFormData.append("request", )
+      //   RequestFormData.append("share_inform", )
+      // }
+
+      //RequestFormData.append("file", )
+
+      await this.props.Project.projectDetailData.request_set[0].estimate_set.map(
+        async (item, idx) => {
+          console.log(item);
+
+          const req = {
+            id: item.id,
+          };
+
+          await RequestAPI.delEstimate(req)
+            .then((res) => {
+              console.log(toJS(res));
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        }
+      );
+
+      for (let i = 0; i < this.props.Request.request_file_set.length; i++) {
+        await this.props.Request.deleteRequestFile(
+          this.props.Request.request_file_set[i]
+        );
+      }
+
+      if (ManufactureProcess.openFileArray.length !== 0) {
+        await ManufactureProcess.openFileArray.map(async (item, idx) => {
+          this.modifyRequestFile(item, true);
+        });
+      }
+      if (ManufactureProcess.privateFileArray.length !== 0) {
+        await ManufactureProcess.privateFileArray.map(async (item, idx) => {
+          this.modifyRequestFile(item, false);
+        });
+      }
+
+      const modifyFormData = new FormData();
+
+      for (var i = 0; i < fileList.length; i++) {
+        console.log(fileList[i]);
+        console.log(fileList[i].originFile);
+        console.log(toJS(fileList[i].selectBig.id));
+        console.log(toJS(fileList[i].selectedMid.id));
+        console.log(this.state.requestId);
+        console.log(fileList[i].quantity.value);
+
+        if (fileList[i].checked) {
+          modifyFormData.append("blueprint", fileList[i].originFile);
+          modifyFormData.append("process", fileList[i].selectBig.id);
+          modifyFormData.append("detailprocess", fileList[i].selectedMid.id);
+          modifyFormData.append("requestid", this.state.requestId);
+          modifyFormData.append("number", fileList[i].quantity.value);
+
+          const req = {
+            headers: {
+              Authorization: `Token ${Token}`,
+            },
+            data: modifyFormData,
+          };
+          await RequestAPI.modifyEstimate(req)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+      }
+
+      const reqFormData = new FormData();
+      const req = {
+        headers: {
+          Authorization: `Token ${Token}`,
+        },
+        data: formData,
+        id: this.state.requestId,
+      };
+
+      // for (var pair of formData.entries()) {
+      //   console.log(pair[0] + ", " + pair[1]);
+      // }
+
+      await RequestAPI.modifyProject(req)
+        .then((res) => {
+          console.log(`modify Project : ${res}`);
+          ManufactureProcess.projectSubmitLoading = true;
+          console.log(toJS(ManufactureProcess.projectSubmitLoading));
+          ManufactureProcess.changeProject = false;
+
+          this.props.Request.newIndex = 3;
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+    }
+  };
 
   purposeHandler = (item) => {
     const { ManufactureProcess } = this.props;
@@ -965,28 +1242,10 @@ class FileUploadContainer extends Component {
                             marginBottom: "24px",
                           }}
                         >
-                          <div
-                            style={{
-                              color: "#0933b3",
-                              fontSize: "20px",
-                              fontWeight: "bold",
-                              marginBottom: "-3px",
-                            }}
-                          >
-                            ↑
-                          </div>
-                          <div
-                            style={{
-                              width: "22px",
-                              height: "7px",
-                              border: "3px solid #0933b3",
-                              borderTop: "none",
-                            }}
-                          ></div>
+                          <img src={fileupload}></img>
                         </div>
                         <p>
-                          3D 도면 파일을 이곳에 드래그 또는{" "}
-                          <span>파일찾기</span>
+                          3D 도면 파일을 <span>파일찾기 클릭</span>
                         </p>
                         <p>*한 파일에 한 파트만 업로드 해주세요.</p>
                         <FileImageContainer>
@@ -1146,14 +1405,15 @@ class FileUploadContainer extends Component {
                 >
                   프로젝트 제품분야에 해당하는 항목들을 선택해주세요.
                 </span>
-                <input
+                {/* <div
                   style={{
                     width: "100%",
                     height: 42,
                     marginTop: 16,
                     border: "solid 1px #c6c7cc",
                   }}
-                ></input>
+                ></div> */}
+                <Calendar />
                 <DateCheckbox>
                   <img src={checkbox}></img>
                   <span style={{ marginLeft: 8 }}>
@@ -1191,36 +1451,43 @@ class FileUploadContainer extends Component {
             <RequestContentBox>
               <ContentTitle>
                 <span>프로젝트 관련 파일</span>
-                <span>이미지 혹은 PDF 자료만 업로드가 가능합니다.</span>
+                <span
+                  style={{
+                    marginLeft: 20,
+                    fontSize: 14,
+                    lineHeight: 2.43,
+                    letterSpacing: -0.35,
+                    color: "#c7c7c7",
+                    fontWeight: "normal",
+                  }}
+                >
+                  이미지 혹은 PDF 자료만 업로드가 가능합니다.
+                </span>
               </ContentTitle>
               <InputComponent file={true} isOpen={true} />
             </RequestContentBox>
           </Body>
           <>
-            <Card
-              checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
-              onChange={this.scrollChange}
-              id="card"
-            >
+            <FileUpload>
               <Header>
-                {this.props.ManufactureProcess.checkFileUpload
-                  ? "도면 추가"
-                  : this.props.title}
+                <span>
+                  <span style={{ color: "#0933b3" }}>도면 파일</span>을 업로드
+                  해주세요.
+                </span>
               </Header>
-
-              <TableHeader
-                checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
+              <span
+                style={{
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  lineHeight: 1.89,
+                  letterSpacing: -0.45,
+                  color: "#1e2222",
+                  marginBottom: 16,
+                }}
               >
-                <div></div>
-                <span>파일명</span>
-                <span>기본가공</span>
-                <span>재료</span>
-                <span>마감</span>
-                <span>색상</span>
-                <span>수량</span>
-              </TableHeader>
-            </Card>
-
+                도면 파일
+              </span>
+            </FileUpload>
             <ItemList
               checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
               checkBannerHeight={this.state.checkHeight}
@@ -2161,7 +2428,7 @@ class FileUploadContainer extends Component {
                       ManufactureProcess.checkPaymentButton = true;
 
                       if (ManufactureProcess.projectSubmitLoading) {
-                        Request.requestSubmit(
+                        this.requestSubmit(
                           0,
                           this.props.Project.projectDetailData.request_set[0].id
                         );
@@ -2208,7 +2475,7 @@ class FileUploadContainer extends Component {
                     } else {
                       ManufactureProcess.checkPaymentButton = true;
                       if (ManufactureProcess.projectSubmitLoading) {
-                        Request.requestSubmit(1);
+                        this.requestSubmit(1);
                       } else {
                         alert("요청 중입니다. 잠시만 기다려주세요.");
                       }
@@ -2238,7 +2505,7 @@ class FileUploadContainer extends Component {
   }
 }
 
-export default FileUploadContainer;
+export default PartnerDirectRequest;
 
 const quantityAry = [
   { label: "1", value: 1 },
@@ -2563,8 +2830,6 @@ const Card = styled.div`
   height: ${(props) => (props.checkFileUpload ? "210px" : "100px")};
   object-fit: contain;
   background-color: white;
-  //margin: 60px 0px 20px 0;
-  margin: 30px 0px 20px 0;
   display: flex;
   flex-direction: column;
   //position: ${(props) => (props.checkFileUpload ? "fixed" : "static")};
@@ -2574,17 +2839,19 @@ const Card = styled.div`
   box-sizing: border-box;
 `;
 
-const Header = styled(Content.FontSize32)`
-  font-weight: bold;
+const FileUpload = styled.div``;
+
+const Header = styled.div`
+  font-family: NotoSansCJKkr;
+  font-size: 32px;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.06;
   letter-spacing: -0.8px;
-  text-align: left;
-  color: #0a2165;
-  padding-top: 38px;
-  padding-bottom: 20px;
-  object-fit: contain;
+  text-align: center;
+  color: #1e2222;
+  margin-bottom: 70px;
 `;
 
 const FileImageContainer = styled.div`
@@ -2648,22 +2915,22 @@ const DropZoneContainer = styled.div`
     }
   }
   p:nth-of-type(1) {
-    font-size: 20px;
-    line-height: 40px;
-    letter-spacing: -0.5px;
-    color: #282c36;
-    margin-bottom: 4px;
+    font-size: 15px;
+    line-height: 2;
+    letter-spacing: -0.38px;
+    color: #1e2222;
+    margin-bottom: 6px;
+    margin-top: 11px;
     span {
       color: #0933b3;
-      font-weight: 600;
+      font-weight: 500;
     }
     :focus {
       outline: none;
     }
   }
   > p:nth-of-type(2) {
-    font-size: 16px;
-    //line-height: 40px;
+    font-size: 14px;
     letter-spacing: -0.4px;
     color: #767676;
   }
