@@ -284,7 +284,6 @@ const KakaoImgBox = styled.div`
 `;
 
 const CustomInput = styled(InputComponent)`
-  height: 42px;
   border-radius: 3px;
   border: solid 1px #c7c7c7;
   padding-left: 10px;
@@ -349,10 +348,11 @@ const AuthenticateBtn = styled.button`
   justify-content: center;
   align-items: center;
   width: 139px;
-  height: 42px;
+  height: 100%;
   border-radius: 3px;
   border: solid 1px #c7c7c7;
   background-color: #ffffff;
+  cursor: pointer;
 `;
 
 const AuthenticateBtnText = styled(Title.FontSize16)`
