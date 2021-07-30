@@ -29,6 +29,17 @@ class PartnerDirectRequest extends Component {
       { id: 2, name: "견적문의", checked: false },
       { id: 3, name: "업체수배", checked: false },
     ],
+    priceAry: [
+      { id: 1, name: "100만원 이하", checked: false },
+      { id: 2, name: "100만원 - 300만원", checked: false },
+      { id: 3, name: "300만원 - 500만원", checked: false },
+      { id: 4, name: "500만원 - 1000만원", checked: false },
+      { id: 5, name: "1000만원 - 2000만원", checked: false },
+      { id: 6, name: "2000만원 - 3000만원", checked: false },
+      { id: 7, name: "3000만원 - 5000만원", checked: false },
+      { id: 8, name: "5000만원 - 1억원", checked: false },
+      { id: 9, name: "1억원이상", checked: false },
+    ],
     securityCheck1: false,
     securityCheck2: false,
   };
@@ -95,8 +106,7 @@ class PartnerDirectRequest extends Component {
                         <PurposeSelectCircle
                           active={item.checked}
                           onClick={() => {
-                            // ManufactureProcess.purposeHandler(item);
-                            console.log(idx);
+                            Request.set_state(idx)
                           }}
                         >
                           <PurposeFont18 active={item.checked}>
@@ -117,10 +127,9 @@ class PartnerDirectRequest extends Component {
                   class="Input"
                   placeholder="진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
                   onFocus={(e) => (e.target.placeholder = "")}
-                  value={this.state.projectname}
+                  value={Request.request_name}
                   onChange={(e) => {
-                    console.log(e);
-                    this.setState({ projectname: e });
+                    Request.set_name(e)
                   }}
                   style={{
                     width: "100%",
@@ -142,23 +151,15 @@ class PartnerDirectRequest extends Component {
                       color: "#414550",
                     }}
                   >
-                    <BudgetBox>
-                      <span style={{ marginLeft: 16 }}>0</span>
-                      <img src={down_arrow} style={{ marginRight: 12 }}></img>
-                    </BudgetBox>
-                    <span
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontSize: 16,
-                      }}
-                    >
-                      ~
-                    </span>
-                    <BudgetBox style={{ marginLeft: 16 }}>
-                      <span style={{ marginLeft: 16 }}>0</span>
-                      <img src={down_arrow} style={{ marginRight: 12 }}></img>
-                    </BudgetBox>
+                    {this.state.priceAry.map((item, idx) => {
+                      return (
+                        <BudgetBox active={item.checked} onClick={() => { Request.set_price(idx)}} style={{ marginLeft: 16 }}>
+                          <span style={{ marginLeft: 16 }}>{item.name}</span>
+                          <img src={down_arrow} style={{ marginRight: 12 }}></img>
+                        </BudgetBox>
+                      );
+                    })}
+                    
                     <span
                       style={{
                         display: "flex",

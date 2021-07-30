@@ -44,12 +44,21 @@ class Request {
 
   // 의뢰 상태 추가하기
   @action set_state = (val) => {
+    // 이미 선택되어 있을 때
+    if (this.request_state == val){
+      this.request_state = -1;
+      console.log(this.request_state)
+      return true
+    } else {
     this.request_state = val;
+    console.log(this.request_state)
+    }
   };
 
   // 의뢰 제목 추가하기
   @action set_name = (val) => {
     this.request_name = val;
+    console.log(this.request_name)
   };
 
   // 희망 예산 최소 금액 추가하기
