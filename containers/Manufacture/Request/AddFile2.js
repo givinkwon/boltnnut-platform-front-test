@@ -141,37 +141,45 @@ class InputComponent extends React.Component {
     }
 
     return (
-      <Wrap width={this.props.width}>
+      <Wrap width={this.props.width} style={{ marginTop: 16 }}>
         <FileText mobile={mobile} checkFileUpload={this.state.checkFileUpload}>
           <InputBox
             mobile={mobile}
-            style={{ width: "100%", display: "inline-flex" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "inline-flex",
+              borderColor: "#ffffff",
+            }}
           >
             <div>
-              <input
-                type="file"
-                multiple={"multiple"}
-                fileName={"fileName[]"}
-                style={{ display: "none" }}
-                onChange={
-                  isOpen ? this.openOnChangeFile : this.privateOnChangeFile
-                }
-                id="inputFile"
-                ref={this.file}
-                value=""
-                placeholder={"파일을 선택해 주세요."}
-              />
-
-              <div
-                onClick={() => {
-                  console.log(this.file);
-                  this.file.current.click();
-                }}
-              >
-                <span>파일첨부</span>
-                <img src={addButtonImg} />
-              </div>
               <div>
+                <div
+                  onClick={() => {
+                    console.log(this.file);
+                    this.file.current.click();
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "100%",
+                    justifyContent: "center",
+                    height: 42,
+                  }}
+                >
+                  <img src={addButtonImg} style={{ width: 30, height: 30 }} />
+                  <span
+                    style={{
+                      fontSize: 16,
+                      lineHeight: 2.13,
+                      color: "#0933b3",
+                      letterSpacing: -0.4,
+                      marginLeft: 20,
+                    }}
+                  >
+                    파일첨부
+                  </span>
+                </div>
                 {isOpen ? (
                   <>
                     {ManufactureProcess.openFileArray.map((item, idx) => {
@@ -277,39 +285,22 @@ const InputBox = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  align-items: center;  
-  border: solid 1px #ffffff;
+  align-items: center; 
+  border: solid 0.5px #c7c7c7;
   color: #404040;
   border-radius: 3px;
   box-sizing: border-box;
+  background-color: #ffffff;
 
   >div{
-    display: ${(props) => (props.mobile ? "" : "inline-flex")};
-    width: ${(props) => (props.mobile ? "100%" : "")};
+    width: 100%;
 
     >div:nth-of-type(1){        
-      margin-right: 40px;
       cursor: pointer;
-      width: ${(props) => (props.mobile ? "100%" : "")};
-
-      >span{
-        font-size: ${(props) => (props.mobile ? "14px" : "18px")};
-        line-height: 40px;
-        letter-sacing: ${(props) => (props.mobile ? "-0.35px" : "-0.45px")};
-        color: #0933b3;
-        font-weight: normal;
-        box-sizing: border-box;
-        margin-right: 5px;
-      }
-      >img {
-        vertical-align : baseline;
-        width: ${(props) => (props.mobile ? "20px" : "")};
-        height: ${(props) => (props.mobile ? "18px" : "")};
-      }      
     }
       
     >div:nth-of-type(2){      
-      width: 950px;   
+      width: 100%;   
       word-wrap: break-word;
       word-break:break-all;
       
@@ -330,21 +321,6 @@ const InputBox = styled.div`
   }
 }
 
-   @media (min-width: 0px) and (max-width: 767.98px) { 
-  //   height: 100%;
-  //   height: 34px;
-  //   object-fit: contain;
-  //   border-radius: 3px;
-  //   background-color: #ffffff;
-  //   > img {
-  //     position: relative;
-  //     padding-top: 8px;
-  //     padding-bottom: 8px;
-  //     padding-right: 20px;
-  //     padding-left: 0;
-  //     width: 20px;
-  //     height: 18px;
-  //   }
   >div{
     div:nth-of-type(2){
       width: auto;
@@ -420,8 +396,7 @@ const Input = styled.div`
   }
 `;
 const FileText = styled(Content.FontSize18)`
-  //width: 1152px;
-  width: ${(props) => (props.mobile ? "100%" : "1152px")}
+  width: 100%
   font-stretch: normal;
   font-style: normal;
   line-height: 40px;
@@ -430,11 +405,13 @@ const FileText = styled(Content.FontSize18)`
   color: #c6c7cc;
   display: inline-flex;
   align-items: center;
-  padding: ${(props) => (props.mobile ? "0 14px 0 14px" : "14px 16px")};
+  padding: 27px 20px 26px;
   flex-wrap: wrap;
-  background-color: #ffffff;
+  background-color: #f6f6f6;
   box-sizing: border-box;
-  height: ${(props) => (props.mobile ? "100%" : "")}
+  border-radius: 3px;
+  border: solid 0.5px #c7c7c7;
+  height: 100%;
   > span:nth-of-type(1) {
     > span {
       > img {
