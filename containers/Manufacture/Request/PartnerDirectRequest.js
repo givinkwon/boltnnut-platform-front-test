@@ -5,12 +5,14 @@ import * as Title from "components/Title";
 
 import SelectComponent from "components/Select";
 
-import InputComponent from "AddFile2";
+
 import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
+import InputComponent from "AddFile2";
 import Calendar from "./Calendar2";
-
+import AddFile from "./AddFile";
+import AddDrawingFile from "./AddDrawing";
 const pass3 = "static/images/pass3.png";
 const reqeustlogo = "./static/images/request/request_logo.svg";
 const starred = "./static/images/request/star_red.svg";
@@ -19,6 +21,38 @@ const help_face = "./static/images/request/help_face.svg";
 const checkbox = "./static/images/request/checkbox.svg";
 const circlecheck = "./static/images/request/circlecheck.svg";
 const circlecheckblue = "./static/images/request/circlecheck_blue.svg";
+
+const customStyles = {
+  dropdownIndicator: () => ({
+    color: '#555555',
+    width: 40,
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? '#000000' : '#555555',
+    backgroundColor: '#fff',
+    borderRadius: 0,
+    padding: 16,
+    fontSize: 16,
+  }),
+  control: () => ({
+    marginTop: 10,
+    border: '1px solid #c7c7c7',
+    backgroundColor: '#fff',
+    display: 'flex',
+    borderRadius: 3,
+    padding: 5,
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+    return { ...provided, opacity, transition };
+  }
+}
 
 @inject("Request", "Auth", "Schedule", "ManufactureProcess")
 @observer
@@ -29,26 +63,55 @@ class PartnerDirectRequest extends Component {
       { id: 2, name: "견적문의", checked: false },
       { id: 3, name: "업체수배", checked: false },
     ],
+    priceAry: [
+      { id: 1, name: "100만원 이하"},
+      { id: 2, name: "100만원 - 300만원"},
+      { id: 3, name: "300만원 - 500만원"},
+      { id: 4, name: "500만원 - 1000만원"},
+      { id: 5, name: "1000만원 - 2000만원"},
+      { id: 6, name: "2000만원 - 3000만원"},
+      { id: 7, name: "3000만원 - 5000만원"},
+      { id: 8, name: "5000만원 - 1억원"},
+      { id: 9, name: "1억원이상"},
+    ],
     securityCheck1: false,
     securityCheck2: false,
+    period_state: false,
   };
 
   activeHandler = (flag) => {
+    const {Request} = this.props;
     if (flag == "check1") {
       if (this.state.securityCheck1) {
         this.setState({ securityCheck1: false });
       } else {
-        this.setState({ securityCheck1: true });
+        this.setState({ securityCheck1: true, securityCheck2: false });
+        // 공개하기
+        Request.set_file_secure(1)
       }
     }
     if (flag == "check2") {
       if (this.state.securityCheck2) {
         this.setState({ securityCheck2: false });
       } else {
-        this.setState({ securityCheck2: true });
+        this.setState({ securityCheck2: true, securityCheck1: false });
+        // 비공개하기
+        Request.set_file_secure(2)
       }
     }
   };
+
+  
+  toggleCheckBox = () => {
+    const { Request } = this.props
+    this.setState({
+      ...this.state,
+      period_state: !this.state.period_state,
+    });
+    // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
+    Request.set_period_state(!this.state.period_state)
+  };
+
   render() {
     const { ManufactureProcess } = this.props;
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
@@ -59,7 +122,7 @@ class PartnerDirectRequest extends Component {
     `;
 
     const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
-    const { Request } = this.props;
+    const { Request, Auth } = this.props;
 
     return (
       <>
@@ -95,8 +158,7 @@ class PartnerDirectRequest extends Component {
                         <PurposeSelectCircle
                           active={item.checked}
                           onClick={() => {
-                            // ManufactureProcess.purposeHandler(item);
-                            console.log(idx);
+                            Request.set_state(idx)
                           }}
                         >
                           <PurposeFont18 active={item.checked}>
@@ -117,10 +179,9 @@ class PartnerDirectRequest extends Component {
                   class="Input"
                   placeholder="진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
                   onFocus={(e) => (e.target.placeholder = "")}
-                  value={this.state.projectname}
+                  value={Request.request_name}
                   onChange={(e) => {
-                    console.log(e);
-                    this.setState({ projectname: e });
+                    Request.set_name(e)
                   }}
                   style={{
                     width: "100%",
@@ -142,23 +203,11 @@ class PartnerDirectRequest extends Component {
                       color: "#414550",
                     }}
                   >
-                    <BudgetBox>
-                      <span style={{ marginLeft: 16 }}>0</span>
-                      <img src={down_arrow} style={{ marginRight: 12 }}></img>
-                    </BudgetBox>
-                    <span
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontSize: 16,
-                      }}
-                    >
-                      ~
-                    </span>
-                    <BudgetBox style={{ marginLeft: 16 }}>
-                      <span style={{ marginLeft: 16 }}>0</span>
-                      <img src={down_arrow} style={{ marginRight: 12 }}></img>
-                    </BudgetBox>
+
+                  <SelectComponent
+                    styles={customStyles} options={this.state.priceAry} value={Request.request_price}
+                    getOptionLabel={(option) => option.name} placeholder='선택해주세요' onChange={Request.set_price}/>
+                    
                     <span
                       style={{
                         display: "flex",
@@ -234,10 +283,9 @@ class PartnerDirectRequest extends Component {
                 <InputComponent
                   class="Input"
                   onFocus={(e) => (e.target.placeholder = "")}
-                  value={this.state.projectname}
+                  value={Request.request_contents}
                   onChange={(e) => {
-                    console.log(e);
-                    this.setState({ projectname: e });
+                    Request.set_contents(e)
                   }}
                   style={{
                     width: "100%",
@@ -273,7 +321,9 @@ class PartnerDirectRequest extends Component {
                 - 관련 파일은 모두 비공개로 올라갑니다. 보안상 공개로 올리지
                 못했던 내용을 파일을 올려주세요.{" "}
               </span>
-              <InputComponent file={true} isOpen={true} />
+              {/* 관련 파일 추가하는 함수가 들어가 있는 컴포넌트 */}
+              <AddFile file={true} isOpen={true} />
+              
             </RequestContentBox>
             <RequestContentBox>
               <span
@@ -304,7 +354,8 @@ class PartnerDirectRequest extends Component {
                   이미지 혹은 PDF 자료만 업로드가 가능합니다.
                 </span>
               </ContentTitle>
-              <InputComponent file={true} isOpen={true} />
+              {/* 관련 파일 추가하는 함수가 들어가 있는 컴포넌트 */}
+              <AddDrawingFile file={true} isOpen={true} />
               <ContentTitle>
                 <span>도면 보안 설정</span>
               </ContentTitle>
@@ -349,7 +400,7 @@ class PartnerDirectRequest extends Component {
                 </SecurityBox>
               </Security>
               <RequestBtn>
-                <RequestBotton>의뢰 요청하기</RequestBotton>
+                <RequestBotton onClick = {() => {Request.requestSubmit()}}>의뢰 요청하기</RequestBotton>
               </RequestBtn>
             </RequestContentBox>
           </Body>

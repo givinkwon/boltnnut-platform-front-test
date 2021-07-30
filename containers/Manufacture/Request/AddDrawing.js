@@ -30,8 +30,8 @@ class InputComponent extends React.Component {
 
       if (e && e.currentTarget.files[0]) {
          // 파일 추가하기
-         Request.set_file_set(e.currentTarget.files[0]);
-         console.log(Request.request_file_set)
+         Request.set_drawing_set(e.currentTarget.files[0]);
+         console.log(Request.request_drawing_set)
             // 파일 업로드 state true로 변경
          this.setState({
             ...this.state,
@@ -77,20 +77,20 @@ class InputComponent extends React.Component {
                            <img src={addButtonImg} />
                         </div>
                         <div>
-                           {Request.request_file_set.map((item, idx) => {
-                                        console.log(Request.request_file_set)
+                           {Request.request_drawing_set.map((item, idx) => {
+                                        console.log(Request.request_drawing_set)
                               return (
                                  <>
                                     <span
                                        onClick={() => {
                                           if (checkFileUpload) {
-                                             Request.request_file_set.splice(idx, 1);
+                                             Request.request_drawing_set.splice(idx, 1);
                                              const inputFile = document.getElementById(
                                                 'inputFile'
                                              );
                                              inputFile.innerHTML = '';
 
-                                             if (Request.request_file_set.length === 0) {
+                                             if (Request.request_drawing_set.length === 0) {
                                                 this.setState({ checkFileUpload: false });
                                              }
                                           }
