@@ -183,11 +183,12 @@ class Request {
       formData.append("deadline", "2020-11-11 11:11");
     }
 
-    // 선택한 납기 선택이 없으면 납기일 미정으로
-    if (this.request_period_state == -1) {
+    // 선택한 납기 미선택 시
+    if (this.request_period_state == 0) {
       formData.append("deadline_state", 0);
     } else {
-      formData.append("deadline_state", this.request_period_state);
+      // 납기 협의 가능 선택 시
+      formData.append("deadline_state", 1);
     }
 
     // 의뢰 내용 ( 공개 사항 )
