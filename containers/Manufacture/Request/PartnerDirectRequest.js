@@ -5,12 +5,14 @@ import * as Title from "components/Title";
 
 import SelectComponent from "components/Select";
 
-import InputComponent from "AddFile2";
+
 import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
+import InputComponent from "AddFile2";
 import Calendar from "./Calendar2";
 import AddFile from "./AddFile";
+import AddDrawingFile from "./AddDrawing";
 const pass3 = "static/images/pass3.png";
 const reqeustlogo = "./static/images/request/request_logo.svg";
 const starred = "./static/images/request/star_red.svg";
@@ -78,18 +80,23 @@ class PartnerDirectRequest extends Component {
   };
 
   activeHandler = (flag) => {
+    const {Request} = this.props;
     if (flag == "check1") {
       if (this.state.securityCheck1) {
         this.setState({ securityCheck1: false });
       } else {
-        this.setState({ securityCheck1: true });
+        this.setState({ securityCheck1: true, securityCheck2: false });
+        // 공개하기
+        Request.set_file_secure(1)
       }
     }
     if (flag == "check2") {
       if (this.state.securityCheck2) {
         this.setState({ securityCheck2: false });
       } else {
-        this.setState({ securityCheck2: true });
+        this.setState({ securityCheck2: true, securityCheck1: false });
+        // 비공개하기
+        Request.set_file_secure(2)
       }
     }
   };
@@ -347,7 +354,8 @@ class PartnerDirectRequest extends Component {
                   이미지 혹은 PDF 자료만 업로드가 가능합니다.
                 </span>
               </ContentTitle>
-              <InputComponent file={true} isOpen={true} />
+              {/* 관련 파일 추가하는 함수가 들어가 있는 컴포넌트 */}
+              <AddDrawingFile file={true} isOpen={true} />
               <ContentTitle>
                 <span>도면 보안 설정</span>
               </ContentTitle>

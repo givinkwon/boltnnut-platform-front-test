@@ -32,7 +32,7 @@ class Request {
   @observable request_period_state = 0; // 납기일 협의 state => 체크 시에는 1, 미 체크 시에는 0
   @observable request_contents = ""; // 프로젝트 내용
   @observable request_file_set = []; // 의뢰 관련 파일
-  @observable request_file_secure = 0; // 의뢰 보안 state => 미선택 0, 의뢰 파일 보안 1, 도면 파일 보안 2, 전체 보안 3
+  @observable request_file_secure = 0; // 의뢰 보안 state => 미선택 0, 도면 파일 공개 1, 미공개 2
   @observable request_drawing_set = []; // 의뢰 도면 파일
 
   // 파트너 상세에서 의뢰서 클릭 한 경우에 id를 넘겨주는 것
@@ -104,6 +104,7 @@ class Request {
   // 의뢰 보안 상태 추가
   @action set_file_secure = (val) => {
     this.request_file_secure = val;
+    console.log(this.request_file_secure)
   };
 
   // 도면 파일 추가하기
@@ -115,6 +116,13 @@ class Request {
       this.common_file = null;
     }
   };
+
+  // 도면 파일 삭제하기
+	@action delete_Drawing = (deleteIdx) => {
+		// 파일 삭제하기
+		this.request_drawing_set.splice(deleteIdx, 1);
+		console.log(deleteIdx, this.request_drawing_set)
+	}
 
   // 의뢰서 제출 시 의뢰서 만들기
   @action requestSubmit = async () => {
