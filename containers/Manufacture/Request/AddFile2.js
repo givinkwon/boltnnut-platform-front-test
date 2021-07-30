@@ -285,7 +285,7 @@ const InputBox = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  align-items: center; 
+  align-items: center;
   border: solid 0.5px #c7c7c7;
   color: #404040;
   border-radius: 3px;

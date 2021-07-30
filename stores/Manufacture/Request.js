@@ -26,14 +26,13 @@ class Request {
   // 의뢰서 제출용 데이터
   @observable request_state = -1; // 문의 목적 state => 미선택 -1, 상담요청 0, 견적 요청 1, 업체 수배 2
   @observable request_name = ""; // 의뢰 제목
-  @observable request_minprice = ""; // 희망 예산 최소 금액
-  @observable request_maxprice = ""; // 희망 예산 최대 금액
+  @observable request_price = ""; // 희망 예산 금액
   @observable request_price_state = -1; // 예산 조율 state => 미 체크 시에는 -1, 조율 가능 체크 시 0, 상담 후 예산 결정 시 1
   @observable request_period = ""; // 희망 납기일
   @observable request_period_state = 0; // 납기일 협의 state => 체크 시에는 1, 미 체크 시에는 0
   @observable request_contents = ""; // 프로젝트 내용
   @observable request_file_set = []; // 의뢰 관련 파일
-  @observable request_file_secure = 0; // 의뢰 보안 state => 미선택 0, 의뢰 파일 보안 1, 도면 파일 보안 2, 전체 보안 3
+  @observable request_file_secure = 0; // 의뢰 보안 state => 미선택 0, 도면 파일 공개 1, 미공개 2
   @observable request_drawing_set = []; // 의뢰 도면 파일
 
   // 파트너 상세에서 의뢰서 클릭 한 경우에 id를 넘겨주는 것
@@ -44,27 +43,34 @@ class Request {
 
   // 의뢰 상태 추가하기
   @action set_state = (val) => {
+    // 이미 선택되어 있을 때
+    if (this.request_state == val){
+      this.request_state = -1;
+      console.log(this.request_state)
+      return true
+    } else {
     this.request_state = val;
+    console.log(this.request_state)
+    }
   };
 
   // 의뢰 제목 추가하기
   @action set_name = (val) => {
     this.request_name = val;
+    console.log(this.request_name)
   };
 
-  // 희망 예산 최소 금액 추가하기
-  @action set_minprice = (val) => {
-    this.request_minprice = val;
+  // 희망 예산 금액 추가하기
+  @action set_price = (obj) => {
+    this.request_price = obj;
+    console.log(obj)
   };
 
-  // 희망 예산 최소 금액 추가하기
-  @action set_maxprice = (val) => {
-    this.request_maxprice = val;
-  };
 
   // 예산 조율 협의 상태 추가하기
   @action set_period_state = (val) => {
     this.request_period_state = val;
+    console.log(this.request_period_state)
   };
 
   // 납기일 협의 상태 추가하기
@@ -75,6 +81,7 @@ class Request {
   // 의뢰 내용 추가하기
   @action set_contents = (val) => {
     this.request_contents = val;
+    console.log(this.request_contents)
   };
 
   // 의뢰 파일 추가하기
@@ -87,9 +94,17 @@ class Request {
     }
   };
 
+  // 의뢰 파일 삭제하기
+	@action delete_File = (deleteIdx) => {
+		// 파일 삭제하기
+		this.request_file_set.splice(deleteIdx, 1);
+		console.log(deleteIdx, this.request_file_set)
+	}
+
   // 의뢰 보안 상태 추가
   @action set_file_secure = (val) => {
     this.request_file_secure = val;
+    console.log(this.request_file_secure)
   };
 
   // 도면 파일 추가하기
@@ -101,6 +116,13 @@ class Request {
       this.common_file = null;
     }
   };
+
+  // 도면 파일 삭제하기
+	@action delete_Drawing = (deleteIdx) => {
+		// 파일 삭제하기
+		this.request_drawing_set.splice(deleteIdx, 1);
+		console.log(deleteIdx, this.request_drawing_set)
+	}
 
   // 의뢰서 제출 시 의뢰서 만들기
   @action requestSubmit = async () => {
@@ -137,9 +159,9 @@ class Request {
     // 의뢰 제목
     formData.append("name", this.request_name);
 
-    // 희망 예산 => 최대값 저장
-    formData.append("minprice", this.request_minprice);
-    formData.append("maxprice", this.request_maxprice);
+    // 희망 예산 저장
+    formData.append("price", this.request_price);
+
     // 희망 예산 상태 저장
     formData.append("price_state", this.request_price_state)
 
@@ -269,8 +291,7 @@ class Request {
     this.selected_partner = "";
     this.request_state = -1;
     this.request_name = ""; 
-    this.request_minprice = ""; 
-    this.request_maxprice = ""; 
+    this.request_price = ""; 
     this.request_price_state = -1; 
     this.request_period = ""; 
     this.request_period_state = 0; 

@@ -5,13 +5,15 @@ import * as Title from "components/Title";
 
 import SelectComponent from "components/Select";
 
-import InputComponent from "AddFile2";
 import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
+import InputComponent from "AddFile2";
 import Calendar from "./Calendar2";
 import FileImage from "FileImage.js";
 
+import AddFile from "./AddFile";
+import AddDrawingFile from "./AddDrawing";
 const pass3 = "static/images/pass3.png";
 const reqeustlogo = "./static/images/request/request_logo.svg";
 const starred = "./static/images/request/star_red.svg";
@@ -23,6 +25,38 @@ const circlecheckblue = "./static/images/request/circlecheck_blue.svg";
 const helpimg = "./static/images/request/help_img.svg";
 const fileupload = "./static/images/request/fileupload.svg";
 
+const customStyles = {
+  dropdownIndicator: () => ({
+    color: "#555555",
+    width: 14,
+    height: 42,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? "#000000" : "#555555",
+    backgroundColor: "#fff",
+    borderRadius: 0,
+    padding: 16,
+    fontSize: 16,
+  }),
+  control: () => ({
+    border: "1px solid #c7c7c7",
+    backgroundColor: "#fff",
+    display: "flex",
+    borderRadius: 3,
+    width: 204,
+    height: 42,
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+    return { ...provided, opacity, transition };
+  },
+};
+
 @inject("Request", "Auth", "Schedule", "ManufactureProcess")
 @observer
 class PartnerDirectRequest extends Component {
@@ -32,26 +66,59 @@ class PartnerDirectRequest extends Component {
       { id: 2, name: "견적을 받고 싶어요.", checked: false },
       { id: 3, name: "전문 업체를 찾고 싶어요.", checked: false },
     ],
+    priceAry: [
+      { id: 1, name: "100만원 이하" },
+      { id: 2, name: "100만원 - 300만원" },
+      { id: 3, name: "300만원 - 500만원" },
+      { id: 4, name: "500만원 - 1000만원" },
+      { id: 5, name: "1000만원 - 2000만원" },
+      { id: 6, name: "2000만원 - 3000만원" },
+      { id: 7, name: "3000만원 - 5000만원" },
+      { id: 8, name: "5000만원 - 1억원" },
+      { id: 9, name: "1억원이상" },
+    ],
     securityCheck1: false,
     securityCheck2: false,
+    period_state: false,
   };
 
+  async componentDidMount() {
+    const { purposeAry } = this.state;
+    console.log(purposeAry);
+  }
+
   activeHandler = (flag) => {
+    const { Request } = this.props;
     if (flag == "check1") {
       if (this.state.securityCheck1) {
         this.setState({ securityCheck1: false });
       } else {
-        this.setState({ securityCheck1: true });
+        this.setState({ securityCheck1: true, securityCheck2: false });
+        // 공개하기
+        Request.set_file_secure(1);
       }
     }
     if (flag == "check2") {
       if (this.state.securityCheck2) {
         this.setState({ securityCheck2: false });
       } else {
-        this.setState({ securityCheck2: true });
+        this.setState({ securityCheck2: true, securityCheck1: false });
+        // 비공개하기
+        Request.set_file_secure(2);
       }
     }
   };
+
+  toggleCheckBox = () => {
+    const { Request } = this.props;
+    this.setState({
+      ...this.state,
+      period_state: !this.state.period_state,
+    });
+    // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
+    Request.set_period_state(!this.state.period_state);
+  };
+
   render() {
     const { ManufactureProcess } = this.props;
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
@@ -69,7 +136,7 @@ class PartnerDirectRequest extends Component {
     - 프로젝트 진행 시 파트너가 알아야 할 발주 조건 : `;
 
     const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
-    const { Request } = this.props;
+    const { Request, Auth } = this.props;
 
     return (
       <>
@@ -87,16 +154,6 @@ class PartnerDirectRequest extends Component {
                 <ContentTitle>
                   <span>문의 목적</span>
                   <img src={starred} style={{ marginLeft: 4 }}></img>
-                  <span
-                    style={{
-                      fontSize: 14,
-                      fontWeight: "normal",
-                      color: "#86888c",
-                      marginLeft: 12,
-                    }}
-                  >
-                    (중복 선택 가능)
-                  </span>
                 </ContentTitle>
                 <SelectBox>
                   <InlineDiv>
@@ -105,8 +162,14 @@ class PartnerDirectRequest extends Component {
                         <PurposeSelectCircle
                           active={item.checked}
                           onClick={() => {
-                            // ManufactureProcess.purposeHandler(item);
-                            console.log(idx);
+                            console.log(item.checked);
+                            Request.set_state(idx);
+                            if (!item.checked) {
+                              item.checked = true;
+                            } else {
+                              item.checked = false;
+                            }
+                            this.setState({ f: 3 });
                           }}
                         >
                           <PurposeFont18 active={item.checked}>
@@ -128,8 +191,7 @@ class PartnerDirectRequest extends Component {
                   placeholder="   진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
                   onFocus={(e) => (e.target.placeholder = "")}
                   onChange={(e) => {
-                    console.log(e);
-                    this.setState({ projectname: e });
+                    Request.set_name(e);
                   }}
                   style={{
                     width: "100%",
@@ -141,6 +203,7 @@ class PartnerDirectRequest extends Component {
               <RequestContentBox>
                 <ContentTitle>
                   <div>희망 예산</div>
+                  <img src={starred} style={{ marginLeft: 4 }}></img>
                 </ContentTitle>
                 <Budget>
                   <div
@@ -151,15 +214,21 @@ class PartnerDirectRequest extends Component {
                       marginBottom: 11,
                     }}
                   >
-                    <BudgetBox>
-                      <span style={{ marginLeft: 16 }}>0</span>
-                      <img src={down_arrow} style={{ marginRight: 12 }}></img>
-                    </BudgetBox>
+                    <SelectComponent
+                      styles={customStyles}
+                      options={this.state.priceAry}
+                      value={Request.request_price}
+                      getOptionLabel={(option) => option.name}
+                      placeholder="선택해주세요"
+                      onChange={Request.set_price}
+                    />
+
                     <span
                       style={{
                         display: "flex",
                         alignItems: "center",
                         fontSize: 16,
+                        marginLeft: 12,
                       }}
                     >
                       원
@@ -256,8 +325,7 @@ class PartnerDirectRequest extends Component {
                   onFocus={(e) => (e.target.placeholder = "")}
                   value={projectContent}
                   onChange={(e) => {
-                    console.log(e);
-                    this.setState({ projectname: e });
+                    Request.set_contents(e);
                   }}
                   style={{
                     width: "100%",
@@ -292,7 +360,8 @@ class PartnerDirectRequest extends Component {
                 - 관련 파일은 모두 비공개로 올라갑니다. 보안상 공개로 올리지
                 못했던 내용을 파일을 올려주세요.{" "}
               </span>
-              <InputComponent file={true} isOpen={true} />
+              {/* 관련 파일 추가하는 함수가 들어가 있는 컴포넌트 */}
+              <AddFile file={true} isOpen={true} />
             </RequestContentBox>
             <RequestContentBox>
               <span
@@ -313,59 +382,8 @@ class PartnerDirectRequest extends Component {
               <ContentTitle>
                 <span>도면 파일</span>
               </ContentTitle>
-              <InputBox
-                checkFileUpload={this.props.ManufactureProcess.checkFileUpload}
-                style={{
-                  height: 236,
-                  backgroundColor: "#f6f6f6",
-                  borderRadius: 5,
-                  border: "dashed 2px #c6c7cc",
-                  marginBottom: 70,
-                }}
-              >
-                <DropZoneContainer>
-                  {this.state.loading === true ? (
-                    <>
-                      <div>Uploading files...</div>
-                      <CircularProgress
-                        style={{
-                          margin: "10px auto",
-                          width: "22px",
-                          height: "22px",
-                        }}
-                        className="spinner"
-                      />
-                    </>
-                  ) : (
-                    <>
-                      {!this.props.ManufactureProcess.checkFileUpload && (
-                        <>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              flexDirection: "column",
-                              marginBottom: 11,
-                            }}
-                          >
-                            <img src={fileupload}></img>
-                          </div>
-                          <p>
-                            3D 도면 파일을 이곳에 드래그 또는{" "}
-                            <span>파일찾기</span>
-                          </p>
-                          <p>*한 파일에 한 파트만 업로드 해주세요.</p>
-                          <FileImageContainer>
-                            <FileImage name=".STP" />
-                            <FileImage name=".STEP" />
-                            <FileImage name=".STL" />
-                          </FileImageContainer>
-                        </>
-                      )}
-                    </>
-                  )}
-                </DropZoneContainer>
-              </InputBox>
+              {/* 관련 파일 추가하는 함수가 들어가 있는 컴포넌트 */}
+              <AddDrawingFile file={true} isOpen={true} />
               <ContentTitle>
                 <span>도면 보안 설정</span>
               </ContentTitle>
@@ -1016,16 +1034,14 @@ const PurposeSelectCircle = styled.div`
   border: ${(props) => (props.active ? "solid 1px #0933b3" : "")};
   cursor: pointer;
   margin-right: 16px;
-  font-size: 16px;
-  line-height: 2.5;
-  letter-spacing: -0.4px;
   padding: 0px 10px;
   color: #1e2222;
 `;
 const PurposeFont18 = styled.div`
   font-weight: normal;
-  line-height: 1.89;
-  letter-spacing: -0.45px;
+  font-size: 16px;
+  line-height: 2.5;
+  letter-spacing: -0.4px;
   color: ${(props) => (props.active ? "#0933b3" : "#414550")};
 `;
 
