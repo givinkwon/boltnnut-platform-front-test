@@ -70,6 +70,7 @@ class Request {
   // 예산 조율 협의 상태 추가하기
   @action set_period_state = (val) => {
     this.request_period_state = val;
+    console.log(this.request_period_state)
   };
 
   // 납기일 협의 상태 추가하기
@@ -80,6 +81,7 @@ class Request {
   // 의뢰 내용 추가하기
   @action set_contents = (val) => {
     this.request_contents = val;
+    console.log(this.request_contents)
   };
 
   // 의뢰 파일 추가하기
@@ -91,6 +93,13 @@ class Request {
       this.request_file = null;
     }
   };
+
+  // 의뢰 파일 삭제하기
+	@action delete_File = (deleteIdx) => {
+		// 파일 삭제하기
+		this.request_file_set.splice(deleteIdx, 1);
+		console.log(deleteIdx, this.request_file_set)
+	}
 
   // 의뢰 보안 상태 추가
   @action set_file_secure = (val) => {

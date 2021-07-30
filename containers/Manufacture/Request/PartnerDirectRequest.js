@@ -10,7 +10,7 @@ import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
 import Calendar from "./Calendar2";
-
+import AddFile from "./AddFile";
 const pass3 = "static/images/pass3.png";
 const reqeustlogo = "./static/images/request/request_logo.svg";
 const starred = "./static/images/request/star_red.svg";
@@ -74,6 +74,7 @@ class PartnerDirectRequest extends Component {
     ],
     securityCheck1: false,
     securityCheck2: false,
+    period_state: false,
   };
 
   activeHandler = (flag) => {
@@ -92,6 +93,18 @@ class PartnerDirectRequest extends Component {
       }
     }
   };
+
+  
+  toggleCheckBox = () => {
+    const { Request } = this.props
+    this.setState({
+      ...this.state,
+      period_state: !this.state.period_state,
+    });
+    // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
+    Request.set_period_state(!this.state.period_state)
+  };
+
   render() {
     const { ManufactureProcess } = this.props;
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
@@ -263,10 +276,9 @@ class PartnerDirectRequest extends Component {
                 <InputComponent
                   class="Input"
                   onFocus={(e) => (e.target.placeholder = "")}
-                  value={this.state.projectname}
+                  value={Request.request_contents}
                   onChange={(e) => {
-                    console.log(e);
-                    this.setState({ projectname: e });
+                    Request.set_contents(e)
                   }}
                   style={{
                     width: "100%",
@@ -302,7 +314,9 @@ class PartnerDirectRequest extends Component {
                 - 관련 파일은 모두 비공개로 올라갑니다. 보안상 공개로 올리지
                 못했던 내용을 파일을 올려주세요.{" "}
               </span>
-              <InputComponent file={true} isOpen={true} />
+              {/* 관련 파일 추가하는 함수가 들어가 있는 컴포넌트 */}
+              <AddFile file={true} isOpen={true} />
+              
             </RequestContentBox>
             <RequestContentBox>
               <span
