@@ -8,6 +8,7 @@ import Router from "next/router";
 import moment from "moment";
 import Schedule from "./Schedule";
 import ManufactureProcess from "./ManufactureProcess"
+import Auth from "stores/Account/Auth";
 
 class Request {
   constructor() {
@@ -80,6 +81,13 @@ class Request {
 
   // 의뢰 내용 추가하기
   @action set_contents = (val) => {
+    Auth.checkLogin();
+    
+    if (!Auth.logged_in_user) {
+      alert("로그인이 필요한 서비스입니다.");
+      Router.push("/login");
+      return;
+    }
     this.request_contents = val;
     console.log(this.request_contents)
   };
@@ -155,7 +163,7 @@ class Request {
     
     // 문의 목적 상태
     formData.append("request_state", this.request_state);
-    
+
     // 의뢰 제목
     formData.append("name", this.request_name);
 
