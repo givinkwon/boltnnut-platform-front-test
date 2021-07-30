@@ -20,6 +20,38 @@ const checkbox = "./static/images/request/checkbox.svg";
 const circlecheck = "./static/images/request/circlecheck.svg";
 const circlecheckblue = "./static/images/request/circlecheck_blue.svg";
 
+const customStyles = {
+  dropdownIndicator: () => ({
+    color: '#555555',
+    width: 40,
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? '#000000' : '#555555',
+    backgroundColor: '#fff',
+    borderRadius: 0,
+    padding: 16,
+    fontSize: 16,
+  }),
+  control: () => ({
+    marginTop: 10,
+    border: '1px solid #c7c7c7',
+    backgroundColor: '#fff',
+    display: 'flex',
+    borderRadius: 3,
+    padding: 5,
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+    return { ...provided, opacity, transition };
+  }
+}
+
 @inject("Request", "Auth", "Schedule", "ManufactureProcess")
 @observer
 class PartnerDirectRequest extends Component {
@@ -30,15 +62,15 @@ class PartnerDirectRequest extends Component {
       { id: 3, name: "업체수배", checked: false },
     ],
     priceAry: [
-      { id: 1, name: "100만원 이하", checked: false },
-      { id: 2, name: "100만원 - 300만원", checked: false },
-      { id: 3, name: "300만원 - 500만원", checked: false },
-      { id: 4, name: "500만원 - 1000만원", checked: false },
-      { id: 5, name: "1000만원 - 2000만원", checked: false },
-      { id: 6, name: "2000만원 - 3000만원", checked: false },
-      { id: 7, name: "3000만원 - 5000만원", checked: false },
-      { id: 8, name: "5000만원 - 1억원", checked: false },
-      { id: 9, name: "1억원이상", checked: false },
+      { id: 1, name: "100만원 이하"},
+      { id: 2, name: "100만원 - 300만원"},
+      { id: 3, name: "300만원 - 500만원"},
+      { id: 4, name: "500만원 - 1000만원"},
+      { id: 5, name: "1000만원 - 2000만원"},
+      { id: 6, name: "2000만원 - 3000만원"},
+      { id: 7, name: "3000만원 - 5000만원"},
+      { id: 8, name: "5000만원 - 1억원"},
+      { id: 9, name: "1억원이상"},
     ],
     securityCheck1: false,
     securityCheck2: false,
@@ -70,7 +102,7 @@ class PartnerDirectRequest extends Component {
     `;
 
     const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
-    const { Request } = this.props;
+    const { Request, Auth } = this.props;
 
     return (
       <>
@@ -151,14 +183,10 @@ class PartnerDirectRequest extends Component {
                       color: "#414550",
                     }}
                   >
-                    {this.state.priceAry.map((item, idx) => {
-                      return (
-                        <BudgetBox active={item.checked} onClick={() => { Request.set_price(idx)}} style={{ marginLeft: 16 }}>
-                          <span style={{ marginLeft: 16 }}>{item.name}</span>
-                          <img src={down_arrow} style={{ marginRight: 12 }}></img>
-                        </BudgetBox>
-                      );
-                    })}
+
+                  <SelectComponent
+                    styles={customStyles} options={this.state.priceAry} value={Request.request_price}
+                    getOptionLabel={(option) => option.name} placeholder='선택해주세요' onChange={Request.set_price}/>
                     
                     <span
                       style={{
