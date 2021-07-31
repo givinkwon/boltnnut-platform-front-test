@@ -230,7 +230,16 @@ class Calendar extends Component {
                 <>{Schedule.clickDay}</>
               ) : (
                 <>
-                  <span></span>
+                  <span
+                    style={{
+                      fontSize: 16,
+                      lineHeight: 2.13,
+                      letterSpacing: -0.4,
+                      color: "#c7c7c7",
+                    }}
+                  >
+                    납기일 선택
+                  </span>
                 </>
               )}
             </span>
@@ -417,6 +426,7 @@ const FoldedComponent = styled.div`
   border-radius: 3px;
   border: solid 1px #c6c7cc;
   margin-top: 16px;
+  margin-bottom: 11px;
   height: ${(props) => (props.mobile ? "34px" : "50px")};
   > div {
     > div {
