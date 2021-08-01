@@ -37,10 +37,6 @@ class SearchBarConatiner extends React.Component {
   search = async () => {
     const { Partner, ManufactureProcess, Category } = this.props;
 
-    // 연관검색어 저장
-    Partner.suggest_list = this.state.suggs;
-    console.log(toJS(Partner.suggest_list));
-
     await Router.push("/producer");
     // console.log("click");
 
@@ -98,10 +94,15 @@ class SearchBarConatiner extends React.Component {
   }
 
 
+  // 검색창에 검색을 할 때 text를 observable에 저장
+  handleSearcherInputChange(event) {
+    const { Partner } = this.props;
+    Partner.search_text = event.target.value;
+    console.log(event.target.value);
+  }
+
   render() {
     const { Partner, Request } = this.props;
-
-
 
     return (
       <>
@@ -130,6 +131,11 @@ class SearchBarConatiner extends React.Component {
               <img src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
 
+            {this.state.showSuggestions && this.state.suggs.length > 0 && (
+              <CustomUl>
+                <CustomLiBox>{suggestions}</CustomLiBox>
+              </CustomUl>
+            )}
           </div>
         </Form>
       </>
@@ -138,6 +144,14 @@ class SearchBarConatiner extends React.Component {
 }
 
 export default SearchBarConatiner;
+
+const CustomUl = styled.ul`
+  width: 588px;
+  height: 150px;
+  margin-left: 30px;
+  font-size: 18px;
+  }
+`;
 
 const CustomLiBox = styled.div`
   display: flex;
@@ -239,13 +253,6 @@ const SearchBar = styled.div`
   }
   @media (min-width: 1300px) {
     width: 792px;
-  }
-
-  // 구글 검색 관련
-  .searcher-suggs {
-    // position: absolute;
-    // background-color: red;
-    // width: 588px;
   }
 
   .searcher-suggs-word {
