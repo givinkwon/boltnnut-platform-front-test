@@ -10,7 +10,6 @@ import MobileNav from "../../components/MobileNav";
 import { inject, observer } from "mobx-react";
 const back_ic = "/static/images/components/MobileNav/back.png";
 
-@inject("Post")
 @observer
 class Personal extends React.Component {
   state = {
@@ -20,7 +19,6 @@ class Personal extends React.Component {
     return { query };
   }
   componentDidMount() {
-    this.props.Post.getData();
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
