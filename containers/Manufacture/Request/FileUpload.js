@@ -263,10 +263,8 @@ class FileUploadContainer extends Component {
       });
   };
 
-
   purposeHandler = (item) => {
     const { ManufactureProcess } = this.props;
-    const { purposeAry } = this.state;
     console.log(ManufactureProcess.purposeContent);
     if (item.checked) {
       item.checked = false;
