@@ -6,21 +6,16 @@ import ButtonComponent from "components/Buttonv2";
 
 import Background from "components/Background";
 import Container from "components/Containerv1";
+import * as Title from "components/Title";
 import Router from "next/router";
 import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
 import Category from "../../../stores/Manufacture/Category";
 
-@inject(
-  "Auth",
-  "Project",
-  "Request",
-  "Partner",
-  "ManufactureProcess",
-  "Producer",
-  "Category"
-)
+import AddFile from "./AddFile";
+
+@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer", "Category")
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -31,6 +26,7 @@ class SearchBarConatiner extends React.Component {
     suggs: [],
     showSuggs: false,
     searchbaractive: false,
+    imgsearchhover: false,
   };
 
   // 검색함수
@@ -67,10 +63,7 @@ class SearchBarConatiner extends React.Component {
         // console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(
-          () => (ManufactureProcess.loadingSaveSearchText = true),
-          2000
-        );
+        setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
       }
     }
   };
@@ -93,13 +86,26 @@ class SearchBarConatiner extends React.Component {
     await this.props.Auth.checkLogin();
   }
 
-
   // 검색창에 검색을 할 때 text를 observable에 저장
   handleSearcherInputChange(event) {
     const { Partner } = this.props;
     Partner.search_text = event.target.value;
     console.log(event.target.value);
   }
+
+  // 이미지 버큰 호버 시 문구 안내 핸들러 함수
+  imageSearchHandler = () => {
+    if (!this.state.imgsearchhover) {
+      this.setState({ ...this.state, imgsearchhover: true });
+    } else {
+      this.setState({ ...this.state, imgsearchhover: false });
+    }
+  };
+
+  imageModal = () => {
+    const { Partner } = this.props;
+    Partner.image_modal_state = !Partner.image_modal_state;
+  };
 
   render() {
     const { Partner, Request } = this.props;
@@ -115,27 +121,33 @@ class SearchBarConatiner extends React.Component {
               alignItems: "center",
             }}
           >
-            <SearchBar active={Partner.subButtonActive}>
+            <SearchBar active={Partner.subButtonActive} style={{ position: "relative" }}>
               <input
                 placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) =>
-                  (e.target.placeholder =
-                    "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
-                }
+                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.search_text}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-              <img src="/static/icon/search_blue.svg" onClick={this.search} />
+
+              <ImgContainer onMouseEnter={() => this.imageSearchHandler()} onMouseLeave={() => this.imageSearchHandler()}>
+                <HoverBox active={this.state.imgsearchhover} className="hoverBox">
+                  <Title13>제품 이미지로 검색하기</Title13>
+                </HoverBox>
+                <AddFile
+                    file={true}
+                    isOpen={true}
+                    ///onChange={this.handleChange}
+                  />
+              </ImgContainer>
+
+              <ImgContainer>
+                <img src="/static/icon/search_blue.svg" onClick={this.search} />
+              </ImgContainer>
             </SearchBar>
 
-            {this.state.showSuggestions && this.state.suggs.length > 0 && (
-              <CustomUl>
-                <CustomLiBox>{suggestions}</CustomLiBox>
-              </CustomUl>
-            )}
           </div>
         </Form>
       </>
@@ -144,6 +156,49 @@ class SearchBarConatiner extends React.Component {
 }
 
 export default SearchBarConatiner;
+
+const ImgContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 45px;
+  height: 45px;
+  border-radius: 20px;
+
+  :hover {
+    background-color: #eeeeee;
+  }
+`;
+
+const HoverBox = styled.div`
+  display: ${(props) => (props.active ? "flex" : "none")};
+  justify-content: center;
+  align-items: center;
+  width: 190px;
+  height: 49px;
+  border-radius: 75px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  margin-bottom: 5px;
+
+  position: absolute;
+  bottom: 100%;
+  left: 75%;
+`;
+
+const Title13 = styled(Title.FontSize13)`
+  font-weight: normal;
+  font-stretch: normal;
+  line-height: 4;
+  letter-spacing: -0.33px;
+  color: #0933b3;
+`;
+
+const ImgBox = styled.img`
+  width: 32px;
+  height: 32px;
+`;
 
 const CustomUl = styled.ul`
   width: 588px;
@@ -191,7 +246,7 @@ const SearchBar = styled.div`
   padding-right: 17px;
 
   input {
-    width: 700px;
+    width: 640px;
     height: 59px;
     border: none;
     border-radius: 60px;
