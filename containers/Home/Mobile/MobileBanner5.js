@@ -12,12 +12,12 @@ class MobileBanner5Container extends React.Component {
     return (
       <BackgroundContainer>
         <Container>
-          <Title16>신제품을 개발하고 싶으신가요?</Title16>
-          <Title16>1분만에 프로젝트를 등록하고</Title16>
-          <Title16>전문 업체 정보들을 받아보세요.</Title16>
+          <Title16> 마음에 드는 공장을 찾기 힘드시나요? </Title16>
+          <Title16>지금 '의뢰하기'를 눌러서</Title16>
+          <Title16>여러 업체의 회사소개서와 제안서를 받아보세요.</Title16>
 
           <RequestButton>
-            <Title15>맞춤형 문의하기</Title15>
+            <Title15>무료로 의뢰하기</Title15>
           </RequestButton>
         </Container>
       </BackgroundContainer>
