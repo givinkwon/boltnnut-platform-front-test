@@ -8,12 +8,11 @@ import { inject, observer } from "mobx-react";
 import PartnerDirectRequest from "./PartnerDirectRequest";
 import RequestComplete from "./RequestComplete";
 
-@inject()
+@inject("Request")
 @observer
 class RequestContainer extends React.Component {
   render() {
     const { Request, width } = this.props;
-    console.log(width);
     return (
       <>
         <Background>
@@ -22,22 +21,6 @@ class RequestContainer extends React.Component {
             <PartnerDirectRequest />
           </Containerv1>
         </Background>
-        {/* {this.props.width >= 1279.98 ? (
-          <div style={{ overflow: "visible" }}>
-            {console.log(`newIndex : ${Request.newIndex}`)}
-                {Request.newIndex == 0 && (
-                  <FileUploadContainer width={this.props.width} />
-                )}
-                {Request.newIndex == 1 && <RequestCompleteContainer />}
-                {Request.newIndex == 2 && <NoneDrawingConsultingContainer />}
-                {Request.newIndex == 3 && <ModifyCompleteContainer />}
-            <PaymentPageContainer />
-          </div>
-        ) : (
-          <>
-             {/* <PartnerDirectRequestM /> */}
-        {/* </>
-        )} */}
       </>
     );
   }
