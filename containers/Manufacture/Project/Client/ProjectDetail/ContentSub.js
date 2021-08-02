@@ -10,13 +10,7 @@ import { toJS } from "mobx";
 const profile = "/static/images/project/user.svg";
 const partnerbadge = "/static/images/project/partnerbadge.svg";
 
-@inject(
-  "Request",
-  "ManufactureProcess",
-  "Auth",
-  "Project",
-  "Answer",
-)
+@inject("Request", "ManufactureProcess", "Auth", "Project", "Answer")
 @observer
 class ContentSub extends React.Component {
   state = {
@@ -91,8 +85,9 @@ class ContentSub extends React.Component {
               onMouseOut={() => this.activeHandler("activeOne")}
               onClick={async () => {
                 console.log("click!");
-                // this.changeProject();
-                console.log(this.props.ManufactureProcess.changeProject);
+                this.changeProject();
+                // this.props.ManufactureProcess.changeProject();
+                // console.log(this.props.ManufactureProcess.changeProject);
                 // Router.push("/request")
               }}
             >

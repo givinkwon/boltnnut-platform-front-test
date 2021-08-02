@@ -7,6 +7,7 @@ import Router from "next/router";
 @observer
 class KSLink extends React.Component {
   render() {
+    const { FontContent } = this.props;
     return (
       <>
         {/* <a href={this.props.Common.makeUrl(this.props.url)}> */}
@@ -14,7 +15,17 @@ class KSLink extends React.Component {
           onClick={() => {
             Router.push(`/${this.props.url}`);
           }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+          }}
         >
+          {/* <Tttt></Tttt> */}
+
+          {FontContent && <FontContent />}
           {this.props.content}
           <Logo src={this.props.logoImg} />
           <Image src={this.props.Image} />
