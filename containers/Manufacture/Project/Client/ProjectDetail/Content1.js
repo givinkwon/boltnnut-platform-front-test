@@ -57,27 +57,6 @@ class Content1 extends React.Component {
         Project.projectDetailData.request_set[0].deadline
     );
     await Auth.checkLogin();
-
-    Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
-      console.log(toJS(Answer.answers));
-      this.setState({ partnerList: Answer.answers });
-
-      Answer.answers.forEach((answer) => {
-        const PartnerDetailList = this.state.partnerDetailList;
-        PartnerAPI.detail(answer.partner)
-          .then((res) => {
-            PartnerDetailList.push({
-              logo: res.data.logo,
-              name: res.data.name,
-            });
-            this.setState({ partnerDetailList: PartnerDetailList });
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-      });
-    });
   }
 
   render() {

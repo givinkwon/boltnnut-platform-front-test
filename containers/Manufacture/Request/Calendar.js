@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import React, { Component } from "react";
+import React, { Component, useRef } from "react";
 import moment from "moment";
 import { inject, observer } from "mobx-react";
-const prevMonth = "/static/images/request/Calendar/MobilePrevMonth.svg";
-const nextMonth = "/static/images/request/Calendar/MobileNextMonth.svg";
+const prevMonth = "/static/images/request/Calendar/prevMonth.png";
+const nextMonth = "/static/images/request/Calendar/nextMonth.png";
+const dropdown = "/static/images/request/Step4/dropdown.png";
 const calendar = "/static/images/calendar.svg";
 
 @inject("Request", "Schedule")
@@ -13,8 +14,10 @@ class Week extends Component {
     now: moment(),
   };
   Days = (firstDayFormat) => {
+    const { Schedule } = this.props;
     const days = [];
-    for (let i = 0; i < 42; i++) {
+
+    for (let i = 0; i < 7; i++) {
       const Day = moment(firstDayFormat).add("d", i);
       days.push({
         yearMonthDayFormat: Day.format("YYYY-MM-DD"),
@@ -27,34 +30,23 @@ class Week extends Component {
     }
     return days;
   };
-  focusFunction = (e) => {
-    const { Schedule } = this.props;
-    let day = e;
-    if (day == Schedule.active1) {
-      return true;
-    } else {
-      return false;
-    }
-  };
   calendarOnOff = (e) => {
-    const { Schedule } = this.props;
+    const { Request, Schedule } = this.props;
     if (Schedule.calendarOnOffV2 == true) {
       Schedule.calendarOnOffV2 = false;
     } else {
       Schedule.calendarOnOffV2 = true;
     }
-    let targetDay = e.target.innerHTML.replace(/[^0-9]/g, "");
     let day = e.currentTarget.innerHTML.replace(/[^0-9]/g, "");
-    Schedule.setActive1(targetDay);
     const dayValue = Schedule.nowMoment;
 
     Schedule.clickDay = dayValue.date(day).format("YYYY-MM-DD");
     Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   };
-  
+
   mapDaysToComponents = (Days, fn = () => {}) => {
     const { Schedule } = this.props;
-    console.log(Schedule.today);
+    const { now } = this.state;
     const occupied = Schedule.date_occupied;
 
     return Days.map((dayInfo, i) => {
@@ -62,9 +54,9 @@ class Week extends Component {
       let thisMoment = moment();
       if (!Schedule.nowMoment.isSame(dayInfo.yearMonthDayFormat, "month")) {
         className = "not-month";
-      } else if (i % 7 == 0) {
+      } else if (i === 0) {
         className = "date-sun";
-      } else if (i % 7 == 6) {
+      } else if (i === 6) {
         className = "date-sat";
       } else if (
         parseInt(thisMoment.format("D")) > parseInt(dayInfo.getDay) &&
@@ -88,25 +80,18 @@ class Week extends Component {
         Schedule.nowMoment.format("M") === dayInfo.getMonth
       ) {
         className += "today";
+        console.log(className);
         return (
-          <Day
-            className={className}
-            onClick={this.calendarOnOff}
-            focused={this.focusFunction(dayInfo.getDay)}
-          >
+          <div className={className} onClick={this.calendarOnOff}>
             {dayInfo.getDay}
             <div>오늘</div>
-          </Day>
+          </div>
         );
       } else {
         return (
-          <Day
-            className={className}
-            onClick={this.calendarOnOff}
-            focused={this.focusFunction(dayInfo.getDay)}
-          >
+          <div className={className} onClick={this.calendarOnOff}>
             {dayInfo.getDay}
-          </Day>
+          </div>
         );
       }
     });
@@ -121,10 +106,9 @@ class Week extends Component {
     );
   }
 }
-
 @inject("Schedule")
 @observer
-class MobileCalendar extends Component {
+class Calendar extends Component {
   state = {
     now: moment(),
   };
@@ -138,7 +122,6 @@ class MobileCalendar extends Component {
     const { Schedule } = this.props;
     Schedule.nowMoment.add(month, "M");
     Schedule.setTodayDate(this.state.now.format("YYYY-MM-01 "));
-    Schedule.setActive1(null);
     this.setState({
       now: Schedule.nowMoment,
     });
@@ -186,36 +169,43 @@ class MobileCalendar extends Component {
     const firstDateOfMonth = firstDayOfMonth.get("d");
     const firstDayOfWeek = firstDayOfMonth.clone().add("d", -firstDateOfMonth);
     const Weeks = [];
-    Weeks.push(
-      <Week firstDayOfThisWeekformat={firstDayOfWeek.format("YYYY-MM-DD")} />
-    );
+    for (let i = 0; i < 6; i++) {
+      Weeks.push(
+        <Week
+          firstDayOfThisWeekformat={firstDayOfWeek
+            .clone()
+            .add("d", i * 7)
+            .format("YYYY-MM-DD")}
+        />
+      );
+    }
     return Weeks;
   };
   render() {
     const { now } = this.state;
-    const { Schedule } = this.props;
+    const { Schedule, mobile } = this.props;
     return (
       <>
         {Schedule.calendarOnOffV2 == true && (
           <MainContainer>
-            <div>
-              <Header>
-                <div onClick={() => this.moveMonth(-1)}>
-                  <img src={prevMonth} />
-                </div>
-                <HeaderText>{now.format("YYYY.MM")}</HeaderText>
-                <div onClick={() => this.moveMonth(1)}>
-                  <img src={nextMonth} />
-                </div>
-              </Header>
-              <DateContainer>
-                {this.mapArrayToDate(this.dateToArray(this.props.dates))}
-              </DateContainer>
-              <CalendarContainer>{this.Weeks(now)}</CalendarContainer>
-            </div>
+            {console.log(Schedule.calendarOnOffV2)}
+            <Header>
+              <div onClick={() => this.moveMonth(-1)}>
+                <img src={prevMonth} />
+              </div>
+              <HeaderText>{now.format("YYYY.MM")}</HeaderText>
+              <div onClick={() => this.moveMonth(1)}>
+                <img src={nextMonth} />
+              </div>
+            </Header>
+            <DateContainer>
+              {this.mapArrayToDate(this.dateToArray(this.props.dates))}
+            </DateContainer>
+            <CalendarContainer>{this.Weeks(now)}</CalendarContainer>
           </MainContainer>
         )}
-        <FoldedComponent>
+
+        <FoldedComponent mobile={mobile}>
           <div
             style={{
               display: "flex",
@@ -229,7 +219,6 @@ class MobileCalendar extends Component {
                 marginLeft: "16px",
                 color: "#999999",
                 fontWeight: "normal",
-                fontSize: "14px",
               }}
             >
               {Schedule.clickDay !== 0 ? (
@@ -250,61 +239,60 @@ class MobileCalendar extends Component {
   }
 }
 
-export default MobileCalendar;
+export default Calendar;
 
 const MainContainer = styled.div`
+  //display: ${(props) => (props.fileUpload ? "flex" : "none")};
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  width: 100%;
-  height: 451px;
+  width: 760px;
+  height: 639px;
   margin-top: 6px;
   background-color: white;
   position: absolute;
-  top: 90%;
+  top: 28%;
   z-index: 1;
-  > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 347px;
-    height: 451px;
-  }
 `;
 const Header = styled.div`
   display: flex;
   align-items: center;
+  flex-direction: row;
   justify-content: space-between;
-  width: 127px;
-  margin-bottom: 38px;
-  margin-top: 20px;
-  height: 27px;
+  width: 176px;
+  align-items: baseline;
+  margin-bottom: 50px;
+  margin-top: 40px;
+  > div:nth-of-type(1),
+  div:nth-of-type(3) {
+    cursor: pointer;
+  }
 `;
-const HeaderText = styled.span`
+const HeaderText = styled.div`
   height: auto;
   font-family: AppleSDGothicNeoB00;
-  font-size: 18px;
+  font-size: 28px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   letter-spacing: -0.7px;
+  text-align: left;
   color: #282c36;
 `;
 const DateContainer = styled.div`
-  max-width: 347px;
-  width: 100%;
-  display: table;
+  width: 714px;
+  display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-bottom: 16px;
+  margin-bottom: 25px;
   > div {
-    display: table-cell;
     text-align: center;
-    font-size: 15px;
-    font-weight: bold;
+    width: 102px;
+    font-family: NotoSansCJKkr;
+    font-size: 22px;
+    font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     letter-spacing: -0.55px;
@@ -312,54 +300,63 @@ const DateContainer = styled.div`
   }
   .date-sun {
     color: #c6c7cc;
-    pointer-events: none;
   }
   .date-sat {
     color: #c6c7cc;
-    pointer-events: none;
-  }
-`;
-const Day = styled.div`
-  background-color: ${(props) => (props.focused ? "#0933b3" : "white")};
-  color: ${(props) => (props.focused ? "white" : "#282c36")};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 35px;
-  width: 100%;
-  height: 35px;
-  border-radius: 35px;
-  font-family: Roboto-iOS;
-  font-size: 15px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: -0.18px;
-  > div {
-    pointer-events: none;
-    margin-top: 25px;
-    position: absolute;
-    color: #0933b3;
-    font-size: 10px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: -0.25px;
   }
 `;
 const CalendarContainer = styled.div`
-  max-width: 347px;
-  width: 100%;
+  width: 700px;
   display: grid;
-  height: 315px;
+  height: 432px;
   grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  justify-items: center;
-  align-items: center;
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-left: 25px;
+    margin-top: 11px;
+    //border: solid 0.5px rgba(198,199,204,0.5);
+    //border-collapse: collapse;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: -0.18px;
+    color: #282c36;
+    cursor: pointer;
+    > div {
+      font-family: Roboto;
+      line-height: 1.4;
+      font-size: 12px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      letter-spacing: -0.12px;
+      color: #282c36;
+    }
+    :hover {
+      //background-color: #e1e2e4;
+      background-color: #0933b3;
+      color: white;
+      > div {
+        color: black;
+        display: none;
+      }
+    }
+    :focus {
+      background-color: #0933b3;
+      color: white;
+    }
+  }
   .date-sun {
     color: #c6c7cc;
     pointer-events: none;
@@ -377,6 +374,15 @@ const CalendarContainer = styled.div`
     pointer-events: none;
     color: #c6c7cc;
   }
+  .date-weekday-labeltoday {
+    pointer-events: none;
+    color: #c6c7cc;
+    > div {
+      position: absolute;
+      margin-top: 38px;
+      color: #c6c7cc;
+    }
+  }
   .not-book {
     pointer-events: none;
     color: #c6c7cc;
@@ -387,20 +393,17 @@ const CalendarContainer = styled.div`
     > div {
       position: absolute;
       margin-top: 38px;
-      color: #0933b3;
+      color: #c6c7cc;
     }
-  }
-  .date-weekday-labeltoday {
-    pointer-events: none;
-    color: #c6c7cc;
-    > div {
-      position: absolute;
-      margin-top: 38px;
-      color: #0933b3;
-    }
+    //pointer-events: none;
+    //background-color: #e1e2e4;
+    //> div {
+    //  position: absolute;
+    //  margin-top: 38px;
+    //  color: #e1e2e4;
+    //}
   }
 `;
-
 const FoldedComponent = styled.div`
   display: flex;
   align-items: center;
@@ -411,13 +414,13 @@ const FoldedComponent = styled.div`
   letter-spacing: -0.45px;
   border-radius: 5px;
   margin-top: 6px;
-  height: 34px;
+  height: ${(props) => (props.mobile ? "34px" : "50px")};
   > div {
     > div {
       margin-right: 24px;
       > img {
-        width: 21px;
-        height: 20px;
+        width: ${(props) => (props.mobile ? "21px" : "")};
+        height: ${(props) => (props.mobile ? "20px" : "")};
       }
     }
   }

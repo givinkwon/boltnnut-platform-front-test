@@ -2,8 +2,6 @@ import { observable, action, toJS, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
-import { isConstructorDeclaration } from "typescript";
-import NoneDrawingConsultingContainer from "containers/Manufacture/Request/NoneDrawingConsulting";
 
 import Partner from "./Partner";
 
@@ -238,7 +236,7 @@ class Category {
     }
   };
 
-  categoryActiveHandler = (idx, state) => {
+  categoryActiveHandler = (idx, state) => { 
     if (state == "business") {
       if (this.business_selected.includes(idx)) {
         return true;
@@ -285,6 +283,7 @@ class Category {
     }
   };
 
+  // Category가 id로 되어 있기 때문에 이름을 가져오기 위한 함수
   @action getNameByCategory = async (state) => {
     console.log(state);
     if (state === "business") {
@@ -301,6 +300,7 @@ class Category {
     }
   };
 
+  // Business가 id로 되어 있기 때문에 이름을 가져오기 위한 함수
   @action getBusinessName = async (state, id) => {
     console.log(state);
     const req = {

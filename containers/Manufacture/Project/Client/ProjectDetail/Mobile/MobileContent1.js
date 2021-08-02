@@ -115,6 +115,7 @@ class MobileContent1 extends React.Component {
                 name: res.data.name,
               });
               this.setState({ partnerDetailList: PartnerDetailList });
+              console.log(PartnerDetailList)
             })
             .catch((e) => {
               console.log(e);

@@ -197,19 +197,49 @@ class Nav extends React.Component {
                     </ul>
                   ) : (
                     /* partner로 로그인 */
-                    <>
-                      <NavLink active={url.indexOf("project") > -1}>
-                        {console.log(url)}
-                        <KSLink url={"producer"} content={"제조사 찾기"} />
+                    <ul>
+                      <NavLink active={url.indexOf("producer") > -1}>
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"producer"} content={"제조사 찾기"} />
+                          </Font16>
+                        </RouterWrapper>
                       </NavLink>
                       <NavLink active={url.indexOf("project") > -1}>
-                        {console.log(url)}
-                        <KSLink url={"project"} content={"프로젝트 찾기"} />
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                          </Font16>
+                        </RouterWrapper>
+
+                        <SubMenu>
+                          <li>
+                            <KSLink
+                              url={"project"}
+                              FontContent={() => {
+                                return <Font14>전체 프로젝트</Font14>;
+                              }}
+                            />
+                          </li>
+                          <li>
+                            <KSLink
+                              url={"project"}
+                              FontContent={() => {
+                                return <Font14>내 프로젝트</Font14>;
+                              }}
+                            />
+                          </li>
+                        </SubMenu>
                       </NavLink>
                       <NavLink active={url.indexOf("magazine") > -1}>
-                        <KSLink url={"magazine"} content={"제조 매거진"} />
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"magazine"} content={"제조 매거진"} />
+                          </Font16>
+                        </RouterWrapper>
+                        {/* 제조 매거진 */}
                       </NavLink>
-                    </>
+                    </ul>
                   )
                 ) : (
                   /* 로그인 안되어있는 경우 */
@@ -279,6 +309,27 @@ class Nav extends React.Component {
                 {/* 로그인한/안한 경우 */}
                 {token ? (
                   <ul>
+                    {/* 파트너 로그인 */}
+                    {this.props.Auth.logged_in_user.type === 1 && (
+                      <NavLink
+                        onClick={() => {
+                          this.props.Auth.setType("detailexpert");
+                        }}
+                        active={
+                          url.indexOf("signup") > -1 &&
+                          Auth.type == "detailexpert"
+                        }
+                      >
+                        <RouterWrapper>
+                          <KSLink
+                            url={"signup"}
+                            FontContent={() => {
+                              return <Font14>파트너 등록하기</Font14>;
+                            }}
+                          />
+                        </RouterWrapper>
+                      </NavLink>
+                    )}
                     <NavLink>
                       <div
                         style={{
@@ -296,7 +347,7 @@ class Nav extends React.Component {
                       </div>
                       <SubMenu
                         style={{
-                          width: "250%",
+                          width: "160px",
                         }}
                       >
                         <li>
@@ -380,7 +431,9 @@ class Nav extends React.Component {
                       )} */}
                     </NavLink>
                     <NavLink>
-                      <RouterWrapper>
+                      <RouterWrapper
+                        style={{ paddingRight: 0, paddingLeft: 13 }}
+                      >
                         <StyledButton onClick={this.logout}>
                           <KSLink
                             url={""}
@@ -493,7 +546,7 @@ const Font14 = styled(Content.FontSize14)`
   text-align: center;
 `;
 const RouterWrapper = styled.div`
-  border: 1px solid black; //지우기
+  /* border: 1px solid black; //지우기 */
   /* padding: 20px 40px; */
   display: flex;
   align-items: center;
@@ -502,7 +555,7 @@ const RouterWrapper = styled.div`
   /* padding-top: 20px;
   padding-bottom: 20px; */
   height: 100%;
-  /* padding-right: 40px; */
+  padding-right: 40px;
   /* padding-left: 40px; */
   /* margin-right: 40px; */
 `;
@@ -588,10 +641,11 @@ const Container = styled.div`
   width: 100%;
 `;
 const Avatar = styled.img`
-  width: 32px;
+  width: 56px;
   height: 32px;
   border-radius: 10px;
   padding: 0px 15px;
+  /* padding-right: 33px; */
   cursor: pointer;
 `;
 const NavBox = styled.div`

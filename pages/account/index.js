@@ -34,9 +34,6 @@ class Account extends React.Component {
     // 중복
     await Auth.checkLogin();
 
-    if (Auth.logged_in_client) {
-      Answer.loadCategories();
-    }
     // page ip 기록
     const formData = new FormData();
 
