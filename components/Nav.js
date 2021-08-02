@@ -144,19 +144,57 @@ class Nav extends React.Component {
                 {this.props.Auth.logged_in_user ? (
                   this.props.Auth.logged_in_user.type === 0 ? (
                     /* client로 로그인 */
-                    <>
+                    <ul>
                       <NavLink active={url.indexOf("producer") > -1}>
-                        <KSLink url={"producer"} content={"제조사 찾기"} />
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"producer"} content={"제조사 찾기"} />
+                          </Font16>
+                        </RouterWrapper>
                       </NavLink>
-
                       <NavLink active={url.indexOf("project") > -1}>
-                        <KSLink url={"project"} content={"프로젝트 의뢰"} />
-                      </NavLink>
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                          </Font16>
+                        </RouterWrapper>
 
-                      <NavLink active={url.indexOf("magazine") > -1}>
-                        <KSLink url={"magazine"} content={"제조 인사이트"} />
+                        <SubMenu>
+                          <li>
+                            <KSLink
+                              url={"project"}
+                              FontContent={() => {
+                                return <Font14>전체 프로젝트</Font14>;
+                              }}
+                            />
+                          </li>
+                          <li>
+                            <KSLink
+                              url={"project"}
+                              FontContent={() => {
+                                return <Font14>내 프로젝트</Font14>;
+                              }}
+                            />
+                          </li>
+                          <li>
+                            <KSLink
+                              url={"project"}
+                              FontContent={() => {
+                                return <Font14>프로젝트 의뢰</Font14>;
+                              }}
+                            />
+                          </li>
+                        </SubMenu>
                       </NavLink>
-                    </>
+                      <NavLink active={url.indexOf("magazine") > -1}>
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"magazine"} content={"제조 매거진"} />
+                          </Font16>
+                        </RouterWrapper>
+                        {/* 제조 매거진 */}
+                      </NavLink>
+                    </ul>
                   ) : (
                     /* partner로 로그인 */
                     <>
@@ -169,7 +207,7 @@ class Nav extends React.Component {
                         <KSLink url={"project"} content={"프로젝트 찾기"} />
                       </NavLink>
                       <NavLink active={url.indexOf("magazine") > -1}>
-                        <KSLink url={"magazine"} content={"제조 인사이트"} />
+                        <KSLink url={"magazine"} content={"제조 매거진"} />
                       </NavLink>
                     </>
                   )
@@ -178,39 +216,61 @@ class Nav extends React.Component {
                   <ul>
                     <NavLink active={url.indexOf("producer") > -1}>
                       <RouterWrapper>
-                        <KSLink url={"producer"} content={"제조사 찾기"} />
+                        <KSLink
+                          url={"producer"}
+                          FontContent={() => {
+                            return <Font16>제조사 찾기</Font16>;
+                          }}
+                        />
                       </RouterWrapper>
                     </NavLink>
                     <NavLink active={url.indexOf("project") > -1}>
                       <RouterWrapper>
-                        <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                        <KSLink
+                          url={"project"}
+                          FontContent={() => {
+                            return <Font16>프로젝트 의뢰</Font16>;
+                          }}
+                        />
                       </RouterWrapper>
 
                       <SubMenu>
-                        <li onClick={() => Router.push("/login")}>
-                          <Font14>전체 프로젝트</Font14>
+                        <li>
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>전체 프로젝트</Font14>;
+                            }}
+                          />
                         </li>
-                        <li onClick={() => Router.push("/login")}>
-                          <Font14>내 프로젝트</Font14>
+                        <li>
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>내 프로젝트</Font14>;
+                            }}
+                          />
                         </li>
-                        <li onClick={() => Router.push("/login")}>
-                          <Font14>프로젝트 의뢰</Font14>
+                        <li>
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>프로젝트 의뢰</Font14>;
+                            }}
+                          />
                         </li>
                       </SubMenu>
                     </NavLink>
                     <NavLink active={url.indexOf("magazine") > -1}>
                       <RouterWrapper>
-                        <KSLink url={"magazine"} content={"제조 인사이트"} />
+                        <KSLink
+                          url={"magazine"}
+                          FontContent={() => {
+                            return <Font16>제조 매거진</Font16>;
+                          }}
+                        />
                       </RouterWrapper>
-
-                      <SubMenu>
-                        <li>test</li>
-                        <li>test</li>
-                        <li>test</li>
-                        <li>test</li>
-                        <li>test</li>
-                      </SubMenu>
-                      {/* 제조 인사이트 */}
+                      {/* 제조 매거진 */}
                     </NavLink>
                   </ul>
                 )}
@@ -218,15 +278,70 @@ class Nav extends React.Component {
               <Menu style={{ marginLeft: "auto" }}>
                 {/* 로그인한/안한 경우 */}
                 {token ? (
-                  <>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <Avatar
-                        src={profile}
-                        onClick={() =>
-                          this.setState({ is_profile: !is_profile })
-                        }
-                      />
-                      {is_profile && (
+                  <ul>
+                    <NavLink>
+                      <div
+                        style={{
+                          height: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Avatar
+                          src={profile}
+                          onClick={() =>
+                            this.setState({ is_profile: !is_profile })
+                          }
+                        />
+                      </div>
+                      <SubMenu
+                        style={{
+                          width: "250%",
+                        }}
+                      >
+                        <li>
+                          <KSLink
+                            url={"project"}
+                            FontContent={() => {
+                              return <Font14>내 프로젝트</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>관심 제조사</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            url={"chatting"}
+                            FontContent={() => {
+                              return <Font14>채팅하기</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>리뷰 관리</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            url={"account"}
+                            FontContent={() => {
+                              return <Font14>계정 설정</Font14>;
+                            }}
+                          />
+                        </li>
+                      </SubMenu>
+
+                      {/* {is_profile && (
                         <ProfileMenu>
                           <div>
                             <div>
@@ -262,14 +377,23 @@ class Nav extends React.Component {
                             </div>
                           </div>
                         </ProfileMenu>
-                      )}
-                    </div>
+                      )} */}
+                    </NavLink>
+                    <NavLink>
+                      <RouterWrapper>
+                        <StyledButton onClick={this.logout}>
+                          <KSLink
+                            url={""}
+                            FontContent={() => {
+                              return <Font14>로그아웃</Font14>;
+                            }}
+                          />
+                        </StyledButton>
+                      </RouterWrapper>
 
-                    <NavLink onClick={this.logout}>
-                      <KSLink url={""} content={"로그아웃"} />
                       {/* 로그아웃 */}
                     </NavLink>
-                  </>
+                  </ul>
                 ) : (
                   <ul>
                     <NavLink
@@ -282,11 +406,18 @@ class Nav extends React.Component {
                       }
                     >
                       <RouterWrapper>
-                        <KSLink url={"signup"} content={"파트너 등록하기"} />
+                        <KSLink
+                          url={"signup"}
+                          FontContent={() => {
+                            return <Font14>파트너 등록하기</Font14>;
+                          }}
+                        />
                       </RouterWrapper>
                     </NavLink>
                     <NavLink>
-                      <RouterWrapper style={{ padding: 0 }}>|</RouterWrapper>
+                      <RouterWrapper style={{ padding: 0 }}>
+                        <Font14>|</Font14>
+                      </RouterWrapper>
                     </NavLink>
                     <NavLink
                       onClick={() => {
@@ -297,18 +428,29 @@ class Nav extends React.Component {
                       }
                     >
                       <RouterWrapper>
-                        <KSLink url={"signup"} content={"회원가입"} />
+                        <KSLink
+                          url={"signup"}
+                          FontContent={() => {
+                            return <Font14>회원가입</Font14>;
+                          }}
+                        />
                       </RouterWrapper>
                     </NavLink>
 
-                    <NavLink
-                      onClick={() => {
-                        Auth.reset();
-                      }}
-                      active={url.indexOf("login") > -1}
-                    >
+                    <NavLink active={url.indexOf("login") > -1}>
                       <RouterWrapper>
-                        <KSLink url={"login"} content={"로그인"} />
+                        <StyledButton
+                          onClick={() => {
+                            Auth.reset();
+                          }}
+                        >
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>로그인</Font14>;
+                            }}
+                          />
+                        </StyledButton>
                       </RouterWrapper>
                     </NavLink>
                   </ul>
@@ -331,6 +473,16 @@ class Nav extends React.Component {
 }
 export default Nav;
 
+const StyledButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
+  border-radius: 19px;
+  border: solid 1px #c6c7cc;
+  height: 36px;
+  width: 78px;
+`;
 const Font14 = styled(Content.FontSize14)`
   font-weight: normal;
   font-stretch: normal;
@@ -341,6 +493,7 @@ const Font14 = styled(Content.FontSize14)`
   text-align: center;
 `;
 const RouterWrapper = styled.div`
+  border: 1px solid black; //지우기
   /* padding: 20px 40px; */
   display: flex;
   align-items: center;
@@ -349,13 +502,16 @@ const RouterWrapper = styled.div`
   /* padding-top: 20px;
   padding-bottom: 20px; */
   height: 100%;
-  padding-right: 40px;
+  /* padding-right: 40px; */
+  /* padding-left: 40px; */
   /* margin-right: 40px; */
 `;
 const SubMenu = styled.ul`
   margin-top: 4px;
   position: absolute;
-  width: 100%;
+  width: 120%;
+  left: 50%;
+  transform: translateX(-50%);
   border-radius: 5px;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
@@ -478,6 +634,7 @@ const Menu = styled.ul`
   flex-flow: column nowrap;
   /* align-items: center; */
   /* margin-left: auto; */
+  margin-left: 40px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: none;
     flex-direction: column;
@@ -499,13 +656,15 @@ const Menu = styled.ul`
   }
 `;
 const NavLink = styled.li`
+  /* display: flex;
+  align-items: center; */
   float: left;
   position: relative;
-
   margin: 0px;
   height: 64px;
   cursor: pointer;
   color: #000000;
+
   /* border: 1px solid yellow;
   background: red !important; */
 
