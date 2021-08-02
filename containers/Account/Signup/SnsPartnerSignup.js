@@ -4,7 +4,8 @@ import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
 import { inject, observer } from "mobx-react";
 import InputComponent from "components/Input";
-
+import { getJSDocThisTag } from "typescript";
+import ButtonSpinnerComponent from "components/ButtonSpinner";
 const signupdot = "/static/images/signupdot.svg";
 const signupsearch = "/static/images/signupsearch.svg";
 const dropdown = "/static/images/dropdown.svg";
@@ -142,9 +143,17 @@ class SnsPartnerSignupContainer extends React.Component {
             })}
           </AgreeContainer>
 
-          <SubmitButton onClick={() => this.signupSubmit()}>
-            <ButtonText>가입하기</ButtonText>
-          </SubmitButton>
+          {Auth.loading ? (
+            <ButtonSpinnerComponent scale="50%" primary />
+          ) : (
+            <SubmitButton
+              onClick={() => {
+                this.signupSubmit();
+              }}
+            >
+              <ButtonText>가입하기</ButtonText>
+            </SubmitButton>
+          )}
         </Container>
       </div>
     );
