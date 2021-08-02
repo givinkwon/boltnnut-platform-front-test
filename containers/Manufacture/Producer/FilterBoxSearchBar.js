@@ -8,7 +8,7 @@ import Background from "components/Background";
 import Container from "components/Containerv1";
 import Router from "next/router";
 import { toJS } from "mobx";
-import AddFile from "./AddFile";
+
 import { PRIMARY2 } from "static/style";
 import Category from "../../../stores/Manufacture/Category";
 
@@ -31,16 +31,11 @@ class SearchBarConatiner extends React.Component {
     suggs: [],
     showSuggs: false,
     searchbaractive: false,
-
   };
 
   // 검색함수
   search = async () => {
     const { Partner, ManufactureProcess, Category } = this.props;
-
-    // 연관검색어 저장
-    Partner.suggest_list = this.state.suggs;
-    console.log(toJS(Partner.suggest_list));
 
     await Router.push("/producer");
     // console.log("click");
@@ -98,207 +93,16 @@ class SearchBarConatiner extends React.Component {
     await this.props.Auth.checkLogin();
   }
 
-  // 구글 연관검색어
-  handleMouseDown(event) {
-    let x = $(document).scrollLeft() + event.clientX; // event.offsetX
-    let y = $(document).scrollTop() + event.clientY; // event.offsetY
 
-    // did not click on the search input or the suggestion list
-    if (
-      this.state.showSuggestions &&
-      !this.checkXYInElement(x, y, ".searcher-suggs") &&
-      !this.checkXYInElement(x, y, ".searcher-input")
-    ) {
-      this.setState({ showSuggestions: false });
-    }
-  }
-
-  checkXYInElement(x, y, className) {
-    let elem = $(className);
-    if (elem.length == 0) {
-      return false;
-    }
-
-    let rect = {
-      x: elem.offset().left,
-      y: elem.offset().top,
-      w: elem.outerWidth(),
-      h: elem.outerHeight(),
-    };
-
-    if (
-      x < rect.x ||
-      y < rect.y ||
-      x > rect.x + rect.w ||
-      y > rect.y + rect.h
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
-  // check the input keywords (without URL encode) with the suggsKeywords
-  // true if the input was the same as the suggsKeywords
-  // otherwise, false
-  checkSuggsKeywords(keywords) {
-    if (
-      this.state.suggsKeywords == encodeURIComponent(keywords.toLowerCase())
-    ) {
-      return true;
-    }
-
-    return false;
-  }
-
-  // check and send request to google for suggestions
-  // the request will not send if the input was the same as the suggsKeywords
-  // or length equals to 0
-  requestSuggestions(keywords) {
-    const { Partner } = this.props;
-
-    // current suggs was request with the input keywords
-    // no need to send again
-    if (this.checkSuggsKeywords(keywords)) {
-      return;
-    }
-
-    // empty keywords just reset the suggsKeywords and suggs
-    if (keywords.length == 0) {
-      this.setState({ suggsKeywords: "", suggs: [] });
-      return;
-    }
-
-    let urlKeywords = encodeURIComponent(keywords.toLowerCase());
-    this.setState({ suggsKeywords: urlKeywords, suggs: [] });
-    let url =
-      "https://suggestqueries.google.com/complete/search?output=chrome&q=" +
-      urlKeywords;
-    // use JSONP (issue: http://security.stackexchange.com/questions/23438/security-risks-with-jsonp/23439#23439)
-    // just for CORS trick
-    $.ajax({
-      url: url,
-      dataType: "jsonp",
-      type: "GET",
-      success: function (data, textStatus, jqXHR) {
-        // data[0] was the keywords to search
-        // data[1] was the array of the google suggestion keywords
-        //console.log(data);
-        if (this.checkSuggsKeywords(data[0])) {
-          this.setState({ suggs: data[1] });
-        }
-      }.bind(this),
-    });
-  }
-
-  // 검색창에 검색을 할 때 text를 observable에 저장하고, 구글 연관검색어 검색
+  // 검색창에 검색을 할 때 text를 observable에 저장
   handleSearcherInputChange(event) {
     const { Partner } = this.props;
     Partner.search_text = event.target.value;
     console.log(event.target.value);
-    this.setState({ showSuggestions: true });
-    this.requestSuggestions(Partner.search_text);
-  }
-
-  // 제안된 키워드를 선택했을 때, 그 키워드를 text에 저장하고 적용
-  handleClickSuggetionsKeywords(event) {
-    const { Partner } = this.props;
-    console.log(event.target.textContent);
-    Partner.search_text = event.target.textContent;
-    this.setState({ showSuggestions: false });
-    this.requestSuggestions(Partner.search_text);
-    // 검색하기
-    this.search();
-  }
-
-  // handel the key down event of the search input
-  handleSearcherInputKeyDown(event) {
-    if (this.state.showSuggestions) {
-      // use keyboard to select the suggesions
-      this.handleSelectSuggestions(event);
-    } else {
-      // just show the suggestions list
-      this.setState({ showSuggestions: true });
-    }
-  }
-
-  // use use keyboards to select the suggestions
-  handleSelectSuggestions(event) {
-    const { Partner } = this.props;
-    // 선택되어 있는 추천 검색어 가지고 오기
-    let li = $(".searcher-suggs-word.selected");
-    // 40 => down, 38 => up >> 내려갈 때 혹은 올라올 때 선택된 키워드 변경
-    if (event.keyCode == 40 || event.keyCode == 38) {
-      event.preventDefault();
-      if (li.length == 0) {
-        $(".searcher-suggs-word:first-child").toggleClass("selected");
-      } else if (event.keyCode == 40) {
-        li.removeClass("selected");
-        li.next().toggleClass("selected");
-      } else {
-        li.removeClass("selected");
-        li.prev().toggleClass("selected");
-      }
-    } else {
-      // 13 => enter
-      if (event.keyCode == 13) {
-        event.preventDefault();
-
-        if (li.length > 0) {
-          // 리스트가 있고, 엔터 시에 클릭된 텍스트로 구글 연관 검색
-          Partner.search_text = li.text();
-          this.setState({ showSuggestions: false });
-          this.requestSuggestions(Partner.search_text);
-        } else {
-          this.setState({ showSuggestions: false });
-        }
-      }
-    }
-  }
-
-  // 마우스 호버에 따라서 클래스 적용을 함으로써 Css 적용 변경
-  handleHoverSearcherSuggestions(event) {
-    $(".searcher-suggs-word.selected").removeClass("selected");
-    $(".searcher-suggs-word:hover").addClass("selected");
-  }
-
-  closeModal = () => {
-    this.setState({
-      ...this.state,
-      modal_open: false,
-    });
-  };
-  // 이미지 버튼 클릭 시 모달 창 띄우기
-  imageModal = () => {
-    const { Partner } = this.props;
-    Partner.image_modal_state = !Partner.image_modal_state;
   }
 
   render() {
     const { Partner, Request } = this.props;
-
-    let suggestions = null;
-    // Partner.searchText가 처음에 null 값이라 에러가 떠서 공백문자를 더해줌
-    // 구글 검색 제안 리스트
-    if (
-      this.state.showSuggestions &&
-      this.checkSuggsKeywords(Partner.search_text + "")
-    ) {
-      suggestions = this.state.suggs.map(
-        function (value, index) {
-          return (
-            <li
-              key={index}
-              className="searcher-suggs-word"
-              onClick={this.handleClickSuggetionsKeywords.bind(this)}
-              onMouseOver={this.handleHoverSearcherSuggestions.bind(this)}
-            >
-              {value}
-            </li>
-          );
-        }.bind(this)
-      );
-    }
 
     return (
       <>
@@ -324,21 +128,9 @@ class SearchBarConatiner extends React.Component {
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-              <img src="/static/icon/Camera.svg" onClick={this.imageModal} />
-              {/* 이미지 검색 테스트용 */}
-              {Partner.image_modal_state &&
-                <span style={{ display: "inline-block" }}>
-                <AddFile
-                  file={true}
-                  isOpen={true}
-                  ///onChange={this.handleChange}
-                />
-                <div></div>
-              </span>
-              }
               <img src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
-            
+
             {this.state.showSuggestions && this.state.suggs.length > 0 && (
               <CustomUl>
                 <CustomLiBox>{suggestions}</CustomLiBox>
@@ -354,17 +146,18 @@ class SearchBarConatiner extends React.Component {
 export default SearchBarConatiner;
 
 const CustomUl = styled.ul`
-  width: 100%;
+  width: 588px;
   height: 150px;
+  margin-left: 30px;
   font-size: 18px;
-  margin-right: 1px;
+  }
 `;
 
 const CustomLiBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 120px;
+  width: 588px;
+  height: 160px;
   overflow: scroll;
   background-color: #ffffff;
 
@@ -393,9 +186,9 @@ const SearchBar = styled.div`
   box-sizing: border-box;
   border-radius: 60px;
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
-  border: solid 1px #e1e2e4;
+  border: solid 0.5px #c6c7cc;
   width: 100%;
-  padding-right: 25px;
+  padding-right: 17px;
 
   input {
     width: 700px;
@@ -405,12 +198,10 @@ const SearchBar = styled.div`
     padding: 0 14px;
     margin-left: 10px;
     font-size: 18px;
-    margin-top: 2px;
     :focus {
       outline: none;
     }
     ::placeholder {
-      margin-top: 2px;
       color: #c6c7cc;
       font-size: 18px;
     }
@@ -462,13 +253,6 @@ const SearchBar = styled.div`
   }
   @media (min-width: 1300px) {
     width: 792px;
-  }
-
-  // 구글 검색 관련
-  .searcher-suggs {
-    // position: absolute;
-    // background-color: red;
-    // width: 588px;
   }
 
   .searcher-suggs-word {

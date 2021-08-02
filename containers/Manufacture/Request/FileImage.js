@@ -22,7 +22,7 @@ const Container = styled.div`
   border: 1px solid #c6c7cc;
   background-color: #ffffff;
   position: relative;
-  margin: 26px 16px 20px 16px;
+  margin: 10px 16px;
 
   > span {
     position: absolute;

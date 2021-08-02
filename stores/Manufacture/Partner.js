@@ -12,8 +12,9 @@ class Partner {
   constructor() {
     //makeObservable(this);
   }
-
+  // 상세 주소
   @observable detailRegion = "";
+  // 비즈니스 관련 카테고리를 가지고 있는 지
   @observable hashBusinessCategory = [];
   /* Page 관련 변수 */
   @observable pageType = "";
@@ -430,37 +431,6 @@ class Partner {
         : this.getPartner(this.currentPage, this.click_count);
     }
   };
-
-  // @action pushToDetail = async (item, idx) => {
-  //   console.log(this.modalActive);
-
-  //   if (!this.requestModalActive && !this.modalActive) {
-  //     console.log("Detail click");
-  //     this.category_name_list = null;
-  //     this.partner_detail_list = [];
-  //     this.partner_detail_list.push({ item: item });
-  //     this.category_name_list = this.category_dic[idx];
-
-  //     if (this.dropDownIdx === -1) {
-  //       await this.getCityName(this.partner_detail_list[0].item.city);
-  //       this.portFolioList = [];
-  //       await this.getPortfolio(this.partner_detail_list[0].item.id);
-  //       this.dropDownActive = true;
-  //       this.dropDownIdx = idx;
-  //     } else {
-  //       if (this.dropDownIdx === idx) {
-  //         this.dropDownActive = false;
-  //         this.dropDownIdx = -1;
-  //       } else {
-  //         await this.getCityName(this.partner_detail_list[0].item.city);
-  //         this.portFolioList = [];
-  //         await this.getPortfolio(this.partner_detail_list[0].item.id);
-  //         this.dropDownActive = true;
-  //         this.dropDownIdx = idx;
-  //       }
-  //     }
-  //   }
-  // };
 
   @action pushToDetail = async (item, idx) => {
     this.detailLoadingFlag = true;
