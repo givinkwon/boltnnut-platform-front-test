@@ -141,147 +141,136 @@ class InputComponent extends React.Component {
     }
 
     return (
-      <Wrap width={this.props.width}>
+      <Wrap width={this.props.width} style={{ marginTop: 16 }}>
         <FileText mobile={mobile} checkFileUpload={this.state.checkFileUpload}>
-          <InputBox mobile={mobile}>
-            <input
-              type="file"
-              multiple={"multiple"}
-              fileName={"fileName[]"}
-              style={{ display: "none" }}
-              onChange={
-                isOpen ? this.openOnChangeFile : this.privateOnChangeFile
-              }
-              id="inputFile"
-              ref={this.file}
-              value=""
-              placeholder={"파일을 선택해 주세요."}
-            />
+          <InputBox
+            mobile={mobile}
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "inline-flex",
+              borderColor: "#ffffff",
+            }}
+          >
             <div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "#ffffff",
-                }}
-                onClick={() => {
-                  console.log(this.file);
-                  this.file.current.click();
-                }}
-              >
-                <img
-                  src={addButtonImg}
-                  style={{
-                    verticalAlign: "baseline",
-                    width: 30,
-                    height: 30,
-                    paddingTop: 2,
+              <div>
+                <div
+                  onClick={() => {
+                    console.log(this.file);
+                    this.file.current.click();
                   }}
-                />
-                <span
                   style={{
-                    fontSize: 16,
-                    color: "#0933b3",
-                    lineHeight: 2.13,
-                    letterSpacing: -0.4,
-                    marginLeft: 20,
-                    fontFamily: "NotoSansCJKkr",
+                    display: "flex",
+                    alignItems: "center",
+                    width: "100%",
+                    justifyContent: "center",
+                    height: 42,
                   }}
                 >
-                  파일첨부
-                </span>
+                  <img src={addButtonImg} style={{ width: 30, height: 30 }} />
+                  <span
+                    style={{
+                      fontSize: 16,
+                      lineHeight: 2.13,
+                      color: "#0933b3",
+                      letterSpacing: -0.4,
+                      marginLeft: 20,
+                    }}
+                  >
+                    파일첨부
+                  </span>
+                </div>
+                {isOpen ? (
+                  <>
+                    {ManufactureProcess.openFileArray.map((item, idx) => {
+                      return (
+                        <>
+                          <span
+                            onClick={() => {
+                              if (checkFileUpload) {
+                                ManufactureProcess.openFileArray.splice(idx, 1);
+                                const inputFile =
+                                  document.getElementById("inputFile");
+                                console.log(
+                                  toJS(ManufactureProcess.openFileArray)
+                                );
+                                inputFile.innerHTML = "";
+
+                                if (
+                                  ManufactureProcess.openFileArray.length === 0
+                                ) {
+                                  this.setState({ checkFileUpload: false });
+                                }
+                              }
+                            }}
+                          >
+                            <span>
+                              <span>
+                                {!item.name
+                                  ? decodeURI(item.file.split("/").pop())
+                                  : item.name}
+                              </span>
+                              <DeleteFile
+                                src={deleteButtonImg}
+                                style={{
+                                  display: this.state.checkFileUpload
+                                    ? "inline"
+                                    : "none",
+                                }}
+                              />
+                            </span>
+                          </span>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    {ManufactureProcess.privateFileArray.map((item, idx) => {
+                      return (
+                        <>
+                          <span
+                            onClick={() => {
+                              if (checkFileUpload) {
+                                ManufactureProcess.privateFileArray.splice(
+                                  idx,
+                                  1
+                                );
+                                const inputFile =
+                                  document.getElementById("inputFile");
+                                inputFile.innerHTML = "";
+
+                                if (
+                                  ManufactureProcess.privateFileArray.length ===
+                                  0
+                                ) {
+                                  this.setState({ checkFileUpload: false });
+                                }
+                              }
+                            }}
+                          >
+                            <span>
+                              <span>
+                                {!item.name
+                                  ? decodeURI(item.file.split("/").pop())
+                                  : item.name}
+                              </span>
+                              <DeleteFile
+                                src={deleteButtonImg}
+                                style={{
+                                  display: this.state.checkFileUpload
+                                    ? "inline"
+                                    : "none",
+                                }}
+                              />
+                            </span>
+                          </span>
+                        </>
+                      );
+                    })}
+                  </>
+                )}
               </div>
-              {isOpen ? (
-                <>
-                  {ManufactureProcess.openFileArray.map((item, idx) => {
-                    return (
-                      <>
-                        <span
-                          onClick={() => {
-                            if (checkFileUpload) {
-                              ManufactureProcess.openFileArray.splice(idx, 1);
-                              const inputFile =
-                                document.getElementById("inputFile");
-                              console.log(
-                                toJS(ManufactureProcess.openFileArray)
-                              );
-                              inputFile.innerHTML = "";
-
-                              if (
-                                ManufactureProcess.openFileArray.length === 0
-                              ) {
-                                this.setState({ checkFileUpload: false });
-                              }
-                            }
-                          }}
-                        >
-                          <span>
-                            <span>
-                              {!item.name
-                                ? decodeURI(item.file.split("/").pop())
-                                : item.name}
-                            </span>
-                            <DeleteFile
-                              src={deleteButtonImg}
-                              style={{
-                                display: this.state.checkFileUpload
-                                  ? "inline"
-                                  : "none",
-                              }}
-                            />
-                          </span>
-                        </span>
-                      </>
-                    );
-                  })}
-                </>
-              ) : (
-                <>
-                  {ManufactureProcess.privateFileArray.map((item, idx) => {
-                    return (
-                      <>
-                        <span
-                          onClick={() => {
-                            if (checkFileUpload) {
-                              ManufactureProcess.privateFileArray.splice(
-                                idx,
-                                1
-                              );
-                              const inputFile =
-                                document.getElementById("inputFile");
-                              inputFile.innerHTML = "";
-
-                              if (
-                                ManufactureProcess.privateFileArray.length === 0
-                              ) {
-                                this.setState({ checkFileUpload: false });
-                              }
-                            }
-                          }}
-                        >
-                          <span>
-                            <span>
-                              {!item.name
-                                ? decodeURI(item.file.split("/").pop())
-                                : item.name}
-                            </span>
-                            <DeleteFile
-                              src={deleteButtonImg}
-                              style={{
-                                display: this.state.checkFileUpload
-                                  ? "inline"
-                                  : "none",
-                              }}
-                            />
-                          </span>
-                        </span>
-                      </>
-                    );
-                  })}
-                </>
-              )}
             </div>
           </InputBox>
         </FileText>
@@ -293,17 +282,15 @@ class InputComponent extends React.Component {
 export default InputComponent;
 
 const InputBox = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 96%;
-  height: 45px;
+  height: 100%;
   width: 100%;
-  align-items: center;  
-  border: solid 1px #ffffff;
+  display: flex;
+  align-items: center;
+  border: solid 0.5px #c7c7c7;
   color: #404040;
-  background-color: #ffffff;
   border-radius: 3px;
   box-sizing: border-box;
+  background-color: #ffffff;
 
   >div{
     width: 100%;
@@ -313,8 +300,10 @@ const InputBox = styled.div`
     }
       
     >div:nth-of-type(2){      
+      width: 100%;   
       word-wrap: break-word;
       word-break:break-all;
+      
       >span{      
         >span{          
           >span{
@@ -332,21 +321,6 @@ const InputBox = styled.div`
   }
 }
 
-   @media (min-width: 0px) and (max-width: 767.98px) { 
-  //   height: 100%;
-  //   height: 34px;
-  //   object-fit: contain;
-  //   border-radius: 3px;
-  //   background-color: #ffffff;
-  //   > img {
-  //     position: relative;
-  //     padding-top: 8px;
-  //     padding-bottom: 8px;
-  //     padding-right: 20px;
-  //     padding-left: 0;
-  //     width: 20px;
-  //     height: 18px;
-  //   }
   >div{
     div:nth-of-type(2){
       width: auto;
@@ -372,9 +346,6 @@ const Input = styled.div`
   margin-top: ${(props) => props.marginTop}px;
   color: #404040;
   font-weight: 400;
-  padding-left: 2.3%;
-  :focus {
-    outline: none;
   }
   > input {
     width: 100%;
@@ -425,22 +396,22 @@ const Input = styled.div`
   }
 `;
 const FileText = styled(Content.FontSize18)`
-  width: 100%;
+  width: 100%
   font-stretch: normal;
   font-style: normal;
   line-height: 40px;
   letter-spacing: -0.18px;
   text-align: left;
   color: #c6c7cc;
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
   align-items: center;
-  padding: 27px 20px;
+  padding: 27px 20px 26px;
   flex-wrap: wrap;
   background-color: #f6f6f6;
-  border: solid 0.5px #c7c7c7;
   box-sizing: border-box;
-  height: ${(props) => (props.mobile ? "100%" : "")}
+  border-radius: 3px;
+  border: solid 0.5px #c7c7c7;
+  height: 100%;
   > span:nth-of-type(1) {
     > span {
       > img {

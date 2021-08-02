@@ -9,7 +9,7 @@ import Container from "components/Containerv1";
 import * as Title from "components/Title";
 import Router from "next/router";
 import { toJS } from "mobx";
-import AddFile from "./AddFile";
+
 import { PRIMARY2 } from "static/style";
 import Category from "../../../stores/Manufacture/Category";
 
@@ -30,10 +30,6 @@ class SearchBarConatiner extends React.Component {
   // 검색함수
   search = async () => {
     const { Partner, ManufactureProcess, Category } = this.props;
-
-    // 연관검색어 저장
-    Partner.suggest_list = this.state.suggs;
-    console.log(toJS(Partner.suggest_list));
 
     await Router.push("/producer");
     // console.log("click");
@@ -382,17 +378,18 @@ const ImgBox = styled.img`
 `;
 
 const CustomUl = styled.ul`
-  width: 100%;
+  width: 588px;
   height: 150px;
+  margin-left: 30px;
   font-size: 18px;
-  margin-right: 1px;
+  }
 `;
 
 const CustomLiBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 120px;
+  width: 588px;
+  height: 160px;
   overflow: scroll;
   background-color: #ffffff;
 
@@ -421,9 +418,9 @@ const SearchBar = styled.div`
   box-sizing: border-box;
   border-radius: 60px;
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
-  border: solid 1px #e1e2e4;
+  border: solid 0.5px #c6c7cc;
   width: 100%;
-  padding-right: 25px;
+  padding-right: 17px;
 
   input {
     width: 640px;
@@ -433,12 +430,10 @@ const SearchBar = styled.div`
     padding: 0 14px;
     margin-left: 10px;
     font-size: 18px;
-    margin-top: 2px;
     :focus {
       outline: none;
     }
     ::placeholder {
-      margin-top: 2px;
       color: #c6c7cc;
       font-size: 18px;
     }
@@ -490,13 +485,6 @@ const SearchBar = styled.div`
   }
   @media (min-width: 1300px) {
     width: 792px;
-  }
-
-  // 구글 검색 관련
-  .searcher-suggs {
-    // position: absolute;
-    // background-color: red;
-    // width: 588px;
   }
 
   .searcher-suggs-word {

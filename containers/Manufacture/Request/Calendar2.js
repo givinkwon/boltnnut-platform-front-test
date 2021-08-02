@@ -217,15 +217,17 @@ class Calendar extends Component {
               width: "100%",
             }}
           >
-            <img src={calendar} onClick={this.calendarOnOff} />
+            <div>
+              <img src={calendar} onClick={this.calendarOnOff} />
+            </div>
             <span
               style={{
-                color: "#1e2222",
+                color: "##1e2222",
                 fontWeight: "normal",
               }}
             >
               {Schedule.clickDay !== 0 ? (
-                <> {Schedule.clickDay}</>
+                <>{Schedule.clickDay}</>
               ) : (
                 <>
                   <span
@@ -421,8 +423,17 @@ const FoldedComponent = styled.div`
   font-size: 18px;
   font-weight: 500;
   letter-spacing: -0.45px;
-  border: solid 1px #c6c7cc;
   border-radius: 3px;
-  height: ${(props) => (props.mobile ? "34px" : "42px")};
+  border: solid 1px #c6c7cc;
   margin-top: 16px;
+  margin-bottom: 11px;
+  height: ${(props) => (props.mobile ? "34px" : "50px")};
+  > div {
+    > div {
+      > img {
+        width: ${(props) => (props.mobile ? "21px" : "")};
+        height: ${(props) => (props.mobile ? "20px" : "")};
+      }
+    }
+  }
 `;

@@ -1,5 +1,5 @@
 import { observable, action } from "mobx";
-import Proposal from "./Proposal";
+
 import { toJS } from "mobx";
 
 import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
@@ -72,6 +72,20 @@ class ManufactureProcess {
   @observable nonDrawingProjectSubmitLoading = true;
 
   @observable loadingSaveSearchText = true;
+
+  @action purposeHandler = (item) => {
+    console.log(this.purposeContent);
+    if (item.checked) {
+      item.checked = false;
+      this.purposeContent = 0;
+    } else {
+      item.checked = true;
+      if (this.purposeContent) {
+        this.state.purposeAry[this.purposeContent - 1].checked = false;
+      }
+      this.purposeContent = item.id;
+    }
+  };
 
   @action countQuantity = (data) => {
     data.map((item, idx) => {

@@ -11,7 +11,7 @@ import Spinner from "components/Spinner";
 import InfoConatiner from "containers/Manufacture/Chatting/Info2/index";
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
-@inject("Post", "Loading") // *_app.js <Provider>에 넘겨준 store명과 일치해야함. *inject: 컴포넌트에서 store에 접근 가능하게 함. 해당 store에 있는 값을 컴포넌트의 props로 주입시켜줌.
+@inject("Loading") // *_app.js <Provider>에 넘겨준 store명과 일치해야함. *inject: 컴포넌트에서 store에 접근 가능하게 함. 해당 store에 있는 값을 컴포넌트의 props로 주입시켜줌.
 @observer
 class Info extends React.Component {
   state = {
@@ -21,7 +21,6 @@ class Info extends React.Component {
     return { query };
   }
   componentDidMount() {
-    this.props.Post.getData();
     //창 크기
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });

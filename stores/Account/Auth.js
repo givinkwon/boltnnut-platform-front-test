@@ -9,9 +9,9 @@ class Auth {
     //makeObservable(this);
   }
   @observable bgColor = "#ffffff";
-  @observable logged_in_user = null;
-  @observable logged_in_client = null;
-  @observable logged_in_partner = null;
+  @observable logged_in_user = null; // user 로그인 데이터
+  @observable logged_in_client = null; // client면 로그인 했을 때 데이터
+  @observable logged_in_partner = null; // partner면 로그인 했을 때 데이터
 
   @observable always_login = false;
 
@@ -66,10 +66,7 @@ class Auth {
   @observable checkboxState = [false, false, false, false];
   @observable allCheckState = false;
 
-  @action kakaoSignup = () => {
-    alert("AAAA");
-    // Router.push("/kakao");
-  };
+
   @action reset = () => {
     this.email = "";
     this.password = "";
@@ -475,7 +472,7 @@ class Auth {
         setTimeout(() => {
           this.loading = false;
 
-          if (this.previous_url == "") {
+          if (this.previous_url == "" || this.previous_url == null) {
             Router.push("/");
           } else {
             // this.makeUrl(this.previous_url);
@@ -664,7 +661,7 @@ class Auth {
 
       formData.append("username", this.email);
       // formData.append("password", this.password);
-      // formData.append("phone", this.phone);
+      formData.append("phone", this.phone);
       formData.append("type", 1);
       formData.append("marketing", this.marketing);
       formData.append("name", this.company_name);
@@ -702,6 +699,7 @@ class Auth {
   };
 
   @action signup = async () => {
+    console.log(this.type);
     if (!this.email) {
       await alert("이메일을 입력해주세요.");
       return;
@@ -724,38 +722,32 @@ class Auth {
       return;
     }
 
+    if (!this.realName) {
+      await alert("이름을 입력해주세요.");
+      return;
+    }
+
     console.log("email : ", this.email);
     console.log("password : ", this.password);
     console.log("password2 : ", this.password2);
-    console.log("company : ", this.name);
+    console.log("company : ", this.company_name);
     console.log("job title : ", this.title);
-    console.log("path : ", this.path);
-    console.log("business : ", this.business);
-    console.log("business2 : ", this.business2);
     console.log("phone : ", this.phone);
     console.log("marketing : ", this.marketing);
     if (this.type === "client") {
-      if (!this.name) {
-        await alert("상호명을 입력해주세요.");
+      if (!this.company_name) {
+        await alert("회사명을 입력해주세요.");
         return;
       }
       if (!this.title) {
         await alert("직위를 입력해주세요");
         return;
       }
-      if (!this.path) {
-        await alert("방문경로를 입력해주세요");
-        return;
-      }
-      if (!this.business) {
-        await alert("업종을 입력해주세요");
-        return;
-      }
 
-      if (this.business.business == "기타") {
-        //console.log(this.business.business)
-        this.business.business = this.business2;
-      }
+      // if (this.business.business == "기타") {
+      //   //console.log(this.business.business)
+      //   this.business.business = this.business2;
+      // }
 
       this.loading = true;
       const req = {
@@ -763,10 +755,11 @@ class Auth {
           username: this.email,
           password: this.password,
           phone: this.phone,
-          name: this.name,
+          name: this.company_name,
+          realName: this.realName,
           title: this.title,
-          path: this.path.path,
-          business: this.business.business,
+          // path: this.path.path,
+          // business: this.business.business,
           type: 0,
           marketing: this.marketing,
         },
@@ -795,76 +788,6 @@ class Auth {
         await alert("상호명을 입력해주세요.");
         return;
       }
-      {
-        /*if (!this.employee) {
-        await alert("종업원 수를 입력해주세요.");
-        return;
-      }
-      if (!this.career) {
-        await alert("설립연도를 입력해주세요.");
-        return;
-      }
-      if (!this.revenue) {
-        await alert("매출액을 입력해주세요.");
-        return;
-      }*/
-      }
-      if (!this.city) {
-        await alert("시/도를 입력해주세요.");
-        return;
-      }
-      {
-        /*if (!this.region) {
-        await alert("지역을 입력해주세요.");
-        return;
-      }
-
-      if (!this.info_biz) {
-        await alert("주요사업을 입력해주세요.");
-        return;
-      }*/
-      }
-      if (!this.deal) {
-        await alert("주요거래처를 입력해주세요.");
-        return;
-      }
-      if (!this.info_company) {
-        await alert("회사소개를 입력해주세요.");
-        return;
-      }
-      if (this.info_company.length < 100) {
-        await alert("회사소개를 100자 이상 입력해주세요");
-        return;
-      }
-
-      {
-        /*if (toJS(this.possible_set).length === 0) {
-        await alert("가능한 제품을 입력해주세요.");
-        return;
-      }*/
-      }
-      if (!this.histories) {
-        await alert("진행한 제품들을 10개 이상 입력해 주세요.");
-        return;
-      }
-
-      if (this.category_middle_set.length === 0) {
-        await alert("개발분야를 선택 해주세요.");
-        return;
-      }
-
-      if (!this.file) {
-        await alert("회사소개서를 입력해주세요.");
-        return;
-      }
-      //  if (!this.logo) {
-      //    await alert("로고를 입력해주세요.");
-      //    return;
-      //  }
-      if (!this.resume) {
-        await alert("이력서를 첨부해 주세요.");
-        return;
-      } // 0923
 
       if (this.marketing == true) {
         this.marketing = 1;
@@ -873,44 +796,13 @@ class Auth {
       }
       var formData = new FormData();
 
-      {
-        /*var possible_set = [];
-      for (var i of this.possible_set) {
-        await possible_set.push(i.id);
-      }
-      */
-      }
-      var history_set = [];
-      for (var i of this.history_set) {
-        await history_set.push(i.id);
-      }
-
       formData.append("username", this.email);
       formData.append("password", this.password);
       formData.append("phone", this.phone);
       formData.append("type", 1);
       formData.append("marketing", this.marketing);
-
       formData.append("name", this.company_name);
-      //   formData.append("employee", this.employee);
-      //  formData.append("career", this.career);
-      //  formData.append("revenue", this.revenue);
-      formData.append("city", this.city.id);
-      //  formData.append("region", this.region.id);
-
-      formData.append("info_biz", this.info_biz);
-      formData.append("deal", this.deal);
-      formData.append("info_company", this.info_company);
-      {
-        /*formData.append("possible_set", possible_set);*/
-      }
-      formData.append("history", this.histories);
-
-      formData.append("category_middle", this.category_middle_set);
-      formData.append("logo", this.logo);
-      formData.append("file", this.file);
-      formData.append("resume", this.resume);
-
+      formData.append("realName", this.realName);
       this.loading = true;
       const req = {
         data: formData,

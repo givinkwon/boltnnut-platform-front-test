@@ -5,31 +5,139 @@ import * as Title from "components/Title";
 
 import SelectComponent from "components/Select";
 
+import CheckBoxComponent from "components/CheckBox";
+import Buttonv1 from "components/Buttonv1";
+
 import InputComponent from "AddFile2";
-
 import Calendar from "./Calendar2";
+import FileImage from "FileImage.js";
 
+import AddFile from "./AddFile";
+import AddDrawingFile from "./AddDrawing";
 const pass3 = "static/images/pass3.png";
 const reqeustlogo = "./static/images/request/request_logo.svg";
 const starred = "./static/images/request/star_red.svg";
 const down_arrow = "./static/images/request/down_arrow.svg";
 const help_face = "./static/images/request/help_face.svg";
 const checkbox = "./static/images/request/checkbox.svg";
+const circlecheck = "./static/images/request/circlecheck.svg";
+const circlecheckblue = "./static/images/request/circlecheck_blue.svg";
+const helpimg = "./static/images/request/help_img.svg";
+const fileupload = "./static/images/request/fileupload.svg";
 
-@inject("Request", "Auth", "Schedule")
+const customStyles = {
+  dropdownIndicator: () => ({
+    color: "#555555",
+    width: 14,
+    height: 42,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? "#000000" : "#555555",
+    backgroundColor: "#fff",
+    borderRadius: 0,
+    padding: 16,
+    fontSize: 16,
+  }),
+  control: () => ({
+    border: "1px solid #c7c7c7",
+    backgroundColor: "#fff",
+    display: "flex",
+    borderRadius: 3,
+    width: 204,
+    height: 42,
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+    return { ...provided, opacity, transition };
+  },
+};
+
+@inject("Request", "Auth", "Schedule", "ManufactureProcess")
 @observer
 class PartnerDirectRequest extends Component {
+  state = {
+    purposeAry: [
+      { id: 1, name: "기획에 대한 상담을 받고 싶어요.", checked: false },
+      { id: 2, name: "견적을 받고 싶어요.", checked: false },
+      { id: 3, name: "전문 업체를 찾고 싶어요.", checked: false },
+    ],
+    priceAry: [
+      { id: 1, name: "100만원 이하" },
+      { id: 2, name: "100만원 - 300만원" },
+      { id: 3, name: "300만원 - 500만원" },
+      { id: 4, name: "500만원 - 1000만원" },
+      { id: 5, name: "1000만원 - 2000만원" },
+      { id: 6, name: "2000만원 - 3000만원" },
+      { id: 7, name: "3000만원 - 5000만원" },
+      { id: 8, name: "5000만원 - 1억원" },
+      { id: 9, name: "1억원이상" },
+    ],
+    securityCheck1: false,
+    securityCheck2: false,
+    period_state: false,
+  };
+
+  async componentDidMount() {
+    const { purposeAry } = this.state;
+    console.log(purposeAry);
+  }
+
+  activeHandler = (flag) => {
+    const { Request } = this.props;
+    if (flag == "check1") {
+      if (this.state.securityCheck1) {
+        this.setState({ securityCheck1: false });
+      } else {
+        this.setState({ securityCheck1: true, securityCheck2: false });
+        // 공개하기
+        Request.set_file_secure(1);
+      }
+    }
+    if (flag == "check2") {
+      if (this.state.securityCheck2) {
+        this.setState({ securityCheck2: false });
+      } else {
+        this.setState({ securityCheck2: true, securityCheck1: false });
+        // 비공개하기
+        Request.set_file_secure(2);
+      }
+    }
+  };
+
+  toggleCheckBox = () => {
+    const { Request } = this.props;
+    this.setState({
+      ...this.state,
+      period_state: !this.state.period_state,
+    });
+    // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
+    Request.set_period_state(!this.state.period_state);
+  };
+
   render() {
+    const { ManufactureProcess } = this.props;
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
     다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
     1. 가공품 목적 및 사용 환경
     2. 가공 부품별 특이 사항
     3. 공급처가 충족해야하는 발주 조건
     `;
+    const projectContent = `
+    1. 프로젝트의 소개 및 제작 목적:   
+    2. 프로젝트의 진행 상황 및 계획 수립 :   
+    3. 프로젝트 기능 및 특이 사항 - 필수로 들어가야 할 기능들  :  
+    4. 참고자료 / 레퍼런스 예시) ‘볼트앤너트 네이버 블로그’ 참고 등 :  
+    5. 제조사(파트너)에게의 요청사항 
+    - 프로젝트 진행 시 파트너가 알아야 할 발주 조건 : `;
 
-  const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
-  const {Request} = this.props;
-  
+    const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
+    const { Request, Auth } = this.props;
+
     return (
       <>
         <Container>
@@ -46,46 +154,56 @@ class PartnerDirectRequest extends Component {
                 <ContentTitle>
                   <span>문의 목적</span>
                   <img src={starred} style={{ marginLeft: 4 }}></img>
-                  <span
-                    style={{
-                      fontSize: 14,
-                      fontWeight: "normal",
-                      color: "#86888c",
-                      marginLeft: 12,
-                    }}
-                  >
-                    (중복 선택 가능)
-                  </span>
                 </ContentTitle>
-                <PurposeBtn>
-                  <RequestButton onClick={Request.set_state(0)} style={{ border: "none", color: "#414550" }}>
-                    <span>상담 요청</span>
-                  </RequestButton>
-                  <RequestButton onClick={Request.set_state(1)}>
-                    <span>견적 요청</span>
-                  </RequestButton>
-                  <RequestButton onClick={Request.set_state(2)}>
-                    <span>업체 수배</span>
-                  </RequestButton>
-                </PurposeBtn>
+                <SelectBox>
+                  <InlineDiv>
+                    {this.state.purposeAry.map((item, idx) => {
+                      return (
+                        <PurposeSelectCircle
+                          active={item.checked}
+                          onClick={() => {
+                            console.log(item.checked);
+                            Request.set_state(idx);
+                            if (!item.checked) {
+                              item.checked = true;
+                            } else {
+                              item.checked = false;
+                            }
+                            this.setState({ f: 3 });
+                          }}
+                        >
+                          <PurposeFont18 active={item.checked}>
+                            {item.name}
+                          </PurposeFont18>
+                        </PurposeSelectCircle>
+                      );
+                    })}
+                  </InlineDiv>
+                </SelectBox>
               </RequestContentBox>
               <RequestContentBox>
                 <ContentTitle>
                   <div>프로젝트 제목</div>
                   <img src={starred} style={{ marginLeft: 4 }}></img>
                 </ContentTitle>
-                <input
+                <InputComponent
+                  class="Input"
+                  placeholder="   진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onChange={(e) => {
+                    Request.set_name(e);
+                  }}
                   style={{
                     width: "100%",
                     height: 42,
-                    border: "solid 1px #c6c7cc",
                     borderRadius: 3,
                   }}
-                ></input>
+                />
               </RequestContentBox>
               <RequestContentBox>
                 <ContentTitle>
                   <div>희망 예산</div>
+                  <img src={starred} style={{ marginLeft: 4 }}></img>
                 </ContentTitle>
                 <Budget>
                   <div
@@ -93,43 +211,53 @@ class PartnerDirectRequest extends Component {
                       display: "flex",
                       justifyContent: "flex-start",
                       color: "#414550",
+                      marginBottom: 11,
                     }}
                   >
-                    <BudgetBox>
-                      <span>0</span>
-                      <img src={down_arrow}></img>
-                    </BudgetBox>
+                    <SelectComponent
+                      styles={customStyles}
+                      options={this.state.priceAry}
+                      value={Request.request_price}
+                      getOptionLabel={(option) => option.name}
+                      placeholder="선택해주세요"
+                      onChange={Request.set_price}
+                    />
+
                     <span
                       style={{
                         display: "flex",
                         alignItems: "center",
                         fontSize: 16,
-                      }}
-                    >
-                      ~
-                    </span>
-                    <BudgetBox style={{ marginLeft: 16 }}>
-                      <span>0</span>
-                      <img src={down_arrow}></img>
-                    </BudgetBox>
-                    <span
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontSize: 16,
+                        marginLeft: 12,
                       }}
                     >
                       원
                     </span>
                   </div>
-                  <BudgetCheckbox>
-                    <img src={checkbox}></img>
-                    <span style={{ marginLeft: 8 }}>
+                  <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <span
+                      style={{
+                        color: "#1e2222",
+                        fontSize: 15,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
                       프로젝트 예산 조율이 가능합니다.
                     </span>
-                  </BudgetCheckbox>
+                  </CheckBoxComponent>
                   <BudgetHelp>
-                    <span>예산 측정이 어려우신가요?</span>
+                    <img src={helpimg}></img>
+                    <span
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginLeft: 4,
+                        cursor: "pointer",
+                      }}
+                    >
+                      예산 측정이 어려우신가요?
+                    </span>
                   </BudgetHelp>
                 </Budget>
               </RequestContentBox>
@@ -141,30 +269,43 @@ class PartnerDirectRequest extends Component {
                   style={{
                     fontSize: 16,
                     color: "#505050",
+                    lineHeight: 2.13,
+                    letterSpacing: -0.4,
                   }}
                 >
                   프로젝트 제품분야에 해당하는 항목들을 선택해주세요.
                 </span>
-                {/* <div
-                  style={{
-                    width: "100%",
-                    height: 42,
-                    marginTop: 16,
-                    border: "solid 1px #c6c7cc",
-                  }}
-                ></div> */}
+
                 <Calendar />
-                <DateCheckbox>
-                  <img src={checkbox}></img>
-                  <span style={{ marginLeft: 8 }}>
+                <CheckBoxComponent onChange={this.toggleCheckBox}>
+                  <span
+                    style={{
+                      color: "#1e2222",
+                      fontSize: 15,
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
                     납기일 협의가 가능합니다.
                   </span>
-                </DateCheckbox>
+                </CheckBoxComponent>
               </RequestContentBox>
               <RequestContentBox>
                 <ContentTitle style={{ marginBottom: 8 }}>
                   <span>프로젝트 내용</span>
-                  <img src={starred}></img>
+                  <img src={starred} style={{ marginLeft: 5 }}></img>
+                  <span
+                    style={{
+                      marginLeft: 12,
+                      fontSize: 14,
+                      lineHeight: 2.43,
+                      letterSpacing: -0.35,
+                      color: "#e53c38",
+                      fontWeight: "normal",
+                    }}
+                  >
+                    (공개)
+                  </span>
                 </ContentTitle>
                 <span
                   style={{
@@ -179,56 +320,124 @@ class PartnerDirectRequest extends Component {
                 <Help>
                   <img src={help_face}></img>
                 </Help>
-                <input
+                <InputComponent
+                  class="Input"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  value={projectContent}
+                  onChange={(e) => {
+                    Request.set_contents(e);
+                  }}
                   style={{
                     width: "100%",
                     height: "433px",
-                    border: "solid 1px #c6c7cc",
+                    borderRadius: 3,
                   }}
-                ></input>
+                />
               </RequestContentBox>
             </Requestontent>
             <RequestContentBox>
-              <ContentTitle>
+              <ContentTitle style={{ marginBottom: 4 }}>
                 <span>프로젝트 관련 파일</span>
                 <span
                   style={{
-                    marginLeft: 20,
+                    marginLeft: 12,
                     fontSize: 14,
                     lineHeight: 2.43,
                     letterSpacing: -0.35,
-                    color: "#c7c7c7",
+                    color: "#e53c38",
                     fontWeight: "normal",
                   }}
                 >
-                  이미지 혹은 PDF 자료만 업로드가 가능합니다.
+                  (비공개)
                 </span>
               </ContentTitle>
-              <InputComponent file={true} isOpen={true} />
+              <span
+                style={{
+                  fontSize: 16,
+                  color: "#505050",
+                }}
+              >
+                - 관련 파일은 모두 비공개로 올라갑니다. 보안상 공개로 올리지
+                못했던 내용을 파일을 올려주세요.{" "}
+              </span>
+              {/* 관련 파일 추가하는 함수가 들어가 있는 컴포넌트 */}
+              <AddFile file={true} isOpen={true} />
             </RequestContentBox>
             <RequestContentBox>
+              <span
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  fontSize: 32,
+                  fontWeight: 500,
+                  letterSpacing: -0.8,
+                  color: "#1e2222",
+                  marginTop: 140,
+                  marginBottom: 70,
+                }}
+              >
+                <span style={{ color: "#0933b3" }}>도면 파일</span>을 업로드
+                해주세요.
+              </span>
               <ContentTitle>
                 <span>도면 파일</span>
-                <span
-                  style={{
-                    marginLeft: 20,
-                    fontSize: 14,
-                    lineHeight: 2.43,
-                    letterSpacing: -0.35,
-                    color: "#c7c7c7",
-                    fontWeight: "normal",
+              </ContentTitle>
+              {/* 관련 파일 추가하는 함수가 들어가 있는 컴포넌트 */}
+              <AddDrawingFile file={true} isOpen={true} />
+              <ContentTitle>
+                <span>도면 보안 설정</span>
+              </ContentTitle>
+              <Security>
+                <SecurityBox
+                  active={this.state.securityCheck1}
+                  onClick={() => {
+                    this.activeHandler("check1");
                   }}
                 >
-                  이미지 혹은 PDF 자료만 업로드가 가능합니다.
-                </span>
-              </ContentTitle>
-              <InputComponent file={true} isOpen={true} />
+                  <img
+                    src={
+                      this.state.securityCheck1 ? circlecheckblue : circlecheck
+                    }
+                    style={{ width: 17, height: 17, marginTop: 14 }}
+                  ></img>
+                  <SecurityBoxTitle>
+                    모든 파트너가 도면 보기 가능
+                  </SecurityBoxTitle>
+                  <SecurityBoxContent>
+                    모든 파트너가 도면을 볼 수 있으며
+                    <br />
+                    가장 정확한 견적을 받을 수 있습니다.
+                  </SecurityBoxContent>
+                </SecurityBox>
+                <SecurityBox
+                  active={this.state.securityCheck2}
+                  onClick={() => {
+                    this.activeHandler("check2");
+                  }}
+                >
+                  <img
+                    src={
+                      this.state.securityCheck2 ? circlecheckblue : circlecheck
+                    }
+                    style={{ width: 17, height: 17, marginTop: 14 }}
+                  ></img>
+                  <SecurityBoxTitle>허용된 파트너만 도면 보기</SecurityBoxTitle>
+                  <SecurityBoxContent>
+                    채팅이나 견적서 요청에서
+                    <br />
+                    도면 보기 권한을 부여할 수 있습니다.
+                  </SecurityBoxContent>
+                </SecurityBox>
+              </Security>
+              <RequestBtn>
+                <RequestBotton onClick = {() => {Request.requestSubmit()}}>의뢰 요청하기</RequestBotton>
+              </RequestBtn>
             </RequestContentBox>
           </Body>
         </Container>
       </>
-    )
-    }
+    );
+  }
 }
 
 export default PartnerDirectRequest;
@@ -294,12 +503,8 @@ const Box = styled.div`
     `}
 `;
 const ItemList = styled.div`
-  width: 101%;
-  height: 100%;
-  padding-left: 3px;
-  //padding-top: ${(props) => (props.checkFileUpload ? "215px" : "0")};
-  //padding-top: ${(props) =>
-    props.checkBannerHeight && props.checkFileUpload ? "215px" : "0"};
+  width: 100%;
+  height: 16px;
   padding-top: ${(props) =>
     props.checkBannerHeight && props.checkFileUpload ? "250px" : "0"};
 `;
@@ -377,7 +582,7 @@ const EntireDelete = styled.div`
 
 const ContentBox = styled.div`
   width: 100%;
-  height: ${(props) => (props.checkFileUpload ? "100px" : "313px")};
+  height: ${(props) => (props.checkFileUpload ? "100px" : "")};
   display: flex;
   flex-direction: column;
   border: 2px dashed #a4aab4;
@@ -540,6 +745,7 @@ const DeleteBox = styled.div`
 `;
 
 const InputBox = styled.div`
+  height: 236px !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -578,12 +784,6 @@ const Header = styled.div`
   text-align: center;
   color: #1e2222;
   margin-bottom: 70px;
-`;
-
-const FileImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const CheckBox = styled.div`
@@ -629,15 +829,6 @@ const DropZoneContainer = styled.div`
         background-color: #ffffff;
         border: 1px solid white;
       }
-      > div:nth-of-type(1) {
-        //border: 3px solid red;
-        width: 14px;
-        height: 0px;
-      }
-      > div:nth-of-type(2) {
-        width: 0px;
-        height: 14px;
-      }
     }
   }
   p:nth-of-type(1) {
@@ -645,8 +836,7 @@ const DropZoneContainer = styled.div`
     line-height: 2;
     letter-spacing: -0.38px;
     color: #1e2222;
-    margin-bottom: 6px;
-    margin-top: 11px;
+    margin-bottom: 3px;
     span {
       color: #0933b3;
       font-weight: 500;
@@ -827,29 +1017,32 @@ const Purposebox = styled.div`
   margin-bottom: 70px;
 `;
 const SelectBox = styled.div`
-  display: flex;
-  justify-content: space-between;
+  width: 100%;
+  margin-left: ;
 `;
 const InlineDiv = styled.div`
   display: inline-flex;
 `;
 const PurposeSelectCircle = styled.div`
+  width: 224px;
+  height: 42px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 140px;
-  height: 44px;
   border-radius: 30px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: ${(props) => (props.active ? "#0933b3" : "#ffffff")};
+  border: ${(props) => (props.active ? "solid 1px #0933b3" : "")};
   cursor: pointer;
-  margin-right: 30px;
+  margin-right: 16px;
+  padding: 0px 10px;
+  color: #1e2222;
 `;
 const PurposeFont18 = styled.div`
   font-weight: normal;
-  line-height: 1.89;
-  letter-spacing: -0.45px;
-  color: ${(props) => (props.active ? "#ffffff" : "#414550")};
+  font-size: 16px;
+  line-height: 2.5;
+  letter-spacing: -0.4px;
+  color: ${(props) => (props.active ? "#0933b3" : "#414550")};
 `;
 
 const Label = styled.div`
@@ -1215,6 +1408,7 @@ const Layer = styled.div`
 const Security = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 70px;
 `;
 
 const SecurityBox = styled.div`
@@ -1222,9 +1416,37 @@ const SecurityBox = styled.div`
   height: 140px;
   border-radius: 5px;
   border: solid 1px #c6c7cc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  cursor: pointer;
 `;
 
-const SecuritySetting = styled.div``;
+const SecurityBoxTitle = styled.span`
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.88;
+  letter-spacing: -0.4px;
+  color: #1e2222;
+  margin-top: 14px;
+`;
+
+const SecurityBoxContent = styled.span`
+  font-size: 15px;
+  line-height: 1.47;
+  letter-spacing: -0.38px;
+  color: #999999;
+  margin-bottom: 17px;
+`;
+
+const SecuritySetting = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -1258,6 +1480,7 @@ const Body = styled.div`
 const Requestontent = styled.div``;
 
 const RequestContentBox = styled.div`
+  width: 100%;
   margin-bottom: 74px;
 `;
 
@@ -1348,4 +1571,22 @@ const Help = styled.div`
   margin-bottom: 20px;
 `;
 
-// const FileUpload = styled.div``;
+const RequestBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 300px;
+`;
+
+const RequestBotton = styled(Buttonv1)`
+  width: 228px !important;
+  height: 48px !important;
+  font-size: 18px;
+  line-height: 1.89;
+  letter-spacing: -0.45px;
+`;
+
+const FileImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

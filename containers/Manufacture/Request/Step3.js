@@ -4,7 +4,6 @@ import Router, { withRouter } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import 'intersection-observer'; // polyfill
 import Buttonv1 from "components/Buttonv1";
-import TaskBarContainer from "./TaskBar"
 import PaymentBox from "containers/Manufacture/Request/Payment"
 //material-ui
 import Table from '@material-ui/core/Table';
