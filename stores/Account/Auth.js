@@ -9,9 +9,9 @@ class Auth {
     //makeObservable(this);
   }
   @observable bgColor = "#ffffff";
-  @observable logged_in_user = null;
-  @observable logged_in_client = null;
-  @observable logged_in_partner = null;
+  @observable logged_in_user = null; // user 로그인 데이터
+  @observable logged_in_client = null; // client면 로그인 했을 때 데이터
+  @observable logged_in_partner = null; // partner면 로그인 했을 때 데이터
 
   @observable always_login = false;
 
@@ -66,10 +66,7 @@ class Auth {
   @observable checkboxState = [false, false, false, false];
   @observable allCheckState = false;
 
-  @action kakaoSignup = () => {
-    alert("AAAA");
-    // Router.push("/kakao");
-  };
+
   @action reset = () => {
     this.email = "";
     this.password = "";

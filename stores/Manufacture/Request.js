@@ -8,6 +8,7 @@ import Router from "next/router";
 import moment from "moment";
 import Schedule from "./Schedule";
 import ManufactureProcess from "./ManufactureProcess"
+import Auth from "stores/Account/Auth";
 
 class Request {
   constructor() {
@@ -80,6 +81,13 @@ class Request {
 
   // 의뢰 내용 추가하기
   @action set_contents = (val) => {
+    Auth.checkLogin();
+    
+    if (!Auth.logged_in_user) {
+      alert("로그인이 필요한 서비스입니다.");
+      Router.push("/login");
+      return;
+    }
     this.request_contents = val;
     console.log(this.request_contents)
   };
@@ -155,7 +163,7 @@ class Request {
     
     // 문의 목적 상태
     formData.append("request_state", this.request_state);
-    
+
     // 의뢰 제목
     formData.append("name", this.request_name);
 
@@ -175,11 +183,12 @@ class Request {
       formData.append("deadline", "2020-11-11 11:11");
     }
 
-    // 선택한 납기 선택이 없으면 납기일 미정으로
-    if (this.request_period_state == -1) {
+    // 선택한 납기 미선택 시
+    if (this.request_period_state == 0) {
       formData.append("deadline_state", 0);
     } else {
-      formData.append("deadline_state", this.request_period_state);
+      // 납기 협의 가능 선택 시
+      formData.append("deadline_state", 1);
     }
 
     // 의뢰 내용 ( 공개 사항 )

@@ -430,7 +430,7 @@ class PartnerDirectRequest extends Component {
                 </SecurityBox>
               </Security>
               <RequestBtn>
-                <RequestBotton>의뢰 요청하기</RequestBotton>
+                <RequestBotton onClick = {() => {Request.requestSubmit()}}>의뢰 요청하기</RequestBotton>
               </RequestBtn>
             </RequestContentBox>
           </Body>
