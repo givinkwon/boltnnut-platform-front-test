@@ -39,8 +39,6 @@ class Project extends React.Component {
     Loading.setOpen(true);
     setTimeout(() => Loading.setOpen(false), 500);
 
-    // 중복
-    await Auth.checkLogin();
     // page ip 기록
     const formData = new FormData();
 
