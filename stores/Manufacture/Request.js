@@ -240,8 +240,6 @@ class Request {
         this.newIndex = 1;
         // GA 데이터 보내기
         MyDataLayerPush({ event: "request_Drawing" });
-        // 의뢰 관련 내용 초기화
-        this.reset();
       })
       .catch((e) => {
         console.log(e);
