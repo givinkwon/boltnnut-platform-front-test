@@ -5,7 +5,7 @@ import { inject, observer } from "mobx-react";
 const prevMonth = "/static/images/request/Calendar/prevMonth.png";
 const nextMonth = "/static/images/request/Calendar/nextMonth.png";
 const dropdown = "/static/images/request/Step4/dropdown.png";
-const calendar = "/static/images/calendar.svg";
+const calendar = "/static/images/request/calendar.svg";
 
 @inject("Request", "Schedule")
 @observer
@@ -209,11 +209,12 @@ class Calendar extends Component {
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "flex-start",
               alignItems: "center",
-              width: "764px",
+              width: "100%",
             }}
           >
+            <img src={calendar} onClick={this.calendarOnOff} />
             <span
               style={{
                 marginLeft: "16px",
@@ -222,16 +223,22 @@ class Calendar extends Component {
               }}
             >
               {Schedule.clickDay !== 0 ? (
-                <>~ {Schedule.clickDay}</>
+                <>{Schedule.clickDay}</>
               ) : (
                 <>
-                  <span></span>
+                  <span
+                    style={{
+                      fontSize: 16,
+                      lineHeight: 2.13,
+                      letterSpacing: -0.4,
+                      color: "#c7c7c7",
+                    }}
+                  >
+                    납기일 선택
+                  </span>
                 </>
               )}
             </span>
-            <div>
-              <img src={calendar} onClick={this.calendarOnOff} />
-            </div>
           </div>
         </FoldedComponent>
       </>
@@ -414,14 +421,7 @@ const FoldedComponent = styled.div`
   letter-spacing: -0.45px;
   border-radius: 5px;
   margin-top: 6px;
+  border: solid 1px #c6c7cc;
   height: ${(props) => (props.mobile ? "34px" : "50px")};
-  > div {
-    > div {
-      margin-right: 24px;
-      > img {
-        width: ${(props) => (props.mobile ? "21px" : "")};
-        height: ${(props) => (props.mobile ? "20px" : "")};
-      }
-    }
-  }
+  margin-bottom: 12px;
 `;

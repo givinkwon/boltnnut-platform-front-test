@@ -17,11 +17,8 @@ class RequestContainer extends React.Component {
       <>
         <Background>
           <Containerv1 style={{ width: 792 }}>
-            {Request.newIndex == 0 ? (
-              <PartnerDirectRequest />
-            ) : (
-              <RequestComplete />
-            )}
+            {/* <RequestComplete /> */}
+            <PartnerDirectRequest />
           </Containerv1>
         </Background>
       </>

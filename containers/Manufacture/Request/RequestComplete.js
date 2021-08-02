@@ -17,8 +17,11 @@ class RequestComplete extends React.Component {
             style={{ marginTop: 80, width: 296, height: 296 }}
           ></img>
           <Title>
+            {/* 제조사에 직접 견적 요청 */}
             <span style={{ color: "#0933b3" }}>견적 요청이 완료</span>
-            되었습니다.
+            {/* 프로젝트 의뢰 & 맞춤형 문의 견적 요청 */}
+            <span style={{ color: "#0933b3" }}>요청이 완료</span>
+            되었습니다. 되었습니다.
           </Title>
           <span
             style={{
