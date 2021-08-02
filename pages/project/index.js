@@ -95,10 +95,14 @@ class Project extends React.Component {
         </Head>
         <>
           {width > 767.98 ? (
-            <NewNav />
+            <Nav />
           ) : (
             <div>
-              <MobileNav src={back_ic} headText={"프로젝트 관리"} width={width} />
+              <MobileNav
+                src={back_ic}
+                headText={"프로젝트 관리"}
+                width={width}
+              />
               <div style={{ height: "54px" }}></div>
             </div>
           )}

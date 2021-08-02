@@ -123,7 +123,10 @@ class Nav extends React.Component {
       <>
         <NavBox>
           <Containerv1
-            style={{ display: "inline", justifyContent: "space-between" }}
+            style={{
+              display: "inline",
+              justifyContent: "space-between",
+            }}
           >
             <NavWrap>
               <BoltLogo>
@@ -141,63 +144,255 @@ class Nav extends React.Component {
                 {this.props.Auth.logged_in_user ? (
                   this.props.Auth.logged_in_user.type === 0 ? (
                     /* client로 로그인 */
-                    <Fragment>
+                    <ul>
                       <NavLink active={url.indexOf("producer") > -1}>
-                        <KSLink url={"producer"} content={"제조사 찾기"} />
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"producer"} content={"제조사 찾기"} />
+                          </Font16>
+                        </RouterWrapper>
                       </NavLink>
-
                       <NavLink active={url.indexOf("project") > -1}>
-                        <KSLink url={"project"} content={"프로젝트 의뢰"} />
-                      </NavLink>
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                          </Font16>
+                        </RouterWrapper>
 
-                      <NavLink active={url.indexOf("magazine") > -1}>
-                        <KSLink url={"magazine"} content={"제조 인사이트"} />
+                        <SubMenu>
+                          <li>
+                            <KSLink
+                              url={"project"}
+                              FontContent={() => {
+                                return <Font14>전체 프로젝트</Font14>;
+                              }}
+                            />
+                          </li>
+                          <li>
+                            <KSLink
+                              url={"project"}
+                              FontContent={() => {
+                                return <Font14>내 프로젝트</Font14>;
+                              }}
+                            />
+                          </li>
+                          <li>
+                            <KSLink
+                              url={"project"}
+                              FontContent={() => {
+                                return <Font14>프로젝트 의뢰</Font14>;
+                              }}
+                            />
+                          </li>
+                        </SubMenu>
                       </NavLink>
-                    </Fragment>
+                      <NavLink active={url.indexOf("magazine") > -1}>
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"magazine"} content={"제조 매거진"} />
+                          </Font16>
+                        </RouterWrapper>
+                        {/* 제조 매거진 */}
+                      </NavLink>
+                    </ul>
                   ) : (
                     /* partner로 로그인 */
-                    <Fragment>
-                      <NavLink active={url.indexOf("project") > -1}>
-                        {console.log(url)}
-                        <KSLink url={"producer"} content={"제조사 찾기"} />
+                    <ul>
+                      <NavLink active={url.indexOf("producer") > -1}>
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"producer"} content={"제조사 찾기"} />
+                          </Font16>
+                        </RouterWrapper>
                       </NavLink>
                       <NavLink active={url.indexOf("project") > -1}>
-                        {console.log(url)}
-                        <KSLink url={"project"} content={"프로젝트 찾기"} />
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                          </Font16>
+                        </RouterWrapper>
+
+                        <SubMenu>
+                          <li>
+                            <KSLink
+                              url={"project"}
+                              FontContent={() => {
+                                return <Font14>전체 프로젝트</Font14>;
+                              }}
+                            />
+                          </li>
+                          <li>
+                            <KSLink
+                              url={"project"}
+                              FontContent={() => {
+                                return <Font14>내 프로젝트</Font14>;
+                              }}
+                            />
+                          </li>
+                        </SubMenu>
                       </NavLink>
                       <NavLink active={url.indexOf("magazine") > -1}>
-                        <KSLink url={"magazine"} content={"제조 인사이트"} />
+                        <RouterWrapper>
+                          <Font16>
+                            <KSLink url={"magazine"} content={"제조 매거진"} />
+                          </Font16>
+                        </RouterWrapper>
+                        {/* 제조 매거진 */}
                       </NavLink>
-                    </Fragment>
+                    </ul>
                   )
                 ) : (
                   /* 로그인 안되어있는 경우 */
-                  <Fragment>
+                  <ul>
                     <NavLink active={url.indexOf("producer") > -1}>
-                      <KSLink url={"producer"} content={"제조사 찾기"} />
+                      <RouterWrapper>
+                        <KSLink
+                          url={"producer"}
+                          FontContent={() => {
+                            return <Font16>제조사 찾기</Font16>;
+                          }}
+                        />
+                      </RouterWrapper>
                     </NavLink>
                     <NavLink active={url.indexOf("project") > -1}>
-                      <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                      <RouterWrapper>
+                        <KSLink
+                          url={"project"}
+                          FontContent={() => {
+                            return <Font16>프로젝트 의뢰</Font16>;
+                          }}
+                        />
+                      </RouterWrapper>
+
+                      <SubMenu>
+                        <li>
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>전체 프로젝트</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>내 프로젝트</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>프로젝트 의뢰</Font14>;
+                            }}
+                          />
+                        </li>
+                      </SubMenu>
                     </NavLink>
                     <NavLink active={url.indexOf("magazine") > -1}>
-                      <KSLink url={"magazine"} content={"제조 인사이트"} />
-                      {/* 제조 인사이트 */}
+                      <RouterWrapper>
+                        <KSLink
+                          url={"magazine"}
+                          FontContent={() => {
+                            return <Font16>제조 매거진</Font16>;
+                          }}
+                        />
+                      </RouterWrapper>
+                      {/* 제조 매거진 */}
                     </NavLink>
-                  </Fragment>
+                  </ul>
                 )}
               </Menu>
-              <Menu>
+              <Menu style={{ marginLeft: "auto" }}>
                 {/* 로그인한/안한 경우 */}
                 {token ? (
-                  <>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <Avatar
-                        src={profile}
-                        onClick={() =>
-                          this.setState({ is_profile: !is_profile })
+                  <ul>
+                    {/* 파트너 로그인 */}
+                    {this.props.Auth.logged_in_user.type === 1 && (
+                      <NavLink
+                        onClick={() => {
+                          this.props.Auth.setType("detailexpert");
+                        }}
+                        active={
+                          url.indexOf("signup") > -1 &&
+                          Auth.type == "detailexpert"
                         }
-                      />
-                      {is_profile && (
+                      >
+                        <RouterWrapper>
+                          <KSLink
+                            url={"signup"}
+                            FontContent={() => {
+                              return <Font14>파트너 등록하기</Font14>;
+                            }}
+                          />
+                        </RouterWrapper>
+                      </NavLink>
+                    )}
+                    <NavLink>
+                      <div
+                        style={{
+                          height: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Avatar
+                          src={profile}
+                          onClick={() =>
+                            this.setState({ is_profile: !is_profile })
+                          }
+                        />
+                      </div>
+                      <SubMenu
+                        style={{
+                          width: "160px",
+                        }}
+                      >
+                        <li>
+                          <KSLink
+                            url={"project"}
+                            FontContent={() => {
+                              return <Font14>내 프로젝트</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>관심 제조사</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            url={"chatting"}
+                            FontContent={() => {
+                              return <Font14>채팅하기</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>리뷰 관리</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            url={"account"}
+                            FontContent={() => {
+                              return <Font14>계정 설정</Font14>;
+                            }}
+                          />
+                        </li>
+                      </SubMenu>
+
+                      {/* {is_profile && (
                         <ProfileMenu>
                           <div>
                             <div>
@@ -233,16 +428,27 @@ class Nav extends React.Component {
                             </div>
                           </div>
                         </ProfileMenu>
-                      )}
-                    </div>
+                      )} */}
+                    </NavLink>
+                    <NavLink>
+                      <RouterWrapper
+                        style={{ paddingRight: 0, paddingLeft: 13 }}
+                      >
+                        <StyledButton onClick={this.logout}>
+                          <KSLink
+                            url={""}
+                            FontContent={() => {
+                              return <Font14>로그아웃</Font14>;
+                            }}
+                          />
+                        </StyledButton>
+                      </RouterWrapper>
 
-                    <NavLink onClick={this.logout}>
-                      <KSLink url={""} content={"로그아웃"} />
                       {/* 로그아웃 */}
                     </NavLink>
-                  </>
+                  </ul>
                 ) : (
-                  <>
+                  <ul>
                     <NavLink
                       onClick={() => {
                         this.props.Auth.setType("detailexpert");
@@ -252,9 +458,20 @@ class Nav extends React.Component {
                         Auth.type == "detailexpert"
                       }
                     >
-                      <KSLink url={"signup"} content={"파트너 등록하기"} />
+                      <RouterWrapper>
+                        <KSLink
+                          url={"signup"}
+                          FontContent={() => {
+                            return <Font14>파트너 등록하기</Font14>;
+                          }}
+                        />
+                      </RouterWrapper>
                     </NavLink>
-                    |
+                    <NavLink>
+                      <RouterWrapper style={{ padding: 0 }}>
+                        <Font14>|</Font14>
+                      </RouterWrapper>
+                    </NavLink>
                     <NavLink
                       onClick={() => {
                         this.props.Auth.setType("client");
@@ -263,18 +480,33 @@ class Nav extends React.Component {
                         url.indexOf("signup") > -1 && Auth.type == "client"
                       }
                     >
-                      <KSLink url={"signup"} content={"회원가입"} />
+                      <RouterWrapper>
+                        <KSLink
+                          url={"signup"}
+                          FontContent={() => {
+                            return <Font14>회원가입</Font14>;
+                          }}
+                        />
+                      </RouterWrapper>
                     </NavLink>
-                    <NavLink
-                      onClick={() => {
-                        Auth.reset();
-                      }}
-                      active={url.indexOf("login") > -1}
-                    >
-                      <KSLink url={"login"} content={"로그인"} />
-                      {/* 로그인 */}
+
+                    <NavLink active={url.indexOf("login") > -1}>
+                      <RouterWrapper>
+                        <StyledButton
+                          onClick={() => {
+                            Auth.reset();
+                          }}
+                        >
+                          <KSLink
+                            url={"login"}
+                            FontContent={() => {
+                              return <Font14>로그인</Font14>;
+                            }}
+                          />
+                        </StyledButton>
+                      </RouterWrapper>
                     </NavLink>
-                  </>
+                  </ul>
                 )}
               </Menu>
               <Icon
@@ -294,6 +526,66 @@ class Nav extends React.Component {
 }
 export default Nav;
 
+const StyledButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
+  border-radius: 19px;
+  border: solid 1px #c6c7cc;
+  height: 36px;
+  width: 78px;
+`;
+const Font14 = styled(Content.FontSize14)`
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.14;
+  letter-spacing: -0.14px;
+  color: #1e2222;
+  text-align: center;
+`;
+const RouterWrapper = styled.div`
+  /* border: 1px solid black; //지우기 */
+  /* padding: 20px 40px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* padding-top: 20px;
+  padding-bottom: 20px; */
+  height: 100%;
+  padding-right: 40px;
+  /* padding-left: 40px; */
+  /* margin-right: 40px; */
+`;
+const SubMenu = styled.ul`
+  margin-top: 4px;
+  position: absolute;
+  width: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+
+  > li {
+    height: 44px;
+    /* padding: 16px 16px; */
+    /* background: green;
+    border: 1px solid black; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    :hover {
+      background-color: #ededef;
+    }
+  }
+  /* background: #182952; */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.15s ease-in;
+`;
 const BoltLogo = styled.button`
   background: none;
   border: None;
@@ -349,16 +641,17 @@ const Container = styled.div`
   width: 100%;
 `;
 const Avatar = styled.img`
-  width: 32px;
+  width: 56px;
   height: 32px;
   border-radius: 10px;
   padding: 0px 15px;
+  /* padding-right: 33px; */
   cursor: pointer;
 `;
 const NavBox = styled.div`
   position: fixed;
   z-index: 100;
-  height: 60px;
+  /* height: 60px; */
   width: 100%;
   background-color: ${WHITE};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
@@ -366,9 +659,10 @@ const NavBox = styled.div`
   justify-content: center;
 `;
 const NavWrap = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  height: 60px;
+  /* justify-content: space-between; */
   > div:nth-of-type(1) {
     margin-left: 60px !important;
   }
@@ -388,10 +682,13 @@ const Icon = styled.img`
     display: block;
   }
 `;
-const Menu = styled.div`
+const Menu = styled.ul`
+  position: relative;
   display: flex;
-  align-items: center;
-  margin-left: auto;
+  flex-flow: column nowrap;
+  /* align-items: center; */
+  /* margin-left: auto; */
+  margin-left: 40px;
   @media (min-width: 0px) and (max-width: 767.98px) {
     display: none;
     flex-direction: column;
@@ -412,15 +709,29 @@ const Menu = styled.div`
       `}
   }
 `;
-const NavLink = styled.button`
-  border: none;
+const NavLink = styled.li`
+  /* display: flex;
+  align-items: center; */
+  float: left;
+  position: relative;
   margin: 0px;
-  height: 60px;
+  height: 64px;
   cursor: pointer;
   color: #000000;
-  display: flex;
-  align-items: center;
+
+  /* border: 1px solid yellow;
+  background: red !important; */
+
+  /* display: flex; */
+  /* align-items: center; */
   font-weight: 500;
+
+  :hover {
+    ${SubMenu} {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
     font-weight: 500;
@@ -428,23 +739,23 @@ const NavLink = styled.button`
     justify-content: center;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    padding-left: 12px;
-    padding-right: 12px;
+    /* padding-left: 12px;
+    padding-right: 12px; */
     font-size: 14px;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    padding-left: 15px;
-    padding-right: 15px;
+    /* padding-left: 15px;
+    padding-right: 15px; */
     font-size: 14px;
   }
   @media (min-width: 1300px) and (max-width: 1599.98px) {
-    padding-left: 17px;
-    padding-right: 15px;
+    /* padding-left: 17px;
+    padding-right: 15px; */
     font-size: 16px;
   }
   @media (min-width: 1600px) {
-    padding-left: 19px;
-    padding-right: 19px;
+    /* padding-left: 19px;
+    padding-right: 19px; */
     font-size: 16px;
   }
   ${(props) =>
