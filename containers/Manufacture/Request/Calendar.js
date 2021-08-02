@@ -2,15 +2,14 @@ import styled from "styled-components";
 import React, { Component, useRef } from "react";
 import moment from "moment";
 import { inject, observer } from "mobx-react";
-
 const prevMonth = "/static/images/request/Calendar/prevMonth.png";
 const nextMonth = "/static/images/request/Calendar/nextMonth.png";
 const dropdown = "/static/images/request/Step4/dropdown.png";
-const calendar = "/static/images/request/calendar.svg";
+const calendar = "/static/images/calendar.svg";
 
 @inject("Request", "Schedule")
 @observer
-class Calender extends Component {
+class Week extends Component {
   state = {
     now: moment(),
   };
@@ -210,37 +209,29 @@ class Calendar extends Component {
           <div
             style={{
               display: "flex",
-              justifyContent: "flex-start",
+              justifyContent: "space-between",
               alignItems: "center",
-              width: "100%",
+              width: "764px",
             }}
           >
-            <div>
-              <img src={calendar} onClick={this.calendarOnOff} />
-            </div>
             <span
               style={{
-                color: "##1e2222",
+                marginLeft: "16px",
+                color: "#999999",
                 fontWeight: "normal",
               }}
             >
               {Schedule.clickDay !== 0 ? (
-                <>{Schedule.clickDay}</>
+                <>~ {Schedule.clickDay}</>
               ) : (
                 <>
-                  <span
-                    style={{
-                      fontSize: 16,
-                      lineHeight: 2.13,
-                      letterSpacing: -0.4,
-                      color: "#c7c7c7",
-                    }}
-                  >
-                    납기일 선택
-                  </span>
+                  <span></span>
                 </>
               )}
             </span>
+            <div>
+              <img src={calendar} onClick={this.calendarOnOff} />
+            </div>
           </div>
         </FoldedComponent>
       </>
@@ -248,7 +239,7 @@ class Calendar extends Component {
   }
 }
 
-export default Calender;
+export default Calendar;
 
 const MainContainer = styled.div`
   //display: ${(props) => (props.fileUpload ? "flex" : "none")};
@@ -421,13 +412,12 @@ const FoldedComponent = styled.div`
   font-size: 18px;
   font-weight: 500;
   letter-spacing: -0.45px;
-  border-radius: 3px;
-  border: solid 1px #c6c7cc;
-  margin-top: 16px;
-  margin-bottom: 11px;
+  border-radius: 5px;
+  margin-top: 6px;
   height: ${(props) => (props.mobile ? "34px" : "50px")};
   > div {
     > div {
+      margin-right: 24px;
       > img {
         width: ${(props) => (props.mobile ? "21px" : "")};
         height: ${(props) => (props.mobile ? "20px" : "")};

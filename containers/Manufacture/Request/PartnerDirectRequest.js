@@ -9,7 +9,7 @@ import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
 import InputComponent from "components/Input";
-import Calendar from "./Calender";
+import Calendar from "./Calendar";
 
 import AddFile from "./AddFile";
 import AddDrawingFile from "./AddDrawing";
