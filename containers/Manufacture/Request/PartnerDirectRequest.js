@@ -218,7 +218,7 @@ class PartnerDirectRequest extends Component {
                       options={this.state.priceAry}
                       value={Request.request_price}
                       getOptionLabel={(option) => option.name}
-                      placeholder="선택해주세요"
+                      placeholder={"1000만~2000만"}
                       onChange={Request.set_price}
                     />
 
@@ -321,8 +321,8 @@ class PartnerDirectRequest extends Component {
                 </Help>
                 <InputComponent
                   class="Input"
-                  placeholder="비밀번호를 입력해주세요"
-                  value={Request.contents}
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  value={Request.request_contents}
                   onChange={(e) => {
                     Request.set_contents(e);
                   }}
@@ -429,7 +429,14 @@ class PartnerDirectRequest extends Component {
                 </SecurityBox>
               </Security>
               <RequestBtn>
-                <RequestBotton onClick = {() => {Request.requestSubmit()}}>의뢰 요청하기</RequestBotton>
+                <RequestButton
+                  onClick={() => {
+                    Request.requestSubmit();
+                    console.log(this.newIndex);
+                  }}
+                >
+                  의뢰 요청하기
+                </RequestButton>
               </RequestBtn>
             </RequestContentBox>
           </Body>
@@ -1421,6 +1428,7 @@ const SecurityBox = styled.div`
   flex-direction: column;
   text-align: center;
   cursor: pointer;
+  background-color: ${(props) => (props.active ? "#edf4fe" : "#ffffff")};
 `;
 
 const SecurityBoxTitle = styled.span`
@@ -1498,22 +1506,6 @@ const PurposeBtn = styled.div`
   justify-content: flex-start;
 `;
 
-const RequestButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 140px;
-  height: 42px;
-  border-radius: 30px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  border: solid 1px #0933b3;
-  background-color: #ffffff;
-  margin-right: 16px;
-  font-size: 16px;
-  color: #0933b3;
-  letter-spacing: -0.4px;
-`;
-
 const Budget = styled.div`
   display: flex;
   flex-direction: column;
@@ -1576,7 +1568,7 @@ const RequestBtn = styled.div`
   margin-bottom: 300px;
 `;
 
-const RequestBotton = styled(Buttonv1)`
+const RequestButton = styled(Buttonv1)`
   width: 228px !important;
   height: 48px !important;
   font-size: 18px;
