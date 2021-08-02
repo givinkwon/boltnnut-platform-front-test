@@ -1,53 +1,51 @@
-import styled from 'styled-components';
-import React, { Component, useRef } from 'react';
+import styled from "styled-components";
+import React, { Component, useRef } from "react";
 import moment from "moment";
-import { inject, observer } from 'mobx-react';
-import Step3Container from './Step3';
-import Step4Container from './Step4';
-import Containerv1 from '../../../components/Containerv1';
+import { inject, observer } from "mobx-react";
+
 const prevMonth = "/static/images/request/Calendar/prevMonth.png";
 const nextMonth = "/static/images/request/Calendar/nextMonth.png";
-const dropdown = '/static/images/request/Step4/dropdown.png';
+const dropdown = "/static/images/request/Step4/dropdown.png";
+const calendar = "/static/images/request/calendar.svg";
 
-@inject('Request', 'Schedule')
+@inject("Request", "Schedule")
 @observer
-class Week extends Component {
+class Calender extends Component {
   state = {
-    now: moment()
-  }
+    now: moment(),
+  };
   Days = (firstDayFormat) => {
     const { Schedule } = this.props;
     const days = [];
 
     for (let i = 0; i < 7; i++) {
-      const Day = moment(firstDayFormat).add('d', i);
+      const Day = moment(firstDayFormat).add("d", i);
       days.push({
         yearMonthDayFormat: Day.format("YYYY-MM-DD"),
         holyDayCompare: Day.format("MM-DD"),
-        getDay: Day.format('D'),
-        getMonth: Day.format('M'),
-        getYear: Day.format('YYYY'),
-        isHolyDay: false
+        getDay: Day.format("D"),
+        getMonth: Day.format("M"),
+        getYear: Day.format("YYYY"),
+        isHolyDay: false,
       });
     }
     return days;
-  }
+  };
   calendarOnOff = (e) => {
     const { Request, Schedule } = this.props;
-      if (Schedule.calendarOnOff == true) {
-        Schedule.calendarOnOff = false;
-      }
-      else {
-        Schedule.calendarOnOff = true;
-      }
-      let day = e.currentTarget.innerHTML.replace(/[^0-9]/g,'');
-      const dayValue = Schedule.nowMoment;
+    if (Schedule.calendarOnOffV2 == true) {
+      Schedule.calendarOnOffV2 = false;
+    } else {
+      Schedule.calendarOnOffV2 = true;
+    }
+    let day = e.currentTarget.innerHTML.replace(/[^0-9]/g, "");
+    const dayValue = Schedule.nowMoment;
 
-      Schedule.clickDay = dayValue.date(day).format("YYYY년 M월 D일");
-      Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
-  }
+    Schedule.clickDay = dayValue.date(day).format("YYYY-MM-DD");
+    Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
+  };
 
-  mapDaysToComponents = (Days, fn = () => { }) => {
+  mapDaysToComponents = (Days, fn = () => {}) => {
     const { Schedule } = this.props;
     const { now } = this.state;
     const occupied = Schedule.date_occupied;
@@ -55,185 +53,232 @@ class Week extends Component {
     return Days.map((dayInfo, i) => {
       let className = "date-weekday-label";
       let thisMoment = moment();
-      if (!Schedule.nowMoment.isSame(dayInfo.yearMonthDayFormat,'month')) {
+      if (!Schedule.nowMoment.isSame(dayInfo.yearMonthDayFormat, "month")) {
         className = "not-month";
-      }
-      else if (i === 0) {
+      } else if (i === 0) {
         className = "date-sun";
-      }
-      else if (i === 6) {
+      } else if (i === 6) {
         className = "date-sat";
-      }
-      else if (parseInt(thisMoment.format('D')) > parseInt(dayInfo.getDay) && parseInt(thisMoment.format("M")) == parseInt(dayInfo.getMonth) && parseInt(thisMoment.format("Y")) == parseInt(dayInfo.getYear)) {
+      } else if (
+        parseInt(thisMoment.format("D")) > parseInt(dayInfo.getDay) &&
+        parseInt(thisMoment.format("M")) == parseInt(dayInfo.getMonth) &&
+        parseInt(thisMoment.format("Y")) == parseInt(dayInfo.getYear)
+      ) {
         className = "not-day";
-      }
-      else if (parseInt(thisMoment.format('M')) > parseInt(dayInfo.getMonth)) {
+      } else if (
+        parseInt(thisMoment.format("M")) > parseInt(dayInfo.getMonth)
+      ) {
         className = "not-day";
-      }
-      else if (parseInt(thisMoment.format('YYYY')) > parseInt(dayInfo.getYear)) {
+      } else if (
+        parseInt(thisMoment.format("YYYY")) > parseInt(dayInfo.getYear)
+      ) {
         className = "not-day";
-      }
-      else if (occupied.includes(dayInfo.yearMonthDayFormat)) {
+      } else if (occupied.includes(dayInfo.yearMonthDayFormat)) {
         className = "not-book";
       }
-      if (dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") && Schedule.nowMoment.format('M') === dayInfo.getMonth) {
+      if (
+        dayInfo.yearMonthDayFormat === moment().format("YYYY-MM-DD") &&
+        Schedule.nowMoment.format("M") === dayInfo.getMonth
+      ) {
         className += "today";
         console.log(className);
         return (
-          <div className={className} onClick={ this.calendarOnOff }>
+          <div className={className} onClick={this.calendarOnOff}>
             {dayInfo.getDay}
             <div>오늘</div>
           </div>
-        )
-      }
-      else {
+        );
+      } else {
         return (
-          <div className={className} onClick={ this.calendarOnOff }>
+          <div className={className} onClick={this.calendarOnOff}>
             {dayInfo.getDay}
           </div>
-        )
+        );
       }
-    })
-  }
+    });
+  };
   render() {
     return (
       <>
-        {this.mapDaysToComponents(this.Days(this.props.firstDayOfThisWeekformat))}
+        {this.mapDaysToComponents(
+          this.Days(this.props.firstDayOfThisWeekformat)
+        )}
       </>
-    )
+    );
   }
 }
-@inject('Schedule')
+@inject("Schedule")
 @observer
 class Calendar extends Component {
-  state= {
+  state = {
     now: moment(),
-  }
+  };
   componentDidMount() {
     const { Schedule } = this.props;
     this.setState({
-      now : Schedule.nowMoment,
-    })
+      now: Schedule.nowMoment,
+    });
   }
   moveMonth = (month) => {
     const { Schedule } = this.props;
-    Schedule.nowMoment.add(month, 'M');
+    Schedule.nowMoment.add(month, "M");
     Schedule.setTodayDate(this.state.now.format("YYYY-MM-01 "));
     this.setState({
-      now : Schedule.nowMoment,
-    })
-  }
+      now: Schedule.nowMoment,
+    });
+  };
   //요일
   dateToArray = (dates) => {
     if (Array.isArray(dates)) {
       return dates;
+    } else if (typeof dates === "string") {
+      return dates.split(",");
+    } else {
+      return ["일", "월", "화", "수", "목", "금", "토"];
     }
-    else if (typeof dates === "string") {
-      return dates.split(',')
-    }
-    else{
-      return ["일", "월", "화", "수", "목", "금", "토"]
-    }
-  }
+  };
   mapArrayToDate = (dateArray) => {
-    if (dateArray.length !== 7){
+    if (dateArray.length !== 7) {
       dateArray = ["일", "월", "화", "수", "목", "금", "토"];
     }
     return dateArray.map((date, index) => {
       const className = () => {
-        if (index === 0){
+        if (index === 0) {
           return "date-sun";
-        }
-        else if(index === 6) {
+        } else if (index === 6) {
           return "date-sat";
-        }
-        else {
+        } else {
           return "date-weekday";
         }
-      }
-      return (
-        <div className={className()}>
-          {date}
-        </div>
-      )
-    })
-  }
+      };
+      return <div className={className()}>{date}</div>;
+    });
+  };
   calendarOnOff = () => {
     const { Schedule } = this.props;
-    if (Schedule.calendarOnOff == true) {
-      Schedule.calendarOnOff = false;
+    if (Schedule.calendarOnOffV2 == true) {
+      Schedule.calendarOnOffV2 = false;
+    } else {
+      Schedule.calendarOnOffV2 = true;
     }
-    else {
-      Schedule.calendarOnOff = true;
-    }
-  }
+    console.log(Schedule.calendarOnOffV2);
+  };
 
   // 날짜 입력
   Weeks = (monthYear) => {
-    const firstDayOfMonth = moment(monthYear).startOf('month');
-    const firstDateOfMonth = firstDayOfMonth.get('d');
-    const firstDayOfWeek = firstDayOfMonth.clone().add('d', -firstDateOfMonth);
+    const firstDayOfMonth = moment(monthYear).startOf("month");
+    const firstDateOfMonth = firstDayOfMonth.get("d");
+    const firstDayOfWeek = firstDayOfMonth.clone().add("d", -firstDateOfMonth);
     const Weeks = [];
     for (let i = 0; i < 6; i++) {
-      Weeks.push((
-        <Week firstDayOfThisWeekformat={firstDayOfWeek.clone().add('d', i * 7).format("YYYY-MM-DD")} />
-      ))
+      Weeks.push(
+        <Week
+          firstDayOfThisWeekformat={firstDayOfWeek
+            .clone()
+            .add("d", i * 7)
+            .format("YYYY-MM-DD")}
+        />
+      );
     }
     return Weeks;
-  }
+  };
   render() {
     const { now } = this.state;
-    const { Schedule } = this.props;
+    const { Schedule, mobile } = this.props;
     return (
       <>
-        { Schedule.calendarOnOff == true &&
-          <MainContainer display1={ this.state.hid }>
+        {Schedule.calendarOnOffV2 == true && (
+          <MainContainer>
+            {console.log(Schedule.calendarOnOffV2)}
             <Header>
-              <div onClick={() => this.moveMonth(-1)}><img src={ prevMonth }/></div>
+              <div onClick={() => this.moveMonth(-1)}>
+                <img src={prevMonth} />
+              </div>
               <HeaderText>{now.format("YYYY.MM")}</HeaderText>
-              <div onClick={() => this.moveMonth(1)}><img src={ nextMonth }/></div>
+              <div onClick={() => this.moveMonth(1)}>
+                <img src={nextMonth} />
+              </div>
             </Header>
             <DateContainer>
               {this.mapArrayToDate(this.dateToArray(this.props.dates))}
             </DateContainer>
-            <CalendarContainer>
-              {this.Weeks(now)}
-            </CalendarContainer>
+            <CalendarContainer>{this.Weeks(now)}</CalendarContainer>
           </MainContainer>
-        }
-        { Schedule.calendarOnOff == false &&
-        <FoldedComponent onClick={ this.calendarOnOff }>
-          { Schedule.clickDay }
-          <img src={dropdown} />
+        )}
+
+        <FoldedComponent mobile={mobile}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <div>
+              <img src={calendar} onClick={this.calendarOnOff} />
+            </div>
+            <span
+              style={{
+                color: "##1e2222",
+                fontWeight: "normal",
+              }}
+            >
+              {Schedule.clickDay !== 0 ? (
+                <>{Schedule.clickDay}</>
+              ) : (
+                <>
+                  <span
+                    style={{
+                      fontSize: 16,
+                      lineHeight: 2.13,
+                      letterSpacing: -0.4,
+                      color: "#c7c7c7",
+                    }}
+                  >
+                    납기일 선택
+                  </span>
+                </>
+              )}
+            </span>
+          </div>
         </FoldedComponent>
-        }
       </>
-    )
+    );
   }
 }
 
-export default Calendar;
+export default Calender;
 
 const MainContainer = styled.div`
+  //display: ${(props) => (props.fileUpload ? "flex" : "none")};
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  width: 798px;
+  width: 760px;
   height: 639px;
   margin-top: 6px;
-`
+  background-color: white;
+  position: absolute;
+  top: 28%;
+  z-index: 1;
+`;
 const Header = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
   width: 176px;
-  align-items: center;
+  align-items: baseline;
   margin-bottom: 50px;
   margin-top: 40px;
-`
+  > div:nth-of-type(1),
+  div:nth-of-type(3) {
+    cursor: pointer;
+  }
+`;
 const HeaderText = styled.div`
   height: auto;
   font-family: AppleSDGothicNeoB00;
@@ -244,7 +289,7 @@ const HeaderText = styled.div`
   letter-spacing: -0.7px;
   text-align: left;
   color: #282c36;
-`
+`;
 const DateContainer = styled.div`
   width: 714px;
   display: flex;
@@ -268,7 +313,7 @@ const DateContainer = styled.div`
   .date-sat {
     color: #c6c7cc;
   }
-`
+`;
 const CalendarContainer = styled.div`
   width: 700px;
   display: grid;
@@ -296,6 +341,7 @@ const CalendarContainer = styled.div`
     font-style: normal;
     letter-spacing: -0.18px;
     color: #282c36;
+    cursor: pointer;
     > div {
       font-family: Roboto;
       line-height: 1.4;
@@ -307,8 +353,9 @@ const CalendarContainer = styled.div`
       color: #282c36;
     }
     :hover {
-      background-color: #e1e2e4;
-      color: black;
+      //background-color: #e1e2e4;
+      background-color: #0933b3;
+      color: white;
       > div {
         color: black;
         display: none;
@@ -316,7 +363,7 @@ const CalendarContainer = styled.div`
     }
     :focus {
       background-color: #0933b3;
-      color: white;    
+      color: white;
     }
   }
   .date-sun {
@@ -331,7 +378,7 @@ const CalendarContainer = styled.div`
     visibility: hidden;
     pointer-events: none;
     color: #c6c7cc;
-    }
+  }
   .not-day {
     pointer-events: none;
     color: #c6c7cc;
@@ -365,27 +412,26 @@ const CalendarContainer = styled.div`
     //  color: #e1e2e4;
     //}
   }
-`
+`;
 const FoldedComponent = styled.div`
-  width: fit-content;
-  font-family: NotoSansCJKkr;
-  font-size: 18px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: -0.45px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  padding: 8px 16px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: var(--white);
-  margin-top : 6px;
-  line-height: 1.3;
-  > img {
-    width: 14px;
-    height: 8px;
-    margin-left: 22px;
+  font-family: NotoSansCJKkr;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.45px;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  margin-top: 16px;
+  margin-bottom: 11px;
+  height: ${(props) => (props.mobile ? "34px" : "50px")};
+  > div {
+    > div {
+      > img {
+        width: ${(props) => (props.mobile ? "21px" : "")};
+        height: ${(props) => (props.mobile ? "20px" : "")};
+      }
+    }
   }
-`
+`;

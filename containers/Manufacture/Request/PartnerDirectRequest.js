@@ -8,9 +8,8 @@ import SelectComponent from "components/Select";
 import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
-import InputComponent from "AddFile2";
-import Calendar from "./Calendar2";
-import FileImage from "FileImage.js";
+import InputComponent from "components/Input";
+import Calendar from "./Calender";
 
 import AddFile from "./AddFile";
 import AddDrawingFile from "./AddDrawing";

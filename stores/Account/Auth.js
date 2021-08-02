@@ -876,10 +876,14 @@ class Auth {
         }, 1500);
       });
   };
+
+  // 아이디 찾기
   @action forgetId = async () => {
     setTimeout(() => {
       this.loading = false;
     }, 1500);
+    
+    // 예외처리
     if (!this.phone) {
       alert("휴대폰 번호를 입력해주세요.");
       return;
@@ -887,16 +891,21 @@ class Auth {
 
     this.loading = true;
     console.log(this.phone);
+    
+    // 데이터 만들기
     const req = {
       data: {
         phone: this.phone,
       },
     };
+
+    // API 호출
     AccountAPI.findId(req)
       .then((res) => {
         setTimeout(() => {
           this.loading = false;
         }, 800);
+        // 아이디 데이터
         this.restore_email = [];
         this.setStep(1);
         this.restore_email = this.restore_email.concat(res.data.data);
