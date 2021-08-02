@@ -21,7 +21,7 @@ const image14 = "/static/images/logo/logo_14.png";
 const image15 = "/static/images/logo/logo_15.jpg";
 const image16 = "/static/images/logo/logo_16.png";
 
-class NewBanner1Container extends React.Component {
+class Banner1Container extends React.Component {
   render() {
     const SlideSettings = {
       dots: false,
@@ -97,7 +97,7 @@ class NewBanner1Container extends React.Component {
   }
 }
 
-export default NewBanner1Container;
+export default Banner1Container;
 
 const CustomBackground = styled(Background)`
   height: 282px;

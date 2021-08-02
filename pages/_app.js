@@ -9,7 +9,7 @@ import { createGlobalStyle } from "styled-components";
 import IE from "components/IE";
 import ScrollToTop from "components/ScrollToTop";
 import stores from "stores";
-import CheckBrowserModal from "containers/Home/CheckBrowserModal";
+import CheckBrowserModal from "containers/Home/Common/CheckBrowserModal";
 import PrepareModal from "containers/Home/Common/PrepareModal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

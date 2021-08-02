@@ -19,30 +19,8 @@ import MobileBanner3Container from "./Mobile/MobileBanner3";
 import MobileBanner4Container from "./Mobile/MobileBanner4";
 import MobileBanner5Container from "./Mobile/MobileBanner5";
 
-// Tablet Container
-import TabletBanner0Container from "./Tablet/TabletBanner0";
-import TabletBanner1Container from "./Tablet/TabletBanner1";
-import TabletBanner2Container from "./Tablet/TabletBanner2";
-import TabletBanner3Container from "./Tablet/TabletBanner3";
-import TabletBanner4Container from "./Tablet/TabletBanner4";
-import TabletBanner5Container from "./Tablet/TabletBanner5";
-import TabletBanner6Container from "./Tablet/TabletBanner6";
-import TabletBanner7Container from "./Tablet/TabletBanner7";
-import TabletBanner8Container from "./Tablet/TabletBanner8";
 
 import { inject, observer } from "mobx-react";
-import TabletBanner9Container from "./Tablet/TabletBanner9";
-
-import TabletBanner10Container from "./Tablet/TabletBanner10";
-
-import TabletBanner11Container from "./Tablet/TabletBanner11";
-
-import TabletBanner12Container from "./Tablet/TabletBanner12";
-
-import TabletBanner13Container from "./Tablet/TabletBanner13";
-
-import TabletBanner14Container from "./Tablet/TabletBanner14";
-
 import axios from "axios";
 
 @inject("Home")
@@ -104,16 +82,6 @@ class HomeConatiner extends React.Component {
             </CustomContainer>
           </>
         ) : (
-          // ) : 767.99 < width && width < 1279.98 ? (
-          //   <>
-          //     <CustomContainer>
-          //       <TabletBanner13Container width={width} />
-          //       <TabletBanner14Container width={width} />
-          //       <TabletBanner12Container />
-          //       <TabletBanner8Container />
-          //       <TabletBanner9Container />
-          //     </CustomContainer>
-          //   </>
           <>
             <div style={{ overflow: "hidden" }}>
               <Banner0Container width={width} />
