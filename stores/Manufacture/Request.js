@@ -64,7 +64,7 @@ class Request {
   // 희망 예산 금액 추가하기
   @action set_price = (obj) => {
     this.request_price = obj;
-    console.log(obj)
+    console.log(this.request_price)
   };
 
 
@@ -168,7 +168,7 @@ class Request {
     formData.append("name", this.request_name);
 
     // 희망 예산 저장
-    formData.append("price", this.request_price);
+    formData.append("price", this.request_price.id);
 
     // 희망 예산 상태 저장
     formData.append("price_state", this.request_price_state)
@@ -293,6 +293,22 @@ class Request {
       });
   };
 
+
+  // 의뢰서 id로 의뢰서 가져오기
+  @observable requests = [];
+  @observable current_request_id = -1;
+
+  getRequestById = (id) => {
+    if (id === -1) {
+      return;
+    }
+
+    console.log(`getRequestById(${id})`);
+    const idx = this.requests.findIndex((request) => request.id == id);
+
+    console.log(this.requests[idx]);
+    return this.requests[idx];
+  };
   
   @action reset = () => {
     // 의뢰서 관련 변수 초기화

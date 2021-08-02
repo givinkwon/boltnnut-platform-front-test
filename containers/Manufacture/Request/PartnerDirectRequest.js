@@ -321,8 +321,8 @@ class PartnerDirectRequest extends Component {
                 </Help>
                 <InputComponent
                   class="Input"
-                  onFocus={(e) => (e.target.placeholder = "")}
-                  value={projectContent}
+                  placeholder="비밀번호를 입력해주세요"
+                  value={Request.contents}
                   onChange={(e) => {
                     Request.set_contents(e);
                   }}
