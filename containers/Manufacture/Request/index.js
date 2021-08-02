@@ -13,6 +13,7 @@ import RequestComplete from "./RequestComplete";
 class RequestContainer extends React.Component {
   render() {
     const { Request, width } = this.props;
+
     return (
       <>
         <Background>

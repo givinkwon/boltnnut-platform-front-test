@@ -30,7 +30,7 @@ const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 const toparrowblue = "static/icon/top_arrow_blue.svg";
 
-@inject("Project", "Auth", "Partner", "Producer", "Common", "Cookie")
+@inject("Project", "Auth", "Partner", "Producer", "Common", "Cookie", "Request")
 @observer
 class ManufacturerContentContainer extends React.Component {
   state = {
@@ -146,8 +146,14 @@ class ManufacturerContentContainer extends React.Component {
     window.scrollTo(0, 0);
   };
 
+  ToRequest = () => {
+    const { Request } = this.props;
+    Router.push("/request")
+    Request.set_request_type(1)
+  }
+
   render() {
-    const { Project, Partner, Producer, Auth, Cookie } = this.props;
+    const { Project, Partner, Producer, Auth, Cookie, Request } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
@@ -163,7 +169,7 @@ class ManufacturerContentContainer extends React.Component {
                 기존 제품 검색보다 원하는 조건에 딱 맞는 신제품 제조를
                 원하시나요?
               </div>
-              <RequestBtn onClick={Partner.openModal}>
+              <RequestBtn onClick={() => this.ToRequest()}>
                 맞춤형 문의하기
               </RequestBtn>
             </RequestMiddle>
@@ -207,9 +213,7 @@ class ManufacturerContentContainer extends React.Component {
                             유사한 연관 검색어를 찾아보시겠어요?
                           </Question>
                           <ExplainList>
-                            {Partner.suggest_list.map((data) => {
-                              return <li>{data + ", "}</li>;
-                            })}
+
                           </ExplainList>
                         </Explain>
                       </NoResultBox>

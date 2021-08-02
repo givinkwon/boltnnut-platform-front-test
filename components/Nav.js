@@ -20,7 +20,7 @@ const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
 const profile = "/static/images/profile.png";
 
-@inject("Auth", "Partner", "Project", "Home")
+@inject("Auth", "Partner", "Project", "Home", "Request")
 @observer
 class Nav extends React.Component {
   state = {
@@ -116,7 +116,7 @@ class Nav extends React.Component {
     console.log(toJS(Auth.logged_in_user));
   }
   render() {
-    const { Auth, Home } = this.props;
+    const { Auth, Request, Home } = this.props;
     const { url, is_open, is_profile, token } = this.state;
 
     return (
@@ -178,7 +178,8 @@ class Nav extends React.Component {
                           </li>
                           <li>
                             <KSLink
-                              url={"project"}
+                              url={"request"}
+                              onClick={Request.set_request_type}
                               FontContent={() => {
                                 return <Font14>프로젝트 의뢰</Font14>;
                               }}
@@ -223,7 +224,8 @@ class Nav extends React.Component {
                           </li>
                           <li>
                             <KSLink
-                              url={"project"}
+                              url={"request"}
+                              onClick={Request.set_request_type}
                               FontContent={() => {
                                 return <Font14>내 프로젝트</Font14>;
                               }}
@@ -267,7 +269,7 @@ class Nav extends React.Component {
                       <SubMenu>
                         <li>
                           <KSLink
-                            url={"login"}
+                            url={"project"}
                             FontContent={() => {
                               return <Font14>전체 프로젝트</Font14>;
                             }}
@@ -275,7 +277,7 @@ class Nav extends React.Component {
                         </li>
                         <li>
                           <KSLink
-                            url={"login"}
+                            url={"project"}
                             FontContent={() => {
                               return <Font14>내 프로젝트</Font14>;
                             }}
@@ -283,7 +285,8 @@ class Nav extends React.Component {
                         </li>
                         <li>
                           <KSLink
-                            url={"login"}
+                            url={"request"}
+                            onClick={Request.set_request_type}
                             FontContent={() => {
                               return <Font14>프로젝트 의뢰</Font14>;
                             }}
