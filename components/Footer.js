@@ -101,41 +101,21 @@ class FooterComponent extends React.Component {
           <>
             <Footer myColor={Auth.bgColor} id="MyFooter">
               <Containerv1 style={{ flexDirection: "column" }}>
-                <img
-                  src={rowline}
-                  style={{ width: 16, height: 4, marginBottom: 6 }}
-                ></img>
+                <img src={rowline} style={{ width: 16, height: 4, marginBottom: 6 }}></img>
                 <TelInfoWrapper>
                   <Font24>
                     <span>TEL.</span> 02-926-6637
                   </Font24>
                 </TelInfoWrapper>
                 <CompanyInfoWrapper>
-                  <span> 오전 10:00 ~ 오후 07:00 </span>
-                  <span> 점심시간 12:00 ~ 01:00 </span>
+                  <span> 근무 시간 09:00 ~ 18:00 </span>
+                  <span> 점심 시간 12:00 ~ 13:00 </span>
                   <div>
-                    휴일( 토요일, 일요일, 공휴일 )
+                    토·일요일, 공휴일 휴무
                     <div style={{ display: "flex" }}>
-                      <img
-                        src={instargram}
-                        onClick={() =>
-                          window.open(
-                            "http://www.instargram.com/boltnnut_korea"
-                          )
-                        }
-                      />
-                      <img
-                        src={blog}
-                        onClick={() =>
-                          window.open("https://blog.naver.com/boltnnut_korea")
-                        }
-                      />
-                      <img
-                        src={post}
-                        onClick={() =>
-                          window.open("https://post.naver.com/boltnnut_korea")
-                        }
-                      />
+                      <img src={instargram} onClick={() => window.open("http://www.instargram.com/boltnnut_korea")} />
+                      <img src={blog} onClick={() => window.open("https://blog.naver.com/boltnnut_korea")} />
+                      <img src={post} onClick={() => window.open("https://post.naver.com/boltnnut_korea")} />
                     </div>
                   </div>
                 </CompanyInfoWrapper>
@@ -146,10 +126,7 @@ class FooterComponent extends React.Component {
                     </Button>
                     <img src={separator} />
                     <Button>
-                      <KSLink
-                        url={"term/personal"}
-                        content={"개인정보처리방침"}
-                      />
+                      <KSLink url={"term/personal"} content={"개인정보처리방침"} />
                     </Button>
                     <img src={separator} />
                     <Button>
@@ -167,8 +144,7 @@ class FooterComponent extends React.Component {
                       <span class="title"> 사업자등록번호 </span> 390-87-01669
                     </span>
                     <span>
-                      <span class="title"> 사업장 소재지 </span> 서울특별시
-                      성북구 고려대길 27길 4 3층
+                      <span class="title"> 사업장 소재지 </span> 서울특별시 성북구 고려대길 27길 4 3층
                     </span>
                     <span>
                       <span class="title"> 이메일 </span> boltnnut@boltnnut.com
@@ -187,21 +163,13 @@ class FooterComponent extends React.Component {
               }}
             >
               <Containerv1 style={{ flexDirection: "column" }}>
-                <img
-                  src={rowline}
-                  style={{ width: 10, height: 2, marginBottom: 6 }}
-                ></img>
+                <img src={rowline} style={{ width: 10, height: 2, marginBottom: 6 }}></img>
                 <Font14 style={{ height: 17 }}>
                   <span>TEL.</span>02-926-6637
                 </Font14>
                 <CompanyInfoWrapper>
-                  <Font12 style={{ marginBottom: 2 }}>
-                    {" "}
-                    평일 오전 10:00 ~ 오후 07:00 점심시간 12:00 ~ 01:00{" "}
-                  </Font12>
-                  <Font12 style={{ marginTop: 0, marginBottom: 12 }}>
-                    휴일 (토요일, 일요일, 공휴일 )
-                  </Font12>
+                  <Font12 style={{ marginBottom: 2 }}> 평일 오전 10:00 ~ 오후 07:00 점심시간 12:00 ~ 01:00 </Font12>
+                  <Font12 style={{ marginTop: 0, marginBottom: 12 }}>휴일 (토요일, 일요일, 공휴일 )</Font12>
                 </CompanyInfoWrapper>
                 <CompanyInfoWrapper>
                   <InfoDetailContainer>
@@ -213,10 +181,7 @@ class FooterComponent extends React.Component {
                       }}
                     >
                       (주)볼트앤너트 사업자 정보
-                      <img
-                        src={lowdirection}
-                        style={{ height: 5, width: 10, marginLeft: 9 }}
-                      ></img>
+                      <img src={lowdirection} style={{ height: 5, width: 10, marginLeft: 9 }}></img>
                     </Font12>
                     <Font12>
                       <span>회사명</span> (주)볼트앤너트
@@ -234,8 +199,7 @@ class FooterComponent extends React.Component {
                       <br />
                     </Font12>
                     <Font12>
-                      <span>사업장 소재지</span> 서울특별시 성북구 고려대길 27길
-                      3 2층
+                      <span>사업장 소재지</span> 서울특별시 성북구 고려대길 27길 3 2층
                     </Font12>
                   </InfoDetailContainer>
                   <FaqTable>
@@ -253,26 +217,17 @@ class FooterComponent extends React.Component {
                     <img src={separator} />
                     <Button>
                       <Font12 style={{ fontWeight: 500 }}>
-                        <KSLink
-                          url={"term/personal"}
-                          content={"개인정보처리방침"}
-                        />
+                        <KSLink url={"term/personal"} content={"개인정보처리방침"} />
                       </Font12>
                     </Button>
                   </FaqTable>
                 </CompanyInfoWrapper>
                 <ImageWrapper>
-                  <img
-                    src={campustown}
-                    style={{ height: 13, alignSelf: "center" }}
-                  />
+                  <img src={campustown} style={{ height: 13, alignSelf: "center" }} />
                   <div class="imagebox">
                     <Button>
                       <a href="http://www.instargram.com/boltnnut_korea">
-                        <img
-                          src={instargram}
-                          style={{ height: 24, width: 24 }}
-                        />
+                        <img src={instargram} style={{ height: 24, width: 24 }} />
                       </a>
                     </Button>
                     <Button>

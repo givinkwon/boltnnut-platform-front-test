@@ -7,9 +7,6 @@ import { inject, observer } from "mobx-react";
 import { CompressedPixelFormat } from "three";
 import { toJS } from "mobx";
 
-const camera ="/static/icon/camera.png";
-const deleteButtonImg = "/static/images/delete.png";
-
 @inject("Request", "ManufactureProcess", "Project", "Partner", "Producer")
 @observer
 class InputComponent extends React.Component {
@@ -24,7 +21,6 @@ class InputComponent extends React.Component {
     checkFileUpload: false,
   };
 
-  async componentDidMount() {}
   componentWillUnmount() {
     const { Partner } = this.props;
 
@@ -32,113 +28,35 @@ class InputComponent extends React.Component {
   }
 
   render() {
-    const {
-      onChange,
-      children,
-      label,
-      file,
-      Request,
-      ManufactureProcess,
-      Partner,
-      isOpen,
-      mobile,
-      Producer,
-      ...props
-    } = this.props;
+    const { onChange, children, label, file, Request, ManufactureProcess, Partner, isOpen, mobile, Producer, ...props } = this.props;
     const { fileName, checkFileUpload } = this.state;
 
-    if (!file) {
-      return (
-        <Wrap width={this.props.width}>
-          {label && (
-            <Text.FontSize20 color={DARKGRAY} fontWeight={500}>
-              {label}
-            </Text.FontSize20>
-          )}
-          <InputBox marginTop={label ? 12 : 0}>
-            <Input>
-              <input {...props} onChange={Producer.onChange} />
-            </Input>
-            {children}
-          </InputBox>
-        </Wrap>
-      );
-    }
-
     return (
-      <Wrap width={this.props.width}>
-        <FileText mobile={mobile} checkFileUpload={this.state.checkFileUpload}>
-          <InputBox
-            mobile={mobile}
-            style={{ width: "100%", display: "inline-flex" }}
+      <InputBox mobile={mobile} style={{ width: "100%", display: "inline-flex" }}>
+        <div>
+          <input
+            type="file"
+            multiple={"multiple"}
+            fileName={"fileName[]"}
+            style={{ display: "none" }}
+            onChange={Partner.onChangeFile}
+            id="inputFile"
+            ref={this.file}
+            value=""
+            placeholder={"파일을 선택해 주세요."}
+          />
+
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              console.log(this.file);
+              this.file.current.click();
+            }}
           >
-            <div>
-              <div>
-                {Partner.fileArray.map((item, idx) => {
-                  return (
-                    <>
-                      <span
-                        onClick={() => {
-                          if (checkFileUpload) {
-                            Partner.fileArray.splice(idx, 1);
-                            const inputFile =
-                              document.getElementById("inputFile");
-                            console.log(toJS(ManufactureProcess.openFileArray));
-                            inputFile.innerHTML = "";
-
-                            if (Partner.fileArray.length === 0) {
-                              this.setState({ checkFileUpload: false });
-                            }
-                          }
-                        }}
-                      >
-                        <span>
-                          <span style={{ marginRight: "10px" }}>
-                            {!item.name
-                              ? decodeURI(item.split("/").pop())
-                              : item.name}
-                          </span>
-                          <DeleteFile
-                            src={deleteButtonImg}
-                            style={{
-                              display: this.state.checkFileUpload
-                                ? "inline"
-                                : "none",
-                            }}
-                          />
-                        </span>
-                      </span>
-                    </>
-                  );
-                })}
-              </div>
-              <input
-                type="file"
-                multiple={"multiple"}
-                fileName={"fileName[]"}
-                style={{ display: "none" }}
-                onChange={Partner.onChangeFile}
-                id="inputFile"
-                ref={this.file}
-                value=""
-                placeholder={"파일을 선택해 주세요."}
-              />
-
-              <div
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  console.log(this.file);
-                  this.file.current.click();
-                }}
-              >
-                <img src={camera} />
-              </div>
-              <div></div>
-              <div></div>
-            </div>
-          </InputBox>
-        </FileText>
-      </Wrap>
+            <img src="/static/icon/camera.svg" />
+          </div>
+        </div>
+      </InputBox>
     );
   }
 }
@@ -149,7 +67,6 @@ const InputBox = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  align-items: center;  
   border: solid 1px #ffffff;
   color: #404040;
   border-radius: 3px;
@@ -157,19 +74,14 @@ const InputBox = styled.div`
 
 
   >div:nth-of-type(1){
-    //   border: 3px solid red;
-      border: 1px solid #c6c7cc;
       border-radius: 3px;
-    //   height: 40px;
-        min-height: 40px;
-      width: 804px;
       display:flex;
       align-items: center;
       position: relative;
       >div:nth-of-type(1){
         word-wrap: break-word;
         word-break: break-all;
-        width: 92%;
+        // width: 92%;
         padding-left: 10px;
 
       }
@@ -208,7 +120,7 @@ const InputBox = styled.div`
     }
       
     >div:nth-of-type(2){      
-    //   width: 950px;   
+      width: 34px;   
       word-wrap: break-word;
       word-break:break-all;
       
@@ -229,93 +141,6 @@ const InputBox = styled.div`
   }
 }
 
-  // @media (min-width: 0px) and (max-width: 767.98px) { 
-  //   height: 100%;
-  //   height: 34px;
-  //   object-fit: contain;
-  //   border-radius: 3px;
-  //   background-color: #ffffff;
-  //   > img {
-  //     position: relative;
-  //     padding-top: 8px;
-  //     padding-bottom: 8px;
-  //     padding-right: 20px;
-  //     padding-left: 0;
-  //     width: 20px;
-  //     height: 18px;
-  //   }
-  // }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-
-    >div:nth-of-type(1){
-      // width: 180px;
-          min-height: 35px;
-        
-        >div:nth-of-type(1){
-          width: 88%;
-          padding-left: 10px;
-          line-height:20px;
-          >span{
-            >span{
-              >span{
-                font-size: 12px;
-              }
-            }
-          }
-        }
-        >div:nth-of-type(2){
-        
-            right: 6px;
-          >img{
-              float: right;
-              width: 15px;
-              height: 15px;
-          }
-        }
-        
-    }
-    >div:nth-of-type(2){
-      >div:nth-of-type(1){        
-        margin-right: 40px;
-    
-  
-        >span{
-      
-          margin-right: 5px;
-        }
-        >img {
-      
-        }      
-      }
-        
-      >div:nth-of-type(2){      
-        
-        >span{      
-          >span{          
-            >span{
-              margin-right: 10px;
-              font-size: 14px;
-              line-height: 40px;
-            }
-          }
-        }
-      }
-    }
-
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    >div:nth-of-type(1){
-      width: 500px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    >div:nth-of-type(1){
-      width: 600px;
-    }
-  }
-  @media (min-width: 1300px) {
-  }
 `;
 const Wrap = styled.div`
   display: flex;
@@ -380,7 +205,6 @@ const Input = styled.div`
   }
 `;
 const FileText = styled(Content.FontSize18)`
-  //width: 1152px;
   width: ${(props) => (props.mobile ? "100%" : "1152px")}
   font-stretch: normal;
   font-style: normal;
@@ -414,36 +238,5 @@ const FileText = styled(Content.FontSize18)`
     > img:last-child {
       margin-right: 20px;
     }
-  }
-  // @media (min-width: 0px) and (max-width: 767.98px) {
-  //   font-size: 14px !important;
-  //   padding-top: 0px;
-  //   font-weight: normal;
-  //   font-stretch: normal;
-  //   font-style: normal;
-  //   line-height: 2.43;
-  //   letter-spacing: -0.35px;
-  //   text-align: left;
-  //   color: #999999;
-  // }
-`;
-const DeleteFile = styled.img`
-  width: 18px;
-  height: 18px;
-  padding: 2px;
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  border-radius: 9px;
-  background-color: #e1e2e4;
-  align-self: center;
-  line-height: 40px;
-  letter-spacing: -0.45px;
-  margin-right: 29px;
-  vertical-align: middle;
-  cursor: pointer;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    width: 12px;
-    height: 12px;
-    margin-right: 10px;
   }
 `;

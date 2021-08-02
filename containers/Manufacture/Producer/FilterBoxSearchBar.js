@@ -13,7 +13,7 @@ import { toJS } from "mobx";
 import { PRIMARY2 } from "static/style";
 import Category from "../../../stores/Manufacture/Category";
 
-import AddFile from "./AddFile";
+import ImageFile from "./ImageFile";
 
 @inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer", "Category")
 @observer
@@ -136,18 +136,14 @@ class SearchBarConatiner extends React.Component {
                 <HoverBox active={this.state.imgsearchhover} className="hoverBox">
                   <Title13>제품 이미지로 검색하기</Title13>
                 </HoverBox>
-                <AddFile
-                    file={true}
-                    isOpen={true}
-                    ///onChange={this.handleChange}
-                  />
+
+                <ImageFile file={true} isOpen={true} />
               </ImgContainer>
 
               <ImgContainer>
                 <img src="/static/icon/search_blue.svg" onClick={this.search} />
               </ImgContainer>
             </SearchBar>
-
           </div>
         </Form>
       </>
