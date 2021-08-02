@@ -19,6 +19,9 @@ import ButtonSpinnerComponent from "components/ButtonSpinner";
 import List from "material-ui/List";
 import Cookies from "js-cookie";
 
+import AddFile from "./AddFile";
+
+const deleteButtonImg = "/static/images/delete.png";
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
 const pass4 = "static/images/pass4.png";
@@ -38,6 +41,10 @@ class ManufacturerContentContainer extends React.Component {
     recent_partner_dic: [],
     recent_partner: [],
     recent_partner_namearr: [],
+    fileArray: [],
+    fileName: "",
+    file: "",
+    checkFileUpload: false,
   };
 
   async componentDidMount() {
@@ -74,8 +81,7 @@ class ManufacturerContentContainer extends React.Component {
           this.setState({ recent_partner: res.data });
           console.log(res);
 
-          recent_partner_dic[res.data.name] =
-            res.data.portfolio_set[0].img_portfolio;
+          recent_partner_dic[res.data.name] = res.data.portfolio_set[0].img_portfolio;
           recent_partner.push(res.data);
           recent_partner_namearr.push(res.data.name);
 
@@ -146,6 +152,11 @@ class ManufacturerContentContainer extends React.Component {
     window.scrollTo(0, 0);
   };
 
+  imageModal = () => {
+    const { Partner } = this.props;
+    Partner.image_modal_state = !Partner.image_modal_state;
+  };
+
   render() {
     const { Project, Partner, Producer, Auth, Cookie } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
@@ -159,13 +170,8 @@ class ManufacturerContentContainer extends React.Component {
         <Background id="MyBackground">
           {Partner.subButtonActive ? (
             <RequestMiddle>
-              <div>
-                기존 제품 검색보다 원하는 조건에 딱 맞는 신제품 제조를
-                원하시나요?
-              </div>
-              <RequestBtn onClick={Partner.openModal}>
-                맞춤형 문의하기
-              </RequestBtn>
+              <div>기존 제품 검색보다 원하는 조건에 딱 맞는 신제품 제조를 원하시나요?</div>
+              <RequestBtn onClick={Partner.openModal}>맞춤형 문의하기</RequestBtn>
             </RequestMiddle>
           ) : (
             <></>
@@ -178,12 +184,45 @@ class ManufacturerContentContainer extends React.Component {
                   <Layer />
                 </>
               )}
+
+              {/* 이미지 검색 리스트 */}
+              {Partner.fileArray.map((item, idx) => {
+                console.log(item);
+                return (
+                  <>
+                    <span
+                      onClick={() => {
+                        if (this.state.checkFileUpload) {
+                          Partner.fileArray.splice(idx, 1);
+                          const inputFile = document.getElementById("inputFile");
+                          console.log(toJS(ManufactureProcess.openFileArray));
+                          inputFile.innerHTML = "";
+
+                          if (Partner.fileArray.length === 0) {
+                            this.setState({ checkFileUpload: false });
+                          }
+                        }
+                      }}
+                    >
+                      <span>
+                        {Partner.fileArray[0] ? <img style={{ width: 127, height: 101 }} src={Partner.searchFileUrl} /> : <>파일이 없습니다</>}
+                        <span style={{ marginRight: "10px" }}>{!item.name ? decodeURI(item.split("/").pop()) : item.name}</span>
+                        <DeleteFile
+                          src={deleteButtonImg}
+                          style={{
+                            display: this.state.checkFileUpload ? "inline" : "none",
+                          }}
+                        />
+                      </span>
+                      <span>해당 이미지를 검색 합니다.</span>
+                    </span>
+                  </>
+                );
+              })}
+
               <Header>
                 <Font20 style={{ marginLeft: "20px" }}>
-                  <span style={{ fontWeight: "bold" }}>
-                    {Partner.partner_count}개
-                  </span>
-                  의 제조사가 있습니다.
+                  <span style={{ fontWeight: "bold" }}>{Partner.partner_count}개</span>의 제조사가 있습니다.
                 </Font20>
               </Header>
               <Main>
@@ -197,15 +236,10 @@ class ManufacturerContentContainer extends React.Component {
                       <NoResultBox>
                         <img src={nosearch}></img>
                         <NoSearch>
-                          <span style={{ fontWeight: "bold" }}>
-                            '{Partner.search_text}'
-                          </span>
-                          에 대한 검색 결과가 없습니다.
+                          <span style={{ fontWeight: "bold" }}>'{Partner.search_text}'</span>에 대한 검색 결과가 없습니다.
                         </NoSearch>
                         <Explain>
-                          <Question>
-                            유사한 연관 검색어를 찾아보시겠어요?
-                          </Question>
+                          <Question>유사한 연관 검색어를 찾아보시겠어요?</Question>
                           <ExplainList>
                             {Partner.suggest_list.map((data) => {
                               return <li>{data + ", "}</li>;
@@ -246,98 +280,65 @@ class ManufacturerContentContainer extends React.Component {
                   <RecentPartner>
                     <header>
                       <div style={{ marginLeft: 10 }}>최근 본 제조사</div>
-                      <div style={{ marginRight: 10 }}>
-                        {this.state.recent_partner_dic ? (
-                          Object.keys(this.state.recent_partner_dic).length
-                        ) : (
-                          <></>
-                        )}
-                      </div>
+                      <div style={{ marginRight: 10 }}>{this.state.recent_partner_dic ? Object.keys(this.state.recent_partner_dic).length : <></>}</div>
                     </header>
                     <body>
                       {this.state.recent_partner.length > 0 ? (
-                        Object.keys(this.state.recent_partner_dic).map(
-                          (name) => (
-                            <RecentPartnerContent>
-                              <div
-                                style={{
-                                  width: 156,
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <div style={{ marginLeft: 3 }}>{name}</div>
-                                <img
-                                  src={close}
-                                  style={{
-                                    marginRight: 3,
-                                    width: 12,
-                                    height: 12,
-                                    cursor: "pointer",
-                                  }}
-                                  onClick={async () => {
-                                    console.log(this.state.recent_partner_dic);
-                                    if (this.state.recent_partner_dic) {
-                                      Cookie.delete_partner_view(
-                                        Cookie.partner_view_list[
-                                          this.state.recent_partner_namearr.indexOf(
-                                            name
-                                          )
-                                        ]
-                                      );
-                                    }
-                                    const expires = new Date();
-                                    expires.setMinutes(
-                                      expires.getMinutes() + 2440
-                                    );
-                                    const a = this.state.recent_partner_dic;
-                                    const b = this.state.recent_partner;
-                                    console.log(b);
-                                    delete a[name];
-                                    b.splice(
-                                      this.state.recent_partner_namearr.indexOf(
-                                        name
-                                      ),
-                                      1
-                                    );
-                                    console.log(b);
-                                    this.setState({
-                                      recent_partner_dic: a,
-                                      recent_partner: b,
-                                    });
-                                    Cookies.set(
-                                      "partner_view",
-                                      Cookie.partner_view_list,
-                                      {
-                                        path: "/",
-                                        expires,
-                                      }
-                                    );
-                                  }}
-                                ></img>
-                              </div>
+                        Object.keys(this.state.recent_partner_dic).map((name) => (
+                          <RecentPartnerContent>
+                            <div
+                              style={{
+                                width: 156,
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <div style={{ marginLeft: 3 }}>{name}</div>
                               <img
-                                src={this.state.recent_partner_dic[name]}
-                                onClick={async () => {
-                                  if (Auth.logged_in_client) {
-                                    await Project.getPage(
-                                      Auth.logged_in_client.id
-                                    );
-                                  }
-                                  Partner.pushToDetail(
-                                    this.state.recent_partner[
-                                      this.state.recent_partner_namearr.indexOf(
-                                        name
-                                      )
-                                    ]
-                                  );
+                                src={close}
+                                style={{
+                                  marginRight: 3,
+                                  width: 12,
+                                  height: 12,
+                                  cursor: "pointer",
                                 }}
-                                style={{ cursor: "pointer" }}
+                                onClick={async () => {
+                                  console.log(this.state.recent_partner_dic);
+                                  if (this.state.recent_partner_dic) {
+                                    Cookie.delete_partner_view(Cookie.partner_view_list[this.state.recent_partner_namearr.indexOf(name)]);
+                                  }
+                                  const expires = new Date();
+                                  expires.setMinutes(expires.getMinutes() + 2440);
+                                  const a = this.state.recent_partner_dic;
+                                  const b = this.state.recent_partner;
+                                  console.log(b);
+                                  delete a[name];
+                                  b.splice(this.state.recent_partner_namearr.indexOf(name), 1);
+                                  console.log(b);
+                                  this.setState({
+                                    recent_partner_dic: a,
+                                    recent_partner: b,
+                                  });
+                                  Cookies.set("partner_view", Cookie.partner_view_list, {
+                                    path: "/",
+                                    expires,
+                                  });
+                                }}
                               ></img>
-                            </RecentPartnerContent>
-                          )
-                        )
+                            </div>
+                            <img
+                              src={this.state.recent_partner_dic[name]}
+                              onClick={async () => {
+                                if (Auth.logged_in_client) {
+                                  await Project.getPage(Auth.logged_in_client.id);
+                                }
+                                Partner.pushToDetail(this.state.recent_partner[this.state.recent_partner_namearr.indexOf(name)]);
+                              }}
+                              style={{ cursor: "pointer" }}
+                            ></img>
+                          </RecentPartnerContent>
+                        ))
                       ) : (
                         <div>
                           최근에 본 제조사가
@@ -350,11 +351,7 @@ class ManufacturerContentContainer extends React.Component {
                   <MyInfo>
                     <header>
                       <img src="/static/icon/login_img.svg"></img>
-                      {Auth.logged_in_user ? (
-                        <div>{Auth.logged_in_user.username.split("@")[0]}</div>
-                      ) : (
-                        <div>로그인 해주세요.</div>
-                      )}
+                      {Auth.logged_in_user ? <div>{Auth.logged_in_user.username.split("@")[0]}</div> : <div>로그인 해주세요.</div>}
                     </header>
                     <body>
                       <RequestandRegister style={{ marginTop: 5 }}>
@@ -392,10 +389,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1)}
             active={Partner.currentPage % 10 == 1}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 1
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 1 ? "none" : "block",
             }}
           >
             {" "}
@@ -405,10 +399,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 1}
             active={Partner.currentPage % 10 == 2}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 2
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 2 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -419,10 +410,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 2}
             active={Partner.currentPage % 10 == 3}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 3
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 3 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -433,10 +421,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 3}
             active={Partner.currentPage % 10 == 4}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 4
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 4 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -447,10 +432,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 4}
             active={Partner.currentPage % 10 == 5}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 5
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 5 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -461,10 +443,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 5}
             active={Partner.currentPage % 10 == 6}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 6
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 6 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -475,10 +454,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 6}
             active={Partner.currentPage % 10 == 7}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 7
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 7 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -489,10 +465,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 7}
             active={Partner.currentPage % 10 == 8}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 8
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 8 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -503,10 +476,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 8}
             active={Partner.currentPage % 10 == 9}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 9
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 9 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -517,10 +487,7 @@ class ManufacturerContentContainer extends React.Component {
             value={10 * (current_set - 1) + 9}
             active={Partner.currentPage % 10 == 0}
             style={{
-              display:
-                Partner.partner_page < 10 * (current_set - 1) + 10
-                  ? "none"
-                  : "block",
+              display: Partner.partner_page < 10 * (current_set - 1) + 10 ? "none" : "block",
             }}
             onClick={Partner.movePage}
           >
@@ -884,6 +851,27 @@ const TopButton = styled.div`
     font-weight: 500;
     letter-spacing: -0.35px;
     color: #0933b3;
+  }
+`;
+
+const DeleteFile = styled.img`
+  width: 18px;
+  height: 18px;
+  padding: 2px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background-color: #e1e2e4;
+  align-self: center;
+  line-height: 40px;
+  letter-spacing: -0.45px;
+  margin-right: 29px;
+  vertical-align: middle;
+  cursor: pointer;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
   }
 `;
 
