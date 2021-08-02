@@ -144,12 +144,6 @@ class SearchBarConatiner extends React.Component {
                 <img src="/static/icon/search_blue.svg" onClick={this.search} />
               </ImgContainer>
             </SearchBar>
-
-            {this.state.showSuggestions && this.state.suggs.length > 0 && (
-              <CustomUl>
-                <CustomLiBox>{suggestions}</CustomLiBox>
-              </CustomUl>
-            )}
           </div>
         </Form>
       </>

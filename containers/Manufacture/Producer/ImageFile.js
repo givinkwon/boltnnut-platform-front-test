@@ -141,7 +141,6 @@ const InputBox = styled.div`
   }
 }
 
-
 `;
 const Wrap = styled.div`
   display: flex;

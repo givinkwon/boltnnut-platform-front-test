@@ -3,8 +3,6 @@ import { observable, action, toJS, makeObservable } from "mobx";
 import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 import Router from "next/router";
-import { isConstructorDeclaration } from "typescript";
-import NoneDrawingConsultingContainer from "containers/Manufacture/Request/NoneDrawingConsulting";
 
 import Category from "./Category";
 

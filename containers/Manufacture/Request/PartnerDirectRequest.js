@@ -8,9 +8,8 @@ import SelectComponent from "components/Select";
 import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
-import InputComponent from "AddFile2";
-import Calendar from "./Calendar2";
-import FileImage from "FileImage.js";
+import InputComponent from "components/Input";
+import Calendar from "./Calendar";
 
 import AddFile from "./AddFile";
 import AddDrawingFile from "./AddDrawing";
@@ -80,6 +79,8 @@ class PartnerDirectRequest extends Component {
     securityCheck1: false,
     securityCheck2: false,
     period_state: false,
+
+    budget: false,
   };
 
   async componentDidMount() {
@@ -105,6 +106,13 @@ class PartnerDirectRequest extends Component {
         this.setState({ securityCheck2: true, securityCheck1: false });
         // 비공개하기
         Request.set_file_secure(2);
+      }
+    }
+    if (flag == "budget") {
+      if (this.state.budget) {
+        this.setState({ budget: false });
+      } else {
+        this.setState({ budget: true });
       }
     }
   };
@@ -186,20 +194,89 @@ class PartnerDirectRequest extends Component {
                   <div>프로젝트 제목</div>
                   <img src={starred} style={{ marginLeft: 4 }}></img>
                 </ContentTitle>
-                <InputComponent
-                  class="Input"
-                  placeholder="   진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
-                  onFocus={(e) => (e.target.placeholder = "")}
-                  onChange={(e) => {
-                    Request.set_name(e);
-                  }}
-                  style={{
-                    width: "100%",
-                    height: 42,
-                    borderRadius: 3,
-                  }}
-                />
+                <ContentInput>
+                  <InputComponent
+                    class="Input"
+                    placeholder="   진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
+                    onFocus={(e) => (e.target.placeholder = "")}
+                    onChange={(e) => {
+                      Request.set_name(e);
+                    }}
+                  />
+                </ContentInput>
               </RequestContentBox>
+
+              {/* 프로젝트 의뢰에서만 */}
+              <RequestContentBox>
+                <ContentTitle style={{ marginBottom: 4 }}>
+                  <div>프로젝트 분류</div>
+                  <img src={starred} style={{ marginLeft: 4 }}></img>
+                  <span
+                    style={{
+                      fontSize: 14,
+                      letterSpacing: -0.35,
+                      color: "#86888c",
+                      fontWeight: "normal",
+                      marginLeft: 12,
+                    }}
+                  >
+                    (중복 선택 가능)
+                  </span>
+                </ContentTitle>
+                <span
+                  style={{
+                    fontSize: 16,
+                    color: "#505050",
+                    lineHeight: 2.13,
+                    letterSpacing: -0.4,
+                    fontWeight: "normal",
+                  }}
+                >
+                  프로젝트 분류에 해당하는 항목을 선택해주세요.
+                </span>
+                <ProjectFieldCheckbox>
+                  <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <span
+                      style={{
+                        color: "#767676",
+                        fontSize: 16,
+                        display: "flex",
+                        alignItems: "center",
+                        marginRight: 91,
+                      }}
+                    >
+                      완제품/부품 구매
+                    </span>
+                  </CheckBoxComponent>
+                  <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <span
+                      style={{
+                        color: "#767676",
+                        fontSize: 16,
+                        display: "flex",
+                        alignItems: "center",
+                        marginRight: 91,
+                      }}
+                    >
+                      개발/설계
+                    </span>
+                  </CheckBoxComponent>
+                  <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <span
+                      style={{
+                        color: "#767676",
+                        fontSize: 16,
+                        display: "flex",
+                        alignItems: "center",
+                        marginRight: 91,
+                      }}
+                    >
+                      제작
+                    </span>
+                  </CheckBoxComponent>
+                </ProjectFieldCheckbox>
+              </RequestContentBox>
+
               <RequestContentBox>
                 <ContentTitle>
                   <div>희망 예산</div>
@@ -219,7 +296,7 @@ class PartnerDirectRequest extends Component {
                       options={this.state.priceAry}
                       value={Request.request_price}
                       getOptionLabel={(option) => option.name}
-                      placeholder="선택해주세요"
+                      placeholder={"1000만~2000만"}
                       onChange={Request.set_price}
                     />
 
@@ -246,7 +323,12 @@ class PartnerDirectRequest extends Component {
                       프로젝트 예산 조율이 가능합니다.
                     </span>
                   </CheckBoxComponent>
-                  <BudgetHelp>
+                  <BudgetHelp
+                    active={this.state.budget}
+                    onClick={() => {
+                      this.activeHandler("budget");
+                    }}
+                  >
                     <img src={helpimg}></img>
                     <span
                       style={{
@@ -259,8 +341,80 @@ class PartnerDirectRequest extends Component {
                       예산 측정이 어려우신가요?
                     </span>
                   </BudgetHelp>
+                  <HelpBox
+                    style={{ display: this.state.budget ? "flex" : "none" }}
+                  >
+                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                      <span
+                        style={{
+                          color: "#1e2222",
+                          fontSize: 15,
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        상담 후 예산 결정
+                      </span>
+                    </CheckBoxComponent>
+                    <span
+                      style={{
+                        fontSize: 15,
+                        lineHeight: 2.27,
+                        letterSpacing: -0.38,
+                        color: "#505050",
+                        marginLeft: 31,
+                      }}
+                    >
+                      프로젝트 예산 측정이 어렵다면, 볼트앤너트에서 유선으로
+                      예산 책정을 도와드립니다.
+                    </span>
+                  </HelpBox>
                 </Budget>
               </RequestContentBox>
+
+              {/* 프로젝트 의뢰에서만 */}
+              <RequestContentBox>
+                <ContentTitle style={{ marginBottom: 4 }}>
+                  <div>프로젝트 예상 진행 기간</div>
+                </ContentTitle>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <span
+                    style={{
+                      fontSize: 16,
+                      color: "#505050",
+                      lineHeight: 2.13,
+                      letterSpacing: -0.4,
+                      fontWeight: "normal",
+                    }}
+                  >
+                    희망하는 프로젝트 진행 기간을 입력해주세요.
+                  </span>
+                  <ProjectDate>
+                    <InputComponent
+                      class="Input"
+                      onFocus={(e) => (e.target.placeholder = "")}
+                      placeholder="일"
+                      onChange={(e) => {
+                        Request.set_contents(e);
+                      }}
+                    />
+                  </ProjectDate>
+                  <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <span
+                      style={{
+                        color: "#1e2222",
+                        fontSize: 15,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      프로젝트 진행 기간 조율이 가능합니다.
+                    </span>
+                  </CheckBoxComponent>
+                </div>
+              </RequestContentBox>
+
+              {/* 제조사가 직접 의뢰하기, 신제품 맞춤형 문의만*/}
               <RequestContentBox>
                 <ContentTitle style={{ marginBottom: 8 }}>
                   <span>희망 납기일</span>
@@ -275,7 +429,6 @@ class PartnerDirectRequest extends Component {
                 >
                   프로젝트 제품분야에 해당하는 항목들을 선택해주세요.
                 </span>
-
                 <Calendar />
                 <CheckBoxComponent onChange={this.toggleCheckBox}>
                   <span
@@ -290,6 +443,7 @@ class PartnerDirectRequest extends Component {
                   </span>
                 </CheckBoxComponent>
               </RequestContentBox>
+
               <RequestContentBox>
                 <ContentTitle style={{ marginBottom: 8 }}>
                   <span>프로젝트 내용</span>
@@ -320,19 +474,16 @@ class PartnerDirectRequest extends Component {
                 <Help>
                   <img src={help_face}></img>
                 </Help>
-                <InputComponent
-                  class="Input"
-                  onFocus={(e) => (e.target.placeholder = "")}
-                  value={projectContent}
-                  onChange={(e) => {
-                    Request.set_contents(e);
-                  }}
-                  style={{
-                    width: "100%",
-                    height: "433px",
-                    borderRadius: 3,
-                  }}
-                />
+                <ProjectInput>
+                  <InputComponent
+                    class="Input"
+                    onFocus={(e) => (e.target.placeholder = "")}
+                    value={Request.request_contents}
+                    onChange={(e) => {
+                      Request.set_contents(e);
+                    }}
+                  />
+                </ProjectInput>
               </RequestContentBox>
             </Requestontent>
             <RequestContentBox>
@@ -429,8 +580,80 @@ class PartnerDirectRequest extends Component {
                   </SecurityBoxContent>
                 </SecurityBox>
               </Security>
+
+              {/* 프로젝트 의뢰에서만 */}
+              <span
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  fontSize: 32,
+                  fontWeight: 500,
+                  letterSpacing: -0.8,
+                  color: "#1e2222",
+                  marginTop: 140,
+                  marginBottom: 70,
+                }}
+              >
+                <span style={{ color: "#0933b3" }}>파트너 모집 정보</span>를
+                입력해주세요.
+              </span>
+
+              <PartnerInfo>
+                <ContentTitle style={{ marginBottom: 4 }}>
+                  <div>선호 지역</div>
+                  <img src={starred} style={{ marginLeft: 4 }}></img>
+                </ContentTitle>
+                <span
+                  style={{
+                    fontSize: 16,
+                    color: "#505050",
+                    lineHeight: 2.13,
+                    letterSpacing: -0.4,
+                    fontWeight: "normal",
+                  }}
+                >
+                  파트너와의 오프라인 미팅 시 고객님의 선호 위치를 참고합니다.
+                </span>
+                <div
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 12,
+                  }}
+                >
+                  <SelectComponent
+                    styles={customStyles}
+                    options={this.state.priceAry}
+                    value={Request.request_price}
+                    getOptionLabel={(option) => option.name}
+                    placeholder={"시/도"}
+                    onChange={Request.set_price}
+                  />
+                </div>
+                <div style={{ marginBottom: 70 }}>
+                  <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <span
+                      style={{
+                        color: "#1e2222",
+                        fontSize: 15,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      위치 조율이 가능합니다.
+                    </span>
+                  </CheckBoxComponent>
+                </div>
+              </PartnerInfo>
+
               <RequestBtn>
-                <RequestBotton onClick = {() => {Request.requestSubmit()}}>의뢰 요청하기</RequestBotton>
+                <RequestButton
+                  onClick={() => {
+                    Request.requestSubmit();
+                    // console.log(this.newIndex);
+                  }}
+                >
+                  의뢰 요청하기
+                </RequestButton>
               </RequestBtn>
             </RequestContentBox>
           </Body>
@@ -1422,6 +1645,7 @@ const SecurityBox = styled.div`
   flex-direction: column;
   text-align: center;
   cursor: pointer;
+  background-color: ${(props) => (props.active ? "#edf4fe" : "#ffffff")};
 `;
 
 const SecurityBoxTitle = styled.span`
@@ -1499,22 +1723,6 @@ const PurposeBtn = styled.div`
   justify-content: flex-start;
 `;
 
-const RequestButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 140px;
-  height: 42px;
-  border-radius: 30px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  border: solid 1px #0933b3;
-  background-color: #ffffff;
-  margin-right: 16px;
-  font-size: 16px;
-  color: #0933b3;
-  letter-spacing: -0.4px;
-`;
-
 const Budget = styled.div`
   display: flex;
   flex-direction: column;
@@ -1577,7 +1785,7 @@ const RequestBtn = styled.div`
   margin-bottom: 300px;
 `;
 
-const RequestBotton = styled(Buttonv1)`
+const RequestButton = styled(Buttonv1)`
   width: 228px !important;
   height: 48px !important;
   font-size: 18px;
@@ -1589,4 +1797,49 @@ const FileImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const ContentInput = styled.div`
+  .MuiInputBase-root {
+    height: 42px;
+  }
+`;
+
+const ProjectInput = styled.div`
+  .MuiInputBase-root {
+    height: 433px;
+  }
+`;
+
+const ProjectDate = styled.div`
+  .MuiInputBase-root {
+    width: 204px;
+    height: 42px;
+  }
+  margin-bottom: 12px;
+`;
+
+const ProjectFieldCheckbox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  background-color: #ffffff;
+  padding-left: 12px;
+  margin-top: 16px;
+`;
+
+const PartnerInfo = styled.div``;
+
+const HelpBox = styled.div`
+  flex-direction: column;
+  justify-content: center;
+  height: 72px;
+  border-radius: 3px;
+  background-color: #edf4fe;
+  padding-left: 33px;
+  margin-top: 12px;
 `;
