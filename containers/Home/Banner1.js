@@ -1,97 +1,177 @@
 import React from "react";
-import Background from "../../components/Background";
-import Containerv1 from "components/Containerv1";
-import * as Title from "components/Title";
 import styled from "styled-components";
-import Fade from "react-reveal/Fade";
-import { inject, observer } from "mobx-react";
+import * as Text from "components/Text";
+import Slider from "react-slick";
+import Background from "components/Background";
 
-const BannerImg = "static/images/Home/Banner1/Banner1.png";
-const backgroundImg = "/static/images/Home/Banner3/Banner3_Bg.png";
+const image1 = "/static/images/logo/logo_1.png";
+const image2 = "/static/images/logo/logo_2.png";
+const image3 = "/static/images/logo/logo_3.png";
+const image4 = "/static/images/logo/logo_4.png";
+const image5 = "/static/images/logo/logo_5.png";
+const image6 = "/static/images/logo/logo_6.png";
+const image7 = "/static/images/logo/logo_7.png";
+const image8 = "/static/images/logo/logo_8.png";
+const image9 = "/static/images/logo/logo_9.png";
+const image10 = "/static/images/logo/logo_10.png";
+const image11 = "/static/images/logo/logo_11.png";
+const image12 = "/static/images/logo/logo_12.png";
+const image13 = "/static/images/logo/logo_13.png";
+const image14 = "/static/images/logo/logo_14.png";
+const image15 = "/static/images/logo/logo_15.jpg";
+const image16 = "/static/images/logo/logo_16.png";
 
-@inject("Proposal", "Partner")
-@observer
-class Banner1Container extends React.Component {
+class NewBanner1Container extends React.Component {
   render() {
-    const ProjectCount = this.props.Proposal.projects_count;
+    const SlideSettings = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 7,
+      slidesToScroll: 1,
+      draggable: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+    };
+
     return (
-      <Background src={backgroundImg}>
-        <ContentContainer>
-          <Fade bottom>
-            <Image>
-              <ImageContainer>
-                <div>
-                  <img src={BannerImg} />
-                </div>
-              </ImageContainer>
-            </Image>
-            <div>
-              <Head>볼트앤너트 AI 자동 견적</Head>
-              <Main>
-                <span>
-                  바로 나오는 <br />
-                  AI 자동 견적
-                </span>
-              </Main>
-              <Content>
-                볼트앤너트 AI 자동 견적 알고리즘이 <br />
-                제작품에 대한 견적 범위를 바로 안내해드립니다.
-              </Content>
-            </div>
-          </Fade>
-        </ContentContainer>
-      </Background>
+      <CustomBackground>
+        <Container>
+          <Box>
+            <Header>볼트앤너트는 제조분야를 선도하는 많은 기업들과 함께 하고있습니다.</Header>
+          </Box>
+
+          <SliderContainer {...SlideSettings}>
+            <Item style={{ width: 141 }}>
+              <img src={image1} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image2} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image3} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image4} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image5} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image6} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image7} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image8} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image9} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image10} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image11} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image12} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image13} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image14} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image15} />
+            </Item>
+            <Item style={{ width: 141 }}>
+              <img src={image16} />
+            </Item>
+          </SliderContainer>
+        </Container>
+      </CustomBackground>
     );
   }
 }
-export default Banner1Container;
-const ContentContainer = styled(Containerv1)`
-  display: flex;
-  flex-direction: row;
+
+export default NewBanner1Container;
+
+const CustomBackground = styled(Background)`
+  height: 282px;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.06);
+  background-color: #ffffff;
 `;
-const Image = styled.div`
+
+const Box = styled.div`
+  background-position: center;
+  background-size: cover;
   display: flex;
-  flex-direction: row;
-  margin-right: 120px;
-`;
-const ImageContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   width: 100%;
-  height: 246px;
-  margin-top: 385px;
-`;
-const Head = styled(Title.FontSize20)`
-  //color: #0933b3;
-  color: #ffffff;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.45;
-  letter-spacing: normal;
-  margin: 293px 0px 32px 0px;
-`;
-const Main = styled(Title.FontSize56)`
-  color: #ffffff;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.36;
-  letter-spacing: -1.4px;
-  margin-bottom: 128px;
+
+  height: 73px;
+  position: relative;
+  justify-content: center;
+
   > span {
-    font-weight: bold;
+    font-size: 26px;
+    line-height: 76px;
+    letter-spacing: -0.65px;
+    color: #ffffff;
+    z-index: 98;
   }
 `;
-const Content = styled(Title.FontSize24)`
-  font-weight: 500;
+
+const Container = styled.div`
+  padding-top: 30px;
+
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: calc(100% - 28px);
+  }
+
+  @media (min-width: 768px) and (max-width: 1279.98px) {
+    width: 720px;
+  }
+  @media (min-width: 1280px) {
+    width: 1200px;
+  }
+`;
+
+const SliderContainer = styled(Slider)`
+  .slick-list {
+    .slick-track {
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+`;
+
+const Item = styled.div`
+  margin: 0 20px;
+
+  > img {
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    width: 141px;
+    height: 141px;
+  }
+`;
+
+const Header = styled(Text.FontSize18)`
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.6px;
-  text-align: left;
-  // color: #282c36;
-  color: #ffffff;
-  margin-bottom: 331px;
+  line-height: 4.22;
+  letter-spacing: -0.45px;
+  text-align: center;
+  color: #999999;
 `;
