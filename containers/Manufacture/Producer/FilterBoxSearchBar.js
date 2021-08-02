@@ -8,7 +8,7 @@ import Background from "components/Background";
 import Container from "components/Containerv1";
 import Router from "next/router";
 import { toJS } from "mobx";
-import AddFile from "./AddFile";
+
 import { PRIMARY2 } from "static/style";
 import Category from "../../../stores/Manufacture/Category";
 
@@ -31,7 +31,6 @@ class SearchBarConatiner extends React.Component {
     suggs: [],
     showSuggs: false,
     searchbaractive: false,
-
   };
 
   // 검색함수
@@ -94,22 +93,16 @@ class SearchBarConatiner extends React.Component {
     await this.props.Auth.checkLogin();
   }
 
-  closeModal = () => {
-    this.setState({
-      ...this.state,
-      modal_open: false,
-    });
-  };
-  // 이미지 버튼 클릭 시 모달 창 띄우기
-  imageModal = () => {
+
+  // 검색창에 검색을 할 때 text를 observable에 저장
+  handleSearcherInputChange(event) {
     const { Partner } = this.props;
-    Partner.image_modal_state = !Partner.image_modal_state;
+    Partner.search_text = event.target.value;
+    console.log(event.target.value);
   }
 
   render() {
     const { Partner, Request } = this.props;
-
-    
 
     return (
       <>
@@ -135,21 +128,14 @@ class SearchBarConatiner extends React.Component {
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-              <img src="/static/icon/Camera.svg" onClick={this.imageModal} />
-              {/* 이미지 검색 테스트용 */}
-              {Partner.image_modal_state &&
-                <span style={{ display: "inline-block" }}>
-                <AddFile
-                  file={true}
-                  isOpen={true}
-                  ///onChange={this.handleChange}
-                />
-                <div></div>
-              </span>
-              }
               <img src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
-            
+
+            {this.state.showSuggestions && this.state.suggs.length > 0 && (
+              <CustomUl>
+                <CustomLiBox>{suggestions}</CustomLiBox>
+              </CustomUl>
+            )}
           </div>
         </Form>
       </>
@@ -160,17 +146,18 @@ class SearchBarConatiner extends React.Component {
 export default SearchBarConatiner;
 
 const CustomUl = styled.ul`
-  width: 100%;
+  width: 588px;
   height: 150px;
+  margin-left: 30px;
   font-size: 18px;
-  margin-right: 1px;
+  }
 `;
 
 const CustomLiBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 120px;
+  width: 588px;
+  height: 160px;
   overflow: scroll;
   background-color: #ffffff;
 
@@ -199,9 +186,9 @@ const SearchBar = styled.div`
   box-sizing: border-box;
   border-radius: 60px;
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
-  border: solid 1px #e1e2e4;
+  border: solid 0.5px #c6c7cc;
   width: 100%;
-  padding-right: 25px;
+  padding-right: 17px;
 
   input {
     width: 700px;
@@ -211,12 +198,10 @@ const SearchBar = styled.div`
     padding: 0 14px;
     margin-left: 10px;
     font-size: 18px;
-    margin-top: 2px;
     :focus {
       outline: none;
     }
     ::placeholder {
-      margin-top: 2px;
       color: #c6c7cc;
       font-size: 18px;
     }
@@ -268,13 +253,6 @@ const SearchBar = styled.div`
   }
   @media (min-width: 1300px) {
     width: 792px;
-  }
-
-  // 구글 검색 관련
-  .searcher-suggs {
-    // position: absolute;
-    // background-color: red;
-    // width: 588px;
   }
 
   .searcher-suggs-word {

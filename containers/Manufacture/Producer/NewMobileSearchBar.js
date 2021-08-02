@@ -79,6 +79,14 @@ class NewMobileSearchBarConatiner extends React.Component {
     await this.props.Auth.checkLogin();
   }
 
+  // 검색창에 검색을 할 때 text를 observable에 저장
+  handleSearcherInputChange(event) {
+    const { Partner } = this.props;
+    Partner.search_text = event.target.value;
+    console.log(event.target.value);
+  }
+  
+
   render() {
     const { Partner, Request } = this.props;
 

@@ -8,6 +8,7 @@ import { CompressedPixelFormat } from "three";
 
 const addButtonImg = "static/images/components/Input2/Mask.png";
 const deleteButtonImg = "/static/images/delete.png";
+const clip = "./static/images/request/clip.svg";
 
 @inject("Request", "ManufactureProcess")
 @observer
@@ -46,6 +47,48 @@ class InputComponent extends React.Component {
 
     return (
       <Wrap width={this.props.width}>
+        {Request.request_file_set.map((item, idx) => {
+          console.log(Request.request_file_set);
+          return (
+            <>
+              <AddFileList>
+                <span
+                  onClick={() => {
+                    if (checkFileUpload) {
+                      Request.request_file_set.splice(idx, 1);
+                      const inputFile = document.getElementById("inputFile");
+                      inputFile.innerHTML = "";
+
+                      if (Request.request_file_set.length === 0) {
+                        this.setState({ checkFileUpload: false });
+                      }
+                    }
+                  }}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <span>
+                    <img
+                      src={clip}
+                      style={{
+                        marginLeft: 17,
+                        marginRight: 17,
+                      }}
+                    ></img>
+                    <span>{item.name}</span>
+                    <DeleteFile
+                      onClick={() => Request.delete_File(idx)}
+                      src={deleteButtonImg}
+                      style={{
+                        display: this.state.checkFileUpload ? "inline" : "none",
+                        marginLeft: 17,
+                      }}
+                    />
+                  </span>
+                </span>
+              </AddFileList>
+            </>
+          );
+        })}
         <FileText checkFileUpload={this.state.checkFileUpload}>
           <InputBox>
             <div>
@@ -60,8 +103,7 @@ class InputComponent extends React.Component {
                 value=""
                 placeholder={"파일을 선택해 주세요."}
               />
-
-              <div>
+              <AddFile>
                 <div
                   onClick={() => {
                     this.file.current.click();
@@ -81,41 +123,7 @@ class InputComponent extends React.Component {
                     파일 첨부
                   </span>
                 </div>
-                {Request.request_file_set.map((item, idx) => {
-                  console.log(Request.request_file_set);
-                  return (
-                    <>
-                      <span
-                        onClick={() => {
-                          if (checkFileUpload) {
-                            Request.request_file_set.splice(idx, 1);
-                            const inputFile =
-                              document.getElementById("inputFile");
-                            inputFile.innerHTML = "";
-
-                            if (Request.request_file_set.length === 0) {
-                              this.setState({ checkFileUpload: false });
-                            }
-                          }
-                        }}
-                      >
-                        <span>
-                          <span>{item.name}</span>
-                          <DeleteFile
-                            onClick={() => Request.delete_File(idx)}
-                            src={deleteButtonImg}
-                            style={{
-                              display: this.state.checkFileUpload
-                                ? "inline"
-                                : "none",
-                            }}
-                          />
-                        </span>
-                      </span>
-                    </>
-                  );
-                })}
-              </div>
+              </AddFile>
             </div>
           </InputBox>
         </FileText>
@@ -200,6 +208,7 @@ const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   width: ${(props) => (props.width ? props.width : "100%")};
+  margin-top: 16px;
 `;
 const Input = styled.div`
   width: 100%;
@@ -275,7 +284,7 @@ const FileText = styled(Content.FontSize18)`
   background-color: #f6f6f6;
   flex-wrap: wrap;
   box-sizing: border-box;
-  margin-top: 24px;
+  margin-top: 12px;
   > span:nth-of-type(1) {
     > span {
       > img {
@@ -322,4 +331,27 @@ const DeleteFile = styled.img`
   margin-right: 29px;
   vertical-align: middle;
   cursor: pointer;
+`;
+
+const AddFile = styled.div`
+  display: flex;
+  justify-content: center;
+  algin-items: center;
+`;
+
+const AddFileList = styled.div`
+  width: 100%;
+  height: 42px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  object-fit: contain;
+  border-radius: 3px;
+  border: solid 1px #c6c7cc;
+  font-family: NotoSansCJKkr;
+  font-size: 16px;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #1e2222;
+  margin-bottom: 8px;
 `;

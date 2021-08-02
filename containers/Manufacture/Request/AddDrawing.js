@@ -12,6 +12,7 @@ const addButtonImg = "static/images/components/Input2/Mask.png";
 const deleteButtonImg = "/static/images/delete.png";
 const fileupload = "./static/images/request/fileupload.svg";
 const clip = "./static/images/request/clip.svg";
+const blueplus = "./static/images/request/blueplus.svg";
 
 @inject("Request", "ManufactureProcess")
 @observer
@@ -127,8 +128,32 @@ class InputComponent extends React.Component {
                       }}
                       style={{ marginTop: 30 }}
                     >
-                      <FileUploadBox>
-                        <div>넣자~</div>
+                      <FileUploadBox
+                        style={{
+                          width: 792,
+                          height: 90,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          src={blueplus}
+                          style={{ width: 22, height: 22 }}
+                        ></img>
+                        <span
+                          style={{
+                            fontSize: 15,
+                            letterSpacing: -0.38,
+                            color: "#282c36",
+                            marginLeft: 27,
+                          }}
+                        >
+                          3D 도면 파일을 이곳에 드래그 또는{" "}
+                          <span style={{ color: "#0933b3", fontWeight: 500 }}>
+                            파일찾기
+                          </span>
+                        </span>
                       </FileUploadBox>
                     </div>
                   </>

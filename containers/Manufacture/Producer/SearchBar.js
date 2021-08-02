@@ -28,6 +28,10 @@ class SearchBarConatiner extends React.Component {
   search = async () => {
     const { Partner, ManufactureProcess, Category } = this.props;
 
+    // 연관검색어 저장
+    Partner.suggest_list = this.state.suggs;
+    console.log(toJS(Partner.suggest_list));
+
     await Router.push("/producer");
     // console.log("click");
 
@@ -81,6 +85,12 @@ class SearchBarConatiner extends React.Component {
     await this.props.Auth.checkLogin();
   }
 
+  // 검색창에 검색을 할 때 text를 observable에 저장
+  handleSearcherInputChange(event) {
+    const { Partner } = this.props;
+    Partner.search_text = event.target.value;
+  }
+
   render() {
     const { Partner, Request } = this.props;
 
@@ -98,9 +108,14 @@ class SearchBarConatiner extends React.Component {
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-
               <img style={{ width: 24, height: 24, marginRight: 25, cursor: "pointer" }} src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
+
+            {this.state.showSuggestions && this.state.suggs.length > 0 && (
+              <CustomUl>
+              <CustomLiBox>{suggestions}</CustomLiBox>
+            </CustomUl>
+            )}
 
           </div>
         </Form>
@@ -204,12 +219,6 @@ const SearchBar = styled.div`
     }
   }
   
-  // 구글 검색 관련
-  .searcher-suggs {
-    // position: absolute;
-    // background-color: red;
-    // width: 588px;
-  }
 
   .searcher-suggs-word {
     height: 40px;

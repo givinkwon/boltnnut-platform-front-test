@@ -33,6 +33,7 @@ import MobileRequestCompleteContainer from "./Mobile/MobileRequestComplete";
 import ModifyCompleteContainer from "./ModifyComplete";
 import MobileModifyCompleteContainer from "./Mobile/MobileModifyComplete";
 import PartnerDirectRequest from "./PartnerDirectRequest";
+import RequestComplete from "./RequestComplete";
 
 @inject("Partner", "ManufactureProcess", "Request", "Auth")
 @observer
@@ -53,7 +54,13 @@ class RequestContainer extends React.Component {
       <>
         <Background>
           <Containerv1 style={{ width: 792 }}>
-            <PartnerDirectRequest />
+            {Request.newIndex !== 1 ? (
+              <PartnerDirectRequest />
+            ) : (
+              <RequestComplete />
+            )}
+            {/* <RequestComplete /> */}
+            {/* <PartnerDirectRequest /> */}
           </Containerv1>
         </Background>
         {/* {this.props.width >= 1279.98 ? (
