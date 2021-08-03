@@ -159,12 +159,29 @@ class ManufacturerContentContainer extends React.Component {
         <Background id="MyBackground">
           {Partner.subButtonActive ? (
             <RequestMiddle>
-              <div>
-                기존 제품 검색보다 원하는 조건에 딱 맞는 신제품 제조를
-                원하시나요?
-              </div>
+              <span
+                style={{
+                  fontSize: 16,
+                  lineHeight: 3.13,
+                  letterSpacing: -0.4,
+                  color: "#555963",
+                  marginRight: 24,
+                }}
+              >
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    color: "#1e2222",
+                    marginRight: 2,
+                  }}
+                >
+                  마음에 드는 공장을 찾기 힘드시나요?
+                </span>
+                지금 '의뢰하기'를 눌러서 여러 업체의 회사소개서와 제안서를
+                받아보세요.
+              </span>
               <RequestBtn onClick={Partner.openModal}>
-                맞춤형 문의하기
+                무료로 의뢰하기
               </RequestBtn>
             </RequestMiddle>
           ) : (

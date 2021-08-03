@@ -15,7 +15,15 @@ import Category from "../../../stores/Manufacture/Category";
 
 import AddFile from "./AddFile";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer", "Category")
+@inject(
+  "Auth",
+  "Project",
+  "Request",
+  "Partner",
+  "ManufactureProcess",
+  "Producer",
+  "Category"
+)
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -63,7 +71,10 @@ class SearchBarConatiner extends React.Component {
         // console.log(Partner.subButtonActive);
         ManufactureProcess.saveSearchText(Partner.search_text);
         ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
+        setTimeout(
+          () => (ManufactureProcess.loadingSaveSearchText = true),
+          2000
+        );
       }
     }
   };
@@ -121,33 +132,44 @@ class SearchBarConatiner extends React.Component {
               alignItems: "center",
             }}
           >
-            <SearchBar active={Partner.subButtonActive} style={{ position: "relative" }}>
+            <SearchBar
+              active={Partner.subButtonActive}
+              style={{ position: "relative" }}
+            >
               <input
                 placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
+                onBlur={(e) =>
+                  (e.target.placeholder =
+                    "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
+                }
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.search_text}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
 
-              <ImgContainer onMouseEnter={() => this.imageSearchHandler()} onMouseLeave={() => this.imageSearchHandler()}>
-                <HoverBox active={this.state.imgsearchhover} className="hoverBox">
+              <ImgContainer
+                onMouseEnter={() => this.imageSearchHandler()}
+                onMouseLeave={() => this.imageSearchHandler()}
+              >
+                <HoverBox
+                  active={this.state.imgsearchhover}
+                  className="hoverBox"
+                >
                   <Title13>제품 이미지로 검색하기</Title13>
                 </HoverBox>
                 <AddFile
-                    file={true}
-                    isOpen={true}
-                    ///onChange={this.handleChange}
-                  />
+                  file={true}
+                  isOpen={true}
+                  ///onChange={this.handleChange}
+                />
               </ImgContainer>
 
               <ImgContainer>
                 <img src="/static/icon/search_blue.svg" onClick={this.search} />
               </ImgContainer>
             </SearchBar>
-
           </div>
         </Form>
       </>

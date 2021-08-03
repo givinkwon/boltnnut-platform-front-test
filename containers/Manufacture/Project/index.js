@@ -3,7 +3,7 @@ import ClientContentContainer from "./Client/Content";
 import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobileProject";
 import ProjectSearch from "./Partner/Content";
 import MobileProjectSearch from "./Partner/Mobile/MobileProject";
-import MobileMyProject from "./Partner/Mobile/MobileMyProject"
+import MobileMyProject from "./Partner/Mobile/MobileMyProject";
 import BannerContainer from "./Common/Banner";
 
 import ProjectDetailContainer from "./Client/ProjectDetail/ProjectDetail";
