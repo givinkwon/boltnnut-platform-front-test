@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import { withRouter } from "next/router";
@@ -14,12 +14,14 @@ import Buttonv1 from "components/Buttonv1";
 import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
 import KSLink from "components/KSLink";
 
-const close_ic = "/static/icon/close.svg";
+const close_ic = "/static/icon/closeIcon.svg";
+const close_clicked = "/static/icon/close_clicked.svg";
+const signupIcon = "/static/images/signupIcon.svg";
 const bnlogo = "/static/images/bnlogo.svg";
 const hamburger_ic = "/static/icon/hamburger.png";
 const logo_ic = "/static/images/components/Nav/logo_ic.svg";
 const profile = "/static/images/profile.png";
-
+const signupBoxImg = "/static/images/SignupBox.png";
 @inject("Auth", "Partner", "Project", "Home")
 @observer
 class Nav extends React.Component {
@@ -30,6 +32,7 @@ class Nav extends React.Component {
     is_open: false,
     selectedRoom: null,
     partnerList: [],
+    closeImgState: false,
   };
 
   alreadyLoggedin = ["login", "signup"];
@@ -322,7 +325,7 @@ class Nav extends React.Component {
                       >
                         <RouterWrapper>
                           <KSLink
-                            url={"signup"}
+                            url={"login"}
                             FontContent={() => {
                               return <Font14>파트너 등록하기</Font14>;
                             }}
@@ -460,7 +463,7 @@ class Nav extends React.Component {
                     >
                       <RouterWrapper>
                         <KSLink
-                          url={"signup"}
+                          url={"login"}
                           FontContent={() => {
                             return <Font14>파트너 등록하기</Font14>;
                           }}
@@ -474,7 +477,7 @@ class Nav extends React.Component {
                     </NavLink>
                     <NavLink
                       onClick={() => {
-                        this.props.Auth.setType("client");
+                        Auth.setType("client");
                       }}
                       active={
                         url.indexOf("signup") > -1 && Auth.type == "client"
@@ -487,6 +490,64 @@ class Nav extends React.Component {
                             return <Font14>회원가입</Font14>;
                           }}
                         />
+                        {Auth.signupBoxActive && (
+                          <AnimationBox
+                            onClick={() => {
+                              Router.push("/signup");
+                            }}
+                          >
+                            <img src={signupBoxImg} />
+                            <img
+                              src={signupIcon}
+                              style={{
+                                position: "absolute",
+                                left: "21%",
+                                top: "35%",
+                              }}
+                            />
+                            <img
+                              src={
+                                this.state.closeImgState
+                                  ? close_clicked
+                                  : close_ic
+                              }
+                              onMouseOver={() => {
+                                this.setState({ closeImgState: true });
+                              }}
+                              onMouseOut={() => {
+                                this.setState({ closeImgState: false });
+                              }}
+                              style={{
+                                width: 12,
+                                height: 12,
+                                position: "absolute",
+                                top: "40%",
+                                right: "14%",
+                                zIndex: 5000,
+                              }}
+                              onClick={() => {
+                                Auth.signupBoxActive = false;
+                              }}
+                            />
+                            <div
+                              style={{
+                                position: "absolute",
+                                textAlign: "center",
+                              }}
+                            >
+                              <Font14
+                                style={{
+                                  lineHeight: "1.71",
+                                  letterSpacing: "-0.14px",
+                                  marginTop: 6,
+                                }}
+                              >
+                                <span>지금 회원가입</span>하고 <br />
+                                전문 제조사 정보를 무료로 받아보세요!
+                              </Font14>
+                            </div>
+                          </AnimationBox>
+                        )}
                       </RouterWrapper>
                     </NavLink>
 
@@ -526,6 +587,24 @@ class Nav extends React.Component {
 }
 export default Nav;
 
+const MoveBoxAnimation = keyframes`
+  0% {transform:translate(0,0);}
+  100% {transform:translate(0,10px);}
+`;
+const AnimationBox = styled.div`
+  top: 70%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${MoveBoxAnimation} 1s 1s infinite alternate;
+  animation-delay: 0s;
+  cursor: pointer;
+  :hover {
+    animation-play-state: paused;
+  }
+`;
+
 const StyledButton = styled.div`
   display: flex;
   align-items: center;
@@ -544,6 +623,9 @@ const Font14 = styled(Content.FontSize14)`
   letter-spacing: -0.14px;
   color: #1e2222;
   text-align: center;
+  > span {
+    font-weight: bold;
+  }
 `;
 const RouterWrapper = styled.div`
   /* border: 1px solid black; //지우기 */

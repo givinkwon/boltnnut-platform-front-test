@@ -6,7 +6,6 @@ import TextField from "@material-ui/core/TextField";
 
 const CustomInput = withStyles({
   root: {
-    width: "1323px",
     marginTop: "35px",
     border: "1px",
     borderRadius: "3px",
@@ -69,7 +68,6 @@ class Input extends React.Component {
       <CustomInput
         {...props}
         id={this.id}
-        fullWidth
         label={focused ? label : placeholder}
         outlined={this.outlined}
         onFocus={this.onFocus}

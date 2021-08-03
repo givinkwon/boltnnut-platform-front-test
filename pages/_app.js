@@ -14,9 +14,6 @@ import PrepareModal from "containers/Home/Common/PrepareModal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import * as AccountAPI from "axios/Account/Account";
-
-
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
@@ -98,7 +95,6 @@ class MyApp extends App {
     });
   };
   componentDidMount() {
-    console.log("RR");
     const { Home } = this.props;
     const userAgent = window.navigator.userAgent;
 
@@ -118,9 +114,6 @@ class MyApp extends App {
       userAgent.indexOf(".NET") !== -1 ||
       userAgent.indexOf("Edge") !== -1
     ) {
-      console.log(
-        "AAS@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-      );
       this.setState({
         ...this.state,
         ie_user: true,
@@ -137,27 +130,6 @@ class MyApp extends App {
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentNode)
       jssStyles.parentNode.removeChild(jssStyles);
-
-    const formData = new FormData();
-
-    formData.append("url", window.location.href);
-    document.referrer === ""
-      ? formData.append("prevUrl", "direct")
-      : formData.append("prevUrl", document.referrer);
-
-    console.log(window.location.href);
-    const req = {
-      data: formData,
-    };
-
-    AccountAPI.setUserIP(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
   }
   // 네이버애널리틱스
   componentDidUpdate() {
@@ -178,7 +150,7 @@ class MyApp extends App {
           handleClose={this.closeModal}
         />
         <Provider {...stores}>
-            <Component {...pageProps} />
+          <Component {...pageProps} />
         </Provider>
       </ScrollToTop>
     );
