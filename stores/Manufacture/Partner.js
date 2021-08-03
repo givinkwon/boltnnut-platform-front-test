@@ -1018,6 +1018,30 @@ class Partner {
     }
   };
 
+  // 관심 제조사를 가져오는 함수
+  @action BookmarkPartner = (clientid) => {
+
+    const req = {
+      params: { client: clientid },
+    };
+
+    PartnerAPI.BookmarkPartner(req)
+      .then((res) => {
+        console.log(res);
+        this.partner_list = [];
+        this.partner_list = res.data.results;
+        console.log(res.data.results)
+        this.partner_count = res.data.partner.length;
+
+        // image modal state 초기화
+        this.image_modal_state = false;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
   @action getNextPartner = () => {
     if (!this.partner_next) {
       return;

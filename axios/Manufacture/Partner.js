@@ -425,6 +425,15 @@ export function getPPTInfo(req) {
   });
 }
 
+export function BookmarkPartner(req) {
+  return axios({
+    method: "GET",
+    url: `${ROOT_URL}/bookmark/`,
+    params: req.params ? req.params : null,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
 export function setBookmarkPartner(req) {
   return axios({
     method: "POST",
