@@ -6,7 +6,7 @@ import * as Text from "components/Text";
 import Button from "components/Button";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
-import ProposalCard from "containers/Manufacture/Producer/ProposalCard";
+import MobileProposalCard from "containers/Manufacture/Producer/MobileProposalCard";
 import { toJS } from "mobx";
 
 @inject("Home", "Partner", "Auth", "Producer", "Category")
@@ -69,11 +69,7 @@ class MobileBanner2Container extends React.Component {
           <CategoryBox>
             {nameTable.map((v, idx) => (
               <div style={{ width: "110px", marginRight: "18px" }}>
-                <CategoryTitle
-                  key={v.id}
-                  active={this.onCompareCategory(idx)}
-                  onClick={() => this.onClickCategory(v.id)}
-                >
+                <CategoryTitle key={v.id} active={this.onCompareCategory(idx)} onClick={() => this.onClickCategory(v.id)}>
                   {v.name}
                 </CategoryTitle>
               </div>
@@ -86,11 +82,8 @@ class MobileBanner2Container extends React.Component {
                 <>
                   {idx < 3 && (
                     <Background style={{ marginBottom: "5px" }}>
-                      <div
-                        onClick={() => Partner.pushToDetail(item, idx)}
-                        style={{ width: "100%" }}
-                      >
-                        <ProposalCard
+                      <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
+                        <MobileProposalCard
                           data={item}
                           width={this.props.width}
                           categoryData={toJS(Partner.category_dic[idx])}
@@ -105,9 +98,7 @@ class MobileBanner2Container extends React.Component {
               );
             })}
 
-          <Text16 style={{ marginTop: "56px" }}>
-            다양한 카테고리의 업체 전문가들을 찾고 있으신가요?
-          </Text16>
+          <Text16 style={{ marginTop: "56px" }}>다양한 카테고리의 업체 전문가들을 찾고 있으신가요?</Text16>
 
           <SignupButtom>
             <ButtonText16>회원가입하기</ButtonText16>

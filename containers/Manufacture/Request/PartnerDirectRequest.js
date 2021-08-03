@@ -207,7 +207,7 @@ class PartnerDirectRequest extends Component {
               </RequestContentBox>
 
               {/* 프로젝트 의뢰에서만 */}
-              <RequestContentBox>
+              {Request.request_type == 0 && <RequestContentBox>
                 <ContentTitle style={{ marginBottom: 4 }}>
                   <div>프로젝트 분류</div>
                   <img src={starred} style={{ marginLeft: 4 }}></img>
@@ -276,6 +276,7 @@ class PartnerDirectRequest extends Component {
                   </CheckBoxComponent>
                 </ProjectFieldCheckbox>
               </RequestContentBox>
+              }
 
               <RequestContentBox>
                 <ContentTitle>
@@ -597,7 +598,8 @@ class PartnerDirectRequest extends Component {
                 <span style={{ color: "#0933b3" }}>파트너 모집 정보</span>를
                 입력해주세요.
               </span>
-
+              {/* 제조사 선택에서 온 게 아닌 경우만 지역 노출 */}
+              {Request.request_type != 2 &&
               <PartnerInfo>
                 <ContentTitle style={{ marginBottom: 4 }}>
                   <div>선호 지역</div>
@@ -644,7 +646,8 @@ class PartnerDirectRequest extends Component {
                   </CheckBoxComponent>
                 </div>
               </PartnerInfo>
-
+              }
+              
               <RequestBtn>
                 <RequestButton
                   onClick={() => {

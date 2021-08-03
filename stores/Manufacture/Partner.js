@@ -136,23 +136,7 @@ class Partner {
   @observable temp_category_name_ary = [];
   @observable category_count = 0;
 
-  @observable availableFileType = [
-    "png",
-    "jpeg",
-    "gif",
-    "bmp",
-    "pdf",
-    "csv",
-    "xslx",
-    "docx",
-    "mp4",
-    "webm",
-    "mp3",
-    "pptx",
-    "doc",
-    "html",
-    "jpg",
-  ];
+  @observable availableFileType = ["png", "jpeg", "gif", "bmp", "pdf", "csv", "xslx", "docx", "mp4", "webm", "mp3", "pptx", "doc", "html", "jpg"];
   @observable category_dic = {
     0: [],
     1: [],
@@ -389,9 +373,7 @@ class Partner {
     this.dropDownActive = false;
     this.dropDownIdx = -1;
     this.click_count += 1;
-    this.subButtonActive
-      ? this.getOtherPartner(newPage)
-      : this.getPartner(newPage, this.click_count);
+    this.subButtonActive ? this.getOtherPartner(newPage) : this.getPartner(newPage, this.click_count);
   };
 
   @action pageNext = (e) => {
@@ -406,9 +388,7 @@ class Partner {
       this.dropDownActive = false;
       this.dropDownIdx = -1;
       this.click_count += 1;
-      this.subButtonActive
-        ? this.getOtherPartner(this.currentPage)
-        : this.getPartner(this.currentPage, this.click_count);
+      this.subButtonActive ? this.getOtherPartner(this.currentPage) : this.getPartner(this.currentPage, this.click_count);
     }
   };
 
@@ -424,9 +404,7 @@ class Partner {
       this.dropDownActive = false;
       this.dropDownIdx = -1;
       this.click_count += 1;
-      this.subButtonActive
-        ? this.getOtherPartner(this.currentPage)
-        : this.getPartner(this.currentPage, this.click_count);
+      this.subButtonActive ? this.getOtherPartner(this.currentPage) : this.getPartner(this.currentPage, this.click_count);
     }
   };
 
@@ -446,9 +424,7 @@ class Partner {
       }
       this.selectedIntroductionFile = item.file;
 
-      const fileType = item.file
-        .split(".")
-        [item.file.split(".").length - 1].toLowerCase();
+      const fileType = item.file.split(".")[item.file.split(".").length - 1].toLowerCase();
       this.selectedIntroductionFileType = fileType;
 
       if (this.availableFileType.indexOf(fileType) > -1) {
@@ -459,11 +435,7 @@ class Partner {
 
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
         console.log(toJS(this.partner_detail_list));
-        await this.getReviewByPartner(
-          this.partner_detail_list[0].item.id,
-          1,
-          1
-        );
+        await this.getReviewByPartner(this.partner_detail_list[0].item.id, 1, 1);
         await this.getReviewByPartner(this.partner_detail_list[0].item.id);
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
@@ -487,11 +459,21 @@ class Partner {
     link.click();
   };
 
+  //
+
+  @observable searchFileUrl = "";
   @action onChangeFile = (e) => {
     if (e && e.currentTarget.files[0]) {
       console.log(e.currentTarget);
       console.log(e.currentTarget.files[0]);
 
+      let reader = new FileReader();
+      //다른거
+      let file = e.target.files[0];
+      reader.onloadend = () => {
+        this.searchFileUrl = reader.result;
+      };
+      reader.readAsDataURL(file);
       for (var item in e.currentTarget.files) {
         console.log(item);
         if (typeof e.currentTarget.files[item] === "object") {
@@ -509,7 +491,7 @@ class Partner {
     this.fileName = fileName;
     this.checkFileUpload = true;
 
-    this.ImageSearch()
+    this.ImageSearch();
   };
 
   @action resetReviewAry = () => {
@@ -666,9 +648,7 @@ class Partner {
   @action setMainCategory = async (val) => {
     this.input_big_category = val;
     this.request_middle_list = this.input_big_category.category_set;
-    this.category_middle_ary = await this.category_middle_total_ary.filter(
-      (item) => item.maincategory === val.id
-    );
+    this.category_middle_ary = await this.category_middle_total_ary.filter((item) => item.maincategory === val.id);
 
     this.input_small_category = this.category_middle_ary[0];
   };
@@ -683,9 +663,7 @@ class Partner {
 
     this.request_middle_list = this.input_detail_big_category.category_set;
     // this.selectedMidCategory = obj.category_set[0];
-    this.category_middle_ary = await this.category_middle_total_ary.filter(
-      (item) => item.maincategory === val.id
-    );
+    this.category_middle_ary = await this.category_middle_total_ary.filter((item) => item.maincategory === val.id);
 
     this.input_detail_small_category = this.category_middle_ary[0];
   };
@@ -771,13 +749,10 @@ class Partner {
         console.log(res.data.results.splice(0, 4));
         this.category_list = res.data.results;
         this.category_list.forEach((mainCategory) => {
-          this.category_middle_list = this.category_middle_list.concat(
-            mainCategory.category_set
-          );
+          this.category_middle_list = this.category_middle_list.concat(mainCategory.category_set);
         });
         await this.category_main_list.map((mainCategory) => {
-          this.category_middle_total_ary =
-            this.category_middle_total_ary.concat(mainCategory.category_set);
+          this.category_middle_total_ary = this.category_middle_total_ary.concat(mainCategory.category_set);
         });
       })
       .catch((e) => {
@@ -985,9 +960,7 @@ class Partner {
         // history_set__id: toJS(develop).toString(),
         region: region.toString() ? region.toString() : null,
         // 카테고리 = 의뢰 분야
-        category_middle__id: toJS(develop).toString()
-          ? toJS(develop).toString()
-          : null,
+        category_middle__id: toJS(develop).toString() ? toJS(develop).toString() : null,
         page: this.page,
       },
     };
@@ -1010,43 +983,64 @@ class Partner {
 
   // image search를 위한 함수
   @action ImageSearch = () => {
-    console.log(this.file)
+    console.log(this.file);
     // 데이터 만들기
     var formData = new FormData();
     formData.append("file", this.file);
-    console.log(formData)
+    console.log(formData);
     const req = {
       data: formData,
     };
 
-    PartnerAPI.imagesearch (req)
+    PartnerAPI.imagesearch(req)
       .then((res) => {
         console.log(res);
         this.partner_list = [];
-        this.partner_list = res.data.partner;     
+        this.partner_list = res.data.partner;
         this.partner_count = res.data.partner.length;
 
         // image modal state 초기화
         this.image_modal_state = false;
-
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-    
-  }
+  };
 
   // 이미지 찾기 파일 설정
   @action set_searchfile = (obj) => {
     if (typeof obj == "object") {
-      this.request_file_set.push(obj)
+      this.request_file_set.push(obj);
       console.log("file uploaded");
     } else {
       this.request_file = null;
     }
   };
 
+  // 관심 제조사를 가져오는 함수
+  @action BookmarkPartner = (clientid) => {
+
+    const req = {
+      params: { client: clientid },
+    };
+
+    PartnerAPI.BookmarkPartner(req)
+      .then((res) => {
+        console.log(res);
+        this.partner_list = [];
+        this.partner_list = res.data.results;
+        console.log(res.data.results)
+        this.partner_count = res.data.partner.length;
+
+        // image modal state 초기화
+        this.image_modal_state = false;
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
 
   @action getNextPartner = () => {
     if (!this.partner_next) {
@@ -1222,9 +1216,7 @@ class Partner {
       return;
     }
 
-    const idx = this.requests.findIndex(
-      (request) => request.project == projectId
-    );
+    const idx = this.requests.findIndex((request) => request.project == projectId);
 
     return this.requests[idx];
   };
@@ -1233,9 +1225,7 @@ class Partner {
       return;
     }
 
-    const idx = this.category_middle_list.findIndex(
-      (category) => category.id == id
-    );
+    const idx = this.category_middle_list.findIndex((category) => category.id == id);
 
     return this.category_middle_list[idx];
   };
@@ -1375,10 +1365,7 @@ class Partner {
         if (!this.category_dic.hasOwnProperty(id)) {
           this.category_dic[id] = [];
         }
-        this.category_dic[id] = await [
-          ...this.category_dic[id],
-          res.data.category,
-        ];
+        this.category_dic[id] = await [...this.category_dic[id], res.data.category];
         console.log(toJS(this.category_dic));
       })
       .catch((e) => {
@@ -1402,9 +1389,7 @@ class Partner {
 
     PartnerAPI.getCategory(req)
       .then(async (res) => {
-        this.filter_category_ary = this.filter_category_ary.concat(
-          res.data.results
-        );
+        this.filter_category_ary = this.filter_category_ary.concat(res.data.results);
         this.develop_next = res.data.next;
 
         // console.log(toJS(res.data.results));
@@ -1418,9 +1403,7 @@ class Partner {
           await PartnerAPI.getNextDevelopPage(req)
             .then((res) => {
               //console.log(res);
-              this.filter_category_ary = this.filter_category_ary.concat(
-                res.data.results
-              );
+              this.filter_category_ary = this.filter_category_ary.concat(res.data.results);
 
               this.develop_next = res.data.next;
               //console.log(this.develop_next);
@@ -1453,9 +1436,7 @@ class Partner {
 
     PartnerAPI.getCity(req)
       .then(async (res) => {
-        this.filter_city_ary = await this.filter_city_ary.concat(
-          res.data.results
-        );
+        this.filter_city_ary = await this.filter_city_ary.concat(res.data.results);
         console.log(toJS(this.filter_city_ary));
         this.city_ary = this.city_ary.concat(res.data.results);
         this.city_next = res.data.next;
@@ -1470,9 +1451,7 @@ class Partner {
           await PartnerAPI.getNextCityPage(req)
             .then((res) => {
               // console.log(res);
-              this.filter_city_ary = this.filter_city_ary.concat(
-                res.data.results
-              );
+              this.filter_city_ary = this.filter_city_ary.concat(res.data.results);
               this.city_ary = this.city_ary.concat(res.data.results);
 
               this.city_next = res.data.next;
@@ -1668,11 +1647,7 @@ class Partner {
 
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
         console.log(toJS(this.partner_detail_list));
-        await this.getReviewByPartner(
-          this.partner_detail_list[0].item.id,
-          1,
-          1
-        );
+        await this.getReviewByPartner(this.partner_detail_list[0].item.id, 1, 1);
         await this.getReviewByPartner(this.partner_detail_list[0].item.id);
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
@@ -1705,10 +1680,7 @@ class Partner {
         console.log(this.business_string);
       });
       // 마지막 쉼표 제거하기 위함
-      this.business_string = this.business_string.substr(
-        0,
-        this.business_string.length - 1
-      );
+      this.business_string = this.business_string.substr(0, this.business_string.length - 1);
 
       // 괄호를 없애서 전처리
       req.params.business = this.business_string;
@@ -1722,10 +1694,7 @@ class Partner {
         console.log(this.category_string);
       });
       // 마지막 쉼표 제거하기 위함
-      this.category_string = this.category_string.substr(
-        0,
-        this.category_string.length - 1
-      );
+      this.category_string = this.category_string.substr(0, this.category_string.length - 1);
       console.log(this.category_string);
       // 괄호를 없애서 전처리
       req.params.category = this.category_string;
@@ -1739,10 +1708,7 @@ class Partner {
       });
       // 마지막 쉼표 제거하기 위함
 
-      this.city_string = this.city_string.substr(
-        0,
-        this.city_string.length - 1
-      );
+      this.city_string = this.city_string.substr(0, this.city_string.length - 1);
 
       // 괄호를 없애서 전처리
       req.params.city = this.city_string;
@@ -1755,10 +1721,7 @@ class Partner {
         console.log(this.develop_string);
       });
       // 마지막 쉼표 제거하기 위함
-      this.develop_string = this.develop_string.substr(
-        0,
-        this.develop_string.length - 1
-      );
+      this.develop_string = this.develop_string.substr(0, this.develop_string.length - 1);
 
       // 괄호를 없애서 전처리
       req.params.develop = this.develop_string;
@@ -1771,10 +1734,7 @@ class Partner {
         console.log(this.material_string);
       });
       // 마지막 쉼표 제거하기 위함
-      this.material_string = this.material_string.substr(
-        0,
-        this.material_string.length - 1
-      );
+      this.material_string = this.material_string.substr(0, this.material_string.length - 1);
 
       // 괄호를 없애서 전처리
       req.params.material = this.material_string;
@@ -2146,17 +2106,12 @@ class Partner {
     await PartnerAPI.getReviewByPartner(req)
       .then(async (res) => {
         if (page_nation == 1) {
-          this.partnerReviewList = await this.partnerReviewList.concat(
-            res.data
-          );
+          this.partnerReviewList = await this.partnerReviewList.concat(res.data);
           console.log(this.partnerReviewList);
           this.review_partner_count = res.data.count;
-          this.review_partner_page =
-            parseInt((this.review_partner_count - 1) / 10) + 1;
+          this.review_partner_page = parseInt((this.review_partner_count - 1) / 10) + 1;
         } else {
-          this.partnerAllReviewList = await this.partnerAllReviewList.concat(
-            res.data
-          );
+          this.partnerAllReviewList = await this.partnerAllReviewList.concat(res.data);
         }
         console.log(this.partnerReviewList);
         console.log(this.partnerAllReviewList);
@@ -2237,10 +2192,7 @@ class Partner {
         if (!this.review_client_obj.hasOwnProperty(id)) {
           this.review_client_obj[idx] = [];
         }
-        this.review_client_obj[idx] = await [
-          ...this.review_client_obj[idx],
-          res.data.user.username,
-        ];
+        this.review_client_obj[idx] = await [...this.review_client_obj[idx], res.data.user.username];
       }
       if (type === "question") {
         console.log(res.data);
@@ -2642,13 +2594,7 @@ class Partner {
       });
   };
 
-  @action setAnswerByQuestion = async (
-    questionID,
-    state,
-    secret,
-    content,
-    clientID = ""
-  ) => {
+  @action setAnswerByQuestion = async (questionID, state, secret, content, clientID = "") => {
     console.log(questionID);
     console.log(state);
     console.log(secret);
