@@ -18,12 +18,15 @@ class Project {
   @observable project_status = "";
   @observable projectDetailData = "";
   @observable selectedProjectId = null;
+
   // 페이지 관련 변수
   @observable project_page = ["", "", "", "", ""];
   @observable currentPage = 1;
+
   // 필터 & 라디오박스 관련 변수
   @observable filter_price = "전체";
   @observable radiobox_checked_idx = "1";
+
   // 카테고리 데이터 관련 변수
   @observable input_category = null;
   @observable product_idx = 0;
@@ -34,8 +37,7 @@ class Project {
   @observable newIndex = 0;
   @observable myIndex = 0;
   @observable chattingIndex = 0;
-  // * 삭제 예정 * 옛날 데이터 관련 변수
-  @observable data_dt = [];
+
   // 검색 관련 변수
   @observable search_text = "";
 
@@ -97,6 +99,7 @@ class Project {
     this.main_category_idx = [0, 0, 0, 0, 0];
     this.main_category_name = ["", "", "", "", ""];
   };
+
   /* 삭제 검토 중 */
   @action getNextPage = (clientId, callback = null) => {
     if (!this.project_next) {
@@ -128,6 +131,7 @@ class Project {
         console.log(e.response);
       });
   };
+  
   /* 클라이언트 - project API 데이터 가져오기 */
   @action getPage = (clientId, page = 1) => {
     this.projectDataList = [];
@@ -228,7 +232,7 @@ class Project {
       });
   };
   @action getProjectDetail = async (id) => {
-    // console.log(id);
+
     const req = {
       id: id,
     };
@@ -244,11 +248,7 @@ class Project {
       });
   };
 
-  @action setProjectDetailData = (data) => {
-    // this.projectDetailData = data;
-    // Router.push(`/project/${data.id}`);
-  };
-
+  // 클라이언트가 모집 종료를 눌렀을 때 status를 바꿔주는 함수
   @action exitProject = (id) => {
     const req = {
       id: id,

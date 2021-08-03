@@ -69,10 +69,10 @@ class ProjectContentContainer extends React.Component {
                   </Header>
 
                   {Project.projectDataList &&
-                    Project.currentPage > 0 &&
+                    Project.currentPage > 0 && 
                     Project.projectDataList.map((item, idx) => {
                       {
-                        //   console.log(toJS(item));
+                        console.log(toJS(item.request_set.length));
                       }
                       return (
                         <>
