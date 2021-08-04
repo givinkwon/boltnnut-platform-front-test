@@ -102,6 +102,14 @@ export function setUserIP(req) {
   });
 }
 
+export function setPrevUrlLog(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/prevurllog/`,
+    data: req.data,
+  });
+}
+
 export function setUserPageIP(req) {
   return axios({
     method: "POST",
