@@ -31,34 +31,41 @@ class ProposalCard extends React.Component {
   };
 
   render() {
-    const {
-      id,
-      data,
-      middleCategory,
-      mainCategory,
-      newData,
-      checkTotal,
-      customer,
-    } = this.props;
+    const { data } = this.props;
     const { width } = this.state;
 
-    console.log(toJS(data.request_set));
-    console.log(data.request_set[0].request_state);
+    // 의뢰명
     let name = "";
+    // 의뢰 날짜
     let date = "";
+    // 의뢰 기간
     let period = "";
-    let estimate = "";
+    // 희망 가격
+    let price = "";
+    // 의뢰 목적
     let status = "";
+    // 의뢰 내용
     let content = "";
-    console.log(data);
+
+    // 의뢰 파일 list
+    let filelist = "";
+
+    // 의뢰 분류
+    let category = "";
+
+    // 희망 지역
+    let region = "";
+
+    // 데이터 저장
     if (data.request_set[0]) {
       name = data.request_set[0].name && data.request_set[0].name;
+
       date =
         data.request_set[0].createdAt &&
         data.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".");
-      content =
-        data.request_set[0].order_request_open &&
-        data.request_set[0].order_request_open;
+
+      content = data.request_set[0].contents && data.request_set[0].contents;
+
       period =
         data.request_set[0].deadline == "2020-11-11T11:11:00+09:00"
           ? "납기일미정"
@@ -66,8 +73,19 @@ class ProposalCard extends React.Component {
             "(" +
             data.request_set[0].deadline_state +
             ")";
+
+      price = data.request_set[0].price && data.request_set[0].price;
+
       status =
         data.request_set[0].request_state && data.request_set[0].request_state;
+
+      filelist =
+        data.request_set[0].requestfile_set &&
+        data.request_set[0].requestfile_set;
+
+      category = data.request_set[0].category && data.request_set[0].category;
+
+      region = data.request_set[0].region && data.request_set[0].region;
     }
 
     const { Project } = this.props;
@@ -86,7 +104,7 @@ class ProposalCard extends React.Component {
             {data.status}
           </div>
           <HeaderWrapper>
-            <Title>{name}</Title>
+            <Title>{name && name}</Title>
             {data.identification_state === true ? (
               <Certification>
                 <img src={certification}></img>
@@ -114,7 +132,7 @@ class ProposalCard extends React.Component {
                     </span>
                   </Field>
                   <FieldContent>
-                    <div style={{ marginLeft: 3 }}>완제품/부품 구매</div>
+                    <div style={{ marginLeft: 3 }}>{category && category}</div>
                   </FieldContent>
                 </CategoryBox>
                 <CategoryBox style={{ marginLeft: 16 }}>
@@ -132,9 +150,7 @@ class ProposalCard extends React.Component {
                     </span>
                   </Field>
                   <FieldContent>
-                    <div style={{ marginLeft: 3 }}>
-                      {data.request_set[0].request_state}
-                    </div>
+                    <div style={{ marginLeft: 3 }}>{status && status}</div>
                   </FieldContent>
                 </CategoryBox>
                 <CategoryBox style={{ marginLeft: 16, borderRight: "none" }}>
@@ -153,17 +169,16 @@ class ProposalCard extends React.Component {
                   </Field>
                   <FieldContent>
                     <div style={{ marginLeft: 3 }}>
-                      {Project.projectDetailData &&
-                      Project.projectDetailData.request_set[0].price
-                        ? Project.projectDetailData.request_set[0].price.toLocaleString(
-                            "ko-KR"
-                          ) + "원"
-                        : "미정"}
+                      {price != "" ? price : "미정"}원
                     </div>
                   </FieldContent>
                 </CategoryBox>
               </Category>
-              <Content>{content}</Content>
+              <Content>
+                <div style={{ width: 660, textOverflow: "ellipsis" }}>
+                  {content}
+                </div>
+              </Content>
             </Main>
             <Aside>
               <AsideContent>
@@ -253,11 +268,14 @@ const CategoryWrapper = styled.div`
   width: 100%;
 `;
 
-const Main = styled.div``;
+const Main = styled.div`
+  width: 100%;
+`;
 
 const Category = styled.div`
   display: flex;
   justify-content: flex-start;
+  margin-bottom: 32px;
 `;
 
 const CategoryBox = styled.div`
@@ -298,31 +316,9 @@ const AsideContent = styled.div`
 }
 `;
 
-const FooterWrapper = styled.div`
-  display: inline-flex;
-  width: 100%;
-  // height: 29px;
-  align-items: center;
-  justify-content: space-between;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-bottom: 14px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-bottom: 32px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-bottom: 32px;
-  }
-  @media (min-width: 1300px) {
-    margin-bottom: 32px;
-  }
-`;
-
 const Content = styled.span`
-  width: 100%;
   font-size: 14px;
   letter-spacing: -0.35px;
-  text-align: left;
   color: #767676;
   margin-top: 32px;
 `;
