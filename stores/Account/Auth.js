@@ -66,6 +66,9 @@ class Auth {
   @observable checkboxState = [false, false, false, false];
   @observable allCheckState = false;
 
+  @observable signupBoxActive = true;
+
+  @observable registerType = "123";
   @action reset = () => {
     this.email = "";
     this.password = "";
@@ -326,7 +329,7 @@ class Auth {
         password: this.password,
       },
     };
-
+    console.log(req);
     AccountAPI.login(req)
       .then((res) => {
         this.loading = false;
@@ -446,6 +449,7 @@ class Auth {
         password: this.password,
       },
     };
+    console.log(req);
     AccountAPI.login(req)
       .then((res) => {
         this.logged_in_user = res.data.data.User;
@@ -482,6 +486,7 @@ class Auth {
       })
       .catch((e) => {
         try {
+          console.log(e);
           alert(e.response.data.message);
         } catch {
           console.log(e);
@@ -529,12 +534,12 @@ class Auth {
 
                 if (myStore.logged_in_user.type === 0) {
                   myStore.logged_in_client = res.data.data.Client[0];
-                  if (!myStore.logged_in_client) {
-                    alert(
-                      "로그인에 문제가 발생하였습니다. 새로고침 후 다시 시도해 주세요."
-                    );
-                    return false;
-                  }
+                  // if (!myStore.logged_in_client) {
+                  //   alert(
+                  //     "로그인에 문제가 발생하였습니다. 새로고침 후 다시 시도해 주세요."
+                  //   );
+                  //   return false;
+                  // }
                   console.log(myStore.logged_in_client);
                 } else if (myStore.logged_in_user.type === 1) {
                   myStore.logged_in_partner = res.data.data.Partner[0];
