@@ -221,7 +221,7 @@ class Nav extends React.Component {
                           </li>
                           <li>
                             <KSLink
-                              url={"request"}
+                              url={"project"}
                               onClick={Request.set_request_type}
                               FontContent={() => {
                                 return <Font14>내 프로젝트</Font14>;
