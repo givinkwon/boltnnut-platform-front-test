@@ -284,6 +284,7 @@ class Project {
 
   @action set_step_index = (idx) => {
     this.step_index = idx
+    console.log(idx)
   }
 }
 

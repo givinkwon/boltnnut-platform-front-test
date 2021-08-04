@@ -1,26 +1,21 @@
 import React from "react";
-import ClientContentContainer from "./Client/Content";
-import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobileProject";
-import ProjectSearch from "./Partner/Content";
-import MobileProjectSearch from "./Partner/Mobile/MobileProject";
-import MobileMyProject from "./Partner/Mobile/MobileMyProject";
-
-import ProjectDetailContainer from "./Client/ProjectDetail/ProjectDetail";
-import MobileProjectDetailContainer from "./Client/ProjectDetail/Mobile/MobileProjectDetail";
 import styled, { css } from "styled-components";
-import PartnerAnswer from "./Partner/PartnerAnswer";
-import MobilePartnerAnswer from "./Partner/Mobile/MobilePartnerAnswer";
-import AnswerCompleteContainer from "./Partner/AnswerComplete";
-import MobileAnswerCompleteContainer from "./Partner/Mobile/MobileAnswerComplete";
 import * as Content from "components/Content";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import PartnerMyProject from "./Partner/MyProject";
-import ProjectDivider from "./Common/ProjectDivider";
 
 // cookie 추가
 import Cookies from "js-cookie";
-import MyProject from "./Partner/Mobile/MobileMyProject";
+
+// Web
+import MyProject from "containers/Manufacture/project/MyProject/index";
+import AllProject from "containers/Manufacture/project/AllProject/index";
+import ProjectDetail from "containers/Manufacture/project/ProjectDetail/index";
+
+// Mobile
+import MobileMyProject from "containers/Manufacture/project/MyProject/Mobile/index";
+import MobileAllProject from "containers/Manufacture/project/AllProject/Mobile/index";
+import MobileProjectDetail from "containers/Manufacture/project/ProjectDetail/index";
 
 @inject("Project", "Auth", "Partner", "Cookie")
 @observer

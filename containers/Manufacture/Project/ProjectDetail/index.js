@@ -11,7 +11,7 @@ import Content4 from "./Content4";
 
 @inject("Project")
 @observer
-class ProjectDetailContainer extends React.Component {
+class ProjectDetail extends React.Component {
   render() {
     const { user } = this.props;
 
@@ -38,7 +38,7 @@ class ProjectDetailContainer extends React.Component {
   }
 }
 
-export default ProjectDetailContainer;
+export default ProjectDetail;
 
 const Container13 = styled.div`
   width: 996px;
