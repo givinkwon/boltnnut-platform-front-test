@@ -68,35 +68,37 @@ class MobileBanner2Container extends React.Component {
 
           <CategoryBox>
             {nameTable.map((v, idx) => (
-              <div style={{ width: "110px", marginRight: "18px" }}>
-                <CategoryTitle key={v.id} active={this.onCompareCategory(idx)} onClick={() => this.onClickCategory(v.id)}>
+              <div style={{ width: "110px" }}>
+                <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
                   {v.name}
                 </CategoryTitle>
               </div>
             ))}
           </CategoryBox>
 
-          {Partner.partner_list &&
-            Partner.partner_list.map((item, idx) => {
-              return (
-                <>
-                  {idx < 3 && (
-                    <Background style={{ marginBottom: "5px" }}>
-                      <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
-                        <MobileProposalCard
-                          data={item}
-                          width={this.props.width}
-                          categoryData={toJS(Partner.category_dic[idx])}
-                          idx={idx}
-                          handleIntersection={Producer.handleIntersection}
-                          customer="partner"
-                        />
-                      </div>
-                    </Background>
-                  )}
-                </>
-              );
-            })}
+          <div style={{ marginTop: "23px" }}>
+            {Partner.partner_list &&
+              Partner.partner_list.map((item, idx) => {
+                return (
+                  <>
+                    {idx < 3 && (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
+                          <MobileProposalCard
+                            data={item}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[idx])}
+                            idx={idx}
+                            handleIntersection={Producer.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
+                      </Background>
+                    )}
+                  </>
+                );
+              })}
+          </div>
 
           <Text16 style={{ marginTop: "56px" }}>다양한 카테고리의 업체 전문가들을 찾고 있으신가요?</Text16>
 
@@ -158,6 +160,7 @@ const ButtonText16 = styled(Text.FontSize16)`
 const CategoryBox = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 15px;
   margin-top: 80px;
   border-bottom: solid 1px #c6c7cc;
   white-space: nowrap;

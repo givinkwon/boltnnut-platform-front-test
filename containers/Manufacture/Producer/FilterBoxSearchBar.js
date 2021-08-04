@@ -172,14 +172,12 @@ const HoverBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 190px;
-  height: 49px;
   border-radius: 75px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
-  margin-bottom: 5px;
 
   position: absolute;
-  bottom: 100%;
+  bottom: 90%;
   left: 75%;
 `;
 
