@@ -61,7 +61,13 @@ class ProjectContentContainer extends React.Component {
     return (
       <>
         <Background style={{ backgroundColor: "#f6f6f6" }} id="MyBackground">
-          <Header></Header>
+          <Header>
+            <HeaderTitle>
+              <div style={{ marginBottom: 12 }}>
+                내 프로젝트 > 진행 중인 프로젝트
+              </div>
+            </HeaderTitle>
+          </Header>
           <Container>
             <Body>
               <Aside>
@@ -226,6 +232,19 @@ const Header = styled.div`
   background-color: #ffffff;
   width: 100%;
   height: 116px;
+`;
+
+const HeaderTitle = styled.div`
+  height: 100%;
+  padding-left: 118px;
+  display: flex;
+  align-items: flex-end;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #555963;
+}
 `;
 
 const Body = styled.div`

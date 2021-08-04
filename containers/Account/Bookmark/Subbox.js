@@ -10,24 +10,24 @@ import Router from "next/router";
 class SubBoxContainer extends React.Component {
   componentDidMount = async () => {
     const { Auth } = this.props;
-
   };
   render() {
     const { Auth } = this.props;
 
-    const clientId = this.props.Auth.logged_in_client && this.props.Auth.logged_in_client.id;
-    const userEmail = Auth.logged_in_client && Auth.logged_in_client.user.username;
+    const clientId =
+      this.props.Auth.logged_in_client && this.props.Auth.logged_in_client.id;
+    const userEmail =
+      Auth.logged_in_client && Auth.logged_in_client.user.username;
 
     return (
       <>
         <Container>
-            <Button>
-                <span>{userEmail}</span>
-            </Button>
-            <Button>
-                <span>프로젝트 의뢰하기</span>
-            </Button>
-
+          <Button>
+            <span>{userEmail}</span>
+          </Button>
+          <Button>
+            <span>프로젝트 의뢰하기</span>
+          </Button>
         </Container>
       </>
     );
