@@ -185,9 +185,7 @@ class Auth {
     this.city = obj;
     this.region = null;
     const city_data = this.city_data;
-    this.region_data = city_data.filter(
-      (item) => item.id === obj.id
-    )[0].region_set;
+    this.region_data = city_data.filter((item) => item.id === obj.id)[0].region_set;
   };
   @action setRegion = (obj) => {
     this.region = obj;
@@ -530,9 +528,7 @@ class Auth {
                 if (myStore.logged_in_user.type === 0) {
                   myStore.logged_in_client = res.data.data.Client[0];
                   if (!myStore.logged_in_client) {
-                    alert(
-                      "로그인에 문제가 발생하였습니다. 새로고침 후 다시 시도해 주세요."
-                    );
+                    alert("로그인에 문제가 발생하였습니다. 새로고침 후 다시 시도해 주세요.");
                     return false;
                   }
                   console.log(myStore.logged_in_client);
@@ -562,10 +558,7 @@ class Auth {
                 setTimeout(() => {
                   myStore.loading = false;
 
-                  if (
-                    myStore.previous_url == "" ||
-                    myStore.previous_url == null
-                  ) {
+                  if (myStore.previous_url == "" || myStore.previous_url == null) {
                     Router.push("/");
                   } else {
                     console.log(myStore.previous_url);

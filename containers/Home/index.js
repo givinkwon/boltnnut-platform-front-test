@@ -19,7 +19,6 @@ import MobileBanner3Container from "./Mobile/MobileBanner3";
 import MobileBanner4Container from "./Mobile/MobileBanner4";
 import MobileBanner5Container from "./Mobile/MobileBanner5";
 
-
 import { inject, observer } from "mobx-react";
 import axios from "axios";
 
@@ -71,8 +70,6 @@ class HomeConatiner extends React.Component {
         {width < 767.98 ? (
           <>
             <CustomContainer>
-              {Home.modalState ? <MobileModalContainer /> : "none"}
-
               <MobileBanner0Container width={width} />
               <MobileBanner1Container width={width} />
               <MobileBanner2Container width={width} />
@@ -91,7 +88,6 @@ class HomeConatiner extends React.Component {
               <Banner4Container width={width} />
               <Banner5Container width={width} />
               <Banner6Container width={width} />
-
             </div>
           </>
         )}

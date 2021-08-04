@@ -68,7 +68,7 @@ class MobileBanner2Container extends React.Component {
 
           <CategoryBox>
             {nameTable.map((v, idx) => (
-              <div style={{ width: "110px" }}>
+              <div style={{ width: "110px", display: "flex", justifyContent: "center" }}>
                 <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
                   {v.name}
                 </CategoryTitle>
@@ -127,7 +127,7 @@ const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 70px;
-  width: 100%;
+  width: 347px;
 `;
 
 const Title20 = styled(Title.FontSize20)`
@@ -161,7 +161,8 @@ const CategoryBox = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 15px;
-  margin-top: 80px;
+  // margin-top: 80px;
+  margin: 80px 14px 0px 14px;
   border-bottom: solid 1px #c6c7cc;
   white-space: nowrap;
   width: 100%;
