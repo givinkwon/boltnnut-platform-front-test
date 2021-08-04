@@ -91,6 +91,7 @@ class MobileProposalCard extends React.Component {
 
   async componentDidMount() {
     const { width, Producer, data, Partner, idx, Auth } = this.props;
+    console.log("sdfsdfsdf!!!!!!!!!!!!!!!!!!!!!!", data);
 
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data.id;
@@ -434,7 +435,11 @@ class MobileProposalCard extends React.Component {
               </Header>
               <Main>
                 <Name>{data.name}</Name>
-                <InfoOne>{data.info_company.length > 70 ? data.info_company.slice(0, 70) + "..." : data.info_company}</InfoOne>
+                <InfoOne>{data.history}</InfoOne>
+                <Location>
+                  <img src={location} />
+                  <div>{data.region === null || data.region === "nan" ? this.state.city : data.region.substring(0, 8)}</div>
+                </Location>
               </Main>
             </Card>
             {this.props.Partner.ReviewActive && this.props.Partner.ReviewActiveIndex === idx && (
@@ -486,10 +491,12 @@ const Card = styled.div`
 `;
 
 const Header = styled.div`
-  margin-right: 34px;
+  // margin-right: 34px;
 `;
 
 const Main = styled.div`
+  margin-top: 14px;
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     width: 100%;
   }
@@ -517,10 +524,12 @@ const Name = styled.div`
   font-size: 20px;
   line-height: 40px;
   letter-spacing: -0.5px;
-  color: #1e2222;
+  color: #282c36;
   font-weight: bold;
+  margin-bottom: 8px;
+
   @media (min-width: 0px) and (max-width: 767.98px) {
-    color: #0933b3;
+    color: #282c36;
     font-size: 16px;
     line-height: 16px;
     letter-spacing: -0.4px;
@@ -598,18 +607,20 @@ const Score = styled.div`
 
 const Location = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  margin-top: 25px;
+  gap: 10px;
+
   div {
-    width: 100%;
     font-size: 14px;
     color: #767676;
     line-height: 2.86;
     letter-spacing: -0.35px;
   }
   img {
-    width: 10.6px;
-    height: 15.3px;
+    width: 9px;
+    height: 13px;
   }
 `;
 
@@ -653,7 +664,7 @@ const InfoOne = styled.div`
     font-size: 13px;
     line-height: 18px;
     letter-spacing: -0.33px;
-    height: 50%;
+    height: 19px;
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     margin-bottom: 35px;
@@ -664,8 +675,7 @@ const InfoOne = styled.div`
 `;
 
 const Item = styled.div`
-  padding: 20px 0;
-  margin: 0 20px;
+  margin-right: 18px;
   > img {
     width: 100px;
     height: 116px;
