@@ -98,6 +98,7 @@ class ProjectContentContainer extends React.Component {
                                   onClick={() => Project.pushToDetail(item.id)}
                                 >
                                   <ProposalCard
+                                    id={idx}
                                     data={item}
                                     middleCategory={
                                       Project.middle_category_name[idx]

@@ -22,15 +22,19 @@ import ProjectDivider from "./Common/ProjectDivider";
 import NoProject from "./Common/NoProject";
 import SearchBarConatiner from "./Common/SearchBar";
 
-@inject("Project", "Auth", "Partner")
+// cookie 추가
+import Cookies from "js-cookie";
+
+@inject("Project", "Auth", "Partner", "Cookie")
 @observer
 class ProjectContainer extends React.Component {
   async getProject(data) {
     const { Project } = this.props;
     await Project.getAllProject(data);
   }
+  
   async componentDidMount() {
-    const { Auth, Project } = this.props;
+    const { Auth, Project, Cookie } = this.props;
 
     await Auth.checkLogin();
     if (Auth.logged_in_client) {
@@ -39,6 +43,23 @@ class ProjectContainer extends React.Component {
 
     Project.newIndex = 0;
     Project.myIndex = 1;
+
+    // Cookie 값 가지고 와서 리스트에 먼저 저장
+    let project_view_data = [];
+    project_view_data = await Cookies.get("project_view");
+    // list 전처리
+    console.log(project_view_data);
+    if (project_view_data) {
+      project_view_data = project_view_data
+        .replace("[", "")
+        .replace("]", "")
+        .split(",");
+    }
+
+    if (project_view_data !== undefined && project_view_data !== "undefined") {
+      project_view_data.map((data) => Cookie.add_project_view(data));
+    }
+
   }
 
   render() {

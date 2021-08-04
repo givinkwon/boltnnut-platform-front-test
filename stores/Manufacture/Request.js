@@ -327,23 +327,5 @@ class Request {
     this.request_file_secure = 0;
     this.request_drawing_set = [];
   };
-
-  @action getRequest = () => {
-    // request 정보 가져오기
-    var formData = new FormData();
-    const req = {
-      params: {
-        data: formData,
-      },
-    };
-    RequestAPI.getRequests(req)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
 }
 export default new Request();

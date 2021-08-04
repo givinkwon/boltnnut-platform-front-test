@@ -352,7 +352,7 @@ class Nav extends React.Component {
                         </li>
                         <li>
                           <KSLink
-                            url={"login"}
+                            url={"bookmark"}
                             FontContent={() => {
                               return <Font14>관심 제조사</Font14>;
                             }}

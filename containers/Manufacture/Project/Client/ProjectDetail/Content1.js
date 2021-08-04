@@ -21,6 +21,9 @@ const toolBarImg = "/static/images/project/ToolBar.svg";
 const callImg = "/static/images/project/Call.svg";
 const messagesImg = "/static/images/project/Messages.svg";
 
+// cookie 추가
+import Cookies from "js-cookie";
+
 @inject("Project", "Auth", "Answer", "Partner")
 @observer
 class Content1 extends React.Component {
@@ -47,7 +50,7 @@ class Content1 extends React.Component {
     Project.chatModalActive = !Project.chatModalActive;
   };
   async componentDidMount() {
-    const { Project, Auth, Answer } = this.props;
+    const { Project, Auth, Cookie } = this.props;
 
     console.log(Project.selectedProjectId);
     console.log("<Web> did mount");
@@ -57,6 +60,21 @@ class Content1 extends React.Component {
         Project.projectDetailData.request_set[0].deadline
     );
     await Auth.checkLogin();
+
+    
+    // 쿠기 값 리스트에 저장
+    if (Project.projectDetailData.item) {
+      Cookie.add_project_view(Project.projectDetailData.item.id);
+    }
+
+    // 쿠키 저장하기
+    const expires = new Date();
+    expires.setMinutes(expires.getMinutes() + 2440);
+    Cookies.set("project_view", Cookie.project_view_list, {
+      path: "/",
+      expires,
+    });
+
   }
 
   render() {

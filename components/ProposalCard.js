@@ -7,8 +7,11 @@ const certification = "/static/icon/certification_img.svg";
 const category = "/static/images/project/category.svg";
 const purpose = "/static/images/project/purpose.svg";
 const moneyicon = "/static/images/project/moneyicon.svg";
+const bookmarkcount = "static/icon/bookmarkcount.svg";
+const views = "/static/images/project/views.svg";
+const applicant2 = "/static/images/project/applicant2.svg";
 
-@inject("Project", "Request")
+@inject("Project")
 @observer
 class ProposalCard extends React.Component {
   state = {
@@ -16,9 +19,6 @@ class ProposalCard extends React.Component {
   };
 
   componentDidMount() {
-    const { Request } = this.props;
-    console.log(Request.getRequest);
-
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
   }
@@ -32,6 +32,7 @@ class ProposalCard extends React.Component {
 
   render() {
     const {
+      id,
       data,
       middleCategory,
       mainCategory,
@@ -41,12 +42,15 @@ class ProposalCard extends React.Component {
     } = this.props;
     const { width } = this.state;
 
+    console.log(toJS(data.request_set));
+    console.log(data.request_set[0].request_state);
     let name = "";
     let date = "";
     let period = "";
     let estimate = "";
     let status = "";
     let content = "";
+    console.log(data);
     if (data.request_set[0]) {
       name = data.request_set[0].name && data.request_set[0].name;
       date =
@@ -79,7 +83,7 @@ class ProposalCard extends React.Component {
               color: "#0933b3",
             }}
           >
-            모집중
+            {data.status}
           </div>
           <HeaderWrapper>
             <Title>{name}</Title>
@@ -110,7 +114,7 @@ class ProposalCard extends React.Component {
                     </span>
                   </Field>
                   <FieldContent>
-                    <div>완제품/부품 구매</div>
+                    <div style={{ marginLeft: 3 }}>완제품/부품 구매</div>
                   </FieldContent>
                 </CategoryBox>
                 <CategoryBox style={{ marginLeft: 16 }}>
@@ -128,7 +132,9 @@ class ProposalCard extends React.Component {
                     </span>
                   </Field>
                   <FieldContent>
-                    <div>업체수배, 견적문의, 상담요청</div>
+                    <div style={{ marginLeft: 3 }}>
+                      {data.request_set[0].request_state}
+                    </div>
                   </FieldContent>
                 </CategoryBox>
                 <CategoryBox style={{ marginLeft: 16, borderRight: "none" }}>
@@ -146,7 +152,7 @@ class ProposalCard extends React.Component {
                     </span>
                   </Field>
                   <FieldContent>
-                    <div>
+                    <div style={{ marginLeft: 3 }}>
                       {Project.projectDetailData &&
                       Project.projectDetailData.request_set[0].price
                         ? Project.projectDetailData.request_set[0].price.toLocaleString(
@@ -159,24 +165,21 @@ class ProposalCard extends React.Component {
               </Category>
               <Content>{content}</Content>
             </Main>
-            <Aside></Aside>
+            <Aside>
+              <AsideContent>
+                <img src={bookmarkcount} style={{ marginRight: 6 }} />
+                <div>3</div>
+              </AsideContent>
+              <AsideContent>
+                <img src={views} style={{ marginRight: 6 }} />
+                <div> 높음 </div>
+              </AsideContent>
+              <AsideContent style={{ borderBottom: "solid 1px #e1e2e4" }}>
+                <img src={applicant2} style={{ marginRight: 6 }} />
+                <div> 총 3명 지원 </div>
+              </AsideContent>
+            </Aside>
           </CategoryWrapper>
-          {/* <CategoryWrapper>
-            <SubTitle>
-              <span>공개내용</span>
-            </SubTitle>
-            <Content> {content} </Content>
-            <CategoryBox>
-              <span>{mainCategory}</span>
-            </CategoryBox>
-            <CategoryBox>
-              <span>{middleCategory}</span>
-            </CategoryBox>
-          </CategoryWrapper>
-          <FooterWrapper>
-            <SubTitle>희망납기</SubTitle>
-            <Content>{period}</Content>
-          </FooterWrapper> */}
         </Card>
       </>
     );
@@ -186,7 +189,7 @@ class ProposalCard extends React.Component {
 export default ProposalCard;
 
 const Card = styled.div`
-  width: 100%;
+  width: 94%;
   padding: 30px 24px 30px 30px;
   position: relative;
   object-fit: contain;
@@ -250,9 +253,7 @@ const CategoryWrapper = styled.div`
   width: 100%;
 `;
 
-const Main = styled.div`
-  width: 100%;
-`;
+const Main = styled.div``;
 
 const Category = styled.div`
   display: flex;
@@ -280,7 +281,22 @@ const FieldContent = styled.div`
   color: #282c36;
 `;
 
-const Aside = styled.div``;
+const Aside = styled.div`
+  width: 112px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const AsideContent = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  padding-bottom: 11px;
+  font-size: 14px;
+  letter-spacing: -0.35px;
+  text-align: left;
+  color: #282c36;
+}
+`;
 
 const FooterWrapper = styled.div`
   display: inline-flex;
