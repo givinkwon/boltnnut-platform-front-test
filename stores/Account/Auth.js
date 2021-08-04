@@ -66,7 +66,6 @@ class Auth {
   @observable checkboxState = [false, false, false, false];
   @observable allCheckState = false;
 
-
   @action reset = () => {
     this.email = "";
     this.password = "";
@@ -530,13 +529,27 @@ class Auth {
 
                 if (myStore.logged_in_user.type === 0) {
                   myStore.logged_in_client = res.data.data.Client[0];
+                  if (!myStore.logged_in_client) {
+                    alert(
+                      "로그인에 문제가 발생하였습니다. 새로고침 후 다시 시도해 주세요."
+                    );
+                    return false;
+                  }
                   console.log(myStore.logged_in_client);
                 } else if (myStore.logged_in_user.type === 1) {
                   myStore.logged_in_partner = res.data.data.Partner[0];
+                  console.log(res.data.data.Partner[0]);
                   console.log(myStore.logged_in_partner);
+                  // if (!myStore.logged_in_partner) {
+                  //   alert(
+                  //     "로그인에 문제가 발생하였습니다. 새로고침 후 다시 시도해 주세요."
+                  //   );
+                  //   return false;
+                  // }
                 }
 
                 const token = res.data.data.token;
+                console.log(token);
                 if (!myStore.always_login) {
                   const now = new Date();
                   let tomorrow = new Date();
@@ -568,7 +581,7 @@ class Auth {
                 myStore.isSnsSignup = true;
                 // myStore.email = "qwerqwsdsdsdsder@naver.com";
                 myStore.email = kakao_account.email;
-                myStore.phone = "01099393929"; //임시, 비즈니스 채널 연결되면 폰번호 받아올 수 있음
+                myStore.phone = "01014242323"; //임시, 비즈니스 채널 연결되면 폰번호 받아올 수 있음
                 Router.push("/signup");
               });
             console.log(kakao_account);
@@ -882,7 +895,7 @@ class Auth {
     setTimeout(() => {
       this.loading = false;
     }, 1500);
-    
+
     // 예외처리
     if (!this.phone) {
       alert("휴대폰 번호를 입력해주세요.");
@@ -891,7 +904,7 @@ class Auth {
 
     this.loading = true;
     console.log(this.phone);
-    
+
     // 데이터 만들기
     const req = {
       data: {

@@ -19,6 +19,9 @@ import ButtonSpinnerComponent from "components/ButtonSpinner";
 import List from "material-ui/List";
 import Cookies from "js-cookie";
 
+import AddFile from "./AddFile";
+
+const deleteButtonImg = "/static/images/delete.png";
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
 const pass4 = "static/images/pass4.png";
@@ -30,7 +33,7 @@ const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 const toparrowblue = "static/icon/top_arrow_blue.svg";
 
-@inject("Project", "Auth", "Partner", "Producer", "Common", "Cookie")
+@inject("Project", "Auth", "Partner", "Producer", "Common", "Cookie", "Request")
 @observer
 class ManufacturerContentContainer extends React.Component {
   state = {
@@ -38,6 +41,10 @@ class ManufacturerContentContainer extends React.Component {
     recent_partner_dic: [],
     recent_partner: [],
     recent_partner_namearr: [],
+    fileArray: [],
+    fileName: "",
+    file: "",
+    checkFileUpload: false,
   };
 
   async componentDidMount() {
@@ -146,8 +153,14 @@ class ManufacturerContentContainer extends React.Component {
     window.scrollTo(0, 0);
   };
 
+  ToRequest = () => {
+    const { Request } = this.props;
+    Router.push("/request");
+    Request.set_request_type(1);
+  };
+
   render() {
-    const { Project, Partner, Producer, Auth, Cookie } = this.props;
+    const { Project, Partner, Producer, Auth, Cookie, Request } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
@@ -159,29 +172,12 @@ class ManufacturerContentContainer extends React.Component {
         <Background id="MyBackground">
           {Partner.subButtonActive ? (
             <RequestMiddle>
-              <span
-                style={{
-                  fontSize: 16,
-                  lineHeight: 3.13,
-                  letterSpacing: -0.4,
-                  color: "#555963",
-                  marginRight: 24,
-                }}
-              >
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    color: "#1e2222",
-                    marginRight: 2,
-                  }}
-                >
-                  마음에 드는 공장을 찾기 힘드시나요?
-                </span>
-                지금 '의뢰하기'를 눌러서 여러 업체의 회사소개서와 제안서를
-                받아보세요.
-              </span>
-              <RequestBtn onClick={Partner.openModal}>
-                무료로 의뢰하기
+              <div>
+                기존 제품 검색보다 원하는 조건에 딱 맞는 신제품 제조를
+                원하시나요?
+              </div>
+              <RequestBtn onClick={() => this.ToRequest()}>
+                맞춤형 문의하기
               </RequestBtn>
             </RequestMiddle>
           ) : (
@@ -195,6 +191,56 @@ class ManufacturerContentContainer extends React.Component {
                   <Layer />
                 </>
               )}
+
+              {/* 이미지 검색 리스트 */}
+              {Partner.fileArray.map((item, idx) => {
+                console.log(item);
+                return (
+                  <>
+                    <span
+                      onClick={() => {
+                        if (this.state.checkFileUpload) {
+                          Partner.fileArray.splice(idx, 1);
+                          const inputFile =
+                            document.getElementById("inputFile");
+                          console.log(toJS(ManufactureProcess.openFileArray));
+                          inputFile.innerHTML = "";
+
+                          if (Partner.fileArray.length === 0) {
+                            this.setState({ checkFileUpload: false });
+                          }
+                        }
+                      }}
+                    >
+                      <span>
+                        {Partner.fileArray[0] ? (
+                          <img
+                            style={{ width: 127, height: 101 }}
+                            src={Partner.searchFileUrl}
+                          />
+                        ) : (
+                          <>파일이 없습니다</>
+                        )}
+                        <span style={{ marginRight: "10px" }}>
+                          {!item.name
+                            ? decodeURI(item.split("/").pop())
+                            : item.name}
+                        </span>
+                        <DeleteFile
+                          src={deleteButtonImg}
+                          style={{
+                            display: this.state.checkFileUpload
+                              ? "inline"
+                              : "none",
+                          }}
+                        />
+                      </span>
+                      <span>해당 이미지를 검색 합니다.</span>
+                    </span>
+                  </>
+                );
+              })}
+
               <Header>
                 <Font20 style={{ marginLeft: "20px" }}>
                   <span style={{ fontWeight: "bold" }}>
@@ -223,11 +269,7 @@ class ManufacturerContentContainer extends React.Component {
                           <Question>
                             유사한 연관 검색어를 찾아보시겠어요?
                           </Question>
-                          <ExplainList>
-                            {Partner.suggest_list.map((data) => {
-                              return <li>{data + ", "}</li>;
-                            })}
-                          </ExplainList>
+                          <ExplainList></ExplainList>
                         </Explain>
                       </NoResultBox>
                     ))}
@@ -901,6 +943,27 @@ const TopButton = styled.div`
     font-weight: 500;
     letter-spacing: -0.35px;
     color: #0933b3;
+  }
+`;
+
+const DeleteFile = styled.img`
+  width: 18px;
+  height: 18px;
+  padding: 2px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background-color: #e1e2e4;
+  align-self: center;
+  line-height: 40px;
+  letter-spacing: -0.45px;
+  margin-right: 29px;
+  vertical-align: middle;
+  cursor: pointer;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
   }
 `;
 

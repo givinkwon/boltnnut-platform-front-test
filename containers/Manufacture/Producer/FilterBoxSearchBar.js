@@ -13,7 +13,7 @@ import { toJS } from "mobx";
 import { PRIMARY2 } from "static/style";
 import Category from "../../../stores/Manufacture/Category";
 
-import AddFile from "./AddFile";
+import ImageFile from "./ImageFile";
 
 @inject(
   "Auth",
@@ -159,11 +159,8 @@ class SearchBarConatiner extends React.Component {
                 >
                   <Title13>제품 이미지로 검색하기</Title13>
                 </HoverBox>
-                <AddFile
-                  file={true}
-                  isOpen={true}
-                  ///onChange={this.handleChange}
-                />
+
+                <ImageFile file={true} isOpen={true} />
               </ImgContainer>
 
               <ImgContainer>

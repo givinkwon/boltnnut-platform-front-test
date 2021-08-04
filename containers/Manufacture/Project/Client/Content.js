@@ -35,7 +35,6 @@ class ProjectContentContainer extends React.Component {
 
   handleIntersection = (event) => {
     if (event.isIntersecting) {
-
     }
   };
 
@@ -61,143 +60,219 @@ class ProjectContentContainer extends React.Component {
 
     return (
       <>
-        <Background
-          style={{ backgroundColor: "#f9f9f9", paddingTop: "49px" }}
-          id="MyBackground"
-        >
-          {Project.project_existence &&
-          Project.projectDataList &&
-          Project.projectDataList[0] ? (
-            <>
-              {Project.currentPage > 0 &&
-                Project.projectDataList.map((item, idx) => {
-                  {
-                    console.log(toJS(item));
-                  }
-                  return (
-                    <>
-                    {toJS(item.request_set.length > 0) &&
-                    <Background
-                      style={{ marginTop: 34, backgroundColor: "#f9f9f9" }}
-                    >
-                      <Container>
-                        <div
-                          style={{ cursor: "pointer", width: "100%" }}
-                          onClick={() => Project.pushToDetail(item.id)}
-                        >
-                          <ProposalCard
-                            data={item}
-                            middleCategory={Project.middle_category_name[idx]}
-                            mainCategory={Project.main_category_name[idx]}
-                            newData={Project.data_dt[idx]}
-                            handleIntersection={this.handleIntersection}
-                          />
-                        </div>
-                      </Container>
-                    </Background>
-                    }
-                    </>
-                  );
-                })}
-              <PageBar>
-                <img
-                  src={pass1}
-                  style={{
-                    opacity:
-                      current_set == 1 && Project.currentPage <= 1 ? 0.4 : 1,
-                    cursor: "pointer",
-                  }}
-                  onClick={Project.pagePrev}
-                />
-                <PageCount
-                  onClick={Project.movePage}
-                  value={5 * (current_set - 1)}
-                  active={Project.currentPage % 5 == 1}
-                  style={{
-                    display:
-                      Project.project_page < 5 * (current_set - 1) + 1
-                        ? "none"
-                        : "block",
-                  }}
-                >
-                  {" "}
-                  {5 * (current_set - 1) + 1}{" "}
-                </PageCount>
-                <PageCount
-                  value={5 * (current_set - 1) + 1}
-                  active={Project.currentPage % 5 == 2}
-                  style={{
-                    display:
-                      Project.project_page < 5 * (current_set - 1) + 2
-                        ? "none"
-                        : "block",
-                  }}
-                  onClick={Project.movePage}
-                >
-                  {" "}
-                  {5 * (current_set - 1) + 2}{" "}
-                </PageCount>
-                <PageCount
-                  value={5 * (current_set - 1) + 2}
-                  active={Project.currentPage % 5 == 3}
-                  style={{
-                    display:
-                      Project.project_page < 5 * (current_set - 1) + 3
-                        ? "none"
-                        : "block",
-                  }}
-                  onClick={Project.movePage}
-                >
-                  {" "}
-                  {5 * (current_set - 1) + 3}{" "}
-                </PageCount>
-                <PageCount
-                  value={5 * (current_set - 1) + 3}
-                  active={Project.currentPage % 5 == 4}
-                  style={{
-                    display:
-                      Project.project_page < 5 * (current_set - 1) + 4
-                        ? "none"
-                        : "block",
-                  }}
-                  onClick={this.movePage}
-                >
-                  {" "}
-                  {5 * (current_set - 1) + 4}{" "}
-                </PageCount>
-                <PageCount
-                  value={5 * (current_set - 1) + 4}
-                  active={Project.currentPage % 5 == 0}
-                  style={{
-                    display:
-                      Project.project_page < 5 * (current_set - 1) + 5
-                        ? "none"
-                        : "block",
-                  }}
-                  onClick={Project.movePage}
-                >
-                  {" "}
-                  {5 * (current_set - 1) + 5}{" "}
-                </PageCount>
-                <img
-                  src={pass2}
-                  style={{
-                    opacity:
-                      Project.project_page == Project.currentPage ? 0.4 : 1,
-                    cursor: "pointer",
-                  }}
-                  onClick={Project.pageNext}
-                />
-              </PageBar>
-            </>
-          ) : (
-            <NoProject />
-          )}
+        <Background style={{ backgroundColor: "#f6f6f6" }} id="MyBackground">
+          <Header></Header>
+          <Container>
+            <Body>
+              <Aside>
+                <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
+                <AsideBody>
+                  <div style={{ marginBottom: 12 }}>진행 중인 프로젝트</div>
+                  <div>종료된 프로젝트</div>
+                </AsideBody>
+              </Aside>
+              <Main>
+                <MainHeader>
+                  <div>진행 중인 프로젝트</div>
+                </MainHeader>
+                {Project.project_existence &&
+                Project.projectDataList &&
+                Project.projectDataList[0] ? (
+                  <>
+                    {Project.currentPage > 0 &&
+                      Project.projectDataList.map((item, idx) => {
+                        {
+                          console.log(toJS(item));
+                        }
+                        return (
+                          <>
+                            {toJS(item.request_set.length > 0) && (
+                              <Background
+                                style={{
+                                  marginTop: 24,
+                                  backgroundColor: "#f6f6f6",
+                                }}
+                              >
+                                <div
+                                  style={{ cursor: "pointer", width: "100%" }}
+                                  onClick={() => Project.pushToDetail(item.id)}
+                                >
+                                  <ProposalCard
+                                    data={item}
+                                    middleCategory={
+                                      Project.middle_category_name[idx]
+                                    }
+                                    mainCategory={
+                                      Project.main_category_name[idx]
+                                    }
+                                    newData={Project.data_dt[idx]}
+                                    handleIntersection={this.handleIntersection}
+                                  />
+                                </div>
+                              </Background>
+                            )}
+                          </>
+                        );
+                      })}
+                    <PageBar>
+                      <img
+                        src={pass1}
+                        style={{
+                          opacity:
+                            current_set == 1 && Project.currentPage <= 1
+                              ? 0.4
+                              : 1,
+                          cursor: "pointer",
+                        }}
+                        onClick={Project.pagePrev}
+                      />
+                      <PageCount
+                        onClick={Project.movePage}
+                        value={5 * (current_set - 1)}
+                        active={Project.currentPage % 5 == 1}
+                        style={{
+                          display:
+                            Project.project_page < 5 * (current_set - 1) + 1
+                              ? "none"
+                              : "block",
+                        }}
+                      >
+                        {" "}
+                        {5 * (current_set - 1) + 1}{" "}
+                      </PageCount>
+                      <PageCount
+                        value={5 * (current_set - 1) + 1}
+                        active={Project.currentPage % 5 == 2}
+                        style={{
+                          display:
+                            Project.project_page < 5 * (current_set - 1) + 2
+                              ? "none"
+                              : "block",
+                        }}
+                        onClick={Project.movePage}
+                      >
+                        {" "}
+                        {5 * (current_set - 1) + 2}{" "}
+                      </PageCount>
+                      <PageCount
+                        value={5 * (current_set - 1) + 2}
+                        active={Project.currentPage % 5 == 3}
+                        style={{
+                          display:
+                            Project.project_page < 5 * (current_set - 1) + 3
+                              ? "none"
+                              : "block",
+                        }}
+                        onClick={Project.movePage}
+                      >
+                        {" "}
+                        {5 * (current_set - 1) + 3}{" "}
+                      </PageCount>
+                      <PageCount
+                        value={5 * (current_set - 1) + 3}
+                        active={Project.currentPage % 5 == 4}
+                        style={{
+                          display:
+                            Project.project_page < 5 * (current_set - 1) + 4
+                              ? "none"
+                              : "block",
+                        }}
+                        onClick={this.movePage}
+                      >
+                        {" "}
+                        {5 * (current_set - 1) + 4}{" "}
+                      </PageCount>
+                      <PageCount
+                        value={5 * (current_set - 1) + 4}
+                        active={Project.currentPage % 5 == 0}
+                        style={{
+                          display:
+                            Project.project_page < 5 * (current_set - 1) + 5
+                              ? "none"
+                              : "block",
+                        }}
+                        onClick={Project.movePage}
+                      >
+                        {" "}
+                        {5 * (current_set - 1) + 5}{" "}
+                      </PageCount>
+                      <img
+                        src={pass2}
+                        style={{
+                          opacity:
+                            Project.project_page == Project.currentPage
+                              ? 0.4
+                              : 1,
+                          cursor: "pointer",
+                        }}
+                        onClick={Project.pageNext}
+                      />
+                    </PageBar>
+                  </>
+                ) : (
+                  <NoProject />
+                )}
+              </Main>
+            </Body>
+          </Container>
         </Background>
       </>
     );
   }
 }
+
+const Header = styled.div`
+  background-color: #ffffff;
+  width: 100%;
+  height: 116px;
+`;
+
+const Body = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-family: NotoSansCJKkr;
+`;
+
+const Aside = styled.div`
+  width: 234px;
+`;
+
+const AsideHeader = styled.div`
+  padding-top: 50px;
+  padding-bottom: 16px;
+  border-bottom: solid 1px #e1e2e4;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  color: #0933b3;
+`;
+
+const AsideBody = styled.div`
+  padding-top: 16px;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: #1e2222;
+`;
+
+const Main = styled.div`
+  width: 100%;
+  padding-left: 72px;
+`;
+
+const MainHeader = styled.div`
+padding-top: 45px;
+padding-bottom: 16px;
+border-bottom: solid 1px #e1e2e4;
+font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  text-align: left;
+  color: #1e2222;
+}
+`;
 
 const PageBar = styled.div`
   width: 351px;

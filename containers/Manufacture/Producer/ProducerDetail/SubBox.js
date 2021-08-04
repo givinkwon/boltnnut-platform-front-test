@@ -76,6 +76,7 @@ class SubBoxContainer extends React.Component {
                   console.log(Project.producerId);
                   Partner.clickHandler("project");
                   Request.partner_request(partnerId);
+                  Request.set_request_type(2)
                   Router.push("/request");
                   // this.setState({ g: 3 });
                 }}
@@ -123,7 +124,7 @@ class SubBoxContainer extends React.Component {
                 <div>로그인 해주세요.</div>
               )}
             </UserBox>
-            <SubItem>
+            <SubItem onClick={() => Request.set_request_type(2)}>
               <span>프로젝트 의뢰</span>
               {Project.project_count ? (
                 <span>{Project.project_count}</span>

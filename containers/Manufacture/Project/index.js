@@ -49,12 +49,12 @@ class ProjectContainer extends React.Component {
         {this.props.width && this.props.width > 767.98 ? (
           <>
             <div style={{ overflow: "visible" }}>
-              <BannerContainer />
+              {/* <BannerContainer /> */}
               {Auth.logged_in_client && (
                 <>
                   {Project.newIndex == 0 && (
                     <>
-                      <ProjectDivider />
+                      {/* <ProjectDivider /> */}
                       {Project.myIndex == 0 && (
                         <ProjectSearch length={this.props.length} />
                       )}

@@ -39,8 +39,6 @@ class Project extends React.Component {
     Loading.setOpen(true);
     setTimeout(() => Loading.setOpen(false), 500);
 
-    // 중복
-    await Auth.checkLogin();
     // page ip 기록
     const formData = new FormData();
 
@@ -95,10 +93,14 @@ class Project extends React.Component {
         </Head>
         <>
           {width > 767.98 ? (
-            <NewNav />
+            <Nav />
           ) : (
             <div>
-              <MobileNav src={back_ic} headText={"프로젝트 관리"} width={width} />
+              <MobileNav
+                src={back_ic}
+                headText={"프로젝트 관리"}
+                width={width}
+              />
               <div style={{ height: "54px" }}></div>
             </div>
           )}

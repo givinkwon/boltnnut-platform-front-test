@@ -6,7 +6,6 @@ import TextField from "@material-ui/core/TextField";
 
 const CustomInput = withStyles({
   root: {
-    width: "1323px",
     marginTop: "35px",
     border: "1px",
     borderRadius: "3px",
