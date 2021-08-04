@@ -20,7 +20,7 @@ class Request {
   @observable newIndex = 0;
 
   // 의뢰하기 접근한 이전 페이지 => 0인 경우 Nav 바에서, 1인 경우 제조사 검색에서, 2인 경우 제조사 디테일에서
-  @observable request_type = ""; 
+  @observable request_type = "";
 
   // 파트너 상세에서 의뢰하기를 선택했을 때, 선택한 파트너 id
   @observable selected_partner = "";
@@ -47,8 +47,8 @@ class Request {
   // 의뢰하기 접근한 이전 페이지 => 0인 경우 Nav 바에서, 1인 경우 제조사 검색에서, 2인 경우 제조사 디테일에서
   @action set_request_type = (val = 0) => {
     this.request_type = val;
-    console.log(this.request_type)
-  }
+    console.log(this.request_type);
+  };
 
   // 의뢰 상태 추가하기
   @action set_state = (val) => {
