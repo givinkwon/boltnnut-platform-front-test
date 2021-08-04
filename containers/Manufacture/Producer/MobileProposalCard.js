@@ -435,7 +435,7 @@ class MobileProposalCard extends React.Component {
               </Header>
               <Main>
                 <Name>{data.name}</Name>
-                <InfoOne>{data.history}</InfoOne>
+                <InfoOne>{data.history.length > 40 ? data.history.slice(0, 40) + "..." : data.history}</InfoOne>
                 <Location>
                   <img src={location} />
                   <div>{data.region === null || data.region === "nan" ? this.state.city : data.region.substring(0, 8)}</div>
