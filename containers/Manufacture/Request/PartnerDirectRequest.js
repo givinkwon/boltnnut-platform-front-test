@@ -197,7 +197,7 @@ class PartnerDirectRequest extends Component {
                 <ContentInput>
                   <InputComponent
                     class="Input"
-                    placeholder="   진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
+                    // placeholder="   진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
                     onFocus={(e) => (e.target.placeholder = "")}
                     onChange={(e) => {
                       Request.set_name(e);
@@ -207,76 +207,77 @@ class PartnerDirectRequest extends Component {
               </RequestContentBox>
 
               {/* 프로젝트 의뢰에서만 */}
-              {Request.request_type == 0 && <RequestContentBox>
-                <ContentTitle style={{ marginBottom: 4 }}>
-                  <div>프로젝트 분류</div>
-                  <img src={starred} style={{ marginLeft: 4 }}></img>
+              {Request.request_type == 0 && (
+                <RequestContentBox>
+                  <ContentTitle style={{ marginBottom: 4 }}>
+                    <div>프로젝트 분류</div>
+                    <img src={starred} style={{ marginLeft: 4 }}></img>
+                    <span
+                      style={{
+                        fontSize: 14,
+                        letterSpacing: -0.35,
+                        color: "#86888c",
+                        fontWeight: "normal",
+                        marginLeft: 12,
+                      }}
+                    >
+                      (중복 선택 가능)
+                    </span>
+                  </ContentTitle>
                   <span
                     style={{
-                      fontSize: 14,
-                      letterSpacing: -0.35,
-                      color: "#86888c",
+                      fontSize: 16,
+                      color: "#505050",
+                      lineHeight: 2.13,
+                      letterSpacing: -0.4,
                       fontWeight: "normal",
-                      marginLeft: 12,
                     }}
                   >
-                    (중복 선택 가능)
+                    프로젝트 분류에 해당하는 항목을 선택해주세요.
                   </span>
-                </ContentTitle>
-                <span
-                  style={{
-                    fontSize: 16,
-                    color: "#505050",
-                    lineHeight: 2.13,
-                    letterSpacing: -0.4,
-                    fontWeight: "normal",
-                  }}
-                >
-                  프로젝트 분류에 해당하는 항목을 선택해주세요.
-                </span>
-                <ProjectFieldCheckbox>
-                  <CheckBoxComponent onChange={this.toggleCheckBox}>
-                    <span
-                      style={{
-                        color: "#767676",
-                        fontSize: 16,
-                        display: "flex",
-                        alignItems: "center",
-                        marginRight: 91,
-                      }}
-                    >
-                      완제품/부품 구매
-                    </span>
-                  </CheckBoxComponent>
-                  <CheckBoxComponent onChange={this.toggleCheckBox}>
-                    <span
-                      style={{
-                        color: "#767676",
-                        fontSize: 16,
-                        display: "flex",
-                        alignItems: "center",
-                        marginRight: 91,
-                      }}
-                    >
-                      개발/설계
-                    </span>
-                  </CheckBoxComponent>
-                  <CheckBoxComponent onChange={this.toggleCheckBox}>
-                    <span
-                      style={{
-                        color: "#767676",
-                        fontSize: 16,
-                        display: "flex",
-                        alignItems: "center",
-                        marginRight: 91,
-                      }}
-                    >
-                      제작
-                    </span>
-                  </CheckBoxComponent>
-                </ProjectFieldCheckbox>
-              </RequestContentBox>
-              }
+                  <ProjectFieldCheckbox>
+                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                      <span
+                        style={{
+                          color: "#767676",
+                          fontSize: 16,
+                          display: "flex",
+                          alignItems: "center",
+                          marginRight: 91,
+                        }}
+                      >
+                        완제품/부품 구매
+                      </span>
+                    </CheckBoxComponent>
+                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                      <span
+                        style={{
+                          color: "#767676",
+                          fontSize: 16,
+                          display: "flex",
+                          alignItems: "center",
+                          marginRight: 91,
+                        }}
+                      >
+                        개발/설계
+                      </span>
+                    </CheckBoxComponent>
+                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                      <span
+                        style={{
+                          color: "#767676",
+                          fontSize: 16,
+                          display: "flex",
+                          alignItems: "center",
+                          marginRight: 91,
+                        }}
+                      >
+                        제작
+                      </span>
+                    </CheckBoxComponent>
+                  </ProjectFieldCheckbox>
+                </RequestContentBox>
+              )}
 
               <RequestContentBox>
                 <ContentTitle>
@@ -394,7 +395,7 @@ class PartnerDirectRequest extends Component {
                     <InputComponent
                       class="Input"
                       onFocus={(e) => (e.target.placeholder = "")}
-                      placeholder="일"
+                      // placeholder="일"
                       onChange={(e) => {
                         Request.set_contents(e);
                       }}
@@ -599,55 +600,55 @@ class PartnerDirectRequest extends Component {
                 입력해주세요.
               </span>
               {/* 제조사 선택에서 온 게 아닌 경우만 지역 노출 */}
-              {Request.request_type != 2 &&
-              <PartnerInfo>
-                <ContentTitle style={{ marginBottom: 4 }}>
-                  <div>선호 지역</div>
-                  <img src={starred} style={{ marginLeft: 4 }}></img>
-                </ContentTitle>
-                <span
-                  style={{
-                    fontSize: 16,
-                    color: "#505050",
-                    lineHeight: 2.13,
-                    letterSpacing: -0.4,
-                    fontWeight: "normal",
-                  }}
-                >
-                  파트너와의 오프라인 미팅 시 고객님의 선호 위치를 참고합니다.
-                </span>
-                <div
-                  style={{
-                    marginTop: 10,
-                    marginBottom: 12,
-                  }}
-                >
-                  <SelectComponent
-                    styles={customStyles}
-                    options={this.state.priceAry}
-                    value={Request.request_price}
-                    getOptionLabel={(option) => option.name}
-                    placeholder={"시/도"}
-                    onChange={Request.set_price}
-                  />
-                </div>
-                <div style={{ marginBottom: 70 }}>
-                  <CheckBoxComponent onChange={this.toggleCheckBox}>
-                    <span
-                      style={{
-                        color: "#1e2222",
-                        fontSize: 15,
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      위치 조율이 가능합니다.
-                    </span>
-                  </CheckBoxComponent>
-                </div>
-              </PartnerInfo>
-              }
-              
+              {Request.request_type != 2 && (
+                <PartnerInfo>
+                  <ContentTitle style={{ marginBottom: 4 }}>
+                    <div>선호 지역</div>
+                    <img src={starred} style={{ marginLeft: 4 }}></img>
+                  </ContentTitle>
+                  <span
+                    style={{
+                      fontSize: 16,
+                      color: "#505050",
+                      lineHeight: 2.13,
+                      letterSpacing: -0.4,
+                      fontWeight: "normal",
+                    }}
+                  >
+                    파트너와의 오프라인 미팅 시 고객님의 선호 위치를 참고합니다.
+                  </span>
+                  <div
+                    style={{
+                      marginTop: 10,
+                      marginBottom: 12,
+                    }}
+                  >
+                    <SelectComponent
+                      styles={customStyles}
+                      options={this.state.priceAry}
+                      value={Request.request_price}
+                      getOptionLabel={(option) => option.name}
+                      placeholder={"시/도"}
+                      onChange={Request.set_price}
+                    />
+                  </div>
+                  <div style={{ marginBottom: 70 }}>
+                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                      <span
+                        style={{
+                          color: "#1e2222",
+                          fontSize: 15,
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        위치 조율이 가능합니다.
+                      </span>
+                    </CheckBoxComponent>
+                  </div>
+                </PartnerInfo>
+              )}
+
               <RequestBtn>
                 <RequestButton
                   onClick={() => {
