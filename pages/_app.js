@@ -13,7 +13,6 @@ import CheckBrowserModal from "containers/Home/Common/CheckBrowserModal";
 import PrepareModal from "containers/Home/Common/PrepareModal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 // CSS Reset Code
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
@@ -149,6 +148,7 @@ class MyApp extends App {
           open={!this.state.modal_shown && this.state.ie_user}
           handleClose={this.closeModal}
         />
+
         <Provider {...stores}>
           <Component {...pageProps} />
         </Provider>

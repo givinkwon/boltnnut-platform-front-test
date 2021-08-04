@@ -329,7 +329,7 @@ class Nav extends React.Component {
                       >
                         <RouterWrapper>
                           <KSLink
-                            url={"login"}
+                            url={"partnerregister"}
                             FontContent={() => {
                               return <Font14>파트너 등록하기</Font14>;
                             }}
@@ -458,7 +458,7 @@ class Nav extends React.Component {
                     >
                       <RouterWrapper>
                         <KSLink
-                          url={"login"}
+                          url={"partnerregister"}
                           FontContent={() => {
                             return <Font14>파트너 등록하기</Font14>;
                           }}
@@ -596,9 +596,9 @@ const AnimationBox = styled.div`
   animation: ${MoveBoxAnimation} 1s 1s infinite alternate;
   animation-delay: 0s;
   cursor: pointer;
-  :hover {
+  /* :hover {
     animation-play-state: paused;
-  }
+  } */
 `;
 
 const StyledButton = styled.div`

@@ -67,6 +67,8 @@ class Auth {
   @observable allCheckState = false;
 
   @observable signupBoxActive = true;
+
+  @observable registerType = "123";
   @action reset = () => {
     this.email = "";
     this.password = "";
