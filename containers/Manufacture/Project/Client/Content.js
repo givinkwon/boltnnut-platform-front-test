@@ -9,7 +9,7 @@ import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
 import NoProject from "../Common/NoProject";
 import { toJS } from "mobx";
-import ProjectNoneContainer from "./ProjectNone";
+import ProjectNoneContainer from "../Common/ProjectNone";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -37,8 +37,7 @@ class ProjectContentContainer extends React.Component {
   async componentDidMount() {
     const { Project, Auth } = this.props;
     console.log("<Web> did mount");
-    console.log(Project.newIndex);
-    Project.newIndex = 0;
+    Project.set_step_index(0)
     this.props.Project.currentPage = 1;
 
     await Auth.checkLogin();

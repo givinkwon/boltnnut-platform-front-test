@@ -198,8 +198,7 @@ class MobileContent2 extends React.Component {
                 onMouseOver={() => this.activeHandler("activeOne")}
                 onMouseOut={() => this.activeHandler("activeOne")}
                 onClick={async () => {
-                  Project.newIndex = 2;
-                  console.log(Project.newIndex);
+                  Project.set_step_index(0)
                 }}
               >
                 <Font18

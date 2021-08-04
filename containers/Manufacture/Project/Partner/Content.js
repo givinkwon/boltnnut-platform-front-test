@@ -31,7 +31,7 @@ class ProjectContentContainer extends React.Component {
 
   async componentDidMount() {
     const { Project, Auth } = this.props;
-    Project.newIndex = 0;
+    Project.set_step_index(0)
     Project.search_text = "";
     Project.currentPage = 1;
 
