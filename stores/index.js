@@ -16,6 +16,7 @@ import Answer from "./Manufacture/Answer";
 import Schedule from "./Manufacture/Schedule";
 import Category from "./Manufacture/Category";
 import Cookie from "./Manufacture/Cookie";
+import Signup from "./Account/Signup";
 
 export default {
   Loading,
@@ -36,4 +37,5 @@ export default {
   Schedule,
   Category,
   Cookie,
+  Signup,
 };

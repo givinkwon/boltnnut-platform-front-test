@@ -110,8 +110,6 @@ class HomeConatiner extends React.Component {
         {width < 767.98 ? (
           <>
             <CustomContainer>
-              {Home.modalState ? <MobileModalContainer /> : "none"}
-
               <MobileBanner0Container width={width} />
               <MobileBanner1Container width={width} />
               <MobileBanner2Container width={width} />

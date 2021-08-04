@@ -21,7 +21,7 @@ const AgreeContent = [
   { content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 },
 ];
 
-@inject("Auth")
+@inject("Auth", "Signup")
 @observer
 class ClientSignupContainer extends React.Component {
   componentDidMount() {
@@ -29,6 +29,10 @@ class ClientSignupContainer extends React.Component {
     this.props.Auth.getBusinessData();
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+  }
+
+  componentWillUnmount() {
+    const { Auth } = this.props;
   }
 
   // 전체동의 핸들러 함수
@@ -67,8 +71,41 @@ class ClientSignupContainer extends React.Component {
     }
   };
 
+  // 비밀번호 확인 일치 함수
+  passwordInvalid = () => {
+    const { Auth, Signup } = this.props;
+    if (Auth.password === Auth.password2) {
+      Signup.passwordInvalid = true;
+    } else {
+      Signup.passwordInvalid = false;
+    }
+  };
+
+  // 이름, 회사명, 직급에 특수문자 유효성 검사
+  textInvalid = () => {
+    const { Auth, Signup } = this.props;
+    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
+
+    if (regex.test(Auth.realName)) {
+      Signup.realNameInvalid = true;
+    } else {
+      Signup.realNameInvalid = false;
+    }
+  };
+
+  phoneInvalid = () => {
+    const { Auth, Signup } = this.props;
+    const regex = /^[A-Za-z0-9]{9,12}$/;
+
+    if (regex.test(Auth.phone)) {
+      Signup.phoneInvalid = true;
+    } else {
+      Signup.phoneInvalid = false;
+    }
+  };
+
   render() {
-    const { Auth } = this.props;
+    const { Auth, Signup } = this.props;
 
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -116,30 +153,69 @@ class ClientSignupContainer extends React.Component {
           <InputInnerBox>
             <Title18>비밀번호</Title18>
             <CustomInput placeholder="비밀번호를 입력해 주세요." type="password" onChange={Auth.setPassword} value={Auth.password} style={{ marginTop: "0px" }} />
+            <PasswordInvalidImgBox src={success} active={Auth.password} />
           </InputInnerBox>
 
           {/* password confirm */}
           <InputInnerBox>
             <Title18>비밀번호 확인</Title18>
-            <CustomInput placeholder="비밀번호를 한 번 더 입력해 주세요." type="password" onChange={Auth.setPassword2} value={Auth.password2} style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="비밀번호를 한 번 더 입력해 주세요."
+              type="password"
+              onChange={(e) => {
+                Auth.setPassword2(e);
+                this.passwordInvalid();
+              }}
+              value={Auth.password2}
+              style={{ marginTop: "0px" }}
+            />
+            <InvalidImgBox src={success} active={Signup.passwordInvalid} />
           </InputInnerBox>
 
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
-            <CustomInput placeholder="이름을 입력해 주세요." onChange={Auth.setRealName} value={Auth.realName} style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="이름을 입력해 주세요."
+              onChange={(e) => {
+                Auth.setRealName(e);
+                this.textInvalid();
+              }}
+              value={Auth.realName}
+              style={{ marginTop: "0px" }}
+            />
+            <InvalidImgBox src={success} active={Signup.realNameInvalid} />
           </InputInnerBox>
 
           {/* phone number */}
           <InputInnerBox>
             <Title18>휴대전화</Title18>
-            <CustomInput placeholder="- 없이 입력해 주세요" onChange={Auth.setPhone} value={Auth.phone} type="tel" style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="- 없이 입력해 주세요"
+              onChange={(e) => {
+                Auth.setPhone(e);
+                this.phoneInvalid();
+              }}
+              value={Auth.phone}
+              type="tel"
+              style={{ marginTop: "0px" }}
+            />
+            <InvalidImgBox src={success} active={Signup.phoneInvalid} />
           </InputInnerBox>
 
           {/* company name */}
           <InputInnerBox>
             <Title18>회사명</Title18>
-            <CustomInput placeholder="- 없이 입력해 주세요" onChange={Auth.setCompanyName} value={Auth.company_name} style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="- 없이 입력해 주세요"
+              onChange={(e) => {
+                Auth.setCompanyName(e);
+                this.textInvalid();
+              }}
+              value={Auth.company_name}
+              style={{ marginTop: "0px" }}
+            />
+            <InvalidImgBox src={success} style={{ bottom: "45%" }} active={Signup.company_nameInvalid} />
 
             <div style={{ display: "inline-flex", marginTop: "25px" }}>
               <CustomCheckBox type="checkbox" />
@@ -150,7 +226,16 @@ class ClientSignupContainer extends React.Component {
           {/* rank */}
           <InputInnerBox>
             <Title18>직급</Title18>
-            <CustomInput placeholder="직급을 입력해 주세요." onChange={Auth.setTitle} value={Auth.title} style={{ marginTop: "0px" }} />
+            <CustomInput
+              placeholder="직급을 입력해 주세요."
+              onChange={(e) => {
+                Auth.setTitle(e);
+                this.textInvalid();
+              }}
+              value={Auth.title}
+              style={{ marginTop: "0px" }}
+            />
+            <InvalidImgBox src={success} active={Signup.titlenameInvalid} />
           </InputInnerBox>
 
           {/* agree */}
@@ -206,6 +291,22 @@ const ImgBox = styled.img`
   position: absolute;
   right: 0;
   cursor: pointer;
+`;
+
+const PasswordInvalidImgBox = styled.img`
+  display: ${(props) => (props.active !== "" ? "inline-block" : "none")};
+  position: absolute;
+  right: 0;
+  bottom: 20%;
+  margin-right: 16px;
+`;
+
+const InvalidImgBox = styled.img`
+  display: ${(props) => (props.active ? "block" : "none")};
+  position: absolute;
+  right: 0;
+  bottom: 20%;
+  margin-right: 16px;
 `;
 
 const Container = styled(Containerv1)`
@@ -401,6 +502,7 @@ const EmailInnerContainer = styled.div`
 `;
 
 const InputInnerBox = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;

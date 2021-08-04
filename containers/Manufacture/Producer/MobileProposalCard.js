@@ -457,7 +457,7 @@ class MobileProposalCard extends React.Component {
 export default MobileProposalCard;
 
 const Card = styled.div`
-  width: 347px;
+  width: 100%;
   height: 116px;
   object-fit: contain;
   border-bottom: solid 2px #e1e2e4;

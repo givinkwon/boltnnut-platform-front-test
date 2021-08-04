@@ -188,9 +188,7 @@ class Auth {
     this.city = obj;
     this.region = null;
     const city_data = this.city_data;
-    this.region_data = city_data.filter(
-      (item) => item.id === obj.id
-    )[0].region_set;
+    this.region_data = city_data.filter((item) => item.id === obj.id)[0].region_set;
   };
   @action setRegion = (obj) => {
     this.region = obj;
@@ -567,10 +565,7 @@ class Auth {
                 setTimeout(() => {
                   myStore.loading = false;
 
-                  if (
-                    myStore.previous_url == "" ||
-                    myStore.previous_url == null
-                  ) {
+                  if (myStore.previous_url == "" || myStore.previous_url == null) {
                     Router.push("/");
                   } else {
                     console.log(myStore.previous_url);
