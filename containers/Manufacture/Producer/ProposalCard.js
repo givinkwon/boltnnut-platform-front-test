@@ -320,7 +320,7 @@ class ProposalCard extends React.Component {
   render() {
     const { data, width, Partner, categoryData, idx, Auth } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
-    const partnerId = data.id;
+    const partnerId = data && data.id;
     const loggedInPartnerId =
       Auth.logged_in_partner && Auth.logged_in_partner.id;
     console.log(Partner.interestedIdx);

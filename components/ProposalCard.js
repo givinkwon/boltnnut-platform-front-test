@@ -31,43 +31,55 @@ class ProposalCard extends React.Component {
   };
 
   render() {
-    const {
-      id,
-      data,
-      middleCategory,
-      mainCategory,
-      newData,
-      checkTotal,
-      customer,
-    } = this.props;
+    const { data } = this.props;
     const { width } = this.state;
 
-    console.log(toJS(data.request_set));
-    console.log(data.request_set[0].request_state);
+    // 의뢰명
     let name = "";
+    // 의뢰 날짜
     let date = "";
+    // 의뢰 기간
     let period = "";
-    let estimate = "";
+    // 희망 가격
+    let price = "";
+    // 의뢰 목적
     let status = "";
+    // 의뢰 내용
     let content = "";
-    console.log(data);
+
+    // 의뢰 파일 list
+    let filelist = "";
+
+    // 의뢰 분류
+    let category = "";
+
+    // 희망 지역
+    let region = "";
+
+    // 데이터 저장
     if (data.request_set[0]) {
       name = data.request_set[0].name && data.request_set[0].name;
-      date =
-        data.request_set[0].createdAt &&
-        data.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".");
-      content =
-        data.request_set[0].order_request_open &&
-        data.request_set[0].order_request_open;
-      period =
-        data.request_set[0].deadline == "2020-11-11T11:11:00+09:00"
-          ? "납기일미정"
+      
+      date = data.request_set[0].createdAt && data.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".");
+      
+      content = data.request_set[0].contents && data.request_set[0].contents;
+      
+      
+      period = data.request_set[0].deadline == "2020-11-11T11:11:00+09:00" ? "납기일미정"
           : data.request_set[0].deadline.substring(0, 10) +
             "(" +
             data.request_set[0].deadline_state +
             ")";
-      status =
-        data.request_set[0].request_state && data.request_set[0].request_state;
+      
+      price = data.request_set[0].price && data.request_set[0].price
+      
+      status = data.request_set[0].request_state && data.request_set[0].request_state;
+
+      filelist = data.request_set[0].requestfile_set && data.request_set[0].requestfile_set
+
+      category = data.request_set[0].category && data.request_set[0].category
+
+      region = data.request_set[0].region && data.request_set[0].region
     }
 
     const { Project } = this.props;
@@ -86,7 +98,7 @@ class ProposalCard extends React.Component {
             {data.status}
           </div>
           <HeaderWrapper>
-            <Title>{name}</Title>
+            <Title>{name && name}</Title>
             {data.identification_state === true ? (
               <Certification>
                 <img src={certification}></img>
@@ -114,7 +126,7 @@ class ProposalCard extends React.Component {
                     </span>
                   </Field>
                   <FieldContent>
-                    <div style={{ marginLeft: 3 }}>완제품/부품 구매</div>
+                    <div style={{ marginLeft: 3 }}>{category && category }</div>
                   </FieldContent>
                 </CategoryBox>
                 <CategoryBox style={{ marginLeft: 16 }}>
@@ -133,7 +145,7 @@ class ProposalCard extends React.Component {
                   </Field>
                   <FieldContent>
                     <div style={{ marginLeft: 3 }}>
-                      {data.request_set[0].request_state}
+                      {status && status}
                     </div>
                   </FieldContent>
                 </CategoryBox>
@@ -153,12 +165,7 @@ class ProposalCard extends React.Component {
                   </Field>
                   <FieldContent>
                     <div style={{ marginLeft: 3 }}>
-                      {Project.projectDetailData &&
-                      Project.projectDetailData.request_set[0].price
-                        ? Project.projectDetailData.request_set[0].price.toLocaleString(
-                            "ko-KR"
-                          ) + "원"
-                        : "미정"}
+                      {price != "" ? price : "미정"}
                     </div>
                   </FieldContent>
                 </CategoryBox>
