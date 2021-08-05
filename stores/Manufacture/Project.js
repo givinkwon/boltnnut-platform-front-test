@@ -5,12 +5,6 @@ import * as AccountAPI from "axios/Account/Account";
 import { toJS } from "mobx";
 
 class Project {
-  constructor() {
-    //makeObservable(this);
-  }
-  @observable producerId = null;
-
-  @observable project_existence = true;
 
   // 프로젝트 데이터 관련 변수
   @observable projectDataList = [];
@@ -20,24 +14,13 @@ class Project {
   @observable project_status = "";
   @observable projectDetailData = "";
   @observable selectedProjectId = null;
+  
   // 페이지 관련 변수
   @observable project_page = ["", "", "", "", ""];
   @observable currentPage = 1;
-  // 필터 & 라디오박스 관련 변수
-  @observable filter_price = "전체";
-  @observable radiobox_checked_idx = "1";
-  // 카테고리 데이터 관련 변수
-  @observable input_category = null;
-  @observable product_idx = 0;
-  @observable middle_category_idx = [0, 0, 0, 0, 0];
-  @observable middle_category_name = ["", "", "", "", ""];
-  @observable main_category_idx = [0, 0, 0, 0, 0];
-  @observable main_category_name = ["", "", "", "", ""];
-  @observable newIndex = 0;
-  @observable myIndex = 0;
+
   @observable chattingIndex = 0;
-  // * 삭제 예정 * 옛날 데이터 관련 변수
-  @observable data_dt = [];
+
   // 검색 관련 변수
   @observable search_text = "";
 
@@ -54,6 +37,7 @@ class Project {
   //로그인 된 클라이언트 id
   @observable loggedInClientId = null;
 
+
   @action movePage = (e, isMyProject = true) => {
     const newPage = e.target.innerText * 1;
 
@@ -63,6 +47,7 @@ class Project {
       : this.getProjectByPrice(this.search_text, this.currentPage);
   };
 
+  // 다음 페이지로 이동
   @action pageNext = (isMyProject = true) => {
     if (this.currentPage < this.project_page) {
       const nextPage = this.currentPage + 1;
@@ -73,6 +58,7 @@ class Project {
     }
   };
 
+  // 이전 페이지로 이동
   @action pagePrev = (isMyProject = true) => {
     if (this.currentPage > 1) {
       const newPage = this.currentPage - 1;
@@ -82,54 +68,17 @@ class Project {
         : this.getProjectByPrice(this.search_text, this.currentPage);
     }
   };
+
+  // 카드를 클릭했을 때 가져오기
   @action pushToDetail = async (id) => {
-    console.log(id);
     this.selectedProjectId = id;
+    // 디테일 데이터 가져오기
     await this.getProjectDetail(id);
-    this.newIndex = 1;
-    this.setProjectDetailData(id);
+    // 상세 페이지로 이동
+    this.set_step_index(2)
   };
 
-  @action setCategory = (val) => {
-    this.input_category = val;
-  };
-  @action category_reset = () => {
-    this.middle_category_idx = [0, 0, 0, 0, 0];
-    this.middle_category_name = ["", "", "", "", ""];
-    this.main_category_idx = [0, 0, 0, 0, 0];
-    this.main_category_name = ["", "", "", "", ""];
-  };
-  /* 삭제 검토 중 */
-  @action getNextPage = (clientId, callback = null) => {
-    if (!this.project_next) {
-      return;
-    }
-    const token = localStorage.getItem("token");
-    const req = {
-      nextUrl: this.project_next,
-      params: {
-        client: clientId,
-        // page: page
-      },
-      headers: {
-        //  Authorization: `Token ${token}`,
-      },
-    };
-    ProjectAPI.getNextPage(req)
-      .then((res) => {
-        console.log(res.data.results);
-        this.projectData = this.projectData.concat(res.data.results);
-        this.project_next = res.data.next;
-        //this.project_page = parseInt(this.project_count/5) + 1
-        if (callback) {
-          callback();
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
+
   /* 클라이언트 - project API 데이터 가져오기 */
   @action getPage = (clientId, page = 1) => {
     this.projectDataList = [];
@@ -229,27 +178,24 @@ class Project {
         console.log(e.response);
       });
   };
+
+
+  // 프로젝트 디테일 데이터를 가져오기
   @action getProjectDetail = async (id) => {
-    // console.log(id);
     const req = {
       id: id,
     };
-    // console.log(req);
     await ProjectAPI.getProjectDetail(req)
       .then((res) => {
         this.projectDetailData = res.data;
         console.log(res.data);
       })
       .catch((e) => {
-        // console.log(e);
-        // console.log(e.response);
+        console.log(e);
+        console.log(e.response);
       });
   };
 
-  @action setProjectDetailData = (data) => {
-    // this.projectDetailData = data;
-    // Router.push(`/project/${data.id}`);
-  };
 
   // 프로젝트 모집을 종료 버튼 눌렀을 때
   @action exitProject = (id) => {
@@ -271,10 +217,23 @@ class Project {
       });
   };
 
+
   @observable myproject_state = 0 // 내 프로젝트 보기에서 전체 보기의 경우 0, 진행 중인 프로젝트 보기의 경우 1, 종료된 프로젝트 보기의 경우 2
   
   @action set_myproject_state = (state) => {
     this.myproject_state = state
+  }
+
+
+  @observable step_index = 0; // 프로젝트 페이지에 따른 index, 
+  // 0인 경우에는 내 프로젝트
+  // 1인 경우에는 전체 프로젝트
+  // 2인 경우에는 프로젝트 상세  
+
+  @action set_step_index = (idx) => {
+    this.step_index = idx
+    console.log(idx)
+    
   }
 }
 

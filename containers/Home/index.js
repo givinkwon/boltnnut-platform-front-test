@@ -19,9 +19,10 @@ import MobileBanner3Container from "./Mobile/MobileBanner3";
 import MobileBanner4Container from "./Mobile/MobileBanner4";
 import MobileBanner5Container from "./Mobile/MobileBanner5";
 
-
 import { inject, observer } from "mobx-react";
 import axios from "axios";
+
+import * as AccountAPI from "axios/Account/Account";
 
 @inject("Home")
 @observer
@@ -36,6 +37,44 @@ class HomeConatiner extends React.Component {
   componentDidMount() {
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+
+    const formData = new FormData();
+    const formData2 = new FormData();
+
+    document.referrer === ""
+      ? formData.append("prevUrl", "direct")
+      : formData.append("prevUrl", document.referrer);
+
+    document.referrer === ""
+      ? formData2.append("prevUrl", "direct")
+      : formData2.append("prevUrl", document.referrer);
+
+    console.log(window.location.href);
+    formData.append("url", window.location.href);
+    const req = {
+      data: formData,
+    };
+
+    const req2 = {
+      data: formData2,
+    };
+    AccountAPI.setUserIP(req)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    AccountAPI.setPrevUrlLog(req2)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
   }
 
   componentWillUnmount() {
@@ -71,8 +110,6 @@ class HomeConatiner extends React.Component {
         {width < 767.98 ? (
           <>
             <CustomContainer>
-              {Home.modalState ? <MobileModalContainer /> : "none"}
-
               <MobileBanner0Container width={width} />
               <MobileBanner1Container width={width} />
               <MobileBanner2Container width={width} />
@@ -91,7 +128,6 @@ class HomeConatiner extends React.Component {
               <Banner4Container width={width} />
               <Banner5Container width={width} />
               <Banner6Container width={width} />
-
             </div>
           </>
         )}

@@ -1,29 +1,21 @@
 import React from "react";
-import ClientContentContainer from "./Client/Content";
-import ClientMobileContentContainer from "./Client/ProjectDetail/Mobile/MobileProject";
-import ProjectSearch from "./Partner/Content";
-import MobileProjectSearch from "./Partner/Mobile/MobileProject";
-import MobileMyProject from "./Partner/Mobile/MobileMyProject";
-import BannerContainer from "./Common/Banner";
-
-import ProjectDetailContainer from "./Client/ProjectDetail/ProjectDetail";
-import MobileProjectDetailContainer from "./Client/ProjectDetail/Mobile/MobileProjectDetail";
 import styled, { css } from "styled-components";
-import RequestComplete from "./Common/RequestComplete";
-import PartnerAnswer from "./Partner/PartnerAnswer";
-import MobilePartnerAnswer from "./Partner/Mobile/MobilePartnerAnswer";
-import AnswerCompleteContainer from "./Partner/AnswerComplete";
-import MobileAnswerCompleteContainer from "./Partner/Mobile/MobileAnswerComplete";
 import * as Content from "components/Content";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import PartnerMyProject from "./Partner/MyProject";
-import ProjectDivider from "./Common/ProjectDivider";
-import NoProject from "./Common/NoProject";
-import SearchBarConatiner from "./Common/SearchBar";
 
 // cookie 추가
 import Cookies from "js-cookie";
+
+// Web
+import MyProject from "containers/Manufacture/project/MyProject/index";
+import AllProject from "containers/Manufacture/project/AllProject/index";
+import ProjectDetail from "containers/Manufacture/project/ProjectDetail/index";
+
+// Mobile
+import MobileMyProject from "containers/Manufacture/project/MyProject/Mobile/index";
+import MobileAllProject from "containers/Manufacture/project/AllProject/Mobile/index";
+import MobileProjectDetail from "containers/Manufacture/project/ProjectDetail/index";
 
 @inject("Project", "Auth", "Partner", "Cookie")
 @observer
@@ -36,14 +28,13 @@ class ProjectContainer extends React.Component {
   async componentDidMount() {
     const { Auth, Project, Cookie } = this.props;
 
+    // 로그인 체크하기
     await Auth.checkLogin();
     if (Auth.logged_in_client) {
       Project.getPage(Auth.logged_in_client.id);
     }
-
-    Project.newIndex = 0;
-    Project.myIndex = 1;
-
+    // 로그인 체크 끝
+  
     // Cookie 값 가지고 와서 리스트에 먼저 저장
     let project_view_data = [];
     project_view_data = await Cookies.get("project_view");
@@ -59,6 +50,7 @@ class ProjectContainer extends React.Component {
     if (project_view_data !== undefined && project_view_data !== "undefined") {
       project_view_data.map((data) => Cookie.add_project_view(data));
     }
+    // Cookie 값 저장 끝
 
   }
 
@@ -67,92 +59,54 @@ class ProjectContainer extends React.Component {
 
     return (
       <>
+        {/* 웹 */}
         {this.props.width && this.props.width > 767.98 ? (
           <>
-            <div style={{ overflow: "visible" }}>
-              {/* <BannerContainer /> */}
-              {Auth.logged_in_client && (
-                <>
-                  {Project.newIndex == 0 && (
-                    <>
-                      {/* <ProjectDivider /> */}
-                      {Project.myIndex == 0 && (
-                        <ProjectSearch length={this.props.length} />
-                      )}
-                      {Project.myIndex == 1 && (
-                        <ClientContentContainer length={this.props.length} />
-                      )}
-                    </>
-                  )}
-                  {Project.newIndex == 1 && (
-                    <ProjectDetailContainer user="client" />
-                  )}
-                </>
-              )}
 
-              {Auth.logged_in_partner && (
-                <>
-                  {Project.newIndex == 0 && (
-                    <>
-                      <ProjectDivider />
-                      {Project.myIndex == 0 && (
-                        <ProjectSearch length={this.props.length} />
-                      )}
-                      {Project.myIndex == 1 && <PartnerMyProject />}
-                    </>
-                  )}
-                  {Project.newIndex == 1 && (
-                    <ProjectDetailContainer user="partner" />
-                  )}
-                  {Project.newIndex == 2 && <PartnerAnswer />}
-                  {Project.newIndex == 3 && <AnswerCompleteContainer />}
-                </>
-              )}
+            <div style={{ overflow: "visible" }}>
+
+                
+              {/* 내 프로젝트 */}
+              {Project.step_index == 0 && <MyProject/>}
+              {/* 전체 프로젝트 */}
+              {Project.step_index == 1 && <AllProject />}
+              {/* 프로젝트 상세 */}
+
+              {/* 클라이언트로 로그인 */}
+              {Project.step_index == 2 && Auth.logged_in_client && <ProjectDetail user="client" /> }
+              
+              {/* 파트너로 로그인 */}
+              {Project.step_index == 2 && Auth.logged_in_partner && <ProjectDetail user="partner" />}
+
+            </div>
+
+          </>
+
+        ) : (
+
+          <>
+
+            {/* 모바일 */}
+            <div>
+
+              {/* 내 프로젝트 */}
+              {Project.step_index == 0 && <MobileMyProject width={this.props.width} />}
+              {/* 전체 프로젝트 */}
+              {Project.step_index == 1 &&  <MobileAllProject width={this.props.width} />}
+              {/* 프로젝트 상세 */}
+
+              {/* 클라이언트로 로그인 */}
+              {Project.step_index == 2 && Auth.logged_in_client && <MobileProjectDetail user="client" />}
+                    
+              {/* 파트너로 로그인 */}
+              {Project.step_index == 2 && Auth.logged_in_partner && <MobileProjectDetail user="partner" />}
+
             </div>
           </>
-        ) : (
-          <>
-            {Auth.logged_in_client && (
-              <div>
-                {Project.newIndex == 0 && (
-                  <>
-                    <ProjectDivider />
-                    {Project.myIndex == 0 && (
-                      <MobileProjectSearch width={this.props.width} />
-                    )}
-                    {Project.myIndex == 1 && (
-                      <ClientMobileContentContainer width={this.props.width} />
-                    )}
-                  </>
-                )}
-
-                {Project.newIndex == 1 && (
-                  <MobileProjectDetailContainer user="client" />
-                )}
-              </div>
-            )}
-            {Auth.logged_in_partner && (
-              <div>
-                {Project.newIndex == 0 && (
-                  <>
-                    <ProjectDivider />
-                    {Project.myIndex == 0 && (
-                      <MobileProjectSearch width={this.props.width} />
-                    )}
-                    {Project.myIndex == 1 && <MobileMyProject />}
-                  </>
-                )}
-                {Project.newIndex == 1 && (
-                  <MobileProjectDetailContainer user="partner" />
-                )}
-                {Project.newIndex == 2 && <MobilePartnerAnswer />}
-                {Project.newIndex == 3 && <MobileAnswerCompleteContainer />}
-              </div>
-            )}
-          </>
-        )}
+        )
+        }
       </>
-    );
+    )
   }
 }
 

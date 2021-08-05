@@ -68,7 +68,6 @@ class Input extends React.Component {
       <CustomInput
         {...props}
         id={this.id}
-        fullWidth
         label={focused ? label : placeholder}
         outlined={this.outlined}
         onFocus={this.onFocus}

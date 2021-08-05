@@ -3,14 +3,13 @@ import styled, { css } from "styled-components";
 import Router from "next/router";
 import Slider from "react-slick";
 import { inject, observer } from "mobx-react";
-import SearchBar from "../Common/SearchBar";
 import * as Title from "components/Title";
 import * as Content from "components/Content";
 
 import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
-import RadioBox from "../Common/RadioBox";
+import SearchBar from "./SearchBar"
 import { toJS } from "mobx";
 
 const pass1 = "static/images/pass1.png";
@@ -22,7 +21,7 @@ const right = "static/icon/right-arrow.png";
 
 @inject("Project", "Auth")
 @observer
-class ProjectContentContainer extends React.Component {
+class AllProject extends React.Component {
   handleIntersection = (event) => {
     if (event.isIntersecting) {
       console.log("추가 로딩을 시도합니다");
@@ -54,10 +53,7 @@ class ProjectContentContainer extends React.Component {
             <SearchBar />
             <>
               <Body>
-                <Filter style={{ paddingTop: "32px" }}>
-                  <span>필터</span>
-                  <RadioBox data={request_data} />
-                </Filter>
+
                 <Main>
                   <Header style={{ paddingTop: "32px" }}>
                     <Font20 style={{ marginLeft: "-9px" }}>
@@ -84,12 +80,6 @@ class ProjectContentContainer extends React.Component {
                               >
                                 <ProposalCard
                                   data={item}
-                                  middleCategory={
-                                    Project.middle_category_name[idx]
-                                  }
-                                  mainCategory={Project.main_category_name[idx]}
-                                  newData={Project.data_dt[idx]}
-                                  checkTotal={Project.filter_price}
                                   handleIntersection={this.handleIntersection}
                                   customer="partner"
                                 />
@@ -355,4 +345,4 @@ const Font14 = styled(Content.FontSize14)`
   color: #0933b3;
 `;
 
-export default ProjectContentContainer;
+export default AllProject;
