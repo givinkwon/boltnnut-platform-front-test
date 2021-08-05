@@ -3,17 +3,23 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import * as Content from "./Content";
 import Router from "next/router";
-@inject("Common")
+@inject("Common", "Project")
 @observer
 class KSLink extends React.Component {
+
+
   render() {
-    const { FontContent } = this.props;
+    const { FontContent, step_index, Project } = this.props;
+
     return (
       <>
         {/* <a href={this.props.Common.makeUrl(this.props.url)}> */}
         <div
           onClick={() => {
-            Router.push(`/${this.props.url}`);
+            if(step_index){
+              Project.set_step_index(step_index)
+              }
+              Router.push(`/${this.props.url}`);
           }}
           style={{
             display: "flex",

@@ -34,11 +34,7 @@ class ProjectContainer extends React.Component {
       Project.getPage(Auth.logged_in_client.id);
     }
     // 로그인 체크 끝
-
-    // 처음 페이지로 index init
-    Project.set_step_index(0)
-
-
+  
     // Cookie 값 가지고 와서 리스트에 먼저 저장
     let project_view_data = [];
     project_view_data = await Cookies.get("project_view");
