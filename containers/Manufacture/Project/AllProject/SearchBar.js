@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import SelectComponent from "Select";
 import ButtonComponent from "components/Buttonv2";
 
 import Background from "components/Background";
@@ -10,11 +9,10 @@ import Router from "next/router";
 import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
-import Category from "../../../stores/Manufacture/Category";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer", "Category")
+@inject("Auth", "Project", "Request", "ManufactureProcess", "Producer", "Category")
 @observer
-class SearchBarConatiner extends React.Component {
+class SearchBarContainer extends React.Component {
   state = {
     search: "",
     modal_open: false,
@@ -26,56 +24,13 @@ class SearchBarConatiner extends React.Component {
 
   // 검색함수
   search = async () => {
-    const { Partner, ManufactureProcess, Category } = this.props;
+    const { Project } = this.props;
 
-    // 연관검색어 저장
-    Partner.suggest_list = this.state.suggs;
-    console.log(toJS(Partner.suggest_list));
 
-    await Router.push("/producer");
-    // console.log("click");
-
-    Partner.loadingFlag = true;
-    setTimeout(() => {
-      Partner.loadingFlag = false;
-    }, 3000);
-
-    Partner.currentPage = 1;
-    Partner.click_count += 1;
-
-    await Partner.search();
-
-    // 전체 파트너 숫자
-    ManufactureProcess.PartnerCount = Partner.partner_count;
-    console.log(toJS(ManufactureProcess.PartnerCount));
-
-    // 검색어 로그에 저장하기 위한 함수
-    if (Partner.search_text) {
-      Partner.isSearched = true;
-    } else {
-      Partner.isSearched = false;
-    }
-    console.log(Partner.search_text, ManufactureProcess.loadingSaveSearchText);
-    if (Partner.search_text != "") {
-      if (ManufactureProcess.loadingSaveSearchText) {
-        Partner.subButtonActive = true;
-        // console.log(Partner.subButtonActive);
-        ManufactureProcess.saveSearchText(Partner.search_text);
-        ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
-      }
-    }
-  };
-
-  closeModal = () => {
-    this.setState({
-      ...this.state,
-      modal_open: false,
-    });
+    await Project.search();
   };
 
   handleKeyDown = (e) => {
-    const { Partner, ManufactureProcess } = this.props;
     if (e.key === "Enter") {
       this.search();
     }
@@ -87,12 +42,12 @@ class SearchBarConatiner extends React.Component {
 
   // 검색창에 검색을 할 때 text를 observable에 저장
   handleSearcherInputChange(event) {
-    const { Partner } = this.props;
-    Partner.search_text = event.target.value;
+    const { Project } = this.props;
+    Project.search_text = event.target.value;
   }
 
   render() {
-    const { Partner, Request } = this.props;
+    const { Project } = this.props;
 
     return (
       <>
@@ -118,14 +73,8 @@ class SearchBarConatiner extends React.Component {
   }
 }
 
-export default SearchBarConatiner;
-const CustomUl = styled.ul`
-  width: 588px;
-  height: 150px;
-  margin-left: 30px;
-  font-size: 18px;
-  }
-`;
+export default SearchBarContainer;
+
 
 const CustomLiBox = styled.div`
   display: flex;
@@ -146,12 +95,6 @@ const CustomLiBox = styled.div`
 
 `;
 
-const categoryArray = [
-  { label: "전체", value: "전체" },
-  // { label: "만든 제품", value: "만든 제품" },
-  // { label: "제목", value: "제목" },
-  // { label: "내용", value: "내용" },
-];
 
 const SearchBar = styled.div`
   display: flex;

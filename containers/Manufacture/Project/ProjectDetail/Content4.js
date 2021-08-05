@@ -8,8 +8,6 @@ import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import STLViewer from "stl-viewer";
 const search_img = "/static/images/project/search.png";
-import Modal from "./Modal";
-import CloseModalButton from "components/CloseModalButton";
 import DownloadFile from "components/DownloadFile";
 import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
 import { createNoSubstitutionTemplateLiteral } from "typescript";
@@ -24,21 +22,11 @@ class Content4 extends React.Component {
   detailProcess = [];
   count = 0;
   state = {
-    modalOpen: false,
-    modal_open: false,
-    classModal_open: false,
     render_process: false,
     process: [],
     detailProcess: [],
   };
-
-  openModal = () => {
-    this.setState({ modalOpen: true });
-  };
-  closeModal = () => {
-    this.setState({ modalOpen: false });
-  };
-
+  
   downloadFile(urls) {
     const blob = new Blob([this.content], { type: "text/plain" });
     const url = window.URL.createObjectURL(blob);
@@ -199,13 +187,7 @@ class Content4 extends React.Component {
                               </span>
                               <img src={download_img} />
                             </div>
-                            <Modal
-                              open={this.state.modalOpen}
-                              close={this.closeModal}
-                              header="도면"
-                              title="dd"
-                            >
-                            </Modal>
+
                           </Header>
                           <Body>
                             <DrawingName>
