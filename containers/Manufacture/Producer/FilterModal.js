@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import Background from "components/Background";
-import InnerBoxComponent from "components/InnerBox";
 import * as Title from "components/Title";
 import * as Content from "components/Content";
 import Button from "components/Button";
