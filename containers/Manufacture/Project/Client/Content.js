@@ -31,11 +31,7 @@ class ProjectContentContainer extends React.Component {
     next: true,
     prev: true,
     count: 0,
-  };
-
-  handleIntersection = (event) => {
-    if (event.isIntersecting) {
-    }
+    myproject_state: 0,
   };
 
   async componentDidMount() {
@@ -60,11 +56,17 @@ class ProjectContentContainer extends React.Component {
 
     return (
       <>
-        <Background style={{ backgroundColor: "#f6f6f6" }} id="MyBackground">
+        <Background
+          style={{ backgroundColor: "#f6f6f6", paddingBottom: 217 }}
+          id="MyBackground"
+        >
           <Header>
             <HeaderTitle>
               <div style={{ marginBottom: 12 }}>
-                내 프로젝트 > 진행 중인 프로젝트
+                내 프로젝트 >{" "}
+                {Project.myproject_state == 1
+                  ? "진행 중인 프로젝트"
+                  : "종료된 프로젝트"}
               </div>
             </HeaderTitle>
           </Header>
@@ -73,13 +75,24 @@ class ProjectContentContainer extends React.Component {
               <Aside>
                 <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
                 <AsideBody>
-                  <div style={{ marginBottom: 12 }}>진행 중인 프로젝트</div>
-                  <div>종료된 프로젝트</div>
+                  <div
+                    onClick={() => Project.set_myproject_state(1)}
+                    style={{ marginBottom: 12 }}
+                  >
+                    진행 중인 프로젝트
+                  </div>
+                  <div onClick={() => Project.set_myproject_state(2)}>
+                    종료된 프로젝트
+                  </div>
                 </AsideBody>
               </Aside>
               <Main>
                 <MainHeader>
-                  <div>진행 중인 프로젝트</div>
+                  <div>
+                    {Project.myproject_state == 1
+                      ? "진행 중인 프로젝트"
+                      : "종료된 프로젝트"}
+                  </div>
                 </MainHeader>
                 {Project.project_existence &&
                 Project.projectDataList &&
@@ -92,36 +105,57 @@ class ProjectContentContainer extends React.Component {
                         }
                         return (
                           <>
-                            {toJS(item.request_set.length > 0) && (
-                              <Background
-                                style={{
-                                  marginTop: 24,
-                                  backgroundColor: "#f6f6f6",
-                                }}
-                              >
-                                <div
-                                  style={{ cursor: "pointer", width: "100%" }}
-                                  onClick={() => Project.pushToDetail(item.id)}
+                            {toJS(item.request_set.length > 0) &&
+                              // 진행 중인 프로젝트 선택 시 >> 진행 중 프로젝트만 보여주기
+                              Project.myproject_state == 1 &&
+                              item.status == "모집중" && (
+                                <Background
+                                  style={{
+                                    marginTop: 24,
+                                    backgroundColor: "#f6f6f6",
+                                  }}
                                 >
-                                  <ProposalCard
-                                    id={idx}
-                                    data={item}
-                                    middleCategory={
-                                      Project.middle_category_name[idx]
+                                  <div
+                                    style={{ cursor: "pointer", width: "100%" }}
+                                    onClick={() =>
+                                      Project.pushToDetail(item.id)
                                     }
-                                    mainCategory={
-                                      Project.main_category_name[idx]
+                                  >
+                                    <ProposalCard
+                                      state={Project.myproject_state}
+                                      data={item}
+                                    />
+                                  </div>
+                                </Background>
+                              )}
+
+                            {toJS(item.request_set.length > 0) &&
+                              // 종료된 프로젝트 선택 시 >> 종료된 프로젝트만 보여주기
+                              Project.myproject_state == 2 &&
+                              item.status == "모집종료" && (
+                                <Background
+                                  style={{
+                                    marginTop: 24,
+                                    backgroundColor: "#f6f6f6",
+                                  }}
+                                >
+                                  <div
+                                    style={{ cursor: "pointer", width: "100%" }}
+                                    onClick={() =>
+                                      Project.pushToDetail(item.id)
                                     }
-                                    newData={Project.data_dt[idx]}
-                                    handleIntersection={this.handleIntersection}
-                                  />
-                                </div>
-                              </Background>
-                            )}
+                                  >
+                                    <ProposalCard
+                                      state={Project.myproject_state}
+                                      data={item}
+                                    />
+                                  </div>
+                                </Background>
+                              )}
                           </>
                         );
                       })}
-                    <PageBar>
+                    {/* <PageBar>
                       <img
                         src={pass1}
                         style={{
@@ -214,7 +248,7 @@ class ProjectContentContainer extends React.Component {
                         }}
                         onClick={Project.pageNext}
                       />
-                    </PageBar>
+                    </PageBar> */}
                   </>
                 ) : (
                   <NoProject />
@@ -275,6 +309,13 @@ const AsideBody = styled.div`
   letter-spacing: -0.38px;
   text-align: left;
   color: #1e2222;
+  cursor: pointer;
+  ${(props) =>
+    props.active &&
+    css`
+      font-weight: 700;
+      color: #1e2222;
+    `}
 `;
 
 const Main = styled.div`

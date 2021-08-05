@@ -6,7 +6,7 @@ import Background from "components/Background";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
-import SubBoxContainer from "containers/Manufacture/Producer/ProducerDetail/SubBox";
+import SubBoxContainer from "containers/Account/Bookmark/SubBox";
 
 @inject("Auth", "Partner", "Producer")
 @observer
@@ -28,7 +28,7 @@ class BookmarkContainer extends React.Component {
 
     return (
       <>
-        <SubBoxContainer />
+        <SubBoxContainer width={this.props.width} />
       </>
     );
   }

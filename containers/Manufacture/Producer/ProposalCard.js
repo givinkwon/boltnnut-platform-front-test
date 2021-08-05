@@ -560,37 +560,10 @@ const Card = styled.div`
   background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
   display: flex;
   cursor: pointer;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    // height: 108px;
-
-    padding-left: 14px;
-    padding-right: 14px;
-    padding-top: 14px;
-
-    margin-top: 14px;
-    box-sizing: border-box;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 100%;
-    // margin-bottom: 34px;
-    padding: 33px 0px 30px 34px;
-    box-sizing: border-box;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    height: 100%;
-    // margin-bottom: 34px;
-    padding: 33px 0px 30px 34px;
-    box-sizing: border-box;
-    // align-self: self-start;
-    // width: 68%;
-  }
-  @media (min-width: 1300px) {
-    height: 100%;
-    // margin-bottom: 34px;
-    padding: 33px 0px 30px 34px;
-    box-sizing: border-box;
-  }
+  height: 100%;
+  padding: 14px 0px 14px 10px;
+  box-sizing: border-box;
+  border-radius: 8px;
 `;
 
 const Header = styled.div`

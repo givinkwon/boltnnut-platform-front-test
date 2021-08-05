@@ -169,3 +169,34 @@ font-size: 20px;
   color: #1e2222;
 }
 `;
+
+const PageBar = styled.div`
+  width: 351px;
+  margin-top: 109px;
+  margin-bottom: 157px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PageCount = styled.span`
+  width: 14px;
+  height: 30px;
+  font-size: 25px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: 0.63px;
+  text-align: left;
+  color: #999999;
+  cursor: pointer;
+  ${(props) =>
+    props.active &&
+    css`
+      font-weight: 700;
+      color: #0933b3;
+    `}
+`;

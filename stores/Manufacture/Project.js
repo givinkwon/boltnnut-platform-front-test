@@ -251,6 +251,7 @@ class Project {
     // Router.push(`/project/${data.id}`);
   };
 
+  // 프로젝트 모집을 종료 버튼 눌렀을 때
   @action exitProject = (id) => {
     const req = {
       id: id,
@@ -269,6 +270,12 @@ class Project {
         console.log(e.response);
       });
   };
+
+  @observable myproject_state = 0 // 내 프로젝트 보기에서 전체 보기의 경우 0, 진행 중인 프로젝트 보기의 경우 1, 종료된 프로젝트 보기의 경우 2
+  
+  @action set_myproject_state = (state) => {
+    this.myproject_state = state
+  }
 }
 
 export default new Project();

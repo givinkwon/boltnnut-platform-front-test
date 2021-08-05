@@ -66,6 +66,7 @@ class Auth {
   @observable checkboxState = [false, false, false, false];
   @observable allCheckState = false;
 
+  @observable accountTabIdx = 1;
   @action reset = () => {
     this.email = "";
     this.password = "";

@@ -4,12 +4,13 @@ import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 
 import * as Text from "components/Text";
-
-import BackgroundContainer from "./Background";
-import BannerContainer from "./Step2/Banner";
-import TabContainer from "./Step2/Tab";
-import ChangePasswordContainer from "./Step2/ChangePassword";
-import DeactivateUser from "./Step2/DeactivateUser";
+import Background from "components/Background";
+import Container from "components/Containerv1";
+import BasicInfoModify from "./AccountSetting/BasicInfoModify";
+import NotificationSetting from "./AccountSetting/NotificationSetting";
+import PasswordChange from "./AccountSetting/PasswordChange";
+import AccountWithdraw from "./AccountSetting/AccountWithdraw";
+import TabContainer from "AccountSetting/Tab";
 
 @inject("Auth")
 @observer
@@ -17,9 +18,7 @@ class AccountConatiner extends React.Component {
   state = {
     tab: 0,
   };
-  setTab = (val) => {
-    this.setState({ tab: val });
-  };
+
   onKeyPress = (e) => {
     if (e.key === "Enter") {
       const { Auth } = this.props;
@@ -44,46 +43,35 @@ class AccountConatiner extends React.Component {
     const { Auth } = this.props;
 
     return (
-      // <>
-      //   {!Auth.password_checked ? (
-      //     <BackgroundContainer>
-      //       <Form>
-      //         <Text.FontSize36 color="white" fontWeight={700}>
-      //           계정설정
-      //         </Text.FontSize36>
-      //         <Text.FontSize18 color="white">
-      //           계정 설정에 접근하시려면 비밀번호를 입력해주세요
-      //         </Text.FontSize18>
-
-      //         <InputBox
-      //           type="password"
-      //           placeholder="비밀번호를 입력해주세요"
-      //           onChange={(e) => Auth.setPassword(e.target.value)}
-      //           onKeyPress={this.onKeyPress}
-      //         />
-      //         <Button onClick={Auth.checkPassword}>
-      //           <Text.FontSize18 color="white" fontWeight={700}>
-      //             확인
-      //           </Text.FontSize18>
-      //         </Button>
-      //       </Form>
-      //     </BackgroundContainer>
-      //   ) : (
-      //     <Fragment>
-      //       {/* <BannerContainer tab={tab} /> */}
-      //       <TabContainer tab={tab} setTab={this.setTab} />
-      //       {tab === 1 && <ChangePasswordContainer />}
-      //       {tab === 2 && <DeactivateUser />}
-      //     </Fragment>
-      //   )}
-      // </>
       <>
-        <Fragment>
-          {/* <BannerContainer tab={tab} /> */}
-          <TabContainer tab={tab} setTab={this.setTab} />
-          {tab === 1 && <ChangePasswordContainer />}
-          {tab === 2 && <DeactivateUser />}
-        </Fragment>
+        <Background style={{ backgroundColor: "#f6f6f6", paddingBottom: 300 }}>
+          <Header>
+            <HeaderTitle>
+              <div style={{ marginBottom: 12 }}>
+                {" "}
+                계정 설정 > 기본 정보 수정
+              </div>
+            </HeaderTitle>
+          </Header>
+          <Container>
+            <Body>
+              <Aside>
+                <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
+                <AsideBody>
+                  <Fragment>
+                    <TabContainer />
+                  </Fragment>
+                </AsideBody>
+              </Aside>
+              <Main>
+                {Auth.accountTabIdx === 1 && <BasicInfoModify />}
+                {Auth.accountTabIdx === 2 && <NotificationSetting />}
+                {Auth.accountTabIdx === 3 && <PasswordChange />}
+                {Auth.accountTabIdx === 4 && <AccountWithdraw />}
+              </Main>
+            </Body>
+          </Container>
+        </Background>
       </>
     );
   }
@@ -91,38 +79,97 @@ class AccountConatiner extends React.Component {
 
 export default AccountConatiner;
 
-const Form = styled.div`
-  width: fit-content;
-  margin: 0 auto;
+const Header = styled.div`
+  background-color: #ffffff;
+  width: 100%;
+  height: 116px;
+  font-family: NotoSansCJKkr;
+`;
 
-  padding-top: 125px;
+const HeaderTitle = styled.div`
+  height: 100%;
+  padding-left: 118px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #555963;
+}
+`;
 
-  > p:nth-of-type(2) {
-    margin-top: 12px;
-    margin-bottom: 50px;
+const Body = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-family: NotoSansCJKkr;
+`;
+
+const BodyBox = styled.div`
+  width: 100%;
+  margin-top: 32px;
+  .MuiInputBase-root {
+    height: 42px;
   }
 `;
-const InputBox = styled.input`
-  box-sizing: border-box;
-  width: 500px;
-  padding: 15px 25px;
-  margin-bottom: 30px;
-  background-color: white;
-  border: none;
-  border-radius: 10px;
-  opacity: 0.8;
 
-  color: #001a56;
+const BodySubBox = styled.div`
+  width: 50%;
+`;
+
+const BodyBoxTitle = styled.div`
   font-size: 18px;
+  font-weight: 500;
+  line-height: 1.89;
+  letter-spacing: -0.45px;
+  color: #1e2222;
+  margin-bottom: 10px;
 `;
-const Button = styled.div`
-  margin-left: auto;
 
-  cursor: pointer;
-  border: 1px solid white;
-  border-radius: 20px;
-  padding: 8px 90px;
+const Aside = styled.div`
+  width: 230px;
+  font-family: NotoSansCJKkr;
 `;
+
+const AsideHeader = styled.div`
+  padding-top: 50px;
+  padding-bottom: 16px;
+  border-bottom: solid 1px #e1e2e4;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  color: #0933b3;
+`;
+
+const AsideBody = styled.div`
+  padding-top: 16px;
+  font-size: 14px;
+  line-height: 1.73;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: #767676;
+`;
+
+const Main = styled.div`
+  width: 100%;
+  padding-left: 76px;
+  font-family: NotoSansCJKkr;
+`;
+
+const MainBox = styled.div`
+  width: 894px;
+  border-radius: 15px;
+  border: solid 1px #e1e2e4;
+  background-color: #fff;
+  padding: 40px 51px 80px;
+`;
+
+const MainBoxHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const MainBoxBody = styled.div``;

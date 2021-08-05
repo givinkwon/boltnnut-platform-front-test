@@ -31,7 +31,8 @@ class ProposalCard extends React.Component {
   };
 
   render() {
-    const { data } = this.props;
+    // data는 프로젝트 데이터 
+    const { data} = this.props;
     const { width } = this.state;
 
     // 의뢰명
