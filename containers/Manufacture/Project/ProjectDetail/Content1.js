@@ -24,7 +24,7 @@ const messagesImg = "/static/images/project/Messages.svg";
 // cookie 추가
 import Cookies from "js-cookie";
 
-@inject("Project", "Auth", "Answer", "Partner")
+@inject("Project", "Auth", "Answer", "Partner","Cookie")
 @observer
 class Content1 extends React.Component {
   state = {

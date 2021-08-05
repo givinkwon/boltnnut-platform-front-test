@@ -36,7 +36,6 @@ class MyProject extends React.Component {
   async componentDidMount() {
     const { Project, Auth } = this.props;
     console.log("<Web> did mount");
-    Project.set_step_index(0)
     this.props.Project.currentPage = 1;
 
     await Auth.checkLogin();
@@ -51,6 +50,7 @@ class MyProject extends React.Component {
     const { Project, Auth } = this.props;
     const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
+    console.log(Auth.logged_in_user)
 
     return (
       <>
@@ -59,7 +59,7 @@ class MyProject extends React.Component {
           <Container>
             <Body>
               <Aside>
-                <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
+                <AsideHeader>{Auth.logged_in_user && Auth.logged_in_user.username}</AsideHeader>
                 <AsideBody>
                   <div onClick = {() => Project.set_myproject_state(1)} style={{ marginBottom: 12 }}>진행 중인 프로젝트</div>
                   <div onClick = {() => Project.set_myproject_state(2)}>종료된 프로젝트</div>

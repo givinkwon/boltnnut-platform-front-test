@@ -26,6 +26,27 @@ class Cookie {
     this.partner_view_list.splice(this.deleteIdx, 1);
     console.log(toJS(this.partner_view_list));
   };
+
+    // 최근 본 프로젝트
+    @observable project_view_list = [];
+    @observable deleteIdx = -1;
+  
+    @action add_project_view = async (id) => {
+      console.log(id);
+      if (!this.project_view_list.includes(parseInt(id))) {
+        this.project_view_list.push(parseInt(id));
+      }
+  
+      console.log(toJS(this.project_view_list));
+    };
+  
+    @action delete_project_view = async (id) => {
+      this.deleteIdx = this.project_view_list.indexOf(id);
+      console.log(toJS(this.project_view_list));
+      this.project_view_list.splice(this.deleteIdx, 1);
+      console.log(toJS(this.project_view_list));
+    };
+  
 }
 
 export default new Cookie();
