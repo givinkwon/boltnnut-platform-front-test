@@ -16,8 +16,8 @@ class InnerBoxComponent extends React.Component {
     const { Content } = this.props;
     return (
       <OuterBox style={this.props.outerStyles}>
-        <InnerBox>
-          <Content></Content>
+        <InnerBox style={this.props.innerStyles}>
+          {Content && <Content />}
         </InnerBox>
       </OuterBox>
     );
@@ -26,6 +26,8 @@ class InnerBoxComponent extends React.Component {
 
 export default InnerBoxComponent;
 
-const OuterBox = styled.div``;
+const OuterBox = styled.div`
+  width: 100%;
+`;
 
 const InnerBox = styled.div``;
