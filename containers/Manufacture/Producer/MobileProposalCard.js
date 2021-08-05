@@ -285,168 +285,43 @@ class MobileProposalCard extends React.Component {
 
     return (
       <>
-        {width > 767.98 ? (
-          <>
-            <Card
-              active={this.state.active}
-              onMouseOver={() => {
-                this.activeHandler("active");
-              }}
-              onMouseOut={() => {
-                this.activeHandler("active");
-              }}
-            >
-              <Header>
-                {data && data.portfolio_set.length > 0 ? (
-                  <Item>
-                    <img src={data.portfolio_set[0].img_portfolio}></img>
-                  </Item>
-                ) : existLogo === "null" ? (
-                  <Item>{this.state.active ? <img src="static/images/noportfolio_img_over.svg" /> : <img src="static/images/noportfolio_img.svg" />}</Item>
-                ) : (
-                  <Item>
-                    <img src={data.logo} />
-                  </Item>
-                )}
-              </Header>
-              <Main>
-                <Title>
-                  <div>
-                    <Name>{data.name}</Name>
-                    {data.identification_state === true ? (
-                      <Certification>
-                        <img src="/static/icon/certification_img.svg"></img>
-                        <div>신원 인증</div>
-                      </Certification>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-
-                  {Auth.logged_in_user && (
-                    <BookMark>
-                      <img
-                        src={Partner.check_bookmark[idx] === idx ? bookmarkBlueImg : bookmarkImg}
-                        onClick={async (e) => {
-                          if (!loggedInPartnerId && clientId) {
-                            e.stopPropagation();
-                            Partner.BookmarkHandler(idx);
-                            Partner.checkedBookmark(clientId, partnerId, idx);
-                          }
-                        }}
-                      ></img>
-                    </BookMark>
-                  )}
-                </Title>
-                <Introduce
-                  style={{
-                    width: 630,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {data.history}
-                </Introduce>
-                {this.state.business.length !== 0 ? (
-                  this.state.active ? (
-                    <div style={{ display: "flex" }}>
-                      {this.state.business &&
-                        this.state.business.map((item, idx) => {
-                          console.log(item);
-                          return <Hashtag style={{ background: " #ffffff" }}>#{item}</Hashtag>;
-                        })}
-                    </div>
-                  ) : (
-                    <div style={{ display: "flex" }}>
-                      {this.state.business &&
-                        this.state.business.map((item, idx) => {
-                          console.log(item);
-                          return <Hashtag style={{ background: " #f6f6f6" }}>#{item}</Hashtag>;
-                        })}
-                    </div>
-                  )
-                ) : (
-                  <></>
-                )}
-                <Bottom>
-                  <BottomBox>
-                    {this.state.total_review === -1 ? (
-                      <></>
-                    ) : (
-                      <Review>
-                        <img src={star} style={{ marginRight: 5 }}></img>
-                        <Score
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <div style={{ fontWeight: "bold" }}>{this.state.total_review}</div>
-                          /5.0
-                        </Score>
-                      </Review>
-                    )}
-                    <Location>
-                      <img src={location} style={{ marginLeft: 15, marginRight: 5 }}></img>
-                      <div>{data.region === null || data.region === "nan" ? this.state.city : data.region}</div>
-                    </Location>
-                  </BottomBox>
-                  <BottomBox>
-                    <ViewCount>
-                      <img src={viewcount} style={{ marginRight: 5 }}></img>
-                      <div>높음</div>
-                    </ViewCount>
-                    <BookmarkCount>
-                      <img src={bookmarkcount} style={{ marginRight: 5 }}></img>
-                      <div>{this.state.totalPartnerBookmark}</div>
-                    </BookmarkCount>
-                  </BottomBox>
-                </Bottom>
-              </Main>
-            </Card>
-          </>
-        ) : (
-          <>
-            <Card
-              active={this.state.active}
-              onClick={(e) => {
-                // this.cardClick(e);
-              }}
-              onMouseOver={() => {
-                this.activeHandler("active");
-              }}
-              onMouseOut={() => {
-                this.activeHandler("active");
-              }}
-            >
-              <Header>
-                {data && data.portfolio_set.length > 0 ? (
-                  <Item>
-                    <img src={data.portfolio_set[0].img_portfolio}></img>
-                  </Item>
-                ) : existLogo === "null" ? (
-                  <Item>{this.state.active ? <img src="static/images/noportfolio_img_over.svg" /> : <img src="static/images/noportfolio_img.svg" />}</Item>
-                ) : (
-                  <Item>
-                    <img src={data.logo} />
-                  </Item>
-                )}
-              </Header>
-              <Main>
-                <Name>{data.name}</Name>
-                <InfoOne>{data.history.length > 40 ? data.history.slice(0, 40) + "..." : data.history}</InfoOne>
-                <Location>
-                  <img src={location} />
-                  <div>{data.region === null || data.region === "nan" ? this.state.city : data.region.substring(0, 8)}</div>
-                </Location>
-              </Main>
-            </Card>
-            {this.props.Partner.ReviewActive && this.props.Partner.ReviewActiveIndex === idx && (
-              <>
-                <ReviewContainer data={data} width={width} Partner={Partner} categoryData={categoryData} idx={idx} />
-              </>
+        <Card
+          active={this.state.active}
+          onClick={(e) => {
+            // this.cardClick(e);
+          }}
+          onMouseOver={() => {
+            this.activeHandler("active");
+          }}
+          onMouseOut={() => {
+            this.activeHandler("active");
+          }}
+        >
+          <Header>
+            {data && data.portfolio_set.length > 0 ? (
+              <Item>
+                <img src={data.portfolio_set[0].img_portfolio}></img>
+              </Item>
+            ) : existLogo === "null" ? (
+              <Item>{this.state.active ? <img src="static/images/noportfolio_img_over.svg" /> : <img src="static/images/noportfolio_img.svg" />}</Item>
+            ) : (
+              <Item>
+                <img src={data.logo} />
+              </Item>
             )}
+          </Header>
+          <Main>
+            <Name>{data.name}</Name>
+            <InfoOne>{data.history.length > 40 ? data.history.slice(0, 40) + "..." : data.history}</InfoOne>
+            <Location>
+              <img src={location} />
+              <div>{data.region === null || data.region === "nan" ? this.state.city : data.region.substring(0, 8)}</div>
+            </Location>
+          </Main>
+        </Card>
+        {this.props.Partner.ReviewActive && this.props.Partner.ReviewActiveIndex === idx && (
+          <>
+            <ReviewContainer data={data} width={width} Partner={Partner} categoryData={categoryData} idx={idx} />
           </>
         )}
       </>
