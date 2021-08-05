@@ -3,24 +3,27 @@ import styled, { css } from "styled-components";
 import Router from "next/router";
 import Slider from "react-slick";
 import { inject, observer } from "mobx-react";
+
 import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
-import Project from "stores/Manufacture/Project";
 import { toJS } from "mobx";
 
-import SearchBarConatiner from "../../Common/SearchBar";
-
-const left = 'static/icon/left-arrow.png'
-const right = 'static/icon/right-arrow.png'
-
-import * as Content from "components/Content";
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
 
+const left = "static/icon/left-arrow.png";
+const right = "static/icon/right-arrow.png";
+
 @inject("Project", "Auth")
 @observer
-class MobileProjectContentContainer extends React.Component {
+class AllProject extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.Project.pushToDetail =
+      this.props.Project.pushToDetail.bind(this);
+  }
+
   state = {
     current: 0,
     next: true,
@@ -30,79 +33,82 @@ class MobileProjectContentContainer extends React.Component {
 
   handleIntersection = (event) => {
     if (event.isIntersecting) {
-      console.log("추가 로딩을 시도합니다");
+
     }
   };
 
   async componentDidMount() {
     const { Project, Auth } = this.props;
+    console.log("<Web> did mount");
+    console.log(Project.newIndex);
     Project.newIndex = 0;
-    Project.search_text = "";
-    Project.currentPage = 1;
-
-    console.log("did mount");
+    this.props.Project.currentPage = 1;
 
     await Auth.checkLogin();
-    Project.getProjectByPrice();
+    if (Auth.logged_in_client) {
+      Project.getPage(Auth.logged_in_client.id);
+      Project.loggedInClientId = Auth.logged_in_client.id;
+    }
+    console.log(Auth.logged_in_client);
   }
 
   render() {
-    const { Project } = this.props;
+    const { Project, Auth } = this.props;
     const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
-    console.log(toJS(Project.projectDataList));
+    const gray = "#f9f9f9";
 
     return (
       <>
-        <div>
-          <SearchBarConatiner />
-          <Background>
-            <Container style={{ display: "flex", flexDirection: "column" }}>
-              <Font15
-                style={{ marginLeft: 14, marginTop: 27, marginBottom: 20 }}
-              >
-                {Project.project_count}개의 프로젝트
-              </Font15>
-
-              {Project.projectDataList &&
-                Project.currentPage > 0 &&
+        <Background
+          style={{ backgroundColor: "#f9f9f9", paddingTop: "49px" }}
+          id="MyBackground"
+        >
+          {Project.project_existence &&
+          Project.projectDataList &&
+          Project.projectDataList[0] &&
+            <>
+              {Project.currentPage > 0 &&
                 Project.projectDataList.map((item, idx) => {
+                  {
+                    console.log(toJS(item));
+                  }
                   return (
-                    <div
-                      style={{
-                        cursor: "pointer",
-                        width: "100%",
-                        marginBottom: 14,
-                      }}
-                      onClick={() => Project.pushToDetail(item.id)}
+                    <>
+                    {toJS(item.request_set.length > 0) &&
+                    <Background
+                      style={{ marginTop: 34, backgroundColor: "#f9f9f9" }}
                     >
-                      <ProposalCard
-                        data={item}
-                        middleCategory={Project.middle_category_name[idx]}
-                        mainCategory={Project.main_category_name[idx]}
-                        newData={Project.data_dt[idx]}
-                        checkTotal={Project.filter_price}
-                        handleIntersection={this.handleIntersection}
-                        customer="partner"
-                      />
-                    </div>
+                      <Container>
+                        <div
+                          style={{ cursor: "pointer", width: "100%" }}
+                          onClick={() => Project.pushToDetail(item.id)}
+                        >
+                          <ProposalCard
+                            data={item}
+                            middleCategory={Project.middle_category_name[idx]}
+                            mainCategory={Project.main_category_name[idx]}
+                            newData={Project.data_dt[idx]}
+                            handleIntersection={this.handleIntersection}
+                          />
+                        </div>
+                      </Container>
+                    </Background>
+                    }
+                    </>
                   );
                 })}
-
               <PageBar>
                 <img
                   src={pass1}
                   style={{
                     opacity:
                       current_set == 1 && Project.currentPage <= 1 ? 0.4 : 1,
+                    cursor: "pointer",
                   }}
-                  onClick={() => {
-                    Project.pagePrev(false);
-                  }}
+                  onClick={Project.pagePrev}
                 />
                 <PageCount
-                  onClick={(e) => {
-                    Project.movePage(e, false);
-                  }}
+                  onClick={Project.movePage}
                   value={5 * (current_set - 1)}
                   active={Project.currentPage % 5 == 1}
                   style={{
@@ -124,9 +130,7 @@ class MobileProjectContentContainer extends React.Component {
                         ? "none"
                         : "block",
                   }}
-                  onClick={(e) => {
-                    Project.movePage(e, false);
-                  }}
+                  onClick={Project.movePage}
                 >
                   {" "}
                   {5 * (current_set - 1) + 2}{" "}
@@ -140,9 +144,7 @@ class MobileProjectContentContainer extends React.Component {
                         ? "none"
                         : "block",
                   }}
-                  onClick={(e) => {
-                    Project.movePage(e, false);
-                  }}
+                  onClick={Project.movePage}
                 >
                   {" "}
                   {5 * (current_set - 1) + 3}{" "}
@@ -156,9 +158,7 @@ class MobileProjectContentContainer extends React.Component {
                         ? "none"
                         : "block",
                   }}
-                  onClick={(e) => {
-                    Project.movePage(e, false);
-                  }}
+                  onClick={this.movePage}
                 >
                   {" "}
                   {5 * (current_set - 1) + 4}{" "}
@@ -172,9 +172,7 @@ class MobileProjectContentContainer extends React.Component {
                         ? "none"
                         : "block",
                   }}
-                  onClick={(e) => {
-                    Project.movePage(e, false);
-                  }}
+                  onClick={Project.movePage}
                 >
                   {" "}
                   {5 * (current_set - 1) + 5}{" "}
@@ -184,35 +182,34 @@ class MobileProjectContentContainer extends React.Component {
                   style={{
                     opacity:
                       Project.project_page == Project.currentPage ? 0.4 : 1,
+                    cursor: "pointer",
                   }}
-                  onClick={() => {
-                    Project.pageNext(false);
-                  }}
+                  onClick={Project.pageNext}
                 />
               </PageBar>
-            </Container>
-          </Background>
-        </div>
+            </>
+        }
+        </Background>
       </>
     );
   }
 }
 
 const PageBar = styled.div`
-  width: 280px;
+  width: 351px;
   margin-top: 109px;
   margin-bottom: 157px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const PageCount = styled.span`
   width: 14px;
   height: 30px;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -229,30 +226,4 @@ const PageCount = styled.span`
     `}
 `;
 
-const Header = styled.div`
-  position: relative;
-  width: auto;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const Font15 = styled(Content.FontSize15)`
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 2.27 !important;
-  letter-spacing: -0.38px !important;
-  color: #282c36;
-`;
-
-const Font16 = styled(Content.FontSize16)`
-  width: 90px;
-  height: 24px;
-  color: #0a2165;
-  line-height: 18;
-  letter-spacing: -0.4px;
-  font-weight: bold;
-`;
-
-export default MobileProjectContentContainer;
+export default AllProject;

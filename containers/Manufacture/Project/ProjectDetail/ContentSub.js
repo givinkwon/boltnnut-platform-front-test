@@ -125,8 +125,7 @@ class ContentSub extends React.Component {
                   onMouseOver={() => this.activeHandler("activeOne")}
                   onMouseOut={() => this.activeHandler("activeOne")}
                   onClick={async () => {
-                    console.log(this.props.Project.newIndex);
-                    this.props.Project.newIndex = 2;
+                    Project.set_step_index(0)
                   }}
                 >
                   <Font18

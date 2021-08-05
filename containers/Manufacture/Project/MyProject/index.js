@@ -7,9 +7,8 @@ import { inject, observer } from "mobx-react";
 import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
-import NoProject from "../Common/NoProject";
+import ProjectNone from "containers/Manufacture/Project/MyProject/ProjectNone";
 import { toJS } from "mobx";
-import ProjectNoneContainer from "./ProjectNone";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";
@@ -19,7 +18,7 @@ const right = "static/icon/right-arrow.png";
 
 @inject("Project", "Auth")
 @observer
-class ProjectContentContainer extends React.Component {
+class MyProject extends React.Component {
   constructor(props) {
     super(props);
     this.props.Project.pushToDetail =
@@ -37,8 +36,7 @@ class ProjectContentContainer extends React.Component {
   async componentDidMount() {
     const { Project, Auth } = this.props;
     console.log("<Web> did mount");
-    console.log(Project.newIndex);
-    Project.newIndex = 0;
+    Project.set_step_index(0)
     this.props.Project.currentPage = 1;
 
     await Auth.checkLogin();
@@ -218,7 +216,7 @@ class ProjectContentContainer extends React.Component {
                     </PageBar>
                   </>
                 ) : (
-                  <NoProject />
+                  <ProjectNone />
                 )}
               </Main>
             </Body>
@@ -313,4 +311,4 @@ const PageCount = styled.span`
     `}
 `;
 
-export default ProjectContentContainer;
+export default MyProject;

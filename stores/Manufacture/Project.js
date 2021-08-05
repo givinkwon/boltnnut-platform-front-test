@@ -33,7 +33,7 @@ class Project {
   @observable middle_category_name = ["", "", "", "", ""];
   @observable main_category_idx = [0, 0, 0, 0, 0];
   @observable main_category_name = ["", "", "", "", ""];
-  @observable newIndex = 0;
+
   @observable myIndex = 0;
   @observable chattingIndex = 0;
   // * 삭제 예정 * 옛날 데이터 관련 변수
@@ -275,6 +275,16 @@ class Project {
   
   @action set_myproject_state = (state) => {
     this.myproject_state = state
+  }
+
+  @observable step_index = 0; // 프로젝트 페이지에 따른 index, 
+  // 0인 경우에는 내 프로젝트
+  // 1인 경우에는 전체 프로젝트
+  // 2인 경우에는 프로젝트 상세  
+
+  @action set_step_index = (idx) => {
+    this.step_index = idx
+    console.log(idx)
   }
 }
 

@@ -13,6 +13,7 @@ import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
 import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
 import KSLink from "components/KSLink";
+import Project from "../stores/Manufacture/Project";
 
 const close_ic = "/static/icon/closeIcon.svg";
 const close_clicked = "/static/icon/close_clicked.svg";
@@ -120,7 +121,7 @@ class Nav extends React.Component {
     console.log(toJS(Auth.logged_in_user));
   }
   render() {
-    const { Auth, Request, Home } = this.props;
+    const { Auth, Request, Home, Project } = this.props;
     const { url, is_open, is_profile, token } = this.state;
 
     return (
@@ -167,6 +168,9 @@ class Nav extends React.Component {
                           <li>
                             <KSLink
                               url={"project"}
+                              onClick={() =>
+                                // 새 프로젝트 페이지로 이동
+                                Project.set_step_index(1)}
                               FontContent={() => {
                                 return <Font14>전체 프로젝트</Font14>;
                               }}
@@ -175,6 +179,9 @@ class Nav extends React.Component {
                           <li>
                             <KSLink
                               url={"project"}
+                              onClick={() => 
+                                // 새 프로젝트 페이지로 이동
+                                Project.set_step_index(0)}
                               FontContent={() => {
                                 return <Font14>내 프로젝트</Font14>;
                               }}
@@ -220,6 +227,9 @@ class Nav extends React.Component {
                         <SubMenu>
                           <li>
                             <KSLink
+                              onClick={() => 
+                                // 새 프로젝트 페이지로 이동
+                                Project.set_step_index(1)}
                               url={"project"}
                               FontContent={() => {
                                 return <Font14>전체 프로젝트</Font14>;
@@ -229,7 +239,10 @@ class Nav extends React.Component {
                           <li>
                             <KSLink
                               url={"project"}
-                              onClick={Request.set_request_type}
+                              onClick={() => 
+                                // 내 프로젝트 페이지로 이동
+                                Project.set_step_index(0)
+                              }
                               FontContent={() => {
                                 return <Font14>내 프로젝트</Font14>;
                               }}
@@ -274,6 +287,9 @@ class Nav extends React.Component {
                         <li>
                           <KSLink
                             url={"project"}
+                            onClick={() => 
+                              // 새 프로젝트 페이지로 이동
+                              Project.set_step_index(1)}
                             FontContent={() => {
                               return <Font14>전체 프로젝트</Font14>;
                             }}
@@ -282,6 +298,9 @@ class Nav extends React.Component {
                         <li>
                           <KSLink
                             url={"project"}
+                            onClick={() => 
+                              // 새 프로젝트 페이지로 이동
+                              Project.set_step_index(0)}
                             FontContent={() => {
                               return <Font14>내 프로젝트</Font14>;
                             }}
