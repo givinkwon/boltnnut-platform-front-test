@@ -76,13 +76,13 @@ class MobileBanner2Container extends React.Component {
             ))}
           </CategoryBox>
 
-          <div style={{ marginTop: "23px" }}>
+          <div style={{ marginTop: "23px", width: "95%" }}>
             {Partner.partner_list &&
               Partner.partner_list.map((item, idx) => {
                 return (
                   <>
                     {idx < 3 && (
-                      <Background style={{ marginBottom: "5px" }}>
+                      <Background style={{ marginBottom: "5px", width: "100%" }}>
                         <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
                           <MobileProposalCard
                             data={item}
@@ -127,7 +127,8 @@ const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 70px;
-  width: 347px;
+  // width: 375px;
+  width: 100%;
 `;
 
 const Title20 = styled(Title.FontSize20)`
@@ -165,7 +166,7 @@ const CategoryBox = styled.div`
   margin: 80px 14px 0px 14px;
   border-bottom: solid 1px #c6c7cc;
   white-space: nowrap;
-  width: 100%;
+  width: 95%;
 
   overflow-x: scroll;
   ::-webkit-scrollbar {

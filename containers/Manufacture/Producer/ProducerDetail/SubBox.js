@@ -4,10 +4,14 @@ import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import { withRouter } from "next/router";
 import Router from "next/router";
+import Background from "components/Background";
+import Container from "components/Containerv1";
+
+import ProposalCard from "containers/Manufacture/Producer/ProposalCard";
 
 const userImg = "/static/images/producer/user.svg";
 
-@inject("Partner", "Auth", "Project", "Common", "Request")
+@inject("Partner", "Auth", "Project", "Common", "Request", "Producer")
 @observer
 class SubBoxContainer extends React.Component {
   componentDidMount = async () => {
@@ -18,7 +22,7 @@ class SubBoxContainer extends React.Component {
     await Partner.getBookmarkByClient(clientId);
   };
   render() {
-    const { Partner, Auth, partnerId, Project, Common, Request } = this.props;
+    const { Auth, partnerId, Project, Partner, Producer } = this.props;
     // console.log(this.props.Auth.logged_in_client.id);
     // console.log(toJS(`clientId: ${this.props.Auth.logged_in_client.id}`));
     console.log(toJS(Auth));
@@ -36,234 +40,163 @@ class SubBoxContainer extends React.Component {
     console.log(Project.project_count);
     return (
       <>
-        <Container>
-          <ActiveItem>
-            <div>자동견적&비슷한 업체를 추천 받고 싶다면</div>
-
-            {/* {buttenArray.map((item, idx) => {
-              return (
-                <Button
-                  style={{ marginBottom: "12px" }}
-                  active={Partner.activeHandler("interested", item, idx)}                  
-                >
-                  <div
-                    onClick={() => {
-                      Partner.clickHandler("interested", item, idx);
-                      this.setState({ g: 3 });
-                    }}
-                  >
-                    <span>{item.name}</span>
+        <Background style={{ backgroundColor: "#f6f6f6" }} id="MyBackground">
+          <Header>
+            <HeaderTitle>
+              <div style={{ marginBottom: 12 }}>> 관심 제조사</div>
+            </HeaderTitle>
+          </Header>
+          <Container>
+            <Body>
+              <Aside>
+                {/* <AsideHeader>{Auth.logged_in_user.username}</AsideHeader> */}
+                <AsideHeader>ddddd</AsideHeader>
+                <AsideBody>
+                  <div>
+                    프로젝트를 진행하면 최소 3개월 이상 시간이 소요됩니다. 다른
+                    프로젝트를 진행하기전에 제조사에게 프로젝트를 의뢰해보세요.{" "}
                   </div>
-                </Button>
-              );
-            })} */}
-            <Button
-              active={Partner.activeHandler("project")}
-              hover={Partner.hoverProjectIdx}
-              style={{ marginBottom: "12px" }}
-              type="project"
-            >
-              <div
-                onMouseOver={() => {
-                  Partner.hoverHandler("project", true);
-                }}
-                onMouseOut={() => {
-                  Partner.hoverHandler("project", false);
-                }}
-                onClick={() => {
-                  console.log(location);
-                  Project.producerId = partnerId;
-                  console.log(Project.producerId);
-                  Partner.clickHandler("project");
-                  Request.partner_request(partnerId);
-                  Request.set_request_type(2)
-                  Router.push("/request");
-                  // this.setState({ g: 3 });
-                }}
-              >
-                <span>프로젝트 의뢰하기</span>
-              </div>
-            </Button>
-
-            {Auth.logged_in_user && (
-              <Button
-                active={Partner.activeHandler("interested")}
-                hover={Partner.hoverInterestedIdx}
-                type="interested"
-              >
-                <div
-                  onMouseOver={() => {
-                    Partner.hoverHandler("interested", true);
-                  }}
-                  onMouseOut={() => {
-                    Partner.hoverHandler("interested", false);
-                  }}
-                  onClick={async () => {
-                    console.log(Partner.interestedIdx);
-                    if (clientId) {
-                      Partner.clickHandler("interested");
-                      Partner.checkedInterestedIdx(clientId, partnerId);
-                      this.setState({ g: 3 });
-                    } else {
-                      location.href = Common.makeUrl("request");
-                      // this.setState({ g: 3 });
-                    }
-                  }}
-                >
-                  <span>관심 업체 등록하기</span>
-                </div>
-              </Button>
-            )}
-          </ActiveItem>
-          <ShowItem>
-            <UserBox>
-              <img src={userImg} />
-              {Auth.logged_in_user ? (
-                <div>{Auth.logged_in_user.username.split("@")[0]}</div>
-              ) : (
-                <div>로그인 해주세요.</div>
-              )}
-            </UserBox>
-            <SubItem onClick={() => Request.set_request_type(2)}>
-              <span>프로젝트 의뢰</span>
-              {Project.project_count ? (
-                <span>{Project.project_count}</span>
-              ) : (
-                <span>0</span>
-              )}
-            </SubItem>
-            <SubItem>
-              <span>관심 업체 등록</span>
-              <span>{Partner.totalClientBookmark}</span>
-            </SubItem>
-          </ShowItem>
-        </Container>
+                </AsideBody>
+              </Aside>
+              <Main>
+                <MainHeader>
+                  <div>관심 제조사</div>
+                </MainHeader>
+                {Partner.partner_list &&
+                  Partner.partner_list.map((item, idx) => {
+                    return (
+                      <Background
+                        style={{
+                          marginTop: 24,
+                          backgroundColor: "#f6f6f6",
+                        }}
+                      >
+                        <div
+                          onClick={async () => {
+                            console.log(Auth);
+                            if (Auth.logged_in_client) {
+                              await Project.getPage(Auth.logged_in_client.id);
+                            }
+                            Partner.pushToDetail(item, idx);
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProposalCard
+                            data={item.bookmark_partner}
+                            width={this.props.width}
+                            idx={idx}
+                            categoryData={toJS(Partner.category_dic[idx])}
+                            handleIntersection={Producer.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
+                      </Background>
+                    );
+                  })}
+              </Main>
+            </Body>
+          </Container>
+        </Background>
       </>
     );
   }
 }
 
-const buttenArray = [
-  { id: 1, name: "프로젝트 의뢰하기" },
-  { id: 2, name: "관심 업체 등록하기" },
-];
-
 export default SubBoxContainer;
 
-const Container = styled.div`
-  width: 300px;
-  height: 500px;
-  //   border: 3px solid red;
-`;
-
-const ActiveItem = styled.div`
-  height: 187px;
-  padding: 25px 0 16px 26px;
-  box-sizing: border-box;
-  margin-bottom: 50px;
-  > div {
-    margin-bottom: 15px;
-    font-size: 14px;
-  }
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    padding: 15px 0 6px 16px;
-    > div {
-      font-size: 11px;
-    }
-  }
-`;
-
-const ShowItem = styled.div`
-  // border: 3px solid green;
-  height: 80px;
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 70%;
-  }
-`;
-
-const Button = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Header = styled.div`
   background-color: #ffffff;
-  border: none;
-  > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 230px;
-    height: 47px;
-    background-color: ${(props) =>
-      props.type === "project"
-        ? props.active
-          ? "#0933b3"
-          : "#0933b3"
-        : props.active
-        ? "#eeeeee"
-        : "#ffffff"};
-
-    border: 1px solid #e1e2e4;
-    border-radius: 5px;
-    > span {
-      font-size: 14px;
-      line-height: 9px;
-      letter-spacing: -0.35px;
-      color: ${(props) =>
-        props.type === "project"
-          ? props.active
-            ? "#ffffff"
-            : "#ffffff"
-          : props.active
-          ? "#a4aab4"
-          : "#767676"};
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    > div {
-      width: 180px;
-      height: 34px;
-      > span {
-        font-size: 12px;
-      }
-    }
-  }
+  width: 100%;
+  height: 116px;
 `;
 
-const UserBox = styled.div`
-  border-bottom: 1px solid #e1e2e4;
-  // padding-bottom: 16px;
-  margin-bottom: 16px;
+const HeaderTitle = styled.div`
+  height: 100%;
+  padding-left: 118px;
   display: flex;
-  justify-content: space-between;
-  > div {
-    font-size: 14px;
-    line-height: 77px;
-    letter-spacing: -0.35px;
-    color: #999999;
-    font-weight: normal;
-  }
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 60px;
-    > img {
-      width: 30px;
-    }
-  }
+  align-items: flex-end;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #555963;
+}
 `;
 
-const SubItem = styled.div`
-  margin-bottom: 12px;
+const Body = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  > span:last-child {
-    color: #0933b3;
-  }
+  font-family: NotoSansCJKkr;
+`;
 
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    > span {
-      font-size: 13px;
-    }
-  }
+const Aside = styled.div`
+  width: 230px;
+`;
+
+const AsideHeader = styled.div`
+  padding-top: 50px;
+  padding-bottom: 16px;
+  border-bottom: solid 1px #e1e2e4;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  color: #0933b3;
+`;
+
+const AsideBody = styled.div`
+  padding-top: 16px;
+  font-size: 14px;
+  line-height: 1.73;
+  letter-spacing: -0.38px;
+  text-align: left;
+  color: #767676;
+`;
+
+const Main = styled.div`
+  width: 100%;
+  padding-left: 72px;
+`;
+
+const MainHeader = styled.div`
+padding-top: 45px;
+padding-bottom: 16px;
+border-bottom: solid 1px #e1e2e4;
+font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  text-align: left;
+  color: #1e2222;
+}
+`;
+
+const PageBar = styled.div`
+  width: 351px;
+  margin-top: 109px;
+  margin-bottom: 157px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PageCount = styled.span`
+  width: 14px;
+  height: 30px;
+  font-size: 25px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: 0.63px;
+  text-align: left;
+  color: #999999;
+  cursor: pointer;
+  ${(props) =>
+    props.active &&
+    css`
+      font-weight: 700;
+      color: #0933b3;
+    `}
 `;
