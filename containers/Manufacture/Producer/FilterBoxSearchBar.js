@@ -62,8 +62,7 @@ class SearchBarConatiner extends React.Component {
     }
     if (Partner.search_text != "") {
       }
-    }
-  };
+  }
 
   closeModal = () => {
     this.setState({
@@ -81,7 +80,7 @@ class SearchBarConatiner extends React.Component {
 
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-  }
+  };
 
   // 검색창에 검색을 할 때 text를 observable에 저장
   handleSearcherInputChange(event) {
