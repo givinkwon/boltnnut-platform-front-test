@@ -23,19 +23,17 @@ class Project {
 
   // 채팅 관련 변수
 
-  @observable chatModalActive = false;
+  @observable chatModalActive = false; // 채팅창을 키고 끄는 State
   @observable chatMessages = [];
-  @observable chattingIndex = 0;
-
-  // 제안서 별 채팅방 연결 관련 변수
-  @observable answerDetailList = [];
+  @observable chattingIndex = 0; // 채팅 state index
+  @observable partnerDetailList = []; // 채팅에 표시될 answer에 대한 정보 변수
 
   // 채팅하기 페이지 간략히 보기 및 자세히 보기 관련 변수
   @observable projectQuickView = [];
 
   
   /* 프로젝트 가져오기 */
-  // container : 1. allproject : 모든 프로젝트 가져오기에서 호출 2. myproject : 내 프로젝트 가져오기에서 호출
+  // container : 1. allproject : 모든 프로젝트 가져오기에서 호출 2. myproject : 내 프로젝트 가져오기 / 채팅창에서 호출
   // search_text : allproject에서 검색한 경우에 검색 텍스트 저장 후 필터 호출
   // clientId : 해당 클라이언트의 프로젝트 가져오기 | partnerId : 해당 파트너의 프로젝트 가져오기
   // page : page에 따라 호출

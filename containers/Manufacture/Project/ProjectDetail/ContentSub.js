@@ -118,7 +118,7 @@ class ContentSub extends React.Component {
                   onMouseOver={() => this.activeHandler("activeOne")}
                   onMouseOut={() => this.activeHandler("activeOne")}
                   onClick={async () => {
-                    Project.set_step_index(0)
+                    Router.push('/chatting')
                   }}
                 >
                   <Font18

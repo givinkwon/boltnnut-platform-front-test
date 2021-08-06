@@ -170,7 +170,7 @@ class ProposalCard extends React.Component {
                   </Field>
                   <FieldContent>
                     <div style={{ marginLeft: 3 }}>
-                      {price != "" ? price : "미정"}원
+                      {price != "" ? price : "미정"}
                     </div>
                   </FieldContent>
                 </CategoryBox>
