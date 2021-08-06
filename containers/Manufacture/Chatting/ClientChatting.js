@@ -10,8 +10,6 @@ import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 
-import NoProject from "containers/Manufacture/Project/Common/NoProject";
-
 @inject("Project", "Auth", "Answer")
 @observer
 class ClientChatting extends React.Component {
@@ -21,56 +19,56 @@ class ClientChatting extends React.Component {
     partnerList: [],
   };
 
-  async getProject(data) {
-    const { Project } = this.props;
-    await Project.getAllProject(data);
-    Project.projectDataList.map((data, idx) => {
-      data.answer_set.map((answer, idx) => {
-        PartnerAPI.detail(answer.partner)
-          .then((res) => {
-            Project.answerDetailList.push({
-              logo: res.data.logo,
-              name: res.data.name,
-              id: answer.id,
-              content: answer.content1,
-              project: data.id,
+  async componentDidMount() {
+    const { Auth, Project } = this.props;
+    // 로그인되어 있는 지 체크하기
+    await Auth.checkLogin();
+
+    // 채팅 내역 보는 창 index = 1
+    Project.chattingIndex = 1;
+
+    // 클라이언트 로그인이 되어 있으면 프로젝트 호출하여 데이터 담은 후 answer 데이터 담기
+    if (Auth.logged_in_client) {
+      // 프로젝트 데이터 호출
+      Project.getProject("chatting", Auth.logged_in_client.id);
+      
+      // 담은 데이터 map
+      Project.projectDataList.map((data, idx) => {
+        // answer_set에 있는 파트너 id 가지고 오기
+        data.answer_set.map((answer, idx) => {
+          // 파트너 id로 파트너 정보 호출
+          PartnerAPI.detail(answer.partner)
+            .then((res) => {
+              // 데이터에 내용 담기 >> 채팅에 표시될 answer 리스트
+              Project.answerDetailList.push({
+                logo: res.data.logo,
+                name: res.data.name,
+                id: answer.id,
+                content: answer.content1,
+                project: data.id,
+              });
+
+              Project.projectQuickView.push({
+                check: null,
+              });
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
             });
-            Project.projectQuickView.push({
-              check: null,
-            });
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-      });
-    });
+        });
+      })
+    }
   }
 
+
+
+  // 채팅방 클릭 시에 채팅방 active 값을 활성 비활성 결정
   modalHandler = (id) => {
     this.setState({ selectedRoom: id });
     const { Project } = this.props;
 
     Project.chatModalActive = !Project.chatModalActive;
-  };
-
-  async componentDidMount() {
-    const { Auth, Project } = this.props;
-    console.log("ClientChatting <Web> did mount");
-    await Auth.checkLogin();
-
-    Project.chattingIndex = 1;
-    if (Auth.logged_in_client) {
-      this.getProject(Auth.logged_in_client.id);
-    }
-  }
-  activeHandler = (idx) => {
-    const { Project } = this.props;
-    if (Project.projectQuickView[idx].check) {
-      Project.projectQuickView[idx].check = false;
-    } else {
-      Project.projectQuickView[idx].check = true;
-    }
   };
 
   render() {
@@ -80,7 +78,7 @@ class ClientChatting extends React.Component {
       <Background>
         <Container style={{ display: "flex", flexDirection: "column" }}>
           {Project.chatModalActive && (
-            <Layer onClick={this.modalHandler}>
+            <Layer onClick={() => this.modalHandler()}>
               <ChatTestContainer
                 roomName={this.state.selectedRoom}
               ></ChatTestContainer>
@@ -117,7 +115,7 @@ class ClientChatting extends React.Component {
               );
             })
           ) : (
-            <NoProject />
+           " <NoProject />"
           )}
         </Container>
       </Background>

@@ -20,7 +20,6 @@ const search_img = "static/images/manufacturer/search.png";
   "Project",
   "Request",
   "Partner",
-  "ManufactureProcess",
   "Producer"
 )
 @observer
@@ -34,43 +33,22 @@ class MobileSearchBarConatiner extends React.Component {
   };
 
   search = async () => {
-    const { Partner, ManufactureProcess } = this.props;
+    const { Partner } = this.props;
 
     Partner.currentPage = 1;
     Partner.resetDevCategory();
     await Partner.getPartner();
-    ManufactureProcess.PartnerCount = Partner.partner_count;
-
-    if (Partner.search_text != "") {
-      if (ManufactureProcess.loadingSaveSearchText) {
-        Partner.subButtonActive = true;
-        ManufactureProcess.saveSearchText(Partner.search_text);
-        ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(
-          () => (ManufactureProcess.loadingSaveSearchText = true),
-          2000
-        );
-      }
-    }
+    Partner.partner_count;
   };
 
   handleKeyDown = async (e) => {
-    const { Partner, ManufactureProcess } = this.props;
+    const { Partner } = this.props;
     if (e.key === "Enter") {
       Partner.currentPage = 1;
       Partner.resetDevCategory();
       await Partner.getPartner();
-      ManufactureProcess.PartnerCount = Partner.partner_count;
-
-      if (ManufactureProcess.loadingSaveSearchText) {
-        Partner.subButtonActive = true;
-        ManufactureProcess.saveSearchText(Partner.search_text);
-        ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(
-          () => (ManufactureProcess.loadingSaveSearchText = true),
-          2000
-        );
-      }
+    
+      
     }
   };
   async componentDidMount() {

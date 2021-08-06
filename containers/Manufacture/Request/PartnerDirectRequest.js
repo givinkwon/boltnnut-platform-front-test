@@ -56,7 +56,7 @@ const customStyles = {
   },
 };
 
-@inject("Request", "Auth", "Schedule", "ManufactureProcess")
+@inject("Request", "Auth", "Schedule")
 @observer
 class PartnerDirectRequest extends Component {
   state = {
@@ -128,7 +128,6 @@ class PartnerDirectRequest extends Component {
   };
 
   render() {
-    const { ManufactureProcess } = this.props;
     const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
     다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
     1. 가공품 목적 및 사용 환경

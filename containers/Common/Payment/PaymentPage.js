@@ -12,7 +12,7 @@ const img = "/static/images/request/PaymentPage/star.png";
 const passimg = "/static/images/request/PaymentPage/pass.png";
 const pass3 = "static/images/pass3.png";
 
-@inject("Payment", "ManufactureProcess")
+@inject("Payment")
 @observer
 class PaymentPageContainer extends React.Component {
   state = {
@@ -34,7 +34,6 @@ class PaymentPageContainer extends React.Component {
     } else if (!this.state.checkbox) {
       return alert("구매진행 동의에 체크를 하셔야 결제가 진행됩니다.");
     }
-    console.log(this.props.ManufactureProcess.quantity);
     Payment.setPhoneNumber(cellphone.replace("-", "").replace("-", ""));
     Payment.product_price = 10;
     Payment.setProjectName("MASDASCNASKLCNASKLCNL");

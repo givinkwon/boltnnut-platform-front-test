@@ -5,15 +5,10 @@ import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
-@inject("ManufactureProcess", "Auth")
+@inject("Auth")
 @observer
 class LoadingModal extends React.Component {
   state = {};
-
-  closeModal = () => {
-    const { ManufactureProcess } = this.props;
-    ManufactureProcess.loadingEstimate = false;
-  };
 
   render() {
     const {
@@ -23,7 +18,6 @@ class LoadingModal extends React.Component {
       children,
       width,
       data,
-      ManufactureProcess,
     } = this.props;
 
     return (

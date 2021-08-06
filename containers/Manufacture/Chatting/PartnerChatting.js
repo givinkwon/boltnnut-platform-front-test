@@ -10,7 +10,6 @@ import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
 import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
 
-import NoProject from "containers/Manufacture/Project/Common/NoProject";
 import Router from "next/router";
 @inject("Project", "Auth", "Partner")
 @observer
@@ -22,6 +21,7 @@ class MyProject extends React.Component {
     clientPhone: null,
     projectName: null,
   };
+
   modalHandler = async (id, idx) => {
     this.setState({
       selectedRoom: id,
@@ -83,6 +83,7 @@ class MyProject extends React.Component {
     return (
       <Background>
         <Container style={{ flexDirection: "column" }}>
+          {/* 채팅창이 켜진 경우 모달 띄워주기 */}
           {Project.chatModalActive && (
             <Layer>
               <ChatTestContainer
@@ -90,6 +91,9 @@ class MyProject extends React.Component {
               ></ChatTestContainer>
             </Layer>
           )}
+          {/* 채팅창이 켜진 경우 모달 띄워주기 끝 */}      
+
+          {/* 내가 기존에 신청한 프로젝트 띄워주기 */}
           <>
             {Partnerprojectlist && Partnerprojectlist[0] ? (
               Partnerprojectlist.map((data, idx) => {
@@ -116,7 +120,7 @@ class MyProject extends React.Component {
                 );
               })
             ) : (
-              <NoProject />
+             " <NoProject />"
             )}
           </>
         </Container>

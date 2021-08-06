@@ -63,6 +63,10 @@ class Auth {
 
   @observable isSnsSignup = false;
 
+  @observable checkboxState = [false, false, false, false];
+  @observable allCheckState = false;
+
+  @observable accountTabIdx = 1;
   @observable signupBoxActive = true;
 
   @observable registerType = "";

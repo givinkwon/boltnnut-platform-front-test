@@ -27,13 +27,6 @@ class ProjectContainer extends React.Component {
   
   async componentDidMount() {
     const { Auth, Project, Cookie } = this.props;
-
-    // 로그인 체크하기
-    await Auth.checkLogin();
-    if (Auth.logged_in_client) {
-      Project.getPage(Auth.logged_in_client.id);
-    }
-    // 로그인 체크 끝
   
     // Cookie 값 가지고 와서 리스트에 먼저 저장
     let project_view_data = [];

@@ -10,7 +10,7 @@ const addButtonImg = "static/images/components/Input2/Mask.png";
 const deleteButtonImg = "/static/images/delete.png";
 const clip = "./static/images/request/clip.svg";
 
-@inject("Request", "ManufactureProcess")
+@inject("Request")
 @observer
 class InputComponent extends React.Component {
   constructor(props) {

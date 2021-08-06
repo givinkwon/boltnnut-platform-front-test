@@ -6,10 +6,8 @@ import { inject, observer } from "mobx-react";
 import Router from "next/router";
 
 import Nav from "components/Nav";
-import NewNav from "components/NewNav";
 import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
-import Spinner from "components/Spinner";
 
 import { toJS } from "mobx";
 import * as AccountAPI from "axios/Account/Account";
@@ -56,23 +54,7 @@ class Project extends React.Component {
         console.log(e.response);
       });
 
-    console.log(toJS(Auth));
-    if (Auth.logged_in_user) {
-      if (Auth.logged_in_partner) {
-        await Project.getProjectByPrice();
-        console.log("프로젝트 목록 로딩 끝");
-      }
-      if (Auth.logged_in_client) {
-        console.log("프로젝트 목록 로딩 시작");
-        console.log(Auth.logged_in_client);
-        Project.getPage(Auth.logged_in_client.id, () => {
-          console.log("프로젝트 목록 로딩 끝");
-        });
-      }
-    } else {
-      alert("로그인이 필요합니다");
-      Router.push("/login");
-    }
+    await Project.getProject();
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);

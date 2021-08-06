@@ -153,10 +153,10 @@ class Nav extends React.Component {
                           </Font16>
                         </RouterWrapper>
                       </NavLink>
-                      <NavLink active={url.indexOf("project") > -1}>
+                      <NavLink active={url.indexOf("request") > -1}>
                         <RouterWrapper>
                           <Font16>
-                            <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                            <KSLink url={"request"} content={"프로젝트 의뢰"} />
                           </Font16>
                         </RouterWrapper>
 
@@ -212,7 +212,7 @@ class Nav extends React.Component {
                       <NavLink active={url.indexOf("project") > -1}>
                         <RouterWrapper>
                           <Font16>
-                            <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                            <KSLink url={"request"} content={"프로젝트 의뢰"} />
                           </Font16>
                         </RouterWrapper>
 
@@ -230,7 +230,6 @@ class Nav extends React.Component {
                             <KSLink
                               step_index={0}
                               url={"project"}
-                              onClick={Request.set_request_type}
                               FontContent={() => {
                                 return <Font14>내 프로젝트</Font14>;
                               }}
@@ -278,15 +277,6 @@ class Nav extends React.Component {
                             url={"project"}
                             FontContent={() => {
                               return <Font14>전체 프로젝트</Font14>;
-                            }}
-                          />
-                        </li>
-                        <li>
-                          <KSLink
-                            step_index={0}
-                            url={"project"}
-                            FontContent={() => {
-                              return <Font14>내 프로젝트</Font14>;
                             }}
                           />
                         </li>
@@ -354,6 +344,7 @@ class Nav extends React.Component {
                       >
                         <li>
                           <KSLink
+                            step_index={0}
                             url={"project"}
                             FontContent={() => {
                               return <Font14>내 프로젝트</Font14>;
@@ -393,35 +384,6 @@ class Nav extends React.Component {
                           />
                         </li>
                       </SubMenu>
-
-                      {/* {is_profile && (
-                        <ProfileMenu>
-                          <div>
-                            <div>
-                              <Button>
-                                <Font16>
-                                  <KSLink url={"profile"} content={"정보수정"} />
-                                </Font16>
-                              </Button>
-                            </div>
-
-                            <div>
-                              <Button>
-                                <Font16>
-                                  <KSLink url={"chatting"} content={"채팅하기"} />
-                                </Font16>
-                              </Button>
-                            </div>
-                            <div>
-                              <Button>
-                                <Font16>
-                                  <KSLink url={"account?tab=1"} content={"계정설정"} />
-                                </Font16>
-                              </Button>
-                            </div>
-                          </div>
-                        </ProfileMenu>
-                      )} */}
                     </NavLink>
                     <NavLink>
                       <RouterWrapper style={{ paddingRight: 0, paddingLeft: 13 }}>

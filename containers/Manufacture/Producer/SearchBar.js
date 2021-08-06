@@ -12,7 +12,7 @@ import { toJS } from "mobx";
 import { PRIMARY2 } from "static/style";
 import Category from "../../../stores/Manufacture/Category";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer", "Category")
+@inject("Auth", "Project", "Request", "Partner", "Producer", "Category")
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -26,7 +26,7 @@ class SearchBarConatiner extends React.Component {
 
   // 검색함수
   search = async () => {
-    const { Partner, ManufactureProcess, Category } = this.props;
+    const { Partner, Category } = this.props;
 
     // 연관검색어 저장
     Partner.suggest_list = this.state.suggs;
@@ -45,25 +45,15 @@ class SearchBarConatiner extends React.Component {
 
     await Partner.search();
 
-    // 전체 파트너 숫자
-    ManufactureProcess.PartnerCount = Partner.partner_count;
-    console.log(toJS(ManufactureProcess.PartnerCount));
-
     // 검색어 로그에 저장하기 위한 함수
     if (Partner.search_text) {
       Partner.isSearched = true;
     } else {
       Partner.isSearched = false;
     }
-    console.log(Partner.search_text, ManufactureProcess.loadingSaveSearchText);
+    
     if (Partner.search_text != "") {
-      if (ManufactureProcess.loadingSaveSearchText) {
         Partner.subButtonActive = true;
-        // console.log(Partner.subButtonActive);
-        ManufactureProcess.saveSearchText(Partner.search_text);
-        ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
-      }
     }
   };
 
@@ -75,7 +65,7 @@ class SearchBarConatiner extends React.Component {
   };
 
   handleKeyDown = (e) => {
-    const { Partner, ManufactureProcess } = this.props;
+    const { Partner } = this.props;
     if (e.key === "Enter") {
       this.search();
     }
