@@ -48,7 +48,7 @@ class Banner4Container extends React.Component {
     const stepBoxArray = [
       { step: "Step1", title: "제조사 찾기", desc: "한번의 검색으로 제품에 맞는 카테고리의 제조사를 찾아보세요." },
       { step: "Step2", title: "제조에 의뢰하기", desc: "제조사를 비교하고 간단한 양식에 맞춰 견적 요청서를 작성해 보세요." },
-      { step: "Step3", title: "제조사 추천받기", desc: "한번 등록된 견적 요청서를 바탕으로 다른 제조사를 추천 받을 수 있습니다." },
+      { step: "Step3", title: "제조사와 직접 채팅하기", desc: "제조사에게 견적 요청서를 자세히 상담받고 견적을 조율해 보세요." },
     ];
 
     return (

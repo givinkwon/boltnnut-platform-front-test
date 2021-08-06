@@ -4,11 +4,11 @@ import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
 import { inject, observer } from "mobx-react";
 import InputComponent from "components/Input";
-import { getJSDocThisTag } from "typescript";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
+
 const signupdot = "/static/images/signupdot.svg";
 const signupsearch = "/static/images/signupsearch.svg";
-const dropdown = "/static/images/dropdown.svg";
+const success = "/static/images/success.svg";
 const viewterms = "/static/images/viewterms.svg";
 
 const AgreeContent = [
@@ -18,89 +18,60 @@ const AgreeContent = [
   { content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 },
 ];
 
-@inject("Auth")
+@inject("Auth", "Signup")
 @observer
 class SnsPartnerSignupContainer extends React.Component {
-  // 전체동의 핸들러 함수
-  fullConsent = () => {
-    const { Auth } = this.props;
-    if (Auth.allCheckState === false) {
-      Auth.allCheckState = true;
+  componentDidMount() {
+    this.props.Auth.getPathData();
+    this.props.Auth.getBusinessData();
+    window.addEventListener("resize", this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+    // this.props.Signup.passwordInvalidhandler();
+  }
 
-      Auth.checkboxState.forEach((item, idx) => {
-        const checkbox = Auth.checkboxState;
-        checkbox[idx] = true;
-        Auth.checkboxState = checkbox;
-        console.log("item : ", Auth.checkboxState);
-      });
-    } else {
-      Auth.allCheckState = false;
-
-      Auth.checkboxState.forEach((item, idx) => {
-        const checkbox = Auth.checkboxState;
-        checkbox[idx] = false;
-        Auth.checkboxState = checkbox;
-        console.log("item : ", Auth.checkboxState);
-      });
-    }
-  };
-
-  // 가입하기 submit 함수
-  signupSubmit = () => {
-    const { Auth } = this.props;
-    const checkboxArr = Auth.checkboxState;
-
-    if (
-      checkboxArr[0] === true &&
-      checkboxArr[1] === true &&
-      checkboxArr[2] === true
-    ) {
-      Auth.snsSignup();
-      console.log("post!!!!");
-    } else {
-      alert("필수 이용약관에 동의해 주세요");
-    }
-  };
+  componentWillUnmount() {
+    const { Signup } = this.props;
+    // Signup.reset();
+  }
 
   render() {
-    const { Auth } = this.props;
+    const { Auth, Signup } = this.props;
 
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
           <img src={signupdot} />
 
-          <Title32 style={{ marginTop: "20px" }}>
-            추가정보를 입력해 주세요.
-          </Title32>
+          <Title32 style={{ marginTop: "20px" }}>추가정보를 입력해 주세요.</Title32>
 
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
             <CustomInput
               placeholder="이름을 입력해 주세요."
-              onChange={Auth.setRealName}
-              value={Auth.realName}
-              style={{ marginTop: "0px" }}
+              onChange={(e) => {
+                Signup.setRealName(e.currentTarget.value);
+                Signup.textInvalid("name", e.currentTarget.value);
+              }}
+              active={Signup.realNameInputState}
             />
+            <InvalidImgBox src={success} active={Signup.realNameInvalid} />
+            {Signup.realName && <InvalidTitle14 active={Signup.realNameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
           </InputInnerBox>
 
           {/* company name */}
-          <InputInnerBox style={{ position: "relative" }}>
+          <InputInnerBox>
             <Title18>상호명</Title18>
-
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <CustomInput
-                placeholder="등록하고자 하는 상호명을 입력해 주세요."
-                onChange={Auth.setCompanyName}
-                value={Auth.company_name}
-                style={{ marginTop: "0px" }}
-              />
-              <ImgBox
-                src={signupsearch}
-                style={{ marginRight: "22px", marginBottom: "3px" }}
-              />
-            </div>
+            <CustomInput
+              placeholder="등록하고자 하는 상호명을 입력해 주세요."
+              onChange={(e) => {
+                Signup.setCompanyName(e.currentTarget.value);
+                Signup.textInvalid("companyName", e.currentTarget.value);
+              }}
+              active={Signup.company_nameInputState}
+            />
+            <InvalidImgBox src={success} active={Signup.company_nameInvalid} />
+            {Signup.company_name && <InvalidTitle14 active={Signup.company_nameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
           </InputInnerBox>
 
           {/* agree */}
@@ -113,7 +84,7 @@ class SnsPartnerSignupContainer extends React.Component {
                 onChange={(e) => {
                   this.setState({ allCheckState: e.currentTarget.checked });
                 }}
-                onClick={() => this.fullConsent()}
+                onClick={() => Signup.fullConsent()}
               />
               <Title15>전체 동의합니다.</Title15>
             </AllAgreeInnerBox>
@@ -125,18 +96,16 @@ class SnsPartnerSignupContainer extends React.Component {
                 <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
                   <CustomCheckBox
                     type="checkbox"
-                    checked={Auth.checkboxState[idx]}
+                    checked={Signup.checkboxState[idx]}
                     onChange={(e) => {
-                      const check = Auth.checkboxState;
+                      const check = Signup.checkboxState;
                       check[idx] = e.currentTarget.checked;
 
-                      Auth.checkboxState = check;
+                      Signup.checkboxState = check;
                     }}
                   />
-                  <Title15>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
-                    {item.essential}
-                  </Title14>
+                  <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
@@ -148,7 +117,7 @@ class SnsPartnerSignupContainer extends React.Component {
           ) : (
             <SubmitButton
               onClick={() => {
-                this.signupSubmit();
+                Signup.signupSubmit();
               }}
             >
               <ButtonText>가입하기</ButtonText>
@@ -243,15 +212,21 @@ const KakaoImgBox = styled.div`
   left: 0;
 `;
 
-const CustomInput = styled(InputComponent)`
-  height: 42px;
+const CustomInput = styled.input`
   border-radius: 3px;
-  border: solid 1px #c7c7c7;
+  border: ${(props) => (props.active ? "1px solid #c7c7c7" : "1px solid #e53c38")};
   padding-left: 10px;
-  width: 588px;
+  width: 578px;
+  height: 42px;
+  font-size: 16px;
 
   ::placeholder {
     color: #c7c7c7;
+  }
+
+  :focus {
+    background-color: #edf4fe;
+    outline: none;
   }
 `;
 
@@ -361,6 +336,7 @@ const EmailInnerContainer = styled.div`
 `;
 
 const InputInnerBox = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -382,4 +358,19 @@ const AllAgreeInnerBox = styled.div`
 const AgreeInnerBox = styled.div`
   display: inline-flex;
   align-items: center;
+`;
+
+const InvalidImgBox = styled.img`
+  display: ${(props) => (props.active ? "block" : "none")};
+  position: absolute;
+  right: 0;
+  bottom: 18%;
+  margin-right: 16px;
+`;
+
+const InvalidTitle14 = styled(Title.FontSize14)`
+  color: #e53c38;
+  margin-top: 10px;
+  font-weight: normal;
+  display: ${(props) => (props.active ? "none" : "block")};
 `;

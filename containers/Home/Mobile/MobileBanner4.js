@@ -78,7 +78,8 @@ export default MobileBanner4Container;
 
 const Container = styled.div`
   background-color: #f6f6f6;
-  height: 488px;
+  // margin-bottom: 70px;
+  height: 100%;
 `;
 
 const InnerContainer = styled.div`
@@ -131,19 +132,21 @@ const ReviewMyStarRatingComponent = styled(StarRatingComponent)`
 const RattingBox = styled.div`
   display: inline-flex;
   justify-content: space-between;
-  width: 140px;
+  width: 132px;
   margin-top: 6px;
 `;
 
 const ReviewBox = styled.div`
   display: flex;
   justify-content: center;
-  width: 228px;
+  width: 230px;
   border-radius: 10px;
-  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   margin-top: 40px;
   margin-right: 8px;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
 `;
 
 const InnerReviewBox = styled.div`
@@ -185,8 +188,8 @@ const ReviewContainer = styled.div`
 
   position: relative;
   width: 100%;
+  height: 300px;
   overflow-x: scroll;
-  overflow-y: hidden;
 
   ::-webkit-scrollbar {
     display: none;

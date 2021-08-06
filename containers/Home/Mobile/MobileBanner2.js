@@ -66,24 +66,24 @@ class MobileBanner2Container extends React.Component {
           </Title20>
           <Title20>업체 전문가들을 만나보세요.</Title20>
 
-          <CategoryBox>
-            {nameTable.map((v, idx) => (
-              <div style={{ width: "110px", display: "flex", justifyContent: "center" }}>
-                <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
-                  {v.name}
-                </CategoryTitle>
-              </div>
-            ))}
-          </CategoryBox>
-
           <div style={{ marginTop: "23px", width: "95%" }}>
+            <CategoryBox>
+              {nameTable.map((v, idx) => (
+                <div style={{ width: "110px", display: "flex", justifyContent: "center" }}>
+                  <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
+                    {v.name}
+                  </CategoryTitle>
+                </div>
+              ))}
+            </CategoryBox>
+
             {Partner.partner_list &&
               Partner.partner_list.map((item, idx) => {
                 return (
                   <>
                     {idx < 3 && (
-                      <Background style={{ marginBottom: "5px", width: "100%" }}>
-                        <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
+                      <div style={{ display: "flex", justifyContent: "center" }}>
+                        <ProposalCardBox onClick={() => Partner.pushToDetail(item, idx)}>
                           <MobileProposalCard
                             data={item}
                             width={this.props.width}
@@ -92,8 +92,8 @@ class MobileBanner2Container extends React.Component {
                             handleIntersection={Producer.handleIntersection}
                             customer="partner"
                           />
-                        </div>
-                      </Background>
+                        </ProposalCardBox>
+                      </div>
                     )}
                   </>
                 );
@@ -113,6 +113,12 @@ class MobileBanner2Container extends React.Component {
 
 export default MobileBanner2Container;
 
+const ProposalCardBox = styled.div`
+  width: 95%;
+  margin-top: 12px;
+  border: none;
+`;
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -120,6 +126,7 @@ const Container = styled.div`
   height: 841px;
   background-color: #f6f6f6;
   box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
 `;
 
 const InnerContainer = styled.div`
@@ -127,7 +134,6 @@ const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 70px;
-  // width: 375px;
   width: 100%;
 `;
 
@@ -139,7 +145,8 @@ const Title20 = styled(Title.FontSize20)`
   color: #282c36;
 `;
 
-const Text16 = styled(Text.FontSize16)`
+const Text16 = styled.p`
+  font-size: 16px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
@@ -148,7 +155,8 @@ const Text16 = styled(Text.FontSize16)`
   color: #282c36;
 `;
 
-const ButtonText16 = styled(Text.FontSize16)`
+const ButtonText16 = styled.p`
+  font-size: 16px;
   font-family: NotoSansCJKkr;
   font-weight: 500;
   font-stretch: normal;
@@ -156,14 +164,14 @@ const ButtonText16 = styled(Text.FontSize16)`
   line-height: 3.25;
   letter-spacing: -0.4px;
   color: #0933b3;
+  margin-top: 2px;
 `;
 
 const CategoryBox = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 15px;
-  // margin-top: 80px;
-  margin: 80px 14px 0px 14px;
+  margin: 40px 14px 20px 14px;
   border-bottom: solid 1px #c6c7cc;
   white-space: nowrap;
   width: 95%;
@@ -188,11 +196,14 @@ const CategoryTitle = styled.div`
   border-bottom: ${(props) => (props.active ? "2px solid #282c36" : "")};
 `;
 
-const SignupButtom = styled(Button)`
+const SignupButtom = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 148px;
   height: 42px;
   border-radius: 29px;
-  border: solid 1.5px #0933b3;
-  margin-top: 33px;
+  border: solid 2px #0933b3;
+  margin: 25px 0px 70px 0px;
   background: none;
 `;

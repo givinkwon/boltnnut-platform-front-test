@@ -2,12 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
-import * as Text from "components/Text";
 import { inject, observer } from "mobx-react";
-import { GRAY, DARKGRAY, PRIMARY, WHITE, BLACK } from "static/style";
-import SelectComponent from "components/Select";
 import Router from "next/router";
-import InputComponent from "components/Input";
 
 const signupdot = "/static/images/signupdot.svg";
 const signupkakao = "/static/images/signupkakao.svg";
@@ -117,7 +113,7 @@ class ClientSignupContainer extends React.Component {
               active={Signup.password2inputstate}
             />
             <InvalidImgBox src={success} active={Signup.passwordInvalid} />
-            <InvalidTitle14 active={Signup.passwordInvalid}>비밀번호가 일치하지 않습니다.</InvalidTitle14>
+            {Signup.password2 && <InvalidTitle14 active={Signup.passwordInvalid}>비밀번호가 일치하지 않습니다.</InvalidTitle14>}
           </InputInnerBox>
 
           {/* name */}
@@ -132,14 +128,14 @@ class ClientSignupContainer extends React.Component {
               active={Signup.realNameInputState}
             />
             <InvalidImgBox src={success} active={Signup.realNameInvalid} />
-            <InvalidTitle14 active={Signup.realNameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>
+            {Signup.realName && <InvalidTitle14 active={Signup.realNameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
           </InputInnerBox>
 
           {/* phone number */}
           <InputInnerBox>
             <Title18>휴대전화</Title18>
             <CustomInput
-              placeholder="- 없이 숫자만 입력해 주세요"
+              placeholder="- 없이 숫자만 입력해 주세요. (최대 11자리)"
               onChange={(e) => {
                 Signup.setPhone(e.currentTarget.value);
                 Signup.phoneInvalidhandler();
@@ -148,25 +144,26 @@ class ClientSignupContainer extends React.Component {
               active={Signup.phoneInputState}
             />
             <InvalidImgBox src={success} active={Signup.phoneInvalid} />
-            <InvalidTitle14 active={Signup.phoneInvalid}>- 없이 숫자만 입력해주세요.</InvalidTitle14>
+            {Signup.phone && <InvalidTitle14 active={Signup.phoneInvalid}>- 없이 숫자만 입력해주세요. (최대 11자리)</InvalidTitle14>}
           </InputInnerBox>
 
           {/* company name */}
           <InputInnerBox>
             <Title18>회사명</Title18>
             <CustomInput
-              placeholder="- 없이 입력해 주세요"
+              placeholder="근무하고 계신 회사명을 입력해 주세요."
               onChange={(e) => {
                 Signup.setCompanyName(e.currentTarget.value);
                 Signup.textInvalid("companyName", e.currentTarget.value);
               }}
               active={Signup.company_nameInputState}
+              // value={Signup.individual}
             />
-            <InvalidImgBox src={success} style={{ bottom: "46%" }} active={Signup.company_nameInvalid} />
-            <InvalidTitle14 active={Signup.company_nameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>
+            <InvalidImgBox src={success} style={{ bottom: "40%" }} active={Signup.company_nameInvalid} />
+            {Signup.company_name && <InvalidTitle14 active={Signup.company_nameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
 
-            <div style={{ display: "inline-flex", marginTop: "25px" }}>
-              <CustomCheckBox type="checkbox" />
+            <div style={{ display: "inline-flex", marginTop: "12px" }}>
+              <CustomCheckBox type="checkbox" onClick={() => Signup.individualhandler(Signup.individualState)} />
               <Title15>개인일 경우 체크해 주세요.</Title15>
             </div>
           </InputInnerBox>
@@ -183,7 +180,7 @@ class ClientSignupContainer extends React.Component {
               active={Signup.titleInputState}
             />
             <InvalidImgBox src={success} active={Signup.titleInvalid} />
-            <InvalidTitle14 active={Signup.titleInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>
+            {Signup.title && <InvalidTitle14 active={Signup.titleInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
           </InputInnerBox>
 
           {/* agree */}
@@ -215,7 +212,7 @@ class ClientSignupContainer extends React.Component {
                       Signup.checkboxState = check;
                     }}
                   />
-                  <Title15>{item.content}</Title15>
+                  <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
                   <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
@@ -337,12 +334,14 @@ const CustomInput = styled.input`
   padding-left: 10px;
   width: 578px;
   height: 42px;
+  font-size: 16px;
 
   ::placeholder {
     color: #c7c7c7;
   }
 
   :focus {
+    background-color: #edf4fe;
     outline: none;
   }
 `;

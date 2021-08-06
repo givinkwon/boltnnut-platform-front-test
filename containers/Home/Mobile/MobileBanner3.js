@@ -58,7 +58,7 @@ class MobileBanner3Container extends React.Component {
             ))}
           </StepContainer>
 
-          <img src={this.onChangeStepImage()} style={{ width: "346px", height: "205px", marginTop: "23px" }} />
+          <img src={this.onChangeStepImage()} style={{ width: "346px", height: "205px", marginTop: "18px" }} />
 
           {this.state.stepBoxIndex === 0 ? (
             <>

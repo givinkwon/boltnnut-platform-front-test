@@ -139,10 +139,7 @@ class Nav extends React.Component {
 
               <Menu is_open={is_open}>
                 <Close>
-                  <Icon
-                    src={bnlogo}
-                    onClick={() => this.setState({ is_open: false })}
-                  />
+                  <Icon src={bnlogo} onClick={() => this.setState({ is_open: false })} />
                 </Close>
 
                 {this.props.Auth.logged_in_user ? (
@@ -166,7 +163,7 @@ class Nav extends React.Component {
                         <SubMenu>
                           <li>
                             <KSLink
-                              step_index = {1}
+                              step_index={1}
                               url={"project"}
                               FontContent={() => {
                                 return <Font14>전체 프로젝트</Font14>;
@@ -175,7 +172,7 @@ class Nav extends React.Component {
                           </li>
                           <li>
                             <KSLink
-                              step_index = {0}
+                              step_index={0}
                               url={"project"}
                               FontContent={() => {
                                 return <Font14>내 프로젝트</Font14>;
@@ -222,7 +219,7 @@ class Nav extends React.Component {
                         <SubMenu>
                           <li>
                             <KSLink
-                              step_index = {1}
+                              step_index={1}
                               url={"project"}
                               FontContent={() => {
                                 return <Font14>전체 프로젝트</Font14>;
@@ -231,7 +228,7 @@ class Nav extends React.Component {
                           </li>
                           <li>
                             <KSLink
-                              step_index = {0}
+                              step_index={0}
                               url={"project"}
                               onClick={Request.set_request_type}
                               FontContent={() => {
@@ -277,7 +274,7 @@ class Nav extends React.Component {
                       <SubMenu>
                         <li>
                           <KSLink
-                            step_index = {1}
+                            step_index={1}
                             url={"project"}
                             FontContent={() => {
                               return <Font14>전체 프로젝트</Font14>;
@@ -286,7 +283,7 @@ class Nav extends React.Component {
                         </li>
                         <li>
                           <KSLink
-                            step_index = {0}
+                            step_index={0}
                             url={"project"}
                             FontContent={() => {
                               return <Font14>내 프로젝트</Font14>;
@@ -328,10 +325,7 @@ class Nav extends React.Component {
                         onClick={() => {
                           this.props.Auth.setType("detailexpert");
                         }}
-                        active={
-                          url.indexOf("signup") > -1 &&
-                          Auth.type == "detailexpert"
-                        }
+                        active={url.indexOf("signup") > -1 && Auth.type == "detailexpert"}
                       >
                         <RouterWrapper>
                           <KSLink
@@ -351,12 +345,7 @@ class Nav extends React.Component {
                           alignItems: "center",
                         }}
                       >
-                        <Avatar
-                          src={profile}
-                          onClick={() =>
-                            this.setState({ is_profile: !is_profile })
-                          }
-                        />
+                        <Avatar src={profile} onClick={() => this.setState({ is_profile: !is_profile })} />
                       </div>
                       <SubMenu
                         style={{
@@ -435,9 +424,7 @@ class Nav extends React.Component {
                       )} */}
                     </NavLink>
                     <NavLink>
-                      <RouterWrapper
-                        style={{ paddingRight: 0, paddingLeft: 13 }}
-                      >
+                      <RouterWrapper style={{ paddingRight: 0, paddingLeft: 13 }}>
                         <StyledButton onClick={this.logout}>
                           <KSLink
                             url={""}
@@ -457,10 +444,7 @@ class Nav extends React.Component {
                       onClick={() => {
                         this.props.Auth.setType("detailexpert");
                       }}
-                      active={
-                        url.indexOf("signup") > -1 &&
-                        Auth.type == "detailexpert"
-                      }
+                      active={url.indexOf("signup") > -1 && Auth.type == "detailexpert"}
                     >
                       <RouterWrapper>
                         <KSLink
@@ -480,9 +464,7 @@ class Nav extends React.Component {
                       onClick={() => {
                         Auth.setType("client");
                       }}
-                      active={
-                        url.indexOf("signup") > -1 && Auth.type == "client"
-                      }
+                      active={url.indexOf("signup") > -1 && Auth.type == "client"}
                     >
                       <RouterWrapper>
                         <KSLink
@@ -507,11 +489,7 @@ class Nav extends React.Component {
                               }}
                             />
                             <img
-                              src={
-                                this.state.closeImgState
-                                  ? close_clicked
-                                  : close_ic
-                              }
+                              src={this.state.closeImgState ? close_clicked : close_ic}
                               onMouseOver={() => {
                                 this.setState({ closeImgState: true });
                               }}
@@ -572,13 +550,8 @@ class Nav extends React.Component {
                   </ul>
                 )}
               </Menu>
-              <Icon
-                src={hamburger_ic}
-                onClick={() => this.setState({ is_open: true })}
-              />
-              {is_open && (
-                <BG onClick={() => this.setState({ is_open: false })} />
-              )}
+              <Icon src={hamburger_ic} onClick={() => this.setState({ is_open: true })} />
+              {is_open && <BG onClick={() => this.setState({ is_open: false })} />}
             </NavWrap>
           </Containerv1>
         </NavBox>
@@ -738,7 +711,8 @@ const NavBox = styled.div`
   /* height: 60px; */
   width: 100%;
   background-color: ${WHITE};
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.06);
+  // box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   display: inline-flex;
   justify-content: center;
 `;

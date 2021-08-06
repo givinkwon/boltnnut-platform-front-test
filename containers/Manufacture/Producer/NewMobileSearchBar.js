@@ -85,7 +85,6 @@ class NewMobileSearchBarConatiner extends React.Component {
     Partner.search_text = event.target.value;
     console.log(event.target.value);
   }
-  
 
   render() {
     const { Partner, Request } = this.props;
@@ -103,6 +102,7 @@ class NewMobileSearchBarConatiner extends React.Component {
                 value={Partner.searchText}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
+                style={{ height: 40 }}
               />
 
               <img
@@ -156,6 +156,7 @@ const SearchBar = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 329px;
+  height: 48px;
   border-radius: 30px;
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.28);
   border: solid 1.5px #0933b3;
@@ -211,5 +212,5 @@ const Form = styled.div`
   width: 347px;
   height: 56px;
   margin-top: 36px;
-  margin-bottom: 150px;
+  margin-bottom: 66px;
 `;
