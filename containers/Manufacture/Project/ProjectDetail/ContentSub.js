@@ -71,10 +71,12 @@ class ContentSub extends React.Component {
   };
 
   render() {
-    const { Auth, Project } = this.props;
+    const { Auth, Project, user } = this.props;
+
     return (
       <ContainerSub>
-        {this.props.user === "client" &&
+        {/* 클라이언트일 때 + 본인이 만든 프로젝트일 때 */}
+        {user === "client" &&
         Project.projectDetailData.request_set[0].client ==
           Auth.logged_in_client.id ? (
           <>
@@ -116,7 +118,7 @@ class ContentSub extends React.Component {
             </Box3>
           </>
         ) : (
-          this.props.user === "partner" && (
+          user === "partner" && (
             <>
               {!this.state.isAnswered && (
                 <Box3

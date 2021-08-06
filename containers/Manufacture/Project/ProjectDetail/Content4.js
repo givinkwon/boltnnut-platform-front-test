@@ -18,15 +18,8 @@ const download_img = "static/images/download.png";
 @inject("Project", "Auth", "ManufactureProcess")
 @observer
 class Content4 extends React.Component {
-  process = [];
-  detailProcess = [];
-  count = 0;
-  state = {
-    render_process: false,
-    process: [],
-    detailProcess: [],
-  };
-  
+
+  // 파일 다운로드
   downloadFile(urls) {
     const blob = new Blob([this.content], { type: "text/plain" });
     const url = window.URL.createObjectURL(blob);
@@ -38,64 +31,40 @@ class Content4 extends React.Component {
     window.URL.revokeObjectURL(url);
   }
 
-  async loadProcess(item, idx, process_idx, material_idx, detail_idx) {
-    const { Project, ManufactureProcess } = this.props;
-    const { projectDetailData } = Project;
-
-    let item_detail_idx = 0;
-    if (process_idx === "1") {
-      item_detail_idx = detail_idx - material_idx + 1;
-    } else {
-      item_detail_idx = detail_idx - material_idx;
-    }
-
-    if (
-      projectDetailData.request_set[0].estimate_set.length > this.count
-    ) {
-      this.count++;
-      const req = {
-        id: process_idx,
-      };
-      await ManufactureProcessAPI.loadProcess(req).then((res) => {
-        const data = res.data;
-
-        this.setState({ process: this.state.process.concat(data.name) });
-
-        for (let i = 0; i < data.detailmanufactureprocess_set.length; i++) {
-          if (detail_idx == data.detailmanufactureprocess_set[i].id) {
-            this.setState({
-              detailProcess: this.state.detailProcess.concat(
-                data.detailmanufactureprocess_set[i].name
-              ),
-            });
-          }
-        }
-      });
-    }
-  }
-
   async componentDidMount() {
   }
   render() {
     const { Project, ManufactureProcess, user, Auth } = this.props;
-    const { projectDetailData } = Project;
-
+    console.log(Project.projectDetailData)
     return (
       <Background>
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
           <RequestSubContainer style={{ marginBottom: 70 }}>
-            <Font20>공개 내용</Font20>
+            <Font20>의뢰 내용</Font20>
             <RequestBox>
               <RequestContent>
                 <pre style={{ whiteSpace: "break-spaces" }}>
-                  {projectDetailData &&
-                    projectDetailData.request_set[0].order_request_open}
+                  {Project.projectDetailData &&
+                    Project.projectDetailData.request_set[0].contents}
                 </pre>
               </RequestContent>
+            </RequestBox>
+          </RequestSubContainer>
+
+          {/*비공개내용 :  파트너, 해당 프로젝트를 만든 클라이언트, 해당 프로젝트를 만들지 않은 클라이언트 구분*/}
+          <Font20>프로젝트 관련 파일</Font20>
+          {/* 파트너일 경우 */}
+          {user === "partner" ? (
+            <BlackBox>
+              <span>
+                '의뢰하신 클라이언트가 공개 요청을 승인하면 열람할 수 있습니다.'
+              </span>
+              <RequestSubContainer style={{ filter: "blur(5px)" }}>
+              {/* 의뢰 관련 파일 추가 */}
               <File>
-                {projectDetailData &&
-                  projectDetailData.request_set[0].requestfile_set.map(
+                {Project.projectDetailData &&
+                  Project.projectDetailData.request_set[0].requestfile_set.map(
                     (item, idx) => {
                       {
                         console.log(toJS(item));
@@ -121,18 +90,7 @@ class Content4 extends React.Component {
                     }
                   )}
               </File>
-            </RequestBox>
-          </RequestSubContainer>
-
-          {/*비공개내용 :  파트너, 해당 프로젝트를 만든 클라이언트, 해당 프로젝트를 만들지 않은 클라이언트 구분*/}
-          <Font20>비공개내용</Font20>
-          {/* 파트너일 경우 */}
-          {user === "partner" ? (
-            <BlackBox>
-              <span>
-                '의뢰하신 클라이언트가 공개 요청을 승인하면 열람할 수 있습니다.'
-              </span>
-              <RequestSubContainer style={{ filter: "blur(5px)" }}>
+                {/* 도면 파일 추가 */}
                 <DrawingCard></DrawingCard>
                 <RequestBox>
                   {" "}
@@ -141,13 +99,13 @@ class Content4 extends React.Component {
                 </RequestBox>
               </RequestSubContainer>
             </BlackBox>
-          ) : projectDetailData.request_set[0].client ==
+          ) : Project.projectDetailData.request_set[0].client ==
             Auth.logged_in_client.id ? (
             <>
               {/*해당 프로젝트의 클라이언트일 경우*/}
               <RequestSubContainer>
-                {projectDetailData &&
-                  projectDetailData.request_set[0].estimate_set.map(
+                {Project.projectDetailData &&
+                  Project.projectDetailData.request_set[0].estimate_set.map(
                     (item, idx) => {
                       {
                         this.loadProcess(
@@ -241,12 +199,12 @@ class Content4 extends React.Component {
                 <RequestBox>
                   {" "}
                   <RequestContent>
-                    {projectDetailData &&
-                      projectDetailData.request_set[0].order_request_close}
+                    {Project.projectDetailData &&
+                      Project.projectDetailData.request_set[0].content}
                   </RequestContent>
                   <File>
-                    {projectDetailData &&
-                      projectDetailData.request_set[0].requestfile_set.map(
+                    {Project.projectDetailData &&
+                      Project.projectDetailData.request_set[0].requestfile_set.map(
                         (item, idx) => {
                           if (!item.share_inform) {
                             return (

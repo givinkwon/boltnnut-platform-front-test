@@ -230,7 +230,7 @@ class Project {
   // 1인 경우에는 전체 프로젝트
   // 2인 경우에는 프로젝트 상세  
 
-  @action set_step_index = (idx) => {
+  @action set_step_index = (idx = 0 ) => {
     this.step_index = idx
     console.log(idx)
     
