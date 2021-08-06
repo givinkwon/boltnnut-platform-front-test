@@ -8,10 +8,9 @@ import SearchBar from "../Manufacture/Producer/SearchBar";
 const banner0img = "/static/images/banner0img.svg";
 
 class Banner0Container extends React.Component {
-
   render() {
     return (
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "200px", marginBottom: "188px" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "200px", marginBottom: "130px" }}>
         <Containerv1 style={{ justifyContent: "space-between" }}>
           <LeftBox>
             <Header>

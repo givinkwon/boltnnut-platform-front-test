@@ -51,10 +51,10 @@ class Banner5Container extends React.Component {
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <MiniReviewBox>
                       <div style={{ display: "flex", flexDirection: "column", width: "324px" }}>
-                        <MiniImageBox>
+                        <ImageBox>
                           <img src={logo2} />
                           <img src={stars} />
-                        </MiniImageBox>
+                        </ImageBox>
 
                         <Text15>볼트앤너트는 단순히 설계를 해주고 제조사들과의 연결 만 해주는 것이 아니라 함께 고민을 나누어 준다는 것이 너무 감사했고, 만족스러웠습니다.</Text15>
                         <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "38px" }}>
@@ -67,10 +67,10 @@ class Banner5Container extends React.Component {
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <MiniReviewBox>
                       <div style={{ display: "flex", flexDirection: "column", width: "324px" }}>
-                        <MiniImageBox>
+                        <ImageBox>
                           <img src={logo5} />
                           <img src={stars} />
-                        </MiniImageBox>
+                        </ImageBox>
 
                         <Text15>비전문가다보니 업체 찾고 소통하기가 쉽지 않았습니다. 지인소개를 통해 볼트앤너트를 알게 되어 문의를 드렸는 데 그런 취약점을 잘 채워주시는 것 같아 감사드립니다.</Text15>
                         <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "38px" }}>
@@ -85,10 +85,10 @@ class Banner5Container extends React.Component {
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <MiniReviewBox>
                       <div style={{ display: "flex", flexDirection: "column", width: "324px" }}>
-                        <MiniImageBox>
+                        <ImageBox>
                           <img src={logo3} />
                           <img src={stars} />
-                        </MiniImageBox>
+                        </ImageBox>
 
                         <Text15>
                           볼트앤너트에서 업체를 찾다가 '맞춤형 문의'를 하였는 데, 일반인의 수준에 맞추어 설명을 해주시고, 또 모르기 에 의뢰할 수 있는 것들에 대해 충분히 고려를 해주신다 는 점이 큰 장점
@@ -104,10 +104,10 @@ class Banner5Container extends React.Component {
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <MiniReviewBox>
                       <div style={{ display: "flex", flexDirection: "column", width: "324px" }}>
-                        <MiniImageBox>
+                        <ImageBox>
                           <img src={logo1} />
                           <img src={stars} />
-                        </MiniImageBox>
+                        </ImageBox>
 
                         <Text15>
                           업체 찾기가 힘들었는데 담당자 분께서 본인 프로젝트 처럼 대응해주시고 업체와 미팅에도 동석하여 직접 말하 기 어려운 부분을 업체와 소통해주는 부분이 가장 마음 에 들었습니다.
@@ -185,16 +185,8 @@ const MiniReviewBox = styled.div`
 
 const ImageBox = styled.div`
   display: flex;
-  justify-content: space-between;
   align-itmes: center;
-  width: 200px;
-`;
-
-const MiniImageBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-itmes: center;
-  width: 150px;
+  gap: 10px;
 `;
 
 const Text14 = styled(Text.FontSize14)`

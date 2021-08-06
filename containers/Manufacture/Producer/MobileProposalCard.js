@@ -333,12 +333,13 @@ export default MobileProposalCard;
 
 const Card = styled.div`
   width: 100%;
-  height: 116px;
+  height: 100%;
   object-fit: contain;
   border-bottom: solid 2px #e1e2e4;
   background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
   display: flex;
   cursor: pointer;
+  border-radius: 3px;
 
   // @media (min-width: 0px) and (max-width: 767.98px) {
   //   padding-left: 14px;
@@ -366,6 +367,7 @@ const Card = styled.div`
 `;
 
 const Header = styled.div`
+  border-radius: 3px;
   // margin-right: 34px;
 `;
 
@@ -484,7 +486,7 @@ const Location = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 13px;
   gap: 10px;
 
   div {
@@ -534,8 +536,9 @@ const InfoOne = styled.div`
   white-space: break-spaces;
   line-height: 1.2;
   letter-spacing: 0.56px;
+  margin-top: 13px;
   @media (min-width: 0px) and (max-width: 767.98px) {
-    color: #282c36;
+    color: #767676;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: -0.33px;
@@ -553,7 +556,7 @@ const Item = styled.div`
   margin-right: 18px;
   > img {
     width: 100px;
-    height: 116px;
+    height: 120px;
     border-radius: 10px;
     overflow: hidden;
     cursor: pointer;

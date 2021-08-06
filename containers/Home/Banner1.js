@@ -38,7 +38,7 @@ class Banner1Container extends React.Component {
       <CustomBackground>
         <Container>
           <Box>
-            <Header>볼트앤너트는 제조분야를 선도하는 많은 기업들과 함께 하고있습니다.</Header>
+            <Header>볼트앤너트는 제조 분야를 선도하는 많은 기업들과 함께하고 있습니다.</Header>
           </Box>
 
           <SliderContainer {...SlideSettings}>
