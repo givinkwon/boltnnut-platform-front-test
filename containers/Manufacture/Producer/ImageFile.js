@@ -7,7 +7,7 @@ import { inject, observer } from "mobx-react";
 import { CompressedPixelFormat } from "three";
 import { toJS } from "mobx";
 
-@inject("Request", "ManufactureProcess", "Project", "Partner", "Producer")
+@inject("Request", "Project", "Partner", "Producer")
 @observer
 class InputComponent extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class InputComponent extends React.Component {
   }
 
   render() {
-    const { onChange, children, label, file, Request, ManufactureProcess, Partner, isOpen, mobile, Producer, ...props } = this.props;
+    const { onChange, children, label, file, Request, Partner, isOpen, mobile, Producer, ...props } = this.props;
     const { fileName, checkFileUpload } = this.state;
 
     return (

@@ -9,13 +9,12 @@ import { toJS } from "mobx";
 import STLViewer from "stl-viewer";
 const search_img = "/static/images/project/search.png";
 import DownloadFile from "components/DownloadFile";
-import * as ManufactureProcessAPI from "axios/Manufacture/ManufactureProcess";
 import { createNoSubstitutionTemplateLiteral } from "typescript";
 
 const file_img = "/static/images/project/fileimg.svg";
 const download_img = "static/images/download.png";
 
-@inject("Project", "Auth", "ManufactureProcess")
+@inject("Project", "Auth")
 @observer
 class Content4 extends React.Component {
 
@@ -34,7 +33,7 @@ class Content4 extends React.Component {
   async componentDidMount() {
   }
   render() {
-    const { Project, ManufactureProcess, user, Auth } = this.props;
+    const { Project, user, Auth } = this.props;
     console.log(Project.projectDetailData)
 
     return (

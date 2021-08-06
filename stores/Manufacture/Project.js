@@ -8,26 +8,24 @@ import Auth from "stores/Account/Auth"
 class Project {
 
   // 프로젝트 데이터 관련 변수
-  @observable projectDataList = [];
-  @observable projectData = [];
-  @observable project_next = null;
-  @observable project_count = null;
-  @observable project_status = "";
-  @observable projectDetailData = "";
-  @observable selectedProjectId = null;
-  
-  // 페이지 관련 변수
-  @observable project_page = ["", "", "", "", ""];
-  @observable currentPage = 1;
+  @observable projectDataList = []; // 프로젝트 데이터 저장
+  @observable project_next = null; // page index(다음)
+  @observable project_count = null; // 프로젝트 개수
+  @observable project_status = ""; // 프로젝트 모집 상태 index
+  @observable projectDetailData = ""; // 특정 프로젝트 데이터 저장
+  @observable selectedProjectId = null; // Project Id 저장
+  @observable search_text = ""; // 프로젝트 검색 시 텍스트 저장
+  @observable currentPage = 1; // page index(현재)
+  @observable project_page = ["", "", "", "", ""]; // 페이지 관련 함수 작동을 위해 쓰는 변수
 
-  @observable chattingIndex = 0;
 
-  // 검색 관련 변수
-  @observable search_text = "";
 
-  //채팅 관련 변수
+
+  // 채팅 관련 변수
+
   @observable chatModalActive = false;
   @observable chatMessages = [];
+  @observable chattingIndex = 0;
 
   // 제안서 별 채팅방 연결 관련 변수
   @observable answerDetailList = [];
@@ -35,6 +33,7 @@ class Project {
   // 채팅하기 페이지 간략히 보기 및 자세히 보기 관련 변수
   @observable projectQuickView = [];
 
+  
   /* 프로젝트 가져오기 */
   // container : 1. allproject : 모든 프로젝트 가져오기에서 호출 2. myproject : 내 프로젝트 가져오기에서 호출
   // search_text : allproject에서 검색한 경우에 검색 텍스트 저장 후 필터 호출

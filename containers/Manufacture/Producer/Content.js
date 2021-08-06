@@ -203,7 +203,6 @@ class ManufacturerContentContainer extends React.Component {
                           Partner.fileArray.splice(idx, 1);
                           const inputFile =
                             document.getElementById("inputFile");
-                          console.log(toJS(ManufactureProcess.openFileArray));
                           inputFile.innerHTML = "";
 
                           if (Partner.fileArray.length === 0) {

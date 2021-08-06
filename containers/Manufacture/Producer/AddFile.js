@@ -10,7 +10,7 @@ import { toJS } from "mobx";
 const addButtonImg = "static/images/components/Input2/Mask.png";
 const deleteButtonImg = "/static/images/delete.png";
 
-@inject("Request", "ManufactureProcess", "Project", "Partner", "Producer")
+@inject("Request", "Project", "Partner", "Producer")
 @observer
 class InputComponent extends React.Component {
   constructor(props) {
@@ -38,7 +38,6 @@ class InputComponent extends React.Component {
       label,
       file,
       Request,
-      ManufactureProcess,
       Partner,
       isOpen,
       mobile,
@@ -83,7 +82,6 @@ class InputComponent extends React.Component {
                             Partner.fileArray.splice(idx, 1);
                             const inputFile =
                               document.getElementById("inputFile");
-                            console.log(toJS(ManufactureProcess.openFileArray));
                             inputFile.innerHTML = "";
 
                             if (Partner.fileArray.length === 0) {

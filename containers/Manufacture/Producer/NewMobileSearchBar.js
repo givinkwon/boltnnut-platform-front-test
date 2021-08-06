@@ -13,7 +13,7 @@ import { PRIMARY2 } from "static/style";
 
 const searchIcon = "/static/images/mobilesearchicon.svg";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer")
+@inject("Auth", "Project", "Request", "Partner", "Producer")
 @observer
 class NewMobileSearchBarConatiner extends React.Component {
   state = {
@@ -27,7 +27,7 @@ class NewMobileSearchBarConatiner extends React.Component {
 
   // 검색함수
   search = async () => {
-    const { Partner, ManufactureProcess } = this.props;
+    const { Partner } = this.props;
 
     await Router.push("/producer");
     // console.log("click");
@@ -40,8 +40,7 @@ class NewMobileSearchBarConatiner extends React.Component {
     Partner.currentPage = 1;
     Partner.click_count += 1;
     await Partner.getPartner(Partner.currentPage, Partner.click_count);
-    ManufactureProcess.PartnerCount = Partner.partner_count;
-    // console.log(toJS(ManufactureProcess.PartnerCount));
+   
     if (Partner.search_text) {
       Partner.isSearched = true;
     } else {
@@ -49,15 +48,10 @@ class NewMobileSearchBarConatiner extends React.Component {
     }
 
     if (Partner.search_text != "") {
-      // console.log("click2");
-      if (ManufactureProcess.loadingSaveSearchText) {
-        // console.log("click3");
+  
         Partner.subButtonActive = true;
-        // console.log(Partner.subButtonActive);
-        ManufactureProcess.saveSearchText(Partner.search_text);
-        ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
-      }
+
+      
     }
   };
 
@@ -69,7 +63,7 @@ class NewMobileSearchBarConatiner extends React.Component {
   };
 
   handleKeyDown = (e) => {
-    const { Partner, ManufactureProcess } = this.props;
+    const { Partner } = this.props;
     if (e.key === "Enter") {
       this.search();
     }

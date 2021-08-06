@@ -13,7 +13,7 @@ const fileupload = "./static/images/request/fileupload.svg";
 const clip = "./static/images/request/clip.svg";
 const blueplus = "./static/images/request/blueplus.svg";
 
-@inject("Request", "ManufactureProcess")
+@inject("Request")
 @observer
 class InputComponent extends React.Component {
   constructor(props) {

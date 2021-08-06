@@ -10,7 +10,7 @@ import { toJS } from "mobx";
 const profile = "/static/images/project/user.svg";
 const partnerbadge = "/static/images/project/partnerbadge.svg";
 
-@inject("Request", "ManufactureProcess", "Auth", "Project", "Answer")
+@inject("Request","Auth", "Project", "Answer")
 @observer
 class ContentSub extends React.Component {
   state = {
@@ -39,13 +39,7 @@ class ContentSub extends React.Component {
   }
 
   changeProject = () => {
-    const { ManufactureProcess } = this.props;
-    // console.log(Request.newIndex);
-
     Router.push("/request");
-    this.props.ManufactureProcess.changeProject = true;
-    this.props.ManufactureProcess.checkFileUpload = true;
-    console.log(ManufactureProcess.checkFileUpload);
   };
 
   exitProject = () => {
@@ -88,9 +82,6 @@ class ContentSub extends React.Component {
               onClick={async () => {
                 console.log("click!");
                 this.changeProject();
-                // this.props.ManufactureProcess.changeProject();
-                // console.log(this.props.ManufactureProcess.changeProject);
-                // Router.push("/request")
               }}
             >
               <Font18

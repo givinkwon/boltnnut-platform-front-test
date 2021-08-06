@@ -7,7 +7,6 @@ import * as RequestAPI from "axios/Manufacture/Request";
 import Router from "next/router";
 import moment from "moment";
 import Schedule from "./Schedule";
-import ManufactureProcess from "./ManufactureProcess";
 import Auth from "stores/Account/Auth";
 
 class Request {
