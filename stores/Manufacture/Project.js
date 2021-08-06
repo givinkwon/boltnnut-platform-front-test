@@ -110,6 +110,7 @@ class Project {
         },
       }
 
+      console.log(req)
       await ProjectAPI.getProjects(req)
       .then((res) => {
         // 과거 데이터 삭제

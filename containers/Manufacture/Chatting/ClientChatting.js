@@ -30,7 +30,7 @@ class ClientChatting extends React.Component {
     // 클라이언트 로그인이 되어 있으면 프로젝트 호출하여 데이터 담은 후 answer 데이터 담기
     if (Auth.logged_in_client) {
       // 프로젝트 데이터 호출
-      Project.getProject("chatting", Auth.logged_in_client.id);
+      await Project.getProject("myproject", Auth.logged_in_client.id);
       
       // 담은 데이터 map
       Project.projectDataList.map((data, idx) => {
@@ -59,6 +59,39 @@ class ClientChatting extends React.Component {
         });
       })
     }
+
+    // 파트너 로그인이 되어 있으면 프로젝트 호출하여 데이터 담은 후 answer 데이터 담기
+    if (Auth.logged_in_partner) {
+      // 프로젝트 데이터 호출
+      await Project.getProject("myproject", "", Auth.logged_in_partner.id);
+      
+      // 담은 데이터 map
+      Project.projectDataList.map((data, idx) => {
+        // answer_set에 있는 파트너 id 가지고 오기
+        data.answer_set.map((answer, idx) => {
+          // 파트너 id로 파트너 정보 호출
+          PartnerAPI.detail(answer.partner)
+            .then((res) => {
+              console.log(res)
+              // 데이터에 내용 담기 >> 채팅에 표시될 answer 리스트
+              Project.answerDetailList.push({
+                logo: res.data.logo,
+                name: res.data.name,
+                id: answer.id,
+                content: answer.content1,
+                project: data.id,
+              });
+              Project.projectQuickView.push({
+                check: null,
+              });
+            })
+            .catch((e) => {
+              console.log(e);
+              console.log(e.response);
+            });
+        });
+      })
+    }
   }
 
 
@@ -73,7 +106,7 @@ class ClientChatting extends React.Component {
 
   render() {
     const { Project, Auth } = this.props;
-
+    
     return (
       <Background>
         <Container style={{ display: "flex", flexDirection: "column" }}>
@@ -84,14 +117,8 @@ class ClientChatting extends React.Component {
               ></ChatTestContainer>
             </Layer>
           )}
-          {Project.projectDataList && Project.projectDataList[0] ? (
-            Project.projectDataList.map((item, idx) => {
-              return (
+
                 <ProjectContainer>
-                  <Font24>
-                    {item.request_set[0].name}
-                    <span>{item.answer_set.length}</span>
-                  </Font24>
                   {Project.answerDetailList &&
                     Project.answerDetailList.map((data, idx) => {
                       return (
@@ -112,11 +139,8 @@ class ClientChatting extends React.Component {
                       );
                     })}
                 </ProjectContainer>
-              );
-            })
-          ) : (
-           " <NoProject />"
-          )}
+
+
         </Container>
       </Background>
     );
