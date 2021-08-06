@@ -44,7 +44,7 @@ class Project {
     this.currentPage = newPage;
     isMyProject
       ? this.getPage(this.loggedInClientId, newPage)
-      : this.getProjectByPrice(this.search_text, this.currentPage);
+      : this.getProject(this.search_text, this.currentPage);
   };
 
   // 다음 페이지로 이동
@@ -54,7 +54,7 @@ class Project {
       this.currentPage = nextPage;
       isMyProject
         ? this.getPage(this.loggedInClientId, newPage)
-        : this.getProjectByPrice(this.search_text, this.currentPage);
+        : this.getProject(this.search_text, this.currentPage);
     }
   };
 
@@ -65,7 +65,7 @@ class Project {
       this.currentPage = newPage;
       isMyProject
         ? this.getPage(this.loggedInClientId, newPage)
-        : this.getProjectByPrice(this.search_text, this.currentPage);
+        : this.getProject(this.search_text, this.currentPage);
     }
   };
 
@@ -78,105 +78,103 @@ class Project {
     this.set_step_index(2)
   };
 
+  /* 프로젝트 가져오기 */
+  // container : 1. allproject : 모든 프로젝트 가져오기에서 호출 2. myproject : 내 프로젝트 가져오기에서 호출
+  // search_text : allproject에서 검색한 경우에 검색 텍스트 저장 후 필터 호출
+  // clientId : 해당 클라이언트의 프로젝트 가져오기 | partnerId : 해당 파트너의 프로젝트 가져오기
+  // page : page에 따라 호출
+  @action getProject = async (container = "allproject", clientId="", partnerId="", page = 1, search_text = "") => {
 
-  /* 클라이언트 - project API 데이터 가져오기 */
-  @action getPage = (clientId, page = 1) => {
-    this.projectDataList = [];
-
-    console.log(toJS(clientId));
-    if (!clientId) {
-      return;
-    }
+    // 토큰 가져오기
     const token = localStorage.getItem("token");
-    const req = {
-      params: {
-        request__client: clientId,
-        page: page,
-      },
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    ProjectAPI.getProjects(req)
+    // 모든 프로젝트 보기에서 호출한 경우
+    if (container == "allproject"){
+      const req = {
+          params: {
+            search: search_text,
+            page: page,
+            ordering: "-id",
+          },
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+      }
+      await ProjectAPI.getProjects(req)
       .then((res) => {
-        this.projectDataList = res.data.results;
-        console.log(res.data.results);
-        this.project_next = res.data.next;
-        this.project_count = res.data.count;
-        this.project_page = parseInt((this.project_count - 1) / 5) + 1;
-        this.getCategory();
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
-  /* 해당 클라이언트의 모든 프로젝트 가져오기 */
-  @action getAllProject = async (clientId) => {
-    this.projectDataList = [];
-    console.log(toJS(clientId));
-    if (!clientId) {
-      return;
-    }
-    const token = localStorage.getItem("token");
-    const req = {
-      params: {
-        request__client: clientId,
-      },
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    await ProjectAPI.getProjects(req)
-      .then((res) => {
-        this.projectDataList = res.data.results;
-        console.log(res.data.results);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
-  /* 파트너 - 전체 + 가격 별 + search별 다 포함시켰음 */
-  /**
-   * @author Oh Kyu Seok
-   * @email cane1226@gmail.com
-   * @create date 2021-07-13 15:44:26
-   * @modify date 2021-07-13 15:44:26
-   * @desc 전체 프로젝트 가져오기. getProjectByPrice라는 이름에서 혼동할수도 있지만 가격으로 가져오는 함수는 아닙니다.
-   * 전체 프로젝트 / 내 프로젝트에서 전체 프로젝트를 가져오는 함수입니다.(함수 작성자 이상원)
-   */
-  @action getProjectByPrice = (search_text, page = 1) => {
-    this.projectDataList = [];
-    this.data_dt = [];
-    const token = localStorage.getItem("token");
-    const req = {
-      params: {
-        request__request_state: this.filter === "전체" ? "" : this.filter,
-        search: search_text,
-        page: page,
-        ordering: "-id",
-      },
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    ProjectAPI.getProjects(req)
-      .then((res) => {
+        // 과거 데이터 삭제
         this.projectDataList = [];
-        /* 오래된 데이터 제외하기 위함 */
-
         this.projectDataList = res.data.results;
         this.project_next = res.data.next;
         this.project_count = res.data.count;
         this.project_page = parseInt((this.project_count - 1) / 5) + 1;
+        console.log(res.data.results);
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
+    } 
+
+    // 내 프로젝트 가져오기에서 호출한 경우
+
+    // 클라이언트인 경우
+    if (container == "myproject" && clientId != ""){
+      const req = {
+          params: {
+            request__client: clientId,
+            page: page,
+            ordering: "-id",
+          },
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+      }
+
+      await ProjectAPI.getProjects(req)
+      .then((res) => {
+        // 과거 데이터 삭제
+        this.projectDataList = [];
+        this.projectDataList = res.data.results;
+        this.project_next = res.data.next;
+        this.project_count = res.data.count;
+        this.project_page = parseInt((this.project_count - 1) / 5) + 1;
+        console.log(res.data.results);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    }
+    
+    // 파트너인 경우
+    if (container =="myproject" && partnerId !=""){
+      const req = {
+        params: {
+          answer__partner: partnerId,
+          page: page,
+          ordering: "-id",
+        },
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }
+
+      await ProjectAPI.getProjects(req)
+      .then((res) => {
+        // 과거 데이터 삭제
+        this.projectDataList = [];
+        this.projectDataList = res.data.results;
+        this.project_next = res.data.next;
+        this.project_count = res.data.count;
+        this.project_page = parseInt((this.project_count - 1) / 5) + 1;
+        console.log(res.data.results);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    }
+
   };
 
 

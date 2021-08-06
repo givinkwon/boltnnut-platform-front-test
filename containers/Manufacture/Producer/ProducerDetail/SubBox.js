@@ -75,7 +75,7 @@ class SubBoxContainer extends React.Component {
                           onClick={async () => {
                             console.log(Auth);
                             if (Auth.logged_in_client) {
-                              await Project.getPage(Auth.logged_in_client.id);
+                              await Project.getProject("allproject", Auth.logged_in_client.id);
                             }
                             Partner.pushToDetail(item, idx);
                           }}

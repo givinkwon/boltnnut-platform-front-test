@@ -36,10 +36,12 @@ class Content4 extends React.Component {
   render() {
     const { Project, ManufactureProcess, user, Auth } = this.props;
     console.log(Project.projectDetailData)
+
     return (
       <Background>
         <RequestContainer>
           <Font24 mb={30}>프로젝트 설명 및 요청사항</Font24>
+          
           <RequestSubContainer style={{ marginBottom: 70 }}>
             <Font20>의뢰 내용</Font20>
             <RequestBox>
@@ -51,6 +53,7 @@ class Content4 extends React.Component {
               </RequestContent>
             </RequestBox>
           </RequestSubContainer>
+
 
           {/*비공개내용 :  파트너, 해당 프로젝트를 만든 클라이언트, 해당 프로젝트를 만들지 않은 클라이언트 구분*/}
           <Font20>프로젝트 관련 파일</Font20>

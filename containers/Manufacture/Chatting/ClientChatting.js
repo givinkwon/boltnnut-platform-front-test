@@ -61,7 +61,7 @@ class ClientChatting extends React.Component {
 
     Project.chattingIndex = 1;
     if (Auth.logged_in_client) {
-      this.getProject(Auth.logged_in_client.id);
+      this.getProject("myproject", Auth.logged_in_client.id);
     }
   }
   activeHandler = (idx) => {
