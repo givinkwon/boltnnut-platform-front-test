@@ -54,7 +54,6 @@ class Project extends React.Component {
         console.log(e.response);
       });
 
-
     await Project.getProject();
   }
   componentWillUnmount() {

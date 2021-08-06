@@ -3,6 +3,7 @@ import { observable, action } from "mobx";
 import * as ProjectAPI from "axios/Manufacture/Project";
 import * as AccountAPI from "axios/Account/Account";
 import { toJS } from "mobx";
+import Auth from "stores/Account/Auth"
 
 class Project {
 
@@ -34,50 +35,6 @@ class Project {
   // 채팅하기 페이지 간략히 보기 및 자세히 보기 관련 변수
   @observable projectQuickView = [];
 
-  //로그인 된 클라이언트 id
-  @observable loggedInClientId = null;
-
-
-  @action movePage = (e, isMyProject = true) => {
-    const newPage = e.target.innerText * 1;
-
-    this.currentPage = newPage;
-    isMyProject
-      ? this.getPage(this.loggedInClientId, newPage)
-      : this.getProject(this.search_text, this.currentPage);
-  };
-
-  // 다음 페이지로 이동
-  @action pageNext = (isMyProject = true) => {
-    if (this.currentPage < this.project_page) {
-      const nextPage = this.currentPage + 1;
-      this.currentPage = nextPage;
-      isMyProject
-        ? this.getPage(this.loggedInClientId, newPage)
-        : this.getProject(this.search_text, this.currentPage);
-    }
-  };
-
-  // 이전 페이지로 이동
-  @action pagePrev = (isMyProject = true) => {
-    if (this.currentPage > 1) {
-      const newPage = this.currentPage - 1;
-      this.currentPage = newPage;
-      isMyProject
-        ? this.getPage(this.loggedInClientId, newPage)
-        : this.getProject(this.search_text, this.currentPage);
-    }
-  };
-
-  // 카드를 클릭했을 때 가져오기
-  @action pushToDetail = async (id) => {
-    this.selectedProjectId = id;
-    // 디테일 데이터 가져오기
-    await this.getProjectDetail(id);
-    // 상세 페이지로 이동
-    this.set_step_index(2)
-  };
-
   /* 프로젝트 가져오기 */
   // container : 1. allproject : 모든 프로젝트 가져오기에서 호출 2. myproject : 내 프로젝트 가져오기에서 호출
   // search_text : allproject에서 검색한 경우에 검색 텍스트 저장 후 필터 호출
@@ -94,9 +51,6 @@ class Project {
             search: search_text,
             page: page,
             ordering: "-id",
-          },
-          headers: {
-            Authorization: `Token ${token}`,
           },
       }
       await ProjectAPI.getProjects(req)
@@ -177,6 +131,14 @@ class Project {
 
   };
 
+  // 카드를 클릭했을 때 호출하는 함수
+  @action pushToDetail = async (id) => {
+    this.selectedProjectId = id;
+    // 디테일 데이터 가져오기
+    await this.getProjectDetail(id);
+    // 상세 페이지로 이동
+    this.set_step_index(2)
+  };
 
   // 프로젝트 디테일 데이터를 가져오기
   @action getProjectDetail = async (id) => {
@@ -195,6 +157,45 @@ class Project {
   };
 
 
+  // 원하는 페이지로 이동
+  @action movePage = (e, isMyProject = true) => {
+    // 목표 페이지 가져오기
+    const newPage = e.target.innerText * 1;
+    this.currentPage = newPage;
+    isMyProject
+        // client인 경우 client 프로젝트를 partner인 경우 partner의 프로젝트를 가져오기
+        ? (Auth.logged_in_client ? this.getProject("myproject", Auth.logged_in_client.id , "", this.currentPage) :  this.getProject("myproject", Auth.logged_in_partner.id , "", this.currentPage) )
+        : this.getProject("allproject", "", "",  this.currentPage, this.search_text);
+  };
+
+  // 다음 페이지로 이동
+  @action pageNext = (isMyProject = true) => {
+    if (this.currentPage < this.project_page) {
+      // 목표 페이지 가져오기
+      const nextPage = this.currentPage + 1;
+      this.currentPage = nextPage;
+      // myproject에서 온 경우
+      isMyProject
+        // client인 경우 client 프로젝트를 partner인 경우 partner의 프로젝트를 가져오기
+        ? (Auth.logged_in_client ? this.getProject("myproject", Auth.logged_in_client.id , "", this.currentPage) :  this.getProject("myproject", Auth.logged_in_partner.id , "", this.currentPage) )
+        : this.getProject("allproject", "", "",  this.currentPage, this.search_text);
+    }
+  };
+
+  // 이전 페이지로 이동
+  @action pagePrev = (isMyProject = true) => {
+    if (this.currentPage > 1) {
+      // 목표 페이지 가져오기
+      const newPage = this.currentPage - 1;
+      this.currentPage = newPage;
+      // myproject에서 온 경우
+      isMyProject
+        // client인 경우 client 프로젝트를 partner인 경우 partner의 프로젝트를 가져오기
+        ? (Auth.logged_in_client ? this.getProject("myproject", Auth.logged_in_client.id , "", this.currentPage) :  this.getProject("myproject", Auth.logged_in_partner.id , "", this.currentPage) )
+        : this.getProject("allproject", "", "",  this.currentPage, this.search_text);
+    }
+  };
+  
   // 프로젝트 모집을 종료 버튼 눌렀을 때
   @action exitProject = (id) => {
     const req = {
