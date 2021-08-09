@@ -13,8 +13,8 @@ import AllProject from "containers/Manufacture/project/AllProject/index";
 import ProjectDetail from "containers/Manufacture/project/ProjectDetail/index";
 
 // Mobile
-import MobileMyProject from "containers/Manufacture/project/MyProject/index";
-import MobileAllProject from "containers/Manufacture/project/AllProject/index";
+import MobileMyProject from "containers/Manufacture/project/MyProject/Mobile/index";
+import MobileAllProject from "containers/Manufacture/project/AllProject/Mobile/index";
 import MobileProjectDetail from "containers/Manufacture/project/ProjectDetail/index";
 
 @inject("Project", "Auth", "Partner", "Cookie")
@@ -49,6 +49,7 @@ class ProjectContainer extends React.Component {
 
   render() {
     const { Auth, Project, width } = this.props;
+    console.log(width)
     return (
       <>
         {/* 웹 */}
