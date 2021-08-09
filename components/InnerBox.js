@@ -15,7 +15,10 @@ class InnerBoxComponent extends React.Component {
   render() {
     const { Content } = this.props;
     return (
-      <OuterBox style={this.props.outerStyles}>
+      <OuterBox
+        style={this.props.outerStyles}
+        marginBottom={this.props.marginBottom}
+      >
         <InnerBox style={this.props.innerStyles}>
           {Content && <Content />}
         </InnerBox>
@@ -28,6 +31,7 @@ export default InnerBoxComponent;
 
 const OuterBox = styled.div`
   width: 100%;
+  margin-bottom: ${(props) => props.marginBottom && props.marginBottom};
 `;
 
 const InnerBox = styled.div``;

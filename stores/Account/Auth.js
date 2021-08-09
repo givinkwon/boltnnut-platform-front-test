@@ -67,10 +67,46 @@ class Auth {
   @observable allCheckState = false;
 
   @observable accountTabIdx = 1;
-  @observable signupBoxActive = true;
+  //개발중에 임시로 false로해둠
+  @observable signupBoxActive = false;
 
   @observable registerType = "";
   @observable registerPageIdx = 0;
+
+  @observable nextBtnActive = false;
+
+  @observable RegisterTypeArray = [
+    {
+      img: "/static/icon/registerMain1.svg",
+      content: "부품/완제품 판매",
+      type: "product",
+      checked: false,
+      id: 0,
+    },
+    {
+      img: "/static/icon/registerMain2.svg",
+      content: "개발/설계",
+      type: "development",
+      checked: false,
+      id: 1,
+    },
+    {
+      img: "/static/icon/registerMain3.svg",
+      content: "제작",
+      type: "manufacture",
+      checked: false,
+      id: 2,
+    },
+  ];
+
+  @action isChecked = () => {
+    this.nextBtnActive = false;
+    this.RegisterTypeArray.map((item, idx) => {
+      if (item.checked) {
+        this.nextBtnActive = true;
+      }
+    });
+  };
   @action reset = () => {
     this.email = "";
     this.password = "";

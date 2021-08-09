@@ -1,12 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 export const FontSize48 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
-  font-style: ${props => props.fontStyle ? props.fontStyle : 'normal'};
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
+  font-style: ${(props) => (props.fontStyle ? props.fontStyle : "normal")};
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 32px;
   }
@@ -19,14 +19,14 @@ export const FontSize48 = styled.p`
     letter-spacing: 0.6px;
     line-height: 1.67;
   }
-`
+`;
 
 export const FontSize46 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
-  font-style: ${props => props.fontStyle ? props.fontStyle : 'normal'};
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
+  font-style: ${(props) => (props.fontStyle ? props.fontStyle : "normal")};
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 46px;
   }
@@ -36,14 +36,14 @@ export const FontSize46 = styled.p`
   @media (min-width: 1280px) {
     font-size: 46px;
   }
-`
+`;
 
 export const FontSize32 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
-  font-style: ${props => props.fontStyle ? props.fontStyle : 'normal'};
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
+  font-style: ${(props) => (props.fontStyle ? props.fontStyle : "normal")};
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 32px;
   }
@@ -56,13 +56,13 @@ export const FontSize32 = styled.p`
     letter-spacing: 0.6px;
     line-height: 1.67;
   }
-`
+`;
 
 export const FontSize24 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 24px;
   }
@@ -75,13 +75,13 @@ export const FontSize24 = styled.p`
     letter-spacing: 0.6px;
     line-height: 1.67;
   }
-`
+`;
 
 export const FontSize22 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 22px;
   }
@@ -90,13 +90,31 @@ export const FontSize22 = styled.p`
   @media (min-width: 1280px) {
     font-size: 22px;
   }
-`
+`;
+
+export const FontSize19 = styled.p`
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    font-size: 19px;
+  }
+  @media (min-width: 768px) and (max-width: 1279.98px) {
+    font-size: 19px;
+    letter-spacing: 0.25px;
+  }
+  @media (min-width: 1280px) {
+    font-size: 19px;
+    letter-spacing: 0.5px;
+  }
+`;
 
 export const FontSize18 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 18px;
   }
@@ -108,12 +126,12 @@ export const FontSize18 = styled.p`
     font-size: 18px;
     letter-spacing: 0.5px;
   }
-`
+`;
 export const FontSize17 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-weight: bold;
     font-stretch: normal;
@@ -130,17 +148,16 @@ export const FontSize17 = styled.p`
   @media (min-width: 1280px) {
     font-size: 17px;
   }
-`
+`;
 export const FontSize16 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 16px;
     line-height: 0.94;
     letter-spacing: -0.4px;
-
   }
   @media (min-width: 768px) and (max-width: 1279.98px) {
     font-size: 14px;
@@ -150,12 +167,12 @@ export const FontSize16 = styled.p`
     font-size: 16px;
     letter-spacing: 0.5px;
   }
-`
+`;
 export const FontSize15 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 15px;
   }
@@ -167,12 +184,12 @@ export const FontSize15 = styled.p`
     font-size: 15px;
     letter-spacing: 0.5px;
   }
-`
+`;
 export const FontSize14 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 14px;
     letter-spacing: 0.25px;
@@ -185,12 +202,12 @@ export const FontSize14 = styled.p`
     font-size: 14px;
     letter-spacing: 0.25px;
   }
-`
+`;
 export const FontSize13 = styled.p`
-  font-weight: ${props => props.fontWeight ? props.fontWeight : 300};
-  color: ${props => props.color ? props.color : '#000000'};
-  text-align: ${props => props.center ? 'center' : 'left'};
-  font-family: ${props => props.eng ? 'Roboto' : 'Noto Sans KR'}, sans-serif;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 300)};
+  color: ${(props) => (props.color ? props.color : "#000000")};
+  text-align: ${(props) => (props.center ? "center" : "left")};
+  font-family: ${(props) => (props.eng ? "Roboto" : "Noto Sans KR")}, sans-serif;
   @media (min-width: 0px) and (max-width: 767.98px) {
     font-size: 13px;
     letter-spacing: 0.25px;
@@ -206,5 +223,4 @@ export const FontSize13 = styled.p`
     align-items: center;
     justify-content: center;
   }
-` 
-  
+`;
