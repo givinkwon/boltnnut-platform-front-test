@@ -68,7 +68,7 @@ class SnsClientSignupContainer extends React.Component {
                 Signup.textInvalid("companyName", e.currentTarget.value);
               }}
               active={Signup.company_nameInputState}
-              // value={Signup.individual}
+              defaultValue={Signup.individual}
             />
             <InvalidImgBox src={success} style={{ bottom: "40%" }} active={Signup.company_nameInvalid} />
             {Signup.company_name && <InvalidTitle14 active={Signup.company_nameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
