@@ -158,7 +158,13 @@ class RequestContent extends Component {
       region_state: !this.state.region_state,
     });
     // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
-    Request.set_region_state(!this.state.region_state);
+    if(this.state.region_state == true){
+      Request.set_region_state(0);
+    }
+    else {
+      Request.set_region_state(1);
+    }
+
   };
 
   render() {
@@ -412,7 +418,7 @@ class RequestContent extends Component {
                     희망하는 프로젝트 진행 기간을 입력해주세요.
                   </span>
                   <Calendar />
-                  <CheckBoxComponent onChange={this.toggleCheckBox}>
+                  <CheckBoxComponent onChange={() => this.periodCheckBox()}>
                     <span
                       style={{
                         color: "#1e2222",

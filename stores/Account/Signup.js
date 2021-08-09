@@ -148,13 +148,14 @@ class Signup {
         .then((res) => {
           setTimeout(() => {
             this.loading = false;
-            alert("회원가입 성공");
+           
             MyDataLayerPush({ event: "SignUpComplete_Client" });
             this.reset();
             
             // 의뢰서에서 회원가입하지 않았을 때 => 그냥 회원가입일 때 Router Push
             if(container == "signup"){
               Router.push("/login");
+              alert("회원가입 성공");
             }
 
           }, 800);
