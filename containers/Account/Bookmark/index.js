@@ -7,8 +7,6 @@ import Container from "components/Containerv1";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
-// import SubBoxContainer from "./SubBox";
-
 @inject("Auth", "Partner", "Producer")
 @observer
 class BookmarkContainer extends React.Component {

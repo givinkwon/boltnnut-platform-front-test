@@ -6,7 +6,7 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import MainContainer from "./MainContainer";
 import BasicInfoModify from "AccountSetting/BasicInfoModify";
-import SubBox from "containers/Account/Bookmark/SubBox";
+// import SubBox from "containers/Account/Bookmark/SubBox";
 import TabContainer from "Profile/Tab";
 import Buttonv1 from "components/Buttonv1";
 import * as Text from "components/Text";
