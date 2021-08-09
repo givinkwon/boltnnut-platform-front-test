@@ -8,6 +8,7 @@ import MapContainer from "./Map";
 
 import { toJS } from "mobx";
 import DocViewer from "./DocViewer";
+import SubBoxContainer from "./SubBox";
 import QuestionContainer from "./Question";
 import HeaderItem from "./HeaderContainer";
 import ReviewStarRating from "../Review/ReviewStarRating";
@@ -1255,9 +1256,9 @@ class DetailCardContainer extends React.Component {
 
               {!Auth.logged_in_partner && (
                 <SubCard>
-                  {/* <SubBoxContainer
+                  <SubBoxContainer
                     partnerId={Partner.partner_detail_list[0].item.id}
-                  /> */}
+                  />
                   {/* <RequestContainer /> */}
                   {/* <RecentPartnerContainer /> */}
                 </SubCard>
