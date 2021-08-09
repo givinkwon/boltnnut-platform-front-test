@@ -8,14 +8,14 @@ import { toJS } from "mobx";
 import Cookies from "js-cookie";
 
 // Web
-import MyProject from "containers/Manufacture/project/MyProject/index";
-import AllProject from "containers/Manufacture/project/AllProject/index";
-import ProjectDetail from "containers/Manufacture/project/ProjectDetail/index";
+import MyProject from "containers/Manufacture/Project/MyProject/index";
+import AllProject from "containers/Manufacture/Project/AllProject/index";
+import ProjectDetail from "containers/Manufacture/Project/ProjectDetail/index";
 
 // Mobile
-import MobileMyProject from "containers/Manufacture/project/MyProject/index";
-import MobileAllProject from "containers/Manufacture/project/AllProject/index";
-import MobileProjectDetail from "containers/Manufacture/project/ProjectDetail/index";
+import MobileMyProject from "containers/Manufacture/Project/MyProject/Mobile/index";
+import MobileAllProject from "containers/Manufacture/Project/AllProject/Mobile/index";
+import MobileProjectDetail from "containers/Manufacture/Project/ProjectDetail/index";
 
 @inject("Project", "Auth", "Partner", "Cookie")
 @observer
