@@ -19,8 +19,6 @@ import ButtonSpinnerComponent from "components/ButtonSpinner";
 import List from "material-ui/List";
 import Cookies from "js-cookie";
 
-import AddFile from "./AddFile";
-
 const deleteButtonImg = "/static/images/delete.png";
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
@@ -281,7 +279,10 @@ class ManufacturerContentContainer extends React.Component {
                             onClick={async () => {
                               console.log(Auth);
                               if (Auth.logged_in_client) {
-                                await Project.getProject("allproject", Auth.logged_in_client.id);
+                                await Project.getProject(
+                                  "allproject",
+                                  Auth.logged_in_client.id
+                                );
                               }
                               Partner.pushToDetail(item, idx);
                             }}
@@ -379,7 +380,8 @@ class ManufacturerContentContainer extends React.Component {
                                 src={this.state.recent_partner_dic[name]}
                                 onClick={async () => {
                                   if (Auth.logged_in_client) {
-                                    await Project.getProject("allproject", 
+                                    await Project.getProject(
+                                      "allproject",
                                       Auth.logged_in_client.id
                                     );
                                   }

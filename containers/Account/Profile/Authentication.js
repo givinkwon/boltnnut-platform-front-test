@@ -89,17 +89,13 @@ class Authentication extends React.Component {
                       >
                         나중에 할래요
                       </ModalButton1>
-                      <ModalButton2
-                        active={this.state.addfile}
-                        onClick={this.fileHandler}
-                      >
-                        인증하기
+                      <ModalButton2>
+                        <FileComponent
+                          file={true}
+                          content="인증하기"
+                          type="authentication"
+                        />
                       </ModalButton2>
-                      {this.state.addfile ? (
-                        <FileComponent file={true} type="authentication" />
-                      ) : (
-                        <></>
-                      )}
                     </ModalButtonBox>
                   </Modal>
                 </ModalBackground>
