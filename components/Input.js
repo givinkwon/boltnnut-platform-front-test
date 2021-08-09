@@ -65,7 +65,16 @@ class Input extends React.Component {
     const { focused } = this.state;
     const { placeholder, label, outlined, variant, ...props } = this.props;
     return (
-      <CustomInput {...props} id={this.id} label={focused ? label : placeholder} outlined={this.outlined} onFocus={this.onFocus} onBlur={this.onBlur} onChange={this.onChange} variant="outlined" />
+      <CustomInput
+        {...props}
+        id={this.id}
+        label={focused ? label : placeholder}
+        outlined={this.outlined}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        onChange={this.onChange}
+        variant="outlined"
+      />
     );
   }
 }

@@ -429,9 +429,14 @@ class Nav extends React.Component {
                             Auth.type == "detailexpert"
                           }
                         >
-                          <RouterWrapper>
+                          <RouterWrapper
+                            onClick={() => {
+                              alert("준비 중인 서비스입니다!");
+                            }}
+                          >
                             <KSLink
-                              url={"partnerregister"}
+                              // url={"partnerregister"}
+                              url={"/"}
                               FontContent={() => {
                                 return <Font14>파트너 등록하기</Font14>;
                               }}
@@ -567,9 +572,14 @@ class Nav extends React.Component {
                         Auth.type == "detailexpert"
                       }
                     >
-                      <RouterWrapper>
+                      <RouterWrapper
+                        onClick={() => {
+                          alert("준비 중인 서비스입니다!");
+                        }}
+                      >
                         <KSLink
-                          url={"partnerregister"}
+                          // url={"partnerregister"}
+                          url={""}
                           FontContent={() => {
                             return <Font14>파트너 등록하기</Font14>;
                           }}

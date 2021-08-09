@@ -104,38 +104,11 @@ const InputBox = styled.div`
   width: 100%;
   display: flex;
   align-items: center;  
-  border: solid 1px #ffffff;
-  color: #404040;
+  color: #fff;
   border-radius: 3px;
   box-sizing: border-box;
 
-
-  >div:nth-of-type(1){
-    // //   border: 3px solid red;
-    //   border: 1px solid #c6c7cc;
-    //   border-radius: 3px;
-    // //   height: 40px;
-    //     min-height: 40px;
-    //   width: 804px;
-    //   display:flex;
-    //   align-items: center;
-    //   position: relative;
-    //   >div:nth-of-type(1){
-    //     word-wrap: break-word;
-    //     word-break: break-all;
-    //     width: 92%;
-    //     padding-left: 10px;
-
-      }
-      // >div:nth-of-type(2){
-      //     position: absolute;
-      //     right: 24px;
-      //   >img{
-      //       float: right;
-      //   }
-      // }
-      
-  }
+    
   >div:nth-of-type(2){
     display: ${(props) => (props.mobile ? "" : "inline-flex")};
     width: ${(props) => (props.mobile ? "100%" : "")};
@@ -334,21 +307,14 @@ const Input = styled.div`
   }
 `;
 const FileText = styled(Content.FontSize18)`
-  //width: 1152px;
   width: ${(props) => (props.mobile ? "100%" : "1152px")}
   font-stretch: normal;
   font-style: normal;
   line-height: 40px;
   letter-spacing: -0.18px;
-  text-align: left;
-  color: #c6c7cc;
+  color: #fff;
   display: inline-flex;
   align-items: center;
-  padding: ${(props) => (props.mobile ? "0 0 0 14px" : "0 16px 0 0")};
-  flex-wrap: wrap;
-  background-color: #ffffff;
-  box-sizing: border-box;
-  height: ${(props) => (props.mobile ? "100%" : "")}
   > span:nth-of-type(1) {
     > span {
       > img {
@@ -369,17 +335,6 @@ const FileText = styled(Content.FontSize18)`
       margin-right: 20px;
     }
   }
-  // @media (min-width: 0px) and (max-width: 767.98px) {
-  //   font-size: 14px !important;
-  //   padding-top: 0px;
-  //   font-weight: normal;
-  //   font-stretch: normal;
-  //   font-style: normal;
-  //   line-height: 2.43;
-  //   letter-spacing: -0.35px;
-  //   text-align: left;
-  //   color: #999999;
-  // }
 `;
 const DeleteFile = styled.img`
   width: 18px;

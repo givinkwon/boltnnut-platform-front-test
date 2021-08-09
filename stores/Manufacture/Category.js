@@ -42,6 +42,7 @@ class Category {
     await CategoryAPI.getMainbusiness()
       .then((res) => {
         this.mainbusiness_list = res.data.results;
+
         console.log(toJS(this.mainbusiness_list));
       })
       .catch((e) => {
@@ -54,7 +55,7 @@ class Category {
       .then(async (res) => {
         this.maincategory_list = res.data.results;
         console.log(toJS(this.maincategory_list));
-        this.category_list.forEach((mainCategory) => {
+        this.maincategory_list.forEach((mainCategory) => {
           this.category_list = this.category_list.concat(
             mainCategory.category_set
           );
@@ -164,7 +165,9 @@ class Category {
     console.log(typeof id);
     // 카테고리 선택
     if (state == "business") {
-      this.business_selected.push(id);
+      if (this.business_selected.indexOf(id) < 0) {
+        this.business_selected.push(id);
+      }
     }
 
     // 업체 분류 선택
@@ -191,6 +194,16 @@ class Category {
     // producer 페이지에서 왔을 때만
     if (container == "producer") {
       Partner.getPartner();
+    }
+  };
+
+  @action checkedItemHandler = (id, isChecked) => {
+    if (isChecked) {
+      checkedItems.add(id);
+      setCheckedItems(checkedItems);
+    } else if (!isChecked && checkedItems.has(id)) {
+      checkedItems.delete(id);
+      setCheckedItems(checkedItems);
     }
   };
 
@@ -236,7 +249,7 @@ class Category {
     }
   };
 
-  categoryActiveHandler = (idx, state) => { 
+  categoryActiveHandler = (idx, state) => {
     if (state == "business") {
       if (this.business_selected.includes(idx)) {
         return true;

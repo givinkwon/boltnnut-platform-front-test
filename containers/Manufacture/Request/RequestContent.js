@@ -56,9 +56,9 @@ const customStyles = {
   },
 };
 
-@inject("Request", "Auth", "Schedule")
+@inject("Request", "Auth", "Schedule", "Signup")
 @observer
-class Request extends Component {
+class RequestContent extends Component {
   state = {
     purposeAry: [
       { id: 1, name: "기획에 대한 상담을 받고 싶어요.", checked: false },
@@ -76,10 +76,21 @@ class Request extends Component {
       { id: 8, name: "5000만원 - 1억원" },
       { id: 9, name: "1억원이상" },
     ],
+    regionAry: [
+      { id: 1, name: "서울" },
+      { id: 2, name: "경기도" },
+      { id: 3, name: "인천" },
+      { id: 4, name: "충청도" },
+      { id: 5, name: "경상북도" },
+      { id: 6, name: "경상남도" },
+      { id: 7, name: "전라도" },
+      { id: 8, name: "제주도" },
+    ],
     securityCheck1: false,
     securityCheck2: false,
     period_state: false,
-
+    price_state: false,
+    region_state: false,
     budget: false,
   };
 
@@ -117,7 +128,8 @@ class Request extends Component {
     }
   };
 
-  toggleCheckBox = () => {
+  // 희망 기간 state
+  periodCheckBox = () => {
     const { Request } = this.props;
     this.setState({
       ...this.state,
@@ -127,22 +139,29 @@ class Request extends Component {
     Request.set_period_state(!this.state.period_state);
   };
 
-  render() {
-    const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
-    다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
-    1. 가공품 목적 및 사용 환경
-    2. 가공 부품별 특이 사항
-    3. 공급처가 충족해야하는 발주 조건
-    `;
-    const projectContent = `
-    1. 프로젝트의 소개 및 제작 목적:   
-    2. 프로젝트의 진행 상황 및 계획 수립 :   
-    3. 프로젝트 기능 및 특이 사항 - 필수로 들어가야 할 기능들  :  
-    4. 참고자료 / 레퍼런스 예시) ‘볼트앤너트 네이버 블로그’ 참고 등 :  
-    5. 제조사(파트너)에게의 요청사항 
-    - 프로젝트 진행 시 파트너가 알아야 할 발주 조건 : `;
+  // 희망 가격 state
+  priceCheckBox = () => {
+    const { Request } = this.props;
+    this.setState({
+      ...this.state,
+      price_state: !this.state.price_state,
+    });
+    // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
+    Request.set_price_state(!this.state.price_state);
+  };
 
-    const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
+  // 희망 지역 state
+  regionCheckBox = () => {
+    const { Request } = this.props;
+    this.setState({
+      ...this.state,
+      region_state: !this.state.region_state,
+    });
+    // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
+    Request.set_region_state(!this.state.region_state);
+  };
+
+  render() {
     const { Request, Auth } = this.props;
 
     return (
@@ -205,7 +224,7 @@ class Request extends Component {
                 </ContentInput>
               </RequestContentBox>
 
-              {/* 프로젝트 의뢰에서만 */}
+              {/* 프로젝트 의뢰에서만
               {Request.request_type == 0 && (
                 <RequestContentBox>
                   <ContentTitle style={{ marginBottom: 4 }}>
@@ -276,7 +295,7 @@ class Request extends Component {
                     </CheckBoxComponent>
                   </ProjectFieldCheckbox>
                 </RequestContentBox>
-              )}
+              )} */}
 
               <RequestContentBox>
                 <ContentTitle>
@@ -312,7 +331,7 @@ class Request extends Component {
                       원
                     </span>
                   </div>
-                  <CheckBoxComponent onChange={this.toggleCheckBox}>
+                  <CheckBoxComponent onChange={() => this.priceCheckBox()}>
                     <span
                       style={{
                         color: "#1e2222",
@@ -324,10 +343,13 @@ class Request extends Component {
                       프로젝트 예산 조율이 가능합니다.
                     </span>
                   </CheckBoxComponent>
-                  <BudgetHelp
+                  {/* <BudgetHelp
                     active={this.state.budget}
                     onClick={() => {
                       this.activeHandler("budget");
+                    }}
+                    style={{
+                      cursor: "pointer",
                     }}
                   >
                     <img src={helpimg}></img>
@@ -336,16 +358,15 @@ class Request extends Component {
                         display: "flex",
                         alignItems: "center",
                         marginLeft: 4,
-                        cursor: "pointer",
                       }}
                     >
                       예산 측정이 어려우신가요?
                     </span>
-                  </BudgetHelp>
-                  <HelpBox
+                  </BudgetHelp> */}
+                  {/* <HelpBox
                     style={{ display: this.state.budget ? "flex" : "none" }}
                   >
-                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <CheckBoxComponent onChange={this.priceCheckBox}>
                       <span
                         style={{
                           color: "#1e2222",
@@ -369,7 +390,7 @@ class Request extends Component {
                       프로젝트 예산 측정이 어렵다면, 볼트앤너트에서 유선으로
                       예산 책정을 도와드립니다.
                     </span>
-                  </HelpBox>
+                  </HelpBox> */}
                 </Budget>
               </RequestContentBox>
 
@@ -390,16 +411,7 @@ class Request extends Component {
                   >
                     희망하는 프로젝트 진행 기간을 입력해주세요.
                   </span>
-                  <ProjectDate>
-                    <InputComponent
-                      class="Input"
-                      onFocus={(e) => (e.target.placeholder = "")}
-                      // placeholder="일"
-                      onChange={(e) => {
-                        Request.set_contents(e);
-                      }}
-                    />
-                  </ProjectDate>
+                  <Calendar />
                   <CheckBoxComponent onChange={this.toggleCheckBox}>
                     <span
                       style={{
@@ -413,36 +425,6 @@ class Request extends Component {
                     </span>
                   </CheckBoxComponent>
                 </div>
-              </RequestContentBox>
-
-              {/* 제조사가 직접 의뢰하기, 신제품 맞춤형 문의만*/}
-              <RequestContentBox>
-                <ContentTitle style={{ marginBottom: 8 }}>
-                  <span>희망 납기일</span>
-                </ContentTitle>
-                <span
-                  style={{
-                    fontSize: 16,
-                    color: "#505050",
-                    lineHeight: 2.13,
-                    letterSpacing: -0.4,
-                  }}
-                >
-                  프로젝트 제품분야에 해당하는 항목들을 선택해주세요.
-                </span>
-                <Calendar />
-                <CheckBoxComponent onChange={this.toggleCheckBox}>
-                  <span
-                    style={{
-                      color: "#1e2222",
-                      fontSize: 15,
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    납기일 협의가 가능합니다.
-                  </span>
-                </CheckBoxComponent>
               </RequestContentBox>
 
               <RequestContentBox>
@@ -624,15 +606,15 @@ class Request extends Component {
                   >
                     <SelectComponent
                       styles={customStyles}
-                      options={this.state.priceAry}
-                      value={Request.request_price}
+                      options={this.state.regionAry}
+                      value={Request.request_region}
                       getOptionLabel={(option) => option.name}
                       placeholder={"시/도"}
-                      onChange={Request.set_price}
+                      onChange={Request.set_region}
                     />
                   </div>
                   <div style={{ marginBottom: 70 }}>
-                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <CheckBoxComponent onChange={() => this.regionCheckBox()}>
                       <span
                         style={{
                           color: "#1e2222",
@@ -677,26 +659,28 @@ class Request extends Component {
                         <img src={starred} style={{ marginLeft: 4 }}></img>
                       </ContentTitle>
                       <InputComponent
-                        class="Input"
-                        onFocus={(e) => (e.target.placeholder = "")}
-                        // placeholder="일"
-                        onChange={(e) => {
-                          Request.set_contents(e);
-                        }}
+                        style={{ width: "100%", marginTop: 0 }}
+                        placeholder="이메일을 입력하세요"
+                        label="아이디"
+                        onChange={Request.setEmail}
+                        value={Request.email}
                       />
                     </ClientInfoBox>
                     <ClientInfoBox>
                       <ContentTitle>
                         <div>전화번호</div>
-                        <img src={starred} style={{ marginLeft: 4 }}></img>
+                        <img
+                          src={starred}
+                          style={{ marginLeft: 4, marginTop: 0 }}
+                        ></img>
                       </ContentTitle>
                       <InputComponent
-                        class="Input"
-                        onFocus={(e) => (e.target.placeholder = "")}
-                        // placeholder="일"
-                        onChange={(e) => {
-                          Request.set_contents(e);
-                        }}
+                        style={{ width: "100%", marginTop: 0 }}
+                        placeholder="-없이 입력해주세요"
+                        label="휴대전화"
+                        type="phone"
+                        onChange={Request.setPhone}
+                        value={Request.phone}
                       />
                     </ClientInfoBox>
                     <ClientInfoBox style={{ marginBottom: 11 }}>
@@ -705,15 +689,15 @@ class Request extends Component {
                         <img src={starred} style={{ marginLeft: 4 }}></img>
                       </ContentTitle>
                       <InputComponent
-                        class="Input"
-                        onFocus={(e) => (e.target.placeholder = "")}
-                        // placeholder="일"
-                        onChange={(e) => {
-                          Request.set_contents(e);
-                        }}
+                        style={{ width: "100%", marginTop: 0 }}
+                        placeholder="비밀번호를 입력하세요"
+                        label="비밀번호"
+                        type="password"
+                        onChange={Request.setPassword}
+                        value={Request.password}
                       />
                     </ClientInfoBox>
-                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <CheckBoxComponent checked>
                       <span
                         style={{
                           color: "#1e2222",
@@ -747,7 +731,7 @@ class Request extends Component {
   }
 }
 
-export default Request;
+export default RequestContent;
 
 const quantityAry = [
   { label: "1", value: 1 },
@@ -1887,6 +1871,7 @@ const ContentInput = styled.div`
   .MuiInputBase-root {
     height: 42px;
     width: 100%;
+    margintop: 0px;
   }
 `;
 
@@ -1897,38 +1882,7 @@ const ProjectInput = styled.div`
   }
 `;
 
-const ProjectDate = styled.div`
-  .MuiInputBase-root {
-    width: 204px;
-    height: 42px;
-  }
-  margin-bottom: 12px;
-`;
-
-const ProjectFieldCheckbox = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 42px;
-  object-fit: contain;
-  border-radius: 3px;
-  border: solid 1px #c6c7cc;
-  background-color: #ffffff;
-  padding-left: 12px;
-  margin-top: 16px;
-`;
-
 const PartnerInfo = styled.div``;
-
-const HelpBox = styled.div`
-  flex-direction: column;
-  justify-content: center;
-  height: 72px;
-  border-radius: 3px;
-  background-color: #edf4fe;
-  padding-left: 33px;
-  margin-top: 12px;
-`;
 
 const ClientInfo = styled.div`
   margin-bottom: 70px;
@@ -1939,5 +1893,6 @@ const ClientInfoBox = styled.div`
   .MuiInputBase-root {
     height: 42px;
     width: 100%;
+    margintop: 0px;
   }
 `;
