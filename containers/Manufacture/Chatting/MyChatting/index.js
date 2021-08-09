@@ -12,11 +12,13 @@ import * as PartnerAPI from "axios/Manufacture/Partner";
 
 @inject("Project", "Auth", "Answer")
 @observer
-class ClientChatting extends React.Component {
+class MyChatting extends React.Component {
   state = {
     selectedRoom: null,
     answerDetailList: [],
     partnerList: [],
+    clientPhone: null,
+    projectName: null,
   };
 
   async componentDidMount() {
@@ -30,7 +32,7 @@ class ClientChatting extends React.Component {
     // 클라이언트 로그인이 되어 있으면 프로젝트 호출하여 데이터 담은 후 answer 데이터 담기
     if (Auth.logged_in_client) {
       // 프로젝트 데이터 호출
-      Project.getProject("chatting", Auth.logged_in_client.id);
+      await Project.getProject("myproject", Auth.logged_in_client.id);
       
       // 담은 데이터 map
       Project.projectDataList.map((data, idx) => {
@@ -59,21 +61,62 @@ class ClientChatting extends React.Component {
         });
       })
     }
-  }
+
+    // 파트너 로그인이 되어 있으면 프로젝트 호출하여 데이터 담은 후 answer 데이터 담기
+    if (Auth.logged_in_partner) {
+      // 프로젝트 데이터 호출
+      await Project.getProject("myproject", "", Auth.logged_in_partner.id);
+      
+       // 담은 데이터 map
+       Project.projectDataList.map((data, idx) => {
+        // answer_set에 있는 파트너 id 가지고 오기
+        data.answer_set.map((answer, idx) => {
+          // 파트너 id가 같으면 => 정보 저장
+          if(Auth.logged_in_partner.id == answer.partner){
+              console.log(data, answer)
+              // 데이터에 내용 담기 >> 채팅에 표시될 answer 리스트
+              Project.answerDetailList.push({
+                name: data.request_set[0] ? data.request_set[0].name.substring(0.10) : "미정",
+                id: data.id,
+                answerId : answer.id,
+                content: answer.content1 && answer.content1.substring(0.10),
+                project: data.project,
+              });
+
+              Project.projectQuickView.push({
+                check: null,
+              });
+            }
+        })
+      })
+    }
+
+    }
+  
 
 
-
-  // 채팅방 클릭 시에 채팅방 active 값을 활성 비활성 결정
-  modalHandler = (id) => {
-    this.setState({ selectedRoom: id });
+  // 채팅 카드 클릭 시에 채팅 창 state를 활성화해줌
+  modalHandler = async (id, idx) => {
+    this.setState({
+      selectedRoom: id,
+      projectName: Project.answerDetailList[idx].name,
+      projectId: Project.answerDetailList[idx].project,
+    });
+    const { Project } = this.props;
+    Project.chatModalActive = !Project.chatModalActive;
+  };
+ 
+  // 디테일 창으로 념겨주는 함수
+  pushToDetail = async (id) => {
     const { Project } = this.props;
 
-    Project.chatModalActive = !Project.chatModalActive;
+    await Project.getProjectDetail(id);
+    Project.selectedProjectId = id;
   };
 
   render() {
     const { Project, Auth } = this.props;
-
+    
     return (
       <Background>
         <Container style={{ display: "flex", flexDirection: "column" }}>
@@ -84,20 +127,13 @@ class ClientChatting extends React.Component {
               ></ChatTestContainer>
             </Layer>
           )}
-          {Project.projectDataList && Project.projectDataList[0] ? (
-            Project.projectDataList.map((item, idx) => {
-              return (
+
                 <ProjectContainer>
-                  <Font24>
-                    {item.request_set[0].name}
-                    <span>{item.answer_set.length}</span>
-                  </Font24>
-                  {Project.answerDetailList &&
+                  {/* 클라이언트 로그인일 때 */}
+                  {Auth.logged_in_client && Project.answerDetailList &&
                     Project.answerDetailList.map((data, idx) => {
                       return (
                         <>
-                          {data.project == item.id && (
-                            <>
                               <ChatItemContainer
                                 logo={data.logo}
                                 name={data.name}
@@ -106,24 +142,41 @@ class ClientChatting extends React.Component {
                                 modalHandler={this.modalHandler}
                                 user={Auth}
                               />
-                            </>
-                          )}
+
                         </>
                       );
                     })}
+
+                  {/* 파트너 로그인일 때 */}
+                  {Auth.logged_in_partner && Project.answerDetailList &&
+                    Project.answerDetailList.map((data, idx) => {
+                      return (
+                        <>
+                              <ChatItemContainer
+                                name={data.name}
+                                id={data.id}
+                                modalHandler={this.modalHandler}
+                                user={Auth}
+                                modalHandler={() => {
+                                  this.modalHandler(data.answerId, idx);
+                                }}
+                                pushToDetail={this.pushToDetail}
+                              />
+
+                        </>
+                      );
+                      })
+                    }
                 </ProjectContainer>
-              );
-            })
-          ) : (
-           " <NoProject />"
-          )}
+
+
         </Container>
       </Background>
     );
   }
 }
 
-export default ClientChatting;
+export default MyChatting;
 
 const Layer = styled.div`
   position: fixed;

@@ -26,7 +26,8 @@ class Project {
   @observable chatModalActive = false; // 채팅창을 키고 끄는 State
   @observable chatMessages = [];
   @observable chattingIndex = 0; // 채팅 state index
-  @observable partnerDetailList = []; // 채팅에 표시될 answer에 대한 정보 변수
+  @observable answerDetailList = []; // 채팅에 표시된 answer에 대한 변수
+  @observable projectDetailData = []; // 채팅에서 사용되는 프로젝트 디테일 변수
 
   // 채팅하기 페이지 간략히 보기 및 자세히 보기 관련 변수
   @observable projectQuickView = [];
@@ -110,6 +111,7 @@ class Project {
         },
       }
 
+      console.log(req)
       await ProjectAPI.getProjects(req)
       .then((res) => {
         // 과거 데이터 삭제
