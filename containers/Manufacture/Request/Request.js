@@ -58,7 +58,7 @@ const customStyles = {
 
 @inject("Request", "Auth", "Schedule")
 @observer
-class PartnerDirectRequest extends Component {
+class Request extends Component {
   state = {
     purposeAry: [
       { id: 1, name: "기획에 대한 상담을 받고 싶어요.", checked: false },
@@ -666,7 +666,7 @@ class PartnerDirectRequest extends Component {
   }
 }
 
-export default PartnerDirectRequest;
+export default Request;
 
 const quantityAry = [
   { label: "1", value: 1 },

@@ -10,7 +10,7 @@ class AutoestimateContainer extends React.Component {
       <>
         <Background>
           <Containerv1 style={{ width: 792 }}>
-            <PartnerDirectRequest />
+            <Request />
           </Containerv1>
         </Background>
       </>
