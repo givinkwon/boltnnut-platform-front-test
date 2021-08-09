@@ -7,7 +7,7 @@ import Container from "components/Containerv1";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
-import SubBoxContainer from "containers/Account/Bookmark";
+import SubBoxContainer from "containers/Account/Bookmark/Subbox";
 
 @inject("Auth", "Partner", "Producer")
 @observer
