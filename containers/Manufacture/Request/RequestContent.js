@@ -58,28 +58,39 @@ const customStyles = {
 
 @inject("Request", "Auth", "Schedule")
 @observer
-class Request extends Component {
+class RequestContent extends Component {
   state = {
     purposeAry: [
-      { id: 1, name: "기획에 대한 상담을 받고 싶어요.", checked: false },
-      { id: 2, name: "견적을 받고 싶어요.", checked: false },
-      { id: 3, name: "전문 업체를 찾고 싶어요.", checked: false },
+      { id:1, name: "기획에 대한 상담을 받고 싶어요.", checked: false },
+      { id:2, name: "견적을 받고 싶어요.", checked: false },
+      { id:3, name: "전문 업체를 찾고 싶어요.", checked: false },
     ],
     priceAry: [
-      { id: 1, name: "100만원 이하" },
-      { id: 2, name: "100만원 - 300만원" },
-      { id: 3, name: "300만원 - 500만원" },
-      { id: 4, name: "500만원 - 1000만원" },
-      { id: 5, name: "1000만원 - 2000만원" },
-      { id: 6, name: "2000만원 - 3000만원" },
-      { id: 7, name: "3000만원 - 5000만원" },
-      { id: 8, name: "5000만원 - 1억원" },
-      { id: 9, name: "1억원이상" },
+      { id:1, name: "100만원 이하" },
+      { id:2, name: "100만원 - 300만원" },
+      { id:3, name: "300만원 - 500만원" },
+      { id:4, name: "500만원 - 1000만원" },
+      { id:5, name: "1000만원 - 2000만원" },
+      { id:6, name: "2000만원 - 3000만원" },
+      { id:7, name: "3000만원 - 5000만원" },
+      { id:8, name: "5000만원 - 1억원" },
+      { id:9, name: "1억원이상" },
+    ],
+    regionAry: [
+      { id:1, name: "서울" },
+      { id:2, name: "경기도" },
+      { id:3, name: "인천" },
+      { id:4, name: "충청도" },
+      { id:5, name: "경상북도" },
+      { id:6, name: "경상남도" },
+      { id:7, name: "전라도" },
+      { id:8, name: "제주도" },
     ],
     securityCheck1: false,
     securityCheck2: false,
     period_state: false,
-
+    price_state: false,
+    region_state: false,
     budget: false,
   };
 
@@ -117,7 +128,8 @@ class Request extends Component {
     }
   };
 
-  toggleCheckBox = () => {
+  // 희망 기간 state
+  periodCheckBox = () => {
     const { Request } = this.props;
     this.setState({
       ...this.state,
@@ -125,6 +137,28 @@ class Request extends Component {
     });
     // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
     Request.set_period_state(!this.state.period_state);
+  };
+
+  // 희망 가격 state
+  priceCheckBox = () => {
+    const { Request } = this.props;
+    this.setState({
+      ...this.state,
+      price_state: !this.state.price_state,
+    });
+    // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
+    Request.set_price_state(!this.state.price_state);
+  };
+
+  // 희망 지역 state
+  regionCheckBox = () => {
+    const { Request } = this.props;
+    this.setState({
+      ...this.state,
+      region_state: !this.state.region_state,
+    });
+    // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
+    Request.set_region_state(!this.state.region_state);
   };
 
   render() {
@@ -205,7 +239,7 @@ class Request extends Component {
                 </ContentInput>
               </RequestContentBox>
 
-              {/* 프로젝트 의뢰에서만 */}
+              {/* 프로젝트 의뢰에서만
               {Request.request_type == 0 && (
                 <RequestContentBox>
                   <ContentTitle style={{ marginBottom: 4 }}>
@@ -276,7 +310,7 @@ class Request extends Component {
                     </CheckBoxComponent>
                   </ProjectFieldCheckbox>
                 </RequestContentBox>
-              )}
+              )} */}
 
               <RequestContentBox>
                 <ContentTitle>
@@ -312,7 +346,7 @@ class Request extends Component {
                       원
                     </span>
                   </div>
-                  <CheckBoxComponent onChange={this.toggleCheckBox}>
+                  <CheckBoxComponent onChange={() => this.priceCheckBox()}>
                     <span
                       style={{
                         color: "#1e2222",
@@ -324,7 +358,7 @@ class Request extends Component {
                       프로젝트 예산 조율이 가능합니다.
                     </span>
                   </CheckBoxComponent>
-                  <BudgetHelp
+                  {/* <BudgetHelp
                     active={this.state.budget}
                     onClick={() => {
                       this.activeHandler("budget");
@@ -341,11 +375,11 @@ class Request extends Component {
                     >
                       예산 측정이 어려우신가요?
                     </span>
-                  </BudgetHelp>
-                  <HelpBox
+                  </BudgetHelp> */}
+                  {/* <HelpBox
                     style={{ display: this.state.budget ? "flex" : "none" }}
                   >
-                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <CheckBoxComponent onChange={this.priceCheckBox}>
                       <span
                         style={{
                           color: "#1e2222",
@@ -369,56 +403,12 @@ class Request extends Component {
                       프로젝트 예산 측정이 어렵다면, 볼트앤너트에서 유선으로
                       예산 책정을 도와드립니다.
                     </span>
-                  </HelpBox>
+                  </HelpBox> */}
                 </Budget>
               </RequestContentBox>
-
-              {/* 프로젝트 의뢰에서만 */}
-              <RequestContentBox>
-                <ContentTitle style={{ marginBottom: 4 }}>
-                  <div>프로젝트 예상 진행 기간</div>
-                </ContentTitle>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <span
-                    style={{
-                      fontSize: 16,
-                      color: "#505050",
-                      lineHeight: 2.13,
-                      letterSpacing: -0.4,
-                      fontWeight: "normal",
-                    }}
-                  >
-                    희망하는 프로젝트 진행 기간을 입력해주세요.
-                  </span>
-                  <ProjectDate>
-                    <InputComponent
-                      class="Input"
-                      onFocus={(e) => (e.target.placeholder = "")}
-                      // placeholder="일"
-                      onChange={(e) => {
-                        Request.set_contents(e);
-                      }}
-                    />
-                  </ProjectDate>
-                  <CheckBoxComponent onChange={this.toggleCheckBox}>
-                    <span
-                      style={{
-                        color: "#1e2222",
-                        fontSize: 15,
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      프로젝트 진행 기간 조율이 가능합니다.
-                    </span>
-                  </CheckBoxComponent>
-                </div>
-              </RequestContentBox>
-
-              {/* 제조사가 직접 의뢰하기, 신제품 맞춤형 문의만*/}
               <RequestContentBox>
                 <ContentTitle style={{ marginBottom: 8 }}>
-                  <span>희망 납기일</span>
+                  <span>프로젝트 예상 진행 기간</span>
                 </ContentTitle>
                 <span
                   style={{
@@ -428,10 +418,10 @@ class Request extends Component {
                     letterSpacing: -0.4,
                   }}
                 >
-                  프로젝트 제품분야에 해당하는 항목들을 선택해주세요.
+
                 </span>
                 <Calendar />
-                <CheckBoxComponent onChange={this.toggleCheckBox}>
+                <CheckBoxComponent onChange={() => this.periodCheckBox()}>
                   <span
                     style={{
                       color: "#1e2222",
@@ -440,7 +430,7 @@ class Request extends Component {
                       alignItems: "center",
                     }}
                   >
-                    납기일 협의가 가능합니다.
+                    프로젝트 진행 기간 조율이 가능합니다.
                   </span>
                 </CheckBoxComponent>
               </RequestContentBox>
@@ -624,15 +614,15 @@ class Request extends Component {
                   >
                     <SelectComponent
                       styles={customStyles}
-                      options={this.state.priceAry}
-                      value={Request.request_price}
+                      options={this.state.regionAry}
+                      value={Request.request_region}
                       getOptionLabel={(option) => option.name}
                       placeholder={"시/도"}
-                      onChange={Request.set_price}
+                      onChange={Request.set_region}
                     />
                   </div>
                   <div style={{ marginBottom: 70 }}>
-                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <CheckBoxComponent onChange={() => this.regionCheckBox()}>
                       <span
                         style={{
                           color: "#1e2222",
@@ -747,7 +737,7 @@ class Request extends Component {
   }
 }
 
-export default Request;
+export default RequestContent;
 
 const quantityAry = [
   { label: "1", value: 1 },

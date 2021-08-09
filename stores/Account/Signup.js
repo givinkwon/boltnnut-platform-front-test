@@ -76,8 +76,13 @@ class Signup {
     this.title = val;
   };
 
+  @observable marketing = false;
+  @action setMarketing = (val) => {
+    this.marketing = val;
+  };
+
   // 회원가입 함수 시작
-  @action signup = async () => {
+  @action signup = async (container = "request" ) => {
     if (!this.email) {
       await alert("이메일을 입력해주세요.");
       return;
@@ -149,7 +154,11 @@ class Signup {
             alert("회원가입 성공");
             MyDataLayerPush({ event: "SignUpComplete_Client" });
             this.reset();
-            Router.push("/login");
+            // 의뢰서에서 회원가입하지 않았을 때 => 그냥 회원가입일 때 Router Push
+            if(container != "request"){
+              Router.push("/login");
+            }
+
           }, 800);
         })
         .catch((e) => {

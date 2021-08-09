@@ -37,6 +37,8 @@ class Request {
   @observable request_file_set = []; // 의뢰 관련 파일
   @observable request_file_secure = 0; // 의뢰 보안 state => 미선택 0, 도면 파일 공개 1, 미공개 2
   @observable request_drawing_set = []; // 의뢰 도면 파일
+  @observable request_region = ""; // 의뢰 지역 선택
+  @observable request_region_state = 0; // 의뢰 지역 협의 state => 체크 시에는 1, 미 체크 시에는 0
 
   // 파트너 상세에서 의뢰서 클릭 한 경우에 id를 넘겨주는 것
   @action partner_request = (val) => {
@@ -84,6 +86,7 @@ class Request {
   // 납기일 협의 상태 추가하기
   @action set_price_state = (val) => {
     this.request_price_state = val;
+    console.log(this.request_price_state);
   };
 
   // 의뢰 내용 추가하기
@@ -139,8 +142,29 @@ class Request {
     console.log(deleteIdx, this.request_drawing_set);
   };
 
+  // 희망 지역 추가하기
+  @action set_region = (obj) => {
+    this.request_region = obj;
+    console.log(this.request_region);
+  };
+
+  // 지역 협의 상태 추가하기
+  @action set_region_state = (val) => {
+    this.request_region_state = val;
+  };
+
   // 의뢰서 제출 시 의뢰서 만들기
   @action requestSubmit = async () => {
+
+    // 아이디 로그인 없이 의뢰서 만들 때 => 해당 정보로 회원가입
+    if(!Auth.logged_in_user) {
+      Signup.email = this.email;
+      Signup.password = this.password;
+      Signup.password2 = this.password2;
+      Signup.phone = this.phone;
+      Signup.realName = "비회원의뢰";
+      Signup.signup("request")
+    }
     // error 처리
     if (this.request_state == -1) {
       alert("문의 목적을 선택해주세요");
@@ -179,8 +203,14 @@ class Request {
     // 희망 예산 상태 저장
     formData.append("price_state", this.request_price_state);
 
+    // 희망 예산 저장
+    formData.append("region", this.request_region.id);
+
+    // 희망 예산 상태 저장
+    formData.append("region_state", this.request_region_state);
+
     // 제조사 상세보기에서 의뢰서 클릭해서 들어온 경우
-    formData.append("partner", Request.selected_partner);
+    formData.append("partner", this.selected_partner);
 
     // 선택한 날짜가 없으면, 기본 날짜 추가하기
     if (Schedule.clickDay) {
@@ -191,10 +221,10 @@ class Request {
 
     // 선택한 납기 미선택 시
     if (this.request_period_state == 0) {
-      formData.append("deadline_state", 0);
+      formData.append("deadline_state",0);
     } else {
       // 납기 협의 가능 선택 시
-      formData.append("deadline_state", 1);
+      formData.append("deadline_state",1);
     }
 
     // 의뢰 내용 ( 공개 사항 )
@@ -253,16 +283,6 @@ class Request {
         console.log(e.response);
       });
 
-    
-    // 아이디 로그인 없이 의뢰서 만들 때 => 해당 정보로 회원가입
-    if(Auth.logged_in_user) {
-      Signup.email = this.email;
-      Signup.password = this.password;
-      Signup.password2 = this.password2;
-      Signup.phone = this.phone;
-      Signup.realName = "비회원의뢰";
-      Signup.signup()
-    }
   };
 
   // 의뢰서 수정 관련
