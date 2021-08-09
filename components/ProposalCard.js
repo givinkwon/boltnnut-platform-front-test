@@ -1,19 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { toJS } from "mobx";
 import { inject, observer } from "mobx-react";
 
-const certification = "/static/icon/certification_img.svg";
-const category = "/static/images/project/category.svg";
-const purpose = "/static/images/project/purpose.svg";
-const moneyicon = "/static/images/project/moneyicon.svg";
-const bookmarkcount = "static/icon/bookmarkcount.svg";
-const views = "/static/images/project/views.svg";
-const applicant2 = "/static/images/project/applicant2.svg";
+import Containerv1 from "components/Containerv1";
+import * as Title from "components/Title";
 
 @inject("Project")
 @observer
-class ProposalCard extends React.Component {
+class ProjectCardContainer extends React.Component {
   state = {
     width: null,
   };
@@ -31,8 +25,8 @@ class ProposalCard extends React.Component {
   };
 
   render() {
-    // data는 프로젝트 데이터 
-    const { data} = this.props;
+    // data는 프로젝트 데이터
+    const { data } = this.props;
     const { width } = this.state;
 
     // 의뢰명
@@ -92,240 +86,165 @@ class ProposalCard extends React.Component {
     const { Project } = this.props;
 
     return (
-      <>
-        <Card>
-          <div
-            style={{
-              fontSize: 12,
-              fontWeight: 500,
-              letterSpacing: -0.3,
-              color: "#0933b3",
-            }}
-          >
-            {data.status}
-          </div>
-          <HeaderWrapper>
-            <Title>{name && name}</Title>
-            {data.identification_state === true ? (
-              <Certification>
-                <img src={certification}></img>
-              </Certification>
-            ) : (
-              <></>
-            )}
-            <Date style={{ color: "#86888c" }}>{date}</Date>
-          </HeaderWrapper>
-          <CategoryWrapper>
-            <Main>
-              <Category>
-                <CategoryBox>
-                  <Field>
-                    <img src={category} style={{ marginRight: 4 }}></img>
-                    <span
-                      style={{
-                        fontSize: 16,
-                        letterSpacing: -0.4,
-                        color: "#767676",
-                        marginRight: 16,
-                      }}
-                    >
-                      업체분류
-                    </span>
-                  </Field>
-                  <FieldContent>
-                    <div style={{ marginLeft: 3 }}>{category && category}</div>
-                  </FieldContent>
-                </CategoryBox>
-                <CategoryBox style={{ marginLeft: 16 }}>
-                  <Field>
-                    <img src={purpose} style={{ marginRight: 4 }}></img>
-                    <span
-                      style={{
-                        fontSize: 16,
-                        letterSpacing: -0.4,
-                        color: "#767676",
-                        marginRight: 16,
-                      }}
-                    >
-                      문의 목적
-                    </span>
-                  </Field>
-                  <FieldContent>
-                    <div style={{ marginLeft: 3 }}>{status && status}</div>
-                  </FieldContent>
-                </CategoryBox>
-                <CategoryBox style={{ marginLeft: 16, borderRight: "none" }}>
-                  <Field>
-                    <img src={moneyicon} style={{ marginRight: 4 }}></img>
-                    <span
-                      style={{
-                        fontSize: 16,
-                        letterSpacing: -0.4,
-                        color: "#767676",
-                        marginRight: 16,
-                      }}
-                    >
-                      예상 금액
-                    </span>
-                  </Field>
-                  <FieldContent>
-                    <div style={{ marginLeft: 3 }}>
-                      {price != "" ? price : "미정"}
-                    </div>
-                  </FieldContent>
-                </CategoryBox>
-              </Category>
-              <Content>
-                <div style={{ width: 660, textOverflow: "ellipsis" }}>
-                  {content}
+      <Background>
+        <Container style={{ width: "95%" }}>
+          <MainContainer>
+            <ContentBox style={{ width: 100, alignItems: "center" }}>
+              <Title12 style={{ width: 50 }}>{data.status}</Title12>
+              <img src="/static/images/new.svg" />
+            </ContentBox>
+
+            <ContentBox style={{ width: 320, marginTop: 20 }}>
+              <Title20>{name && name}</Title20>
+              <img src="/static/images/success.svg" />
+              <Title14>{date}</Title14>
+            </ContentBox>
+
+            <ContentBox style={{ marginTop: 32, width: 400, gap: 20 }}>
+              <ImgInnerBox style={{ flexDirection: "column" }}>
+                <InnerBox>
+                  <img src="static/images/class.svg" />
+                  <Title16>업체분류</Title16>
+                </InnerBox>
+                <div style={{ marginTop: 8 }}>{category && category}</div>
+              </ImgInnerBox>
+
+              <img src="static/images/contentline.svg" />
+
+              <ImgInnerBox style={{ flexDirection: "column" }}>
+                <InnerBox>
+                  <img src="static/images/purpose.svg" />
+                  <Title16>문의목적</Title16>
+                </InnerBox>
+                <div style={{ marginTop: 8 }}>{status && status}</div>
+              </ImgInnerBox>
+
+              <img src="static/images/contentline.svg" />
+
+              <ImgInnerBox style={{ flexDirection: "column" }}>
+                <InnerBox>
+                  <img src="static/images/price.svg" />
+                  <Title16>예상금액</Title16>
+                </InnerBox>
+                <div style={{ marginTop: 8 }}>
+                  {price != "" ? price : "미정"}
                 </div>
-              </Content>
-            </Main>
-            <Aside>
-              <AsideContent>
-                <img src={bookmarkcount} style={{ marginRight: 6 }} />
-                <div>3</div>
-              </AsideContent>
-              <AsideContent>
-                <img src={views} style={{ marginRight: 6 }} />
-                <div> 높음 </div>
-              </AsideContent>
-              <AsideContent style={{ borderBottom: "solid 1px #e1e2e4" }}>
-                <img src={applicant2} style={{ marginRight: 6 }} />
-                <div> 총 3명 지원 </div>
-              </AsideContent>
-            </Aside>
-          </CategoryWrapper>
-        </Card>
-      </>
+              </ImgInnerBox>
+            </ContentBox>
+
+            <DescTitle14>
+              {content.length > 70 ? content.slice(0, 70) + "..." : content}
+            </DescTitle14>
+          </MainContainer>
+
+          <AssistantContainer>
+            <AssistantInnerBox>
+              <img src="static/images/bookmark.svg" />
+              <AssistantTitle14>3</AssistantTitle14>
+            </AssistantInnerBox>
+
+            <AssistantInnerBox>
+              <img src="static/images/eye.svg" />
+              <AssistantTitle14>높음</AssistantTitle14>
+            </AssistantInnerBox>
+
+            <AssistantInnerBox>
+              <img src="static/images/person.svg" />
+              <AssistantTitle14>총 3명 지원</AssistantTitle14>
+            </AssistantInnerBox>
+
+            <img src="static/images/underline.svg" style={{ marginTop: 9 }} />
+          </AssistantContainer>
+        </Container>
+      </Background>
     );
   }
 }
 
-export default ProposalCard;
+export default ProjectCardContainer;
 
-const Card = styled.div`
-  width: 94%;
-  padding: 30px 24px 30px 30px;
-  position: relative;
-  object-fit: contain;
+const Title12 = styled(Title.FontSize12)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  color: #0933b3;
+`;
+
+const Title14 = styled(Title.FontSize14)`
+  font-weight: normal;
+  color: #b3b3b3;
+  margin: 5px 0px 0px 15px;
+`;
+
+const Title16 = styled(Title.FontSize16)`
+  font-weight: normal;
+  color: #767676;
+  margin-left: 4px;
+`;
+
+const Title20 = styled(Title.FontSize20)`
+  font-weight: bold;
+  color: #000000;
+`;
+
+const DescTitle14 = styled(Title.FontSize14)`
+  margin-top: 40px;
+  font-weight: 400;
+  color: #767676;
+`;
+
+const Background = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
   border-radius: 8px;
   border: solid 1px #e1e2e4;
   background-color: #ffffff;
-`;
-const Title = styled.span`
-  height: 36px;
-  font-size: 24px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.6px;
-  text-align: left;
-  color: #282c36;
-  white-space: nowrap;
-  margin-right: 30px;
-`;
-const SubTitle = styled.span`
-  height: 29px;
-  display: flex;
-  align-items: center;
-  font-size: 20px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 2;
-  letter-spacing: -0.5px;
-  text-align: left;
-  color: #282c36;
-  white-space: nowrap;
-  margin-right: 15px;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 100%;
-    font-size: 12px;
-    line-height: 15px;
-    letter-spacing: -0.38px;
+  cursor: pointer;
+
+  :hover {
+    border: solid 1px #0933b3;
   }
 `;
-const HeaderWrapper = styled.div`
-  width: 100%;
-  margin-top: 13px;
-  margin-bottom: 27px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
 
-const Date = styled.div`
-  font-size: 14px;
-  letter-spacing: -0.35px;
-  text-align: left;
-  color: #b3b3b3;
-`;
-
-const CategoryWrapper = styled.div`
-  display: flex;
+const Container = styled(Containerv1)`
   justify-content: space-between;
-  width: 100%;
+  margin: 30px 0px 30px 0px;
 `;
 
-const Main = styled.div`
-  width: 100%;
-`;
-
-const Category = styled.div`
+const MainContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
-  margin-bottom: 32px;
-`;
-
-const CategoryBox = styled.div`
-  display: flex;
-  justify-content: flex-start;
   flex-direction: column;
-  border-right: solid 1px #c6c7cc;
+`;
+const AssistantContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `;
 
-const Field = styled.div`
-  display: flex;
+const ContentBox = styled.div`
+  display: inline-flex;
+  gap: 10px;
+`;
+
+const ImgInnerBox = styled.div`
+  display: inline-flex;
   align-items: center;
-  margin-bottom: 8px;
 `;
 
-const FieldContent = styled.div`
-  margin-right: 16px;
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: -0.4px;
-  color: #282c36;
+const InnerBox = styled.div`
+  display: inline-flex;
+  align-items: center;
 `;
 
-const Aside = styled.div`
-  width: 112px;
+const AssistantInnerBox = styled.div`
   display: flex;
-  flex-direction: column;
+  gap: 10px;
+  width: 100px;
+  margin-top: 12px;
 `;
 
-const AsideContent = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  padding-bottom: 11px;
-  font-size: 14px;
-  letter-spacing: -0.35px;
-  text-align: left;
+const AssistantTitle14 = styled(Title.FontSize14)`
+  font-weight: 400;
   color: #282c36;
-}
-`;
-
-const Content = styled.span`
-  font-size: 14px;
-  letter-spacing: -0.35px;
-  color: #767676;
-  margin-top: 32px;
-`;
-
-const Certification = styled.div`
-  width: 14px;
-  height: 14px;
-  margin-right: 30px;
 `;
