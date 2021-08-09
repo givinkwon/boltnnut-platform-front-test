@@ -38,7 +38,7 @@ class Request {
   @observable request_file_secure = 0; // 의뢰 보안 state => 미선택 0, 도면 파일 공개 1, 미공개 2
   @observable request_drawing_set = []; // 의뢰 도면 파일
   @observable request_region = ""; // 의뢰 지역 선택
-  @observable request_region_state = 0; // 의뢰 지역 협의 state => 체크 시에는 1, 미 체크 시에는 0
+  @observable request_region_state = false; // 의뢰 지역 협의 state => 체크 시에는 1, 미 체크 시에는 0
 
   // 파트너 상세에서 의뢰서 클릭 한 경우에 id를 넘겨주는 것
   @action partner_request = (val) => {
@@ -160,10 +160,11 @@ class Request {
     if(!Auth.logged_in_user) {
       Signup.email = this.email;
       Signup.password = this.password;
-      Signup.password2 = this.password2;
+      Signup.password2 = this.password;
       Signup.phone = this.phone;
       Signup.realName = "비회원의뢰";
-      Signup.signup("request")
+      Signup.company_name = "비회원가입";
+      await Signup.signup("request")
     }
     // error 처리
     if (this.request_state == -1) {
@@ -257,9 +258,11 @@ class Request {
     }
 
     // 로그인 토큰 받아 user 데이터 받기
-    const Token = localStorage.getItem("token");
-    console.log(Token);
-
+    // 비로그인시
+    if(!Auth.logged_in_user) {
+      const Token = "b2ad465ffc84bdc7e91d1b2752683dc4227ba892"
+      console.log(Token);
+      
     // axois 쏘기
     const req = {
       headers: {
@@ -283,8 +286,65 @@ class Request {
         console.log(e.response);
       });
 
+    }
+    else {
+      const Token = localStorage.getItem("token");
+      console.log(Token);
+      
+    // axois 쏘기
+    const req = {
+      headers: {
+        Authorization: `Token ${Token}`,
+      },
+      data: formData,
+    };
+
+    console.log(req);
+
+    RequestAPI.create(req)
+      .then((res) => {
+        console.log("create: ", res);
+        // page 넘기기 위한 트리거 만들기
+        this.newIndex = 1;
+        // GA 데이터 보내기
+        MyDataLayerPush({ event: "request_Drawing" });
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+
+    }
+    
+
   };
 
+
+  // 비회원 회원가입 전용
+  // email
+  @observable email = "";
+
+  @action setEmail = (val) => {
+    this.email = val;
+    console.log(this.email)
+  };
+
+  // password
+  @observable password = "";
+
+  @action setPassword = (val) => {
+    this.password = val;
+    console.log(this.password)
+  };
+
+  // 휴대폰
+  @observable phone = "";
+
+  @action setPhone = (val) => {
+    this.phone = val;
+    console.log(this.phone)
+  };
+  
   // 의뢰서 수정 관련
 
   // 의뢰서 수정에서 의뢰 파일 가져오기

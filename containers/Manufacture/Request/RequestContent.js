@@ -56,7 +56,7 @@ const customStyles = {
   },
 };
 
-@inject("Request", "Auth", "Schedule")
+@inject("Request", "Auth", "Schedule", "Signup")
 @observer
 class RequestContent extends Component {
   state = {
@@ -177,7 +177,7 @@ class RequestContent extends Component {
     - 프로젝트 진행 시 파트너가 알아야 할 발주 조건 : `;
 
     const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
-    const { Request, Auth } = this.props;
+    const { Request, Auth, Signup } = this.props;
 
     return (
       <>
@@ -667,43 +667,26 @@ class RequestContent extends Component {
                         <img src={starred} style={{ marginLeft: 4 }}></img>
                       </ContentTitle>
                       <InputComponent
-                        class="Input"
-                        onFocus={(e) => (e.target.placeholder = "")}
-                        // placeholder="일"
-                        onChange={(e) => {
-                          Request.set_contents(e);
-                        }}
-                      />
+                        placeholder='이메일을 입력하세요' label='아이디' onChange={Request.setEmail} value={Request.email}
+                        />
                     </ClientInfoBox>
                     <ClientInfoBox>
                       <ContentTitle>
                         <div>전화번호</div>
                         <img src={starred} style={{ marginLeft: 4 }}></img>
                       </ContentTitle>
-                      <InputComponent
-                        class="Input"
-                        onFocus={(e) => (e.target.placeholder = "")}
-                        // placeholder="일"
-                        onChange={(e) => {
-                          Request.set_contents(e);
-                        }}
-                      />
+                      <InputComponent placeholder='-없이 입력해주세요' label='휴대전화' type='phone' onChange={Request.setPhone} value={Request.phone}/>
+          
                     </ClientInfoBox>
                     <ClientInfoBox style={{ marginBottom: 11 }}>
                       <ContentTitle>
                         <div>비밀번호</div>
                         <img src={starred} style={{ marginLeft: 4 }}></img>
                       </ContentTitle>
-                      <InputComponent
-                        class="Input"
-                        onFocus={(e) => (e.target.placeholder = "")}
-                        // placeholder="일"
-                        onChange={(e) => {
-                          Request.set_contents(e);
-                        }}
-                      />
+                      <InputComponent placeholder='비밀번호를 입력하세요' label='비밀번호' type='password' onChange={Request.setPassword} value={Request.password}/>
+                      
                     </ClientInfoBox>
-                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <CheckBoxComponent checked>
                       <span
                         style={{
                           color: "#1e2222",
