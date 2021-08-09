@@ -13,7 +13,7 @@ import { inject, observer } from "mobx-react";
 import DetailContainer from "./Detail/index";
 import MobileRequest from "./MobileRequest";
 import MobileRequestDone from "./MobileRequestDone";
-import { DiagnosticCategory } from "typescript";
+import { DiagnosticCategory, isParenthesizedExpression } from "typescript";
 
 // cookie 추가
 import Cookies from "js-cookie";
@@ -25,6 +25,13 @@ class ProducerConatiner extends React.Component {
     let partner_view_data = [];
     const { Auth, Partner, Category, Cookie } = this.props;
     Partner.init();
+    await Partner.getPartner();
+
+    // 임시로 새로고침 하는 코드 넣기
+    if(Partner.partner_count < 100 ) {
+      window.location.replace("/producer")
+    }
+
     Partner.newIndex = 0;
     Partner.mobileRequestIndex = 0;
     await Auth.checkLogin();

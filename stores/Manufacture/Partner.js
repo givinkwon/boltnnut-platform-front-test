@@ -776,6 +776,7 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    this.getPartner();
   };
   @action reset = () => {
     this.detail = null;
@@ -1744,6 +1745,7 @@ class Partner {
     console.log(req.params);
     await PartnerAPI.getPartners(req)
       .then(async (res) => {
+        console.log(res)
         this.partner_list = [];
         this.category_ary = [];
         this.category_name_ary = [];

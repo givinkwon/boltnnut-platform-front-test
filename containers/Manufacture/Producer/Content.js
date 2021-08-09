@@ -46,12 +46,11 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   async componentDidMount() {
+
     const { Partner, Cookie } = this.props;
     Partner.detailLoadingFlag = false;
 
     Partner.currentPage = 1;
-
-    await Partner.getPartner(1, Partner.click_count);
 
     if (Partner.filter_category_ary.length === 1) {
       Partner.getCategory();
@@ -102,22 +101,6 @@ class ManufacturerContentContainer extends React.Component {
     });
   }
 
-  /* Parnter (진수정밀) 제조사 상세 찾기용 임의 함수 (삭제할 예정) */
-  temp = (e) => {
-    const { Partner } = this.props;
-    e.preventDefault();
-    Partner.currentPage = 386;
-    Partner.resetDevCategory();
-    Partner.check_loading_develop = false;
-    Partner.ReviewActive = false;
-    Partner.ReviewActiveIndex = -1;
-    Partner.dropDownActive = false;
-    Partner.dropDownIdx = -1;
-    Partner.click_count += 1;
-
-    Partner.getPartner(386, this.click_count);
-    // Partner.getPartner(182, this.click_count);
-  };
   componentWillUnmount() {
     const { Partner } = this.props;
     console.log("content unmount");
@@ -165,7 +148,6 @@ class ManufacturerContentContainer extends React.Component {
     console.log(toJS(Partner.partner_list));
 
     console.log(Partner.suggest_list);
-    console.log(Partner.searchFileUrl)
     return (
       <>
         <Background id="MyBackground">
@@ -274,6 +256,7 @@ class ManufacturerContentContainer extends React.Component {
 
                   {Partner.partner_list &&
                     Partner.partner_list.map((item, idx) => {
+                      console.log(item)
                       return (
                         <Background>
                           <div
