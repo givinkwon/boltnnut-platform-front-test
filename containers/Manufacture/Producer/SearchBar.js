@@ -28,12 +28,7 @@ class SearchBarConatiner extends React.Component {
   search = async () => {
     const { Partner, Category } = this.props;
 
-    // 연관검색어 저장
-    Partner.suggest_list = this.state.suggs;
-    console.log(toJS(Partner.suggest_list));
-
     await Router.push("/producer");
-    // console.log("click");
 
     Partner.loadingFlag = true;
     setTimeout(() => {
@@ -100,12 +95,6 @@ class SearchBarConatiner extends React.Component {
               />
               <img style={{ width: 24, height: 24, marginRight: 25, cursor: "pointer" }} src="/static/icon/search_blue.svg" onClick={this.search} />
             </SearchBar>
-
-            {this.state.showSuggestions && this.state.suggs.length > 0 && (
-              <CustomUl>
-              <CustomLiBox>{suggestions}</CustomLiBox>
-            </CustomUl>
-            )}
 
           </div>
         </Form>
