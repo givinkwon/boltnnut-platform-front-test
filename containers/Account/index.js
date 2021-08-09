@@ -56,7 +56,7 @@ class AccountConatiner extends React.Component {
           <Container>
             <Body>
               <Aside>
-                <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
+                {/* <AsideHeader>{Auth.logged_in_user.username}</AsideHeader> */}
                 <AsideBody>
                   <Fragment>
                     <TabContainer />
@@ -144,7 +144,7 @@ const AsideHeader = styled.div`
 
 const AsideBody = styled.div`
   padding-top: 16px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.73;
   letter-spacing: -0.38px;
   text-align: left;

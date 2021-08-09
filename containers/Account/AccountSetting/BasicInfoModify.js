@@ -122,10 +122,10 @@ class ChangePassword extends Component {
 export default ChangePassword;
 
 const BodyBox = styled.div`
-  width: 100%;
   margin-top: 32px;
   .MuiInputBase-root {
     height: 42px;
+    width: 100%;
   }
 `;
 
