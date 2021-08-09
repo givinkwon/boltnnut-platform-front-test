@@ -21,7 +21,7 @@ class Signup extends React.Component {
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
     // page ip 기록
-    const formData = new FormData();
+    const formData = new FormData(); 
 
     formData.append("url", window.location.href);
     console.log(window.location.href);
