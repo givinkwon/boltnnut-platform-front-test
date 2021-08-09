@@ -8,7 +8,7 @@ import MapContainer from "../Map";
 
 import { toJS } from "mobx";
 import DocViewer from "../DocViewer";
-import SubBoxContainer from "containers/Account/Bookmark/Subbox";
+import SubBoxContainer from "containers/Account/Bookmark/SubBox";
 import QuestionContainer from "../Question";
 import HeaderItem from "../HeaderContainer";
 import ReviewStarRating from "../../Review/ReviewStarRating";
