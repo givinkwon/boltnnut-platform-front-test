@@ -648,6 +648,87 @@ class Request extends Component {
                 </PartnerInfo>
               )}
 
+              {/* 로그인 안했을 시  */}
+              {this.props.Auth.logged_in_user ? (
+                <></>
+              ) : (
+                <>
+                  <span
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      fontSize: 32,
+                      fontWeight: 500,
+                      letterSpacing: -0.8,
+                      color: "#1e2222",
+                      marginTop: 140,
+                      marginBottom: 70,
+                    }}
+                  >
+                    <span style={{ color: "#0933b3" }}>
+                      의뢰 확인을 위한 필수 정보
+                    </span>
+                    를 입력해주세요.
+                  </span>
+                  <ClientInfo>
+                    <ClientInfoBox>
+                      <ContentTitle>
+                        <div>이메일</div>
+                        <img src={starred} style={{ marginLeft: 4 }}></img>
+                      </ContentTitle>
+                      <InputComponent
+                        class="Input"
+                        onFocus={(e) => (e.target.placeholder = "")}
+                        // placeholder="일"
+                        onChange={(e) => {
+                          Request.set_contents(e);
+                        }}
+                      />
+                    </ClientInfoBox>
+                    <ClientInfoBox>
+                      <ContentTitle>
+                        <div>전화번호</div>
+                        <img src={starred} style={{ marginLeft: 4 }}></img>
+                      </ContentTitle>
+                      <InputComponent
+                        class="Input"
+                        onFocus={(e) => (e.target.placeholder = "")}
+                        // placeholder="일"
+                        onChange={(e) => {
+                          Request.set_contents(e);
+                        }}
+                      />
+                    </ClientInfoBox>
+                    <ClientInfoBox style={{ marginBottom: 11 }}>
+                      <ContentTitle>
+                        <div>비밀번호</div>
+                        <img src={starred} style={{ marginLeft: 4 }}></img>
+                      </ContentTitle>
+                      <InputComponent
+                        class="Input"
+                        onFocus={(e) => (e.target.placeholder = "")}
+                        // placeholder="일"
+                        onChange={(e) => {
+                          Request.set_contents(e);
+                        }}
+                      />
+                    </ClientInfoBox>
+                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                      <span
+                        style={{
+                          color: "#1e2222",
+                          fontSize: 15,
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        이용약관 및 개인정보 처리방침에 동의합니다. (필수)
+                      </span>
+                    </CheckBoxComponent>
+                  </ClientInfo>
+                </>
+              )}
+
               <RequestBtn>
                 <RequestButton
                   onClick={() => {
@@ -1805,12 +1886,14 @@ const FileImageContainer = styled.div`
 const ContentInput = styled.div`
   .MuiInputBase-root {
     height: 42px;
+    width: 100%;
   }
 `;
 
 const ProjectInput = styled.div`
   .MuiInputBase-root {
     height: 433px;
+    width: 100%;
   }
 `;
 
@@ -1845,4 +1928,16 @@ const HelpBox = styled.div`
   background-color: #edf4fe;
   padding-left: 33px;
   margin-top: 12px;
+`;
+
+const ClientInfo = styled.div`
+  margin-bottom: 70px;
+`;
+
+const ClientInfoBox = styled.div`
+  margin-bottom: 32px;
+  .MuiInputBase-root {
+    height: 42px;
+    width: 100%;
+  }
 `;

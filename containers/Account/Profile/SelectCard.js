@@ -6,7 +6,6 @@ import * as Text from "components/Text";
 import SelectComponent from "components/Select";
 import FilterModalContainer from "./FilterModalContainer";
 
-const medalImg = "/static/images/signup/medal.svg";
 const down_arrow = "/static/icon/down_arrow.svg";
 const up_arrow = "/static/icon/up_arrow.svg";
 
@@ -104,7 +103,7 @@ class SelectCard extends React.Component {
   };
 
   render() {
-    const { Auth, name, Partner, id, type, Category } = this.props;
+    const { Auth, name, Partner, id, type, Category, image } = this.props;
     console.log(this.state.type);
     console.log("==================");
     console.log(this.props.type);
@@ -112,7 +111,7 @@ class SelectCard extends React.Component {
     return (
       <Container>
         <Header>
-          <img src={medalImg} />
+          <img src={image} />
           <span>{name}</span>
         </Header>
         <Field>
@@ -202,12 +201,15 @@ const Container = styled.div`
 
 const Header = styled.div`
   display: flex;
+  align-items: center;
+  margin-bottom: 14px;
   > span {
     font-size: 16px;
     line-height: 24px;
     letter-spacing: -0.4px;
     color: #282c36;
     font-weight: normal;
+    margin-left: 4px;
   }
 `;
 
@@ -222,8 +224,8 @@ const Select = styled(SelectComponent)`
 `;
 
 const Field = styled.div`
-  width: 204px;
-  height: 40px;
+  width: 100%;
+  height: 44px;
   display: flex;
   justify-content: space-between;
   align-items: center;
