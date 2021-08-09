@@ -7,7 +7,7 @@ import Nav from "components/Nav";
 import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
 import Spinner from "components/Spinner";
-import SnsClientSignupContainer from "../../../containers/Account/Signup/SnsClientSignUp";
+import SnsClientSignupContainer from "containers/Account/Signup/SnsClientSignUp";
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 import * as AccountAPI from "axios/Account/Account";
