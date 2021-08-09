@@ -2,9 +2,19 @@ import React, { Component } from "react";
 import InnerBox from "components/InnerBox";
 import * as Content from "components/Content";
 import styled, { css } from "styled-components";
+import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
+import TestCheckBox from "./test";
+const topCategoryOuterStyles = {
+  borderRadius: "5px",
+  border: "1px solid #e1e2e4",
+  marginBottom: 20,
+};
+
 const outerStyles = {
   borderRadius: "5px",
   border: "1px solid #e1e2e4",
+  marginBottom: 20,
 };
 
 const innerStyles = {
@@ -131,59 +141,81 @@ const mainType = [
   },
 ];
 
+@inject("Auth", "Category")
+@observer
 class Category extends Component {
+  state = {};
+  componentDidMount() {
+    console.log("===================================");
+    console.log(toJS(this.props.Category.mainbusiness_list));
+    console.log(toJS(this.props.Category.maincategory_list));
+    console.log(toJS(this.props.Category.category_list));
+    console.log("===================================");
+  }
   render() {
+    const { Auth, Category } = this.props;
     return (
       <>
-        <InnerBox
-          outerStyles={outerStyles}
-          innerStyles={innerStyles}
-          Content={() => {
-            return (
-              <>
-                <CategoryBox>
-                  <ContentBox>
-                    <HeaderText>
-                      <Font18>{mainType[0].maincategory} </Font18>
-                      <Font16
-                        style={{
-                          color: "#86888c",
-                          fontWeight: 500,
-                        }}
-                      >
-                        (중복 선택 가능)
-                      </Font16>
-                    </HeaderText>
+        {Auth.RegisterTypeArray.map((item, idx) => {
+          return (
+            <>
+              {item.checked && (
+                <InnerBox
+                  outerStyles={outerStyles}
+                  innerStyles={innerStyles}
+                  Content={() => {
+                    return (
+                      <>
+                        <CategoryBox>
+                          <ContentBox>
+                            <HeaderText>
+                              <img src={item.img} />
+                              <Font18>
+                                {
+                                  Category.mainbusiness_list[item.id]
+                                    .maincategory
+                                }
+                              </Font18>
+                            </HeaderText>
 
-                    <CheckItemBox>
-                      <CheckItem>
-                        <input type="checkbox" />
-                        <Font16>전체</Font16>
-                      </CheckItem>
-                      <CheckItem></CheckItem>
-                      <CheckItem></CheckItem>
-                      {mainType[0].category_set.map((item, idx) => {
-                        return (
-                          <CheckItem>
-                            <input type="checkbox" />
-                            <Font16>{item.category}</Font16>
-                          </CheckItem>
-                        );
-                      })}
-                    </CheckItemBox>
-                  </ContentBox>
-                </CategoryBox>
-              </>
-            );
-          }}
-        ></InnerBox>
+                            <CheckItemBox>
+                              <CheckItem>
+                                <input type="checkbox" />
+                                <Font16>전체</Font16>
+                              </CheckItem>
+                              <CheckItem></CheckItem>
+                              <CheckItem></CheckItem>
+                              {Category.mainbusiness_list[
+                                item.id
+                              ].business_set.map((subItem, idx) => {
+                                return (
+                                  <CheckItem>
+                                    <input type="checkbox" />
+                                    <Font16>{subItem.category}</Font16>
+                                  </CheckItem>
+                                );
+                              })}
+                            </CheckItemBox>
+                          </ContentBox>
+                        </CategoryBox>
+                      </>
+                    );
+                  }}
+                ></InnerBox>
+              )}
+            </>
+          );
+        })}
+        <Font18 style={{ textAlign: "left", width: "100%", marginBottom: 16 }}>
+          카테고리
+        </Font18>
         <InnerBox
           outerStyles={outerStyles}
           innerStyles={innerStyles}
           Content={() => {
             return (
               <CategoryBox>
-                {test.map((item, idx) => {
+                {Category.maincategory_list.map((item, idx) => {
                   return (
                     <ContentBox>
                       <HeaderText>
@@ -200,20 +232,75 @@ class Category extends Component {
 
                       <CheckItemBox>
                         <CheckItem>
-                          <input type="checkbox" />
+                          <input
+                            type="checkbox"
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                {
+                                  item.category_set.map((subItem, idx) => {
+                                    Category.add_selected(
+                                      "business",
+                                      subItem.id
+                                    );
+                                  });
+                                }
+                              } else {
+                                item.category_set.map((subItem, idx) => {
+                                  Category.remove_selected(
+                                    "business",
+                                    subItem.id
+                                  );
+                                });
+                              }
+                              console.log(Category.business_selected);
+                            }}
+                          />
                           <Font16>전체</Font16>
                         </CheckItem>
                         <CheckItem></CheckItem>
                         <CheckItem></CheckItem>
-                        {item.category_set.map((item, idx) => {
+                        {item.category_set.map((subItem, idx) => {
                           return (
                             // <CheckItem for={item.id}>
                             //   <input type="checkbox" id={item.id} />
                             //   <Font16>{item.category}</Font16>
                             // </CheckItem>
                             <CheckItem>
-                              <input type="checkbox" />
-                              <Font16>{item.category}</Font16>
+                              {Category.business_selected.indexOf(subItem.id) >
+                              -1
+                                ? "true"
+                                : "false"}
+                              <TestCheckBox />
+                              {/* <input
+                                type="checkbox"
+                                onChange={(e) => {
+                                  // this.setState({ f: 3 });
+                                  // this.forceUpdate();
+                                  console.log(
+                                    Category.business_selected.indexOf(
+                                      subItem.id
+                                    ) > -1
+                                  );
+                                  if (e.target.checked) {
+                                    Category.add_selected(
+                                      "business",
+                                      subItem.id
+                                    );
+                                  } else {
+                                    Category.remove_selected(
+                                      "business",
+                                      subItem.id
+                                    );
+                                  }
+                                  console.log(this);
+                                }}
+                                checked={
+                                  Category.business_selected.indexOf(
+                                    subItem.id
+                                  ) > -1
+                                }
+                              /> */}
+                              <Font16>{subItem.category}</Font16>
                             </CheckItem>
                           );
                         })}
@@ -282,4 +369,6 @@ const Font16 = styled(Content.FontSize16)`
   letter-spacing: -0.4px;
   text-align: left;
   color: #1e2222;
+
+  overflow-x: auto;
 `;
