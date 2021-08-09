@@ -30,8 +30,8 @@ export default MobileBanner5Container;
 const BackgroundContainer = styled(Background)`
   display: flex;
   justify-content: center;
-  height: 217px;
   background-image: url(${background});
+  height: 217px;
 `;
 
 const Container = styled.div`
@@ -67,7 +67,7 @@ const RequestButton = styled.button`
   height: 42px;
   object-fit: contain;
   border-radius: 21px;
-  border: solid 1px #0933b3;
+  border: solid 2px #0933b3;
   margin-top: 28px;
   background: none;
   cursor: pointer;

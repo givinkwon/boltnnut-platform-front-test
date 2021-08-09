@@ -106,27 +106,6 @@ const Body = styled.div`
   font-family: NotoSansCJKkr;
 `;
 
-const BodyBox = styled.div`
-  width: 100%;
-  margin-top: 32px;
-  .MuiInputBase-root {
-    height: 42px;
-  }
-`;
-
-const BodySubBox = styled.div`
-  width: 50%;
-`;
-
-const BodyBoxTitle = styled.div`
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.89;
-  letter-spacing: -0.45px;
-  color: #1e2222;
-  margin-bottom: 10px;
-`;
-
 const Aside = styled.div`
   width: 230px;
   font-family: NotoSansCJKkr;
@@ -156,20 +135,3 @@ const Main = styled.div`
   padding-left: 76px;
   font-family: NotoSansCJKkr;
 `;
-
-const MainBox = styled.div`
-  width: 894px;
-  border-radius: 15px;
-  border: solid 1px #e1e2e4;
-  background-color: #fff;
-  padding: 40px 51px 80px;
-`;
-
-const MainBoxHeader = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const MainBoxBody = styled.div``;

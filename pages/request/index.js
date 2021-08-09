@@ -15,7 +15,6 @@ const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 @inject(
   "Request",
   "Partner",
-  "ManufactureProcess",
   "Auth",
   "Schedule",
 )
@@ -27,8 +26,7 @@ class Request extends React.Component {
     const {Partner, Request} = this.props;
     this.props.Partner.init();
     console.log(Request.selected_partner)
-  
-    this.props.ManufactureProcess.init();
+
     this.props.Schedule.init();
 
     //창 크기

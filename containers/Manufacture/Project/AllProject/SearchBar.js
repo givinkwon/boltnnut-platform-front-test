@@ -10,7 +10,7 @@ import { toJS } from "mobx";
 
 import { PRIMARY2 } from "static/style";
 
-@inject("Auth", "Project", "Request", "ManufactureProcess", "Producer", "Category")
+@inject("Auth", "Project")
 @observer
 class SearchBarContainer extends React.Component {
   state = {

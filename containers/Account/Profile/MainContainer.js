@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import Button from "components/Button";
+
 import SelectCard from "./SelectCard";
 import Authentication from "./Authentication";
 import Explaination from "./Explaination";
@@ -134,7 +134,6 @@ class MainContainer extends React.Component {
             image="/static/images/signup/process.svg"
           />
         </div>
-
         <Authentication></Authentication>
         <Explaination info_company={Profile.info_company}></Explaination>
         <Product histories={Profile.histories}></Product>

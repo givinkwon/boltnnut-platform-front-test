@@ -10,7 +10,7 @@ import { toJS } from "mobx";
 const profile = "/static/images/project/user.svg";
 const partnerbadge = "/static/images/project/partnerbadge.svg";
 
-@inject("Request", "ManufactureProcess", "Auth", "Project", "Answer")
+@inject("Request","Auth", "Project", "Answer")
 @observer
 class ContentSub extends React.Component {
   state = {
@@ -39,13 +39,7 @@ class ContentSub extends React.Component {
   }
 
   changeProject = () => {
-    const { ManufactureProcess } = this.props;
-    // console.log(Request.newIndex);
-
     Router.push("/request");
-    this.props.ManufactureProcess.changeProject = true;
-    this.props.ManufactureProcess.checkFileUpload = true;
-    console.log(ManufactureProcess.checkFileUpload);
   };
 
   exitProject = () => {
@@ -71,10 +65,12 @@ class ContentSub extends React.Component {
   };
 
   render() {
-    const { Auth, Project } = this.props;
+    const { Auth, Project, user } = this.props;
+
     return (
       <ContainerSub>
-        {this.props.user === "client" &&
+        {/* 클라이언트일 때 + 본인이 만든 프로젝트일 때 */}
+        {user === "client" &&
         Project.projectDetailData.request_set[0].client ==
           Auth.logged_in_client.id ? (
           <>
@@ -86,9 +82,6 @@ class ContentSub extends React.Component {
               onClick={async () => {
                 console.log("click!");
                 this.changeProject();
-                // this.props.ManufactureProcess.changeProject();
-                // console.log(this.props.ManufactureProcess.changeProject);
-                // Router.push("/request")
               }}
             >
               <Font18
@@ -116,7 +109,7 @@ class ContentSub extends React.Component {
             </Box3>
           </>
         ) : (
-          this.props.user === "partner" && (
+          user === "partner" && (
             <>
               {!this.state.isAnswered && (
                 <Box3
@@ -125,7 +118,7 @@ class ContentSub extends React.Component {
                   onMouseOver={() => this.activeHandler("activeOne")}
                   onMouseOut={() => this.activeHandler("activeOne")}
                   onClick={async () => {
-                    Project.set_step_index(0)
+                    Router.push('/chatting')
                   }}
                 >
                   <Font18

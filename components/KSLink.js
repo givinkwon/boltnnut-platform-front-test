@@ -16,9 +16,9 @@ class KSLink extends React.Component {
         {/* <a href={this.props.Common.makeUrl(this.props.url)}> */}
         <div
           onClick={() => {
-            if(step_index){
+            
               Project.set_step_index(step_index)
-              }
+              
               Router.push(`/${this.props.url}`);
           }}
           style={{

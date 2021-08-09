@@ -133,7 +133,7 @@ const mobileCustomStyles = {
   },
 };
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
+@inject("Auth", "Project", "Request", "Partner")
 @observer
 class MobileSearchFilterConatiner extends React.Component {
   state = {

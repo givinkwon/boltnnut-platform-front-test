@@ -375,28 +375,18 @@ class RequestModal extends React.Component {
         formData = new FormData();
         formData.append("request_state", "업체수배");
         formData.append("name", Partner.detailRequestTitle);
-        // 선택한 날짜가 없으면, 기본 날짜 추가하기
-        // if (Schedule.clickDay) {
-        //   formData.append("deadline", Schedule.clickDay + " 09:00");
-        // } else {
-        //   formData.append("deadline", "2020-11-11 11:11");
-        // }
 
         formData.append("deadline", "2020-11-11 11:11");
         formData.append("deadline_state", "납기일미정");
-        //ManufactureProcess.date_undefined
         formData.append("order_request_open", Partner.detailRequestInfo);
-        // formData.append("order_request_close", ManufactureProcess.requestComment2);
-        //formData.append("file_open", ManufactureProcess.openFileArray[0]);
+
 
         for (let i = 0; i < Partner.fileArray.length; i++) {
           console.log(Partner.fileArray[i]);
           formData.append(`file_open`, Partner.fileArray[i]);
         }
 
-        // for (var i = 0; i < ManufactureProcess.privateFileArray.length; i++) {
-        //   formData.append(`file_close`, ManufactureProcess.privateFileArray[i]);
-        // }
+
         if (maxValue > 0) {
           formData.append("price", maxValue);
         }
@@ -430,12 +420,10 @@ class RequestModal extends React.Component {
         RequestAPI.create(RequestReq)
           .then((res) => {
             console.log("create: ", res);
-            // ManufactureProcess.nonDrawingProjectSubmitLoading = true;
-            // this.props.Request.newIndex = 1;
-            // MyDataLayerPush({ event: "request_noneDrawing" });
+
           })
           .catch((e) => {
-            // ManufactureProcess.projectSubmitLoading = true;
+
             console.log(e);
             console.log(e.response);
           });

@@ -3,11 +3,11 @@ import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
 import Router from "next/router";
-import InputComponent from "components/Input";
 import { inject, observer } from "mobx-react";
 
 const signupdot = "/static/images/signupdot.svg";
 const signupkakao = "/static/images/signupkakao.svg";
+const success = "/static/images/success.svg";
 const viewterms = "/static/images/viewterms.svg";
 
 const AgreeContent = [
@@ -17,51 +17,24 @@ const AgreeContent = [
   { content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 },
 ];
 
-@inject("Auth")
+@inject("Auth", "Signup")
 @observer
 class PartnerSignupContainer extends React.Component {
-  // 전체동의 핸들러 함수
-  fullConsent = () => {
-    const { Auth } = this.props;
-    if (Auth.allCheckState === false) {
-      Auth.allCheckState = true;
+  componentDidMount() {
+    this.props.Auth.getPathData();
+    this.props.Auth.getBusinessData();
+    window.addEventListener("resize", this.updateDimensions);
+    this.setState({ ...this.state, width: window.innerWidth });
+    // this.props.Signup.passwordInvalidhandler();
+  }
 
-      Auth.checkboxState.forEach((item, idx) => {
-        const checkbox = Auth.checkboxState;
-        checkbox[idx] = true;
-        Auth.checkboxState = checkbox;
-        console.log("item : ", Auth.checkboxState);
-      });
-    } else {
-      Auth.allCheckState = false;
-
-      Auth.checkboxState.forEach((item, idx) => {
-        const checkbox = Auth.checkboxState;
-        checkbox[idx] = false;
-        Auth.checkboxState = checkbox;
-        console.log("item : ", Auth.checkboxState);
-      });
-    }
-  };
-
-  // 가입하기 submit 함수
-  signupSubmit = () => {
-    const { Auth } = this.props;
-    const checkboxArr = Auth.checkboxState;
-
-    if (
-      checkboxArr[0] === true &&
-      checkboxArr[1] === true &&
-      checkboxArr[2] === true
-    ) {
-      Auth.signup();
-    } else {
-      alert("필수 이용약관에 동의해 주세요");
-    }
-  };
+  componentWillUnmount() {
+    const { Signup } = this.props;
+    // Signup.reset();
+  }
 
   render() {
-    const { Auth } = this.props;
+    const { Signup } = this.props;
 
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -74,9 +47,7 @@ class PartnerSignupContainer extends React.Component {
 
           <LineDivContainer>
             <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>
-              SNS 간편 회원가입
-            </Title14>
+            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 회원가입</Title14>
             <LineDiv />
           </LineDivContainer>
 
@@ -97,9 +68,11 @@ class PartnerSignupContainer extends React.Component {
             <EmailInnerContainer>
               <CustomInput
                 placeholder="boltnnut@gmail.com"
-                onChange={Auth.setEmail}
-                value={Auth.email}
-                style={{ width: "437px", marginTop: "0px" }}
+                onChange={(e) => {
+                  Signup.setEmail(e.currentTarget.value);
+                }}
+                style={{ width: "427px" }}
+                active={Signup.emailinputstate}
               />
 
               <AuthenticateBtn>
@@ -113,11 +86,14 @@ class PartnerSignupContainer extends React.Component {
             <Title18>비밀번호</Title18>
             <CustomInput
               placeholder="비밀번호를 입력해 주세요."
-              onChange={Auth.setPassword}
-              value={Auth.password}
               type="password"
-              style={{ marginTop: "0px" }}
+              onChange={(e) => {
+                Signup.setPassword(e.currentTarget.value);
+                Signup.passwordInvalidhandler();
+              }}
+              active={Signup.passwordinputstate}
             />
+            <PasswordInvalidImgBox src={success} active={Signup.password} />
           </InputInnerBox>
 
           {/* password confirm */}
@@ -125,11 +101,15 @@ class PartnerSignupContainer extends React.Component {
             <Title18>비밀번호 확인</Title18>
             <CustomInput
               placeholder="비밀번호를 한 번 더 입력해 주세요."
-              onChange={Auth.setPassword2}
-              value={Auth.password2}
               type="password"
-              style={{ marginTop: "0px" }}
+              onChange={(e) => {
+                Signup.setPassword2(e.currentTarget.value);
+                Signup.passwordInvalidhandler();
+              }}
+              active={Signup.password2inputstate}
             />
+            <InvalidImgBox src={success} active={Signup.passwordInvalid} />
+            {Signup.password2 && <InvalidTitle14 active={Signup.passwordInvalid}>비밀번호가 일치하지 않습니다.</InvalidTitle14>}
           </InputInnerBox>
 
           {/* name */}
@@ -137,22 +117,30 @@ class PartnerSignupContainer extends React.Component {
             <Title18>이름</Title18>
             <CustomInput
               placeholder="이름을 입력해 주세요."
-              onChange={Auth.setRealName}
-              value={Auth.realName}
-              style={{ marginTop: "0px" }}
+              onChange={(e) => {
+                Signup.setRealName(e.currentTarget.value);
+                Signup.textInvalid("name", e.currentTarget.value);
+              }}
+              active={Signup.realNameInputState}
             />
+            <InvalidImgBox src={success} active={Signup.realNameInvalid} />
+            {Signup.realName && <InvalidTitle14 active={Signup.realNameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
           </InputInnerBox>
 
           {/* phone number */}
           <InputInnerBox>
             <Title18>휴대전화</Title18>
             <CustomInput
-              placeholder="- 없이 입력해 주세요"
-              onChange={Auth.setPhone}
-              value={Auth.phone}
+              placeholder="- 없이 숫자만 입력해 주세요. (최대 11자리)"
+              onChange={(e) => {
+                Signup.setPhone(e.currentTarget.value);
+                Signup.phoneInvalidhandler();
+              }}
               type="tel"
-              style={{ marginTop: "0px" }}
+              active={Signup.phoneInputState}
             />
+            <InvalidImgBox src={success} active={Signup.phoneInvalid} />
+            {Signup.phone && <InvalidTitle14 active={Signup.phoneInvalid}>- 없이 숫자만 입력해주세요. (최대 11자리)</InvalidTitle14>}
           </InputInnerBox>
 
           {/* company name */}
@@ -160,10 +148,14 @@ class PartnerSignupContainer extends React.Component {
             <Title18>상호명</Title18>
             <CustomInput
               placeholder="근무하고 계신 회사명을 입력해주세요."
-              onChange={Auth.setCompanyName}
-              value={Auth.company_name}
-              style={{ marginTop: "0px" }}
+              onChange={(e) => {
+                Signup.setCompanyName(e.currentTarget.value);
+                Signup.textInvalid("companyName", e.currentTarget.value);
+              }}
+              active={Signup.company_nameInputState}
             />
+            <InvalidImgBox src={success} active={Signup.company_nameInvalid} />
+            {Signup.company_name && <InvalidTitle14 active={Signup.company_nameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
           </InputInnerBox>
 
           {/* agree */}
@@ -174,9 +166,9 @@ class PartnerSignupContainer extends React.Component {
               <CustomCheckBox
                 type="checkbox"
                 onChange={(e) => {
-                  this.setState({ allCheckState: e.currentTarget.checked });
+                  Signup.allCheckState = e.currentTarget.checked;
                 }}
-                onClick={() => this.fullConsent()}
+                onClick={() => Signup.fullConsent()}
               />
               <Title15>전체 동의합니다.</Title15>
             </AllAgreeInnerBox>
@@ -188,25 +180,22 @@ class PartnerSignupContainer extends React.Component {
                 <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
                   <CustomCheckBox
                     type="checkbox"
-                    checked={Auth.checkboxState[idx]}
+                    checked={Signup.checkboxState[idx]}
                     onChange={(e) => {
-                      const check = Auth.checkboxState;
+                      const check = Signup.checkboxState;
                       check[idx] = e.currentTarget.checked;
-
-                      Auth.checkboxState = check;
+                      Signup.checkboxState = check;
                     }}
                   />
-                  <Title15>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
-                    {item.essential}
-                  </Title14>
+                  <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
             })}
           </AgreeContainer>
 
-          <SubmitButton onClick={() => this.signupSubmit()}>
+          <SubmitButton onClick={() => Signup.signupSubmit()}>
             <ButtonText>가입하기</ButtonText>
           </SubmitButton>
         </Container>
@@ -298,14 +287,21 @@ const KakaoImgBox = styled.div`
   left: 0;
 `;
 
-const CustomInput = styled(InputComponent)`
+const CustomInput = styled.input`
   border-radius: 3px;
-  border: solid 1px #c7c7c7;
+  border: ${(props) => (props.active ? "1px solid #c7c7c7" : "1px solid #e53c38")};
   padding-left: 10px;
-  width: 588px;
+  width: 578px;
+  height: 42px;
+  font-size: 16px;
 
   ::placeholder {
     color: #c7c7c7;
+  }
+
+  :focus {
+    background-color: #edf4fe;
+    outline: none;
   }
 `;
 
@@ -380,14 +376,6 @@ const KakaoSignupInnerBox = styled.div`
   position: relative;
 `;
 
-const EmailContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  margin-top: 80px;
-  width: 600px;
-`;
-
 const EmailInnerContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -396,6 +384,7 @@ const EmailInnerContainer = styled.div`
 `;
 
 const InputInnerBox = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -417,4 +406,27 @@ const AllAgreeInnerBox = styled.div`
 const AgreeInnerBox = styled.div`
   display: inline-flex;
   align-items: center;
+`;
+
+const PasswordInvalidImgBox = styled.img`
+  display: ${(props) => (props.active !== "" ? "inline-block" : "none")};
+  position: absolute;
+  right: 0;
+  bottom: 18%;
+  margin-right: 16px;
+`;
+
+const InvalidImgBox = styled.img`
+  display: ${(props) => (props.active ? "block" : "none")};
+  position: absolute;
+  right: 0;
+  bottom: 18%;
+  margin-right: 16px;
+`;
+
+const InvalidTitle14 = styled(Title.FontSize14)`
+  color: #e53c38;
+  margin-top: 10px;
+  font-weight: normal;
+  display: ${(props) => (props.active ? "none" : "block")};
 `;

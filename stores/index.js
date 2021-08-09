@@ -6,7 +6,6 @@ import Offered from "./Manufacture/Offered";
 import Profile from "./Account/Profile";
 import Notice from "./Common/Notice";
 import Magazine from "./Common/Magazine";
-import ManufactureProcess from "./Manufacture/ManufactureProcess";
 import Project from "./Manufacture/Project";
 import Chat from "./Manufacture/Chat";
 import Common from "./Common/Common";
@@ -29,7 +28,7 @@ export default {
   Offered,
   Notice,
   Magazine,
-  ManufactureProcess,
+
   Project,
   Chat,
   Common,

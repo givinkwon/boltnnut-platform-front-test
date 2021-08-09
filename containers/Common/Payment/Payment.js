@@ -64,7 +64,7 @@ const getNumber = [
   { label: "9", value: 9 },
   { label: "직접 입력", value: 0 },
 ];
-@inject("Request", "Proposal", "Payment", "ManufactureProcess")
+@inject("Request", "Proposal", "Payment")
 @observer
 class PaymentBox extends Component {
   state = {
@@ -79,13 +79,13 @@ class PaymentBox extends Component {
     }
   };
   PayFunction() {
-    const { Payment, Request, ManufactureProcess, Proposal } = this.props;
+    const { Payment, Request, Proposal } = this.props;
     const estimateData = Proposal.estimateData;
-    Payment.setProductPrice(
-      Math.round(ManufactureProcess.MinPrice / 100) *
-        100 *
-        Request.numCount.value
-    );
+    // Payment.setProductPrice(
+    //   Math.round(ManufactureProcess.MinPrice / 100) *
+    //     100 *
+    //     Request.numCount.value
+    // );
     Payment.setProjectName(estimateData.projectTitle);
     Payment.setCountNumber(Request.numCount);
     Payment.setPhoneNumber(
@@ -107,7 +107,7 @@ class PaymentBox extends Component {
     return false;
   };
   render() {
-    const { Proposal, Request, ManufactureProcess, Payment } = this.props;
+    const { Proposal, Request, Payment } = this.props;
     const estimateData = Proposal.estimateData;
     console.log(Payment);
     console.log(estimateData);
@@ -154,14 +154,14 @@ class PaymentBox extends Component {
             )}
           </div>
           <CalText>
-            {Request.numCount
+            {/* {Request.numCount
               ? (
                   Math.round(ManufactureProcess.MinPrice / 100) *
                   100 *
                   Request.numCount.value
                 ).toLocaleString("ko-KR")
               : 0}
-            원
+            원 */}
           </CalText>
         </div>
         <div
@@ -189,14 +189,14 @@ class PaymentBox extends Component {
               총 수량 {Request.numCount ? Request.numCount.value : 0}개
             </MoneyText>
             <Allmoney>
-              {Request.numCount
+              {/* {Request.numCount
                 ? (
                     Math.round(ManufactureProcess.MinPrice / 100) *
                     100 *
                     Request.numCount.value
                   ).toLocaleString("ko-KR")
                 : 0}
-              원
+              원 */}
             </Allmoney>
           </div>
           <ModalQuestion OnOff={this.state.display}>

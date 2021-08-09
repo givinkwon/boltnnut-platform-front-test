@@ -156,10 +156,10 @@ class Nav extends React.Component {
                           </Font16>
                         </RouterWrapper>
                       </NavLink>
-                      <NavLink active={url.indexOf("project") > -1}>
+                      <NavLink active={url.indexOf("request") > -1}>
                         <RouterWrapper>
                           <Font16>
-                            <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                            <KSLink url={"request"} content={"프로젝트 의뢰"} />
                           </Font16>
                         </RouterWrapper>
 
@@ -215,7 +215,7 @@ class Nav extends React.Component {
                       <NavLink active={url.indexOf("project") > -1}>
                         <RouterWrapper>
                           <Font16>
-                            <KSLink url={"project"} content={"프로젝트 의뢰"} />
+                            <KSLink url={"request"} content={"프로젝트 의뢰"} />
                           </Font16>
                         </RouterWrapper>
 
@@ -233,7 +233,6 @@ class Nav extends React.Component {
                             <KSLink
                               step_index={0}
                               url={"project"}
-                              onClick={Request.set_request_type}
                               FontContent={() => {
                                 return <Font14>내 프로젝트</Font14>;
                               }}
@@ -267,7 +266,7 @@ class Nav extends React.Component {
                     <NavLink active={url.indexOf("project") > -1}>
                       <RouterWrapper>
                         <KSLink
-                          url={"project"}
+                          url={"request"}
                           FontContent={() => {
                             return <Font16>프로젝트 의뢰</Font16>;
                           }}
@@ -845,7 +844,8 @@ const NavBox = styled.div`
   /* height: 60px; */
   width: 100%;
   background-color: ${WHITE};
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.06);
+  // box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   display: inline-flex;
   justify-content: center;
 `;

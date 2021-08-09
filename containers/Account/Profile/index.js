@@ -8,7 +8,7 @@ import MainContainer from "./MainContainer";
 import BasicInfoModify from "AccountSetting/BasicInfoModify";
 import SubBox from "Bookmark/SubBox";
 import TabContainer from "Profile/Tab";
-
+import Buttonv1 from "components/Buttonv1";
 import * as Text from "components/Text";
 
 const perfection = "static/images/perfection_bar.svg";
@@ -42,39 +42,43 @@ class ProfileContainer extends React.Component {
                     <TabContainer />
                   </Fragment>
                 </AsideBody>
-                <Perfection>
-                  <PerfectionHeader>
-                    <span style={{ marginBottom: 27 }}>프로필 완성도</span>
-                    <div
+                {Profile.profileTabIdx === 1 ? (
+                  <Perfection>
+                    <PerfectionHeader>
+                      <span style={{ marginBottom: 27 }}>프로필 완성도</span>
+                      <div
+                        style={{
+                          fontSize: 20,
+                          letterSpacing: -0.5,
+                          color: "#0933b3",
+                          marginLeft: 12,
+                        }}
+                      >
+                        30%
+                      </div>
+                    </PerfectionHeader>
+                    <Bar>
+                      <img src={perfection} style={{ position: "relative" }} />
+                      <img
+                        src={perfection_blue}
+                        style={{ position: "absolute", top: 472 }}
+                      />
+                    </Bar>
+                    <span
                       style={{
-                        fontSize: 20,
-                        letterSpacing: -0.5,
-                        color: "#0933b3",
-                        marginLeft: 12,
+                        fontSize: 16,
+                        letterSpacing: -0.4,
+                        color: "#555963",
+                        lineHeight: 1.5,
                       }}
                     >
-                      30%
-                    </div>
-                  </PerfectionHeader>
-                  <Bar>
-                    <img src={perfection} style={{ position: "relative" }} />
-                    <img
-                      src={perfection_blue}
-                      style={{ position: "absolute", top: 472 }}
-                    />
-                  </Bar>
-                  <span
-                    style={{
-                      fontSize: 16,
-                      letterSpacing: -0.4,
-                      color: "#555963",
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    더욱 완성도 높은 프로필을 위해 <br />
-                    업체 정보를 채워보세요!
-                  </span>
-                </Perfection>
+                      더욱 완성도 높은 프로필을 위해 <br />
+                      업체 정보를 채워보세요!
+                    </span>
+                  </Perfection>
+                ) : (
+                  <></>
+                )}
               </Aside>
               <Main>
                 {Profile.profileTabIdx === 1 && <MainContainer />}
@@ -165,6 +169,7 @@ const Perfection = styled.div`
 `;
 
 const PerfectionHeader = styled.div`
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   font-size: 18px;

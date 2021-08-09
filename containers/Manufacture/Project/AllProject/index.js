@@ -37,7 +37,7 @@ class AllProject extends React.Component {
     console.log("did mount");
 
     await Auth.checkLogin();
-    Project.getProjectByPrice();
+    Project.getProject("allproject");
   }
 
   render() {

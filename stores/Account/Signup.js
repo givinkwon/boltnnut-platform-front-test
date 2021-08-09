@@ -250,15 +250,15 @@ class Signup {
   };
 
   // 비밀번호 확인 일치 함수
-  @observable emailinputstate = true;
-  @observable passwordInvalid = false;
-  @observable passwordinputstate = true;
-  @observable password2inputstate = true;
+  @observable emailinputstate = true; // 이메일 입력 상태
+  @observable passwordInvalid = false; // 비밀번호 유효성 여부 상태
+  @observable passwordinputstate = true; // 비밀번호 인풋 테두리 유효성 여부 상태
+  @observable password2inputstate = true; // 비밀번호 확인 유효성 여부 상태
 
   @action passwordInvalidhandler = () => {
     if (this.password === this.password2) {
-      this.passwordInvalid = true;
-      this.password2inputstate = true;
+      this.passwordInvalid = true; // 비밀번호 확인 유효성 상태 변경
+      this.password2inputstate = true; // 비밀번호 확인 인풋 테두리 상태 변경
     } else {
       this.passwordInvalid = false;
       this.password2inputstate = false;
@@ -266,20 +266,22 @@ class Signup {
   };
 
   // 특수문자 여부 유효성 검사(특수문자 포함X)
-  @observable realNameInvalid = false;
-  @observable realNameInputState = true;
-  @observable company_nameInvalid = false;
-  @observable company_nameInputState = true;
-  @observable titleInvalid = false;
-  @observable titleInputState = true;
+  @observable realNameInvalid = false; // 이름 유효성 여부 상태
+  @observable realNameInputState = true; // 이름 인풋 테두리 유효성 여부 상태
+  @observable company_nameInvalid = false; // 회사이름 유효성 여부 상태
+  @observable company_nameInputState = true; // 회사이름 인풋 테두리 유효성 여부 상태
+  @observable titleInvalid = false; // 직급 유효성 여부 상태
+  @observable titleInputState = true; // 직급 인풋 테두리 유효성 여부 상태
 
   @action textInvalid = (type, word) => {
+    // 첫 번째 인자로 받는 type에 따라 실행 함수가 달라짐
+    // word의 유효성 상태와 인풋 유효성 상태를 조건에 따라 같이 변경
     const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
     switch (type) {
       case "name":
         if (regex.test(word)) {
-          this.realNameInvalid = true;
-          this.realNameInputState = true;
+          this.realNameInvalid = true; // 이름 유효성 여부 상태 변경
+          this.realNameInputState = true; // 이름 인풋 테두리 유효성 상태 변경
         } else {
           this.realNameInvalid = false;
           this.realNameInputState = false;
@@ -309,10 +311,10 @@ class Signup {
   };
 
   // 전화번호 유효성 검사
-  @observable phoneInvalid = false;
-  @observable phoneInputState = true;
+  @observable phoneInvalid = false; // 휴대전화 유효성 여부 상태
+  @observable phoneInputState = true; // 휴대전화 인풋 테두리 유효성 상태
   @action phoneInvalidhandler = () => {
-    const regex = /^[0-9]{9,12}$/;
+    const regex = /^[0-9]{9,11}$/;
 
     if (regex.test(this.phone)) {
       this.phoneInvalid = true;
@@ -320,6 +322,19 @@ class Signup {
     } else {
       this.phoneInvalid = false;
       this.phoneInputState = false;
+    }
+  };
+
+  // 개인체크 박스 true일 경우 "개인" 텍스트 자동입력 함수
+  @observable individual = "";
+  @observable individualState = false;
+  @action individualhandler = (state) => {
+    if (state) {
+      this.individualState = false;
+      this.individual = "";
+    } else {
+      this.individualState = true;
+      this.individual = "개인";
     }
   };
 }

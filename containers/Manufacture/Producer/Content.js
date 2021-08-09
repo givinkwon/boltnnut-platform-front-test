@@ -203,7 +203,6 @@ class ManufacturerContentContainer extends React.Component {
                           Partner.fileArray.splice(idx, 1);
                           const inputFile =
                             document.getElementById("inputFile");
-                          console.log(toJS(ManufactureProcess.openFileArray));
                           inputFile.innerHTML = "";
 
                           if (Partner.fileArray.length === 0) {
@@ -282,7 +281,7 @@ class ManufacturerContentContainer extends React.Component {
                             onClick={async () => {
                               console.log(Auth);
                               if (Auth.logged_in_client) {
-                                await Project.getPage(Auth.logged_in_client.id);
+                                await Project.getProject("allproject", Auth.logged_in_client.id);
                               }
                               Partner.pushToDetail(item, idx);
                             }}
@@ -380,7 +379,7 @@ class ManufacturerContentContainer extends React.Component {
                                 src={this.state.recent_partner_dic[name]}
                                 onClick={async () => {
                                   if (Auth.logged_in_client) {
-                                    await Project.getPage(
+                                    await Project.getProject("allproject", 
                                       Auth.logged_in_client.id
                                     );
                                   }

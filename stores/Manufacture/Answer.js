@@ -300,7 +300,6 @@ class Answer {
         }
       });
   };
-
 }
 
 export default new Answer();
