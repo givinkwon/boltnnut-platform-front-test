@@ -89,7 +89,7 @@ class ProjectCardContainer extends React.Component {
       <Background>
         <Container style={{ width: "95%" }}>
           <MainContainer>
-            <ContentBox style={{ width: 100, alignItems: "center" }}>
+            <ContentBox style={{ width: 110, alignItems: "center" }}>
               <Title12 style={{ width: 50 }}>{data.status}</Title12>
               <img src="/static/images/new.svg" />
             </ContentBox>
@@ -133,7 +133,9 @@ class ProjectCardContainer extends React.Component {
             </ContentBox>
 
             <DescTitle14>
-              {content.length > 70 ? content.slice(0, 70) + "..." : content}
+              {content && content.length > 70
+                ? content.substring(0, 70) + "..."
+                : content}
             </DescTitle14>
           </MainContainer>
 
