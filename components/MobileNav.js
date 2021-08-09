@@ -122,10 +122,7 @@ class MobileNav extends React.Component {
       <NavBox>
         {is_open && (
           <Modal>
-            <ProfileMenu
-              width={this.props.width}
-              onClick={() => this.setState({ is_open: false })}
-            >
+            <ProfileMenu width={this.props.width} onClick={() => this.setState({ is_open: false })}>
               <ModalHeader>
                 <div style={{ marginBottom: 50, width: "100%" }}>
                   <BoltLogo>
@@ -170,16 +167,10 @@ class MobileNav extends React.Component {
               </ModalHeader>
               <>
                 <ModalContent>
-                  {Auth.logged_in_partner ? (
-                    <KSLink url={"project"} content={"프로젝트 관리"} />
-                  ) : (
-                    <KSLink url={"producer"} content={"제조사 찾기"} />
-                  )}
+                  {Auth.logged_in_partner ? <KSLink url={"project"} content={"프로젝트 관리"} /> : <KSLink url={"producer"} content={"제조사 찾기"} />}
                   <KSLink url={"magazine"} content={"제조 인사이트"} />
 
-                  {Auth.logged_in_user && (
-                    <KSLink url={"chatting"} content={"채팅하기"} />
-                  )}
+                  {Auth.logged_in_user && <KSLink url={"chatting"} content={"채팅하기"} />}
                 </ModalContent>
               </>
               <ModalContent2>
@@ -223,13 +214,9 @@ class MobileNav extends React.Component {
         )}
         <Container>
           <NavWrap2>
-            {this.props.src ===
-            "/static/images/components/MobileNav/MobileLogo.svg" ? (
+            {this.props.src === "/static/images/components/MobileNav/MobileLogo.svg" ? (
               <BoltLogo>
-                <Logo
-                  src={this.props.src}
-                  onClick={() => (location.href = Common.makeUrl(""))}
-                />
+                <Logo src={this.props.src} onClick={() => (location.href = Common.makeUrl(""))} />
               </BoltLogo>
             ) : (
               <BoltLogo>
@@ -264,8 +251,7 @@ const ProfileMenu = styled.div`
   z-index: 10000;
   top: 0;
   right: 0;
-  // transform: translate3d(${(props) =>
-    props.width ? props.width - 156 : 10}px, calc(55%), 0);
+  // transform: translate3d(${(props) => (props.width ? props.width - 156 : 10)}px, calc(55%), 0);
   display: flex;
   flex-direction: column;
   }

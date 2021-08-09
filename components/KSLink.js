@@ -2,17 +2,42 @@ import React from "react";
 import styled from "styled-components";
 import { inject, observer } from "mobx-react";
 import * as Content from "./Content";
-
-@inject("Common")
+import Router from "next/router";
+@inject("Common", "Project")
 @observer
 class KSLink extends React.Component {
+
+
   render() {
+    const { FontContent, step_index, Project } = this.props;
+
     return (
       <>
-        <a href={this.props.Common.makeUrl(this.props.url)}>
+        {/* <a href={this.props.Common.makeUrl(this.props.url)}> */}
+        <div
+          onClick={() => {
+            
+              Project.set_step_index(step_index)
+              
+              Router.push(`/${this.props.url}`);
+          }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          {/* <Tttt></Tttt> */}
+
+          {FontContent && <FontContent />}
           {this.props.content}
           <Logo src={this.props.logoImg} />
-        </a>
+          <Image src={this.props.Image} />
+        </div>
+
+        {/* </a> */}
       </>
     );
   }
@@ -25,3 +50,5 @@ const Logo = styled.img`
   width: auto;
   height: auto;
 `;
+
+const Image = styled.img``;

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68">
+    <defs>
+        <style>
+            .cls-3,.cls-5{fill:none}.cls-3,.cls-4,.cls-5{stroke-miterlimit:10}.cls-3,.cls-4{stroke:#1e2222}.cls-4{fill:#a4aab4}.cls-5{stroke:#0933b3;stroke-linecap:round;stroke-width:1.5px}
+        </style>
+    </defs>
+    <g id="그룹_5930" transform="translate(-645 -577)">
+        <path id="사각형_7221" fill="none" d="M0 0H68V68H0z" transform="translate(645 577)"/>
+        <g id="그룹_5929" transform="translate(11.094 -3.111)">
+            <path id="패스_8573" d="M495.53 249.167a20.544 20.544 0 1 0-37.56 11.511l6.951 11.674h20.935l6.15-11.674a20.444 20.444 0 0 0 3.524-11.511z" class="cls-3" transform="translate(192.948 355.598)"/>
+            <path id="패스_8574" d="M482.1 280.054h-14.29l-2.06-4.65h18.419z" class="cls-4" transform="translate(192.948 355.598)"/>
+            <path id="패스_8575" d="M467.866 282.1v4.2l7.092 3.1 7.092-3.1v-4.2z" class="cls-4" transform="translate(192.948 355.598)"/>
+            <path id="패스_2276" d="M486.663 247.746a11.922 11.922 0 0 0-1.488-3.592l1.267-2.441-2.711-2.713-2.435 1.27a11.947 11.947 0 0 0-3.59-1.488l-.832-2.621h-3.834l-.824 2.621a11.953 11.953 0 0 0-3.591 1.488l-2.442-1.267-2.71 2.71 1.269 2.436a11.973 11.973 0 0 0-1.488 3.59l-2.621.832v3.834l2.621.824a11.943 11.943 0 0 0 1.488 3.591l-1.266 2.442 2.709 2.709 2.437-1.269a11.961 11.961 0 0 0 3.589 1.485l.833 2.624h3.833l.826-2.623a11.942 11.942 0 0 0 3.591-1.483l2.441 1.266 2.71-2.711-1.27-2.436a11.921 11.921 0 0 0 1.488-3.59l2.621-.833v-3.831zm-11.7 9.41a6.665 6.665 0 0 1-6.665-6.665 6.665 6.665 0 0 1 6.665-6.665 6.665 6.665 0 0 1 6.665 6.665 6.665 6.665 0 0 1-6.664 6.665z" class="cls-4" transform="translate(192.948 355.598)"/>
+            <path id="선_2090" d="M5.826 0L0 0" class="cls-5" transform="translate(636 606.032)"/>
+            <path id="선_2091" d="M5.045 0L0 2.913" class="cls-5" transform="translate(640.275 619.073)"/>
+            <path id="선_2092" d="M0 0L5.045 2.913" class="cls-5" transform="translate(690.493 619.073)"/>
+            <path id="선_2093" d="M0 0L5.826 0" class="cls-5" transform="translate(693.987 606.032)"/>
+            <path id="선_2094" d="M0 2.913L5.045 0" class="cls-5" transform="translate(690.493 590.079)"/>
+            <path id="선_2095" d="M5.045 2.913L0 0" class="cls-5" transform="translate(640.275 590.079)"/>
+        </g>
+    </g>
+</svg>

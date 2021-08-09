@@ -18,6 +18,8 @@ import SearchBar from "./SearchBar";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
 import List from "material-ui/List";
 import Cookies from "js-cookie";
+
+const deleteButtonImg = "/static/images/delete.png";
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
 const pass4 = "static/images/pass4.png";
@@ -27,12 +29,20 @@ const close = "static/icon/close_btn.svg";
 
 const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
+const toparrowblue = "static/icon/top_arrow_blue.svg";
 
-@inject("Project", "Auth", "Partner", "Producer", "Common", "Cookie")
+@inject("Project", "Auth", "Partner", "Producer", "Common", "Cookie", "Request")
 @observer
 class ManufacturerContentContainer extends React.Component {
   state = {
     dropDownActive: false,
+    recent_partner_dic: [],
+    recent_partner: [],
+    recent_partner_namearr: [],
+    fileArray: [],
+    fileName: "",
+    file: "",
+    checkFileUpload: false,
   };
 
   async componentDidMount() {
@@ -52,29 +62,38 @@ class ManufacturerContentContainer extends React.Component {
     await this.props.Auth.checkLogin();
     console.log(this.props.Auth.logged_in_user);
 
-    var recent_partner_dic = [];
-
     await Partner.partner_list.map((item, idx) => {
       Partner.getTotalBookmarkByPartner(item.id);
       Partner.getReviewByPartner;
     });
+
+    var recent_partner_dic = [];
+    var recent_partner = [];
+    var recent_partner_namearr = [];
 
     await Cookie.partner_view_list.map((item, idx) => {
       console.log(item);
 
       PartnerAPI.detail(item)
         .then((res) => {
+          this.setState({ recent_partner: res.data });
           console.log(res);
 
           recent_partner_dic[res.data.name] =
             res.data.portfolio_set[0].img_portfolio;
+          recent_partner.push(res.data);
+          recent_partner_namearr.push(res.data.name);
 
           this.setState({
             recent_partner_dic: recent_partner_dic,
             recent_partner_name: res.data.name,
+            recent_partner: recent_partner,
+            recent_partner_namearr: recent_partner_namearr,
           });
           console.log(this.state.recent_partner_dic);
-          console.log(this.recent_partner_name);
+          console.log(this.state.recent_partner_name);
+          console.log(this.state.recent_partner);
+          console.log(this.state.recent_partner_namearr);
         })
         .catch((e) => {
           console.log(e);
@@ -128,17 +147,41 @@ class ManufacturerContentContainer extends React.Component {
     }
   };
 
+  TopScroll = () => {
+    window.scrollTo(0, 0);
+  };
+
+  ToRequest = () => {
+    const { Request } = this.props;
+    Router.push("/request");
+    Request.set_request_type(1);
+  };
+
   render() {
-    const { Project, Partner, Producer, Auth, Cookie } = this.props;
+    const { Project, Partner, Producer, Auth, Cookie, Request } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
     console.log(toJS(Partner.partner_list));
 
     console.log(Partner.suggest_list);
+    console.log(Partner.searchFileUrl)
     return (
       <>
         <Background id="MyBackground">
+          {Partner.subButtonActive ? (
+            <RequestMiddle>
+              <div>
+                기존 제품 검색보다 원하는 조건에 딱 맞는 신제품 제조를
+                원하시나요?
+              </div>
+              <RequestBtn onClick={() => this.ToRequest()}>
+                맞춤형 문의하기
+              </RequestBtn>
+            </RequestMiddle>
+          ) : (
+            <></>
+          )}
           <Container>
             <Body>
               {Partner.detailLoadingFlag && (
@@ -147,19 +190,55 @@ class ManufacturerContentContainer extends React.Component {
                   <Layer />
                 </>
               )}
-              {Partner.subButtonActive ? (
-                <RequestMiddle>
-                  <div>
-                    마음에 드는 공장을 찾기 힘드시나요? 지금 '의뢰하기'를 눌러서
-                    여러 업체의 회사소개서와 제안서를 받아보세요.
-                  </div>
-                  <RequestBtn onClick={Partner.openModal}>
-                    무료로 의뢰하기
-                  </RequestBtn>
-                </RequestMiddle>
-              ) : (
-                <></>
-              )}
+
+              {/* 이미지 검색 리스트 */}
+              {Partner.fileArray.map((item, idx) => {
+                console.log(item);
+                return (
+                  <>
+                    <span
+                      onClick={() => {
+                        if (this.state.checkFileUpload) {
+                          Partner.fileArray.splice(idx, 1);
+                          const inputFile =
+                            document.getElementById("inputFile");
+                          inputFile.innerHTML = "";
+
+                          if (Partner.fileArray.length === 0) {
+                            this.setState({ checkFileUpload: false });
+                          }
+                        }
+                      }}
+                    >
+                      <span>
+                        {Partner.fileArray[0] ? (
+                          <img
+                            style={{ width: 127, height: 101 }}
+                            src={Partner.searchFileUrl}
+                          />
+                        ) : (
+                          <>파일이 없습니다</>
+                        )}
+                        <span style={{ marginRight: "10px" }}>
+                          {/* {!item.name
+                            ? decodeURI(item.split("/").pop())
+                            : item.name} */}
+                        </span>
+                        <DeleteFile
+                          src={deleteButtonImg}
+                          style={{
+                            display: this.state.checkFileUpload
+                              ? "inline"
+                              : "none",
+                          }}
+                        />
+                      </span>
+                      {/* <span>해당 이미지를 검색 합니다.</span> */}
+                    </span>
+                  </>
+                );
+              })}
+
               <Header>
                 <Font20 style={{ marginLeft: "20px" }}>
                   <span style={{ fontWeight: "bold" }}>
@@ -170,6 +249,7 @@ class ManufacturerContentContainer extends React.Component {
               </Header>
               <Main>
                 <MainBody>
+                  <Border style={{ border: "solid 1px #e1e2e4" }}></Border>
                   {Partner.partner_list &&
                     Partner.partner_list.length === 0 &&
                     (Partner.loadingFlag ? (
@@ -185,33 +265,9 @@ class ManufacturerContentContainer extends React.Component {
                         </NoSearch>
                         <Explain>
                           <Question>
-                            다음 제안사항에 맞춰 다시 검색해보는건 어떠신가요?
-                          </Question>
-                          <ExplainList>
-                            <li>철자가 정확한지 확인해보세요. </li>
-                            <li>
-                              더 포괄적인 상위 항목을 검색해보세요.{" "}
-                              <span style={{ marginLeft: 20 }}>
-                                ex. 도마{" "}
-                                <img
-                                  src={rightarrow}
-                                  style={{ marginLeft: 10, marginRight: 10 }}
-                                />{" "}
-                                주방용품
-                              </span>
-                            </li>
-                            <li style={{ marginBottom: 60 }}>
-                              카테고리를 이용하여 검색해보세요.
-                            </li>
-                          </ExplainList>
-                          <Question>
                             유사한 연관 검색어를 찾아보시겠어요?
                           </Question>
-                          <ExplainList>
-                            {Partner.suggest_list.map((data) => {
-                              return <li>{data + ", "}</li>;
-                            })}
-                          </ExplainList>
+                          <ExplainList></ExplainList>
                         </Explain>
                       </NoResultBox>
                     ))}
@@ -219,12 +275,15 @@ class ManufacturerContentContainer extends React.Component {
                   {Partner.partner_list &&
                     Partner.partner_list.map((item, idx) => {
                       return (
-                        <Background style={{ marginBottom: "5px" }}>
+                        <Background>
                           <div
                             onClick={async () => {
                               console.log(Auth);
                               if (Auth.logged_in_client) {
-                                await Project.getPage(Auth.logged_in_client.id);
+                                await Project.getProject(
+                                  "allproject",
+                                  Auth.logged_in_client.id
+                                );
                               }
                               Partner.pushToDetail(item, idx);
                             }}
@@ -256,7 +315,7 @@ class ManufacturerContentContainer extends React.Component {
                       </div>
                     </header>
                     <body>
-                      {this.state.recent_partner_dic ? (
+                      {this.state.recent_partner.length > 0 ? (
                         Object.keys(this.state.recent_partner_dic).map(
                           (name) => (
                             <RecentPartnerContent>
@@ -268,14 +327,74 @@ class ManufacturerContentContainer extends React.Component {
                                   alignItems: "center",
                                 }}
                               >
-                                <div style={{ width: 149 }}>{name}</div>
-                                {/*<img
+                                <div style={{ marginLeft: 3 }}>{name}</div>
+                                <img
                                   src={close}
-                                  style={{ width: "7.7px", height: "7.7px" }}
-                                ></img>*/}
+                                  style={{
+                                    marginRight: 3,
+                                    width: 12,
+                                    height: 12,
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={async () => {
+                                    console.log(this.state.recent_partner_dic);
+                                    if (this.state.recent_partner_dic) {
+                                      Cookie.delete_partner_view(
+                                        Cookie.partner_view_list[
+                                          this.state.recent_partner_namearr.indexOf(
+                                            name
+                                          )
+                                        ]
+                                      );
+                                    }
+                                    const expires = new Date();
+                                    expires.setMinutes(
+                                      expires.getMinutes() + 2440
+                                    );
+                                    const a = this.state.recent_partner_dic;
+                                    const b = this.state.recent_partner;
+                                    console.log(b);
+                                    delete a[name];
+                                    b.splice(
+                                      this.state.recent_partner_namearr.indexOf(
+                                        name
+                                      ),
+                                      1
+                                    );
+                                    console.log(b);
+                                    this.setState({
+                                      recent_partner_dic: a,
+                                      recent_partner: b,
+                                    });
+                                    Cookies.set(
+                                      "partner_view",
+                                      Cookie.partner_view_list,
+                                      {
+                                        path: "/",
+                                        expires,
+                                      }
+                                    );
+                                  }}
+                                ></img>
                               </div>
                               <img
                                 src={this.state.recent_partner_dic[name]}
+                                onClick={async () => {
+                                  if (Auth.logged_in_client) {
+                                    await Project.getProject(
+                                      "allproject",
+                                      Auth.logged_in_client.id
+                                    );
+                                  }
+                                  Partner.pushToDetail(
+                                    this.state.recent_partner[
+                                      this.state.recent_partner_namearr.indexOf(
+                                        name
+                                      )
+                                    ]
+                                  );
+                                }}
+                                style={{ cursor: "pointer" }}
                               ></img>
                             </RecentPartnerContent>
                           )
@@ -292,7 +411,6 @@ class ManufacturerContentContainer extends React.Component {
                   <MyInfo>
                     <header>
                       <img src="/static/icon/login_img.svg"></img>
-
                       {Auth.logged_in_user ? (
                         <div>{Auth.logged_in_user.username.split("@")[0]}</div>
                       ) : (
@@ -313,6 +431,10 @@ class ManufacturerContentContainer extends React.Component {
                 </Aside>
               </Main>
             </Body>
+            <TopButton onClick={this.TopScroll} style={{ cursor: "pointer" }}>
+              <img src={toparrowblue}></img>
+              <div style={{ marginTop: 5 }}>Top</div>
+            </TopButton>
           </Container>
         </Background>
         {/* 제조사 상세 페이지 - Q/A 기능 체크 용 함수 (파트너로 로그인해서 기능 확인) */}
@@ -525,17 +647,16 @@ const Explain = styled.div`
 const ExplainList = styled.div`
   margin-top: 26px;
   margin-bottom: 18px;
-  font-size: 20px;
-  line-height: 2;
-  letter-spacing: -0.5px;
+  font-size: 16px;
+  line-height: 2.5;
+  letter-spacing: -0.4px;
   color: #1e2222;
 `;
 
 const Question = styled.div`
-  line-height: 1.67;
-  letter-spacing: -0.6px;
-  color: #1e2222;
-  font-size: 24px;
+  line-height: 2;
+  letter-spacing: -0.5px;
+  font-size: 20px;
 `;
 
 const SubButton = styled.div`
@@ -553,7 +674,7 @@ const SubButton = styled.div`
 `;
 
 const PageBar = styled.div`
-  width: 351px;
+  width: 500px;
   margin-top: 109px;
   margin-bottom: 157px;
   margin-left: auto;
@@ -561,6 +682,7 @@ const PageBar = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   img {
     margin-bottom: 5px;
   }
@@ -577,6 +699,7 @@ const PageCount = styled.span`
   letter-spacing: -0.4px;
   text-align: left;
   color: #999999;
+  cursor: pointer;
   ${(props) =>
     props.active &&
     css`
@@ -633,7 +756,6 @@ const RecentPartner = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 52px;
     background-color: #e1e2e4;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -651,11 +773,14 @@ const RecentPartner = styled.div`
     letter-spacing: -0.35px;
     text-align: center;
     color: #999999;
+    position: relative;
   }
 `;
 
 const RecentPartnerContent = styled.div`
-  height: 95%:
+  height: 100%:
+  position: absolute;
+  top: 0;
   div {
     font-size: 14px;
     color: #1e2222;
@@ -725,6 +850,11 @@ const Header = styled.div`
   }
 `;
 
+const Border = styled.div`
+width: 100%
+border: solid 1px #e1e2e4;
+`;
+
 const Font20 = styled(Title.FontSize20)`
   font-weight: normal !important;
   font-stretch: normal !important;
@@ -785,12 +915,58 @@ const RequestBtn = styled.button`
   height: 40px;
   object-fit: contain;
   border-radius: 29px;
-  border: solid 1.5px #0933b3;
+  border: solid 2px #0933b3;
   background: none;
   font-size: 15px;
   letter-spacing: -0.38px;
   color: #0933b3;
 }
+`;
+
+const TopButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 56px;
+  height: 56px;
+  // object-fit: contain;
+  box-shadow: 4px 5px 20px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  border-radius: 100%;
+  top: 78%;
+  left: 94.2%;
+  position: fixed;
+  z-index: 2;
+  div {
+    object-fit: contain;
+    font-family: NotoSansCJKkr;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.35px;
+    color: #0933b3;
+  }
+`;
+
+const DeleteFile = styled.img`
+  width: 18px;
+  height: 18px;
+  padding: 2px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background-color: #e1e2e4;
+  align-self: center;
+  line-height: 40px;
+  letter-spacing: -0.45px;
+  margin-right: 29px;
+  vertical-align: middle;
+  cursor: pointer;
+  @media (min-width: 0px) and (max-width: 767.98px) {
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
+  }
 `;
 
 export default ManufacturerContentContainer;

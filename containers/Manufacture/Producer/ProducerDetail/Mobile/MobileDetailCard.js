@@ -8,7 +8,7 @@ import MapContainer from "../Map";
 
 import { toJS } from "mobx";
 import DocViewer from "../DocViewer";
-import SubBoxContainer from "../SubBox";
+import SubBoxContainer from "../../../../Account/Bookmark/SubBox";
 import QuestionContainer from "../Question";
 import HeaderItem from "../HeaderContainer";
 import ReviewStarRating from "../../Review/ReviewStarRating";
@@ -68,7 +68,7 @@ let loadingCounter = 0;
 let index = 0;
 let region;
 
-@inject("Partner", "Auth")
+@inject("Partner", "Auth", "Common")
 @observer
 class MobileDetailCardContainer extends React.Component {
   state = {
@@ -425,19 +425,26 @@ class MobileDetailCardContainer extends React.Component {
     }
   };
 
-  reload() {
-    (location || window.location || document.location).reload();
-  }
+  // reload() {
+  //   (location || window.location || document.location).reload();
+  // }
   render() {
-    const { width, Partner, Auth } = this.props;
+    const { width, Partner, Auth, Common } = this.props;
+
+    // if (!Partner.partner_detail_list[0]) {
+    //   console.log("nonono");
+    //   // console.log(location.href);
+    //   location.href = this.props.Common.makeUrl("producer");
+    // }
 
     region = "";
-    region =
-      Partner.partner_detail_list[0].item.region === null ||
-      Partner.partner_detail_list[0].item.region === "nan"
-        ? Partner.city_name
-        : Partner.partner_detail_list[0].item.region;
-
+    if (Partner.partner_detail_list[0]) {
+      region =
+        Partner.partner_detail_list[0].item.region === null ||
+        Partner.partner_detail_list[0].item.region === "nan"
+          ? Partner.city_name
+          : Partner.partner_detail_list[0].item.region;
+    }
     console.log(region);
 
     let clientId;
@@ -453,8 +460,10 @@ class MobileDetailCardContainer extends React.Component {
     console.log(toJS(Partner.partner_detail_list));
     console.log(Auth);
     console.log(Partner.partner_detail_list);
+
     const partnerId =
       Partner.partner_detail_list &&
+      Partner.partner_detail_list[0] &&
       Partner.partner_detail_list[0].item &&
       Partner.partner_detail_list[0].item.id;
 
@@ -542,7 +551,10 @@ class MobileDetailCardContainer extends React.Component {
                       <InfoCard
                         src={drawerImg}
                         name="진행한 제품군"
-                        content={Partner.partner_detail_list[0].item.history}
+                        content={
+                          Partner.partner_detail_list[0] &&
+                          Partner.partner_detail_list[0].item.history
+                        }
                         marginLeft="21"
                       />
                     )}
@@ -551,7 +563,9 @@ class MobileDetailCardContainer extends React.Component {
                       src={markImg}
                       name="지역"
                       content={
-                        Partner.partner_detail_list[0].item.region === "null" ||
+                        (Partner.partner_detail_list[0] &&
+                          Partner.partner_detail_list[0].item.region ===
+                            "null") ||
                         Partner.partner_detail_list[0].item.region === "nan"
                           ? Partner.city_name
                           : Partner.partner_detail_list[0].item.region
@@ -562,7 +576,8 @@ class MobileDetailCardContainer extends React.Component {
                   {Partner.partner_detail_list && (
                     <content>
                       <span>
-                        {Partner.partner_detail_list[0].item.info_company}
+                        {Partner.partner_detail_list[0] &&
+                          Partner.partner_detail_list[0].item.info_company}
                       </span>
                     </content>
                   )}
@@ -611,7 +626,10 @@ class MobileDetailCardContainer extends React.Component {
                         )}
                     </SliderContainer> */}
                     <PortfolioConatiner
-                      data={Partner.partner_detail_list[0].item}
+                      data={
+                        Partner.partner_detail_list[0] &&
+                        Partner.partner_detail_list[0].item
+                      }
                       width={width}
                     />
                   </IntroductionBox>

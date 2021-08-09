@@ -28,6 +28,15 @@ export function clientSignup(req) {
   });
 }
 
+// 클라이언트 카카오 회원가입
+export function snsClientSignup(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/client/sns-signup/`,
+    data: req.data,
+  });
+}
+
 // 파트너 회원가입
 export function partnerSignup(req) {
   return axios({
@@ -93,6 +102,14 @@ export function setUserIP(req) {
   });
 }
 
+export function setPrevUrlLog(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/prevurllog/`,
+    data: req.data,
+  });
+}
+
 export function setUserPageIP(req) {
   return axios({
     method: "POST",
@@ -106,6 +123,16 @@ export function SNSlogin(req) {
   return axios({
     method: "POST",
     url: `${ROOT_URL}/snsuser/login/`,
+    data: req.data,
+    headers: req.headers ? req.headers : null,
+  });
+}
+
+// img portfoilo 임시
+export function getPortfolio(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/portfolio/img/`,
     data: req.data,
     headers: req.headers ? req.headers : null,
   });

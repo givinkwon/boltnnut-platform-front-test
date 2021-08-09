@@ -6,473 +6,352 @@ import * as RequestAPI from "axios/Manufacture/Request";
 
 import Router from "next/router";
 import moment from "moment";
+import Schedule from "./Schedule";
+import Auth from "stores/Account/Auth";
+import Signup from "../Account/Signup";
 
 class Request {
   constructor() {
     //makeObservable(this);
   }
-  @observable select_reqs = [];
 
-  @observable id = null;
-  @observable tab = 0;
-  @observable type = "";
-  @observable step = 0;
-
-  @observable created_request = null;
-  @observable check_list = [];
-
-  // maincategory
-  @observable big_category_list = [];
-  @observable mid_category_list = [];
-  @observable small_category_list = [];
-  @observable maincategory_id = "";
-
-  @observable q_big = "";
-  @observable q_mid = "";
-
-  @observable selected = [];
-
-  @observable select_big = null;
-  @observable select_mid = null;
-  @observable select_small = null;
-
-  @observable initial_contents = [];
-  @observable contents = [];
-
-  @observable category_id = 0;
-  @observable category_middle_set = [];
-
-  @observable common_email = "";
-  @observable common_content = "";
-  @observable common_period = "";
-  @observable common_price = "";
-
-  @observable search_mode = "";
-  @observable partners = [];
-  @observable partners_next = null;
-
-  // save_writed_request
-  @observable input_name = "";
-  @observable input_phone = "";
-
-  @observable input_content = "";
-  @observable input_day = null; // 개발기간
-  @observable input_price = null; // 가격
-  @observable common_file = null; // 첨부 파일
-
-  //new
-  @observable step_index = 4;
-  @observable step1_index = 1;
-  @observable drawFile = null;
-  @observable percentage = 0;
-  @observable titleData = [];
+  // 의뢰 관련 index
+  // 의뢰 완료 페이지로 넘어가기 위한 Trigger
   @observable newIndex = 0;
 
-  // Client
-  @observable client_id = null;
-  @observable has_email = false;
-
-  // Partner
-  @observable random_partner_list = null;
-
-  //type
+  // 의뢰하기 접근한 이전 페이지 => 0인 경우 Nav 바에서, 1인 경우 제조사 검색에서, 2인 경우 제조사 디테일
   @observable request_type = "";
-  @observable proposal_type = 1;
 
-  //Payment
-  @observable numCount = null;
+  // 파트너 상세에서 의뢰하기를 선택했을 때, 선택한 파트너 id
+  @observable selected_partner = "";
 
-  @observable request_file_set = [];
+  // 의뢰서 제출용 데이터
+  @observable request_state = -1; // 문의 목적 state => 미선택 -1, 상담요청 0, 견적 요청 1, 업체 수배 2
+  @observable request_name = ""; // 의뢰 제목
+  @observable request_price = ""; // 희망 예산 금액
+  @observable request_price_state = -1; // 예산 조율 state => 미 체크 시에는 -1, 조율 가능 체크 시 0, 상담 후 예산 결정 시 1
+  @observable request_period = ""; // 희망 납기일
+  @observable request_period_state = 0; // 납기일 협의 state => 체크 시에는 1, 미 체크 시에는 0
+  @observable request_contents =
+    "1. 프로젝트의 소개 및 제작 목적:   2. 프로젝트의 진행 상황 및 계획 수립 :   3. 프로젝트 기능 및 특이 사항 - 필수로 들어가야 할 기능들  :  4. 참고자료 / 레퍼런스 예시) ‘볼트앤너트 네이버 블로그’ 참고 등 :  5. 제조사(파트너)에게의 요청사항 - 프로젝트 진행 시 파트너가 알아야 할 발주 조건 : ";
+  @observable request_file_set = []; // 의뢰 관련 파일
+  @observable request_file_secure = 0; // 의뢰 보안 state => 미선택 0, 도면 파일 공개 1, 미공개 2
+  @observable request_drawing_set = []; // 의뢰 도면 파일
+  @observable request_region = ""; // 의뢰 지역 선택
+  @observable request_region_state = 0; // 의뢰 지역 협의 state => 체크 시에는 1, 미 체크 시에는 0
 
-  @action reset = () => {
-    this.newIndex = 0;
-    this.titleData = [];
-    this.percentage = 7;
-    this.step_index = 0; //0으로 바꿔야됨. 임시방편
-    this.step1_index = 1;
-    this.input_name = "";
-    this.input_phone = "";
-    this.input_day = null;
-    this.input_price = null;
-    this.common_file = null;
-    this.select_big = null;
-    this.select_mid = null;
-    this.random_partner_list = [];
-    this.maincategory_id = "";
-    this.request_type = ""; // ""로 바꿔야됨. 임시방편
-    this.numCount = null;
+  // 파트너 상세에서 의뢰서 클릭 한 경우에 id를 넘겨주는 것
+  @action partner_request = (val) => {
+    this.selected_partner = val;
+    console.log(this.selected_partner);
   };
-  @action setInputName = (val) => {
-    //
-    this.input_name = val;
+
+  // 의뢰하기 접근한 이전 페이지 => 0인 경우 Nav 바에서, 1인 경우 제조사 검색에서, 2인 경우 제조사 디테일에서
+  @action set_request_type = (val = 0) => {
+    this.request_type = val;
+    console.log(this.request_type);
   };
-  @action setType = (val) => {
-    this.type = val;
-  };
-  @action setTab = (val) => {
-    this.tab = val;
-  };
-  @action setStep = (val) => {
-    this.step = val;
-  };
-  @action setInputPhone = (val) => {
-    this.input_phone = val;
-  };
-  @action setPrice = (val) => {
-    this.input_price = val;
-  };
-  @action setDue = (val) => {
-    this.input_day = val;
-  };
-  @action setNumCount = (val) => {
-    console.log(val);
-    if (val.label != "직접 입력") {
-      this.numCount = val;
-    }
-    if (val.label == "직접 입력" && val.value == 0) {
-      this.numCount = val;
-    }
-    if (val.label == null) {
-      this.numCount = { label: "직접 입력", value: val };
+
+  // 의뢰 상태 추가하기
+  @action set_state = (val) => {
+    // 이미 선택되어 있을 때
+    if (this.request_state == val) {
+      this.request_state = -1;
+      console.log(this.request_state);
+      return true;
+    } else {
+      this.request_state = val;
+      console.log(this.request_state);
     }
   };
 
-  @action setCommonFile = (obj) => {
+  // 의뢰 제목 추가하기
+  @action set_name = (val) => {
+    this.request_name = val;
+    console.log(this.request_name);
+  };
+
+  // 희망 예산 금액 추가하기
+  @action set_price = (obj) => {
+    this.request_price = obj;
+    console.log(this.request_price);
+  };
+
+  // 예산 조율 협의 상태 추가하기
+  @action set_period_state = (val) => {
+    this.request_period_state = val;
+    console.log(this.request_period_state);
+  };
+
+  // 납기일 협의 상태 추가하기
+  @action set_price_state = (val) => {
+    this.request_price_state = val;
+    console.log(this.request_price_state);
+  };
+
+  // 의뢰 내용 추가하기
+  @action set_contents = (val) => {
+    Auth.checkLogin();
+
+    if (!Auth.logged_in_user) {
+      alert("로그인이 필요한 서비스입니다.");
+      Router.push("/login");
+      return;
+    }
+    this.request_contents = val;
+    console.log(this.request_contents);
+  };
+
+  // 의뢰 파일 추가하기
+  @action set_file_set = (obj) => {
     if (typeof obj == "object") {
-      this.common_file = obj;
+      this.request_file_set.push(obj);
+      console.log("file uploaded");
+    } else {
+      this.request_file = null;
+    }
+  };
+
+  // 의뢰 파일 삭제하기
+  @action delete_File = (deleteIdx) => {
+    // 파일 삭제하기
+    this.request_file_set.splice(deleteIdx, 1);
+    console.log(deleteIdx, this.request_file_set);
+  };
+
+  // 의뢰 보안 상태 추가
+  @action set_file_secure = (val) => {
+    this.request_file_secure = val;
+    console.log(this.request_file_secure);
+  };
+
+  // 도면 파일 추가하기
+  @action set_drawing_set = (obj) => {
+    if (typeof obj == "object") {
+      this.request_drawing_set.push(obj);
       console.log("file uploaded");
     } else {
       this.common_file = null;
     }
   };
-  @action setDrawFile = (obj) => {
-    this.drawFile = obj;
+
+  // 도면 파일 삭제하기
+  @action delete_Drawing = (deleteIdx) => {
+    // 파일 삭제하기
+    this.request_drawing_set.splice(deleteIdx, 1);
+    console.log(deleteIdx, this.request_drawing_set);
   };
-  @action createRequest = () => {
-    var cellphoneValid = /^\d{3}-\d{3,4}-\d{4}$/;
-    var homephoneValid = /^\d{2,3}-\d{3,4}-\d{4}$/;
-    if (
-      !cellphoneValid.test(this.input_phone) ||
-      !homephoneValid.test(this.input_phone)
-    ) {
-      alert("전화번호가 올바르지 않습니다. 재확인해주세요.");
-      return;
+
+  // 희망 지역 추가하기
+  @action set_region = (obj) => {
+    this.request_region = obj;
+    console.log(this.request_region);
+  };
+
+  // 지역 협의 상태 추가하기
+  @action set_region_state = (val) => {
+    this.request_region_state = val;
+    console.log(this.request_region_state)
+  };
+
+  // 의뢰서 제출 시 의뢰서 만들기
+  @action requestSubmit = async () => {
+
+    // 아이디 로그인 없이 의뢰서 만들 때 => 해당 정보로 회원가입
+    if(!Auth.logged_in_user) {
+      Signup.email = this.email;
+      Signup.password = this.password;
+      Signup.password2 = this.password;
+      Signup.phone = this.phone;
+      Signup.realName = "비회원의뢰";
+      Signup.company_name = "비회원가입";
+      Signup.signup("request")
     }
+    // error 처리
+    if (this.request_state == -1) {
+      alert("문의 목적을 선택해주세요");
+      return false;
+    }
+    if (this.request_name.length == 0) {
+      alert("의뢰 제목을 입력해주세요");
+      return false;
+    }
+    if (this.request_name.length > 200) {
+      alert("제목이 너무 깁니다. 200자 이내로 작성해주세요.");
+      return false;
+    }
+    if (this.request_contents.length == 0) {
+      alert("의뢰 내용 작성해주세요");
+      return false;
+    }
+
+    if (this.request_contents.length > 4500) {
+      alert("의뢰 내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
+      return false;
+    }
+
+    // 데이터 저장
     var formData = new FormData();
 
-    formData.append("product", this.select_mid.id);
-    formData.append("name", this.input_name);
-    formData.append("price", this.input_price.value);
-    formData.append("period", this.input_day.value);
-    formData.append(
-      "phone",
-      this.input_phone.replace("-", "").replace("-", "")
-    );
-    if (this.common_file) {
-      formData.append("file", this.common_file);
+    // 문의 목적 상태
+    formData.append("request_state", this.request_state);
+
+    // 의뢰 제목
+    formData.append("name", this.request_name);
+
+    // 희망 예산 저장
+    formData.append("price", this.request_price.id);
+
+    // 희망 예산 상태 저장
+    formData.append("price_state", this.request_price_state);
+
+    // 희망 예산 저장
+    formData.append("region", this.request_region.id);
+
+    // 희망 예산 상태 저장
+    formData.append("region_state", this.request_region_state);
+
+    // 제조사 상세보기에서 의뢰서 클릭해서 들어온 경우
+    formData.append("partner", this.selected_partner);
+
+    // 선택한 날짜가 없으면, 기본 날짜 추가하기
+    if (Schedule.clickDay) {
+      formData.append("deadline", Schedule.clickDay + " 09:00");
+    } else {
+      formData.append("deadline", "2020-11-11 11:11");
     }
+
+    // 선택한 납기 미선택 시
+    if (this.request_period_state == 0) {
+      formData.append("deadline_state",0);
+    } else {
+      // 납기 협의 가능 선택 시
+      formData.append("deadline_state",1);
+    }
+
+    // 의뢰 내용 ( 공개 사항 )
+    formData.append("contents", this.request_contents);
+
+    // 의뢰 관련 파일 저장
+    if (this.request_file_set.length === 0) {
+      formData.append(`file`, "");
+    }
+    for (var i = 0; i < this.request_file_set.length; i++) {
+      formData.append(`file`, this.request_file_set[i]);
+    }
+
+    // 도면 유무 저장 => 도면이 있으면, state = 1로
+    if (this.request_drawing_set.length === 0) {
+      formData.append("blueprint_exist", 0);
+    } else {
+      formData.append("blueprint_exist", 1);
+    }
+
+    // 의뢰 보안 상태 추가
+    formData.append("request_file_secure", this.request_file_secure);
+
+    // 도면 관련 파일 저장
+    if (this.request_drawing_set.length === 0) {
+      formData.append(`blueprint`, "");
+    }
+    for (var i = 0; i < this.request_drawing_set.length; i++) {
+      formData.append(`blueprint`, this.request_file_set[i]);
+    }
+
+    // 로그인 토큰 받아 user 데이터 받기
+    // 비로그인시
+    if(!Auth.logged_in_user) {
+      const Token = "b2ad465ffc84bdc7e91d1b2752683dc4227ba892"
+      console.log(Token);
+      
+    // axois 쏘기
     const req = {
+      headers: {
+        Authorization: `Token ${Token}`,
+      },
       data: formData,
     };
+
+    console.log(req);
+
     RequestAPI.create(req)
       .then((res) => {
-        console.log(res);
-        this.created_request = res.data.id;
-        this.client_id = res.data.clientId;
-        this.has_email = res.data.hasEmail;
-        this.step_index = 2;
-        this.percentage += 15;
-        console.log(this.client_id);
-      })
-      .catch((error) => {
-        alert("정상적으로 의뢰가 생성되지 않았습니다. 연락처로 문의해주세요.");
-        console.log(error.response);
-        this.step_index = 1;
-      });
-  };
-  @action init = (q) => {
-    CategoryAPI.getMainCategory()
-      .then((res) => {
-        this.big_category_list = res.data.results;
-        for (let i = 0; i < this.big_category_list.length; i++) {
-          for (let j = 0; j < this.big_category_list[i].category_set; j++) {
-            this.initial_contents.push(
-              this.big_category_list[i].category_set[j].subclass_set
-            );
-          }
-        }
-        //this.setQuery(q);
+        console.log("create: ", res);
+        // page 넘기기 위한 트리거 만들기
+        this.newIndex = 1;
+        // GA 데이터 보내기
+        MyDataLayerPush({ event: "request_Drawing" });
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
 
-    this.reset();
-  };
-  @action setBigCategory = (obj) => {
-    this.select_big = obj;
-    this.select_mid = null;
-    this.select_small = null;
-
-    if (obj.category_set[0] && obj.category_set[0].category !== "전체보기") {
-      console.log(obj.category_set[0]);
-      obj.category_set.push({
-        id: obj.id,
-        maincategory: obj.maincategory,
-        category: "전체보기",
-        category_set: obj.category_set,
-        subclass_set: [],
-      });
-      const tmp = obj.category_set[0];
-      obj.category_set[0] = obj.category_set[obj.category_set.length - 1];
-      obj.category_set[obj.category_set.length - 1] = tmp;
     }
-
-    this.mid_category_list = obj.category_set;
-    this.small_category_list = [];
-    var contents = [];
-    for (const item of obj.category_set) {
-      contents = [...contents, ...item.subclass_set];
-    }
-    this.contents = contents;
-    this.maincategory_id = this.select_big.category_set[0].id;
-    window.history.pushState("", "", `/request`);
-  };
-  @action setMidCategory = (obj) => {
-    if (obj.category === "전체보기") {
-      this.setBigCategory(obj);
-      return;
-    }
-    //console.log(obj)
-    this.select_mid = obj;
-    //console.log(this.select_mid)
-    this.loadRandomPartner();
-    this.select_small = null;
-    this.small_category_list = obj.subclass_set;
-
-    this.contents = obj.subclass_set;
-    window.history.pushState(
-      "",
-      "",
-      `/request`
-      //`/request?big=${obj.maincategory}&mid=${obj.id}`
-    );
-  };
-  @action setSmallCategory = (obj) => {
-    this.select_small = obj;
-    this.contents = [obj];
-
-    // 자동으로 넘기기
-    Router.push(`/request/${obj.id}`);
-  };
-  @action setCategoryMiddleSet = (id, category) => {
-    const index = this.category_middle_set.indexOf(id);
-    if (this.category_id === category) {
-      if (index > -1) {
-        this.category_middle_set.splice(index, 1);
-        this.category_middle_set = [...this.category_middle_set];
-        if (this.category_middle_set.length === 0) {
-          this.category_id = 0;
-        }
-      } else {
-        this.category_middle_set = [id, ...this.category_middle_set];
-      }
-    } else {
-      this.category_id = category;
-      this.category_middle_set = [id];
-    }
-  };
-  @action setFindCategory = (check_list) => {
-    console.log("check_list : ", check_list);
-
-    if (this.category_middle_set.length < 1) {
-      alert("개발분야를 선택해주세요.");
-    } else {
-      for (var cate of check_list) {
-        for (var dev of cate.develop_set) {
-          console.log(this.category_middle_set);
-
-          if (this.category_middle_set.indexOf(dev.id) > -1) {
-            this.selected = [...dev.select_set, ...this.selected];
-          }
-        }
-      }
-      this.tab = 2;
-    }
-  };
-
-  @action loadRandomPartner = () => {
+    else {
+      const Token = localStorage.getItem("token");
+      console.log(Token);
+      
+    // axois 쏘기
     const req = {
-      data: {
-        category: this.select_mid.id,
-        // 제품 분야 = 가능 제품 분야
-        count: 20,
-      },
-    };
-    PartnerAPI.getRandomPartner(req)
-      .then((res) => {
-        console.log("받은 리스폰스", res);
-        this.random_partner_list = res.data.data;
-        console.log(this.random_partner_list);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-
-  @action loadAppropriatePartners = () => {
-    if (!this.created_request) {
-      return;
-    }
-    const subclass = this.created_request.product.toString();
-
-    const token = localStorage.getItem("token");
-    const req = {
-      // headers
       headers: {
-        Authorization: `Token ${token}`,
+        Authorization: `Token ${Token}`,
       },
-      // params
-      params: {
-        subclass: subclass,
-      },
+      data: formData,
     };
 
-    PartnerAPI.matchPartner(req)
-      .then(async (res) => {
-        const req = {
-          // headers
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-          // params
-          data: {
-            ordering: "-avg_score",
-            page: 1,
-          },
-        };
+    console.log(req);
 
-        if (res.data.data.length <= 3) {
-          console.log("search로 가져올");
-          this.search_mode = "search";
-
-          PartnerAPI.search(req)
-            .then((res) => {
-              this.partners = res.data.results.slice(0, 5);
-              console.log(res.data);
-            })
-            .catch((e) => {
-              console.log(e);
-              console.log(e.response);
-            });
-        } else {
-          this.search_mode = "match";
-
-          console.log("partner로 가져올게");
-          this.partners = res.data.data;
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-  };
-  @action loadNextPartners = () => {
-    if (!this.partners_next) {
-      return;
-    }
-
-    const token = localStorage.getItem("token");
-    const req = {
-      // headers
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-      nextUrl: this.partners_next,
-    };
-
-    PartnerAPI.getNextPage(req)
+    RequestAPI.create(req)
       .then((res) => {
-        this.partners = this.partners.concat(res.data.results);
-        this.partners_next = res.data.next;
+        console.log("create: ", res);
+        // page 넘기기 위한 트리거 만들기
+        this.newIndex = 1;
+        // GA 데이터 보내기
+        MyDataLayerPush({ event: "request_Drawing" });
       })
       .catch((e) => {
         console.log(e);
         console.log(e.response);
       });
-  };
 
-  @action setQuery = async (q) => {
-    this.q_big = q.big ? q.big : "";
-    this.q_mid = q.mid ? q.mid : "";
-    if (q.mid) {
-      const big_cate = this.big_category_list.filter(
-        (obj) => obj.id === parseInt(q.big)
-      );
-      this.select_big = big_cate[0];
-
-      console.log(big_cate[0]);
-      big_cate[0].category_set.push({
-        id: big_cate[0].id,
-        maincategory: big_cate[0].maincategory,
-        category: "전체보기",
-        category_set: big_cate[0].category_set,
-        subclass_set: [],
-      });
-      const tmp = big_cate[0].category_set[0];
-      big_cate[0].category_set[0] =
-        big_cate[0].category_set[big_cate[0].category_set.length - 1];
-      big_cate[0].category_set[big_cate[0].category_set.length - 1] = tmp;
-
-      this.mid_category_list = big_cate[0].category_set;
-      const mid_cate = this.mid_category_list.filter(
-        (obj) => obj.id === parseInt(q.mid)
-      );
-      this.select_mid = mid_cate[0];
-      this.small_category_list = mid_cate[0].subclass_set;
-      this.contents = mid_cate[0].subclass_set;
-      return;
-    } else {
-      if (q.big) {
-        const big_cate = this.big_category_list.filter(
-          (obj) => obj.id === parseInt(q.big)
-        );
-        this.select_big = big_cate[0];
-
-        big_cate[0].category_set.push({
-          id: big_cate[0].id,
-          maincategory: big_cate[0].maincategory,
-          category: "전체보기",
-          category_set: big_cate[0].category_set,
-          subclass_set: [],
-        });
-        const tmp = big_cate[0].category_set[0];
-        big_cate[0].category_set[0] =
-          big_cate[0].category_set[big_cate[0].category_set.length - 1];
-        big_cate[0].category_set[big_cate[0].category_set.length - 1] = tmp;
-
-        this.mid_category_list = big_cate[0].category_set;
-        var contents = [];
-        for (const item of big_cate[0].category_set) {
-          contents = [...contents, ...item.subclass_set];
-        }
-        this.contents = contents;
-      } else {
-        window.history.pushState("", "", `/request`);
-        //window.history.pushState("", "", `/request?big=&mid=`);
-      }
     }
+    
+
   };
 
+
+  // 비회원 회원가입 전용
+  // email
+  @observable email = "";
+
+  @action setEmail = (val) => {
+    this.email = val;
+    console.log(this.email)
+  };
+
+  // password
+  @observable password = "";
+
+  @action setPassword = (val) => {
+    this.password = val;
+    console.log(this.password)
+  };
+
+  // 휴대폰
+  @observable phone = "";
+
+  @action setPhone = (val) => {
+    this.phone = val;
+    console.log(this.phone)
+  };
+  
+  // 의뢰서 수정 관련
+
+  // 의뢰서 수정에서 의뢰 파일 가져오기
   @action getRequestFile = async (id) => {
     console.log(id);
     const req = {
-      // headers: {
-      //   Authorization: `Token ${token}`,
-      // },
-      // params
       params: {
         request: id,
       },
@@ -492,15 +371,11 @@ class Request {
       });
   };
 
+  // 의뢰서 수정에서 파일 삭제하기
   @action deleteRequestFile = (id) => {
     console.log(id);
     const req = {
       id: id,
-      // headers
-      // headers: {
-      //   Authorization: `Token ${token}`,
-      // },
-      // nextUrl: this.partners_next,
     };
 
     RequestAPI.deleteRequest(req)
@@ -512,6 +387,37 @@ class Request {
         console.log(e.response);
       });
   };
-}
 
+  // 의뢰서 id로 의뢰서 가져오기
+  @observable requests = [];
+  @observable current_request_id = -1;
+
+  getRequestById = (id) => {
+    if (id === -1) {
+      return;
+    }
+
+    console.log(`getRequestById(${id})`);
+    const idx = this.requests.findIndex((request) => request.id == id);
+
+    console.log(this.requests[idx]);
+    return this.requests[idx];
+  };
+
+  @action reset = () => {
+    // 의뢰서 관련 변수 초기화
+    this.newIndex = 0;
+    this.selected_partner = "";
+    this.request_state = -1;
+    this.request_name = "";
+    this.request_price = "";
+    this.request_price_state = -1;
+    this.request_period = "";
+    this.request_period_state = 0;
+    this.request_contents = "";
+    this.request_file_set = [];
+    this.request_file_secure = 0;
+    this.request_drawing_set = [];
+  };
+}
 export default new Request();

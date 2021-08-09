@@ -1,8 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { toJS } from "mobx";
+import { inject, observer } from "mobx-react";
 
-class ProposalCard extends React.Component {
+import Containerv1 from "components/Containerv1";
+import * as Title from "components/Title";
+
+@inject("Project")
+@observer
+class ProjectCardContainer extends React.Component {
   state = {
     width: null,
   };
@@ -20,30 +25,42 @@ class ProposalCard extends React.Component {
   };
 
   render() {
-    const {
-      data,
-      middleCategory,
-      mainCategory,
-      newData,
-      checkTotal,
-      customer,
-    } = this.props;
+    // data는 프로젝트 데이터
+    const { data } = this.props;
     const { width } = this.state;
 
+    // 의뢰명
     let name = "";
+    // 의뢰 날짜
     let date = "";
+    // 의뢰 기간
     let period = "";
-    let estimate = "";
+    // 희망 가격
+    let price = "";
+    // 의뢰 목적
     let status = "";
+    // 의뢰 내용
     let content = "";
+
+    // 의뢰 파일 list
+    let filelist = "";
+
+    // 의뢰 분류
+    let category = "";
+
+    // 희망 지역
+    let region = "";
+
+    // 데이터 저장
     if (data.request_set[0]) {
       name = data.request_set[0].name && data.request_set[0].name;
+
       date =
         data.request_set[0].createdAt &&
         data.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".");
-      content =
-        data.request_set[0].order_request_open &&
-        data.request_set[0].order_request_open;
+
+      content = data.request_set[0].contents && data.request_set[0].contents;
+
       period =
         data.request_set[0].deadline == "2020-11-11T11:11:00+09:00"
           ? "납기일미정"
@@ -51,437 +68,185 @@ class ProposalCard extends React.Component {
             "(" +
             data.request_set[0].deadline_state +
             ")";
+
+      price = data.request_set[0].price && data.request_set[0].price;
+
       status =
         data.request_set[0].request_state && data.request_set[0].request_state;
+
+      filelist =
+        data.request_set[0].requestfile_set &&
+        data.request_set[0].requestfile_set;
+
+      category = data.request_set[0].category && data.request_set[0].category;
+
+      region = data.request_set[0].region && data.request_set[0].region;
     }
 
+    const { Project } = this.props;
 
     return (
-      <>
-        {width > 767.98 ? (
-          <Card>
-            {data.project_status === 21 ? (
-              <StepTag style={{ backgroundColor: "#999999" }}>
-                <span> {status} </span>
-                <div style={{ borderTop: "9.1px solid #414550" }}></div>
-              </StepTag>
-            ) : (
-              <StepTag>
-                <span> {status} </span>
-                <div></div>
-              </StepTag>
-            )}
-            <HeaderWrapper>
-              <Title>{name}</Title>
-              <Content style={{ color: "#86888c", width: "20%" }}>
-                {date}
-              </Content>
-            </HeaderWrapper>
-            <CategoryWrapper>
-              <SubTitle>
-                <span>공개내용</span>
-              </SubTitle>
-              <Content> {content} </Content>
-              <CategoryBox>
-                <span>{mainCategory}</span>
-              </CategoryBox>
-              <CategoryBox>
-                <span>{middleCategory}</span>
-              </CategoryBox>
-            </CategoryWrapper>
-            <FooterWrapper>
-              <SubTitle>희망납기</SubTitle>
-              <Content>{period}</Content>
-            </FooterWrapper>
-          </Card>
-        ) : (
-          //    )
+      <Background>
+        <Container style={{ width: "95%" }}>
+          <MainContainer>
+            <ContentBox style={{ width: 110, alignItems: "center" }}>
+              <Title12 style={{ width: 50 }}>{data.status}</Title12>
+              <img src="/static/images/new.svg" />
+            </ContentBox>
 
-          <Card
-            style={{
-              backgroundColor:
-                data.project_status === 21 ? "#f6f6f6" : "var(--white)",
-            }}
-          >
-            <StepTag>
-              <span
-                style={{
-                  color: data.project_status === 21 ? "#767676" : "#0933b3",
-                }}
-              >
-                {" "}
-                {status}{" "}
-              </span>
-            </StepTag>
-            <HeaderWrapper>
-              <Title>{name}</Title>
-              <Content style={{ color: "#86888c", width: "20%" }}>
-                {date}
-              </Content>
-            </HeaderWrapper>
-            <CategoryWrapper>
-              <SubTitle>
-                <span>공개내용</span>
-              </SubTitle>
-              <Content> {content}</Content>
-              <CategoryBox>
-                <span>{mainCategory}</span>
-              </CategoryBox>
-              <CategoryBox>
-                <span>{middleCategory}</span>
-              </CategoryBox>
-            </CategoryWrapper>
-            <FooterWrapper>
-              <SubTitle>
-                <span>희망납기</span>
-              </SubTitle>
-              <Content>{period}</Content>
-            </FooterWrapper>
-          </Card>
-        )}
-      </>
+            <ContentBox style={{ width: 320, marginTop: 20 }}>
+              <Title20>{name && name}</Title20>
+              <img src="/static/images/success.svg" />
+              <Title14>{date}</Title14>
+            </ContentBox>
+
+            <ContentBox style={{ marginTop: 32, width: 400, gap: 20 }}>
+              <ImgInnerBox style={{ flexDirection: "column" }}>
+                <InnerBox>
+                  <img src="static/images/class.svg" />
+                  <Title16>업체분류</Title16>
+                </InnerBox>
+                <div style={{ marginTop: 8 }}>{category && category}</div>
+              </ImgInnerBox>
+
+              <img src="static/images/contentline.svg" />
+
+              <ImgInnerBox style={{ flexDirection: "column" }}>
+                <InnerBox>
+                  <img src="static/images/purpose.svg" />
+                  <Title16>문의목적</Title16>
+                </InnerBox>
+                <div style={{ marginTop: 8 }}>{status && status}</div>
+              </ImgInnerBox>
+
+              <img src="static/images/contentline.svg" />
+
+              <ImgInnerBox style={{ flexDirection: "column" }}>
+                <InnerBox>
+                  <img src="static/images/price.svg" />
+                  <Title16>예상금액</Title16>
+                </InnerBox>
+                <div style={{ marginTop: 8 }}>
+                  {price != "" ? price : "미정"}
+                </div>
+              </ImgInnerBox>
+            </ContentBox>
+
+            <DescTitle14>
+              {content && content.length > 70
+                ? content.substring(0, 70) + "..."
+                : content}
+            </DescTitle14>
+          </MainContainer>
+
+          <AssistantContainer>
+            <AssistantInnerBox>
+              <img src="static/images/bookmark.svg" />
+              <AssistantTitle14>3</AssistantTitle14>
+            </AssistantInnerBox>
+
+            <AssistantInnerBox>
+              <img src="static/images/eye.svg" />
+              <AssistantTitle14>높음</AssistantTitle14>
+            </AssistantInnerBox>
+
+            <AssistantInnerBox>
+              <img src="static/images/person.svg" />
+              <AssistantTitle14>총 3명 지원</AssistantTitle14>
+            </AssistantInnerBox>
+
+            <img src="static/images/underline.svg" style={{ marginTop: 9 }} />
+          </AssistantContainer>
+        </Container>
+      </Background>
     );
   }
 }
 
-export default ProposalCard;
+export default ProjectCardContainer;
 
-const StepTag = styled.div`
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    > span {
-      width: 61px;
-      height: 19px;
-      color: #0933b3;
-      font-size: 13px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 34px;
-      letter-spacing: -0.33px;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 100px;
-    height: 36px;
-    position: absolute;
-    background-color: #0933b3;
-    top: 0;
-    left: -9px;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-    border-radius: 3px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    > div {
-      position: absolute;
-      width: 0px;
-      height: 0px;
-      left: 1px;
-      bottom: -8px;
-      border-left: 9px solid transparent;
-      border-top: 9px solid #0a2165;
-    }
-    > span {
-      font-size: 16px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.88;
-      letter-spacing: -0.16px;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 100px;
-    height: 36px;
-    position: absolute;
-    background-color: #0933b3;
-    top: 0;
-    left: -9px;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-    border-radius: 3px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    > div {
-      position: absolute;
-      width: 0px;
-      height: 0px;
-      left: 1px;
-      bottom: -8px;
-      border-left: 9px solid transparent;
-      border-top: 9px solid #0a2165;
-    }
-    > span {
-      font-size: 16px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.88;
-      letter-spacing: -0.16px;
-    }
-  }
-  @media (min-width: 1300px) {
-    width: 100px;
-    height: 36px;
-    position: absolute;
-    background-color: #0933b3;
-    top: 0;
-    left: -9px;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-    border-radius: 3px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    > div {
-      position: absolute;
-      width: 0px;
-      height: 0px;
-      left: 1px;
-      bottom: -8px;
-      border-left: 9px solid transparent;
-      border-top: 9px solid #0a2165;
-    }
-    > span {
-      font-size: 16px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.88;
-      letter-spacing: -0.16px;
-    }
-  }
-`;
-const Card = styled.div`
-  width: 100%;
-  //width: 987px;
-  position: relative;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  background-color: #ffffff;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 100%;
-
-    padding-left: 14px;
-    padding-right: 14px;
-    padding-top: 7px;
-    // padding-bottom: 14px;
-
-    box-sizing: border-box;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 100%;
-    // margin-bottom: 34px;
-    padding: 62px 49px 32px 32px;
-    padding-bottom: 0;
-
-    box-sizing: border-box;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    height: 100%;
-    // margin-bottom: 34px;
-    padding: 62px 49px 32px 32px;
-    padding-bottom: 0;
-    box-sizing: border-box;
-  }
-  @media (min-width: 1300px) {
-    height: 100%;
-    // margin-bottom: 34px;
-    padding: 62px 49px 32px 32px;
-    padding-bottom: 0;
-    box-sizing: border-box;
-  }
-`;
-const Title = styled.span`
-  height: 36px;
-  font-size: 24px;
+const Title12 = styled(Title.FontSize12)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.6px;
-  text-align: left;
-  color: #282c36;
-  white-space: nowrap;
-  margin-right: 20px;
-  width: 80%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 15px;
-    height: 22px;
-    line-height: 15px;
-    letter-spacing: -0.38px;
-    margin-bottom: 5px;
-  }
+  color: #0933b3;
 `;
-const SubTitle = styled.span`
-  height: 29px;
+
+const Title14 = styled(Title.FontSize14)`
+  font-weight: normal;
+  color: #b3b3b3;
+  margin: 5px 0px 0px 15px;
+`;
+
+const Title16 = styled(Title.FontSize16)`
+  font-weight: normal;
+  color: #767676;
+  margin-left: 4px;
+`;
+
+const Title20 = styled(Title.FontSize20)`
+  font-weight: bold;
+  color: #000000;
+`;
+
+const DescTitle14 = styled(Title.FontSize14)`
+  margin-top: 40px;
+  font-weight: 400;
+  color: #767676;
+`;
+
+const Background = styled.div`
   display: flex;
-  align-items: center;
-  font-size: 20px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 2;
-  letter-spacing: -0.5px;
-  text-align: left;
-  color: #282c36;
-  white-space: nowrap;
-  margin-right: 15px;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    height: 100%;
-    font-size: 12px;
-    line-height: 15px;
-    letter-spacing: -0.38px;
-  }
-`;
-const HeaderWrapper = styled.div`
-  width: 100%;
-  margin-bottom: 27px;
-  display: inline-flex;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-bottom: 0px;
-    box-sizing: border-box;
-  }
-`;
-const CategoryWrapper = styled.div`
-  display: inline-flex;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 13px;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-bottom: 2px;
-    box-sizing: border-box;
-  }
-`;
-const FooterWrapper = styled.div`
-  display: inline-flex;
-  width: 100%;
-  // height: 29px;
-  align-items: center;
-  justify-content: space-between;
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin-bottom: 14px;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    margin-bottom: 32px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    margin-bottom: 32px;
-  }
-  @media (min-width: 1300px) {
-    margin-bottom: 32px;
-  }
-`;
-const CategoryBox = styled.div`
-  object-fit: contain;
-  border-radius: 3px;
-  background-color: #e1e2e4;
-  display: inline-flex;
-  align-items: center;
-  align-content: center;
   justify-content: center;
-  margin-right: 20px;
-  padding: 0 15px;
-  > span {
-    font-size: 16px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.88;
-    letter-spacing: -0.16px;
-    text-align: left;
-    color: #282c36;
+  margin-top: 30px;
+  border-radius: 8px;
+  border: solid 1px #e1e2e4;
+  background-color: #ffffff;
+  cursor: pointer;
+
+  :hover {
+    border: solid 1px #0933b3;
   }
 `;
-const Content = styled.span`
-  // height: 24px;
-  display: inline-block;
+
+const Container = styled(Containerv1)`
+  justify-content: space-between;
+  margin: 30px 0px 30px 0px;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const AssistantContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+
+const ContentBox = styled.div`
+  display: inline-flex;
+  gap: 10px;
+`;
+
+const ImgInnerBox = styled.div`
+  display: inline-flex;
   align-items: center;
-  // align-self: flex-end;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  // line-height: 2.5;
-  letter-spacing: -0.4px;
-  text-align: left;
-  white-space: nowrap;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    font-size: 12px;
-    color: #767676;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    font-size: 16px;
-    color: #414550;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    font-size: 16px;
-    color: #414550;
-  }
-  @media (min-width: 1300px) {
-    font-size: 16px;
-    color: #414550;
-  }
 `;
-const PriceTagBox = styled.div`    
-    .tag1 {
-        height: 29px;
-        display: inline-flex;
-        
-        font-size: 20px;
-        font-weight: 500;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 40px;
-        letter-spacing: -0.5px;
-        text-align: left;
-        color: #282c36;
-        padding-right: 20px;   
-        
-    }
-    .tag2 {
-        display: inline-flex;        
-        font-weight: 500;
-        font-stretch: normal;
-        font-style: normal;
-        letter-spacing: -0.75px;
-        text-align: left;
-        color: #282c36;
-        height: 45px;
-        @media (min-width: 0px) and (max-width: 767.98px) {
-            font-size: 14px
-            line-height: 15px;
-        }
-        @media (min-width: 768px) and (max-width: 991.98px) {
-            font-size: 24px;        
-            line-height: 52px;
-          }
-          @media (min-width: 992px) and (max-width: 1299.98px) { 
-            font-size: 27px;    
-            line-height: 52px;
-          }
-          @media (min-width: 1300px) { 
-            font-size: 30px;
-            line-height: 52px;
-          }
-    }
 
-    @media (min-width: 0px) and (max-width: 767.98px) {    
-        .tag1{
-            font-size: 13px;
-            padding-right: 8px;
-        }
-    }
+const InnerBox = styled.div`
+  display: inline-flex;
+  align-items: center;
+`;
+
+const AssistantInnerBox = styled.div`
+  display: flex;
+  gap: 10px;
+  width: 100px;
+  margin-top: 12px;
+`;
+
+const AssistantTitle14 = styled(Title.FontSize14)`
+  font-weight: 400;
+  color: #282c36;
 `;

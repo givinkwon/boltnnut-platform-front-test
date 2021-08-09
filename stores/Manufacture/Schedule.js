@@ -28,15 +28,11 @@ class Schedule {
   };
   @action init = () => {
     let today_date = new moment().format("YYYY-MM");
-    //this.today = today_date.format('YYYY-MM-DD ');
-    //this.book_time = this.today + this.current;
     this.active1 = null;
     this.clickDay = 0;
     this.getDays(today_date.split("-")[0], today_date.split("-")[1]);
   };
-  @action setOnline = (obj) => {
-    this.isOnline = obj;
-  };
+
   @action setTodayDate = (obj) => {
     this.today = obj;
     this.current = "10:00:00";
@@ -45,11 +41,13 @@ class Schedule {
     this.getDays(this.today.split("-")[0], this.today.split("-")[1]);
     this.getOccupiedDate();
   };
+
   @action setCurrent = (obj) => {
     this.current = obj;
     this.book_time = this.today + this.current;
     console.log(this.book_time);
   };
+
   @action getOccupiedDate = () => {
     this.inactive_today = [];
     let req = {
@@ -67,6 +65,7 @@ class Schedule {
       })
       .catch((error) => console.log(error));
   };
+  
   @action submitSchedule = (data) => {
     let req = {
       request: data.request,

@@ -1,84 +1,138 @@
 import React from "react";
 import styled from "styled-components";
-import Containerv1 from "../../components/Containerv1";
-import Background from "components/Background";
 import * as Title from "components/Title";
+import { inject, observer } from "mobx-react";
+import Containerv1 from "components/Containerv1";
 import Fade from "react-reveal/Fade";
+import Background from "components/Background";
+import ProposalCard from "../Manufacture/Producer/ProposalCard";
+import { toJS } from "mobx";
 
-const image1 = "/static/images/Home/Banner2/image1.png";
+@inject("Home", "Partner", "Auth", "Producer", "Category")
+@observer
+class NewBanner2Container extends React.Component {
+  async componentDidMount() {
+    const { Partner, Category } = this.props;
+    Partner.detailLoadingFlag = false;
 
-class Banner4Container extends React.Component {
+    Partner.currentPage = 1;
+
+    // 리스트 초기화 && 선택하기
+    Category.reset();
+    Category.add_selected("category", 1);
+  }
+
+  onClickCategory = (idx) => {
+    const { Home, Category, Partner } = this.props;
+    Home.categoryIndex = idx;
+    // 리스트 초기화 && 선택하기
+    Category.reset();
+    Category.add_selected("category", idx);
+  };
+
+  onCompareCategory = (idx) => {
+    const { Home } = this.props;
+
+    if (Home.categoryIndex === idx) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   render() {
-    return (
-      <Background backgroundColor={"#ffffff"}>
-        <Containerv1
-          style={{
-            paddingBottom: 300,
-            paddingTop: 300,
-            justifyContent: "space-between",
-          }}
-        >
-          <Fade bottom>
-            <div style={{ marginRight: "126px" }}>
-              <img src={image1} style={{ height: "100%" }} />
-            </div>
-            <div style={{ width: "100%" }}>
-              <Header>제조사 정보 제공 서비스</Header>
-              <Middle>
-                <span>포트폴리오부터 계약 후기까지!</span>
-                <span>5000개의 전국 제조사 정보 제공</span>
-              </Middle>
-              <Body>
-                <span>남동공단부터 창원까지</span>
+    // id는 실제 DB의 id로 해야함
+    const nameTable = [
+      { id: 1, name: "생활/위생" },
+      { id: 2, name: "디지털/가전" },
+      { id: 5, name: "반려" },
+      { id: 6, name: "인테리어" },
+      { id: 7, name: "주방" },
+      { id: 41, name: "전자/반도체 부품" },
+      { id: 46, name: "볼트/너트류" },
+      { id: 39, name: "동력전달부품" },
+      { id: 19, name: "냉난방/공조" },
+      { id: 22, name: "밴딩/포장" },
+    ];
 
-                <span>선별된 5000여 개 제조사 정보를</span>
-                <span> 지금 바로 확인하세요.</span>
-              </Body>
-            </div>
-          </Fade>
-        </Containerv1>
-      </Background>
+    const { Partner, Auth, Producer, Category } = this.props;
+
+    return (
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "200px" }}>
+        <Fade right>
+          <Containerv1 style={{ justifyContent: " center", flexDirection: "column" }}>
+            <Header>
+              <b style={{ fontWeight: "bold" }}>5,660개</b>의 볼트앤너트의 업체 전문가들을 만나보세요.
+            </Header>
+
+            <CategoryBox>
+              {nameTable.map((v, idx) => (
+                <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
+                  {v.name}
+                </CategoryTitle>
+              ))}
+            </CategoryBox>
+
+            {Partner.partner_list &&
+              Partner.partner_list.map((item, idx) => {
+                return (
+                  <>
+                    {idx < 3 && (
+                      <Background style={{ marginBottom: "5px" }}>
+                        <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
+                          <ProposalCard
+                            data={item}
+                            width={this.props.width}
+                            categoryData={toJS(Partner.category_dic[idx])}
+                            idx={idx}
+                            handleIntersection={Producer.handleIntersection}
+                            customer="partner"
+                          />
+                        </div>
+                      </Background>
+                    )}
+                  </>
+                );
+              })}
+          </Containerv1>
+        </Fade>
+      </div>
     );
   }
 }
 
-export default Banner4Container;
+export default NewBanner2Container;
 
-const Header = styled(Title.FontSize20)`
-  color: #0933b3;
-  font-weight: bold;
+const Header = styled(Title.FontSize32)`
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.45;
-  letter-spacing: normal;
-  margin-bottom: 16px;
-  font-size: 17px !important;
+  line-height: 1.56;
+  letter-spacing: -0.8px;
+  text-align: center;
+  color: #000000;
 `;
-const Middle = styled(Title.FontSize56)`
-  font-size: 32px !important;
-  color: #282c36;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.36;
-  letter-spacing: -1.4px;
-  margin-bottom: 128px;
-  width: 105%;
 
-  > span {
-    display: block;
-    font-weight: bold;
-  }
+const CategoryBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 80px;
+  border-bottom: solid 1px #c6c7cc;
 `;
-const Body = styled(Title.FontSize24)`
-  font-weight: 500;
+
+const CategoryTitle = styled.div`
+  object-fit: contain;
+  font-family: NotoSansCJKkr;
+  font-size: 18px;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.67;
-  letter-spacing: -0.6px;
-  //color: #cedafe;
-  color: #282c36;
-  > span {
-    display: block;
-  }
+  line-height: 2.89;
+  letter-spacing: -0.45px;
+  text-align: left;
+  cursor: pointer;
+  color: ${(props) => (props.active ? "#282c36" : "#b3b3b3")};
+  border-bottom: ${(props) => (props.active ? "2px solid #282c36" : "")};
 `;

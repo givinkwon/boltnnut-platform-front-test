@@ -10,6 +10,8 @@ import KSLink from "components/KSLink";
 import { inject, observer } from "mobx-react";
 import InnerBoxComponent from "components/InnerBox";
 
+@inject("Auth")
+@observer
 class NoticeConatiner extends React.Component {
   state = {
     companyName: null,
@@ -48,6 +50,7 @@ class NoticeConatiner extends React.Component {
         <Section>
           <Container>
             <ContentConatiner />
+
             <InnerBoxComponent
               outerStyles={{
                 marginTop: 30,
@@ -55,7 +58,7 @@ class NoticeConatiner extends React.Component {
                 padding: 20,
               }}
               Content={() => {
-                return <>hello</>;
+                return <>{this.props.Auth.registerType}</>;
               }}
             />
             {/* {this.state.companyName} */}

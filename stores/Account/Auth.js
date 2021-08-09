@@ -3,16 +3,15 @@ import Router from "next/router";
 import * as AccountAPI from "axios/Account/Account";
 import * as CategoryAPI from "axios/Account/Category";
 import Account from "pages/account";
-import Category from "stores/Manufacture/Category";
 
 class Auth {
   constructor() {
     //makeObservable(this);
   }
   @observable bgColor = "#ffffff";
-  @observable logged_in_user = null;
-  @observable logged_in_client = null;
-  @observable logged_in_partner = null;
+  @observable logged_in_user = null; // user 로그인 데이터
+  @observable logged_in_client = null; // client면 로그인 했을 때 데이터
+  @observable logged_in_partner = null; // partner면 로그인 했을 때 데이터
 
   @observable always_login = false;
 
@@ -30,6 +29,7 @@ class Auth {
   @observable step = 0;
   @observable loading = false;
 
+  @observable realName = "";
   @observable company_name = "";
   @observable revenue = "";
   @observable employee = "";
@@ -59,31 +59,52 @@ class Auth {
 
   @observable home_index = 0;
 
-  @observable previous_url = "";
+  @observable previous_url;
 
-  @action kakaoLogin = () => {
-    const { Kakao } = window;
-    console.log(Kakao.isInitialized());
-    console.log(Kakao);
-    const scopes = "profile";
-    Kakao.Auth.login({
-      // scopes,
-      success: function (authObj) {
-        console.log(authObj);
-        // Kakao.Auth.setAccessToken(authObj.access_token);
+  @observable isSnsSignup = false;
 
-        Kakao.API.request({
-          url: "/v2/user/me",
-          success: function ({ kakao_account }) {
-            // const { profile } = kakao_account;
-            // console.log(profile);
-            console.log(kakao_account);
-          },
-          fail: function (error) {
-            console.log(error);
-          },
-        });
-      },
+  @observable checkboxState = [false, false, false, false];
+  @observable allCheckState = false;
+
+  @observable accountTabIdx = 1;
+  //개발중에 임시로 false로해둠
+  @observable signupBoxActive = false;
+
+  @observable registerType = "";
+  @observable registerPageIdx = 0;
+
+  @observable nextBtnActive = false;
+
+  @observable RegisterTypeArray = [
+    {
+      img: "/static/icon/registerMain1.svg",
+      content: "부품/완제품 판매",
+      type: "product",
+      checked: false,
+      id: 0,
+    },
+    {
+      img: "/static/icon/registerMain2.svg",
+      content: "개발/설계",
+      type: "development",
+      checked: false,
+      id: 1,
+    },
+    {
+      img: "/static/icon/registerMain3.svg",
+      content: "제작",
+      type: "manufacture",
+      checked: false,
+      id: 2,
+    },
+  ];
+
+  @action isChecked = () => {
+    this.nextBtnActive = false;
+    this.RegisterTypeArray.map((item, idx) => {
+      if (item.checked) {
+        this.nextBtnActive = true;
+      }
     });
   };
   @action reset = () => {
@@ -125,8 +146,13 @@ class Auth {
   @action setPassword2 = (val) => {
     this.password2 = val;
   };
+  //회사명
   @action setName = (val) => {
     this.name = val;
+  };
+  //실명
+  @action setRealName = (val) => {
+    this.realName = val;
   };
   @action setTitle = (val) => {
     this.title = val;
@@ -342,7 +368,7 @@ class Auth {
         password: this.password,
       },
     };
-
+    console.log(req);
     AccountAPI.login(req)
       .then((res) => {
         this.loading = false;
@@ -462,6 +488,7 @@ class Auth {
         password: this.password,
       },
     };
+    console.log(req);
     AccountAPI.login(req)
       .then((res) => {
         this.logged_in_user = res.data.data.User;
@@ -487,7 +514,7 @@ class Auth {
         setTimeout(() => {
           this.loading = false;
 
-          if (this.previous_url == "") {
+          if (this.previous_url == "" || this.previous_url == null) {
             Router.push("/");
           } else {
             // this.makeUrl(this.previous_url);
@@ -498,6 +525,7 @@ class Auth {
       })
       .catch((e) => {
         try {
+          console.log(e);
           alert(e.response.data.message);
         } catch {
           console.log(e);
@@ -506,7 +534,111 @@ class Auth {
         this.loading = false;
       });
   };
-  @action signup = async () => {
+
+  @action kakaoLogin = () => {
+    const { Kakao } = window;
+    console.log(Kakao.isInitialized());
+    console.log(Kakao);
+    console.log(this);
+    const scopes = "profile";
+    const myStore = this;
+    Kakao.Auth.login({
+      // scopes,
+      success: function (authObj) {
+        console.log(authObj);
+        // Kakao.Auth.setAccessToken(authObj.access_token);
+
+        Kakao.API.request({
+          url: "/v2/user/me",
+          success: function ({ kakao_account }) {
+            // const { profile } = kakao_account;
+            // console.log(profile);
+
+            const req = {
+              data: {
+                token: authObj.access_token,
+                // username: "qwerqwsdsdsdsder@naver.com",
+                username: kakao_account.email,
+                sns: 1,
+              },
+            };
+            console.log(req);
+            //POST to "${ROOT_URL}/snsuser/login/"
+            AccountAPI.SNSlogin(req)
+              //아이디가 DB에 이미 존재할 때
+              .then((res) => {
+                console.log(res);
+
+                myStore.logged_in_user = res.data.data.User;
+
+                if (myStore.logged_in_user.type === 0) {
+                  myStore.logged_in_client = res.data.data.Client[0];
+                  // if (!myStore.logged_in_client) {
+                  //   alert(
+                  //     "로그인에 문제가 발생하였습니다. 새로고침 후 다시 시도해 주세요."
+                  //   );
+                  //   return false;
+                  // }
+                  console.log(myStore.logged_in_client);
+                } else if (myStore.logged_in_user.type === 1) {
+                  myStore.logged_in_partner = res.data.data.Partner[0];
+                  console.log(res.data.data.Partner[0]);
+                  console.log(myStore.logged_in_partner);
+                  // if (!myStore.logged_in_partner) {
+                  //   alert(
+                  //     "로그인에 문제가 발생하였습니다. 새로고침 후 다시 시도해 주세요."
+                  //   );
+                  //   return false;
+                  // }
+                }
+
+                const token = res.data.data.token;
+                console.log(token);
+                if (!myStore.always_login) {
+                  const now = new Date();
+                  let tomorrow = new Date();
+                  tomorrow.setDate(now.getDate() + 1);
+
+                  localStorage.setItem("expiry", tomorrow.getTime().toString());
+                }
+                localStorage.setItem("token", token);
+
+                setTimeout(() => {
+                  myStore.loading = false;
+
+                  if (
+                    myStore.previous_url == "" ||
+                    myStore.previous_url == null
+                  ) {
+                    Router.push("/");
+                  } else {
+                    console.log(myStore.previous_url);
+                    Router.push("/" + myStore.previous_url);
+
+                    myStore.previous_url = "";
+                  }
+                }, 800);
+              })
+              //아이디가 DB에 없을 때
+              .catch((res) => {
+                console.log(res);
+                myStore.isSnsSignup = true;
+                // myStore.email = "qwerqwsdsdsdsder@naver.com";
+                myStore.email = kakao_account.email;
+                myStore.phone = "01014242323"; //임시, 비즈니스 채널 연결되면 폰번호 받아올 수 있음
+                Router.push("/signup");
+              });
+            console.log(kakao_account);
+          },
+          fail: function (error) {
+            console.log(error);
+          },
+        });
+      },
+    });
+  };
+
+  @action snsSignup = async () => {
     if (!this.email) {
       await alert("이메일을 입력해주세요.");
       return;
@@ -516,72 +648,47 @@ class Auth {
       await alert("이메일 형식을 확인해주세요.");
       return;
     }
-    if (!this.password) {
-      await alert("비밀번호를 입력해주세요.");
-      return;
-    }
-    if (this.password != this.password2) {
-      await alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-    if (!this.phone) {
-      await alert("휴대전화를 입력해주세요.");
-      return;
-    }
 
     console.log("email : ", this.email);
-    console.log("password : ", this.password);
-    console.log("password2 : ", this.password2);
-    console.log("company : ", this.name);
-    console.log("job title : ", this.title);
-    console.log("path : ", this.path);
-    console.log("business : ", this.business);
-    console.log("business2 : ", this.business2);
-    console.log("phone : ", this.phone);
-    console.log("marketing : ", this.marketing);
-    if (this.type === "client") {
-      if (!this.name) {
-        await alert("상호명을 입력해주세요.");
-        return;
-      }
-      if (!this.title) {
-        await alert("직위를 입력해주세요");
-        return;
-      }
-      if (!this.path) {
-        await alert("방문경로를 입력해주세요");
-        return;
-      }
-      if (!this.business) {
-        await alert("업종을 입력해주세요");
-        return;
-      }
 
-      if (this.business.business == "기타") {
-        //console.log(this.business.business)
-        this.business.business = this.business2;
+    console.log("company : ", this.name);
+
+    console.log("business : ", this.business);
+    // if (true)
+    if (this.type === "client") {
+      if (!this.realName) {
+        await alert("이름을 입력해주세요.");
+        return;
       }
+      // if (!this.title) {
+      //   await alert("직위를 입력해주세요");
+      //   return;
+      // }
+      // if (!this.path) {
+      //   await alert("방문경로를 입력해주세요");
+      //   return;
+      // }
+      // if (!this.business) {
+      //   await alert("업종을 입력해주세요");
+      //   return;
+      // }
 
       this.loading = true;
       const req = {
         data: {
           username: this.email,
-          password: this.password,
           phone: this.phone,
-          name: this.name,
-          title: this.title,
-          path: this.path.path,
-          business: this.business.business,
+          realName: this.realName,
+          business: this.business,
           type: 0,
-          marketing: this.marketing,
         },
       };
-      AccountAPI.clientSignup(req)
+      AccountAPI.snsClientSignup(req)
         .then((res) => {
           setTimeout(() => {
             this.loading = false;
             alert("회원가입 성공");
-            MyDataLayerPush({ event: "SignUpComplete_Client" });
+            // MyDataLayerPush({ event: "SignUpComplete_Client" });
             this.reset();
             Router.push("/login");
           }, 800);
@@ -596,80 +703,11 @@ class Auth {
           this.loading = false;
         });
     } else {
+      //파트너
       if (!this.company_name) {
         await alert("상호명을 입력해주세요.");
         return;
       }
-      {
-        /*if (!this.employee) {
-        await alert("종업원 수를 입력해주세요.");
-        return;
-      }
-      if (!this.career) {
-        await alert("설립연도를 입력해주세요.");
-        return;
-      }
-      if (!this.revenue) {
-        await alert("매출액을 입력해주세요.");
-        return;
-      }*/
-      }
-      if (!this.city) {
-        await alert("시/도를 입력해주세요.");
-        return;
-      }
-      {
-        /*if (!this.region) {
-        await alert("지역을 입력해주세요.");
-        return;
-      }
-
-      if (!this.info_biz) {
-        await alert("주요사업을 입력해주세요.");
-        return;
-      }*/
-      }
-      if (!this.deal) {
-        await alert("주요거래처를 입력해주세요.");
-        return;
-      }
-      if (!this.info_company) {
-        await alert("회사소개를 입력해주세요.");
-        return;
-      }
-      if (this.info_company.length < 100) {
-        await alert("회사소개를 100자 이상 입력해주세요");
-        return;
-      }
-
-      {
-        /*if (toJS(this.possible_set).length === 0) {
-        await alert("가능한 제품을 입력해주세요.");
-        return;
-      }*/
-      }
-      if (!this.histories) {
-        await alert("진행한 제품들을 10개 이상 입력해 주세요.");
-        return;
-      }
-
-      // if (this.category_set.length === 0) {
-      //   await alert("개발분야를 선택 해주세요.");
-      //   return;
-      // }
-
-      if (!this.file) {
-        await alert("회사소개서를 입력해주세요.");
-        return;
-      }
-      //  if (!this.logo) {
-      //    await alert("로고를 입력해주세요.");
-      //    return;
-      //  }
-      if (!this.resume) {
-        await alert("이력서를 첨부해 주세요.");
-        return;
-      } // 0923
 
       if (this.marketing == true) {
         this.marketing = 1;
@@ -678,43 +716,13 @@ class Auth {
       }
       var formData = new FormData();
 
-      {
-        /*var possible_set = [];
-      for (var i of this.possible_set) {
-        await possible_set.push(i.id);
-      }
-      */
-      }
-      var history_set = [];
-      for (var i of this.history_set) {
-        await history_set.push(i.id);
-      }
-
       formData.append("username", this.email);
-      formData.append("password", this.password);
+      // formData.append("password", this.password);
       formData.append("phone", this.phone);
       formData.append("type", 1);
       formData.append("marketing", this.marketing);
-      formData.append("logo", this.logo);
       formData.append("name", this.company_name);
-      formData.append("city", this.city.id);
-      formData.append("deal", this.deal);
-      formData.append("info_company", this.info_company);
-      formData.append("history", this.histories);
-      
-      // 카테고리 추가
-      console.log(Category.business_selected)
-      console.log(Category.category_selected)
-      console.log(Category.develop_selected)
-      console.log(Category.material_selected)
-      formData.append("business", Category.business_selected);
-      formData.append("category", Category.category_selected);
-      formData.append("develop", Category.develop_selected);
-      formData.append("material", Category.material_selected);
-
-      // 파일 추가
-      formData.append("file", this.file);
-      formData.append("resume", this.resume);
+      formData.append("realName", this.realName);
 
       this.loading = true;
       const req = {
@@ -725,7 +733,7 @@ class Auth {
           setTimeout(() => {
             this.loading = false;
             alert("회원가입 성공");
-            MyDataLayerPush({ event: "SignUpComplete_Partner" });
+            // MyDataLayerPush({ event: "SignUpComplete_Partner" });
             this.reset();
             Router.push("/login");
           }, 800);
@@ -746,6 +754,7 @@ class Auth {
         });
     }
   };
+
   @action forget = async () => {
     setTimeout(() => {
       this.loading = false;
@@ -789,10 +798,14 @@ class Auth {
         }, 1500);
       });
   };
+
+  // 아이디 찾기
   @action forgetId = async () => {
     setTimeout(() => {
       this.loading = false;
     }, 1500);
+
+    // 예외처리
     if (!this.phone) {
       alert("휴대폰 번호를 입력해주세요.");
       return;
@@ -800,16 +813,21 @@ class Auth {
 
     this.loading = true;
     console.log(this.phone);
+
+    // 데이터 만들기
     const req = {
       data: {
         phone: this.phone,
       },
     };
+
+    // API 호출
     AccountAPI.findId(req)
       .then((res) => {
         setTimeout(() => {
           this.loading = false;
         }, 800);
+        // 아이디 데이터
         this.restore_email = [];
         this.setStep(1);
         this.restore_email = this.restore_email.concat(res.data.data);

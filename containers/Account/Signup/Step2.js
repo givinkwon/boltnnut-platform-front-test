@@ -112,6 +112,7 @@ class Step2Conatiner extends React.Component {
                 <File />
               </>
             )}
+
             {width > 767.98 ? (
               <>
                 <TermsContainer>

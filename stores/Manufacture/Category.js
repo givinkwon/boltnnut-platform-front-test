@@ -2,8 +2,6 @@ import { observable, action, toJS, makeObservable } from "mobx";
 
 import * as CategoryAPI from "axios/Account/Category";
 import * as PartnerAPI from "axios/Manufacture/Partner";
-import { isConstructorDeclaration } from "typescript";
-import NoneDrawingConsultingContainer from "containers/Manufacture/Request/NoneDrawingConsulting";
 
 import Partner from "./Partner";
 
@@ -44,6 +42,7 @@ class Category {
     await CategoryAPI.getMainbusiness()
       .then((res) => {
         this.mainbusiness_list = res.data.results;
+
         console.log(toJS(this.mainbusiness_list));
       })
       .catch((e) => {
@@ -56,7 +55,7 @@ class Category {
       .then(async (res) => {
         this.maincategory_list = res.data.results;
         console.log(toJS(this.maincategory_list));
-        this.category_list.forEach((mainCategory) => {
+        this.maincategory_list.forEach((mainCategory) => {
           this.category_list = this.category_list.concat(
             mainCategory.category_set
           );
@@ -102,7 +101,7 @@ class Category {
 
   /* reset */
   @action reset = () => {
-    console.log("Category Reset")
+    console.log("Category Reset");
     // 카테고리 배열 초기화
     this.mainbusiness_list = [];
     this.business_list = [];
@@ -128,34 +127,47 @@ class Category {
     this.city_selected = [];
     this.material_selected = [];
     this.develop_selected = [];
+
+    this.business_selected_name = [];
+    this.category_selected_name = [];
+    this.material_selected_name = [];
+    this.develop_selected_name = [];
   };
 
-    /* 선택된 리스트 초기화 */
-    @action reset_selected = () => {
-      console.log("Category Reset")
-  
-      // 선택된 리스트
-      this.business_selected = [];
-      this.category_selected = [];
-      this.city_selected = [];
-      this.material_selected = [];
-      this.develop_selected = [];
-      
-      // 모달 끄기
-      Partner.filter_dropdown = false;
+  /* 선택된 리스트 초기화 */
+  @action reset_selected = () => {
+    console.log("Category Reset");
 
-      // 다시 가져오기
-      Partner.getPartner();
-    };
+    // 선택된 리스트
+    this.business_selected = [];
+    this.category_selected = [];
+    this.city_selected = [];
+    this.material_selected = [];
+    this.develop_selected = [];
+
+    this.business_selected_name = [];
+    this.category_selected_name = [];
+    this.material_selected_name = [];
+    this.develop_selected_name = [];
+
+    // 모달 끄기
+    Partner.filter_dropdown = false;
+
+    // 다시 가져오기
+    Partner.getPartner();
+  };
 
   // 선택된 필터를 추가하기
   // state : 선택된 대카테고리 테이블
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
-  @action add_selected = async (state, id, container="producer") => {
+  @action add_selected = async (state, id, container = "producer") => {
+    console.log(typeof id);
     // 카테고리 선택
     if (state == "business") {
-      this.business_selected.push(id);
+      if (this.business_selected.indexOf(id) < 0) {
+        this.business_selected.push(id);
+      }
     }
 
     // 업체 분류 선택
@@ -180,17 +192,26 @@ class Category {
     }
 
     // producer 페이지에서 왔을 때만
-    if (container == "producer"){
+    if (container == "producer") {
       Partner.getPartner();
     }
+  };
 
+  @action checkedItemHandler = (id, isChecked) => {
+    if (isChecked) {
+      checkedItems.add(id);
+      setCheckedItems(checkedItems);
+    } else if (!isChecked && checkedItems.has(id)) {
+      checkedItems.delete(id);
+      setCheckedItems(checkedItems);
+    }
   };
 
   // 선택된 필터를 제거하기
   // state : 선택된 대카테고리 테이블
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
-  @action remove_selected = async (state, id, container="producer") => {
+  @action remove_selected = async (state, id, container = "producer") => {
     let deleteIdx;
     // 카테고리 선택
     if (state == "business") {
@@ -223,10 +244,9 @@ class Category {
     }
 
     // producer 페이지에서 왔을 때만
-    if (container == "producer"){
+    if (container == "producer") {
       Partner.getPartner();
     }
-
   };
 
   categoryActiveHandler = (idx, state) => {
@@ -259,6 +279,7 @@ class Category {
     // 공정 선택
     if (state == "develop") {
       if (this.develop_selected.includes(idx)) {
+        console.log(idx);
         return true;
       } else {
         return false;
@@ -273,6 +294,44 @@ class Category {
         return false;
       }
     }
+  };
+
+  // Category가 id로 되어 있기 때문에 이름을 가져오기 위한 함수
+  @action getNameByCategory = async (state) => {
+    console.log(state);
+    if (state === "business") {
+      console.log(state);
+      if (this.business_selected) {
+        console.log(state);
+        this.business_selected_name = [];
+        await this.business_selected.map(async (item, idx) => {
+          console.log(state);
+          await this.getBusinessName(state, item);
+        });
+      }
+      console.log(this.business_selected_name);
+    }
+  };
+
+  // Business가 id로 되어 있기 때문에 이름을 가져오기 위한 함수
+  @action getBusinessName = async (state, id) => {
+    console.log(state);
+    const req = {
+      id: id,
+    };
+
+    await CategoryAPI.getBusinessName(req)
+      .then(async (res) => {
+        console.log(res.data.category);
+        this.business_selected_name = await this.business_selected_name.concat(
+          res.data.category
+        );
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+    console.log(this.business_selected_name);
   };
 }
 

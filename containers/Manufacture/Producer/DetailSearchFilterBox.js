@@ -53,7 +53,7 @@ const customStyles = {
   },
 };
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess")
+@inject("Auth", "Project", "Request", "Partner")
 @observer
 class DetailSearchFilterConatiner extends React.Component {
   state = {

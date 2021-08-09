@@ -6,7 +6,6 @@ import { inject, observer } from "mobx-react";
 import Modal from "./Modal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import ReviewContainer from "./Review/ReviewContainer";
-import CheckBrowserModal from "containers/Home/CheckBrowserModal";
 import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 
@@ -53,6 +52,7 @@ class ProposalCard extends React.Component {
     city: "",
     business: "",
     totalPartnerBookmark: "",
+    total_review: -1,
   };
 
   openModal = (user_phone) => {
@@ -111,22 +111,25 @@ class ProposalCard extends React.Component {
 
     AccountAPI.setUserPageIP(req)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
       })
       .catch((e) => {
-        console.log(e);
-        console.log(e.response);
+        //console.log(e);
+        //console.log(e.response);
       });
   };
 
   async componentDidMount() {
-    // console.log(data.id);
+    // //console.log(data.id);
     const { width, Producer, data, Partner, idx, Auth } = this.props;
 
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     const partnerId = data.id;
     await Partner.existCheckedBookmark(clientId, partnerId, idx);
     await Partner.getTotalBookmarkByPartner(partnerId);
+
+    const existLogo = data.logo && data.logo.split("/")[4];
+    //console.log(existLogo);
 
     window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
@@ -153,56 +156,56 @@ class ProposalCard extends React.Component {
 
     PartnerAPI.getCityName(req)
       .then(async (res) => {
-        console.log(res);
+        //console.log(res);
         this.setState({ city: res.data.maincategory });
-        console.log(this.state.maincategory);
+        //console.log(this.state.maincategory);
       })
       .catch((e) => {
-        console.log(e);
-        console.log(e.response);
+        //console.log(e);
+        //console.log(e.response);
       });
 
     await PartnerAPI.getTotalReview(reviewReq)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         this.setState({ total_review: res.data.score });
-        console.log(this.state.total_review);
+        //console.log(this.state.total_review);
       })
       .catch((e) => {
-        console.log(e);
-        console.log(e.response);
+        //console.log(e);
+        //console.log(e.response);
       });
 
     await PartnerAPI.getTotalBookmarkByPartner(BookmarkReq)
       .then(async (res) => {
-        console.log(res);
-        console.log(res.data.count);
+        //console.log(res);
+        //console.log(res.data.count);
         this.setState({ totalPartnerBookmark: res.data.count });
-        console.log(this.state.totalPartnerBookmark);
+        //console.log(this.state.totalPartnerBookmark);
       })
       .catch((e) => {
-        console.log(e);
-        console.log(e.response);
+        //console.log(e);
+        //console.log(e.response);
       });
 
     const temp = [];
     PartnerAPI.getBusinessCategory(partnerReq)
       .then(async (res) => {
-        console.log(res);
+        //console.log(res);
         // this.setState({ business: res.data.business });
         res.data.business.forEach((element) => {
-          console.log(element);
+          //console.log(element);
           PartnerAPI.getBusinessName(element).then((res) => {
-            console.log(res);
+            //console.log(res);
             temp.push(res.data.category);
           });
         });
         this.setState({ business: temp });
-        console.log(toJS(this.state.business));
+        //console.log(toJS(this.state.business));
       })
       .catch((e) => {
-        console.log(e);
-        console.log(e.response);
+        //console.log(e);
+        //console.log(e.response);
       });
   }
 
@@ -264,7 +267,7 @@ class ProposalCard extends React.Component {
   cardClick = async (e) => {
     e.stopPropagation();
     const { data, Partner, idx } = this.props;
-    console.log(idx);
+    //console.log(idx);
     Partner.detailLoadingFlag = true;
 
     if (this.props.Auth && this.props.Auth.logged_in_user) {
@@ -281,12 +284,12 @@ class ProposalCard extends React.Component {
       this.props.Partner.selectedIntroductionFileType = fileType;
 
       if (availableFileType.indexOf(fileType) > -1) {
-        console.log("뷰어 페이지 router push");
+        //console.log("뷰어 페이지 router push");
         Partner.partner_detail_list = [];
         await Partner.partner_detail_list.push({ item: data });
 
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
-        console.log(toJS(Partner.partner_detail_list));
+        //console.log(toJS(Partner.partner_detail_list));
         await Partner.getReviewByPartner(
           Partner.partner_detail_list[0].item.id,
           1,
@@ -300,7 +303,7 @@ class ProposalCard extends React.Component {
         Router.push("/producer/detail");
         this.setState({ g: 3 });
       } else {
-        console.log("file download");
+        //console.log("file download");
         this.filedownload(this.props.data.file);
       }
     } else {
@@ -317,21 +320,11 @@ class ProposalCard extends React.Component {
   render() {
     const { data, width, Partner, categoryData, idx, Auth } = this.props;
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
-    const partnerId = data.id;
+    const partnerId = data && data.id;
     const loggedInPartnerId =
       Auth.logged_in_partner && Auth.logged_in_partner.id;
-    console.log(Partner.interestedIdx);
-
-    const SlideSettings = {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 0,
-      draggable: true,
-      autoplay: true,
-      autoplaySpeed: 2000,
-    };
+    //console.log(Partner.interestedIdx);
+    const existLogo = data.logo && data.logo.split("/")[4];
 
     const SlideSettingsMobile = {
       dots: false,
@@ -345,7 +338,7 @@ class ProposalCard extends React.Component {
     };
 
     let category_data;
-    console.log(data.logo);
+    //console.log(data.logo);
 
     return (
       <>
@@ -353,11 +346,6 @@ class ProposalCard extends React.Component {
           <>
             <Card
               active={this.state.active}
-              // onClick={(e) => {
-              //   if (!this.props.Partner.modalActive) {
-              //     this.cardClick(e);
-              //   }
-              // }}
               onMouseOver={() => {
                 this.activeHandler("active");
               }}
@@ -366,25 +354,23 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                <SliderContainer {...SlideSettings}>
-                  {data &&
-                    data.portfolio_set.map((item, idx) => {
-                      return (
-                        <Item>
-                          <img
-                            src={item.img_portfolio}
-                            style={{ borderRadius: 8 }}
-                          />
-                        </Item>
-                      );
-                    })}
+                {data && data.portfolio_set.length > 0 ? (
+                  <Item>
+                    <img src={data.portfolio_set[0].img_portfolio}></img>
+                  </Item>
+                ) : existLogo === "null" ? (
+                  <Item>
+                    {this.state.active ? (
+                      <img src="static/images/noportfolio_img_over.svg" />
+                    ) : (
+                      <img src="static/images/noportfolio_img.svg" />
+                    )}
+                  </Item>
+                ) : (
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                  <Item>
-                    <img src={data.logo} />
-                  </Item>
-                </SliderContainer>
+                )}
               </Header>
               <Main>
                 <Title>
@@ -418,15 +404,42 @@ class ProposalCard extends React.Component {
                     </BookMark>
                   )}
                 </Title>
-                <Introduce>{data.history}</Introduce>
+                <Introduce
+                  style={{
+                    width: 630,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {data.history}
+                </Introduce>
                 {this.state.business.length !== 0 ? (
-                  <div style={{ display: "flex" }}>
-                    {this.state.business &&
-                      this.state.business.map((item, idx) => {
-                        console.log(item);
-                        return <Hashtag>#{item}</Hashtag>;
-                      })}
-                  </div>
+                  this.state.active ? (
+                    <div style={{ display: "flex" }}>
+                      {this.state.business &&
+                        this.state.business.map((item, idx) => {
+                          //console.log(item);
+                          return (
+                            <Hashtag style={{ background: " #ffffff" }}>
+                              #{item}
+                            </Hashtag>
+                          );
+                        })}
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex" }}>
+                      {this.state.business &&
+                        this.state.business.map((item, idx) => {
+                          //console.log(item);
+                          return (
+                            <Hashtag style={{ background: " #f6f6f6" }}>
+                              #{item}
+                            </Hashtag>
+                          );
+                        })}
+                    </div>
+                  )
                 ) : (
                   <></>
                 )}
@@ -491,19 +504,23 @@ class ProposalCard extends React.Component {
               }}
             >
               <Header>
-                <SliderMobileContainer {...SlideSettingsMobile}>
-                  {data &&
-                    data.portfolio_set.map((item, idx) => {
-                      return (
-                        <Item>
-                          <img src={item.img_portfolio} />
-                        </Item>
-                      );
-                    })}
+                {data && data.portfolio_set.length > 0 ? (
+                  <Item>
+                    <img src={data.portfolio_set[0].img_portfolio}></img>
+                  </Item>
+                ) : existLogo === "null" ? (
+                  <Item>
+                    {this.state.active ? (
+                      <img src="static/images/noportfolio_img_over.svg" />
+                    ) : (
+                      <img src="static/images/noportfolio_img.svg" />
+                    )}
+                  </Item>
+                ) : (
                   <Item>
                     <img src={data.logo} />
                   </Item>
-                </SliderMobileContainer>
+                )}
               </Header>
               <Main>
                 <Name>{data.name}</Name>
@@ -539,41 +556,14 @@ const Card = styled.div`
   width: 100%;
   // position: relative;
   object-fit: contain;
-  border-top: solid 1px #e1e2e4;
-  border-bottom: solid 1px #e1e2e4;
+  border-bottom: solid 2px #e1e2e4;
   background-color: ${(props) => (props.active ? "#f6f6f6;" : "#ffffff")};
   display: flex;
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    // height: 108px;
-
-    padding-left: 14px;
-    padding-right: 14px;
-    padding-top: 14px;
-
-    margin-top: 14px;
-    box-sizing: border-box;
-  }
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    height: 100%;
-    // margin-bottom: 34px;
-    padding: 33px 0px 30px 34px;
-    box-sizing: border-box;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    height: 100%;
-    // margin-bottom: 34px;
-    padding: 33px 0px 30px 34px;
-    box-sizing: border-box;
-    // align-self: self-start;
-    // width: 68%;
-  }
-  @media (min-width: 1300px) {
-    height: 100%;
-    // margin-bottom: 34px;
-    padding: 33px 0px 30px 34px;
-    box-sizing: border-box;
-  }
+  cursor: pointer;
+  height: 100%;
+  padding: 14px 0px 14px 10px;
+  box-sizing: border-box;
+  border-radius: 8px;
 `;
 
 const Header = styled.div`
@@ -667,7 +657,6 @@ const Hashtag = styled.div`
   align-items: center;
   height: 34px;
   border-radius: 5px;
-  background-color: #f6f6f6;
   margin-right: 20px;
   padding-right: 10px;
   padding-left: 10px;
@@ -805,12 +794,12 @@ const InfoOne = styled.div`
   }
 `;
 const InfoTwo = styled.div`
-margin-top: 16px;
+  margin-top: 16px;
   > span {
     background-color: #e1e2e4;
     border: 1px solid #ffffff;
     border-radius: 5px;
-    padding 5px 12px;
+    padding: 5px 12px;
     box-sizing: border-box;
     margin-right: 21px;
     display: inline-block;
@@ -823,7 +812,7 @@ margin-top: 16px;
     width: 95%;
   }
   @media (min-width: 1300px) {
-    width: 88%
+    width: 88%;
   }
 `;
 const Button = styled.button`
@@ -1118,7 +1107,7 @@ const Item = styled.div`
     // width: 100%;
     // display: inline-block;
     // position: relative;
-    border-radius: 4px;
+    border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
     width: 262px;

@@ -8,6 +8,7 @@ class Profile {
   constructor() {
     //makeObservable(this);
   }
+
   @observable data = null;
 
   @observable email = "";
@@ -51,6 +52,25 @@ class Profile {
 
   @observable process_set = [];
   @observable process_checked = [];
+
+  /* 파트너 등록하기 */
+  @observable authenticationFile = "";
+  @observable authenticationFileArray = [];
+  @observable authenticationFileName = "";
+  @observable authenticationCheckFileUpload = false;
+
+  @observable introductionFileArray = [];
+  @observable introductionFile = "";
+  @observable introductionCheckFileUpload = false;
+
+  @observable portfolioFileArray = [];
+  @observable portfolioCheckFileUpload = false;
+
+  @observable locationAddress = "";
+  @observable locationModalActive = false;
+
+  @observable profileTabIdx = 0;
+  @observable certificationModal = false;
 
   @action reset = () => {
     this.email = "";
@@ -327,7 +347,8 @@ class Profile {
       this.category_middle_set = [id, ...this.category_middle_set];
     }
   };
-  @action checkLogin = () => {
+  @action checkLogin = async () => {
+    console.log("checkLogin");
     const token = localStorage.getItem("token");
     const req = {
       data: {
@@ -339,50 +360,40 @@ class Profile {
       },
     };
 
-    AccountAPI.reloadUserInfo(req)
+    await AccountAPI.reloadUserInfo(req)
       .then((res) => {
         if (res.data.data.User.type == 0) {
           alert("잘못된 접근입니다.");
-          // Router.push("/");
-          Router.push("/account");
+          Router.push("/");
         } else if (res.data.data.User.type == 1) {
           console.log("파트너 정보 리로딩");
           console.log(res.data.data.Partner[0]);
           this.data = res.data.data.Partner[0];
+          // 회사명
           this.company_name = res.data.data.Partner[0].name;
+          // 지역
           this.setCity(this.getCityById(res.data.data.Partner[0].city));
-          this.setRegion(this.getRegionById(res.data.data.Partner[0].region));
-          this.career = res.data.data.Partner[0].career;
-          this.employee = res.data.data.Partner[0].employee;
-          this.revenue = res.data.data.Partner[0].revenue;
-          this.info_biz = res.data.data.Partner[0].info_biz;
+          // 상세 주소
+          this.region = res.data.data.Partner[0].region;
+          // 회사 소개
           this.info_company = res.data.data.Partner[0].info_company;
+          // 거래처
           this.deal = res.data.data.Partner[0].deal;
+          // 만든 제품군
           this.histories = res.data.data.Partner[0].history;
+
+          // 회사소개서 파일
+          this.file = res.data.data.Partner[0].file;
+
+          // this.introductionFile.push({name : this.file}) // 오류남
+          console.log(this.file);
+
           // 카테고리 초기화
-          this.category_middle_set = [];
-          this.possible_set = [];
-          this.history_set = [];
-
-          res.data.data.Partner[0].category.forEach((category) => {
-            this.category_middle_set = this.category_middle_set.concat(
-              category.id
-            );
+          this.portfolio_set = [];
+          res.data.data.Partner[0].portfolio_set.map((data) => {
+            this.portfolio_set.push(data.img_portfolio);
           });
-
-          //      res.data.data.Partner[0].product_possible.forEach(subclass => {
-          //        this.possible_set.push(subclass)
-          //      })
-
-          res.data.data.Partner[0].product_history.forEach((subclass) => {
-            this.history_set.push(subclass);
-          });
-
-          this.setPortfolioSet(res.data.data.Partner[0].portfolio_set);
-          this.setStructureSet(res.data.data.Partner[0].structure_set);
-          this.setMachineSet(res.data.data.Partner[0].machine_set);
-          this.setCertificationSet(res.data.data.Partner[0].certification_set);
-          this.setProcessSet(res.data.data.Partner[0].process_set);
+          console.log(this.info_company);
         }
       })
       .catch((e) => {
@@ -398,6 +409,7 @@ class Profile {
         // Router.push("/");
         Router.push("/account");
       });
+    console.log(this.info_company);
   };
 
   @action signup = async () => {
@@ -1103,8 +1115,8 @@ class Profile {
         console.log("인증서 중요 표시 토글");
         console.log(res.data);
 
-        this.certification_set[idx].is_main = !this.certification_set[idx]
-          .is_main;
+        this.certification_set[idx].is_main =
+          !this.certification_set[idx].is_main;
         this.sortCertificationSet();
       })
       .catch((e) => {
@@ -1419,20 +1431,58 @@ class Profile {
 
     console.log(`getCityById(${id})`);
     const idx = this.city_data.findIndex((city) => city.id == id);
-
+    console.log(this.city_data[idx]);
     return this.city_data[idx];
   };
-  getRegionById = (id) => {
-    if (id === -1) {
-      return;
+
+  //   console.log(`getRegionById(${id})`);
+  //   const idx = this.region_data.findIndex((city) => city.id == id);
+
+  //   console.log(idx);
+
+  //   return this.region_data[idx];
+  // };
+
+  @action onChangeFile = (e, type) => {
+    console.log(e);
+    console.log(type);
+    if (e && e.currentTarget.files[0]) {
+      console.log(e.currentTarget);
+      console.log(e.currentTarget.files[0]);
+
+      for (var item in e.currentTarget.files) {
+        console.log(item);
+        if (typeof e.currentTarget.files[item] === "object") {
+          this.authenticationFile = e.currentTarget.files[item];
+          // this.authenticationFileArray.push(e.currentTarget.files[item]);
+          console.log(this.authenticationFile);
+        } else {
+          break;
+        }
+      }
     }
 
-    console.log(`getRegionById(${id})`);
-    const idx = this.region_data.findIndex((city) => city.id == id);
+    console.log(toJS(this.authenticationFileArray));
+    const fileName = e.currentTarget.files[0].name;
 
-    console.log(idx);
+    // this.file = e.currentTarget.files[0];
+    this.authenticationFileName = fileName;
+    this.authenticationCheckFileUpload = true;
+  };
 
-    return this.region_data[idx];
+  // 프로필 수정하기
+  @action saveCompanyInfo = (edit_text) => {
+    // 회사 상세 설명 수정 시 저장(API Update)
+  };
+
+  // 진행한 제품군 수정하기
+  @action saveProduct = (edit_text) => {
+    // 진행한 제품군 수정 시 저장(API Update)
+  };
+
+  // 상세 위치 수정하기
+  @action saveRegion = (edit_text) => {
+    // 상세 위치 수정 시 저장(API Update)
   };
 }
 

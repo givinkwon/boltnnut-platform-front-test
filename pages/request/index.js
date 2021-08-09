@@ -15,7 +15,6 @@ const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 @inject(
   "Request",
   "Partner",
-  "ManufactureProcess",
   "Auth",
   "Schedule",
 )
@@ -24,11 +23,12 @@ class Request extends React.Component {
   state = {};
 
   componentDidMount() {
+    const {Partner, Request} = this.props;
     this.props.Partner.init();
-    this.props.Request.init();
-  
-    this.props.ManufactureProcess.init();
+    console.log(Request.selected_partner)
+
     this.props.Schedule.init();
+
     //창 크기
     this.props.Auth.previous_url = "request";
     window.addEventListener("resize", this.updateDimensions);
@@ -39,6 +39,7 @@ class Request extends React.Component {
 
     formData.append("url", window.location.href);
     console.log(window.location.href);
+
     const req = {
       data: formData,
     };

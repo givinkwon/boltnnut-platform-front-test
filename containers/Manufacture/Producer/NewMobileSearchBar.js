@@ -13,7 +13,7 @@ import { PRIMARY2 } from "static/style";
 
 const searchIcon = "/static/images/mobilesearchicon.svg";
 
-@inject("Auth", "Project", "Request", "Partner", "ManufactureProcess", "Producer")
+@inject("Auth", "Project", "Request", "Partner", "Producer")
 @observer
 class NewMobileSearchBarConatiner extends React.Component {
   state = {
@@ -27,11 +27,10 @@ class NewMobileSearchBarConatiner extends React.Component {
 
   // 검색함수
   search = async () => {
-    const { Partner, ManufactureProcess } = this.props;
+    const { Partner } = this.props;
 
     await Router.push("/producer");
-    // console.log("click");
-    // alert("EXECUTE");
+
     Partner.loadingFlag = true;
     setTimeout(() => {
       Partner.loadingFlag = false;
@@ -39,25 +38,19 @@ class NewMobileSearchBarConatiner extends React.Component {
 
     Partner.currentPage = 1;
     Partner.click_count += 1;
-    await Partner.getPartner(Partner.currentPage, Partner.click_count);
-    ManufactureProcess.PartnerCount = Partner.partner_count;
-    // console.log(toJS(ManufactureProcess.PartnerCount));
+   
+    await Partner.search();
+    
+    
+    // 검색어 로그에 저장하기 위한 함수
     if (Partner.search_text) {
       Partner.isSearched = true;
     } else {
       Partner.isSearched = false;
     }
-
+    
     if (Partner.search_text != "") {
-      // console.log("click2");
-      if (ManufactureProcess.loadingSaveSearchText) {
-        // console.log("click3");
         Partner.subButtonActive = true;
-        // console.log(Partner.subButtonActive);
-        ManufactureProcess.saveSearchText(Partner.search_text);
-        ManufactureProcess.loadingSaveSearchText = false;
-        setTimeout(() => (ManufactureProcess.loadingSaveSearchText = true), 2000);
-      }
     }
   };
 
@@ -69,7 +62,7 @@ class NewMobileSearchBarConatiner extends React.Component {
   };
 
   handleKeyDown = (e) => {
-    const { Partner, ManufactureProcess } = this.props;
+    const { Partner } = this.props;
     if (e.key === "Enter") {
       this.search();
     }
@@ -79,172 +72,15 @@ class NewMobileSearchBarConatiner extends React.Component {
     await this.props.Auth.checkLogin();
   }
 
-  // 구글 연관검색어
-  handleMouseDown(event) {
-    let x = $(document).scrollLeft() + event.clientX; // event.offsetX
-    let y = $(document).scrollTop() + event.clientY; // event.offsetY
-
-    // did not click on the search input or the suggestion list
-    if (this.state.showSuggestions && !this.checkXYInElement(x, y, ".searcher-suggs") && !this.checkXYInElement(x, y, ".searcher-input")) {
-      this.setState({ showSuggestions: false });
-    }
-  }
-
-  checkXYInElement(x, y, className) {
-    let elem = $(className);
-    if (elem.length == 0) {
-      return false;
-    }
-
-    let rect = {
-      x: elem.offset().left,
-      y: elem.offset().top,
-      w: elem.outerWidth(),
-      h: elem.outerHeight(),
-    };
-
-    if (x < rect.x || y < rect.y || x > rect.x + rect.w || y > rect.y + rect.h) {
-      return false;
-    }
-
-    return true;
-  }
-
-  // check the input keywords (without URL encode) with the suggsKeywords
-  // true if the input was the same as the suggsKeywords
-  // otherwise, false
-  checkSuggsKeywords(keywords) {
-    if (this.state.suggsKeywords == encodeURIComponent(keywords.toLowerCase())) {
-      return true;
-    }
-
-    return false;
-  }
-
-  // check and send request to google for suggestions
-  // the request will not send if the input was the same as the suggsKeywords
-  // or length equals to 0
-  requestSuggestions(keywords) {
-    // current suggs was request with the input keywords
-    // no need to send again
-    if (this.checkSuggsKeywords(keywords)) {
-      return;
-    }
-
-    // empty keywords just reset the suggsKeywords and suggs
-    if (keywords.length == 0) {
-      this.setState({ suggsKeywords: "", suggs: [] });
-      return;
-    }
-
-    let urlKeywords = encodeURIComponent(keywords.toLowerCase());
-    this.setState({ suggsKeywords: urlKeywords, suggs: [] });
-    let url = "https://suggestqueries.google.com/complete/search?output=chrome&q=" + urlKeywords;
-    // use JSONP (issue: http://security.stackexchange.com/questions/23438/security-risks-with-jsonp/23439#23439)
-    // just for CORS trick
-    $.ajax({
-      url: url,
-      dataType: "jsonp",
-      type: "GET",
-      success: function (data, textStatus, jqXHR) {
-        // data[0] was the keywords to search
-        // data[1] was the array of the google suggestion keywords
-        //console.log(data);
-        if (this.checkSuggsKeywords(data[0])) {
-          this.setState({ suggs: data[1] });
-        }
-      }.bind(this),
-    });
-  }
-
-  // 검색창에 검색을 할 때 text를 observable에 저장하고, 구글 연관검색어 검색
+  // 검색창에 검색을 할 때 text를 observable에 저장
   handleSearcherInputChange(event) {
     const { Partner } = this.props;
-    Partner.searchText = event.target.value;
-    this.setState({ showSuggestions: true });
-    this.requestSuggestions(Partner.searchText);
-  }
-
-  // 제안된 키워드를 선택했을 때, 그 키워드를 text에 저장하고 적용
-  handleClickSuggetionsKeywords(event) {
-    const { Partner } = this.props;
-    // console.log(event.target.textContent);
-    Partner.searchText = event.target.textContent;
-    this.setState({ showSuggestions: false });
-    this.requestSuggestions(Partner.searchText);
-    // 검색하기
-    this.search();
-  }
-
-  // handel the key down event of the search input
-  handleSearcherInputKeyDown(event) {
-    if (this.state.showSuggestions) {
-      // use keyboard to select the suggesions
-      this.handleSelectSuggestions(event);
-    } else {
-      // just show the suggestions list
-      this.setState({ showSuggestions: true });
-    }
-  }
-
-  // use use keyboards to select the suggestions
-  handleSelectSuggestions(event) {
-    const { Partner } = this.props;
-    // 선택되어 있는 추천 검색어 가지고 오기
-    let li = $(".searcher-suggs-word.selected");
-    // 40 => down, 38 => up >> 내려갈 때 혹은 올라올 때 선택된 키워드 변경
-    if (event.keyCode == 40 || event.keyCode == 38) {
-      event.preventDefault();
-      if (li.length == 0) {
-        $(".searcher-suggs-word:first-child").toggleClass("selected");
-      } else if (event.keyCode == 40) {
-        li.removeClass("selected");
-        li.next().toggleClass("selected");
-      } else {
-        li.removeClass("selected");
-        li.prev().toggleClass("selected");
-      }
-    } else {
-      // 13 => enter
-      if (event.keyCode == 13) {
-        event.preventDefault();
-
-        if (li.length > 0) {
-          // 리스트가 있고, 엔터 시에 클릭된 텍스트로 구글 연관 검색
-          Partner.searchText = li.text();
-          this.setState({ showSuggestions: false });
-          this.requestSuggestions(Partner.searchText);
-        } else {
-          this.setState({ showSuggestions: false });
-        }
-      }
-    }
-  }
-
-  // 마우스 호버에 따라서 클래스 적용을 함으로써 Css 적용 변경
-  handleHoverSearcherSuggestions(event) {
-    $(".searcher-suggs-word.selected").removeClass("selected");
-    $(".searcher-suggs-word:hover").addClass("selected");
+    Partner.search_text = event.target.value;
+    console.log(event.target.value);
   }
 
   render() {
     const { Partner, Request } = this.props;
-
-    let suggestions = null;
-    // Partner.searchText가 처음에 null 값이라 에러가 떠서 공백문자를 더해줌
-    // console.log(this.state.showSuggestions, this.checkSuggsKeywords(Partner.searchText + ""), this.state.suggs);
-    // 구글 검색 제안 리스트
-    if (this.state.showSuggestions && this.checkSuggsKeywords(Partner.searchText + "")) {
-      suggestions = this.state.suggs.map(
-        function (value, index) {
-          return (
-            <li key={index} className="searcher-suggs-word" onClick={this.handleClickSuggetionsKeywords.bind(this)} onMouseOver={this.handleHoverSearcherSuggestions.bind(this)}>
-              {value}
-            </li>
-          );
-        }.bind(this)
-      );
-    }
 
     return (
       <>
@@ -256,9 +92,10 @@ class NewMobileSearchBarConatiner extends React.Component {
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "원하는 분야나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
-                value={Partner.searchText}
+                value={Partner.search_text}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
+                style={{ height: 40 }}
               />
 
               <img
@@ -273,12 +110,6 @@ class NewMobileSearchBarConatiner extends React.Component {
               />
               {/* <img style={{ width: 24, height: 24, marginRight: 25 }} src="/static/icon/search_blue.svg" onClick={this.search} /> */}
             </SearchBar>
-
-            {this.state.showSuggestions && this.state.suggs.length > 0 && (
-              <CustomUl>
-                <CustomLiBox>{suggestions}</CustomLiBox>
-              </CustomUl>
-            )}
           </div>
         </Form>
       </>
@@ -318,6 +149,7 @@ const SearchBar = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 329px;
+  height: 48px;
   border-radius: 30px;
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.28);
   border: solid 1.5px #0933b3;
@@ -373,5 +205,5 @@ const Form = styled.div`
   width: 347px;
   height: 56px;
   margin-top: 36px;
-  margin-bottom: 150px;
+  margin-bottom: 66px;
 `;
