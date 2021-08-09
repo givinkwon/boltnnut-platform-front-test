@@ -101,7 +101,7 @@ class Content4 extends React.Component {
                 </RequestBox>
               </RequestSubContainer>
             </BlackBox>
-          ) : Project.projectDetailData.request_set[0].client ==
+          ) : Auth.logged_in_client && Project.projectDetailData.request_set[0].client ==
             Auth.logged_in_client.id ? (
             <>
               {/*해당 프로젝트의 클라이언트일 경우*/}

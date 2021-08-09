@@ -158,7 +158,7 @@ class Content1 extends React.Component {
                     {projectDetailData && projectDetailData.request_set[0].price
                       ? projectDetailData.request_set[0].price.toLocaleString(
                           "ko-KR"
-                        ) + "원"
+                        )
                       : "미정"}
                   </Font18>
                 </div>

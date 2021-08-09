@@ -63,13 +63,13 @@ class ProjectContainer extends React.Component {
               {Project.step_index == 0 && <MyProject/>}
               {/* 전체 프로젝트 */}
               {Project.step_index == 1 && <AllProject />}
+              
               {/* 프로젝트 상세 */}
-
               {/* 클라이언트로 로그인 */}
               {Project.step_index == 2 && Auth.logged_in_client && <ProjectDetail user="client" /> }
               
-              {/* 파트너로 로그인 */}
-              {Project.step_index == 2 && Auth.logged_in_partner && <ProjectDetail user="partner" />}
+              {/* 비로그인 */}
+              {Project.step_index == 2 && !Auth.logged_in_partner && !Auth.logged_in_client && <ProjectDetail user="None" />}
 
             </div>
 
