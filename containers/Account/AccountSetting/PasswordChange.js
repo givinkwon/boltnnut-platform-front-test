@@ -88,16 +88,6 @@ const Aside = styled.div`
   font-family: NotoSansCJKkr;
 `;
 
-const AsideHeader = styled.div`
-  padding-top: 50px;
-  padding-bottom: 16px;
-  border-bottom: solid 1px #e1e2e4;
-  font-size: 16px;
-  font-weight: 500;
-  text-align: left;
-  color: #0933b3;
-`;
-
 const MainBox = styled.div`
   width: 894px;
   border-radius: 15px;
@@ -123,6 +113,7 @@ const MainSubbox = styled.div`
   margin-bottom: 40px;
   .MuiInputBase-root {
     height: 42px;
+    width: 100%;
   }
 `;
 

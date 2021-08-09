@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import Button from "components/Button";
+
 import SelectCard from "./SelectCard";
 import Authentication from "./Authentication";
 import Explaination from "./Explaination";
@@ -20,6 +20,16 @@ const checkImg = "/static/images/producer/check.svg";
 @inject("Category", "Partner", "Profile")
 @observer
 class MainContainer extends React.Component {
+  modalHandler = () => {
+    if (this.state.modalOn) {
+      this.setState({ modalOn: false });
+      console.log(this.state.modalOn);
+    } else {
+      this.setState({ modalOn: true });
+      console.log(this.state.modalOn);
+    }
+  };
+
   async componentDidMount() {
     const { Category, Profile } = this.props;
     // await Profile.checkLogin();
@@ -99,12 +109,31 @@ class MainContainer extends React.Component {
           노출될 확률이 올라가요!
         </Description>
         <div style={{ width: "100%" }}>
-          <SelectCard name="전문분야" id="1" type="category" />
-          <SelectCard name="제품분야" id="2" type="business" />
-          <SelectCard name="취급소재" id="3" type="material" />
-          <SelectCard name="전문공정" id="4" type="develop" />
+          <SelectCard
+            name="전문분야"
+            id="1"
+            type="category"
+            image="/static/images/signup/medal.svg"
+          />
+          <SelectCard
+            name="제품분야"
+            id="2"
+            type="business"
+            image="/static/images/signup/product.svg"
+          />
+          <SelectCard
+            name="취급소재"
+            id="3"
+            type="material"
+            image="/static/images/signup/handle.svg"
+          />
+          <SelectCard
+            name="전문공정"
+            id="4"
+            type="develop"
+            image="/static/images/signup/process.svg"
+          />
         </div>
-
         <Authentication></Authentication>
         <Explaination info_company={Profile.info_company}></Explaination>
         <Product histories={Profile.histories}></Product>
@@ -119,10 +148,7 @@ class MainContainer extends React.Component {
 export default MainContainer;
 
 const Container = styled.div`
-  //   border: 3px solid red;
-  // flex-grow: 5;
-  padding-left: 30px;
-  width: 72%;
+  width: 100%;
 `;
 
 const Name = styled.div`
