@@ -8,6 +8,7 @@ import Router from "next/router";
 import moment from "moment";
 import Schedule from "./Schedule";
 import Auth from "stores/Account/Auth";
+import Signup from "../Account/Signup";
 
 class Request {
   constructor() {
@@ -251,6 +252,17 @@ class Request {
         console.log(e);
         console.log(e.response);
       });
+
+    
+    // 아이디 로그인 없이 의뢰서 만들 때 => 해당 정보로 회원가입
+    if(Auth.logged_in_user) {
+      Signup.email = this.email;
+      Signup.password = this.password;
+      Signup.password2 = this.password2;
+      Signup.phone = this.phone;
+      Signup.realName = "비회원의뢰";
+      Signup.signup()
+    }
   };
 
   // 의뢰서 수정 관련

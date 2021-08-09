@@ -5,7 +5,7 @@ import Background from "components/Background";
 
 import { inject, observer } from "mobx-react";
 
-import PartnerDirectRequest from "./PartnerDirectRequest";
+import Request from "./Request";
 import RequestComplete from "./RequestComplete";
 
 @inject("Request")
@@ -19,7 +19,7 @@ class RequestContainer extends React.Component {
         <Background>
           <Containerv1 style={{ width: 792 }}>
             {/* <RequestComplete /> */}
-            <PartnerDirectRequest />
+            <Request />
           </Containerv1>
         </Background>
       </>
