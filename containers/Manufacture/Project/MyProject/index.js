@@ -8,6 +8,7 @@ import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
 import ProjectNone from "containers/Manufacture/Project/MyProject/ProjectNone";
+import ProjectCard from "containers/Manufacture/Project/ProjectCard";
 import { toJS } from "mobx";
 
 const pass1 = "static/images/pass1.png";
@@ -21,8 +22,7 @@ const right = "static/icon/right-arrow.png";
 class MyProject extends React.Component {
   constructor(props) {
     super(props);
-    this.props.Project.pushToDetail =
-      this.props.Project.pushToDetail.bind(this);
+    this.props.Project.pushToDetail = this.props.Project.pushToDetail.bind(this);
   }
 
   state = {
@@ -49,22 +49,14 @@ class MyProject extends React.Component {
     const { Project, Auth } = this.props;
     const current_set = parseInt((Project.currentPage - 1) / 5) + 1;
     const gray = "#f9f9f9";
-    console.log(Auth.logged_in_user)
+    console.log(Auth.logged_in_user);
 
     return (
       <>
-        <Background
-          style={{ backgroundColor: "#f6f6f6", paddingBottom: 217 }}
-          id="MyBackground"
-        >
+        <Background style={{ backgroundColor: "#f6f6f6", paddingBottom: 217 }} id="MyBackground">
           <Header>
             <HeaderTitle>
-              <div style={{ marginBottom: 12 }}>
-                내 프로젝트 >{" "}
-                {Project.myproject_state == 1
-                  ? "진행 중인 프로젝트"
-                  : "종료된 프로젝트"}
-              </div>
+              <div style={{ marginBottom: 12 }}>내 프로젝트 >{Project.myproject_state == 1 ? "진행 중인 프로젝트" : "종료된 프로젝트"}</div>
             </HeaderTitle>
           </Header>
           <Container>
@@ -72,28 +64,17 @@ class MyProject extends React.Component {
               <Aside>
                 <AsideHeader>{Auth.logged_in_user && Auth.logged_in_user.username}</AsideHeader>
                 <AsideBody>
-                  <div
-                    onClick={() => Project.set_myproject_state(1)}
-                    style={{ marginBottom: 12 }}
-                  >
+                  <div onClick={() => Project.set_myproject_state(1)} style={{ marginBottom: 12 }}>
                     진행 중인 프로젝트
                   </div>
-                  <div onClick={() => Project.set_myproject_state(2)}>
-                    종료된 프로젝트
-                  </div>
+                  <div onClick={() => Project.set_myproject_state(2)}>종료된 프로젝트</div>
                 </AsideBody>
               </Aside>
               <Main>
                 <MainHeader>
-                  <div>
-                    {Project.myproject_state == 1
-                      ? "진행 중인 프로젝트"
-                      : "종료된 프로젝트"}
-                  </div>
+                  <div>{Project.myproject_state == 1 ? "진행 중인 프로젝트" : "종료된 프로젝트"}</div>
                 </MainHeader>
-                {Project.project_existence &&
-                Project.projectDataList &&
-                Project.projectDataList[0] ? (
+                {Project.project_existence && Project.projectDataList && Project.projectDataList[0] ? (
                   <>
                     {Project.currentPage > 0 &&
                       Project.projectDataList.map((item, idx) => {
@@ -112,16 +93,8 @@ class MyProject extends React.Component {
                                     backgroundColor: "#f6f6f6",
                                   }}
                                 >
-                                  <div
-                                    style={{ cursor: "pointer", width: "100%" }}
-                                    onClick={() =>
-                                      Project.pushToDetail(item.id)
-                                    }
-                                  >
-                                    <ProposalCard
-                                      state={Project.myproject_state}
-                                      data={item}
-                                    />
+                                  <div style={{ cursor: "pointer", width: "100%" }} onClick={() => Project.pushToDetail(item.id)}>
+                                    <ProposalCard state={Project.myproject_state} data={item} />
                                   </div>
                                 </Background>
                               )}
@@ -136,16 +109,8 @@ class MyProject extends React.Component {
                                     backgroundColor: "#f6f6f6",
                                   }}
                                 >
-                                  <div
-                                    style={{ cursor: "pointer", width: "100%" }}
-                                    onClick={() =>
-                                      Project.pushToDetail(item.id)
-                                    }
-                                  >
-                                    <ProposalCard
-                                      state={Project.myproject_state}
-                                      data={item}
-                                    />
+                                  <div style={{ cursor: "pointer", width: "100%" }} onClick={() => Project.pushToDetail(item.id)}>
+                                    <ProposalCard state={Project.myproject_state} data={item} />
                                   </div>
                                 </Background>
                               )}
@@ -248,7 +213,10 @@ class MyProject extends React.Component {
                     </PageBar> */}
                   </>
                 ) : (
-                  <ProjectNone />
+                  <>
+                    {/* <ProjectNone /> */}
+                    <ProjectCard />
+                  </>
                 )}
               </Main>
             </Body>

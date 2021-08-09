@@ -20,7 +20,7 @@ const messagesImg = "/static/images/project/Messages.svg";
 // cookie 추가
 import Cookies from "js-cookie";
 
-@inject("Project", "Auth", "Answer", "Partner","Cookie")
+@inject("Project", "Auth", "Answer", "Partner", "Cookie")
 @observer
 class Content1 extends React.Component {
   state = {
@@ -51,13 +51,9 @@ class Content1 extends React.Component {
     console.log(Project.selectedProjectId);
     console.log("<Web> did mount");
 
-    this.getToday(
-      Project.projectDetailData &&
-        Project.projectDetailData.request_set[0].deadline
-    );
+    this.getToday(Project.projectDetailData && Project.projectDetailData.request_set[0].deadline);
     await Auth.checkLogin();
 
-    
     // 쿠기 값 리스트에 저장
     if (Project.projectDetailData.item) {
       Cookie.add_project_view(Project.projectDetailData.item.id);
@@ -70,7 +66,6 @@ class Content1 extends React.Component {
       path: "/",
       expires,
     });
-
   }
 
   render() {
@@ -95,12 +90,7 @@ class Content1 extends React.Component {
           {console.log(toJS(projectDetailData))}
           {Project.chatModalActive && (
             <Layer>
-              <ChatTestContainer
-                roomName={this.state.selectedRoom}
-                requestTitle={
-                  this.props.Project.projectDetailData.request_set[0].name
-                }
-              ></ChatTestContainer>
+              <ChatTestContainer roomName={this.state.selectedRoom} requestTitle={this.props.Project.projectDetailData.request_set[0].name}></ChatTestContainer>
             </Layer>
           )}
 
@@ -114,28 +104,16 @@ class Content1 extends React.Component {
                     letterSpacing: -0.18,
                   }}
                 >
-                  {projectDetailData &&
-                    projectDetailData.request_set[0].request_state}
+                  {projectDetailData && projectDetailData.request_set[0].request_state}
                 </Font18>
               </Box1>
               <div style={{ display: "inline-flex", flexDirection: "row" }}>
-                <Font16 style={{ color: "#999999", marginRight: 17 }}>
-                  등록 일자
-                </Font16>{" "}
-                <Font16 style={{ color: "#999999" }}>
-                  {projectDetailData &&
-                    projectDetailData.request_set[0].createdAt
-                      .substr(0, 10)
-                      .replaceAll("-", ".")}
-                </Font16>
+                <Font16 style={{ color: "#999999", marginRight: 17 }}>등록 일자</Font16>{" "}
+                <Font16 style={{ color: "#999999" }}>{projectDetailData && projectDetailData.request_set[0].createdAt.substr(0, 10).replaceAll("-", ".")}</Font16>
               </div>
             </Top>
             <Head>
-              <Font26
-                style={{ height: 38, fontWeight: "bold", letterSpacing: -0.65 }}
-              >
-                {projectDetailData && projectDetailData.request_set[0].name}
-              </Font26>
+              <Font26 style={{ height: 38, fontWeight: "bold", letterSpacing: -0.65 }}>{projectDetailData && projectDetailData.request_set[0].name}</Font26>
               <div>
                 <Font17 style={{ color: "#86888c" }}>
                   {category}
@@ -151,11 +129,7 @@ class Content1 extends React.Component {
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>예상 금액</Font18>
                   <Font18 style={{ fontWeight: "bold" }}>
-                    {projectDetailData && projectDetailData.request_set[0].price
-                      ? projectDetailData.request_set[0].price.toLocaleString(
-                          "ko-KR"
-                        )
-                      : "미정"}
+                    {projectDetailData && projectDetailData.request_set[0].price ? projectDetailData.request_set[0].price.toLocaleString("ko-KR") : "미정"}
                   </Font18>
                 </div>
               </Box2>
@@ -166,12 +140,7 @@ class Content1 extends React.Component {
                 </Box2ImageContainer>
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>희망 납기</Font18>
-                  <Font18 style={{ fontWeight: "bold" }}>
-                    {projectDetailData &&
-                      projectDetailData.request_set[0].deadline
-                        .slice(2, 10)
-                        .replace(/-/gi, ".")}
-                  </Font18>
+                  <Font18 style={{ fontWeight: "bold" }}>{projectDetailData && projectDetailData.request_set[0].deadline.slice(2, 10).replace(/-/gi, ".")}</Font18>
                 </div>
               </Box2>
 
@@ -181,9 +150,7 @@ class Content1 extends React.Component {
                 </Box2ImageContainer>
                 <div style={{ marginBottom: 27 }}>
                   <Font18 style={{ color: "#86888c" }}>지원자 수</Font18>
-                  <Font18 style={{ fontWeight: "bold" }}>
-                    {this.state.partnerList.length} 명
-                  </Font18>
+                  <Font18 style={{ fontWeight: "bold" }}>{this.state.partnerList.length} 명</Font18>
                 </div>
               </Box2>
             </Box2Container>
@@ -197,18 +164,10 @@ class Content1 extends React.Component {
                 }}
               >
                 지원한 파트너
-                {user == "client" &&
-                  projectDetailData.request_set[0].client ==
-                    Auth.logged_in_client.id && (
-                    <p style={{ color: "#0933b3", marginLeft: 6 }}>
-                      {this.state.partnerList.length}
-                    </p>
-                  )}
+                {user == "client" && projectDetailData.request_set[0].client == Auth.logged_in_client.id && <p style={{ color: "#0933b3", marginLeft: 6 }}>{this.state.partnerList.length}</p>}
               </Font20>
               {/* 프로젝트의 해당 클라이언트인 경우와 아닌 경우   */}
-              {user == "client" &&
-              projectDetailData.request_set[0].client ==
-                Auth.logged_in_client.id ? (
+              {user == "client" && projectDetailData.request_set[0].client == Auth.logged_in_client.id ? (
                 <>
                   {this.state.partnerList.map((data, idx) => {
                     return (
@@ -233,31 +192,13 @@ class Content1 extends React.Component {
                     <span>'해당 프로젝트 담당자만 확인할 수 있습니다.'</span>
                     <div style={{ filter: "blur(5px)" }}>
                       <PartnerBox>
-                        <img
-                          src={
-                            "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-                          }
-                          width={36}
-                          height={36}
-                        />
+                        <img src={"https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"} width={36} height={36} />
                       </PartnerBox>
                       <PartnerBox>
-                        <img
-                          src={
-                            "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-                          }
-                          width={36}
-                          height={36}
-                        />
+                        <img src={"https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"} width={36} height={36} />
                       </PartnerBox>
                       <PartnerBox>
-                        <img
-                          src={
-                            "https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"
-                          }
-                          width={36}
-                          height={36}
-                        />
+                        <img src={"https://boltnnutplatform.s3.amazonaws.com/media/partner/1.png"} width={36} height={36} />
                       </PartnerBox>
                     </div>
                   </BlackBox>
