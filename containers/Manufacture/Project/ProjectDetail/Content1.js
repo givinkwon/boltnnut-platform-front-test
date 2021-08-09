@@ -4,13 +4,9 @@ import * as Content from "components/Content";
 import * as Title from "components/Title";
 import Content4 from "./Content4";
 import { inject, observer } from "mobx-react";
-import Background from "components/Background";
-import Container from "components/Containerv1";
-import ProposalCard from "components/ProposalCard";
-import { Toolbar } from "material-ui";
+
 import { toJS } from "mobx";
 import ChatTestContainer from "containers/Manufacture/Chatting/ChattingDetail/ChatTest";
-import * as PartnerAPI from "axios/Manufacture/Partner";
 import ChatItemContainer from "components/ChatItem";
 const money = "/static/images/project/money.svg";
 const calendar = "/static/images/project/period.svg";

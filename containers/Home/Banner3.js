@@ -9,17 +9,17 @@ import Button from "../../components/Button";
 class Banner3Container extends React.Component {
   render() {
     return (
-      <CustomBackground>
-        <CustomContainer style={{ width: "830px" }}>
-          <Title26>더 다양한 카테고리의 업체 전문가들을 찾고 있으신가요?</Title26>
+      <a href={"signup"}>
+        <CustomBackground>
+          <CustomContainer style={{ width: "830px" }}>
+            <Title26>더 다양한 카테고리의 업체 전문가들을 찾고 있으신가요?</Title26>
 
-          <SignupButton>
-            <a href={"signup"}>
+            <SignupButton>
               <Text20>회원가입하기</Text20>
-            </a>
-          </SignupButton>
-        </CustomContainer>
-      </CustomBackground>
+            </SignupButton>
+          </CustomContainer>
+        </CustomBackground>
+      </a>
     );
   }
 }

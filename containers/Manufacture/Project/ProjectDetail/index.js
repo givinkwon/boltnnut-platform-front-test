@@ -4,10 +4,9 @@ import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
 import Content1 from "./Content1";
-import Content2 from "./Content2";
+
 import ContentSub from "./ContentSub";
-import Content3 from "./Content3";
-import Content4 from "./Content4";
+
 
 @inject("Project")
 @observer
