@@ -16,7 +16,7 @@ import * as AccountAPI from "axios/Account/Account";
 class Signup extends React.Component {
   state = {
     width: null,
-  };
+  }; 
   componentDidMount() {
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });

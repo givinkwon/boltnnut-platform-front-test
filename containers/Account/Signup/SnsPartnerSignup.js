@@ -16,7 +16,7 @@ const AgreeContent = [
   { content: "이용약관 동의", essential: "(필수)", terms: 1 },
   { content: "개인정보 처리방침 동의", essential: "(필수)", terms: 1 },
   { content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 },
-];
+]; 
 
 @inject("Auth", "Signup")
 @observer
