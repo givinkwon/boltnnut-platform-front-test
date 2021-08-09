@@ -13,8 +13,6 @@ import { inject, observer } from "mobx-react";
 import DetailContainer from "./Detail/index";
 import MobileRequest from "./MobileRequest";
 import MobileRequestDone from "./MobileRequestDone";
-import { DiagnosticCategory, isParenthesizedExpression } from "typescript";
-
 // cookie 추가
 import Cookies from "js-cookie";
 
