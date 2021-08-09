@@ -11,7 +11,6 @@ import Containerv1 from "components/Containerv1";
 
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import Buttonv1 from "components/Buttonv1";
-import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
 import KSLink from "components/KSLink";
 
 const close_ic = "/static/icon/closeIcon.svg";
@@ -266,7 +265,7 @@ class Nav extends React.Component {
                     <NavLink active={url.indexOf("project") > -1}>
                       <RouterWrapper>
                         <KSLink
-                          url={"project"}
+                          url={"request"}
                           FontContent={() => {
                             return <Font16>프로젝트 의뢰</Font16>;
                           }}
@@ -280,6 +279,15 @@ class Nav extends React.Component {
                             url={"project"}
                             FontContent={() => {
                               return <Font14>전체 프로젝트</Font14>;
+                            }}
+                          />
+                        </li>
+                        <li>
+                          <KSLink
+                            step_index={0}
+                            url={"project"}
+                            FontContent={() => {
+                              return <Font14>내 프로젝트</Font14>;
                             }}
                           />
                         </li>
@@ -310,97 +318,232 @@ class Nav extends React.Component {
               </Menu>
               <Menu style={{ marginLeft: "auto" }}>
                 {/* 로그인한/안한 경우 */}
+                {console.log(Auth.logged_in_user)}
                 {token ? (
                   <ul>
+                    {/* 클라이언트 로그인 */}
+                    {this.props.Auth.logged_in_user.type === 0 && (
+                      <>
+                        <NavLink>
+                          <div
+                            style={{
+                              height: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Avatar
+                              src={profile}
+                              onClick={() =>
+                                this.setState({ is_profile: !is_profile })
+                              }
+                            />
+                          </div>
+                          <SubMenu
+                            style={{
+                              width: "160px",
+                            }}
+                          >
+                            <li>
+                              <KSLink
+                                url={"project"}
+                                FontContent={() => {
+                                  return <Font14>내 프로젝트</Font14>;
+                                }}
+                              />
+                            </li>
+                            <li>
+                              <KSLink
+                                url={"bookmark"}
+                                FontContent={() => {
+                                  return <Font14>관심 제조사</Font14>;
+                                }}
+                              />
+                            </li>
+                            <li>
+                              <KSLink
+                                url={"chatting"}
+                                FontContent={() => {
+                                  return <Font14>채팅하기</Font14>;
+                                }}
+                              />
+                            </li>
+                            <li>
+                              <KSLink
+                                url={"review"}
+                                FontContent={() => {
+                                  return <Font14>후기 관리</Font14>;
+                                }}
+                              />
+                            </li>
+                            <li>
+                              <KSLink
+                                url={"account"}
+                                FontContent={() => {
+                                  return <Font14>계정 설정</Font14>;
+                                }}
+                              />
+                            </li>
+                          </SubMenu>
+
+                          {/* {is_profile && (
+                        <ProfileMenu>
+                          <div>
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink url={"profile"} content={"정보수정"} />
+                                </Font16>
+                              </Button>
+                            </div>
+
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink url={"chatting"} content={"채팅하기"} />
+                                </Font16>
+                              </Button>
+                            </div>
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink url={"account?tab=1"} content={"계정설정"} />
+                                </Font16>
+                              </Button>
+                            </div>
+                          </div>
+                        </ProfileMenu>
+                      )} */}
+                        </NavLink>
+                      </>
+                    )}
                     {/* 파트너 로그인 */}
                     {this.props.Auth.logged_in_user.type === 1 && (
-                      <NavLink
-                        onClick={() => {
-                          this.props.Auth.setType("detailexpert");
-                        }}
-                        active={
-                          url.indexOf("signup") > -1 &&
-                          Auth.type == "detailexpert"
-                        }
-                      >
-                        <RouterWrapper
+                      <>
+                        <NavLink
                           onClick={() => {
-                            alert("준비 중인 서비스입니다!");
+                            this.props.Auth.setType("detailexpert");
                           }}
-                        >
-                          <KSLink
-                            // url={"partnerregister"}
-                            url={""}
-                            FontContent={() => {
-                              return <Font14>파트너 등록하기</Font14>;
-                            }}
-                          />
-                        </RouterWrapper>
-                      </NavLink>
-                    )}
-                    <NavLink>
-                      <div
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Avatar
-                          src={profile}
-                          onClick={() =>
-                            this.setState({ is_profile: !is_profile })
+                          active={
+                            url.indexOf("signup") > -1 &&
+                            Auth.type == "detailexpert"
                           }
-                        />
-                      </div>
-                      <SubMenu
-                        style={{
-                          width: "160px",
-                        }}
-                      >
-                        <li>
-                          <KSLink
-                            step_index={0}
-                            url={"project"}
-                            FontContent={() => {
-                              return <Font14>내 프로젝트</Font14>;
+                        >
+                          <RouterWrapper
+                            onClick={() => {
+                              alert("준비 중인 서비스입니다!");
                             }}
-                          />
-                        </li>
-                        <li>
-                          <KSLink
-                            url={"bookmark"}
-                            FontContent={() => {
-                              return <Font14>관심 제조사</Font14>;
+                          >
+                            <KSLink
+                              // url={"partnerregister"}
+                              url={"/"}
+                              FontContent={() => {
+                                return <Font14>파트너 등록하기</Font14>;
+                              }}
+                            />
+                          </RouterWrapper>
+                        </NavLink>
+                        <NavLink>
+                          <div
+                            style={{
+                              height: "100%",
+                              display: "flex",
+                              alignItems: "center",
                             }}
-                          />
-                        </li>
-                        <li>
-                          <KSLink
-                            url={"chatting"}
-                            FontContent={() => {
-                              return <Font14>채팅하기</Font14>;
+                          >
+                            <Avatar
+                              src={profile}
+                              onClick={() =>
+                                this.setState({ is_profile: !is_profile })
+                              }
+                            />
+                          </div>
+                          <SubMenu
+                            style={{
+                              width: "160px",
                             }}
-                          />
-                        </li>
-                        <li>
-                          <KSLink
-                            url={"login"}
-                            FontContent={() => {
-                              return <Font14>리뷰 관리</Font14>;
-                            }}
-                          />
-                        </li>
-                        <li>
-                          <KSLink
-                            url={"account"}
-                            FontContent={() => {
-                              return <Font14>계정 설정</Font14>;
-                            }}
-                          />
-                        </li>
-                      </SubMenu>
-                    </NavLink>
+                          >
+                            <li>
+                              <KSLink
+                                url={"project"}
+                                FontContent={() => {
+                                  return <Font14>내 프로젝트</Font14>;
+                                }}
+                              />
+                            </li>
+                            <li>
+                              <KSLink
+                                url={"Profile"}
+                                FontContent={() => {
+                                  return <Font14>프로필 수정</Font14>;
+                                }}
+                              />
+                            </li>
+                            <li>
+                              <KSLink
+                                url={"bookmark"}
+                                FontContent={() => {
+                                  return <Font14>관심 프로젝트</Font14>;
+                                }}
+                              />
+                            </li>
+                            <li>
+                              <KSLink
+                                url={"chatting"}
+                                FontContent={() => {
+                                  return <Font14>채팅하기</Font14>;
+                                }}
+                              />
+                            </li>
+                            <li>
+                              <KSLink
+                                url={"review"}
+                                FontContent={() => {
+                                  return <Font14>후기 관리</Font14>;
+                                }}
+                              />
+                            </li>
+                            <li>
+                              <KSLink
+                                url={"account"}
+                                FontContent={() => {
+                                  return <Font14>계정 설정</Font14>;
+                                }}
+                              />
+                            </li>
+                          </SubMenu>
+
+                          {/* {is_profile && (
+                        <ProfileMenu>
+                          <div>
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink url={"profile"} content={"정보수정"} />
+                                </Font16>
+                              </Button>
+                            </div>
+
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink url={"chatting"} content={"채팅하기"} />
+                                </Font16>
+                              </Button>
+                            </div>
+                            <div>
+                              <Button>
+                                <Font16>
+                                  <KSLink url={"account?tab=1"} content={"계정설정"} />
+                                </Font16>
+                              </Button>
+                            </div>
+                          </div>
+                        </ProfileMenu>
+                      )} */}
+                        </NavLink>
+                      </>
+                    )}
                     <NavLink>
                       <RouterWrapper
                         style={{ paddingRight: 0, paddingLeft: 13 }}

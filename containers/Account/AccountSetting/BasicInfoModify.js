@@ -42,20 +42,37 @@ class ChangePassword extends Component {
               <img src={profile_img} />
               <img src={profile_modify} />
             </div>
-            <span
-              style={{
-                marginTop: 56,
-                marginBottom: 40,
-                fontSize: 16,
-                letterSpacing: -0.4,
-                lineHeight: 1.38,
-                color: "#767676",
-              }}
-            >
-              프로필 사진을 등록하면 파트너가 더욱 신뢰감을 가집니다.
-              <br />
-              이미지 파일(.jpg, .jpeg, .png, 등)만 업로드할 수 있습니다.
-            </span>
+            {this.props.Auth.logged_in_user.type === 0 ? (
+              <span
+                style={{
+                  marginTop: 56,
+                  marginBottom: 40,
+                  fontSize: 16,
+                  letterSpacing: -0.4,
+                  lineHeight: 1.38,
+                  color: "#767676",
+                }}
+              >
+                프로필 사진을 등록하면 파트너가 더욱 신뢰감을 가집니다.
+                <br />
+                이미지 파일(.jpg, .jpeg, .png, 등)만 업로드할 수 있습니다.
+              </span>
+            ) : (
+              <span
+                style={{
+                  marginTop: 56,
+                  marginBottom: 40,
+                  fontSize: 16,
+                  letterSpacing: -0.4,
+                  lineHeight: 1.38,
+                  color: "#767676",
+                }}
+              >
+                프로필 사진을 등록하면 클라이언트가 더욱 신뢰감을 가집니다.
+                <br />
+                이미지 파일(.jpg, .jpeg, .png, 등)만 업로드할 수 있습니다.
+              </span>
+            )}
           </MainBoxHeader>
           <MainBoxBody>
             <BodyBox>
@@ -122,10 +139,10 @@ class ChangePassword extends Component {
 export default ChangePassword;
 
 const BodyBox = styled.div`
-  width: 100%;
   margin-top: 32px;
   .MuiInputBase-root {
     height: 42px;
+    width: 100%;
   }
 `;
 

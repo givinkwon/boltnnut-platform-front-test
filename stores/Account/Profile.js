@@ -8,6 +8,7 @@ class Profile {
   constructor() {
     //makeObservable(this);
   }
+
   @observable data = null;
 
   @observable email = "";
@@ -67,6 +68,9 @@ class Profile {
 
   @observable locationAddress = "";
   @observable locationModalActive = false;
+
+  @observable profileTabIdx = 0;
+  @observable certificationModal = false;
 
   @action reset = () => {
     this.email = "";
@@ -1469,17 +1473,17 @@ class Profile {
   // 프로필 수정하기
   @action saveCompanyInfo = (edit_text) => {
     // 회사 상세 설명 수정 시 저장(API Update)
-  }
+  };
 
   // 진행한 제품군 수정하기
   @action saveProduct = (edit_text) => {
     // 진행한 제품군 수정 시 저장(API Update)
-  }
+  };
 
   // 상세 위치 수정하기
   @action saveRegion = (edit_text) => {
     // 상세 위치 수정 시 저장(API Update)
-  }
+  };
 }
 
 export default new Profile();

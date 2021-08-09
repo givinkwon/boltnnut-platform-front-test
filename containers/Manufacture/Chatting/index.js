@@ -1,8 +1,7 @@
 import React from "react";
 import { inject, observer } from "mobx-react";
 
-import ClientChatting from "./ClientChatting";
-import PartnerChatting from "./PartnerChatting";
+import MyChatting from "./MyChatting/index";
 import BannerContainer from "./Banner";
 
 @inject("Project", "Auth", "Partner")
@@ -19,7 +18,7 @@ class ChattingContainer extends React.Component{
       <BannerContainer/>
       {this.props.width && this.props.width > 767.98 &&
         <div style={{ overflow: "visible" }}>
-        <ClientChatting/>
+        <MyChatting/>
         </div>
       }
       </div>

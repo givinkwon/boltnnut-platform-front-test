@@ -81,7 +81,7 @@ class ContentSub extends React.Component {
               onMouseOut={() => this.activeHandler("activeOne")}
               onClick={async () => {
                 console.log("click!");
-                this.changeProject();
+                alert("준비중입니다. 수정이 필요하시면 고객센터로 문의주세요.")
               }}
             >
               <Font18
@@ -118,7 +118,7 @@ class ContentSub extends React.Component {
                   onMouseOver={() => this.activeHandler("activeOne")}
                   onMouseOut={() => this.activeHandler("activeOne")}
                   onClick={async () => {
-                    Router.push('/chatting')
+                    alert("준비중입니다. 지원이 필요하시면 고객센터로 문의주세요.")
                   }}
                 >
                   <Font18
