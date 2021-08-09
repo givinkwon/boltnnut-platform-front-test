@@ -8,7 +8,6 @@ import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
 import ProjectNone from "containers/Manufacture/Project/MyProject/ProjectNone";
-import ProjectCard from "containers/Manufacture/Project/ProjectCard";
 import { toJS } from "mobx";
 
 const pass1 = "static/images/pass1.png";
@@ -252,8 +251,7 @@ class MyProject extends React.Component {
                   </>
                 ) : (
                   <>
-                    {/* <ProjectNone /> */}
-                    <ProjectCard />
+                    <ProjectNone />
                   </>
                 )}
               </Main>

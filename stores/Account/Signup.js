@@ -76,8 +76,13 @@ class Signup {
     this.title = val;
   };
 
+  @observable marketing = false;
+  @action setMarketing = (val) => {
+    this.marketing = val;
+  };
+
   // 회원가입 함수 시작
-  @action signup = async () => {
+  @action signup = async (container = "signup" ) => {
     if (!this.email) {
       await alert("이메일을 입력해주세요.");
       return;
@@ -112,13 +117,9 @@ class Signup {
     console.log("job title : ", this.title);
     console.log("phone : ", this.phone);
     console.log("marketing : ", this.marketing);
-    if (this.type === "client") {
+    if (this.type !== "partner") {
       if (!this.company_name) {
         await alert("회사명을 입력해주세요.");
-        return;
-      }
-      if (!this.title) {
-        await alert("직위를 입력해주세요");
         return;
       }
 
@@ -149,7 +150,12 @@ class Signup {
             alert("회원가입 성공");
             MyDataLayerPush({ event: "SignUpComplete_Client" });
             this.reset();
-            Router.push("/login");
+            console.log(res)
+            // 의뢰서에서 회원가입하지 않았을 때 => 그냥 회원가입일 때 Router Push
+            if(container == "signup"){
+              Router.push("/login");
+            }
+
           }, 800);
         })
         .catch((e) => {
@@ -192,7 +198,10 @@ class Signup {
             alert("회원가입 성공");
             MyDataLayerPush({ event: "SignUpComplete_Partner" });
             this.reset();
-            Router.push("/login");
+            // 의뢰서에서 회원가입하지 않았을 때 => 그냥 회원가입일 때 Router Push
+            if(container == "signup"){
+              Router.push("/login");
+            }
           }, 800);
         })
         .catch((e) => {
