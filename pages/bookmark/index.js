@@ -5,7 +5,7 @@ import { inject, observer } from "mobx-react";
 import Nav from "components/Nav";
 import MobileNav from "components/MobileNav";
 import Footer from "components/Footer";
-import BookmarkConatiner from "containers/Account/Bookmark/index";
+import BookmarkConatiner from "containers/Account/Bookmark/index"
 
 const logo_ic = "/static/images/components/MobileNav/MobileLogo.svg";
 
