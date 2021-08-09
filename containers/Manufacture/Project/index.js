@@ -13,8 +13,8 @@ import AllProject from "containers/Manufacture/Project/AllProject/index";
 import ProjectDetail from "containers/Manufacture/Project/ProjectDetail/index";
 
 // Mobile
-import MobileMyProject from "containers/Manufacture/Project/MyProject/index";
-import MobileAllProject from "containers/Manufacture/Project/AllProject/index";
+import MobileMyProject from "containers/Manufacture/Project/MyProject/Mobile/index";
+import MobileAllProject from "containers/Manufacture/Project/AllProject/Mobile/index";
 import MobileProjectDetail from "containers/Manufacture/Project/ProjectDetail/index";
 
 @inject("Project", "Auth", "Partner", "Cookie")
