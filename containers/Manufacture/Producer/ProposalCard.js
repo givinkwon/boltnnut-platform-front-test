@@ -128,7 +128,7 @@ class ProposalCard extends React.Component {
     await Partner.existCheckedBookmark(clientId, partnerId, idx);
     await Partner.getTotalBookmarkByPartner(partnerId);
 
-    const existLogo = data.logo.split("/")[4];
+    const existLogo = data.logo && data.logo.split("/")[4];
     //console.log(existLogo);
 
     window.addEventListener("resize", Producer.updateDimensions);
@@ -324,7 +324,7 @@ class ProposalCard extends React.Component {
     const loggedInPartnerId =
       Auth.logged_in_partner && Auth.logged_in_partner.id;
     //console.log(Partner.interestedIdx);
-    const existLogo = data.logo.split("/")[4];
+    const existLogo = data.logo && data.logo.split("/")[4];
 
     const SlideSettingsMobile = {
       dots: false,

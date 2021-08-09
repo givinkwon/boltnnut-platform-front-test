@@ -165,6 +165,7 @@ class ManufacturerContentContainer extends React.Component {
     console.log(toJS(Partner.partner_list));
 
     console.log(Partner.suggest_list);
+    console.log(Partner.searchFileUrl)
     return (
       <>
         <Background id="MyBackground">
@@ -219,9 +220,9 @@ class ManufacturerContentContainer extends React.Component {
                           <>파일이 없습니다</>
                         )}
                         <span style={{ marginRight: "10px" }}>
-                          {!item.name
+                          {/* {!item.name
                             ? decodeURI(item.split("/").pop())
-                            : item.name}
+                            : item.name} */}
                         </span>
                         <DeleteFile
                           src={deleteButtonImg}
@@ -232,7 +233,7 @@ class ManufacturerContentContainer extends React.Component {
                           }}
                         />
                       </span>
-                      <span>해당 이미지를 검색 합니다.</span>
+                      {/* <span>해당 이미지를 검색 합니다.</span> */}
                     </span>
                   </>
                 );

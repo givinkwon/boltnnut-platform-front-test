@@ -477,6 +477,7 @@ class Partner {
       for (var item in e.currentTarget.files) {
         console.log(item);
         if (typeof e.currentTarget.files[item] === "object") {
+          this.fileArray.pop()
           this.fileArray.push(e.currentTarget.files[item]);
         } else {
           break;
