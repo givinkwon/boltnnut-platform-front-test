@@ -7,7 +7,7 @@ import Footer from "components/Footer";
 
 import { inject, observer } from "mobx-react";
 
-import ProjectDetailContainer from "containers/Manufacture/Project/Client/ProjectDetail/ProjectDetail";
+import ProjectDetailContainer from "containers/Manufacture/Project/ProjectDetail/index";
 import * as AccountAPI from "axios/Account/Account";
 
 @inject("Project")

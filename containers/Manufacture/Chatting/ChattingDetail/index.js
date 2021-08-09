@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Router from "next/router";
-import ChatIndexContainer from "./ChatIndex";
-import BannerContainer from "./Banner";
+
 const Map = "/static/images/Info/InfoMap.svg";
 const Line = "/static/images/Info/Line.svg";
 const Line2 = "/static/images/Info/Line2.svg";
@@ -11,12 +10,7 @@ const Banner1Img = "/static/images/Info/Banner1Img.png";
 const Banner1Img2 = "/static/images/Info/Banner1Img2.png";
 const Banner2Img = "/static/images/Info/Banner2Img.png";
 const Banner3Img = "/static/images/Info/Banner3Img.png";
-import PaymentPageContainer from "Request/PaymentPage";
-import PaymentCompleteContainer from "Request/PaymentComplete";
-import ChatCardContainer from "./ChatCard";
-import ChatItemContainer from "components/ChatItem";
-import Containerv1 from "components/Containerv1";
-import Background from "components/Background";
+
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import * as PartnerAPI from "axios/Manufacture/Partner";

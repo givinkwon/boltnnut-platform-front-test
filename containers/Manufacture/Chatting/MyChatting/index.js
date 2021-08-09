@@ -7,7 +7,7 @@ import { toJS } from "mobx";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import ChatItemContainer from "components/ChatItem";
-import ChatTestContainer from "containers/Manufacture/Chatting/Info2/ChatTest";
+import ChatTestContainer from "containers/Manufacture/Chatting/ChattingDetail/ChatTest";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 
 @inject("Project", "Auth", "Answer")
