@@ -128,21 +128,6 @@ class PartnerDirectRequest extends Component {
   };
 
   render() {
-    const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
-    다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
-    1. 가공품 목적 및 사용 환경
-    2. 가공 부품별 특이 사항
-    3. 공급처가 충족해야하는 발주 조건
-    `;
-    const projectContent = `
-    1. 프로젝트의 소개 및 제작 목적:   
-    2. 프로젝트의 진행 상황 및 계획 수립 :   
-    3. 프로젝트 기능 및 특이 사항 - 필수로 들어가야 할 기능들  :  
-    4. 참고자료 / 레퍼런스 예시) ‘볼트앤너트 네이버 블로그’ 참고 등 :  
-    5. 제조사(파트너)에게의 요청사항 
-    - 프로젝트 진행 시 파트너가 알아야 할 발주 조건 : `;
-
-    const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
     const { Request, Auth } = this.props;
 
     return (
@@ -329,6 +314,9 @@ class PartnerDirectRequest extends Component {
                     onClick={() => {
                       this.activeHandler("budget");
                     }}
+                    style={{
+                      cursor: "pointer",
+                    }}
                   >
                     <img src={helpimg}></img>
                     <span
@@ -336,7 +324,6 @@ class PartnerDirectRequest extends Component {
                         display: "flex",
                         alignItems: "center",
                         marginLeft: 4,
-                        cursor: "pointer",
                       }}
                     >
                       예산 측정이 어려우신가요?
@@ -390,16 +377,7 @@ class PartnerDirectRequest extends Component {
                   >
                     희망하는 프로젝트 진행 기간을 입력해주세요.
                   </span>
-                  <ProjectDate>
-                    <InputComponent
-                      class="Input"
-                      onFocus={(e) => (e.target.placeholder = "")}
-                      // placeholder="일"
-                      onChange={(e) => {
-                        Request.set_contents(e);
-                      }}
-                    />
-                  </ProjectDate>
+                  <Calendar />
                   <CheckBoxComponent onChange={this.toggleCheckBox}>
                     <span
                       style={{
@@ -413,36 +391,6 @@ class PartnerDirectRequest extends Component {
                     </span>
                   </CheckBoxComponent>
                 </div>
-              </RequestContentBox>
-
-              {/* 제조사가 직접 의뢰하기, 신제품 맞춤형 문의만*/}
-              <RequestContentBox>
-                <ContentTitle style={{ marginBottom: 8 }}>
-                  <span>희망 납기일</span>
-                </ContentTitle>
-                <span
-                  style={{
-                    fontSize: 16,
-                    color: "#505050",
-                    lineHeight: 2.13,
-                    letterSpacing: -0.4,
-                  }}
-                >
-                  프로젝트 제품분야에 해당하는 항목들을 선택해주세요.
-                </span>
-                <Calendar />
-                <CheckBoxComponent onChange={this.toggleCheckBox}>
-                  <span
-                    style={{
-                      color: "#1e2222",
-                      fontSize: 15,
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    납기일 협의가 가능합니다.
-                  </span>
-                </CheckBoxComponent>
               </RequestContentBox>
 
               <RequestContentBox>

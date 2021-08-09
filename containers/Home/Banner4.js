@@ -46,9 +46,9 @@ class Banner4Container extends React.Component {
 
   render() {
     const stepBoxArray = [
-      { step: "Step1", title: "제조사 찾기", desc: "한번의 검색으로 제품에 맞는 카테고리의 제조사를 찾아보세요." },
-      { step: "Step2", title: "제조에 의뢰하기", desc: "제조사를 비교하고 간단한 양식에 맞춰 견적 요청서를 작성해 보세요." },
-      { step: "Step3", title: "제조사와 직접 채팅하기", desc: "제조사에게 견적 요청서를 자세히 상담받고 견적을 조율해 보세요." },
+      { step: "Step1", title: "제조사 찾기", desc1: "한번의 검색으로 제품에 맞는", desc2: "카테고리의 제조사를 찾아보세요." },
+      { step: "Step2", title: "제조에 의뢰하기", desc1: "제조사를 비교하고 간단한 양식에", desc2: "맞춰 견적 요청서를 작성해 보세요." },
+      { step: "Step3", title: "제조사와 직접 채팅하기", desc1: "제조사에게 견적 요청서를 자세히", desc2: "상담받고 견적을 조율해 보세요." },
     ];
 
     return (
@@ -71,7 +71,8 @@ class Banner4Container extends React.Component {
 
                       <div style={{ display: "flex", flexDirection: "column", marginTop: "25px" }}>
                         <Text22>{v.title}</Text22>
-                        <Text17>{v.desc}</Text17>
+                        <Text17>{v.desc1}</Text17>
+                        <Text17 style={{ marginTop: 0 }}>{v.desc2}</Text17>
                       </div>
                     </StepBox>
                   ))}

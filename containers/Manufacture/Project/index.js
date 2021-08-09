@@ -48,12 +48,12 @@ class ProjectContainer extends React.Component {
   }
 
   render() {
-    const { Auth, Project } = this.props;
-
+    const { Auth, Project, width } = this.props;
+    console.log(width)
     return (
       <>
         {/* 웹 */}
-        {this.props.width && this.props.width > 767.98 ? (
+        {width && width > 767.98 ? (
           <>
 
             <div style={{ overflow: "visible" }}>
@@ -63,8 +63,8 @@ class ProjectContainer extends React.Component {
               {Project.step_index == 0 && <MyProject/>}
               {/* 전체 프로젝트 */}
               {Project.step_index == 1 && <AllProject />}
+              
               {/* 프로젝트 상세 */}
-
               {/* 클라이언트로 로그인 */}
               {Project.step_index == 2 && Auth.logged_in_client && <ProjectDetail user="client" /> }
               
