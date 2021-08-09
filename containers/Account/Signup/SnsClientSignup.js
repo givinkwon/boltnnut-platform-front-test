@@ -11,7 +11,7 @@ const signupsearch = "/static/images/signupsearch.svg";
 const success = "/static/images/success.svg";
 const viewterms = "/static/images/viewterms.svg";
 
-const AgreeContent = [ 
+const AgreeContent = [
   { content: "만 14세 이상 입니다", essential: "(필수)", terms: 0 },
   { content: "이용약관 동의", essential: "(필수)", terms: 1 },
   { content: "개인정보 처리방침 동의", essential: "(필수)", terms: 1 },
