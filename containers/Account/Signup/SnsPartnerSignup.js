@@ -20,7 +20,7 @@ const AgreeContent = [
 
 @inject("Auth", "Signup")
 @observer
-class SnsPartnerSignupContainer extends React.Component {
+class SnsPartnerSignUpContainer extends React.Component {
   componentDidMount() {
     this.props.Auth.getPathData();
     this.props.Auth.getBusinessData();
@@ -129,7 +129,7 @@ class SnsPartnerSignupContainer extends React.Component {
   }
 }
 
-export default SnsPartnerSignupContainer;
+export default SnsPartnerSignUpContainer;
 
 const ImgBox = styled.img`
   position: absolute;
