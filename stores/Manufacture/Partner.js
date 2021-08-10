@@ -829,6 +829,7 @@ class Partner {
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
+    this.category_string = [];
   };
 
   @action getClientInfo = async (id) => {
@@ -1759,8 +1760,8 @@ class Partner {
         this.category_string.length - 1
       );
       console.log(this.category_string);
-      // 괄호를 없애서 전처리
-      // req.params.category = this.category_string;
+
+      req.params.category = this.category_string;
     }
 
     // 지역 분류 선택되어 있을 때

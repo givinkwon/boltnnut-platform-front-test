@@ -22,7 +22,8 @@ class ProducerConatiner extends React.Component {
   async componentDidMount() {
     let partner_view_data = [];
     const { Auth, Partner, Category, Cookie } = this.props;
-    Partner.init();
+    await Category.reset();
+    await Partner.init();
     await Partner.getPartner();
 
     // 임시로 새로고침 하는 코드 넣기
@@ -52,6 +53,7 @@ class ProducerConatiner extends React.Component {
 
   render() {
     const { Auth, Partner, Search } = this.props;
+
     return (
       <>
         {this.props.width &&
