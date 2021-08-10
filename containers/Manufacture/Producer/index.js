@@ -22,9 +22,6 @@ class ProducerConatiner extends React.Component {
   async componentDidMount() {
     let partner_view_data = [];
     const { Auth, Partner, Category, Cookie } = this.props;
-    Category.reset();
-    Partner.getPartner();
-
     // 임시로 새로고침 하는 코드 넣기
     // if(Partner.partner_count < 100 ) {
     //   window.location.replace("/producer")
