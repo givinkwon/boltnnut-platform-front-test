@@ -66,7 +66,7 @@ class InputComponent extends React.Component {
           >
             <img
               src="/static/images/camera.svg"
-              style={{ width: 32, height: 32 }}
+              style={{ width: 32, height: 32, marginTop: 1, marginRight: 2 }}
             />
           </div>
         </div>
