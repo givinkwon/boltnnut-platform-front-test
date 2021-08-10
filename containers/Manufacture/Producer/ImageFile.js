@@ -43,10 +43,7 @@ class InputComponent extends React.Component {
     const { fileName, checkFileUpload } = this.state;
 
     return (
-      <InputBox
-        mobile={mobile}
-        style={{ width: "100%", display: "inline-flex" }}
-      >
+      <InputBox mobile={mobile} style={{ display: "inline-flex" }}>
         <div>
           <input
             type="file"
@@ -67,7 +64,10 @@ class InputComponent extends React.Component {
               this.file.current.click();
             }}
           >
-            <img src="/static/images/camera.svg" />
+            <img
+              src="/static/images/camera.svg"
+              style={{ width: 32, height: 32 }}
+            />
           </div>
         </div>
       </InputBox>
@@ -78,12 +78,10 @@ class InputComponent extends React.Component {
 export default InputComponent;
 
 const InputBox = styled.div`
-  height: 100%;
-  width: 100%;
   display: flex;
   border: solid 1px #ffffff;
   color: #404040;
-  border-radius: 3px;
+  border: none;
   box-sizing: border-box;
 
 
@@ -95,16 +93,10 @@ const InputBox = styled.div`
       >div:nth-of-type(1){
         word-wrap: break-word;
         word-break: break-all;
-        // width: 92%;
-        padding-left: 10px;
-
       }
       >div:nth-of-type(2){
           position: absolute;
           right: 24px;
-        >img{
-            float: right;
-        }
       }
       
   }
@@ -125,11 +117,6 @@ const InputBox = styled.div`
         font-weight: normal;
         box-sizing: border-box;
         margin-right: 5px;
-      }
-      >img {
-        vertical-align : baseline;
-        width: ${(props) => (props.mobile ? "20px" : "")};
-        height: ${(props) => (props.mobile ? "18px" : "")};
       }      
     }
       
