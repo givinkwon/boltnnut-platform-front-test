@@ -529,9 +529,10 @@ class ProposalCard extends React.Component {
               <Main>
                 <Name>{data && data.name}</Name>
                 <InfoOne>
-                  {data && data.info_company && data.info_company.length > 70
-                    ? data.info_company.slice(0, 70) + "..."
-                    : data.info_company}
+                  {data &&
+                    (data.info_company.length > 70
+                      ? data.info_company.slice(0, 70) + "..."
+                      : data.info_company)}
                 </InfoOne>
               </Main>
             </Card>
