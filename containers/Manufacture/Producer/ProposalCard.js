@@ -278,9 +278,9 @@ class ProposalCard extends React.Component {
       }
       this.props.Partner.selectedIntroductionFile = data && data.file;
 
-      const fileType = data && data.file
-        .split(".")
-        [data.file.split(".").length - 1].toLowerCase();
+      const fileType =
+        data &&
+        data.file.split(".")[data.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
 
       if (availableFileType.indexOf(fileType) > -1) {
@@ -339,7 +339,7 @@ class ProposalCard extends React.Component {
 
     let category_data;
     //console.log(data.logo);
-    console.log(data)
+    console.log(data);
     return (
       <>
         {width > 767.98 && data ? (
@@ -356,7 +356,9 @@ class ProposalCard extends React.Component {
               <Header>
                 {data && data.portfolio_set.length > 0 ? (
                   <Item>
-                    <img src={data && data.portfolio_set[0].img_portfolio}></img>
+                    <img
+                      src={data && data.portfolio_set[0].img_portfolio}
+                    ></img>
                   </Item>
                 ) : existLogo === "null" ? (
                   <Item>
@@ -469,7 +471,7 @@ class ProposalCard extends React.Component {
                         style={{ marginLeft: 15, marginRight: 5 }}
                       ></img>
                       <div>
-                        {data && data.region === null || data.region === "nan"
+                        {(data && data.region === null) || data.region === "nan"
                           ? this.state.city
                           : data.region}
                       </div>
@@ -506,7 +508,9 @@ class ProposalCard extends React.Component {
               <Header>
                 {data && data.portfolio_set.length > 0 ? (
                   <Item>
-                    <img src={data && data.portfolio_set[0].img_portfolio}></img>
+                    <img
+                      src={data && data.portfolio_set[0].img_portfolio}
+                    ></img>
                   </Item>
                 ) : existLogo === "null" ? (
                   <Item>
@@ -525,9 +529,10 @@ class ProposalCard extends React.Component {
               <Main>
                 <Name>{data && data.name}</Name>
                 <InfoOne>
-                  {data && data.info_company && data.info_company.length > 70
-                    ? data.info_company.slice(0, 70) + "..."
-                    : data.info_company}
+                  {data &&
+                    (data.info_company.length > 70
+                      ? data.info_company.slice(0, 70) + "..."
+                      : data.info_company)}
                 </InfoOne>
               </Main>
             </Card>
