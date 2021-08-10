@@ -94,8 +94,10 @@ class ProjectCardContainer extends React.Component {
               <img src="/static/images/new.svg" />
             </ContentBox>
 
-            <ContentBox style={{ width: 320, marginTop: 20 }}>
-              <Title20>{name && name}</Title20>
+            <ContentBox style={{ width: "100%", marginTop: 20 }}>
+              <Title20>
+                {name && name.length > 35 ? name.slice(0, 35) + "..." : name}
+              </Title20>
               <img src="/static/images/success.svg" />
               <Title14>{date}</Title14>
             </ContentBox>
