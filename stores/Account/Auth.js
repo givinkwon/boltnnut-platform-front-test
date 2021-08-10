@@ -68,7 +68,7 @@ class Auth {
 
   @observable accountTabIdx = 1;
   //개발중에 임시로 false로해둠
-  @observable signupBoxActive = false;
+  @observable signupBoxActive = true;
 
   @observable registerType = "";
   @observable registerPageIdx = 0;
