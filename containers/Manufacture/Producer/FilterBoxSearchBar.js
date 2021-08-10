@@ -15,14 +15,7 @@ import Category from "../../../stores/Manufacture/Category";
 
 import ImageFile from "./ImageFile";
 
-@inject(
-  "Auth",
-  "Project",
-  "Request",
-  "Partner",
-  "Producer",
-  "Category"
-)
+@inject("Auth", "Project", "Request", "Partner", "Producer", "Category")
 @observer
 class SearchBarConatiner extends React.Component {
   state = {
@@ -53,7 +46,6 @@ class SearchBarConatiner extends React.Component {
 
     await Partner.search();
 
-
     // 검색어 로그에 저장하기 위한 함수
     if (Partner.search_text) {
       Partner.isSearched = true;
@@ -61,8 +53,8 @@ class SearchBarConatiner extends React.Component {
       Partner.isSearched = false;
     }
     if (Partner.search_text != "") {
-      }
-  }
+    }
+  };
 
   closeModal = () => {
     this.setState({
@@ -80,7 +72,7 @@ class SearchBarConatiner extends React.Component {
 
   async componentDidMount() {
     await this.props.Auth.checkLogin();
-  };
+  }
 
   // 검색창에 검색을 할 때 text를 observable에 저장
   handleSearcherInputChange(event) {
@@ -243,9 +235,9 @@ const SearchBar = styled.div`
   box-sizing: border-box;
   border-radius: 60px;
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
-  border: solid 0.5px #c6c7cc;
+  border: solid 0.5px #e1e2e4;
   width: 100%;
-  padding-right: 17px;
+  padding-right: 20px;
 
   input {
     width: 640px;

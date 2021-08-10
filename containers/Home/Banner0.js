@@ -10,8 +10,15 @@ const banner0img = "/static/images/banner0img.svg";
 class Banner0Container extends React.Component {
   render() {
     return (
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "200px", marginBottom: "130px" }}>
-        <Containerv1 style={{ justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "90px",
+          marginBottom: "110px",
+        }}
+      >
+        <Containerv1 style={{ gap: 130, alignItems: "center" }}>
           <LeftBox>
             <Header>
               대한민국 제조사 정보
@@ -24,7 +31,7 @@ class Banner0Container extends React.Component {
             <SearchBar />
           </LeftBox>
 
-          <img src={banner0img} style={{ height: "420px" }} />
+          <img src={banner0img} style={{ marginTop: 40 }} />
         </Containerv1>
       </div>
     );

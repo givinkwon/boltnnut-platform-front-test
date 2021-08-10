@@ -46,9 +46,9 @@ class SearchBarConatiner extends React.Component {
     } else {
       Partner.isSearched = false;
     }
-    
+
     if (Partner.search_text != "") {
-        Partner.subButtonActive = true;
+      Partner.subButtonActive = true;
     }
   };
 
@@ -82,20 +82,33 @@ class SearchBarConatiner extends React.Component {
     return (
       <>
         <Form active={Partner.subButtonActive}>
-          <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
+          <div
+            style={{ width: "100%", display: "flex", flexDirection: "column" }}
+          >
             <SearchBar active={Partner.subButtonActive}>
               <input
                 placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")}
+                onBlur={(e) =>
+                  (e.target.placeholder =
+                    "원하는 분야의 제조업체나 비슷한 제품을 검색해보세요.")
+                }
                 onChange={this.handleSearcherInputChange.bind(this)}
                 value={Partner.search_text}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-              <img style={{ width: 24, height: 24, marginRight: 25, cursor: "pointer" }} src="/static/icon/search_blue.svg" onClick={this.search} />
+              <img
+                style={{
+                  width: 24,
+                  height: 24,
+                  marginRight: 25,
+                  cursor: "pointer",
+                }}
+                src="/static/icon/search_blue.svg"
+                onClick={this.search}
+              />
             </SearchBar>
-
           </div>
         </Form>
       </>
@@ -128,7 +141,6 @@ const CustomLiBox = styled.div`
       background-color: #f2f2f2;
     }
   }
-
 `;
 
 const categoryArray = [
