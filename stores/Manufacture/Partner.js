@@ -811,7 +811,6 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    this.getPartner();
   };
   @action reset = () => {
     this.detail = null;
