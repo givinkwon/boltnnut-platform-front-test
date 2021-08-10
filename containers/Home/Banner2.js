@@ -18,7 +18,7 @@ class NewBanner2Container extends React.Component {
 
     // 리스트 초기화 && 선택하기
     Category.reset();
-    Category.add_selected("category", 1);
+    Category.add_selected("category", 2);
   }
 
   onClickCategory = (idx) => {
