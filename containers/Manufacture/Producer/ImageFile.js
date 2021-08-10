@@ -28,11 +28,25 @@ class InputComponent extends React.Component {
   }
 
   render() {
-    const { onChange, children, label, file, Request, Partner, isOpen, mobile, Producer, ...props } = this.props;
+    const {
+      onChange,
+      children,
+      label,
+      file,
+      Request,
+      Partner,
+      isOpen,
+      mobile,
+      Producer,
+      ...props
+    } = this.props;
     const { fileName, checkFileUpload } = this.state;
 
     return (
-      <InputBox mobile={mobile} style={{ width: "100%", display: "inline-flex" }}>
+      <InputBox
+        mobile={mobile}
+        style={{ width: "100%", display: "inline-flex" }}
+      >
         <div>
           <input
             type="file"
@@ -53,7 +67,7 @@ class InputComponent extends React.Component {
               this.file.current.click();
             }}
           >
-            <img src="/static/icon/camera.svg" />
+            <img src="/static/images/camera.svg" />
           </div>
         </div>
       </InputBox>

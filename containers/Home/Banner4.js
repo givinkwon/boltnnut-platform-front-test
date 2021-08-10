@@ -4,7 +4,6 @@ import Containerv1 from "../../components/Containerv1";
 import * as Title from "../../components/Title";
 import * as Text from "../../components/Text";
 import { inject, observer } from "mobx-react";
-import Fade from "react-reveal/Fade";
 import Background from "../../components/Background";
 
 // Images
@@ -73,56 +72,53 @@ class Banner4Container extends React.Component {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <CustomContainer>
-          <Fade left>
-            <Containerv1
-              style={{ justifyContent: "center", flexDirection: "column" }}
-            >
-              <InnerContainer>
-                <Title32>
-                  "저희 사무실 근처에 이런 제품 만드는 공장이 없나요?"
-                </Title32>
-                <Title32>
-                  볼트앤너트 플랫폼에서 내 제품 분야에 꼭 맞는 업체를
-                  찾아보세요.
-                </Title32>
-              </InnerContainer>
+          <Containerv1
+            style={{ justifyContent: "center", flexDirection: "column" }}
+          >
+            <InnerContainer>
+              <Title32>
+                "저희 사무실 근처에 이런 제품 만드는 공장이 없나요?"
+              </Title32>
+              <Title32>
+                볼트앤너트 플랫폼에서 내 제품 분야에 꼭 맞는 업체를 찾아보세요.
+              </Title32>
+            </InnerContainer>
 
-              <StepContainer>
-                <img src={this.onChangeStepImage()} />
+            <StepContainer>
+              <img src={this.onChangeStepImage()} />
 
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
-                >
-                  {stepBoxArray.map((v, idx) => (
-                    <StepBox
-                      onClick={() => this.onClickStepBox(idx)}
-                      active={this.onCompareStepBox(idx)}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                {stepBoxArray.map((v, idx) => (
+                  <StepBox
+                    onClick={() => this.onClickStepBox(idx)}
+                    active={this.onCompareStepBox(idx)}
+                  >
+                    <Text13 active={this.onCompareStepBox(idx)}>
+                      {v.step}
+                    </Text13>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginTop: "25px",
+                      }}
                     >
-                      <Text13 active={this.onCompareStepBox(idx)}>
-                        {v.step}
-                      </Text13>
-
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          marginTop: "25px",
-                        }}
-                      >
-                        <Text22>{v.title}</Text22>
-                        <Text17>{v.desc1}</Text17>
-                        <Text17 style={{ marginTop: 0 }}>{v.desc2}</Text17>
-                      </div>
-                    </StepBox>
-                  ))}
-                </div>
-              </StepContainer>
-            </Containerv1>
-          </Fade>
+                      <Text22>{v.title}</Text22>
+                      <Text17>{v.desc1}</Text17>
+                      <Text17 style={{ marginTop: 0 }}>{v.desc2}</Text17>
+                    </div>
+                  </StepBox>
+                ))}
+              </div>
+            </StepContainer>
+          </Containerv1>
         </CustomContainer>
 
         <BackgroundLogo src={backgroundlogo} />

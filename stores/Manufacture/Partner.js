@@ -1760,7 +1760,7 @@ class Partner {
       );
       console.log(this.category_string);
       // 괄호를 없애서 전처리
-      // req.params.category = this.category_string;
+      req.params.category = this.category_string;
     }
 
     // 지역 분류 선택되어 있을 때
