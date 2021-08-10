@@ -96,7 +96,7 @@ class Auth {
       type: "manufacture",
       checked: false,
       id: 2,
-    },
+    },  
   ];
 
   @action isChecked = () => {
