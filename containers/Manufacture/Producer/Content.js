@@ -46,7 +46,6 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   async componentDidMount() {
-
     const { Partner, Cookie } = this.props;
     Partner.detailLoadingFlag = false;
 
@@ -256,7 +255,7 @@ class ManufacturerContentContainer extends React.Component {
 
                   {Partner.partner_list &&
                     Partner.partner_list.map((item, idx) => {
-                      console.log(item)
+                      console.log(item);
                       return (
                         <Background>
                           <div
