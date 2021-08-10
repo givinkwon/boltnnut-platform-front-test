@@ -26,9 +26,9 @@ class ProducerConatiner extends React.Component {
     await Partner.getPartner();
 
     // 임시로 새로고침 하는 코드 넣기
-    if(Partner.partner_count < 100 ) {
-      window.location.replace("/producer")
-    }
+    // if(Partner.partner_count < 100 ) {
+    //   window.location.replace("/producer")
+    // }
 
     Partner.newIndex = 0;
     Partner.mobileRequestIndex = 0;
