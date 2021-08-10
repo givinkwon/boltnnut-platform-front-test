@@ -530,7 +530,7 @@ export function getBusinessName(req) {
 
 // 이미지 검색
 export function imagesearch(req) {
-  console.log(req)
+  console.log(req);
   return axios({
     method: "POST",
     url: `${ROOT_URL}/portfolio/search_file/`,
