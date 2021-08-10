@@ -1722,7 +1722,6 @@ class Partner {
 
     // 전 페이지가 메인페이지면 필터 중복을 제외하기 위하여 reset
     if (pre_page == "Home"){
-      console.log(1)
       await Category.reset()
     }
     // 초기화
