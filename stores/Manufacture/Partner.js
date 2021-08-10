@@ -1015,7 +1015,33 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    
+    // 검색 시 텍스트 저장
+    this.saveSearchText(this.search_text)
   };
+
+  @action saveSearchText = (text) => {
+    const formData = new FormData();
+    console.log(this.partner_count);
+    console.log(text);
+    console.log(typeof this.partner_count);
+    formData.append("text", text); // 입력 텍스트
+    formData.append("count", this.partner_count); // 파트너 개수
+
+    const req = {
+      data: formData,
+    };
+
+    PartnerAPI.saveSearchText(req)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
 
   // 이미지 모달을 위한 state
   @observable image_modal_state = false;
