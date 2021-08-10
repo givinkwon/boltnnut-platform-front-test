@@ -829,6 +829,7 @@ class Partner {
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
+    this.category_string = [];
   };
 
   @action getClientInfo = async (id) => {
@@ -1717,7 +1718,15 @@ class Partner {
       });
   };
 
-  @action getPartner = async (page = 1, click = 0) => {
+  @action getPartner = async (page = 1, pre_page = "Producer") => {
+
+    // 전 페이지가 메인페이지면 필터 중복을 제외하기 위하여 reset
+    if (pre_page == "Home"){
+      console.log(1)
+      await Category.reset()
+    }
+    // 초기화
+    this.partner_count = ""
     this.partner_list = [];
     this.category_ary = [];
     // data 저장용
@@ -1759,7 +1768,7 @@ class Partner {
         this.category_string.length - 1
       );
       console.log(this.category_string);
-      // 괄호를 없애서 전처리
+
       req.params.category = this.category_string;
     }
 
@@ -1813,7 +1822,7 @@ class Partner {
     }
 
     console.log(req.params);
-    await PartnerAPI.getPartners(req)
+    PartnerAPI.getPartners(req)
       .then(async (res) => {
         console.log(res);
         this.partner_list = [];
