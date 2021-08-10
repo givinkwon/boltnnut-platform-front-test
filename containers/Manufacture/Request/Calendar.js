@@ -186,25 +186,6 @@ class Calendar extends Component {
     const { Schedule, mobile } = this.props;
     return (
       <>
-        {Schedule.calendarOnOffV2 == true && (
-          <MainContainer>
-            {console.log(Schedule.calendarOnOffV2)}
-            <Header>
-              <div onClick={() => this.moveMonth(-1)}>
-                <img src={prevMonth} />
-              </div>
-              <HeaderText>{now.format("YYYY.MM")}</HeaderText>
-              <div onClick={() => this.moveMonth(1)}>
-                <img src={nextMonth} />
-              </div>
-            </Header>
-            <DateContainer>
-              {this.mapArrayToDate(this.dateToArray(this.props.dates))}
-            </DateContainer>
-            <CalendarContainer>{this.Weeks(now)}</CalendarContainer>
-          </MainContainer>
-        )}
-
         <FoldedComponent mobile={mobile}>
           <div
             style={{
@@ -217,7 +198,6 @@ class Calendar extends Component {
             <img src={calendar} onClick={this.calendarOnOff} />
             <span
               style={{
-                marginLeft: "16px",
                 color: "#999999",
                 fontWeight: "normal",
               }}
@@ -234,12 +214,30 @@ class Calendar extends Component {
                       color: "#c7c7c7",
                     }}
                   >
-                    납기일 선택
+                    예상 진행 기간 선택
                   </span>
                 </>
               )}
             </span>
           </div>
+          {Schedule.calendarOnOffV2 == true && (
+            <MainContainer>
+              {console.log(Schedule.calendarOnOffV2)}
+              <Header>
+                <div onClick={() => this.moveMonth(-1)}>
+                  <img src={prevMonth} />
+                </div>
+                <HeaderText>{now.format("YYYY.MM")}</HeaderText>
+                <div onClick={() => this.moveMonth(1)}>
+                  <img src={nextMonth} />
+                </div>
+              </Header>
+              <DateContainer>
+                {this.mapArrayToDate(this.dateToArray(this.props.dates))}
+              </DateContainer>
+              <CalendarContainer>{this.Weeks(now)}</CalendarContainer>
+            </MainContainer>
+          )}
         </FoldedComponent>
       </>
     );
@@ -255,12 +253,12 @@ const MainContainer = styled.div`
   align-items: center;
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  width: 760px;
+  width: 792px;
   height: 639px;
   margin-top: 6px;
   background-color: white;
   position: absolute;
-  top: 28%;
+  top: 31%;
   z-index: 1;
 `;
 const Header = styled.div`

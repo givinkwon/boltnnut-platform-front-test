@@ -61,30 +61,30 @@ const customStyles = {
 class RequestContent extends Component {
   state = {
     purposeAry: [
-      { id:1, name: "기획에 대한 상담을 받고 싶어요.", checked: false },
-      { id:2, name: "견적을 받고 싶어요.", checked: false },
-      { id:3, name: "전문 업체를 찾고 싶어요.", checked: false },
+      { id: 1, name: "기획에 대한 상담을 받고 싶어요.", checked: false },
+      { id: 2, name: "견적을 받고 싶어요.", checked: false },
+      { id: 3, name: "전문 업체를 찾고 싶어요.", checked: false },
     ],
     priceAry: [
-      { id:1, name: "100만원 이하" },
-      { id:2, name: "100만원 - 300만원" },
-      { id:3, name: "300만원 - 500만원" },
-      { id:4, name: "500만원 - 1000만원" },
-      { id:5, name: "1000만원 - 2000만원" },
-      { id:6, name: "2000만원 - 3000만원" },
-      { id:7, name: "3000만원 - 5000만원" },
-      { id:8, name: "5000만원 - 1억원" },
-      { id:9, name: "1억원이상" },
+      { id: 1, name: "100만원 이하" },
+      { id: 2, name: "100만원 - 300만원" },
+      { id: 3, name: "300만원 - 500만원" },
+      { id: 4, name: "500만원 - 1000만원" },
+      { id: 5, name: "1000만원 - 2000만원" },
+      { id: 6, name: "2000만원 - 3000만원" },
+      { id: 7, name: "3000만원 - 5000만원" },
+      { id: 8, name: "5000만원 - 1억원" },
+      { id: 9, name: "1억원이상" },
     ],
     regionAry: [
-      { id:1, name: "서울" },
-      { id:2, name: "경기도" },
-      { id:3, name: "인천" },
-      { id:4, name: "충청도" },
-      { id:5, name: "경상북도" },
-      { id:6, name: "경상남도" },
-      { id:7, name: "전라도" },
-      { id:8, name: "제주도" },
+      { id: 1, name: "서울" },
+      { id: 2, name: "경기도" },
+      { id: 3, name: "인천" },
+      { id: 4, name: "충청도" },
+      { id: 5, name: "경상북도" },
+      { id: 6, name: "경상남도" },
+      { id: 7, name: "전라도" },
+      { id: 8, name: "제주도" },
     ],
     securityCheck1: false,
     securityCheck2: false,
@@ -158,26 +158,17 @@ class RequestContent extends Component {
       region_state: !this.state.region_state,
     });
     // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
-    Request.set_region_state(!this.state.region_state);
+    if(this.state.region_state == true){
+      Request.set_region_state(0);
+    }
+    else {
+      Request.set_region_state(1);
+    }
+
   };
 
   render() {
-    const openPlaceHolderText = `모두에게 공개될 수 있는 내용을 입력해주세요.
-    다음 사항이 명확하게 작성되어야 정확한 견적을 받을 가능성이 높습니다.
-    1. 가공품 목적 및 사용 환경
-    2. 가공 부품별 특이 사항
-    3. 공급처가 충족해야하는 발주 조건
-    `;
-    const projectContent = `
-    1. 프로젝트의 소개 및 제작 목적:   
-    2. 프로젝트의 진행 상황 및 계획 수립 :   
-    3. 프로젝트 기능 및 특이 사항 - 필수로 들어가야 할 기능들  :  
-    4. 참고자료 / 레퍼런스 예시) ‘볼트앤너트 네이버 블로그’ 참고 등 :  
-    5. 제조사(파트너)에게의 요청사항 
-    - 프로젝트 진행 시 파트너가 알아야 할 발주 조건 : `;
-
-    const privatePlaceholderText = `회사의 세부적인 기술과 관련하여 외부로 유출되지 않아야 할 내용을 입력해주세요.`;
-    const { Request, Auth, Signup } = this.props;
+    const { Request, Auth } = this.props;
 
     return (
       <>
@@ -363,6 +354,9 @@ class RequestContent extends Component {
                     onClick={() => {
                       this.activeHandler("budget");
                     }}
+                    style={{
+                      cursor: "pointer",
+                    }}
                   >
                     <img src={helpimg}></img>
                     <span
@@ -370,7 +364,6 @@ class RequestContent extends Component {
                         display: "flex",
                         alignItems: "center",
                         marginLeft: 4,
-                        cursor: "pointer",
                       }}
                     >
                       예산 측정이 어려우신가요?
@@ -406,33 +399,38 @@ class RequestContent extends Component {
                   </HelpBox> */}
                 </Budget>
               </RequestContentBox>
-              <RequestContentBox>
-                <ContentTitle style={{ marginBottom: 8 }}>
-                  <span>프로젝트 예상 진행 기간</span>
-                </ContentTitle>
-                <span
-                  style={{
-                    fontSize: 16,
-                    color: "#505050",
-                    lineHeight: 2.13,
-                    letterSpacing: -0.4,
-                  }}
-                >
 
-                </span>
-                <Calendar />
-                <CheckBoxComponent onChange={() => this.periodCheckBox()}>
+              {/* 프로젝트 의뢰에서만 */}
+              <RequestContentBox>
+                <ContentTitle style={{ marginBottom: 4 }}>
+                  <div>프로젝트 예상 진행 기간</div>
+                </ContentTitle>
+                <div style={{ display: "flex", flexDirection: "column" }}>
                   <span
                     style={{
-                      color: "#1e2222",
-                      fontSize: 15,
-                      display: "flex",
-                      alignItems: "center",
+                      fontSize: 16,
+                      color: "#505050",
+                      lineHeight: 2.13,
+                      letterSpacing: -0.4,
+                      fontWeight: "normal",
                     }}
                   >
-                    프로젝트 진행 기간 조율이 가능합니다.
+                    희망하는 프로젝트 진행 기간을 입력해주세요.
                   </span>
-                </CheckBoxComponent>
+                  <Calendar />
+                  <CheckBoxComponent onChange={() => this.periodCheckBox()}>
+                    <span
+                      style={{
+                        color: "#1e2222",
+                        fontSize: 15,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      프로젝트 진행 기간 조율이 가능합니다.
+                    </span>
+                  </CheckBoxComponent>
+                </div>
               </RequestContentBox>
 
               <RequestContentBox>
@@ -667,24 +665,43 @@ class RequestContent extends Component {
                         <img src={starred} style={{ marginLeft: 4 }}></img>
                       </ContentTitle>
                       <InputComponent
-                        placeholder='이메일을 입력하세요' label='아이디' onChange={Request.setEmail} value={Request.email}
-                        />
+                        style={{ width: "100%", marginTop: 0 }}
+                        placeholder="이메일을 입력하세요"
+                        label="아이디"
+                        onChange={Request.setEmail}
+                        value={Request.email}
+                      />
                     </ClientInfoBox>
                     <ClientInfoBox>
                       <ContentTitle>
                         <div>전화번호</div>
-                        <img src={starred} style={{ marginLeft: 4 }}></img>
+                        <img
+                          src={starred}
+                          style={{ marginLeft: 4, marginTop: 0 }}
+                        ></img>
                       </ContentTitle>
-                      <InputComponent placeholder='-없이 입력해주세요' label='휴대전화' type='phone' onChange={Request.setPhone} value={Request.phone}/>
-          
+                      <InputComponent
+                        style={{ width: "100%", marginTop: 0 }}
+                        placeholder="-없이 입력해주세요"
+                        label="휴대전화"
+                        type="phone"
+                        onChange={Request.setPhone}
+                        value={Request.phone}
+                      />
                     </ClientInfoBox>
                     <ClientInfoBox style={{ marginBottom: 11 }}>
                       <ContentTitle>
                         <div>비밀번호</div>
                         <img src={starred} style={{ marginLeft: 4 }}></img>
                       </ContentTitle>
-                      <InputComponent placeholder='비밀번호를 입력하세요' label='비밀번호' type='password' onChange={Request.setPassword} value={Request.password}/>
-                      
+                      <InputComponent
+                        style={{ width: "100%", marginTop: 0 }}
+                        placeholder="비밀번호를 입력하세요"
+                        label="비밀번호"
+                        type="password"
+                        onChange={Request.setPassword}
+                        value={Request.password}
+                      />
                     </ClientInfoBox>
                     <CheckBoxComponent checked>
                       <span
@@ -1860,6 +1877,7 @@ const ContentInput = styled.div`
   .MuiInputBase-root {
     height: 42px;
     width: 100%;
+    margintop: 0px;
   }
 `;
 
@@ -1870,38 +1888,7 @@ const ProjectInput = styled.div`
   }
 `;
 
-const ProjectDate = styled.div`
-  .MuiInputBase-root {
-    width: 204px;
-    height: 42px;
-  }
-  margin-bottom: 12px;
-`;
-
-const ProjectFieldCheckbox = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 42px;
-  object-fit: contain;
-  border-radius: 3px;
-  border: solid 1px #c6c7cc;
-  background-color: #ffffff;
-  padding-left: 12px;
-  margin-top: 16px;
-`;
-
 const PartnerInfo = styled.div``;
-
-const HelpBox = styled.div`
-  flex-direction: column;
-  justify-content: center;
-  height: 72px;
-  border-radius: 3px;
-  background-color: #edf4fe;
-  padding-left: 33px;
-  margin-top: 12px;
-`;
 
 const ClientInfo = styled.div`
   margin-bottom: 70px;
@@ -1912,5 +1899,6 @@ const ClientInfoBox = styled.div`
   .MuiInputBase-root {
     height: 42px;
     width: 100%;
+    margintop: 0px;
   }
 `;

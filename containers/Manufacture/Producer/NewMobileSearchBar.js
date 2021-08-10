@@ -30,8 +30,7 @@ class NewMobileSearchBarConatiner extends React.Component {
     const { Partner } = this.props;
 
     await Router.push("/producer");
-    // console.log("click");
-    // alert("EXECUTE");
+
     Partner.loadingFlag = true;
     setTimeout(() => {
       Partner.loadingFlag = false;
@@ -39,19 +38,19 @@ class NewMobileSearchBarConatiner extends React.Component {
 
     Partner.currentPage = 1;
     Partner.click_count += 1;
-    await Partner.getPartner(Partner.currentPage, Partner.click_count);
    
+    await Partner.search();
+    
+    
+    // 검색어 로그에 저장하기 위한 함수
     if (Partner.search_text) {
       Partner.isSearched = true;
     } else {
       Partner.isSearched = false;
     }
-
+    
     if (Partner.search_text != "") {
-  
         Partner.subButtonActive = true;
-
-      
     }
   };
 
@@ -93,7 +92,7 @@ class NewMobileSearchBarConatiner extends React.Component {
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "원하는 분야나 비슷한 제품을 검색해보세요.")}
                 onChange={this.handleSearcherInputChange.bind(this)}
-                value={Partner.searchText}
+                value={Partner.search_text}
                 class="Input"
                 onKeyPress={this.handleKeyDown}
                 style={{ height: 40 }}

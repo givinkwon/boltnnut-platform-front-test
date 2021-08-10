@@ -27,7 +27,7 @@ class SearchBarContainer extends React.Component {
     const { Project } = this.props;
 
 
-    await Project.search();
+    alert("최적화된 서비스 제공을 위해 수정중에 있습니다.")
   };
 
   handleKeyDown = (e) => {

@@ -477,6 +477,7 @@ class Partner {
       for (var item in e.currentTarget.files) {
         console.log(item);
         if (typeof e.currentTarget.files[item] === "object") {
+          this.fileArray.pop()
           this.fileArray.push(e.currentTarget.files[item]);
         } else {
           break;
@@ -775,6 +776,7 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    this.getPartner();
   };
   @action reset = () => {
     this.detail = null;
@@ -1743,6 +1745,7 @@ class Partner {
     console.log(req.params);
     await PartnerAPI.getPartners(req)
       .then(async (res) => {
+        console.log(res)
         this.partner_list = [];
         this.category_ary = [];
         this.category_name_ary = [];

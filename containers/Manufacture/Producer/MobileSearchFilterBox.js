@@ -209,20 +209,8 @@ class MobileSearchFilterConatiner extends React.Component {
         <FilterBoxSearchBar />
 
         <FilterCategory>
-          <Category>
+        <Category>
             <CategoryName>카테고리</CategoryName>
-            <Field>
-              <div>전체</div>
-              <img
-                src="/static/icon/down_arrow.svg"
-                onClick={() => {
-                  this.dropdownHandler("business");
-                }}
-              ></img>
-            </Field>
-          </Category>
-          <Category>
-            <CategoryName>업체 분류</CategoryName>
             <Field>
               <div>전체</div>
               <img
@@ -233,6 +221,20 @@ class MobileSearchFilterConatiner extends React.Component {
               ></img>
             </Field>
           </Category>
+
+          <Category>
+            <CategoryName>업체 분류</CategoryName>
+            <Field>
+              <div>전체</div>
+              <img
+                src="/static/icon/down_arrow.svg"
+                onClick={() => {
+                  this.dropdownHandler("business");
+                }}
+              ></img>
+            </Field>
+          </Category>
+>
           <Category>
             <CategoryName>지역</CategoryName>
             <Field>

@@ -9,7 +9,7 @@ import * as Content from "components/Content";
 import Container from "components/Containerv1";
 import ProposalCard from "components/ProposalCard";
 import Background from "components/Background";
-import SearchBar from "./SearchBar"
+import SearchBar from "./SearchBar";
 import { toJS } from "mobx";
 
 const pass1 = "static/images/pass1.png";
@@ -49,11 +49,20 @@ class AllProject extends React.Component {
     return (
       <>
         <Background id="MyBackground">
-          <Container style={{ flexDirection: "column" }}>
-            <SearchBar />
+          <Container style={{ flexDirection: "column", marginTop: 80 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                marginBottom: 80,
+              }}
+            >
+              <Font32 style={{ marginBottom: 60 }}>프로젝트 찾기</Font32>
+              <SearchBar />
+            </div>
             <>
               <Body>
-
                 <Main>
                   <Header style={{ paddingTop: "32px" }}>
                     <Font20 style={{ marginLeft: "-9px" }}>
@@ -65,10 +74,10 @@ class AllProject extends React.Component {
                   </Header>
 
                   {Project.projectDataList &&
-                    Project.currentPage > 0 &&
+                    Project.currentPage > 0 && 
                     Project.projectDataList.map((item, idx) => {
                       {
-                        //   console.log(toJS(item));
+                        console.log(toJS(item.request_set.length));
                       }
                       return (
                         <>
@@ -343,6 +352,11 @@ const Font14 = styled(Content.FontSize14)`
   line-height: 30px !important;
   letter-spacing: -0.14px !important;
   color: #0933b3;
+`;
+
+const Font32 = styled(Title.FontSize32)`
+  font-weight: 500;
+  color: #000000;
 `;
 
 export default AllProject;

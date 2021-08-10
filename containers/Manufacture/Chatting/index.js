@@ -2,7 +2,7 @@ import React from "react";
 import { inject, observer } from "mobx-react";
 
 import MyChatting from "./MyChatting/index";
-import BannerContainer from "./Banner";
+import BannerContainer from "containers/Manufacture/Chatting/MyChatting/Banner";
 
 @inject("Project", "Auth", "Partner")
 @observer

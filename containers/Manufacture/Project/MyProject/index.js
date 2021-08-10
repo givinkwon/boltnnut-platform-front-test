@@ -60,10 +60,10 @@ class MyProject extends React.Component {
           <Header>
             <HeaderTitle>
               <div style={{ marginBottom: 12 }}>
-                내 프로젝트 >
+                내 프로젝트 >{" "}
                 {Project.myproject_state == 1
-                  ? "진행 중인 프로젝트"
-                  : "종료된 프로젝트"}
+                  ? " 진행 중인 프로젝트"
+                  : " 종료된 프로젝트"}
               </div>
             </HeaderTitle>
           </Header>

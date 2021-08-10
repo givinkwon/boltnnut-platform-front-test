@@ -118,7 +118,6 @@ const Container = styled.div`
   align-items: center;
 
   margin-top: 100px;
-  margin-bottom: 120px;
 `;
 
 const Info = styled.div`
@@ -163,15 +162,8 @@ const Header = styled.div`
 const Main = styled.div`
   margin-top: 60px;
   width: 100%;
-  // box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
   height: 406px;
   position: relative;
-  // > img {
-  //   position: absolute;
-  //   top: 50%;
-  //   left: 50%;
-  //   transform: translate(-50%, -50%);
-  // }
 `;
 
 const InputBox = styled.div`

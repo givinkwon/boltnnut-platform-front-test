@@ -4,7 +4,7 @@ import * as Content from "components/Content";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import TestCheckBox from "./test";
+import TestCheckBox from "./Test";
 const topCategoryOuterStyles = {
   borderRadius: "5px",
   border: "1px solid #e1e2e4",

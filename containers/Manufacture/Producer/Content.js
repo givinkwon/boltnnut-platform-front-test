@@ -19,8 +19,6 @@ import ButtonSpinnerComponent from "components/ButtonSpinner";
 import List from "material-ui/List";
 import Cookies from "js-cookie";
 
-import AddFile from "./AddFile";
-
 const deleteButtonImg = "/static/images/delete.png";
 const pass1 = "static/images/pass1.svg";
 const pass2 = "static/images/pass2.svg";
@@ -48,12 +46,11 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   async componentDidMount() {
+
     const { Partner, Cookie } = this.props;
     Partner.detailLoadingFlag = false;
 
     Partner.currentPage = 1;
-
-    await Partner.getPartner(1, Partner.click_count);
 
     if (Partner.filter_category_ary.length === 1) {
       Partner.getCategory();
@@ -104,22 +101,6 @@ class ManufacturerContentContainer extends React.Component {
     });
   }
 
-  /* Parnter (진수정밀) 제조사 상세 찾기용 임의 함수 (삭제할 예정) */
-  temp = (e) => {
-    const { Partner } = this.props;
-    e.preventDefault();
-    Partner.currentPage = 386;
-    Partner.resetDevCategory();
-    Partner.check_loading_develop = false;
-    Partner.ReviewActive = false;
-    Partner.ReviewActiveIndex = -1;
-    Partner.dropDownActive = false;
-    Partner.dropDownIdx = -1;
-    Partner.click_count += 1;
-
-    Partner.getPartner(386, this.click_count);
-    // Partner.getPartner(182, this.click_count);
-  };
   componentWillUnmount() {
     const { Partner } = this.props;
     console.log("content unmount");
@@ -221,9 +202,9 @@ class ManufacturerContentContainer extends React.Component {
                           <>파일이 없습니다</>
                         )}
                         <span style={{ marginRight: "10px" }}>
-                          {!item.name
+                          {/* {!item.name
                             ? decodeURI(item.split("/").pop())
-                            : item.name}
+                            : item.name} */}
                         </span>
                         <DeleteFile
                           src={deleteButtonImg}
@@ -234,7 +215,7 @@ class ManufacturerContentContainer extends React.Component {
                           }}
                         />
                       </span>
-                      <span>해당 이미지를 검색 합니다.</span>
+                      {/* <span>해당 이미지를 검색 합니다.</span> */}
                     </span>
                   </>
                 );
@@ -275,13 +256,17 @@ class ManufacturerContentContainer extends React.Component {
 
                   {Partner.partner_list &&
                     Partner.partner_list.map((item, idx) => {
+                      console.log(item)
                       return (
                         <Background>
                           <div
                             onClick={async () => {
                               console.log(Auth);
                               if (Auth.logged_in_client) {
-                                await Project.getProject("allproject", Auth.logged_in_client.id);
+                                await Project.getProject(
+                                  "allproject",
+                                  Auth.logged_in_client.id
+                                );
                               }
                               Partner.pushToDetail(item, idx);
                             }}
@@ -379,7 +364,8 @@ class ManufacturerContentContainer extends React.Component {
                                 src={this.state.recent_partner_dic[name]}
                                 onClick={async () => {
                                   if (Auth.logged_in_client) {
-                                    await Project.getProject("allproject", 
+                                    await Project.getProject(
+                                      "allproject",
                                       Auth.logged_in_client.id
                                     );
                                   }
