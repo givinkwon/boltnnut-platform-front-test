@@ -7,19 +7,15 @@ import styled, { css } from "styled-components";
 import PartnerRegisterBanner from "components/PartnerRegisterBanner";
 import Button from "containers/Account/PartnerRegister/Button";
 
-const signupBoxImg = "/static/images/SignupBox.png";
-const registerMain1 = "/static/icon/registerMain1.svg";
-const registerMain2 = "/static/icon/registerMain2.svg";
-const registerMain3 = "/static/icon/registerMain3.svg";
-
 @inject("Auth", "Category")
 @observer
 class PartnerRegisterContainer extends React.Component {
   componentDidMount() {
     this.props.Category.init();
+    this.props.Category.isChecked("main");
   }
   render() {
-    const { Auth } = this.props;
+    const { Auth, Category } = this.props;
     return (
       <Background>
         <Containerv1
@@ -32,11 +28,12 @@ class PartnerRegisterContainer extends React.Component {
             alignItems: "center",
           }}
         >
-          <Category>
+          <CategoryBox>
             <PartnerRegisterBanner />
-            {Auth.RegisterTypeArray.map((item, idx) => {
+            {Category.RegisterTypeArray.map((item, idx) => {
               return (
                 <CategoryItem
+                  active={item.checked}
                   onClick={() => {
                     // Router.push(
                     //   "/partnerregister/[pagename]",
@@ -44,7 +41,7 @@ class PartnerRegisterContainer extends React.Component {
                     // );
                     // Auth.registerType = item.type;
                     item.checked = !item.checked;
-                    Auth.isChecked();
+                    Category.isChecked("main");
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
@@ -55,9 +52,9 @@ class PartnerRegisterContainer extends React.Component {
                 </CategoryItem>
               );
             })}
-          </Category>
+          </CategoryBox>
 
-          {Auth.nextBtnActive ? (
+          {Category.nextBtnActive ? (
             <Button
               buttonType="next"
               onClick={() => {
@@ -103,7 +100,7 @@ const DisabledButton = styled.div`
   text-align: center;
 `;
 
-const Category = styled.div`
+const CategoryBox = styled.div`
   width: 100%;
 `;
 
@@ -115,5 +112,6 @@ const CategoryItem = styled.div`
   padding: 40px 52px 40px 102px;
   object-fit: contain;
   border-radius: 10px;
-  border: solid 1px #c6c7cc;
+  border: ${(props) =>
+    props.active ? "solid 2px #0933b3" : "solid 2px #c6c7cc;"};
 `;

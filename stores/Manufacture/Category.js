@@ -36,13 +36,58 @@ class Category {
   @observable material_selected = [];
   @observable develop_selected = [];
 
+  //전체<< 체크박스 체크상태 저장하는 dictionary
+  @observable checkAllState = {};
+  @observable nextBtnActive = false;
+
+  @observable RegisterTypeArray = [
+    {
+      img: "/static/icon/registerMain1.svg",
+      content: "부품/완제품 판매",
+      type: "product",
+      checked: false,
+      id: 0,
+    },
+    {
+      img: "/static/icon/registerMain2.svg",
+      content: "개발/설계",
+      type: "development",
+      checked: false,
+      id: 1,
+    },
+    {
+      img: "/static/icon/registerMain3.svg",
+      content: "제작",
+      type: "manufacture",
+      checked: false,
+      id: 2,
+    },
+  ];
+
+  @action setCheckAllState = (type) => {
+    const temp = new Array();
+    temp.push(false);
+
+    // const typeArray = ["business","category"]
+    this.checkAllState[type] = temp;
+  };
   /* init */
+
+  // @observable setCheckAllState = (type) => {
+  //   const temp = new Array();
+  //   temp.push(false);
+
+  //   // const typeArray = ["business","category"]
+  //   this.checkAllState[type] = temp;
+  // };
   @action init = async () => {
-    // 카테고리 데이터 가져오기
+    this.checkAllState = [];
+
+    // 업체분류 데이터 가져오기
     await CategoryAPI.getMainbusiness()
       .then((res) => {
         this.mainbusiness_list = res.data.results;
-
+        this.setCheckAllState("business");
         console.log(toJS(this.mainbusiness_list));
       })
       .catch((e) => {
@@ -50,12 +95,16 @@ class Category {
         console.log(e.response);
       });
 
-    // 업체 분류 가져오기
+    // 카테고리 가져오기
     await CategoryAPI.getMainCategory()
       .then(async (res) => {
         this.maincategory_list = res.data.results;
-        console.log(toJS(this.maincategory_list));
         this.maincategory_list.forEach((mainCategory) => {
+          // const temp = new Array();
+          // temp.push(false);
+
+          // this.checkAllState["category"] = temp;
+          this.setCheckAllState("category");
           this.category_list = this.category_list.concat(
             mainCategory.category_set
           );
@@ -91,6 +140,13 @@ class Category {
     await CategoryAPI.getDevelopbig()
       .then((res) => {
         this.developbig_list = res.data.results;
+        this.developbig_list.forEach((mainCategory) => {
+          // const temp = new Array();
+          // temp.push(false);
+
+          // this.checkAllState["category"] = temp;
+          this.setCheckAllState("develop");
+        });
         console.log(toJS(this.developbig_list));
       })
       .catch((e) => {
@@ -162,17 +218,19 @@ class Category {
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
   @action add_selected = async (state, id, container = "producer") => {
-    console.log(typeof id);
-    // 카테고리 선택
+    // console.log(typeof id);
+    // 업체분류 선택
     if (state == "business") {
       if (this.business_selected.indexOf(id) < 0) {
         this.business_selected.push(id);
       }
     }
 
-    // 업체 분류 선택
+    // 카테고리 선택
     if (state == "category") {
-      this.category_selected.push(id);
+      if (this.category_selected.indexOf(id) < 0) {
+        this.category_selected.push(id);
+      }
     }
 
     // 지역 선택
@@ -197,13 +255,18 @@ class Category {
     }
   };
 
-  @action checkedItemHandler = (id, isChecked) => {
-    if (isChecked) {
-      checkedItems.add(id);
-      setCheckedItems(checkedItems);
-    } else if (!isChecked && checkedItems.has(id)) {
-      checkedItems.delete(id);
-      setCheckedItems(checkedItems);
+  @action isChecked = (myType) => {
+    this.nextBtnActive = false;
+    if (myType === "main") {
+      this.RegisterTypeArray.map((item, idx) => {
+        if (item.checked) {
+          this.nextBtnActive = true;
+        }
+      });
+    } else if (myType === "category") {
+      if (this.business_selected.length > 0) {
+        this.nextBtnActive = true;
+      }
     }
   };
 

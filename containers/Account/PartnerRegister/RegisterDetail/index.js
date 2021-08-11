@@ -8,13 +8,16 @@ import Background from "components/Background";
 import styled from "styled-components";
 import Router from "next/router";
 import PartnerRegisterBanner from "components/PartnerRegisterBanner";
-import Category from "./Category";
+import CategoryContainer from "./Category";
+import Process from "./Process";
+
 const pageNameArr = ["Category", "Process", "Material", "Aboutus"];
-@inject("Auth")
+@inject("Auth", "Category")
 @observer
 class RegisterDetailContainer extends React.Component {
   render() {
-    const { Auth } = this.props;
+    const { Auth, Category } = this.props;
+
     const { pageName } = this.props;
     return (
       <Background>
@@ -35,14 +38,14 @@ class RegisterDetailContainer extends React.Component {
             }}
           >
             <PartnerRegisterBanner />
-            {Auth.RegisterTypeArray.map((item, idx) => {
+            {/* {Category.RegisterTypeArray.map((item, idx) => {
               return <>/{item.checked && item.type}</>;
-            })}
+            })} */}
             <div>고정1</div>
             <div>고정2</div>
             <div>카테고리 {true && <>- 공정</>} - 소재 - 회사소개</div>
-            {pageName === "Category" && <Category />}
-            {pageName === "Process" && <>Page 2 - Process</>}
+            {pageName === "Category" && <CategoryContainer />}
+            {pageName === "Process" && <Process />}
             {pageName === "Material" && <>Page 3 - Material</>}
             {pageName === "Aboutus" && <>Page 4 - Aboutus</>}
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -67,7 +70,7 @@ class RegisterDetailContainer extends React.Component {
                 >
                   이전으로
                 </Button>
-                {Auth.nextBtnActivate ? (
+                {Category.nextBtnActive ? (
                   <Button
                     buttonType="next"
                     onClick={() => {

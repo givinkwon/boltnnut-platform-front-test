@@ -22,85 +22,21 @@ const innerStyles = {
 };
 @inject("Category")
 @observer
-class CategoryContainer extends Component {
+class Process extends Component {
   componentDidMount() {
     // console.log("===================================");
     // console.log(toJS(this.props.Category.mainbusiness_list));
     // console.log(toJS(this.props.Category.maincategory_list));
     // console.log(toJS(this.props.Category.category_list));
     // console.log("===================================");
-    // this.props.Auth.nextBtnActive = false;
-    console.log("componentDidMount in CategoryContainer");
     this.props.Category.isChecked("category");
   }
   render() {
     const { Category } = this.props;
     return (
       <>
-        {Category.RegisterTypeArray.map((item, idx) => {
-          return (
-            <>
-              {item.checked && (
-                <InnerBox
-                  outerStyles={outerStyles}
-                  innerStyles={innerStyles}
-                  Content={() => {
-                    return (
-                      <>
-                        <CategoryBox>
-                          <ContentBox>
-                            <HeaderText>
-                              <img src={item.img} />
-                              <Font18>
-                                {Category.mainbusiness_list &&
-                                  Category.mainbusiness_list[item.id]
-                                    .maincategory}
-                              </Font18>
-                            </HeaderText>
-
-                            <CheckItemBox>
-                              <CheckItem>
-                                <CheckBoxComponent
-                                  isCheckAll={true}
-                                  type={"business"}
-                                  selectedList={Category.business_selected}
-                                  item={item}
-                                  arrIdx={idx}
-                                  wholeList={
-                                    Category.mainbusiness_list[item.id]
-                                      .business_set
-                                  }
-                                />
-                              </CheckItem>
-                              <CheckItem></CheckItem>
-                              <CheckItem></CheckItem>
-                              {Category.mainbusiness_list[
-                                item.id
-                              ].business_set.map((subItem, idx) => {
-                                return (
-                                  <CheckItem>
-                                    <CheckBoxComponent
-                                      isCheckAll={false}
-                                      type={"business"}
-                                      selectedList={Category.business_selected}
-                                      item={subItem}
-                                    />
-                                  </CheckItem>
-                                );
-                              })}
-                            </CheckItemBox>
-                          </ContentBox>
-                        </CategoryBox>
-                      </>
-                    );
-                  }}
-                ></InnerBox>
-              )}
-            </>
-          );
-        })}
         <Font18 style={{ textAlign: "left", width: "100%", marginBottom: 16 }}>
-          카테고리
+          공정
         </Font18>
         <InnerBox
           outerStyles={outerStyles}
@@ -108,7 +44,7 @@ class CategoryContainer extends Component {
           Content={() => {
             return (
               <CategoryBox>
-                {Category.maincategory_list.map((item, mainIdx) => {
+                {Category.developbig_list.map((item, mainIdx) => {
                   return (
                     <ContentBox>
                       <HeaderText>
@@ -127,22 +63,22 @@ class CategoryContainer extends Component {
                         <CheckItem>
                           <CheckBoxComponent
                             isCheckAll={true}
-                            type={"category"}
-                            selectedList={Category.category_selected}
+                            type={"develop"}
+                            selectedList={Category.develop_selected}
                             item={item}
                             arrIdx={mainIdx}
-                            wholeList={item.category_set}
+                            wholeList={item.develop_set}
                           />
                         </CheckItem>
                         <CheckItem></CheckItem>
                         <CheckItem></CheckItem>
-                        {item.category_set.map((subItem, subIdx) => {
+                        {item.develop_set.map((subItem, subIdx) => {
                           return (
                             <CheckItem>
                               <CheckBoxComponent
                                 isCheckAll={false}
-                                type={"category"}
-                                selectedList={Category.category_selected}
+                                type={"develop"}
+                                selectedList={Category.develop_selected}
                                 item={subItem}
                               />
                             </CheckItem>
@@ -161,7 +97,7 @@ class CategoryContainer extends Component {
   }
 }
 
-export default CategoryContainer;
+export default Process;
 
 const CheckItem = styled.label`
   width: 33%;

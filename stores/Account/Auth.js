@@ -73,8 +73,6 @@ class Auth {
   @observable registerType = "";
   @observable registerPageIdx = 0;
 
-  @observable nextBtnActive = false;
-
   @observable RegisterTypeArray = [
     {
       img: "/static/icon/registerMain1.svg",
@@ -96,17 +94,9 @@ class Auth {
       type: "manufacture",
       checked: false,
       id: 2,
-    },  
+    },
   ];
 
-  @action isChecked = () => {
-    this.nextBtnActive = false;
-    this.RegisterTypeArray.map((item, idx) => {
-      if (item.checked) {
-        this.nextBtnActive = true;
-      }
-    });
-  };
   @action reset = () => {
     this.email = "";
     this.password = "";
@@ -268,7 +258,7 @@ class Auth {
     CategoryAPI.getBusiness_client()
       .then((res) => {
         this.business_data = res.data.results;
-        console.log(res.data.results)
+        console.log(res.data.results);
       })
       .catch((e) => {
         console.log(e);
