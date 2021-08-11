@@ -12,6 +12,7 @@ const calendar = "/static/images/request/calendar.svg";
 class Week extends Component {
   state = {
     now: moment(),
+    selectedDay: null,
   };
   Days = (firstDayFormat) => {
     const { Schedule } = this.props;
@@ -32,16 +33,36 @@ class Week extends Component {
   };
   calendarOnOff = (e) => {
     const { Request, Schedule } = this.props;
-    if (Schedule.calendarOnOffV2 == true) {
-      Schedule.calendarOnOffV2 = false;
-    } else {
-      Schedule.calendarOnOffV2 = true;
-    }
     let day = e.currentTarget.innerHTML.replace(/[^0-9]/g, "");
     const dayValue = Schedule.nowMoment;
 
     Schedule.clickDay = dayValue.date(day).format("YYYY-MM-DD");
     Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
+  };
+
+  calendarHandler = () => {
+    const { Schedule } = this.props;
+    if (Schedule.calendarHandler) {
+      Schedule.calendarHandler = false;
+      console.log(Schedule.calendarHandler);
+    } else {
+      Schedule.calendarHandler = true;
+      console.log(Schedule.calendarHandler);
+    }
+  };
+  activeHandler = (currentDay) => {
+    // const { Schedule } = this.props;
+    // if (Schedule.todaycolor) {
+    //   Schedule.todaycolor = false;
+    // } else {
+    //   Schedule.todaycolor = true;
+    // }
+
+    if (this.props.Schedule.selectedDay === currentDay) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   mapDaysToComponents = (Days, fn = () => {}) => {
@@ -82,16 +103,32 @@ class Week extends Component {
         className += "today";
         console.log(className);
         return (
-          <div className={className} onClick={this.calendarOnOff}>
+          <div className={className}>
             {dayInfo.getDay}
             <div>오늘</div>
           </div>
         );
       } else {
         return (
-          <div className={className} onClick={this.calendarOnOff}>
+          <DayBox
+            className={className}
+            // active={Schedule.todaycolor}
+            active={this.activeHandler(dayInfo.getDay)}
+            onClick={(e) => {
+              this.calendarOnOff(e);
+              // this.activeHandler();
+              // this.setState({ selectedDay: dayInfo.getDay });
+              Schedule.selectedDay = dayInfo.getDay;
+              this.setState({});
+              // console.log(this.props.Schedule.selectedDay);
+              console.log(dayInfo.getDay);
+            }}
+          >
             {dayInfo.getDay}
-          </div>
+            {this.activeHandler(dayInfo.getDay) && (
+              <div style={{ fontSize: 12, fontWeight: 500 }}>종료일</div>
+            )}
+          </DayBox>
         );
       }
     });
@@ -163,6 +200,26 @@ class Calendar extends Component {
     console.log(Schedule.calendarOnOffV2);
   };
 
+  calendarHandler = () => {
+    const { Schedule } = this.props;
+    if (Schedule.calendarHandler) {
+      Schedule.calendarHandler = false;
+      console.log(Schedule.calendarHandler);
+    } else {
+      Schedule.calendarHandler = true;
+      console.log(Schedule.calendarHandler);
+    }
+  };
+
+  activeHandler = () => {
+    const { Schedule } = this.props;
+    if (Schedule.todaycolor) {
+      Schedule.todaycolor = false;
+    } else {
+      Schedule.todaycolor = true;
+    }
+  };
+
   // 날짜 입력
   Weeks = (monthYear) => {
     const firstDayOfMonth = moment(monthYear).startOf("month");
@@ -195,7 +252,14 @@ class Calendar extends Component {
               width: "100%",
             }}
           >
-            <img src={calendar} onClick={this.calendarOnOff} />
+            <img
+              src={calendar}
+              onClick={() => {
+                this.calendarOnOff();
+                this.calendarHandler();
+              }}
+              style={{ cursor: "pointer" }}
+            />
             <span
               style={{
                 color: "#999999",
@@ -203,7 +267,7 @@ class Calendar extends Component {
               }}
             >
               {Schedule.clickDay !== 0 ? (
-                <>{Schedule.clickDay}</>
+                <>~{Schedule.clickDay}</>
               ) : (
                 <>
                   <span
@@ -220,18 +284,43 @@ class Calendar extends Component {
               )}
             </span>
           </div>
-          {Schedule.calendarOnOffV2 == true && (
+          {Schedule.calendarHandler == true && (
             <MainContainer>
               {console.log(Schedule.calendarOnOffV2)}
-              <Header>
-                <div onClick={() => this.moveMonth(-1)}>
-                  <img src={prevMonth} />
-                </div>
-                <HeaderText>{now.format("YYYY.MM")}</HeaderText>
-                <div onClick={() => this.moveMonth(1)}>
-                  <img src={nextMonth} />
-                </div>
-              </Header>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: 12,
+                  marginTop: 40,
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Header>
+                  <div onClick={() => this.moveMonth(-1)}>
+                    <img src={prevMonth} />
+                  </div>
+                  <HeaderText>{now.format("YYYY.MM")}</HeaderText>
+                  <div onClick={() => this.moveMonth(1)}>
+                    <img src={nextMonth} />
+                  </div>
+                </Header>
+                <SubmitButton onClick={this.calendarHandler}>
+                  선택완료
+                </SubmitButton>
+              </div>
+              <span
+                style={{
+                  fontSize: 14,
+                  fontWeight: 500,
+                  letterSpacing: -0.14,
+                  color: "#0933b3",
+                  marginBottom: 38,
+                }}
+              >
+                종료일을 선택해 주세요.
+              </span>
               <DateContainer>
                 {this.mapArrayToDate(this.dateToArray(this.props.dates))}
               </DateContainer>
@@ -246,6 +335,10 @@ class Calendar extends Component {
 
 export default Calendar;
 
+const DayBox = styled.div`
+  color: ${(props) => props.active && "#fff !important"};
+  background-color: ${(props) => props.active && "#0933b3 !important"};
+`;
 const MainContainer = styled.div`
   //display: ${(props) => (props.fileUpload ? "flex" : "none")};
   display: flex;
@@ -255,10 +348,10 @@ const MainContainer = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   width: 792px;
   height: 639px;
-  margin-top: 6px;
+  margin-top: 15px;
   background-color: white;
   position: absolute;
-  top: 31%;
+  top: 22.8%;
   z-index: 1;
 `;
 const Header = styled.div`
@@ -268,8 +361,6 @@ const Header = styled.div`
   justify-content: space-between;
   width: 176px;
   align-items: baseline;
-  margin-bottom: 50px;
-  margin-top: 40px;
   > div:nth-of-type(1),
   div:nth-of-type(3) {
     cursor: pointer;
@@ -328,16 +419,15 @@ const CalendarContainer = styled.div`
     border-radius: 50px;
     margin-left: 25px;
     margin-top: 11px;
-    //border: solid 0.5px rgba(198,199,204,0.5);
-    //border-collapse: collapse;
     font-family: Roboto;
     font-size: 18px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     letter-spacing: -0.18px;
-    color: #282c36;
     cursor: pointer;
+    color: #282c36;
+
     > div {
       font-family: Roboto;
       line-height: 1.4;
@@ -346,14 +436,13 @@ const CalendarContainer = styled.div`
       font-stretch: normal;
       font-style: normal;
       letter-spacing: -0.12px;
-      color: #282c36;
     }
     :hover {
       //background-color: #e1e2e4;
       background-color: #0933b3;
       color: white;
       > div {
-        color: black;
+        color: #fff;
         display: none;
       }
     }
@@ -361,6 +450,14 @@ const CalendarContainer = styled.div`
       background-color: #0933b3;
       color: white;
     }
+  }
+
+  .testClass {
+    // display: none;
+    // color: ${(props) => (props.active ? "#fff" : "#282c36")};
+    color: #fff;
+    background-color: #0933b3;
+    // background-color: ${(props) => (props.active ? "#0933b3" : "#fff")};
   }
   .date-sun {
     color: #c6c7cc;
@@ -381,11 +478,12 @@ const CalendarContainer = styled.div`
   }
   .date-weekday-labeltoday {
     pointer-events: none;
-    color: #c6c7cc;
+    color: #fff;
+    background-color: #0933b3;
     > div {
       position: absolute;
-      margin-top: 38px;
-      color: #c6c7cc;
+      margin-top: 75px;
+      color: #0933b3;
     }
   }
   .not-book {
@@ -400,13 +498,6 @@ const CalendarContainer = styled.div`
       margin-top: 38px;
       color: #c6c7cc;
     }
-    //pointer-events: none;
-    //background-color: #e1e2e4;
-    //> div {
-    //  position: absolute;
-    //  margin-top: 38px;
-    //  color: #e1e2e4;
-    //}
   }
 `;
 const FoldedComponent = styled.div`
@@ -418,8 +509,27 @@ const FoldedComponent = styled.div`
   font-weight: 500;
   letter-spacing: -0.45px;
   border-radius: 5px;
-  margin-top: 6px;
   border: solid 1px #c6c7cc;
   height: ${(props) => (props.mobile ? "34px" : "50px")};
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+`;
+
+const SubmitButton = styled.div`
+  margin-left: 145px;
+  margin-right: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  height: 38px;
+  font-size: 14px;
+  line-height: 2.14;
+  letter-spacing: -0.14px;
+  color: #0933b3;
+  border-radius: 19px;
+  border: solid 1px #0933b3;
+  cursor: pointer;
+  &:hover {
+    background-color: #edf4fe;
+  }
 `;

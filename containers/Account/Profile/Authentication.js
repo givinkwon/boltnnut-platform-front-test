@@ -56,7 +56,7 @@ class Authentication extends React.Component {
               >
                 인증하기
               </Certification>
-              {this.state.modalOn ? (
+              {this.state.modalOn && !Profile.authenticationFile ? (
                 <ModalBackground>
                   <Modal>
                     <div
