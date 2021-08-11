@@ -537,3 +537,12 @@ export function imagesearch(req) {
     data: req.data,
   });
 }
+
+// 검색어 로그 저장
+export function saveSearchText(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/searchtextlog/`,
+    data: req.data ? req.data : null,
+  });
+}

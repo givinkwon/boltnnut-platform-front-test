@@ -57,10 +57,10 @@ class ManufacturerContentContainer extends React.Component {
     if (Partner.filter_city_ary.length === 1) {
       Partner.getCity();
     }
-    await this.props.Auth.checkLogin();
+    
     console.log(this.props.Auth.logged_in_user);
 
-    await Partner.partner_list.map((item, idx) => {
+    Partner.partner_list.map((item, idx) => {
       Partner.getTotalBookmarkByPartner(item.id);
       Partner.getReviewByPartner;
     });

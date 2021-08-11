@@ -27,6 +27,7 @@ class Index extends React.Component {
   async componentDidMount() {
     const { Auth, Partner } = this.props;
     // category 리셋하여 메인페이지 연동되지 않게 + 파트너 가져오기
+    Partner.init()
     await Partner.getPartner(1, "Home");
     console.log("producer didmount2");
 
