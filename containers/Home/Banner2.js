@@ -4,10 +4,10 @@ import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
 import Containerv1 from "components/Containerv1";
 import Background from "components/Background";
-import ProposalCard from "../Manufacture/Producer/ProposalCard";
+import ProposalCard from "../Manufacture/Search/ProposalCard";
 import { toJS } from "mobx";
 
-@inject("Home", "Partner", "Auth", "Producer", "Category")
+@inject("Home", "Partner", "Auth", "Search", "Category")
 @observer
 class NewBanner2Container extends React.Component {
   async componentDidMount() {
@@ -54,7 +54,7 @@ class NewBanner2Container extends React.Component {
       { id: 22, name: "밴딩/포장" },
     ];
 
-    const { Partner, Auth, Producer, Category } = this.props;
+    const { Partner, Auth, Search, Category } = this.props;
 
     return (
       <div
@@ -99,7 +99,7 @@ class NewBanner2Container extends React.Component {
                           width={this.props.width}
                           categoryData={toJS(Partner.category_dic[idx])}
                           idx={idx}
-                          handleIntersection={Producer.handleIntersection}
+                          handleIntersection={Search.handleIntersection}
                           customer="partner"
                         />
                       </div>

@@ -7,11 +7,11 @@ import Router from "next/router";
 import Background from "components/Background";
 import Container from "components/Containerv1";
 
-import ProposalCard from "containers/Manufacture/Producer/ProposalCard";
+import ProposalCard from "containers/Manufacture/Search/ProposalCard";
 
-const userImg = "/static/images/producer/user.svg";
+const userImg = "/static/images/search/user.svg";
 
-@inject("Partner", "Auth", "Project", "Common", "Request", "Producer")
+@inject("Partner", "Auth", "Project", "Common", "Request", "Search")
 @observer
 class SubBoxContainer extends React.Component {
   componentDidMount = async () => {
@@ -22,7 +22,7 @@ class SubBoxContainer extends React.Component {
     await Partner.getBookmarkByClient(clientId);
   };
   render() {
-    const { Auth, partnerId, Project, Partner, Producer } = this.props;
+    const { Auth, partnerId, Project, Partner, Search } = this.props;
     // console.log(this.props.Auth.logged_in_client.id);
     // console.log(toJS(`clientId: ${this.props.Auth.logged_in_client.id}`));
     console.log(toJS(Auth));
@@ -69,7 +69,7 @@ class SubBoxContainer extends React.Component {
                       width={this.props.width}
                       idx={idx}
                       categoryData={toJS(Partner.category_dic[idx])}
-                      handleIntersection={Producer.handleIntersection}
+                      handleIntersection={Search.handleIntersection}
                       customer="partner"
                     />
                   </div>

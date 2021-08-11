@@ -6,10 +6,10 @@ import * as Text from "components/Text";
 import Button from "components/Button";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
-import MobileProposalCard from "containers/Manufacture/Producer/MobileProposalCard";
+import MobileProposalCard from "containers/Manufacture/Search/MobileProposalCard";
 import { toJS } from "mobx";
 
-@inject("Home", "Partner", "Auth", "Producer", "Category")
+@inject("Home", "Partner", "Auth", "Search", "Category")
 @observer
 class MobileBanner2Container extends React.Component {
   async componentDidMount() {
@@ -56,7 +56,7 @@ class MobileBanner2Container extends React.Component {
       { id: 22, name: "밴딩/포장" },
     ];
 
-    const { Partner, Auth, Producer, Category } = this.props;
+    const { Partner, Auth, Search, Category } = this.props;
 
     return (
       <Container>
@@ -69,8 +69,18 @@ class MobileBanner2Container extends React.Component {
           <div style={{ marginTop: "23px", width: "95%" }}>
             <CategoryBox>
               {nameTable.map((v, idx) => (
-                <div style={{ width: "110px", display: "flex", justifyContent: "center" }}>
-                  <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
+                <div
+                  style={{
+                    width: "110px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CategoryTitle
+                    key={v.id}
+                    active={this.onCompareCategory(v.id)}
+                    onClick={() => this.onClickCategory(v.id)}
+                  >
                     {v.name}
                   </CategoryTitle>
                 </div>
@@ -82,14 +92,18 @@ class MobileBanner2Container extends React.Component {
                 return (
                   <>
                     {idx < 3 && (
-                      <div style={{ display: "flex", justifyContent: "center" }}>
-                        <ProposalCardBox onClick={() => Partner.pushToDetail(item, idx)}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <ProposalCardBox
+                          onClick={() => Partner.pushToDetail(item, idx)}
+                        >
                           <MobileProposalCard
                             data={item}
                             width={this.props.width}
                             categoryData={toJS(Partner.category_dic[idx])}
                             idx={idx}
-                            handleIntersection={Producer.handleIntersection}
+                            handleIntersection={Search.handleIntersection}
                             customer="partner"
                           />
                         </ProposalCardBox>
@@ -100,7 +114,9 @@ class MobileBanner2Container extends React.Component {
               })}
           </div>
 
-          <Text16 style={{ marginTop: "56px" }}>다양한 카테고리의 업체 전문가들을 찾고 있으신가요?</Text16>
+          <Text16 style={{ marginTop: "56px" }}>
+            다양한 카테고리의 업체 전문가들을 찾고 있으신가요?
+          </Text16>
 
           <SignupButtom>
             <ButtonText16>회원가입하기</ButtonText16>

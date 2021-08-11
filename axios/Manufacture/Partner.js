@@ -356,7 +356,7 @@ export function getClientEmail(req) {
   });
 }
 
-export function setReqProducerInfo(req) {
+export function setReqSearchInfo(req) {
   return axios({
     method: "POST",
     url: `${ROOT_URL}/requestinfo/`,

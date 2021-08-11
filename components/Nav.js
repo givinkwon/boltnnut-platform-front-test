@@ -148,10 +148,10 @@ class Nav extends React.Component {
                   this.props.Auth.logged_in_user.type === 0 ? (
                     /* client로 로그인 */
                     <ul>
-                      <NavLink active={url.indexOf("producer") > -1}>
+                      <NavLink active={url.indexOf("search") > -1}>
                         <RouterWrapper>
                           <Font16>
-                            <KSLink url={"producer"} content={"제조사 찾기"} />
+                            <KSLink url={"search"} content={"제조사 찾기"} />
                           </Font16>
                         </RouterWrapper>
                       </NavLink>
@@ -204,10 +204,10 @@ class Nav extends React.Component {
                   ) : (
                     /* partner로 로그인 */
                     <ul>
-                      <NavLink active={url.indexOf("producer") > -1}>
+                      <NavLink active={url.indexOf("search") > -1}>
                         <RouterWrapper>
                           <Font16>
-                            <KSLink url={"producer"} content={"제조사 찾기"} />
+                            <KSLink url={"search"} content={"제조사 찾기"} />
                           </Font16>
                         </RouterWrapper>
                       </NavLink>
@@ -252,10 +252,10 @@ class Nav extends React.Component {
                 ) : (
                   /* 로그인 안되어있는 경우 */
                   <ul>
-                    <NavLink active={url.indexOf("producer") > -1}>
+                    <NavLink active={url.indexOf("search") > -1}>
                       <RouterWrapper>
                         <KSLink
-                          url={"producer"}
+                          url={"search"}
                           FontContent={() => {
                             return <Font16>제조사 찾기</Font16>;
                           }}

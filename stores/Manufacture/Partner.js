@@ -38,7 +38,7 @@ class Partner {
   @observable questionCount = 0;
   @observable questionList = new Array(10);
   @observable writingModalIdx = "";
-  /* /producer 우측 카드 변수 */
+  /* /search 우측 카드 변수 */
   @observable totalPartnerBookmark = 0;
   @observable totalClientBookmark = 0;
   @observable hoverInterestedIdx = false;
@@ -470,7 +470,7 @@ class Partner {
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
-        Router.push("/producer/detail");
+        Router.push("/search/detail");
         // this.setState({ g: 3 });
       } else {
         console.log("file download");
@@ -1736,7 +1736,7 @@ class Partner {
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
-        Router.push("/producer/detail");
+        Router.push("/search/detail");
       })
       .catch((e) => {
         console.log(e);
@@ -1744,7 +1744,7 @@ class Partner {
       });
   };
 
-  @action getPartner = async (page = 1, pre_page = "Producer") => {
+  @action getPartner = async (page = 1, pre_page = "Search") => {
     // 전 페이지가 메인페이지면 필터 중복을 제외하기 위하여 reset
     if (pre_page == "Home") {
       await Category.reset();

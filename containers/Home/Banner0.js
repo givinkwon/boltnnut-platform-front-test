@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Containerv1 from "../../components/Containerv1";
 import * as Title from "components/Title";
 import * as Text from "components/Text";
-import SearchBar from "../Manufacture/Producer/SearchBar";
+import SearchBar from "../Manufacture/Search/SearchBar";
 
 const banner0img = "/static/images/banner0img.svg";
 

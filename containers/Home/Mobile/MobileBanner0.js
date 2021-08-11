@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
-import NewMobileSearchBar from "../../Manufacture/Producer/NewMobileSearchBar";
+import NewMobileSearchBar from "../../Manufacture/Search/NewMobileSearchBar";
 
 const startling = "/static/images/startline.svg";
 const mobilebanner0img = "/static/images/mobilebanner0img.svg";
@@ -15,7 +15,9 @@ class MobileBanner0Container extends React.Component {
           <img src={mobilebanner0img} style={{ marginBottom: "34px" }} />
 
           <Title24>대한민국 제조사 정보 여기 다 있다.</Title24>
-          <Title16 style={{ marginTop: "20px" }}>당신에게 맞는 제조사 정보를</Title16>
+          <Title16 style={{ marginTop: "20px" }}>
+            당신에게 맞는 제조사 정보를
+          </Title16>
           <Title16>바로 조회해보세요.</Title16>
 
           <NewMobileSearchBar />
