@@ -95,7 +95,7 @@ class MobileContent1 extends React.Component {
     }
 
     if (Auth.logged_in_client) {
-      Project.getPage(Auth.logged_in_client.id);
+      Project.getProject("myproject", Auth.logged_in_client.id);
       Answer.loadAnswerListByProjectId(Project.selectedProjectId).then(() => {
         console.log(toJS(Answer.answers));
         this.setState({ partnerList: Answer.answers });

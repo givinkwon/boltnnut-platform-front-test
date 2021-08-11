@@ -1,7 +1,6 @@
 import React from "react";
 
-import BannerConatiner from "./Banner";
-import SearchBar from "./SearchBar";
+import BannerConatiner from "./Common/Banner";
 import SearchFilterBox from "./SearchFilterBox";
 import MobileSearchFilterBox from "./MobileSearchFilterBox";
 

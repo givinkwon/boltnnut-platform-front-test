@@ -3,7 +3,7 @@ import React from "react";
 import Container from "components/Container";
 import Section from "components/Section";
 
-import BannerConatiner from "../Banner";
+import BannerConatiner from "../Common/Banner";
 import ContentConatiner from "./Content";
 
 class ManufacturerDetailConatiner extends React.Component {
