@@ -40,7 +40,7 @@ class MyProject extends React.Component {
 
     await Auth.checkLogin();
     if (Auth.logged_in_client) {
-      Project.getPage(Auth.logged_in_client.id);
+      Project.getProject("myproject", Auth.logged_in_client.id);
     }
     console.log(Auth.logged_in_client);
   }

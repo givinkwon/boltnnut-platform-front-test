@@ -3,9 +3,8 @@ import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
 import SelectComponent from "Select";
 import Router from "next/router";
-import MobileSelectComponent from "MobileSelect";
+import MobileSelectComponent from "./Mobile/MobileSelect";
 
-import FilterBox from "./FilterBox";
 import FilterBox2 from "./FilterBox2";
 import FileComponent from "./AddFile";
 

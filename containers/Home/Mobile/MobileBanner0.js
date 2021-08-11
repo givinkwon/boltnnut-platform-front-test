@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Containerv1 from "components/Containerv1";
 import * as Title from "components/Title";
-import NewMobileSearchBar from "../../Manufacture/Search/NewMobileSearchBar";
+import NewMobileSearchBar from "containers/Manufacture/Search/Mobile/NewMobileSearchBar";
 
 const startling = "/static/images/startline.svg";
 const mobilebanner0img = "/static/images/mobilebanner0img.svg";

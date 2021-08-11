@@ -2,16 +2,14 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import SelectComponent from "Select";
-import MobileSelectComponent from "../Mobile/MobileSelect";
-
+import MobileSelectComponent from "MobileSelect";
+import FilterBoxSearchBar from "../Home/SearchBar";
 import ButtonComponent from "components/Buttonv2";
-import FilterBoxSearchBar from "./SearchBar";
+
 import Modal from "../RequestModal";
 import DoneModal from "../RequestDoneModal";
 import FilterModalContainer from "../FilterModal";
 const filter_img = "static/images/filter.svg";
-const down_arrow = "/static/icon/down_arrow.svg";
-const up_arrow = "/static/icon/up_arrow.svg";
 
 const customStyles = {
   container: (base, state) => {
@@ -129,7 +127,7 @@ const mobileCustomStyles = {
 
 @inject("Auth", "Project", "Request", "Partner")
 @observer
-class SearchFilterConatiner extends React.Component {
+class MobileSearchFilterConatiner extends React.Component {
   state = {
     search: "",
     modal_open: false,
@@ -137,9 +135,6 @@ class SearchFilterConatiner extends React.Component {
     filter_city_active: false,
     filter_category_active: false,
     type: "",
-    category_arrow: false,
-    classify_arrow: false,
-    location_arrow: false,
   };
 
   dropdownHandler = (flag) => {
@@ -197,95 +192,57 @@ class SearchFilterConatiner extends React.Component {
         this.setState({ filter_category_active: true });
       }
     }
-    if (flag == "category_arrow") {
-      if (this.state.category_arrow) {
-        this.setState({ category_arrow: false });
-      } else {
-        this.setState({
-          category_arrow: true,
-          classify_arrow: false,
-          location_arrow: false,
-        });
-      }
-    }
-    if (flag == "classify_arrow") {
-      if (this.state.classify_arrow) {
-        this.setState({ classify_arrow: false });
-      } else {
-        this.setState({
-          classify_arrow: true,
-          category_arrow: false,
-          location_arrow: false,
-        });
-      }
-    }
-    if (flag == "location_arrow") {
-      if (this.state.location_arrow) {
-        this.setState({ location_arrow: false });
-      } else {
-        this.setState({
-          location_arrow: true,
-          category_arrow: false,
-          classify_arrow: false,
-        });
-      }
-    }
   };
-
   render() {
     const { Partner, width } = this.props;
     console.log(this.state.type);
     return (
       <ContainerV2>
-        {console.log(`Active : ${Partner.subButtonActive}`)}
-
         <FilterBoxSearchBar />
 
         <FilterCategory>
-          <Category>
+        <Category>
             <CategoryName>카테고리</CategoryName>
             <Field>
               <div>전체</div>
               <img
-                src={this.state.category_arrow ? up_arrow : down_arrow}
+                src="/static/icon/down_arrow.svg"
                 onClick={() => {
-                  this.dropdownHandler("business");
-                  this.activeHandler("category_arrow");
+                  this.dropdownHandler("category");
                 }}
               ></img>
             </Field>
           </Category>
+
           <Category>
             <CategoryName>업체 분류</CategoryName>
             <Field>
               <div>전체</div>
               <img
-                src={this.state.classify_arrow ? up_arrow : down_arrow}
+                src="/static/icon/down_arrow.svg"
                 onClick={() => {
-                  this.dropdownHandler("category");
-                  this.activeHandler("classify_arrow");
+                  this.dropdownHandler("business");
                 }}
               ></img>
             </Field>
           </Category>
+>
           <Category>
             <CategoryName>지역</CategoryName>
             <Field>
               <div>전체</div>
               <img
-                src={this.state.location_arrow ? up_arrow : down_arrow}
+                src="/static/icon/down_arrow.svg"
                 onClick={() => {
                   this.dropdownHandler("city");
-                  this.activeHandler("location_arrow");
                 }}
               ></img>
             </Field>
           </Category>
           <Category>
-            <ProcessMaterialBox>공정/소재</ProcessMaterialBox>
+            <CategoryName>공정, 소재</CategoryName>
             <Material>
               <div
-                style={{ cursor: "pointer" }}
                 onClick={() => {
                   this.dropdownHandler("develop&material");
                 }}
@@ -296,12 +253,7 @@ class SearchFilterConatiner extends React.Component {
                 ></img>
                 <img
                   src="/static/icon/arrow_down.svg"
-                  style={{
-                    widht: 12,
-                    height: 12,
-                    marginLeft: 2,
-                    marginBottom: 5,
-                  }}
+                  style={{ widht: 12, height: 12 }}
                 ></img>
               </div>
             </Material>
@@ -338,16 +290,7 @@ class SearchFilterConatiner extends React.Component {
   }
 }
 
-export default SearchFilterConatiner;
-
-const TestDiv = styled.div`
-  width: 792px;
-  height: 59px;
-  border-radius: 60px;
-  box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
-  border: solid 0.5px #c6c7cc;
-  background-color: #ffffff;
-`;
+export default MobileSearchFilterConatiner;
 
 const FilterCategory = styled.div`
   width: 100%;
@@ -360,9 +303,16 @@ const FilterCategory = styled.div`
 `;
 
 const Category = styled.div`
+  width: 30%;
   background: none;
   border: none;
   margin-right: 20px;
+  display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+
 `;
 
 const Material = styled.div`
@@ -372,40 +322,48 @@ const Material = styled.div`
   border-radius: 3px;
   border: solid 1px #c6c7cc;
   width: 64px;
-  height: 40px;
+  height: 30px;
+  align-self: center;
+  img:nth-of-type(1) {
+    height: 16px !important;
+  }
+  img:nth-of-type(2) {
+    height: 10px !important;
+  }
 `;
 
 const CategoryName = styled.div`
   background: none;
   border: none;
-  width: 204px;
-  font-size: 15px;
+  font-size: 12px;
   line-height: 2.27;
   letter-spacing: -0.38px;
   text-align: left;
   color: #555963;
+  align-self: center;
+}
 `;
 
 const Field = styled.div`
-  width: 204px;
-  height: 40px;
+  height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: none;
   border-radius: 3px;
-  border: ${(props) =>
-    props.active ? "solid 1px #0933b3" : "solid 1px #c6c7cc"};
+  border: solid 1px #c6c7cc;
   div {
     margin-left: 16px;
     line-height: 2.27;
     letter-spacing: -0.38px;
     text-align: left;
     color: #b3b3b3;
+    font-size: 12px;
   }
   img {
     margin-right: 12px;
-    cursor: pointer;
+    width: 12px;
+    height: 12px;
   }
 `;
 
@@ -413,7 +371,6 @@ const ContainerV2 = styled.div`
   margin-top: 32px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 1200px;
   margin-bottom: 30px;
 
@@ -423,7 +380,6 @@ const ContainerV2 = styled.div`
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     justify-content: center;
-    width: 100%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 115%;
@@ -433,15 +389,6 @@ const ContainerV2 = styled.div`
     justify-content: center;
   }
 `;
-
-const ProcessMaterialBox = styled.div`
-  font-size: 15px;
-  line-height: 2.27;
-  letter-spacing: -0.38px;
-  text-align: center;
-  color: #555963;
-`;
-
 const Search = styled.div`
   display: flex;
   align-items: center;

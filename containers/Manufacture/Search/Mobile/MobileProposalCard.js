@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { toJS } from "mobx";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
-import ReviewContainer from "./Review/ReviewContainer";
+import ReviewContainer from "../Review/ReviewContainer";
 import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 

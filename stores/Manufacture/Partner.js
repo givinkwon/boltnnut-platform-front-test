@@ -442,10 +442,26 @@ class Partner {
       this.category_name_list = this.category_dic[idx];
 
       if (!item.file) {
-        this.detailLoadingFlag = false;
-        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        // this.detailLoadingFlag = false;
+        // alert("해당 회사의 소개서가 존재하지 않습니다!");
+        // return;
+        this.partner_detail_list = [];
+        await this.partner_detail_list.push({ item: item, idx: idx });
+        this.recentPartnerId = this.partner_detail_list[0].item.id;
+
+        await this.getReviewByPartner(
+          this.partner_detail_list[0].item.id,
+          1,
+          1
+        );
+        await this.getReviewByPartner(this.partner_detail_list[0].item.id);
+        await this.getQuestion(this.partner_detail_list[0].item.id);
+        await this.getCityName(this.partner_detail_list[0].item.city);
+
+        Router.push("/search/detail");
         return;
       }
+
       this.selectedIntroductionFile = item.file;
 
       const fileType = item.file

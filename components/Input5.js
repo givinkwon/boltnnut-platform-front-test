@@ -76,6 +76,8 @@ class Input extends React.Component {
         onBlur={this.onBlur}
         onChange={this.onChange}
         variant="outlined"
+        multiline
+        rows={20}
       />
     );
   }

@@ -49,7 +49,14 @@ class SelectComp extends React.Component {
     this.props.onBlur(blur);
   };
   render() {
-    const { options, placeholder, styles, getOptionLabel, defaultValue, value } = this.props;
+    const {
+      options,
+      placeholder,
+      styles,
+      getOptionLabel,
+      defaultValue,
+      value,
+    } = this.props;
     return (
       <Select
         id={this.props.id}
@@ -57,7 +64,9 @@ class SelectComp extends React.Component {
         styles={styles ? styles : customStyles}
         value={value}
         onChange={this.handleChange}
-        getOptionLabel={(option) => (getOptionLabel ? getOptionLabel(option) : option.label)}
+        getOptionLabel={(option) =>
+          getOptionLabel ? getOptionLabel(option) : option.label
+        }
         options={options}
         isSearchable={false}
         placeholder={placeholder}
