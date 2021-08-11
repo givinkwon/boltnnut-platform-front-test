@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import SelectComponent from "Select";
-import MobileSelectComponent from "MobileSelect";
+import MobileSelectComponent from "../Mobile/MobileSelect";
 
 import ButtonComponent from "components/Buttonv2";
 import FilterBoxSearchBar from "./SearchBar";

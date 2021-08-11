@@ -3,12 +3,12 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import SelectComponent from "Select";
 import MobileSelectComponent from "MobileSelect";
-import FilterBoxSearchBar from "./Home/SearchBar";
+import FilterBoxSearchBar from "../Home/SearchBar";
 import ButtonComponent from "components/Buttonv2";
 
-import Modal from "./RequestModal";
-import DoneModal from "./RequestDoneModal";
-import FilterModalContainer from "./FilterModal";
+import Modal from "../RequestModal";
+import DoneModal from "../RequestDoneModal";
+import FilterModalContainer from "../FilterModal";
 const filter_img = "static/images/filter.svg";
 
 const customStyles = {

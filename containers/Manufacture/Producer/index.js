@@ -2,7 +2,7 @@ import React from "react";
 
 import BannerConatiner from "./Home/Banner";
 import SearchFilterBox from "./Home/SearchFilterBox";
-import MobileSearchFilterBox from "./MobileSearchFilterBox";
+import MobileSearchFilterBox from "./Mobile/MobileSearchFilterBox";
 
 import ContentContainer from "./Home/Content";
 import MobileContentContainer from "./Mobile/MobileContent";
@@ -10,8 +10,8 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
 import DetailContainer from "./Detail/index";
-import MobileRequest from "./MobileRequest";
-import MobileRequestDone from "./MobileRequestDone";
+import MobileRequest from "./Mobile/MobileRequest";
+import MobileRequestDone from "./Mobile/MobileRequestDone";
 // cookie 추가
 import Cookies from "js-cookie";
 

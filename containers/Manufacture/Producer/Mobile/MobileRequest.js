@@ -1,6 +1,6 @@
 import React from "react";
 import Select from "react-select";
-import RequestDetailContainer from "./RequestModal";
+import RequestDetailContainer from "../RequestModal";
 
 class MobileRequest extends React.Component {
   render() {
