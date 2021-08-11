@@ -902,6 +902,7 @@ const RequestBtn = styled.button`
   font-size: 15px;
   letter-spacing: -0.38px;
   color: #0933b3;
+  cursor: pointer;
 }
 `;
 

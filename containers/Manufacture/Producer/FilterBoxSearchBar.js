@@ -43,6 +43,9 @@ class SearchBarConatiner extends React.Component {
 
     Partner.currentPage = 1;
     Partner.click_count += 1;
+    
+    // 버튼 활성화 하기 위해 state true
+    Partner.subButtonActive = true;
 
     await Partner.search();
 
