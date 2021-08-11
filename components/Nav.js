@@ -431,7 +431,9 @@ class Nav extends React.Component {
                         >
                           <RouterWrapper
                             onClick={() => {
-                              alert("가입을 원하시는 분은 고객센터로 별도 문의주세요");
+                              alert(
+                                "가입을 원하시는 분은 고객센터로 별도 문의주세요"
+                              );
                             }}
                           >
                             <KSLink
@@ -574,7 +576,9 @@ class Nav extends React.Component {
                     >
                       <RouterWrapper
                         onClick={() => {
-                          alert("준비 중 입니다. 가입을 원하시는 분은 고객센터로 문의해주세요");
+                          alert(
+                            "준비 중 입니다. 가입을 원하시는 분은 고객센터로 문의해주세요"
+                          );
                         }}
                       >
                         <KSLink
