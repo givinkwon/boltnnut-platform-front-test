@@ -8,23 +8,19 @@ class TestContainer extends React.Component {
   setChecked = (value) => {
     this.setState({ bChecked: value });
   };
-  checkedItemHandler = (id, isChecked) => {
-    if (isChecked) {
-      checkedItems.add(id);
-      setCheckedItems(checkedItems);
-    } else if (!isChecked && checkedItems.has(id)) {
-      checkedItems.delete(id);
-      setCheckedItems(checkedItems);
-    }
-  };
+
   checkHandler = ({ target }) => {
-    setChecked(!bChecked);
-    checkedItemHandler(issue.id, target.checked);
+    this.setChecked(!this.state.bChecked);
+    this.props.checkedItemHandler(this.props.issue.id, target.checked);
   };
   render() {
     return (
       <>
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          checked={this.state.bChecked}
+          onChange={(e) => this.checkHandler(e)}
+        />
       </>
     );
   }

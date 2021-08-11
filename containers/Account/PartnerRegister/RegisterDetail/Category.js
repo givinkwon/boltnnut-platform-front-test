@@ -144,7 +144,9 @@ const mainType = [
 @inject("Auth", "Category")
 @observer
 class Category extends Component {
-  state = {};
+  state = {
+    checkedItems: new Set(),
+  };
   componentDidMount() {
     console.log("===================================");
     console.log(toJS(this.props.Category.mainbusiness_list));
@@ -152,6 +154,25 @@ class Category extends Component {
     console.log(toJS(this.props.Category.category_list));
     console.log("===================================");
   }
+
+  checkedItemHandler = (id, isChecked) => {
+    if (isChecked) {
+      let a = this.state.checkedItems;
+      a.add(id);
+
+      // this.setState({ checkedItems: a });
+      // this.setCheckedItems(this.state.checkedItems);
+    } else if (!isChecked && this.state.checkedItems.has(id)) {
+      let a = this.state.checkedItems;
+      a.delete(id);
+      // this.setState({ checkedItems: a });
+      // this.setCheckedItems(this.state.checkedItems);
+    }
+    console.log(this.state.checkedItems);
+  };
+  setCheckedItems = (val) => {
+    this.setState({ checkedItems: val });
+  };
   render() {
     const { Auth, Category } = this.props;
     return (
@@ -270,7 +291,10 @@ class Category extends Component {
                               -1
                                 ? "true"
                                 : "false"}
-                              <TestCheckBox />
+                              <TestCheckBox
+                                checkedItemHandler={this.checkedItemHandler}
+                                issue={subItem}
+                              />
                               {/* <input
                                 type="checkbox"
                                 onChange={(e) => {
