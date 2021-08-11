@@ -158,8 +158,8 @@ const ImgContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   border-radius: 20px;
 
   :hover {

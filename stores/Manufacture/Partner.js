@@ -811,7 +811,6 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    this.getPartner();
   };
   @action reset = () => {
     this.detail = null;
@@ -829,6 +828,7 @@ class Partner {
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
+    this.category_string = [];
   };
 
   @action getClientInfo = async (id) => {
@@ -1015,7 +1015,33 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    
+    // 검색 시 텍스트 저장
+    this.saveSearchText(this.search_text)
   };
+
+  @action saveSearchText = (text) => {
+    const formData = new FormData();
+    console.log(this.partner_count);
+    console.log(text);
+    console.log(typeof this.partner_count);
+    formData.append("text", text); // 입력 텍스트
+    formData.append("count", this.partner_count); // 파트너 개수
+
+    const req = {
+      data: formData,
+    };
+
+    PartnerAPI.saveSearchText(req)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(e.response);
+      });
+  };
+
 
   // 이미지 모달을 위한 state
   @observable image_modal_state = false;
@@ -1717,7 +1743,14 @@ class Partner {
       });
   };
 
-  @action getPartner = async (page = 1, click = 0) => {
+  @action getPartner = async (page = 1, pre_page = "Producer") => {
+
+    // 전 페이지가 메인페이지면 필터 중복을 제외하기 위하여 reset
+    if (pre_page == "Home"){
+      await Category.reset()
+    }
+    // 초기화
+    this.partner_count = ""
     this.partner_list = [];
     this.category_ary = [];
     // data 저장용
@@ -1759,7 +1792,7 @@ class Partner {
         this.category_string.length - 1
       );
       console.log(this.category_string);
-      // 괄호를 없애서 전처리
+
       req.params.category = this.category_string;
     }
 
@@ -1813,7 +1846,7 @@ class Partner {
     }
 
     console.log(req.params);
-    await PartnerAPI.getPartners(req)
+    PartnerAPI.getPartners(req)
       .then(async (res) => {
         console.log(res);
         this.partner_list = [];
