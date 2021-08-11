@@ -1254,15 +1254,14 @@ class DetailCardContainer extends React.Component {
                 </QuestionBox>
               </Card>
 
-              {!Auth.logged_in_partner && (
+              {/* {!Auth.logged_in_partner && (
                 <SubCard>
                   <SubBoxContainer
                     partnerId={Partner.partner_detail_list[0].item.id}
                   />
-                  {/* <RequestContainer /> */}
-                  {/* <RecentPartnerContainer /> */}
+
                 </SubCard>
-              )}
+              )} */}
             </div>
           </Containerv1>
         </Background>

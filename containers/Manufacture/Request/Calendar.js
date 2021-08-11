@@ -12,6 +12,7 @@ const calendar = "/static/images/request/calendar.svg";
 class Week extends Component {
   state = {
     now: moment(),
+    endDate: false,
   };
   Days = (firstDayFormat) => {
     const { Schedule } = this.props;
@@ -42,6 +43,14 @@ class Week extends Component {
 
     Schedule.clickDay = dayValue.date(day).format("YYYY-MM-DD");
     Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
+  };
+
+  activeHandler = () => {
+    if (this.state.endDate) {
+      this.state.endDate = false;
+    } else {
+      this.state.endDate = true;
+    }
   };
 
   mapDaysToComponents = (Days, fn = () => {}) => {
@@ -82,17 +91,13 @@ class Week extends Component {
         className += "today";
         console.log(className);
         return (
-          <div className={className} onClick={this.calendarOnOff}>
+          <div className={className}>
             {dayInfo.getDay}
             <div>오늘</div>
           </div>
         );
       } else {
-        return (
-          <div className={className} onClick={this.calendarOnOff}>
-            {dayInfo.getDay}
-          </div>
-        );
+        return <div className={className}>{dayInfo.getDay}</div>;
       }
     });
   };
@@ -195,7 +200,11 @@ class Calendar extends Component {
               width: "100%",
             }}
           >
-            <img src={calendar} onClick={this.calendarOnOff} />
+            <img
+              src={calendar}
+              onClick={this.calendarOnOff}
+              style={{ cursor: "pointer" }}
+            />
             <span
               style={{
                 color: "#999999",
@@ -223,15 +232,40 @@ class Calendar extends Component {
           {Schedule.calendarOnOffV2 == true && (
             <MainContainer>
               {console.log(Schedule.calendarOnOffV2)}
-              <Header>
-                <div onClick={() => this.moveMonth(-1)}>
-                  <img src={prevMonth} />
-                </div>
-                <HeaderText>{now.format("YYYY.MM")}</HeaderText>
-                <div onClick={() => this.moveMonth(1)}>
-                  <img src={nextMonth} />
-                </div>
-              </Header>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: 12,
+                  marginTop: 40,
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Header>
+                  <div onClick={() => this.moveMonth(-1)}>
+                    <img src={prevMonth} />
+                  </div>
+                  <HeaderText>{now.format("YYYY.MM")}</HeaderText>
+                  <div onClick={() => this.moveMonth(1)}>
+                    <img src={nextMonth} />
+                  </div>
+                </Header>
+                <SubmitButton onClick={this.calendarOnOff}>
+                  선택완료
+                </SubmitButton>
+              </div>
+              <span
+                style={{
+                  fontSize: 14,
+                  fontWeight: 500,
+                  letterSpacing: -0.14,
+                  color: "#0933b3",
+                  marginBottom: 38,
+                }}
+              >
+                종료일을 선택해 주세요.
+              </span>
               <DateContainer>
                 {this.mapArrayToDate(this.dateToArray(this.props.dates))}
               </DateContainer>
@@ -255,10 +289,10 @@ const MainContainer = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   width: 792px;
   height: 639px;
-  margin-top: 6px;
+  margin-top: 15px;
   background-color: white;
   position: absolute;
-  top: 31%;
+  top: 22%;
   z-index: 1;
 `;
 const Header = styled.div`
@@ -268,8 +302,6 @@ const Header = styled.div`
   justify-content: space-between;
   width: 176px;
   align-items: baseline;
-  margin-bottom: 50px;
-  margin-top: 40px;
   > div:nth-of-type(1),
   div:nth-of-type(3) {
     cursor: pointer;
@@ -353,7 +385,7 @@ const CalendarContainer = styled.div`
       background-color: #0933b3;
       color: white;
       > div {
-        color: black;
+        color: #fff;
         display: none;
       }
     }
@@ -381,11 +413,12 @@ const CalendarContainer = styled.div`
   }
   .date-weekday-labeltoday {
     pointer-events: none;
-    color: #c6c7cc;
+    color: #fff;
+    background-color: #0933b3;
     > div {
       position: absolute;
-      margin-top: 38px;
-      color: #c6c7cc;
+      margin-top: 75px;
+      color: #0933b3;
     }
   }
   .not-book {
@@ -400,13 +433,6 @@ const CalendarContainer = styled.div`
       margin-top: 38px;
       color: #c6c7cc;
     }
-    //pointer-events: none;
-    //background-color: #e1e2e4;
-    //> div {
-    //  position: absolute;
-    //  margin-top: 38px;
-    //  color: #e1e2e4;
-    //}
   }
 `;
 const FoldedComponent = styled.div`
@@ -418,8 +444,27 @@ const FoldedComponent = styled.div`
   font-weight: 500;
   letter-spacing: -0.45px;
   border-radius: 5px;
-  margin-top: 6px;
   border: solid 1px #c6c7cc;
   height: ${(props) => (props.mobile ? "34px" : "50px")};
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+`;
+
+const SubmitButton = styled.div`
+  margin-left: 145px;
+  margin-right: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  height: 38px;
+  font-size: 14px;
+  line-height: 2.14;
+  letter-spacing: -0.14px;
+  color: #0933b3;
+  border-radius: 19px;
+  border: solid 1px #0933b3;
+  cursor: pointer;
+  &:hover {
+    background-color: #edf4fe;
+  }
 `;

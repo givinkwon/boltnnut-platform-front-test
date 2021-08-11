@@ -9,6 +9,7 @@ import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
 import InputComponent from "components/Input";
+import InputComponent2 from "components/Input5";
 import Calendar from "./Calendar";
 
 import AddFile from "./AddFile";
@@ -215,7 +216,7 @@ class RequestContent extends Component {
                 <ContentInput>
                   <InputComponent
                     class="Input"
-                    // placeholder="   진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
+                    // placeholder="진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
                     onFocus={(e) => (e.target.placeholder = "")}
                     onChange={(e) => {
                       Request.set_name(e);
@@ -404,9 +405,9 @@ class RequestContent extends Component {
                     style={{
                       fontSize: 16,
                       color: "#505050",
-                      lineHeight: 2.13,
                       letterSpacing: -0.4,
                       fontWeight: "normal",
+                      marginBottom: 16,
                     }}
                   >
                     희망하는 프로젝트 진행 기간을 입력해주세요.
@@ -428,14 +429,13 @@ class RequestContent extends Component {
               </RequestContentBox>
 
               <RequestContentBox>
-                <ContentTitle style={{ marginBottom: 8 }}>
+                <ContentTitle style={{ marginBottom: 4 }}>
                   <span>프로젝트 내용</span>
                   <img src={starred} style={{ marginLeft: 5 }}></img>
                   <span
                     style={{
                       marginLeft: 12,
                       fontSize: 14,
-                      lineHeight: 2.43,
                       letterSpacing: -0.35,
                       color: "#e53c38",
                       fontWeight: "normal",
@@ -458,7 +458,7 @@ class RequestContent extends Component {
                   <img src={help_face}></img>
                 </Help>
                 <ProjectInput>
-                  <InputComponent
+                  <InputComponent2
                     class="Input"
                     onFocus={(e) => (e.target.placeholder = "")}
                     value={Request.request_contents}
@@ -476,7 +476,6 @@ class RequestContent extends Component {
                   style={{
                     marginLeft: 12,
                     fontSize: 14,
-                    lineHeight: 2.43,
                     letterSpacing: -0.35,
                     color: "#e53c38",
                     fontWeight: "normal",
@@ -591,7 +590,6 @@ class RequestContent extends Component {
                     style={{
                       fontSize: 16,
                       color: "#505050",
-                      lineHeight: 2.13,
                       letterSpacing: -0.4,
                       fontWeight: "normal",
                     }}
@@ -600,8 +598,8 @@ class RequestContent extends Component {
                   </span>
                   <div
                     style={{
-                      marginTop: 10,
-                      marginBottom: 12,
+                      marginTop: 16,
+                      marginBottom: 10,
                     }}
                   >
                     <SelectComponent
