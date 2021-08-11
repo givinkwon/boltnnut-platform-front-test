@@ -1,17 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import SelectComponent from "Select";
-import ButtonComponent from "components/Buttonv2";
 
-import Background from "components/Background";
-import Container from "components/Containerv1";
 import * as Title from "components/Title";
 import Router from "next/router";
-import { toJS } from "mobx";
-
-import { PRIMARY2 } from "static/style";
-import Category from "../../../stores/Manufacture/Category";
 
 import ImageFile from "./ImageFile";
 

@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import * as Text from "components/Text";
-import { DARKGRAY } from "static/style";
+
 import * as Content from "components/Content";
 import { inject, observer } from "mobx-react";
-import { CompressedPixelFormat } from "three";
-import { toJS } from "mobx";
 
 @inject("Request", "Project", "Partner", "Producer")
 @observer
