@@ -5,7 +5,7 @@ import SearchFilterBox from "./Home/SearchFilterBox";
 import MobileSearchFilterBox from "./MobileSearchFilterBox";
 
 import ContentContainer from "./Home/Content";
-import MobileContentContainer from "./MobileContent";
+import MobileContentContainer from "./Mobile/MobileContent";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
