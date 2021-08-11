@@ -120,7 +120,7 @@ class DetailCardContainer extends React.Component {
     //   Partner.partner_detail_list[0].item.region === "nan"
     //     ? Partner.city_name
     //     : Partner.partner_detail_list[0].item.region;
-
+    console.log(toJS(Partner.partner_detail_list));
     console.log(region);
     console.log(toJS(Partner.detailRegion));
 
@@ -131,11 +131,13 @@ class DetailCardContainer extends React.Component {
       portfolioPosY += portfolioObject.offsetParent.offsetTop;
     }
 
-    let introductionObject = document.getElementById("introduction");
+    if (Partner.partner_detail_list[0].item.file !== null) {
+      let introductionObject = document.getElementById("introduction");
 
-    let introductionPosY = introductionObject.offsetTop;
-    if (introductionObject.offsetParent) {
-      introductionPosY += introductionObject.offsetParent.offsetTop;
+      let introductionPosY = introductionObject.offsetTop;
+      if (introductionObject.offsetParent) {
+        introductionPosY += introductionObject.offsetParent.offsetTop;
+      }
     }
 
     let reviewObject = document.getElementById("review");
@@ -153,15 +155,28 @@ class DetailCardContainer extends React.Component {
     }
 
     this.setState((state) => {
-      return {
-        // portfoliLocation: document
-        //   .getElementById("portfolio")
-        //   .getBoundingClientRect().top,
-        portfoliLocation: portfolioPosY,
-        introductionLocation: introductionPosY,
-        reviewLocation: reviewPosY,
-        mapLocation: mapsPosY,
-      };
+      const { Partner } = this.props;
+
+      if (Partner.partner_detail_list[0].item.file !== null) {
+        return {
+          // portfoliLocation: document
+          //   .getElementById("portfolio")
+          //   .getBoundingClientRect().top,
+          portfoliLocation: portfolioPosY,
+          introductionLocation: introductionPosY,
+          reviewLocation: reviewPosY,
+          mapLocation: mapsPosY,
+        };
+      } else {
+        return {
+          // portfoliLocation: document
+          //   .getElementById("portfolio")
+          //   .getBoundingClientRect().top,
+          portfoliLocation: portfolioPosY,
+          reviewLocation: reviewPosY,
+          mapLocation: mapsPosY,
+        };
+      }
     });
     console.log(document.getElementById("portfolio"));
     console.log(document.getElementById("portfolio").offsetTop);
@@ -360,11 +375,11 @@ class DetailCardContainer extends React.Component {
 
     if (!Partner.requestModalActive && !Partner.modalActive) {
       console.log("Detail click");
-      if (!item.file) {
-        Partner.detailLoadingFlag = false;
-        alert("해당 회사의 소개서가 존재하지 않습니다!");
-        return;
-      }
+      // if (!item.file) {
+      //   Partner.detailLoadingFlag = false;
+      //   alert("해당 회사의 소개서가 존재하지 않습니다!");
+      //   return;
+      // }
 
       Partner.category_name_list = null;
       Partner.partner_detail_list = [];
@@ -630,58 +645,61 @@ class DetailCardContainer extends React.Component {
                       width={width}
                     />
                   </IntroductionBox>
+                  {Partner.partner_detail_list[0].item.file !== null ? (
+                    <IntroductionBox width={width}>
+                      <Font24 id="introduction">회사소개서</Font24>
+                      {notLoginUser && <Block />}
+                      {!Auth.logged_in_client && !Auth.logged_in_partner && (
+                        <BlackBox
+                          content="이 제조사의 회사소개서를 보고싶다면?"
+                          width={width}
+                        />
+                      )}
+                      {availableFileType1.indexOf(
+                        this.props.Partner.selectedIntroductionFileType
+                      ) > -1 &&
+                        (notLoginUser ? (
+                          <div style={{ filter: "blur(9px)" }}>
+                            <FileViewerContainer
+                              fileType={
+                                this.props.Partner.selectedIntroductionFileType
+                              }
+                              filePath={
+                                this.props.Partner.selectedIntroductionFile
+                              }
+                              onError={onError}
+                            />
+                          </div>
+                        ) : (
+                          <div>
+                            <FileViewerContainer
+                              fileType={
+                                this.props.Partner.selectedIntroductionFileType
+                              }
+                              filePath={
+                                this.props.Partner.selectedIntroductionFile
+                              }
+                              onError={onError}
+                            />
+                          </div>
+                        ))}
 
-                  <IntroductionBox width={width}>
-                    <Font24 id="introduction">회사소개서</Font24>
-                    {notLoginUser && <Block />}
-                    {!Auth.logged_in_client && !Auth.logged_in_partner && (
-                      <BlackBox
-                        content="이 제조사의 회사소개서를 보고싶다면?"
-                        width={width}
-                      />
-                    )}
-                    {availableFileType1.indexOf(
-                      this.props.Partner.selectedIntroductionFileType
-                    ) > -1 &&
-                      (notLoginUser ? (
-                        <div style={{ filter: "blur(9px)" }}>
-                          <FileViewerContainer
-                            fileType={
-                              this.props.Partner.selectedIntroductionFileType
-                            }
-                            filePath={
-                              this.props.Partner.selectedIntroductionFile
-                            }
-                            onError={onError}
-                          />
-                        </div>
-                      ) : (
-                        <div>
-                          <FileViewerContainer
-                            fileType={
-                              this.props.Partner.selectedIntroductionFileType
-                            }
-                            filePath={
-                              this.props.Partner.selectedIntroductionFile
-                            }
-                            onError={onError}
-                          />
-                        </div>
-                      ))}
-
-                    {availableFileType3.indexOf(
-                      this.props.Partner.selectedIntroductionFileType
-                    ) > -1 &&
-                      (notLoginUser ? (
-                        <div style={{ filter: "blur(9px)" }}>
-                          <DocViewer width={width} />
-                        </div>
-                      ) : (
-                        <div>
-                          <DocViewer width={width} />
-                        </div>
-                      ))}
-                  </IntroductionBox>
+                      {availableFileType3.indexOf(
+                        this.props.Partner.selectedIntroductionFileType
+                      ) > -1 &&
+                        (notLoginUser ? (
+                          <div style={{ filter: "blur(9px)" }}>
+                            <DocViewer width={width} />
+                          </div>
+                        ) : (
+                          <div>
+                            <DocViewer width={width} />
+                          </div>
+                        ))}
+                    </IntroductionBox>
+                  ) : (
+                    <></>
+                  )}
                 </InnerBox>
                 {/* <DetailInfoBox>
             <div>
@@ -1254,15 +1272,14 @@ class DetailCardContainer extends React.Component {
                 </QuestionBox>
               </Card>
 
-              {!Auth.logged_in_partner && (
+              {/* {!Auth.logged_in_partner && (
                 <SubCard>
                   <SubBoxContainer
                     partnerId={Partner.partner_detail_list[0].item.id}
                   />
-                  {/* <RequestContainer /> */}
-                  {/* <RecentPartnerContainer /> */}
+
                 </SubCard>
-              )}
+              )} */}
             </div>
           </Containerv1>
         </Background>

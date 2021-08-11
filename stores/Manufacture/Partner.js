@@ -440,10 +440,26 @@ class Partner {
       this.category_name_list = this.category_dic[idx];
 
       if (!item.file) {
-        this.detailLoadingFlag = false;
-        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        // this.detailLoadingFlag = false;
+        // alert("해당 회사의 소개서가 존재하지 않습니다!");
+        // return;
+        this.partner_detail_list = [];
+        await this.partner_detail_list.push({ item: item, idx: idx });
+        this.recentPartnerId = this.partner_detail_list[0].item.id;
+
+        await this.getReviewByPartner(
+          this.partner_detail_list[0].item.id,
+          1,
+          1
+        );
+        await this.getReviewByPartner(this.partner_detail_list[0].item.id);
+        await this.getQuestion(this.partner_detail_list[0].item.id);
+        await this.getCityName(this.partner_detail_list[0].item.city);
+
+        Router.push("/producer/detail");
         return;
       }
+
       this.selectedIntroductionFile = item.file;
 
       const fileType = item.file
@@ -1015,9 +1031,9 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    
+
     // 검색 시 텍스트 저장
-    this.saveSearchText(this.search_text)
+    this.saveSearchText(this.search_text);
   };
 
   @action saveSearchText = (text) => {
@@ -1041,7 +1057,6 @@ class Partner {
         console.log(e.response);
       });
   };
-
 
   // 이미지 모달을 위한 state
   @observable image_modal_state = false;
@@ -1744,13 +1759,12 @@ class Partner {
   };
 
   @action getPartner = async (page = 1, pre_page = "Producer") => {
-
     // 전 페이지가 메인페이지면 필터 중복을 제외하기 위하여 reset
-    if (pre_page == "Home"){
-      await Category.reset()
+    if (pre_page == "Home") {
+      await Category.reset();
     }
     // 초기화
-    this.partner_count = ""
+    this.partner_count = "";
     this.partner_list = [];
     this.category_ary = [];
     // data 저장용

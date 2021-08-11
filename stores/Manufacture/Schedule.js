@@ -22,7 +22,17 @@ class Schedule {
   @observable already_setted = [];
   @observable active1 = null;
   @observable isOnline = null;
+  @observable calendarHandler = false;
+  @observable todaycolor = false;
+  @observable selectedDay = null;
 
+  @action dayPickerActiveHandler = (val) => {
+    if (this.selectedDay === val) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   @action setActive1 = (day) => {
     this.active1 = day;
   };
@@ -65,7 +75,7 @@ class Schedule {
       })
       .catch((error) => console.log(error));
   };
-  
+
   @action submitSchedule = (data) => {
     let req = {
       request: data.request,

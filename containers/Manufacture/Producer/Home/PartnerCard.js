@@ -266,11 +266,11 @@ class PartnerCard extends React.Component {
     Partner.detailLoadingFlag = true;
 
     if (this.props.Auth && this.props.Auth.logged_in_user) {
-      if (!data.file) {
-        Partner.detailLoadingFlag = false;
-        alert("해당 회사의 소개서가 존재하지 않습니다!");
-        return;
-      }
+      // if (!data.file) {
+      //   Partner.detailLoadingFlag = false;
+      //   alert("해당 회사의 소개서가 존재하지 않습니다!");
+      //   return;
+      // }
       this.props.Partner.selectedIntroductionFile = data && data.file;
 
       const fileType =

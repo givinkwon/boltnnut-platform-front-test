@@ -208,7 +208,6 @@ const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   width: ${(props) => (props.width ? props.width : "100%")};
-  margin-top: 16px;
 `;
 const Input = styled.div`
   width: 100%;
@@ -284,7 +283,7 @@ const FileText = styled(Content.FontSize18)`
   background-color: #f6f6f6;
   flex-wrap: wrap;
   box-sizing: border-box;
-  margin-top: 12px;
+  margin-top: 16px;
   > span:nth-of-type(1) {
     > span {
       > img {
