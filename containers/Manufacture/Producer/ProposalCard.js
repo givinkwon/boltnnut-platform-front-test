@@ -14,7 +14,7 @@ const call_img = "static/images/manufacturer/call.png";
 const file_img = "static/images/file.png";
 const file_img2 = "static/images/manufacturer/file.png";
 const star = "static/icon/star_lightblue.svg";
-const viewcount = "static/icon/viewcount.svg";
+const viewcount = "static/images/viewcount.svg";
 const bookmarkcount = "static/icon/bookmarkcount.svg";
 const bookmarkImg = "/static/icon/bookmark_empty.svg";
 const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
@@ -124,33 +124,33 @@ class ProposalCard extends React.Component {
     const { width, Producer, data, Partner, idx, Auth } = this.props;
 
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
-    const partnerId = data.id;
+    const partnerId = data && data.id;
     await Partner.existCheckedBookmark(clientId, partnerId, idx);
     await Partner.getTotalBookmarkByPartner(partnerId);
 
-    const existLogo = data.logo.split("/")[4];
+    const existLogo = data && data.logo && data.logo.split("/")[4];
     //console.log(existLogo);
 
     window.addEventListener("resize", Producer.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
 
     const req = {
-      id: data.city,
+      id: data && data.city,
     };
 
     const partnerReq = {
-      id: data.id,
+      id: data && data.id,
     };
 
     const reviewReq = {
       params: {
-        partner_id: data.id,
+        partner_id: data && data.id,
       },
     };
 
     const BookmarkReq = {
       params: {
-        partnerID: data.id,
+        partnerID: data && data.id,
       },
     };
 
@@ -254,7 +254,7 @@ class ProposalCard extends React.Component {
       if (!data.file) {
         alert("준비중입니다.");
       }
-      const url = data.file;
+      const url = data && data.file;
       const link = document.createElement("a");
       link.href = url;
       link.click();
@@ -271,16 +271,16 @@ class ProposalCard extends React.Component {
     Partner.detailLoadingFlag = true;
 
     if (this.props.Auth && this.props.Auth.logged_in_user) {
-      if (!this.props.data.file) {
-        Partner.detailLoadingFlag = false;
-        alert("해당 회사의 소개서가 존재하지 않습니다!");
-        return;
-      }
-      this.props.Partner.selectedIntroductionFile = this.props.data.file;
+      // if (!data.file) {
+      //   Partner.detailLoadingFlag = false;
+      //   alert("해당 회사의 소개서가 존재하지 않습니다!");
+      //   return;
+      // }
+      this.props.Partner.selectedIntroductionFile = data && data.file;
 
-      const fileType = this.props.data.file
-        .split(".")
-        [this.props.data.file.split(".").length - 1].toLowerCase();
+      const fileType =
+        data &&
+        data.file.split(".")[data.file.split(".").length - 1].toLowerCase();
       this.props.Partner.selectedIntroductionFileType = fileType;
 
       if (availableFileType.indexOf(fileType) > -1) {
@@ -304,7 +304,7 @@ class ProposalCard extends React.Component {
         this.setState({ g: 3 });
       } else {
         //console.log("file download");
-        this.filedownload(this.props.data.file);
+        this.filedownload(data.file);
       }
     } else {
       alert("로그인이 필요합니다.");
@@ -324,7 +324,7 @@ class ProposalCard extends React.Component {
     const loggedInPartnerId =
       Auth.logged_in_partner && Auth.logged_in_partner.id;
     //console.log(Partner.interestedIdx);
-    const existLogo = data.logo.split("/")[4];
+    const existLogo = data && data.logo && data.logo.split("/")[4];
 
     const SlideSettingsMobile = {
       dots: false,
@@ -339,10 +339,10 @@ class ProposalCard extends React.Component {
 
     let category_data;
     //console.log(data.logo);
-
+    console.log(data);
     return (
       <>
-        {width > 767.98 ? (
+        {width > 767.98 && data ? (
           <>
             <Card
               active={this.state.active}
@@ -356,7 +356,9 @@ class ProposalCard extends React.Component {
               <Header>
                 {data && data.portfolio_set.length > 0 ? (
                   <Item>
-                    <img src={data.portfolio_set[0].img_portfolio}></img>
+                    <img
+                      src={data && data.portfolio_set[0].img_portfolio}
+                    ></img>
                   </Item>
                 ) : existLogo === "null" ? (
                   <Item>
@@ -368,15 +370,15 @@ class ProposalCard extends React.Component {
                   </Item>
                 ) : (
                   <Item>
-                    <img src={data.logo} />
+                    <img src={data && data.logo} />
                   </Item>
                 )}
               </Header>
               <Main>
                 <Title>
                   <div>
-                    <Name>{data.name}</Name>
-                    {data.identification_state === true ? (
+                    <Name>{data && data.name}</Name>
+                    {data && data.identification_state === true ? (
                       <Certification>
                         <img src="/static/icon/certification_img.svg"></img>
                         <div>신원 인증</div>
@@ -412,7 +414,7 @@ class ProposalCard extends React.Component {
                     textOverflow: "ellipsis",
                   }}
                 >
-                  {data.history}
+                  {data && data.history}
                 </Introduce>
                 {this.state.business.length !== 0 ? (
                   this.state.active ? (
@@ -469,7 +471,7 @@ class ProposalCard extends React.Component {
                         style={{ marginLeft: 15, marginRight: 5 }}
                       ></img>
                       <div>
-                        {data.region === null || data.region === "nan"
+                        {(data && data.region === null) || data.region === "nan"
                           ? this.state.city
                           : data.region}
                       </div>
@@ -506,7 +508,9 @@ class ProposalCard extends React.Component {
               <Header>
                 {data && data.portfolio_set.length > 0 ? (
                   <Item>
-                    <img src={data.portfolio_set[0].img_portfolio}></img>
+                    <img
+                      src={data && data.portfolio_set[0].img_portfolio}
+                    ></img>
                   </Item>
                 ) : existLogo === "null" ? (
                   <Item>
@@ -518,16 +522,17 @@ class ProposalCard extends React.Component {
                   </Item>
                 ) : (
                   <Item>
-                    <img src={data.logo} />
+                    <img src={data && data.logo} />
                   </Item>
                 )}
               </Header>
               <Main>
-                <Name>{data.name}</Name>
+                <Name>{data && data.name}</Name>
                 <InfoOne>
-                  {data.info_company.length > 70
-                    ? data.info_company.slice(0, 70) + "..."
-                    : data.info_company}
+                  {data &&
+                    (data.info_company.length > 70
+                      ? data.info_company.slice(0, 70) + "..."
+                      : data.info_company)}
                 </InfoOne>
               </Main>
             </Card>

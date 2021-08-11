@@ -13,8 +13,6 @@ import { inject, observer } from "mobx-react";
 import DetailContainer from "./Detail/index";
 import MobileRequest from "./MobileRequest";
 import MobileRequestDone from "./MobileRequestDone";
-import { DiagnosticCategory } from "typescript";
-
 // cookie 추가
 import Cookies from "js-cookie";
 
@@ -24,10 +22,11 @@ class ProducerConatiner extends React.Component {
   async componentDidMount() {
     let partner_view_data = [];
     const { Auth, Partner, Category, Cookie } = this.props;
-    Partner.init();
+
+
     Partner.newIndex = 0;
     Partner.mobileRequestIndex = 0;
-    await Auth.checkLogin();
+    Auth.checkLogin();
 
     // Cookie 값 가지고 와서 리스트에 먼저 저장
     partner_view_data = await Cookies.get("partner_view");
@@ -47,6 +46,7 @@ class ProducerConatiner extends React.Component {
 
   render() {
     const { Auth, Partner, Search } = this.props;
+
     return (
       <>
         {this.props.width &&

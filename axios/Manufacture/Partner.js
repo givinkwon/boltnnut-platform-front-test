@@ -530,10 +530,19 @@ export function getBusinessName(req) {
 
 // 이미지 검색
 export function imagesearch(req) {
-  console.log(req)
+  console.log(req);
   return axios({
     method: "POST",
     url: `${ROOT_URL}/portfolio/search_file/`,
     data: req.data,
+  });
+}
+
+// 검색어 로그 저장
+export function saveSearchText(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/searchtextlog/`,
+    data: req.data ? req.data : null,
   });
 }

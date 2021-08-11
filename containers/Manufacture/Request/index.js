@@ -18,8 +18,9 @@ class RequestContainer extends React.Component {
       <>
         <Background>
           <Containerv1 style={{ width: 792 }}>
-            {/* <RequestComplete /> */}
-            <RequestContent />
+            
+            {Request.newIndex == 0 && <RequestContent />}
+            {Request.newIndex == 1 && <RequestComplete />}
           </Containerv1>
         </Background>
       </>

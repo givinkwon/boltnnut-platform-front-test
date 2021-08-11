@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 import WritingContainer from "./Writing";
 import { toJS } from "mobx";
 import NoticeCard from "./Notice";
-import Partner from "../../../../stores/Manufacture/Partner";
+import Partner from "stores/Manufacture/Partner";
 import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 
 const rightAngleImg = "/static/images/producer/rightAngle.svg";

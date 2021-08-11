@@ -4,7 +4,6 @@ import Containerv1 from "../../components/Containerv1";
 import * as Title from "../../components/Title";
 import * as Text from "../../components/Text";
 import { inject, observer } from "mobx-react";
-import Fade from "react-reveal/Fade";
 import Background from "../../components/Background";
 
 // Images
@@ -23,7 +22,11 @@ class Banner4Container extends React.Component {
   };
 
   onClickStepBox = (idx) => {
-    this.setState({ stepBoxIndex: idx, stepImgIndex: idx, stepImgActive: true });
+    this.setState({
+      stepBoxIndex: idx,
+      stepImgIndex: idx,
+      stepImgActive: true,
+    });
   };
 
   onCompareStepBox = (idx) => {
@@ -46,40 +49,76 @@ class Banner4Container extends React.Component {
 
   render() {
     const stepBoxArray = [
-      { step: "Step1", title: "제조사 찾기", desc1: "한번의 검색으로 제품에 맞는", desc2: "카테고리의 제조사를 찾아보세요." },
-      { step: "Step2", title: "제조에 의뢰하기", desc1: "제조사를 비교하고 간단한 양식에", desc2: "맞춰 견적 요청서를 작성해 보세요." },
-      { step: "Step3", title: "제조사와 직접 채팅하기", desc1: "제조사에게 견적 요청서를 자세히", desc2: "상담받고 견적을 조율해 보세요." },
+      {
+        step: "Step1",
+        title: "제조사 찾기",
+        desc1: "한번의 검색으로 제품에 맞는",
+        desc2: "카테고리의 제조사를 찾아보세요.",
+      },
+      {
+        step: "Step2",
+        title: "제조사에 의뢰하기",
+        desc1: "제조사를 비교하고 간단한 양식에",
+        desc2: "맞춰 견적 요청서를 작성해 보세요.",
+      },
+      {
+        step: "Step3",
+        title: "제조사와 직접 채팅하기",
+        desc1: "제조사에게 견적 요청서를 자세히",
+        desc2: "상담받고 견적을 조율해 보세요.",
+      },
     ];
 
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <CustomContainer>
-          <Fade left>
-            <Containerv1 style={{ justifyContent: "center", flexDirection: "column" }}>
-              <InnerContainer>
-                <Title32>"저희 사무실 근처에 이런 제품 만드는 공장이 없나요?"</Title32>
-                <Title32>볼트앤너트 플랫폼에서 내 제품 분야에 꼭 맞는 업체를 찾아보세요.</Title32>
-              </InnerContainer>
+          <Containerv1
+            style={{ justifyContent: "center", flexDirection: "column" }}
+          >
+            <InnerContainer>
+              <Title32>
+                "저희 사무실 근처에 이런 제품 만드는 공장이 없나요?"
+              </Title32>
+              <Title32>
+                볼트앤너트 플랫폼에서 내 제품 분야에 꼭 맞는 업체를 찾아보세요.
+              </Title32>
+            </InnerContainer>
 
-              <StepContainer>
-                <img src={this.onChangeStepImage()} />
+            <StepContainer>
+              <img src={this.onChangeStepImage()} />
 
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                  {stepBoxArray.map((v, idx) => (
-                    <StepBox onClick={() => this.onClickStepBox(idx)} active={this.onCompareStepBox(idx)}>
-                      <Text13 active={this.onCompareStepBox(idx)}>{v.step}</Text13>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                {stepBoxArray.map((v, idx) => (
+                  <StepBox
+                    onClick={() => this.onClickStepBox(idx)}
+                    active={this.onCompareStepBox(idx)}
+                  >
+                    <Text13 active={this.onCompareStepBox(idx)}>
+                      {v.step}
+                    </Text13>
 
-                      <div style={{ display: "flex", flexDirection: "column", marginTop: "25px" }}>
-                        <Text22>{v.title}</Text22>
-                        <Text17>{v.desc1}</Text17>
-                        <Text17 style={{ marginTop: 0 }}>{v.desc2}</Text17>
-                      </div>
-                    </StepBox>
-                  ))}
-                </div>
-              </StepContainer>
-            </Containerv1>
-          </Fade>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginTop: "25px",
+                      }}
+                    >
+                      <Text22>{v.title}</Text22>
+                      <Text17>{v.desc1}</Text17>
+                      <Text17 style={{ marginTop: 0 }}>{v.desc2}</Text17>
+                    </div>
+                  </StepBox>
+                ))}
+              </div>
+            </StepContainer>
+          </Containerv1>
         </CustomContainer>
 
         <BackgroundLogo src={backgroundlogo} />
@@ -130,7 +169,8 @@ const StepBox = styled.div`
   margin-top: 17px;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow: ${(props) => (props.active ? "4px 5px 20px 0 rgba(0, 0, 0, 0.16)" : "none")};
+  box-shadow: ${(props) =>
+    props.active ? "4px 5px 20px 0 rgba(0, 0, 0, 0.16)" : "none"};
   background-color: ${(props) => (props.active ? "#ffffff" : "#eeeeee")};
 
   :hover {

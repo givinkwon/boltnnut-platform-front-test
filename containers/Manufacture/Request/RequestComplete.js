@@ -8,6 +8,13 @@ import Buttonv1 from "components/Buttonv1";
 const submitimg = "./static/images/request/submitimg.svg";
 
 class RequestComplete extends React.Component {
+  // 추가 견적 요청했을 때
+  additionalrequest = () => {
+    alert("해당 서비스는 준비중입니다. 추가 견적을 원하시면 고객센터로 연락해주세요")
+    Router.push("/")
+  }
+
+
   render() {
     return (
       <>
@@ -21,7 +28,7 @@ class RequestComplete extends React.Component {
             <span style={{ color: "#0933b3" }}>견적 요청이 완료</span>
             {/* 프로젝트 의뢰 & 맞춤형 문의 견적 요청 */}
             <span style={{ color: "#0933b3" }}>요청이 완료</span>
-            되었습니다. 되었습니다.
+            되었습니다.
           </Title>
           <span
             style={{
@@ -47,12 +54,12 @@ class RequestComplete extends React.Component {
           >
             * 카카오톡으로 제조사의 견적을 무료로 받아 볼 수 있습니다.
           </span>
-          <Button
+          <Button onClick={() => this.additionalrequest()}
             style={{ background: "#0933b3", marginTop: 12, marginBottom: 10 }}
           >
             확인
           </Button>
-          <Button style={{ marginBottom: 300 }}>이전 페이지로</Button>
+          <Button onClick={() => Router.push("/")} style={{ marginBottom: 300 }}>이전 페이지로</Button>
         </Content>
       </>
     );

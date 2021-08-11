@@ -1,6 +1,6 @@
 import React from "react";
 import { inject, observer } from "mobx-react";
-import Buttonv1 from "components/Buttonv1";
+
 import Button from "containers/Account/PartnerRegister/Button";
 import ButtonBox from "components/ButtonBox";
 import Containerv1 from "components/Containerv1";

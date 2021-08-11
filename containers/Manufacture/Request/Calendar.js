@@ -12,7 +12,7 @@ const calendar = "/static/images/request/calendar.svg";
 class Week extends Component {
   state = {
     now: moment(),
-    endDate: false,
+    selectedDay: null,
   };
   Days = (firstDayFormat) => {
     const { Schedule } = this.props;
@@ -33,11 +33,6 @@ class Week extends Component {
   };
   calendarOnOff = (e) => {
     const { Request, Schedule } = this.props;
-    if (Schedule.calendarOnOffV2 == true) {
-      Schedule.calendarOnOffV2 = false;
-    } else {
-      Schedule.calendarOnOffV2 = true;
-    }
     let day = e.currentTarget.innerHTML.replace(/[^0-9]/g, "");
     const dayValue = Schedule.nowMoment;
 
@@ -45,11 +40,28 @@ class Week extends Component {
     Schedule.setTodayDate(dayValue.date(day).format("YYYY-MM-DD "));
   };
 
-  activeHandler = () => {
-    if (this.state.endDate) {
-      this.state.endDate = false;
+  calendarHandler = () => {
+    const { Schedule } = this.props;
+    if (Schedule.calendarHandler) {
+      Schedule.calendarHandler = false;
+      console.log(Schedule.calendarHandler);
     } else {
-      this.state.endDate = true;
+      Schedule.calendarHandler = true;
+      console.log(Schedule.calendarHandler);
+    }
+  };
+  activeHandler = (currentDay) => {
+    // const { Schedule } = this.props;
+    // if (Schedule.todaycolor) {
+    //   Schedule.todaycolor = false;
+    // } else {
+    //   Schedule.todaycolor = true;
+    // }
+
+    if (this.props.Schedule.selectedDay === currentDay) {
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -97,7 +109,27 @@ class Week extends Component {
           </div>
         );
       } else {
-        return <div className={className}>{dayInfo.getDay}</div>;
+        return (
+          <DayBox
+            className={className}
+            // active={Schedule.todaycolor}
+            active={this.activeHandler(dayInfo.getDay)}
+            onClick={(e) => {
+              this.calendarOnOff(e);
+              // this.activeHandler();
+              // this.setState({ selectedDay: dayInfo.getDay });
+              Schedule.selectedDay = dayInfo.getDay;
+              this.setState({});
+              // console.log(this.props.Schedule.selectedDay);
+              console.log(dayInfo.getDay);
+            }}
+          >
+            {dayInfo.getDay}
+            {this.activeHandler(dayInfo.getDay) && (
+              <div style={{ fontSize: 12, fontWeight: 500 }}>종료일</div>
+            )}
+          </DayBox>
+        );
       }
     });
   };
@@ -168,6 +200,26 @@ class Calendar extends Component {
     console.log(Schedule.calendarOnOffV2);
   };
 
+  calendarHandler = () => {
+    const { Schedule } = this.props;
+    if (Schedule.calendarHandler) {
+      Schedule.calendarHandler = false;
+      console.log(Schedule.calendarHandler);
+    } else {
+      Schedule.calendarHandler = true;
+      console.log(Schedule.calendarHandler);
+    }
+  };
+
+  activeHandler = () => {
+    const { Schedule } = this.props;
+    if (Schedule.todaycolor) {
+      Schedule.todaycolor = false;
+    } else {
+      Schedule.todaycolor = true;
+    }
+  };
+
   // 날짜 입력
   Weeks = (monthYear) => {
     const firstDayOfMonth = moment(monthYear).startOf("month");
@@ -202,7 +254,10 @@ class Calendar extends Component {
           >
             <img
               src={calendar}
-              onClick={this.calendarOnOff}
+              onClick={() => {
+                this.calendarOnOff();
+                this.calendarHandler();
+              }}
               style={{ cursor: "pointer" }}
             />
             <span
@@ -212,7 +267,7 @@ class Calendar extends Component {
               }}
             >
               {Schedule.clickDay !== 0 ? (
-                <>{Schedule.clickDay}</>
+                <>~{Schedule.clickDay}</>
               ) : (
                 <>
                   <span
@@ -229,7 +284,7 @@ class Calendar extends Component {
               )}
             </span>
           </div>
-          {Schedule.calendarOnOffV2 == true && (
+          {Schedule.calendarHandler == true && (
             <MainContainer>
               {console.log(Schedule.calendarOnOffV2)}
               <div
@@ -251,7 +306,7 @@ class Calendar extends Component {
                     <img src={nextMonth} />
                   </div>
                 </Header>
-                <SubmitButton onClick={this.calendarOnOff}>
+                <SubmitButton onClick={this.calendarHandler}>
                   선택완료
                 </SubmitButton>
               </div>
@@ -280,6 +335,10 @@ class Calendar extends Component {
 
 export default Calendar;
 
+const DayBox = styled.div`
+  color: ${(props) => props.active && "#fff !important"};
+  background-color: ${(props) => props.active && "#0933b3 !important"};
+`;
 const MainContainer = styled.div`
   //display: ${(props) => (props.fileUpload ? "flex" : "none")};
   display: flex;
@@ -292,7 +351,7 @@ const MainContainer = styled.div`
   margin-top: 15px;
   background-color: white;
   position: absolute;
-  top: 22%;
+  top: 22.8%;
   z-index: 1;
 `;
 const Header = styled.div`
@@ -360,16 +419,15 @@ const CalendarContainer = styled.div`
     border-radius: 50px;
     margin-left: 25px;
     margin-top: 11px;
-    //border: solid 0.5px rgba(198,199,204,0.5);
-    //border-collapse: collapse;
     font-family: Roboto;
     font-size: 18px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     letter-spacing: -0.18px;
-    color: #282c36;
     cursor: pointer;
+    color: #282c36;
+
     > div {
       font-family: Roboto;
       line-height: 1.4;
@@ -378,7 +436,6 @@ const CalendarContainer = styled.div`
       font-stretch: normal;
       font-style: normal;
       letter-spacing: -0.12px;
-      color: #282c36;
     }
     :hover {
       //background-color: #e1e2e4;
@@ -393,6 +450,14 @@ const CalendarContainer = styled.div`
       background-color: #0933b3;
       color: white;
     }
+  }
+
+  .testClass {
+    // display: none;
+    // color: ${(props) => (props.active ? "#fff" : "#282c36")};
+    color: #fff;
+    background-color: #0933b3;
+    // background-color: ${(props) => (props.active ? "#0933b3" : "#fff")};
   }
   .date-sun {
     color: #c6c7cc;

@@ -68,7 +68,7 @@ class Auth {
 
   @observable accountTabIdx = 1;
   //개발중에 임시로 false로해둠
-  @observable signupBoxActive = false;
+  @observable signupBoxActive = true;
 
   @observable registerType = "";
   @observable registerPageIdx = 0;
@@ -96,7 +96,7 @@ class Auth {
       type: "manufacture",
       checked: false,
       id: 2,
-    },
+    },  
   ];
 
   @action isChecked = () => {
@@ -265,9 +265,10 @@ class Auth {
   };
 
   @action getBusinessData = () => {
-    CategoryAPI.getBusiness()
+    CategoryAPI.getBusiness_client()
       .then((res) => {
         this.business_data = res.data.results;
+        console.log(res.data.results)
       })
       .catch((e) => {
         console.log(e);

@@ -38,7 +38,7 @@ class Request {
   @observable request_file_secure = 0; // 의뢰 보안 state => 미선택 0, 도면 파일 공개 1, 미공개 2
   @observable request_drawing_set = []; // 의뢰 도면 파일
   @observable request_region = ""; // 의뢰 지역 선택
-  @observable request_region_state = false; // 의뢰 지역 협의 state => 체크 시에는 1, 미 체크 시에는 0
+  @observable request_region_state = 0; // 의뢰 지역 협의 state => 체크 시에는 1, 미 체크 시에는 0
 
   // 파트너 상세에서 의뢰서 클릭 한 경우에 id를 넘겨주는 것
   @action partner_request = (val) => {
@@ -93,11 +93,11 @@ class Request {
   @action set_contents = (val) => {
     Auth.checkLogin();
 
-    if (!Auth.logged_in_user) {
-      alert("로그인이 필요한 서비스입니다.");
-      Router.push("/login");
-      return;
-    }
+    // if (!Auth.logged_in_user) {
+    //   alert("로그인이 필요한 서비스입니다.");
+    //   Router.push("/login");
+    //   return;
+    // }
     this.request_contents = val;
     console.log(this.request_contents);
   };
@@ -151,6 +151,7 @@ class Request {
   // 지역 협의 상태 추가하기
   @action set_region_state = (val) => {
     this.request_region_state = val;
+    console.log(this.request_region_state);
   };
 
   // 의뢰서 제출 시 의뢰서 만들기
@@ -163,7 +164,7 @@ class Request {
       Signup.phone = this.phone;
       Signup.realName = "비회원의뢰";
       Signup.company_name = "비회원가입";
-      await Signup.signup("request");
+      Signup.signup("request");
     }
     // error 처리
     if (this.request_state == -1) {

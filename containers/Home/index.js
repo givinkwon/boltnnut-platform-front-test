@@ -11,7 +11,6 @@ import Banner5Container from "./Banner5";
 import Banner6Container from "./Banner6";
 
 // New
-import MobileModalContainer from "./Mobile/MobileModal";
 import MobileBanner0Container from "./Mobile/MobileBanner0";
 import MobileBanner1Container from "./Mobile/MobileBanner1";
 import MobileBanner2Container from "./Mobile/MobileBanner2";

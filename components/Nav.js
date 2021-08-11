@@ -172,7 +172,7 @@ class Nav extends React.Component {
                               }}
                             />
                           </li>
-                          <li>
+                          {/* <li>
                             <KSLink
                               step_index={0}
                               url={"project"}
@@ -180,7 +180,7 @@ class Nav extends React.Component {
                                 return <Font14>내 프로젝트</Font14>;
                               }}
                             />
-                          </li>
+                          </li> */}
                           <li>
                             <KSLink
                               url={"request"}
@@ -228,7 +228,7 @@ class Nav extends React.Component {
                               }}
                             />
                           </li>
-                          <li>
+                          {/* <li>
                             <KSLink
                               step_index={0}
                               url={"project"}
@@ -236,7 +236,7 @@ class Nav extends React.Component {
                                 return <Font14>내 프로젝트</Font14>;
                               }}
                             />
-                          </li>
+                          </li> */}
                         </SubMenu>
                       </NavLink>
                       <NavLink active={url.indexOf("magazine") > -1}>
@@ -282,7 +282,7 @@ class Nav extends React.Component {
                             }}
                           />
                         </li>
-                        <li>
+                        {/* <li>
                           <KSLink
                             step_index={0}
                             url={"project"}
@@ -290,7 +290,7 @@ class Nav extends React.Component {
                               return <Font14>내 프로젝트</Font14>;
                             }}
                           />
-                        </li>
+                        </li> */}
                         <li>
                           <KSLink
                             url={"request"}
@@ -344,14 +344,14 @@ class Nav extends React.Component {
                               width: "160px",
                             }}
                           >
-                            <li>
+                            {/* <li>
                               <KSLink
                                 url={"project"}
                                 FontContent={() => {
                                   return <Font14>내 프로젝트</Font14>;
                                 }}
                               />
-                            </li>
+                            </li> */}
                             <li>
                               <KSLink
                                 url={"bookmark"}
@@ -431,7 +431,7 @@ class Nav extends React.Component {
                         >
                           <RouterWrapper
                             onClick={() => {
-                              alert("준비 중인 서비스입니다!");
+                              alert("가입을 원하시는 분은 고객센터로 별도 문의주세요");
                             }}
                           >
                             <KSLink
@@ -463,14 +463,14 @@ class Nav extends React.Component {
                               width: "160px",
                             }}
                           >
-                            <li>
+                            {/* <li>
                               <KSLink
                                 url={"project"}
                                 FontContent={() => {
                                   return <Font14>내 프로젝트</Font14>;
                                 }}
                               />
-                            </li>
+                            </li> */}
                             <li>
                               <KSLink
                                 url={"Profile"}
@@ -574,7 +574,7 @@ class Nav extends React.Component {
                     >
                       <RouterWrapper
                         onClick={() => {
-                          alert("준비 중인 서비스입니다!");
+                          alert("준비 중 입니다. 가입을 원하시는 분은 고객센터로 문의해주세요");
                         }}
                       >
                         <KSLink

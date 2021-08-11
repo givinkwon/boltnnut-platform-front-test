@@ -2,7 +2,6 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
 import NoticeCard from "./Notice";
-import Partner from "../../../../stores/Manufacture/Partner";
 
 const checkImg = "/static/images/producer/check.svg";
 

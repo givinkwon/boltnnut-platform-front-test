@@ -3,7 +3,6 @@ import styled from "styled-components";
 import * as Title from "components/Title";
 import { inject, observer } from "mobx-react";
 import Containerv1 from "components/Containerv1";
-import Fade from "react-reveal/Fade";
 import Background from "components/Background";
 import ProposalCard from "../Manufacture/Producer/ProposalCard";
 import { toJS } from "mobx";
@@ -19,7 +18,7 @@ class NewBanner2Container extends React.Component {
 
     // 리스트 초기화 && 선택하기
     Category.reset();
-    Category.add_selected("category", 1);
+    Category.add_selected("category", 2);
   }
 
   onClickCategory = (idx) => {
@@ -58,44 +57,58 @@ class NewBanner2Container extends React.Component {
     const { Partner, Auth, Producer, Category } = this.props;
 
     return (
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "200px" }}>
-        <Fade right>
-          <Containerv1 style={{ justifyContent: " center", flexDirection: "column" }}>
-            <Header>
-              <b style={{ fontWeight: "bold" }}>5,660개</b>의 볼트앤너트의 업체 전문가들을 만나보세요.
-            </Header>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "200px",
+        }}
+      >
+        <Containerv1
+          style={{ justifyContent: " center", flexDirection: "column" }}
+        >
+          <Header>
+            <b style={{ fontWeight: "bold" }}>5,660개</b>의 볼트앤너트의 업체
+            전문가들을 만나보세요.
+          </Header>
 
-            <CategoryBox>
-              {nameTable.map((v, idx) => (
-                <CategoryTitle key={v.id} active={this.onCompareCategory(v.id)} onClick={() => this.onClickCategory(v.id)}>
-                  {v.name}
-                </CategoryTitle>
-              ))}
-            </CategoryBox>
+          <CategoryBox>
+            {nameTable.map((v, idx) => (
+              <CategoryTitle
+                key={v.id}
+                active={this.onCompareCategory(v.id)}
+                onClick={() => this.onClickCategory(v.id)}
+              >
+                {v.name}
+              </CategoryTitle>
+            ))}
+          </CategoryBox>
 
-            {Partner.partner_list &&
-              Partner.partner_list.map((item, idx) => {
-                return (
-                  <>
-                    {idx < 3 && (
-                      <Background style={{ marginBottom: "5px" }}>
-                        <div onClick={() => Partner.pushToDetail(item, idx)} style={{ width: "100%" }}>
-                          <ProposalCard
-                            data={item}
-                            width={this.props.width}
-                            categoryData={toJS(Partner.category_dic[idx])}
-                            idx={idx}
-                            handleIntersection={Producer.handleIntersection}
-                            customer="partner"
-                          />
-                        </div>
-                      </Background>
-                    )}
-                  </>
-                );
-              })}
-          </Containerv1>
-        </Fade>
+          {Partner.partner_list &&
+            Partner.partner_list.map((item, idx) => {
+              return (
+                <>
+                  {idx < 3 && (
+                    <Background style={{ marginBottom: "5px" }}>
+                      <div
+                        onClick={() => Partner.pushToDetail(item, idx)}
+                        style={{ width: "100%" }}
+                      >
+                        <ProposalCard
+                          data={item}
+                          width={this.props.width}
+                          categoryData={toJS(Partner.category_dic[idx])}
+                          idx={idx}
+                          handleIntersection={Producer.handleIntersection}
+                          customer="partner"
+                        />
+                      </div>
+                    </Background>
+                  )}
+                </>
+              );
+            })}
+        </Containerv1>
       </div>
     );
   }

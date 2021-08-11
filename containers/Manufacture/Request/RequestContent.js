@@ -159,7 +159,11 @@ class RequestContent extends Component {
       region_state: !this.state.region_state,
     });
     // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
-    Request.set_region_state(!this.state.region_state);
+    if (this.state.region_state == true) {
+      Request.set_region_state(0);
+    } else {
+      Request.set_region_state(1);
+    }
   };
 
   render() {
@@ -344,7 +348,7 @@ class RequestContent extends Component {
                       프로젝트 예산 조율이 가능합니다.
                     </span>
                   </CheckBoxComponent>
-                  {/* <BudgetHelp
+                  <BudgetHelp
                     active={this.state.budget}
                     onClick={() => {
                       this.activeHandler("budget");
@@ -363,8 +367,8 @@ class RequestContent extends Component {
                     >
                       예산 측정이 어려우신가요?
                     </span>
-                  </BudgetHelp> */}
-                  {/* <HelpBox
+                  </BudgetHelp>
+                  <HelpBox
                     style={{ display: this.state.budget ? "flex" : "none" }}
                   >
                     <CheckBoxComponent onChange={this.priceCheckBox}>
@@ -386,12 +390,14 @@ class RequestContent extends Component {
                         letterSpacing: -0.38,
                         color: "#505050",
                         marginLeft: 31,
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
                       프로젝트 예산 측정이 어렵다면, 볼트앤너트에서 유선으로
                       예산 책정을 도와드립니다.
                     </span>
-                  </HelpBox> */}
+                  </HelpBox>
                 </Budget>
               </RequestContentBox>
 
@@ -413,7 +419,7 @@ class RequestContent extends Component {
                     희망하는 프로젝트 진행 기간을 입력해주세요.
                   </span>
                   <Calendar />
-                  <CheckBoxComponent onChange={this.toggleCheckBox}>
+                  <CheckBoxComponent onChange={() => this.periodCheckBox()}>
                     <span
                       style={{
                         color: "#1e2222",
@@ -1822,7 +1828,7 @@ const BudgetHelp = styled.div`
   font-size: 15px;
   letter-spacing: -0.38px;
   color: #0933b3;
-  margin-top: 13px;
+  margin-top: 11px;
 `;
 
 const DateCheckbox = styled.div`
@@ -1893,4 +1899,12 @@ const ClientInfoBox = styled.div`
     width: 100%;
     margintop: 0px;
   }
+`;
+
+const HelpBox = styled.div`
+  margin-top: 11px;
+  flex-direction: column;
+  border-radius: 3px;
+  background-color: #edf4fe;
+  padding: 10px 33px;
 `;
