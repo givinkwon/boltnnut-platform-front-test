@@ -80,7 +80,7 @@ class Home extends React.Component {
           {Loading.is_open}
 
           <>
-            {width && width > 767.98 && <Nav />}
+            {width && width > 767.98 && <Nav width={width} />}
             {width && width < 768 && <MobileNav src={logo_ic} width={width} />}
           </>
           <>
