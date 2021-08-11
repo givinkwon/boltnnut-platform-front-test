@@ -392,6 +392,7 @@ class Partner {
     this.subButtonActive
       ? this.getOtherPartner(newPage)
       : this.getPartner(newPage, this.click_count);
+    window.scrollTo(0, 0);
   };
 
   @action pageNext = (e) => {
@@ -427,6 +428,7 @@ class Partner {
       this.subButtonActive
         ? this.getOtherPartner(this.currentPage)
         : this.getPartner(this.currentPage, this.click_count);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -1015,9 +1017,9 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    
+
     // 검색 시 텍스트 저장
-    this.saveSearchText(this.search_text)
+    this.saveSearchText(this.search_text);
   };
 
   @action saveSearchText = (text) => {
@@ -1041,7 +1043,6 @@ class Partner {
         console.log(e.response);
       });
   };
-
 
   // 이미지 모달을 위한 state
   @observable image_modal_state = false;
@@ -1744,13 +1745,12 @@ class Partner {
   };
 
   @action getPartner = async (page = 1, pre_page = "Producer") => {
-
     // 전 페이지가 메인페이지면 필터 중복을 제외하기 위하여 reset
-    if (pre_page == "Home"){
-      await Category.reset()
+    if (pre_page == "Home") {
+      await Category.reset();
     }
     // 초기화
-    this.partner_count = ""
+    this.partner_count = "";
     this.partner_list = [];
     this.category_ary = [];
     // data 저장용

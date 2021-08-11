@@ -291,17 +291,7 @@ class SearchFilterConatiner extends React.Component {
             </Field>
           </Category>
           <Category>
-            <div
-              style={{
-                fontSize: "15px",
-                lineHeight: 2.27,
-                letterSpacing: "-0.38px",
-                textAlign: "center",
-                color: "#555963",
-              }}
-            >
-              공정/소재
-            </div>
+            <ProcessMaterialBox>공정/소재</ProcessMaterialBox>
             <Material>
               <div
                 style={{ cursor: "pointer" }}
@@ -403,9 +393,6 @@ const CategoryName = styled.div`
   letter-spacing: -0.38px;
   text-align: left;
   color: #555963;
-
-
-}
 `;
 
 const Field = styled.div`
@@ -416,7 +403,8 @@ const Field = styled.div`
   align-items: center;
   background: none;
   border-radius: 3px;
-  border: solid 1px #c6c7cc;
+  border: ${(props) =>
+    props.active ? "solid 1px #0933b3" : "solid 1px #c6c7cc"};
   div {
     margin-left: 16px;
     line-height: 2.27;
@@ -454,6 +442,15 @@ const ContainerV2 = styled.div`
     justify-content: center;
   }
 `;
+
+const ProcessMaterialBox = styled.div`
+  font-size: 15px;
+  line-height: 2.27;
+  letter-spacing: -0.38px;
+  text-align: center;
+  color: #555963;
+`;
+
 const Search = styled.div`
   display: flex;
   align-items: center;

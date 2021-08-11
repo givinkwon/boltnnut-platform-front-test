@@ -1112,6 +1112,7 @@ const Item = styled.div`
     // width: 100%;
     // display: inline-block;
     // position: relative;
+    border: solid 1px #eeeeee;
     border-radius: 10px;
     overflow: hidden;
     cursor: pointer;

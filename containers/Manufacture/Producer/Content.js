@@ -57,7 +57,7 @@ class ManufacturerContentContainer extends React.Component {
     if (Partner.filter_city_ary.length === 1) {
       Partner.getCity();
     }
-    
+
     console.log(this.props.Auth.logged_in_user);
 
     Partner.partner_list.map((item, idx) => {
@@ -392,7 +392,11 @@ class ManufacturerContentContainer extends React.Component {
                   </RecentPartner>
                   <MyInfo>
                     <header>
-                      <img src="/static/icon/login_img.svg"></img>
+                      <img
+                        src="/static/icon/login_img.svg"
+                        onClick={() => Router.push("/bookmark")}
+                        style={{ cursor: "pointer" }}
+                      />
                       {Auth.logged_in_user ? (
                         <div>{Auth.logged_in_user.username.split("@")[0]}</div>
                       ) : (

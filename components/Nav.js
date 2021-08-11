@@ -610,6 +610,7 @@ class Nav extends React.Component {
                             return <Font14>회원가입</Font14>;
                           }}
                         />
+
                         {Auth.signupBoxActive && (
                           <AnimationBox
                             onClick={() => {
@@ -751,6 +752,7 @@ const Font14 = styled(Content.FontSize14)`
 const RouterWrapper = styled.div`
   /* border: 1px solid black; //지우기 */
   /* padding: 20px 40px; */
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
