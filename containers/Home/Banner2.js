@@ -68,7 +68,7 @@ class NewBanner2Container extends React.Component {
           style={{ justifyContent: " center", flexDirection: "column" }}
         >
           <Header>
-            <b style={{ fontWeight: "bold" }}>5,660개</b>의 볼트앤너트의 업체
+            <b style={{ fontWeight: "bold" }}>7071개</b>의 볼트앤너트의 업체
             전문가들을 만나보세요.
           </Header>
 
