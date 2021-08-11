@@ -51,13 +51,13 @@ class Banner4Container extends React.Component {
     const stepBoxArray = [
       {
         step: "Step1",
-        title: "제조사 찾기",
+        title: "제조사 찾기",
         desc1: "한번의 검색으로 제품에 맞는",
         desc2: "카테고리의 제조사를 찾아보세요.",
       },
       {
         step: "Step2",
-        title: "제조사에 의뢰하기",
+        title: "제조사에 의뢰하기",
         desc1: "제조사를 비교하고 간단한 양식에",
         desc2: "맞춰 견적 요청서를 작성해 보세요.",
       },
