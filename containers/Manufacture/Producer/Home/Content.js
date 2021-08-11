@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import Router from "next/router";
-import Slider from "react-slick";
 import { inject, observer } from "mobx-react";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 
@@ -10,13 +9,10 @@ import * as Content from "components/Content";
 
 import Container from "components/Containerv1";
 import Background from "components/Background";
-import ProposalCard from "./ProposalCard";
+import ProposalCard from "./PartnerCard";
 
-import RadioBox from "./RadioBox";
 import { toJS } from "mobx";
-import SearchBar from "./SearchBar";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
-import List from "material-ui/List";
 import Cookies from "js-cookie";
 
 const deleteButtonImg = "/static/images/delete.png";
@@ -902,6 +898,7 @@ const RequestBtn = styled.button`
   font-size: 15px;
   letter-spacing: -0.38px;
   color: #0933b3;
+  cursor: pointer;
 }
 `;
 

@@ -3,19 +3,11 @@ import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 import SelectComponent from "Select";
 import MobileSelectComponent from "MobileSelect";
-import FilterBoxSearchBar from "./FilterBoxSearchBar";
+import FilterBoxSearchBar from "./Home/SearchBar";
 import ButtonComponent from "components/Buttonv2";
-import SearchBar from "./SearchBar";
-import FilterBox from "./FilterBox";
-import FilterBox2 from "./FilterBox2";
-import Background from "components/Background";
-import Container from "components/Containerv1";
+
 import Modal from "./RequestModal";
 import DoneModal from "./RequestDoneModal";
-import Router from "next/router";
-import RadioBox from "./RadioBox";
-import { toJS } from "mobx";
-import { PRIMARY2 } from "static/style";
 import FilterModalContainer from "./FilterModal";
 const filter_img = "static/images/filter.svg";
 

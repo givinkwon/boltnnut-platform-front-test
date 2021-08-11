@@ -5,14 +5,11 @@ import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import Modal from "./Modal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
-import ReviewContainer from "./Review/ReviewContainer";
+import ReviewContainer from "../Review/ReviewContainer";
 import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
 
-const message_img = "static/images/manufacturer/message.png";
-const call_img = "static/images/manufacturer/call.png";
-const file_img = "static/images/file.png";
-const file_img2 = "static/images/manufacturer/file.png";
+
 const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/images/viewcount.svg";
 const bookmarkcount = "static/icon/bookmarkcount.svg";
@@ -20,7 +17,6 @@ const bookmarkImg = "/static/icon/bookmark_empty.svg";
 const bookmarkBlueImg = "/static/icon/bookmark_blue.svg";
 const location = "static/icon/location.svg";
 import Slider from "react-slick";
-import { EqualStencilFunc } from "three";
 
 var availableFileType = [
   "png",
@@ -40,7 +36,7 @@ var availableFileType = [
 ];
 @inject("Partner", "Auth", "Common", "Producer")
 @observer
-class ProposalCard extends React.Component {
+class PartnerCard extends React.Component {
   state = {
     width: null,
     introduction: false,
@@ -555,7 +551,7 @@ class ProposalCard extends React.Component {
   }
 }
 
-export default ProposalCard;
+export default PartnerCard;
 
 const Card = styled.div`
   width: 100%;

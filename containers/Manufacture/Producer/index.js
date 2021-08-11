@@ -1,11 +1,10 @@
 import React from "react";
 
-import BannerConatiner from "./Banner";
-import SearchBar from "./SearchBar";
-import SearchFilterBox from "./SearchFilterBox";
+import BannerConatiner from "./Home/Banner";
+import SearchFilterBox from "./Home/SearchFilterBox";
 import MobileSearchFilterBox from "./MobileSearchFilterBox";
 
-import ContentContainer from "./Content";
+import ContentContainer from "./Home/Content";
 import MobileContentContainer from "./MobileContent";
 import Container from "components/Containerv1";
 import Background from "components/Background";
