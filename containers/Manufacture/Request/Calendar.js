@@ -51,13 +51,6 @@ class Week extends Component {
     }
   };
   activeHandler = (currentDay) => {
-    // const { Schedule } = this.props;
-    // if (Schedule.todaycolor) {
-    //   Schedule.todaycolor = false;
-    // } else {
-    //   Schedule.todaycolor = true;
-    // }
-
     if (this.props.Schedule.selectedDay === currentDay) {
       return true;
     } else {
@@ -112,12 +105,9 @@ class Week extends Component {
         return (
           <DayBox
             className={className}
-            // active={Schedule.todaycolor}
             active={this.activeHandler(dayInfo.getDay)}
             onClick={(e) => {
               this.calendarOnOff(e);
-              // this.activeHandler();
-              // this.setState({ selectedDay: dayInfo.getDay });
               Schedule.selectedDay = dayInfo.getDay;
               this.setState({});
               // console.log(this.props.Schedule.selectedDay);

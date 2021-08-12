@@ -74,7 +74,7 @@ class SubBoxContainer extends React.Component {
                       categoryData={toJS(Partner.category_dic[idx])}
                       handleIntersection={Search.handleIntersection}
                       customer="partner"
-                    />
+                    />{" "}
                   </div>
                 </Background>
               );
