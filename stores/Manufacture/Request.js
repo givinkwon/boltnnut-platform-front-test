@@ -260,7 +260,7 @@ class Request {
     // 로그인 토큰 받아 user 데이터 받기
     // 비로그인시
     if (!Auth.logged_in_user) {
-      const Token = "b2ad465ffc84bdc7e91d1b2752683dc4227ba892";
+      const Token = "60fff081a86bc9084bf8f3916f68ff34a762a0f4";
       console.log(Token);
 
       // axois 쏘기
