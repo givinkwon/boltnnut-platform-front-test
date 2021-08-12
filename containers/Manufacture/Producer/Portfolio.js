@@ -8,18 +8,6 @@ import * as Text from "components/Text";
 import { GRAY, DARKGRAY, PRIMARY, WHITE } from "static/style";
 import { toJS } from "mobx";
 
-const rowline = "/static/images/components/Footer/rowline.svg";
-const facebook_mob = "/static/images/components/Footer/facebook.svg";
-const instargram_mob = "/static/images/components/Footer/instargram.svg";
-const blog_mob = "/static/images/components/Footer/blog.svg";
-const post_mob = "/static/images/components/Footer/post.svg";
-const facebook = "/static/images/components/Footer/facebook_big.svg";
-const instargram = "/static/images/components/Footer/instargram_big.svg";
-const camera_img = "/static/images/camera_img.png";
-const banner1_img = "/static/images/Home/Banner1/Banner1_img.png";
-const banner_dot_img = "/static/images/Home/Banner12/Banner12_img1.png";
-const banner9_img = "/static/images/Home/Banner9/Banner9_img1.png";
-
 @inject("Partner", "Auth", "Answer", "Producer")
 @observer
 class PortfolioConatiner extends React.Component {

@@ -9,14 +9,14 @@ import * as Content from "components/Content";
 
 import Container from "components/Containerv1";
 import Background from "components/Background";
-import ProposalCard from "./ProposalCard";
+import ProposalCard from "containers/Manufacture/Producer/Home/PartnerCard";
 
 import ButtonSpinnerComponent from "components/ButtonSpinner";
 
 import { toJS } from "mobx";
 
-import Modal from "./RequestModal";
-import MobileWarningModalContainer from "../../../components/MobileWarningModal";
+import Modal from "../RequestModal";
+import MobileWarningModalContainer from "components/MobileWarningModal";
 
 const pass1 = "static/images/pass1.png";
 const pass2 = "static/images/pass2.png";

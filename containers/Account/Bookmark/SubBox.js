@@ -7,7 +7,7 @@ import Router from "next/router";
 import Background from "components/Background";
 import Container from "components/Containerv1";
 
-import ProposalCard from "containers/Manufacture/Producer/ProposalCard";
+// import ProposalCard from "containers/Manufacture/Producer/ProducerDetail/ProposalCard";
 
 const userImg = "/static/images/producer/user.svg";
 
@@ -58,20 +58,23 @@ class SubBoxContainer extends React.Component {
                     onClick={async () => {
                       console.log(Auth);
                       if (Auth.logged_in_client) {
-                        await Project.getProject("myproject", Auth.logged_in_client.id);
+                        await Project.getProject(
+                          "myproject",
+                          Auth.logged_in_client.id
+                        );
                       }
                       Partner.pushToDetail(item, idx);
                     }}
                     style={{ width: "100%" }}
                   >
-                    <ProposalCard
+                    {/* <ProposalCard
                       data={item.bookmark_partner}
                       width={this.props.width}
                       idx={idx}
                       categoryData={toJS(Partner.category_dic[idx])}
                       handleIntersection={Producer.handleIntersection}
                       customer="partner"
-                    />
+                    /> */}
                   </div>
                 </Background>
               );

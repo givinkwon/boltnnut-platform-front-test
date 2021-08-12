@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { toJS } from "mobx";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
-import Modal from "./Modal";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
 import ReviewContainer from "../Review/ReviewContainer";
 import * as AccountAPI from "axios/Account/Account";

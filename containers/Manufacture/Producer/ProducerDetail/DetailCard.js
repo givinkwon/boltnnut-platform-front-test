@@ -156,14 +156,13 @@ class DetailCardContainer extends React.Component {
 
     this.setState((state) => {
       const { Partner } = this.props;
-
       if (Partner.partner_detail_list[0].item.file !== null) {
         return {
           // portfoliLocation: document
           //   .getElementById("portfolio")
           //   .getBoundingClientRect().top,
           portfoliLocation: portfolioPosY,
-          introductionLocation: introductionPosY,
+          // introductionLocation: introductionPosY,
           reviewLocation: reviewPosY,
           mapLocation: mapsPosY,
         };
