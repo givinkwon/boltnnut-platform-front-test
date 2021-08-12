@@ -254,20 +254,20 @@ class Request {
       // 예외 처리
       if (!this.email) {
         await alert("이메일을 입력해주세요.");
-        return;
+        return false;
       }
       var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
       if (!emailValid.test(this.email)) {
         await alert("이메일 형식을 확인해주세요.");
-        return;
+        return false;
       }
       if (!this.password) {
         await alert("비밀번호를 입력해주세요.");
-        return;
+        return false;
       }
       if (!this.phone) {
         await alert("휴대전화를 입력해주세요.");
-        return;
+        return false;
       }
       
       formData.append("email", this.email)
