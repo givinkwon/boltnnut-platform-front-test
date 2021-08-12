@@ -7,7 +7,7 @@ import Router from "next/router";
 import Background from "components/Background";
 import Container from "components/Containerv1";
 
-// import ProposalCard from "containers/Manufacture/Producer/ProducerDetail/ProposalCard";
+import PartnerCard from "containers/Manufacture/Producer/Home/PartnerCard";
 
 const userImg = "/static/images/producer/user.svg";
 
@@ -67,14 +67,14 @@ class SubBoxContainer extends React.Component {
                     }}
                     style={{ width: "100%" }}
                   >
-                    {/* <ProposalCard
+                    <PartnerCard
                       data={item.bookmark_partner}
                       width={this.props.width}
                       idx={idx}
                       categoryData={toJS(Partner.category_dic[idx])}
                       handleIntersection={Producer.handleIntersection}
                       customer="partner"
-                    /> */}
+                    />{" "}
                   </div>
                 </Background>
               );
