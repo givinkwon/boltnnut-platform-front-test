@@ -23,7 +23,6 @@ class Schedule {
   @observable active1 = null;
   @observable isOnline = null;
   @observable calendarHandler = false;
-  @observable todaycolor = false;
   @observable selectedDay = null;
 
   @action dayPickerActiveHandler = (val) => {

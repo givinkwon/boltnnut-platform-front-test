@@ -58,7 +58,10 @@ class SubBoxContainer extends React.Component {
                     onClick={async () => {
                       console.log(Auth);
                       if (Auth.logged_in_client) {
-                        await Project.getProject("myproject", Auth.logged_in_client.id);
+                        await Project.getProject(
+                          "myproject",
+                          Auth.logged_in_client.id
+                        );
                       }
                       Partner.pushToDetail(item, idx);
                     }}
@@ -71,7 +74,7 @@ class SubBoxContainer extends React.Component {
                       categoryData={toJS(Partner.category_dic[idx])}
                       handleIntersection={Producer.handleIntersection}
                       customer="partner"
-                    />
+                    />{" "}
                   </div>
                 </Background>
               );
