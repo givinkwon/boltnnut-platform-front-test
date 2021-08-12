@@ -2224,7 +2224,7 @@ class Partner {
         page: page,
       },
     };
-
+    
     await PartnerAPI.getReviewByPartner(req)
       .then(async (res) => {
         if (page_nation == 1) {

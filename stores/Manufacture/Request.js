@@ -251,6 +251,29 @@ class Request {
     // 비로그인 시
     // 아이디 로그인 없이 의뢰서 만들 때 => 해당 정보로 회원가입
     if (!Auth.logged_in_user) {
+      // 예외 처리
+      if (!this.email) {
+        await alert("이메일을 입력해주세요.");
+        return;
+      }
+      var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+      if (!emailValid.test(this.email)) {
+        await alert("이메일 형식을 확인해주세요.");
+        return;
+      }
+      if (!this.password) {
+        await alert("비밀번호를 입력해주세요.");
+        return;
+      }
+      if (this.password != this.password2) {
+        await alert("비밀번호가 일치하지 않습니다.");
+        return;
+      }
+      if (!this.phone) {
+        await alert("휴대전화를 입력해주세요.");
+        return;
+      }
+      
       formData.append("email", this.email)
       formData.append("password", this.password)
       formData.append("phone", this.phone)

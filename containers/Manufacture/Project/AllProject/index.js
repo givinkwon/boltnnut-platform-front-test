@@ -7,7 +7,7 @@ import * as Title from "components/Title";
 import * as Content from "components/Content";
 
 import Container from "components/Containerv1";
-import ProposalCard from "components/ProposalCard";
+import ProjectCard from "./ProjectCard";
 import Background from "components/Background";
 import SearchBar from "./SearchBar";
 import { toJS } from "mobx";
@@ -87,7 +87,7 @@ class AllProject extends React.Component {
                                 style={{ cursor: "pointer", width: "100%" }}
                                 onClick={() => Project.pushToDetail(item.id)}
                               >
-                                <ProposalCard
+                                <ProjectCard
                                   data={item}
                                   handleIntersection={this.handleIntersection}
                                   customer="partner"

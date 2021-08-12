@@ -9,7 +9,7 @@ import * as Content from "components/Content";
 
 import Container from "components/Containerv1";
 import Background from "components/Background";
-import ProposalCard from "./PartnerCard";
+import PartnerCard from "./PartnerCard";
 
 import { toJS } from "mobx";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
@@ -267,7 +267,7 @@ class ManufacturerContentContainer extends React.Component {
                             }}
                             style={{ width: "100%" }}
                           >
-                            <ProposalCard
+                            <PartnerCard
                               data={item}
                               width={this.props.width}
                               categoryData={toJS(Partner.category_dic[idx])}

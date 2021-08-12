@@ -4,9 +4,9 @@ import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";
 import { toJS } from "mobx";
 
-import SearchProjectModal from "../Modal/SearchProjectModal";
-import SearchPartnerModal from "../Modal/SearchPartnerModal";
-import QuestionContainer from "../Modal/QuestionBox";
+import SearchProjectModal from "./Modal/SearchProjectModal";
+import SearchPartnerModal from "./Modal/SearchPartnerModal";
+import QuestionContainer from "./Modal/QuestionBox";
 
 const checkImg = "/static/images/pass8.png";
 const star = "/static/icon/star_blue3.svg";

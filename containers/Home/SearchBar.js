@@ -2,10 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
 
-import * as Title from "components/Title";
 import Router from "next/router";
-
-import ImageFile from "./ImageFile";
 
 @inject("Auth", "Project", "Request", "Partner", "Search", "Category")
 @observer
@@ -17,8 +14,6 @@ class SearchBarConatiner extends React.Component {
     suggsKeywords: "",
     suggs: [],
     showSuggs: false,
-    searchbaractive: false,
-    imgsearchhover: false,
   };
 
   // 검색함수
@@ -26,7 +21,6 @@ class SearchBarConatiner extends React.Component {
     const { Partner, Category } = this.props;
 
     await Router.push("/search");
-    // console.log("click");
 
     Partner.loadingFlag = true;
     setTimeout(() => {
@@ -36,9 +30,6 @@ class SearchBarConatiner extends React.Component {
     Partner.currentPage = 1;
     Partner.click_count += 1;
 
-    // 버튼 활성화 하기 위해 state true
-    Partner.subButtonActive = true;
-
     await Partner.search();
 
     // 검색어 로그에 저장하기 위한 함수
@@ -47,7 +38,9 @@ class SearchBarConatiner extends React.Component {
     } else {
       Partner.isSearched = false;
     }
+
     if (Partner.search_text != "") {
+      Partner.subButtonActive = true;
     }
   };
 
@@ -73,22 +66,7 @@ class SearchBarConatiner extends React.Component {
   handleSearcherInputChange(event) {
     const { Partner } = this.props;
     Partner.search_text = event.target.value;
-    console.log(event.target.value);
   }
-
-  // 이미지 버큰 호버 시 문구 안내 핸들러 함수
-  imageSearchHandler = () => {
-    if (!this.state.imgsearchhover) {
-      this.setState({ ...this.state, imgsearchhover: true });
-    } else {
-      this.setState({ ...this.state, imgsearchhover: false });
-    }
-  };
-
-  imageModal = () => {
-    const { Partner } = this.props;
-    Partner.image_modal_state = !Partner.image_modal_state;
-  };
 
   render() {
     const { Partner, Request } = this.props;
@@ -97,17 +75,9 @@ class SearchBarConatiner extends React.Component {
       <>
         <Form active={Partner.subButtonActive}>
           <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "95%",
-              alignItems: "center",
-            }}
+            style={{ width: "100%", display: "flex", flexDirection: "column" }}
           >
-            <SearchBar
-              active={Partner.subButtonActive}
-              style={{ position: "relative" }}
-            >
+            <SearchBar active={Partner.subButtonActive}>
               <input
                 placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요."
                 onFocus={(e) => (e.target.placeholder = "")}
@@ -120,24 +90,16 @@ class SearchBarConatiner extends React.Component {
                 class="Input"
                 onKeyPress={this.handleKeyDown}
               />
-
-              <ImgContainer
-                onMouseEnter={() => this.imageSearchHandler()}
-                onMouseLeave={() => this.imageSearchHandler()}
-              >
-                <HoverBox
-                  active={this.state.imgsearchhover}
-                  className="hoverBox"
-                >
-                  <Title13>제품 이미지로 검색하기</Title13>
-                </HoverBox>
-
-                <ImageFile file={true} isOpen={true} />
-              </ImgContainer>
-
-              <ImgContainer>
-                <img src="/static/icon/search_blue.svg" onClick={this.search} />
-              </ImgContainer>
+              <img
+                style={{
+                  width: 24,
+                  height: 24,
+                  marginRight: 25,
+                  cursor: "pointer",
+                }}
+                src="/static/icon/search_blue.svg"
+                onClick={this.search}
+              />
             </SearchBar>
           </div>
         </Form>
@@ -147,48 +109,6 @@ class SearchBarConatiner extends React.Component {
 }
 
 export default SearchBarConatiner;
-
-const ImgContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 50px;
-  height: 50px;
-  border-radius: 20px;
-
-  :hover {
-    background-color: #eeeeee;
-  }
-`;
-
-const HoverBox = styled.div`
-  display: ${(props) => (props.active ? "flex" : "none")};
-  justify-content: center;
-  align-items: center;
-  width: 190px;
-  border-radius: 75px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  background-color: #ffffff;
-
-  position: absolute;
-  bottom: 90%;
-  left: 75%;
-`;
-
-const Title13 = styled(Title.FontSize13)`
-  font-weight: normal;
-  font-stretch: normal;
-  line-height: 4;
-  letter-spacing: -0.33px;
-  color: #0933b3;
-`;
-
-const ImgBox = styled.img`
-  width: 32px;
-  height: 32px;
-`;
-
 const CustomUl = styled.ul`
   width: 588px;
   height: 150px;
@@ -202,12 +122,11 @@ const CustomLiBox = styled.div`
   flex-direction: column;
   width: 588px;
   height: 160px;
-  overflow: scroll;
+  overflow-y: scroll;
   background-color: #ffffff;
-
   > li {
     cursor: pointer;
-    margin: 20px 10px 0px 10px;
+    margin-top: 20px;
     font-size: 18px;
 
     :hover {
@@ -228,76 +147,61 @@ const SearchBar = styled.div`
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
+  border: solid 0.5px #0933b3;
   border-radius: 60px;
   box-shadow: 4px 5px 12px 0 rgba(146, 146, 146, 0.2);
-  border: solid 0.5px #e1e2e4;
-  width: 100%;
-  padding-right: 20px;
 
   input {
-    width: 640px;
+    width: 100%;
     height: 59px;
     border: none;
     border-radius: 60px;
     padding: 0 14px;
     margin-left: 10px;
-    font-size: 18px;
     :focus {
       outline: none;
     }
     ::placeholder {
-      color: #c6c7cc;
-      font-size: 18px;
+      #c6c7cc
     }
-  }
-  img {
-    width: 24px;
-    height: 24px;
-
-    marginright: 25px;
-    cursor: pointer;
   }
   @media (min-width: 0px) and (max-width: 767.98px) {
+    // margin-top: 30px;
+    flex-direction: column;
     input {
-      width: 80%;
-      height: 30px;
-      // border: none;
-      // border-radiusf: 60px;
-      padding: 0 7px;
-      margin-left: 5px;
       font-size: 12px;
-
-      ::placeholder {
-        font-size: 12px;
-      }
-    }
-    img {
-      width: 16px;
-      height: 16px;
+      width: 100%;
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
     // margin-top: 30px;
-    width: 700px;
-    // input {
-    //   font-size: 16px;
-    //   ::placeholder {
-    //     font-size: 13px;
-    //   }
-    // }
+    width: ${(props) => (props.active ? "330px" : "100%")};
+    input {
+      font-size: 16px;
+      ::placeholder {
+        font-size: 13px;
+      }
+    }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 792px;
-    // input {
-    //   font-size: 17px;
-    //   ::placeholder {
-    //     font-size: 15px;
-    //   }
-    // }
+    // margin-top: 40px;
+    width: ${(props) => (props.active ? "410px" : "100%")};
+    input {
+      font-size: 17px;
+      ::placeholder {
+        font-size: 15px;
+      }
+    }
   }
   @media (min-width: 1300px) {
-    width: 792px;
+    // width: ${(props) => (props.active ? "501px" : "100%")};
+    transition: 3s;
+    width: 100%;
+    input {
+      font-size: 18px;
+    }
   }
+  
 
   .searcher-suggs-word {
     height: 40px;
@@ -319,14 +223,16 @@ const SearchBar = styled.div`
   }
 
   .searcher-suggs-word.selected {
-    background-color: #0288d1;
+    background-color: #0288D1;
     color: white;
   }
+  
 `;
 
 const Form = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 588px;
   height: 44px;
 
   @media (min-width: 768px) and (max-width: 991.98px) {

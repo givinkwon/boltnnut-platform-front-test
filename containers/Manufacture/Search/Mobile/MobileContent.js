@@ -15,7 +15,6 @@ import ButtonSpinnerComponent from "components/ButtonSpinner";
 
 import { toJS } from "mobx";
 
-import Modal from "../RequestModal";
 import MobileWarningModalContainer from "components/MobileWarningModal";
 
 const pass1 = "static/images/pass1.png";

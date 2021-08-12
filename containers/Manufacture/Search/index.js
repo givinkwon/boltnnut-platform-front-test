@@ -10,8 +10,7 @@ import Container from "components/Containerv1";
 import Background from "components/Background";
 import { inject, observer } from "mobx-react";
 import DetailContainer from "./Detail/index";
-import MobileRequest from "./Mobile/MobileRequest";
-import MobileRequestDone from "./Mobile/MobileRequestDone";
+
 // cookie 추가
 import Cookies from "js-cookie";
 
@@ -76,14 +75,7 @@ class SearchConatiner extends React.Component {
                   <MobileContentContainer width={this.props.width} />
                 </>
               )}
-              {/* 제조사 찾기 모바일 버전 업체 수배 화면 */}
-              {Partner.mobileRequestIndex == 1 && (
-                <MobileRequest width={this.props.width} />
-              )}
-              {/* 제조사 찾기 모바일 버전 업체 수배 완료 화면 */}
-              {Partner.mobileRequestIndex == 2 && (
-                <MobileRequestDone width={this.props.width} />
-              )}
+
             </>
           ))}
       </>

@@ -1,14 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import SelectComponent from "Select";
 import MobileSelectComponent from "../Mobile/MobileSelect";
 
 import ButtonComponent from "components/Buttonv2";
 import FilterBoxSearchBar from "./SearchBar";
-import Modal from "../RequestModal";
-import DoneModal from "../RequestDoneModal";
-import FilterModalContainer from "../FilterModal";
+import FilterModalContainer from "./FilterModal";
 const filter_img = "static/images/filter.svg";
 const down_arrow = "/static/icon/down_arrow.svg";
 const up_arrow = "/static/icon/up_arrow.svg";
@@ -311,28 +308,6 @@ class SearchFilterConatiner extends React.Component {
           <FilterModalContainer type={this.state.type}></FilterModalContainer>
         )}
 
-        {Partner.requestModalActive && (
-          <Layer>
-            <span>
-              <Modal
-                width={width}
-                open={Partner.requestModalActive}
-                close={Partner.closeModal}
-              ></Modal>
-            </span>
-          </Layer>
-        )}
-        {Partner.requestDoneModalActive && (
-          <Layer>
-            <span>
-              <DoneModal
-                width={width}
-                open={Partner.requestDoneModalActive}
-                close={Partner.closeModal}
-              />
-            </span>
-          </Layer>
-        )}
       </ContainerV2>
     );
   }
@@ -930,34 +905,6 @@ const MobileSelect = styled(MobileSelectComponent)`
   }
 `;
 
-const Select = styled(SelectComponent)`
-  width: 220px;
-  box-sizing: border-box;
-
-  option {
-    color: #c1bfbf;
-  }
-
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    margin: 0;
-    padding: 0;
-    margin-right: 8px;
-    width: 100%;
-    height: 32px;
-    object-fit: contain;
-    border-radius: 2px;
-    border: solid 0.5px #c7c7c7;
-    background-color: #ffffff;
-    position: relative;
-  }
-
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    width: 120px;
-  }
-  @media (min-width: 992px) and (max-width: 1299.98px) {
-    width: 140px;
-  }
-`;
 
 const Box = styled.div`
   width: 220px;

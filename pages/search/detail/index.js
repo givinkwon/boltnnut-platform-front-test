@@ -8,7 +8,7 @@ import Footer from "components/Footer";
 
 import { inject, observer } from "mobx-react";
 
-import ManufacturerDetailContainer from "containers/Manufacture/Search/SearchDetail/index";
+import ManufacturerDetailContainer from "containers/Manufacture/Search/Detail/index";
 import * as AccountAPI from "axios/Account/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";

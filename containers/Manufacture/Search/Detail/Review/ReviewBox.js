@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "react-select";
 import styled, { keyframes } from "styled-components";
-import ReviewStarRating from "../Review/ReviewStarRating";
+import ReviewStarRating from "./Review/ReviewStarRating";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 import { withStyles, makeStyles } from "@material-ui/core/styles";

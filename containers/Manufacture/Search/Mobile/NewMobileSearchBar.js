@@ -1,11 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { inject, observer } from "mobx-react";
-import SelectComponent from "Select";
-import ButtonComponent from "components/Buttonv2";
-
-import Background from "components/Background";
-import Container from "components/Containerv1";
 import Router from "next/router";
 import { toJS } from "mobx";
 

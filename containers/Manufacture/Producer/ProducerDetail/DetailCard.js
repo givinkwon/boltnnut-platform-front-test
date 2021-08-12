@@ -2,17 +2,17 @@ import React from "react";
 import styled, { css } from "styled-components";
 import dynamic from "next/dynamic";
 import Router from "next/router";
-import Modal from "../Review/ReviewWritingModal";
-import ReviewCard from "../Review/ReviewCard";
+import Modal from "./Review/ReviewWritingModal";
+import ReviewCard from "./Review/ReviewCard";
 import MapContainer from "./Map";
 
 import { toJS } from "mobx";
 import DocViewer from "./DocViewer";
-import SubBoxContainer from "./SubBox";
+
 import QuestionContainer from "./Question";
 import HeaderItem from "./HeaderContainer";
-import ReviewStarRating from "../Review/ReviewStarRating";
-import ReviewSummaryContainer from "../Review/ReviewBox";
+import ReviewStarRating from "./Review/ReviewStarRating";
+
 //import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
@@ -30,15 +30,15 @@ import PortfolioConatiner from "./Portfolio";
 // const customRenderer = DocViewerRenderers;
 /* 이미지 관련 변수 */
 const star = "/static/icon/star_blue3.svg";
-const medalImg = "/static/images/search/medal.svg";
-const drawerImg = "/static/images/search/drawer.svg";
-const markImg = "/static/images/search/mark.svg";
+const medalImg = "/static/images/producer/medal.svg";
+const drawerImg = "/static/images/producer/drawer.svg";
+const markImg = "/static/images/producer/mark.svg";
 const waterMarkImg = "/static/images/logo_marine@2x.png";
 const pass1 = "/static/images/pass1.png";
 const pass2 = "/static/images/pass2.png";
 const sort = "/static/icon/sort.svg";
-const rightAngleImg = "/static/images/search/rightAngle.svg";
-const upImg = "/static/images/search/up.svg";
+const rightAngleImg = "/static/images/producer/rightAngle.svg";
+const upImg = "/static/images/producer/up.svg";
 
 const availableFileType1 = [
   "png",
@@ -454,7 +454,7 @@ class DetailCardContainer extends React.Component {
 
     // if (!Partner.partner_detail_list[0].item) {
     //   console.log("nonono");
-    //   location.href = Common.makeUrl("search");
+    //   location.href = Common.makeUrl("producer");
     // }
     region = "";
     if (Partner.partner_detail_list[0].item) {

@@ -9,7 +9,7 @@ import * as Content from "components/Content";
 
 import Container from "components/Containerv1";
 import Background from "components/Background";
-import ProposalCard from "./PartnerCard";
+import PartnerCard from "./PartnerCard";
 
 import { toJS } from "mobx";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
@@ -27,7 +27,7 @@ const left = "static/icon/left-arrow.png";
 const right = "static/icon/right-arrow.png";
 const toparrowblue = "static/icon/top_arrow_blue.svg";
 
-@inject("Project", "Auth", "Partner", "Search", "Common", "Cookie", "Request")
+@inject("Project", "Auth", "Partner", "Producer", "Common", "Cookie", "Request")
 @observer
 class ManufacturerContentContainer extends React.Component {
   state = {
@@ -53,12 +53,12 @@ class ManufacturerContentContainer extends React.Component {
     if (Partner.filter_city_ary.length === 1) {
       Partner.getCity();
     }
-
+    
     console.log(this.props.Auth.logged_in_user);
 
     Partner.partner_list.map((item, idx) => {
       Partner.getTotalBookmarkByPartner(item.id);
-      Partner.getReviewByPartner;
+      Partner.getReviewByPartner();
     });
 
     var recent_partner_dic = [];
@@ -120,7 +120,7 @@ class ManufacturerContentContainer extends React.Component {
       link.click();
     } else {
       alert("로그인이 필요합니다.");
-      // this.props.Auth.previous_url = "search";
+      // this.props.Auth.previous_url = "producer";
       Router.push("/login");
     }
   };
@@ -136,7 +136,7 @@ class ManufacturerContentContainer extends React.Component {
   };
 
   render() {
-    const { Project, Partner, Search, Auth, Cookie, Request } = this.props;
+    const { Project, Partner, Producer, Auth, Cookie, Request } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
@@ -267,12 +267,12 @@ class ManufacturerContentContainer extends React.Component {
                             }}
                             style={{ width: "100%" }}
                           >
-                            <ProposalCard
+                            <PartnerCard
                               data={item}
                               width={this.props.width}
                               categoryData={toJS(Partner.category_dic[idx])}
                               idx={idx}
-                              handleIntersection={Search.handleIntersection}
+                              handleIntersection={Producer.handleIntersection}
                               customer="partner"
                             />
                           </div>
@@ -388,11 +388,7 @@ class ManufacturerContentContainer extends React.Component {
                   </RecentPartner>
                   <MyInfo>
                     <header>
-                      <img
-                        src="/static/icon/login_img.svg"
-                        onClick={() => Router.push("/bookmark")}
-                        style={{ cursor: "pointer" }}
-                      />
+                      <img src="/static/icon/login_img.svg"></img>
                       {Auth.logged_in_user ? (
                         <div>{Auth.logged_in_user.username.split("@")[0]}</div>
                       ) : (

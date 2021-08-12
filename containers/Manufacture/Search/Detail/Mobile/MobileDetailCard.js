@@ -2,8 +2,8 @@ import React from "react";
 import styled, { css } from "styled-components";
 import dynamic from "next/dynamic";
 import Router from "next/router";
-import Modal from "../../Review/ReviewWritingModal";
-import ReviewCard from "../../Review/ReviewCard";
+import Modal from "../Review/ReviewWritingModal";
+import ReviewCard from "../Review/ReviewCard";
 import MapContainer from "../Map";
 
 import { toJS } from "mobx";
@@ -11,8 +11,8 @@ import DocViewer from "../DocViewer";
 import SubBoxContainer from "containers/Account/Bookmark/SubBox";
 import QuestionContainer from "../Question";
 import HeaderItem from "../HeaderContainer";
-import ReviewStarRating from "../../Review/ReviewStarRating";
-import ReviewSummaryContainer from "../../Review/ReviewBox";
+import ReviewStarRating from "../Review/ReviewStarRating";
+
 //import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";

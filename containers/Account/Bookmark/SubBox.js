@@ -2,12 +2,11 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import { withRouter } from "next/router";
-import Router from "next/router";
-import Background from "components/Background";
-import Container from "components/Containerv1";
 
-import PartnerCard from "containers/Manufacture/Search/ProposalCard";
+import Background from "components/Background";
+
+
+import PartnerCard from "containers/Manufacture/Search/Home/PartnerCard";
 
 const userImg = "/static/images/search/user.svg";
 

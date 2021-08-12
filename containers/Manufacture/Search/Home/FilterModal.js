@@ -6,7 +6,6 @@ import * as Content from "components/Content";
 import Button from "components/Button";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import Category from "../../../stores/Manufacture/Category";
 
 const passimg = "static/images/passimg.svg";
 const MainArr = ["제품", "기계/설비/장비", "부품", "공구류"];
