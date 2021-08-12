@@ -10,7 +10,7 @@ import Buttonv1 from "components/Buttonv1";
 
 const profileimg = "/static/images/profileimg2.svg";
 
-@inject("Partner", "Auth", "Project", "Common", "Request", "Producer")
+@inject("Partner", "Auth", "Project", "Common", "Request", "Search")
 @observer
 class ReviewManagement extends React.Component {
   render() {

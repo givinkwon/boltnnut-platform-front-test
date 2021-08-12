@@ -161,7 +161,7 @@ class Category {
   // state : 선택된 대카테고리 테이블
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
-  @action add_selected = async (state, id, container = "producer") => {
+  @action add_selected = async (state, id, container = "search") => {
     console.log(typeof id);
     // 카테고리 선택
     if (state == "business") {
@@ -191,8 +191,8 @@ class Category {
       this.material_selected.push(id);
     }
 
-    // producer 페이지에서 왔을 때만
-    if (container == "producer") {
+    // search 페이지에서 왔을 때만
+    if (container == "search") {
       Partner.getPartner();
     }
   };
@@ -211,7 +211,7 @@ class Category {
   // state : 선택된 대카테고리 테이블
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
-  @action remove_selected = async (state, id, container = "producer") => {
+  @action remove_selected = async (state, id, container = "search") => {
     let deleteIdx;
     // 카테고리 선택
     if (state == "business") {
@@ -243,8 +243,8 @@ class Category {
       this.material_selected.splice(deleteIdx, 1);
     }
 
-    // producer 페이지에서 왔을 때만
-    if (container == "producer") {
+    // search 페이지에서 왔을 때만
+    if (container == "search") {
       Partner.getPartner();
     }
   };

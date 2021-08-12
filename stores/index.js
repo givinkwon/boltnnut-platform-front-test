@@ -9,7 +9,7 @@ import Magazine from "./Common/Magazine";
 import Project from "./Manufacture/Project";
 import Chat from "./Manufacture/Chat";
 import Common from "./Common/Common";
-import Producer from "./Manufacture/Producer";
+import Search from "./Manufacture/Search";
 import Partner from "./Manufacture/Partner";
 import Answer from "./Manufacture/Answer";
 import Schedule from "./Manufacture/Schedule";
@@ -32,7 +32,7 @@ export default {
   Project,
   Chat,
   Common,
-  Producer,
+  Search,
   Schedule,
   Category,
   Cookie,
