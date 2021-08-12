@@ -4,10 +4,9 @@ import { toJS } from "mobx";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import { PRIMARY, WHITE, DARKGRAY } from "static/style";
-import ReviewContainer from "../Review/ReviewContainer";
+import ReviewContainer from "../Search/Review/ReviewContainer";
 import * as AccountAPI from "axios/Account/Account";
 import * as PartnerAPI from "axios/Manufacture/Partner";
-
 
 const star = "static/icon/star_lightblue.svg";
 const viewcount = "static/images/viewcount.svg";
