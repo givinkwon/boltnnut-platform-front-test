@@ -265,10 +265,6 @@ class Request {
         await alert("비밀번호를 입력해주세요.");
         return;
       }
-      if (this.password != this.password2) {
-        await alert("비밀번호가 일치하지 않습니다.");
-        return;
-      }
       if (!this.phone) {
         await alert("휴대전화를 입력해주세요.");
         return;
