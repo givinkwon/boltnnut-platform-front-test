@@ -148,7 +148,7 @@ class Signup {
         .then((res) => {
           setTimeout(() => {
             this.loading = false;
-           
+            console.log(res)
             MyDataLayerPush({ event: "SignUpComplete_Client" });
             this.reset();
             

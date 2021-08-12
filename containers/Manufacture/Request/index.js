@@ -11,6 +11,7 @@ import RequestComplete from "./RequestComplete";
 @inject("Request")
 @observer
 class RequestContainer extends React.Component {
+
   render() {
     const { Request, width } = this.props;
 
