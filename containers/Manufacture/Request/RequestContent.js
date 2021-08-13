@@ -9,6 +9,7 @@ import CheckBoxComponent from "components/CheckBox";
 import Buttonv1 from "components/Buttonv1";
 
 import InputComponent from "components/Input";
+import InputComponent2 from "components/Input5";
 import Calendar from "./Calendar";
 
 import AddFile from "./AddFile";
@@ -96,7 +97,10 @@ class RequestContent extends Component {
 
   async componentDidMount() {
     const { purposeAry } = this.state;
+    const { Request } = this.props;
     console.log(purposeAry);
+    // request 초기화
+    Request.reset()
   }
 
   activeHandler = (flag) => {
@@ -158,13 +162,11 @@ class RequestContent extends Component {
       region_state: !this.state.region_state,
     });
     // 이상하게 비동기 문제 때문에 안맞아서 역순으로 체크해놓음..
-    if(this.state.region_state == true){
+    if (this.state.region_state == true) {
       Request.set_region_state(0);
-    }
-    else {
+    } else {
       Request.set_region_state(1);
     }
-
   };
 
   render() {
@@ -221,7 +223,7 @@ class RequestContent extends Component {
                 <ContentInput>
                   <InputComponent
                     class="Input"
-                    // placeholder="   진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
+                    // placeholder="진행하는 프로젝트 제목을 입력해주세요. ex) 반려동물 샤워기"
                     onFocus={(e) => (e.target.placeholder = "")}
                     onChange={(e) => {
                       Request.set_name(e);
@@ -349,7 +351,7 @@ class RequestContent extends Component {
                       프로젝트 예산 조율이 가능합니다.
                     </span>
                   </CheckBoxComponent>
-                  {/* <BudgetHelp
+                  <BudgetHelp
                     active={this.state.budget}
                     onClick={() => {
                       this.activeHandler("budget");
@@ -368,8 +370,8 @@ class RequestContent extends Component {
                     >
                       예산 측정이 어려우신가요?
                     </span>
-                  </BudgetHelp> */}
-                  {/* <HelpBox
+                  </BudgetHelp>
+                  <HelpBox
                     style={{ display: this.state.budget ? "flex" : "none" }}
                   >
                     <CheckBoxComponent onChange={this.priceCheckBox}>
@@ -391,12 +393,14 @@ class RequestContent extends Component {
                         letterSpacing: -0.38,
                         color: "#505050",
                         marginLeft: 31,
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
                       프로젝트 예산 측정이 어렵다면, 볼트앤너트에서 유선으로
                       예산 책정을 도와드립니다.
                     </span>
-                  </HelpBox> */}
+                  </HelpBox>
                 </Budget>
               </RequestContentBox>
 
@@ -410,9 +414,9 @@ class RequestContent extends Component {
                     style={{
                       fontSize: 16,
                       color: "#505050",
-                      lineHeight: 2.13,
                       letterSpacing: -0.4,
                       fontWeight: "normal",
+                      marginBottom: 16,
                     }}
                   >
                     희망하는 프로젝트 진행 기간을 입력해주세요.
@@ -434,14 +438,13 @@ class RequestContent extends Component {
               </RequestContentBox>
 
               <RequestContentBox>
-                <ContentTitle style={{ marginBottom: 8 }}>
+                <ContentTitle style={{ marginBottom: 4 }}>
                   <span>프로젝트 내용</span>
                   <img src={starred} style={{ marginLeft: 5 }}></img>
                   <span
                     style={{
                       marginLeft: 12,
                       fontSize: 14,
-                      lineHeight: 2.43,
                       letterSpacing: -0.35,
                       color: "#e53c38",
                       fontWeight: "normal",
@@ -464,7 +467,7 @@ class RequestContent extends Component {
                   <img src={help_face}></img>
                 </Help>
                 <ProjectInput>
-                  <InputComponent
+                  <InputComponent2
                     class="Input"
                     onFocus={(e) => (e.target.placeholder = "")}
                     value={Request.request_contents}
@@ -482,7 +485,6 @@ class RequestContent extends Component {
                   style={{
                     marginLeft: 12,
                     fontSize: 14,
-                    lineHeight: 2.43,
                     letterSpacing: -0.35,
                     color: "#e53c38",
                     fontWeight: "normal",
@@ -597,7 +599,6 @@ class RequestContent extends Component {
                     style={{
                       fontSize: 16,
                       color: "#505050",
-                      lineHeight: 2.13,
                       letterSpacing: -0.4,
                       fontWeight: "normal",
                     }}
@@ -606,8 +607,8 @@ class RequestContent extends Component {
                   </span>
                   <div
                     style={{
-                      marginTop: 10,
-                      marginBottom: 12,
+                      marginTop: 16,
+                      marginBottom: 10,
                     }}
                   >
                     <SelectComponent
@@ -1830,7 +1831,7 @@ const BudgetHelp = styled.div`
   font-size: 15px;
   letter-spacing: -0.38px;
   color: #0933b3;
-  margin-top: 13px;
+  margin-top: 11px;
 `;
 
 const DateCheckbox = styled.div`
@@ -1901,4 +1902,12 @@ const ClientInfoBox = styled.div`
     width: 100%;
     margintop: 0px;
   }
+`;
+
+const HelpBox = styled.div`
+  margin-top: 11px;
+  flex-direction: column;
+  border-radius: 3px;
+  background-color: #edf4fe;
+  padding: 10px 33px;
 `;

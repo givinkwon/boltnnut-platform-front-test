@@ -63,6 +63,17 @@ class Category {
       id: 2,
     },
   ];
+  @observable locationModalActive = false;
+  @observable LocationAddress = "";
+  @observable LocationZipCode = "";
+  //회사소개서 파일(1개)
+  @observable partnerInfoFile = null;
+  //파트너 포트폴리오(배열)
+  @observable partnerPortfolioArray = null;
+  //파트너 소개
+  @observable partnerInfo = "";
+  //진행한 제품군
+  @observable partnerHistory = "";
 
   @action setCheckAllState = (type) => {
     const temp = new Array();
@@ -70,6 +81,26 @@ class Category {
 
     // const typeArray = ["business","category"]
     this.checkAllState[type] = temp;
+  };
+
+  @action setPartnerInfo = (e) => {
+    console.log(e);
+    this.partnerInfo = e;
+  };
+  @action setPartnerHistory = (e) => {
+    console.log(e);
+    this.partnerHistory = e;
+  };
+  @action setPartnerInfoFile = (e) => {
+    console.log(e);
+    this.partnerInfoFile = e[0];
+  };
+
+  @action setPartnerPortfolioFile = (e) => {
+    console.log(e);
+    // console.log(e.target);
+    this.partnerPortfolioArray = e;
+    console.log(this.partnerPortfolioArray);
   };
   /* init */
 
@@ -129,6 +160,7 @@ class Category {
     await CategoryAPI.getMainmaterial()
       .then((res) => {
         this.mainmaterial_list = res.data.results;
+        this.setCheckAllState("material");
         console.log(toJS(this.mainmaterial_list));
       })
       .catch((e) => {
@@ -141,10 +173,6 @@ class Category {
       .then((res) => {
         this.developbig_list = res.data.results;
         this.developbig_list.forEach((mainCategory) => {
-          // const temp = new Array();
-          // temp.push(false);
-
-          // this.checkAllState["category"] = temp;
           this.setCheckAllState("develop");
         });
         console.log(toJS(this.developbig_list));
@@ -217,15 +245,14 @@ class Category {
   // state : 선택된 대카테고리 테이블
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
-  @action add_selected = async (state, id, container = "producer") => {
-    // console.log(typeof id);
-    // 업체분류 선택
+  @action add_selected = async (state, id, container = "search") => {
+    console.log(typeof id);
+    // 카테고리 선택
     if (state == "business") {
       if (this.business_selected.indexOf(id) < 0) {
         this.business_selected.push(id);
       }
     }
-
     // 카테고리 선택
     if (state == "category") {
       if (this.category_selected.indexOf(id) < 0) {
@@ -249,8 +276,8 @@ class Category {
       this.material_selected.push(id);
     }
 
-    // producer 페이지에서 왔을 때만
-    if (container == "producer") {
+    // search 페이지에서 왔을 때만
+    if (container == "search") {
       Partner.getPartner();
     }
   };
@@ -274,7 +301,7 @@ class Category {
   // state : 선택된 대카테고리 테이블
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
-  @action remove_selected = async (state, id, container = "producer") => {
+  @action remove_selected = async (state, id, container = "search") => {
     let deleteIdx;
     // 카테고리 선택
     if (state == "business") {
@@ -306,8 +333,8 @@ class Category {
       this.material_selected.splice(deleteIdx, 1);
     }
 
-    // producer 페이지에서 왔을 때만
-    if (container == "producer") {
+    // search 페이지에서 왔을 때만
+    if (container == "search") {
       Partner.getPartner();
     }
   };
@@ -395,6 +422,65 @@ class Category {
         console.log(e.response);
       });
     console.log(this.business_selected_name);
+  };
+
+  @action save_selected = async (pageName, id) => {
+    let req = null;
+    // alert("F");
+    switch (pageName) {
+      //business입니다. 페이지만 Category
+      case "Category":
+        req = {
+          data: {
+            partnerId: id,
+            business: this.business_selected,
+            category: this.category_selected,
+          },
+        };
+        CategoryAPI.saveSelectedList(req)
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+        break;
+      case "Process":
+        req = {
+          data: {
+            partnerId: id,
+            develop: this.develop_selected,
+          },
+        };
+        CategoryAPI.saveSelectedList(req)
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+        break;
+      case "Material":
+        req = {
+          data: {
+            partnerId: id,
+            material: this.material_selected,
+          },
+        };
+        CategoryAPI.saveSelectedList(req)
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+        break;
+      case "Aboutus":
+        req = {
+          data: {
+            partnerId: id,
+            city: this.LocationAddress.split(" ")[0],
+            region: this.LocationAddress,
+            info_company: this.partnerInfo,
+            file: this.partnerInfoFile,
+            history: this.partnerHistory,
+            portfolio: this.partnerPortfolioArray,
+          },
+        };
+
+        CategoryAPI.savePartnerInfo(req)
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+        break;
+    }
   };
 }
 

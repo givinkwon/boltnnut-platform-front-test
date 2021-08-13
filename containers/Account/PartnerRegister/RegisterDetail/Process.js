@@ -22,7 +22,7 @@ const innerStyles = {
 };
 @inject("Category")
 @observer
-class Process extends Component {
+class ProcessContainer extends Component {
   componentDidMount() {
     // console.log("===================================");
     // console.log(toJS(this.props.Category.mainbusiness_list));
@@ -97,7 +97,7 @@ class Process extends Component {
   }
 }
 
-export default Process;
+export default ProcessContainer;
 
 const CheckItem = styled.label`
   width: 33%;

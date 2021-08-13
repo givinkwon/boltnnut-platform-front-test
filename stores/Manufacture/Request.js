@@ -33,7 +33,7 @@ class Request {
   @observable request_period = ""; // 희망 납기일
   @observable request_period_state = 0; // 납기일 협의 state => 체크 시에는 1, 미 체크 시에는 0
   @observable request_contents =
-    "1. 프로젝트의 소개 및 제작 목적:   2. 프로젝트의 진행 상황 및 계획 수립 :   3. 프로젝트 기능 및 특이 사항 - 필수로 들어가야 할 기능들  :  4. 참고자료 / 레퍼런스 예시) ‘볼트앤너트 네이버 블로그’ 참고 등 :  5. 제조사(파트너)에게의 요청사항 - 프로젝트 진행 시 파트너가 알아야 할 발주 조건 : ";
+    "1. 프로젝트의 소개 및 제작 목적\n:\n\n2. 프로젝트의 진행 상황 및 계획 수립 \n:\n\n3. 프로젝트 기능 및 특이 사항 \n- 필수로 들어가야 할 기능들  \n:\n\n4. 참고자료 / 레퍼런스 \n예시) ‘볼트앤너트 네이버 블로그’ 참고 등 \n:\n\n5. 제조사(파트너)에게의 요청사항 \n- 프로젝트 진행 시 파트너가 알아야 할 발주 조건 \n: ";
   @observable request_file_set = []; // 의뢰 관련 파일
   @observable request_file_secure = 0; // 의뢰 보안 state => 미선택 0, 도면 파일 공개 1, 미공개 2
   @observable request_drawing_set = []; // 의뢰 도면 파일
@@ -93,11 +93,11 @@ class Request {
   @action set_contents = (val) => {
     Auth.checkLogin();
 
-    if (!Auth.logged_in_user) {
-      alert("로그인이 필요한 서비스입니다.");
-      Router.push("/login");
-      return;
-    }
+    // if (!Auth.logged_in_user) {
+    //   alert("로그인이 필요한 서비스입니다.");
+    //   Router.push("/login");
+    //   return;
+    // }
     this.request_contents = val;
     console.log(this.request_contents);
   };
@@ -151,22 +151,12 @@ class Request {
   // 지역 협의 상태 추가하기
   @action set_region_state = (val) => {
     this.request_region_state = val;
-    console.log(this.request_region_state)
+    console.log(this.request_region_state);
   };
 
   // 의뢰서 제출 시 의뢰서 만들기
   @action requestSubmit = async () => {
 
-    // 아이디 로그인 없이 의뢰서 만들 때 => 해당 정보로 회원가입
-    if(!Auth.logged_in_user) {
-      Signup.email = this.email;
-      Signup.password = this.password;
-      Signup.password2 = this.password;
-      Signup.phone = this.phone;
-      Signup.realName = "비회원의뢰";
-      Signup.company_name = "비회원가입";
-      Signup.signup("request")
-    }
     // error 처리
     if (this.request_state == -1) {
       alert("문의 목적을 선택해주세요");
@@ -223,10 +213,10 @@ class Request {
 
     // 선택한 납기 미선택 시
     if (this.request_period_state == 0) {
-      formData.append("deadline_state",0);
+      formData.append("deadline_state", 0);
     } else {
       // 납기 협의 가능 선택 시
-      formData.append("deadline_state",1);
+      formData.append("deadline_state", 1);
     }
 
     // 의뢰 내용 ( 공개 사항 )
@@ -258,68 +248,89 @@ class Request {
       formData.append(`blueprint`, this.request_file_set[i]);
     }
 
-    // 로그인 토큰 받아 user 데이터 받기
-    // 비로그인시
-    if(!Auth.logged_in_user) {
-      const Token = "b2ad465ffc84bdc7e91d1b2752683dc4227ba892"
-      console.log(Token);
+    // 비로그인 시
+    // 아이디 로그인 없이 의뢰서 만들 때 => 해당 정보로 회원가입
+    if (!Auth.logged_in_user) {
+      // 예외 처리
+      if (!this.email) {
+        await alert("이메일을 입력해주세요.");
+        return false;
+      }
+      var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+      if (!emailValid.test(this.email)) {
+        await alert("이메일 형식을 확인해주세요.");
+        return false;
+      }
+      if (!this.password) {
+        await alert("비밀번호를 입력해주세요.");
+        return false;
+      }
+      if (!this.phone) {
+        await alert("휴대전화를 입력해주세요.");
+        return false;
+      }
       
-    // axois 쏘기
-    const req = {
-      headers: {
-        Authorization: `Token ${Token}`,
-      },
-      data: formData,
-    };
+      formData.append("email", this.email)
+      formData.append("password", this.password)
+      formData.append("phone", this.phone)
+      formData.append("login_state", 0) // 비로그인 시
 
-    console.log(req);
+      // axois 쏘기
+      const req = {
+        data: formData,
+      };
+      // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
+      this.newIndex = 1;
+      console.log(req);
 
-    RequestAPI.create(req)
-      .then((res) => {
-        console.log("create: ", res);
-        // page 넘기기 위한 트리거 만들기
+      RequestAPI.create(req)
+        .then((res) => {
+          console.log("create: ", res);
+          // page 넘기기 위한 트리거 만들기
+          this.newIndex = 1;
+          // GA 데이터 보내기
+          MyDataLayerPush({ event: "request_Drawing" });
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+      }
+
+      // 로그인 시
+      else {
+        formData.append("login_state", 1) // 로그인 시
+        const Token = localStorage.getItem("token");
+        console.log(Token);
+  
+        // axois 쏘기
+        const req = {
+          headers: {
+            Authorization: `Token ${Token}`,
+          },
+          data: formData,
+        };
+        // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
         this.newIndex = 1;
-        // GA 데이터 보내기
-        MyDataLayerPush({ event: "request_Drawing" });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
+        console.log(req);
+  
+        RequestAPI.create(req)
+          .then((res) => {
+            console.log("create: ", res);
+            // page 넘기기 위한 트리거 만들기
+            this.newIndex = 1;
+            // GA 데이터 보내기
+            MyDataLayerPush({ event: "request_Drawing" });
+          })
+          .catch((e) => {
+            console.log(e);
+            console.log(e.response);
+          });
+      }
 
-    }
-    else {
-      const Token = localStorage.getItem("token");
-      console.log(Token);
-      
-    // axois 쏘기
-    const req = {
-      headers: {
-        Authorization: `Token ${Token}`,
-      },
-      data: formData,
-    };
-
-    console.log(req);
-
-    RequestAPI.create(req)
-      .then((res) => {
-        console.log("create: ", res);
-        // page 넘기기 위한 트리거 만들기
-        this.newIndex = 1;
-        // GA 데이터 보내기
-        MyDataLayerPush({ event: "request_Drawing" });
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(e.response);
-      });
-
-    }
     
-
+  
   };
-
 
   // 비회원 회원가입 전용
   // email
@@ -327,7 +338,7 @@ class Request {
 
   @action setEmail = (val) => {
     this.email = val;
-    console.log(this.email)
+    console.log(this.email);
   };
 
   // password
@@ -335,7 +346,7 @@ class Request {
 
   @action setPassword = (val) => {
     this.password = val;
-    console.log(this.password)
+    console.log(this.password);
   };
 
   // 휴대폰
@@ -343,9 +354,9 @@ class Request {
 
   @action setPhone = (val) => {
     this.phone = val;
-    console.log(this.phone)
+    console.log(this.phone);
   };
-  
+
   // 의뢰서 수정 관련
 
   // 의뢰서 수정에서 의뢰 파일 가져오기

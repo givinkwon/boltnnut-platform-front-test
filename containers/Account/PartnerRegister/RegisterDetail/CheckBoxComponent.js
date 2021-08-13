@@ -100,5 +100,5 @@ const Font16 = styled(Content.FontSize16)`
   text-align: left;
   color: #1e2222;
 
-  overflow-x: auto;
+  overflow-x: hidden;
 `;

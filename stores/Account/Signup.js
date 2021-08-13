@@ -3,6 +3,7 @@ import * as AccountAPI from "axios/Account/Account";
 import Router from "next/router";
 
 class Signup {
+  @observable type = "";
   // state 리셋 함수
   @action reset = () => {
     this.email = "";
@@ -69,7 +70,7 @@ class Signup {
 
   @action setRealName = (val) => {
     this.realName = val;
-    console.log(this.realName)
+    console.log(this.realName);
   };
 
   @observable title = "";
@@ -83,7 +84,7 @@ class Signup {
   };
 
   // 회원가입 함수 시작
-  @action signup = async (container = "signup" ) => {
+  @action signup = async (container = "signup") => {
     if (!this.email) {
       await alert("이메일을 입력해주세요.");
       return;
@@ -118,7 +119,9 @@ class Signup {
     console.log("job title : ", this.title);
     console.log("phone : ", this.phone);
     console.log("marketing : ", this.marketing);
-    if (this.type !== "partner") {
+
+    // alert(this.type);
+    if (this.type != "partner") {
       if (!this.company_name) {
         await alert("회사명을 입력해주세요.");
         return;
@@ -140,7 +143,7 @@ class Signup {
           title: this.title,
           // path: this.path.path,
           // business: this.business.business,
-          type: 0,
+          // type: 0,
           marketing: this.marketing,
         },
       };
@@ -148,16 +151,15 @@ class Signup {
         .then((res) => {
           setTimeout(() => {
             this.loading = false;
-           
+            console.log(res);
             MyDataLayerPush({ event: "SignUpComplete_Client" });
             this.reset();
-            
+
             // 의뢰서에서 회원가입하지 않았을 때 => 그냥 회원가입일 때 Router Push
-            if(container == "signup"){
+            if (container == "signup") {
               Router.push("/login");
               alert("회원가입 성공");
             }
-
           }, 800);
         })
         .catch((e) => {
@@ -185,7 +187,7 @@ class Signup {
       formData.append("username", this.email);
       formData.append("password", this.password);
       formData.append("phone", this.phone);
-      formData.append("type", 1);
+      // formData.append("type", 1);
       formData.append("marketing", this.marketing);
       formData.append("name", this.company_name);
       formData.append("realName", this.realName);
@@ -201,7 +203,7 @@ class Signup {
             MyDataLayerPush({ event: "SignUpComplete_Partner" });
             this.reset();
             // 의뢰서에서 회원가입하지 않았을 때 => 그냥 회원가입일 때 Router Push
-            if(container == "signup"){
+            if (container == "signup") {
               Router.push("/login");
             }
           }, 800);
@@ -253,7 +255,11 @@ class Signup {
   @action signupSubmit = () => {
     const checkboxArr = this.checkboxState;
 
-    if (checkboxArr[0] === true && checkboxArr[1] === true && checkboxArr[2] === true) {
+    if (
+      checkboxArr[0] === true &&
+      checkboxArr[1] === true &&
+      checkboxArr[2] === true
+    ) {
       this.signup();
     } else {
       alert("필수 이용약관에 동의해 주세요");

@@ -26,9 +26,9 @@ class Index extends React.Component {
 
   async componentDidMount() {
     const { Auth, Home, Answer, Loading } = this.props;
-    console.log("producer didmount2");
+    console.log("search didmount2");
 
-    Auth.previous_url = "producer";
+    Auth.previous_url = "search";
 
     console.log(Auth);
     //창 크기

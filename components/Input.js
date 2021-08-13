@@ -19,6 +19,7 @@ const CustomInput = withStyles({
       fontStyle: "normal",
       lineHeight: "1.7",
       letterSpacing: "-0.5px",
+      color: "#505050",
     },
     "& label.Mui-focused": {
       color: "#c7c7c7",
@@ -63,7 +64,8 @@ class Input extends React.Component {
   };
   render() {
     const { focused } = this.state;
-    const { placeholder, label, outlined, variant, ...props } = this.props;
+    const { placeholder, label, outlined, variant, multiline, rows, ...props } =
+      this.props;
     return (
       <CustomInput
         {...props}

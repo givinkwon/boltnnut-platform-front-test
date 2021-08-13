@@ -38,7 +38,7 @@ class Partner {
   @observable questionCount = 0;
   @observable questionList = new Array(10);
   @observable writingModalIdx = "";
-  /* /producer 우측 카드 변수 */
+  /* /search 우측 카드 변수 */
   @observable totalPartnerBookmark = 0;
   @observable totalClientBookmark = 0;
   @observable hoverInterestedIdx = false;
@@ -392,6 +392,7 @@ class Partner {
     this.subButtonActive
       ? this.getOtherPartner(newPage)
       : this.getPartner(newPage, this.click_count);
+    window.scrollTo(0, 0);
   };
 
   @action pageNext = (e) => {
@@ -427,6 +428,7 @@ class Partner {
       this.subButtonActive
         ? this.getOtherPartner(this.currentPage)
         : this.getPartner(this.currentPage, this.click_count);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -440,10 +442,26 @@ class Partner {
       this.category_name_list = this.category_dic[idx];
 
       if (!item.file) {
-        this.detailLoadingFlag = false;
-        alert("해당 회사의 소개서가 존재하지 않습니다!");
+        // this.detailLoadingFlag = false;
+        // alert("해당 회사의 소개서가 존재하지 않습니다!");
+        // return;
+        this.partner_detail_list = [];
+        await this.partner_detail_list.push({ item: item, idx: idx });
+        this.recentPartnerId = this.partner_detail_list[0].item.id;
+
+        await this.getReviewByPartner(
+          this.partner_detail_list[0].item.id,
+          1,
+          1
+        );
+        await this.getReviewByPartner(this.partner_detail_list[0].item.id);
+        await this.getQuestion(this.partner_detail_list[0].item.id);
+        await this.getCityName(this.partner_detail_list[0].item.city);
+
+        Router.push("/search/detail");
         return;
       }
+
       this.selectedIntroductionFile = item.file;
 
       const fileType = item.file
@@ -468,7 +486,7 @@ class Partner {
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
-        Router.push("/producer/detail");
+        Router.push("/search/detail");
         // this.setState({ g: 3 });
       } else {
         console.log("file download");
@@ -1015,9 +1033,9 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    
+
     // 검색 시 텍스트 저장
-    this.saveSearchText(this.search_text)
+    this.saveSearchText(this.search_text);
   };
 
   @action saveSearchText = (text) => {
@@ -1041,7 +1059,6 @@ class Partner {
         console.log(e.response);
       });
   };
-
 
   // 이미지 모달을 위한 state
   @observable image_modal_state = false;
@@ -1735,7 +1752,7 @@ class Partner {
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
-        Router.push("/producer/detail");
+        Router.push("/search/detail");
       })
       .catch((e) => {
         console.log(e);
@@ -1743,14 +1760,13 @@ class Partner {
       });
   };
 
-  @action getPartner = async (page = 1, pre_page = "Producer") => {
-
+  @action getPartner = async (page = 1, pre_page = "Search") => {
     // 전 페이지가 메인페이지면 필터 중복을 제외하기 위하여 reset
-    if (pre_page == "Home"){
-      await Category.reset()
+    if (pre_page == "Home") {
+      await Category.reset();
     }
     // 초기화
-    this.partner_count = ""
+    this.partner_count = "";
     this.partner_list = [];
     this.category_ary = [];
     // data 저장용
@@ -2208,7 +2224,7 @@ class Partner {
         page: page,
       },
     };
-
+    
     await PartnerAPI.getReviewByPartner(req)
       .then(async (res) => {
         if (page_nation == 1) {
