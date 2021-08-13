@@ -6,6 +6,7 @@ import { withRouter } from "next/router";
 import Router from "next/router";
 
 const userImg = "/static/images/producer/user.svg";
+const bookmarkbtn = "/static/images/producer/bookmarkbtn.svg";
 
 @inject("Partner", "Auth", "Project", "Common", "Request")
 @observer
@@ -16,6 +17,7 @@ class SubBoxContainer extends React.Component {
     const clientId = Auth.logged_in_client && Auth.logged_in_client.id;
     await Partner.existBookmarkPartner(clientId, partnerId);
     await Partner.getBookmarkByClient(clientId);
+    console.log(Auth.logged_in_client);
   };
   render() {
     const { Partner, Auth, partnerId, Project, Common, Request } = this.props;
@@ -37,10 +39,12 @@ class SubBoxContainer extends React.Component {
     return (
       <>
         <Container>
-          <ActiveItem>
-            <div>자동견적&비슷한 업체를 추천 받고 싶다면</div>
+          {Auth.logged_in_user && Auth.logged_in_client && (
+            <>
+              <ActiveItem>
+                <div>프로젝트를 등록하고 견적 요청을 해보세요!</div>
 
-            {/* {buttenArray.map((item, idx) => {
+                {/* {buttenArray.map((item, idx) => {
               return (
                 <Button
                   style={{ marginBottom: "12px" }}
@@ -57,85 +61,86 @@ class SubBoxContainer extends React.Component {
                 </Button>
               );
             })} */}
-            <Button
-              active={Partner.activeHandler("project")}
-              hover={Partner.hoverProjectIdx}
-              style={{ marginBottom: "12px" }}
-              type="project"
-            >
-              <div
-                onMouseOver={() => {
-                  Partner.hoverHandler("project", true);
-                }}
-                onMouseOut={() => {
-                  Partner.hoverHandler("project", false);
-                }}
-                onClick={() => {
-                  console.log(location);
-                  Project.producerId = partnerId;
-                  console.log(Project.producerId);
-                  Partner.clickHandler("project");
-                  Request.partner_request(partnerId);
-                  Router.push("/request");
-                  // this.setState({ g: 3 });
-                }}
-              >
-                <span>프로젝트 의뢰하기</span>
-              </div>
-            </Button>
-
-            {Auth.logged_in_user && (
-              <Button
-                active={Partner.activeHandler("interested")}
-                hover={Partner.hoverInterestedIdx}
-                type="interested"
-              >
-                <div
-                  onMouseOver={() => {
-                    Partner.hoverHandler("interested", true);
-                  }}
-                  onMouseOut={() => {
-                    Partner.hoverHandler("interested", false);
-                  }}
-                  onClick={async () => {
-                    console.log(Partner.interestedIdx);
-                    if (clientId) {
-                      Partner.clickHandler("interested");
-                      Partner.checkedInterestedIdx(clientId, partnerId);
-                      this.setState({ g: 3 });
-                    } else {
-                      location.href = Common.makeUrl("request");
-                      // this.setState({ g: 3 });
-                    }
-                  }}
+                <Button
+                  active={Partner.activeHandler("project")}
+                  hover={Partner.hoverProjectIdx}
+                  style={{ marginBottom: "12px" }}
+                  type="project"
                 >
-                  <span>관심 업체 등록하기</span>
-                </div>
-              </Button>
-            )}
-          </ActiveItem>
-          <ShowItem>
-            <UserBox>
-              <img src={userImg} />
-              {Auth.logged_in_user ? (
-                <div>{Auth.logged_in_user.username.split("@")[0]}</div>
-              ) : (
-                <div>로그인 해주세요.</div>
-              )}
-            </UserBox>
-            <SubItem>
-              <span>프로젝트 의뢰</span>
-              {Project.project_count ? (
-                <span>{Project.project_count}</span>
-              ) : (
-                <span>0</span>
-              )}
-            </SubItem>
-            <SubItem>
-              <span>관심 업체 등록</span>
-              <span>{Partner.totalClientBookmark}</span>
-            </SubItem>
-          </ShowItem>
+                  <div
+                    onMouseOver={() => {
+                      Partner.hoverHandler("project", true);
+                    }}
+                    onMouseOut={() => {
+                      Partner.hoverHandler("project", false);
+                    }}
+                    onClick={() => {
+                      console.log(location);
+                      Project.producerId = partnerId;
+                      console.log(Project.producerId);
+                      Partner.clickHandler("project");
+                      Request.partner_request(partnerId);
+                      Router.push("/request");
+                      // this.setState({ g: 3 });
+                    }}
+                  >
+                    <span>견적 요청하기</span>
+                  </div>
+                </Button>
+
+                <Button
+                  active={Partner.activeHandler("interested")}
+                  hover={Partner.hoverInterestedIdx}
+                  type="interested"
+                >
+                  <div
+                    onMouseOver={() => {
+                      Partner.hoverHandler("interested", true);
+                    }}
+                    onMouseOut={() => {
+                      Partner.hoverHandler("interested", false);
+                    }}
+                    onClick={async () => {
+                      console.log(Partner.interestedIdx);
+                      if (clientId) {
+                        Partner.clickHandler("interested");
+                        Partner.checkedInterestedIdx(clientId, partnerId);
+                        this.setState({ g: 3 });
+                      } else {
+                        location.href = Common.makeUrl("request");
+                        // this.setState({ g: 3 });
+                      }
+                    }}
+                  >
+                    <img src={bookmarkbtn}></img>
+                    <span style={{ marginLeft: 12 }}>관심 업체 등록하기</span>
+                  </div>
+                </Button>
+              </ActiveItem>
+              <ShowItem>
+                <UserBox>
+                  <img src={userImg} />
+                  {Auth.logged_in_user ? (
+                    <div>{Auth.logged_in_user.username.split("@")[0]}</div>
+                  ) : (
+                    <div>로그인 해주세요.</div>
+                  )}
+                </UserBox>
+                <SubItem>
+                  <span>프로젝트 의뢰</span>
+                  {Project.project_count ? (
+                    <span>{Project.project_count}</span>
+                  ) : (
+                    <span>0</span>
+                  )}
+                </SubItem>
+                <SubItem>
+                  <span>관심 업체 등록</span>
+                  <span>{Partner.totalClientBookmark}</span>
+                </SubItem>
+              </ShowItem>
+            </>
+          )}
         </Container>
       </>
     );
@@ -153,6 +158,8 @@ const Container = styled.div`
   width: 300px;
   height: 500px;
   //   border: 3px solid red;
+  margin-top: 197px;
+  padding: 54px 32px;
 `;
 
 const ActiveItem = styled.div`
@@ -186,6 +193,7 @@ const Button = styled.button`
   align-items: center;
   background-color: #ffffff;
   border: none;
+  cursor: pointer;
   > div {
     display: flex;
     justify-content: center;

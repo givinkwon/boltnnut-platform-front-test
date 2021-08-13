@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #0933b3;
+      }
+    </style>
+  </defs>
+  <g id="그룹_6324" data-name="그룹 6324" transform="translate(-901 -807)">
+    <rect id="사각형_5743" data-name="사각형 5743" class="cls-1" width="20" height="20" transform="translate(901 807)"/>
+    <path id="Arrow" class="cls-2" d="M6.782.313.208,7.158a.758.758,0,0,0,0,1.043l6.574,6.845a1,1,0,0,0,1.451,0,1.1,1.1,0,0,0,0-1.51L2.609,7.679,8.233,1.824a1.1,1.1,0,0,0,0-1.511,1,1,0,0,0-1.451,0" transform="translate(916.359 824.44) rotate(180)"/>
+  </g>
+</svg>

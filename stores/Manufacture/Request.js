@@ -18,6 +18,7 @@ class Request {
   // 의뢰 관련 index
   // 의뢰 완료 페이지로 넘어가기 위한 Trigger
   @observable newIndex = 0;
+  @observable requestTabIdx = 0;
 
   // 의뢰하기 접근한 이전 페이지 => 0인 경우 Nav 바에서, 1인 경우 제조사 검색에서, 2인 경우 제조사 디테일
   @observable request_type = "";
@@ -39,6 +40,8 @@ class Request {
   @observable request_drawing_set = []; // 의뢰 도면 파일
   @observable request_region = ""; // 의뢰 지역 선택
   @observable request_region_state = 0; // 의뢰 지역 협의 state => 체크 시에는 1, 미 체크 시에는 0
+
+  @observable loadingFlag = false; //의뢰 요청하기 버튼 클릭 후 로딩
 
   // 파트너 상세에서 의뢰서 클릭 한 경우에 id를 넘겨주는 것
   @action partner_request = (val) => {
@@ -312,6 +315,8 @@ class Request {
           console.log(e.response);
         });
     }
+    this.loadingFlag = true;
+    // this.requestTabIdx = 1;
   };
 
   // 비회원 회원가입 전용

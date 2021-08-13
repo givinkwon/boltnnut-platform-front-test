@@ -7,20 +7,25 @@ import { inject, observer } from "mobx-react";
 
 import RequestContent from "./RequestContent";
 import RequestComplete from "./RequestComplete";
+import RequestMain from "./RequestMain";
 
 @inject("Request")
 @observer
 class RequestContainer extends React.Component {
+  componentDidMount() {
+    const { Request } = this.props;
+    Request.requestTabIdx = 0;
+  }
   render() {
-    const { Request, width } = this.props;
+    const { Request } = this.props;
 
     return (
       <>
         <Background>
           <Containerv1 style={{ width: 792 }}>
-            
-            {Request.newIndex == 0 && <RequestContent />}
-            {Request.newIndex == 1 && <RequestComplete />}
+            {Request.requestTabIdx == 0 && <RequestMain />}
+            {Request.requestTabIdx == 1 && <RequestContent />}
+            {Request.requestTabIdx == 2 && <RequestComplete />}
           </Containerv1>
         </Background>
       </>

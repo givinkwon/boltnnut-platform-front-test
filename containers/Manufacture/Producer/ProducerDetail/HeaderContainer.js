@@ -35,19 +35,25 @@ class HeaderContainer extends React.Component {
           )}
 
           <ImgBox>
-            <img src={viewImg} />
-
-            <img
-              src={Partner.interestedIdx ? bookmarkBlueImg : bookmarkImg}
-              onClick={async () => {
-                if (!loggedInPartnerId && clientId) {
-                  Partner.clickHandler("interested");
-                  Partner.checkedInterestedIdx(clientId, partnerId);
-                  this.setState({ h: 3 });
-                }
-              }}
-            />
-            <span>{Partner.totalPartnerBookmark}</span>
+            <InnerBox>
+              <img src={viewImg} />
+              <span style={{ marginLeft: 8 }}>높음</span>
+            </InnerBox>
+            <InnerBox>
+              <img
+                src={Partner.interestedIdx ? bookmarkBlueImg : bookmarkImg}
+                onClick={async () => {
+                  if (!loggedInPartnerId && clientId) {
+                    Partner.clickHandler("interested");
+                    Partner.checkedInterestedIdx(clientId, partnerId);
+                    this.setState({ h: 3 });
+                  }
+                }}
+              />
+              <span style={{ marginLeft: 8 }}>
+                {Partner.totalPartnerBookmark}
+              </span>
+            </InnerBox>
           </ImgBox>
         </Container>
       </>
@@ -70,4 +76,19 @@ const Container = styled.div`
   }
 `;
 
-const ImgBox = styled.div``;
+const InnerBox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 14px;
+  line-height: 2.86;
+  letter-spacing: -0.35px;
+  text-align: left;
+  color: #999;
+  margin-left: 28px;
+`;
+
+const ImgBox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
