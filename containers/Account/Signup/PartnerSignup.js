@@ -25,6 +25,7 @@ class PartnerSignupContainer extends React.Component {
     this.props.Auth.getBusinessData();
     window.addEventListener("resize", this.updateDimensions);
     this.setState({ ...this.state, width: window.innerWidth });
+    // alert(this.props.Signup.type);
     // this.props.Signup.passwordInvalidhandler();
   }
 
@@ -47,7 +48,9 @@ class PartnerSignupContainer extends React.Component {
 
           <LineDivContainer>
             <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 회원가입</Title14>
+            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>
+              SNS 간편 회원가입
+            </Title14>
             <LineDiv />
           </LineDivContainer>
 
@@ -109,7 +112,11 @@ class PartnerSignupContainer extends React.Component {
               active={Signup.password2inputstate}
             />
             <InvalidImgBox src={success} active={Signup.passwordInvalid} />
-            {Signup.password2 && <InvalidTitle14 active={Signup.passwordInvalid}>비밀번호가 일치하지 않습니다.</InvalidTitle14>}
+            {Signup.password2 && (
+              <InvalidTitle14 active={Signup.passwordInvalid}>
+                비밀번호가 일치하지 않습니다.
+              </InvalidTitle14>
+            )}
           </InputInnerBox>
 
           {/* name */}
@@ -124,7 +131,11 @@ class PartnerSignupContainer extends React.Component {
               active={Signup.realNameInputState}
             />
             <InvalidImgBox src={success} active={Signup.realNameInvalid} />
-            {Signup.realName && <InvalidTitle14 active={Signup.realNameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
+            {Signup.realName && (
+              <InvalidTitle14 active={Signup.realNameInvalid}>
+                특수문자는 입력할 수 없습니다.
+              </InvalidTitle14>
+            )}
           </InputInnerBox>
 
           {/* phone number */}
@@ -140,7 +151,11 @@ class PartnerSignupContainer extends React.Component {
               active={Signup.phoneInputState}
             />
             <InvalidImgBox src={success} active={Signup.phoneInvalid} />
-            {Signup.phone && <InvalidTitle14 active={Signup.phoneInvalid}>- 없이 숫자만 입력해주세요. (최대 11자리)</InvalidTitle14>}
+            {Signup.phone && (
+              <InvalidTitle14 active={Signup.phoneInvalid}>
+                - 없이 숫자만 입력해주세요. (최대 11자리)
+              </InvalidTitle14>
+            )}
           </InputInnerBox>
 
           {/* company name */}
@@ -155,7 +170,11 @@ class PartnerSignupContainer extends React.Component {
               active={Signup.company_nameInputState}
             />
             <InvalidImgBox src={success} active={Signup.company_nameInvalid} />
-            {Signup.company_name && <InvalidTitle14 active={Signup.company_nameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
+            {Signup.company_name && (
+              <InvalidTitle14 active={Signup.company_nameInvalid}>
+                특수문자는 입력할 수 없습니다.
+              </InvalidTitle14>
+            )}
           </InputInnerBox>
 
           {/* agree */}
@@ -188,7 +207,9 @@ class PartnerSignupContainer extends React.Component {
                     }}
                   />
                   <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                    {item.essential}
+                  </Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
@@ -289,7 +310,8 @@ const KakaoImgBox = styled.div`
 
 const CustomInput = styled.input`
   border-radius: 3px;
-  border: ${(props) => (props.active ? "1px solid #c7c7c7" : "1px solid #e53c38")};
+  border: ${(props) =>
+    props.active ? "1px solid #c7c7c7" : "1px solid #e53c38"};
   padding-left: 10px;
   width: 578px;
   height: 42px;

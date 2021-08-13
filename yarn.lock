@@ -4720,6 +4720,14 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+create-react-class@^15.6.0:
+  version "15.7.0"
+  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.7.0.tgz#7499d7ca2e69bb51d13faf59bd04f0c65a1d6c1e"
+  integrity sha512-QZv4sFWG9S5RUvkTYWbflxeZX+JG7Cz0Tn33rQBJ+WFQTqTfUTjMjiv9tnfXazjsO5r0KhPs+AqCjyrQX6h2ng==
+  dependencies:
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
+
 cross-env@6.0.3:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-6.0.3.tgz#4256b71e49b3a40637a0ce70768a6ef5c72ae941"
@@ -11872,6 +11880,16 @@ react-dom@^0.14.7:
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-0.14.10.tgz#da883daef7fa86838e9e2fcfcc084c590c350e21"
   integrity sha512-kDs8SWFb8Sry4NAplhpJbZEeAnTPir/m+s9s+lkdqA2a89BzmWGnEgGG/CfmhULjv1ogc4oHrjMfAvFNruT3jQ==
 
+react-dom@^15.3.2:
+  version "15.7.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.7.0.tgz#39106dee996d0742fb0f43d567ef8b8153483ab2"
+  integrity sha512-mpjXqC2t1FuYsILOLCj0kg6pbg460byZkVA/80VtDmKU/pYmoTdHOtaMcTRIDiyXLz4sIur0cQ04nOC6iGndJg==
+  dependencies:
+    fbjs "^0.8.9"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.0"
+    prop-types "^15.5.10"
+
 react-dom@^16.1.0, react-dom@^16.2.0:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.14.0.tgz#7ad838ec29a777fb3c75c3a190f661cf92ab8b89"
@@ -12246,6 +12264,11 @@ react-star-rating-component@^1.4.1:
     classnames "^2.2.5"
     prop-types "^15.6.1"
 
+react-step-progress@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-step-progress/-/react-step-progress-1.0.3.tgz#8c93a7e4f5fd020888873944534cd97ab7641535"
+  integrity sha512-AsebjdBZsoZzZuN50p24TMwKt8JVdyhsAPL/xvpY4c3dpQ9XBiRcZlADD0BoKP3iIxpEm+7ufwITmwY66FEfjQ==
+
 react-step-range-slider@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/react-step-range-slider/-/react-step-range-slider-1.4.1.tgz#da743d7ec60b43b2fb0befd0bc5a903a21c35acf"
@@ -12255,6 +12278,15 @@ react-step-range-slider@^1.4.1:
     classnames "^2.2.5"
     lodash "^4.11.1"
     prop-types "^15"
+
+react-stepper-enhanced@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-stepper-enhanced/-/react-stepper-enhanced-1.0.0.tgz#ce3ac738b27bcf544bf889769d359a8a729689e4"
+  integrity sha512-u//YbhxbAdfCvrZYZHMJWXm8tG83Dhdhl+ah+/2sH+4nAbTZ3RgvIAwkN855I5BmZoDUBzYdbsZ0KR3J+l9dnA==
+  dependencies:
+    prop-types "^15.5.10"
+    react "^15.3.2"
+    react-dom "^15.3.2"
 
 react-transition-group@^1.2.1:
   version "1.2.1"
@@ -12301,6 +12333,17 @@ react@^0.14.7:
   dependencies:
     envify "^3.0.0"
     fbjs "^0.6.1"
+
+react@^15.3.2:
+  version "15.7.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-15.7.0.tgz#10308fd42ac6912a250bf00380751abc41ac7106"
+  integrity sha512-5/MMRYmpmM0sMTHGLossnJCrmXQIiJilD6y3YN3TzAwGFj6zdnMtFv6xmi65PHKRV+pehIHpT7oy67Sr6s9AHA==
+  dependencies:
+    create-react-class "^15.6.0"
+    fbjs "^0.8.9"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.0"
+    prop-types "^15.5.10"
 
 react@^16.1.0, react@^16.14.0, react@^16.2.0, react@^16.4.2:
   version "16.14.0"

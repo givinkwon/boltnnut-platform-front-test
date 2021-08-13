@@ -18,6 +18,23 @@ export function getCategory(req) {
   });
 }
 
+// 파트너 등록하기 - 체크박스 저장
+export function saveSelectedList(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/partner/signup-page2/`,
+    data: req.data,
+  });
+}
+
+// 파트너 등록하기 - 마지막페이지
+export function savePartnerInfo(req) {
+  return axios({
+    method: "POST",
+    url: `${ROOT_URL}/partner/signup-page3/`,
+    data: req.data,
+  });
+}
 // 업체 분류 분야 : 대분류
 export function getMainbusiness(req) {
   return axios({

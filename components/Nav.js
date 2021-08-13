@@ -33,6 +33,7 @@ class Nav extends React.Component {
     selectedRoom: null,
     partnerList: [],
     closeImgState: false,
+    testState: false,
   };
 
   alreadyLoggedin = ["login", "signup"];
@@ -52,6 +53,10 @@ class Nav extends React.Component {
     const { route, pathname } = Router.router;
     const splitedRoute = route.split("/");
     const requestId = window.location.pathname.split("/").pop();
+
+    // setTimeout(() => {
+    //   this.setState({ testState: true });
+    // }, 1000);
 
     // 사용자 접근 제어
     if (token) {
@@ -659,6 +664,7 @@ class Nav extends React.Component {
                             >
                               <Font14
                                 style={{
+                                  width: 250,
                                   lineHeight: "1.71",
                                   letterSpacing: "-0.14px",
                                   marginTop: 6,

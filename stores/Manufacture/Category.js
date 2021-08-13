@@ -36,13 +36,89 @@ class Category {
   @observable material_selected = [];
   @observable develop_selected = [];
 
+  //전체<< 체크박스 체크상태 저장하는 dictionary
+  @observable checkAllState = {};
+  @observable nextBtnActive = false;
+
+  @observable RegisterTypeArray = [
+    {
+      img: "/static/icon/registerMain1.svg",
+      content: "부품/완제품 판매",
+      type: "product",
+      checked: false,
+      id: 0,
+    },
+    {
+      img: "/static/icon/registerMain2.svg",
+      content: "개발/설계",
+      type: "development",
+      checked: false,
+      id: 1,
+    },
+    {
+      img: "/static/icon/registerMain3.svg",
+      content: "제작",
+      type: "manufacture",
+      checked: false,
+      id: 2,
+    },
+  ];
+  @observable locationModalActive = false;
+  @observable LocationAddress = "";
+  @observable LocationZipCode = "";
+  //회사소개서 파일(1개)
+  @observable partnerInfoFile = null;
+  //파트너 포트폴리오(배열)
+  @observable partnerPortfolioArray = null;
+  //파트너 소개
+  @observable partnerInfo = "";
+  //진행한 제품군
+  @observable partnerHistory = "";
+
+  @action setCheckAllState = (type) => {
+    const temp = new Array();
+    temp.push(false);
+
+    // const typeArray = ["business","category"]
+    this.checkAllState[type] = temp;
+  };
+
+  @action setPartnerInfo = (e) => {
+    console.log(e);
+    this.partnerInfo = e;
+  };
+  @action setPartnerHistory = (e) => {
+    console.log(e);
+    this.partnerHistory = e;
+  };
+  @action setPartnerInfoFile = (e) => {
+    console.log(e);
+    this.partnerInfoFile = e[0];
+  };
+
+  @action setPartnerPortfolioFile = (e) => {
+    console.log(e);
+    // console.log(e.target);
+    this.partnerPortfolioArray = e;
+    console.log(this.partnerPortfolioArray);
+  };
   /* init */
+
+  // @observable setCheckAllState = (type) => {
+  //   const temp = new Array();
+  //   temp.push(false);    
+
+  //   // const typeArray = ["business","category"]
+  //   this.checkAllState[type] = temp;
+  // };
   @action init = async () => {
-    // 카테고리 데이터 가져오기
+    this.checkAllState = [];
+
+    // 업체분류 데이터 가져오기
     await CategoryAPI.getMainbusiness()
       .then((res) => {
         this.mainbusiness_list = res.data.results;
-
+        this.setCheckAllState("business");
         console.log(toJS(this.mainbusiness_list));
       })
       .catch((e) => {
@@ -50,12 +126,16 @@ class Category {
         console.log(e.response);
       });
 
-    // 업체 분류 가져오기
+    // 카테고리 가져오기
     await CategoryAPI.getMainCategory()
       .then(async (res) => {
         this.maincategory_list = res.data.results;
-        console.log(toJS(this.maincategory_list));
         this.maincategory_list.forEach((mainCategory) => {
+          // const temp = new Array();
+          // temp.push(false);
+
+          // this.checkAllState["category"] = temp;
+          this.setCheckAllState("category");
           this.category_list = this.category_list.concat(
             mainCategory.category_set
           );
@@ -80,6 +160,7 @@ class Category {
     await CategoryAPI.getMainmaterial()
       .then((res) => {
         this.mainmaterial_list = res.data.results;
+        this.setCheckAllState("material");
         console.log(toJS(this.mainmaterial_list));
       })
       .catch((e) => {
@@ -91,6 +172,9 @@ class Category {
     await CategoryAPI.getDevelopbig()
       .then((res) => {
         this.developbig_list = res.data.results;
+        this.developbig_list.forEach((mainCategory) => {
+          this.setCheckAllState("develop");
+        });
         console.log(toJS(this.developbig_list));
       })
       .catch((e) => {
@@ -169,10 +253,11 @@ class Category {
         this.business_selected.push(id);
       }
     }
-
-    // 업체 분류 선택
+    // 카테고리 선택
     if (state == "category") {
-      this.category_selected.push(id);
+      if (this.category_selected.indexOf(id) < 0) {
+        this.category_selected.push(id);
+      }
     }
 
     // 지역 선택
@@ -197,13 +282,18 @@ class Category {
     }
   };
 
-  @action checkedItemHandler = (id, isChecked) => {
-    if (isChecked) {
-      checkedItems.add(id);
-      setCheckedItems(checkedItems);
-    } else if (!isChecked && checkedItems.has(id)) {
-      checkedItems.delete(id);
-      setCheckedItems(checkedItems);
+  @action isChecked = (myType) => {
+    this.nextBtnActive = false;
+    if (myType === "main") {
+      this.RegisterTypeArray.map((item, idx) => {
+        if (item.checked) {
+          this.nextBtnActive = true;
+        }
+      });
+    } else if (myType === "category") {
+      if (this.business_selected.length > 0) {
+        this.nextBtnActive = true;
+      }
     }
   };
 
@@ -332,6 +422,65 @@ class Category {
         console.log(e.response);
       });
     console.log(this.business_selected_name);
+  };
+
+  @action save_selected = async (pageName, id) => {
+    let req = null;
+    // alert("F");
+    switch (pageName) {
+      //business입니다. 페이지만 Category
+      case "Category":
+        req = {
+          data: {
+            partnerId: id,
+            business: this.business_selected,
+            category: this.category_selected,
+          },
+        };
+        CategoryAPI.saveSelectedList(req)
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+        break;
+      case "Process":
+        req = {
+          data: {
+            partnerId: id,
+            develop: this.develop_selected,
+          },
+        };
+        CategoryAPI.saveSelectedList(req)
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+        break;
+      case "Material":
+        req = {
+          data: {
+            partnerId: id,
+            material: this.material_selected,
+          },
+        };
+        CategoryAPI.saveSelectedList(req)
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+        break;
+      case "Aboutus":
+        req = {
+          data: {
+            partnerId: id,
+            city: this.LocationAddress.split(" ")[0],
+            region: this.LocationAddress,
+            info_company: this.partnerInfo,
+            file: this.partnerInfoFile,
+            history: this.partnerHistory,
+            portfolio: this.partnerPortfolioArray,
+          },
+        };
+
+        CategoryAPI.savePartnerInfo(req)
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+        break;
+    }
   };
 }
 

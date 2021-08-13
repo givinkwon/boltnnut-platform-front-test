@@ -5,11 +5,12 @@ import * as AccountAPI from "axios/Account/Account";
 import DaumPostcode from "react-daum-postcode";
 import * as Text from "components/Text";
 
-@inject("Auth", "Answer", "Profile")
+@inject("Auth", "Answer", "Profile", "Category")
 @observer
 class LocationSearchModal extends React.Component {
   handleComplete = async (data) => {
-    const { Profile, closeModal } = this.props;
+    const { Profile, closeModal, Category } = this.props;
+    console.log(data);
     let fullAddress = data.address;
     let extraAddress = "";
 
@@ -27,6 +28,9 @@ class LocationSearchModal extends React.Component {
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     Profile.LocationAddress = fullAddress;
     Profile.locationModalActive = false;
+    Category.LocationAddress = fullAddress;
+    Category.locationModalActive = false;
+    Category.locationZipCode = data.zonecode;
     // await closeModal();
   };
 

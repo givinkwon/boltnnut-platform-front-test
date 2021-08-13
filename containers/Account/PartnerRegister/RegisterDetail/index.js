@@ -8,14 +8,34 @@ import Background from "components/Background";
 import styled from "styled-components";
 import Router from "next/router";
 import PartnerRegisterBanner from "components/PartnerRegisterBanner";
-import Category from "./Category";
+import CategoryContainer from "./Category";
+import ProcessContainer from "./Process";
+import MaterialContainer from "./Material";
+import AboutUsContainer from "./AboutUs";
+// import the progress bar
+import StepProgressBar from "react-step-progress";
+// import the stylesheet
+import "react-step-progress/dist/index.css";
+import Stepper from "react-stepper-enhanced";
+const perfection = "/static/icon/camera.png";
 const pageNameArr = ["Category", "Process", "Material", "Aboutus"];
-@inject("Auth")
+@inject("Auth", "Category")
 @observer
 class RegisterDetailContainer extends React.Component {
   render() {
-    const { Auth } = this.props;
+    const { Auth, Category } = this.props;
+
     const { pageName } = this.props;
+    const step1Content = <h1>Step 1 Content</h1>;
+    const step2Content = <h1>Step 2 Content</h1>;
+    const step3Content = <h1>Step 3 Content</h1>;
+    function step2Validator() {
+      // return a boolean
+    }
+
+    function step3Validator() {
+      // return a boolean
+    }
     return (
       <Background>
         <Containerv1
@@ -35,16 +55,46 @@ class RegisterDetailContainer extends React.Component {
             }}
           >
             <PartnerRegisterBanner />
-            {Auth.RegisterTypeArray.map((item, idx) => {
-              return <>/{item.checked && item.type}</>;
-            })}
-            <div>고정1</div>
-            <div>고정2</div>
             <div>카테고리 {true && <>- 공정</>} - 소재 - 회사소개</div>
-            {pageName === "Category" && <Category />}
-            {pageName === "Process" && <>Page 2 - Process</>}
-            {pageName === "Material" && <>Page 3 - Material</>}
-            {pageName === "Aboutus" && <>Page 4 - Aboutus</>}
+            <Stepper
+              // activeBorderColor={"solid 10px blue"}
+              // activeColor={"red"}
+              steps={[
+                { title: "Step One", icon: perfection },
+                { title: "Step Two" },
+                { title: "Step Three" },
+                { title: "Step Four" },
+              ]}
+              // activeStep={1}
+
+              // barStyle={"dashed"}
+            />
+            {/* <StepProgressBar
+              startingStep={0}
+              steps={[
+                {
+                  label: "Step 1",
+                  name: "step 1",
+                  content: step1Content,
+                },
+                {
+                  label: "Step 2",
+                  name: "step 2",
+                  content: step2Content,
+                  validator: step2Validator,
+                },
+                {
+                  label: "Step 3",
+                  name: "step 3",
+                  content: step3Content,
+                  validator: step3Validator,
+                },
+              ]}
+            /> */}
+            {pageName === "Category" && <CategoryContainer />}
+            {pageName === "Process" && <ProcessContainer />}
+            {pageName === "Material" && <MaterialContainer />}
+            {pageName === "Aboutus" && <AboutUsContainer />}
             <div style={{ display: "flex", justifyContent: "center" }}>
               <ButtonBox width={"400px"} style={{ marginTop: 70 }}>
                 <Button
@@ -67,16 +117,25 @@ class RegisterDetailContainer extends React.Component {
                 >
                   이전으로
                 </Button>
-                {Auth.nextBtnActivate ? (
+                {Category.nextBtnActive ? (
                   <Button
                     buttonType="next"
-                    onClick={() => {
+                    onClick={async () => {
+                      await Auth.checkLogin();
+                      console.log(Auth.logged_in_partner);
                       if (Auth.registerPageIdx < 3) {
                         Auth.registerType === "product" &&
                         Auth.registerPageIdx === 0
                           ? (Auth.registerPageIdx += 2)
                           : (Auth.registerPageIdx += 1);
-
+                        Category.save_selected(
+                          pageName,
+                          Auth.logged_in_partner.id
+                        );
+                        // switch (pageName) {
+                        //   case "Category":
+                        //     break;
+                        // }
                         Router.push(
                           "/partnerregister/[pagename]",
                           `/partnerregister/${

@@ -9,11 +9,11 @@ const signupbnlogo = "/static/images/signupbnlogo.svg";
 const partnersignupimg = "/static/images/partnersignupimg.svg";
 const clientsignupimg = "/static/images/clientsignupimg.svg";
 
-@inject("Auth")
+@inject("Auth", "Signup")
 @observer
 class SignupContainer extends React.Component {
   render() {
-    const { Auth } = this.props;
+    const { Auth, Signup } = this.props;
     console.log(Auth.signupType);
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -28,7 +28,10 @@ class SignupContainer extends React.Component {
             <SelectBox
               onClick={() => {
                 Auth.type = "client";
-                Auth.isSnsSignup ? Router.push("/signup/snsclientsignup") : Router.push("/signup/clientsignup");
+                Signup.type = "client";
+                Auth.isSnsSignup
+                  ? Router.push("/signup/snsclientsignup")
+                  : Router.push("/signup/clientsignup");
               }}
             >
               <Title16>제조사를 찾고 싶어요.</Title16>
@@ -36,7 +39,9 @@ class SignupContainer extends React.Component {
               <Title20>클라이언트</Title20>
 
               <DescBox>
-                <Title18 style={{ marginTop: "20px" }}>의뢰할 프로젝트가 있는</Title18>
+                <Title18 style={{ marginTop: "20px" }}>
+                  의뢰할 프로젝트가 있는
+                </Title18>
                 <Title18>기업 또는 개인</Title18>
               </DescBox>
             </SelectBox>
@@ -44,7 +49,10 @@ class SignupContainer extends React.Component {
             <SelectBox
               onClick={() => {
                 Auth.type = "partner";
-                Auth.isSnsSignup ? Router.push("/signup/snspartnersignup") : Router.push("/signup/partnersignup");
+                Signup.type = "partner";
+                Auth.isSnsSignup
+                  ? Router.push("/signup/snspartnersignup")
+                  : Router.push("/signup/partnersignup");
               }}
             >
               <Title16>일거리를 찾고 있어요.</Title16>
@@ -52,7 +60,9 @@ class SignupContainer extends React.Component {
               <Title20>제조사</Title20>
 
               <DescBox>
-                <Title18 style={{ marginTop: "20px" }}>프로젝트를 의뢰받고자 하는</Title18>
+                <Title18 style={{ marginTop: "20px" }}>
+                  프로젝트를 의뢰받고자 하는
+                </Title18>
                 <Title18>기업 또는 개인</Title18>
               </DescBox>
             </SelectBox>
