@@ -97,9 +97,11 @@ class RequestContent extends Component {
   };
 
   async componentDidMount() {
-    const { purposeAry, Request } = this.state;
+    const { purposeAry } = this.state;
+    const { Request } = this.props;
     console.log(purposeAry);
-    // Request.loadingFlag = false;
+    // request 초기화
+    Request.reset();
   }
 
   activeHandler = (flag) => {

@@ -14,8 +14,8 @@ import * as Content from "components/Content";
 import * as Text from "components/Text";
 import { toJS } from "mobx";
 
-const arrowRightImg = "/static/images/producer/arrow_right.svg";
-const checkImg = "/static/images/producer/check.svg";
+const arrowRightImg = "/static/images/search/arrow_right.svg";
+const checkImg = "/static/images/search/check.svg";
 
 @inject("Category", "Partner", "Profile")
 @observer

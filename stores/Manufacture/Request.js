@@ -159,16 +159,6 @@ class Request {
 
   // 의뢰서 제출 시 의뢰서 만들기
   @action requestSubmit = async () => {
-    // 아이디 로그인 없이 의뢰서 만들 때 => 해당 정보로 회원가입
-    if (!Auth.logged_in_user) {
-      Signup.email = this.email;
-      Signup.password = this.password;
-      Signup.password2 = this.password;
-      Signup.phone = this.phone;
-      Signup.realName = "비회원의뢰";
-      Signup.company_name = "비회원가입";
-      Signup.signup("request");
-    }
     // error 처리
     if (this.request_state == -1) {
       alert("문의 목적을 선택해주세요");
@@ -260,46 +250,39 @@ class Request {
       formData.append(`blueprint`, this.request_file_set[i]);
     }
 
-    // 로그인 토큰 받아 user 데이터 받기
-    // 비로그인시
+    // 비로그인 시
+    // 아이디 로그인 없이 의뢰서 만들 때 => 해당 정보로 회원가입
     if (!Auth.logged_in_user) {
-      const Token = "b2ad465ffc84bdc7e91d1b2752683dc4227ba892";
-      console.log(Token);
+      // 예외 처리
+      if (!this.email) {
+        await alert("이메일을 입력해주세요.");
+        return false;
+      }
+      var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+      if (!emailValid.test(this.email)) {
+        await alert("이메일 형식을 확인해주세요.");
+        return false;
+      }
+      if (!this.password) {
+        await alert("비밀번호를 입력해주세요.");
+        return false;
+      }
+      if (!this.phone) {
+        await alert("휴대전화를 입력해주세요.");
+        return false;
+      }
+
+      formData.append("email", this.email);
+      formData.append("password", this.password);
+      formData.append("phone", this.phone);
+      formData.append("login_state", 0); // 비로그인 시
 
       // axois 쏘기
       const req = {
-        headers: {
-          Authorization: `Token ${Token}`,
-        },
         data: formData,
       };
-
-      console.log(req);
-
-      RequestAPI.create(req)
-        .then((res) => {
-          console.log("create: ", res);
-          // page 넘기기 위한 트리거 만들기
-          this.newIndex = 1;
-          // GA 데이터 보내기
-          MyDataLayerPush({ event: "request_Drawing" });
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log(e.response);
-        });
-    } else {
-      const Token = localStorage.getItem("token");
-      console.log(Token);
-
-      // axois 쏘기
-      const req = {
-        headers: {
-          Authorization: `Token ${Token}`,
-        },
-        data: formData,
-      };
-
+      // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
+      this.newIndex = 1;
       console.log(req);
 
       RequestAPI.create(req)
@@ -315,8 +298,37 @@ class Request {
           console.log(e.response);
         });
     }
-    this.loadingFlag = true;
-    // this.requestTabIdx = 1;
+
+    // 로그인 시
+    else {
+      formData.append("login_state", 1); // 로그인 시
+      const Token = localStorage.getItem("token");
+      console.log(Token);
+
+      // axois 쏘기
+      const req = {
+        headers: {
+          Authorization: `Token ${Token}`,
+        },
+        data: formData,
+      };
+      // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
+      this.newIndex = 1;
+      console.log(req);
+
+      RequestAPI.create(req)
+        .then((res) => {
+          console.log("create: ", res);
+          // page 넘기기 위한 트리거 만들기
+          this.newIndex = 1;
+          // GA 데이터 보내기
+          MyDataLayerPush({ event: "request_Drawing" });
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+    }
   };
 
   // 비회원 회원가입 전용

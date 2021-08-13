@@ -8,12 +8,12 @@ import Footer from "components/Footer";
 
 import { inject, observer } from "mobx-react";
 
-import ProfileContainer from "containers/Account/Profile/index";
+import ManufacturerDetailContainer from "containers/Manufacture/Search/Detail/index";
 import * as AccountAPI from "axios/Account/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
-@inject("Project", "Auth")
+@inject("Project")
 @observer
 class Index extends React.Component {
   static getInitialProps({ query }) {
@@ -26,9 +26,6 @@ class Index extends React.Component {
 
   async componentDidMount() {
     const { Auth, Home, Answer, Loading } = this.props;
-    console.log("search didmount2");
-
-    Auth.previous_url = "search";
 
     console.log(Auth);
     //창 크기
@@ -44,7 +41,7 @@ class Index extends React.Component {
       data: formData,
     };
 
-    AccountAPI.setUserPageIP(req)
+    await AccountAPI.setUserPageIP(req)
       .then((res) => {
         console.log(res);
       })
@@ -52,9 +49,13 @@ class Index extends React.Component {
         console.log(e);
         console.log(e.response);
       });
+
+    // Home.init();
+    // Auth.bgColor = "#ffffff";
+    // Loading.setOpen(true);
+    // setTimeout(() => Loading.setOpen(false), 500);
   }
   componentWillUnmount() {
-    const { Auth } = this.props;
     window.removeEventListener("resize", this.updateDimensions);
   }
   updateDimensions = () => {
@@ -66,7 +67,7 @@ class Index extends React.Component {
     return (
       <div onContextMenu={(e) => e.preventDefault()}>
         <Head>
-          <title>볼트앤너트|프로필 관리</title>
+          <title>볼트앤너트|제조사 상세</title>
         </Head>
 
         <>
@@ -77,15 +78,14 @@ class Index extends React.Component {
               <div>
                 <MobileNav
                   src={back_ic}
-                  headText={"프로필 관리"}
+                  headText={"제조사 상세보기"}
                   width={width}
                 />
                 <div style={{ height: "65px" }}></div>
               </div>
             ))}
         </>
-
-        <ProfileContainer width={width} />
+        <ManufacturerDetailContainer width={width} />
         <Footer />
       </div>
     );

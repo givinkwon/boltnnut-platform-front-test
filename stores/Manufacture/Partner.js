@@ -38,7 +38,7 @@ class Partner {
   @observable questionCount = 0;
   @observable questionList = new Array(10);
   @observable writingModalIdx = "";
-  /* /producer 우측 카드 변수 */
+  /* /search 우측 카드 변수 */
   @observable totalPartnerBookmark = 0;
   @observable totalClientBookmark = 0;
   @observable hoverInterestedIdx = false;
@@ -392,6 +392,7 @@ class Partner {
     this.subButtonActive
       ? this.getOtherPartner(newPage)
       : this.getPartner(newPage, this.click_count);
+    window.scrollTo(0, 0);
   };
 
   @action pageNext = (e) => {
@@ -427,6 +428,7 @@ class Partner {
       this.subButtonActive
         ? this.getOtherPartner(this.currentPage)
         : this.getPartner(this.currentPage, this.click_count);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -456,7 +458,7 @@ class Partner {
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
-        Router.push("/producer/detail");
+        Router.push("/search/detail");
         return;
       }
 
@@ -484,7 +486,7 @@ class Partner {
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
-        Router.push("/producer/detail");
+        Router.push("/search/detail");
         // this.setState({ g: 3 });
       } else {
         console.log("file download");
@@ -827,6 +829,8 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    // 초기화
+    this.reset()
   };
   @action reset = () => {
     this.detail = null;
@@ -840,11 +844,11 @@ class Partner {
     this.partner_next = null;
     this.page = 1;
 
-    this.search_text = "";
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
     this.category_string = [];
+    this.matching_image = "";
   };
 
   @action getClientInfo = async (id) => {
@@ -1060,6 +1064,7 @@ class Partner {
 
   // 이미지 모달을 위한 state
   @observable image_modal_state = false;
+  @observable matching_image = ""; // 이미지 검색 시 적합하게 나온 이미지 url
 
   // image search를 위한 함수
   @action ImageSearch = () => {
@@ -1078,6 +1083,7 @@ class Partner {
         this.partner_list = [];
         this.partner_list = res.data.partner;
         this.partner_count = res.data.partner.length;
+        this.matching_image = res.data.img_url;
 
         // image modal state 초기화
         this.image_modal_state = false;
@@ -1750,7 +1756,7 @@ class Partner {
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
 
-        Router.push("/producer/detail");
+        Router.push("/search/detail");
       })
       .catch((e) => {
         console.log(e);
@@ -1758,7 +1764,7 @@ class Partner {
       });
   };
 
-  @action getPartner = async (page = 1, pre_page = "Producer") => {
+  @action getPartner = async (page = 1, pre_page = "Search") => {
     // 전 페이지가 메인페이지면 필터 중복을 제외하기 위하여 reset
     if (pre_page == "Home") {
       await Category.reset();
@@ -2222,7 +2228,7 @@ class Partner {
         page: page,
       },
     };
-
+    
     await PartnerAPI.getReviewByPartner(req)
       .then(async (res) => {
         if (page_nation == 1) {

@@ -96,7 +96,7 @@ class Auth {
       type: "manufacture",
       checked: false,
       id: 2,
-    },  
+    },
   ];
 
   @action isChecked = () => {
@@ -268,7 +268,7 @@ class Auth {
     CategoryAPI.getBusiness_client()
       .then((res) => {
         this.business_data = res.data.results;
-        console.log(res.data.results)
+        console.log(res.data.results);
       })
       .catch((e) => {
         console.log(e);

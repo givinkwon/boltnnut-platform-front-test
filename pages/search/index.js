@@ -8,12 +8,12 @@ import Footer from "components/Footer";
 
 import { inject, observer } from "mobx-react";
 
-import ProfileContainer from "containers/Account/Profile/index";
+import SearchContainer from "containers/Manufacture/Search/index";
 import * as AccountAPI from "axios/Account/Account";
 
 const back_ic = "/static/images/components/MobileNav/back_ic.svg";
 
-@inject("Project", "Auth")
+@inject("Project", "Auth", "Category", "Partner")
 @observer
 class Index extends React.Component {
   static getInitialProps({ query }) {
@@ -25,7 +25,10 @@ class Index extends React.Component {
   };
 
   async componentDidMount() {
-    const { Auth, Home, Answer, Loading } = this.props;
+    const { Auth, Partner } = this.props;
+    // category 리셋하여 메인페이지 연동되지 않게 + 파트너 가져오기
+    Partner.init();
+    await Partner.getPartner(1, "Home");
     console.log("search didmount2");
 
     Auth.previous_url = "search";
@@ -63,10 +66,12 @@ class Index extends React.Component {
 
   render() {
     const { width } = this.state;
+    const { Category, Partner } = this.props;
+
     return (
       <div onContextMenu={(e) => e.preventDefault()}>
         <Head>
-          <title>볼트앤너트|프로필 관리</title>
+          <title>볼트앤너트|제조사 찾기</title>
         </Head>
 
         <>
@@ -77,7 +82,7 @@ class Index extends React.Component {
               <div>
                 <MobileNav
                   src={back_ic}
-                  headText={"프로필 관리"}
+                  headText={"제조사 관리"}
                   width={width}
                 />
                 <div style={{ height: "65px" }}></div>
@@ -85,7 +90,7 @@ class Index extends React.Component {
             ))}
         </>
 
-        <ProfileContainer width={width} />
+        <SearchContainer width={width} />
         <Footer />
       </div>
     );
