@@ -106,7 +106,7 @@ class Category {
 
   // @observable setCheckAllState = (type) => {
   //   const temp = new Array();
-  //   temp.push(false);
+  //   temp.push(false);    
 
   //   // const typeArray = ["business","category"]
   //   this.checkAllState[type] = temp;
