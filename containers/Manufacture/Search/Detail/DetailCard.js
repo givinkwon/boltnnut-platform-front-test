@@ -1273,7 +1273,7 @@ class DetailCardContainer extends React.Component {
 
               {!Auth.logged_in_partner && (
                 <SubCard>
-                  <SubBox
+                  <SubBox 
                     partnerId={Partner.partner_detail_list[0].item.id}
                   />
 

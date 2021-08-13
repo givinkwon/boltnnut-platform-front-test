@@ -13,7 +13,7 @@ import QuestionContainer from "../Question";
 import HeaderItem from "../HeaderContainer";
 import ReviewStarRating from "../Review/ReviewStarRating";
 
-//import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { inject, observer } from "mobx-react";
 import * as Title from "components/Title";

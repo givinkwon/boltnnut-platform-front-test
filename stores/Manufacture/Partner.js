@@ -829,6 +829,8 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
+    // 초기화
+    this.reset()
   };
   @action reset = () => {
     this.detail = null;
@@ -842,11 +844,11 @@ class Partner {
     this.partner_next = null;
     this.page = 1;
 
-    this.search_text = "";
     this.search_category = [];
     this.search_develop = [];
     this.search_region = [];
     this.category_string = [];
+    this.matching_image = "";
   };
 
   @action getClientInfo = async (id) => {
@@ -1062,6 +1064,7 @@ class Partner {
 
   // 이미지 모달을 위한 state
   @observable image_modal_state = false;
+  @observable matching_image = ""; // 이미지 검색 시 적합하게 나온 이미지 url
 
   // image search를 위한 함수
   @action ImageSearch = () => {
@@ -1080,6 +1083,7 @@ class Partner {
         this.partner_list = [];
         this.partner_list = res.data.partner;
         this.partner_count = res.data.partner.length;
+        this.matching_image = res.data.img_url;
 
         // image modal state 초기화
         this.image_modal_state = false;

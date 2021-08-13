@@ -335,6 +335,7 @@ class PartnerCard extends React.Component {
     let category_data;
     //console.log(data.logo);
     console.log(data);
+    console.log(Partner.matching_image)
     return (
       <>
         {width > 767.98 && data ? (
@@ -351,9 +352,19 @@ class PartnerCard extends React.Component {
               <Header>
                 {data && data.portfolio_set.length > 0 ? (
                   <Item>
+                    {/* 이미지 검색이면 매칭된 이미지를 띄우고, 아닌 경우에는 포토폴리오 이미지를 띄우기 */}
+                    {Partner.matching_image.length > 0 ? (
+                    <img
+                      src={Partner.matching_image[idx]}
+                    ></img>
+                    )
+                    :
+                    (
                     <img
                       src={data && data.portfolio_set[0].img_portfolio}
                     ></img>
+                    )
+                    }
                   </Item>
                 ) : existLogo === "null" ? (
                   <Item>
