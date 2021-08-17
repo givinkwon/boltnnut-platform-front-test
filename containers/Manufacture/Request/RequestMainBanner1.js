@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import Router from "next/router";
 import Container from "components/Containerv1";
 import Background from "components/Background";
 import Buttonv1 from "components/Buttonv1";
@@ -39,7 +39,7 @@ class RequestMain extends React.Component {
                   <br />
                   직접 의뢰하는 형식입니다.
                 </Text>
-                <Button>
+                <Button onClick={() => (Router.push('/search'))}>
                   제조사 찾기 바로가기
                   <img src={bluearrow} style={{ marginLeft: 8 }} />
                 </Button>
