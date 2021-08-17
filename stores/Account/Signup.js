@@ -205,7 +205,7 @@ class Signup {
             this.reset();
             // 의뢰서에서 회원가입하지 않았을 때 => 그냥 회원가입일 때 Router Push
             if (container == "signup") {
-              Router.push("/login");
+              Router.push("/partnerregister");
             }
           }, 800);
         })
@@ -447,7 +447,7 @@ class Signup {
           alert("회원가입 성공");
           // MyDataLayerPush({ event: "SignUpComplete_Partner" });
           this.reset();
-          Router.push("/login");
+          Router.push("/partnerregister");
         }, 800);
       })
       .catch((e) => {

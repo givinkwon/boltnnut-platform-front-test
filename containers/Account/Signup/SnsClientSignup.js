@@ -48,7 +48,15 @@ class SnsClientSignupContainer extends React.Component {
           <InputInnerBox>
             <Title18>아이디</Title18>
             <CustomInput
-              value={Auth.email}
+              value={Signup.email}
+            />
+          </InputInnerBox>
+
+          {/* Phone */}
+          <InputInnerBox>
+            <Title18>휴대전화</Title18>
+            <CustomInput
+              value={Signup.phone}
             />
           </InputInnerBox>
 

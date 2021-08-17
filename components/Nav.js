@@ -434,13 +434,7 @@ class Nav extends React.Component {
                             Auth.type == "detailexpert"
                           }
                         >
-                          <RouterWrapper
-                            onClick={() => {
-                              alert(
-                                "가입을 원하시는 분은 고객센터로 별도 문의주세요"
-                              );
-                            }}
-                          >
+                          <RouterWrapper>
                             <KSLink
                               url={"partnerregister"}
                               FontContent={() => {
@@ -580,7 +574,7 @@ class Nav extends React.Component {
                     >
                       <RouterWrapper>
                         <KSLink
-                          url={"partnerregister"}
+                          url={"signup"}
                           FontContent={() => {
                             return <Font14>파트너 등록하기</Font14>;
                           }}
