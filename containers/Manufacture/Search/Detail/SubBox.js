@@ -5,8 +5,8 @@ import { toJS } from "mobx";
 import { withRouter } from "next/router";
 import Router from "next/router";
 
-const userImg = "/static/images/producer/user.svg";
-const bookmarkbtn = "/static/images/producer/bookmarkbtn.svg";
+const userImg = "/static/images/search/user.svg";
+const bookmarkbtn = "/static/images/search/bookmarkbtn.svg";
 
 @inject("Partner", "Auth", "Project", "Common", "Request")
 @observer
