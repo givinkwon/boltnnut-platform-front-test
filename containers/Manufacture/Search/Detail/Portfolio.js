@@ -152,7 +152,7 @@ class PortfolioConatiner extends React.Component {
           )}
           {this.state.modalOpen && <Layer />}
         </div>
-        {notLoginUser && (
+        {notLoginUser && !Auth.logged_in_client && !Auth.logged_in_partner && (
           <BlackBox
             top="80"
             content="이 제조사의 포트폴리오를 보고싶다면?"
