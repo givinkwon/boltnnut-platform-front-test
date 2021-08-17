@@ -135,6 +135,7 @@ class Project {
     // 비로그인 시에 경고창 띄우고 종료
     if(!Auth.logged_in_user){
       alert("프로젝트 상세 내용은 볼트앤너트에 등록된 파트너사 혹은 본인만 확인 가능합니다.")
+      return false;
     }
     this.selectedProjectId = id;
     // 디테일 데이터 가져오기
