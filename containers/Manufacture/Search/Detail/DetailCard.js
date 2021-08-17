@@ -1270,7 +1270,7 @@ class DetailCardContainer extends React.Component {
                   )}
                 </QuestionBox>
               </Card>
-              <SubBoxContainer />
+              <SubBox />
 
               {!Auth.logged_in_partner && (
                 <SubCard>

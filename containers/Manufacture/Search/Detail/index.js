@@ -6,6 +6,7 @@ import MobileDetailCardContainer from "./Mobile/MobileDetailCard";
 import ReviewContainer from "./Review/ReviewPage";
 import CompleteContainer from "components/Complete";
 import { inject, observer } from "mobx-react";
+
 // cookie 추가
 import Cookies from "js-cookie";
 
@@ -33,7 +34,7 @@ class SearchDetailConatiner extends React.Component {
     //alert(Cookies.get('partner_view'))
   }
   render() {
-    const { Auth, Partner } = this.props;
+    const { Auth, Partner, width } = this.props;
     console.log(Partner.reviewActiveIndex);
     return (
       <>
@@ -42,7 +43,7 @@ class SearchDetailConatiner extends React.Component {
         )} */}
 
         {Partner.reviewActiveIndex == 0 &&
-          (this.props.width > 767.98 ? (
+          (width && width > 767.98 ? (
             <DetailCardContainer width={this.props.width} />
           ) : (
             <MobileDetailCardContainer width={this.props.width} />
