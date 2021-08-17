@@ -43,6 +43,16 @@ class SnsClientSignupContainer extends React.Component {
 
           <Title32 style={{ marginTop: "20px" }}>추가정보를 입력해 주세요.</Title32>
 
+          
+          {/* userID */}
+          <InputInnerBox>
+            <Title18>아이디</Title18>
+            <CustomInput
+              value={Auth.email}
+              active={Signup.realNameInputState}
+            />
+          </InputInnerBox>
+
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>

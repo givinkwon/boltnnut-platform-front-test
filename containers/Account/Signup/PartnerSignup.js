@@ -20,6 +20,11 @@ const AgreeContent = [
 @inject("Auth", "Signup")
 @observer
 class PartnerSignupContainer extends React.Component {
+  toKakaoSignUp = () => {
+    this.props.Auth.kakaoLogin();
+    // Router.push("/signup/kakao");
+  };
+
   componentDidMount() {
     this.props.Auth.getPathData();
     this.props.Auth.getBusinessData();
@@ -54,7 +59,7 @@ class PartnerSignupContainer extends React.Component {
             <LineDiv />
           </LineDivContainer>
 
-          <KakaoSignUp onClick={() => Router.push("/signup/SnsPartnerSignUp")}>
+          <KakaoSignUp onClick={this.toKakaoSignUp}>
             <KakaoSignupInnerBox>
               <KakaoImgBox>
                 <img src={signupkakao} />

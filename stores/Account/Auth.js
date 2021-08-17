@@ -73,6 +73,9 @@ class Auth {
   @observable registerType = "";
   @observable registerPageIdx = 0;
 
+  // SNS 이메일 저장
+  @observable SNSemail = null;
+
   @action reset = () => {
     this.email = "";
     this.password = "";
@@ -512,7 +515,6 @@ class Auth {
       // scopes,
       success: function (authObj) {
         console.log(authObj);
-        // Kakao.Auth.setAccessToken(authObj.access_token);
 
         Kakao.API.request({
           url: "/v2/user/me",
@@ -523,12 +525,12 @@ class Auth {
             const req = {
               data: {
                 token: authObj.access_token,
-                // username: "qwerqwsdsdsdsder@naver.com",
                 username: kakao_account.email,
                 sns: 1,
               },
             };
             console.log(req);
+
             //POST to "${ROOT_URL}/snsuser/login/"
             AccountAPI.SNSlogin(req)
               //아이디가 DB에 이미 존재할 때
@@ -589,8 +591,8 @@ class Auth {
               .catch((res) => {
                 console.log(res);
                 myStore.isSnsSignup = true;
-                // myStore.email = "qwerqwsdsdsdsder@naver.com";
                 myStore.email = kakao_account.email;
+                this.SNSemail = myStore.email;
                 myStore.phone = "01014242323"; //임시, 비즈니스 채널 연결되면 폰번호 받아올 수 있음
                 Router.push("/signup");
               });
