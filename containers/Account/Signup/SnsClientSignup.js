@@ -49,7 +49,6 @@ class SnsClientSignupContainer extends React.Component {
             <Title18>아이디</Title18>
             <CustomInput
               value={Auth.email}
-              active={Signup.realNameInputState}
             />
           </InputInnerBox>
 
@@ -145,7 +144,7 @@ class SnsClientSignupContainer extends React.Component {
           ) : (
             <SubmitButton
               onClick={() => {
-                Auth.snsSignup();
+                Signup.snsSignup();
               }}
             >
               <ButtonText>가입하기</ButtonText>

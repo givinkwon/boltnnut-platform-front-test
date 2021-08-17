@@ -73,6 +73,7 @@ class Signup {
     console.log(this.realName);
   };
 
+  // 직급
   @observable title = "";
   @action setTitle = (val) => {
     this.title = val;
@@ -354,6 +355,117 @@ class Signup {
       this.individual = "개인";
     }
   };
+
+
+@action snsSignup = async () => {
+  if (!this.email) {
+    await alert("이메일을 입력해주세요.");
+    return;
+  }
+  var emailValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+  if (!emailValid.test(this.email)) {
+    await alert("이메일 형식을 확인해주세요.");
+    return;
+  }
+
+  console.log("email : ", this.email);
+
+  console.log("realName : ", this.realName);
+
+  console.log("company_name : ", this.company_name);
+
+  console.log("phone : ", this.phone);
+
+  // if (true)
+  if (this.type === "client") {
+    if (!this.realName) {
+      await alert("이름을 입력해주세요.");
+      return;
+    }
+
+    this.loading = true;
+    const req = {
+      data: {
+        username: this.email,
+        phone: this.phone,
+        realName: this.realName,
+        name: this.company_name,
+        title: this.title,
+        //business: this.business,
+        type: 0,
+      },
+    };
+    AccountAPI.snsClientSignup(req)
+      .then((res) => {
+        setTimeout(() => {
+          this.loading = false;
+          alert("회원가입 성공");
+          // MyDataLayerPush({ event: "SignUpComplete_Client" });
+          this.reset();
+          Router.push("/login");
+        }, 800);
+      })
+      .catch((e) => {
+        try {
+          alert(e.response.data.message);
+        } catch {
+          console.log(e);
+          console.log(e.response);
+        }
+        this.loading = false;
+      });
+  } else {
+    //파트너
+    if (!this.company_name) {
+      await alert("상호명을 입력해주세요.");
+      return;
+    }
+
+    if (this.marketing == true) {
+      this.marketing = 1;
+    } else {
+      this.marketing = 0;
+    }
+    var formData = new FormData();
+
+    formData.append("username", this.email);
+    // formData.append("password", this.password);
+    formData.append("phone", this.phone);
+    formData.append("type", 1);
+    formData.append("marketing", this.marketing);
+    formData.append("name", this.company_name);
+    formData.append("realName", this.realName);
+
+    this.loading = true;
+    const req = {
+      data: formData,
+    };
+    AccountAPI.partnerSignup(req)
+      .then((res) => {
+        setTimeout(() => {
+          this.loading = false;
+          alert("회원가입 성공");
+          // MyDataLayerPush({ event: "SignUpComplete_Partner" });
+          this.reset();
+          Router.push("/login");
+        }, 800);
+      })
+      .catch((e) => {
+        try {
+          console.log(e);
+          console.log(e.response);
+          console.log(e.response.data);
+          alert(e.response.data.message);
+        } catch {
+          console.log(e);
+          console.log(e.response);
+        }
+        setTimeout(() => {
+          this.loading = false;
+        }, 1500);
+      });
+  }
+}
 }
 
 export default new Signup();
