@@ -293,97 +293,107 @@ class ManufacturerContentContainer extends React.Component {
                       </div>
                     </header>
                     <body>
-                      {this.state.recent_partner.length > 0 ? (
-                        Object.keys(this.state.recent_partner_dic).map(
-                          (name) => (
-                            <RecentPartnerContent>
-                              <div
-                                style={{
-                                  width: 156,
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <div style={{ marginLeft: 3 }}>{name}</div>
-                                <img
-                                  src={close}
+                      <div style={{ height: "100%" }}>
+                        {this.state.recent_partner.length > 0 ? (
+                          Object.keys(this.state.recent_partner_dic).map(
+                            (name) => (
+                              <RecentPartnerContent>
+                                <div
                                   style={{
-                                    marginRight: 3,
-                                    width: 12,
-                                    height: 12,
-                                    cursor: "pointer",
+                                    width: 156,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
                                   }}
+                                >
+                                  <div style={{ marginLeft: 3 }}>{name}</div>
+                                  <img
+                                    src={close}
+                                    style={{
+                                      marginRight: 3,
+                                      width: 12,
+                                      height: 12,
+                                      cursor: "pointer",
+                                    }}
+                                    onClick={async () => {
+                                      console.log(
+                                        this.state.recent_partner_dic
+                                      );
+                                      if (this.state.recent_partner_dic) {
+                                        Cookie.delete_partner_view(
+                                          Cookie.partner_view_list[
+                                            this.state.recent_partner_namearr.indexOf(
+                                              name
+                                            )
+                                          ]
+                                        );
+                                      }
+                                      const expires = new Date();
+                                      expires.setMinutes(
+                                        expires.getMinutes() + 2440
+                                      );
+                                      const a = this.state.recent_partner_dic;
+                                      const b = this.state.recent_partner;
+                                      console.log(b);
+                                      delete a[name];
+                                      b.splice(
+                                        this.state.recent_partner_namearr.indexOf(
+                                          name
+                                        ),
+                                        1
+                                      );
+                                      console.log(b);
+                                      this.setState({
+                                        recent_partner_dic: a,
+                                        recent_partner: b,
+                                      });
+                                      Cookies.set(
+                                        "partner_view",
+                                        Cookie.partner_view_list,
+                                        {
+                                          path: "/",
+                                          expires,
+                                        }
+                                      );
+                                    }}
+                                  ></img>
+                                </div>
+                                <img
+                                  src={this.state.recent_partner_dic[name]}
                                   onClick={async () => {
-                                    console.log(this.state.recent_partner_dic);
-                                    if (this.state.recent_partner_dic) {
-                                      Cookie.delete_partner_view(
-                                        Cookie.partner_view_list[
-                                          this.state.recent_partner_namearr.indexOf(
-                                            name
-                                          )
-                                        ]
+                                    if (Auth.logged_in_client) {
+                                      await Project.getProject(
+                                        "allproject",
+                                        Auth.logged_in_client.id
                                       );
                                     }
-                                    const expires = new Date();
-                                    expires.setMinutes(
-                                      expires.getMinutes() + 2440
-                                    );
-                                    const a = this.state.recent_partner_dic;
-                                    const b = this.state.recent_partner;
-                                    console.log(b);
-                                    delete a[name];
-                                    b.splice(
-                                      this.state.recent_partner_namearr.indexOf(
-                                        name
-                                      ),
-                                      1
-                                    );
-                                    console.log(b);
-                                    this.setState({
-                                      recent_partner_dic: a,
-                                      recent_partner: b,
-                                    });
-                                    Cookies.set(
-                                      "partner_view",
-                                      Cookie.partner_view_list,
-                                      {
-                                        path: "/",
-                                        expires,
-                                      }
+                                    Partner.pushToDetail(
+                                      this.state.recent_partner[
+                                        this.state.recent_partner_namearr.indexOf(
+                                          name
+                                        )
+                                      ]
                                     );
                                   }}
+                                  style={{ cursor: "pointer" }}
                                 ></img>
-                              </div>
-                              <img
-                                src={this.state.recent_partner_dic[name]}
-                                onClick={async () => {
-                                  if (Auth.logged_in_client) {
-                                    await Project.getProject(
-                                      "allproject",
-                                      Auth.logged_in_client.id
-                                    );
-                                  }
-                                  Partner.pushToDetail(
-                                    this.state.recent_partner[
-                                      this.state.recent_partner_namearr.indexOf(
-                                        name
-                                      )
-                                    ]
-                                  );
-                                }}
-                                style={{ cursor: "pointer" }}
-                              ></img>
-                            </RecentPartnerContent>
+                              </RecentPartnerContent>
+                            )
                           )
-                        )
-                      ) : (
-                        <div>
-                          최근에 본 제조사가
-                          <br />
-                          없습니다.
-                        </div>
-                      )}
+                        ) : (
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              height: "100%",
+                            }}
+                          >
+                            최근에 본 제조사가
+                            <br />
+                            없습니다.
+                          </div>
+                        )}
+                      </div>
                     </body>
                   </RecentPartner>
                   <MyInfo>

@@ -18,6 +18,7 @@ class Request {
   // 의뢰 관련 index
   // 의뢰 완료 페이지로 넘어가기 위한 Trigger
   @observable newIndex = 0;
+  @observable requestTabIdx = 0;
 
   // 의뢰하기 접근한 이전 페이지 => 0인 경우 Nav 바에서, 1인 경우 제조사 검색에서, 2인 경우 제조사 디테일
   @observable request_type = "";
@@ -39,6 +40,8 @@ class Request {
   @observable request_drawing_set = []; // 의뢰 도면 파일
   @observable request_region = ""; // 의뢰 지역 선택
   @observable request_region_state = 0; // 의뢰 지역 협의 state => 체크 시에는 1, 미 체크 시에는 0
+
+  @observable loadingFlag = false; //의뢰 요청하기 버튼 클릭 후 로딩
 
   // 파트너 상세에서 의뢰서 클릭 한 경우에 id를 넘겨주는 것
   @action partner_request = (val) => {
@@ -156,7 +159,6 @@ class Request {
 
   // 의뢰서 제출 시 의뢰서 만들기
   @action requestSubmit = async () => {
-
     // error 처리
     if (this.request_state == -1) {
       alert("문의 목적을 선택해주세요");
@@ -269,11 +271,11 @@ class Request {
         await alert("휴대전화를 입력해주세요.");
         return false;
       }
-      
-      formData.append("email", this.email)
-      formData.append("password", this.password)
-      formData.append("phone", this.phone)
-      formData.append("login_state", 0) // 비로그인 시
+
+      formData.append("email", this.email);
+      formData.append("password", this.password);
+      formData.append("phone", this.phone);
+      formData.append("login_state", 0); // 비로그인 시
 
       // axois 쏘기
       const req = {
@@ -295,41 +297,38 @@ class Request {
           console.log(e);
           console.log(e.response);
         });
-      }
+    }
 
-      // 로그인 시
-      else {
-        formData.append("login_state", 1) // 로그인 시
-        const Token = localStorage.getItem("token");
-        console.log(Token);
-  
-        // axois 쏘기
-        const req = {
-          headers: {
-            Authorization: `Token ${Token}`,
-          },
-          data: formData,
-        };
-        // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
-        this.newIndex = 1;
-        console.log(req);
-  
-        RequestAPI.create(req)
-          .then((res) => {
-            console.log("create: ", res);
-            // page 넘기기 위한 트리거 만들기
-            this.newIndex = 1;
-            // GA 데이터 보내기
-            MyDataLayerPush({ event: "request_Drawing" });
-          })
-          .catch((e) => {
-            console.log(e);
-            console.log(e.response);
-          });
-      }
+    // 로그인 시
+    else {
+      formData.append("login_state", 1); // 로그인 시
+      const Token = localStorage.getItem("token");
+      console.log(Token);
 
-    
-  
+      // axois 쏘기
+      const req = {
+        headers: {
+          Authorization: `Token ${Token}`,
+        },
+        data: formData,
+      };
+      // page 넘기기 위한 트리거 만들기 : 시간이 너무 오래 걸려서 여기서 index 변경
+      this.newIndex = 1;
+      console.log(req);
+
+      RequestAPI.create(req)
+        .then((res) => {
+          console.log("create: ", res);
+          // page 넘기기 위한 트리거 만들기
+          this.newIndex = 1;
+          // GA 데이터 보내기
+          MyDataLayerPush({ event: "request_Drawing" });
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log(e.response);
+        });
+    }
   };
 
   // 비회원 회원가입 전용

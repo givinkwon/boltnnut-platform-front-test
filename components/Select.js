@@ -30,6 +30,10 @@ const customStyles = {
     border: "1px solid #c7c7c7",
     display: "flex",
   }),
+  placeholder: () => ({
+    color: "#c6c7cc",
+    fontSize: 16,
+  }),
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
     const transition = "opacity 300ms";
