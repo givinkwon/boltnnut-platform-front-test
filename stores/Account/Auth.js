@@ -596,6 +596,7 @@ class Auth {
                 this.SNSemail = myStore.email;
                 myStore.phone = "01014242323"; //임시, 비즈니스 채널 연결되면 폰번호 받아올 수 있음
                 Signup.phone = myStore.phone;
+                Signup.email = myStore.email;
                 Router.push("/signup");
               });
             console.log(kakao_account);
