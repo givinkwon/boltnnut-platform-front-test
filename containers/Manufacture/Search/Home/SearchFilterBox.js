@@ -241,7 +241,7 @@ class SearchFilterConatiner extends React.Component {
         <FilterCategory>
           <Category>
             <CategoryName>카테고리</CategoryName>
-            <Field>
+            <Field active={this.state.category_arrow}>
               <div>전체</div>
               <img
                 src={this.state.category_arrow ? up_arrow : down_arrow}
@@ -254,7 +254,7 @@ class SearchFilterConatiner extends React.Component {
           </Category>
           <Category>
             <CategoryName>업체 분류</CategoryName>
-            <Field>
+            <Field active={this.state.classify_arrow}>
               <div>전체</div>
               <img
                 src={this.state.classify_arrow ? up_arrow : down_arrow}
@@ -267,7 +267,7 @@ class SearchFilterConatiner extends React.Component {
           </Category>
           <Category>
             <CategoryName>지역</CategoryName>
-            <Field>
+            <Field active={this.state.location_arrow}>
               <div>전체</div>
               <img
                 src={this.state.location_arrow ? up_arrow : down_arrow}

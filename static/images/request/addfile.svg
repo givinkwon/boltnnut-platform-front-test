@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0933b3;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <g id="그룹_5743" data-name="그룹 5743" transform="translate(-779 -2398)">
+    <circle id="타원_698" data-name="타원 698" class="cls-1" cx="11" cy="11" r="11" transform="translate(779 2398)"/>
+    <g id="그룹_1802" data-name="그룹 1802" transform="translate(784.772 2403.778)">
+      <line id="선_1053" data-name="선 1053" class="cls-2" y2="10" transform="translate(5.228 0.221)"/>
+      <line id="선_1054" data-name="선 1054" class="cls-2" y2="10.456" transform="translate(10.456 5.221) rotate(90)"/>
+    </g>
+  </g>
+</svg>

@@ -9,6 +9,7 @@ import { CompressedPixelFormat } from "three";
 const addButtonImg = "static/images/components/Input2/Mask.png";
 const deleteButtonImg = "/static/images/delete.png";
 const clip = "./static/images/request/clip.svg";
+const addfile = "./static/images/request/addfile.svg";
 
 @inject("Request")
 @observer
@@ -110,17 +111,24 @@ class InputComponent extends React.Component {
                   }}
                   style={{ display: "flex", alignItems: "center" }}
                 >
-                  <img src={addButtonImg} style={{ width: 30, height: 30 }} />
+                  <img src={addfile} />
                   <span
                     style={{
-                      fontSize: 16,
-                      lineHeight: 2.13,
-                      letterSpacing: -0.4,
-                      color: "#0933b3",
-                      marginLeft: 8,
+                      fontSize: 15,
+                      lineHeight: 2.67,
+                      letterSpacing: -0.38,
+                      marginLeft: 20,
                     }}
                   >
-                    파일 첨부
+                    파일을 이곳에 드래그 또는{" "}
+                    <span
+                      style={{
+                        color: "#0933b3",
+                      }}
+                    >
+                      {" "}
+                      파일찾기
+                    </span>
                   </span>
                 </div>
               </AddFile>
@@ -142,7 +150,6 @@ const InputBox = styled.div`
   justify-content: center;
   color: #404040;
   border-radius: 3px;
-  background-color: #ffffff;
   box-sizing: border-box;
 
   >div{
@@ -278,7 +285,7 @@ const FileText = styled(Content.FontSize18)`
   align-items: center;
   justify-content: center;
   padding: 20px;
-  border: solid 0.5px #c7c7c7;
+  border: dashed 0.5px #c7c7c7;
   border-radius: 3px;
   background-color: #f6f6f6;
   flex-wrap: wrap;

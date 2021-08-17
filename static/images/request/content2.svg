@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="76" viewBox="0 0 320 76">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #999;
+        font-size: 15px;
+        font-family: NotoSansCJKkr-Regular, Noto Sans CJK KR;
+        letter-spacing: -0.025em;
+      }
+
+      .cls-2 {
+        fill: #555963;
+      }
+
+      .cls-2, .cls-3 {
+        font-family: NotoSansCJKkr-Bold, Noto Sans CJK KR;
+        font-weight: 700;
+      }
+
+      .cls-3 {
+        fill: #1e2222;
+      }
+    </style>
+  </defs>
+  <text id="볼트앤너트는_단순히_설계를_해주고_제조사들과의_연결만_해주는_것이_아니라_함께_고민을_나누어_준다는_것이_너무_감사했고_만족스러웠습니다." data-name="볼트앤너트는 단순히 설계를 해주고 제조사들과의 
+연결만 해주는 것이 아니라 함께 고민을 나누어 준다는 
+것이 너무 감사했고, 만족스러웠습니다." class="cls-1" transform="translate(0 17)"><tspan x="0" y="0">볼트앤너트는 단순히 설계를 해주고 제조사들과의 </tspan><tspan x="0" y="27">연결만 해주는 것이 아니라</tspan><tspan class="cls-2" y="27"> </tspan><tspan class="cls-3" y="27">함께 고민을 나누어 준다는 </tspan><tspan class="cls-3"><tspan x="0" y="54">것이 너무 감사했고, 만족스러웠습니다.</tspan></tspan></text>
+</svg>

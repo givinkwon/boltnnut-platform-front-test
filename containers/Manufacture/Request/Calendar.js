@@ -116,7 +116,17 @@ class Week extends Component {
           >
             {dayInfo.getDay}
             {this.activeHandler(dayInfo.getDay) && (
-              <div style={{ fontSize: 12, fontWeight: 500 }}>종료일</div>
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 500,
+                  position: "absolute",
+                  marginTop: 75,
+                  color: "#0933b3",
+                }}
+              >
+                종료일
+              </div>
             )}
           </DayBox>
         );
@@ -341,7 +351,7 @@ const MainContainer = styled.div`
   margin-top: 15px;
   background-color: white;
   position: absolute;
-  top: 22.8%;
+  top: 30%;
   z-index: 1;
 `;
 const Header = styled.div`
