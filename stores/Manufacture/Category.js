@@ -35,6 +35,7 @@ class Category {
   @observable city_selected = [];
   @observable material_selected = [];
   @observable develop_selected = [];
+  @observable category_selected_tagbox = [];
 
   //전체<< 체크박스 체크상태 저장하는 dictionary
   @observable checkAllState = {};
@@ -106,7 +107,7 @@ class Category {
 
   // @observable setCheckAllState = (type) => {
   //   const temp = new Array();
-  //   temp.push(false);    
+  //   temp.push(false);
 
   //   // const typeArray = ["business","category"]
   //   this.checkAllState[type] = temp;
@@ -245,18 +246,20 @@ class Category {
   // state : 선택된 대카테고리 테이블
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
-  @action add_selected = async (state, id, container = "search") => {
+  @action add_selected = async (state, id, data, container = "search") => {
     console.log(typeof id);
     // 카테고리 선택
     if (state == "business") {
       if (this.business_selected.indexOf(id) < 0) {
         this.business_selected.push(id);
+        this.category_selected_tagbox.push({ id: id, type: state, data: data });
       }
     }
     // 카테고리 선택
     if (state == "category") {
       if (this.category_selected.indexOf(id) < 0) {
         this.category_selected.push(id);
+        this.category_selected_tagbox.push({ id: id, type: state, data: data });
       }
     }
 
@@ -264,16 +267,19 @@ class Category {
     if (state == "city") {
       this.city_selected.push(id);
       console.log(toJS(this.city_selected));
+      this.category_selected_tagbox.push({ id: id, type: state, data: data });
     }
 
     // 공정 선택
     if (state == "develop") {
       this.develop_selected.push(id);
+      this.category_selected_tagbox.push({ id: id, type: state, data: data });
     }
 
     // 소재 선택
     if (state == "material") {
       this.material_selected.push(id);
+      this.category_selected_tagbox.push({ id: id, type: state, data: data });
     }
 
     // search 페이지에서 왔을 때만
@@ -307,30 +313,35 @@ class Category {
     if (state == "business") {
       deleteIdx = this.business_selected.indexOf(id);
       this.business_selected.splice(deleteIdx, 1);
+      this.category_selected_tagbox.splice(deleteIdx, 1);
     }
 
     // 업체 분류 선택
     if (state == "category") {
       deleteIdx = this.category_selected.indexOf(id);
       this.category_selected.splice(deleteIdx, 1);
+      this.category_selected_tagbox.splice(deleteIdx, 1);
     }
 
     // 지역 선택
     if (state == "city") {
       deleteIdx = this.city_selected.indexOf(id);
       this.city_selected.splice(deleteIdx, 1);
+      this.category_selected_tagbox.splice(deleteIdx, 1);
     }
 
     // 공정 선택
     if (state == "develop") {
       deleteIdx = this.develop_selected.indexOf(id);
       this.develop_selected.splice(deleteIdx, 1);
+      this.category_selected_tagbox.splice(deleteIdx, 1);
     }
 
     // 소재 선택
     if (state == "material") {
       deleteIdx = this.material_selected.indexOf(id);
       this.material_selected.splice(deleteIdx, 1);
+      this.category_selected_tagbox.splice(deleteIdx, 1);
     }
 
     // search 페이지에서 왔을 때만

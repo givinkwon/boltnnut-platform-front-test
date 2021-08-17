@@ -124,7 +124,7 @@ const mobileCustomStyles = {
   },
 };
 
-@inject("Auth", "Project", "Request", "Partner")
+@inject("Auth", "Project", "Request", "Partner", "Category")
 @observer
 class SearchFilterConatiner extends React.Component {
   state = {
@@ -308,6 +308,21 @@ class SearchFilterConatiner extends React.Component {
           <FilterModalContainer type={this.state.type}></FilterModalContainer>
         )}
 
+        <SelectedCategoryContainer>
+          {this.props.Category.category_selected_tagbox.length > 0 &&
+            this.props.Category.category_selected_tagbox.map((v, idx) => (
+              <SelectedCategoryBox>
+                {console.log("lendering!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!fuck")}
+                <div style={{ marginLeft: "10px" }}>{v.data}</div>
+                <CloseImgBox
+                  src="/static/images/xbox.svg"
+                  onClick={() =>
+                    this.props.Category.remove_selected(v.type, v.id)
+                  }
+                />
+              </SelectedCategoryBox>
+            ))}
+        </SelectedCategoryContainer>
       </ContainerV2>
     );
   }
@@ -905,7 +920,6 @@ const MobileSelect = styled(MobileSelectComponent)`
   }
 `;
 
-
 const Box = styled.div`
   width: 220px;
 
@@ -1240,4 +1254,29 @@ const Button = styled.button`
   letter-spacing: -0.45px;
   color: #0933b3;
   font-weight: normal;
+`;
+
+const SelectedCategoryContainer = styled.div`
+  display: inline-flex;
+  gap: 15px;
+  width: 1140px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+`;
+
+const SelectedCategoryBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eeeeee;
+  border-radius: 20px;
+  width: auto;
+  height: 30px;
+`;
+
+const CloseImgBox = styled.img`
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+  margin: 0px 10px 0px 10px;
 `;

@@ -71,7 +71,7 @@ class FilterModalContainer extends React.Component {
     }
   };
 
-  buttonClick = (type, idx) => {
+  buttonClick = (type, idx, data) => {
     const { Category } = this.props;
 
     // 공정 클릭 했을 때
@@ -81,7 +81,7 @@ class FilterModalContainer extends React.Component {
         Category.remove_selected(type, idx);
       } else {
         console.log("add selected");
-        Category.add_selected(type, idx);
+        Category.add_selected(type, idx, data);
       }
     }
     // 소재 클릭 했을 때
@@ -91,7 +91,7 @@ class FilterModalContainer extends React.Component {
         Category.remove_selected(type, idx);
       } else {
         console.log("add selected");
-        Category.add_selected(type, idx);
+        Category.add_selected(type, idx, data);
       }
     }
 
@@ -102,7 +102,7 @@ class FilterModalContainer extends React.Component {
         Category.remove_selected(this.props.type, idx);
       } else {
         console.log("add selected");
-        Category.add_selected(this.props.type, idx);
+        Category.add_selected(this.props.type, idx, data);
       }
     }
 
@@ -114,7 +114,7 @@ class FilterModalContainer extends React.Component {
         Category.remove_selected(this.props.type, idx);
       } else {
         console.log("add selected");
-        Category.add_selected(this.props.type, idx);
+        Category.add_selected(this.props.type, idx, data);
       }
       // this.setState({ subSelectIdx: idx });
     }
@@ -193,7 +193,7 @@ class FilterModalContainer extends React.Component {
                   return (
                     <MainCategoryButton
                       onClick={() => {
-                        this.buttonClick("main", idx);
+                        this.buttonClick("main", idx, data);
                       }}
                       active={this.activeHandler("main", idx)}
                     >
@@ -217,7 +217,7 @@ class FilterModalContainer extends React.Component {
                   return (
                     <MainCategoryButton
                       onClick={() => {
-                        this.buttonClick("main", idx);
+                        this.buttonClick("main", idx, data);
                       }}
                       active={this.activeHandler("main", idx)}
                     >
@@ -241,7 +241,7 @@ class FilterModalContainer extends React.Component {
                 return (
                   <MainCategoryButton
                     onClick={() => {
-                      this.buttonClick("main", idx);
+                      this.buttonClick("main", idx, data);
                     }}
                     active={this.activeHandler("main", idx)}
                   >
@@ -278,7 +278,7 @@ class FilterModalContainer extends React.Component {
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("sub", sub_data.id);
+                        this.buttonClick("sub", sub_data.id, sub_data.category);
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >
@@ -301,7 +301,7 @@ class FilterModalContainer extends React.Component {
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("main", data.id);
+                        this.buttonClick("main", data.id, data);
                       }}
                       active={Category.categoryActiveHandler(data.id, type)}
                     >
@@ -327,7 +327,7 @@ class FilterModalContainer extends React.Component {
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("sub", sub_data.id);
+                        this.buttonClick("sub", sub_data.id, sub_data.category);
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >
@@ -354,7 +354,11 @@ class FilterModalContainer extends React.Component {
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("develop", sub_data.id);
+                        this.buttonClick(
+                          "develop",
+                          sub_data.id,
+                          sub_data.category
+                        );
                       }}
                       active={Category.categoryActiveHandler(
                         sub_data.id,
@@ -384,7 +388,11 @@ class FilterModalContainer extends React.Component {
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("material", sub_data.id);
+                        this.buttonClick(
+                          "material",
+                          sub_data.id,
+                          sub_data.category
+                        );
                       }}
                       active={Category.categoryActiveHandler(
                         sub_data.id,
