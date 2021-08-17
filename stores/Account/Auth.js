@@ -521,7 +521,7 @@ class Auth {
           url: "/v2/user/me",
           success: function ({ kakao_account }) {
             // const { profile } = kakao_account;
-            // console.log(profile);
+            console.log(kakao_account, kakao_account.email);
 
             const req = {
               data: {
@@ -594,8 +594,7 @@ class Auth {
                 myStore.isSnsSignup = true;
                 myStore.email = kakao_account.email;
                 this.SNSemail = myStore.email;
-                myStore.phone = "01014242323"; //임시, 비즈니스 채널 연결되면 폰번호 받아올 수 있음
-                Signup.phone = myStore.phone;
+                Signup.phone = kakao_account.phone_number;
                 Signup.email = myStore.email;
                 Router.push("/signup");
               });
