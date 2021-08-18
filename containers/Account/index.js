@@ -81,14 +81,13 @@ export default AccountConatiner;
 
 const Header = styled.div`
   background-color: #ffffff;
-  width: 100%;
+  width: 1200px;
   height: 116px;
   font-family: NotoSansCJKkr;
 `;
 
 const HeaderTitle = styled.div`
   height: 100%;
-  padding-left: 118px;
   display: flex;
   align-items: flex-end;
   font-size: 16px;
