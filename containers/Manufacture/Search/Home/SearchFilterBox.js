@@ -132,8 +132,8 @@ class SearchFilterBox extends React.Component {
               <img
                 src={this.state.category_arrow ? up_arrow : down_arrow}
                 onClick={() => {
-                  this.dropdownHandler("business");
-                  this.activeHandler("category_arrow");
+                  this.dropdownHandler("category");
+                  this.activeHandler("classify_arrow");
                 }}
               ></img>
             </Field>
@@ -145,8 +145,8 @@ class SearchFilterBox extends React.Component {
               <img
                 src={this.state.classify_arrow ? up_arrow : down_arrow}
                 onClick={() => {
-                  this.dropdownHandler("category");
-                  this.activeHandler("classify_arrow");
+                  this.dropdownHandler("business");
+                  this.activeHandler("category_arrow");
                 }}
               ></img>
             </Field>
