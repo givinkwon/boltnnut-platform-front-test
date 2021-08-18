@@ -307,41 +307,46 @@ class Category {
   // state : 선택된 대카테고리 테이블
   // id : 선택된 중카테고리 id
   // container : 제조사 찾기 | 회원가입 페이지에서 사용중
-  @action remove_selected = async (state, id, container = "search") => {
+  @action remove_selected = async (state, id, container = "search", data) => {
     let deleteIdx;
+    let deletedata;
+
+    // 태그 박스 삭제
+    this.category_selected_tagbox.map((sub_data, idx) => {
+      // 데이터가 있는 경우
+      if(sub_data.data == data){
+        this.category_selected_tagbox.splice(idx, 1);
+      }
+    })
+
     // 카테고리 선택
     if (state == "business") {
       deleteIdx = this.business_selected.indexOf(id);
       this.business_selected.splice(deleteIdx, 1);
-      this.category_selected_tagbox.splice(deleteIdx, 1);
     }
 
     // 업체 분류 선택
     if (state == "category") {
       deleteIdx = this.category_selected.indexOf(id);
       this.category_selected.splice(deleteIdx, 1);
-      this.category_selected_tagbox.splice(deleteIdx, 1);
     }
 
     // 지역 선택
     if (state == "city") {
       deleteIdx = this.city_selected.indexOf(id);
       this.city_selected.splice(deleteIdx, 1);
-      this.category_selected_tagbox.splice(deleteIdx, 1);
     }
 
     // 공정 선택
     if (state == "develop") {
       deleteIdx = this.develop_selected.indexOf(id);
       this.develop_selected.splice(deleteIdx, 1);
-      this.category_selected_tagbox.splice(deleteIdx, 1);
     }
 
     // 소재 선택
     if (state == "material") {
       deleteIdx = this.material_selected.indexOf(id);
       this.material_selected.splice(deleteIdx, 1);
-      this.category_selected_tagbox.splice(deleteIdx, 1);
     }
 
     // search 페이지에서 왔을 때만
@@ -353,6 +358,7 @@ class Category {
   categoryActiveHandler = (idx, state) => {
     if (state == "business") {
       if (this.business_selected.includes(idx)) {
+        console.log(idx);
         return true;
       } else {
         return false;
@@ -362,6 +368,7 @@ class Category {
     // 업체 분류 선택
     if (state == "category") {
       if (this.category_selected.includes(idx)) {
+        console.log(idx);
         return true;
       } else {
         return false;
@@ -371,6 +378,7 @@ class Category {
     // 지역 선택
     if (state == "city") {
       if (this.city_selected.includes(idx)) {
+        console.log(idx);
         return true;
       } else {
         return false;
@@ -390,6 +398,7 @@ class Category {
     // 소재 선택
     if (state == "material") {
       if (this.material_selected.includes(idx)) {
+        console.log(idx);
         return true;
       } else {
         return false;

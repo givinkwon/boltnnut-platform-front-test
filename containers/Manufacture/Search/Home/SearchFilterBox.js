@@ -10,123 +10,9 @@ const filter_img = "static/images/filter.svg";
 const down_arrow = "/static/icon/down_arrow.svg";
 const up_arrow = "/static/icon/up_arrow.svg";
 
-const customStyles = {
-  container: (base, state) => {
-    return {
-      ...base,
-      zIndex: state.isFocused ? "98" : "auto", //Only when current state focused
-      width: 185,
-    };
-  },
-  dropdownIndicator: () => ({
-    color: "#555555",
-    width: 32,
-    height: 32,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    color: state.isSelected ? "#000000" : "#555555",
-    backgroundColor: "#fff",
-    borderRadius: 0,
-    padding: 16,
-    fontSize: 16,
-  }),
-  control: () => ({
-    fontSize: 16,
-    border: "1px solid #e6e6e6",
-    backgroundColor: "#fff",
-    display: "flex",
-    borderRadius: 6,
-  }),
-  singleValue: (provided, state) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = "opacity 300ms";
-    return { ...provided, opacity, transition };
-  },
-};
-
-const tabletCustomStyles = {
-  container: (base, state) => {
-    return {
-      ...base,
-      zIndex: state.isFocused ? "98" : "auto", //Only when current state focused
-      width: 160,
-    };
-  },
-  dropdownIndicator: () => ({
-    color: "#555555",
-    width: 30,
-    height: 30,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    color: state.isSelected ? "#000000" : "#555555",
-    backgroundColor: "#fff",
-    borderRadius: 0,
-    padding: 14,
-    fontSize: 14,
-  }),
-  control: () => ({
-    fontSize: 14,
-    border: "1px solid #e6e6e6",
-    backgroundColor: "#fff",
-    display: "flex",
-    borderRadius: 6,
-  }),
-  singleValue: (provided, state) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = "opacity 300ms";
-    return { ...provided, opacity, transition };
-  },
-};
-
-const mobileCustomStyles = {
-  container: (base, state) => {
-    return {
-      ...base,
-      zIndex: state.isFocused ? "98" : "auto", //Only when current state focused
-      width: 130,
-    };
-  },
-  dropdownIndicator: () => ({
-    color: "#555555",
-    width: 28,
-    height: 28,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    color: state.isSelected ? "#000000" : "#555555",
-    backgroundColor: "#fff",
-    borderRadius: 0,
-    padding: 12,
-    fontSize: 12,
-  }),
-  control: () => ({
-    fontSize: 12,
-    border: "1px solid #e6e6e6",
-    backgroundColor: "#fff",
-    display: "flex",
-    borderRadius: 6,
-  }),
-  singleValue: (provided, state) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = "opacity 300ms";
-    return { ...provided, opacity, transition };
-  },
-};
-
 @inject("Auth", "Project", "Request", "Partner", "Category")
 @observer
-class SearchFilterConatiner extends React.Component {
+class SearchFilterBox extends React.Component {
   state = {
     search: "",
     modal_open: false,
@@ -230,8 +116,8 @@ class SearchFilterConatiner extends React.Component {
   };
 
   render() {
-    const { Partner, width } = this.props;
-    console.log(this.state.type);
+    const { Category, Partner } = this.props;
+
     return (
       <ContainerV2>
         {console.log(`Active : ${Partner.subButtonActive}`)}
@@ -239,7 +125,7 @@ class SearchFilterConatiner extends React.Component {
         <FilterBoxSearchBar />
 
         <FilterCategory>
-          <Category>
+          <CategoryContainer>
             <CategoryName>카테고리</CategoryName>
             <Field active={this.state.category_arrow}>
               <div>전체</div>
@@ -251,8 +137,8 @@ class SearchFilterConatiner extends React.Component {
                 }}
               ></img>
             </Field>
-          </Category>
-          <Category>
+          </CategoryContainer>
+          <CategoryContainer>
             <CategoryName>업체 분류</CategoryName>
             <Field active={this.state.classify_arrow}>
               <div>전체</div>
@@ -264,8 +150,8 @@ class SearchFilterConatiner extends React.Component {
                 }}
               ></img>
             </Field>
-          </Category>
-          <Category>
+          </CategoryContainer>
+          <CategoryContainer>
             <CategoryName>지역</CategoryName>
             <Field active={this.state.location_arrow}>
               <div>전체</div>
@@ -277,8 +163,8 @@ class SearchFilterConatiner extends React.Component {
                 }}
               ></img>
             </Field>
-          </Category>
-          <Category>
+          </CategoryContainer>
+          <CategoryContainer>
             <ProcessMaterialBox>공정/소재</ProcessMaterialBox>
             <Material>
               <div
@@ -302,22 +188,22 @@ class SearchFilterConatiner extends React.Component {
                 ></img>
               </div>
             </Material>
-          </Category>
+          </CategoryContainer>
         </FilterCategory>
         {Partner.filter_dropdown && (
           <FilterModalContainer type={this.state.type}></FilterModalContainer>
         )}
 
         <SelectedCategoryContainer>
-          {this.props.Category.category_selected_tagbox.length > 0 &&
-            this.props.Category.category_selected_tagbox.map((v, idx) => (
+          {Category.category_selected_tagbox.length > 0 &&
+            Category.category_selected_tagbox.map((v, idx) => (
               <SelectedCategoryBox>
-                {console.log("lendering!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!fuck")}
+
                 <div style={{ marginLeft: "10px" }}>{v.data}</div>
                 <CloseImgBox
                   src="/static/images/xbox.svg"
                   onClick={() =>
-                    this.props.Category.remove_selected(v.type, v.id)
+                    this.props.Category.remove_selected(v.type, v.idx, "search", v.data)
                   }
                 />
               </SelectedCategoryBox>
@@ -328,7 +214,7 @@ class SearchFilterConatiner extends React.Component {
   }
 }
 
-export default SearchFilterConatiner;
+export default SearchFilterBox;
 
 const TestDiv = styled.div`
   width: 792px;
@@ -349,7 +235,7 @@ const FilterCategory = styled.div`
   border: none;
 `;
 
-const Category = styled.div`
+const CategoryContainer = styled.div`
   background: none;
   border: none;
   margin-right: 20px;
