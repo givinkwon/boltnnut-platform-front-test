@@ -117,7 +117,7 @@ class SearchFilterBox extends React.Component {
 
   render() {
     const { Category, Partner } = this.props;
-
+    console.log(Category.category_selected_tagbox)
     return (
       <ContainerV2>
         {console.log(`Active : ${Partner.subButtonActive}`)}

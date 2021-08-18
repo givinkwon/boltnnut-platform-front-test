@@ -310,7 +310,7 @@ class Category {
   @action remove_selected = async (state, id, container = "search", data) => {
     let deleteIdx;
     let deletedata;
-
+    console.log(this.category_selected_tagbox)
     // 태그 박스 삭제
     this.category_selected_tagbox.map((sub_data, idx) => {
       // 데이터가 있는 경우
