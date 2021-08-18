@@ -437,6 +437,7 @@ class Partner {
 
     if (!this.requestModalActive && !this.modalActive) {
       console.log("Detail click");
+      console.log(item, idx)
       this.category_name_list = null;
 
       this.category_name_list = this.category_dic[idx];
@@ -457,7 +458,7 @@ class Partner {
         await this.getReviewByPartner(this.partner_detail_list[0].item.id);
         await this.getQuestion(this.partner_detail_list[0].item.id);
         await this.getCityName(this.partner_detail_list[0].item.city);
-
+        
         Router.push("/search/detail");
         return;
       }
@@ -2052,88 +2053,6 @@ class Partner {
     );
     console.log(toJS(this.review_user_ary));
   }
-  // @action getPartnerByRegion = async (page = 1) => {
-  //   this.partner_list = [];
-  //   //this.data_dt = [];
-  //   console.log(this.filter_region);
-  //   const token = localStorage.getItem("token");
-  //   let req = {};
-  //   if (!this.filter_region) {
-  //     req = {
-  //       params: {
-  //         // search: search_text,
-  //         page: page,
-  //         // ordering: "-id",
-  //       },
-  //       // headers: {
-  //       //   Authorization: `Token ${token}`,
-  //       // },
-  //     };
-  //   } else {
-  //     req = {
-  //       params: {
-  //         //city: this.filter_region === 0 ? "" : this.filter_region,
-  //         city: this.filter_region,
-  //         // search: search_text,
-  //         page: page,
-
-  //         // ordering: "-id",
-  //       },
-  //       // headers: {
-  //       //   Authorization: `Token ${token}`,
-  //       // },
-  //     };
-  //   }
-
-  //   PartnerAPI.getPartners(req)
-  //     .then((res) => {
-  //       this.partner_list = [];
-  //       this.category_ary = [];
-
-  //       this.partner_list = res.data.results;
-  //       // this.category_ary = res.data.results.category_middle;
-
-  //       // console.log(toJS(category_ary));
-  //       this.partner_next = res.data.next;
-  //       this.partner_count = res.data.count;
-  //       this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-  //       console.log(toJS(this.partner_list));
-
-  //       //this.getCategory();
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //       console.log(e.response);
-  //     });
-  // };
-  // @action getPartnerCategory = async (page = 1) => {
-  //   req = {
-  //     params: {
-  //       // search: search_text,
-  //       page: page,
-  //       // ordering: "-id",
-  //     },
-  //     // headers: {
-  //     //   Authorization: `Token ${token}`,
-  //     // },
-  //   };
-
-  //   PartnerAPI.getPartner(req)
-  //     .then((res) => {
-  //       this.category_list = [];
-
-  //       this.category_list = res.data.results.category_middle;
-  //       // this.partner_next = res.data.next;
-  //       // this.partner_count = res.data.count;
-  //       // this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-  //       // console.log(toJS(this.partner_list));
-  //       //this.getCategory();
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //       console.log(e.response);
-  //     });
-  // };
 
   @action setclickLog = async (formData) => {
     const req = {

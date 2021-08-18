@@ -36,6 +36,7 @@ class SearchDetailConatiner extends React.Component {
   render() {
     const { Auth, Partner, width } = this.props;
     console.log(Partner.reviewActiveIndex);
+    console.log(width)
     return (
       <>
         {/* {Partner.reviewActiveIndex == 0 && (

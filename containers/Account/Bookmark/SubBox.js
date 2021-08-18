@@ -62,7 +62,7 @@ class SubBoxContainer extends React.Component {
                           Auth.logged_in_client.id
                         );
                       }
-                      Partner.pushToDetail(item, idx);
+                      Partner.pushToDetail(item.bookmark_partner, idx);
                     }}
                     style={{ width: "100%" }}
                   >

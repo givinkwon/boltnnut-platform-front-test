@@ -98,7 +98,7 @@ class PortfolioConatiner extends React.Component {
           style={{ display: "flex", justifyContent: "center" }}
         >
           <Content>
-            {data.portfolio_set.length != 0 ? (
+            {data.portfolio_set && data.portfolio_set.length != 0 ? (
               <Slider {...settings} ref={(slider) => (this.slider = slider)}>
                 {data.portfolio_set.map((item, idx) => {
                   return (
@@ -122,7 +122,7 @@ class PortfolioConatiner extends React.Component {
               </>
             )}
 
-            {data && data.portfolio_set.length > 0 && !notLoginUser && (
+            {data.portfolio_set && data.portfolio_set.length > 0 && !notLoginUser && (
               <>
                 <Arrow left onClick={this.sliderPrev} />
                 <Arrow right onClick={this.sliderNext} />
@@ -163,7 +163,7 @@ class PortfolioConatiner extends React.Component {
           {notLoginUser && <Block />}
 
           <SmallImageContainer>
-            {data.portfolio_set.length != 0 &&
+            {data.portfolio_set && data.portfolio_set.length != 0 &&
               data.portfolio_set.map((item, idx) => {
                 return (
                   <SmallImageBox>

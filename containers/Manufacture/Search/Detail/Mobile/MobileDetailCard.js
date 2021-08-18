@@ -184,9 +184,11 @@ class MobileDetailCardContainer extends React.Component {
 
     // 비즈니스 가지고 오기
     console.log(toJS(Partner.partner_detail_list[0].item.business));
+    if(Partner.partner_detail_list[0].item.business != undefined){
     toJS(Partner.partner_detail_list[0].item.business).map(
       async (item) => await Partner.getBusinessName(item)
     );
+    }
     console.log(toJS(Partner.business_name));
 
     await this.countTotalPoint();
