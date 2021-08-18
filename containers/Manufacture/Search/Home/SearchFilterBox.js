@@ -127,40 +127,42 @@ class SearchFilterBox extends React.Component {
         <FilterCategory>
           <CategoryContainer>
             <CategoryName>카테고리</CategoryName>
-            <Field active={this.state.category_arrow}>
-              <div>전체</div>
-              <img
-                src={this.state.category_arrow ? up_arrow : down_arrow}
-                onClick={() => {
+            <Field active={this.state.classify_arrow}                 
+            onClick={() => {
                   this.dropdownHandler("category");
                   this.activeHandler("classify_arrow");
-                }}
+                }}>
+              <div>전체</div>
+              <img
+                src={this.state.classify_arrow ? up_arrow : down_arrow}
+                
               ></img>
             </Field>
           </CategoryContainer>
           <CategoryContainer>
             <CategoryName>업체 분류</CategoryName>
-            <Field active={this.state.classify_arrow}>
+            <Field active={this.state.category_arrow}
+            onClick={() => {
+                this.dropdownHandler("business");
+                this.activeHandler("category_arrow");
+              }}>
               <div>전체</div>
               <img
-                src={this.state.classify_arrow ? up_arrow : down_arrow}
-                onClick={() => {
-                  this.dropdownHandler("business");
-                  this.activeHandler("category_arrow");
-                }}
+                src={this.state.category_arrow ? up_arrow : down_arrow}
+
               ></img>
             </Field>
           </CategoryContainer>
           <CategoryContainer>
             <CategoryName>지역</CategoryName>
-            <Field active={this.state.location_arrow}>
+            <Field active={this.state.location_arrow}
+            onClick={() => {
+                this.dropdownHandler("city");
+                this.activeHandler("location_arrow");
+              }}>
               <div>전체</div>
               <img
                 src={this.state.location_arrow ? up_arrow : down_arrow}
-                onClick={() => {
-                  this.dropdownHandler("city");
-                  this.activeHandler("location_arrow");
-                }}
               ></img>
             </Field>
           </CategoryContainer>
