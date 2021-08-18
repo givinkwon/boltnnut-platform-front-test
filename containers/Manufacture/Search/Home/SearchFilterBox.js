@@ -195,7 +195,7 @@ class SearchFilterBox extends React.Component {
         )}
 
         <SelectedCategoryContainer>
-          {Category.category_selected_tagbox.length > 0 &&
+          {Category.category_selected_tagbox[0] && Category.category_selected_tagbox[0].data &&
             Category.category_selected_tagbox.map((v, idx) => (
               <SelectedCategoryBox>
 
