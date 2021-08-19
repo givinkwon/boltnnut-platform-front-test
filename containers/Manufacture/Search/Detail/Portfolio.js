@@ -98,20 +98,18 @@ class PortfolioConatiner extends React.Component {
           style={{ display: "flex", justifyContent: "center" }}
         >
           <Content>
-            {data.portfolio_set.length != 0 ? (
-              <Slider {...settings} ref={(slider) => (this.slider = slider)}>
-                {data.portfolio_set.map((item, idx) => {
-                  return (
-                    <Image
-                      key={idx}
-                      ratio="65%"
-                      size="contain"
-                      repeat="no-repeat"
-                      src={item.img_portfolio}
-                    />
-                  );
-                })}
-              </Slider>
+            {data.portfolio_set.length != 0 && length > 10 ? (
+              data.portfolio_set.map((item, idx) => {
+                return (
+                  <Image
+                    key={idx}
+                    ratio="65%"
+                    size="contain"
+                    repeat="no-repeat"
+                    src={item.img_portfolio}
+                  />
+                );
+              })
             ) : (
               <>
                 <NoPortfolio>
@@ -119,13 +117,6 @@ class PortfolioConatiner extends React.Component {
                     <span>포트폴리오가 준비되지 않았습니다.</span>
                   </div>
                 </NoPortfolio>
-              </>
-            )}
-
-            {data && data.portfolio_set.length > 0 && !notLoginUser && (
-              <>
-                <Arrow left onClick={this.sliderPrev} />
-                <Arrow right onClick={this.sliderNext} />
               </>
             )}
           </Content>
@@ -159,26 +150,7 @@ class PortfolioConatiner extends React.Component {
             width={width}
           />
         )}
-        <Footer login={notLoginUser}>
-          {notLoginUser && <Block />}
-
-          <SmallImageContainer>
-            {data.portfolio_set.length != 0 &&
-              data.portfolio_set.map((item, idx) => {
-                return (
-                  <SmallImageBox>
-                    <img
-                      src={item.img_portfolio}
-                      onClick={() => {
-                        const src = this.slider.props.children[idx].props.src;
-                        this.activeHandler(src);
-                      }}
-                    />
-                  </SmallImageBox>
-                );
-              })}
-          </SmallImageContainer>
-        </Footer>
+        <Footer login={notLoginUser}>{notLoginUser && <Block />}</Footer>
       </>
     );
   }
