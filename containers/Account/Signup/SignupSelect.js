@@ -17,10 +17,10 @@ class SignupSelect extends React.Component {
     const { Auth } = this.props;
     // SNS 인 경우, 아닌 경우
     if(Auth.isSnsSignup) {
-      Auth.Step = 0;
+      Auth.step= 0;
       Router.push("/signup/snssignup");
     } else {
-      Auth.Step = 1;
+      Auth.step = 1;
     }
   } 
   render() {

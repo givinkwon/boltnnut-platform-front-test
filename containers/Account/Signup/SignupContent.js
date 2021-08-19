@@ -25,7 +25,7 @@ class SignupContent extends React.Component {
   toKakaoSignUp = () => {
     const { Auth } = this.props;
     this.props.Auth.kakaoLogin();
-    Auth.step = 0;
+    Auth.step= 0;
   };
 
   componentDidMount() {
