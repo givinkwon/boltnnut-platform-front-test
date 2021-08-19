@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { inject, observer } from "mobx-react";
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+// import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { toJS } from "mobx";
 /*global kakao*/
 
@@ -76,13 +76,13 @@ class DocViewerContainer extends React.Component {
       <>
         {this.props.Partner.viewerLoading < 2 && (
           <div style={{ position: "relative" }}>
-            <DOCViewer
+            {/* <DOCViewer
               documents={docs}
               pluginRenderers={DocViewerRenderers}
               height={width}
               window={window}
               type={this.props.Partner.selectedIntroductionFileType}
-            />
+            /> */}
 
             {/* ppt 하단에 전체 보기 및 다운로드 막는 박스인데 스타일 컴포넌트로 할 예정 (임시) */}
             <div
@@ -105,37 +105,37 @@ class DocViewerContainer extends React.Component {
 
 export default DocViewerContainer;
 
-const DOCViewer = styled(DocViewer)`
-// min-height: 300px;
-> div:nth-of-type(1){
-    display: none;
-    z-index: 0;    
-}
-> div:nth-of-type(2) {    
+// const DOCViewer = styled(DocViewer)`
+// // min-height: 300px;
+// > div:nth-of-type(1){
+//     display: none;
+//     z-index: 0;    
+// }
+// > div:nth-of-type(2) {    
 
-  > div:nth-of-type(1) {
-    // height: 1000px;
-    height: ${(props) =>
-      (props.type === "pptx" || props.type === "ppt") &&
-      props.height / 2 - props.height / 5}px;
-    height: ${(props) =>
-      (props.type === "docx" || props.type === "doc") && 1200}px;
-  }
-}
+//   > div:nth-of-type(1) {
+//     // height: 1000px;
+//     height: ${(props) =>
+//       (props.type === "pptx" || props.type === "ppt") &&
+//       props.height / 2 - props.height / 5}px;
+//     height: ${(props) =>
+//       (props.type === "docx" || props.type === "doc") && 1200}px;
+//   }
+// }
 
-  @media (min-width: 0px) and (max-width: 767.98px) {
-    > div:nth-of-type(2) {
-      > div:nth-of-type(1) {
-        height: ${(props) =>
-          props.type === "pptx" || props.type === "ppt"
-            ? props.height
-              ? props.height / 3 + props.height / 3
-              : 0
-            : 300}px;
+//   @media (min-width: 0px) and (max-width: 767.98px) {
+//     > div:nth-of-type(2) {
+//       > div:nth-of-type(1) {
+//         height: ${(props) =>
+//           props.type === "pptx" || props.type === "ppt"
+//             ? props.height
+//               ? props.height / 3 + props.height / 3
+//               : 0
+//             : 300}px;
 
 
-      }
-      }
-    }
-  }
-`;
+//       }
+//       }
+//     }
+//   }
+// `;

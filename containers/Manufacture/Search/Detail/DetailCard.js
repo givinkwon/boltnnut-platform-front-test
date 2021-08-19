@@ -6,7 +6,7 @@ import ReviewCard from "./Review/ReviewCard";
 import MapContainer from "./Map";
 
 import { toJS } from "mobx";
-import DocViewer from "./DocViewer";
+// import DocViewer from "./DocViewer";
 
 import QuestionContainer from "./Question";
 import HeaderItem from "./HeaderContainer";
@@ -113,13 +113,7 @@ class DetailCardContainer extends React.Component {
     Partner.business_name = [];
     Partner.docViewerLoading = false;
     Partner.subViewerLoading = 0;
-    // Partner.viewerLoading += 1;
 
-    // Partner.detailRegion =
-    //   Partner.partner_detail_list[0].item.region === null ||
-    //   Partner.partner_detail_list[0].item.region === "nan"
-    //     ? Partner.city_name
-    //     : Partner.partner_detail_list[0].item.region;
     console.log(toJS(Partner.partner_detail_list));
     console.log(region);
     console.log(toJS(Partner.detailRegion));
@@ -131,14 +125,14 @@ class DetailCardContainer extends React.Component {
       portfolioPosY += portfolioObject.offsetParent.offsetTop;
     }
 
-    if (Partner.partner_detail_list[0].item.file !== null) {
-      let introductionObject = document.getElementById("introduction");
+    // if (Partner.partner_detail_list[0].item.file !== null) {
+    //   let introductionObject = document.getElementById("introduction");
 
-      let introductionPosY = introductionObject.offsetTop;
-      if (introductionObject.offsetParent) {
-        introductionPosY += introductionObject.offsetParent.offsetTop;
-      }
-    }
+    //   let introductionPosY = introductionObject.offsetTop;
+    //   if (introductionObject.offsetParent) {
+    //     introductionPosY += introductionObject.offsetParent.offsetTop;
+    //   }
+    // }
 
     let reviewObject = document.getElementById("review");
 
@@ -639,55 +633,7 @@ class DetailCardContainer extends React.Component {
                   </IntroductionBox>
                   {Partner.partner_detail_list[0].item.file !== null ? (
                     <IntroductionBox width={width}>
-                      <Font24 id="introduction">회사소개서</Font24>
-                      {notLoginUser && <Block />}
-                      {!Auth.logged_in_client && !Auth.logged_in_partner && (
-                        <BlackBox
-                          content="이 제조사의 회사소개서를 보고싶다면?"
-                          width={width}
-                        />
-                      )}
-                      {availableFileType1.indexOf(
-                        this.props.Partner.selectedIntroductionFileType
-                      ) > -1 &&
-                        (notLoginUser ? (
-                          <div style={{ filter: "blur(9px)" }}>
-                            <FileViewerContainer
-                              fileType={
-                                this.props.Partner.selectedIntroductionFileType
-                              }
-                              filePath={
-                                this.props.Partner.selectedIntroductionFile
-                              }
-                              onError={onError}
-                            />
-                          </div>
-                        ) : (
-                          <div>
-                            <FileViewerContainer
-                              fileType={
-                                this.props.Partner.selectedIntroductionFileType
-                              }
-                              filePath={
-                                this.props.Partner.selectedIntroductionFile
-                              }
-                              onError={onError}
-                            />
-                          </div>
-                        ))}
-
-                      {availableFileType3.indexOf(
-                        this.props.Partner.selectedIntroductionFileType
-                      ) > -1 &&
-                        (notLoginUser ? (
-                          <div style={{ filter: "blur(9px)" }}>
-                            <DocViewer width={width} />
-                          </div>
-                        ) : (
-                          <div>
-                            <DocViewer width={width} />
-                          </div>
-                        ))}
+                     <div></div>
                     </IntroductionBox>
                   ) : (
                     <></>

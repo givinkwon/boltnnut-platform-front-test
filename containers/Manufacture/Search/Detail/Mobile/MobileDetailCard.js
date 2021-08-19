@@ -7,7 +7,7 @@ import ReviewCard from "../Review/ReviewCard";
 import MapContainer from "../Map";
 
 import { toJS } from "mobx";
-import DocViewer from "../DocViewer";
+//import DocViewer from "../DocViewer";
 import SubBoxContainer from "containers/Account/Bookmark/SubBox";
 import QuestionContainer from "../Question";
 import HeaderItem from "../HeaderContainer";
@@ -123,12 +123,12 @@ class MobileDetailCardContainer extends React.Component {
       portfolioPosY += portfolioObject.offsetParent.offsetTop;
     }
 
-    let introductionObject = document.getElementById("introduction");
+    // let introductionObject = document.getElementById("introduction");
 
-    let introductionPosY = introductionObject.offsetTop;
-    if (introductionObject.offsetParent) {
-      introductionPosY += introductionObject.offsetParent.offsetTop;
-    }
+    // let introductionPosY = introductionObject.offsetTop;
+    // if (introductionObject.offsetParent) {
+    //   introductionPosY += introductionObject.offsetParent.offsetTop;
+    // }
 
     let reviewObject = document.getElementById("review");
 
@@ -637,55 +637,7 @@ class MobileDetailCardContainer extends React.Component {
                   </IntroductionBox>
 
                   <IntroductionBox width={width}>
-                    <Font24 id="introduction">회사소개서</Font24>
-                    {notLoginUser && <Block />}
-                    {!Auth.logged_in_client && !Auth.logged_in_partner && (
-                      <BlackBox
-                        content="이 제조사의 회사소개서를 보고싶다면?"
-                        width={width}
-                      />
-                    )}
-                    {availableFileType1.indexOf(
-                      this.props.Partner.selectedIntroductionFileType
-                    ) > -1 &&
-                      (notLoginUser ? (
-                        <div style={{ filter: "blur(9px)" }}>
-                          <FileViewerContainer
-                            fileType={
-                              this.props.Partner.selectedIntroductionFileType
-                            }
-                            filePath={
-                              this.props.Partner.selectedIntroductionFile
-                            }
-                            onError={onError}
-                          />
-                        </div>
-                      ) : (
-                        <div>
-                          <FileViewerContainer
-                            fileType={
-                              this.props.Partner.selectedIntroductionFileType
-                            }
-                            filePath={
-                              this.props.Partner.selectedIntroductionFile
-                            }
-                            onError={onError}
-                          />
-                        </div>
-                      ))}
-
-                    {availableFileType3.indexOf(
-                      this.props.Partner.selectedIntroductionFileType
-                    ) > -1 &&
-                      (notLoginUser ? (
-                        <div style={{ filter: "blur(9px)" }}>
-                          <DocViewer width={width} />
-                        </div>
-                      ) : (
-                        <div>
-                          <DocViewer width={width} />
-                        </div>
-                      ))}
+                    <div></div>
                   </IntroductionBox>
                 </InnerBox>
                 {/* <DetailInfoBox>
