@@ -12,6 +12,17 @@ const clientsignupimg = "/static/images/clientsignupimg.svg";
 @inject("Auth", "Signup")
 @observer
 class SignupSelect extends React.Component {
+
+  snssignup = () => {
+    const { Auth } = this.props;
+    // SNS 인 경우, 아닌 경우
+    if(Auth.isSnsSignup) {
+      Auth.Step = 0;
+      Router.push("/signup/snssignup");
+    } else {
+      Auth.Step = 1;
+    }
+  } 
   render() {
     const { Auth, Signup } = this.props;
     console.log(Auth.signupType);
@@ -29,8 +40,7 @@ class SignupSelect extends React.Component {
               onClick={() => {
                 Auth.type = "client";
                 Signup.type = "client";
-                Auth.step = 1;
-                Auth.isSnsSignup && Router.push("/signup/snssignup")
+                this.snssignup()
               }}
             >
               <Title16>제조사를 찾고 싶어요.</Title16>
@@ -49,8 +59,7 @@ class SignupSelect extends React.Component {
               onClick={() => {
                 Auth.type = "partner";
                 Signup.type = "partner";
-                Auth.step = 1;
-                Auth.isSnsSignup && Router.push("/signup/snssignup")
+                this.snssignup()
               }}
             >
               <Title16>일거리를 찾고 있어요.</Title16>

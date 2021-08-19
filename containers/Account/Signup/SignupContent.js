@@ -23,8 +23,9 @@ const MarketingContent = [
 @observer
 class SignupContent extends React.Component {
   toKakaoSignUp = () => {
+    const { Auth } = this.props;
     this.props.Auth.kakaoLogin();
-    Router.push("/signup/snssignup")
+    Auth.step = 0;
   };
 
   componentDidMount() {
