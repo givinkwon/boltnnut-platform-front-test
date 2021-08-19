@@ -1,30 +1,26 @@
 import React from "react";
 import { inject, observer } from "mobx-react";
-import SignupContainer from "./Signup";
+import SignupSelectContainer from "./SignupSelect";
+import SignupContentContainer from "./SignupContent";
 
 @inject("Auth")
 @observer
 class SignupConatiner extends React.Component {
-  // componentDidMount = () => {
-  //   const { Auth } = this.props;
-  //   if (Auth.type !== "expert") {
-  //     Auth.setType("client");
-  //   }
-  // };
+  componentDidMount = () => {
+    const { Auth } = this.props;
+    if (Auth.type !== "expert") {
+      Auth.setType("client");
+    }
+  };
   render() {
-    // const { Auth } = this.props;
+    const { Auth } = this.props;
     return (
-      <>
-        <SignupContainer />
-      </>
-      // <div style={{ paddingTop: 90 }}>
-      //   {Auth.type !== "detailexpert" && <BannerConatiner />}
+      <div style={{ paddingTop: 90 }}>
 
-      //   {/* {Auth.step === 0 && <Step1Conatiner/>} */}
-      //   {/* {Auth.step === 1 && <Step2Conatiner/>} */}
+        {Auth.step === 0 && <SignupSelectContainer/>}
+        {Auth.step === 1 && <SignupContentContainer/>}
 
-      //   <Step2Conatiner />
-      // </div>
+      </div>
     );
   }
 }

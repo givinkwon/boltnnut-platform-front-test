@@ -14,15 +14,17 @@ const AgreeContent = [
   { content: "만 14세 이상 입니다", essential: "(필수)", terms: 0 },
   { content: "이용약관 동의", essential: "(필수)", terms: 1 },
   { content: "개인정보 처리방침 동의", essential: "(필수)", terms: 1 },
+];
+const MarketingContent = [
   { content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 },
 ];
 
 @inject("Auth", "Signup")
 @observer
-class ClientSignupContainer extends React.Component {
+class SignupContent extends React.Component {
   toKakaoSignUp = () => {
     this.props.Auth.kakaoLogin();
-    // Router.push("/signup/kakao");
+    Router.push("/signup/snssignup")
   };
 
   componentDidMount() {
@@ -39,7 +41,7 @@ class ClientSignupContainer extends React.Component {
   }
 
   render() {
-    const { Signup } = this.props;
+    const { Signup, Auth } = this.props;
 
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -149,8 +151,9 @@ class ClientSignupContainer extends React.Component {
           </InputInnerBox>
 
           {/* company name */}
+          {/* 클라이언트는 회사명, 파트너는 상호명 */}
           <InputInnerBox>
-            <Title18>회사명</Title18>
+            <Title18>{Auth.type == "client" ? ("회사명") : ("상호명")}</Title18>
             <CustomInput
               placeholder="근무하고 계신 회사명을 입력해 주세요."
               onChange={(e) => {
@@ -170,6 +173,7 @@ class ClientSignupContainer extends React.Component {
           </InputInnerBox>
 
           {/* rank */}
+          {Auth.type == "client" &&
           <InputInnerBox>
             <Title18>직급</Title18>
             <CustomInput
@@ -183,6 +187,7 @@ class ClientSignupContainer extends React.Component {
             <InvalidImgBox src={success} active={Signup.titleInvalid} />
             {Signup.title && <InvalidTitle14 active={Signup.titleInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
           </InputInnerBox>
+          }
 
           {/* agree */}
           <AgreeContainer>
@@ -191,6 +196,7 @@ class ClientSignupContainer extends React.Component {
             <AllAgreeInnerBox>
               <CustomCheckBox
                 type="checkbox"
+                checked={Signup.allCheckState}
                 onChange={(e) => {
                   Signup.allCheckState = e.currentTarget.checked;
                 }}
@@ -206,12 +212,29 @@ class ClientSignupContainer extends React.Component {
                 <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
                   <CustomCheckBox
                     type="checkbox"
-                    checked={Signup.checkboxState[idx]}
+                    checked={Signup.checkboxState}
                     onChange={(e) => {
-                      const check = Signup.checkboxState;
-                      check[idx] = e.currentTarget.checked;
-                      Signup.checkboxState = check;
+                      Signup.checkboxState = e.currentTarget.checked;
                     }}
+                  />
+                  <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  {item.terms != 0 && <ImgBox src={viewterms} />}
+                </AgreeInnerBox>
+              );
+            })}
+
+            {MarketingContent.map((item, idx) => {
+              return (
+                <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
+                  <CustomCheckBox
+                    type="checkbox"
+                    checked={Signup.marketingcheckboxState}
+                    onChange={(e) => {
+                      Signup.marketingcheckboxState = e.currentTarget.checked;
+                    }}
+                    // 초기값이 안맞아서 역순으로 해야함
+                    onClick={() => Signup.setMarketing(!Signup.marketingcheckboxState)}
                   />
                   <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
                   <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
@@ -230,7 +253,7 @@ class ClientSignupContainer extends React.Component {
   }
 }
 
-export default ClientSignupContainer;
+export default SignupContent;
 
 const ImgBox = styled.img`
   position: absolute;

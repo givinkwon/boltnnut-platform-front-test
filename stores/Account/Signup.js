@@ -14,8 +14,9 @@ class Signup {
     this.title = "";
     this.phone = "";
     this.company_name = "";
-    this.allCheckState = false;
-    this.checkboxState = [false, false, false, false];
+    this.allCheckState = true;
+    this.checkboxState = true;
+    this.marketingcheckboxState = true;
     this.passwordInvalid = false;
     this.realNameInvalid = false;
     this.phoneInvalid = false;
@@ -82,6 +83,7 @@ class Signup {
   @observable marketing = false;
   @action setMarketing = (val) => {
     this.marketing = val;
+    console.log(this.marketing)
   };
 
   // 회원가입 함수 시작
@@ -227,28 +229,20 @@ class Signup {
   };
 
   // 전체동의 핸들러 함수
-  @observable allCheckState = false;
-  @observable checkboxState = [false, false, false, false];
+  @observable allCheckState = true;
+  @observable checkboxState = true;
+  @observable marketingcheckboxState = true;
 
   @action fullConsent = () => {
     if (this.allCheckState === false) {
       this.allCheckState = true;
-
-      this.checkboxState.forEach((item, idx) => {
-        const checkbox = this.checkboxState;
-        checkbox[idx] = true;
-        this.checkboxState = checkbox;
-        console.log("item : ", this.checkboxState);
-      });
+      this.checkboxState = true;
+      this.marketingcheckboxState = true;
+      
     } else {
       this.allCheckState = false;
-
-      this.checkboxState.forEach((item, idx) => {
-        const checkbox = this.checkboxState;
-        checkbox[idx] = false;
-        this.checkboxState = checkbox;
-        console.log("item : ", this.checkboxState);
-      });
+      this.checkboxState = false;
+      this.marketingcheckboxState = false;
     }
   };
 
@@ -375,6 +369,8 @@ class Signup {
   console.log("company_name : ", this.company_name);
 
   console.log("phone : ", this.phone);
+
+  console.log("marketing : ", this.marketing);
 
   // if (true)
   if (this.type === "client") {

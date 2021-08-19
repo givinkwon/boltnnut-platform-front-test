@@ -3,7 +3,8 @@ import styled from "styled-components";
 import * as Text from "components/Text";
 import { PRIMARY, WHITE } from "../../../static/style";
 import { inject, observer } from "mobx-react";
-
+import { toJS } from "mobx";
+import Router from "next/router";
 import Background from "components/Background";
 import Container from "components/Containerv1";
 import InputComponent from "components/Input";
@@ -16,6 +17,24 @@ const profile_modify = "static/images/profilemodify.svg";
 @inject("Auth")
 @observer
 class ChangePassword extends Component {
+  async componentDidMount() {
+    const { Auth } = this.props;
+    const token = await localStorage.getItem("token");
+    // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
+    const { route, pathname } = Router.router;
+    await Auth.checkLogin();
+    console.log(Auth.logged_in_client)
+    console.log(Auth.logged_in_partner)
+
+    this.setState({
+      url: route,
+      token: token,
+    });
+    // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
+    Auth.checkLogin();
+    console.log(toJS(Auth.logged_in_user));
+  }
+
   onKeyPress = (e) => {
     if (e.key === "Enter") {
       const { Auth } = this.props;
@@ -30,6 +49,7 @@ class ChangePassword extends Component {
 
   render() {
     const { Auth, tab } = this.props;
+
     return (
       <>
         <MainHeader>
@@ -76,11 +96,12 @@ class ChangePassword extends Component {
           </MainBoxHeader>
           <MainBoxBody>
             <BodyBox>
-              <BodyBoxTitle>이메일</BodyBoxTitle>
+              <BodyBoxTitle>아이디</BodyBoxTitle>
               <InputComponent
                 class="Input"
                 onFocus={(e) => (e.target.placeholder = "")}
-                // onChange={(e) => {}}
+                value= {Auth.logged_in_user.username}
+                onChange={(e) => {}}
               />
             </BodyBox>
             <BodyBox style={{ display: "flex", justifyContent: "flex-start" }}>

@@ -11,7 +11,7 @@ const clientsignupimg = "/static/images/clientsignupimg.svg";
 
 @inject("Auth", "Signup")
 @observer
-class SignupContainer extends React.Component {
+class SignupSelect extends React.Component {
   render() {
     const { Auth, Signup } = this.props;
     console.log(Auth.signupType);
@@ -29,9 +29,8 @@ class SignupContainer extends React.Component {
               onClick={() => {
                 Auth.type = "client";
                 Signup.type = "client";
-                Auth.isSnsSignup
-                  ? Router.push("/signup/snsclientsignup")
-                  : Router.push("/signup/clientsignup");
+                Auth.step = 1;
+                Auth.isSnsSignup && Router.push("/signup/snssignup")
               }}
             >
               <Title16>제조사를 찾고 싶어요.</Title16>
@@ -50,9 +49,8 @@ class SignupContainer extends React.Component {
               onClick={() => {
                 Auth.type = "partner";
                 Signup.type = "partner";
-                Auth.isSnsSignup
-                  ? Router.push("/signup/snspartnersignup")
-                  : Router.push("/signup/partnersignup");
+                Auth.step = 1;
+                Auth.isSnsSignup && Router.push("/signup/snssignup")
               }}
             >
               <Title16>일거리를 찾고 있어요.</Title16>
@@ -73,7 +71,7 @@ class SignupContainer extends React.Component {
   }
 }
 
-export default SignupContainer;
+export default SignupSelect;
 
 const Container = styled(Containerv1)`
   justify-content: center;
