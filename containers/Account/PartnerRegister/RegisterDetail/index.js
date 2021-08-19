@@ -12,10 +12,7 @@ import CategoryContainer from "./Category";
 import ProcessContainer from "./Process";
 import MaterialContainer from "./Material";
 import AboutUsContainer from "./AboutUs";
-// import the progress bar
-import StepProgressBar from "react-step-progress";
-// import the stylesheet
-import "react-step-progress/dist/index.css";
+
 import Stepper from "react-stepper-enhanced";
 const perfection = "/static/icon/camera.png";
 const pageNameArr = ["Category", "Process", "Material", "Aboutus"];

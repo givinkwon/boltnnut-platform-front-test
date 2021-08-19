@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Containerv1 from "../../../components/Containerv1";
 import * as Title from "../../../components/Title";
 import { inject, observer } from "mobx-react";
-import InputComponent from "components/Input";
 import ButtonSpinnerComponent from "components/ButtonSpinner";
+import InputComponent from "components/Input";
 
 const signupdot = "/static/images/signupdot.svg";
 const signupsearch = "/static/images/signupsearch.svg";
@@ -15,12 +15,14 @@ const AgreeContent = [
   { content: "만 14세 이상 입니다", essential: "(필수)", terms: 0 },
   { content: "이용약관 동의", essential: "(필수)", terms: 1 },
   { content: "개인정보 처리방침 동의", essential: "(필수)", terms: 1 },
+];
+const MarketingContent = [
   { content: "마케팅 정보 수신에 동의 합니다", essential: "(선택)", terms: 0 },
 ];
 
 @inject("Auth", "Signup")
 @observer
-class SnsPartnerSignupContainer extends React.Component {
+class SnsSignupContent extends React.Component {
   componentDidMount() {
     this.props.Auth.getPathData();
     this.props.Auth.getBusinessData();
@@ -36,7 +38,6 @@ class SnsPartnerSignupContainer extends React.Component {
 
   render() {
     const { Auth, Signup } = this.props;
-
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Container>
@@ -44,6 +45,7 @@ class SnsPartnerSignupContainer extends React.Component {
 
           <Title32 style={{ marginTop: "20px" }}>추가정보를 입력해 주세요.</Title32>
 
+          
           {/* userID */}
           <InputInnerBox>
             <Title18>아이디</Title18>
@@ -59,7 +61,7 @@ class SnsPartnerSignupContainer extends React.Component {
               value={Signup.phone}
             />
           </InputInnerBox>
-          
+
           {/* name */}
           <InputInnerBox>
             <Title18>이름</Title18>
@@ -76,19 +78,43 @@ class SnsPartnerSignupContainer extends React.Component {
           </InputInnerBox>
 
           {/* company name */}
+          {/* 클라이언트는 회사명, 파트너는 상호명 */}
           <InputInnerBox>
-            <Title18>상호명</Title18>
+            <Title18>{Auth.type == "client" ? ("회사명") : ("상호명")}</Title18>
             <CustomInput
-              placeholder="등록하고자 하는 상호명을 입력해 주세요."
+              placeholder="근무하고 계신 회사명을 입력해 주세요."
               onChange={(e) => {
                 Signup.setCompanyName(e.currentTarget.value);
                 Signup.textInvalid("companyName", e.currentTarget.value);
               }}
               active={Signup.company_nameInputState}
+              defaultValue={Signup.individual}
             />
-            <InvalidImgBox src={success} active={Signup.company_nameInvalid} />
+            <InvalidImgBox src={success} style={{ bottom: "40%" }} active={Signup.company_nameInvalid} />
             {Signup.company_name && <InvalidTitle14 active={Signup.company_nameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
+
+            <div style={{ display: "inline-flex", marginTop: "12px" }}>
+              <CustomCheckBox type="checkbox" onClick={() => Signup.individualhandler(Signup.individualState)} />
+              <Title15>개인일 경우 체크해 주세요.</Title15>
+            </div>
           </InputInnerBox>
+
+          {/* rank */}
+          {Auth.type == "client" &&
+          <InputInnerBox style={{ marginTop: "15px" }}>
+            <Title18>직급</Title18>
+            <CustomInput
+              placeholder="직급을 입력해 주세요."
+              onChange={(e) => {
+                Signup.setTitle(e.currentTarget.value);
+                Signup.textInvalid("title", e.currentTarget.value);
+              }}
+              active={Signup.titleInputState}
+            />
+            <InvalidImgBox src={success} active={Signup.titleInvalid} />
+            {Signup.title && <InvalidTitle14 active={Signup.titleInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
+          </InputInnerBox>
+          }
 
           {/* agree */}
           <AgreeContainer>
@@ -97,6 +123,7 @@ class SnsPartnerSignupContainer extends React.Component {
             <AllAgreeInnerBox>
               <CustomCheckBox
                 type="checkbox"
+                checked={Signup.allCheckState}
                 onChange={(e) => {
                   this.setState({ allCheckState: e.currentTarget.checked });
                 }}
@@ -106,18 +133,14 @@ class SnsPartnerSignupContainer extends React.Component {
             </AllAgreeInnerBox>
 
             <BottomLineDiv />
-
             {AgreeContent.map((item, idx) => {
               return (
                 <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
                   <CustomCheckBox
                     type="checkbox"
-                    checked={Signup.checkboxState[idx]}
+                    checked={Signup.checkboxState}
                     onChange={(e) => {
-                      const check = Signup.checkboxState;
-                      check[idx] = e.currentTarget.checked;
-
-                      Signup.checkboxState = check;
+                      Signup.checkboxState = e.currentTarget.checked;
                     }}
                   />
                   <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
@@ -126,14 +149,32 @@ class SnsPartnerSignupContainer extends React.Component {
                 </AgreeInnerBox>
               );
             })}
-          </AgreeContainer>
 
+            {MarketingContent.map((item, idx) => {
+              return (
+                <AgreeInnerBox style={{ width: "588px", position: "relative" }}>
+                  <CustomCheckBox
+                    type="checkbox"
+                    checked={Signup.marketingcheckboxState}
+                    onChange={(e) => {
+                      Signup.marketingcheckboxState = e.currentTarget.checked;
+                    }}
+                    // 초기값이 안맞아서 역순으로 해야함
+                    onClick={() => Signup.setMarketing(!Signup.marketingcheckboxState)}
+                  />
+                  <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  {item.terms != 0 && <ImgBox src={viewterms} />}
+                </AgreeInnerBox>
+              );
+            })}
+          </AgreeContainer>
           {Auth.loading ? (
             <ButtonSpinnerComponent scale="50%" primary />
           ) : (
             <SubmitButton
               onClick={() => {
-                Signup.signupSubmit();
+                Signup.snsSignup();
               }}
             >
               <ButtonText>가입하기</ButtonText>
@@ -145,12 +186,11 @@ class SnsPartnerSignupContainer extends React.Component {
   }
 }
 
-export default SnsPartnerSignupContainer;
+export default SnsSignupContent;
 
 const ImgBox = styled.img`
   position: absolute;
   right: 0;
-  bottom: 0;
   cursor: pointer;
 `;
 
@@ -250,15 +290,14 @@ const DropDownSelectorsBox = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  border-radius: 3px;
-  border: solid 1px #c7c7c7;
+  position: relactive
   width: 602px;
 `;
 
-const SectorsInput = styled.input`
+const SectorsInput = styled(InputComponent)`
   border: none;
   padding-left: 10px;
-  width: 100%;
+  width: 588px;
   height: 42px;
 
   ::placeholder {

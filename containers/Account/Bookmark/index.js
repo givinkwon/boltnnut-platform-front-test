@@ -19,7 +19,7 @@ class BookmarkContainer extends React.Component {
     const clientId =
       this.props.Auth.logged_in_client && this.props.Auth.logged_in_client.id;
     const userEmail =
-      Auth.logged_in_client && Auth.logged_in_client.user.username;
+      Auth.logged_in_client && Auth.logged_in_client.user && Auth.logged_in_client.user.username;
     console.log(clientId);
     Partner.BookmarkPartner(clientId);
   }
@@ -41,7 +41,7 @@ class BookmarkContainer extends React.Component {
           <Container>
             <Body>
               <Aside>
-                <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
+                <AsideHeader>관심 제조사</AsideHeader>
                 
                 <AsideBody>
                   <div>
