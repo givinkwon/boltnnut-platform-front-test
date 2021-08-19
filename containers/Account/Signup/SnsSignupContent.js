@@ -123,6 +123,7 @@ class SnsSignupContent extends React.Component {
             <AllAgreeInnerBox>
               <CustomCheckBox
                 type="checkbox"
+                checked={Signup.allCheckState}
                 onChange={(e) => {
                   this.setState({ allCheckState: e.currentTarget.checked });
                 }}

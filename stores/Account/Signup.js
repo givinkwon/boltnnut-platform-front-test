@@ -80,7 +80,7 @@ class Signup {
     this.title = val;
   };
 
-  @observable marketing = false;
+  @observable marketing = true;
   @action setMarketing = (val) => {
     this.marketing = val;
     console.log(this.marketing)
@@ -250,11 +250,7 @@ class Signup {
   @action signupSubmit = () => {
     const checkboxArr = this.checkboxState;
 
-    if (
-      checkboxArr[0] === true &&
-      checkboxArr[1] === true &&
-      checkboxArr[2] === true
-    ) {
+    if (this.checkboxState) {
       this.signup();
     } else {
       alert("필수 이용약관에 동의해 주세요");

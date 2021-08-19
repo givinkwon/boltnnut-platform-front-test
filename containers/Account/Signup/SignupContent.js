@@ -79,13 +79,13 @@ class SignupContent extends React.Component {
                 onChange={(e) => {
                   Signup.setEmail(e.currentTarget.value);
                 }}
-                style={{ width: "427px" }}
+
                 active={Signup.emailinputstate}
               />
-
+{/* 
               <AuthenticateBtn>
                 <AuthenticateBtnText>인증하기</AuthenticateBtnText>
-              </AuthenticateBtn>
+              </AuthenticateBtn> */}
             </EmailInnerContainer>
           </InputInnerBox>
 
@@ -467,14 +467,14 @@ const EmailContainer = styled.div`
   justify-content: flex-start;
   flex-direction: column;
   margin-top: 80px;
-  width: 600px;
+  width: 100%;
 `;
 
 const EmailInnerContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 588px;
+  width: 100%;
 `;
 
 const InputInnerBox = styled.div`
