@@ -10,6 +10,7 @@ import ImageFile from "./ImageFile";
 @inject("Auth", "Project", "Request", "Partner", "Search", "Category")
 @observer
 class SearchBarConatiner extends React.Component {
+
   state = {
     search: "",
     modal_open: false,
@@ -66,7 +67,9 @@ class SearchBarConatiner extends React.Component {
   };
 
   async componentDidMount() {
+    const { Partner } = this.props;
     await this.props.Auth.checkLogin();
+    this.search()
   }
 
   // 검색창에 검색을 할 때 text를 observable에 저장
