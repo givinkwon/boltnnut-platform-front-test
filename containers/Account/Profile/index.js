@@ -35,8 +35,8 @@ class ProfileContainer extends React.Component {
           <Container>
             <Body>
               <Aside>
-                {/* <AsideHeader>{Auth.logged_in_user.username}</AsideHeader> */}
-                <AsideHeader>1234@naver.com</AsideHeader>
+                <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
+
                 <AsideBody>
                   <Fragment>
                     <TabContainer />

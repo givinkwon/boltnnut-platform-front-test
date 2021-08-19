@@ -6,7 +6,7 @@ import Background from "components/Background";
 
 const image1 = "/static/images/logo/logo_1.png";
 const image2 = "/static/images/logo/logo_2.png";
-const image3 = "/static/images/logo/logo_3.png";
+// const image3 = "/static/images/logo/logo_3.png";
 const image4 = "/static/images/logo/logo_4.png";
 const image5 = "/static/images/logo/logo_5.png";
 const image6 = "/static/images/logo/logo_6.png";
@@ -20,6 +20,7 @@ const image13 = "/static/images/logo/logo_13.png";
 const image14 = "/static/images/logo/logo_14.png";
 const image15 = "/static/images/logo/logo_15.jpg";
 const image16 = "/static/images/logo/logo_16.png";
+const image17 = "/static/images/logo/logo_17.png";
 
 class Banner1Container extends React.Component {
   render() {
@@ -49,7 +50,7 @@ class Banner1Container extends React.Component {
               <img src={image2} />
             </Item>
             <Item style={{ width: 141 }}>
-              <img src={image3} />
+              <img src={image17} />
             </Item>
             <Item style={{ width: 141 }}>
               <img src={image4} />

@@ -98,18 +98,20 @@ class PortfolioConatiner extends React.Component {
           style={{ display: "flex", justifyContent: "center" }}
         >
           <Content>
-            {data.portfolio_set.length != 0 && length > 10 ? (
-              data.portfolio_set.map((item, idx) => {
-                return (
-                  <Image
-                    key={idx}
-                    ratio="65%"
-                    size="contain"
-                    repeat="no-repeat"
-                    src={item.img_portfolio}
-                  />
-                );
-              })
+            {data.portfolio_set && data.portfolio_set.length != 0 ? (
+              <Slider {...settings} ref={(slider) => (this.slider = slider)}>
+                {data.portfolio_set.map((item, idx) => {
+                  return (
+                    <Image
+                      key={idx}
+                      ratio="65%"
+                      size="contain"
+                      repeat="no-repeat"
+                      src={item.img_portfolio}
+                    />
+                  );
+                })}
+              </Slider>
             ) : (
               <>
                 <NoPortfolio>
@@ -119,6 +121,15 @@ class PortfolioConatiner extends React.Component {
                 </NoPortfolio>
               </>
             )}
+
+            {data.portfolio_set &&
+              data.portfolio_set.length > 0 &&
+              !notLoginUser && (
+                <>
+                  <Arrow left onClick={this.sliderPrev} />
+                  <Arrow right onClick={this.sliderNext} />
+                </>
+              )}
           </Content>
 
           {this.state.modalOpen && (
@@ -143,14 +154,34 @@ class PortfolioConatiner extends React.Component {
           )}
           {this.state.modalOpen && <Layer />}
         </div>
-        {notLoginUser && (
+        {notLoginUser && !Auth.logged_in_client && !Auth.logged_in_partner && (
           <BlackBox
             top="80"
             content="이 제조사의 포트폴리오를 보고싶다면?"
             width={width}
           />
         )}
-        <Footer login={notLoginUser}>{notLoginUser && <Block />}</Footer>
+        <Footer login={notLoginUser}>
+          {notLoginUser && <Block />}
+
+          <SmallImageContainer>
+            {data.portfolio_set &&
+              data.portfolio_set.length != 0 &&
+              data.portfolio_set.map((item, idx) => {
+                return (
+                  <SmallImageBox>
+                    <img
+                      src={item.img_portfolio}
+                      onClick={() => {
+                        const src = this.slider.props.children[idx].props.src;
+                        this.activeHandler(src);
+                      }}
+                    />
+                  </SmallImageBox>
+                );
+              })}
+          </SmallImageContainer>
+        </Footer>
       </>
     );
   }

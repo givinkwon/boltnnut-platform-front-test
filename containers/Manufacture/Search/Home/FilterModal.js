@@ -29,7 +29,6 @@ class FilterModalContainer extends React.Component {
   async componentDidMount() {
     const { Category } = this.props;
     await Category.init();
-    console.log("ASNCKLANSCLKNLAKSCNLKANSCLKNASLCK");
     var mainCategoryTypeDic = {};
     var subCategoryTypeDic = {};
     mainCategoryTypeDic["business"] = Category.mainbusiness_list;
@@ -74,47 +73,19 @@ class FilterModalContainer extends React.Component {
   buttonClick = (type, idx, data) => {
     const { Category } = this.props;
 
-    // 공정 클릭 했을 때
-    if (type == "develop") {
-      if (Category.categoryActiveHandler(idx, type)) {
-        console.log("remove selected");
-        Category.remove_selected(type, idx);
-      } else {
-        console.log("add selected");
-        Category.add_selected(type, idx, data);
-      }
-    }
-    // 소재 클릭 했을 때
-    if (type == "material") {
-      if (Category.categoryActiveHandler(idx, type)) {
-        console.log("remove selected");
-        Category.remove_selected(type, idx);
-      } else {
-        console.log("add selected");
-        Category.add_selected(type, idx, data);
-      }
-    }
-
-    // 지역일 때는 다르게
-    if (this.props.type == "city") {
-      if (Category.categoryActiveHandler(idx, this.props.type)) {
-        console.log("remove selected");
-        Category.remove_selected(this.props.type, idx);
-      } else {
-        console.log("add selected");
-        Category.add_selected(this.props.type, idx, data);
-      }
-    }
-
+    // 대분류 선택 시
     if (type === "main") {
+      // 대분류 선택
       this.setState({ mainSelectIdx: idx });
+      // 중분류 선택 시
     } else {
-      if (Category.categoryActiveHandler(idx, this.props.type)) {
+      // 현재 Active True의 상태이면
+      if (Category.categoryActiveHandler(idx, type)) {
         console.log("remove selected");
-        Category.remove_selected(this.props.type, idx);
+        Category.remove_selected(type, idx, "search", data);
       } else {
         console.log("add selected");
-        Category.add_selected(this.props.type, idx, data);
+        Category.add_selected(type, idx, data);
       }
       // this.setState({ subSelectIdx: idx });
     }
@@ -153,7 +124,7 @@ class FilterModalContainer extends React.Component {
 
   render() {
     const { Category, type } = this.props;
-    console.log(this.props.type);
+    console.log(type);
     console.log(this.state.mainSelectIdx);
     return (
       <ModalBox>
@@ -234,8 +205,8 @@ class FilterModalContainer extends React.Component {
               )}
 
             {/* map으로 뿌리기 */}
-            {this.props.type != "develop&material" &&
-              this.props.type != "city" &&
+            {type != "develop&material" &&
+              type != "city" &&
               this.state.mainCategoryTypeDic[type] &&
               toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
                 return (
@@ -254,7 +225,7 @@ class FilterModalContainer extends React.Component {
               })}
 
             {/* city 일 떄 */}
-            {this.props.type == "city" && this.state.mainCategoryTypeDic[type] && (
+            {type == "city" && this.state.mainCategoryTypeDic[type] && (
               <MainCategoryButton active={true}>
                 <MainCategoryFont>
                   지역
@@ -266,6 +237,7 @@ class FilterModalContainer extends React.Component {
           </>
         </MainCategoryBox>
 
+        {/* 중카테고리 선택 */}
         <div style={{ width: "73.4%" }}>
           <SubCategoryBox>
             <SubInnerBox>
@@ -275,10 +247,15 @@ class FilterModalContainer extends React.Component {
                 Category.mainbusiness_list[
                   this.state.mainSelectIdx
                 ].business_set.map((sub_data, idx) => {
+                  console.log(sub_data);
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("sub", sub_data.id, sub_data.category);
+                        this.buttonClick(
+                          "business",
+                          sub_data.id,
+                          sub_data.category
+                        );
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >
@@ -295,13 +272,14 @@ class FilterModalContainer extends React.Component {
                   );
                 })}
               {/* city 일 떄 */}
-              {this.props.type == "city" &&
+              {type == "city" &&
                 this.state.mainCategoryTypeDic[type] &&
                 toJS(this.state.mainCategoryTypeDic[type]).map((data, idx) => {
+                  console.log(data);
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("main", data.id, data);
+                        this.buttonClick("city", data.id, data.maincategory);
                       }}
                       active={Category.categoryActiveHandler(data.id, type)}
                     >
@@ -327,7 +305,11 @@ class FilterModalContainer extends React.Component {
                   return (
                     <SubCategoryButton
                       onClick={() => {
-                        this.buttonClick("sub", sub_data.id, sub_data.category);
+                        this.buttonClick(
+                          "category",
+                          sub_data.id,
+                          sub_data.category
+                        );
                       }}
                       active={Category.categoryActiveHandler(sub_data.id, type)}
                     >

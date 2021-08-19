@@ -15,15 +15,21 @@ class Banner6Container extends React.Component {
     return (
       <CustomBackground>
         <Container>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <Title26>신제품을 개발하고 싶으신가요?</Title26>
-            <Title26>1분만에 프로젝트를 등록하고 맞춤형 업체 정보를 받아보세요.</Title26>
+            <Title26>
+              1분만에 프로젝트를 등록하고 맞춤형 업체 정보를 받아보세요.
+            </Title26>
           </div>
 
           <a href={"request"}>
-            <RequestButton>
-              <Text20>맞춤형 문의하기</Text20>
-            </RequestButton>
+            <RequestButton>맞춤형 문의하기</RequestButton>
           </a>
           {/* <RequestButton onClick={() => Router.push("/request")}> */}
         </Container>
@@ -73,7 +79,17 @@ const RequestButton = styled(Button)`
   height: 58px;
   margin-top: 46px;
   border-radius: 29px;
-  border: solid 1.5px #0933b3;
+  border: solid 2px #0933b3;
   background: none;
   cursor: pointer;
+
+  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  color: #0933b3;
+
+  :hover {
+    background-color: #174aee;
+    color: #ffffff;
+  }
 `;

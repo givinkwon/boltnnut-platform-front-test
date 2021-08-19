@@ -190,25 +190,18 @@ class DetailCardContainer extends React.Component {
 
     console.log(Partner.reviewWritingModalActive);
 
-    // console.log(this.props.Partner.selectedIntroductionFileType);
-
-    // if (this.props.Partner.selectedIntroductionFileType === "pptx") {
-    //   var frameHTML =
-    //     '<iframe src="https://docs.google.com/gview?url=' +
-    //     this.props.Partner.selectedIntroductionFile +
-    //     '&embedded=true" class="viewer" frameborder="0"></iframe>';
-    //   document.getElementById("viewer-wrap").innerHTML = frameHTML;
-    // }
-
     // 지역 가지고 오기
     //console.log(toJS(Partner.partner_detail_list[0].item.city))
     Partner.getCityName(toJS(Partner.partner_detail_list[0].item.city));
 
     // 비즈니스 가지고 오기
+
     console.log(toJS(Partner.partner_detail_list[0].item.business));
+    if(Partner.partner_detail_list[0].item.business != undefined){
     toJS(Partner.partner_detail_list[0].item.business).map(
       async (item) => await Partner.getBusinessName(item)
     );
+    }
     console.log(toJS(Partner.business_name));
 
     await this.countTotalPoint();
@@ -529,7 +522,7 @@ class DetailCardContainer extends React.Component {
       console.log(toJS(Partner.partnerReviewList[0].current));
     }
     console.log(toJS(Partner.partnerReviewList[0]));
-    console.log(toJS(Partner.partner_detail_list));
+    console.log(toJS(Partner.partner_detail_list[0].item.business));
 
     console.log(this.state.portfoliLocation);
     console.log(this.state.introductionLocation);

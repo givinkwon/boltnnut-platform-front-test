@@ -14,7 +14,7 @@ class Home {
   @observable is_ie = false;
   @observable request_list = [];
   @observable home_idx = 0;
-  @observable categoryIndex = 0;
+  @observable categoryIndex = 1;
   @observable mobile_warning_modal_state = true;
 
   @action init = () => {
@@ -70,7 +70,7 @@ class Home {
             });
         }
 
-        console.log(`magazine length: ${this.magazine_list.length}`);
+        // console.log(`magazine length: ${this.magazine_list.length}`);
       })
       .catch((e) => {
         console.log(e);

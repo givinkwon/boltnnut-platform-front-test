@@ -87,10 +87,15 @@ const Button = styled(Buttonv1)`
   width: 263px !important;
   height: 58px !important;
   font-size: 20px;
+  font-family: NotoSansCJKkr;
   line-height: 2.1;
   letter-spacing: -0.5px;
   margin-top: 100px;
   z-index: 2;
+
+  :hover {
+    background-color: #174aee;
+  }
 `;
 
 const BackImg = styled.div`

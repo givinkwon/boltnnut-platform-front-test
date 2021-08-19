@@ -54,7 +54,7 @@ class ManufacturerContentContainer extends React.Component {
       Partner.getCity();
     }
 
-    console.log(this.props.Auth.logged_in_user);
+    // console.log(this.props.Auth.logged_in_user);
 
     Partner.partner_list.map((item, idx) => {
       Partner.getTotalBookmarkByPartner(item.id);
@@ -66,12 +66,12 @@ class ManufacturerContentContainer extends React.Component {
     var recent_partner_namearr = [];
 
     await Cookie.partner_view_list.map((item, idx) => {
-      console.log(item);
+      // console.log(item);
 
       PartnerAPI.detail(item)
         .then((res) => {
           this.setState({ recent_partner: res.data });
-          console.log(res);
+          // console.log(res);
 
           recent_partner_dic[res.data.name] =
             res.data.portfolio_set[0].img_portfolio;
@@ -84,10 +84,10 @@ class ManufacturerContentContainer extends React.Component {
             recent_partner: recent_partner,
             recent_partner_namearr: recent_partner_namearr,
           });
-          console.log(this.state.recent_partner_dic);
-          console.log(this.state.recent_partner_name);
-          console.log(this.state.recent_partner);
-          console.log(this.state.recent_partner_namearr);
+          // console.log(this.state.recent_partner_dic);
+          // console.log(this.state.recent_partner_name);
+          // console.log(this.state.recent_partner);
+          // console.log(this.state.recent_partner_namearr);
         })
         .catch((e) => {
           console.log(e);
@@ -140,20 +140,23 @@ class ManufacturerContentContainer extends React.Component {
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
     const gray = "#f9f9f9";
     const usertype = "partner";
-    console.log(toJS(Partner.partner_list));
-
-    console.log(Partner.suggest_list);
+    // console.log(toJS(Partner.partner_list));
+    // console.log(Partner.suggest_list);
     return (
       <>
         <Background id="MyBackground">
           {Partner.subButtonActive ? (
             <RequestMiddle>
-              <div>
-                기존 제품 검색보다 원하는 조건에 딱 맞는 신제품 제조를
-                원하시나요?
-              </div>
+              <Font16>
+                <b style={{ fontWeight: "bold", color: "#1e2222" }}>
+                  마음에 드는 공장을 찾기 힘드시나요?
+                </b>{" "}
+                지금 '의뢰하기'를 눌러서 여러 업체의 회사소개서와 제안서를
+                받아보세요.
+              </Font16>
+
               <RequestBtn onClick={() => this.ToRequest()}>
-                맞춤형 문의하기
+                무료로 의뢰하기
               </RequestBtn>
             </RequestMiddle>
           ) : (
@@ -251,7 +254,7 @@ class ManufacturerContentContainer extends React.Component {
 
                   {Partner.partner_list &&
                     Partner.partner_list.map((item, idx) => {
-                      console.log(item);
+                      // console.log(item);
                       return (
                         <Background>
                           <div
@@ -856,13 +859,11 @@ const Font20 = styled(Title.FontSize20)`
   color: #282c36;
 `;
 
-const Font14 = styled(Content.FontSize14)`
-  font-weight: bold !important;
-  font-stretch: normal !important;
-  font-style: normal !important;
-  line-height: 30px !important;
-  letter-spacing: -0.14px !important;
-  color: #0933b3;
+const Font16 = styled(Content.FontSize16)`
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  color: #555963;
 `;
 
 const LoadingComponent = styled(ButtonSpinnerComponent)`
@@ -905,6 +906,7 @@ const RequestMiddle = styled.div`
 const RequestBtn = styled.button`
   width: 145px;
   height: 40px;
+  margin-left: 20px;
   object-fit: contain;
   border-radius: 29px;
   border: solid 2px #0933b3;

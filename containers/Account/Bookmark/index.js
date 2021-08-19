@@ -35,14 +35,14 @@ class BookmarkContainer extends React.Component {
         >
           <Header>
             <HeaderTitle>
-              <div style={{ marginBottom: 12 }}>> 관심 제조사</div>
+              <div style={{ marginBottom: 12 }}>계정 설정 > 관심 제조사</div>
             </HeaderTitle>
           </Header>
           <Container>
             <Body>
               <Aside>
-                {/* <AsideHeader>{Auth.logged_in_user.username}</AsideHeader> */}
-                <AsideHeader>dawdad</AsideHeader>
+                <AsideHeader>{Auth.logged_in_user.username}</AsideHeader>
+                
                 <AsideBody>
                   <div>
                     프로젝트를 진행하면 최소 3개월 이상 시간이 소요됩니다. 다른
@@ -63,13 +63,12 @@ export default BookmarkContainer;
 
 const Header = styled.div`
   background-color: #ffffff;
-  width: 100%;
+  width: 1200px;
   height: 116px;
 `;
 
 const HeaderTitle = styled.div`
   height: 100%;
-  padding-left: 118px;
   display: flex;
   align-items: flex-end;
   font-size: 16px;

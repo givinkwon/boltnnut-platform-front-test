@@ -7,18 +7,16 @@ import * as Text from "components/Text";
 
 const arrow_bottom = "static/images/request/arrow_bottom.svg";
 
-
 class RequestMain extends React.Component {
   state = {
     contents: [
       {
         id: 1,
         open: false,
-        question:
-          "볼트앤너트 의뢰 방식이 두 가지인 이유는 무엇인가요?",
+        question: "볼트앤너트 의뢰 방식이 두 가지인 이유는 무엇인가요?",
         answer:
           "볼트앤너트의 의뢰 방식은 두 가지로, '프로젝트 등록'과 '제조사에 직접 의뢰하는 경우'가 있습니다.\n" +
-          "전자는 제조사에게 의뢰를 받는 경우, 후자는 제조사에게 직접 의뢰를 하는 것이 적합합니다."
+          "전자는 제조사에게 의뢰를 받는 경우, 후자는 제조사에게 직접 의뢰를 하는 것이 적합합니다.",
       },
       {
         id: 2,
@@ -26,14 +24,14 @@ class RequestMain extends React.Component {
         question: "프로젝트 등록 시 정보가 유출될 우려는 없나요?",
         answer:
           "의뢰 시 정보 공개/비공개 여부를 정할 수 있어 선별된 파트너에게만 정보를 공개할 수 있습니다.\n" +
-          "따라서 공개를 원하지 않는 정보가 유출될 위험은 없습니다."
+          "따라서 공개를 원하지 않는 정보가 유출될 위험은 없습니다.",
       },
       {
         id: 3,
         open: false,
         question: "프로젝트 등록 이후 수정 및 삭제는 어떻게 하나요?",
         answer:
-          "프로젝트의 수정 및 삭제는 [마이페이지]-[내 프로젝트]-[프로젝트 수정/종료] 버튼에서 가능합니다.\n" 
+          "프로젝트의 수정 및 삭제는 [마이페이지]-[내 프로젝트]-[프로젝트 수정/종료] 버튼에서 가능합니다.\n",
       },
       {
         id: 4,
@@ -45,14 +43,13 @@ class RequestMain extends React.Component {
       {
         id: 5,
         open: false,
-        question:
-          "의뢰 서비스를 이용하려면 별도의 비용이 필요한가요?",
+        question: "의뢰 서비스를 이용하려면 별도의 비용이 필요한가요?",
         answer:
           "볼트앤너트 의뢰 서비스는 무료이며, 프로젝트 계약 후 요청 업무 범위에 따라 추가 비용이 발생할 수 있습니다.",
       },
     ],
   };
-  
+
   // 드랍다운
   toggleOpen = (id) => {
     const { contents } = this.state;
@@ -79,24 +76,33 @@ class RequestMain extends React.Component {
             {contents.map((content) => {
               return (
                 <QnABox key={content.id}>
-                <QnATitle open={content.open}>
-                  <span style={{color: "#174aee",fontWeight: "bold",marginRight: 14,}}>Q</span>{content.question}
-                  <ArrowIcon
-                    style={{marginLeft: "auto"}}
-                    open={content.open}
-                    src={arrow_bottom}
-                    onClick={() => this.toggleOpen(content.id)}
-                  />
-                </QnATitle>
+                  <QnATitle open={content.open}>
+                    <span
+                      style={{
+                        color: "#174aee",
+                        fontWeight: "bold",
+                        marginRight: 14,
+                      }}
+                    >
+                      Q
+                    </span>
+                    {content.question}
+                    <ArrowIcon
+                      style={{ marginLeft: "auto" }}
+                      open={content.open}
+                      src={arrow_bottom}
+                      onClick={() => this.toggleOpen(content.id)}
+                    />
+                  </QnATitle>
 
-                <QnABody open={content.open}>
-                  <Text.FontSize16 color="#4d4f5c">
-                    {content.answer}
-                  </Text.FontSize16>
-                </QnABody>
-              </QnABox>
-              )}
-            )}
+                  <QnABody open={content.open}>
+                    <Text.FontSize16 color="#4d4f5c">
+                      {content.answer}
+                    </Text.FontSize16>
+                  </QnABody>
+                </QnABox>
+              );
+            })}
           </Body>
         </Container>
       </Background>
@@ -108,7 +114,6 @@ export default RequestMain;
 
 const Body = styled.div`
   width: 100%;
-  height: 893px;
   display: flex;
   margin-bottom: 300px;
   flex-direction: column;
@@ -122,6 +127,7 @@ const Header = styled.span`
   line-height: 2.5;
   letter-spacing: -0.8px;
   color: #000;
+  margin-top: 140px;
 `;
 
 const QnABox = styled.div`
@@ -162,17 +168,16 @@ const QnABody = styled.div`
     css`
       height: 0;
       padding: 0;
-      overflow: hidden;
+      visibility: hidden;
     `};
 `;
-
 
 const ArrowIcon = styled.img`
   cursor: pointer;
   transition: 0.5s;
 
   ${(props) =>
-    !props.open &&
+    props.open &&
     css`
       transform: rotate(180deg);
     `}

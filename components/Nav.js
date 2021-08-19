@@ -121,7 +121,7 @@ class Nav extends React.Component {
     });
     // 토큰은 있는데 userInfo가 mobx에 없으면 리로딩
     Auth.checkLogin();
-    console.log(toJS(Auth.logged_in_user));
+    // console.log(toJS(Auth.logged_in_user));
   }
   render() {
     const { Auth, Request, Home } = this.props;
@@ -323,7 +323,7 @@ class Nav extends React.Component {
               </Menu>
               <Menu style={{ marginLeft: "auto" }}>
                 {/* 로그인한/안한 경우 */}
-                {console.log(Auth.logged_in_user)}
+                {/* {console.log(Auth.logged_in_user)} */}
                 {token ? (
                   <ul>
                     {/* 클라이언트 로그인 */}
@@ -365,17 +365,19 @@ class Nav extends React.Component {
                                 }}
                               />
                             </li>
-                            <li>
+                            <li onClick={() => alert("서비스 준비 중입니다.")}>
                               <KSLink
-                                url={"chatting"}
+                                //url={"chatting"}
+                                url={""}
                                 FontContent={() => {
                                   return <Font14>채팅하기</Font14>;
                                 }}
                               />
                             </li>
-                            <li>
+                            <li onClick={() => alert("서비스 준비 중입니다.")}>
                               <KSLink
-                                url={"review"}
+                                //url={"review"}
+                                url={""}
                                 FontContent={() => {
                                   return <Font14>후기 관리</Font14>;
                                 }}
@@ -434,7 +436,13 @@ class Nav extends React.Component {
                             Auth.type == "detailexpert"
                           }
                         >
-                          <RouterWrapper>
+                          <RouterWrapper
+                            onClick={() => {
+                              alert(
+                                "가입을 원하시는 분은 고객센터로 별도 문의주세요"
+                              );
+                            }}
+                          >
                             <KSLink
                               url={"partnerregister"}
                               FontContent={() => {
@@ -487,17 +495,19 @@ class Nav extends React.Component {
                                 }}
                               />
                             </li>
-                            <li>
+                            <li onClick={() => alert("서비스 준비 중입니다.")}>
                               <KSLink
-                                url={"chatting"}
+                                //url={"chatting"}
+                                url={""}
                                 FontContent={() => {
                                   return <Font14>채팅하기</Font14>;
                                 }}
                               />
                             </li>
-                            <li>
+                            <li onClick={() => alert("서비스 준비 중입니다.")}>
                               <KSLink
-                                url={"review"}
+                                //url={"review"}
+                                url={""}
                                 FontContent={() => {
                                   return <Font14>후기 관리</Font14>;
                                 }}
@@ -574,7 +584,7 @@ class Nav extends React.Component {
                     >
                       <RouterWrapper>
                         <KSLink
-                          url={"signup"}
+                          url={"partnerregister"}
                           FontContent={() => {
                             return <Font14>파트너 등록하기</Font14>;
                           }}

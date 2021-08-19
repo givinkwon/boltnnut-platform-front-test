@@ -436,7 +436,8 @@ class Partner {
     this.detailLoadingFlag = true;
 
     if (!this.requestModalActive && !this.modalActive) {
-      console.log("Detail click");
+      // console.log("Detail click");
+      // console.log(item, idx)
       this.category_name_list = null;
 
       this.category_name_list = this.category_dic[idx];
@@ -470,13 +471,13 @@ class Partner {
       this.selectedIntroductionFileType = fileType;
 
       if (this.availableFileType.indexOf(fileType) > -1) {
-        console.log("뷰어 페이지 router push");
+        // console.log("뷰어 페이지 router push");
         this.partner_detail_list = [];
         await this.partner_detail_list.push({ item: item, idx: idx });
         this.recentPartnerId = this.partner_detail_list[0].item.id;
 
         // Partner.getReviewByPartner(Partner.partner_detail_list[0]);
-        console.log(toJS(this.partner_detail_list));
+        // console.log(toJS(this.partner_detail_list));
         await this.getReviewByPartner(
           this.partner_detail_list[0].item.id,
           1,
@@ -797,7 +798,7 @@ class Partner {
       .then(async (res) => {
         this.category_main_list = res.data.results;
         this.big_category_all = res.data.results;
-        console.log(res.data.results.splice(0, 4));
+        // console.log(res.data.results.splice(0, 4));
         this.category_list = res.data.results;
         this.category_list.forEach((mainCategory) => {
           this.category_middle_list = this.category_middle_list.concat(
@@ -830,7 +831,7 @@ class Partner {
         console.log(e.response);
       });
     // 초기화
-    this.reset()
+    this.reset();
   };
   @action reset = () => {
     this.detail = null;
@@ -1515,7 +1516,7 @@ class Partner {
         }
         // console.log(toJS(res.data.results.category));
         // console.log(toJS(typeof this.filter_category_ary));
-        console.log(toJS(toJS(this.filter_category_ary)));
+        // console.log(toJS(toJS(this.filter_category_ary)));
       })
       .catch((e) => {
         console.log(e);
@@ -1535,7 +1536,7 @@ class Partner {
         this.filter_city_ary = await this.filter_city_ary.concat(
           res.data.results
         );
-        console.log(toJS(this.filter_city_ary));
+        // console.log(toJS(this.filter_city_ary));
         this.city_ary = this.city_ary.concat(res.data.results);
         this.city_next = res.data.next;
 
@@ -1571,7 +1572,7 @@ class Partner {
         console.log(e);
         console.log(e.response);
       });
-    console.log(this.filter_city_ary);
+    // console.log(this.filter_city_ary);
   };
 
   // city를 id로 주고 있어서 이름 가져오기
@@ -1787,7 +1788,7 @@ class Partner {
     if (Category.business_selected.length) {
       toJS(Category.business_selected).map((data) => {
         this.business_string += data + ",";
-        console.log(this.business_string);
+        // console.log(this.business_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.business_string = this.business_string.substr(
@@ -1801,17 +1802,17 @@ class Partner {
 
     // 업체 분류 선택되어 있을 때
     if (Category.category_selected.length) {
-      console.log(toJS(Category.category_selected));
+      // console.log(toJS(Category.category_selected));
       toJS(Category.category_selected).map((data) => {
         this.category_string += data + ",";
-        console.log(this.category_string);
+        // console.log(this.category_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.category_string = this.category_string.substr(
         0,
         this.category_string.length - 1
       );
-      console.log(this.category_string);
+      // console.log(this.category_string);
 
       req.params.category = this.category_string;
     }
@@ -1820,7 +1821,7 @@ class Partner {
     if (Category.city_selected.length) {
       toJS(Category.city_selected).map((data) => {
         this.city_string += data + ",";
-        console.log(this.city_string);
+        // console.log(this.city_string);
       });
       // 마지막 쉼표 제거하기 위함
 
@@ -1837,7 +1838,7 @@ class Partner {
     if (Category.develop_selected.length) {
       toJS(Category.develop_selected).map((data) => {
         this.develop_string += data + ",";
-        console.log(this.develop_string);
+        // console.log(this.develop_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.develop_string = this.develop_string.substr(
@@ -1853,7 +1854,7 @@ class Partner {
     if (Category.material_selected.length) {
       toJS(Category.material_selected).map((data) => {
         this.material_string += data + ",";
-        console.log(this.material_string);
+        // console.log(this.material_string);
       });
       // 마지막 쉼표 제거하기 위함
       this.material_string = this.material_string.substr(
@@ -1865,10 +1866,10 @@ class Partner {
       req.params.material = this.material_string;
     }
 
-    console.log(req.params);
+    // console.log(req.params);
     PartnerAPI.getPartners(req)
       .then(async (res) => {
-        console.log(res);
+        // console.log(res);
         this.partner_list = [];
         this.category_ary = [];
         this.category_name_ary = [];
@@ -2052,88 +2053,6 @@ class Partner {
     );
     console.log(toJS(this.review_user_ary));
   }
-  // @action getPartnerByRegion = async (page = 1) => {
-  //   this.partner_list = [];
-  //   //this.data_dt = [];
-  //   console.log(this.filter_region);
-  //   const token = localStorage.getItem("token");
-  //   let req = {};
-  //   if (!this.filter_region) {
-  //     req = {
-  //       params: {
-  //         // search: search_text,
-  //         page: page,
-  //         // ordering: "-id",
-  //       },
-  //       // headers: {
-  //       //   Authorization: `Token ${token}`,
-  //       // },
-  //     };
-  //   } else {
-  //     req = {
-  //       params: {
-  //         //city: this.filter_region === 0 ? "" : this.filter_region,
-  //         city: this.filter_region,
-  //         // search: search_text,
-  //         page: page,
-
-  //         // ordering: "-id",
-  //       },
-  //       // headers: {
-  //       //   Authorization: `Token ${token}`,
-  //       // },
-  //     };
-  //   }
-
-  //   PartnerAPI.getPartners(req)
-  //     .then((res) => {
-  //       this.partner_list = [];
-  //       this.category_ary = [];
-
-  //       this.partner_list = res.data.results;
-  //       // this.category_ary = res.data.results.category_middle;
-
-  //       // console.log(toJS(category_ary));
-  //       this.partner_next = res.data.next;
-  //       this.partner_count = res.data.count;
-  //       this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-  //       console.log(toJS(this.partner_list));
-
-  //       //this.getCategory();
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //       console.log(e.response);
-  //     });
-  // };
-  // @action getPartnerCategory = async (page = 1) => {
-  //   req = {
-  //     params: {
-  //       // search: search_text,
-  //       page: page,
-  //       // ordering: "-id",
-  //     },
-  //     // headers: {
-  //     //   Authorization: `Token ${token}`,
-  //     // },
-  //   };
-
-  //   PartnerAPI.getPartner(req)
-  //     .then((res) => {
-  //       this.category_list = [];
-
-  //       this.category_list = res.data.results.category_middle;
-  //       // this.partner_next = res.data.next;
-  //       // this.partner_count = res.data.count;
-  //       // this.partner_page = parseInt((this.partner_count - 1) / 10) + 1;
-  //       // console.log(toJS(this.partner_list));
-  //       //this.getCategory();
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //       console.log(e.response);
-  //     });
-  // };
 
   @action setclickLog = async (formData) => {
     const req = {
@@ -2228,7 +2147,7 @@ class Partner {
         page: page,
       },
     };
-    
+
     await PartnerAPI.getReviewByPartner(req)
       .then(async (res) => {
         if (page_nation == 1) {
@@ -2576,8 +2495,8 @@ class Partner {
 
     PartnerAPI.getTotalBookmarkByPartner(req)
       .then((res) => {
-        console.log(res);
-        console.log(res.data.count);
+        // console.log(res);
+        // console.log(res.data.count);
         this.totalPartnerBookmark = res.data.count;
       })
       .catch((e) => {
@@ -2822,9 +2741,9 @@ class Partner {
   };
 
   @action existCheckedBookmark = async (clientID, partnerID, idx) => {
-    console.log(typeof clientID);
-    console.log(clientID);
-    console.log(partnerID);
+    // console.log(typeof clientID);
+    // console.log(clientID);
+    // console.log(partnerID);
 
     if (!clientID) {
       clientID = 20;
@@ -2839,15 +2758,15 @@ class Partner {
 
     await PartnerAPI.existBookmarkPartner(req)
       .then((res) => {
-        console.log(res);
-        console.log(res.data.data);
-        console.log(typeof res.data.data);
+        // console.log(res);
+        // console.log(res.data.data);
+        // console.log(typeof res.data.data);
         if (parseInt(res.data.data)) {
           this.check_bookmark[idx] = idx;
         } else {
           this.check_bookmark[idx] = -1;
         }
-        console.log(this.check_bookmark[idx]);
+        // console.log(this.check_bookmark[idx]);
       })
       .catch((e) => {
         console.log(e);

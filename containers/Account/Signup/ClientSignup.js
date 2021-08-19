@@ -52,7 +52,9 @@ class ClientSignupContainer extends React.Component {
 
           <LineDivContainer>
             <LineDiv />
-            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>SNS 간편 회원가입</Title14>
+            <Title14 style={{ margin: "0px 28px 0px 28px", color: "#505050" }}>
+              SNS 간편 회원가입
+            </Title14>
             <LineDiv />
           </LineDivContainer>
 
@@ -114,7 +116,11 @@ class ClientSignupContainer extends React.Component {
               active={Signup.password2inputstate}
             />
             <InvalidImgBox src={success} active={Signup.passwordInvalid} />
-            {Signup.password2 && <InvalidTitle14 active={Signup.passwordInvalid}>비밀번호가 일치하지 않습니다.</InvalidTitle14>}
+            {Signup.password2 && (
+              <InvalidTitle14 active={Signup.passwordInvalid}>
+                비밀번호가 일치하지 않습니다.
+              </InvalidTitle14>
+            )}
           </InputInnerBox>
 
           {/* name */}
@@ -129,7 +135,11 @@ class ClientSignupContainer extends React.Component {
               active={Signup.realNameInputState}
             />
             <InvalidImgBox src={success} active={Signup.realNameInvalid} />
-            {Signup.realName && <InvalidTitle14 active={Signup.realNameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
+            {Signup.realName && (
+              <InvalidTitle14 active={Signup.realNameInvalid}>
+                특수문자는 입력할 수 없습니다.
+              </InvalidTitle14>
+            )}
           </InputInnerBox>
 
           {/* phone number */}
@@ -145,7 +155,11 @@ class ClientSignupContainer extends React.Component {
               active={Signup.phoneInputState}
             />
             <InvalidImgBox src={success} active={Signup.phoneInvalid} />
-            {Signup.phone && <InvalidTitle14 active={Signup.phoneInvalid}>- 없이 숫자만 입력해주세요. (최대 11자리)</InvalidTitle14>}
+            {Signup.phone && (
+              <InvalidTitle14 active={Signup.phoneInvalid}>
+                - 없이 숫자만 입력해주세요. (최대 11자리)
+              </InvalidTitle14>
+            )}
           </InputInnerBox>
 
           {/* company name */}
@@ -160,11 +174,22 @@ class ClientSignupContainer extends React.Component {
               active={Signup.company_nameInputState}
               defaultValue={Signup.individual}
             />
-            <InvalidImgBox src={success} style={{ bottom: "40%" }} active={Signup.company_nameInvalid} />
-            {Signup.company_name && <InvalidTitle14 active={Signup.company_nameInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
+            <InvalidImgBox
+              src={success}
+              style={{ bottom: "40%" }}
+              active={Signup.company_nameInvalid}
+            />
+            {Signup.company_name && (
+              <InvalidTitle14 active={Signup.company_nameInvalid}>
+                특수문자는 입력할 수 없습니다.
+              </InvalidTitle14>
+            )}
 
             <div style={{ display: "inline-flex", marginTop: "12px" }}>
-              <CustomCheckBox type="checkbox" onClick={() => Signup.individualhandler(Signup.individualState)} />
+              <CustomCheckBox
+                type="checkbox"
+                onClick={() => Signup.individualhandler(Signup.individualState)}
+              />
               <Title15>개인일 경우 체크해 주세요.</Title15>
             </div>
           </InputInnerBox>
@@ -181,7 +206,11 @@ class ClientSignupContainer extends React.Component {
               active={Signup.titleInputState}
             />
             <InvalidImgBox src={success} active={Signup.titleInvalid} />
-            {Signup.title && <InvalidTitle14 active={Signup.titleInvalid}>특수문자는 입력할 수 없습니다.</InvalidTitle14>}
+            {Signup.title && (
+              <InvalidTitle14 active={Signup.titleInvalid}>
+                특수문자는 입력할 수 없습니다.
+              </InvalidTitle14>
+            )}
           </InputInnerBox>
 
           {/* agree */}
@@ -214,7 +243,9 @@ class ClientSignupContainer extends React.Component {
                     }}
                   />
                   <Title15 style={{ color: "#999999" }}>{item.content}</Title15>
-                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>{item.essential}</Title14>
+                  <Title14 style={{ color: "#999999", marginLeft: "4px" }}>
+                    {item.essential}
+                  </Title14>
                   {item.terms != 0 && <ImgBox src={viewterms} />}
                 </AgreeInnerBox>
               );
@@ -331,7 +362,8 @@ const KakaoImgBox = styled.div`
 
 const CustomInput = styled.input`
   border-radius: 3px;
-  border: ${(props) => (props.active ? "1px solid #c7c7c7" : "1px solid #e53c38")};
+  border: ${(props) =>
+    props.active ? "1px solid #c7c7c7" : "1px solid #e53c38"};
   padding-left: 10px;
   width: 578px;
   height: 42px;
@@ -380,6 +412,7 @@ const SubmitButton = styled.button`
   align-items: center;
   width: 228px;
   height: 48px;
+  border: none;
   border-radius: 24px;
   background-color: #0933b3;
   margin-top: 80px;

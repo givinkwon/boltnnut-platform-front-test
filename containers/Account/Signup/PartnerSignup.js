@@ -345,6 +345,7 @@ const SubmitButton = styled.button`
   align-items: center;
   width: 228px;
   height: 48px;
+  border: none;
   border-radius: 24px;
   background-color: #0933b3;
   margin-top: 80px;
