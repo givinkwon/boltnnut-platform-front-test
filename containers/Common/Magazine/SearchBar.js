@@ -67,10 +67,10 @@ class SearchBarConatiner extends React.Component {
         </Box> */}
         <SearchBar>
           <input
-            placeholder="원하는 분야의 제조업체를 검색하세요"
+            placeholder="원하는 분야의 제조 공정을 검색하세요"
             onFocus={(e) => (e.target.placeholder = "")}
             onBlur={(e) =>
-              (e.target.placeholder = "원하는 분야의 제조업체를 검색하세요")
+              (e.target.placeholder = "원하는 분야의 제조 공정을 검색하세요")
             }
             onChange={this.searchText}
             class="Input"

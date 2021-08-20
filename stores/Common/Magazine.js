@@ -100,6 +100,7 @@ class Magazine {
             .then((res) => {
               this.magazine_list = this.magazine_list.concat(res.data.results);
               this.magazine_next = res.data.next;
+              console.log(res)
             })
             .catch((e) => {
               console.log(e);
