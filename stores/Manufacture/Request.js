@@ -181,7 +181,7 @@ class Request {
       alert("의뢰 내용이 너무 깁니다. 4500자 이내로 작성해주세요.");
       return false;
     }
-
+    
     // 데이터 저장
     var formData = new FormData();
 
@@ -329,6 +329,9 @@ class Request {
           console.log(e.response);
         });
     }
+
+    // 페이지 넘어가기
+    Request.requestTabIdx = 2;
   };
 
   // 비회원 회원가입 전용

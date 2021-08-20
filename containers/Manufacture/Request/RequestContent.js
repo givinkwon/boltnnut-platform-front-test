@@ -262,7 +262,7 @@ class RequestContent extends Component {
                     프로젝트 분류에 해당하는 항목을 선택해주세요.
                   </span>
                   <ProjectFieldCheckbox>
-                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <CheckBoxComponent >
                       <span
                         style={{
                           color: "#767676",
@@ -275,7 +275,7 @@ class RequestContent extends Component {
                         완제품/부품 구매
                       </span>
                     </CheckBoxComponent>
-                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <CheckBoxComponent >
                       <span
                         style={{
                           color: "#767676",
@@ -288,7 +288,7 @@ class RequestContent extends Component {
                         개발/설계 업체
                       </span>
                     </CheckBoxComponent>
-                    <CheckBoxComponent onChange={this.toggleCheckBox}>
+                    <CheckBoxComponent >
                       <span
                         style={{
                           color: "#767676",
@@ -715,7 +715,6 @@ class RequestContent extends Component {
                 <RequestButton
                   onClick={() => {
                     Request.requestSubmit();
-                    Request.requestTabIdx = 2;
                     // console.log(this.newIndex);
                   }}
                 >
