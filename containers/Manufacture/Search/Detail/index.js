@@ -16,7 +16,6 @@ class SearchDetailConatiner extends React.Component {
   componentDidMount() {
     const { Auth, Partner, Cookie } = this.props;
     console.log(this.props.width);
-
     // 쿠기 값 리스트에 저장
     if (Partner.partner_detail_list[0].item) {
       Cookie.add_partner_view(Partner.partner_detail_list[0].item.id);

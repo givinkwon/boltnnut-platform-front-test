@@ -84,7 +84,7 @@ class SubBoxContainer extends React.Component {
                       // this.setState({ g: 3 });
                     }}
                   >
-                    <span>견적 요청하기</span>
+                    <span>프로젝트 의뢰하기</span>
                   </div>
                 </Button>
 
