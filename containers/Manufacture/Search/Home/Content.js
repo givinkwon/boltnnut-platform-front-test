@@ -45,7 +45,6 @@ class ManufacturerContentContainer extends React.Component {
   async componentDidMount() {
     const { Partner, Cookie } = this.props;
     Partner.detailLoadingFlag = false;
-
     Partner.currentPage = 1;
 
     if (Partner.filter_category_ary.length === 1) {
@@ -54,8 +53,6 @@ class ManufacturerContentContainer extends React.Component {
     if (Partner.filter_city_ary.length === 1) {
       Partner.getCity();
     }
-
-    // console.log(this.props.Auth.logged_in_user);
 
     Partner.partner_list.map((item, idx) => {
       Partner.getTotalBookmarkByPartner(item.id);
@@ -67,12 +64,9 @@ class ManufacturerContentContainer extends React.Component {
     var recent_partner_namearr = [];
 
     await Cookie.partner_view_list.map((item, idx) => {
-      // console.log(item);
-
       PartnerAPI.detail(item)
         .then((res) => {
           this.setState({ recent_partner: res.data });
-          // console.log(res);
 
           recent_partner_dic[res.data.name] =
             res.data.portfolio_set[0].img_portfolio;
@@ -85,10 +79,6 @@ class ManufacturerContentContainer extends React.Component {
             recent_partner: recent_partner,
             recent_partner_namearr: recent_partner_namearr,
           });
-          // console.log(this.state.recent_partner_dic);
-          // console.log(this.state.recent_partner_name);
-          // console.log(this.state.recent_partner);
-          // console.log(this.state.recent_partner_namearr);
         })
         .catch((e) => {
           console.log(e);
@@ -102,7 +92,6 @@ class ManufacturerContentContainer extends React.Component {
     console.log("content unmount");
     Partner.requestModalActive = false;
     Partner.requestDoneModalActive = false;
-    // Partner.search_text = "";
     Partner.resetDevCategory();
     Partner.filter_category_ary = [{ id: 0, category: "전체" }];
     Partner.filter_city_ary = [{ id: 0, city: "전체" }];
@@ -121,7 +110,6 @@ class ManufacturerContentContainer extends React.Component {
       link.click();
     } else {
       alert("로그인이 필요합니다.");
-      // this.props.Auth.previous_url = "search";
       Router.push("/login");
     }
   };
@@ -138,22 +126,19 @@ class ManufacturerContentContainer extends React.Component {
 
   resultBannerHandler = () => {
     const { Partner } = this.props;
-    if (Partner.subButtonActive) {
-      return (Partner.subButtonActive = false);
+    if (Partner.result_banner) {
+      Partner.result_banner = false;
     }
   };
 
   render() {
-    const { Project, Partner, Search, Auth, Cookie, Request } = this.props;
+    const { Project, Partner, Search, Auth, Cookie } = this.props;
     const current_set = parseInt((Partner.currentPage - 1) / 10) + 1;
-    const gray = "#f9f9f9";
-    const usertype = "partner";
-    // console.log(toJS(Partner.partner_list));
-    // console.log(Partner.suggest_list);
+
     return (
       <>
         <Background id="MyBackground">
-          {Partner.subButtonActive ? (
+          {Partner.result_banner && (
             <RequestMiddle>
               <ResultBannerContainer>
                 <ResultBannerInnerBox>
@@ -177,8 +162,6 @@ class ManufacturerContentContainer extends React.Component {
                 />
               </ResultBannerContainer>
             </RequestMiddle>
-          ) : (
-            <></>
           )}
           <Container>
             <Body>
@@ -914,7 +897,7 @@ const RequestMiddle = styled.div`
   justify-content: center;
   align-items: center;
   height: 113px;
-  margin-top: 40px;
+  margin-top: 30px;
   margin-bottom: 40px;
   background-image: url("static/images/search_result_background.svg");
   div {
@@ -929,6 +912,8 @@ const RequestMiddle = styled.div`
 const RequestBtn = styled.button`
   width: 145px;
   height: 40px;
+  margin-top: 16px;
+  padding-top: 5px;
   border-radius: 29px;
   border: solid 2px #0933b3;
   background-color: #0933b3;
@@ -985,9 +970,10 @@ const DeleteFile = styled.img`
 
 const ResultBannerContainer = styled.div`
   position: relative;
-  width: 700px;
+  width: 900px;
   display: flex;
-  gap: 90px;
+  justify-content: center;
+  gap: 180px;
 `;
 
 const ResultBannerInnerBox = styled.div`
@@ -997,7 +983,7 @@ const ResultBannerInnerBox = styled.div`
 
 const ResultBannerCloseImg = styled.img`
   position: absolute;
-  left: 120%;
+  left: 110%;
   bottom: 100%;
   cursor: pointer;
 `;

@@ -10,7 +10,6 @@ import ImageFile from "./ImageFile";
 @inject("Auth", "Project", "Request", "Partner", "Search", "Category")
 @observer
 class SearchBarConatiner extends React.Component {
-
   state = {
     search: "",
     modal_open: false,
@@ -24,7 +23,7 @@ class SearchBarConatiner extends React.Component {
 
   // 검색함수
   search = async () => {
-    const { Partner, Category } = this.props;
+    const { Partner } = this.props;
 
     await Router.push("/search");
     // console.log("click");
@@ -37,7 +36,6 @@ class SearchBarConatiner extends React.Component {
     Partner.currentPage = 1;
     Partner.click_count += 1;
 
-    // 버튼 활성화 하기 위해 state true
     Partner.subButtonActive = true;
 
     await Partner.search();
@@ -52,6 +50,14 @@ class SearchBarConatiner extends React.Component {
     }
   };
 
+  // 검색 시 배너 활성화 핸들러 따로 분리
+  bannerHandler = () => {
+    const { Partner } = this.props;
+    if (!Partner.result_banner) {
+      Partner.result_banner = true;
+    }
+  };
+
   closeModal = () => {
     this.setState({
       ...this.state,
@@ -60,16 +66,15 @@ class SearchBarConatiner extends React.Component {
   };
 
   handleKeyDown = (e) => {
-    const { Partner } = this.props;
     if (e.key === "Enter") {
       this.search();
+      this.bannerHandler();
     }
   };
 
   async componentDidMount() {
-    const { Partner } = this.props;
     await this.props.Auth.checkLogin();
-    this.search()
+    this.search();
   }
 
   // 검색창에 검색을 할 때 text를 observable에 저장
@@ -139,7 +144,13 @@ class SearchBarConatiner extends React.Component {
               </ImgContainer>
 
               <ImgContainer>
-                <img src="/static/icon/search_blue.svg" onClick={this.search} />
+                <img
+                  src="/static/icon/search_blue.svg"
+                  onClick={() => {
+                    this.search();
+                    this.bannerHandler();
+                  }}
+                />
               </ImgContainer>
             </SearchBar>
           </div>
@@ -245,9 +256,11 @@ const SearchBar = styled.div`
     padding: 0 14px;
     margin-left: 10px;
     font-size: 18px;
+
     :focus {
       outline: none;
     }
+
     ::placeholder {
       color: #c6c7cc;
       font-size: 18px;
@@ -256,16 +269,13 @@ const SearchBar = styled.div`
   img {
     width: 24px;
     height: 24px;
-
-    marginright: 25px;
     cursor: pointer;
   }
+
   @media (min-width: 0px) and (max-width: 767.98px) {
     input {
       width: 80%;
       height: 30px;
-      // border: none;
-      // border-radiusf: 60px;
       padding: 0 7px;
       margin-left: 5px;
       font-size: 12px;
@@ -280,23 +290,10 @@ const SearchBar = styled.div`
     }
   }
   @media (min-width: 768px) and (max-width: 991.98px) {
-    // margin-top: 30px;
     width: 700px;
-    // input {
-    //   font-size: 16px;
-    //   ::placeholder {
-    //     font-size: 13px;
-    //   }
-    // }
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
     width: 792px;
-    // input {
-    //   font-size: 17px;
-    //   ::placeholder {
-    //     font-size: 15px;
-    //   }
-    // }
   }
   @media (min-width: 1300px) {
     width: 792px;
@@ -332,14 +329,14 @@ const Form = styled.div`
   justify-content: center;
   height: 44px;
 
-  @media (min-width: 768px) and (max-width: 991.98px) {
-    // width: 54%;
+  /* @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 54%;
   }
   @media (min-width: 992px) and (max-width: 1299.98px) {
-    // width: 67%;
+    width: 67%;
   }
   @media (min-width: 1300px) {
-    //margin-top: 0;
-    // width: 75%;
-  }
+    margin-top: 0;
+    width: 75%;
+  } */
 `;

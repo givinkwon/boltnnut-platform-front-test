@@ -294,7 +294,6 @@ class Partner {
 
   // 파트너의 답변
   @observable answer_set = [];
-
   @observable clientInfo = [];
 
   // 파트너 리뷰 페이지
@@ -369,6 +368,8 @@ class Partner {
   @observable total_review = 0;
 
   @observable check_bookmark = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+
+  @observable result_banner = false;
 
   @action movePage = (e) => {
     e.preventDefault();

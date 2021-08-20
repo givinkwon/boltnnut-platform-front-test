@@ -1196,12 +1196,11 @@ const Button = styled.button`
 `;
 
 const SelectedCategoryContainer = styled.div`
-  /* position: absolute; */
   display: inline-flex;
   gap: 15px;
-  width: 1140px;
+  width: 760px;
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin-top: 12px;
   top: 50%;
 `;
 
