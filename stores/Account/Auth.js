@@ -437,7 +437,7 @@ class Auth {
       });
   };
 
-  @action login = async () => {
+  @action login = async (container = "") => {
     if (!this.email) {
       alert("이메일을 입력해주세요.");
       return;
@@ -483,8 +483,11 @@ class Auth {
 
         setTimeout(() => {
           this.loading = false;
-
-          if (this.previous_url == "" || this.previous_url == null) {
+          // 파트너 회원가입인 경우 register로
+          if (container == "partnersignup"){
+            Router.push("/partnerregister");
+          }
+          else if (this.previous_url == "" || this.previous_url == null) {
             Router.push("/");
           } else {
             // this.makeUrl(this.previous_url);

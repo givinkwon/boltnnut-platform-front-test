@@ -1,6 +1,7 @@
 import { observable, action } from "mobx";
 import * as AccountAPI from "axios/Account/Account";
 import Router from "next/router";
+import Auth from "./Auth";
 
 class Signup {
   @observable type = "";
@@ -204,7 +205,12 @@ class Signup {
             this.loading = false;
             alert("회원가입 성공");
             MyDataLayerPush({ event: "SignUpComplete_Partner" });
-            this.reset();
+            // 자동 로그인
+            Auth.email = this.email;
+            Auth.password = this.password;
+            //signup에서 왔을 
+            Auth.login("partnersignup")
+            
             // 의뢰서에서 회원가입하지 않았을 때 => 그냥 회원가입일 때 Router Push
             if (container == "signup") {
               Router.push("/partnerregister");
@@ -438,7 +444,11 @@ class Signup {
           this.loading = false;
           alert("회원가입 성공");
           // MyDataLayerPush({ event: "SignUpComplete_Partner" });
-          this.reset();
+          // 자동 로그인
+          Auth.email = this.email;
+          Auth.password = this.password;
+          //signup에서 왔을 
+          Auth.login("partnersignup")
           Router.push("/partnerregister");
         }, 800);
       })
